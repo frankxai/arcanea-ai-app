@@ -10,12 +10,14 @@ interface AuthorEditorProps {
   initialHtml: string;
 }
 
+type SaveMode = 'draft' | 'published' | 'signin-required';
+
 export function AuthorEditor({ bookSlug, chapterSlug, initialHtml }: AuthorEditorProps) {
   const [saving, setSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [wordCount, setWordCount] = useState(0);
   const [dirty, setDirty] = useState(false);
-  const [readOnly, setReadOnly] = useState(false);
+  const [saveMode, setSaveMode] = useState<SaveMode>('published');
   const contentRef = useRef<{ text: string; json: JSONContent | null }>({ text: '', json: null });
 
   const handleSave = useCallback(async (payload: DocEditorSavePayload) => {
@@ -32,11 +34,12 @@ export function AuthorEditor({ bookSlug, chapterSlug, initialHtml }: AuthorEdito
           contentJson: payload.content_json,
         }),
       });
-      if (res.status === 423) {
-        // Locked: production environment
-        setReadOnly(true);
+      if (res.status === 401) {
+        setSaveMode('signin-required');
         setDirty(false);
       } else if (res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setSaveMode(data.source === 'draft' ? 'draft' : 'published');
         setLastSaved(new Date());
         setDirty(false);
       }
@@ -65,13 +68,14 @@ export function AuthorEditor({ bookSlug, chapterSlug, initialHtml }: AuthorEdito
     return () => window.removeEventListener('keydown', handler);
   }, [handleSave, wordCount]);
 
+  const signInRequired = saveMode === 'signin-required';
+
   return (
     <div className="relative">
-      {readOnly && (
+      {signInRequired && (
         <div className="mb-4 px-4 py-3 rounded-xl bg-amber-500/[0.06] border border-amber-500/15 text-[11px] text-amber-300/70 leading-relaxed">
-          <strong className="text-amber-200">Read-only preview.</strong> This online Studio doesn&apos;t persist edits (Vercel filesystem is ephemeral).
-          Write locally with <code className="text-amber-200 bg-black/20 px-1 py-0.5 rounded">pnpm dev</code> or use Claude Code with <code className="text-amber-200 bg-black/20 px-1 py-0.5 rounded">/arcanea-author</code>.
-          Your changes here will NOT save.
+          <strong className="text-amber-200">Sign in to save drafts.</strong> Your edits aren&apos;t persisted because you aren&apos;t authenticated.
+          Drafts live in Supabase under your account and sync across devices. Sign in to enable autosave.
         </div>
       )}
 
@@ -81,9 +85,8 @@ export function AuthorEditor({ bookSlug, chapterSlug, initialHtml }: AuthorEdito
           setDirty(true);
           handleSave(payload);
         }}
-        saveDelay={3000}
+        saveDelay={2000}
         placeholder="Start writing your chapter..."
-        readOnly={readOnly}
       />
 
       {/* Status bar */}
@@ -93,13 +96,15 @@ export function AuthorEditor({ bookSlug, chapterSlug, initialHtml }: AuthorEdito
           <span>{Math.max(1, Math.ceil(wordCount / 250))} min read</span>
         </div>
         <div className="flex items-center gap-3">
-          {readOnly && <span className="text-amber-400/60">Read-only</span>}
-          {!readOnly && dirty && !saving && <span className="text-amber-400/40">Unsaved</span>}
-          {!readOnly && saving && <span className="text-[#00bcd4]/40">Saving...</span>}
-          {!readOnly && lastSaved && !saving && !dirty && (
-            <span className="text-emerald-400/40">Saved {lastSaved.toLocaleTimeString()}</span>
+          {signInRequired && <span className="text-amber-400/60">Sign in to save</span>}
+          {!signInRequired && dirty && !saving && <span className="text-amber-400/40">Unsaved</span>}
+          {!signInRequired && saving && <span className="text-[#00bcd4]/40">Saving...</span>}
+          {!signInRequired && lastSaved && !saving && !dirty && (
+            <span className={saveMode === 'draft' ? 'text-[#00bcd4]/50' : 'text-emerald-400/40'}>
+              {saveMode === 'draft' ? 'Draft saved' : 'Saved'} {lastSaved.toLocaleTimeString()}
+            </span>
           )}
-          {!readOnly && <span className="text-white/15">Ctrl+S</span>}
+          {!signInRequired && <span className="text-white/15">Ctrl+S</span>}
         </div>
       </div>
     </div>

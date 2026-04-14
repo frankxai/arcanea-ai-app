@@ -45,6 +45,22 @@ pnpm --dir apps/web run build
 pnpm --dir apps/web run dev
 ```
 
+## GitHub Publishing (Author Studio)
+
+The Author Studio "Publish to Git" button commits Supabase drafts back to the repo via the GitHub Contents API. Local dev setup:
+
+1. Create a fine-grained GitHub PAT with `Contents: Read and Write` on `frankxai/arcanea-ai-app`
+2. Add to `apps/web/.env.local`:
+   ```
+   GITHUB_TOKEN=ghp_...
+   GITHUB_OWNER=frankxai
+   GITHUB_REPO=arcanea-ai-app
+   GITHUB_BRANCH=main
+   ```
+3. Vercel: set the same vars in project env. Without `GITHUB_TOKEN`, the publish endpoint returns 503 gracefully.
+
+Route: `app/api/author/[bookSlug]/publish/route.ts`. Writes each draft to `book/<bookSlug>/chapters/<chapter>.md`, then clears published drafts from `book_chapter_drafts`.
+
 ## Feature Building
 
 Every feature belongs to one or more of the six layers: Chat/Imagine, Worlds, Feed, OSS, Community, Academy. Features should showcase the framework's power — arcanea.ai is both a product and a reference implementation.

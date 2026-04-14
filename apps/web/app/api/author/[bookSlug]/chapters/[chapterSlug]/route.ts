@@ -1,6 +1,25 @@
-import { readFile, readdir, writeFile, access } from 'fs/promises';
+/**
+ * Author Studio v3 — Chapter read/write with Supabase draft storage
+ *
+ * GET  — Returns the freshest content. If an authenticated user has a draft
+ *        newer than the git file mtime, returns the draft. Otherwise returns
+ *        the published git content. Unauthenticated users always get git.
+ *
+ * POST — Requires auth. Verifies authorship via book_authors (when the book
+ *        is registered in Supabase). UPSERTs the draft — never writes to the
+ *        filesystem (Vercel is ephemeral).
+ */
+
+import { readFile, readdir, access, stat } from 'fs/promises';
 import { join } from 'path';
 import { NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type DB = any;
 
 const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
 
@@ -12,77 +31,223 @@ function findFile(slug: string, files: string[]): string | null {
   return files.find(f => f.replace(/\.md$/, '') === slug) || null;
 }
 
-export async function GET(
-  _req: Request,
-  { params }: { params: Promise<{ bookSlug: string; chapterSlug: string }> }
-) {
-  const { bookSlug, chapterSlug } = await params;
-  const chaptersDir = join(BOOK_ROOT, bookSlug, 'chapters');
+function countWords(content: string): number {
+  return content.split(/\s+/).filter(Boolean).length;
+}
 
-  if (!(await exists(chaptersDir))) {
-    return NextResponse.json({ error: 'Book not found' }, { status: 404 });
-  }
+function extractTitle(content: string, fallback: string): string {
+  const titleMatch = content.match(/^#\s+(.+)$/m);
+  return titleMatch ? titleMatch[1].trim() : fallback;
+}
+
+/**
+ * Resolve the Supabase book row (if the book has been registered in
+ * Open Library). Returns null when the slug only exists in git.
+ */
+async function resolveBook(supabase: DB, slug: string): Promise<{ id: string } | null> {
+  const { data, error } = await supabase
+    .from('books')
+    .select('id')
+    .eq('slug', slug)
+    .maybeSingle();
+  if (error || !data) return null;
+  return data as { id: string };
+}
+
+async function readGitChapter(
+  bookSlug: string,
+  chapterSlug: string,
+): Promise<{ filename: string; content: string; mtime: Date } | null> {
+  const chaptersDir = join(BOOK_ROOT, bookSlug, 'chapters');
+  if (!(await exists(chaptersDir))) return null;
 
   const files = await readdir(chaptersDir);
   const filename = findFile(chapterSlug, files.filter(f => f.endsWith('.md')));
+  if (!filename) return null;
 
-  if (!filename) {
-    return NextResponse.json({ error: 'Chapter not found' }, { status: 404 });
+  const fullPath = join(chaptersDir, filename);
+  const [content, st] = await Promise.all([
+    readFile(fullPath, 'utf-8'),
+    stat(fullPath),
+  ]);
+  return { filename, content, mtime: st.mtime };
+}
+
+// ---------------------------------------------------------------------
+// GET
+// ---------------------------------------------------------------------
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ bookSlug: string; chapterSlug: string }> },
+) {
+  const { bookSlug, chapterSlug } = await params;
+
+  const git = await readGitChapter(bookSlug, chapterSlug);
+
+  // Attempt to read an authenticated user's draft.
+  let draft: {
+    content: string;
+    word_count: number;
+    updated_at: string;
+  } | null = null;
+
+  try {
+    const supabase = (await createClient()) as DB;
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data } = await supabase
+        .from('book_chapter_drafts')
+        .select('content, word_count, updated_at')
+        .eq('book_slug', bookSlug)
+        .eq('chapter_slug', chapterSlug)
+        .eq('author_user_id', user.id)
+        .maybeSingle();
+      if (data) {
+        draft = data as typeof draft;
+      }
+    }
+  } catch (err) {
+    // Supabase unavailable — fall back to git-only
+    console.error('[chapter GET] supabase draft lookup failed:', err);
   }
 
-  const content = await readFile(join(chaptersDir, filename), 'utf-8');
-  const wordCount = content.split(/\s+/).filter(Boolean).length;
-  const titleMatch = content.match(/^#\s+(.+)$/m);
+  // Case 1: draft-only chapter (no git file)
+  if (!git && draft) {
+    return NextResponse.json({
+      slug: chapterSlug,
+      filename: `${chapterSlug}.md`,
+      title: extractTitle(draft.content, chapterSlug),
+      content: draft.content,
+      wordCount: draft.word_count,
+      source: 'draft',
+      draftUpdatedAt: draft.updated_at,
+    });
+  }
 
+  if (!git) {
+    return draft
+      ? NextResponse.json({ error: 'Chapter not found' }, { status: 404 })
+      : NextResponse.json({ error: 'Chapter not found' }, { status: 404 });
+  }
+
+  // Case 2: draft newer than git mtime — return draft
+  if (draft && new Date(draft.updated_at).getTime() > git.mtime.getTime()) {
+    return NextResponse.json({
+      slug: chapterSlug,
+      filename: git.filename,
+      title: extractTitle(draft.content, chapterSlug),
+      content: draft.content,
+      wordCount: draft.word_count,
+      source: 'draft',
+      draftUpdatedAt: draft.updated_at,
+    });
+  }
+
+  // Case 3: git is source of truth (no draft, or draft is stale)
   return NextResponse.json({
     slug: chapterSlug,
-    filename,
-    title: titleMatch ? titleMatch[1].trim() : chapterSlug,
-    content,
-    wordCount,
+    filename: git.filename,
+    title: extractTitle(git.content, chapterSlug),
+    content: git.content,
+    wordCount: countWords(git.content),
+    source: 'published',
+    draftUpdatedAt: draft?.updated_at ?? null,
   });
 }
 
+// ---------------------------------------------------------------------
+// POST — write to Supabase draft (never filesystem)
+// ---------------------------------------------------------------------
 export async function POST(
   req: Request,
-  { params }: { params: Promise<{ bookSlug: string; chapterSlug: string }> }
+  { params }: { params: Promise<{ bookSlug: string; chapterSlug: string }> },
 ) {
-  // Reject writes in production — Vercel filesystem is ephemeral, saves don't persist.
-  // Users must write locally (pnpm dev) or via Claude Code with /arcanea-author.
-  // v2 will introduce Supabase draft storage for persistent online editing.
-  if (process.env.VERCEL === '1' || process.env.NODE_ENV === 'production') {
+  const { bookSlug, chapterSlug } = await params;
+
+  let body: { content?: unknown; contentJson?: unknown };
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+  }
+
+  if (typeof body.content !== 'string') {
     return NextResponse.json(
-      {
-        error: 'Read-only in production',
-        reason: 'Vercel filesystem is ephemeral. Online saves would be lost on next deploy. Use local dev or Claude Code.',
-      },
-      { status: 423 }, // Locked
+      { error: 'content must be a string' },
+      { status: 400 },
     );
   }
+  const content = body.content;
+  const contentJson =
+    body.contentJson && typeof body.contentJson === 'object'
+      ? body.contentJson
+      : null;
 
-  const { bookSlug, chapterSlug } = await params;
-  const chaptersDir = join(BOOK_ROOT, bookSlug, 'chapters');
+  try {
+    const supabase = (await createClient()) as DB;
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 },
+      );
+    }
 
-  if (!(await exists(chaptersDir))) {
-    return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    // Verify authorship when the book is registered in Supabase.
+    // Git-only books (not yet in Open Library) fall through — any authenticated
+    // user can draft. This matches current expected workflow where books
+    // live in git first and get registered later.
+    const book = await resolveBook(supabase, bookSlug);
+    if (book) {
+      const { data: authorship } = await supabase
+        .from('book_authors')
+        .select('role')
+        .eq('book_id', book.id)
+        .eq('user_id', user.id)
+        .maybeSingle();
+      if (!authorship) {
+        return NextResponse.json(
+          { error: 'You are not an author of this book' },
+          { status: 403 },
+        );
+      }
+    }
+
+    const word_count = countWords(content);
+
+    const { error: upsertError } = await supabase
+      .from('book_chapter_drafts')
+      .upsert(
+        {
+          book_slug: bookSlug,
+          chapter_slug: chapterSlug,
+          author_user_id: user.id,
+          content,
+          content_json: contentJson,
+          word_count,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'book_slug,chapter_slug,author_user_id' },
+      );
+
+    if (upsertError) {
+      console.error('[chapter POST] upsert failed:', upsertError);
+      return NextResponse.json(
+        { error: 'Failed to save draft' },
+        { status: 500 },
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      wordCount: word_count,
+      source: 'draft',
+    });
+  } catch (err) {
+    console.error('[chapter POST] error:', err);
+    return NextResponse.json(
+      { error: 'Draft service temporarily unavailable' },
+      { status: 503 },
+    );
   }
-
-  const body = await req.json();
-  const { content } = body;
-
-  if (typeof content !== 'string') {
-    return NextResponse.json({ error: 'content must be a string' }, { status: 400 });
-  }
-
-  const files = await readdir(chaptersDir);
-  const filename = findFile(chapterSlug, files.filter(f => f.endsWith('.md')));
-
-  if (!filename) {
-    return NextResponse.json({ error: 'Chapter not found' }, { status: 404 });
-  }
-
-  await writeFile(join(chaptersDir, filename), content, 'utf-8');
-  const wordCount = content.split(/\s+/).filter(Boolean).length;
-
-  return NextResponse.json({ success: true, wordCount });
 }

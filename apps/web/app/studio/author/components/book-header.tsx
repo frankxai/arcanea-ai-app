@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface BookHeaderProps {
   title: string;
@@ -14,6 +14,24 @@ interface BookHeaderProps {
 export function BookHeader({ title, subtitle, chapterCount, totalWords, currentChapter, bookSlug }: BookHeaderProps) {
   const [reviewing, setReviewing] = useState(false);
   const [reviewResult, setReviewResult] = useState<string | null>(null);
+  const [draftCount, setDraftCount] = useState<number>(0);
+  const [publishing, setPublishing] = useState(false);
+  const [publishResult, setPublishResult] = useState<string | null>(null);
+
+  const loadDraftCount = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/author/${bookSlug}/drafts`, { cache: 'no-store' });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (typeof data?.count === 'number') setDraftCount(data.count);
+    } catch {
+      // Silent — draft count is a nice-to-have, not critical
+    }
+  }, [bookSlug]);
+
+  useEffect(() => {
+    loadDraftCount();
+  }, [loadDraftCount]);
 
   const triggerReview = async () => {
     setReviewing(true);
@@ -32,6 +50,31 @@ export function BookHeader({ title, subtitle, chapterCount, totalWords, currentC
       setReviewResult('Review unavailable');
     } finally {
       setReviewing(false);
+    }
+  };
+
+  const triggerPublish = async () => {
+    if (publishing) return;
+    if (draftCount === 0) {
+      setPublishResult('No drafts to publish');
+      return;
+    }
+    setPublishing(true);
+    setPublishResult(null);
+    try {
+      const res = await fetch(`/api/author/${bookSlug}/publish`, { method: 'POST' });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        const failedNote = data.failed > 0 ? ` (${data.failed} failed)` : '';
+        setPublishResult(`Published ${data.published} chapter${data.published === 1 ? '' : 's'}${failedNote}`);
+        await loadDraftCount();
+      } else {
+        setPublishResult(data.error || 'Publish failed');
+      }
+    } catch {
+      setPublishResult('Publish unavailable');
+    } finally {
+      setPublishing(false);
     }
   };
 
@@ -56,12 +99,29 @@ export function BookHeader({ title, subtitle, chapterCount, totalWords, currentC
           <span className="px-2 py-1 rounded-md bg-emerald-500/10 text-emerald-400">{reviewResult}</span>
         )}
 
+        {publishResult && (
+          <span className="px-2 py-1 rounded-md bg-[#00bcd4]/10 text-[#00bcd4]">{publishResult}</span>
+        )}
+
         <button
           onClick={triggerReview}
           disabled={reviewing}
           className="px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-400 hover:bg-amber-500/20 disabled:opacity-30 transition-all"
         >
           {reviewing ? 'Reviewing...' : 'Guardian Review'}
+        </button>
+
+        <button
+          onClick={triggerPublish}
+          disabled={publishing || draftCount === 0}
+          className="px-2.5 py-1 rounded-md bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-[#00bcd4] hover:bg-[#00bcd4]/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          title={draftCount === 0 ? 'No drafts to publish' : `Publish ${draftCount} draft${draftCount === 1 ? '' : 's'} to git`}
+        >
+          {publishing
+            ? 'Publishing...'
+            : draftCount > 0
+              ? `Publish (${draftCount} draft${draftCount === 1 ? '' : 's'})`
+              : 'Publish to Git'}
         </button>
 
         <a
