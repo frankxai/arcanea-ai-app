@@ -21,6 +21,7 @@ import {
   type ContentType,
 } from '@/lib/chat/suggestion-engine';
 import { ArcaneanMarkSmall } from '@/components/brand/arcanea-mark';
+import Image from 'next/image';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -481,8 +482,8 @@ export const MessageBubble = React.memo(function MessageBubble({
             {luminorAvatar}
           </div>
         ) : (
-          <div className="w-8 h-8 rounded-full bg-[#00bcd4]/5 flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_8px_rgba(0,188,212,0.12)]">
-            <ArcaneanMarkSmall />
+          <div className="w-8 h-8 rounded-full bg-[#0a0e16] flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_8px_rgba(127,255,212,0.12)] overflow-hidden">
+            <Image src="/images/mascot/arcanea-primary.png" alt="Arcanea" width={32} height={32} className="object-contain" />
           </div>
         )}
 

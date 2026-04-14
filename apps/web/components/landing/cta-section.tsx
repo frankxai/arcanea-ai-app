@@ -124,13 +124,13 @@ export function CTASection() {
                     );
                   })}
 
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-2xl overflow-hidden ring-1 ring-white/[0.15] shadow-[0_0_30px_rgba(0,188,212,0.2),0_0_60px_rgba(13,71,161,0.12)]">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 flex items-center justify-center">
                     <Image
-                      src={navLogo}
+                      src="/images/mascot/arcanea-creating.png"
                       alt="Arcanea"
-                      width={80}
-                      height={80}
-                      className="w-full h-full object-cover"
+                      width={96}
+                      height={96}
+                      className="object-contain drop-shadow-[0_0_20px_rgba(127,255,212,0.25)] animate-[mascot-float_3s_ease-in-out_infinite]"
                     />
                   </div>
                 </div>
