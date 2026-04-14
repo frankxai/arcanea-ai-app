@@ -11,6 +11,7 @@ import { CosmicBackground } from "@/lib/arcanea-ui/CosmicBackground";
 import { GlobalGlowTrackerLazy } from "@/components/ui/global-glow-tracker-lazy";
 import { Toaster } from "@/components/ui/sonner";
 import { LuminaBubble } from "@/components/lumina/lumina-bubble";
+import { CommandPalette } from "@/components/command-palette";
 
 
 function CosmicBackgroundFallback() {
@@ -190,6 +191,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Footer />
           </div>
           <LuminaBubble />
+          <CommandPalette />
           <Toaster />
           <SpeedInsights />
           <Analytics />
