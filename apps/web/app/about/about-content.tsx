@@ -36,6 +36,22 @@ export function AboutContent() {
         </div>
 
         <div className="max-w-5xl mx-auto px-6 text-center">
+          {/* Mascot — creating variant, the soul of Arcanea */}
+          <m.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.05, duration: 0.6 }}
+            className="flex justify-center mb-6"
+          >
+            <img
+              src="/images/mascot/arcanea-creating.png"
+              alt="Arcanea"
+              width={200}
+              height={200}
+              className="object-contain drop-shadow-[0_0_40px_rgba(127,255,212,0.2)] animate-[mascot-float_3s_ease-in-out_infinite]"
+            />
+          </m.div>
+
           <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

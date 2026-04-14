@@ -197,6 +197,17 @@ export default function PricingPage() {
       <main className="max-w-7xl mx-auto px-6">
         {/* ─── Hero ─── */}
         <section className="pt-20 pb-16 text-center">
+          {/* Mascot — crossed arms, supreme confidence for "keep your keys" */}
+          <div className="flex justify-center mb-8">
+            <img
+              src="/images/mascot/arcanea-crossed-arms.png"
+              alt="Arcanea"
+              width={160}
+              height={160}
+              className="object-contain drop-shadow-[0_0_30px_rgba(127,255,212,0.2)] animate-[mascot-float_3s_ease-in-out_infinite]"
+            />
+          </div>
+
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#7fffd4]/25 bg-[#7fffd4]/8 mb-8">
             <GitBranch size={14} weight="bold" style={{ color: "#7fffd4" }} />
             <span className="text-sm text-[#7fffd4] font-mono tracking-wider">
