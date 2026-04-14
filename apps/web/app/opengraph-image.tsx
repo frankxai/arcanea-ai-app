@@ -8,7 +8,7 @@ export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 export default function OGImage() {
-  const imageBuffer = readFileSync(join(process.cwd(), 'public/images/mascot/arcanea-primary.png'))
+  const imageBuffer = readFileSync(join(process.cwd(), 'assets/brand/arcanea-mascot-primary.png'))
   const base64 = imageBuffer.toString('base64')
   const markSrc = `data:image/png;base64,${base64}`
 
