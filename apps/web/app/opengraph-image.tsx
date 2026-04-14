@@ -8,9 +8,9 @@ export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 export default function OGImage() {
-  const imageBuffer = readFileSync(join(process.cwd(), 'assets/brand/arcanea-mark.jpg'))
+  const imageBuffer = readFileSync(join(process.cwd(), 'public/images/mascot/arcanea-primary.png'))
   const base64 = imageBuffer.toString('base64')
-  const markSrc = `data:image/jpeg;base64,${base64}`
+  const markSrc = `data:image/png;base64,${base64}`
 
   return new ImageResponse(
     (
@@ -61,22 +61,19 @@ export default function OGImage() {
           }}
         />
 
-        {/* Brand Mark */}
+        {/* Mascot — the face of Arcanea */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: 120,
-            height: 120,
-            borderRadius: 28,
-            overflow: 'hidden',
-            border: '1px solid rgba(0,188,212,0.25)',
-            boxShadow: '0 8px 40px rgba(0,188,212,0.15), 0 2px 16px rgba(0,0,0,0.4)',
-            marginBottom: 44,
+            width: 220,
+            height: 220,
+            marginBottom: 20,
+            filter: 'drop-shadow(0 8px 40px rgba(127,255,212,0.25))',
           }}
         >
-          <img src={markSrc} width={120} height={120} alt="Arcanea" />
+          <img src={markSrc} width={220} height={220} alt="Arcanea" />
         </div>
 
         {/* Title */}
