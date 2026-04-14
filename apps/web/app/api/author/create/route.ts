@@ -14,6 +14,16 @@ async function exists(p: string) {
 }
 
 export async function POST(req: Request) {
+  if (process.env.VERCEL === '1' || process.env.NODE_ENV === 'production') {
+    return NextResponse.json(
+      {
+        error: 'Read-only in production',
+        reason: 'Book creation requires a persistent filesystem. Use local dev or Claude Code.',
+      },
+      { status: 423 },
+    );
+  }
+
   const body = await req.json();
   const { title, slug, genre, description } = body as {
     title?: string;

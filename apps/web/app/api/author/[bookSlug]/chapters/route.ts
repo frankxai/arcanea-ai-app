@@ -47,6 +47,16 @@ export async function POST(
   req: Request,
   { params }: { params: Promise<{ bookSlug: string }> }
 ) {
+  if (process.env.VERCEL === '1' || process.env.NODE_ENV === 'production') {
+    return NextResponse.json(
+      {
+        error: 'Read-only in production',
+        reason: 'Chapter creation requires a persistent filesystem. Use local dev or Claude Code.',
+      },
+      { status: 423 },
+    );
+  }
+
   const { bookSlug } = await params;
   const chaptersDir = join(BOOK_ROOT, bookSlug, 'chapters');
 

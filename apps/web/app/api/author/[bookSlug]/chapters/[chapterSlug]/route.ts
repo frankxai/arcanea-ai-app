@@ -47,6 +47,19 @@ export async function POST(
   req: Request,
   { params }: { params: Promise<{ bookSlug: string; chapterSlug: string }> }
 ) {
+  // Reject writes in production — Vercel filesystem is ephemeral, saves don't persist.
+  // Users must write locally (pnpm dev) or via Claude Code with /arcanea-author.
+  // v2 will introduce Supabase draft storage for persistent online editing.
+  if (process.env.VERCEL === '1' || process.env.NODE_ENV === 'production') {
+    return NextResponse.json(
+      {
+        error: 'Read-only in production',
+        reason: 'Vercel filesystem is ephemeral. Online saves would be lost on next deploy. Use local dev or Claude Code.',
+      },
+      { status: 423 }, // Locked
+    );
+  }
+
   const { bookSlug, chapterSlug } = await params;
   const chaptersDir = join(BOOK_ROOT, bookSlug, 'chapters');
 
