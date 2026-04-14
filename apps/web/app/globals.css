@@ -1020,6 +1020,11 @@
   50% { transform: scale(1.03); opacity: 1; }
 }
 
+@keyframes mascot-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
 @keyframes tabSlideIn {
   from { opacity: 0; transform: scaleX(0.92) scaleY(0.95); }
   to { opacity: 1; transform: scaleX(1) scaleY(1); }

@@ -17,7 +17,8 @@
 import { useState, useEffect, useRef, useCallback, KeyboardEvent } from 'react';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { ArcaneanMark } from '@/components/brand/arcanea-mark';
+import { ArcaneMascotAvatar } from '@/components/brand/arcanea-mascot';
+import Image from 'next/image';
 
 interface Message {
   id: string;
@@ -178,10 +179,10 @@ export function LuminaBubble() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-[#0a0e16]/80 shadow-[0_0_40px_rgba(0,188,212,0.15)] backdrop-blur-xl transition-all hover:scale-110 hover:border-[#00bcd4]/40 hover:shadow-[0_0_60px_rgba(0,188,212,0.3)]"
+            className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-[#0a0e16]/80 shadow-[0_0_40px_rgba(127,255,212,0.15)] backdrop-blur-xl transition-all hover:scale-110 hover:border-[#7fffd4]/30 hover:shadow-[0_0_60px_rgba(127,255,212,0.25)] overflow-hidden"
             aria-label="Open Arcanea (Cmd+K)"
           >
-            <ArcaneanMark size={28} glow animate="breathe" />
+            <Image src="/images/mascot/arcanea-primary.png" alt="Arcanea" width={56} height={56} className="object-contain drop-shadow-[0_0_12px_rgba(127,255,212,0.3)]" />
           </m.button>
         )}
       </AnimatePresence>
@@ -200,7 +201,7 @@ export function LuminaBubble() {
             {/* Header */}
             <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
               <div className="flex items-center gap-3">
-                <ArcaneanMark size={24} glow />
+                <Image src="/images/mascot/arcanea-primary.png" alt="Arcanea" width={32} height={32} className="rounded-full object-contain" />
                 <div>
                   <div className="font-display text-sm font-semibold text-white/90">
                     Arcanea

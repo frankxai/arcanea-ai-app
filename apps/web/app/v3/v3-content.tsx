@@ -178,13 +178,13 @@ function HeroPortal() {
             className="mb-10 md:mb-14"
           >
             <div className="relative">
-              <div className="absolute inset-[-8px] rounded-2xl bg-[radial-gradient(circle,rgba(0,188,212,0.15)_0%,rgba(255,215,0,0.06)_40%,transparent_70%)] blur-sm animate-[breathe_3s_ease-in-out_infinite]" />
+              <div className="absolute inset-[-12px] rounded-full bg-[radial-gradient(circle,rgba(127,255,212,0.12)_0%,rgba(255,215,0,0.04)_50%,transparent_70%)] blur-md animate-[breathe_3s_ease-in-out_infinite]" />
               <Image
-                src={navLogo}
+                src="/images/mascot/arcanea-primary.png"
                 alt="Arcanea"
-                width={64}
-                height={64}
-                className="relative rounded-xl ring-1 ring-white/[0.1] shadow-[0_4px_24px_rgba(0,188,212,0.2),0_8px_40px_rgba(0,0,0,0.4)]"
+                width={88}
+                height={88}
+                className="relative drop-shadow-[0_4px_24px_rgba(127,255,212,0.2)] animate-[mascot-float_3s_ease-in-out_infinite]"
                 priority
               />
             </div>
