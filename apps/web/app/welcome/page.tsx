@@ -2,6 +2,7 @@
 
 import { MotionProvider, m } from '@/lib/motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { PhSparkle, PhArrowRight } from '@/lib/phosphor-icons';
 
 export default function WelcomePage() {
@@ -39,15 +40,23 @@ export default function WelcomePage() {
         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
         className="text-center max-w-2xl mx-auto relative z-10"
       >
-        {/* Icon */}
+        {/* Mascot — welcoming variant */}
         <m.div
-          initial={{ scale: 0, rotate: -180 }}
-          animate={{ scale: 1, rotate: 0 }}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
           className="mb-8"
         >
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-[#ffd700]/20 to-[#00bcd4]/20 backdrop-blur-sm border border-[#ffd700]/30">
-            <PhSparkle className="w-10 h-10 text-[#ffd700]" />
+          <div className="inline-flex items-center justify-center">
+            <Image
+              src="/images/mascot/arcanea-welcoming.png"
+              alt="Arcanea welcomes you"
+              width={180}
+              height={180}
+              className="object-contain drop-shadow-[0_0_40px_rgba(127,255,212,0.2)] animate-[mascot-float_3s_ease-in-out_infinite]"
+              priority
+            />
+            <PhSparkle className="hidden w-10 h-10 text-[#ffd700]" />
           </div>
         </m.div>
 
