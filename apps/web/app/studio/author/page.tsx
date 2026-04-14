@@ -295,20 +295,61 @@ export default async function AuthorStudioPage() {
         </div>
       </section>
 
-      {/* Placeholder chambers */}
+      {/* Writing Workflow */}
+      <section className="space-y-4">
+        <h2 className="font-display text-sm text-white/60 uppercase tracking-wider">
+          Writing Workflow
+        </h2>
+        <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-6 sm:p-8">
+          <div className="grid sm:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-7 h-7 rounded-lg bg-[#00bcd4]/10 border border-[#00bcd4]/20 flex items-center justify-center text-xs text-[#00bcd4] font-mono">1</span>
+                <h3 className="font-display text-sm text-white/80">Draft in Claude Code</h3>
+              </div>
+              <p className="font-sans text-xs text-white/35 leading-relaxed">
+                Use <code className="text-[#00bcd4]/50 font-mono text-[10px]">/arcanea-author</code> for deep writing — full chapters, world-building, character development with parallel agent swarms.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-7 h-7 rounded-lg bg-[#ffd700]/10 border border-[#ffd700]/20 flex items-center justify-center text-xs text-[#ffd700] font-mono">2</span>
+                <h3 className="font-display text-sm text-white/80">Refine in Author Studio</h3>
+              </div>
+              <p className="font-sans text-xs text-white/35 leading-relaxed">
+                Open any chapter above. Edit with the Notion-style rich editor. AI companion gives feedback that knows your characters and world. Mark content as curated.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-xs text-emerald-400 font-mono">3</span>
+                <h3 className="font-display text-sm text-white/80">Publish to Web</h3>
+              </div>
+              <p className="font-sans text-xs text-white/35 leading-relaxed">
+                Push changes to deploy. Your book goes live at <code className="text-emerald-400/50 font-mono text-[10px]">/books/drafts/[slug]</code> with cover art, Guardian reviews, and reader ratings.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
       <section className="grid sm:grid-cols-3 gap-4">
         {[
           {
-            title: 'Agent Team',
-            description: 'AI writing assistants that know your canon, voice, and style.',
+            title: 'AI Companion',
+            description: 'Canon-aware chat that reads your characters, world bible, and current chapter. BYOK for Sonnet/Opus.',
+            status: 'live',
+          },
+          {
+            title: 'Guardian Review',
+            description: 'One-click quality gate: 5 specialized agents score prose, voice, continuity, pacing, and canon alignment.',
+            status: 'live',
           },
           {
             title: 'Publishing Pipeline',
-            description: 'Export to EPUB, PDF, and publish to multiple platforms.',
-          },
-          {
-            title: 'Analytics',
-            description: 'Word counts, writing streaks, reader engagement metrics.',
+            description: 'Export to EPUB, PDF, Kindle. Automatic deployment to arcanea.ai with cover art and reader reviews.',
+            status: 'coming-soon',
           },
         ].map((chamber) => (
           <div
@@ -321,8 +362,12 @@ export default async function AuthorStudioPage() {
             <p className="font-sans text-xs text-white/30 leading-relaxed">
               {chamber.description}
             </p>
-            <span className="inline-block px-2 py-0.5 rounded text-[10px] font-sans text-white/20 bg-white/[0.02] border border-white/[0.04]">
-              Coming Soon
+            <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-sans border ${
+              chamber.status === 'live'
+                ? 'text-emerald-400/60 bg-emerald-500/[0.06] border-emerald-500/10'
+                : 'text-white/20 bg-white/[0.02] border-white/[0.04]'
+            }`}>
+              {chamber.status === 'live' ? 'Live' : 'Coming Soon'}
             </span>
           </div>
         ))}
