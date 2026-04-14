@@ -25,37 +25,14 @@ async function loadBookContext(bookSlug: string, currentChapter?: string): Promi
   const bookDir = join(BOOK_ROOT, bookSlug);
   const parts: string[] = [];
 
-  // Load character sheets
-  const charsDir = join(bookDir, 'characters');
-  if (await exists(charsDir)) {
-    const files = await readdir(charsDir);
-    for (const f of files.filter(f => f.endsWith('.md')).slice(0, 6)) {
-      const content = await readFile(join(charsDir, f), 'utf-8');
-      parts.push(`## Character: ${f.replace('.md', '')}\n${content.slice(0, 2000)}`);
-    }
+  // Load CANON (trusted, human-curated) — only if it exists
+  const canonPath = join(process.cwd(), '..', '..', '.arcanea', 'lore', 'CANON_LOCKED.md');
+  if (await exists(canonPath)) {
+    const content = await readFile(canonPath, 'utf-8');
+    parts.push(`## CANON (Trusted — Human-Curated)\n${content.slice(0, 3000)}`);
   }
 
-  // Load world bible (truncated)
-  const worldDir = join(bookDir, 'worldbuilding');
-  if (await exists(worldDir)) {
-    const files = await readdir(worldDir);
-    for (const f of files.filter(f => f.endsWith('.md')).slice(0, 3)) {
-      const content = await readFile(join(worldDir, f), 'utf-8');
-      parts.push(`## World: ${f.replace('.md', '')}\n${content.slice(0, 3000)}`);
-    }
-  }
-
-  // Load outline/blueprint
-  const outlineDir = join(bookDir, 'outline');
-  if (await exists(outlineDir)) {
-    const files = await readdir(outlineDir);
-    for (const f of files.filter(f => f.endsWith('.md')).slice(0, 1)) {
-      const content = await readFile(join(outlineDir, f), 'utf-8');
-      parts.push(`## Story Blueprint\n${content.slice(0, 4000)}`);
-    }
-  }
-
-  // Load current chapter
+  // Load current chapter (the actual text being edited — always relevant)
   if (currentChapter) {
     const chaptersDir = join(bookDir, 'chapters');
     if (await exists(chaptersDir)) {
@@ -63,10 +40,26 @@ async function loadBookContext(bookSlug: string, currentChapter?: string): Promi
       const match = files.find(f => f.replace(/\.md$/, '') === currentChapter);
       if (match) {
         const content = await readFile(join(chaptersDir, match), 'utf-8');
-        parts.push(`## Current Chapter\n${content.slice(0, 8000)}`);
+        parts.push(`## Current Chapter (being edited)\n${content.slice(0, 8000)}`);
       }
     }
   }
+
+  // Load outline — draft, for reference only
+  const outlineDir = join(bookDir, 'outline');
+  if (await exists(outlineDir)) {
+    const files = await readdir(outlineDir);
+    for (const f of files.filter(f => f.endsWith('.md')).slice(0, 1)) {
+      const content = await readFile(join(outlineDir, f), 'utf-8');
+      parts.push(`## Story Blueprint (DRAFT — author's working notes, not yet reviewed)\n${content.slice(0, 3000)}`);
+    }
+  }
+
+  // NOTE: Character sheets and world bible are NOT loaded as context.
+  // They are AI-generated drafts that have not been curated by the author.
+  // The author must review and approve them before they become trusted context.
+  // When the author marks them as curated (book.yaml curated_context: true),
+  // they will be loaded here.
 
   return parts.join('\n\n---\n\n');
 }
@@ -88,9 +81,15 @@ const AUTHOR_SYSTEM_PROMPT = `You are the Arcanea Author Companion — an AI wri
 - Character voice consistency checking
 - World-building consistency with the world bible
 
+## Context Trust
+- CANON sections are human-curated truth — treat as authoritative
+- DRAFT sections are working notes that may change — reference them but flag uncertainty
+- Say "based on your draft outline" not "according to the story" when citing draft material
+- The current chapter text is what the author is actively editing — focus feedback here
+- Character sheets and world bible are NOT loaded until the author curates them
+- If asked about characters or world details not in your context, say honestly that those notes haven't been reviewed yet
+
 ## Rules
-- You know the characters, world, and plot because they are provided as context
-- Reference specific details from the character sheets and world bible
 - When suggesting prose changes, show the original and your revision
 - Be specific: "An's voice feels too formal here — she's brisk and self-mocking" not "the dialogue could be improved"
 - If asked about something not in your context, say so honestly
