@@ -138,11 +138,11 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@notionhq/client": "^2.2.0"
+    "@notionhq/client": "^5.18.0"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",
     "better-sqlite3": "^12.8.0",
-    "typescript": "^5.7.0"
+    "typescript": "^6.0.2"
   }
 }
