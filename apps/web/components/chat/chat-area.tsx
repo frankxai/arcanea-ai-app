@@ -317,9 +317,15 @@ export function ChatArea({
             </div>
 
             <div className="relative max-w-[480px] w-full text-center">
-              {/* Arcanea icon */}
-              <div className="mb-6 mx-auto animate-empty-fade-in">
-                <ArcaneanMarkGlow animate="breathe" />
+              {/* Arcanea mascot — primary, floating */}
+              <div className="mb-4 mx-auto animate-empty-fade-in flex justify-center">
+                <img
+                  src="/images/mascot/arcanea-primary.png"
+                  alt="Arcanea"
+                  width={140}
+                  height={140}
+                  className="object-contain drop-shadow-[0_0_30px_rgba(127,255,212,0.2)] animate-[mascot-float_3s_ease-in-out_infinite]"
+                />
               </div>
 
               {/* Time-aware greeting — gradient text */}
