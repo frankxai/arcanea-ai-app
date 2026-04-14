@@ -41,10 +41,11 @@ const BLUEPRINTS: Blueprint[] = [
     desc: 'BYOK chat with provider routing, streaming, rate limiting, and 12 agent personas. Swap models without code changes.',
     audience: 'AI startups',
     loc: '1,700',
-    files: ['app/chat/page.tsx', 'app/api/ai/chat/route.ts', 'lib/ai/router.ts'],
+    files: ['app/chat/page.tsx', 'app/api/ai/chat/route.ts', 'lib/ai/luminors.ts'],
     stack: ['Next.js 16', 'Vercel AI SDK', 'OpenRouter', 'Supabase'],
-    github: 'https://github.com/frankxai/arcanea-ai-app/tree/main/apps/web/app/chat',
+    github: 'https://github.com/frankxai/arcanea-chat-template',
     demo: '/chat',
+    deploy: 'https://vercel.com/new/clone?repository-url=https://github.com/frankxai/arcanea-chat-template',
     color: '#a78bfa',
   },
   {
