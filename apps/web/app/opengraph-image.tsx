@@ -1,13 +1,18 @@
 import { ImageResponse } from 'next/og'
+import { readFileSync } from 'fs'
+import { join } from 'path'
 
-export const dynamic = 'force-dynamic'
 export const alt = 'Arcanea — Living Intelligence for Creators'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 export default function OGImage() {
-  // Use Vercel-hosted image URL — guaranteed available at deploy time
-  const markSrc = 'https://www.arcanea.ai/images/mascot/arcanea-mascot-primary.png'
+  // readFileSync works in Node.js runtime (not edge). Public dir is served
+  // from process.cwd()/public at build + runtime on Vercel.
+  const imageBuffer = readFileSync(
+    join(process.cwd(), 'public', 'images', 'mascot', 'arcanea-primary.png')
+  )
+  const markSrc = `data:image/png;base64,${imageBuffer.toString('base64')}`
 
   return new ImageResponse(
     (
