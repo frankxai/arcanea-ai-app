@@ -86,6 +86,18 @@ const BLUEPRINTS: Blueprint[] = [
     color: '#00bcd4',
   },
   {
+    id: 'dashboard',
+    name: 'Cosmic Dashboard',
+    desc: 'Cosmic analytics dashboard with 6 liquid glass widgets, Recharts visualizations, and Luminor-themed activity feed. Mock data, zero env vars.',
+    audience: 'Product builders · Founders',
+    loc: '1,400',
+    files: ['app/page.tsx', 'lib/mock-data.ts', 'components/dashboard/'],
+    stack: ['Next.js 16', 'Recharts', 'Framer Motion', 'Tailwind'],
+    github: 'https://github.com/frankxai/arcanea-dashboard-template',
+    deploy: 'https://vercel.com/new/clone?repository-url=https://github.com/frankxai/arcanea-dashboard-template',
+    color: '#a78bfa',
+  },
+  {
     id: 'vault',
     name: 'Starlight Vault',
     desc: '6 semantic vaults with confidence scoring, Guardian routing, Mem0 adapter, and WebGL constellation visualization.',
