@@ -8,10 +8,10 @@ export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 export default function OGImage() {
-  // readFileSync works in Node.js runtime (not edge). Public dir is served
-  // from process.cwd()/public at build + runtime on Vercel.
+  // Use assets/ not public/ — Next.js OG functions bundle files relative
+  // to the route, and public/ is NOT auto-included in the function trace.
   const imageBuffer = readFileSync(
-    join(process.cwd(), 'public', 'images', 'mascot', 'arcanea-primary.png')
+    join(process.cwd(), 'assets', 'brand', 'arcanea-mascot-primary.png')
   )
   const markSrc = `data:image/png;base64,${imageBuffer.toString('base64')}`
 
@@ -128,3 +128,7 @@ export default function OGImage() {
           <span>Free to Start</span>
         </div>
       </div>
+    ),
+    { ...size }
+  )
+}
