@@ -3,15 +3,17 @@
 **Last updated:** 2026-04-15
 **Status:** Ready-to-run. Copy-paste each block.
 
-## TL;DR
+## TL;DR — 5 LIVE REPOS (all with LICENSE + CONTRIBUTING + OG images)
 
-You have 4 free MIT templates live on GitHub:
-- `arcanea-chat-template` — 12 Luminors + real BYOK, build ✓
-- `cosmic-landing-template` — 12 motion primitives, build ✓
-- `arcanea-dashboard-template` — cosmic analytics, 6 widgets, build ✓
-- `arcanea-mcp-starter` (building while you're on the go — check after)
+| Repo | What | License |
+|------|------|---------|
+| [`arcanea-templates`](https://github.com/frankxai/arcanea-templates) | **META-AGGREGATOR** — single entry point, screenshots, deploy buttons for all | MIT |
+| [`arcanea-chat-template`](https://github.com/frankxai/arcanea-chat-template) | 12 Luminors + real BYOK + OG image, build ✓ | Apache 2.0 (Vercel fork) |
+| [`cosmic-landing-template`](https://github.com/frankxai/cosmic-landing-template) | 12 motion primitives + OG image, build ✓ | MIT |
+| [`arcanea-dashboard-template`](https://github.com/frankxai/arcanea-dashboard-template) | 6 liquid glass widgets, Recharts, build ✓ | MIT |
+| [`arcanea-mcp-starter`](https://github.com/frankxai/arcanea-mcp-starter) | **NEW** — MCP SDK 1.29, 3 tools, Claude Desktop config, build ✓ | MIT |
 
-arcanea.ai/templates already shows 8 blueprints. All pushed. All MIT.
+`arcanea.ai/templates` now shows 9 blueprints. All pushed. All discoverable via GitHub topics.
 
 ## The 3 Things Only You Can Do
 
@@ -29,9 +31,14 @@ vercel --prod
 cd C:\Users\frank\arcanea-dashboard-template
 vercel link
 vercel --prod
+
+# MCP starter — not a web app, skip Vercel. Publish to npm later:
+cd C:\Users\frank\arcanea-mcp-starter
+npm login           # if not already
+npm publish --access public
 ```
 
-**Give me the 3 URLs** and I'll browser-test BYOK + Luminor selector + dashboard widgets end-to-end and take screenshots.
+**Give me the 3 Vercel URLs** and I'll browser-test BYOK + Luminor selector + dashboard widgets end-to-end and take screenshots.
 
 ### 2. Create the GitHub Projects board (2 min)
 
