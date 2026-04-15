@@ -132,6 +132,18 @@ const BLUEPRINTS: Blueprint[] = [
     demo: '/starlight-intelligence',
     color: '#f97316',
   },
+  {
+    id: 'mcp-starter',
+    name: 'MCP Starter',
+    desc: 'Minimal MCP server scaffold — SDK 1.29, 3 example tools, Zod validation, Claude Desktop config. Fork to build your own tools.',
+    audience: 'Agent builders · Tool authors',
+    loc: '500',
+    files: ['src/index.ts', 'src/tools/', 'README.md'],
+    stack: ['TypeScript', 'MCP SDK 1.29', 'Zod', 'stdio'],
+    github: 'https://github.com/frankxai/arcanea-mcp-starter',
+    deploy: 'https://github.com/frankxai/arcanea-mcp-starter/generate',
+    color: '#06b6d4',
+  },
 ];
 
 // ── Use Cases ──────────────────────────────────────────────────────────────
