@@ -1,8 +1,8 @@
 /**
  * Supabase Middleware for Next.js
  *
- * Handles auth session refresh on every request
- * Should be used in proxy.ts at the root of your app (Next.js 16+ convention)
+ * Handles auth session refresh only on routes that require it.
+ * Public pages bypass Supabase entirely for instant response.
  */
 
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
@@ -24,10 +24,43 @@ function matchesPrefix(pathname: string, prefixes: string[] = []) {
   );
 }
 
+/** Wraps getUser() with a timeout so slow Supabase responses degrade gracefully. */
+async function getUserWithTimeout(
+  supabase: ReturnType<typeof createServerClient>,
+  timeoutMs = 4500
+) {
+  try {
+    const result = await Promise.race([
+      supabase.auth.getUser(),
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('getUser timeout')), timeoutMs)
+      ),
+    ]);
+    return result.data.user;
+  } catch {
+    return null;
+  }
+}
+
 export async function updateSession(
   request: NextRequest,
   options: UpdateSessionOptions = {}
 ) {
+  // --- Route classification first (no network calls) ---
+  const pathname = request.nextUrl.pathname;
+  const isProtectedRoute = matchesPrefix(pathname, options.protectedPrefixes);
+  const isAuthRoute = matchesPrefix(pathname, options.authPrefixes);
+  const isApiRoute = pathname.startsWith('/api/');
+  const isPublicApi = isApiRoute && matchesPrefix(pathname, options.publicApiPrefixes);
+
+  // If the route doesn't need auth, skip Supabase entirely
+  const needsAuth = isProtectedRoute || isAuthRoute || (isApiRoute && !isPublicApi);
+
+  if (!needsAuth) {
+    return NextResponse.next({ request: { headers: request.headers } });
+  }
+
+  // --- Auth-required routes: create Supabase client ---
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -91,55 +124,18 @@ export async function updateSession(
     }
   );
 
-  const pathname = request.nextUrl.pathname;
+  // Refresh session with timeout — degrades to unauthenticated on failure
+  const user = await getUserWithTimeout(supabase);
+
   const loginPath = options.loginPath ?? '/auth/login';
   const authenticatedRedirectPath = options.authenticatedRedirectPath ?? '/chat';
-  const isProtectedRoute = matchesPrefix(pathname, options.protectedPrefixes);
-  const isAuthRoute = matchesPrefix(pathname, options.authPrefixes);
-  const isApiRoute = pathname.startsWith('/api/');
-
-  // Fast path: public pages that don't need auth skip the Supabase call entirely.
-  // This prevents 504s when Supabase is slow — public pages always load.
-  const needsAuth = isProtectedRoute
-    || isAuthRoute
-    || (isApiRoute && !matchesPrefix(pathname, options.publicApiPrefixes));
-
-  if (!needsAuth) {
-    // Still refresh session opportunistically if cookies exist, but with a timeout
-    // so public pages never block on Supabase.
-    const hasAuthCookie = request.cookies.getAll().some(c => c.name.startsWith('sb-'));
-    if (hasAuthCookie) {
-      try {
-        await Promise.race([
-          supabase.auth.getUser(),
-          new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000)),
-        ]);
-      } catch {
-        // Supabase slow or down — public page still loads fine
-      }
-    }
-    return response;
-  }
-
-  // Auth-required routes: fetch user (with timeout to prevent infinite hang)
-  let user = null;
-  try {
-    const result = await Promise.race([
-      supabase.auth.getUser(),
-      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('auth_timeout')), 5000)),
-    ]);
-    user = result.data?.user ?? null;
-  } catch {
-    // Supabase unreachable — treat as unauthenticated
-    user = null;
-  }
 
   // API route auth: block unauthenticated access to protected API routes
   if (isApiRoute && !user) {
     const isProtectedApi = matchesPrefix(pathname, options.protectedApiPrefixes);
 
     // If explicitly protected, or if it's an API route not explicitly public → block
-    if (isProtectedApi || !matchesPrefix(pathname, options.publicApiPrefixes)) {
+    if (isProtectedApi || !isPublicApi) {
       return NextResponse.json(
         { success: false, error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
         { status: 401 }
