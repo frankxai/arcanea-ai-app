@@ -44,6 +44,29 @@ ALWAYS run build after code changes. ALWAYS verify before committing. Node 20.x 
 
 NEVER hardcode secrets. NEVER commit .env. Validate input at boundaries. Sanitize file paths.
 
+## Resource Management (16GB machine — ENFORCED)
+
+- This machine has 16GB RAM. Every agent must respect this.
+- NEVER run `pnpm dev` unless actively testing UI in browser. Use `pnpm build` (one-shot) to verify. Use Vercel preview deploys for visual checks.
+- NEVER leave dev servers running after work is done. Kill them.
+- MAX 4-5 concurrent Claude Code instances. Each instance + MCP servers = ~650MB.
+- Before spawning agents, check RAM: `cat /proc/meminfo | grep MemFree`. If < 2GB free, do NOT spawn more agents — work sequentially instead.
+- If fork() fails or "Resource temporarily unavailable" appears, RAM is critical. Stop spawning, recommend closing idle instances.
+- Prefer `model: haiku` for background agents to reduce memory pressure.
+- NEVER run `pnpm dev` and `pnpm build` simultaneously — they compete for RAM.
+- WSL vmmem takes ~1GB. If not using WSL features, avoid WSL-dependent workflows.
+
+## Cached-Belief Validation Protocol
+
+Any claim about CURRENT state — versions, ship status, file paths, architecture, deployment, quantities, dates of events older than this turn — requires same-turn verification (Read/Bash) OR explicit prefix: "unverified, from [memory|prior-turn|claude.md] (date X):".
+
+Memory is authoritative ONLY for: intent, strategy, preferences, decision history, rationale.
+Memory is NEVER authoritative for: current state of code, deploys, or systems.
+
+Vague status claims ("X is mature", "Y is shipped") without provenance are violations. Either verify or disclaim.
+
+Latency permission: 3-5 seconds of disk reads beats instant stale answers. Correct-slow over confident-wrong.
+
 ## Concurrency
 
 All independent operations MUST be concurrent in a single message. Spawn ALL agents in ONE message. Batch ALL file ops in ONE message. After spawning, STOP and wait.
