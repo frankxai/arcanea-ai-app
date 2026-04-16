@@ -17,6 +17,13 @@ import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal } from "@/components/motion/reveal";
 import { NumberTicker } from "@/components/motion/number-ticker";
 import { Marquee } from "@/components/motion/marquee";
+import { FeatureCard, FeatureIcon } from "@/components/premium/feature-card";
+import { SectionShell, SectionHeader } from "@/components/premium/section-shell";
+import { WorldGraphCanvas } from "@/components/premium/world-graph-canvas";
+import { ComparisonMatrix } from "@/components/premium/comparison-matrix";
+import { SovereigntyPillars } from "@/components/premium/sovereignty-pillars";
+import { PersonasShowcase } from "@/components/premium/personas-showcase";
+import { LuminorTeamPreview } from "@/components/premium/luminor-team-preview";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -24,12 +31,16 @@ import { Marquee } from "@/components/motion/marquee";
 
 const FAQ_ITEMS = [
   {
-    q: "What makes Arcanea different from other AI tools?",
-    a: "Sixteen Luminors — specialized creative minds trained on 190K words of original philosophy, not generic AI. A mythology-driven intelligence layer, 17 knowledge collections, and a 10-gate mastery framework. You pick the Luminor that fits your project.",
+    q: "What is a Luminor?",
+    a: "A Luminor is a specialist AI partner — think \"GPT tuned for one craft.\" We have 16 of them: Story Writer, Character Designer, World Builder, Composer, Debugger, Strategist, and more. Each carries its own voice, memory, and toolset. You pick the Luminor for the job.",
+  },
+  {
+    q: "What makes the Living Worlds engine different?",
+    a: "Most AI tools forget. Arcanea builds a persistent graph of your world — characters, locations, magic, lore — all linked. Reference a character next session and the AI still knows them. Export as markdown, fork the world, run it locally. This is the moat.",
   },
   {
     q: "How do the Luminors work?",
-    a: "Each Luminor is specialized for a creative domain — writing, research, design, music, strategy. Trained on Arcanea's philosophy, not generic datasets. Pick one, describe your project, and build together.",
+    a: "Each Luminor is specialized for a creative domain — writing, research, design, music, strategy. Trained on Arcanea's 190K-word philosophy corpus, not generic datasets. Pick one, describe your project, and build together. Each can hand off to another mid-conversation.",
   },
   {
     q: "What is the Library of Arcanea?",
@@ -52,6 +63,251 @@ const FAQ_ITEMS = [
     a: "Yes. We do not train on your data. What you build stays yours — keep it in Arcanea or export it.",
   },
 ];
+
+// ---------------------------------------------------------------------------
+// Product Pillars Feature Grid
+// ---------------------------------------------------------------------------
+
+const PRODUCT_PILLARS = [
+  {
+    icon: "💬",
+    title: "Chat",
+    description: "16 specialist AI partners — one for every craft",
+    href: "/chat",
+    glowColor: "#00bcd4",
+  },
+  {
+    icon: "🌍",
+    title: "Worlds",
+    description: "A graph of characters, locations, magic — all connected",
+    href: "/worlds",
+    glowColor: "#7fffd4",
+  },
+  {
+    icon: "📚",
+    title: "Library",
+    description: "190K+ words of original creative philosophy",
+    href: "/library",
+    glowColor: "#ffd700",
+  },
+  {
+    icon: "🎓",
+    title: "Academy",
+    description: "A structured path from beginner to Luminor",
+    href: "/academy",
+    glowColor: "#a78bfa",
+  },
+  {
+    icon: "⚒",
+    title: "Forge",
+    description: "Forge your own Luminor, companion, or character",
+    href: "/forge",
+    glowColor: "#f97316",
+  },
+  {
+    icon: "⌥",
+    title: "Code",
+    description: "27 open-source repos. Fork anything.",
+    href: "/ecosystem",
+    glowColor: "#34d399",
+  },
+] as const;
+
+function ProductPillarsGrid() {
+  return (
+    <SectionShell ambient="teal" size="compact" id="what-arcanea-does">
+      <div className="max-w-5xl mx-auto px-6">
+        <SectionHeader
+          label="What Arcanea Does"
+          title="Six ways to create"
+          subtitle="A complete creative ecosystem — not a thin AI wrapper. Each pillar is a full product."
+          accent="teal"
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {PRODUCT_PILLARS.map((pillar, i) => (
+            <a key={pillar.title} href={pillar.href} className="block">
+              <FeatureCard
+                glowColor={pillar.glowColor}
+                delay={i * 0.08}
+                compact
+              >
+                <FeatureIcon color={pillar.glowColor} size="sm">
+                  <span className="text-base leading-none">{pillar.icon}</span>
+                </FeatureIcon>
+                <h3 className="text-base font-display font-semibold text-white/90 mb-1">
+                  {pillar.title}
+                </h3>
+                <p className="text-sm text-white/40 font-body leading-snug">
+                  {pillar.description}
+                </p>
+              </FeatureCard>
+            </a>
+          ))}
+        </div>
+      </div>
+    </SectionShell>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Living World Engine — Animated graph visualization
+// ---------------------------------------------------------------------------
+
+function LivingWorldSection() {
+  return (
+    <SectionShell ambient="teal" size="default" id="living-world">
+      <div className="max-w-6xl mx-auto px-6">
+        <SectionHeader
+          label="The Living Worlds Engine"
+          title="One sentence becomes a universe"
+          subtitle="Type a world idea. Characters, locations, magic, and lore spawn — all linked in a persistent graph. Consistent across sessions. Yours forever."
+          accent="teal"
+        />
+        <Reveal y={20}>
+          <WorldGraphCanvas />
+        </Reveal>
+        <Reveal y={12} delay={0.3}>
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            {[
+              { label: "Connected", body: "Characters reference the same locations, magic follows consistent rules, lore propagates.", color: "#7fffd4" },
+              { label: "Persistent", body: "Your world survives every session. Come back in a year — it still remembers everything.", color: "#00bcd4" },
+              { label: "Forkable", body: "Export to markdown/JSON. Fork a world. Run the engine locally. Nothing locked.", color: "#ffd700" },
+            ].map(({ label, body, color }, i) => (
+              <m.div
+                key={label}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
+                className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.05]"
+              >
+                <p className="text-[10px] font-mono tracking-[0.25em] uppercase mb-2" style={{ color }}>
+                  {label}
+                </p>
+                <p className="text-sm text-white/50 leading-relaxed">{body}</p>
+              </m.div>
+            ))}
+          </div>
+        </Reveal>
+      </div>
+    </SectionShell>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Why Arcanea — Comparison matrix
+// ---------------------------------------------------------------------------
+
+function WhyArcaneaSection() {
+  return (
+    <SectionShell ambient="purple" size="default" id="why-arcanea">
+      <div className="max-w-5xl mx-auto px-6">
+        <SectionHeader
+          label="Why Arcanea"
+          title="The moat is the world graph"
+          subtitle="Chat tools forget. Arcanea remembers. One platform for text, image, and music — tied together by a graph that stays consistent."
+          accent="purple"
+        />
+        <Reveal y={20}>
+          <ComparisonMatrix />
+        </Reveal>
+        <Reveal y={10} delay={0.3}>
+          <p className="mt-8 text-center text-xs text-white/25 font-mono tracking-wider">
+            Not a knock on alternatives — a clear statement of what Arcanea is built for.
+          </p>
+        </Reveal>
+      </div>
+    </SectionShell>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Luminor Team Preview — The 13 Chosen made visible
+// ---------------------------------------------------------------------------
+
+function LuminorTeamSection() {
+  return (
+    <SectionShell ambient="teal" size="compact" id="luminor-team">
+      <div className="max-w-5xl mx-auto px-6">
+        <SectionHeader
+          label="The 13 Chosen"
+          title="Meet the specialists"
+          subtitle="Not one generic chatbot — 13 specialist AI partners, each tuned for a specific craft. Hover any to see what they do. Click to chat."
+          accent="teal"
+        />
+        <Reveal y={16}>
+          <LuminorTeamPreview />
+        </Reveal>
+        <Reveal y={10} delay={0.4}>
+          <div className="mt-10 text-center">
+            <Magnetic>
+              <Link
+                href="/luminors"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-white/70 hover:bg-white/[0.08] hover:text-white transition-colors"
+              >
+                Meet all 16 Luminors
+                <span className="text-xs">&rarr;</span>
+              </Link>
+            </Magnetic>
+          </div>
+        </Reveal>
+      </div>
+    </SectionShell>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Personas — "Who Arcanea is for"
+// ---------------------------------------------------------------------------
+
+function PersonasSection() {
+  return (
+    <SectionShell ambient="purple" size="default" id="who-its-for">
+      <div className="max-w-6xl mx-auto px-6">
+        <SectionHeader
+          label="Who it's for"
+          title="Built for makers"
+          subtitle="Novelists, game designers, filmmakers, developers, solo creators — Arcanea meets you where you work."
+          accent="purple"
+        />
+        <PersonasShowcase />
+      </div>
+    </SectionShell>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Sovereignty — Keep your keys, keep your IP
+// ---------------------------------------------------------------------------
+
+function SovereigntySection() {
+  return (
+    <SectionShell ambient="gold" size="default" id="sovereignty">
+      <div className="max-w-6xl mx-auto px-6">
+        <SectionHeader
+          label="Sovereign by default"
+          title="Keep your keys. Keep your IP."
+          subtitle="Arcanea is built on a simple idea: the things you make should belong to you, and the tools should belong to nobody."
+          accent="gold"
+        />
+        <SovereigntyPillars />
+        <Reveal y={12} delay={0.5}>
+          <div className="mt-12 text-center">
+            <Magnetic>
+              <Link
+                href="/pricing"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#7fffd4]/15 to-[#ffd700]/10 border border-[#7fffd4]/25 text-sm font-medium text-[#7fffd4] hover:from-[#7fffd4]/25 hover:to-[#ffd700]/15 transition-colors"
+              >
+                Read the sovereignty promise
+                <span className="text-xs">&rarr;</span>
+              </Link>
+            </Magnetic>
+          </div>
+        </Reveal>
+      </div>
+    </SectionShell>
+  );
+}
 
 // ---------------------------------------------------------------------------
 // Atmospheric Divider
@@ -191,24 +447,54 @@ export function V3BelowFold({
   return (
     <MotionProvider>
       <>
-        {/* 1. Guardian showcase — visual proof */}
+        {/* 0. Living World Engine demo — the differentiator visualized */}
+        <LivingWorldSection />
+
+        <AtmosphericDivider variant="teal" />
+
+        {/* 1. Product pillars — "What Arcanea Does" */}
+        <ProductPillarsGrid />
+
+        <AtmosphericDivider variant="teal" />
+
+        {/* 1b. Luminor team preview — 13 specialists made visible */}
+        <LuminorTeamSection />
+
+        <AtmosphericDivider variant="purple" />
+
+        {/* 2. Why Arcanea — the moat */}
+        <WhyArcaneaSection />
+
+        <AtmosphericDivider variant="teal" />
+
+        {/* 2b. Personas — who it's for */}
+        <PersonasSection />
+
+        <AtmosphericDivider variant="purple" />
+
+        {/* 3. Guardian showcase — visual proof */}
         <GuardianShowcase />
 
         <AtmosphericDivider variant="teal" />
 
-        {/* 2. How it works — 4 clear steps */}
+        {/* 4. How it works — 4 clear steps */}
         <HowItWorks />
 
-        {/* 3. Worlds showcase — multiverse teaser */}
+        {/* 5. Worlds showcase — multiverse teaser */}
         <WorldsShowcase />
 
         <AtmosphericDivider variant="gold" />
 
-        {/* 4. FAQ — objection handling */}
+        {/* 6. Sovereignty pillars — Keep your keys, keep your IP */}
+        <SovereigntySection />
+
+        <AtmosphericDivider variant="teal" />
+
+        {/* 7. FAQ — objection handling */}
         <FAQInline />
 
         {/* 4b. Built in the open — ecosystem narrative */}
-        <section className="py-24 md:py-32">
+        <SectionShell ambient="teal" size="default">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <Reveal y={12} blur>
               <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[#7fffd4]/60 mb-5">
@@ -228,31 +514,20 @@ export function V3BelowFold({
             </Reveal>
 
             <Reveal y={16} delay={0.6}>
-              <div className="grid grid-cols-4 gap-4 md:gap-8 max-w-2xl mx-auto mb-12">
-                <div className="text-center">
-                  <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
-                    <NumberTicker value={27} delay={0.6} />
-                  </p>
-                  <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">repos</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
-                    <NumberTicker value={43} delay={0.7} />
-                  </p>
-                  <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">packages</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
-                    <NumberTicker value={80} delay={0.8} suffix="+" />
-                  </p>
-                  <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">skills</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
-                    MIT
-                  </p>
-                  <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">license</p>
-                </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-8 max-w-2xl mx-auto mb-12">
+                {[
+                  { value: 27, suffix: "", label: "repos", fixed: false },
+                  { value: 43, suffix: "", label: "packages", fixed: false },
+                  { value: 80, suffix: "+", label: "skills", fixed: false },
+                  { value: 0, suffix: "", label: "license", fixed: true },
+                ].map(({ value, suffix, label, fixed }, i) => (
+                  <div key={label} className="text-center px-3 py-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+                    <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
+                      {fixed ? "MIT" : <NumberTicker value={value} delay={0.6 + i * 0.1} suffix={suffix} />}
+                    </p>
+                    <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">{label}</p>
+                  </div>
+                ))}
               </div>
             </Reveal>
 
@@ -261,11 +536,11 @@ export function V3BelowFold({
                 <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-white/20 text-center mb-4">
                   The stack that makes it possible
                 </p>
-                <Marquee duration={35}>
+                <Marquee duration={40}>
                   {["Next.js 16", "React 19", "TypeScript", "Tailwind", "Framer Motion", "Three.js", "Supabase", "Vercel", "Claude", "Gemini", "OpenRouter", "MCP"].map((tech) => (
                     <span
                       key={tech}
-                      className="inline-flex items-center px-5 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-xs font-mono text-white/50 whitespace-nowrap"
+                      className="inline-flex items-center px-5 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-xs font-mono text-white/50 whitespace-nowrap hover:bg-white/[0.06] hover:border-[#00bcd4]/20 transition-colors duration-300"
                     >
                       {tech}
                     </span>
@@ -297,9 +572,7 @@ export function V3BelowFold({
               </div>
             </Reveal>
           </div>
-        </section>
-
-        <AtmosphericDivider variant="teal" />
+        </SectionShell>
 
         <AtmosphericDivider variant="purple" />
 

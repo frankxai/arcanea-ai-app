@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { WorldsClient, type WorldCard } from "./worlds-client";
+import { WorldsHero } from "./worlds-hero";
 
 export const metadata: Metadata = {
   title: "Worlds — Build Your Universe — Arcanea",
@@ -157,5 +158,10 @@ export default async function WorldsPage() {
       ? [...dbWorlds, ...TEMPLATE_WORLDS]
       : TEMPLATE_WORLDS;
 
-  return <WorldsClient worlds={allWorlds} />;
+  return (
+    <>
+      <WorldsHero />
+      <WorldsClient worlds={allWorlds} />
+    </>
+  );
 }

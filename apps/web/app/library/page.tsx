@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { LibraryBrowse } from "./library-browse";
+import { LibraryHero } from "./library-hero";
 import { getCollections, getTextsInCollection } from "../../lib/content";
 
 export const dynamic = 'force-dynamic';
@@ -41,6 +41,9 @@ export default async function LibraryPage() {
   );
   const collectionReadingTimes: Record<string, number> = Object.fromEntries(readingTimeEntries);
 
+  // Total text count across all collections (for hero stats)
+  const textsCount = collections.reduce((sum, c) => sum + (c.textCount ?? 0), 0);
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
@@ -66,47 +69,22 @@ export default async function LibraryPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="mx-auto max-w-7xl px-6 pb-24 pt-8">
-        {/* Hero */}
-        <div className="relative mb-10 overflow-hidden rounded-2xl" style={{ minHeight: '220px', maxHeight: '280px' }}>
-          {/* Dark cosmic base */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#050a12] via-[#071018] to-[#060d16]" />
-          {/* Subtle radial glow behind text */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_30%_50%,rgba(0,188,212,0.06)_0%,transparent_70%)]" />
-          {/* Lyria portrait — atmospheric background */}
-          <div className="absolute inset-0 flex justify-end">
-            <div className="relative h-full w-[55%]">
-              <Image
-                src="/guardians/v3/lyria-hero-v3.webp"
-                alt=""
-                fill
-                className="object-cover object-top"
-                style={{ opacity: 0.15, mixBlendMode: 'luminosity' }}
-                priority
-                aria-hidden="true"
-              />
-              {/* Fade the portrait into the dark left side */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#050a12] via-[#050a12]/60 to-transparent" />
-            </div>
-          </div>
-          {/* Text content */}
-          <div className="relative z-10 flex flex-col justify-center px-8 py-10 sm:px-12" style={{ minHeight: '220px', maxHeight: '280px' }}>
-            <h1
-              className="mb-3 text-4xl font-bold tracking-tight text-white sm:text-5xl"
-              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
-            >
-              The Library
-            </h1>
-            <p
-              className="max-w-lg text-base leading-relaxed text-white/55 sm:text-lg"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-            >
-              200,000+ words across 17 collections. Laws, meditations, parables,
-              legends — the creative philosophy that powers everything.
-            </p>
-          </div>
-        </div>
 
+      {/* Premium hero — full-width, above the constrained main */}
+      <LibraryHero collectionsCount={collections.length} textsCount={textsCount} />
+
+      {/* Decorative divider */}
+      <div className="mx-auto max-w-7xl px-6" aria-hidden>
+        <div
+          className="h-px w-full mb-10"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.08) 25%, rgba(127,255,212,0.14) 50%, rgba(255,215,0,0.08) 75%, transparent 100%)",
+          }}
+        />
+      </div>
+
+      <main className="mx-auto max-w-7xl px-6 pb-24">
         {/* Tab Navigation */}
         <nav className="mb-12 flex items-center gap-2 border-b border-white/[0.05] pb-4">
           <Link

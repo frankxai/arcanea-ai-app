@@ -3,6 +3,7 @@
 import { m } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useMouseStore } from "@/hooks/use-mouse-store";
+import { SplitText } from "@/components/motion/split-text";
 
 export function LoreHero() {
   const mouse = useMouseStore();
@@ -76,10 +77,22 @@ export function LoreHero() {
           </span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6">
-          <span className="bg-gradient-to-r from-gold-bright via-white to-creation-prism-purple bg-clip-text text-transparent">
-            Lore of Arcanea
-          </span>
+        <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-[1.05]">
+          <SplitText
+            as="span"
+            text="Lore of"
+            className="bg-gradient-to-r from-[#ffd700] via-[#f59e0b] to-white bg-clip-text text-transparent"
+            delay={0.1}
+            stagger={0.04}
+          />
+          {" "}
+          <SplitText
+            as="span"
+            text="Arcanea"
+            className="bg-gradient-to-r from-white via-[#c084fc] to-[#7c3aed] bg-clip-text text-transparent"
+            delay={0.5}
+            stagger={0.05}
+          />
         </h1>
 
         <p className="text-lg sm:text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-8 font-body italic">

@@ -272,35 +272,68 @@ export default function ImaginePage() {
         </nav>
       </div>
 
-      {/* ═══ Featured Templates ═══ */}
+      {/* ═══ Hero + Templates (empty state) ═══ */}
       {!hasResults && (
         <m.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="pt-24 px-4"
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="relative pt-20 pb-2 px-4"
         >
-          <p className="text-[13px] text-white/30 mb-4 px-2">Pick a style or write your own prompt. Four images per generation.</p>
-          <h2 className="text-sm font-semibold text-white/50 mb-3 px-2 tracking-wide">Styles</h2>
-          <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-hide -mx-1 px-1">
+          {/* Ambient background orbs */}
+          <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
+            <div className="absolute rounded-full bg-[#00bcd4]/[0.07] w-[500px] h-[500px] left-[20%] top-[-10%] blur-[160px]" />
+            <div className="absolute rounded-full bg-[#0d47a1]/[0.05] w-[400px] h-[400px] right-[10%] top-[30%] blur-[140px]" />
+            <div className="absolute rounded-full bg-[#7fffd4]/[0.03] w-[300px] h-[300px] left-[60%] top-[60%] blur-[120px]" />
+          </div>
+          {/* Dot grid texture */}
+          <div
+            className="pointer-events-none absolute inset-0 -z-10 opacity-[0.02]"
+            aria-hidden
+            style={{
+              backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
+              backgroundSize: "32px 32px",
+            }}
+          />
+
+          {/* Headline */}
+          <div className="text-center mb-8">
+            <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-white/25 mb-3">
+              Visual AI
+            </p>
+            <h1 className="text-3xl md:text-4xl font-display font-bold tracking-[-0.03em] leading-tight mb-3">
+              <span className="bg-gradient-to-r from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
+                Turn words into images
+              </span>
+            </h1>
+            <p className="text-sm text-white/35 max-w-xs mx-auto leading-relaxed">
+              Four images per generation. Pick a style or write your own prompt.
+            </p>
+          </div>
+
+          {/* Style cards */}
+          <p className="text-[11px] font-mono tracking-[0.25em] uppercase text-white/25 mb-3 px-1">
+            Styles
+          </p>
+          <div className="flex gap-2.5 overflow-x-auto pb-3 scrollbar-hide -mx-1 px-1">
             {FEATURED_TEMPLATES.map((template, i) => (
               <button
                 key={template.id}
                 onClick={() => handleTemplateClick(template.prompt)}
                 className="flex-shrink-0 group"
+                aria-label={`Use ${template.label} style`}
               >
-                <div className="w-[150px] h-[110px] rounded-xl bg-[#13131f] border border-white/[0.06] hover:border-[#7fffd4]/30 transition-all overflow-hidden relative">
-                  {/* Unique gradient per template */}
+                <div className="w-[140px] h-[100px] rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-[#7fffd4]/25 hover:bg-white/[0.05] transition-all duration-200 overflow-hidden relative">
                   <div
-                    className="absolute inset-0 opacity-30 group-hover:opacity-50 transition-opacity"
+                    className="absolute inset-0 opacity-25 group-hover:opacity-45 transition-opacity duration-200"
                     style={{
                       background: `linear-gradient(${135 + i * 25}deg, ${
                         ['#7fffd4', '#78a6ff', '#c084fc', '#f472b6', '#fbbf24', '#34d399', '#818cf8', '#fb923c', '#a78bfa', '#22d3ee', '#f9a8d4', '#facc15'][i]
-                      }15, transparent 70%)`,
+                      }18, transparent 65%)`,
                     }}
                   />
                   <div className="absolute inset-0 flex items-end p-3">
-                    <span className="text-xs font-semibold text-white/70 group-hover:text-white/95 transition-colors leading-tight">
+                    <span className="text-xs font-semibold text-white/60 group-hover:text-white/90 transition-colors leading-tight font-display">
                       {template.label}
                     </span>
                   </div>
@@ -308,8 +341,7 @@ export default function ImaginePage() {
               </button>
             ))}
           </div>
-          {/* Teal accent line under templates */}
-          <div className="mx-2 h-px bg-gradient-to-r from-[#7fffd4]/20 via-[#78a6ff]/15 to-transparent" />
+          <div className="mx-1 mt-1 h-px bg-gradient-to-r from-[#7fffd4]/15 via-[#00bcd4]/10 to-transparent" />
         </m.div>
       )}
 
@@ -376,14 +408,14 @@ export default function ImaginePage() {
 
       {/* ═══ Discover Section Header ═══ */}
       {!hasResults && (
-        <div className="px-6 pt-4 pb-2">
+        <div className="px-6 pt-3 pb-2">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-white/60">Discover</h2>
+            <h2 className="text-[11px] font-mono tracking-[0.25em] uppercase text-white/25">Discover</h2>
             <button
               onClick={() => { refreshFavorites(); setShowFavorites(true); }}
-              className="flex items-center gap-1.5 text-xs text-pink-300/50 hover:text-pink-300 transition-colors"
+              className="flex items-center gap-1.5 text-xs text-pink-300/40 hover:text-pink-300 transition-colors"
             >
-              <Heart size={12} />
+              <Heart size={11} />
               {favCount > 0 ? `${favCount} Saved` : 'Favorites'}
             </button>
           </div>
@@ -455,12 +487,10 @@ export default function ImaginePage() {
         )}
       </div>
 
-      {/* ═══ Empty state (when no results and no templates needed) ═══ */}
+      {/* ═══ Empty state hint ═══ */}
       {!hasResults && !isGenerating && (
-        <div className="text-center py-8 px-6">
-          <div className="max-w-sm mx-auto">
-            <p className="text-white/20 text-sm">Describe what you see. The vision appears.</p>
-          </div>
+        <div className="text-center py-6 px-6">
+          <p className="text-white/15 text-xs tracking-wide">Describe what you see in the prompt below</p>
         </div>
       )}
 

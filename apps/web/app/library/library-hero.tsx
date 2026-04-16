@@ -1,0 +1,109 @@
+"use client";
+
+import { LazyMotion, domAnimation, m } from "framer-motion";
+import { FloatingOrbs, StatCard } from "@/components/premium";
+
+// ---------------------------------------------------------------------------
+// LibraryHero — Premium hero section for the Library page (Client Component)
+// Receives dynamic stats from the server page and renders an animated hero.
+// ---------------------------------------------------------------------------
+
+interface LibraryHeroProps {
+  collectionsCount: number;
+  textsCount: number;
+}
+
+export function LibraryHero({ collectionsCount, textsCount }: LibraryHeroProps) {
+  const stats = [
+    { value: String(collectionsCount), label: "Collections", color: "#7fffd4" },
+    { value: String(textsCount), label: "Texts", color: "#00bcd4" },
+    { value: "190K+", label: "Words", color: "#ffd700" },
+    { value: "Free", label: "Always open", color: "#c084fc" },
+  ];
+
+  return (
+    <LazyMotion features={domAnimation}>
+      <section className="relative overflow-hidden pt-28 pb-20">
+        <FloatingOrbs preset="aurora" />
+
+        {/* Dot grid */}
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.02]"
+          aria-hidden
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* Top horizon line glow */}
+        <div
+          className="pointer-events-none absolute top-0 left-0 right-0 h-px -z-10"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.2) 35%, rgba(127,255,212,0.28) 50%, rgba(255,215,0,0.2) 65%, transparent 100%)",
+          }}
+          aria-hidden
+        />
+
+        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+          {/* Eyebrow */}
+          <m.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-3 mb-8"
+          >
+            <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#ffd700]/40" />
+            <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-[#ffd700]/60">
+              Library of Arcanea
+            </span>
+            <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#ffd700]/40" />
+          </m.div>
+
+          {/* Headline with gold-to-teal gradient */}
+          <m.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.06 }}
+            className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-[-0.03em] leading-[1.04] mb-6"
+          >
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage:
+                  "linear-gradient(135deg, #ffd700 0%, #f59e0b 25%, #7fffd4 60%, #00bcd4 100%)",
+              }}
+            >
+              The Library
+            </span>
+          </m.h1>
+
+          {/* Subtitle */}
+          <m.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.13 }}
+            className="text-base md:text-xl text-white/45 max-w-2xl mx-auto leading-relaxed mb-12 font-body"
+          >
+            190,000+ words of original philosophy, poetry, legend, and practice
+            for the creative soul. Laws. Meditations. Parables. Equipment for living.
+          </m.p>
+
+          {/* Stat row */}
+          <m.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl mx-auto"
+          >
+            {stats.map(({ value, label, color }, i) => (
+              <StatCard key={label} value={value} label={label} color={color} delay={0.24 + i * 0.06} />
+            ))}
+          </m.div>
+        </div>
+      </section>
+    </LazyMotion>
+  );
+}

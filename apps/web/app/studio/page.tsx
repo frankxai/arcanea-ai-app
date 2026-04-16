@@ -263,18 +263,36 @@ export default function StudioPage() {
 
   return (
     <div className="relative min-h-screen">
-      {/* Background */}
-      <div className="fixed inset-0 bg-gradient-to-b from-black via-[#060612] to-black -z-10" />
+      {/* Background with ambient orbs */}
+      <div className="fixed inset-0 bg-[#09090b] -z-20" />
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden>
+        <div className="absolute rounded-full bg-[#00bcd4]/[0.06] w-[600px] h-[600px] left-[-10%] top-[-5%] blur-[180px]" />
+        <div className="absolute rounded-full bg-[#0d47a1]/[0.04] w-[500px] h-[500px] right-[-5%] top-[20%] blur-[160px]" />
+        <div className="absolute rounded-full bg-[#7fffd4]/[0.025] w-[400px] h-[400px] left-[40%] bottom-[10%] blur-[140px]" />
+        {/* Dot grid */}
+        <div
+          className="absolute inset-0 opacity-[0.018]"
+          style={{
+            backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
+      </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-start justify-between mb-7">
           <div>
-            <h1 className="text-2xl font-bold font-display text-white/90">
-              Studio
+            <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-white/25 mb-2">
+              Creation Studio
+            </p>
+            <h1 className="text-2xl md:text-3xl font-display font-bold tracking-[-0.03em] leading-tight">
+              <span className="bg-gradient-to-r from-[#7fffd4] via-[#00bcd4] to-white/80 bg-clip-text text-transparent">
+                Create anything
+              </span>
             </h1>
-            <p className="text-xs text-white/30 mt-1">
-              Create with the power of the Luminors
+            <p className="text-xs text-white/30 mt-1.5 font-body">
+              Text, images, code, and music — guided by Luminors
             </p>
           </div>
 
@@ -284,15 +302,15 @@ export default function StudioPage() {
               value={selectedModel}
               onChange={setSelectedModel}
             />
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06]">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#00bcd4]/[0.06] border border-[#00bcd4]/[0.12]">
               <Lightning size={12} className="text-[#00bcd4]" />
-              <span className="text-[10px] text-white/40">AI Connected</span>
+              <span className="text-[10px] text-[#00bcd4]/70">AI Connected</span>
             </div>
           </div>
         </div>
 
         {/* Mode Tabs */}
-        <div className="flex items-center gap-2 mb-6">
+        <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-1">
           {MODES.map((mode) => {
             const ModeIcon = mode.icon;
             const isActive = activeMode === mode.id;
@@ -300,40 +318,46 @@ export default function StudioPage() {
               <button
                 key={mode.id}
                 onClick={() => setActiveMode(mode.id)}
-                className={`group flex items-center gap-2.5 px-4 py-2.5 rounded-xl border text-sm transition-all ${
+                className={`group flex items-center gap-2 px-4 py-2 rounded-xl border text-sm transition-all duration-200 shrink-0 ${
                   isActive
-                    ? "border-white/[0.15] bg-white/[0.06] text-white"
-                    : "border-white/[0.06] bg-white/[0.02] text-white/40 hover:text-white/60 hover:bg-white/[0.04]"
+                    ? "border-white/[0.12] bg-white/[0.07] text-white shadow-[0_0_20px_rgba(0,188,212,0.08)]"
+                    : "border-white/[0.05] bg-white/[0.02] text-white/35 hover:text-white/55 hover:bg-white/[0.04] hover:border-white/[0.08]"
                 }`}
               >
                 <ModeIcon
-                  size={16}
+                  size={15}
                   weight={isActive ? "fill" : "regular"}
                   style={{ color: isActive ? mode.elementColor : undefined }}
                 />
-                <span className="font-medium">{mode.label}</span>
+                <span className="font-medium font-body">{mode.label}</span>
+                {isActive && (
+                  <span
+                    className="ml-0.5 w-1 h-1 rounded-full"
+                    style={{ background: mode.elementColor, boxShadow: `0 0 6px ${mode.elementColor}` }}
+                  />
+                )}
               </button>
             );
           })}
         </div>
 
         {/* Creation Area */}
-        <div className="rounded-2xl border border-white/[0.08] bg-white/[0.015] backdrop-blur-sm overflow-hidden min-h-[500px] flex flex-col">
+        <div className="rounded-2xl border border-white/[0.07] bg-white/[0.015] backdrop-blur-sm overflow-hidden min-h-[500px] flex flex-col" style={{ boxShadow: `0 0 40px ${currentMode.elementColor}08` }}>
           {/* Top bar */}
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.08] bg-white/[0.02]">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.06] bg-white/[0.02]">
             <div className="flex items-center gap-2">
               <div
-                className="w-2 h-2 rounded-full"
+                className="w-1.5 h-1.5 rounded-full"
                 style={{
                   backgroundColor: currentMode.elementColor,
-                  boxShadow: `0 0 8px ${currentMode.elementColor}60`,
+                  boxShadow: `0 0 8px ${currentMode.elementColor}80`,
                 }}
               />
-              <span className="text-xs font-medium text-white/60">
+              <span className="text-xs font-medium text-white/50 font-body">
                 {currentMode.guardian}
               </span>
-              <span className="text-white/15">—</span>
-              <span className="text-xs text-white/30">
+              <span className="text-white/10 text-xs">|</span>
+              <span className="text-xs text-white/25 font-body">
                 {currentMode.description}
               </span>
             </div>
@@ -451,16 +475,16 @@ export default function StudioPage() {
         {/* Recent Creations Section */}
         <section className="mt-6 mb-2">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-semibold text-white/60 flex items-center gap-2">
-              <Clock size={14} className="text-white/30" />
-              Recent Creations
+            <h2 className="text-[11px] font-mono tracking-[0.25em] uppercase text-white/25 flex items-center gap-2">
+              <Clock size={11} className="text-white/20" />
+              Recent
             </h2>
-            <button className="text-[11px] text-[#00bcd4]/60 hover:text-[#00bcd4] transition-colors flex items-center gap-1">
+            <button className="text-[11px] text-[#00bcd4]/50 hover:text-[#00bcd4]/80 transition-colors flex items-center gap-1 font-body">
               View all
               <ArrowRight size={10} />
             </button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
             {RECENT_CREATIONS.map((creation) => {
               const CreationIcon = modeIconMap[creation.mode];
               const modeConfig = MODES.find((m) => m.id === creation.mode)!;
@@ -468,28 +492,29 @@ export default function StudioPage() {
                 <button
                   key={creation.id}
                   onClick={() => setActiveMode(creation.mode)}
-                  className="group relative rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-3.5 text-left transition-all duration-200 hover:bg-white/[0.04] hover:border-white/[0.10]"
+                  className="group relative rounded-xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm p-3 text-left transition-all duration-200 hover:bg-white/[0.04] hover:border-white/[0.09]"
+                  style={{ '--hover-glow': `${modeConfig.elementColor}10` } as React.CSSProperties}
                 >
                   <div className="flex items-start gap-2.5">
                     <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: `${modeConfig.elementColor}15` }}
+                      className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: `${modeConfig.elementColor}12` }}
                     >
                       <CreationIcon
-                        size={14}
+                        size={13}
                         weight="duotone"
                         style={{ color: modeConfig.elementColor }}
                       />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-xs font-medium text-white/70 truncate group-hover:text-white/90 transition-colors">
+                      <p className="text-xs font-medium text-white/60 truncate group-hover:text-white/85 transition-colors font-body">
                         {creation.title}
                       </p>
-                      <p className="text-[10px] text-white/25 mt-0.5">{creation.timeAgo}</p>
+                      <p className="text-[10px] text-white/20 mt-0.5 font-mono">{creation.timeAgo}</p>
                     </div>
                   </div>
                   {creation.preview && (
-                    <p className="text-[10px] text-white/20 mt-2 line-clamp-1 italic">
+                    <p className="text-[10px] text-white/15 mt-2 line-clamp-1 italic font-body">
                       {creation.preview}
                     </p>
                   )}

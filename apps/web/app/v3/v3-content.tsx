@@ -10,6 +10,9 @@ import { HeroChangingWords } from "./hero-changing-words";
 import { HeroShowcase } from "./hero-showcase";
 import { SplitText } from "@/components/motion/split-text";
 import { Magnetic } from "@/components/motion/magnetic";
+import { FloatingOrbs } from "@/components/premium/animated-background";
+import { SovereigntyBadge } from "@/components/premium/sovereignty-pillars";
+import { NumberTicker } from "@/components/motion/number-ticker";
 
 // ---------------------------------------------------------------------------
 // Lazy-load the chat box — it pulls in useRouter + phosphor icons which are
@@ -107,21 +110,9 @@ function HeroPortal() {
       ref={containerRef}
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
-      {/* Background: pure dark with subtle aurora */}
+      {/* Background: pure dark with FloatingOrbs aurora */}
       <div className="absolute inset-0 -z-20 bg-[#09090b]">
-        {/* Single soft aurora bloom — top center */}
-        <m.div
-          className="absolute inset-0"
-          animate={{
-            background: [
-              "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0,188,212,0.07) 0%, transparent 60%)",
-              "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0,137,123,0.06) 0%, transparent 60%)",
-              "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(13,71,161,0.05) 0%, transparent 60%)",
-              "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0,188,212,0.07) 0%, transparent 60%)",
-            ],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        />
+        <FloatingOrbs preset="aurora" />
         {/* Subtle bottom warmth */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_30%_at_50%_100%,rgba(0,188,212,0.03),transparent_60%)]" />
 
@@ -175,7 +166,7 @@ function HeroPortal() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-10 md:mb-14"
+            className="mb-7 md:mb-9"
           >
             <div className="relative">
               <div className="absolute inset-[-12px] rounded-full bg-[radial-gradient(circle,rgba(127,255,212,0.12)_0%,rgba(255,215,0,0.04)_50%,transparent_70%)] blur-md animate-[breathe_3s_ease-in-out_infinite]" />
@@ -190,6 +181,16 @@ function HeroPortal() {
             </div>
           </m.div>
 
+          {/* Sovereignty badge — positioning pill */}
+          <m.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="mb-6"
+          >
+            <SovereigntyBadge />
+          </m.div>
+
           {/* Headline — clean, large, confident */}
           <h1 className="text-[clamp(2.2rem,5.5vw,4.5rem)] font-display font-bold tracking-[-0.035em] leading-[1.08] mb-4 md:mb-5">
             <SplitText
@@ -202,45 +203,48 @@ function HeroPortal() {
             <HeroChangingWords />
           </h1>
 
-          {/* Subtitle — one line, restrained */}
+          {/* Subtitle — concrete value, leads with what you get */}
           <m.p
-            className="max-w-lg mx-auto text-base md:text-lg text-white/40 leading-relaxed mb-12 md:mb-14 font-body"
+            className="max-w-xl mx-auto text-base md:text-lg text-white/50 leading-relaxed mb-3 font-body"
             initial={{ opacity: 0, y: 16 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Type one sentence. Get a world with characters, locations, lore, and music. Yours to own.
+            Type one sentence. Get a world — characters, locations, lore, music — all connected, all yours.
           </m.p>
 
-          {/* Value Prop — explicit for cold visitors */}
+          {/* Secondary clarifier — who it&apos;s for */}
           <m.p
-            className="max-w-lg mx-auto text-xs text-white/25 leading-relaxed -mt-8 mb-4 font-body"
+            className="max-w-md mx-auto text-sm text-white/30 leading-relaxed mb-10 md:mb-12 font-body"
             initial={{ opacity: 0 }}
             animate={isLoaded ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.25 }}
+            transition={{ duration: 0.5, delay: 0.28 }}
           >
-            The AI creative universe for storytellers, world-builders, and makers.
+            16 specialist AI partners &middot; the Living Worlds engine &middot; open source
           </m.p>
 
-          {/* Trust signals — social proof */}
+          {/* Trust signals — glass pill badges with animated numbers */}
           <m.div
-            className="flex items-center justify-center gap-3 md:gap-5 mb-12 md:mb-14"
+            className="flex flex-wrap items-center justify-center gap-2 md:gap-3 mb-12 md:mb-14"
             initial={{ opacity: 0 }}
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             {[
-              { value: "486K+", label: "words" },
-              { value: "16", label: "AI specialists" },
-              { value: "27", label: "repos" },
-              { value: "10", label: "gates" },
-            ].map(({ value, label }, i) => (
-              <div key={label} className="flex items-center gap-3">
-                {i > 0 && <span className="w-px h-3 bg-white/[0.06]" />}
-                <div className="text-center">
-                  <span className="text-[11px] font-display font-bold text-white/30">{value}</span>
-                  <span className="text-[9px] text-white/15 ml-1 font-mono">{label}</span>
-                </div>
+              { icon: "✦", num: 16, suffix: "", label: "specialist AI partners", color: "#00bcd4" },
+              { icon: "◈", num: 190, suffix: "K+", label: "words of craft", color: "#7fffd4" },
+              { icon: "⌥", num: 27, suffix: "", label: "open-source repos", color: "#ffd700" },
+              { icon: "◎", num: 0, suffix: "MIT", label: "forkable", color: "#c084fc", fixed: true },
+            ].map(({ icon, num, suffix, label, color, fixed }, i) => (
+              <div
+                key={label}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.07] backdrop-blur-sm hover:border-white/[0.15] transition-colors"
+              >
+                <span className="text-[10px]" style={{ color: `${color}99` }}>{icon}</span>
+                <span className="text-[11px] font-display font-semibold text-white/55">
+                  {fixed ? suffix : <NumberTicker value={num} suffix={suffix} delay={0.4 + i * 0.1} />}
+                </span>
+                <span className="text-[10px] text-white/30 font-mono">{label}</span>
               </div>
             ))}
           </m.div>
@@ -255,15 +259,32 @@ function HeroPortal() {
             <HeroChatBox />
           </m.div>
 
-          {/* Minimal trust line */}
-          <m.p
-            className="mt-10 md:mt-14 text-[11px] text-white/15 font-mono tracking-wider"
+          {/* Trust line — sovereignty promise */}
+          <m.div
+            className="mt-10 md:mt-14 flex flex-wrap items-center justify-center gap-x-4 gap-y-2"
             initial={{ opacity: 0 }}
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
-            Open Source &middot; Own Your Data &middot; BYOK Forever
-          </m.p>
+            {[
+              { label: "Keep your keys", color: "#7fffd4" },
+              { label: "Keep your IP", color: "#00bcd4" },
+              { label: "Open source (MIT)", color: "#ffd700" },
+              { label: "No vendor lock-in", color: "#c084fc" },
+            ].map(({ label, color }, i) => (
+              <span
+                key={label}
+                className="inline-flex items-center gap-1.5 text-[11px] font-mono tracking-wider"
+              >
+                {i > 0 && <span className="text-white/10">/</span>}
+                <span
+                  className="w-1 h-1 rounded-full"
+                  style={{ background: `${color}80` }}
+                />
+                <span className="text-white/35">{label}</span>
+              </span>
+            ))}
+          </m.div>
         </div>
       </m.div>
 
@@ -286,6 +307,15 @@ export function V3Content({
   return (
     <>
       <HeroPortal />
+
+      {/* Gradient line separator — teal center glow */}
+      <div className="relative h-px mx-6 md:mx-auto md:max-w-4xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[120px] pointer-events-none"
+          style={{ background: "radial-gradient(ellipse, rgba(0,188,212,0.12), transparent 70%)" }}
+        />
+      </div>
+
       <HeroShowcase />
       <V3BelowFold
         collectionsCount={collectionsCount}

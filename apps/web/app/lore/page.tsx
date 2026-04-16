@@ -6,6 +6,7 @@ import { GatesPreview } from '@/components/lore/gates-preview';
 import { LibraryPreview } from '@/components/lore/library-preview';
 import { LoreExploreGrid } from '@/components/lore/lore-explore-grid';
 import { LoreCTA } from '@/components/lore/lore-cta';
+import { FloatingOrbs, AuroraGradient } from '@/components/premium';
 export const metadata: Metadata = {
   title: 'Lore of Arcanea | The Living Mythology',
   description:
@@ -29,6 +30,9 @@ export default function LorePage() {
   return (
     <div className="relative min-h-screen bg-cosmic-deep">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {/* Ambient atmospheric layer — cosmic preset for lore mystery */}
+      <FloatingOrbs preset="cosmic" className="fixed" />
+      <AuroraGradient />
       <main>
         {/* Hero - Immersive entry point */}
         <LoreHero />

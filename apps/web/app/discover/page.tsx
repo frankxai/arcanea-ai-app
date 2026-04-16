@@ -7,6 +7,7 @@ import { Creation } from '@/lib/types/profile';
 import { PhHeart, PhChatCircle, PhEye, PhPlay, PhImage } from '@/lib/phosphor-icons';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
+import { FloatingOrbs, AuroraGradient, GridTexture } from '@/components/premium';
 
 // ─── Seven Academy Houses (canonical) ──────────────────────────────────────────
 
@@ -208,7 +209,7 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.04 }}
       whileHover={{ y: -6 }}
-      className="group relative rounded-2xl overflow-hidden bg-slate-900/50 backdrop-blur-sm border border-white/[0.08] hover:border-[#00bcd4]/25 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-[#00bcd4]/10"
+      className="group relative rounded-2xl overflow-hidden bg-white/[0.025] backdrop-blur-sm border border-white/[0.06] hover:border-[#7fffd4]/30 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-[#00bcd4]/15"
     >
       {/* Visual area — real image or gradient fallback */}
       <Link href={`/gallery/${creation.id}`} className={`block relative aspect-square bg-gradient-to-br ${bg} overflow-hidden`}>
@@ -270,7 +271,7 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
       </Link>
 
       {/* Bottom info (always visible on mobile) */}
-      <Link href={`/gallery/${creation.id}`} className="block p-3 bg-slate-900/90 hover:bg-slate-800/90 transition-colors">
+      <Link href={`/gallery/${creation.id}`} className="block p-3 bg-[#09090b]/80 backdrop-blur-sm hover:bg-white/[0.04] transition-colors border-t border-white/[0.06]">
         <h3 className="text-white font-semibold text-sm line-clamp-1 mb-1">{creation.title}</h3>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 text-slate-400 text-xs">
@@ -358,14 +359,23 @@ export default function DiscoverPage() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="min-h-screen bg-[#09090b] py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <div className="relative min-h-screen bg-[#09090b] py-12">
+        {/* Atmospheric background */}
+        <FloatingOrbs preset="aurora" className="fixed" />
+        <AuroraGradient />
+        <GridTexture variant="dots" opacity={0.018} />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           {/* Header */}
-          <m.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center space-y-4">
-            <h1 className="text-5xl font-display font-bold bg-gradient-to-r from-[#00bcd4] via-[#0d47a1] to-[#00bcd4] bg-clip-text text-transparent">
+          <m.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center space-y-4 pt-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#7fffd4]/25 bg-[#7fffd4]/[0.07] mb-2">
+              <PhSparkle className="w-3.5 h-3.5 text-[#7fffd4]" />
+              <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-[#7fffd4]/80">Discover</span>
+            </div>
+            <h1 className="text-5xl sm:text-6xl font-display font-bold bg-gradient-to-r from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
               Discover Creations
             </h1>
-            <p className="text-text-secondary text-lg max-w-2xl mx-auto font-sans">
+            <p className="text-white/40 text-lg max-w-2xl mx-auto font-body">
               Browse what creators are building across the platform
             </p>
           </m.div>
@@ -395,10 +405,10 @@ export default function DiscoverPage() {
               <button
                 key={key}
                 onClick={() => setSelectedFilter(key)}
-                className={`px-6 py-3 rounded-xl font-sans font-medium transition-all duration-300 flex items-center gap-2 ${
+                className={`px-6 py-3 rounded-xl font-body font-medium transition-all duration-300 flex items-center gap-2 backdrop-blur-sm ${
                   selectedFilter === key
-                    ? 'bg-[#00bcd4]/15 text-[#00bcd4] border border-[#00bcd4]/30 shadow-lg shadow-[#00bcd4]/10'
-                    : 'bg-white/[0.04] text-text-muted hover:text-white hover:bg-white/[0.08] border border-transparent'
+                    ? 'bg-[#7fffd4]/[0.10] text-[#7fffd4] border border-[#7fffd4]/30 shadow-lg shadow-[#7fffd4]/10'
+                    : 'bg-white/[0.03] text-white/40 hover:text-white/80 hover:bg-white/[0.06] border border-white/[0.06]'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -418,10 +428,10 @@ export default function DiscoverPage() {
             <div className="flex flex-wrap gap-2 justify-center">
               <button
                 onClick={() => setSelectedHouse(null)}
-                className={`px-4 py-2 rounded-full text-sm font-sans transition-all ${
+                className={`px-4 py-2 rounded-full text-sm font-body transition-all backdrop-blur-sm ${
                   selectedHouse === null
-                    ? 'bg-white/[0.06] text-white border border-white/[0.12]'
-                    : 'text-text-muted hover:text-white hover:bg-white/[0.04] border border-transparent'
+                    ? 'bg-white/[0.08] text-white border border-white/[0.14]'
+                    : 'text-white/35 hover:text-white/70 hover:bg-white/[0.05] border border-white/[0.05]'
                 }`}
               >
                 All Houses
@@ -430,10 +440,10 @@ export default function DiscoverPage() {
                 <button
                   key={house.name}
                   onClick={() => setSelectedHouse(house.name === selectedHouse ? null : house.name)}
-                  className={`px-4 py-2 rounded-full text-sm font-sans transition-all ${
+                  className={`px-4 py-2 rounded-full text-sm font-body transition-all backdrop-blur-sm ${
                     selectedHouse === house.name
-                      ? `bg-gradient-to-r ${house.gradient} text-white shadow-lg`
-                      : 'text-text-muted hover:text-white hover:bg-white/[0.04] border border-transparent'
+                      ? `bg-gradient-to-r ${house.gradient} text-white shadow-lg border border-white/10`
+                      : 'text-white/35 hover:text-white/70 hover:bg-white/[0.05] border border-white/[0.05]'
                   }`}
                 >
                   {house.name}

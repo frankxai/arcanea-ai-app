@@ -183,7 +183,7 @@ function ProductCard({ product }: { product: Product }) {
               {product.icon}
             </div>
             <div>
-              <h3 className="font-[family-name:var(--font-display)] text-lg font-semibold text-white">
+              <h3 className="font-display text-lg font-semibold text-white">
                 {product.name}
               </h3>
               <p className="text-sm text-[#7fffd4]/80">{product.tagline}</p>
@@ -226,35 +226,45 @@ function ProductCard({ product }: { product: Product }) {
 
 export default function ProductsPage(): JSX.Element {
   return (
-    <div className="relative min-h-screen bg-gray-950 text-white">
-      {/* Background effects */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -left-40 top-20 h-[500px] w-[500px] rounded-full bg-[#7fffd4]/[0.03] blur-[120px]" />
-        <div className="absolute -right-40 top-60 h-[400px] w-[400px] rounded-full bg-[#78a6ff]/[0.03] blur-[120px]" />
-        <div className="absolute bottom-20 left-1/3 h-[350px] w-[350px] rounded-full bg-[#ffd700]/[0.02] blur-[100px]" />
+    <div className="relative min-h-screen bg-[#09090b] text-white">
+      {/* Background effects — premium floating orbs */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden -z-10">
+        <div className="absolute -left-40 top-20 h-[550px] w-[550px] rounded-full bg-[#7fffd4]/[0.04] blur-[160px] animate-[breathe_8s_ease-in-out_infinite]" />
+        <div className="absolute -right-40 top-60 h-[450px] w-[450px] rounded-full bg-[#78a6ff]/[0.04] blur-[140px] animate-[breathe_10s_ease-in-out_infinite_2s]" />
+        <div className="absolute bottom-20 left-1/3 h-[400px] w-[400px] rounded-full bg-[#ffd700]/[0.03] blur-[130px] animate-[breathe_12s_ease-in-out_infinite_4s]" />
       </div>
 
-      <main className="relative z-10 mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+      {/* Dot grid texture */}
+      <div
+        className="pointer-events-none fixed inset-0 -z-10 opacity-[0.02]"
+        aria-hidden
+        style={{
+          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
+
+      <main className="relative z-10 mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
         {/* ── Hero ───────────────────────────────────────────────────── */}
-        <section className="mb-20 text-center">
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-[#7fffd4]/70">
+        <section className="mb-24 text-center">
+          <p className="mb-5 text-[11px] font-mono uppercase tracking-[0.3em] text-[#7fffd4]/60">
             Arcanea Products
           </p>
-          <h1 className="font-[family-name:var(--font-display)] text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="font-display text-4xl font-bold leading-[1.08] tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl">
             Infrastructure for the
             <br />
-            <span className="bg-gradient-to-r from-[#7fffd4] via-[#78a6ff] to-[#ffd700] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
               Agent Economy
             </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/50">
-            Memory. Skills. Identity. Creative APIs. One platform.
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/40 leading-relaxed font-body">
+            Memory. Skills. Identity. Creative APIs. World Engine. One platform.
           </p>
 
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <div className="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/docs"
-              className="inline-flex items-center gap-2 rounded-xl bg-[#7fffd4] px-6 py-3 text-sm font-semibold text-gray-950 transition hover:bg-[#7fffd4]/90"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#7fffd4] to-[#00bcd4] px-7 py-3.5 text-sm font-semibold text-[#09090b] transition hover:shadow-[0_0_40px_rgba(127,255,212,0.25)] hover:scale-[1.02] active:scale-[0.98]"
             >
               Get Started Free
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -262,6 +272,19 @@ export default function ProductsPage(): JSX.Element {
               </svg>
             </Link>
             <CopyCommandBlock command="npx @arcanea/cli init" />
+          </div>
+
+          {/* Trust metrics */}
+          <div className="flex items-center justify-center gap-6 md:gap-10 mt-14">
+            {STATS.map((stat, i) => (
+              <div key={stat.label} className="flex items-center gap-6">
+                {i > 0 && <span className="w-px h-4 bg-white/[0.06]" />}
+                <div className="text-center">
+                  <span className="text-lg font-display font-bold bg-gradient-to-b from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">{stat.value}</span>
+                  <span className="text-[10px] text-white/25 ml-1.5 font-mono uppercase tracking-wider">{stat.label}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -274,39 +297,26 @@ export default function ProductsPage(): JSX.Element {
           </div>
         </section>
 
-        {/* ── Social Proof ──────────────────────────────────────────── */}
-        <section className="mb-24">
-          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-10 text-center backdrop-blur-sm">
-            <p className="mb-2 font-[family-name:var(--font-display)] text-2xl font-semibold text-white">
-              Trusted by 1,000+ AI agents
-            </p>
-            <p className="mb-8 text-sm text-white/40">
-              From solo developers to enterprise swarms
-            </p>
-            <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-              {STATS.map((stat) => (
-                <div key={stat.label} className="flex flex-col items-center gap-1">
-                  <span className="font-[family-name:var(--font-display)] text-3xl font-bold text-[#7fffd4]">
-                    {stat.value}
-                  </span>
-                  <span className="text-sm text-white/50">{stat.label}</span>
-                </div>
-              ))}
+        {/* ── Bottom CTA ────────────────────────────────────────────── */}
+        <section className="text-center py-16">
+          <div className="relative rounded-3xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-[#00bcd4]/10 via-[#7c3aed]/8 to-[#ffd700]/10" />
+            <div className="absolute inset-0 bg-white/[0.02]" />
+            <div className="relative p-12 md:p-16">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 tracking-[-0.02em]">
+                One command. Everything your agent needs.
+              </h2>
+              <p className="text-base text-white/40 mb-8 max-w-lg mx-auto">
+                Memory, skills, identity, creative APIs — all wired up and ready to go.
+              </p>
+              <div className="flex justify-center mb-4">
+                <CopyCommandBlock command="npx @arcanea/cli init" />
+              </div>
+              <p className="mt-6 text-[11px] font-mono text-white/20 tracking-wider">
+                Free to start. Scale as you grow. MIT licensed.
+              </p>
             </div>
           </div>
-        </section>
-
-        {/* ── Bottom CTA ────────────────────────────────────────────── */}
-        <section className="text-center">
-          <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-white sm:text-3xl">
-            One command. Everything your agent needs.
-          </h2>
-          <div className="mt-6 flex justify-center">
-            <CopyCommandBlock command="npx @arcanea/cli init" />
-          </div>
-          <p className="mt-6 text-sm text-white/30">
-            Free to start. Scale as you grow.
-          </p>
         </section>
       </main>
     </div>

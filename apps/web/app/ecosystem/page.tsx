@@ -4,6 +4,13 @@ import { LiquidGlass } from "@/components/motion/liquid-glass";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal } from "@/components/motion/reveal";
 import { LayerCards } from "./layer-cards";
+import {
+  FloatingOrbs,
+  GridTexture,
+  AuroraGradient,
+  StatCard,
+  SovereigntyBadge,
+} from "@/components/premium";
 
 // ─── Inline SVG Icons ─────────────────────────────────────────────────────────
 
@@ -177,8 +184,9 @@ export default function EcosystemHubPage() {
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-[#09090b]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(127,255,212,0.06),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(120,166,255,0.04),transparent_55%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.012)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.012)_1px,transparent_1px)] bg-[size:80px_80px]" />
+        <FloatingOrbs preset="aurora" className="fixed" />
+        <AuroraGradient />
+        <GridTexture variant="dots" opacity={0.018} />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20">
@@ -190,15 +198,19 @@ export default function EcosystemHubPage() {
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#ffd700]/4 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="relative max-w-3xl">
+              <div className="mb-6">
+                <SovereigntyBadge />
+              </div>
+
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#7fffd4]/30 bg-[#7fffd4]/10 mb-8">
                 <IconGitBranch className="w-4 h-4 text-[#7fffd4]" />
                 <span className="text-xs font-mono tracking-widest uppercase text-[#7fffd4]">Ecosystem Hub</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight text-white tracking-tight">
-                <SplitText as="span" text="27 repos." className="text-white" delay={0.1} stagger={0.04} />
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight tracking-tight">
+                <SplitText as="span" text="27 repos." className="bg-gradient-to-r from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent" delay={0.1} stagger={0.04} />
                 {" "}
-                <SplitText as="span" text="One ecosystem." className="bg-gradient-to-r from-[#7fffd4] via-[#78a6ff] to-[#ffd700] bg-clip-text text-transparent" delay={0.5} stagger={0.04} />
+                <SplitText as="span" text="One ecosystem." className="text-white" delay={0.5} stagger={0.04} />
               </h1>
 
               <p className="text-lg text-white/50 leading-relaxed max-w-2xl mb-10">
@@ -207,12 +219,15 @@ export default function EcosystemHubPage() {
                 and ready to fork.
               </p>
 
-              <div className="flex flex-wrap gap-8 mb-10">
-                {STATS.map((s) => (
-                  <div key={s.label}>
-                    <p className="text-2xl font-display font-bold text-[#7fffd4]">{s.value}</p>
-                    <p className="text-xs font-mono text-white/30 uppercase tracking-wider">{s.label}</p>
-                  </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+                {STATS.map((s, i) => (
+                  <StatCard
+                    key={s.label}
+                    value={s.value}
+                    label={s.label}
+                    color={i % 2 === 0 ? "#7fffd4" : "#00bcd4"}
+                    delay={i * 0.08}
+                  />
                 ))}
               </div>
 
@@ -232,6 +247,9 @@ export default function EcosystemHubPage() {
           </div>
         </section>
 
+        {/* ── Divider ──────────────────────────────────────────────────── */}
+        <div className="mb-20 h-px bg-gradient-to-r from-transparent via-[#7fffd4]/20 to-transparent" />
+
         {/* ── Architecture Overview ────────────────────────────────────── */}
         <section className="mb-20" aria-labelledby="arch-heading">
           <div className="mb-10">
@@ -242,6 +260,9 @@ export default function EcosystemHubPage() {
 
           <LayerCards layers={LAYERS} />
         </section>
+
+        {/* ── Divider ──────────────────────────────────────────────────── */}
+        <div className="mb-20 h-px bg-gradient-to-r from-transparent via-[#00bcd4]/15 to-transparent" />
 
         {/* ── Repository Map ───────────────────────────────────────────── */}
         <section className="mb-20" aria-labelledby="repos-heading">

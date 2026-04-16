@@ -2,11 +2,18 @@
 
 import { useState, useMemo } from "react";
 import { m, LazyMotion, domAnimation } from "framer-motion";
-import { CosmicParticles } from "@/components/magic/particles";
-import { TextReveal, AuroraText, GradientText } from "@/components/magic/text-reveal";
 import { AgentCard, type AgentCardProps } from "@/components/agents/agent-card";
 import { CreditBadge } from "@/components/agents/credit-badge";
 import { PremiumCard, PREMIUM_PRODUCTS } from "@/components/agents/premium-card";
+import {
+  SectionShell,
+  SectionHeader,
+  FeatureCard,
+  FeatureIcon,
+  StatCard,
+  FloatingOrbs,
+  GridTexture,
+} from "@/components/premium";
 
 // ---------------------------------------------------------------------------
 // Catalog — inline until @/lib/agents/marketplace/catalog is available
@@ -296,10 +303,10 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
 ];
 
 const CATEGORY_TABS: { key: AgentCategory; label: string }[] = [
-  { key: "all",         label: "All Agents" },
+  { key: "all",         label: "All" },
   { key: "writing",     label: "Writing" },
   { key: "creative",    label: "Creative" },
-  { key: "development", label: "Development" },
+  { key: "development", label: "Dev" },
   { key: "knowledge",   label: "Knowledge" },
   { key: "music",       label: "Music" },
   { key: "visual",      label: "Visual" },
@@ -307,14 +314,54 @@ const CATEGORY_TABS: { key: AgentCategory; label: string }[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// Search input
+// How It Works steps
+// ---------------------------------------------------------------------------
+
+const HOW_IT_WORKS = [
+  {
+    number: "01",
+    title: "Choose",
+    description: "Pick a Luminor for your creative domain. Each one is trained for a specific craft — story, music, code, art.",
+    color: "#7fffd4",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    ),
+  },
+  {
+    number: "02",
+    title: "Create",
+    description: "Describe your project in plain language. The Luminor generates, iterates, and refines with you in real time.",
+    color: "#00bcd4",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
+  },
+  {
+    number: "03",
+    title: "Own",
+    description: "Your creations are yours. Export anytime — markdown, PDF, EPUB, or raw text. No lock-in, ever.",
+    color: "#ffd700",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+    ),
+  },
+];
+
+// ---------------------------------------------------------------------------
+// SearchInput
 // ---------------------------------------------------------------------------
 
 function SearchInput({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   return (
     <div className="relative max-w-lg mx-auto">
       <svg
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 pointer-events-none"
+        className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/25 pointer-events-none"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -326,8 +373,8 @@ function SearchInput({ value, onChange }: { value: string; onChange: (v: string)
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Search agents by name or skill..."
-        className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white placeholder:text-white/30 focus:outline-none focus:border-[#7fffd4]/50 focus:ring-1 focus:ring-[#7fffd4]/20 transition-all backdrop-blur-sm"
+        placeholder="Search by name or skill..."
+        className="w-full pl-11 pr-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.07] text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[#7fffd4]/40 focus:ring-1 focus:ring-[#7fffd4]/15 transition-all backdrop-blur-sm"
         aria-label="Search agents"
       />
     </div>
@@ -371,7 +418,7 @@ export default function AgentsMarketplacePage() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="min-h-screen bg-gray-950 text-white">
+      <div className="min-h-screen bg-[#09090b] text-white">
         {/* JSON-LD */}
         <script
           type="application/ld+json"
@@ -389,157 +436,141 @@ export default function AgentsMarketplacePage() {
           }}
         />
 
-        {/* ── Hero ────────────────────────────────────────────────── */}
-        <section className="relative pt-32 pb-20 overflow-hidden">
-          <CosmicParticles />
+        {/* ── Hero ──────────────────────────────────────────────────── */}
+        <section className="relative pt-28 pb-20 overflow-hidden" aria-labelledby="hero-heading">
+          <FloatingOrbs preset="cosmic" />
+          <GridTexture variant="dots" opacity={0.018} />
 
-          {/* Background orbs */}
-          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#7fffd4]/8 rounded-full blur-3xl animate-float pointer-events-none" aria-hidden="true" />
-          <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-[#78a6ff]/8 rounded-full blur-3xl animate-float-slow pointer-events-none" aria-hidden="true" />
-          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-[#ffd700]/5 rounded-full blur-3xl animate-pulse pointer-events-none" aria-hidden="true" />
-
-          <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-            {/* Credit balance badge */}
+          {/* Top strip — credit badge */}
+          <div className="relative z-10 max-w-6xl mx-auto px-6">
             <m.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="flex justify-center mb-6"
+              transition={{ duration: 0.45 }}
+              className="flex justify-center mb-8"
             >
               <CreditBadge balance={creditBalance} size="md" />
             </m.div>
 
-            <m.div
+            {/* Label */}
+            <m.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.05 }}
+              className="text-center text-[11px] font-mono tracking-[0.3em] uppercase text-white/30 mb-5"
+            >
+              Agents Marketplace
+            </m.p>
+
+            {/* Headline */}
+            <m.h1
+              id="hero-heading"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.05 }}
+              transition={{ duration: 0.65, delay: 0.1 }}
+              className="text-center text-4xl sm:text-5xl md:text-7xl font-display font-bold tracking-[-0.03em] leading-[1.05] mb-6"
             >
-              <p className="text-[#7fffd4] font-mono text-sm tracking-widest mb-4 uppercase">
-                Agents Marketplace
-              </p>
+              <span
+                className="bg-gradient-to-br from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent"
+              >
+                Meet the Luminors
+              </span>
+            </m.h1>
 
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6">
-                <span className="text-white">AI That </span>
-                <AuroraText>Creates</AuroraText>
-                <br />
-                <span className="text-white">For You</span>
-              </h1>
+            {/* Subtitle */}
+            <m.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.18 }}
+              className="text-center text-base md:text-xl text-white/50 max-w-2xl mx-auto mb-14 leading-relaxed font-body"
+            >
+              16 specialized AI minds trained on 190K words of original philosophy.
+              Not generic chatbots — creative specialists.
+            </m.p>
 
-              <p className="text-xl md:text-2xl text-white/60 max-w-3xl mx-auto mb-4">
-                {AGENTS_CATALOG.length} specialized agents ready to write, build, compose, and design
-              </p>
-
-              <p className="text-white/40 max-w-2xl mx-auto mb-10">
-                Each agent is aligned to one of the Five Elements and trained on a specific creative domain.
-                Spend credits, get extraordinary output.
-              </p>
-            </m.div>
-
-            {/* Stats */}
+            {/* Stats row */}
             <m.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.26 }}
               className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
             >
-              {[
-                { value: String(AGENTS_CATALOG.length), label: "Agents" },
-                { value: "5", label: "Elements" },
-                { value: totalRuns.toLocaleString(), label: "Total Runs" },
-                { value: String(creditBalance), label: "Your Credits" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <div className="text-3xl md:text-4xl font-display font-bold text-[#7fffd4]">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-white/40 mt-1">{stat.label}</div>
-                </div>
-              ))}
+              <StatCard value="16" label="Luminors" color="#7fffd4" delay={0.3} />
+              <StatCard value="6" label="Domains" color="#00bcd4" delay={0.36} />
+              <StatCard value="190K+" label="Training words" color="#78a6ff" delay={0.42} />
+              <StatCard value="4.8" label="Avg rating" color="#ffd700" delay={0.48} />
             </m.div>
           </div>
         </section>
 
-        {/* ── Premium Experiences ─────────────────────────────────── */}
-        <section className="py-16 relative" aria-labelledby="premium-heading">
-          {/* Subtle background wash */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(127,255,212,0.03) 0%, transparent 70%)",
-            }}
-            aria-hidden="true"
-          />
-
-          <div className="relative z-10 max-w-5xl mx-auto px-6">
-            <m.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-10"
-            >
-              <p className="text-[#ffd700] font-mono text-xs tracking-widest uppercase mb-3">
-                Premium Experiences
-              </p>
-              <h2
-                id="premium-heading"
-                className="text-3xl md:text-4xl font-display font-bold text-white mb-3"
-              >
-                Beyond the Agent Grid
-              </h2>
-              <p className="text-white/50 max-w-xl mx-auto">
-                Full-service creative intelligence for creators who want more than a single run.
-              </p>
-            </m.div>
+        {/* ── Premium Experiences ────────────────────────────────────── */}
+        <SectionShell ambient="gold" grid size="compact" id="premium">
+          <div className="max-w-5xl mx-auto px-6">
+            <SectionHeader
+              label="Premium Experiences"
+              title="Beyond the Agent Grid"
+              subtitle="Full-service creative intelligence for creators who want more than a single run."
+              accent="gold"
+            />
 
             <div className="flex flex-col gap-5">
               {PREMIUM_PRODUCTS.map((product, i) => (
                 <m.div
                   key={product.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
                 >
                   <PremiumCard {...product} />
                 </m.div>
               ))}
             </div>
           </div>
-        </section>
+        </SectionShell>
 
-        {/* ── Divider ─────────────────────────────────────────────── */}
-        <div className="max-w-5xl mx-auto px-6 py-4" role="separator" aria-hidden="true">
+        {/* ── Divider ─────────────────────────────────────────────────── */}
+        <div className="max-w-5xl mx-auto px-6 py-2" role="separator" aria-hidden="true">
           <div className="flex items-center gap-4">
-            <div className="flex-1 h-px bg-white/[0.06]" />
-            <span className="text-white/30 text-sm font-medium whitespace-nowrap">
-              Or run individual agents
+            <div className="flex-1 h-px bg-white/[0.05]" />
+            <span className="text-white/20 text-xs font-mono tracking-widest uppercase whitespace-nowrap">
+              or run individual agents
             </span>
-            <div className="flex-1 h-px bg-white/[0.06]" />
+            <div className="flex-1 h-px bg-white/[0.05]" />
           </div>
         </div>
 
-        {/* ── Featured agents ─────────────────────────────────────── */}
+        {/* ── Featured agents ─────────────────────────────────────────── */}
         {featuredAgents.length > 0 && (
-          <section className="pb-12 bg-white/[0.01]">
+          <section className="py-12" aria-labelledby="featured-heading">
             <div className="max-w-7xl mx-auto px-6">
-              <TextReveal className="mb-8">
-                <div className="flex items-center gap-3">
-                  <svg className="w-4 h-4 text-[#ffd700]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <h2 className="text-lg font-semibold text-[#ffd700]">Featured</h2>
-                </div>
-              </TextReveal>
+              <m.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="flex items-center gap-2 mb-6"
+              >
+                <svg className="w-4 h-4 text-[#ffd700]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+                <h2 id="featured-heading" className="text-sm font-semibold text-[#ffd700] tracking-wide uppercase">
+                  Featured
+                </h2>
+              </m.div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {featuredAgents.map((agent, i) => (
                   <m.div
                     key={agent.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 28 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: i * 0.1 }}
                     className="h-full"
                   >
-                    <AgentCard {...agent} />
+                    <FeatureCard glowColor={agent.color} delay={i * 0.1} compact className="h-full p-0">
+                      <AgentCard {...agent} />
+                    </FeatureCard>
                   </m.div>
                 ))}
               </div>
@@ -547,19 +578,27 @@ export default function AgentsMarketplacePage() {
           </section>
         )}
 
-        {/* ── Catalog section ─────────────────────────────────────── */}
-        <section className="py-16">
+        {/* ── Catalog section ──────────────────────────────────────────── */}
+        <section className="py-16" id="catalog" aria-labelledby="catalog-heading">
           <div className="max-w-7xl mx-auto px-6">
-            <TextReveal className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-2">
-                Browse <GradientText>Agents</GradientText>
+            <m.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-center mb-10"
+            >
+              <h2 id="catalog-heading" className="text-3xl md:text-4xl font-display font-bold mb-2">
+                <span className="bg-gradient-to-r from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
+                  Browse Agents
+                </span>
               </h2>
-              <p className="text-white/50">
+              <p className="text-white/40 text-sm font-body">
                 Filter by specialization or search for exactly what you need
               </p>
-            </TextReveal>
+            </m.div>
 
-            {/* Category tabs */}
+            {/* Category tabs — glass pills */}
             <div className="flex flex-wrap justify-center gap-2 mb-8" role="tablist" aria-label="Agent categories">
               {CATEGORY_TABS.map((tab) => {
                 const isActive = activeCategory === tab.key;
@@ -572,17 +611,23 @@ export default function AgentsMarketplacePage() {
                     role="tab"
                     aria-selected={isActive}
                     onClick={() => setActiveCategory(tab.key)}
-                    className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]/60 ${
-                      isActive
-                        ? "bg-gradient-to-r from-[#7fffd4]/20 to-[#78a6ff]/20 border-[#7fffd4]/40 text-[#7fffd4] shadow-lg shadow-[#7fffd4]/10"
-                        : "border-white/[0.08] text-white/50 hover:text-white/80 hover:border-white/[0.15] hover:bg-white/[0.03]"
-                    }`}
+                    className={`
+                      inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium
+                      border backdrop-blur-sm transition-all duration-200
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]/50
+                      ${isActive
+                        ? "bg-[#7fffd4]/[0.12] border-[#7fffd4]/30 text-[#7fffd4] shadow-[0_0_12px_rgba(127,255,212,0.12)]"
+                        : "bg-white/[0.03] border-white/[0.07] text-white/40 hover:text-white/70 hover:border-white/[0.12] hover:bg-white/[0.06]"
+                      }
+                    `}
                   >
-                    <span className="flex items-center gap-2">
-                      {tab.label}
-                      <span className={`text-[10px] font-mono rounded-full px-1.5 py-0.5 ${isActive ? "bg-[#7fffd4]/20 text-[#7fffd4]" : "bg-white/5 text-white/30"}`}>
-                        {count}
-                      </span>
+                    {tab.label}
+                    <span
+                      className={`text-[9px] font-mono rounded-full px-1.5 py-0.5 min-w-[18px] text-center tabular-nums ${
+                        isActive ? "bg-[#7fffd4]/20 text-[#7fffd4]" : "bg-white/[0.05] text-white/25"
+                      }`}
+                    >
+                      {count}
                     </span>
                   </button>
                 );
@@ -601,24 +646,24 @@ export default function AgentsMarketplacePage() {
                   {filteredAgents.map((agent, i) => (
                     <m.div
                       key={agent.id}
-                      initial={{ opacity: 0, y: 30 }}
+                      initial={{ opacity: 0, y: 28 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: Math.min(i * 0.05, 0.3) }}
+                      transition={{ duration: 0.4, delay: Math.min(i * 0.04, 0.28) }}
                       className="h-full"
                     >
                       <AgentCard {...agent} />
                     </m.div>
                   ))}
                 </div>
-                <p className="text-center text-sm text-white/30 mt-8">
-                  Showing {filteredAgents.length} of {AGENTS_CATALOG.length} agents
+                <p className="text-center text-xs text-white/20 font-mono mt-8">
+                  {filteredAgents.length} of {AGENTS_CATALOG.length} agents
                 </p>
               </>
             ) : (
               <div className="text-center py-20">
                 <svg
-                  className="w-16 h-16 mx-auto text-white/20 mb-4"
+                  className="w-12 h-12 mx-auto text-white/15 mb-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -626,10 +671,10 @@ export default function AgentsMarketplacePage() {
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-                <p className="text-white/40 text-lg">No agents match your search.</p>
+                <p className="text-white/30 text-base mb-4">No agents match your search.</p>
                 <button
                   onClick={() => { setSearchQuery(""); setActiveCategory("all"); }}
-                  className="mt-4 text-sm text-[#7fffd4] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]/60 rounded"
+                  className="text-sm text-[#7fffd4] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]/50 rounded"
                 >
                   Clear filters
                 </button>
@@ -638,42 +683,117 @@ export default function AgentsMarketplacePage() {
           </div>
         </section>
 
-        {/* ── CTA ─────────────────────────────────────────────────── */}
-        <section className="py-24 bg-white/[0.02] relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#7fffd4]/5 via-transparent to-[#78a6ff]/5 pointer-events-none" aria-hidden="true" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#7fffd4]/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+        {/* ── How Luminors Work ────────────────────────────────────────── */}
+        <SectionShell ambient="teal" grid size="compact" id="how-it-works">
+          <div className="max-w-5xl mx-auto px-6">
+            <SectionHeader
+              label="How it works"
+              title="Three steps to creation"
+              subtitle="From first idea to finished work — Luminors guide you at every stage."
+              accent="teal"
+            />
+
+            {/* 3-step flow */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+              {/* Connecting lines — visible on md+ */}
+              <div className="hidden md:block absolute top-10 left-[calc(33.33%+1.5rem)] right-[calc(33.33%+1.5rem)] h-px" aria-hidden="true">
+                <div className="h-full bg-gradient-to-r from-[#7fffd4]/20 via-[#00bcd4]/30 to-[#7fffd4]/20" />
+              </div>
+
+              {HOW_IT_WORKS.map((step, i) => (
+                <FeatureCard
+                  key={step.number}
+                  glowColor={step.color}
+                  delay={i * 0.15}
+                  compact
+                >
+                  {/* Numbered badge */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div
+                      className="inline-flex items-center justify-center w-9 h-9 rounded-xl text-sm font-mono font-bold shrink-0"
+                      style={{
+                        background: `${step.color}14`,
+                        border: `1px solid ${step.color}22`,
+                        color: step.color,
+                      }}
+                    >
+                      {step.number}
+                    </div>
+                    <FeatureIcon color={step.color} size="sm">
+                      {step.icon}
+                    </FeatureIcon>
+                  </div>
+
+                  <h3
+                    className="text-lg font-display font-bold mb-2"
+                    style={{ color: step.color }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-white/50 leading-relaxed font-body">
+                    {step.description}
+                  </p>
+                </FeatureCard>
+              ))}
+            </div>
+          </div>
+        </SectionShell>
+
+        {/* ── CTA ─────────────────────────────────────────────────────── */}
+        <section className="py-24 relative overflow-hidden" aria-labelledby="cta-heading">
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(0,188,212,0.05) 0%, transparent 70%)",
+            }}
+            aria-hidden="true"
+          />
+          <GridTexture variant="dots" opacity={0.015} />
+
           <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
-            <TextReveal>
-              <p className="text-[#7fffd4] font-mono text-sm tracking-widest mb-4 uppercase">Deploy Now</p>
-              <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
-                Your Creation <AuroraText>Awaits</AuroraText>
+            <m.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-white/25 mb-5">
+                Deploy Now
+              </p>
+              <h2
+                id="cta-heading"
+                className="text-3xl md:text-5xl font-display font-bold mb-5 tracking-[-0.02em]"
+              >
+                <span className="bg-gradient-to-br from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
+                  Your creation awaits
+                </span>
               </h2>
-              <p className="text-lg text-white/50 mb-8">
-                Pick an agent, describe what you want, and watch it come to life.
+              <p className="text-base text-white/40 mb-10 max-w-lg mx-auto font-body leading-relaxed">
+                Pick a Luminor, describe what you want, and watch it come to life.
                 Each run uses credits — top up anytime.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <m.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                  <button
-                    onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" })}
-                    className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#7fffd4] to-[#78a6ff] text-gray-950 font-bold rounded-xl shadow-lg shadow-[#7fffd4]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]/60"
-                  >
-                    Browse All Agents
-                  </button>
-                </m.div>
-                <m.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                  <a
-                    href="/pricing"
-                    className="inline-flex items-center gap-2 px-8 py-4 border-2 border-[#7fffd4]/40 text-[#7fffd4] font-bold rounded-xl hover:bg-[#7fffd4]/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]/60"
-                  >
-                    Get Credits
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </a>
-                </m.div>
+                <m.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" })}
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#7fffd4] to-[#00bcd4] text-[#09090b] font-semibold text-sm rounded-xl shadow-[0_0_24px_rgba(127,255,212,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]/60 transition-shadow hover:shadow-[0_0_32px_rgba(127,255,212,0.3)]"
+                >
+                  Browse All Agents
+                </m.button>
+                <m.a
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  href="/pricing"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-[#7fffd4]/25 text-[#7fffd4] font-semibold text-sm rounded-xl hover:bg-[#7fffd4]/[0.06] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]/60"
+                >
+                  Get Credits
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </m.a>
               </div>
-            </TextReveal>
+            </m.div>
           </div>
         </section>
       </div>
