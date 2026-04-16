@@ -88,4 +88,11 @@ created: $TIMESTAMP
 $SUMMARY
 VAULTEOF
 
+# ── Bridge to Starlight Vaults (append session entry) ──
+STARLIGHT_DIR="$HOME/.starlight/vaults"
+if [ -d "$STARLIGHT_DIR" ]; then
+  SESSION_ENTRY="{\"id\":\"ops_$(date +%Y%m%d_%H%M%S)\",\"insight\":\"$GUARDIAN session: $TOOL_COUNT tools, ${ZONE} context. ${ROUTING_COUNT} routing decisions.\",\"category\":\"session\",\"confidence\":\"high\",\"source\":\"session-end-hook\",\"createdAt\":\"$TIMESTAMP\"}"
+  echo "$SESSION_ENTRY" >> "$STARLIGHT_DIR/operational.jsonl"
+fi
+
 echo "Session archived. $SUMMARY"

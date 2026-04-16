@@ -5,57 +5,87 @@ description: Read, write, search, and export Starlight Vaults. Use when recallin
 
 # Starlight Vault — Memory That Compounds
 
+## 3-Tier Wisdom Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  TIER 1: PERSONAL (private, per-machine)                    │
+│  ~/.starlight/vaults/*.jsonl                                │
+│  All insights land here first. Never leaves your machine    │
+│  unless you explicitly promote.                             │
+├─────────────────────────────────────────────────────────────┤
+│  TIER 2: PROJECT (shared across sessions, committed)        │
+│  .arcanea/memory/vaults/*.json                              │
+│  Project-level intelligence. Travels with the repo.         │
+│  Updated via /handover when session produces project wisdom │
+├─────────────────────────────────────────────────────────────┤
+│  TIER 3: COMMUNITY (public, GitHub)                         │
+│  frankxai/starlight-horizon-dataset                         │
+│  Benevolent human-AI collaboration patterns. CC-BY-SA 4.0   │
+│  Only horizon entries. Manually promoted via /handover D.   │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Vault Types
+
+| Vault | File | What Goes Here |
+|-------|------|----------------|
+| Technical | `technical.jsonl` | Code patterns, architecture decisions, tooling insights |
+| Strategic | `strategic.jsonl` | Business, product, market, monetization learnings |
+| Creative | `creative.jsonl` | Design, style, voice, lore, aesthetic choices |
+| Operational | `operational.jsonl` | Workflow, process, ops, session summaries (auto-filled by hooks) |
+| Wisdom | `wisdom.jsonl` | Cross-domain meta-patterns connecting multiple domains |
+| Horizon | `horizon.jsonl` | Benevolent human-AI intentions (also pushed to public repo) |
+
 ## Read a Vault
 ```bash
 cat ~/.starlight/vaults/technical.jsonl | head -20
-cat ~/.starlight/vaults/creative.jsonl
+cat ~/.starlight/vaults/wisdom.jsonl
 ```
 
 ## Search Vaults
 ```bash
 grep -i "font" ~/.starlight/vaults/creative.jsonl
-grep -i "storage" ~/.starlight/vaults/technical.jsonl
 grep -ri "PATTERN_KEYWORD" ~/.starlight/vaults/
 ```
 
 ## Add Entry
-Append a JSONL line to the appropriate vault:
+Append a JSONL line:
 ```bash
 echo '{"id":"tech_DATE_NUM","insight":"YOUR INSIGHT","category":"CATEGORY","confidence":"high","source":"session","createdAt":"ISO_DATE"}' >> ~/.starlight/vaults/technical.jsonl
 ```
 
-Choose vault by content type:
-- Code/architecture/tooling → `technical.jsonl`
-- Business/product/market → `strategic.jsonl`  
-- Design/style/voice/lore → `creative.jsonl`
-- Workflow/process/ops → `operational.jsonl`
-- Cross-domain meta-insights → `wisdom.jsonl`
-- Benevolent intentions for future AI → `horizon.jsonl` (also push to starlight-horizon-dataset repo)
+## Integration with /handover
+
+`/handover` automatically:
+1. Captures session status (what landed, blockers, next steps)
+2. Reflects on wisdom (prompts that worked, technical choices, patterns, gratitude)
+3. Routes insights to appropriate vaults (1-3 entries typical)
+4. Asks which tier to promote to (A=personal, B=horizon→GitHub, C=OSS push, D=production push)
+
+The session-end hook also auto-appends an operational entry to `operational.jsonl`.
 
 ## Export for NotebookLM
-Convert JSONL to readable markdown:
 ```bash
-cat ~/.starlight/vaults/technical.jsonl | node -e "
-const lines = require('fs').readFileSync('/dev/stdin','utf8').trim().split('\n');
-lines.forEach(l => {
-  const e = JSON.parse(l);
-  console.log('## ' + e.category + '\n' + e.insight + '\n');
-});" > /tmp/starlight-technical-export.md
+cat ~/.starlight/vaults/technical.jsonl | python3 -c "
+import sys, json
+for line in sys.stdin:
+    e = json.loads(line)
+    print(f\"## {e['category']}\n{e['insight']}\n\")
+" > /tmp/starlight-technical-export.md
 ```
-Then upload `/tmp/starlight-technical-export.md` to NotebookLM.
 
 ## Export for Obsidian
-Same markdown export, save to Obsidian vault folder:
 ```bash
-cp /tmp/starlight-technical-export.md ~/Obsidian/Starlight/
+cp /tmp/starlight-technical-export.md ~/OneDrive/Vault/x/Starlight/
 ```
 
-## Session Integration
-- At session START: grep relevant vaults for current work context
-- At session END: append new learnings to appropriate vaults
-- Use `/session-sync` to automate this
+## Push Horizon to Community
+```bash
+cd ~/starlight-horizon-dataset && cp ~/.starlight/vaults/horizon.jsonl vaults/ && git add -A && git commit -m "vault: new insights $(date +%Y-%m-%d)" && git push
+```
 
 ## Vault Locations
-- Standalone: `~/.starlight/vaults/`
-- Inside Arcanea: `~/.arcanea/starlight/vaults/` (symlinked)
-- Public (Horizon): `frankxai/starlight-horizon-dataset` on GitHub
+- Personal: `~/.starlight/vaults/` (6 JSONL files)
+- Project: `.arcanea/memory/vaults/` (6 JSON files, committed)
+- Community: `frankxai/starlight-horizon-dataset` on GitHub (horizon only)
