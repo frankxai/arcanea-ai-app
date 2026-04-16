@@ -1,3 +1,5 @@
+import type { ComponentType } from "react";
+import type { IconProps } from "@phosphor-icons/react";
 import {
   Chat,
   Globe,
@@ -9,6 +11,8 @@ import {
   Sparkle,
   MusicNote,
 } from "@/lib/phosphor-icons";
+
+type IconComponent = ComponentType<IconProps>;
 
 // ---------------------------------------------------------------------------
 // Stat types
@@ -33,7 +37,7 @@ export interface PrimaryChannel {
   color: string;
   cta: string;
   href: string;
-  icon: React.ComponentType<{ className?: string; weight?: string }>;
+  icon: IconComponent;
   badge: string;
 }
 
@@ -333,7 +337,7 @@ export interface Contest {
   urgent: boolean;
   channel: string;
   color: string;
-  icon: React.ComponentType<{ className?: string; weight?: string }>;
+  icon: IconComponent;
 }
 
 export const CONTESTS: Contest[] = [

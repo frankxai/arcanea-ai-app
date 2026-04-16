@@ -32,12 +32,13 @@ const footerLinks = {
   build: {
     label: "Build",
     links: [
+      { href: "/protocol", label: "Protocol" },
+      { href: "/apps", label: "Apps" },
       { href: "/integrations", label: "Integrations" },
+      { href: "/storage", label: "Storage" },
       { href: "/distribute", label: "Distribute" },
-      { href: "/creator-economy", label: "Creator Economy" },
-      { href: "/ecosystem", label: "Ecosystem" },
+      { href: "/teams", label: "Teams" },
       { href: "/developers", label: "Developers" },
-      { href: "/docs/mcp", label: "MCP Docs" },
       { href: "https://github.com/frankxai", label: "GitHub", external: true },
     ],
   },

@@ -20,3 +20,9 @@ export {
 } from "./integration-grid";
 export { RevenueStreamCard, type RevenueStream } from "./revenue-stream-card";
 export { StackLayerDiagram } from "./stack-layer-diagram";
+export { DropZone } from "./drop-zone";
+export { ProtocolLayerStack } from "./protocol-layer-stack";
+export { IdentityCard, type LinkedIdentity, type IdentityCardProps } from "./identity-card";
+export { TeamCard, type TeamCardProps } from "./team-card";
+export { AppTile, type AppTileProps } from "./app-tile";
+export { RepoGrid, REPOS, type Repo } from "./repo-grid";

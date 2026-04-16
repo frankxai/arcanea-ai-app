@@ -96,7 +96,7 @@ const navLinks: NavLink[] = [
   {
     href: "/academy",
     label: "Learn",
-    also: ["/academy/courses", "/academy/gates", "/academy/houses", "/quiz", "/skills"],
+    also: ["/academy/courses", "/academy/gates", "/academy/houses", "/quiz", "/skills", "/docs/mcp", "/ecosystem", "/protocol", "/apps", "/teams", "/storage"],
     mega: [
       {
         title: "Academy",
@@ -111,7 +111,10 @@ const navLinks: NavLink[] = [
         items: [
           { href: "/docs/mcp", label: "MCP Docs", desc: "Developer toolkit" },
           { href: "/ecosystem", label: "Ecosystem", desc: "Open source repos" },
-          { href: "/showcase", label: "Showcase", desc: "Engine demos" },
+          { href: "/protocol", label: "Protocol", desc: "Open standards spec" },
+          { href: "/apps", label: "Apps", desc: "Connector marketplace" },
+          { href: "/teams", label: "Teams", desc: "How we build" },
+          { href: "/storage", label: "Storage", desc: "Semantic memory" },
         ],
       },
     ],
