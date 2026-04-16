@@ -1,6 +1,11 @@
-# Short Status And Handover - 2026-04-16
+# Short Status And Handover - 2026-04-16 (Session 2)
 
-## What Landed
+## What Landed This Session
+
+- **OG image mascot fix shipped** — `d982b912` corrected path from `public/` (not bundled in OG function) to `assets/brand/` (auto-traced). Filename also fixed: `arcanea-mascot-primary.png` → `arcanea-primary.png`.
+- **Character strategy defined** — 3-tier doctrine: Arcanea (sole mascot) → 16 Luminors (each unique species) → Companions (community-ownable). Schema `arcanea-character.yaml` proposed. `/arcanea-character` skill scoped with 5 subcommands (new, visualize, canonize, claw, deploy).
+
+## What Landed Prior Session
 
 - `/templates` page now shows **9 blueprints** (was 7), zero "Coming Soon"
 - **5 GitHub repos live** — all public, all with LICENSE + CONTRIBUTING + GitHub Actions CI
@@ -12,7 +17,21 @@
 - Strategy doc rewritten for **free-first OSS** direction (no Founding Circle, LemonSqueezy+Whop deferred)
 - Frank's TODO doc at `docs/strategy/FRANK_TODO_WHEN_BACK.md` with exact commands
 
-## What Changed This Session
+## What Changed This Session (Session 2)
+
+**OG mascot fix commits:**
+- `6c3f955e` — fix(og): use correct mascot filename
+- `8851148c` — fix(og): declare nodejs runtime + correct path
+- `d982b912` — fix(og): read from assets/ (public/ not bundled)
+
+**Strategy discussed (not yet coded):**
+- 3-tier character doctrine (mascot / Luminor / companion)
+- `arcanea-character.yaml` schema for all characters
+- `/arcanea-character` skill with 5 subcommands
+- Claw × Character binding model
+- Community character layer (fork via `/arcanea-character new --world=<theirs>`)
+
+## What Changed Prior Session
 
 **Main repo (arcanea-ai-app) commits:**
 - `2df3faa3` — docs: update Frank's TODO with 5 repos
@@ -37,16 +56,26 @@
 
 ## Recommended Next Stack
 
-1. **Frank runs `vercel link && vercel --prod`** on 3 template repos → gets live preview URLs
-2. **Browser-test BYOK + Luminor selector** end-to-end on the live chat template
-3. **Strip Drizzle/Postgres from chat template** into opt-in `/with-db` branch — makes main branch zero-dep fork+deploy
-4. **Scaffold `arcanea-world-engine-template`** — unique, zero competition, uses Living Worlds data model
-5. **Draft launch posts** — X thread, HN Show HN, Reddit /r/nextjs, Vercel community forum
-6. **Set up GitHub Projects V2** — one board across all template repos
-7. **Submit templates to Vercel marketplace** — OG images already wired, metadata ready
+1. **Verify OG mascot renders on Vercel** — `curl -sI https://www.arcanea.ai/opengraph-image` after deploy completes, check file size > 100KB (mascot present) vs ~14KB (error fallback)
+2. **Scaffold arcanea-dashboard-template** in worktree — cosmic glass analytics, 6 widgets, MIT, deploy button
+3. **Build Gumroad listing copy** for Motion Kit Pro ($49) — ready for store
+4. **Wire Founding Circle checkout** in arcanea.ai (Stripe + Supabase user linkage)
+5. **OG image for cosmic-landing** in same pattern as chat template
+6. **Strip Drizzle/Postgres from chat template** into `/with-db` branch — zero-dep main for fork+deploy
+7. **Write `arcanea-character.yaml` schema** + migrate Arcanea mascot as first entry
+8. **Build `/arcanea-character visualize`** skill — reuse `generate-v6.mjs` pattern, NB2
+9. **Frank runs `vercel link && vercel --prod`** on template repos
+10. **Submit templates to Vercel marketplace**
 
 ## Verification Evidence
 
+**Session 2:**
+- **OG fix pushed**: `d982b912` on main, pre-push hooks passed
+- **Mascot image URL verified**: `curl -sI https://www.arcanea.ai/images/mascot/arcanea-primary.png` → 200 OK
+- **assets/brand/arcanea-mascot-primary.png** exists for OG function bundling
+- **Awaiting deploy**: OG render needs Vercel rebuild to verify mascot appears in share card
+
+**Session 1:**
 - **Main app build**: `✓ Compiled successfully in 51s` (after MCP Starter card added)
 - **Chat template build**: `✓ Compiled successfully in 33.6s` (after OG image added)
 - **Dashboard template build**: `✓ Compiled successfully in 4.6s` (static prerender)
