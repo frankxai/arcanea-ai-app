@@ -11,3 +11,12 @@ export { SovereigntyPillars, SovereigntyBadge } from "./sovereignty-pillars";
 export { ConnectedFlow, type FlowStep } from "./connected-flow";
 export { PersonasShowcase } from "./personas-showcase";
 export { LuminorTeamPreview } from "./luminor-team-preview";
+export { TemplateCard, StartBlankCard, type TemplateCardProps } from "./template-card";
+export {
+  IntegrationGrid,
+  INTEGRATIONS,
+  type Integration,
+  type IntegrationCategory,
+} from "./integration-grid";
+export { RevenueStreamCard, type RevenueStream } from "./revenue-stream-card";
+export { StackLayerDiagram } from "./stack-layer-diagram";

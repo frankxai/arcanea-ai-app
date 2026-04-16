@@ -33,7 +33,7 @@ const navLinks: NavLink[] = [
   {
     href: "/chat",
     label: "Create",
-    also: ["/imagine", "/studio", "/forge", "/agents", "/worlds", "/voice"],
+    also: ["/imagine", "/studio", "/forge", "/agents", "/worlds", "/voice", "/integrations", "/distribute"],
     mega: [
       {
         title: "Create",
@@ -51,12 +51,20 @@ const navLinks: NavLink[] = [
           { href: "/forge/companion", label: "Forge", desc: "Create your own" },
         ],
       },
+      {
+        title: "Ecosystem",
+        items: [
+          { href: "/create", label: "Create Hub", desc: "Start from a template" },
+          { href: "/integrations", label: "Integrations", desc: "Connect your stack" },
+          { href: "/distribute", label: "Distribute", desc: "Publish everywhere" },
+        ],
+      },
     ],
   },
   {
     href: "/gallery",
     label: "Explore",
-    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/showcase", "/models"],
+    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/showcase", "/models", "/community-hub", "/creator-economy"],
     mega: [
       {
         title: "Discover",
@@ -74,6 +82,13 @@ const navLinks: NavLink[] = [
           { href: "/lore/guardians", label: "Guardians", desc: "The Ten Gate-keepers" },
           { href: "/living-lore", label: "Chronicles", desc: "Interactive stories" },
           { href: "/glossary", label: "Glossary", desc: "Arcanean terminology" },
+        ],
+      },
+      {
+        title: "Community",
+        items: [
+          { href: "/community-hub", label: "Community Hub", desc: "Discord, Reddit, Whop" },
+          { href: "/creator-economy", label: "Creator Economy", desc: "7 ways to earn" },
         ],
       },
     ],
@@ -114,7 +129,7 @@ function MegaDropdown({ sections, onClose }: { sections: NavSection[]; onClose: 
       animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
       exit={{ opacity: 0, y: 6, scale: 0.98, filter: 'blur(4px)' }}
       transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-auto min-w-[480px]"
+      className={`absolute top-full left-1/2 -translate-x-1/2 mt-3 w-auto ${sections.length >= 3 ? "min-w-[660px]" : "min-w-[480px]"}`}
     >
       <div className="rounded-2xl bg-[#0a0e16]/80 backdrop-blur-2xl backdrop-saturate-150 border border-white/[0.08] shadow-[0_32px_80px_-12px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.03)_inset] overflow-hidden">
         <div className={`grid gap-0 divide-x divide-white/[0.06] p-1 ${

@@ -1,0 +1,470 @@
+"use client";
+
+import { useState } from "react";
+import { LazyMotion, domAnimation, m } from "framer-motion";
+import Link from "next/link";
+import {
+  SectionShell,
+  SectionHeader,
+  FeatureCard,
+  FloatingOrbs,
+  AuroraGradient,
+  TemplateCard,
+} from "@/components/premium";
+import { Reveal } from "@/components/motion/reveal";
+import { SplitText } from "@/components/motion/split-text";
+import { Magnetic } from "@/components/motion/magnetic";
+import {
+  TEMPLATE_DATA,
+  CATEGORY_FILTERS,
+  QUICK_START_ITEMS,
+  RECENT_MOCK,
+  type CategoryFilterId,
+} from "./create-templates";
+
+// ---------------------------------------------------------------------------
+// QuickStartCard — large colorful tile, Canva "start a design" style
+// ---------------------------------------------------------------------------
+
+function QuickStartCard({
+  label,
+  symbol,
+  description,
+  href,
+  gradient,
+  glowColor,
+  accentColor,
+  index,
+}: (typeof QUICK_START_ITEMS)[number] & { index: number }) {
+  return (
+    <m.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, delay: 0.05 * index, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <Link
+        href={href}
+        className="group relative flex flex-col items-center justify-center gap-3 rounded-2xl overflow-hidden aspect-square md:aspect-[4/3] border border-white/[0.06] hover:border-white/[0.15] transition-all duration-300 hover:scale-[1.02]"
+        style={{ background: `linear-gradient(135deg, var(--tw-gradient-stops))` }}
+      >
+        {/* Gradient background */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
+
+        {/* Ambient glow on hover */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
+          style={{
+            background: `radial-gradient(circle at 50% 60%, ${glowColor}18, transparent 70%)`,
+          }}
+        />
+
+        {/* Symbol */}
+        <div
+          className="relative z-10 w-12 h-12 rounded-xl flex items-center justify-center text-xl font-display font-bold transition-transform duration-300 group-hover:scale-110"
+          style={{
+            background: `${glowColor}15`,
+            border: `1px solid ${glowColor}25`,
+            color: accentColor,
+          }}
+        >
+          {symbol}
+        </div>
+
+        {/* Label */}
+        <div className="relative z-10 text-center px-3">
+          <p className="text-sm font-display font-semibold text-white/90 leading-tight">
+            {label}
+          </p>
+          <p
+            className="text-[10px] font-mono uppercase tracking-wider mt-0.5"
+            style={{ color: `${accentColor}80` }}
+          >
+            {description}
+          </p>
+        </div>
+
+        {/* Corner arrow */}
+        <span className="absolute top-3 right-3 text-white/20 text-xs transition-all duration-300 group-hover:text-white/60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+          ↗
+        </span>
+      </Link>
+    </m.div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// CategoryFilter pills
+// ---------------------------------------------------------------------------
+
+function CategoryFilter({
+  active,
+  onChange,
+}: {
+  active: CategoryFilterId;
+  onChange: (id: CategoryFilterId) => void;
+}) {
+  return (
+    <div className="flex items-center gap-2 flex-wrap">
+      {CATEGORY_FILTERS.map((f) => (
+        <button
+          key={f.id}
+          onClick={() => onChange(f.id)}
+          className={`px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-200 ${
+            active === f.id
+              ? "bg-[#00bcd4]/20 border border-[#00bcd4]/50 text-[#7fffd4]"
+              : "bg-white/[0.04] border border-white/[0.06] text-white/40 hover:border-white/[0.15] hover:text-white/70"
+          }`}
+        >
+          {f.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// BrandKitPreview
+// ---------------------------------------------------------------------------
+
+function BrandKitPreview() {
+  const swatches = ["#00bcd4", "#7fffd4", "#ffd700", "#0d47a1", "#09090b"];
+  return (
+    <FeatureCard glowColor="#ffd700" delay={0.1}>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        {/* Left: copy */}
+        <div className="flex-1">
+          <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#ffd700]/60 mb-2">
+            Brand Identity
+          </p>
+          <h3 className="text-xl font-display font-bold text-white/90 mb-2">
+            Your Brand Kit
+          </h3>
+          <p className="text-sm text-white/40 leading-relaxed max-w-sm">
+            Fonts, colors, voice, and visual identity. Every creation you make
+            stays consistent with your brand — automatically.
+          </p>
+          <div className="mt-4">
+            <Magnetic strength={8}>
+              <Link
+                href="/settings/brand"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#ffd700]/10 border border-[#ffd700]/30 text-[#ffd700] text-sm font-medium hover:bg-[#ffd700]/15 hover:border-[#ffd700]/50 transition-all duration-200"
+              >
+                Set up Brand Kit
+                <span className="text-[11px]">→</span>
+              </Link>
+            </Magnetic>
+          </div>
+        </div>
+
+        {/* Right: mini demo */}
+        <div className="flex flex-col gap-4 min-w-[200px]">
+          {/* Palette */}
+          <div>
+            <p className="text-[9px] font-mono uppercase tracking-wider text-white/25 mb-2">
+              Palette
+            </p>
+            <div className="flex gap-2">
+              {swatches.map((c) => (
+                <div
+                  key={c}
+                  className="w-8 h-8 rounded-lg border border-white/[0.08] shadow-sm"
+                  style={{ background: c }}
+                  title={c}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Type pair */}
+          <div>
+            <p className="text-[9px] font-mono uppercase tracking-wider text-white/25 mb-1.5">
+              Typography
+            </p>
+            <p className="font-display font-bold text-base text-white/80 leading-none">
+              Space Grotesk
+            </p>
+            <p className="font-body text-xs text-white/40 mt-0.5">
+              Inter — body text
+            </p>
+          </div>
+
+          {/* Voice sample */}
+          <div>
+            <p className="text-[9px] font-mono uppercase tracking-wider text-white/25 mb-1.5">
+              Voice
+            </p>
+            <p className="text-xs text-white/50 italic leading-snug">
+              &ldquo;Precise. Evocative. Always in motion.&rdquo;
+            </p>
+          </div>
+        </div>
+      </div>
+    </FeatureCard>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// CreateHub — Main client component
+// ---------------------------------------------------------------------------
+
+export function CreateHub() {
+  const [activeFilter, setActiveFilter] = useState<CategoryFilterId>("all");
+
+  const filteredTemplates =
+    activeFilter === "all"
+      ? TEMPLATE_DATA
+      : TEMPLATE_DATA.filter((t) => t.category === activeFilter);
+
+  // Community discovery: last 6 from the full list, shuffled feel
+  const communityTemplates = TEMPLATE_DATA.slice(-6);
+
+  return (
+    <LazyMotion features={domAnimation}>
+      {/* ------------------------------------------------------------------ */}
+      {/* HERO                                                                */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="relative overflow-hidden pt-8 pb-16 md:pt-12 md:pb-20">
+        <FloatingOrbs preset="aurora" />
+        <AuroraGradient />
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.02]"
+          aria-hidden
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal delay={0}>
+            <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-white/30 mb-4 text-center">
+              Create
+            </p>
+          </Reveal>
+
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold tracking-[-0.03em] leading-[1.06] text-center mb-5">
+            <SplitText
+              text="What are you"
+              as="span"
+              className="bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent"
+              delay={0.05}
+              stagger={0.022}
+            />
+            <br />
+            <SplitText
+              text="making today?"
+              as="span"
+              className="bg-gradient-to-r from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent"
+              delay={0.35}
+              stagger={0.022}
+            />
+          </h1>
+
+          <Reveal delay={0.6}>
+            <p className="text-base md:text-lg text-white/40 leading-relaxed text-center max-w-xl mx-auto font-body">
+              Start from a template or a blank canvas. Worlds, stories, agents,
+              music — all connected, all yours.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* QUICK START GRID                                                    */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <Reveal delay={0}>
+          <h2 className="text-[11px] font-mono tracking-[0.3em] uppercase text-white/30 mb-5">
+            Start something new
+          </h2>
+        </Reveal>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          {QUICK_START_ITEMS.map((item, i) => (
+            <QuickStartCard key={item.id} {...item} index={i} />
+          ))}
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* TEMPLATE GALLERY                                                    */}
+      {/* ------------------------------------------------------------------ */}
+      <SectionShell ambient="teal" grid id="templates">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+            <SectionHeader
+              label="Templates"
+              title="Start from a template"
+              subtitle="Curated starting points — world-build, write, generate, or deploy in seconds."
+              align="left"
+              accent="teal"
+            />
+          </div>
+
+          {/* Filter pills */}
+          <div className="mb-8">
+            <CategoryFilter active={activeFilter} onChange={setActiveFilter} />
+          </div>
+
+          {/* Template grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {filteredTemplates.map((tpl) => (
+              <TemplateCard
+                key={tpl.href}
+                title={tpl.title}
+                type={tpl.type}
+                subtitle={tpl.subtitle}
+                previewGradient={tpl.previewGradient}
+                stats={tpl.stats}
+                accentColor={tpl.accentColor}
+                badge={tpl.badge}
+                href={tpl.href}
+                isNew={tpl.isNew}
+                isPremium={tpl.isPremium}
+              />
+            ))}
+          </div>
+
+          {filteredTemplates.length === 0 && (
+            <div className="py-20 text-center">
+              <p className="text-white/30 font-body">
+                No templates in this category yet.
+              </p>
+            </div>
+          )}
+
+          {/* Browse all CTA */}
+          <div className="mt-10 flex justify-center">
+            <Magnetic strength={10}>
+              <Link
+                href="/templates"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/60 text-sm font-medium hover:bg-white/[0.07] hover:border-white/[0.15] hover:text-white/90 transition-all duration-200"
+              >
+                Browse all templates
+                <span className="text-xs text-[#00bcd4]">→</span>
+              </Link>
+            </Magnetic>
+          </div>
+        </div>
+      </SectionShell>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* BRAND KIT                                                           */}
+      {/* ------------------------------------------------------------------ */}
+      <SectionShell ambient="gold" grid={false} size="compact">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <BrandKitPreview />
+        </div>
+      </SectionShell>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* RECENT CREATIONS                                                    */}
+      {/* ------------------------------------------------------------------ */}
+      <SectionShell ambient="none" grid={false} size="compact">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-white/25 mb-1">
+                Recent
+              </p>
+              <h2 className="text-lg font-display font-semibold text-white/80">
+                Continue where you left off
+              </h2>
+            </div>
+            <Link
+              href="/dashboard"
+              className="text-xs font-mono uppercase tracking-wider text-[#00bcd4]/60 hover:text-[#00bcd4] transition-colors"
+            >
+              View all
+            </Link>
+          </div>
+
+          {/* Horizontal scroll on mobile, grid on desktop */}
+          <div className="flex gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-4 md:overflow-visible md:pb-0 scrollbar-none">
+            {RECENT_MOCK.map((item) => (
+              <div key={item.href} className="min-w-[220px] md:min-w-0">
+                <TemplateCard
+                  title={item.title}
+                  type={item.type}
+                  subtitle={item.subtitle}
+                  previewGradient={item.previewGradient}
+                  stats={item.stats}
+                  accentColor={item.accentColor}
+                  href={item.href}
+                  badge={item.badge}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </SectionShell>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* COMMUNITY DISCOVER                                                  */}
+      {/* ------------------------------------------------------------------ */}
+      <SectionShell ambient="purple" grid id="community">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+            <div>
+              <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-white/25 mb-2">
+                Community
+              </p>
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-white/90 tracking-[-0.02em]">
+                Discover from creators
+              </h2>
+              <p className="text-sm text-white/35 mt-1.5 max-w-md">
+                Templates made and shared by the Arcanea creator community.
+              </p>
+            </div>
+            <Link
+              href="/templates?source=community"
+              className="text-xs font-mono uppercase tracking-wider text-[#c084fc]/60 hover:text-[#c084fc] transition-colors whitespace-nowrap"
+            >
+              Browse community
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {communityTemplates.map((tpl) => (
+              <TemplateCard
+                key={`community-${tpl.href}`}
+                title={tpl.title}
+                type={tpl.type}
+                subtitle={tpl.subtitle}
+                previewGradient={tpl.previewGradient}
+                stats={tpl.stats}
+                accentColor={tpl.accentColor}
+                badge={tpl.badge}
+                href={tpl.href}
+                isNew={tpl.isNew}
+                isPremium={tpl.isPremium}
+              />
+            ))}
+          </div>
+
+          {/* Contribute CTA */}
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-6 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
+            <div>
+              <p className="text-sm font-display font-semibold text-white/80 mb-1">
+                Share your templates
+              </p>
+              <p className="text-xs text-white/35 max-w-sm">
+                Publish your own worlds, characters, and story templates so
+                other creators can build on your work.
+              </p>
+            </div>
+            <Magnetic strength={10}>
+              <Link
+                href="/templates/submit"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#a855f7]/10 border border-[#a855f7]/30 text-[#c084fc] text-sm font-medium hover:bg-[#a855f7]/15 hover:border-[#a855f7]/50 transition-all duration-200 whitespace-nowrap"
+              >
+                Submit a template
+                <span className="text-xs">→</span>
+              </Link>
+            </Magnetic>
+          </div>
+        </div>
+      </SectionShell>
+    </LazyMotion>
+  );
+}

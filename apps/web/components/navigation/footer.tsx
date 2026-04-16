@@ -8,22 +8,37 @@ const footerLinks = {
   create: {
     label: "Create",
     links: [
+      { href: "/create", label: "Create Hub" },
       { href: "/chat", label: "Chat" },
       { href: "/imagine", label: "Imagine" },
       { href: "/studio", label: "Studio" },
+      { href: "/worlds", label: "Worlds" },
+      { href: "/forge", label: "Forge" },
       { href: "/agents", label: "Agents" },
-      { href: "/gallery", label: "Gallery" },
     ],
   },
   explore: {
     label: "Explore",
     links: [
+      { href: "/gallery", label: "Gallery" },
       { href: "/library", label: "Library" },
       { href: "/lore", label: "Lore" },
       { href: "/factions", label: "Factions" },
-      { href: "/glossary", label: "Glossary" },
       { href: "/showcase", label: "Showcase" },
-      { href: "/arcanea-vault", label: "Starlight Vaults" },
+      { href: "/community-hub", label: "Community Hub" },
+      { href: "/templates", label: "Templates" },
+    ],
+  },
+  build: {
+    label: "Build",
+    links: [
+      { href: "/integrations", label: "Integrations" },
+      { href: "/distribute", label: "Distribute" },
+      { href: "/creator-economy", label: "Creator Economy" },
+      { href: "/ecosystem", label: "Ecosystem" },
+      { href: "/developers", label: "Developers" },
+      { href: "/docs/mcp", label: "MCP Docs" },
+      { href: "https://github.com/frankxai", label: "GitHub", external: true },
     ],
   },
   learn: {
@@ -32,18 +47,15 @@ const footerLinks = {
       { href: "/academy", label: "Academy" },
       { href: "/academy/courses", label: "Courses" },
       { href: "/models", label: "Model Arena" },
-      { href: "/developers", label: "Developers" },
       { href: "/starlight-intelligence", label: "Starlight Intelligence" },
-      { href: "https://github.com/frankxai", label: "GitHub", external: true },
+      { href: "/blog", label: "Blog" },
     ],
   },
   company: {
     label: "Company",
     links: [
       { href: "/about", label: "About" },
-      { href: "/blog", label: "Blog" },
       { href: "/pricing", label: "Pricing" },
-      { href: "/templates", label: "Templates" },
       { href: "/roadmap", label: "Roadmap" },
       { href: "/contact", label: "Contact" },
     ],
@@ -135,7 +147,7 @@ export function Footer() {
         </div>
 
         {/* Link columns */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-10 mb-14">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10 mb-14">
           {Object.values(footerLinks).map((section) => (
             <div key={section.label}>
               <h3 className="text-xs uppercase tracking-[0.22em] font-semibold text-white/36 mb-5">

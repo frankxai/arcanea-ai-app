@@ -24,6 +24,7 @@ import { ComparisonMatrix } from "@/components/premium/comparison-matrix";
 import { SovereigntyPillars } from "@/components/premium/sovereignty-pillars";
 import { PersonasShowcase } from "@/components/premium/personas-showcase";
 import { LuminorTeamPreview } from "@/components/premium/luminor-team-preview";
+import { IntegrationGrid } from "@/components/premium/integration-grid";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -61,6 +62,18 @@ const FAQ_ITEMS = [
   {
     q: "Is my work private?",
     a: "Yes. We do not train on your data. What you build stays yours — keep it in Arcanea or export it.",
+  },
+  {
+    q: "Can I sell what I create?",
+    a: "Yes. Seven revenue streams — template marketplace (keep 90%), Whop memberships (97%), NFT collections (92.5% + smart-contract royalties), commissions, token-gated drops, direct Gumroad/Stripe storefronts, and companion licensing. See /creator-economy.",
+  },
+  {
+    q: "What integrations does Arcanea support?",
+    a: "30+ integrations across coding (VS Code, Cursor, Claude Code, Antigravity), creative AI (Suno, Nano Banana 2, ElevenLabs, Runway), distribution (Blotato, n8n, Postiz), communities (Discord, Reddit, Whop), game engines (Unreal, Unity, Godot), and chain (Base, Story Protocol, Farcaster). See /integrations.",
+  },
+  {
+    q: "How do I publish my work?",
+    a: "One world → many channels. Arcanea prepares native formats for Discord posts, X threads, Instagram carousels, YouTube narrations, TikTok reels — all from the same source. You publish via your own accounts (tokens stay yours). Distribution flows are built on Blotato/n8n/Postiz.",
   },
 ];
 
@@ -310,6 +323,115 @@ function SovereigntySection() {
 }
 
 // ---------------------------------------------------------------------------
+// Stack Teaser — "Connects to every tool you use"
+// ---------------------------------------------------------------------------
+
+function StackTeaserSection() {
+  return (
+    <SectionShell ambient="teal" size="compact" id="stack-teaser">
+      <div className="max-w-6xl mx-auto px-6">
+        <SectionHeader
+          label="The Creator Stack"
+          title="Connects to every tool you use"
+          subtitle="VS Code, Cursor, Suno, Unreal Engine, Discord, Base, and 30+ more. Arcanea sits in the middle — your stack stays yours."
+          accent="teal"
+        />
+        <Reveal y={16}>
+          <IntegrationGrid limit={18} />
+        </Reveal>
+        <Reveal y={10} delay={0.4}>
+          <div className="mt-10 text-center">
+            <Magnetic>
+              <Link
+                href="/integrations"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-white/70 hover:bg-white/[0.08] hover:text-white transition-colors"
+              >
+                See all 30+ integrations
+                <span className="text-xs">&rarr;</span>
+              </Link>
+            </Magnetic>
+          </div>
+        </Reveal>
+      </div>
+    </SectionShell>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Earn Teaser — "Make a living from your worlds"
+// ---------------------------------------------------------------------------
+
+function EarnTeaserSection() {
+  const STREAMS = [
+    { icon: "◇", label: "Template Marketplace", take: "90%", accent: "#7fffd4" },
+    { icon: "♛", label: "Memberships (Whop)", take: "97%", accent: "#ffd700" },
+    { icon: "✦", label: "NFT Collections", take: "92%", accent: "#c084fc" },
+    { icon: "◉", label: "Commissions", take: "88%", accent: "#ef4444" },
+    { icon: "⚡", label: "Token-gated drops", take: "100%", accent: "#f97316" },
+    { icon: "◈", label: "Royalties on remixes", take: "perpetual", accent: "#3b82f6" },
+  ];
+  return (
+    <SectionShell ambient="gold" size="compact" id="earn-teaser">
+      <div className="max-w-5xl mx-auto px-6">
+        <SectionHeader
+          label="Creator Economy"
+          title="Build a universe. Make a living."
+          subtitle="Seven revenue streams. You keep 90%+, always. Smart-contract royalties. Your audience, your rules."
+          accent="gold"
+        />
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          {STREAMS.map((s, i) => (
+            <m.div
+              key={s.label}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.025] border border-white/[0.06] hover:border-white/[0.14] transition-colors"
+            >
+              <div
+                className="w-9 h-9 rounded-lg flex items-center justify-center text-lg shrink-0"
+                style={{
+                  background: `${s.accent}10`,
+                  border: `1px solid ${s.accent}25`,
+                  color: s.accent,
+                }}
+              >
+                {s.icon}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-display font-semibold text-white/80 truncate">
+                  {s.label}
+                </p>
+                <p
+                  className="text-[11px] font-mono tracking-wider"
+                  style={{ color: `${s.accent}bb` }}
+                >
+                  you keep {s.take}
+                </p>
+              </div>
+            </m.div>
+          ))}
+        </div>
+        <Reveal y={10} delay={0.4}>
+          <div className="mt-10 text-center">
+            <Magnetic>
+              <Link
+                href="/creator-economy"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#ffd700]/15 to-[#00bcd4]/10 border border-[#ffd700]/25 text-sm font-medium text-[#ffd700] hover:from-[#ffd700]/25 hover:to-[#00bcd4]/15 transition-colors"
+              >
+                Explore creator economy
+                <span className="text-xs">&rarr;</span>
+              </Link>
+            </Magnetic>
+          </div>
+        </Reveal>
+      </div>
+    </SectionShell>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Atmospheric Divider
 // ---------------------------------------------------------------------------
 
@@ -482,6 +604,16 @@ export function V3BelowFold({
 
         {/* 5. Worlds showcase — multiverse teaser */}
         <WorldsShowcase />
+
+        <AtmosphericDivider variant="teal" />
+
+        {/* 5b. Stack Teaser — connects to every tool you use */}
+        <StackTeaserSection />
+
+        <AtmosphericDivider variant="gold" />
+
+        {/* 5c. Earn Teaser — creator economy preview */}
+        <EarnTeaserSection />
 
         <AtmosphericDivider variant="gold" />
 
