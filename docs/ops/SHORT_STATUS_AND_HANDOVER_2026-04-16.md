@@ -84,3 +84,25 @@
 - **All 5 GitHub repos**: HTTP 200 verified via curl
 - **arcanea.ai/templates**: HTTP 200, 9 blueprints rendered, 0 "Coming Soon"
 - **Memory persisted**: `project_template_business_model.md` saved
+
+---
+
+# Session 3: Author Studio + Song of Van Linh (2026-04-13 → 2026-04-16)
+
+## What Landed
+- Song of Van Linh: 4-book arc, 3 chapters (16K words), 7 characters, world bible, cover art, live at /books/drafts/song-of-van-linh
+- Author Studio v3: Notion-style editor, BYOK, Supabase drafts, Publish to Git (Octokit), Guardian Review, curated context
+- Commits: 0a9bbfca, c395602d, ab715f55, 31cb018c, e208813d + 5 more
+
+## Blockers
+1. Supabase migration 20260414000001_author_drafts.sql not applied (needs supabase link)
+2. GITHUB_TOKEN not on Vercel (Publish button = 503)
+3. Gemini API key expired (no NB2 covers)
+4. Song of Van Linh content uncurated (all curated_context flags false)
+
+## Next
+1. supabase link + db push
+2. Set GITHUB_TOKEN on Vercel
+3. Test Studio E2E: sign in → edit → draft saves → publish
+4. Curate Song of Van Linh, write chapters 4-6
+5. Liveblocks Yjs when co-author appears
