@@ -69,14 +69,14 @@ export async function linkToWorldGraph(
   try {
     const { data: world, error: worldErr } = await supabase
       .from('worlds')
-      .select('id, user_id')
+      .select('id, creator_id')
       .eq('id', input.worldId)
       .maybeSingle();
 
     if (worldErr || !world) {
       return { linked: false, error: 'World not found' };
     }
-    if (world.user_id && world.user_id !== input.userId) {
+    if (world.creator_id && world.creator_id !== input.userId) {
       return { linked: false, error: 'World not owned by current user' };
     }
   } catch (e) {
