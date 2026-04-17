@@ -22,6 +22,7 @@ import {
 } from '@/lib/chat/suggestion-engine';
 import { ArcaneanMarkSmall } from '@/components/brand/arcanea-mark';
 import Image from 'next/image';
+import { LuminaPresence } from '@/components/presence/lumina-presence';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -228,6 +229,7 @@ export const MessageBubble = React.memo(function MessageBubble({
   const [playbackSpeed, setPlaybackSpeed] = useState(1.0);
   const [showVoiceMenu, setShowVoiceMenu] = useState(false);
   const [audioProgress, setAudioProgress] = useState(0);
+  const [speakingAudio, setSpeakingAudio] = useState<HTMLAudioElement | null>(null);
   const progressRef = useRef<number | null>(null);
   const voiceMenuRef = useRef<HTMLDivElement>(null);
 
@@ -344,6 +346,7 @@ export const MessageBubble = React.memo(function MessageBubble({
     if (isPlaying && audioRef.current) {
       audioRef.current.pause();
       audioRef.current = null;
+      setSpeakingAudio(null);
       setIsPlaying(false);
       setAudioProgress(0);
       if (progressRef.current) cancelAnimationFrame(progressRef.current);
@@ -370,7 +373,9 @@ export const MessageBubble = React.memo(function MessageBubble({
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       const audio = new Audio(url);
+      audio.crossOrigin = 'anonymous';
       audioRef.current = audio;
+      setSpeakingAudio(audio);
 
       // Track playback progress
       const updateProgress = () => {
@@ -388,6 +393,7 @@ export const MessageBubble = React.memo(function MessageBubble({
       audio.onended = () => {
         setIsPlaying(false);
         setAudioProgress(0);
+        setSpeakingAudio(null);
         audioRef.current = null;
         if (progressRef.current) cancelAnimationFrame(progressRef.current);
         URL.revokeObjectURL(url);
@@ -395,6 +401,7 @@ export const MessageBubble = React.memo(function MessageBubble({
       audio.onerror = () => {
         setIsPlaying(false);
         setAudioProgress(0);
+        setSpeakingAudio(null);
         audioRef.current = null;
         if (progressRef.current) cancelAnimationFrame(progressRef.current);
         URL.revokeObjectURL(url);
@@ -404,6 +411,7 @@ export const MessageBubble = React.memo(function MessageBubble({
     } catch {
       setIsPlaying(false);
       setAudioProgress(0);
+      setSpeakingAudio(null);
     }
   }, [isPlaying, text, voicePersona, playbackSpeed]);
 
@@ -471,8 +479,19 @@ export const MessageBubble = React.memo(function MessageBubble({
   return (
     <div className="mb-6 group">
       <div className="mr-auto flex gap-3">
-        {/* Avatar */}
-        {luminorAvatar ? (
+        {/* Avatar — becomes a live presence orb while speaking */}
+        {isPlaying ? (
+          <div className="w-10 h-10 shrink-0 -mt-1 -ml-1">
+            <LuminaPresence
+              state={speakingAudio ? 'speaking' : 'thinking'}
+              audio={speakingAudio}
+              color={accentColor}
+              accent="#ffd700"
+              size={40}
+              label={null}
+            />
+          </div>
+        ) : luminorAvatar ? (
           <div
             className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 mt-0.5"
             style={{

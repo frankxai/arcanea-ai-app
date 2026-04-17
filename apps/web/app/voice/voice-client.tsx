@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
+import { LuminaPresence, type PresenceState } from '@/components/presence/lumina-presence';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -108,61 +109,6 @@ function PersonaCard({ persona, isActive, onSelect, onPlay }: {
   );
 }
 
-function WaveformVisualizer({ isActive }: { isActive: boolean }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const w = canvas.width;
-    const h = canvas.height;
-    let frame = 0;
-
-    const draw = () => {
-      ctx.clearRect(0, 0, w, h);
-      const bars = 32;
-      const gap = 3;
-      const barW = (w - (bars - 1) * gap) / bars;
-
-      for (let i = 0; i < bars; i++) {
-        const x = i * (barW + gap);
-        const amplitude = isActive
-          ? 0.3 + 0.7 * Math.abs(Math.sin(frame * 0.03 + i * 0.4))
-          : 0.05 + 0.1 * Math.abs(Math.sin(frame * 0.01 + i * 0.3));
-        const barH = amplitude * h;
-        const y = (h - barH) / 2;
-
-        const gradient = ctx.createLinearGradient(x, y, x, y + barH);
-        gradient.addColorStop(0, `rgba(0,188,212,${amplitude * 0.8})`);
-        gradient.addColorStop(1, `rgba(0,137,123,${amplitude * 0.4})`);
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.roundRect(x, y, barW, barH, 2);
-        ctx.fill();
-      }
-      frame++;
-      animRef.current = requestAnimationFrame(draw);
-    };
-
-    draw();
-    return () => { if (animRef.current) cancelAnimationFrame(animRef.current); };
-  }, [isActive]);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      width={320}
-      height={64}
-      className="w-full h-16 rounded-xl"
-      style={{ background: 'rgba(0,0,0,0.2)' }}
-    />
-  );
-}
-
 // ─── Main Page ──────────────────────────────────────────────────────────────
 
 export default function VoicePage() {
@@ -170,12 +116,14 @@ export default function VoicePage() {
   const [isListening, setIsListening] = useState(false);
   const [demoText, setDemoText] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [audioEl, setAudioEl] = useState<HTMLAudioElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const handlePlayDemo = useCallback(async (personaId: string) => {
     if (isPlaying && audioRef.current) {
       audioRef.current.pause();
       audioRef.current = null;
+      setAudioEl(null);
       setIsPlaying(false);
       return;
     }
@@ -204,9 +152,11 @@ export default function VoicePage() {
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       const audio = new Audio(url);
+      audio.crossOrigin = 'anonymous';
       audioRef.current = audio;
-      audio.onended = () => { setIsPlaying(false); audioRef.current = null; URL.revokeObjectURL(url); };
-      audio.onerror = () => { setIsPlaying(false); audioRef.current = null; URL.revokeObjectURL(url); };
+      setAudioEl(audio);
+      audio.onended = () => { setIsPlaying(false); audioRef.current = null; setAudioEl(null); URL.revokeObjectURL(url); };
+      audio.onerror = () => { setIsPlaying(false); audioRef.current = null; setAudioEl(null); URL.revokeObjectURL(url); };
       await audio.play();
       setDemoText(demoTexts[personaId] || '');
     } catch {
@@ -270,8 +220,22 @@ export default function VoicePage() {
             </a>
           </div>
 
-          {/* Live waveform */}
-          <WaveformVisualizer isActive={isPlaying} />
+          {/* Lumina Presence — orb awakens when a Guardian speaks */}
+          <div className="flex flex-col items-center gap-4">
+            <LuminaPresence
+              state={(isPlaying ? 'speaking' : 'idle') as PresenceState}
+              audio={audioEl}
+              color={activeP.color}
+              accent="#ffd700"
+              size={360}
+              label={isPlaying ? activeP.name : null}
+            />
+            {!isPlaying && (
+              <p className="text-[11px] uppercase tracking-[0.22em] text-white/25">
+                Select a Guardian · hear the voice
+              </p>
+            )}
+          </div>
         </div>
       </section>
 
