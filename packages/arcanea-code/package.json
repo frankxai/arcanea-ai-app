@@ -20,7 +20,8 @@
     "@arcanea/router-spec": "workspace:*",
     "commander": "^12.1.0",
     "execa": "^9.5.0",
-    "kleur": "^4.1.5"
+    "kleur": "^4.1.5",
+    "yaml": "^2.6.0"
   },
   "devDependencies": {
     "tsx": "^4.19.0",

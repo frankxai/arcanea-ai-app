@@ -1,0 +1,71 @@
+# Arcanea Overlay Manifest Schema
+#
+# Each overlay repo (claude-arcanea, oh-my-arcanea, codex-arcanea,
+# gemini-arcanea) ships a manifest.yaml at its root that follows this schema.
+# The manifest tells:
+#   - other agents what the overlay is and how to install it
+#   - the router what surface ID to use
+#   - the installer which config dirs to populate
+#
+# Inspired by the manifest shape used by 21st.dev / 1code.dev for component
+# distribution. Borrowed: the declarative install story. NOT borrowed: their
+# paid premium model or component-library scope — AMCAS overlays are infra.
+#
+# Save this file alongside models.yaml as the canonical schema reference.
+
+$schema: https://arcanea.ai/schema/overlay-manifest/v1.json
+name: <string>              # e.g. "claude-arcanea" — kebab-case, matches repo name
+version: <semver>           # overlay version, independent of router-spec
+description: <string>       # one-line summary
+
+# Which Arcanea surface this overlay targets in the router-spec.
+# Must match a key under `surfaces:` in packages/router-spec/models.yaml.
+surface: <surface-id>       # e.g. "claude-arcanea" | "oh-my-arcanea" | "codex-arcanea" | "gemini-arcanea"
+
+# Which runtime CLI the overlay extends.
+runtime:
+  binary: <string>          # e.g. "claude", "opencode", "codex", "gemini"
+  minVersion: <semver>      # minimum supported CLI version
+  configDir: <path>         # OS-specific config dir expanded at install time
+                            # (e.g. "~/.config/claude-code", "~/.config/opencode")
+
+# How to install the overlay. Each step is idempotent.
+install:
+  - step: copy
+    from: ./agents
+    to: "{configDir}/agents"
+  - step: copy
+    from: ./skills
+    to: "{configDir}/skills"
+  - step: copy
+    from: ./settings.json
+    to: "{configDir}/settings.json"
+    merge: true             # merge JSON, don't overwrite
+
+# Router spec wiring. How this overlay reads @arcanea/router-spec.
+routerSpec:
+  source: "@arcanea/router-spec"
+  # Which fields from the spec drive this overlay's behavior.
+  reads:
+    - models
+    - tasks
+    - surfaces.{surface-id}  # substituted with the surface above
+
+# Dependencies on other Arcanea packages.
+dependencies:
+  "@arcanea/router-spec": ">=1.0.0"
+
+# Metadata for agent discovery.
+agents:
+  # Path inside the overlay where agent definitions live. Any AGENTS.md-compatible
+  # runtime reads this to discover the overlay's capabilities.
+  definitions: ./agents
+  # Optional: a one-file policy that any coding agent can read to understand
+  # the overlay's rules.
+  agentsMd: ./AGENTS.md
+
+# Optional preview / showcase (for future marketplace UI).
+preview:
+  commands:
+    - cmd: "opencode run -p 'design a component'"
+      description: "runs with oh-my-arcanea overlay"

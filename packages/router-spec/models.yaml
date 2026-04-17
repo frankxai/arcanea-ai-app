@@ -314,6 +314,22 @@ surfaces:
       orchestrate: [qwen3.6-plus-free]
       research.deep: [qwen3.6-plus-free, glm-5-free]
 
+  codex-arcanea:
+    description: Codex CLI overlay. OpenAI BYOK first, reasoning + tool-use lean.
+    prefer: byok
+    authContext: [byok]
+    taskOverrides:
+      code.review: [gpt-5]
+      code.debug: [gpt-5]
+
+  gemini-arcanea:
+    description: Gemini CLI overlay. Google BYOK first, multimodal + long-context lean.
+    prefer: byok
+    authContext: [byok]
+    taskOverrides:
+      research.deep: [gemini-3-pro]
+      world.expand: [gemini-3-pro]
+
   web.models-page:
     description: Public /models arena on arcanea.ai. Reads catalog + tasks for display.
     prefer: display-only

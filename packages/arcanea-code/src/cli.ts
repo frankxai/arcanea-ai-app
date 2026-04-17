@@ -5,6 +5,8 @@ import { listTasksCommand } from './commands/list-tasks.js';
 import { explainCommand } from './commands/explain.js';
 import { runCommand } from './commands/run.js';
 import { swarmCommand } from './commands/swarm.js';
+import { doctorCommand } from './commands/doctor.js';
+import { configCommand } from './commands/config.js';
 
 const program = new Command();
 
@@ -46,6 +48,16 @@ program
   .option('--from <file>', 'Parse tasks from a backlog file')
   .option('--tasks <n>', 'Number of workers to spawn', '3')
   .action(swarmCommand);
+
+program
+  .command('doctor')
+  .description('Detect installed CLIs, infer auth tiers, save to ~/.arcanea/config.yaml.')
+  .action(doctorCommand);
+
+program
+  .command('config [key] [value]')
+  .description('Read or write user config (preference, defaultSurface).')
+  .action(configCommand);
 
 program.parseAsync(process.argv).catch((err) => {
   console.error(err instanceof Error ? err.message : err);
