@@ -1,0 +1,16 @@
+{
+  "name": "@arcanea/claude-plugin-design",
+  "version": "0.1.0",
+  "license": "SEE LICENSE IN LICENSE",
+  "private": true,
+  "description": "Arcanea design intelligence for Claude Code — skill + MCP recipe + agent defs + tokens. Install via symlink to .claude/plugins/arcanea-design/",
+  "keywords": ["claude-code", "plugin", "design-system", "arcanea", "skill"],
+  "files": [
+    "skill",
+    "mcp",
+    "agents",
+    "tokens",
+    "README.md",
+    "install.md"
+  ]
+}

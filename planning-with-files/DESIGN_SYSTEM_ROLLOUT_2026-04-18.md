@@ -3,7 +3,7 @@
 **Status:** Foundation + typography elevation shipped. Reference page pending user selection.
 **Owner:** Frank (product) · Claude Code (implementation)
 **Canonical spec:** `docs/superpowers/specs/2026-04-17-agentic-design-system-design.md`
-**Tracking:** Linear issue TBD · Notion Dev Hub TBD
+**Tracking:** Linear project [Design System 2026](https://linear.app/arcanea/project/design-system-2026-073a9aee539c) · Notion Dev Hub TBD
 
 ## What's shipped (verifiable on disk + origin)
 
@@ -74,13 +74,25 @@
 | Lighthouse per revamped page | ≥90 all four metrics | unmeasured |
 | Typography compliance | 0 Space Grotesk / Inter in new code | 100% (enforced in skill) |
 
-## Open questions (need user decision)
+## Open questions — RESOLVED 2026-04-18
 
-1. **Reference page for Phase 2:** homepage hero vs pricing vs `/chat` vs `/imagine`?
-2. **Newsreader:** keep as legacy serif fallback, or fully replace with Instrument Serif?
-3. **OSS sync timing:** mirror-push the design-system to `github.com/frankxai/arcanea` during Phase 2, or wait for Phase 5?
-4. **Claude plugin distribution:** ship as committed `packages/claude-plugin-design/` or keep local at `.claude/plugins/`?
-5. **Linear project:** create "Design System 2026" project now or wait for Phase 2 work to begin?
+1. **Reference page for Phase 2:** ✅ **Homepage hero** — max visibility, forces full-stack exercise. Tracked as [ARC-177](https://linear.app/arcanea/issue/ARC-177).
+2. **Newsreader:** ✅ **Keep as legacy serif fallback**. Instrument Serif is the new default for editorial moments (`font-editorial` class). Deprecate Newsreader gradually as pages revamp.
+3. **OSS sync timing:** ✅ **Phase 5** — wait until 2+ pages battle-tested. Tracked as [ARC-183](https://linear.app/arcanea/issue/ARC-183).
+4. **Claude plugin distribution:** ✅ **Committed at `packages/claude-plugin-design/`**. Scaffolded this turn with skill + MCP recipe + agent defs + tokens + install guide. Tracked as [ARC-182](https://linear.app/arcanea/issue/ARC-182).
+5. **Linear project:** ✅ **Created** — [Design System 2026](https://linear.app/arcanea/project/design-system-2026-073a9aee539c) with 9 Phase 2–5 issues.
+
+## Linear issues
+
+- [ARC-176](https://linear.app/arcanea/issue/ARC-176) — Merge v0.1.0 + v0.2.0 PRs (Urgent)
+- [ARC-177](https://linear.app/arcanea/issue/ARC-177) — Phase 2: Revamp homepage hero (High)
+- [ARC-178](https://linear.app/arcanea/issue/ARC-178) — Phase 2: Port Animated Beam primitive
+- [ARC-179](https://linear.app/arcanea/issue/ARC-179) — Phase 3: Revamp 3 additional pages
+- [ARC-180](https://linear.app/arcanea/issue/ARC-180) — Phase 3: Port 5 remaining primitives + Motion v12
+- [ARC-181](https://linear.app/arcanea/issue/ARC-181) — Phase 4: FrankX adopts design system
+- [ARC-182](https://linear.app/arcanea/issue/ARC-182) — Phase 5: Claude marketplace plugin
+- [ARC-183](https://linear.app/arcanea/issue/ARC-183) — Phase 5: Public OSS repo mirror
+- [ARC-184](https://linear.app/arcanea/issue/ARC-184) — Phase 5: shadcn multi-registry
 
 ## Links
 
