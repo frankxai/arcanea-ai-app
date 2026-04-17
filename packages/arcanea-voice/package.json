@@ -12,17 +12,22 @@
     "./transcribe": "./src/transcribe.mjs",
     "./tts": "./src/tts.mjs",
     "./mic": "./src/mic.mjs",
-    "./coach": "./src/coach.mjs"
+    "./coach": "./src/coach.mjs",
+    "./server": "./src/server.mjs",
+    "./persona": "./src/persona.mjs"
   },
   "files": [
     "bin/",
     "src/",
+    "web/",
     "templates/",
     "LICENSE",
     "README.md"
   ],
   "scripts": {
     "voice": "node bin/voice.mjs",
+    "jarvis": "node bin/voice.mjs jarvis",
+    "lumina": "node bin/voice.mjs lumina",
     "test": "node bin/voice.mjs help"
   },
   "keywords": [

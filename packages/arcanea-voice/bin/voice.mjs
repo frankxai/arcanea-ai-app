@@ -15,6 +15,18 @@ import { detectBestMic, ffmpegInputArgs } from '../src/mic.mjs';
 import { transcribe, getKey } from '../src/transcribe.mjs';
 import { speak } from '../src/tts.mjs';
 import { analyze, coachSummary, extractActions } from '../src/coach.mjs';
+import { PERSONAS } from '../src/persona.mjs';
+
+const PRESENCE_COMMANDS = new Set(['jarvis', 'presence', 'lumina', 'draconia', 'lyria', 'alera', 'shinkami', 'nero']);
+
+function openBrowser(url) {
+  const p = process.platform;
+  try {
+    if (p === 'win32') spawnSync('cmd', ['/c', 'start', '""', url], { stdio: 'ignore' });
+    else if (p === 'darwin') spawnSync('open', [url], { stdio: 'ignore' });
+    else spawnSync('xdg-open', [url], { stdio: 'ignore' });
+  } catch {}
+}
 
 const isWin = platform() === 'win32';
 const args = process.argv.slice(2);
@@ -40,6 +52,12 @@ if (mode === 'help' || mode === 'h') {
   @arcanea/voice v0.1.0
   Mic: ${micInfo}
   ---
+  PRESENCE (live voice room, localhost orb)
+  jarvis   Open JARVIS room         lumina    Open Lumina room
+  draconia Open Draconia room       lyria     Open Lyria room
+  alera    Open Alera room          shinkami  Open Shinkami room
+  nero     Open Nero room           presence  Lumina (default)
+
   THINKING          PUBLISHING           WORKFLOW
   n  Note (1m)      nl Newsletter (5m)   i  Linear Issue
   s  Strategy (5m)  v  Voiceover (3m)    t  Task
@@ -53,6 +71,32 @@ if (mode === 'help' || mode === 'h') {
   Groq: ${groqKey ? 'yes' : 'no'} | ElevenLabs: ${elevenKey ? 'yes' : 'no'}
   `);
   process.exit(0);
+}
+
+if (PRESENCE_COMMANDS.has(mode)) {
+  const { startServer } = await import('../src/server.mjs');
+  const persona = mode === 'presence' ? 'lumina' : mode;
+  const port = parseInt(process.env.ARCANEA_VOICE_PORT || '7777', 10);
+  const host = process.env.ARCANEA_VOICE_HOST || '127.0.0.1';
+  if (!groqKey) {
+    console.log('\n  [WARN] GROQ_API_KEY not set — transcription + LLM unavailable.');
+    console.log('         get a free key: https://console.groq.com\n');
+  }
+  startServer({
+    port, host,
+    onReady: ({ url }) => {
+      const personaName = PERSONAS[persona]?.name || persona;
+      const target = `${url}/?persona=${persona}`;
+      console.log(`\n  Arcanea Presence — ${personaName}`);
+      console.log(`  ${target}`);
+      console.log(`  groq: ${groqKey ? 'yes' : 'no'}  eleven: ${elevenKey ? 'yes' : 'no'}`);
+      console.log(`  Ctrl+C to stop.\n`);
+      openBrowser(target);
+    },
+  });
+  process.stdin.resume();
+  process.on('SIGINT', () => { console.log('\n  presence closed.'); process.exit(0); });
+  await new Promise(() => {});
 }
 
 if (mode === 'mic') {

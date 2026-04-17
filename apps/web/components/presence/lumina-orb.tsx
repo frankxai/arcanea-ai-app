@@ -23,9 +23,11 @@ const VERT = /* glsl */ `
   uniform float uChaos;
   uniform float uRadius;
   uniform float uPulse;
+  uniform float uInhale;
   attribute float aSeed;
   varying float vGlow;
   varying float vSeed;
+  varying float vRim;
 
   vec3 hash3(float n) {
     return fract(sin(vec3(n, n + 1.0, n + 2.0)) * vec3(43758.5453, 22578.1459, 19642.3490));
@@ -51,22 +53,23 @@ const VERT = /* glsl */ `
     float n = noise(p * 1.6 + vec3(t, t * 0.8, -t));
     float n2 = noise(p * 3.2 + vec3(-t, t, t * 1.3));
 
-    float breath = 1.0 + sin(uTime * 1.2 + aSeed * 6.28) * 0.03;
-    float amp = uAmplitude * 1.8 + uLow * 0.7;
-    float radial = uRadius * breath + n * 0.22 + n2 * 0.12 * uChaos + amp * 0.55 + uPulse * 0.4;
+    float breath = 1.0 + sin(uTime * 1.15 + aSeed * 6.28) * 0.045;
+    float amp = uAmplitude * 1.9 + uLow * 0.7;
+    float radial = uRadius * breath * (1.0 - uInhale * 0.38) + n * 0.22 + n2 * 0.13 * uChaos + amp * 0.6 + uPulse * 0.3;
 
     vec3 pos = p * radial;
-    pos += hash3(aSeed * 97.0) * uChaos * 0.15;
+    pos += hash3(aSeed * 97.0) * uChaos * 0.18;
 
     vec4 mv = modelViewMatrix * vec4(pos, 1.0);
     gl_Position = projectionMatrix * mv;
 
     float dist = length(mv.xyz);
-    float sizeBoost = 1.0 + amp * 2.2 + uHigh * 0.8;
-    gl_PointSize = (42.0 / dist) * sizeBoost * (0.7 + fract(aSeed * 13.0) * 0.6);
+    float sizeBoost = 1.0 + amp * 2.4 + uHigh * 0.9 + uInhale * 0.9;
+    gl_PointSize = (44.0 / dist) * sizeBoost * (0.65 + fract(aSeed * 13.0) * 0.7);
 
-    vGlow = 0.55 + amp * 0.9 + n * 0.25;
+    vGlow = 0.6 + amp * 1.0 + n * 0.25 + uInhale * 0.3;
     vSeed = aSeed;
+    vRim = smoothstep(0.6, 1.4, length(pos));
   }
 `;
 
@@ -77,16 +80,56 @@ const FRAG = /* glsl */ `
   uniform float uFade;
   varying float vGlow;
   varying float vSeed;
+  varying float vRim;
 
   void main() {
     vec2 uv = gl_PointCoord - 0.5;
     float r = length(uv);
     if (r > 0.5) discard;
-    float alpha = smoothstep(0.5, 0.0, r);
-    alpha *= alpha;
-    vec3 c = mix(uColor, uAccent, fract(vSeed * 7.0) * 0.6 + 0.2);
-    c *= vGlow * 1.4;
-    gl_FragColor = vec4(c, alpha * uFade);
+
+    float ar = smoothstep(0.50, 0.00, r);
+    float ag = smoothstep(0.48, 0.02, r);
+    float ab = smoothstep(0.46, 0.04, r);
+    vec3 alpha = vec3(ar, ag, ab) * vec3(ar, ag, ab);
+
+    vec3 c = mix(uColor, uAccent, fract(vSeed * 7.0) * 0.55 + 0.15);
+    c *= vGlow * 1.45;
+    c = mix(c, uAccent, vRim * 0.28);
+
+    gl_FragColor = vec4(c * alpha, max(max(alpha.r, alpha.g), alpha.b) * uFade);
+  }
+`;
+
+const CORE_VERT = /* glsl */ `
+  uniform float uTime;
+  uniform float uAmp;
+  uniform float uInhale;
+  varying vec3 vNormal;
+  varying float vFresnel;
+
+  void main() {
+    vec3 pos = position * (0.52 + sin(uTime * 1.4) * 0.02 + uAmp * 0.10 - uInhale * 0.08);
+    vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+    gl_Position = projectionMatrix * mv;
+    vNormal = normalize(normalMatrix * normal);
+    vec3 viewDir = normalize(-mv.xyz);
+    vFresnel = pow(1.0 - max(dot(vNormal, viewDir), 0.0), 2.4);
+  }
+`;
+
+const CORE_FRAG = /* glsl */ `
+  precision highp float;
+  uniform vec3 uColor;
+  uniform vec3 uAccent;
+  uniform float uAmp;
+  uniform float uFade;
+  varying float vFresnel;
+
+  void main() {
+    vec3 base = mix(uColor, uAccent, 0.35);
+    vec3 glow = base * (0.35 + uAmp * 0.9) + uAccent * vFresnel * 0.9;
+    float a = (0.22 + vFresnel * 0.7 + uAmp * 0.3) * uFade;
+    gl_FragColor = vec4(glow, a);
   }
 `;
 
@@ -151,6 +194,27 @@ export function LuminaOrb({
     const geometry = buildGeometry(4096);
     const [cr, cg, cb] = hexToRgb(color);
     const [ar, ag, ab] = hexToRgb(accent);
+    const colorVec = new THREE.Color(cr, cg, cb);
+    const accentVec = new THREE.Color(ar, ag, ab);
+
+    const coreGeometry = new THREE.IcosahedronGeometry(1, 4);
+    const coreMaterial = new THREE.ShaderMaterial({
+      vertexShader: CORE_VERT,
+      fragmentShader: CORE_FRAG,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      uniforms: {
+        uTime: { value: 0 },
+        uAmp: { value: 0 },
+        uInhale: { value: 0 },
+        uFade: { value: 0 },
+        uColor: { value: colorVec.clone() },
+        uAccent: { value: accentVec.clone() },
+      },
+    });
+    const core = new THREE.Mesh(coreGeometry, coreMaterial);
+    scene.add(core);
 
     const material = new THREE.ShaderMaterial({
       vertexShader: VERT,
@@ -166,9 +230,10 @@ export function LuminaOrb({
         uChaos: { value: STATE_CONFIG[state].chaos },
         uRadius: { value: STATE_CONFIG[state].radius },
         uPulse: { value: 0 },
+        uInhale: { value: 0 },
         uFade: { value: 0 },
-        uColor: { value: new THREE.Color(cr, cg, cb) },
-        uAccent: { value: new THREE.Color(ar, ag, ab) },
+        uColor: { value: colorVec },
+        uAccent: { value: accentVec },
       },
     });
 
@@ -179,12 +244,20 @@ export function LuminaOrb({
     let raf = 0;
     let fade = 0;
     const u = material.uniforms;
+    const cu = coreMaterial.uniforms;
+    let lastState = state;
+    let stateChangedAt = 0;
 
     const render = () => {
-      const dt = clock.getDelta();
+      const dt = Math.min(clock.getDelta(), 0.05);
       const t = clock.getElapsedTime();
       const current = stateRef.current;
       const cfg = STATE_CONFIG[current];
+
+      if (current !== lastState) {
+        lastState = current;
+        stateChangedAt = t;
+      }
 
       const snap = snapshotRef?.current;
       const rawAmp = snap?.amplitude ?? 0;
@@ -206,12 +279,23 @@ export function LuminaOrb({
       const targetPulse = current === 'thinking' ? Math.abs(Math.sin(t * 2.8)) * 0.2 : 0;
       u.uPulse.value += (targetPulse - u.uPulse.value) * Math.min(dt * 8, 1);
 
+      const inhaleTarget = current === 'thinking'
+        ? Math.max(0, 1 - (t - stateChangedAt) / 0.9)
+        : 0;
+      u.uInhale.value += (inhaleTarget - u.uInhale.value) * Math.min(dt * 12, 1);
+      cu.uInhale.value = u.uInhale.value;
+      cu.uAmp.value = u.uAmplitude.value;
+
       u.uTime.value = t;
+      cu.uTime.value = t;
       fade += (1 - fade) * Math.min(dt * 3, 1);
       u.uFade.value = fade;
+      cu.uFade.value = fade;
 
       points.rotation.y += cfg.spin * dt;
       points.rotation.x = Math.sin(t * 0.2) * 0.12;
+      core.rotation.y -= cfg.spin * 0.6 * dt;
+      core.rotation.x = Math.sin(t * 0.3 + 1.2) * 0.08;
 
       renderer.render(scene, camera);
       raf = requestAnimationFrame(render);
@@ -232,6 +316,8 @@ export function LuminaOrb({
       ro.disconnect();
       geometry.dispose();
       material.dispose();
+      coreGeometry.dispose();
+      coreMaterial.dispose();
       renderer.dispose();
       if (renderer.domElement.parentNode === mount) mount.removeChild(renderer.domElement);
     };

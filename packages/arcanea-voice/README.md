@@ -14,6 +14,30 @@ npx @arcanea/voice help      # Show all commands
 
 ## Commands
 
+### Presence (live voice room on localhost)
+
+Spawn a full-screen orb room in your browser — speak, Lumina replies, the
+orb reacts to her voice. Zero deploy, zero sign-in, all data stays on your
+machine.
+
+| Command | Persona | Notes |
+|---|---|---|
+| `voice jarvis` | JARVIS — concise assistant | Cyan / white |
+| `voice lumina` | Lumina, First Light | Gold / teal (default) |
+| `voice draconia` | Draconia, Guardian of Fire | Red / gold |
+| `voice lyria` | Lyria, Guardian of Sight | Violet |
+| `voice alera` | Alera, Guardian of Voice | Teal |
+| `voice shinkami` | Shinkami, the Source | Silver |
+| `voice nero` | Nero, Primordial Darkness | Indigo |
+| `voice presence` | Lumina (alias) | |
+
+Inside the room: **Space** to speak (auto-stops on silence), **Esc** to
+interrupt, **1–7** to switch persona live. Server runs at
+`http://127.0.0.1:7777` (override with `ARCANEA_VOICE_PORT`).
+
+Needs `GROQ_API_KEY` for transcription + LLM. `ELEVENLABS_API_KEY` optional
+(premium voices for Lumina and Coach). Edge TTS fallback works offline.
+
 ### Thinking (internal, Ctrl+C to stop)
 | Command | Alias | Default | Description |
 |---------|-------|---------|-------------|
