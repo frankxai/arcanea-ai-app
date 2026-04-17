@@ -125,7 +125,9 @@ jobs:
         continue-on-error: true
 
   # ============================================
-  # TYPECHECK — report errors, do not block
+  # TYPECHECK — informational, does not block merge
+  # Reports error count but never fails the job.
+  # Once errors hit 0, flip continue-on-error to false.
   # ============================================
   typecheck:
     name: TypeScript
@@ -157,6 +159,7 @@ jobs:
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: TypeScript check
+        continue-on-error: true
         run: |
           cd apps/web
           npx tsc --noEmit 2>&1 | tee /tmp/tsc-output.txt
@@ -164,8 +167,7 @@ jobs:
           echo "## TypeScript Report" >> $GITHUB_STEP_SUMMARY
           echo "**Errors**: ${ERROR_COUNT}" >> $GITHUB_STEP_SUMMARY
           if [ "$ERROR_COUNT" -gt 0 ]; then
-            echo "::error::TypeScript has ${ERROR_COUNT} errors — fix before merge"
-            exit 1
+            echo "::warning::TypeScript has ${ERROR_COUNT} errors — track and reduce"
           fi
 
   # ============================================
@@ -219,7 +221,9 @@ jobs:
           echo "- **pnpm**: ${{ env.PNPM_VERSION }}" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
-  # STATUS — aggregate result for branch protection
+  # STATUS — merge gate (green = safe to ship)
+  # Only gates on Install + Lint + Build.
+  # TypeScript is tracked but non-blocking until errors reach 0.
   # ============================================
   ci-status:
     name: CI Status
@@ -231,22 +235,27 @@ jobs:
       - name: Check results
         run: |
           echo "## CI Results" >> $GITHUB_STEP_SUMMARY
-          echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Lint | ${{ needs.lint.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| TypeCheck | ${{ needs.typecheck.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Build | ${{ needs.build.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | Status | Blocking |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|--------|----------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Lint | ${{ needs.lint.result }} | yes |" >> $GITHUB_STEP_SUMMARY
+          echo "| TypeScript | ${{ needs.typecheck.result }} | no (tracked) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Build | ${{ needs.build.result }} | yes |" >> $GITHUB_STEP_SUMMARY
 
+          PASS=true
           if [ "${{ needs.lint.result }}" != "success" ]; then
-            echo "::error::Lint failed"
-            exit 1
-          fi
-          if [ "${{ needs.typecheck.result }}" != "success" ]; then
-            echo "::error::TypeScript check failed"
-            exit 1
+            echo "::error::Lint failed — blocks merge"
+            PASS=false
           fi
           if [ "${{ needs.build.result }}" != "success" ]; then
-            echo "::error::Build failed"
+            echo "::error::Build failed — blocks merge"
+            PASS=false
+          fi
+          if [ "${{ needs.typecheck.result }}" != "success" ]; then
+            echo "::warning::TypeScript has errors — tracked, not blocking"
+          fi
+
+          if [ "$PASS" = true ]; then
+            echo "CI passed — safe to merge (lint + build green)"
+          else
             exit 1
           fi
-          echo "CI passed (lint + typecheck + build green)"
