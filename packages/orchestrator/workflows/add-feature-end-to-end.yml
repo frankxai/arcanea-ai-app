@@ -1,0 +1,63 @@
+name: add-feature-end-to-end
+version: 1
+description: |
+  Add a new feature across API, UI, docs, tests. Generic template you
+  fill with --var. Proves the orchestrator can coordinate a full feature
+  slice in 6 dispatches.
+
+usage: |
+  arcanea-orchestrator workflow run add-feature-end-to-end \
+    --var feature=favorites \
+    --var model=user_favorites \
+    --var surface=/dashboard
+
+tasks:
+  - id: 1
+    task: plan
+    prompt: |
+      Design the {{feature}} feature. Data: what tables/columns, what
+      API endpoints (REST or tRPC), what UI entry points at {{surface}}.
+      Output: database migration SQL, API contract (JSON or TS types),
+      UI component list, effort estimate per surface.
+    why: Design before code
+
+  - id: 2
+    task: code.implement
+    prompt: |
+      Implement the database migration and API endpoints from task 1.
+      SQL migration in apps/web/supabase/migrations/. API routes in
+      apps/web/app/api/. Full TypeScript, strict mode, input validation.
+    why: Backend first; frontend binds to it
+
+  - id: 3
+    task: code.frontend
+    prompt: |
+      Implement UI components for {{feature}} at {{surface}}. Follow
+      design-system rules in apps/web/CLAUDE.md. Optimistic updates
+      where sensible. Loading + empty + error states. Mobile-responsive.
+    why: UI after API so types flow correctly
+
+  - id: 4
+    task: code.implement
+    prompt: |
+      Write tests for {{feature}}: API tests (happy path + 2 edge cases),
+      component tests (render, interaction), one e2e (Playwright if
+      available). Target 80% coverage on the new code.
+    why: Coverage must ship with the feature, not after
+
+  - id: 5
+    task: docs.write
+    prompt: |
+      Document {{feature}}: update apps/web/CLAUDE.md with architectural
+      notes, add a user-facing usage section to the relevant docs/ page
+      or README. Screenshot placeholders acceptable.
+    why: Undocumented features become tech debt
+
+  - id: 6
+    task: code.review
+    prompt: |
+      Full-feature review: schema soundness, API idempotency, auth
+      boundaries, client-side input validation, a11y, error paths,
+      observability (logs, error tracking), docs accuracy. Report
+      blockers vs nits separately.
+    why: Independent final gate
