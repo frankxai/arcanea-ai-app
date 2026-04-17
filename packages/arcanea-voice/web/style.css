@@ -150,3 +150,17 @@ body[data-state="speaking"]  #status-line .sep { animation: pulse 0.8s ease-in-o
 @media (prefers-reduced-motion: reduce) {
   #orb, #glow, #status-line .sep { animation: none !important; transition: none !important; }
 }
+
+.tool-pill {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 3px 10px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--core) 14%, transparent);
+  border: 1px solid color-mix(in oklab, var(--core) 26%, transparent);
+  color: var(--core);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}

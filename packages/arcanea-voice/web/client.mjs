@@ -199,8 +199,18 @@ async function handleRecordedBlob(mime) {
     }
     const transcript = decodeURIComponent(r.headers.get('x-voice-transcript') || '');
     const reply = decodeURIComponent(r.headers.get('x-voice-reply') || '');
+    const toolsUsed = (r.headers.get('x-voice-tools-used') || '').split(',').filter(Boolean);
     if (transcript) { transcriptEl.textContent = `"${transcript}"`; transcriptEl.classList.add('visible'); }
-    if (reply) { replyEl.textContent = reply; replyEl.classList.add('visible'); }
+    if (reply) {
+      replyEl.textContent = reply;
+      replyEl.classList.add('visible');
+      if (toolsUsed.length) {
+        const pill = document.createElement('div');
+        pill.className = 'tool-pill';
+        pill.textContent = 'Executed: ' + toolsUsed.join(', ');
+        replyEl.appendChild(pill);
+      }
+    }
 
     const audioBuf = await r.blob();
     const url = URL.createObjectURL(audioBuf);

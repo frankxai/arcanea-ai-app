@@ -3,6 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { LuminaPresence, type PresenceState } from '@/components/presence/lumina-presence';
+import {
+  chatWithGroq,
+  getStoredKeys,
+  speakWithElevenLabs,
+  transcribeWithGroq,
+  voiceIdForPersona,
+} from './browser-voice';
+import { SettingsPanel } from './settings-panel';
 
 // ---------------------------------------------------------------------------
 // Personas — superset of the local voice room, with arcanea.ai voice mapping
@@ -119,6 +127,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const [audioEl, setAudioEl] = useState<HTMLAudioElement | null>(null);
   const [history, setHistory] = useState<MessageTurn[]>([]);
   const [recording, setRecording] = useState(false);
+  const [hasBYOK, setHasBYOK] = useState(false);
 
   const micStreamRef = useRef<MediaStream | null>(null);
   const micCtxRef = useRef<AudioContext | null>(null);
@@ -139,6 +148,12 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   // Keep refs in sync
   useEffect(() => { recordingRef.current = recording; }, [recording]);
   useEffect(() => { stateRef.current = state; }, [state]);
+
+  // BYOK: detect stored keys on mount
+  useEffect(() => {
+    const k = getStoredKeys();
+    setHasBYOK(Boolean(k.groq || k.eleven));
+  }, []);
 
   // URL sync
   useEffect(() => {
@@ -196,82 +211,84 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
 
   const converse = useCallback(async (blob: Blob, mime: string) => {
     busyRef.current = true;
-    setState('thinking');
-    setTranscript('');
-    setReply('');
-
+    setState('thinking'); setTranscript(''); setReply('');
+    const ctl = new AbortController();
+    abortRef.current = ctl;
     try {
-      // Step 1: transcribe
-      const form = new FormData();
+      const keys = getStoredKeys();
       const ext = mime.includes('webm') ? 'webm' : mime.includes('mp4') ? 'm4a' : 'wav';
-      form.append('audio', blob, `mic.${ext}`);
-      const ctl = new AbortController();
-      abortRef.current = ctl;
-      const sttRes = await fetch('/api/ai/transcribe', { method: 'POST', body: form, signal: ctl.signal });
-      if (!sttRes.ok) throw new Error(`transcribe ${sttRes.status}`);
-      const { text: userText } = (await sttRes.json()) as { text?: string };
-      if (!userText?.trim()) { showErr('Nothing heard — try again.'); return; }
+
+      // 1 — transcribe
+      let userText: string;
+      if (keys.groq) {
+        userText = (await transcribeWithGroq(blob, keys.groq)).trim();
+      } else {
+        const form = new FormData();
+        form.append('audio', blob, `mic.${ext}`);
+        const r = await fetch('/api/ai/transcribe', { method: 'POST', body: form, signal: ctl.signal });
+        if (!r.ok) throw new Error(`transcribe ${r.status}`);
+        userText = ((await r.json()) as { text?: string }).text?.trim() ?? '';
+      }
+      if (!userText) { showErr('Nothing heard — try again.'); return; }
       setTranscript(userText);
 
       const nextHistory: MessageTurn[] = [...history, { role: 'user', content: userText }];
 
-      // Step 2: chat (streaming — we accumulate for TTS once complete)
-      const chatRes = await fetch('/api/ai/chat', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
+      // 2 — chat
+      let full: string;
+      if (keys.groq) {
+        full = await chatWithGroq({
           messages: nextHistory.map((m) => ({ role: m.role, content: m.content })),
-          systemPrompt: persona.prompt,
-          temperature: persona.temperature,
-          maxTokens: 220,
-        }),
-        signal: ctl.signal,
-      });
-      if (!chatRes.ok || !chatRes.body) throw new Error(`chat ${chatRes.status}`);
-
-      const reader = chatRes.body.getReader();
-      const decoder = new TextDecoder();
-      let full = '';
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
-        const chunk = decoder.decode(value, { stream: true });
-        // AI SDK v6 streaming format: data:{...} events OR raw text — accept both
-        const lines = chunk.split(/\r?\n/);
-        for (const line of lines) {
-          if (!line) continue;
-          if (line.startsWith('data:')) {
-            try {
-              const parsed = JSON.parse(line.slice(5).trim());
-              const piece = parsed?.choices?.[0]?.delta?.content ?? parsed?.text ?? parsed?.delta ?? '';
-              if (typeof piece === 'string') full += piece;
-            } catch { /* not JSON — treat as raw */ full += line.replace(/^data:\s?/, ''); }
-          } else if (!line.startsWith('event:') && !line.startsWith(':')) {
-            full += line;
-          }
-        }
+          systemPrompt: persona.prompt, apiKey: keys.groq,
+          temperature: persona.temperature, maxTokens: 220,
+        });
         setReply(full);
+      } else {
+        const chatRes = await fetch('/api/ai/chat', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ messages: nextHistory.map((m) => ({ role: m.role, content: m.content })), systemPrompt: persona.prompt, temperature: persona.temperature, maxTokens: 220 }),
+          signal: ctl.signal,
+        });
+        if (!chatRes.ok || !chatRes.body) throw new Error(`chat ${chatRes.status}`);
+        const reader = chatRes.body.getReader();
+        const decoder = new TextDecoder();
+        let acc = '';
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          for (const line of decoder.decode(value, { stream: true }).split(/\r?\n/)) {
+            if (!line) continue;
+            if (line.startsWith('data:')) {
+              try { const p = JSON.parse(line.slice(5).trim()); const piece = p?.choices?.[0]?.delta?.content ?? p?.text ?? p?.delta ?? ''; if (typeof piece === 'string') acc += piece; }
+              catch { acc += line.replace(/^data:\s?/, ''); }
+            } else if (!line.startsWith('event:') && !line.startsWith(':')) { acc += line; }
+          }
+          setReply(acc);
+        }
+        full = acc.trim();
       }
-      full = full.trim();
-      if (!full) throw new Error('empty reply');
 
+      if (!full) throw new Error('empty reply');
       setHistory([...nextHistory, { role: 'assistant', content: full }]);
 
-      // Step 3: speak
-      const ttsRes = await fetch('/api/ai/speak', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ text: full.slice(0, 4000), persona: persona.voiceKey }),
-        signal: ctl.signal,
-      });
-      if (!ttsRes.ok) throw new Error(`speak ${ttsRes.status}`);
-      const audioBlob = await ttsRes.blob();
+      // 3 — speak
+      let audioBlob: Blob;
+      if (keys.eleven) {
+        audioBlob = await speakWithElevenLabs({ text: full.slice(0, 4000), voiceId: voiceIdForPersona(persona.voiceKey), apiKey: keys.eleven });
+      } else {
+        const ttsRes = await fetch('/api/ai/speak', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ text: full.slice(0, 4000), persona: persona.voiceKey }),
+          signal: ctl.signal,
+        });
+        if (!ttsRes.ok) throw new Error(`speak ${ttsRes.status}`);
+        audioBlob = await ttsRes.blob();
+      }
+
       const url = URL.createObjectURL(audioBlob);
       const audio = new Audio();
-      audio.crossOrigin = 'anonymous';
-      audio.src = url;
-      setAudioEl(audio);
-      setState('speaking');
+      audio.crossOrigin = 'anonymous'; audio.src = url;
+      setAudioEl(audio); setState('speaking');
       await new Promise<void>((done) => {
         audio.addEventListener('ended', () => done(), { once: true });
         audio.addEventListener('error', () => done(), { once: true });
@@ -280,11 +297,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       URL.revokeObjectURL(url);
     } catch (e) {
       if ((e as Error).name !== 'AbortError') showErr((e as Error).message || 'Something broke.');
-    } finally {
-      busyRef.current = false;
-      setAudioEl(null);
-      setState('idle');
-    }
+    } finally { busyRef.current = false; setAudioEl(null); setState('idle'); }
   }, [history, persona, showErr]);
 
   const startRecording = useCallback(async () => {
@@ -404,6 +417,15 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         <span className="text-[11px] tracking-[0.28em] uppercase text-white/80">{persona.name}</span>
         <span className="w-px h-3 bg-white/10" />
         <span className="text-[10px] tracking-[0.22em] uppercase text-white/40">{statusCopy}</span>
+        <span className="w-px h-3 bg-white/10" />
+        <span
+          className="text-[9px] tracking-[0.22em] uppercase px-1.5 py-0.5 rounded"
+          style={hasBYOK
+            ? { backgroundColor: 'rgba(0,188,212,0.15)', color: '#7feaff', border: '1px solid rgba(0,188,212,0.3)' }
+            : { backgroundColor: 'rgba(255,191,0,0.12)', color: '#ffd070', border: '1px solid rgba(255,191,0,0.25)' }}
+        >
+          {hasBYOK ? 'BYOK' : 'Hosted'}
+        </span>
       </div>
 
       {/* Transcript (what you said) */}
@@ -470,6 +492,14 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       >
         ← Arcanea
       </Link>
+
+      {/* BYOK settings gear */}
+      <SettingsPanel
+        onKeysChanged={() => {
+          const k = getStoredKeys();
+          setHasBYOK(Boolean(k.groq || k.eleven));
+        }}
+      />
 
       {error && (
         <div
