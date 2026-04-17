@@ -21,7 +21,8 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "validate": "tsx src/validate.ts"
+    "validate": "tsx src/validate.ts",
+    "test": "tsx --test tests/validate.test.ts"
   },
   "dependencies": {
     "yaml": "^2.6.0"
