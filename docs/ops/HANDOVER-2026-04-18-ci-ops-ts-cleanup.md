@@ -2,7 +2,15 @@
 
 ## Situation
 
-`arcanea-ai-app` / apps/web had **168 TypeScript errors** against the plan at `docs/ops/CI_OPS_BACKLOG.md` Task #1 ("Fix TypeScript Errors (164 errors → 0)"). This session executed a 5-PR sprint that brought the count to **0 locally** (PR #37 branch `fix/ts-errors-batch5`), but **main still has 18 errors** until #37 merges. CI on #37 is currently red with Install failing; logs were 404'ing at handover time. The goal of the session was Task #1 end-to-end, plus #2 (pnpm v6) and #3 (CODEOWNERS). #3 shipped clean, #2 got blocked, #1 is one merge away.
+`arcanea-ai-app` / apps/web had **168 TypeScript errors** against the plan at `docs/ops/CI_OPS_BACKLOG.md` Task #1. This session executed a 5-PR sprint that brought the count to **0 locally** (PR #37 branch `fix/ts-errors-batch5`), plus prepared the follow-up gate-flip PR #38. **Main still has 18 errors** until #37 merges. All CI is currently hard-blocked by a GitHub Actions billing/spending-limit issue — see next section.
+
+## 🚨 Hard blocker: GitHub Actions billing
+
+**All CI across the repo is hard-failing in 1 second** — main, PR #37, PR #38. The check-run annotation reveals:
+
+> "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings"
+
+**Nothing in code can fix this.** First action on resuming: **GitHub → Settings → Billing & plans**. Verify resolution by checking `gh run list --branch main --limit 1` — latest run's Install step should complete in >10s with real steps (not 1s with empty steps).
 
 ## What's Done
 
@@ -13,16 +21,17 @@
 - **PR #36** `2e6d4178` — 27 TS errors (45→18); react-markdown component fix + 7 studio API routes cast + js-yaml ambient shim
 
 **Open / in-flight:**
-- **PR #37** `fix/ts-errors-batch5` HEAD `673ff9d4` (force-pushed after rebase onto main) — the final 18→0 fixes for WorldGraph (9), author-ai-panel (6), liquid-glass (1), split-text (1), gallery-components (1). Local `tsc --noEmit` exits 0. Local `pnpm install --frozen-lockfile` passes. **CI is failing on Install step with logs unavailable at handover time.**
+- **PR #37** `fix/ts-errors-batch5` HEAD `8af86d02` (rebased onto main + empty retrigger). Final 18→0 fixes for WorldGraph (9), author-ai-panel (6), liquid-glass (1), split-text (1), gallery-components (1). Local `tsc --noEmit` exits 0. Local `pnpm install --frozen-lockfile` passes. **CI blocked by account billing, not code.**
+- **PR #38** `ops/ci-typecheck-blocking` — follow-up that flips typecheck gate to blocking in `ci.yml` + `deploy-web.yml`. 2-file diff (10 insertions, 10 deletions). Ready to merge AFTER #37.
 - **PR #33** `feat/pnpm-v6` — **DRAFT / BLOCKED.** `ERR_PNPM_BROKEN_LOCKFILE "expected a single document in the stream, but found more"` in CI under both pnpm 9.15.0 and pnpm 8.15.0 lockfiles. Local install passes. Committed blob is clean (0 CR, 18063 LF, no multi-doc separators). Suspicion: `pnpm/action-setup@v6` (released 2026-04-10, adds pnpm 11 support) has an undocumented incompatibility with our heavy `pnpm.overrides` in root package.json.
 
 ## What's Not Done
 
-- **Zero-error state not on main yet** — blocked on PR #37 CI going green. See Next Actions #1.
-- **CI gate flip** — the plan's final done criterion. Trivial 1-line-per-file edit to flip `continue-on-error: true` → `false` on typecheck in both `.github/workflows/ci.yml` and `.github/workflows/deploy-web.yml`, plus change `::warning::` → `::error::` in the ci.yml summary script. Do NOT do this until PR #37 is merged.
-- **PR #33 pnpm v6** — still blocked. Deadline 2026-09-16 (Node 20 deprecation). Safe to defer. Try `pnpm/action-setup@v5` (Node 24) as an alternative path, or minimal repro to file upstream.
-- **Runtime validation of AI SDK v6 migration** — `author-ai-panel.tsx` changes from v5 (`useChat({ api, body })` + `input/setInput/handleSubmit/isLoading`) to v6 (`useChat({ transport: new DefaultChatTransport({ api, body }) })` + `sendMessage` + `status`). Types clean locally but runtime needs manual verification on a preview URL after merge.
-- **pre-existing smoke test issue** — `pnpm --filter @arcanea/web test:e2e -- --grep @smoke` returns "No tests found" because pnpm passes `--` literally. Non-blocking in deploy-web now (continue-on-error added in PR #34). Fix is simple: drop `--` from workflow command.
+- **Zero-error state not on main yet** — blocked on billing → #37 merge.
+- **CI gate flip** — code is ready (PR #38), but pending billing resolution + #37 merge. Follow-up PR #38 already committed (branch `ops/ci-typecheck-blocking`).
+- **PR #33 pnpm v6** — still blocked. Deadline 2026-09-16 (Node 20 deprecation). Safe to defer. Try `pnpm/action-setup@v5` (Node 24) as alternative.
+- **Runtime validation of AI SDK v6 migration** — `author-ai-panel.tsx` changed from v5 API (`input`/`setInput`/`handleSubmit`/`isLoading`) to v6 (`sendMessage` + `status` + `DefaultChatTransport`). Types clean locally; runtime needs manual verification on preview URL after merge.
+- **pre-existing smoke test issue** — `pnpm --filter @arcanea/web test:e2e -- --grep @smoke` returns "No tests found" because pnpm passes `--` literally. Non-blocking in deploy-web (continue-on-error added in PR #34, will be REMOVED by PR #38 — but smoke test is under `validate-web` job after `Type check`, and that's the step PR #38 flips). Fix is simple: drop `--` from workflow command, separate PR.
 
 ## Critical Context
 
@@ -47,21 +56,17 @@
 
 ## Next Actions (ordered)
 
-1. **Get PR #37 CI green and merge it.**
-   - First: `gh run list --branch fix/ts-errors-batch5 --limit 3` and `gh run view <id> --log-failed` on the Install job to see why install fails. GitHub log 404s should clear within an hour of the run completing.
-   - If lockfile drift: `git checkout fix/ts-errors-batch5 && git rebase origin/main && pnpm install --lockfile-only && git add pnpm-lock.yaml && git commit -m "fix(ops): resync lockfile with main" && git push --force-with-lease`.
-   - If something else: fix, push, merge with `gh pr merge 37 --squash --delete-branch`.
+1. **Resolve GitHub Actions billing.** GitHub → Settings → Billing & plans. Update payment or raise spending limit. Verify: `gh run list --branch main --limit 1` — latest Install should complete in >10s with real steps.
 
-2. **Flip the CI gate to blocking** (follow-up PR after #37 merges).
-   - `.github/workflows/ci.yml` line 162: `continue-on-error: true` → `false` on the `TypeScript check` step.
-   - Same file line 170: `echo "::warning::TypeScript has ${ERROR_COUNT} errors — track and reduce"` → `echo "::error::..." && exit 1` (only inside the `if [ ERROR_COUNT -gt 0 ]` branch).
-   - `.github/workflows/deploy-web.yml` line 64 (added in PR #34): `continue-on-error: true  # 131 pre-existing errors tracked...` → remove the line + comment.
+2. **Merge PR #37** once CI goes green. `gh pr merge 37 --squash --delete-branch`. Then verify: `git pull origin main && cd apps/web && npx tsc --noEmit` should exit 0.
 
-3. **Verify runtime for AI SDK v6 migration** on arcanea.ai preview. Open Author Studio, start a chat, confirm messages stream and render (`msg.parts[]` path).
+3. **Merge PR #38** (typecheck gate flip) — only after #37. Verify by checking that next PR with deliberate TS error correctly blocks merge.
 
-4. **Defer PR #33 pnpm v6** investigation until needed. Deadline 2026-09-16. When picked up: try `pnpm/action-setup@v5` first (Node 24 runtime, older install mechanism), or file a minimal repro with pnpm/action-setup maintainers using our package.json's `pnpm.overrides` block.
+4. **Verify runtime for AI SDK v6 migration** on arcanea.ai preview. Open Author Studio, start a chat, confirm messages stream and render (`msg.parts[]` path works).
 
-5. **Optional housekeeping**: fix the smoke test `--grep` issue in `.github/workflows/deploy-web.yml` (drop the `--` that pnpm passes literally).
+5. **Defer PR #33 pnpm v6** until needed. Deadline 2026-09-16. Try `pnpm/action-setup@v5` (Node 24) as alternative.
+
+6. **Optional housekeeping**: fix smoke test `--grep` issue in deploy-web.yml (drop the `--`).
 
 ## Files to Read First
 
