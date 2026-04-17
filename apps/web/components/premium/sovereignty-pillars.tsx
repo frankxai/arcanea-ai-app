@@ -2,7 +2,7 @@
 
 import { m } from "framer-motion";
 import { Keyboard, Shield, Code, ArrowSquareOut } from "@/lib/phosphor-icons";
-import type { ComponentType } from "react";
+import type { PhosphorIcon } from "@/lib/phosphor-icons";
 
 // ---------------------------------------------------------------------------
 // SovereigntyPillars — The "Keep your keys. Keep your IP." section.
@@ -11,7 +11,7 @@ import type { ComponentType } from "react";
 // ---------------------------------------------------------------------------
 
 interface Pillar {
-  icon: ComponentType<{ className?: string; weight?: string }>;
+  icon: PhosphorIcon;
   title: string;
   body: string;
   accent: string;

@@ -85,11 +85,12 @@ export async function GET(
   const git = await readGitChapter(bookSlug, chapterSlug);
 
   // Attempt to read an authenticated user's draft.
-  let draft: {
+  type DraftRow = {
     content: string;
     word_count: number;
     updated_at: string;
-  } | null = null;
+  };
+  let draft: DraftRow | null = null;
 
   try {
     const supabase = (await createClient()) as DB;
@@ -103,7 +104,7 @@ export async function GET(
         .eq('author_user_id', user.id)
         .maybeSingle();
       if (data) {
-        draft = data as typeof draft;
+        draft = data as DraftRow;
       }
     }
   } catch (err) {

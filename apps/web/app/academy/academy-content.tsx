@@ -6,13 +6,13 @@ import {
   Lightning, Book, Scroll, Flame, Drop, Leaf, Wind, Globe,
   Eye, Heart, Sun, Diamond, Compass,
 } from '@/lib/phosphor-icons';
+import type { PhosphorIcon } from '@/lib/phosphor-icons';
 import { GateGrid } from './gate-grid';
 import { SplitText } from '@/components/motion/split-text';
 import { Magnetic } from '@/components/motion/magnetic';
 import { Reveal, StaggerReveal } from '@/components/motion/reveal';
 import { GlowCard } from '@/components/motion/glow-card';
 import { NumberTicker } from '@/components/motion/number-ticker';
-import type { ComponentType } from 'react';
 
 /* ------------------------------------------------------------------ */
 /*  DATA                                                               */
@@ -25,7 +25,7 @@ interface Gate {
   beast: string;
   domain: string;
   color: string;
-  icon: ComponentType<{ className?: string; style?: React.CSSProperties; weight?: string }>;
+  icon: PhosphorIcon;
   locked?: boolean;
 }
 
@@ -33,7 +33,7 @@ interface House {
   name: string;
   element: string;
   color: string;
-  icon: ComponentType<{ className?: string; style?: React.CSSProperties; weight?: string }>;
+  icon: PhosphorIcon;
   desc: string;
 }
 

@@ -1,5 +1,5 @@
-import type { ComponentType } from "react";
 import type { RevenueStream, FlowStep } from "@/components/premium";
+import type { PhosphorIcon } from "@/lib/phosphor-icons";
 import {
   Coins,
   Diamond,
@@ -257,7 +257,7 @@ export const CASE_STUDIES: CaseStudy[] = [
 // ---------------------------------------------------------------------------
 
 interface Pillar {
-  icon: ComponentType<{ className?: string; weight?: string; style?: React.CSSProperties }>;
+  icon: PhosphorIcon;
   title: string;
   body: string;
   accent: string;

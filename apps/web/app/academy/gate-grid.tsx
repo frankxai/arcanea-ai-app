@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Lock } from '@/lib/phosphor-icons';
-import type { ComponentType } from 'react';
+import type { PhosphorIcon } from '@/lib/phosphor-icons';
 import { LiquidGlass } from '@/components/motion/liquid-glass';
 
 interface Gate {
@@ -13,7 +13,7 @@ interface Gate {
   beast: string;
   domain: string;
   color: string;
-  icon: ComponentType<{ className?: string; style?: React.CSSProperties; weight?: string }>;
+  icon: PhosphorIcon;
   locked?: boolean;
 }
 
