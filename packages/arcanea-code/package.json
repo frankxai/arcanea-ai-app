@@ -1,6 +1,6 @@
 {
   "name": "@arcanea/arcanea-code",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Thin multi-CLI dispatcher that routes coding tasks to the right agent (claude, opencode, codex, gemini) based on @arcanea/router-spec.",
   "type": "module",
   "main": "./dist/cli.js",

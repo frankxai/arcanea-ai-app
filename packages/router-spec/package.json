@@ -1,6 +1,6 @@
 {
   "name": "@arcanea/router-spec",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Canonical model routing spec for the Arcanea ecosystem. Single source of truth consumed by claude-arcanea, oh-my-arcanea, arcanea-flow, and arcanea.ai/models.",
   "type": "module",
   "main": "./dist/index.js",

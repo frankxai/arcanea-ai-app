@@ -48,6 +48,20 @@ This is not a TUI. It is not a chat app. It is a **5-line-what-to-run** decision
 
 ## Status
 
-Phase 1a (2026-04-17) — dispatcher skeleton, `run` / `list-models` / `list-tasks` / `explain` / `swarm`-stub.
+Phase 1a (2026-04-17) — dispatcher skeleton, `run` / `list-models` / `list-tasks` / `explain` / `doctor` / `config` / `status` / `swarm`.
 
 See `planning-with-files/AMCAS_DESIGN_2026-04-17.md` for the full design and phase plan.
+
+## Legal / disclaimer
+
+**This package is a thin wrapper.** It does not process model requests itself — it shells out to CLIs you install and authenticate yourself (`claude`, `opencode`, `codex`, `gemini`). Everything that flows through those sub-CLIs is governed by the vendor's terms.
+
+- **MIT licensed, provided "AS IS"**, without warranty of any kind. See `LICENSE`.
+- **Not affiliated with** Anthropic, OpenAI, Google, Alibaba, MiniMax, Zhipu, Moonshot, NVIDIA, Xiaomi, or any other model provider. All trademarks belong to their respective owners.
+- **You are responsible** for your own provider authentication, API key safety, token consumption, billing, and compliance with each provider's Terms of Service and Acceptable Use Policy.
+- **No usage data is collected** by this package. Your prompts never touch Arcanea infrastructure — they go directly from your shell to the CLI you invoked.
+- **Model metadata** (SWE-Bench scores, context windows, tier classifications) is aggregated from public benchmarks and vendor announcements. Accuracy is best-effort and not guaranteed. Verify claims independently before making business decisions.
+- **The routing heuristics are opinionated**, not optimal. Override with `--model` at any time. The Router Spec is a suggestion, not authority.
+- **Rate limits, quota exhaustion, content filtering, and any other runtime behavior** are the sole responsibility of the underlying provider CLI. This package surfaces their errors but does not modify their behavior.
+
+If a vendor discontinues or renames a model, this package will not automatically adapt — edit `@arcanea/router-spec` or override with `--model`.

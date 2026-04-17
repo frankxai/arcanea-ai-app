@@ -59,3 +59,15 @@ const model = pickModel(candidates);
 ## Principle
 
 Memory is historical. Config is authoritative. If this file disagrees with a surface's local config, this file wins — fix the surface.
+
+## Legal / disclaimer
+
+This package is a **routing specification**. It does not execute models or process prompts. Downstream consumers (the dispatcher, overlays, web pages) exec or display based on these declarations.
+
+- **MIT licensed, provided "AS IS"**, without warranty of any kind. See `LICENSE`.
+- **Not affiliated with** any model provider named in `models.yaml`. All trademarks belong to their respective owners.
+- **Model benchmarks and metadata** (SWE-Bench, context, speed, strengths) are aggregated from public vendor announcements and independent benchmarks. Accuracy is best-effort. Verify before relying on them for production decisions.
+- **Tier classifications** (`free` / `sub` / `byok` / `premium`) describe general availability at time of publish. Vendor pricing and availability change — re-check with the vendor before assuming cost.
+- **Routing decisions** encoded here are opinionated defaults. Consumers are free to override per-call.
+- **No usage data is collected** by this package. It contains only declarations.
+- **Vendor Terms of Service** apply to any runtime invocation downstream. This spec makes no claim about compliance on your behalf.
