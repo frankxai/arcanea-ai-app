@@ -2,6 +2,7 @@ import { loadSpec, resolveTask, pickModel } from '@arcanea/router-spec';
 import { execa } from 'execa';
 import { runtimeFor, getRuntime } from '../runtimes.js';
 import { loadConfig, applyPreference } from '../config.js';
+import { appendHistory } from '../history.js';
 import kleur from 'kleur';
 
 interface Options {
@@ -9,6 +10,7 @@ interface Options {
   surface: string;
   model?: string;
   dryRun?: boolean;
+  noHistory?: boolean;
 }
 
 export async function runCommand(promptParts: string[], opts: Options): Promise<void> {
@@ -74,6 +76,10 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
     return;
   }
 
+  const startTime = Date.now();
+  let capturedExit: number | null = null;
+  let capturedError: string | undefined;
+
   try {
     // Stream stdout/stderr through. Inherit stdin so interactive auth prompts still work.
     const subprocess = execa(runtime.binary, argv, {
@@ -81,11 +87,38 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
       reject: false,
     });
     const result = await subprocess;
+    capturedExit = result.exitCode ?? null;
     if (result.exitCode !== 0) {
+      // stderr already streamed via inherit; nothing to capture here.
+      if (!opts.noHistory) {
+        appendHistory({
+          ts: new Date().toISOString(),
+          task: opts.task,
+          surface,
+          model: modelId,
+          runtime: rtId,
+          durationMs: Date.now() - startTime,
+          exitCode: capturedExit,
+          promptLen: prompt.length,
+        });
+      }
       process.exit(result.exitCode ?? 1);
+    }
+    if (!opts.noHistory) {
+      appendHistory({
+        ts: new Date().toISOString(),
+        task: opts.task,
+        surface,
+        model: modelId,
+        runtime: rtId,
+        durationMs: Date.now() - startTime,
+        exitCode: 0,
+        promptLen: prompt.length,
+      });
     }
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
+    capturedError = msg.slice(0, 200);
     if (msg.includes('ENOENT')) {
       console.error(
         kleur.red(
@@ -94,6 +127,19 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
       );
     } else {
       console.error(kleur.red(`  [arcanea] ${msg}`));
+    }
+    if (!opts.noHistory) {
+      appendHistory({
+        ts: new Date().toISOString(),
+        task: opts.task,
+        surface,
+        model: modelId,
+        runtime: rtId,
+        durationMs: Date.now() - startTime,
+        exitCode: capturedExit ?? -1,
+        promptLen: prompt.length,
+        error: capturedError,
+      });
     }
     process.exit(1);
   }

@@ -9,6 +9,8 @@ import { doctorCommand } from './commands/doctor.js';
 import { configCommand } from './commands/config.js';
 import { statusCommand } from './commands/status.js';
 import { planCommand } from './commands/plan.js';
+import { historyCommand } from './commands/history.js';
+import { statsCommand } from './commands/stats.js';
 
 const program = new Command();
 
@@ -41,6 +43,7 @@ program
   .option('-s, --surface <surface>', 'Surface to route through', 'claude-arcanea')
   .option('-m, --model <model>', 'Override model selection')
   .option('--dry-run', 'Show the command that would run, do not execute')
+  .option('--no-history', 'Do not log this run to ~/.arcanea/history.jsonl')
   .argument('<prompt...>', 'Prompt to send')
   .action(runCommand);
 
@@ -76,6 +79,19 @@ program
   .option('--dry-run', 'Return a template plan without invoking claude')
   .argument('<goal...>', 'High-level goal to decompose')
   .action(planCommand);
+
+program
+  .command('history')
+  .description('Show recent run history from ~/.arcanea/history.jsonl.')
+  .option('-n, --limit <n>', 'How many recent events', '20')
+  .option('--json', 'Output as JSON')
+  .action(historyCommand);
+
+program
+  .command('stats')
+  .description('Aggregate success rates + avg duration per task→model.')
+  .option('--json', 'Output as JSON')
+  .action(statsCommand);
 
 program.parseAsync(process.argv).catch((err) => {
   console.error(err instanceof Error ? err.message : err);
