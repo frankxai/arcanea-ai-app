@@ -159,7 +159,6 @@ jobs:
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: TypeScript check
-        continue-on-error: true
         run: |
           cd apps/web
           npx tsc --noEmit 2>&1 | tee /tmp/tsc-output.txt
@@ -167,7 +166,8 @@ jobs:
           echo "## TypeScript Report" >> $GITHUB_STEP_SUMMARY
           echo "**Errors**: ${ERROR_COUNT}" >> $GITHUB_STEP_SUMMARY
           if [ "$ERROR_COUNT" -gt 0 ]; then
-            echo "::warning::TypeScript has ${ERROR_COUNT} errors — track and reduce"
+            echo "::error::TypeScript has ${ERROR_COUNT} errors"
+            exit 1
           fi
 
   # ============================================
@@ -222,8 +222,8 @@ jobs:
 
   # ============================================
   # STATUS — merge gate (green = safe to ship)
-  # Only gates on Install + Lint + Build.
-  # TypeScript is tracked but non-blocking until errors reach 0.
+  # Gates on Install + Lint + TypeScript + Build.
+  # TypeScript is now blocking — apps/web tsc --noEmit exits 0.
   # ============================================
   ci-status:
     name: CI Status
@@ -238,7 +238,7 @@ jobs:
           echo "| Job | Status | Blocking |" >> $GITHUB_STEP_SUMMARY
           echo "|-----|--------|----------|" >> $GITHUB_STEP_SUMMARY
           echo "| Lint | ${{ needs.lint.result }} | yes |" >> $GITHUB_STEP_SUMMARY
-          echo "| TypeScript | ${{ needs.typecheck.result }} | no (tracked) |" >> $GITHUB_STEP_SUMMARY
+          echo "| TypeScript | ${{ needs.typecheck.result }} | yes |" >> $GITHUB_STEP_SUMMARY
           echo "| Build | ${{ needs.build.result }} | yes |" >> $GITHUB_STEP_SUMMARY
 
           PASS=true
@@ -246,16 +246,17 @@ jobs:
             echo "::error::Lint failed — blocks merge"
             PASS=false
           fi
+          if [ "${{ needs.typecheck.result }}" != "success" ]; then
+            echo "::error::TypeScript failed — blocks merge"
+            PASS=false
+          fi
           if [ "${{ needs.build.result }}" != "success" ]; then
             echo "::error::Build failed — blocks merge"
             PASS=false
           fi
-          if [ "${{ needs.typecheck.result }}" != "success" ]; then
-            echo "::warning::TypeScript has errors — tracked, not blocking"
-          fi
 
           if [ "$PASS" = true ]; then
-            echo "CI passed — safe to merge (lint + build green)"
+            echo "CI passed — safe to merge (lint + typecheck + build green)"
           else
             exit 1
           fi
