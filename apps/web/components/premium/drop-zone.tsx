@@ -531,9 +531,11 @@ export function DropZone() {
                     : { type: "button" as const, disabled: true };
               return (
                 <ButtonOrLink
-                  // @ts-expect-error — mixed element types share visual API
                   key={s.label}
-                  {...linkProps}
+                  // Union of Link and button props — cast to bypass the
+                  // IntrinsicAttributes overlap check; shapes are runtime-safe.
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  {...(linkProps as any)}
                   className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.025] border border-white/[0.06] transition-all group ${
                     isComingSoon
                       ? "opacity-50 cursor-not-allowed"

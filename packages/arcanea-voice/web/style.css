@@ -1,0 +1,152 @@
+:root {
+  --orb-amp: 0;
+  --core: #ffd700;
+  --accent: #00bcd4;
+  --ink: #fafafa;
+  --bg: #050507;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Space Grotesk', 'SF Pro Display', -apple-system, Inter, system-ui, sans-serif;
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main#room {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  cursor: default;
+}
+
+#glow {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 48%,
+      color-mix(in oklab, var(--core) 18%, transparent) 0%,
+      color-mix(in oklab, var(--core) 6%, transparent) 28%,
+      transparent 62%),
+    radial-gradient(circle at 50% 80%,
+      color-mix(in oklab, var(--accent) 10%, transparent) 0%,
+      transparent 55%);
+  filter: blur(calc(24px + var(--orb-amp) * 36px));
+  opacity: calc(0.55 + var(--orb-amp) * 0.5);
+  transition: opacity 400ms ease;
+  mix-blend-mode: screen;
+}
+
+#orb {
+  width: min(78vmin, 720px);
+  height: min(78vmin, 720px);
+  position: relative;
+  z-index: 2;
+  transition: transform 420ms cubic-bezier(.22,.65,.25,1);
+}
+body[data-state="thinking"] #orb { transform: scale(0.96); }
+body[data-state="speaking"] #orb { transform: scale(1.02); }
+
+#status-line {
+  position: absolute;
+  top: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--ink) 70%, transparent);
+  padding: 8px 18px;
+  border: 1px solid color-mix(in oklab, var(--ink) 10%, transparent);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--bg) 60%, transparent);
+  backdrop-filter: blur(10px);
+  z-index: 3;
+}
+#status-line .sep {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--core);
+  box-shadow: 0 0 8px var(--core);
+}
+
+#persona-name { font-weight: 600; color: var(--ink); }
+
+.line {
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  max-width: min(720px, 80vw);
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.55;
+  padding: 0 24px;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 360ms ease;
+  pointer-events: none;
+}
+.line.dim { color: color-mix(in oklab, var(--ink) 38%, transparent); font-size: 12px; }
+#transcript { bottom: calc(50% + min(44vmin, 400px)); }
+#reply      { top:    calc(50% + min(44vmin, 400px)); font-style: italic; }
+.line.visible { opacity: 1; }
+
+#hotkeys {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--ink) 28%, transparent);
+  z-index: 3;
+}
+#hotkeys kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  border: 1px solid color-mix(in oklab, var(--ink) 14%, transparent);
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 9px;
+  color: color-mix(in oklab, var(--ink) 50%, transparent);
+  background: color-mix(in oklab, var(--ink) 4%, transparent);
+}
+
+#error {
+  position: absolute;
+  bottom: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: color-mix(in oklab, #ff4d6d 16%, transparent);
+  border: 1px solid color-mix(in oklab, #ff4d6d 30%, transparent);
+  color: #ffb3c1;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  z-index: 4;
+  backdrop-filter: blur(10px);
+}
+
+body[data-state="listening"] #status-line .sep { animation: pulse 1.2s ease-in-out infinite; }
+body[data-state="thinking"]  #status-line .sep { animation: pulse 0.5s ease-in-out infinite; }
+body[data-state="speaking"]  #status-line .sep { animation: pulse 0.8s ease-in-out infinite; }
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #orb, #glow, #status-line .sep { animation: none !important; transition: none !important; }
+}

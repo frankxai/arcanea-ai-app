@@ -123,7 +123,8 @@ export async function GET(request: NextRequest, context: RouteContext) {
  */
 export async function PATCH(request: NextRequest, context: RouteContext) {
   try {
-    const supabaseServer = await createClient();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabaseServer = (await createClient()) as any;
     const { id } = await context.params;
 
     const body = await parseRequestBody(request);

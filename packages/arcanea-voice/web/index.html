@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Arcanea · Presence</title>
+<link rel="stylesheet" href="./style.css" />
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.183.2/build/three.module.js"
+  }
+}
+</script>
+</head>
+<body data-state="idle">
+  <main id="room" aria-live="polite">
+    <div id="glow" aria-hidden="true"></div>
+    <div id="orb"></div>
+
+    <div id="status-line">
+      <span id="persona-name">Lumina</span>
+      <span class="sep"></span>
+      <span id="status-label">Ready</span>
+    </div>
+
+    <div id="transcript" class="line dim"></div>
+    <div id="reply" class="line"></div>
+
+    <div id="hotkeys" aria-hidden="true">
+      <kbd>Space</kbd> speak · <kbd>Esc</kbd> stop · <kbd>1–7</kbd> switch persona
+    </div>
+
+    <div id="error" role="alert" hidden></div>
+  </main>
+
+  <script type="module" src="./client.mjs"></script>
+</body>
+</html>

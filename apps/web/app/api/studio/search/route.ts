@@ -47,8 +47,9 @@ export async function POST(request: NextRequest) {
 
   const limit = Math.min(Math.max(body.limit ?? 8, 1), 32);
 
-  // Auth
-  const supabase = await createClient();
+  // Auth — Database type is out of sync with studio RPCs
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const supabase = (await createClient()) as any;
   const {
     data: { user },
   } = await supabase.auth.getUser();

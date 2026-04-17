@@ -26,7 +26,8 @@ export async function PATCH(request: NextRequest) {
     }
 
     const { createClient } = await import('@/lib/supabase/server');
-    const supabase = await createClient();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createClient()) as any;
 
     const {
       data: { user },
