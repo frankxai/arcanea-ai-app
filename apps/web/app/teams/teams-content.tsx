@@ -17,278 +17,120 @@ import {
   Users,
   Sparkle,
 } from "@/lib/phosphor-icons";
+import {
+  HERO_STATS,
+  PRINCIPLES,
+  STACK_ROWS,
+  TEAM_MEMBERS,
+} from "./teams-data";
+import type { ComponentType } from "react";
 
 // ---------------------------------------------------------------------------
-// Team data
+// Teams with inline icons (Phosphor components can't be in a plain .ts file)
 // ---------------------------------------------------------------------------
 
-const TEAMS = [
+// TeamCardProps expects a narrow icon signature; Phosphor exports a wider one.
+// Casting through unknown is the canonical escape hatch for icon library mismatches.
+type NarrowIcon = ComponentType<{
+  className?: string;
+  weight?: string;
+  style?: React.CSSProperties;
+}>;
+
+interface TeamDef {
+  name: string;
+  charter: string;
+  owns: string[];
+  icon: NarrowIcon;
+  accent: string;
+  stats: { label: string; value: string }[];
+  members: { name: string; role: string }[];
+  blogHref: string;
+  repoHref: string;
+}
+
+const TEAMS: TeamDef[] = [
   {
     name: "Luminor Intelligence",
-    charter:
-      "Design the 16 specialist AI minds, train them on Arcanea's philosophy, and ship the Luminor Standard.",
-    owns: [
-      "Luminor Kernel",
-      "Chosen specs",
-      "Swarm Engine",
-      "ReasoningBank",
-      "Quality Gates",
-    ],
-    icon: Brain,
+    charter: "Design the 16 specialist AI minds, train them on Arcanea's philosophy, and ship the Luminor Standard.",
+    owns: ["Luminor Kernel", "Chosen specs", "Swarm Engine", "ReasoningBank", "Quality Gates"],
+    icon: Brain as unknown as NarrowIcon,
     accent: "#00bcd4",
-    stats: [
-      { label: "members", value: "5" },
-      { label: "repos", value: "4" },
-    ],
-    members: [
-      { name: "Frank", role: "Lead" },
-      { name: "Lumina", role: "Orchestrator" },
-      { name: "Leyla", role: "Flow Gate" },
-      { name: "Maylinn", role: "Heart Gate" },
-      { name: "Seraph", role: "Intelligence" },
-    ],
+    stats: [{ label: "members", value: "5" }, { label: "repos", value: "4" }],
+    members: [...TEAM_MEMBERS["Luminor Intelligence"]],
     blogHref: "/blog?tag=luminor",
     repoHref: "https://github.com/frankxai/arcanea",
   },
   {
     name: "World Engine",
-    charter:
-      "The living world graph. Characters, locations, magic schemas, persistence, semantic search.",
-    owns: [
-      "world-graph schema",
-      "pgvector integration",
-      "world API",
-      "cross-world linking",
-    ],
-    icon: Globe,
+    charter: "The living world graph. Characters, locations, magic schemas, persistence, semantic search.",
+    owns: ["world-graph schema", "pgvector integration", "world API", "cross-world linking"],
+    icon: Globe as unknown as NarrowIcon,
     accent: "#7fffd4",
-    stats: [
-      { label: "members", value: "4" },
-      { label: "repos", value: "3" },
-    ],
-    members: [
-      { name: "Frank", role: "Lead" },
-      { name: "Oriax", role: "Architect" },
-      { name: "Vael", role: "Schema" },
-      { name: "Kael", role: "Search" },
-    ],
+    stats: [{ label: "members", value: "4" }, { label: "repos", value: "3" }],
+    members: [...TEAM_MEMBERS["World Engine"]],
     blogHref: "/blog?tag=world-engine",
     repoHref: "https://github.com/frankxai/arcanea",
   },
   {
     name: "Creator Platform",
-    charter:
-      "Chat, Imagine, Studio, Worlds UI. The Next.js app, component library, and design system.",
-    owns: [
-      "apps/web",
-      "component library",
-      "design system",
-      "onboarding",
-    ],
-    icon: Palette,
+    charter: "Chat, Imagine, Studio, Worlds UI. The Next.js app, component library, and design system.",
+    owns: ["apps/web", "component library", "design system", "onboarding"],
+    icon: Palette as unknown as NarrowIcon,
     accent: "#a855f7",
-    stats: [
-      { label: "members", value: "4" },
-      { label: "repos", value: "5" },
-    ],
-    members: [
-      { name: "Frank", role: "Lead" },
-      { name: "Leyla", role: "Design" },
-      { name: "Maylinn", role: "UX" },
-      { name: "Zara", role: "Components" },
-    ],
+    stats: [{ label: "members", value: "4" }, { label: "repos", value: "5" }],
+    members: [...TEAM_MEMBERS["Creator Platform"]],
     blogHref: "/blog?tag=platform",
     repoHref: "https://github.com/frankxai/arcanea",
   },
   {
     name: "Protocol & Chain",
-    charter:
-      "Arcanean Protocol spec, smart contracts, on-chain identity, royalties, and IP licensing.",
-    owns: [
-      "AIPs",
-      "Agent Registry contracts",
-      "Story Protocol integration",
-      "x402 micropayments",
-    ],
-    icon: Lightning,
+    charter: "Arcanean Protocol spec, smart contracts, on-chain identity, royalties, and IP licensing.",
+    owns: ["AIPs", "Agent Registry contracts", "Story Protocol integration", "x402 micropayments"],
+    icon: Lightning as unknown as NarrowIcon,
     accent: "#ffd700",
-    stats: [
-      { label: "members", value: "3" },
-      { label: "repos", value: "2" },
-    ],
-    members: [
-      { name: "Frank", role: "Lead" },
-      { name: "Kael", role: "Contracts" },
-      { name: "Vael", role: "Spec" },
-    ],
+    stats: [{ label: "members", value: "3" }, { label: "repos", value: "2" }],
+    members: [...TEAM_MEMBERS["Protocol & Chain"]],
     blogHref: "/blog?tag=protocol",
     repoHref: "https://github.com/frankxai/arcanea-ai-app",
   },
   {
     name: "Infra & Ops",
-    charter:
-      "Deploy pipelines, Supabase, Vercel, observability, and performance budgets.",
-    owns: [
-      "CI/CD",
-      "Supabase migrations",
-      "Sentry",
-      "performance budgets",
-    ],
-    icon: Code,
+    charter: "Deploy pipelines, Supabase, Vercel, observability, and performance budgets.",
+    owns: ["CI/CD", "Supabase migrations", "Sentry", "performance budgets"],
+    icon: Code as unknown as NarrowIcon,
     accent: "#3b82f6",
-    stats: [
-      { label: "members", value: "3" },
-      { label: "repos", value: "3" },
-    ],
-    members: [
-      { name: "Frank", role: "Lead" },
-      { name: "Ori", role: "CI/CD" },
-      { name: "Nexus", role: "Observability" },
-    ],
+    stats: [{ label: "members", value: "3" }, { label: "repos", value: "3" }],
+    members: [...TEAM_MEMBERS["Infra & Ops"]],
     blogHref: "/blog?tag=infra",
     repoHref: "https://github.com/frankxai/arcanea-ai-app",
   },
   {
     name: "Creator Success",
-    charter:
-      "Community managers, Discord moderation, contests, creator onboarding, and Whop tiers.",
-    owns: [
-      "Discord",
-      "Reddit",
-      "Whop communities",
-      "Creator Dashboard",
-      "template review",
-    ],
-    icon: Users,
+    charter: "Community managers, Discord moderation, contests, creator onboarding, and Whop tiers.",
+    owns: ["Discord", "Reddit", "Whop communities", "Creator Dashboard", "template review"],
+    icon: Users as unknown as NarrowIcon,
     accent: "#ef4444",
-    stats: [
-      { label: "members", value: "4" },
-      { label: "repos", value: "1" },
-    ],
-    members: [
-      { name: "Frank", role: "Lead" },
-      { name: "Maylinn", role: "Community" },
-      { name: "Zara", role: "Support" },
-      { name: "Lumi", role: "Contests" },
-    ],
+    stats: [{ label: "members", value: "4" }, { label: "repos", value: "1" }],
+    members: [...TEAM_MEMBERS["Creator Success"]],
     blogHref: "/blog?tag=community",
     repoHref: "https://github.com/frankxai/arcanea",
   },
   {
     name: "Author & Lore",
-    charter:
-      "The 190K-word library, Guardian lore, canon maintenance, and book production pipeline.",
-    owns: [
-      "book/ collections",
-      "CANON_LOCKED.md",
-      "publishing-house CLI",
-      "editorial standards",
-    ],
-    icon: Sparkle,
+    charter: "The 190K-word library, Guardian lore, canon maintenance, and book production pipeline.",
+    owns: ["book/ collections", "CANON_LOCKED.md", "publishing-house CLI", "editorial standards"],
+    icon: Sparkle as unknown as NarrowIcon,
     accent: "#f472b6",
-    stats: [
-      { label: "members", value: "4" },
-      { label: "repos", value: "4" },
-    ],
-    members: [
-      { name: "Frank", role: "Lead" },
-      { name: "Maylinn", role: "Canon" },
-      { name: "Leyla", role: "Voice" },
-      { name: "Kael", role: "Lore" },
-    ],
+    stats: [{ label: "members", value: "4" }, { label: "repos", value: "4" }],
+    members: [...TEAM_MEMBERS["Author & Lore"]],
     blogHref: "/blog?tag=lore",
     repoHref: "https://github.com/frankxai/arcanea",
   },
 ];
 
-const HERO_STATS = [
-  { value: "7", label: "teams", color: "#7fffd4" },
-  { value: "27", label: "repos", color: "#00bcd4" },
-  { value: "MIT", label: "license", color: "#c084fc" },
-  { value: "Discord + GitHub", label: "open channels", color: "#ffd700" },
-];
-
-const PRINCIPLES = [
-  {
-    title: "Ship in public",
-    body: "Every feature has a public spec, a public repo, a public Discord channel. No dark-mode development.",
-    color: "#7fffd4",
-    glyph: "◎",
-  },
-  {
-    title: "BYOK everything",
-    body: "Every team's output works with any LLM. No Arcanea-only paths. Bring your own keys, your own models.",
-    color: "#00bcd4",
-    glyph: "◈",
-  },
-  {
-    title: "Creator-first",
-    body: "Decisions routed through /community-hub. Every major change opens an AIP — Arcanean Improvement Proposal.",
-    color: "#a855f7",
-    glyph: "◐",
-  },
-  {
-    title: "Minimal surface",
-    body: "Each team owns at most 5 repos. If it grows beyond that, we split the team before we split focus.",
-    color: "#ffd700",
-    glyph: "◱",
-  },
-];
-
-const STACK_ROWS = [
-  {
-    team: "Luminor Intelligence",
-    ide: "Claude Code",
-    ai: "Claude Opus 4",
-    deploy: "Vercel",
-    docs: "Notion",
-  },
-  {
-    team: "World Engine",
-    ide: "Cursor",
-    ai: "Gemini 3 Pro",
-    deploy: "Supabase",
-    docs: "Markdown",
-  },
-  {
-    team: "Creator Platform",
-    ide: "Windsurf",
-    ai: "Claude Sonnet 4",
-    deploy: "Vercel",
-    docs: "Figma",
-  },
-  {
-    team: "Protocol & Chain",
-    ide: "VS Code",
-    ai: "Claude Opus 4",
-    deploy: "Base",
-    docs: "Notion",
-  },
-  {
-    team: "Infra & Ops",
-    ide: "Claude Code",
-    ai: "Claude Haiku",
-    deploy: "Vercel + Supabase",
-    docs: "Markdown",
-  },
-  {
-    team: "Creator Success",
-    ide: "Any",
-    ai: "Claude Sonnet 4",
-    deploy: "Discord / Whop",
-    docs: "Notion",
-  },
-  {
-    team: "Author & Lore",
-    ide: "Obsidian",
-    ai: "Claude Opus 4",
-    deploy: "GitHub",
-    docs: "Markdown",
-  },
-];
-
 // ---------------------------------------------------------------------------
-// Main component
+// Page component
 // ---------------------------------------------------------------------------
 
 export function TeamsContent() {
@@ -298,8 +140,6 @@ export function TeamsContent() {
         {/* ── Hero ──────────────────────────────────────────────────────── */}
         <section className="relative overflow-hidden pt-28 pb-20">
           <FloatingOrbs preset="cosmic" />
-
-          {/* Dot grid */}
           <div
             className="pointer-events-none absolute inset-0 -z-10 opacity-[0.022]"
             aria-hidden
@@ -309,8 +149,6 @@ export function TeamsContent() {
               backgroundSize: "28px 28px",
             }}
           />
-
-          {/* Top rule glow */}
           <div
             className="pointer-events-none absolute top-0 left-0 right-0 h-px -z-10"
             style={{
@@ -321,7 +159,6 @@ export function TeamsContent() {
           />
 
           <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-            {/* Eyebrow */}
             <m.div
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -335,7 +172,6 @@ export function TeamsContent() {
               <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#7c3aed]/50" />
             </m.div>
 
-            {/* Headline */}
             <m.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -355,7 +191,6 @@ export function TeamsContent() {
               <span className="text-white/80">Arcanea</span>
             </m.h1>
 
-            {/* Subtitle */}
             <m.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -367,7 +202,6 @@ export function TeamsContent() {
               creators as co-authors.
             </m.p>
 
-            {/* Stats */}
             <m.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -413,7 +247,7 @@ export function TeamsContent() {
           </div>
         </section>
 
-        {/* ── Divider ───────────────────────────────────────────────────── */}
+        {/* Divider */}
         <div className="max-w-6xl mx-auto px-6 mb-16" aria-hidden>
           <div
             className="h-px w-full"
@@ -495,7 +329,6 @@ export function TeamsContent() {
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02]"
             >
-              {/* Table header */}
               <div className="grid grid-cols-5 gap-0 border-b border-white/[0.06] px-5 py-3">
                 {["Team", "IDE", "AI", "Deploy", "Docs"].map((h) => (
                   <p
@@ -506,32 +339,18 @@ export function TeamsContent() {
                   </p>
                 ))}
               </div>
-
-              {/* Table rows */}
               {STACK_ROWS.map((row, i) => (
                 <div
                   key={row.team}
                   className={`grid grid-cols-5 gap-0 px-5 py-3.5 ${
-                    i < STACK_ROWS.length - 1
-                      ? "border-b border-white/[0.04]"
-                      : ""
+                    i < STACK_ROWS.length - 1 ? "border-b border-white/[0.04]" : ""
                   } hover:bg-white/[0.02] transition-colors duration-200`}
                 >
-                  <p className="text-xs font-display font-medium text-white/70 truncate pr-2">
-                    {row.team}
-                  </p>
-                  <p className="text-xs font-mono text-white/35 truncate pr-2">
-                    {row.ide}
-                  </p>
-                  <p className="text-xs font-mono text-white/35 truncate pr-2">
-                    {row.ai}
-                  </p>
-                  <p className="text-xs font-mono text-white/35 truncate pr-2">
-                    {row.deploy}
-                  </p>
-                  <p className="text-xs font-mono text-white/35 truncate">
-                    {row.docs}
-                  </p>
+                  <p className="text-xs font-display font-medium text-white/70 truncate pr-2">{row.team}</p>
+                  <p className="text-xs font-mono text-white/35 truncate pr-2">{row.ide}</p>
+                  <p className="text-xs font-mono text-white/35 truncate pr-2">{row.ai}</p>
+                  <p className="text-xs font-mono text-white/35 truncate pr-2">{row.deploy}</p>
+                  <p className="text-xs font-mono text-white/35 truncate">{row.docs}</p>
                 </div>
               ))}
             </m.div>
@@ -548,11 +367,8 @@ export function TeamsContent() {
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="relative overflow-hidden rounded-3xl"
             >
-              {/* Gradient background */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#7c3aed]/[0.07] via-[#00bcd4]/[0.05] to-[#f472b6]/[0.06]" />
               <div className="absolute inset-0 bg-white/[0.02]" />
-
-              {/* Top accent line */}
               <div
                 className="absolute top-0 left-12 right-12 h-px"
                 style={{
@@ -560,7 +376,6 @@ export function TeamsContent() {
                     "linear-gradient(to right, transparent, rgba(192,132,252,0.4), transparent)",
                 }}
               />
-
               <div className="relative p-10 md:p-16 text-center">
                 <p className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/25 mb-4">
                   Open team

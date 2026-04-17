@@ -10,6 +10,8 @@ import {
   FloatingOrbs,
   AuroraGradient,
   TemplateCard,
+  StatusBadge,
+  StatusNotice,
 } from "@/components/premium";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitText } from "@/components/motion/split-text";
@@ -238,9 +240,24 @@ export function CreateHub() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal delay={0}>
-            <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-white/30 mb-4 text-center">
-              Create
-            </p>
+            <div className="flex flex-wrap justify-center items-center gap-2 mb-4">
+              <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-white/30">
+                Create
+              </p>
+              <StatusBadge level="preview" note="Q2 2026" />
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div className="max-w-2xl mx-auto mb-8">
+              <StatusNotice
+                level="preview"
+                title="Template gallery is a preview"
+                body="Design is final. Templates below are design previews — real template storage + one-click instantiation land through Q2 2026. Use /chat or /worlds to build from scratch today."
+                linkHref="/worlds"
+                linkLabel="Build a world"
+              />
+            </div>
           </Reveal>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold tracking-[-0.03em] leading-[1.06] text-center mb-5">

@@ -14,6 +14,8 @@ import {
   IntegrationGrid,
   SovereigntyBadge,
   DropZone,
+  StatusBadge,
+  StatusNotice,
 } from "@/components/premium";
 import { SplitText } from "@/components/motion/split-text";
 import { Reveal } from "@/components/motion/reveal";
@@ -182,10 +184,23 @@ export function StudioHub() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="mb-6"
+              className="mb-6 flex flex-wrap items-center gap-2"
             >
               <SovereigntyBadge />
+              <StatusBadge level="preview" note="Q2 2026" />
             </m.div>
+
+            <Reveal delay={0.25} y={12}>
+              <div className="mb-6 max-w-2xl">
+                <StatusNotice
+                  level="preview"
+                  title="Studio is a preview today"
+                  body="The design is final; the ingestion + transformation plumbing lands through Q2 2026. /chat and /imagine already work — use those while we wire the rest."
+                  linkHref="/chat"
+                  linkLabel="Open chat"
+                />
+              </div>
+            </Reveal>
 
             <m.p
               initial={{ opacity: 0 }}

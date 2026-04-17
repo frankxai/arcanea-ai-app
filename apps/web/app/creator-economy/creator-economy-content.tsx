@@ -10,6 +10,8 @@ import {
   RevenueStreamCard,
   SovereigntyBadge,
   ConnectedFlow,
+  StatusBadge,
+  StatusNotice,
 } from "@/components/premium";
 import { NumberTicker } from "@/components/motion/number-ticker";
 import { Reveal } from "@/components/motion/reveal";
@@ -43,13 +45,28 @@ export function CreatorEconomyContent() {
 
           <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center w-full">
             <Reveal delay={0}>
-              <SovereigntyBadge />
+              <div className="flex flex-wrap justify-center items-center gap-2">
+                <SovereigntyBadge />
+                <StatusBadge level="roadmap" note="Rolling out 2026" />
+              </div>
             </Reveal>
 
             <Reveal delay={0.1}>
               <p className="mt-5 text-[11px] font-mono tracking-[0.3em] uppercase text-white/30">
                 Creator Economy
               </p>
+            </Reveal>
+
+            <Reveal delay={0.14}>
+              <div className="mt-6 max-w-2xl mx-auto">
+                <StatusNotice
+                  level="roadmap"
+                  title="Revenue streams are a public roadmap"
+                  body="None of the 7 streams below are live yet. Arcanea is BYOK-free today; monetization rails (x402 micropayments preferred over Stripe) are a 2026 workstream tracked on Linear. This page is the intent — not a storefront."
+                  linkHref="/roadmap"
+                  linkLabel="See the roadmap"
+                />
+              </div>
             </Reveal>
 
             <Reveal delay={0.15}>

@@ -332,8 +332,8 @@ function StackTeaserSection() {
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
           label="The Creator Stack"
-          title="Connects to every tool you use"
-          subtitle="VS Code, Cursor, Suno, Unreal Engine, Discord, Base, and 30+ more. Arcanea sits in the middle — your stack stays yours."
+          title="Built to connect everywhere"
+          subtitle="Claude Code, Nano Banana 2, Supabase, Vercel AI SDK wired today. Cursor, Suno, Unreal Engine, Discord, Base, Obsidian, Google Drive and 25+ more on the backlog — each tile is honest about its state."
           accent="teal"
         />
         <Reveal y={16}>
@@ -373,10 +373,16 @@ function EarnTeaserSection() {
   return (
     <SectionShell ambient="gold" size="compact" id="earn-teaser">
       <div className="max-w-5xl mx-auto px-6">
+        <div className="text-center mb-6">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-[0.2em] uppercase border bg-[#94a3b8]/10 border-[#94a3b8]/25 text-[#94a3b8]">
+            <span className="w-1 h-1 rounded-full bg-[#94a3b8]" />
+            ROADMAP · rolling out 2026
+          </span>
+        </div>
         <SectionHeader
           label="Creator Economy"
           title="Build a universe. Make a living."
-          subtitle="Seven revenue streams. You keep 90%+, always. Smart-contract royalties. Your audience, your rules."
+          subtitle="Seven revenue streams planned. You keep 90%+, always. Smart-contract royalties. Your audience, your rules. None shipped yet — tracking on Linear."
           accent="gold"
         />
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">

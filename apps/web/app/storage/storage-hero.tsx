@@ -4,6 +4,7 @@ import Link from "next/link";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { FloatingOrbs } from "@/components/premium/animated-background";
 import { SovereigntyBadge } from "@/components/premium/sovereignty-pillars";
+import { StatusBadge, StatusNotice } from "@/components/premium/status-badge";
 
 const STATS = [
   { value: "Markdown + JSONML", label: "Open formats" },
@@ -35,11 +36,26 @@ export function StorageHero() {
           <div className="flex flex-col items-center text-center gap-8">
             {/* Badge */}
             <m.div
+              className="flex flex-wrap justify-center items-center gap-2"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: EASE }}
             >
               <SovereigntyBadge />
+              <StatusBadge level="beta" note="Supabase live · rest Q2 2026" />
+            </m.div>
+
+            <m.div
+              className="max-w-2xl w-full"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.08, ease: EASE }}
+            >
+              <StatusNotice
+                level="beta"
+                title="Supabase + pgvector are live. Rest is planned."
+                body="Markdown + JSONML + pgvector HNSW work today inside Arcanea. Arweave, S3, Google Drive, Syncthing, and Obsidian export arrive through Q2 2026 as part of the ingestion workstream."
+              />
             </m.div>
 
             {/* Eyebrow */}

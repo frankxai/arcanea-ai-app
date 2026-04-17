@@ -26,3 +26,10 @@ export { IdentityCard, type LinkedIdentity, type IdentityCardProps } from "./ide
 export { TeamCard, type TeamCardProps } from "./team-card";
 export { AppTile, type AppTileProps } from "./app-tile";
 export { RepoGrid, REPOS, type Repo } from "./repo-grid";
+export {
+  StatusBadge,
+  StatusNotice,
+  type StatusLevel,
+  type StatusBadgeProps,
+  type StatusNoticeProps,
+} from "./status-badge";

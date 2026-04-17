@@ -21,6 +21,7 @@ import {
 import { FloatingOrbs } from "@/components/premium/animated-background";
 import { FeatureCard, FeatureIcon } from "@/components/premium/feature-card";
 import { SectionShell, SectionHeader } from "@/components/premium/section-shell";
+import { StatusBadge, StatusNotice } from "@/components/premium/status-badge";
 import { SplitText } from "@/components/motion/split-text";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal, StaggerReveal } from "@/components/motion/reveal";
@@ -117,11 +118,29 @@ export function CommunityHubContent() {
 
           <div className="relative z-10 max-w-4xl mx-auto text-center">
             <Reveal delay={0}>
-              <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-5 py-2.5 backdrop-blur-md">
+              <div className="mb-4 inline-flex items-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-5 py-2.5 backdrop-blur-md">
                 <Users className="h-4 w-4 text-[#00bcd4]" weight="fill" />
                 <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#00bcd4]/80">
                   Community
                 </span>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.05}>
+              <div className="flex justify-center mb-6">
+                <StatusBadge level="beta" note="Discord live · stats mocked" />
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <div className="max-w-2xl mx-auto mb-8">
+                <StatusNotice
+                  level="beta"
+                  title="Discord and Reddit are live. Everything else is a preview."
+                  body="Channel links work — the hub, leaderboards, contests, and spotlight cards below are representative design, not live data. Real dashboards arrive after ARC-community workstream ships."
+                  linkHref="https://discord.gg/arcanea"
+                  linkLabel="Join Discord"
+                />
               </div>
             </Reveal>
 

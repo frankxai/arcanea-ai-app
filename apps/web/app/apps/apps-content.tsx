@@ -6,486 +6,21 @@ import Link from "next/link";
 import {
   FloatingOrbs,
   AppTile,
-  type AppTileProps,
   FeatureCard,
   StatCard,
+  StatusBadge,
+  StatusNotice,
 } from "@/components/premium";
+import {
+  APPS,
+  CATEGORIES,
+  HERO_STATS,
+  FEATURED_NAMES,
+  type Category,
+} from "./apps-data";
 
 // ---------------------------------------------------------------------------
-// App catalogue data
-// ---------------------------------------------------------------------------
-
-type Category =
-  | "All"
-  | "Featured"
-  | "Creative AI"
-  | "Coding"
-  | "Distribution"
-  | "Community"
-  | "Game Engines"
-  | "Storage"
-  | "Web3";
-
-interface AppEntry extends Omit<AppTileProps, "index"> {
-  featured?: boolean;
-  filterCategory: Category;
-}
-
-const APPS: AppEntry[] = [
-  // Coding
-  {
-    name: "Claude Code",
-    tagline: "Agents in your IDE via MCP. Luminor rules, hooks, and skills.",
-    category: "Coding",
-    filterCategory: "Coding",
-    glyph: "✶",
-    color: "#f97316",
-    status: "live",
-    installed: true,
-    featured: true,
-    capabilities: ["MCP Server", "Agent Hooks", "Skill Packs"],
-    href: "/apps/claude-code",
-  },
-  {
-    name: "VS Code",
-    tagline: "Arcanea agents extension with in-editor Luminor sidebar.",
-    category: "Coding",
-    filterCategory: "Coding",
-    glyph: "◧",
-    color: "#007acc",
-    status: "live",
-    capabilities: ["Agents Extension", "Inline Chat", "File Context"],
-    href: "/apps/vscode",
-  },
-  {
-    name: "Cursor",
-    tagline: "Native MCP integration — rules, context, and agent routing.",
-    category: "Coding",
-    filterCategory: "Coding",
-    glyph: "⎈",
-    color: "#ffffff",
-    status: "live",
-    capabilities: ["MCP Native", "Rules Sync", "Context Injection"],
-    href: "/apps/cursor",
-  },
-  {
-    name: "Windsurf",
-    tagline: "Rules and context files for Windsurf's Cascade engine.",
-    category: "Coding",
-    filterCategory: "Coding",
-    glyph: "⎔",
-    color: "#00bcd4",
-    status: "beta",
-    capabilities: ["Rules Sync", "Context Files", "Cascade Hooks"],
-    href: "/apps/windsurf",
-  },
-  {
-    name: "Antigravity",
-    tagline: "Browser-native IDE with Luminor agents running in-tab.",
-    category: "Coding",
-    filterCategory: "Coding",
-    glyph: "↟",
-    color: "#a855f7",
-    status: "soon",
-    capabilities: ["In-Browser Agents", "Realtime Collab", "MCP Bridge"],
-    href: "/apps/antigravity",
-  },
-  {
-    name: "GitHub",
-    tagline: "27 open repos, PR reviews, and automated releases via Lumina.",
-    category: "Coding",
-    filterCategory: "Coding",
-    glyph: "◉",
-    color: "#ffffff",
-    status: "live",
-    installed: true,
-    capabilities: ["PR Automation", "Release Manager", "Code Review"],
-    href: "/apps/github",
-  },
-
-  // Creative AI
-  {
-    name: "Suno",
-    tagline: "AI music generation — tracks, albums, world soundtracks.",
-    category: "Creative AI",
-    filterCategory: "Creative AI",
-    glyph: "♪",
-    color: "#f472b6",
-    status: "live",
-    featured: true,
-    capabilities: ["Generation", "Licensing", "World Sync"],
-    href: "/apps/suno",
-  },
-  {
-    name: "Nano Banana 2",
-    tagline: "Premium image generation with Guardian style presets.",
-    category: "Creative AI",
-    filterCategory: "Creative AI",
-    glyph: "◈",
-    color: "#fbbf24",
-    status: "live",
-    featured: true,
-    capabilities: ["Image Gen", "Style Presets", "Batch Export"],
-    href: "/apps/nano-banana-2",
-  },
-  {
-    name: "ElevenLabs",
-    tagline: "Voice synthesis — Luminor voices, audiobooks, narration.",
-    category: "Creative AI",
-    filterCategory: "Creative AI",
-    glyph: "▶",
-    color: "#a855f7",
-    status: "live",
-    capabilities: ["Voice Cloning", "Audiobook Gen", "Luminor Voices"],
-    href: "/apps/elevenlabs",
-  },
-  {
-    name: "Runway",
-    tagline: "Video generation for cinematic world intros and trailers.",
-    category: "Creative AI",
-    filterCategory: "Creative AI",
-    glyph: "▸",
-    color: "#00ff88",
-    status: "beta",
-    capabilities: ["Video Gen", "Trailer Engine", "Scene Bridge"],
-    href: "/apps/runway",
-  },
-  {
-    name: "Hedra",
-    tagline: "Avatar animation — bring Guardian characters to life.",
-    category: "Creative AI",
-    filterCategory: "Creative AI",
-    glyph: "◐",
-    color: "#7fffd4",
-    status: "beta",
-    capabilities: ["Avatar Animation", "Lip Sync", "Guardian Skins"],
-    href: "/apps/hedra",
-  },
-  {
-    name: "Midjourney",
-    tagline: "Style reference and concept art for worlds and characters.",
-    category: "Creative AI",
-    filterCategory: "Creative AI",
-    glyph: "✦",
-    color: "#e2e8f0",
-    status: "soon",
-    capabilities: ["Style Refs", "Character Art", "World Concepts"],
-    href: "/apps/midjourney",
-  },
-
-  // Distribution
-  {
-    name: "Blotato",
-    tagline: "Multi-channel social posting — one creation, everywhere.",
-    category: "Distribution",
-    filterCategory: "Distribution",
-    glyph: "◬",
-    color: "#ef4444",
-    status: "live",
-    capabilities: ["Multi-Post", "Thread Engine", "Analytics"],
-    href: "/apps/blotato",
-  },
-  {
-    name: "Postiz",
-    tagline: "Scheduling pipeline — drop your creation, Postiz handles the rest.",
-    category: "Distribution",
-    filterCategory: "Distribution",
-    glyph: "◱",
-    color: "#3b82f6",
-    status: "live",
-    capabilities: ["Scheduling", "Calendar", "Repurpose"],
-    href: "/apps/postiz",
-  },
-  {
-    name: "n8n",
-    tagline: "Workflow automation — Arcanea events trigger any action.",
-    category: "Distribution",
-    filterCategory: "Distribution",
-    glyph: "⏚",
-    color: "#ea580c",
-    status: "live",
-    capabilities: ["Webhooks", "Node Engine", "Multi-Step Flows"],
-    href: "/apps/n8n",
-  },
-  {
-    name: "Zapier",
-    tagline: "Trigger automation — connect Arcanea to 6,000+ apps.",
-    category: "Distribution",
-    filterCategory: "Distribution",
-    glyph: "⚡",
-    color: "#ff4a00",
-    status: "soon",
-    capabilities: ["Triggers", "Actions", "Multi-Step Zaps"],
-    href: "/apps/zapier",
-  },
-
-  // Community
-  {
-    name: "Discord",
-    tagline: "Creator community — lore, contests, and live Luminor sessions.",
-    category: "Community",
-    filterCategory: "Community",
-    glyph: "◎",
-    color: "#5865F2",
-    status: "live",
-    installed: true,
-    featured: true,
-    capabilities: ["Server Bots", "Role Sync", "Live Sessions"],
-    href: "/apps/discord",
-  },
-  {
-    name: "Reddit",
-    tagline: "r/Arcanea — community hub, AMA, feedback threads.",
-    category: "Community",
-    filterCategory: "Community",
-    glyph: "◐",
-    color: "#ff4500",
-    status: "live",
-    capabilities: ["Post Sync", "Flair System", "AMA Engine"],
-    href: "/apps/reddit",
-  },
-  {
-    name: "Whop",
-    tagline: "Membership tiers — Founding Circle access and premium channels.",
-    category: "Community",
-    filterCategory: "Community",
-    glyph: "⎊",
-    color: "#f59e0b",
-    status: "live",
-    capabilities: ["Tier Access", "Gated Content", "Stripe Sync"],
-    href: "/apps/whop",
-  },
-  {
-    name: "Telegram",
-    tagline: "Creator bots — Luminor Q&A and world-update notifications.",
-    category: "Community",
-    filterCategory: "Community",
-    glyph: "✈",
-    color: "#0088cc",
-    status: "beta",
-    capabilities: ["Bot Framework", "World Alerts", "Group Sync"],
-    href: "/apps/telegram",
-  },
-
-  // Game Engines
-  {
-    name: "Unreal Engine",
-    tagline: "Export world data to Unreal scenes — characters, locations, lore.",
-    category: "Game Engines",
-    filterCategory: "Game Engines",
-    glyph: "⧉",
-    color: "#a0a0a0",
-    status: "beta",
-    capabilities: ["World Export", "Asset Pipeline", "Level Builder"],
-    href: "/apps/unreal",
-  },
-  {
-    name: "Unity",
-    tagline: "Prefab pipeline — Arcanea assets drop into Unity projects.",
-    category: "Game Engines",
-    filterCategory: "Game Engines",
-    glyph: "◇",
-    color: "#e2e8f0",
-    status: "beta",
-    capabilities: ["Prefab Export", "Scene Bridge", "C# SDK"],
-    href: "/apps/unity",
-  },
-  {
-    name: "Godot",
-    tagline: "Scene bridge — import worlds directly as Godot scene trees.",
-    category: "Game Engines",
-    filterCategory: "Game Engines",
-    glyph: "◈",
-    color: "#3d8fcc",
-    status: "soon",
-    capabilities: ["Scene Import", "GDScript Bindings", "Asset Sync"],
-    href: "/apps/godot",
-  },
-  {
-    name: "Roblox Studio",
-    tagline: "Experience export — Arcanea worlds as Roblox experiences.",
-    category: "Game Engines",
-    filterCategory: "Game Engines",
-    glyph: "◼",
-    color: "#ef4444",
-    status: "soon",
-    capabilities: ["Experience Export", "Lua Scripts", "Asset Pack"],
-    href: "/apps/roblox",
-  },
-
-  // Storage
-  {
-    name: "Google Drive",
-    tagline: "Vault sync — export all creations to Drive automatically.",
-    category: "Storage",
-    filterCategory: "Storage",
-    glyph: "G",
-    color: "#4285f4",
-    status: "live",
-    capabilities: ["Auto Sync", "Folder Structure", "Shared Drives"],
-    href: "/apps/google-drive",
-  },
-  {
-    name: "Notion",
-    tagline: "Docs sync — Arcanea lore and world notes in your workspace.",
-    category: "Storage",
-    filterCategory: "Storage",
-    glyph: "◰",
-    color: "#e2e8f0",
-    status: "live",
-    capabilities: ["Page Sync", "Database Blocks", "Template Export"],
-    href: "/apps/notion",
-  },
-  {
-    name: "Obsidian",
-    tagline: "Personal vault — world graphs as linked Obsidian notes.",
-    category: "Storage",
-    filterCategory: "Storage",
-    glyph: "⬡",
-    color: "#7c3aed",
-    status: "beta",
-    capabilities: ["Graph Export", "Markdown Sync", "Dataview Queries"],
-    href: "/apps/obsidian",
-  },
-  {
-    name: "Arweave",
-    tagline: "Permanent storage — on-chain archival for your creations.",
-    category: "Storage",
-    filterCategory: "Storage",
-    glyph: "∞",
-    color: "#9ca3af",
-    status: "beta",
-    capabilities: ["Permanent Archive", "Content Hash", "IPFS Bridge"],
-    href: "/apps/arweave",
-  },
-  {
-    name: "Syncthing",
-    tagline: "P2P device sync — offline-first creative vault across devices.",
-    category: "Storage",
-    filterCategory: "Storage",
-    glyph: "⟳",
-    color: "#22c55e",
-    status: "soon",
-    capabilities: ["P2P Sync", "Offline First", "Conflict Resolve"],
-    href: "/apps/syncthing",
-  },
-
-  // Web3
-  {
-    name: "Base",
-    tagline: "L2 deployments — mint, transfer, and royalties on Base.",
-    category: "Web3",
-    filterCategory: "Web3",
-    glyph: "◉",
-    color: "#0052ff",
-    status: "live",
-    capabilities: ["Mint Engine", "Royalties", "x402 Payments"],
-    href: "/apps/base",
-  },
-  {
-    name: "Story Protocol",
-    tagline: "IP licensing — register your creations as programmable IP.",
-    category: "Web3",
-    filterCategory: "Web3",
-    glyph: "✍",
-    color: "#e2e8f0",
-    status: "beta",
-    capabilities: ["IP Registration", "License Terms", "Revenue Split"],
-    href: "/apps/story-protocol",
-  },
-  {
-    name: "Lens",
-    tagline: "Social graph — creators as first-class on-chain identities.",
-    category: "Web3",
-    filterCategory: "Web3",
-    glyph: "❁",
-    color: "#22c55e",
-    status: "soon",
-    capabilities: ["Social Graph", "Profile NFT", "Follow API"],
-    href: "/apps/lens",
-  },
-  {
-    name: "Farcaster",
-    tagline: "Decentralized feed — publish directly to the Farcaster protocol.",
-    category: "Web3",
-    filterCategory: "Web3",
-    glyph: "△",
-    color: "#855dcd",
-    status: "beta",
-    capabilities: ["Cast Engine", "Frame Builder", "Channel Sync"],
-    href: "/apps/farcaster",
-  },
-  {
-    name: "Linear",
-    tagline: "Project sync — Arcanea AIPs and tasks become Linear issues.",
-    category: "Distribution",
-    filterCategory: "Distribution",
-    glyph: "▰",
-    color: "#5e6ad2",
-    status: "live",
-    capabilities: ["Issue Sync", "AIP Tracker", "Sprint Board"],
-    href: "/apps/linear",
-  },
-  {
-    name: "Vercel",
-    tagline: "Preview deployments — every world fork gets a live URL.",
-    category: "Coding",
-    filterCategory: "Coding",
-    glyph: "▲",
-    color: "#e2e8f0",
-    status: "live",
-    capabilities: ["Preview URLs", "Edge Config", "CI Hooks"],
-    href: "/apps/vercel",
-  },
-  {
-    name: "Supabase",
-    tagline: "Database and auth — all world data lives in Supabase.",
-    category: "Storage",
-    filterCategory: "Storage",
-    glyph: "◎",
-    color: "#3ecf8e",
-    status: "live",
-    installed: true,
-    capabilities: ["DB + Auth", "Realtime", "pgvector Search"],
-    href: "/apps/supabase",
-  },
-  {
-    name: "Stripe",
-    tagline: "Payments — Founding Circle subscriptions and creator royalties.",
-    category: "Distribution",
-    filterCategory: "Distribution",
-    glyph: "◱",
-    color: "#635bff",
-    status: "live",
-    capabilities: ["Subscriptions", "Creator Payouts", "Webhook Engine"],
-    href: "/apps/stripe",
-  },
-];
-
-const CATEGORIES: Category[] = [
-  "All",
-  "Featured",
-  "Creative AI",
-  "Coding",
-  "Distribution",
-  "Community",
-  "Game Engines",
-  "Storage",
-  "Web3",
-];
-
-const HERO_STATS = [
-  { value: "37+", label: "apps", color: "#7fffd4" },
-  { value: "8", label: "categories", color: "#00bcd4" },
-  { value: "MIT", label: "license", color: "#c084fc" },
-  { value: "BYOK", label: "model agnostic", color: "#ffd700" },
-];
-
-// Featured apps shown in the hero row
-const FEATURED_NAMES = ["Claude Code", "Suno", "Nano Banana 2", "Discord"];
-
-// ---------------------------------------------------------------------------
-// Category filter pill component
+// Category filter pill
 // ---------------------------------------------------------------------------
 
 function CategoryPill({
@@ -532,8 +67,6 @@ export function AppsContent() {
         {/* ── Hero ──────────────────────────────────────────────────────── */}
         <section className="relative overflow-hidden pt-28 pb-20">
           <FloatingOrbs preset="aurora" />
-
-          {/* Dot grid */}
           <div
             className="pointer-events-none absolute inset-0 -z-10 opacity-[0.022]"
             aria-hidden
@@ -543,8 +76,6 @@ export function AppsContent() {
               backgroundSize: "28px 28px",
             }}
           />
-
-          {/* Top rule glow */}
           <div
             className="pointer-events-none absolute top-0 left-0 right-0 h-px -z-10"
             style={{
@@ -555,12 +86,11 @@ export function AppsContent() {
           />
 
           <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-            {/* Eyebrow */}
             <m.div
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-3 mb-8"
+              className="inline-flex items-center gap-3 mb-4"
             >
               <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#7fffd4]/50" />
               <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-[#7fffd4]/70">
@@ -569,7 +99,20 @@ export function AppsContent() {
               <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#7fffd4]/50" />
             </m.div>
 
-            {/* Headline */}
+            <div className="flex justify-center mb-6">
+              <StatusBadge level="preview" note="Install flows Q2-Q3 2026" />
+            </div>
+
+            <div className="max-w-2xl mx-auto mb-8">
+              <StatusNotice
+                level="preview"
+                title="Directory today, marketplace soon"
+                body="These tiles are an honest map of the creator stack we're integrating. Claude Code, Nano Banana 2, Vercel AI SDK, Supabase are wired today. One-click installs for the rest roll out through 2026. No OAuth flows will claim to work before they do."
+                linkHref="/integrations"
+                linkLabel="See live integrations"
+              />
+            </div>
+
             <m.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -589,7 +132,6 @@ export function AppsContent() {
               <span className="text-white/80">Create forever.</span>
             </m.h1>
 
-            {/* Subtitle */}
             <m.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -601,7 +143,6 @@ export function AppsContent() {
               together.
             </m.p>
 
-            {/* Stats */}
             <m.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -621,7 +162,7 @@ export function AppsContent() {
           </div>
         </section>
 
-        {/* ── Featured Row ───────────────────────────────────────────────── */}
+        {/* ── Featured Row ──────────────────────────────────────────────── */}
         <section className="relative pb-16">
           <div className="max-w-6xl mx-auto px-6">
             <m.div
@@ -647,7 +188,7 @@ export function AppsContent() {
           </div>
         </section>
 
-        {/* ── Divider ───────────────────────────────────────────────────── */}
+        {/* Divider */}
         <div className="max-w-6xl mx-auto px-6 mb-10" aria-hidden>
           <div
             className="h-px w-full"
@@ -661,7 +202,6 @@ export function AppsContent() {
         {/* ── All Apps ──────────────────────────────────────────────────── */}
         <section className="relative pb-24">
           <div className="max-w-6xl mx-auto px-6">
-            {/* Category filter */}
             <m.div
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -679,10 +219,13 @@ export function AppsContent() {
               ))}
             </m.div>
 
-            {/* Apps grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {filteredApps.map((app, i) => (
-                <AppTile key={`${app.name}-${activeCategory}`} {...app} index={i} />
+                <AppTile
+                  key={`${app.name}-${activeCategory}`}
+                  {...app}
+                  index={i}
+                />
               ))}
             </div>
 
@@ -694,7 +237,7 @@ export function AppsContent() {
           </div>
         </section>
 
-        {/* ── Build your own section ────────────────────────────────────── */}
+        {/* ── Build your own ────────────────────────────────────────────── */}
         <section className="relative pb-24">
           <div className="max-w-6xl mx-auto px-6">
             <m.div
@@ -773,11 +316,8 @@ export function AppsContent() {
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="relative overflow-hidden rounded-3xl"
             >
-              {/* Gradient background */}
               <div className="absolute inset-0 bg-gradient-to-r from-[#7fffd4]/[0.07] via-[#00bcd4]/[0.05] to-[#a855f7]/[0.07]" />
               <div className="absolute inset-0 bg-white/[0.02]" />
-
-              {/* Top accent line */}
               <div
                 className="absolute top-0 left-12 right-12 h-px"
                 style={{
@@ -785,7 +325,6 @@ export function AppsContent() {
                     "linear-gradient(to right, transparent, rgba(127,255,212,0.4), transparent)",
                 }}
               />
-
               <div className="relative p-10 md:p-16 text-center">
                 <p className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/25 mb-4">
                   Marketplace

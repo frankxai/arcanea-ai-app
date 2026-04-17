@@ -8,6 +8,7 @@ import {
 } from "@/components/premium/identity-card";
 import { FloatingOrbs } from "@/components/premium/animated-background";
 import { TemplateCard } from "@/components/premium/template-card";
+import { StatusNotice } from "@/components/premium/status-badge";
 import { ProfileWorlds } from "./profile-worlds";
 import { ProfileAgents } from "./profile-agents";
 import { ProfileCollections } from "./profile-collections";
@@ -92,6 +93,22 @@ export function ProfileShowcase() {
         />
 
         <main className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+          {/* ── Example-profile notice ─────────────────────────────── */}
+          <m.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="mb-8"
+          >
+            <StatusNotice
+              level="preview"
+              title="This is Frank's example profile"
+              body="You're viewing a logged-out preview. Sign in to claim your own profile and link your Custom GPTs, Suno account, websites, and on-chain identity."
+              linkHref="/auth/signup"
+              linkLabel="Sign up"
+            />
+          </m.div>
+
           {/* ── Identity Card ──────────────────────────────────────── */}
           <m.div
             initial={{ opacity: 0, y: 24 }}

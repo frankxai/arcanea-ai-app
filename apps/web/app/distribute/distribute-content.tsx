@@ -12,6 +12,8 @@ import {
   ConnectedFlow,
   IntegrationGrid,
   SovereigntyBadge,
+  StatusBadge,
+  StatusNotice,
 } from "@/components/premium";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal } from "@/components/motion/reveal";
@@ -268,10 +270,34 @@ export function DistributeContent(): JSX.Element {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="text-[11px] font-mono tracking-[0.3em] uppercase text-white/30 mb-6"
+                className="text-[11px] font-mono tracking-[0.3em] uppercase text-white/30 mb-4"
               >
                 Distribution
               </m.p>
+
+              <m.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.06 }}
+                className="flex justify-center mb-6"
+              >
+                <StatusBadge level="planned" note="Pipelines Q3 2026" />
+              </m.div>
+
+              <m.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.12 }}
+                className="max-w-2xl mx-auto mb-8"
+              >
+                <StatusNotice
+                  level="planned"
+                  title="Distribution pipelines are planned, not live"
+                  body="Blotato / Postiz / n8n integrations are scheduled on the backlog. Today Arcanea helps you draft — you publish via your own accounts. This page is the spec, not the product."
+                  linkHref="/community-hub"
+                  linkLabel="Join Discord for updates"
+                />
+              </m.div>
 
               <m.h1
                 initial={{ opacity: 0, y: 20 }}
