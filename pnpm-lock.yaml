@@ -815,15 +815,6 @@ importers:
         specifier: ^5.3.3
         version: 5.9.3
 
-  packages/design-system:
-    devDependencies:
-      framer-motion:
-        specifier: ^11.15.0
-        version: 11.18.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      typescript:
-        specifier: ^5.3.3
-        version: 5.9.3
-
   packages/extension-core:
     dependencies:
       '@arcanea/core':
