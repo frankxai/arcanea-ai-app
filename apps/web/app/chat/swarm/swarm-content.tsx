@@ -237,15 +237,23 @@ function Header({ hasSession, onClear }: { hasSession: boolean; onClear: () => v
           remains single-Luminor.
         </p>
       </div>
-      {hasSession && (
-        <button
-          type="button"
-          onClick={onClear}
-          className="shrink-0 px-3 py-1.5 rounded-lg text-[12px] text-white/40 hover:text-white/70 hover:bg-white/[0.04] transition-colors"
+      <div className="flex items-center gap-2 shrink-0">
+        <Link
+          href="/chat/traces"
+          className="px-3 py-1.5 rounded-lg text-[12px] text-white/50 hover:text-[#9be7f2] hover:bg-white/[0.04] transition-colors"
         >
-          Clear session
-        </button>
-      )}
+          Trace history
+        </Link>
+        {hasSession && (
+          <button
+            type="button"
+            onClick={onClear}
+            className="px-3 py-1.5 rounded-lg text-[12px] text-white/40 hover:text-white/70 hover:bg-white/[0.04] transition-colors"
+          >
+            Clear session
+          </button>
+        )}
+      </div>
     </header>
   );
 }
