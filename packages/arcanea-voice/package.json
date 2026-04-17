@@ -28,7 +28,8 @@
     "voice": "node bin/voice.mjs",
     "jarvis": "node bin/voice.mjs jarvis",
     "lumina": "node bin/voice.mjs lumina",
-    "test": "node bin/voice.mjs help"
+    "test": "node test/tools.test.mjs",
+    "test:help": "node bin/voice.mjs help"
   },
   "keywords": [
     "arcanea",

@@ -7,9 +7,12 @@
  */
 
 const TOOL_HINT =
-  ' You have access to tools (shell_run, file_write, claude_prompt, open_url, linear_issue). ' +
-  'Use them when the user asks you to do something concrete — otherwise just speak naturally. ' +
-  'Prefer claude_prompt when the user is describing a coding task they want help with.';
+  ' You can chain tools across up to four rounds: shell_run (git/ls/node/pnpm/gh/…), ' +
+  'file_write (home or cwd), claude_prompt (stage prompt on clipboard), ' +
+  'claude_code_launch (spawn a new Claude Code window running the prompt now), ' +
+  'open_url, linear_issue. Prefer claude_code_launch when the user says "go/do it/start"; ' +
+  'claude_prompt when they just want the prompt ready to paste. Use shell_run to inspect state ' +
+  'before acting. Only use tools for actionable requests — otherwise just speak.';
 
 export const PERSONAS = {
   jarvis: {

@@ -69,6 +69,12 @@ export const TOOLS = [
     },
     ['title'],
   ),
+  fn(
+    'claude_code_launch',
+    'Hands-free handoff to Claude Code. Writes the prompt to the voice-inbox, copies it to the clipboard, AND spawns a new terminal window running `claude --dangerously-skip-permissions "<prompt>"` so Claude Code starts executing immediately. Use this instead of claude_prompt when the user wants the work to begin now, not just copied for later.',
+    { prompt: { type: 'string', description: 'The full prompt Claude Code should execute.' } },
+    ['prompt'],
+  ),
 ];
 
 // ---------------------------------------------------------------------------
@@ -166,6 +172,46 @@ async function toolClaudePrompt(prompt) {
     : { path: file, copied: false, message: `Saved to disk — copy manually from ${file}.` };
 }
 
+async function toolClaudeCodeLaunch(prompt) {
+  if (!prompt || typeof prompt !== 'string') return { error: 'prompt required' };
+  // Reuse claude_prompt side effects (inbox + clipboard) so this is a superset.
+  const base = await toolClaudePrompt(prompt);
+  if (base.error) return base;
+
+  const claudeBin = process.env.ARCANEA_CLAUDE_BIN || 'claude';
+  const flag = '--dangerously-skip-permissions';
+  // Truncate the prompt embedded in the command line to keep shells happy.
+  const preview = prompt.length > 1800 ? prompt.slice(0, 1800) + '…' : prompt;
+  const shellSafe = preview.replace(/"/g, '\\"');
+
+  let launched = false;
+  try {
+    if (IS_WIN) {
+      // New cmd window, keep it open after claude exits so the user can read.
+      spawnSync('cmd', ['/c', 'start', '""', 'cmd', '/k', `${claudeBin} ${flag} "${shellSafe}"`], { stdio: 'ignore' });
+      launched = true;
+    } else if (IS_MAC) {
+      const script = `tell application "Terminal" to do script "${claudeBin} ${flag} \\"${shellSafe}\\""`;
+      spawnSync('osascript', ['-e', script], { stdio: 'ignore' });
+      launched = true;
+    } else {
+      const term = process.env.ARCANEA_TERMINAL || 'x-terminal-emulator';
+      spawnSync(term, ['-e', 'bash', '-c', `${claudeBin} ${flag} "${shellSafe}"; exec bash`], { stdio: 'ignore' });
+      launched = true;
+    }
+  } catch (e) {
+    return { ...base, launched: false, launchError: String(e?.message || e) };
+  }
+  logTool('claude_code_launch', `spawned claude with ${prompt.length}-char prompt`);
+  return {
+    ...base,
+    launched,
+    message: launched
+      ? 'New Claude Code window opened and running your request.'
+      : base.message,
+  };
+}
+
 async function toolOpenUrl(url) {
   if (!url || typeof url !== 'string') return { error: 'url required' };
   if (!/^https?:\/\//i.test(url)) return { error: 'url must start with http:// or https://' };
@@ -209,9 +255,10 @@ export async function executeTool(name, args) {
     switch (name) {
       case 'shell_run':     return await toolShellRun(a.command);
       case 'file_write':    return await toolFileWrite(a.path, a.content);
-      case 'claude_prompt': return await toolClaudePrompt(a.prompt);
-      case 'open_url':      return await toolOpenUrl(a.url);
-      case 'linear_issue':  return await toolLinearIssue(a.title, a.body);
+      case 'claude_prompt':       return await toolClaudePrompt(a.prompt);
+      case 'claude_code_launch':  return await toolClaudeCodeLaunch(a.prompt);
+      case 'open_url':            return await toolOpenUrl(a.url);
+      case 'linear_issue':        return await toolLinearIssue(a.title, a.body);
       default:              return { error: `unknown tool: ${name}` };
     }
   } catch (e) { return { error: String(e?.message || e) }; }
@@ -231,6 +278,9 @@ export function formatToolResult(name, result) {
     case 'claude_prompt': return result.copied
       ? `prompt copied to clipboard (saved ${result.path})`
       : `prompt saved to ${result.path} (clipboard unavailable)`;
+    case 'claude_code_launch': return result.launched
+      ? `new Claude Code window launched (prompt also saved to ${result.path})`
+      : `prompt saved to ${result.path}, but launch failed`;
     case 'open_url':      return `opened ${result.url}`;
     case 'linear_issue':  return `created ${result.identifier} — ${result.url}`;
     default:              return `${name}: ${JSON.stringify(result).slice(0, 300)}`;

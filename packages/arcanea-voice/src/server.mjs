@@ -42,6 +42,12 @@ const VOICE_MAP = {
   shinkami: { eleven: null,                   groq: 'Thunder-PlayAI' },
 };
 
+// LLM choice: Groq llama-3.3-70b is the default because it pairs strong
+// OpenAI-compatible function-calling with sub-second time-to-first-token —
+// essential for voice UX (any delay past ~800ms starts to feel broken).
+// Switch via `ARCANEA_VOICE_LLM` (e.g. moonshotai/kimi-k2-instruct,
+// openai/gpt-oss-120b) if you want different trade-offs; all Groq models
+// that expose the `tools` param will work without code changes.
 const LLM_MODEL = process.env.ARCANEA_VOICE_LLM || 'llama-3.3-70b-versatile';
 const TTS_MODEL_GROQ = process.env.ARCANEA_VOICE_TTS || 'playai-tts';
 const TTS_MODEL_ELEVEN = process.env.ARCANEA_VOICE_ELEVEN_MODEL || 'eleven_turbo_v2_5';
@@ -120,59 +126,88 @@ async function callGroqChat(messages, temperature = 0.5, tools = null) {
 }
 
 /**
- * Single-round tool-calling loop:
- *   1. Ask the LLM with tools available.
- *   2. If it returns tool_calls, execute them, feed results back.
- *   3. Ask once more (no tools) for the final natural-language reply.
- * Returns { reply, toolsUsed, toolResults }.
+ * Multi-round tool-calling loop.
+ *
+ * The model can chain tools across up to MAX_ROUNDS turns — e.g. shell_run
+ * to inspect state, then file_write to apply a fix, then claude_code_launch
+ * to hand off the rest. Hard caps stop runaway loops:
+ *   - MAX_ROUNDS: how many times the model can respond with tool_calls
+ *   - MAX_TOOL_CALLS: total executions across all rounds (batch-safety)
+ *
+ * Returns { reply, toolsUsed, toolResults, rounds }.
  */
+const MAX_ROUNDS = 4;
+const MAX_TOOL_CALLS = 8;
+
 async function runLlmLoop(systemPrompt, userText, temperature = 0.5) {
   const messages = [
     { role: 'system', content: systemPrompt },
     { role: 'user', content: userText },
   ];
-
-  const first = await callGroqChat(messages, temperature, TOOLS);
-  if (!first) return null;
-
-  const toolCalls = Array.isArray(first.tool_calls) ? first.tool_calls : [];
-  if (!toolCalls.length) {
-    return { reply: (first.content || '').trim(), toolsUsed: [], toolResults: [] };
-  }
-
   const toolsUsed = [];
   const toolResults = [];
-  // Assistant turn with tool_calls (must be echoed back before role:tool messages)
-  messages.push({
-    role: 'assistant',
-    content: first.content || '',
-    tool_calls: toolCalls,
-  });
+  let rounds = 0;
+  let totalCalls = 0;
+  let finalContent = '';
 
-  for (const call of toolCalls) {
-    const name = call?.function?.name;
-    let args = {};
-    try { args = JSON.parse(call?.function?.arguments || '{}'); } catch {}
-    const result = await executeTool(name, args);
-    toolsUsed.push(name);
-    toolResults.push({ name, result });
+  for (let round = 0; round < MAX_ROUNDS; round++) {
+    const response = await callGroqChat(messages, temperature, TOOLS);
+    if (!response) return null;
+    rounds = round + 1;
+
+    const toolCalls = Array.isArray(response.tool_calls) ? response.tool_calls : [];
+    if (!toolCalls.length) {
+      finalContent = (response.content || '').trim();
+      break;
+    }
+
+    // Assistant turn with tool_calls (must be echoed back before role:tool messages)
     messages.push({
-      role: 'tool',
-      tool_call_id: call.id,
-      content: JSON.stringify(result).slice(0, 2000),
+      role: 'assistant',
+      content: response.content || '',
+      tool_calls: toolCalls,
     });
+
+    for (const call of toolCalls) {
+      if (totalCalls >= MAX_TOOL_CALLS) {
+        messages.push({
+          role: 'tool',
+          tool_call_id: call.id,
+          content: JSON.stringify({ error: 'tool-call budget exhausted for this turn' }),
+        });
+        continue;
+      }
+      const name = call?.function?.name;
+      let args = {};
+      try { args = JSON.parse(call?.function?.arguments || '{}'); } catch {}
+      const result = await executeTool(name, args);
+      toolsUsed.push(name);
+      toolResults.push({ name, result });
+      totalCalls++;
+      messages.push({
+        role: 'tool',
+        tool_call_id: call.id,
+        content: JSON.stringify(result).slice(0, 2000),
+      });
+    }
+
+    // After the last permitted round, force a final spoken summary.
+    if (round === MAX_ROUNDS - 1 || totalCalls >= MAX_TOOL_CALLS) {
+      messages.push({
+        role: 'system',
+        content: 'Wrap up in one or two spoken sentences. No more tool calls. No markdown.',
+      });
+      const finalResp = await callGroqChat(messages, temperature, null);
+      finalContent = (finalResp?.content || '').trim();
+      break;
+    }
   }
 
-  // Nudge the model to summarize briefly — voice output must stay short.
-  messages.push({
-    role: 'system',
-    content:
-      'Summarize what you just did in one or two spoken sentences. No markdown, no code blocks. Plain voice.',
-  });
-
-  const second = await callGroqChat(messages, temperature, null);
-  const reply = (second?.content || formatToolResult(toolsUsed[0], toolResults[0]?.result) || '').trim();
-  return { reply, toolsUsed, toolResults };
+  // Fallback if the model never produced narration — describe the first result.
+  if (!finalContent && toolResults.length) {
+    finalContent = formatToolResult(toolsUsed[0], toolResults[0].result);
+  }
+  return { reply: finalContent, toolsUsed, toolResults, rounds };
 }
 
 async function synthesizeElevenLabs(text, voiceId) {
