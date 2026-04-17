@@ -82,13 +82,13 @@ SIS already ships `core/validation-contract.md` (same rules Frank and I discusse
   - `prepublishOnly: "npm run build && npm test"` ✓
   - README uses `@frankx/starlight-intelligence-system` install + MCP snippet ✓
   - Dirty dist/ files present (rebuild artifacts) — `prepublishOnly` handles this
-- [ ] **Run publish (Frank, with 2FA):**
-  ```bash
-  cd ~/Starlight-Intelligence-System
-  git add dist/ && git commit -m "build: refresh dist for v6.0.0 publish"
-  npm publish --access public
-  ```
-  After publish, update `.mcp.json` again to use `npx @frankx/starlight-intelligence-system start-mcp` (once a `start-mcp` bin exists; for now `node .../dist/mcp-server.js` works fine).
+- [x] **Published** → https://www.npmjs.com/package/@arcanea/starlight-intelligence-system @ v6.0.0
+  - Renamed scope `@frankx` → `@arcanea` (matches existing `@arcanea/core`, `@arcanea/auth`, `@arcanea/overlay-copilot`)
+  - Fixed test script for Windows (explicit file path, no glob)
+  - `npm access set status=public` confirmed
+  - CDN propagation: 5–15 min before `npm view` and web page resolve
+  - Install: `pnpm add @arcanea/starlight-intelligence-system`
+- [ ] **Follow-up (nice-to-have):** Add `starlight-mcp` bin to SIS package.json so `.mcp.json` can use `npx @arcanea/starlight-intelligence-system starlight-mcp` (currently the hardcoded Windows path works for Frank, but npx would be portable across machines)
 - [ ] **Move 3 (Frank):** Review the feature branch diff on GitHub and decide Clone 2 fate: https://github.com/frankxai/Starlight-Intelligence-System/tree/feature/canonical-sis-package-surface
 
 ## Memory updates (done this session)
