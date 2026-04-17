@@ -8,6 +8,7 @@ import { swarmCommand } from './commands/swarm.js';
 import { doctorCommand } from './commands/doctor.js';
 import { configCommand } from './commands/config.js';
 import { statusCommand } from './commands/status.js';
+import { planCommand } from './commands/plan.js';
 
 const program = new Command();
 
@@ -65,6 +66,16 @@ program
   .command('config [key] [value]')
   .description('Read or write user config (preference, defaultSurface).')
   .action(configCommand);
+
+program
+  .command('plan')
+  .description('Decompose a high-level goal into 3-7 dispatchable sub-tasks via claude -p.')
+  .option('-s, --surface <surface>', 'Surface to plan against', 'claude-arcanea')
+  .option('-o, --out <file>', 'Write plan JSON to file')
+  .option('--execute', 'After planning, dispatch via swarm (preview only for v1.1)')
+  .option('--dry-run', 'Return a template plan without invoking claude')
+  .argument('<goal...>', 'High-level goal to decompose')
+  .action(planCommand);
 
 program.parseAsync(process.argv).catch((err) => {
   console.error(err instanceof Error ? err.message : err);
