@@ -6,6 +6,9 @@
  * Run with: npx tsx apps/web/lib/chat/__tests__/extract-message.test.ts
  */
 
+// Mark as module so top-level `passed`/`failed` don't collide with sibling tests
+export {};
+
 // ---------------------------------------------------------------------------
 // Inline the function under test (it's not exported from route.ts)
 // ---------------------------------------------------------------------------

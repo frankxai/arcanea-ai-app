@@ -144,8 +144,8 @@ function RenderCharacter({ data }: { data: Record<string, unknown> }) {
       {personality && (
         <div className="text-sm text-white/60 space-y-1">
           {(personality.traits as string[])?.length > 0 && <p>Traits: {(personality.traits as string[]).join(", ")}</p>}
-          {personality.desire && <p>Desire: {String(personality.desire)}</p>}
-          {personality.flaw && <p>Flaw: {String(personality.flaw)}</p>}
+          {Boolean(personality.desire) && <p>Desire: {String(personality.desire)}</p>}
+          {Boolean(personality.flaw) && <p>Flaw: {String(personality.flaw)}</p>}
         </div>
       )}
       <ItemList label="Story Hooks" items={hooks} color="text-[#7fffd4]/70" />
@@ -186,7 +186,7 @@ function RenderConflict({ data }: { data: Record<string, unknown> }) {
             <div key={i} className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.06]">
               <span className="text-xs text-white/40 uppercase tracking-wider">{i === 0 ? "Side A" : "Side B"}</span>
               <p className="text-sm font-medium mt-1">{(side.name as string) ?? `Faction ${i + 1}`}</p>
-              {side.argument && <p className="text-xs text-white/50 mt-1">{String(side.argument)}</p>}
+              {Boolean(side.argument) && <p className="text-xs text-white/50 mt-1">{String(side.argument)}</p>}
             </div>
           ))}
         </div>

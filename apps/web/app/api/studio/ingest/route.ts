@@ -27,6 +27,7 @@ import {
   embedStudioDocument,
   toPgVector,
 } from '@/lib/studio/embed';
+import { linkToWorldGraph } from '@/lib/studio/world-link';
 
 export const runtime = 'nodejs';
 export const maxDuration = 30;
@@ -145,7 +146,8 @@ export async function POST(request: NextRequest) {
   }
 
   // ── Auth ────────────────────────────────────────────────
-  const supabase = await createClient();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const supabase = (await createClient()) as any;
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -275,6 +277,24 @@ export async function POST(request: NextRequest) {
     return err(`Database error: ${error.message}`, 500);
   }
 
+  // Best-effort world graph linking — don't fail the ingest if it fails
+  let worldLink: Awaited<ReturnType<typeof linkToWorldGraph>> | null = null;
+  if (worldId && ['character', 'location', 'magic'].includes(classification)) {
+    try {
+      worldLink = await linkToWorldGraph(supabase, {
+        worldId,
+        userId: user.id,
+        classification,
+        title,
+        markdownContent: markdown,
+        tags,
+        documentId: data.id,
+      });
+    } catch (e) {
+      console.warn('[studio/ingest] world link failed:', e);
+    }
+  }
+
   return ok({
     id: data.id,
     title: data.title,
@@ -284,6 +304,7 @@ export async function POST(request: NextRequest) {
     summary,
     created_at: data.created_at,
     embedded: embedding !== null,
+    world_link: worldLink,
   });
 }
 

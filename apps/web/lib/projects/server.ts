@@ -112,8 +112,12 @@ interface UntypedQueryBuilder extends UntypedQueryResult {
   update(values: Record<string, unknown>): UntypedQueryBuilder;
 }
 
-type UntypedServerSupabase = ServerSupabase & {
+// Pure untyped surface — do NOT intersect with ServerSupabase. The typed
+// `.from()` overload is more specific and TS would prefer it, re-narrowing
+// column arguments to the generated Database schema and breaking the escape.
+type UntypedServerSupabase = {
   from: (table: string) => UntypedQueryBuilder;
+  auth: ServerSupabase['auth'];
 };
 
 function asUntyped(client: ServerSupabase): UntypedServerSupabase {
