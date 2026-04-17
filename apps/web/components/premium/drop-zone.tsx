@@ -19,9 +19,11 @@ interface AcceptedType {
 
 const ACCEPTED_TYPES: AcceptedType[] = [
   { label: "Markdown", extensions: [".md", ".mdx"], icon: "◩", color: "#7fffd4" },
-  { label: "Text", extensions: [".txt"], icon: "◧", color: "#00bcd4" },
+  { label: "PDF", extensions: [".pdf"], icon: "◧", color: "#ef4444" },
+  { label: "DOCX", extensions: [".docx"], icon: "◆", color: "#3b82f6" },
+  { label: "Text", extensions: [".txt"], icon: "◐", color: "#00bcd4" },
   { label: "URLs", extensions: ["https://"], icon: "⎆", color: "#c084fc" },
-  { label: "Pasted text", extensions: ["⌘V"], icon: "◈", color: "#ffd700" },
+  { label: "Paste (⌘V)", extensions: [], icon: "◈", color: "#ffd700" },
 ];
 
 interface SourceOption {
@@ -106,23 +108,53 @@ export function DropZone() {
 
   const handleFile = useCallback(async (file: File) => {
     if (!file) return;
-    // Only text-like files for now — binary extraction is a later sprint
-    if (!file.type.startsWith("text/") && !/\.(md|mdx|txt|json|yaml|yml)$/i.test(file.name)) {
+    // Route text-like files through /api/studio/ingest (JSON body);
+    // PDF/DOCX go through /api/studio/ingest/file (multipart) for
+    // server-side binary extraction via unpdf + mammoth.
+    const isTextLike =
+      file.type.startsWith("text/") ||
+      /\.(md|mdx|txt|json|yaml|yml)$/i.test(file.name);
+    const isBinary =
+      file.type === "application/pdf" ||
+      file.type ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+      /\.(pdf|docx)$/i.test(file.name);
+
+    if (!isTextLike && !isBinary) {
       setError(
-        `Only text/markdown files are supported today (got ${file.type || file.name}). Binary extraction (PDF, DOCX) arrives Q2 2026.`,
+        `Unsupported file type (${file.type || file.name}). Accepted: markdown, text, PDF, DOCX.`,
       );
       setPhase("error");
       return;
     }
+    if (file.size > 15 * 1024 * 1024) {
+      setError("File exceeds 15 MB limit");
+      setPhase("error");
+      return;
+    }
+
     setPhase("submitting");
     setError(null);
     try {
-      const content = await readFileAsText(file);
-      const result = await submitIngest({
-        kind: "text",
-        content,
-        title: file.name.replace(/\.[a-z0-9]+$/i, ""),
-      });
+      let result: IngestResult;
+      if (isBinary) {
+        const fd = new FormData();
+        fd.append("file", file);
+        const res = await fetch("/api/studio/ingest/file", {
+          method: "POST",
+          body: fd,
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.error ?? `Ingest failed (${res.status})`);
+        result = data as IngestResult;
+      } else {
+        const content = await readFileAsText(file);
+        result = await submitIngest({
+          kind: "text",
+          content,
+          title: file.name.replace(/\.[a-z0-9]+$/i, ""),
+        });
+      }
       setLastResult(result);
       setPhase("success");
     } catch (e) {
@@ -381,7 +413,7 @@ export function DropZone() {
                   </span>
                 </h3>
                 <p className="text-base text-white/45 leading-relaxed max-w-md mx-auto mb-8">
-                  Markdown, text, or URLs. Paste with ⌘V. Drag a file in. The Studio auto-classifies and stores in your world graph.
+                  Markdown, PDF, DOCX, text, or URLs. Paste with ⌘V. Drag a file in. The Studio auto-classifies and stores in your world graph.
                 </p>
 
                 <div className="flex flex-wrap justify-center gap-2 mb-8">
@@ -401,7 +433,7 @@ export function DropZone() {
                   <input
                     ref={fileInputRef}
                     type="file"
-                    accept=".md,.mdx,.txt,.json,.yaml,.yml,text/*"
+                    accept=".md,.mdx,.txt,.json,.yaml,.yml,.pdf,.docx,text/*,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) void handleFile(file);
