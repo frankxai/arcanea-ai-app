@@ -35,8 +35,41 @@ Inside the room: **Space** to speak (auto-stops on silence), **Esc** to
 interrupt, **1–7** to switch persona live. Server runs at
 `http://127.0.0.1:7777` (override with `ARCANEA_VOICE_PORT`).
 
+### Tools Lumina can use
+
+In local mode the LLM can chain tools across up to 4 rounds per turn (8 total
+calls, hard cap). The agent decides autonomously when to invoke them:
+
+| Tool | What it does |
+|---|---|
+| `shell_run` | Execute a whitelisted command (git, ls, node, pnpm, gh, curl GET…). 10s timeout, 4KB stdout cap. |
+| `file_write` | Write a text file under `$HOME` or `cwd`. Creates parent dirs. |
+| `claude_prompt` | Stage a prompt on the system clipboard + `~/.arcanea/voice-inbox/`. Paste into Claude Code with Ctrl+V. |
+| `claude_code_launch` | **Hands-free.** Same as `claude_prompt` but ALSO spawns a new terminal running `claude --dangerously-skip-permissions "<prompt>"` so the work starts immediately. |
+| `open_url` | Open an https URL in the default browser. |
+| `linear_issue` | Create a Linear issue via GraphQL. Requires `LINEAR_API_KEY`. |
+
+### Keys + config
+
 Needs `GROQ_API_KEY` for transcription + LLM. `ELEVENLABS_API_KEY` optional
 (premium voices for Lumina and Coach). Edge TTS fallback works offline.
+Optional overrides:
+
+- `ARCANEA_VOICE_LLM` — Groq model (default `llama-3.3-70b-versatile`). Any Groq
+  model that supports the `tools` param works (`moonshotai/kimi-k2-instruct`,
+  `openai/gpt-oss-120b`, etc.).
+- `ARCANEA_VOICE_PORT` — server port (default `7777`).
+- `ARCANEA_CLAUDE_BIN` — path to the `claude` binary if it's not on `PATH`.
+- `LINEAR_API_KEY` — raw Linear personal API key (no `Bearer` prefix).
+
+### Tests
+
+```bash
+node test/tools.test.mjs
+```
+
+Covers: tool schema shape, shell allowlist enforcement, path sandbox, inbox
+writes, clipboard fallback, URL scheme validation, linear key guard.
 
 ### Thinking (internal, Ctrl+C to stop)
 | Command | Alias | Default | Description |
