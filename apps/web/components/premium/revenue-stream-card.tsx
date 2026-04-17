@@ -2,7 +2,7 @@
 
 import { m } from "framer-motion";
 import Link from "next/link";
-import type { ComponentType } from "react";
+import type { PhosphorIcon } from "@/lib/phosphor-icons";
 
 // ---------------------------------------------------------------------------
 // RevenueStreamCard — Creator economy / monetization pathway card.
@@ -13,7 +13,7 @@ export interface RevenueStream {
   title: string;
   tagline: string;
   body: string;
-  icon: ComponentType<{ className?: string; weight?: string; style?: React.CSSProperties }>;
+  icon: PhosphorIcon;
   accent: string;
   take: string; // e.g. "Keep 90%" or "Keep 100%"
   fee?: string; // e.g. "3% platform" or "free"

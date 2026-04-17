@@ -1,0 +1,38 @@
+{
+  "name": "@arcanea/design-system",
+  "version": "0.1.0",
+  "license": "SEE LICENSE IN LICENSE",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "default": "./dist/tokens.js"
+    },
+    "./brand-kits": {
+      "types": "./dist/brand-kits.d.ts",
+      "default": "./dist/brand-kits.js"
+    },
+    "./motion": {
+      "types": "./dist/motion.d.ts",
+      "default": "./dist/motion.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "framer-motion": ">=11"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "framer-motion": "^11.15.0"
+  }
+}
