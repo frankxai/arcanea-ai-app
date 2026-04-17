@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ReactNode, Suspense } from "react";
-import { Space_Grotesk, Inter, JetBrains_Mono, Newsreader } from "next/font/google";
+import { JetBrains_Mono, Newsreader, Instrument_Serif } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
 import { Navbar, Footer } from "@/components/navigation";
@@ -27,19 +29,10 @@ function CosmicBackgroundFallback() {
   );
 }
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
+// Geist (Vercel) is now the canonical Arcanea typeface for display + body.
+// Space Grotesk and Inter were removed 2026-04-18 per design system v0.2.0 —
+// both are on the Anthropic frontend-design anti-pattern list, and Geist aligns
+// with our Vercel deployment + AI platform standard.
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -52,6 +45,14 @@ const newsreader = Newsreader({
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-serif",
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-editorial",
   display: "swap",
 });
 
@@ -114,10 +115,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       lang="en"
       style={{ colorScheme: "dark" }}
       className={cn(
-              spaceGrotesk.variable,
-              inter.variable,
+              GeistSans.variable,
+              GeistMono.variable,
               jetbrainsMono.variable,
               newsreader.variable,
+              instrumentSerif.variable,
               "font-sans",
             )}
     >

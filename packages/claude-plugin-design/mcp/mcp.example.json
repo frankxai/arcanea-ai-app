@@ -1,0 +1,45 @@
+{
+  "mcpServers": {
+    "magic": {
+      "command": "npx",
+      "args": ["-y", "@21st-dev/magic@latest"],
+      "env": { "API_KEY": "${TWENTYFIRST_API_KEY}" },
+      "description": "21st.dev Magic — premium UI component generation"
+    },
+    "v0": {
+      "command": "npx",
+      "args": ["-y", "v0-mcp@latest"],
+      "env": { "V0_API_KEY": "${V0_API_KEY}" },
+      "description": "Vercel v0 — AI component and page generation"
+    },
+    "fal": {
+      "command": "npx",
+      "args": ["-y", "fal-mcp@latest"],
+      "env": { "FAL_KEY": "${FAL_KEY}" },
+      "description": "Fal.ai — fast FLUX Pro + Stable Video"
+    },
+    "gemini": {
+      "command": "npx",
+      "args": ["-y", "gemini-mcp-tool@latest"],
+      "env": { "GEMINI_API_KEY": "${GEMINI_API_KEY}" },
+      "description": "Google Gemini / NB2 (gemini-3.1-flash-image-preview)"
+    },
+    "replicate": {
+      "command": "npx",
+      "args": ["-y", "replicate-mcp@latest"],
+      "env": { "REPLICATE_API_TOKEN": "${REPLICATE_API_TOKEN}" },
+      "description": "Replicate — fine-tuned models + Wan video"
+    },
+    "figma-remote-mcp": {
+      "type": "http",
+      "url": "https://mcp.figma.com/mcp",
+      "description": "Figma reference only — never source of truth"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@executeautomation/playwright-mcp-server"],
+      "env": {},
+      "description": "Browser automation for E2E testing and UI verification"
+    }
+  }
+}

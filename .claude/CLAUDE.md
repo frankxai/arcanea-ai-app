@@ -13,8 +13,9 @@ Luminor hierarchy: Arcanea (model) → Lumina (orchestrator) → Guardians (coor
 ## Design System (always enforced)
 
 - Primary: Atlantean Teal (#00bcd4) | Secondary: Cosmic Blue (#0d47a1) | Accent: Gold (#ffd700)
-- Background: #09090b | Fonts: Space Grotesk (display), Inter (body), JetBrains Mono (code)
-- NEVER use Cinzel font
+- Background: #09090b | Fonts: **Geist** (display + body), **Instrument Serif** (editorial accent), **JetBrains Mono** (code)
+- NEVER use Cinzel, Space Grotesk, or Inter (on Anthropic frontend-design anti-pattern list as of 2026-04-18)
+- Canonical design package: `@arcanea/design-system` v0.2.0
 - Glass cards: `bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm`
 - Framer Motion: `domAnimation` not `domMax`
 

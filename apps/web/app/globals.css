@@ -15,6 +15,14 @@
   }
 
   :root {
+    /* === TYPOGRAPHY (Geist-forward, 2026-04-18) ===
+       Geist is the canonical Arcanea typeface; --font-display and --font-inter
+       are kept as aliases for legacy className compatibility across 17+ files. */
+    --font-display: var(--font-geist-sans);
+    --font-inter: var(--font-geist-sans);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+
     /* === COSMIC PALETTE (6 depth levels — near-black foundation) === */
     --cosmic-void: 240 6% 4%;
     --cosmic-deep: 240 5% 6%;
@@ -874,13 +882,13 @@
 
   /* Display headings use Space Grotesk */
   h1, h2 {
-    font-family: var(--font-display), 'Space Grotesk', system-ui, sans-serif;
+    font-family: var(--font-display), Geist, 'Geist Sans', system-ui, sans-serif;
     letter-spacing: -0.03em;
   }
 
   /* Body text uses Inter */
   .prose, .narrative, article p {
-    font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+    font-family: var(--font-inter), Geist, 'Geist Sans', system-ui, sans-serif;
   }
 }
 
@@ -889,7 +897,7 @@
    ============================================================ */
 
 .prose-arcanea {
-  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+  font-family: var(--font-inter), Geist, 'Geist Sans', system-ui, sans-serif;
   font-size: 1.125rem;    /* 18px — optimal for long-form reading */
   line-height: 1.75;      /* ~31.5px line-height for comfortable scanning */
   color: hsl(var(--text-secondary));
@@ -913,7 +921,7 @@
 .prose-arcanea h2,
 .prose-arcanea h3,
 .prose-arcanea h4 {
-  font-family: var(--font-display), 'Space Grotesk', system-ui, sans-serif;
+  font-family: var(--font-display), Geist, 'Geist Sans', system-ui, sans-serif;
   color: hsl(var(--text-primary));
   letter-spacing: -0.02em;
 }

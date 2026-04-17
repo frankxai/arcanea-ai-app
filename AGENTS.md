@@ -34,9 +34,40 @@ The core product centers on:
 1. Node 20.x and pnpm only. Never use npm. `.nvmrc` pins the version.
 2. No PR merges unless changed scope passes: build, typecheck, lint.
 3. Frozen lockfile in CI (`pnpm install --frozen-lockfile`).
-4. No raw visual constants in app code — use design tokens only.
+4. No raw visual constants in app code — use `@arcanea/design-system` tokens only.
 5. If git state is dirty, stage only target files and report unrelated changes.
 6. Every agent spawned must use the Luminor Engineering Kernel (`.arcanea/prompts/luminor-engineering-kernel.md`).
+
+## Design System & MCP Stack (2026-04-18)
+
+**Canonical source of truth:** `packages/design-system` (`@arcanea/design-system` v0.2.0) — tokens, brand kits (`arcanea`, `frankx`, `oss`), motion variants, framework-agnostic CSS vars.
+
+**Layered architecture:**
+1. `.arcanea/config/design-tokens.yaml` → platform-agnostic source
+2. `packages/arcanea-design-preset.js` → Tailwind preset
+3. `packages/design-system` → TS tokens + brand kits + Framer Motion variants + `tokens.css` (framework-agnostic)
+4. `apps/web/components/ui/*` → Radix-wrapped primitives (Phase 2 extraction pending)
+
+**Typography (elevated 2026-04-18):** Geist (display + body), Instrument Serif (editorial accent), Geist Mono (code). Space Grotesk is DEPRECATED per Anthropic `frontend-design` anti-pattern list and replaced for platform alignment with Vercel ecosystem.
+
+**MCP stack for design work** (`.mcp.json.example` has the full config):
+- `magic` (21st.dev) — premium UI component generation
+- `v0` (Vercel) — component and page generation
+- `fal` — fast image/video (FLUX Pro, Stable Video)
+- `gemini` — NB2 (Arcanea default for image gen per `feedback_nb2_default.md`)
+- `replicate` — Frank's fine-tuned models + Wan
+- `figma-remote-mcp` — reference only, never source of truth
+- `playwright` — verify rendered output
+- Canva via claude.ai remote — marketing assets only
+
+**Rules:**
+- Code is truth for app UI. Figma is sketchpad. Canva is truth for marketing.
+- Every new page starts from tokens + a brand kit, never hardcoded hex.
+- Framer Motion provider uses `domAnimation` (not `domMax`).
+- Default easing `[0.22, 1, 0.36, 1]` (expoOut). Stagger children 60ms.
+- When generating a *unique* component via the `frontend-design` skill (not Arcanea brand work), vary typography away from the default stack.
+
+**Spec:** `docs/superpowers/specs/2026-04-17-agentic-design-system-design.md`.
 
 ## Task Contract
 
