@@ -46,6 +46,7 @@ export default function CompanionsPage() {
     creative: <PhPalette className="w-4 h-4" />,
     writing: <PhPen className="w-4 h-4" />,
     research: <PhMagnifyingGlass className="w-4 h-4" />,
+    orchestrator: <PhSparkle className="w-4 h-4" />,
   };
 
   return (

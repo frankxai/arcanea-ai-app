@@ -81,7 +81,8 @@ export async function POST(request: NextRequest) {
 
     // Supabase is configured — authenticate and upload
     const { createClient } = await import('@/lib/supabase/server');
-    const supabase = await createClient();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createClient()) as any;
 
     const {
       data: { user },

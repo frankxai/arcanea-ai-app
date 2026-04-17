@@ -212,7 +212,7 @@ export default async function WorldDetailPage({ params }: Props) {
             {/* Elements */}
             {elements.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-2">
-                {elements.map((el) => (
+                {elements.map((el: string) => (
                   <ElementBadge key={el} element={el} size="md" />
                 ))}
               </div>

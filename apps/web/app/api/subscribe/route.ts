@@ -23,7 +23,8 @@ export async function POST(req: NextRequest) {
     const sanitizedEmail = email.trim().toLowerCase().slice(0, 255);
     const sanitizedSource = (source || 'footer').slice(0, 50);
 
-    const supabase = await createClient();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createClient()) as any;
 
     // Upsert into subscribers table — ignore duplicates
     const { error } = await supabase

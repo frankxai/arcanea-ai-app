@@ -19,7 +19,7 @@ import {
   Cat,
   Diamond,
   Fire,
-  CurrencyEth,
+  Coins,
   Envelope,
 } from "@phosphor-icons/react/dist/ssr";
 
@@ -347,7 +347,7 @@ export default function PricingPage() {
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div>
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#ffd700]/25 bg-[#ffd700]/8 mb-6">
-                    <CurrencyEth size={14} weight="bold" style={{ color: "#ffd700" }} />
+                    <Coins size={14} weight="bold" style={{ color: "#ffd700" }} />
                     <span className="text-sm text-[#ffd700] font-mono tracking-wider">
                       THE CREATORS
                     </span>

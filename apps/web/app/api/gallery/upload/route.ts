@@ -53,9 +53,10 @@ export async function POST(request: NextRequest) {
     // Create RLS-scoped client by injecting the user's JWT as Authorization header.
     // This ensures Storage RLS policies (community/[userId]/ path scoping) are enforced.
     // Do NOT use createAdminClient here — that would bypass RLS.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const supabase = createClient<Database>(supabaseUrl, supabaseAnon, {
       global: { headers: { Authorization: `Bearer ${token}` } },
-    });
+    }) as any;
 
     // Verify user
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);

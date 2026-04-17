@@ -113,7 +113,8 @@ export const WorldService = {
     const sb = await createClient();
     const updates: Record<string, unknown> = { ...data, updated_at: new Date().toISOString() };
     if (data.name) updates.slug = slugify(data.name);
-    const { data: world, error } = await sb.from('worlds').update(updates).eq('slug', slug).eq('creator_id', userId).select().single();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: world, error } = await (sb as any).from('worlds').update(updates).eq('slug', slug).eq('creator_id', userId).select().single();
     if (error) throw new Error(`Failed to update world: ${error.message}`);
     return world!;
   },

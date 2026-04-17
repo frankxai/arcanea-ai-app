@@ -14,7 +14,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false }, { status: 400 });
     }
 
-    const sb = await createClient();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const sb = (await createClient()) as any;
 
     // For views, increment a view counter (we could add a views column later)
     // For now, log to activity_log if the user is authenticated

@@ -25,7 +25,10 @@ type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 type MdHeadingProps = React.ComponentProps<'h1'> &
   ExtraProps & { level: number };
 type MdCodeProps = React.ComponentProps<'code'> & ExtraProps;
-type MdChildProps = { children?: React.ReactNode; [key: string]: unknown };
+// React-markdown passes full HTMLAttributes + ExtraProps for each element —
+// use PropsWithChildren<ExtraProps> so the component type is assignable to
+// ElementType<ClassAttributes<HTMLxElement> & HTMLAttributes<HTMLxElement> & ExtraProps>.
+type MdChildProps = React.PropsWithChildren<ExtraProps>;
 
 // ---------------------------------------------------------------------------
 // Helpers
