@@ -22,5 +22,28 @@ export default function manifest(): MetadataRoute.Manifest {
         type: 'image/png',
       },
     ],
+    shortcuts: [
+      {
+        name: 'Lumina Room',
+        short_name: 'Lumina',
+        description: 'Open the voice Presence Room with Lumina',
+        url: '/room/lumina',
+        icons: [{ src: '/icon-192.png', sizes: '192x192', type: 'image/png' }],
+      },
+      {
+        name: 'JARVIS Room',
+        short_name: 'JARVIS',
+        description: 'Open the voice Presence Room in JARVIS mode',
+        url: '/room/jarvis',
+        icons: [{ src: '/icon-192.png', sizes: '192x192', type: 'image/png' }],
+      },
+      {
+        name: 'Chat',
+        short_name: 'Chat',
+        description: 'Open Arcanea Chat',
+        url: '/chat',
+        icons: [{ src: '/icon-192.png', sizes: '192x192', type: 'image/png' }],
+      },
+    ],
   };
 }

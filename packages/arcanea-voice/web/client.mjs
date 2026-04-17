@@ -65,6 +65,15 @@ document.addEventListener('click', (e) => {
   if (!recording && !busy) toggleRecord();
 });
 
+// Startup health ping — confirms server is reachable + keys present
+fetch('/api/health')
+  .then(r => r.ok ? r.json() : null)
+  .then(j => {
+    if (!j?.ok) { showError('Local server unreachable — restart with "voice jarvis".'); return; }
+    if (!j.groq) showError('GROQ_API_KEY missing — transcription disabled.');
+  })
+  .catch(() => showError('Local server offline — restart with "voice jarvis".'));
+
 // ---------------------------------------------------------------------------
 
 async function toggleRecord() {
@@ -178,7 +187,12 @@ async function handleRecordedBlob(mime) {
   const ext = mime.includes('webm') ? 'webm' : mime.includes('mp4') ? 'm4a' : 'bin';
 
   try {
-    const r = await fetch(`/api/converse?persona=${persona}&ext=${ext}`, { method: 'POST', body: blob });
+    let r;
+    try {
+      r = await fetch(`/api/converse?persona=${persona}&ext=${ext}`, { method: 'POST', body: blob });
+    } catch (netErr) {
+      throw new Error('Server offline — the voice jarvis terminal was closed. Run "voice jarvis" again.');
+    }
     if (!r.ok) {
       const body = await r.json().catch(() => ({}));
       throw new Error(body.error || `server ${r.status}`);

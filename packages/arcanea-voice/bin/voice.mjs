@@ -74,8 +74,22 @@ if (mode === 'help' || mode === 'h') {
 }
 
 if (PRESENCE_COMMANDS.has(mode)) {
-  const { startServer } = await import('../src/server.mjs');
   const persona = mode === 'presence' ? 'lumina' : mode;
+  const personaName = PERSONAS[persona]?.name || persona;
+  const useLocal = args.includes('--local') || process.env.ARCANEA_VOICE_LOCAL === '1';
+  const webBase = process.env.ARCANEA_VOICE_WEB || 'https://arcanea.ai';
+
+  if (!useLocal) {
+    const target = `${webBase}/room/${persona}`;
+    console.log(`\n  Arcanea Presence Room — ${personaName}`);
+    console.log(`  ${target}`);
+    console.log(`  (opens the hosted room — no local server needed.)`);
+    console.log(`  pass --local to run the on-device server instead.\n`);
+    openBrowser(target);
+    process.exit(0);
+  }
+
+  const { startServer } = await import('../src/server.mjs');
   const port = parseInt(process.env.ARCANEA_VOICE_PORT || '7777', 10);
   const host = process.env.ARCANEA_VOICE_HOST || '127.0.0.1';
   if (!groqKey) {
@@ -85,9 +99,8 @@ if (PRESENCE_COMMANDS.has(mode)) {
   startServer({
     port, host,
     onReady: ({ url }) => {
-      const personaName = PERSONAS[persona]?.name || persona;
       const target = `${url}/?persona=${persona}`;
-      console.log(`\n  Arcanea Presence — ${personaName}`);
+      console.log(`\n  Arcanea Presence (local) — ${personaName}`);
       console.log(`  ${target}`);
       console.log(`  groq: ${groqKey ? 'yes' : 'no'}  eleven: ${elevenKey ? 'yes' : 'no'}`);
       console.log(`  Ctrl+C to stop.\n`);

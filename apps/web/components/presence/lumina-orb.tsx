@@ -133,6 +133,85 @@ const CORE_FRAG = /* glsl */ `
   }
 `;
 
+// Halo ring: a flat torus in XY plane that thickens and glows on speaking.
+const HALO_VERT = /* glsl */ `
+  uniform float uTime;
+  uniform float uAmp;
+  varying float vAngle;
+
+  void main() {
+    vec3 pos = position;
+    float angle = atan(pos.y, pos.x);
+    float wobble = sin(angle * 6.0 + uTime * 1.6) * 0.018 + sin(angle * 11.0 - uTime * 0.8) * 0.01;
+    float scale = 1.0 + uAmp * 0.16 + wobble;
+    pos.xy *= scale;
+    vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+    gl_Position = projectionMatrix * mv;
+    vAngle = angle;
+  }
+`;
+
+const HALO_FRAG = /* glsl */ `
+  precision highp float;
+  uniform vec3 uColor;
+  uniform vec3 uAccent;
+  uniform float uAmp;
+  uniform float uFade;
+  uniform float uVisible;
+  uniform float uTime;
+  varying float vAngle;
+
+  void main() {
+    float shimmer = 0.55 + 0.45 * sin(vAngle * 9.0 + uTime * 2.2);
+    vec3 c = mix(uColor, uAccent, 0.35 + 0.35 * sin(vAngle * 3.0 + uTime));
+    float intensity = (0.18 + uAmp * 0.9) * shimmer * uVisible * uFade;
+    gl_FragColor = vec4(c * (0.8 + uAmp * 0.8), intensity);
+  }
+`;
+
+// Satellites: small points orbiting the orb in a tilted plane.
+const SAT_VERT = /* glsl */ `
+  uniform float uTime;
+  uniform float uAmp;
+  attribute float aSeed;
+  varying float vSeed;
+
+  void main() {
+    float spin = uTime * (0.18 + fract(aSeed * 7.13) * 0.22);
+    float r = 1.45 + fract(aSeed * 11.17) * 0.35 + uAmp * 0.08;
+    float theta = spin + aSeed * 6.2831;
+    float tilt = (fract(aSeed * 3.7) - 0.5) * 0.9;
+    vec3 pos = vec3(
+      cos(theta) * r,
+      sin(theta) * r * cos(tilt) + sin(tilt) * sin(theta * 0.5) * 0.2,
+      sin(theta) * r * sin(tilt)
+    );
+    vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+    gl_Position = projectionMatrix * mv;
+    float dist = length(mv.xyz);
+    gl_PointSize = (22.0 / dist) * (0.8 + fract(aSeed * 5.0) * 1.4) * (1.0 + uAmp * 0.9);
+    vSeed = aSeed;
+  }
+`;
+
+const SAT_FRAG = /* glsl */ `
+  precision highp float;
+  uniform vec3 uColor;
+  uniform vec3 uAccent;
+  uniform float uFade;
+  varying float vSeed;
+
+  void main() {
+    vec2 uv = gl_PointCoord - 0.5;
+    float r = length(uv);
+    if (r > 0.5) discard;
+    float a = smoothstep(0.5, 0.0, r);
+    a *= a;
+    vec3 c = mix(uColor, uAccent, fract(vSeed * 13.0));
+    gl_FragColor = vec4(c * 1.3, a * uFade * 0.85);
+  }
+`;
+
 const STATE_CONFIG: Record<OrbState, { radius: number; chaos: number; spin: number; baseAmp: number; pulseFreq: number }> = {
   listening: { radius: 1.0, chaos: 0.25, spin: 0.08, baseAmp: 0.0, pulseFreq: 0.0 },
   thinking: { radius: 0.95, chaos: 1.0, spin: 0.6, baseAmp: 0.08, pulseFreq: 2.2 },
@@ -188,8 +267,8 @@ export function LuminaOrb({
     mount.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 20);
-    camera.position.z = 4.2;
+    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 20);
+    camera.position.z = 5.2;
 
     const geometry = buildGeometry(4096);
     const [cr, cg, cb] = hexToRgb(color);
@@ -237,8 +316,63 @@ export function LuminaOrb({
       },
     });
 
+    // Main particle shell
     const points = new THREE.Points(geometry, material);
     scene.add(points);
+
+    // Bloom pass: same geometry, softer + larger, additive underneath for cheap glow
+    const bloomMaterial = material.clone();
+    bloomMaterial.uniforms = { ...material.uniforms };
+    bloomMaterial.fragmentShader = FRAG.replace('* uFade);', '* uFade * 0.35);');
+    const bloomPoints = new THREE.Points(geometry, bloomMaterial);
+    bloomPoints.scale.setScalar(1.22);
+    scene.add(bloomPoints);
+
+    // Halo ring — thin, amplitude-reactive, visible during speaking
+    const haloGeometry = new THREE.TorusGeometry(1.32, 0.012, 8, 220);
+    const haloMaterial = new THREE.ShaderMaterial({
+      vertexShader: HALO_VERT,
+      fragmentShader: HALO_FRAG,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      uniforms: {
+        uTime: { value: 0 },
+        uAmp: { value: 0 },
+        uFade: { value: 0 },
+        uVisible: { value: 0 },
+        uColor: { value: colorVec.clone() },
+        uAccent: { value: accentVec.clone() },
+      },
+    });
+    const halo = new THREE.Mesh(haloGeometry, haloMaterial);
+    halo.rotation.x = Math.PI * 0.5 - 0.15;
+    scene.add(halo);
+
+    // Satellites — orbiting flecks
+    const SAT_COUNT = 256;
+    const satPos = new Float32Array(SAT_COUNT * 3);
+    const satSeeds = new Float32Array(SAT_COUNT);
+    for (let i = 0; i < SAT_COUNT; i++) { satSeeds[i] = Math.random(); }
+    const satGeometry = new THREE.BufferGeometry();
+    satGeometry.setAttribute('position', new THREE.BufferAttribute(satPos, 3));
+    satGeometry.setAttribute('aSeed', new THREE.BufferAttribute(satSeeds, 1));
+    const satMaterial = new THREE.ShaderMaterial({
+      vertexShader: SAT_VERT,
+      fragmentShader: SAT_FRAG,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      uniforms: {
+        uTime: { value: 0 },
+        uAmp: { value: 0 },
+        uFade: { value: 0 },
+        uColor: { value: colorVec.clone() },
+        uAccent: { value: accentVec.clone() },
+      },
+    });
+    const satellites = new THREE.Points(satGeometry, satMaterial);
+    scene.add(satellites);
 
     const clock = new THREE.Clock();
     let raf = 0;
@@ -294,8 +428,24 @@ export function LuminaOrb({
 
       points.rotation.y += cfg.spin * dt;
       points.rotation.x = Math.sin(t * 0.2) * 0.12;
+      bloomPoints.rotation.copy(points.rotation);
       core.rotation.y -= cfg.spin * 0.6 * dt;
       core.rotation.x = Math.sin(t * 0.3 + 1.2) * 0.08;
+
+      // Halo: only visible during speaking, amplitude-driven
+      const haloTarget = current === 'speaking' ? 1 : 0;
+      const hu = haloMaterial.uniforms;
+      hu.uVisible.value += (haloTarget - hu.uVisible.value) * Math.min(dt * 3.5, 1);
+      hu.uAmp.value = u.uAmplitude.value;
+      hu.uTime.value = t;
+      hu.uFade.value = fade;
+      halo.rotation.z += dt * 0.08;
+
+      // Satellites: always orbiting, extra reactive in speaking state
+      const satU = satMaterial.uniforms;
+      satU.uTime.value = t;
+      satU.uAmp.value = u.uAmplitude.value;
+      satU.uFade.value = fade;
 
       renderer.render(scene, camera);
       raf = requestAnimationFrame(render);
@@ -316,6 +466,11 @@ export function LuminaOrb({
       ro.disconnect();
       geometry.dispose();
       material.dispose();
+      bloomMaterial.dispose();
+      haloGeometry.dispose();
+      haloMaterial.dispose();
+      satGeometry.dispose();
+      satMaterial.dispose();
       coreGeometry.dispose();
       coreMaterial.dispose();
       renderer.dispose();
