@@ -132,22 +132,22 @@ export const LiquidGlass = React.forwardRef<HTMLDivElement, LiquidGlassProps>(
     const [pos, setPos] = React.useState({ x: 50, y: 50, active: false });
 
     const handleMouseMove = React.useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
+      (e: React.MouseEvent<HTMLElement>) => {
         if (enableInteractive) {
           const rect = e.currentTarget.getBoundingClientRect();
           const x = ((e.clientX - rect.left) / rect.width) * 100;
           const y = ((e.clientY - rect.top) / rect.height) * 100;
           setPos({ x, y, active: true });
         }
-        onMouseMove?.(e);
+        onMouseMove?.(e as unknown as React.MouseEvent<HTMLDivElement>);
       },
       [enableInteractive, onMouseMove]
     );
 
     const handleMouseLeave = React.useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
+      (e: React.MouseEvent<HTMLElement>) => {
         setPos((prev) => ({ ...prev, active: false }));
-        onMouseLeave?.(e);
+        onMouseLeave?.(e as unknown as React.MouseEvent<HTMLDivElement>);
       },
       [onMouseLeave]
     );
@@ -161,8 +161,13 @@ export const LiquidGlass = React.forwardRef<HTMLDivElement, LiquidGlassProps>(
       '0 8px 32px rgba(0,0,0,0.40)',
     ].join(', ');
 
+    // framer-motion v12 has strict HTMLMotionProps inference on motion.div —
+    // cast to bypass the Omit<..., "ref"> overlap complaint when we spread
+    // a large props object including ref.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const MDiv = m.div as any;
     return (
-      <m.div
+      <MDiv
         ref={ref}
         className={cn(liquidGlassVariants({ intensity, tint, glow }), className)}
         onMouseMove={handleMouseMove}
@@ -217,7 +222,7 @@ export const LiquidGlass = React.forwardRef<HTMLDivElement, LiquidGlassProps>(
 
         {/* Content */}
         <div className="relative">{children}</div>
-      </m.div>
+      </MDiv>
     );
   }
 );

@@ -383,7 +383,7 @@ export function CreationCard({ item, index = 0, mounted = true }: { item: CardIt
     <TiltCard intensity={4}>
     <LiquidGlass
       intensity="subtle"
-      tint={elementStyle.accent ?? '#00bcd4'}
+      tint={(elementStyle as { accent?: string }).accent ?? '#00bcd4'}
       className="group relative rounded-2xl overflow-hidden border border-white/[0.06] hover:border-white/[0.14] transition-colors duration-300"
       noise={false}
     ><div
