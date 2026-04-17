@@ -9,7 +9,7 @@ export type TierPreference = 'sub-first' | 'free-first' | 'byok-first' | 'cheape
 export interface UserConfig {
   /** User's tier preference for routing. Determines fallback order. */
   preference: TierPreference;
-  /** Known auth per runtime. Set by `arcanea-code doctor`. */
+  /** Known auth per runtime. Set by `arcanea-orchestrator doctor`. */
   auth: Partial<Record<'claude' | 'opencode' | 'codex' | 'gemini', AuthRecord>>;
   /** Optional default surface override (e.g. 'oh-my-arcanea' to always prefer free). */
   defaultSurface?: string;

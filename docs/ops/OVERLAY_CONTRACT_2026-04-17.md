@@ -14,7 +14,7 @@ Every overlay MUST:
 1. **Ship a `manifest.yaml`** at repo root conforming to `packages/router-spec/manifest.schema.yaml`. Declares the surface it targets, the runtime binary it extends, and its install steps.
 2. **Ship an `AGENTS.md`** at repo root. Agent-readable policy for what the overlay does, what files it owns, and what to modify where.
 3. **Declare its surface** — a key under `surfaces:` in `packages/router-spec/models.yaml`. The overlay inherits routing defaults from that surface.
-4. **Read, never duplicate**. If the overlay needs to pick a model for an agent, it calls `@arcanea/arcanea-code` or loads `@arcanea/router-spec` directly — never hard-codes.
+4. **Read, never duplicate**. If the overlay needs to pick a model for an agent, it calls `@arcanea/orchestrator` or loads `@arcanea/router-spec` directly — never hard-codes.
 5. **Install idempotently**. Running install twice must produce the same state as running it once. Print a line per action: created / updated / skipped.
 
 ## What overlays own

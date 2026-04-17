@@ -1,17 +1,17 @@
-# AGENTS.md — @arcanea/arcanea-code
+# AGENTS.md — @arcanea/orchestrator
 
 This file is readable by any coding agent. It declares what this package is, how to use it, and what contracts it obeys.
 
 ## What this is
 
-A thin dispatcher CLI that routes a coding task to the right runtime (`claude`, `opencode`, `codex`, `gemini`) based on the canonical `@arcanea/router-spec`. Sub-economics aware: Claude Max covers `claude -p`, OpenCode Zen covers `opencode`, BYOK covers the rest.
+The **Arcanea Orchestrator** — a headless routing/planning/swarming/learning brain that executes via `claude`, `opencode`, `codex`, `gemini` sub-CLIs. Consumes `@arcanea/router-spec`. Sub-economics aware: Claude Max covers `claude -p`, OpenCode Zen covers `opencode`, BYOK covers the rest. This package is the orchestrator; `arcanea-code` (separate repo) is the rich OpenCode-fork TUI that can sit on top of it.
 
 ## Contracts
 
 1. **Source of truth**: `@arcanea/router-spec/models.yaml`. Do not hard-code model choices in this package — add them to the spec.
 2. **Runtime adapter**: `src/runtimes.ts` maps a provider to a CLI binary and argv shape. Changes there affect all commands uniformly.
 3. **User config**: `~/.arcanea/config.yaml` stores `preference` (sub-first / free-first / byok-first / cheapest) and `auth` (populated by `doctor`). Never write there from anywhere except `config.ts`.
-4. **Output discipline**: routing decisions printed to **stderr** as `[arcanea-code] task=… → model via runtime [auth: tier]`. Sub-CLI output streams to **stdout**. Keeps the tool composable in shell pipelines.
+4. **Output discipline**: routing decisions printed to **stderr** as `[arcanea] task=… → model via runtime [auth: tier]`. Sub-CLI output streams to **stdout**. Keeps the tool composable in shell pipelines.
 5. **No hidden state**: every routing decision is derivable from `router-spec` + `~/.arcanea/config.yaml` + runtime availability. Given those three, the dispatch is reproducible.
 
 ## Commands
@@ -24,7 +24,10 @@ A thin dispatcher CLI that routes a coding task to the right runtime (`claude`, 
 | `run --task <id> "<prompt>"` | dispatch to the routed runtime |
 | `doctor` | detect installed CLIs + infer auth tier, write config |
 | `config [key] [value]` | read or write user preference |
-| `swarm --from <file>` | classify a backlog, print planned dispatch (Phase 3 wires real `ao spawn`) |
+| `status` | unified dashboard: spec + config + auth + AO + worktrees |
+| `swarm --from <file>` | classify a backlog, spawn parallel workers via `ao batch-spawn` |
+
+Bin names: `arcanea-orchestrator` (canonical), `arco` (short alias).
 
 ## When another agent should modify this package
 

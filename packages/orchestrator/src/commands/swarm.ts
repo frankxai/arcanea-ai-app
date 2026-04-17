@@ -29,7 +29,7 @@ export async function swarmCommand(opts: Options): Promise<void> {
   const selected = items.slice(0, max);
 
   console.log();
-  console.log(kleur.bold('  arcanea-code swarm'));
+  console.log(kleur.bold('  arcanea-orchestrator swarm'));
   console.log();
   console.log(kleur.dim(`  Source: ${opts.from ?? '(none — pass --from <file>)'}`));
   console.log(kleur.dim(`  Max workers: ${max}`));
@@ -65,7 +65,7 @@ export async function swarmCommand(opts: Options): Promise<void> {
     console.log(kleur.yellow(`    cli installed: ${ao.cliInstalled}`));
     console.log(kleur.yellow(`    daemon running: ${ao.daemonRunning}`));
     if (ao.hint) console.log(kleur.dim(`    ${ao.hint}`));
-    console.log(kleur.dim('  Run `arcanea-code swarm --dry-run` to preview dispatch without AO.'));
+    console.log(kleur.dim('  Run `arcanea-orchestrator swarm --dry-run` to preview dispatch without AO.'));
     return;
   }
 

@@ -12,9 +12,9 @@ import { statusCommand } from './commands/status.js';
 const program = new Command();
 
 program
-  .name('arcanea-code')
-  .description('Thin multi-CLI dispatcher for coding tasks across claude, opencode, codex, gemini.')
-  .version('0.1.0');
+  .name('arcanea-orchestrator')
+  .description('The Arcanea Orchestrator — routes, plans, swarms, and learns across claude / opencode / codex / gemini.')
+  .version('1.0.0');
 
 program
   .command('list-models')

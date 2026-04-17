@@ -60,7 +60,7 @@ export async function doctorCommand(): Promise<void> {
   const config = loadConfig();
 
   console.log();
-  console.log(kleur.bold('  arcanea-code doctor'));
+  console.log(kleur.bold('  arcanea-orchestrator doctor'));
   console.log(kleur.dim('  Detects installed CLIs and infers auth tier.'));
   console.log();
 
@@ -94,7 +94,7 @@ export async function doctorCommand(): Promise<void> {
 
   console.log();
   console.log(kleur.dim(`  Preference: ${kleur.bold(config.preference)}`));
-  console.log(kleur.dim(`  Change with: arcanea-code config preference sub-first|free-first|byok-first|cheapest`));
+  console.log(kleur.dim(`  Change with: arcanea-orchestrator config preference sub-first|free-first|byok-first|cheapest`));
   console.log();
   console.log(kleur.dim(`  Written: ~/.arcanea/config.yaml`));
   console.log();

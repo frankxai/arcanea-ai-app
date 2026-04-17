@@ -11,7 +11,7 @@ export function explainCommand(taskId: string, opts: Options): void {
 
   if (!spec.tasks[taskId]) {
     console.error(kleur.red(`Unknown task: ${taskId}`));
-    console.error(kleur.dim(`Run \`arcanea-code list-tasks\` to see all task classes.`));
+    console.error(kleur.dim(`Run \`arcanea-orchestrator list-tasks\` to see all task classes.`));
     process.exit(1);
   }
   if (!spec.surfaces[opts.surface]) {

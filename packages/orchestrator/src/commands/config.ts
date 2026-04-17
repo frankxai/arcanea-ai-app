@@ -19,8 +19,8 @@ export function configCommand(key?: string, value?: string): void {
     }
     console.log();
     console.log(kleur.dim(`  Examples:`));
-    console.log(kleur.dim(`    arcanea-code config preference free-first`));
-    console.log(kleur.dim(`    arcanea-code config defaultSurface oh-my-arcanea`));
+    console.log(kleur.dim(`    arcanea-orchestrator config preference free-first`));
+    console.log(kleur.dim(`    arcanea-orchestrator config defaultSurface oh-my-arcanea`));
     console.log();
     return;
   }

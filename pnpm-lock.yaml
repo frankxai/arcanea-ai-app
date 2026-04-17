@@ -521,34 +521,6 @@ importers:
         specifier: ^5.7.2
         version: 5.9.3
 
-  packages/arcanea-code:
-    dependencies:
-      '@arcanea/router-spec':
-        specifier: workspace:*
-        version: link:../router-spec
-      commander:
-        specifier: ^12.1.0
-        version: 12.1.0
-      execa:
-        specifier: ^9.5.0
-        version: 9.6.1
-      kleur:
-        specifier: ^4.1.5
-        version: 4.1.5
-      yaml:
-        specifier: '>=2.8.3'
-        version: 2.8.3
-    devDependencies:
-      '@types/node':
-        specifier: ^20.0.0
-        version: 20.19.39
-      tsx:
-        specifier: ^4.19.0
-        version: 4.21.0
-      typescript:
-        specifier: ^5.5.0
-        version: 5.9.3
-
   packages/arcanea-flow:
     dependencies:
       js-yaml:
@@ -982,6 +954,34 @@ importers:
         version: 22.19.17
       tsx:
         specifier: ^4.21.0
+        version: 4.21.0
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+
+  packages/orchestrator:
+    dependencies:
+      '@arcanea/router-spec':
+        specifier: workspace:*
+        version: link:../router-spec
+      commander:
+        specifier: ^12.1.0
+        version: 12.1.0
+      execa:
+        specifier: ^9.5.0
+        version: 9.6.1
+      kleur:
+        specifier: ^4.1.5
+        version: 4.1.5
+      yaml:
+        specifier: '>=2.8.3'
+        version: 2.8.3
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.39
+      tsx:
+        specifier: ^4.19.0
         version: 4.21.0
       typescript:
         specifier: ^5.5.0

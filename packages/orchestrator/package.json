@@ -1,11 +1,24 @@
 {
-  "name": "@arcanea/arcanea-code",
-  "version": "0.1.1",
-  "description": "Thin multi-CLI dispatcher that routes coding tasks to the right agent (claude, opencode, codex, gemini) based on @arcanea/router-spec.",
+  "name": "@arcanea/orchestrator",
+  "version": "1.0.0",
+  "description": "The Arcanea Orchestrator — headless brain that routes, plans, swarms, and learns across claude / opencode / codex / gemini. Consumes @arcanea/router-spec.",
+  "keywords": [
+    "arcanea",
+    "orchestrator",
+    "agent",
+    "cli",
+    "multi-agent",
+    "claude-code",
+    "opencode",
+    "codex",
+    "gemini",
+    "routing"
+  ],
   "type": "module",
   "main": "./dist/cli.js",
   "bin": {
-    "arcanea-code": "./dist/cli.js"
+    "arcanea-orchestrator": "./dist/cli.js",
+    "arco": "./dist/cli.js"
   },
   "files": [
     "dist",

@@ -47,7 +47,7 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
     console.error(
       kleur.red(`No model resolved for task=${opts.task} surface=${surface}.`),
     );
-    console.error(kleur.dim(`Hint: run \`arcanea-code doctor\` to detect installed CLIs.`));
+    console.error(kleur.dim(`Hint: run \`arcanea-orchestrator doctor\` to detect installed CLIs.`));
     process.exit(1);
   }
 
@@ -58,14 +58,14 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
 
   const authRec = config.auth[rtId];
   const authNote = authRec?.installed === false
-    ? kleur.red(' [not installed — run `arcanea-code doctor`]')
+    ? kleur.red(' [not installed — run `arcanea-orchestrator doctor`]')
     : authRec?.tier
     ? kleur.dim(` [auth: ${authRec.tier}]`)
     : '';
 
   console.error(
     kleur.dim(
-      `  [arcanea-code] task=${opts.task} surface=${surface} pref=${config.preference} → ${kleur.cyan(modelId)} via ${kleur.cyan(runtime.binary)}${authNote}`,
+      `  [arcanea] task=${opts.task} surface=${surface} pref=${config.preference} → ${kleur.cyan(modelId)} via ${kleur.cyan(runtime.binary)}${authNote}`,
     ),
   );
 
@@ -89,11 +89,11 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
     if (msg.includes('ENOENT')) {
       console.error(
         kleur.red(
-          `  [arcanea-code] binary not found: ${runtime.binary}. Install the CLI first.`,
+          `  [arcanea] binary not found: ${runtime.binary}. Install the CLI first.`,
         ),
       );
     } else {
-      console.error(kleur.red(`  [arcanea-code] ${msg}`));
+      console.error(kleur.red(`  [arcanea] ${msg}`));
     }
     process.exit(1);
   }

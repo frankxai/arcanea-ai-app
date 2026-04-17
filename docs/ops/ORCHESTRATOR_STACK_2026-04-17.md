@@ -6,11 +6,11 @@ Three distinct "orchestrators" live on this machine. They do different things. S
 
 | Name | Binary | What it is | Where it runs |
 |---|---|---|---|
-| **Composio Agent Orchestrator** | `ao` | Multi-session manager for `claude-code` workers with web dashboard | Port 4200 (running, PID 55928) |
-| **`/ao` skill (Arcanea Orchestrator)** | slash-cmd | Promotion workflow + digest + cleanup rules inside Claude Code | Per Claude Code session |
-| **`arcanea-orchestrator` (planned repo)** | TBD | Standalone CLI that codifies our worktree + promotion protocol | Not built yet |
+| **Composio Agent Orchestrator** | `ao` | Session spawner (tmux + worktree) for `claude-code` workers, with web dashboard on :4200 | Developer machine |
+| **`@arcanea/orchestrator`** | `arcanea-orchestrator` / `arco` | Routing + planning + swarm brain. npm-installable. v1.0.0 live 2026-04-18 | Developer machine |
+| **`/ao` skill (Arcanea Orchestrator)** | slash-cmd | Promotion workflow + digest + cleanup, inside Claude Code | Per Claude Code session |
 
-**Naming collision.** Composio's CLI is `ao`. Our skill alias is also `/ao`. Keep them separate in your head: `ao` (terminal) = Composio; `/ao` (Claude Code chat) = Arcanea skill.
+**Naming collision.** Composio's CLI is `ao`. Our skill alias is also `/ao`. Our npm package uses bin `arcanea-orchestrator` + short alias `arco` (not `ao`) to keep them separate.
 
 ---
 

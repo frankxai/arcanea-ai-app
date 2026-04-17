@@ -6,7 +6,7 @@ import { execa } from 'execa';
 
 export async function statusCommand(): Promise<void> {
   console.log();
-  console.log(kleur.bold('  arcanea-code status'));
+  console.log(kleur.bold('  arcanea-orchestrator status'));
   console.log();
 
   // ── Router spec ───────────────────────────────────────────────────────────
