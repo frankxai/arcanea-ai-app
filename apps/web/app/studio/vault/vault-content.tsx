@@ -496,22 +496,46 @@ export function VaultContent() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-32">
           {/* Hero */}
           <header className="mb-12">
-            <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-white/30 mb-3">
-              Studio · Vault
-            </p>
-            <div className="flex flex-wrap items-center gap-3 mb-3">
-              <h1 className="text-4xl md:text-5xl font-display font-bold tracking-[-0.03em]">
-                <span className="bg-gradient-to-r from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
-                  Your creator memory
-                </span>
-              </h1>
-              <StatusBadge level="beta" note="pgvector live" />
+            <div className="flex flex-wrap items-start justify-between gap-4 mb-3">
+              <div>
+                <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-white/30 mb-3">
+                  Studio · Vault
+                </p>
+                <div className="flex flex-wrap items-center gap-3 mb-3">
+                  <h1 className="text-4xl md:text-5xl font-display font-bold tracking-[-0.03em]">
+                    <span className="bg-gradient-to-r from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
+                      Your creator memory
+                    </span>
+                  </h1>
+                  <StatusBadge level="beta" note="pgvector live" />
+                </div>
+                <p className="text-base text-white/45 max-w-2xl font-body leading-relaxed">
+                  Every document you drop in is classified, stored as markdown + JSONML,
+                  and embedded for semantic retrieval. Luminors can reference any of this
+                  during chat. Export anytime — your vault is yours.
+                </p>
+              </div>
+              {!requiresAuth && docs.length > 0 && (
+                <div className="flex items-center gap-2 shrink-0">
+                  <a
+                    href="/api/studio/export"
+                    download
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#7fffd4]/10 border border-[#7fffd4]/25 text-[12px] font-mono text-[#7fffd4] hover:bg-[#7fffd4]/20 transition-colors"
+                    title="Download the entire vault as JSON"
+                  >
+                    <span>⇣</span> Export JSON
+                  </a>
+                  <a
+                    href="/api/studio/export?format=ndjson"
+                    download
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-[12px] font-mono text-white/60 hover:bg-white/[0.08] transition-colors"
+                    title="Line-delimited JSON — streamable, diff-friendly"
+                  >
+                    <span>⇣</span> ndjson
+                  </a>
+                </div>
+              )}
             </div>
-            <p className="text-base text-white/45 max-w-2xl font-body leading-relaxed">
-              Every document you drop in is classified, stored as markdown + JSONML,
-              and embedded for semantic retrieval. Luminors can reference any of this
-              during chat. Export anytime — your vault is yours.
-            </p>
           </header>
 
           {requiresAuth ? (

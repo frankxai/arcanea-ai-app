@@ -642,17 +642,42 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
     });
 
     const toolsToUse = (() => {
-      if (!enabledTools || enabledTools.length === 0) return undefined;
+      // Always-on vault retrieval when a signed-in user has a Supabase client.
+      // This is the chat↔Studio loop: Luminors can pull from the creator's
+      // ingested documents mid-response. No opt-in needed — the tool simply
+      // won't fire if there's nothing to match or the table isn't migrated.
+      const autoVault =
+        sbClient && sbUserId && chatToolSet.search_vault
+          ? { search_vault: chatToolSet.search_vault }
+          : {};
+
+      if (!enabledTools || enabledTools.length === 0) {
+        return Object.keys(autoVault).length > 0 ? autoVault : undefined;
+      }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const selected: Record<string, any> = {};
+      const selected: Record<string, any> = { ...autoVault };
       if (enabledTools.includes('image') && chatToolSet.image_generate) selected.image_generate = chatToolSet.image_generate;
       if (enabledTools.includes('search') && chatToolSet.web_search) selected.web_search = chatToolSet.web_search;
       if ((enabledTools.includes('think') || enabledTools.includes('research')) && chatToolSet.deep_research) {
         selected.deep_research = chatToolSet.deep_research;
       }
       if (enabledTools.includes('memory') && chatToolSet.memory_store) selected.memory_store = chatToolSet.memory_store;
+      // Explicit opt-in to surface "Vault is searchable" in client UI if needed
+      if (enabledTools.includes('vault') && chatToolSet.search_vault) selected.search_vault = chatToolSet.search_vault;
       return Object.keys(selected).length > 0 ? selected : undefined;
     })();
+
+    // Tell the model its vault is reachable when the tool is active.
+    // Brief, placed at the top of the system prompt so it's seen first.
+    if (toolsToUse && 'search_vault' in toolsToUse) {
+      const vaultHint =
+        '[STUDIO VAULT]\n' +
+        "The user has a persistent Studio vault of ingested content — characters, locations, magic, scenes, lore, chapters, and notes they've saved. " +
+        "When the user references something specific to their world (a character name, location, rule, chapter), call `search_vault` to pull matching context before answering. " +
+        "Cite what you find naturally. If nothing matches, continue normally.\n" +
+        '[/STUDIO VAULT]\n\n';
+      resolvedSystemPrompt = vaultHint + resolvedSystemPrompt;
+    }
 
     if (projectContext?.id && sbClient && sbUserId) {
       await recordProjectTrace(sbClient, {

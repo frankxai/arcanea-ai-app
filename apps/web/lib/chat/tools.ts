@@ -74,6 +74,50 @@ const memoryStoreInputSchema = z.object({
 type MemoryStoreInput = z.infer<typeof memoryStoreInputSchema>;
 
 // ---------------------------------------------------------------------------
+// Vault search — lets Luminors retrieve from the creator's ingested content
+// ---------------------------------------------------------------------------
+
+const vaultClassifications = [
+  'character',
+  'location',
+  'magic',
+  'scene',
+  'lore',
+  'reference',
+  'chapter',
+  'note',
+] as const;
+
+const vaultSearchInputSchema = z.object({
+  query: z
+    .string()
+    .min(2)
+    .max(400)
+    .describe(
+      "Natural-language search over the user's ingested Studio documents. Use when the user references something they've shared before — a world, character, location, magic system, chapter, or note.",
+    ),
+  classification: z
+    .enum(vaultClassifications)
+    .optional()
+    .describe('Restrict to one content type if you know it'),
+  worldId: z
+    .string()
+    .uuid()
+    .optional()
+    .describe('Restrict to a specific world'),
+  limit: z
+    .number()
+    .int()
+    .min(1)
+    .max(16)
+    .optional()
+    .default(6)
+    .describe('How many results to return (1-16, default 6)'),
+});
+
+type VaultSearchInput = z.infer<typeof vaultSearchInputSchema>;
+
+// ---------------------------------------------------------------------------
 // Factory
 // ---------------------------------------------------------------------------
 
@@ -170,6 +214,110 @@ export function createChatTools(options?: ChatToolOptions) {
             sources: [],
             subQueries: [],
             totalSearches: 0,
+          };
+        }
+      },
+    }),
+
+    search_vault: tool({
+      description:
+        "Search the user's Studio vault — their ingested characters, locations, magic systems, scenes, lore, chapters, and notes — and return matching snippets. Use when the user references their own world (a character name, location, magic rule) or when pulling from their past notes would give a better answer. Returns top-K semantically similar documents with titles, classification, and content snippets.",
+      inputSchema: vaultSearchInputSchema,
+      execute: async ({ query, classification, worldId, limit }: VaultSearchInput) => {
+        // Requires both supabase client and userId — degrades gracefully otherwise
+        if (!options?.supabaseClient || !options?.userId) {
+          return {
+            type: 'vault_search' as const,
+            query,
+            results: [],
+            count: 0,
+            error: 'Sign in to search your vault',
+          };
+        }
+
+        try {
+          // Lazy-load the embedder so the bundle stays lean for non-vault routes
+          const [{ openai }, { embed }, { toPgVector }] = await Promise.all([
+            import('@ai-sdk/openai'),
+            import('ai'),
+            import('@/lib/studio/embed'),
+          ]);
+
+          const { embedding } = await embed({
+            model: openai.textEmbedding('text-embedding-3-small'),
+            value: query,
+          });
+
+          const { data, error } = await options.supabaseClient.rpc(
+            'match_ingested_documents',
+            {
+              query_embedding: toPgVector(embedding),
+              match_count: limit ?? 6,
+              p_user_id: options.userId,
+              p_world_id: worldId ?? null,
+              p_classification: classification ?? null,
+            },
+          );
+
+          if (error) {
+            // Clean error — not migrated, or RPC missing
+            if (error.code === '42883' || error.code === '42P01') {
+              return {
+                type: 'vault_search' as const,
+                query,
+                results: [],
+                count: 0,
+                error: 'Vault not migrated yet. Run: supabase db push',
+              };
+            }
+            return {
+              type: 'vault_search' as const,
+              query,
+              results: [],
+              count: 0,
+              error: error.message,
+            };
+          }
+
+          type Row = {
+            id: string;
+            title: string;
+            markdown_content?: string | null;
+            classification: string;
+            source_type: string;
+            world_id: string | null;
+            tags: string[];
+            similarity: number;
+          };
+
+          const rows: Row[] = (data as Row[]) ?? [];
+          const results = rows.map((row) => {
+            const content = typeof row.markdown_content === 'string' ? row.markdown_content : '';
+            return {
+              id: row.id,
+              title: row.title,
+              classification: row.classification,
+              source_type: row.source_type,
+              world_id: row.world_id,
+              tags: row.tags,
+              similarity: Math.round(row.similarity * 100) / 100,
+              snippet: content.slice(0, 600).replace(/\s+/g, ' ').trim(),
+            };
+          });
+
+          return {
+            type: 'vault_search' as const,
+            query,
+            count: results.length,
+            results,
+          };
+        } catch (err) {
+          return {
+            type: 'vault_search' as const,
+            query,
+            results: [],
+            count: 0,
+            error: err instanceof Error ? err.message : 'Vault search failed',
           };
         }
       },
