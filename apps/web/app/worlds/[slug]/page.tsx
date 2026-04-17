@@ -6,7 +6,8 @@ import { createClient } from "@/lib/supabase/server";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const sb = await createClient();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const sb = (await createClient()) as any;
   const { data: world } = await sb.from("worlds").select("name, description, element").eq("slug", slug).single();
   if (!world) return { title: "World Not Found — Arcanea" };
   return {
@@ -27,7 +28,9 @@ import { WorldDetailTabs, type WorldPalette } from "./world-detail-tabs";
 // ── Data fetching ────────────────────────────────────────────────────
 
 async function getWorld(slug: string) {
-  const [sb, user] = await Promise.all([createClient(), getCachedUser()]);
+  const [sbClient, user] = await Promise.all([createClient(), getCachedUser()]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const sb = sbClient as any;
 
   const { data: world, error } = await sb
     .from("worlds")

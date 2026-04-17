@@ -45,7 +45,9 @@ export async function GET(
   context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
-  const supabase = await createClient();
+  // Database type is out of sync with studio tables (ingested_documents) —
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const supabase = (await createClient()) as any;
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -82,7 +84,9 @@ export async function PATCH(
     return err('Invalid JSON body', 400);
   }
 
-  const supabase = await createClient();
+  // Database type is out of sync with studio tables (ingested_documents) —
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const supabase = (await createClient()) as any;
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -204,7 +208,9 @@ export async function DELETE(
   context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
-  const supabase = await createClient();
+  // Database type is out of sync with studio tables (ingested_documents) —
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const supabase = (await createClient()) as any;
   const {
     data: { user },
   } = await supabase.auth.getUser();

@@ -48,7 +48,8 @@ export async function POST(request: NextRequest) {
     return err('fileId and mimeType required', 400);
   }
 
-  const supabase = await createClient();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const supabase = (await createClient()) as any;
   const {
     data: { user },
   } = await supabase.auth.getUser();

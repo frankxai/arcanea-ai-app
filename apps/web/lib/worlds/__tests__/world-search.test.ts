@@ -5,6 +5,9 @@
  * Run with: npx tsx apps/web/lib/worlds/__tests__/world-search.test.ts
  */
 
+// Mark as module so top-level `passed`/`failed` don't collide with sibling tests
+export {};
+
 // ---------------------------------------------------------------------------
 // Inlined from world-search.ts (pure function, no DB dependencies)
 // ---------------------------------------------------------------------------

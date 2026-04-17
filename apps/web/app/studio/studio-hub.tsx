@@ -69,8 +69,10 @@ const FLOW_STEPS: FlowStep[] = [
   },
 ];
 
+import type { PhosphorIcon } from "@/lib/phosphor-icons";
+
 interface TransformCard {
-  icon: React.ComponentType<{ size?: number; weight?: string; style?: React.CSSProperties }>;
+  icon: PhosphorIcon;
   title: string;
   body: string;
   color: string;

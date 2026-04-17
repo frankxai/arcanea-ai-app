@@ -7,6 +7,9 @@
  * Run with: npx tsx apps/web/lib/supabase/__tests__/middleware.test.ts
  */
 
+// Mark as module so top-level `passed`/`failed` don't collide with sibling tests
+export {};
+
 // ---------------------------------------------------------------------------
 // Inline the pure function (not exported from middleware.ts)
 // ---------------------------------------------------------------------------
