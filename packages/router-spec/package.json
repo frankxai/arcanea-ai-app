@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "Canonical model routing spec for the Arcanea ecosystem. Single source of truth consumed by claude-arcanea, oh-my-arcanea, arcanea-flow, and arcanea.ai/models.",
   "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
     "./models.yaml": "./models.yaml"
   },
   "files": [

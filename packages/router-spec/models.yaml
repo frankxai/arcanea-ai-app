@@ -35,7 +35,7 @@ models:
     tier: sub            # Claude Max $200/mo covers unlimited in Claude Code
     byokPrice: { input: 15, output: 75 }
     strengths: [orchestration, extended-thinking, long-context, agentic]
-    aliases: [opus-4.7, opus-4-7, claude-opus-4-7[1m]]
+    aliases: ["opus-4.7", "opus-4-7", "claude-opus-4-7[1m]"]
 
   claude-sonnet-4-6:
     provider: anthropic
