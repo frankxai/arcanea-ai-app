@@ -118,6 +118,47 @@ const vaultSearchInputSchema = z.object({
 type VaultSearchInput = z.infer<typeof vaultSearchInputSchema>;
 
 // ---------------------------------------------------------------------------
+// Vault save — Luminors persist content to the vault mid-chat
+// ---------------------------------------------------------------------------
+
+const vaultSaveInputSchema = z.object({
+  title: z.string().min(2).max(180)
+    .describe("Concise, specific title. For characters: the name. For locations: the place name. For scenes: a descriptive phrase."),
+  content: z.string().min(10).max(60_000)
+    .describe("The full markdown body to save. Use headings, lists, and frontmatter-style metadata where helpful."),
+  classification: z.enum(vaultClassifications)
+    .describe("The type of content — pick the single best fit."),
+  tags: z.array(z.string().max(32)).max(10).optional()
+    .describe('Up to 10 short lowercase tags'),
+  worldId: z.string().uuid().optional()
+    .describe('Attach to a specific world, if applicable'),
+});
+
+type VaultSaveInput = z.infer<typeof vaultSaveInputSchema>;
+
+// ---------------------------------------------------------------------------
+// Luminor handoff — inter-specialist routing mid-conversation
+// ---------------------------------------------------------------------------
+
+const LUMINOR_IDS = [
+  'lumina', 'systems-architect', 'code-crafter', 'debugger',
+  'visual-designer', 'composer', 'motion-designer',
+  'storyteller', 'voice', 'poet',
+  'deep-researcher', 'strategist', 'integrator',
+] as const;
+
+const luminorHandoffSchema = z.object({
+  to: z.enum(LUMINOR_IDS)
+    .describe("Which Luminor to hand off to. Choose based on fit: code-crafter (clean code), debugger (root cause), visual-designer (UI/color), composer (music/audio), motion-designer (animation), storyteller (narrative arcs), voice (copy/naming), poet (lyrics/verse), deep-researcher (synthesis), strategist (direction), integrator (connection), systems-architect (architecture), or lumina (orchestrator when unsure)."),
+  reason: z.string().min(10).max(400)
+    .describe('One sentence: why this specialist is the right next step.'),
+  brief: z.string().min(10).max(2000)
+    .describe('What the target Luminor should pick up with — summarize done work, user wants, and vault context.'),
+});
+
+type LuminorHandoffInput = z.infer<typeof luminorHandoffSchema>;
+
+// ---------------------------------------------------------------------------
 // Factory
 // ---------------------------------------------------------------------------
 
@@ -216,6 +257,89 @@ export function createChatTools(options?: ChatToolOptions) {
             totalSearches: 0,
           };
         }
+      },
+    }),
+
+    save_to_vault: tool({
+      description:
+        "Persist a piece of content to the user's Studio vault so it becomes part of their world graph and future chats can retrieve it. Use when the user produces something worth keeping — a character they've named, a location they're building, a magic system they sketched, a chapter draft, a lore fact. ALWAYS confirm with the user before saving unless they explicitly asked to save. Returns the new document id.",
+      inputSchema: vaultSaveInputSchema,
+      execute: async ({ title, content, classification, tags, worldId }: VaultSaveInput) => {
+        if (!options?.supabaseClient || !options?.userId) {
+          return { type: 'vault_saved' as const, saved: false, error: 'Sign in to save to your vault' };
+        }
+        try {
+          const [{ openai }, { embed }, embedMod] = await Promise.all([
+            import('@ai-sdk/openai'),
+            import('ai'),
+            import('@/lib/studio/embed'),
+          ]);
+          let embedding: number[] | null = null;
+          try {
+            const { embedding: vec } = await embed({
+              model: openai.textEmbedding('text-embedding-3-small'),
+              value: embedMod.buildStudioEmbeddingText({
+                title, classification, tags, markdownContent: content,
+              }),
+            });
+            embedding = vec;
+          } catch {
+            embedding = null;
+          }
+          const wordCount = content.trim().split(/\s+/).filter(Boolean).length;
+          const tokenEstimate = Math.ceil(content.length / 4);
+          const { data, error } = await options.supabaseClient
+            .from('ingested_documents')
+            .insert({
+              user_id: options.userId,
+              world_id: worldId ?? null,
+              title,
+              markdown_content: content,
+              jsonml_content: { source: 'chat', savedBy: 'luminor' },
+              classification,
+              classification_confidence: 0.85,
+              source_type: 'chat',
+              source_uri: null,
+              source_metadata: { savedAt: new Date().toISOString() },
+              embedding: embedding ? embedMod.toPgVector(embedding) : null,
+              word_count: wordCount,
+              token_estimate: tokenEstimate,
+              tags: tags ?? [],
+            })
+            .select('id, title, classification, tags')
+            .single();
+          if (error) {
+            if (error.code === '42P01') {
+              return { type: 'vault_saved' as const, saved: false, error: 'Vault not migrated yet. Run: supabase db push' };
+            }
+            return { type: 'vault_saved' as const, saved: false, error: error.message };
+          }
+          return {
+            type: 'vault_saved' as const,
+            saved: true,
+            id: data.id,
+            title: data.title,
+            classification: data.classification,
+            tags: data.tags,
+            embedded: embedding !== null,
+            detailUrl: `/studio/vault/${data.id}`,
+          };
+        } catch (err) {
+          return {
+            type: 'vault_saved' as const,
+            saved: false,
+            error: err instanceof Error ? err.message : 'Save failed',
+          };
+        }
+      },
+    }),
+
+    handoff_to_luminor: tool({
+      description:
+        "Hand off the current conversation to a different specialist Luminor. Use when the next step needs expertise you don't have — e.g., Storyteller drafts a scene, then hands off to Composer for a soundtrack. Returns a structured handoff payload the client uses to switch the active Luminor. Include enough brief so the new Luminor picks up seamlessly.",
+      inputSchema: luminorHandoffSchema,
+      execute: async ({ to, reason, brief }: LuminorHandoffInput) => {
+        return { type: 'luminor_handoff' as const, to, reason, brief };
       },
     }),
 

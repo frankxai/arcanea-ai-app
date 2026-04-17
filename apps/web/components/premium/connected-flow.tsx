@@ -1,7 +1,8 @@
 "use client";
 
 import { m } from "framer-motion";
-import type { ReactNode, ComponentType } from "react";
+import type { ReactNode } from "react";
+import type { PhosphorIcon } from "@/lib/phosphor-icons";
 
 // ---------------------------------------------------------------------------
 // ConnectedFlow — Horizontal step flow with animated connectors.
@@ -11,7 +12,7 @@ import type { ReactNode, ComponentType } from "react";
 
 export interface FlowStep {
   number: string;
-  icon?: ComponentType<{ className?: string; weight?: string; style?: React.CSSProperties }>;
+  icon?: PhosphorIcon;
   iconNode?: ReactNode;
   title: string;
   body: string;

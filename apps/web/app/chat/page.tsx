@@ -42,6 +42,7 @@ const CreditBalance = dynamic(
   { ssr: false, loading: () => <span className="text-xs text-white/20">---</span> },
 );
 import { CreationIndicator } from '@/components/chat/creation-indicator';
+import { VaultContextStrip } from '@/components/chat/vault-context-strip';
 import { SearchOverlay } from '@/components/chat/search-overlay';
 import { PhWarningCircle, PhX, PhExport, PhPlus, PhList, FolderOpen } from '@/lib/phosphor-icons';
 import { useConversation, getMessageText } from '@/hooks/use-conversation';
@@ -431,6 +432,14 @@ export default function ChatPage() {
                 focusMode={conversation.focusMode ?? 'auto'}
                 onFocusModeChange={conversation.setFocusMode}
                 onOpenAgentPicker={() => setShowAgentPicker(true)}
+              />
+              <VaultContextStrip
+                latestUserMessage={(() => {
+                  const lastUser = [...conversation.messages].reverse().find((m) => m.role === 'user');
+                  if (!lastUser) return null;
+                  return getMessageText(lastUser);
+                })()}
+                disabled={conversation.isStreaming || conversation.isEmpty}
               />
               <div className="px-4 pb-3">
               <ChatInputBar
