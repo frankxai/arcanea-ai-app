@@ -23,9 +23,11 @@
   "files": [
     "dist",
     "scripts",
+    "workflows",
     "AGENTS.md",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
