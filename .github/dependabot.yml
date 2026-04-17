@@ -42,7 +42,3 @@ updates:
       interval: "weekly"
     # Don't batch — each action should be its own PR for isolation
     open-pull-requests-limit: 5
-    ignore:
-      # pnpm/action-setup v6 breaks lockfile parsing — block until migrated
-      - dependency-name: "pnpm/action-setup"
-        update-types: ["version-update:semver-major"]

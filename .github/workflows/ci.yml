@@ -24,7 +24,6 @@ concurrency:
 
 env:
   NODE_VERSION: '22'
-  PNPM_VERSION: '8.15.0'
 
 jobs:
   # ============================================
@@ -40,9 +39,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -77,9 +74,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -140,9 +135,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -184,9 +177,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -218,7 +209,7 @@ jobs:
           echo "## Build Report" >> $GITHUB_STEP_SUMMARY
           echo "- **Build**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Node**: ${{ env.NODE_VERSION }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **pnpm**: ${{ env.PNPM_VERSION }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **pnpm**: $(pnpm --version)" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
   # STATUS — merge gate (green = safe to ship)
