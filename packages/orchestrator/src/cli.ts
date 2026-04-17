@@ -11,6 +11,7 @@ import { statusCommand } from './commands/status.js';
 import { planCommand } from './commands/plan.js';
 import { historyCommand } from './commands/history.js';
 import { statsCommand } from './commands/stats.js';
+import { learnCommand } from './commands/learn.js';
 
 const program = new Command();
 
@@ -92,6 +93,12 @@ program
   .description('Aggregate success rates + avg duration per task→model.')
   .option('--json', 'Output as JSON')
   .action(statsCommand);
+
+program
+  .command('learn <task>')
+  .description('Show baseline vs adaptive routing for a task, using ~/.arcanea/history.jsonl.')
+  .option('-s, --surface <surface>', 'Surface to analyze', 'claude-arcanea')
+  .action(learnCommand);
 
 program.parseAsync(process.argv).catch((err) => {
   console.error(err instanceof Error ? err.message : err);

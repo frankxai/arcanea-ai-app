@@ -2,7 +2,8 @@ import { loadSpec, resolveTask, pickModel } from '@arcanea/router-spec';
 import { execa } from 'execa';
 import { runtimeFor, getRuntime } from '../runtimes.js';
 import { loadConfig, applyPreference } from '../config.js';
-import { appendHistory } from '../history.js';
+import { appendHistory, readHistory } from '../history.js';
+import { adaptiveRerank, shouldApplyAdaptive } from '../adaptive.js';
 import kleur from 'kleur';
 
 interface Options {
@@ -42,7 +43,13 @@ export async function runCommand(promptParts: string[], opts: Options): Promise<
       const rt = runtimeFor(spec.models[id]);
       return config.auth[rt]?.installed !== false;
     });
-    modelId = pickModel(available.length > 0 ? available : preferred, spec);
+    // Phase 8: adaptive routing — re-rank by local success history
+    let finalCandidates = available.length > 0 ? available : preferred;
+    const events = readHistory();
+    if (shouldApplyAdaptive(config.adaptiveRouting, events.length)) {
+      finalCandidates = adaptiveRerank(finalCandidates, events, opts.task);
+    }
+    modelId = pickModel(finalCandidates, spec);
   }
 
   if (!modelId) {
