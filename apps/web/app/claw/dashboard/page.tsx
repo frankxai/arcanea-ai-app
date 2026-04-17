@@ -86,7 +86,10 @@ function StatCard({
 /* ─── Data Fetching ────────────────────────────────────────────────────────── */
 
 async function getFleetData() {
-  const supabase = await createClient();
+  // Database schema type is out of sync with claw fleet tables —
+  // cast to loose-typed client to bypass stale table-name checks.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const supabase = (await createClient()) as any;
 
   // Run all queries in parallel
   const [
@@ -312,7 +315,7 @@ export default async function ClawDashboardPage() {
                         {String(agent.name ?? 'unnamed')}
                       </h3>
                     </div>
-                    {agent.profile_type && (
+                    {Boolean(agent.profile_type) && (
                       <ProfileBadge profile={String(agent.profile_type)} />
                     )}
                   </div>
@@ -323,11 +326,11 @@ export default async function ClawDashboardPage() {
                         {relativeTime(agent.last_heartbeat as string | null)}
                       </span>
                     </span>
-                    {agent.version && (
+                    {Boolean(agent.version) && (
                       <span className="text-white/20">v{String(agent.version)}</span>
                     )}
                   </div>
-                  {agent.capabilities && (
+                  {Boolean(agent.capabilities) && (
                     <div className="mt-3 flex flex-wrap gap-1">
                       {(Array.isArray(agent.capabilities)
                         ? agent.capabilities
