@@ -1,0 +1,26 @@
+# Agentic CODEOWNERS — routing, not gatekeeping
+# Maps areas to the agent types / reviewers best suited for the domain.
+# On free GitHub plans this auto-suggests reviewers; with branch protection it enforces.
+
+# Core infrastructure — ops agent
+.github/                    @frankxai
+package.json                @frankxai
+pnpm-lock.yaml              @frankxai
+*.config.*                  @frankxai
+turbo.json                  @frankxai
+pnpm-workspace.yaml         @frankxai
+
+# Web app — frontend agent
+apps/web/                   @frankxai
+apps/web/components/        @frankxai
+apps/web/app/               @frankxai
+
+# Intelligence substrate — lore / guardian agent
+.arcanea/                   @frankxai
+book/                       @frankxai
+
+# Supabase — backend agent
+supabase/                   @frankxai
+
+# Packages — specialist per package
+packages/                   @frankxai
