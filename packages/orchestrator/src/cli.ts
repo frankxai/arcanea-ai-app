@@ -17,7 +17,7 @@ const program = new Command();
 program
   .name('arcanea-orchestrator')
   .description('The Arcanea Orchestrator — routes, plans, swarms, and learns across claude / opencode / codex / gemini.')
-  .version('1.0.0');
+  .version('1.1.0');
 
 program
   .command('list-models')

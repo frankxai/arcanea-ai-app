@@ -46,13 +46,22 @@ arcanea-orchestrator explain world.canon --surface claude-arcanea
 arcanea-orchestrator run --task code.debug "find the null-deref in api/auth/route.ts"
 arcanea-orchestrator run --task world.canon --surface claude-arcanea "write Forge of Ruin ch5"
 
+# Decompose a high-level goal into sub-tasks (v1.1+)
+arcanea-orchestrator plan "add a /pricing page with 3 tiers"
+arcanea-orchestrator plan --out plan.json "refactor auth to use Supabase"
+
 # Swarm — plan N workers from a backlog file
 arcanea-orchestrator swarm --from backlog.md --tasks 5 --dry-run
 arcanea-orchestrator swarm --from backlog.md --tasks 5    # live (requires Composio `ao` running)
 
+# History + stats (v1.1+) — every run is logged to ~/.arcanea/history.jsonl
+arcanea-orchestrator history --limit 20
+arcanea-orchestrator stats
+
 # Short alias:
 arco doctor
 arco run --task code.implement "add tests for auth middleware"
+arco plan "build a landing page"
 ```
 
 ## How routing works
@@ -86,9 +95,10 @@ If you want a rich TUI daily driver, see **[arcanea-code](https://github.com/fra
 | 2 | Overlay manifests across 4 overlay repos | ✅ shipped |
 | 3 | Real swarm via Composio `ao batch-spawn` | ✅ wired |
 | 4 | `/ops/agents` live web dashboard | ✅ shipped (`apps/web/app/ops/agents`) |
-| 5 | **Planner** — `orchestrator plan "build a site"` decomposes to N tasks | next |
-| 6 | **Reasoning bank** — learns which model+task combos succeeded | next |
+| 5 | **Planner** — `orchestrator plan "build a site"` decomposes to N tasks | ✅ v1.1.0 |
+| 6 | **Reasoning bank** — logs every run, aggregates stats per task→model | ✅ v1.1.0 |
 | 7 | **Agent inventory** — orchestrator picks not just model but specific overlay agent | next |
+| 8 | **Adaptive routing** — history-weighted candidate re-ranking | next |
 
 ## Legal / disclaimer
 
