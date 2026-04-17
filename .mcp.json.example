@@ -57,6 +57,46 @@
         "MANIFEST_PATH": "/mnt/c/Users/frank/Arcanea/arcanea-claw/manifest.json"
       },
       "description": "ArcaneaClaw media pipeline — scan, classify, score, approve/reject creative assets"
+    },
+    "magic": {
+      "command": "npx",
+      "args": ["-y", "@21st-dev/magic@latest"],
+      "env": {
+        "API_KEY": "${TWENTYFIRST_API_KEY}"
+      },
+      "description": "21st.dev Magic — premium UI component generation (heroes, bento, marquee, beams, auroras)"
+    },
+    "v0": {
+      "command": "npx",
+      "args": ["-y", "v0-mcp@latest"],
+      "env": {
+        "V0_API_KEY": "${V0_API_KEY}"
+      },
+      "description": "Vercel v0 — AI component and page generation (complement to Magic)"
+    },
+    "fal": {
+      "command": "npx",
+      "args": ["-y", "fal-mcp@latest"],
+      "env": {
+        "FAL_KEY": "${FAL_KEY}"
+      },
+      "description": "Fal.ai — fast FLUX Pro, Stable Video, real-time image/video inference"
+    },
+    "gemini": {
+      "command": "npx",
+      "args": ["-y", "gemini-mcp-tool@latest"],
+      "env": {
+        "GEMINI_API_KEY": "${GEMINI_API_KEY}"
+      },
+      "description": "Google Gemini — Gemini 2.5/3.x + NB2 (gemini-3.1-flash-image-preview), Arcanea default for image gen"
+    },
+    "replicate": {
+      "command": "npx",
+      "args": ["-y", "replicate-mcp@latest"],
+      "env": {
+        "REPLICATE_API_TOKEN": "${REPLICATE_API_TOKEN}"
+      },
+      "description": "Replicate — custom fine-tuned models + Wan video + community model catalog"
     }
   }
 }
