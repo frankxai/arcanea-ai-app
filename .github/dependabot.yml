@@ -1,20 +1,48 @@
 version: 2
 updates:
+  # --- npm packages ---
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
       day: "monday"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 5
     groups:
-      production-deps:
-        dependency-type: "production"
-      dev-deps:
-        dependency-type: "development"
+      # Only batch PATCH updates — safe to auto-merge
+      patch-updates:
+        update-types: ["version-update:semver-patch"]
+      # Minor updates in a separate group — review before merge
+      minor-updates:
+        update-types: ["version-update:semver-minor"]
+    # NEVER batch major version bumps — they need individual migration PRs
     ignore:
       - dependency-name: "next"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "zod"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "stripe"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "framer-motion"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "openai"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-markdown"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+
+  # --- GitHub Actions ---
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    # Don't batch — each action should be its own PR for isolation
+    open-pull-requests-limit: 5
+    ignore:
+      # pnpm/action-setup v6 breaks lockfile parsing — block until migrated
+      - dependency-name: "pnpm/action-setup"
+        update-types: ["version-update:semver-major"]
