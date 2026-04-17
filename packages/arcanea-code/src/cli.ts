@@ -7,6 +7,7 @@ import { runCommand } from './commands/run.js';
 import { swarmCommand } from './commands/swarm.js';
 import { doctorCommand } from './commands/doctor.js';
 import { configCommand } from './commands/config.js';
+import { statusCommand } from './commands/status.js';
 
 const program = new Command();
 
@@ -44,10 +45,16 @@ program
 
 program
   .command('swarm')
-  .description('Spawn a multi-worker swarm via arcanea-orchestrator. [stub — Phase 3]')
+  .description('Spawn a multi-worker swarm via arcanea-orchestrator (Composio `ao`).')
   .option('--from <file>', 'Parse tasks from a backlog file')
   .option('--tasks <n>', 'Number of workers to spawn', '3')
+  .option('--dry-run', 'Show planned dispatch without spawning')
   .action(swarmCommand);
+
+program
+  .command('status')
+  .description('Unified dashboard: router spec, config, CLI auth, AO sessions, worktrees.')
+  .action(statusCommand);
 
 program
   .command('doctor')

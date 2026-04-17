@@ -1,0 +1,59 @@
+# Template: manifest.yaml for frankxai/oh-my-arcanea
+#
+# Drop this at the repo root of oh-my-arcanea and fill in version + paths.
+# Conforms to packages/router-spec/manifest.schema.yaml.
+#
+# To install in the upstream repo:
+#   cd <path-to-oh-my-arcanea-clone>
+#   cp <this-file> ./manifest.yaml
+#   git add manifest.yaml AGENTS.md
+#   git commit -m "feat(manifest): declare overlay per Arcanea Overlay Contract v1"
+#   git push origin dev   # default branch is `dev`
+
+$schema: https://arcanea.ai/schema/overlay-manifest/v1.json
+
+name: oh-my-arcanea
+version: 0.1.0
+description: |
+  Arcanea overlay for OpenCode. Teaches the opencode CLI about Arcanea
+  canon, voice, skills, and hooks. Consumes @arcanea/router-spec for
+  model routing per task class.
+
+surface: oh-my-arcanea
+
+runtime:
+  binary: opencode
+  minVersion: 0.15.0
+  configDir: ~/.config/opencode    # adjusted by install.sh per OS
+
+install:
+  - step: copy
+    from: ./.opencode
+    to: "{configDir}"
+    merge: true
+  - step: copy
+    from: ./packages/sisyphus
+    to: "{configDir}/agents/sisyphus"
+  - step: copy
+    from: ./.arcanea
+    to: "{configDir}/arcanea"
+    merge: true
+
+routerSpec:
+  source: "@arcanea/router-spec"
+  reads:
+    - models
+    - tasks
+    - surfaces.oh-my-arcanea
+
+dependencies:
+  "@arcanea/router-spec": ">=1.0.0"
+
+agents:
+  definitions: ./packages
+  agentsMd: ./AGENTS.md
+
+preview:
+  commands:
+    - cmd: "opencode run -p 'design a React component'"
+      description: "invokes with oh-my-arcanea overlay loaded; router-spec picks kimi-k2.5-free"
