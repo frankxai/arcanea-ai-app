@@ -317,6 +317,9 @@ importers:
       framer-motion:
         specifier: ^11.15.0
         version: 11.18.2(react-dom@19.2.5)(react@19.2.5)
+      geist:
+        specifier: ^1.7.0
+        version: 1.7.0(next@16.2.2)
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -10627,6 +10630,14 @@ packages:
       json-bigint: 1.0.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /geist@1.7.0(next@16.2.2):
+    resolution: {integrity: sha512-ZaoiZwkSf0DwwB1ncdLKp+ggAldqxl5L1+SXaNIBGkPAqcu+xjVJLxlf3/S8vLt9UHx1xu5fz3lbzKCj5iOVdQ==}
+    peerDependencies:
+      next: '>=16.1.7'
+    dependencies:
+      next: 16.2.2(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(@playwright/test@1.59.1)(react-dom@19.2.5)(react@19.2.5)
     dev: false
 
   /generator-function@2.0.1:

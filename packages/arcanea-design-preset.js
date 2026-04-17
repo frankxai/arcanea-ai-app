@@ -10,7 +10,7 @@
  * - Cosmic color palette (6 depth levels)
  * - Brand colors (aquamarine/teal primary)
  * - Elemental colors (fire, water, wind, earth, void)
- * - Typography (Space Grotesk display, Inter body, JetBrains Mono, Newsreader serif)
+ * - Typography (Geist display + body, Instrument Serif editorial, JetBrains Mono, Newsreader legacy serif)
  * - Animation system (ambient, reveal, celebration)
  * - Elevation shadows
  * - Glow system
@@ -90,9 +90,10 @@ module.exports = {
         info: { DEFAULT: "#3b82f6", light: "#93c5fd", dark: "#1d4ed8" },
       },
       fontFamily: {
-        display: ["var(--font-display)", "Space Grotesk", "system-ui", "sans-serif"],
-        body: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
-        sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Geist", "Geist Sans", "system-ui", "sans-serif"],
+        body: ["var(--font-inter)", "Geist", "Geist Sans", "system-ui", "sans-serif"],
+        sans: ["var(--font-inter)", "Geist", "Geist Sans", "system-ui", "sans-serif"],
+        editorial: ["var(--font-editorial)", "Instrument Serif", "Georgia", "serif"],
         serif: ["var(--font-serif)", "Newsreader", "Georgia", "serif"],
         mono: ["var(--font-jetbrains-mono)", "JetBrains Mono", "Consolas", "monospace"],
       },
