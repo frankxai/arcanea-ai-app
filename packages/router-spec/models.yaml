@@ -1,0 +1,347 @@
+# Arcanea Router Spec — canonical model routing
+#
+# Single source of truth for which model handles which task-class across
+# every Arcanea surface: claude-arcanea (Claude Code), oh-my-arcanea (OpenCode),
+# arcanea-flow, arcanea-mcp, and arcanea.ai/models.
+#
+# Semantics:
+#   - A task-class maps to an ordered list of model candidates.
+#   - The harness picks the first available candidate given its auth context
+#     (Claude Max sub? OpenCode Zen? BYOK?).
+#   - `tier: free` costs $0 tokens. `tier: sub` is paid via subscription.
+#     `tier: byok` is user-provided API key. `tier: premium` is metered.
+#
+# When you change this file:
+#   1. Bump `version` (semver).
+#   2. Update `lastUpdated`.
+#   3. Run `pnpm --filter @arcanea/router-spec build` (syncs to web + CLIs).
+#   4. /models page + blog auto-regenerate on next build.
+
+version: 1.0.0
+lastUpdated: 2026-04-17
+maintainer: frankxai
+
+# ─── Model catalog ──────────────────────────────────────────────────────────
+
+models:
+
+  # ── Frontier (paid / sub) ─────────────────────────────────────────────────
+
+  claude-opus-4-7:
+    provider: anthropic
+    family: claude
+    context: 1000000
+    sweBench: 80.3
+    tier: sub            # Claude Max $200/mo covers unlimited in Claude Code
+    byokPrice: { input: 15, output: 75 }
+    strengths: [orchestration, extended-thinking, long-context, agentic]
+    aliases: [opus-4.7, opus-4-7, claude-opus-4-7[1m]]
+
+  claude-sonnet-4-6:
+    provider: anthropic
+    family: claude
+    context: 1000000
+    sweBench: 77.2
+    tier: sub
+    byokPrice: { input: 3, output: 15 }
+    strengths: [coding, refactor, balanced-reasoning]
+    aliases: [sonnet-4.6]
+
+  claude-haiku-4-5:
+    provider: anthropic
+    family: claude
+    context: 200000
+    sweBench: 73.3
+    tier: sub
+    byokPrice: { input: 1, output: 5 }
+    strengths: [fast, cheap, nav, transforms]
+    aliases: [haiku-4.5]
+
+  gpt-5:
+    provider: openai
+    family: gpt
+    context: 400000
+    sweBench: 74.9
+    tier: byok
+    byokPrice: { input: 10, output: 40 }
+    strengths: [reasoning, tool-use, structured-output]
+
+  gemini-3-pro:
+    provider: google
+    family: gemini
+    context: 2000000
+    sweBench: 76.4
+    tier: byok
+    byokPrice: { input: 2.5, output: 10 }
+    strengths: [multimodal, long-context, grounding]
+
+  # ── OpenCode Zen free tier (bulk worker pool) ─────────────────────────────
+
+  qwen3.6-plus-free:
+    provider: opencode-zen
+    family: qwen
+    upstream: alibaba/qwen-3.6-plus
+    context: 1000000
+    sweBench: 78.8
+    tier: free
+    strengths: [best-all-rounder, planning, agentic, long-context]
+
+  minimax-m2.5-free:
+    provider: opencode-zen
+    family: minimax
+    upstream: minimax/m2.5
+    context: 200000
+    sweBench: 80.2
+    tier: free
+    strengths: [best-coder, debug, review, lifecycle-dev]
+
+  glm-5-free:
+    provider: opencode-zen
+    family: glm
+    upstream: zhipu/glm-5
+    context: 200000
+    sweBench: 79.1
+    tier: free
+    strengths: [deep-reasoning, multilingual, preserved-thinking, research]
+    notes: Replaces glm-4.7-free. Check Zen availability before relying on it.
+
+  glm-4.7-free:
+    provider: opencode-zen
+    family: glm
+    upstream: zhipu/glm-4.7
+    context: 200000
+    sweBench: 73.8
+    tier: free
+    strengths: [research, multilingual]
+    deprecated: Prefer glm-5-free when available.
+
+  nemotron-3-super-free:
+    provider: opencode-zen
+    family: nemotron
+    upstream: nvidia/nemotron-3-super
+    context: 1000000
+    sweBench: 85.6   # PinchBench (not SWE-Bench)
+    tier: free
+    strengths: [throughput, rapid-agent-tasks, 5x-speed]
+
+  mimo-v2-pro-free:
+    provider: opencode-zen
+    family: mimo
+    upstream: xiaomi/mimo-v2-pro
+    context: 1000000
+    sweBench: 78.0
+    tier: free
+    strengths: [code-gen, terminal-tasks, efficient]
+
+  kimi-k2.5-free:
+    provider: opencode-zen
+    family: kimi
+    upstream: moonshot/kimi-k2.5
+    context: 260000
+    sweBench: 76.8
+    tier: free
+    strengths: [frontend, api-design, integration]
+
+  big-pickle:
+    provider: opencode-zen
+    family: glm      # stealth rebrand of GLM-4.6
+    upstream: zhipu/glm-4.6
+    context: 200000
+    sweBench: 70.0
+    tier: free
+    strengths: [architecture, deep-reasoning, code-review]
+
+  gpt-5-nano:
+    provider: opencode-zen
+    family: gpt
+    upstream: openai/gpt-5-nano
+    context: 128000
+    tier: free
+    strengths: [very-fast, lightweight, quick-transforms]
+
+# ─── Task-class routing ─────────────────────────────────────────────────────
+#
+# Each class declares a prioritized candidate list. First match wins in the
+# harness's auth context. `fallback` models are consulted if primary is
+# unavailable or over quota.
+
+tasks:
+
+  # ── Orchestration & planning ──────────────────────────────────────────────
+
+  orchestrate:
+    description: Multi-agent coordination, task decomposition, dispatch
+    primary: [claude-opus-4-7, qwen3.6-plus-free]
+    fallback: [claude-sonnet-4-6, gemini-3-pro]
+    contextMin: 200000
+    rationale: Needs long context + agentic reasoning. Opus on Max sub, Qwen 3.6 for free-tier fallback.
+
+  plan:
+    description: Sprint planning, roadmap synthesis, multi-file architecture
+    primary: [claude-opus-4-7, qwen3.6-plus-free]
+    fallback: [claude-sonnet-4-6]
+    rationale: Planning benefits from extended thinking. Opus preferred.
+
+  # ── Coding ────────────────────────────────────────────────────────────────
+
+  code.implement:
+    description: Feature implementation, TDD green phase
+    primary: [claude-sonnet-4-6, minimax-m2.5-free]
+    fallback: [claude-opus-4-7, mimo-v2-pro-free]
+    rationale: Sonnet is cheap-and-fast for bulk. MiniMax M2.5 has highest SWE-Bench in free tier.
+
+  code.debug:
+    description: Bug reproduction, root-cause analysis, regression tests
+    primary: [claude-opus-4-7, minimax-m2.5-free]
+    fallback: [claude-sonnet-4-6]
+    rationale: Debugging benefits from Opus extended thinking. Free fallback is MiniMax.
+
+  code.review:
+    description: PR review, security/perf audit, nitpicks
+    primary: [claude-sonnet-4-6, minimax-m2.5-free]
+    fallback: [big-pickle, glm-5-free]
+    rationale: Review is pattern-matching. Sonnet or MiniMax both strong.
+
+  code.refactor:
+    description: Large refactors, rename-across-files, modernization
+    primary: [claude-sonnet-4-6, mimo-v2-pro-free]
+    fallback: [claude-opus-4-7]
+    rationale: Refactor needs structural understanding + speed.
+
+  code.frontend:
+    description: React/Next components, CSS, a11y, design-token work
+    primary: [claude-sonnet-4-6, kimi-k2.5-free]
+    fallback: [claude-opus-4-7]
+    rationale: Kimi is optimized for frontend patterns.
+
+  # ── Research & docs ───────────────────────────────────────────────────────
+
+  research.deep:
+    description: Cross-source synthesis, competitive analysis, long-form report
+    primary: [claude-opus-4-7, qwen3.6-plus-free]
+    fallback: [gemini-3-pro, glm-5-free]
+    contextMin: 500000
+    rationale: Deep research needs massive context + reasoning.
+
+  research.quick:
+    description: Single-question lookups, doc extraction
+    primary: [claude-haiku-4-5, gpt-5-nano]
+    fallback: [glm-5-free]
+    rationale: Speed matters more than depth for quick queries.
+
+  docs.write:
+    description: User-facing docs, guides, blog posts
+    primary: [claude-sonnet-4-6, qwen3.6-plus-free]
+    fallback: [glm-5-free]
+    rationale: Docs need voice consistency — Sonnet is tuned for it.
+
+  # ── Creative & world-building ─────────────────────────────────────────────
+
+  world.canon:
+    description: Canon-locked lore writing, character voice, mythology
+    primary: [claude-opus-4-7]
+    fallback: [claude-sonnet-4-6, qwen3.6-plus-free]
+    rationale: Canon violations are expensive to unwind. Opus has best instruction-following.
+
+  world.expand:
+    description: New locations, factions, cultures within existing canon
+    primary: [claude-opus-4-7, qwen3.6-plus-free]
+    fallback: [claude-sonnet-4-6]
+    rationale: World expansion needs creative reasoning + consistency.
+
+  world.character:
+    description: Character psychology, arcs, dialogue
+    primary: [claude-opus-4-7]
+    fallback: [claude-sonnet-4-6, qwen3.6-plus-free]
+    rationale: Character voice is a taste-sensitive task — Opus wins.
+
+  creative.draft:
+    description: First-draft prose, brainstorming, wild ideation
+    primary: [claude-sonnet-4-6, qwen3.6-plus-free]
+    fallback: [kimi-k2.5-free]
+    rationale: Drafting tolerates imperfection — favor speed.
+
+  # ── Fast utility ──────────────────────────────────────────────────────────
+
+  nav.fast:
+    description: File navigation, symbol lookup, quick greps
+    primary: [claude-haiku-4-5, gpt-5-nano]
+    fallback: [nemotron-3-super-free]
+    rationale: Pure throughput. Nemotron is fastest in free tier.
+
+  transform.bulk:
+    description: Format conversion, mechanical edits, codemods
+    primary: [claude-haiku-4-5, nemotron-3-super-free]
+    fallback: [mimo-v2-pro-free]
+    rationale: Deterministic work — cheapest wins.
+
+# ─── Surface bindings ───────────────────────────────────────────────────────
+#
+# How each Arcanea surface consumes this spec.
+
+surfaces:
+
+  claude-arcanea:
+    description: Claude Code overlay. Opus 4.7 is always available via Max sub.
+    prefer: sub
+    authContext: [sub, byok]
+    taskOverrides:
+      # In Claude Code, default to Opus for everything not explicitly downgraded,
+      # because the sub amortizes.
+      code.implement: [claude-sonnet-4-6, claude-opus-4-7]   # Sonnet for speed, Opus fallback
+      transform.bulk: [claude-haiku-4-5]
+
+  oh-my-arcanea:
+    description: OpenCode overlay. Zen free-tier first.
+    prefer: free
+    authContext: [free, byok]
+    taskOverrides:
+      # Free tier only by default; upgrade via BYOK.
+      orchestrate: [qwen3.6-plus-free, minimax-m2.5-free]
+      code.debug: [minimax-m2.5-free, big-pickle]
+
+  arcanea-flow:
+    description: Workflow engine wrapping claude-flow. Uses Luminor-kernel.
+    prefer: sub
+    authContext: [sub, free, byok]
+    # Inherits task defaults.
+
+  arcanea-mcp:
+    description: MCP tool server. Background tasks should stay cheap.
+    prefer: free
+    authContext: [free]
+    taskOverrides:
+      orchestrate: [qwen3.6-plus-free]
+      research.deep: [qwen3.6-plus-free, glm-5-free]
+
+  web.models-page:
+    description: Public /models arena on arcanea.ai. Reads catalog + tasks for display.
+    prefer: display-only
+    authContext: []
+
+# ─── Delegation topology ────────────────────────────────────────────────────
+#
+# When Claude Code (Opus 4.7) delegates to external CLIs via Bash, which
+# tasks route where:
+
+delegation:
+  codex-cli:
+    binary: codex
+    useFor: [code.review, code.debug]        # second opinion
+    rationale: OpenAI's Codex provides independent perspective on complex code.
+
+  gemini-cli:
+    binary: gemini
+    useFor: [research.deep, world.expand]   # multimodal + long context
+    rationale: Gemini's 2M context + grounding suits long research.
+
+  opencode:
+    binary: opencode
+    useFor: [code.implement, transform.bulk, nav.fast]
+    rationale: Free-tier workers for bulk work. Opus orchestrates, opencode executes.
+
+  agent-orchestrator:
+    binary: ao
+    port: 4200
+    useFor: [multi-session-coordination]
+    rationale: Composio AO spawns tmux sessions + git worktrees with dashboard.

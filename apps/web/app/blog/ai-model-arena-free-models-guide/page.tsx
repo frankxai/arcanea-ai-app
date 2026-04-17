@@ -9,6 +9,7 @@ const DESCRIPTION =
   "A transparent look at which AI models power Arcanea, why we chose them, and how you can use the same free models in your own workflows. Updated weekly.";
 const SLUG = "ai-model-arena-free-models-guide";
 const DATE = "2026-04-04";
+const UPDATED = "2026-04-17";
 const AUTHOR = "FrankX";
 const READ_TIME = "8 min read";
 const ACCENT = "#7fffd4";
@@ -101,7 +102,7 @@ const articleJsonLd = {
   author: { "@type": "Person", name: AUTHOR, url: "https://arcanea.ai" },
   publisher: { "@type": "Organization", name: "Arcanea", url: "https://arcanea.ai" },
   datePublished: DATE,
-  dateModified: DATE,
+  dateModified: UPDATED,
   mainEntityOfPage: { "@type": "WebPage", "@id": `https://arcanea.ai/blog/${SLUG}` },
   image: `https://arcanea.ai/og/${SLUG}.png`,
   keywords: TAGS.join(", "),
@@ -126,7 +127,7 @@ const ROUTING_TABLE: AgentRoute[] = [
   { agent: "Metis", role: "Strategist", model: "Qwen 3.6 Plus", why: "Long-context reasoning to weigh trade-offs across the entire system." },
   { agent: "Momus", role: "Reviewer", model: "MiniMax M2.5", why: "80.2% SWE-Bench catches what others miss. The honest critic your code needs." },
   { agent: "Atlas", role: "Coordinator", model: "Kimi K2.5", why: "Strongest frontend model. Carries the world of integrations and UI work." },
-  { agent: "Librarian", role: "Docs/Research", model: "GLM 4.7", why: "Multilingual research and knowledge extraction. Natural documentation prose." },
+  { agent: "Librarian", role: "Docs/Research", model: "GLM 5", why: "Successor to GLM 4.7 with preserved thinking traces. Multilingual research, natural documentation prose, deeper reasoning." },
   { agent: "Explore", role: "Navigator", model: "GPT-5 Nano", why: "Fastest free model. Instant wayfinding through any codebase." },
 ];
 
@@ -141,7 +142,7 @@ const BENCHMARKS: BenchmarkDimension[] = [
   { name: "Context Window (Effective)", description: "How well the model actually uses long context, not the advertised max.", leader: "Qwen 3.6 Plus" },
   { name: "Inference Speed", description: "Time to first token and tokens per second.", leader: "GPT-5 Nano" },
   { name: "Instruction Following", description: "Does the model do exactly what you asked without drift?", leader: "Qwen 3.6 Plus" },
-  { name: "Creative Quality", description: "Human-evaluated output for narrative, dialogue, and world-building.", leader: "GLM 4.7" },
+  { name: "Creative Quality", description: "Human-evaluated output for narrative, dialogue, and world-building.", leader: "Claude Opus 4.7" },
   { name: "Cost Efficiency", description: "All free tier — but rate limits and throughput differ.", leader: "GPT-5 Nano" },
 ];
 
@@ -216,6 +217,29 @@ export default function AIModelArenaPage() {
           </div>
         </header>
 
+        {/* Update Callout — links to canonical Router Spec */}
+        <div
+          className="mb-10 rounded-2xl border p-5 sm:p-6"
+          style={{
+            backgroundColor: `${ACCENT}0a`,
+            borderColor: `${ACCENT}33`,
+          }}
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xs font-mono uppercase tracking-wider" style={{ color: ACCENT }}>
+              Updated {formatDate(UPDATED)}
+            </span>
+          </div>
+          <p className="text-base text-text-secondary leading-relaxed m-0">
+            This post is now backed by a living routing spec. Claude Opus 4.7 is our
+            orchestrator-of-record; GLM 5 replaces GLM 4.7 for research and docs; NVIDIA
+            Nemotron 3 Super is our new throughput engine. The full task-class to model
+            map (including BYOK and subscription tiers) lives at{' '}
+            <code className="font-mono text-sm text-white">packages/router-spec/models.yaml</code>{' '}
+            — every Arcanea surface (Claude Code, OpenCode, MCP, this page) reads from it.
+          </p>
+        </div>
+
         {/* Article Content */}
         <article className="liquid-glass rounded-2xl p-6 sm:p-10 mb-10">
           <div className="prose prose-invert prose-lg max-w-none">
@@ -253,7 +277,8 @@ export default function AIModelArenaPage() {
                 { name: "Qwen 3.6 Plus", lab: "Alibaba", desc: "1M token context window, best-in-class agentic reasoning, strong multilingual performance. The model you reach for when an agent needs an entire codebase in context." },
                 { name: "MiniMax M2.5", lab: "MiniMax", desc: "Highest SWE-Bench score among free models. Exceptional at code generation, refactoring, and debugging. Where Qwen thinks broadly, MiniMax cuts precisely." },
                 { name: "Kimi K2.5", lab: "Moonshot AI", desc: "Strong mathematical reasoning and structured analysis. When a task needs careful step-by-step thinking rather than broad pattern matching, Kimi delivers." },
-                { name: "GLM 4.7", lab: "Zhipu AI", desc: "Balanced general-purpose model with particularly strong creative writing. Generates narrative content that reads naturally rather than mechanically." },
+                { name: "GLM 5", lab: "Zhipu AI", desc: "Successor to GLM 4.7 — preserved thinking traces, stronger multilingual reasoning, and the free-tier leader for deep research and long-form documentation." },
+                { name: "Nemotron 3 Super", lab: "NVIDIA", desc: "1M context at roughly 5x throughput of most peers. When an agent needs to scan, transform, or navigate at speed, Nemotron is the fastest option in the free tier." },
                 { name: "Big Pickle", lab: "Community", desc: "The wildcard. Competitive benchmarks with surprisingly strong creative and conversational abilities. Personality and tone over raw reasoning." },
                 { name: "GPT-5 Nano", lab: "OpenAI", desc: "Lightweight, fast inference, reliable structured output. The workhorse for tasks that need speed over depth." },
               ].map((model) => (

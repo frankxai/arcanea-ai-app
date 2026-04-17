@@ -1,0 +1,36 @@
+{
+  "name": "@arcanea/arcanea-code",
+  "version": "0.1.0",
+  "description": "Thin multi-CLI dispatcher that routes coding tasks to the right agent (claude, opencode, codex, gemini) based on @arcanea/router-spec.",
+  "type": "module",
+  "main": "./dist/cli.js",
+  "bin": {
+    "arcanea-code": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/cli.ts",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "@arcanea/router-spec": "workspace:*",
+    "commander": "^12.1.0",
+    "execa": "^9.5.0",
+    "kleur": "^4.1.5"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0",
+    "@types/node": "^20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

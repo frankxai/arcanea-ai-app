@@ -152,7 +152,7 @@ arcanea-opencode-fork/
 arcanea-intelligence-os/
 arcanea-opencode-fork/
 arcanea-companion/
-arcanea-code/
+/arcanea-code/
 arcanea-ecosystem/
 arcanea-flow/
 arcanea-game-development/
@@ -204,8 +204,8 @@ versions/
 vision-board/
 generated/
 
-# Local scripts, planning, status (not canonical)
-planning-with-files/
+# Local scripts, planning, status — selectively tracked
+# planning-with-files/ is un-ignored; see tracked contents. Unanchored rule removed 2026-04-17.
 tasks/
 status/
 findings.md
@@ -227,9 +227,9 @@ tailwind.config.js
 /design/
 /styles/
 # NOTE: public/ is NOT ignored — apps/web/public/ contains deployed static assets
-src/
-spec/
-tests/
+/src/
+/spec/
+/tests/
 book-de/
 CHANGELOG.md
 CONTRIBUTING.md
