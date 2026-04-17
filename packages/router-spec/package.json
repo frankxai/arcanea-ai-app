@@ -13,9 +13,11 @@
     "./models.yaml": "./models.yaml"
   },
   "files": [
-    "src",
+    "dist",
     "models.yaml",
-    "README.md"
+    "manifest.schema.yaml",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",

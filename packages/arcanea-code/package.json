@@ -9,7 +9,10 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "scripts",
+    "AGENTS.md",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
