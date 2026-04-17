@@ -1,6 +1,6 @@
 {
   "name": "@arcanea/design-system",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "SEE LICENSE IN LICENSE",
   "private": true,
   "main": "dist/index.js",
@@ -21,7 +21,8 @@
     "./motion": {
       "types": "./dist/motion.d.ts",
       "default": "./dist/motion.js"
-    }
+    },
+    "./tokens.css": "./src/tokens.css"
   },
   "scripts": {
     "build": "tsc",

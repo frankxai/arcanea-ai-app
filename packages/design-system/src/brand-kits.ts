@@ -16,6 +16,7 @@ export interface BrandKit {
   fonts: {
     display: string;
     body: string;
+    editorial: string;
     mono: string;
   };
   motion: {
@@ -27,6 +28,11 @@ export interface BrandKit {
     wordmark?: string;
   };
 }
+
+const GEIST_SANS = 'Geist, "Geist Sans", system-ui, sans-serif';
+const GEIST_DISPLAY = 'Geist, "Geist Sans", "Satoshi Variable", system-ui, sans-serif';
+const INSTRUMENT_SERIF = '"Instrument Serif", "Migra", Georgia, serif';
+const GEIST_MONO = '"Geist Mono", "JetBrains Mono", "Fira Code", monospace';
 
 export const arcanea: BrandKit = {
   id: 'arcanea',
@@ -44,9 +50,10 @@ export const arcanea: BrandKit = {
     border: 'rgba(255,255,255,0.06)',
   },
   fonts: {
-    display: '"Space Grotesk", system-ui, sans-serif',
-    body: '"Inter", system-ui, sans-serif',
-    mono: '"JetBrains Mono", monospace',
+    display: GEIST_DISPLAY,
+    body: GEIST_SANS,
+    editorial: INSTRUMENT_SERIF,
+    mono: GEIST_MONO,
   },
   motion: { speed: 'standard', intensity: 'balanced' },
   logo: {
@@ -71,9 +78,10 @@ export const frankx: BrandKit = {
     border: 'rgba(255,255,255,0.04)',
   },
   fonts: {
-    display: '"Inter", system-ui, sans-serif',
-    body: '"Inter", system-ui, sans-serif',
-    mono: '"JetBrains Mono", monospace',
+    display: GEIST_SANS,
+    body: GEIST_SANS,
+    editorial: INSTRUMENT_SERIF,
+    mono: GEIST_MONO,
   },
   motion: { speed: 'standard', intensity: 'subtle' },
   logo: {
@@ -97,9 +105,10 @@ export const oss: BrandKit = {
     border: 'rgba(255,255,255,0.06)',
   },
   fonts: {
-    display: '"Space Grotesk", system-ui, sans-serif',
-    body: '"Inter", system-ui, sans-serif',
-    mono: '"JetBrains Mono", monospace',
+    display: GEIST_DISPLAY,
+    body: GEIST_SANS,
+    editorial: INSTRUMENT_SERIF,
+    mono: GEIST_MONO,
   },
   motion: { speed: 'standard', intensity: 'balanced' },
   logo: {

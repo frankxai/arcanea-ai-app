@@ -31,6 +31,14 @@ const kit = getBrandKit('frankx');
 // kit.palette.primary === '#AB47C7'
 ```
 
+## Typography (2026 premium stack)
+
+- **Display + Body:** Geist (Vercel) — `npm i geist` or load via `@vercel/geist-font`
+- **Editorial accent:** Instrument Serif (Google Fonts) — for hero moments, pull-quotes
+- **Code:** Geist Mono (with JetBrains Mono fallback)
+
+Space Grotesk is DEPRECATED as of v0.2.0. Anthropic's `frontend-design` skill lists it as a generic/overused anti-pattern. Geist is the 2026 standard for AI-platform and creator-tool aesthetics and aligns with our Vercel deployment.
+
 ## Motion principles
 
 - Default easing: `expoOut` — `[0.22, 1, 0.36, 1]`
@@ -38,13 +46,17 @@ const kit = getBrandKit('frankx');
 - Hero reveal: 600ms slow + blur-to-clarity
 - Never use `domMax` — always `domAnimation` in the provider
 
-## Patterns absorbed
+## Patterns absorbed (2026 audit)
 
-- **shadcn/ui** — Radix primitive layer (already in `apps/web/components/ui`)
-- **motion-primitives** — variant shape and stagger defaults
-- **magicui / aceternity** — hero reveal blur-fade, magnetic hover intensity
+- **shadcn/ui v4+** — multi-registry pattern (`components.json` with namespaced registries + Bearer auth). Phase 2 target.
+- **Magic UI** — 5 "wow" primitives to port next: Animated Beam, Border Beam, Marquee, Number Ticker, Interactive Grid, Spotlight
+- **motion-primitives** — variant shape and stagger defaults (adopted)
+- **Vercel Geist** — typography + design pattern (adopted)
+- **Fontsource** — NPM font distribution pattern (Phase 3)
+- **Motion v12 (`motion/react`)** — upcoming migration from `framer-motion` when we bump to v12
 
 ## Next phases
 
-- Phase 2: extract `apps/web/components/ui/*` primitives as `@arcanea/design-system/components`
-- Phase 3: generate a public `agentic-design-system` repo (docs + MCP recipes + skill pack)
+- Phase 2: port the 5 Magic UI primitives as `@arcanea/design-system/primitives`; extract `apps/web/components/ui/*` as `@arcanea/design-system/components`
+- Phase 3: shadcn-style component registry (`components.json` + `@arcanea/*` namespaces) so any repo can `npx shadcn add @arcanea/hero`
+- Phase 4: publish a public `agentic-design-system` repo (docs + MCP recipes + skill pack) + Claude marketplace plugin

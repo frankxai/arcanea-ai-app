@@ -41,10 +41,10 @@ export const gold = {
 } as const;
 
 export const fonts = {
-  display: '"Space Grotesk", system-ui, sans-serif',
-  body: '"Inter", system-ui, sans-serif',
-  mono: '"JetBrains Mono", "Fira Code", monospace',
-  serif: '"Newsreader", Georgia, serif',
+  display: 'Geist, "Geist Sans", "Satoshi Variable", system-ui, sans-serif',
+  body: 'Geist, "Geist Sans", system-ui, sans-serif',
+  editorial: '"Instrument Serif", "Migra", Georgia, serif',
+  mono: '"Geist Mono", "JetBrains Mono", "Fira Code", monospace',
 } as const;
 
 export const radii = {
