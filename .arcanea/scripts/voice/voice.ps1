@@ -255,7 +255,7 @@ function Do-Help {
     Write-Host "    voice mic          Show microphones" -ForegroundColor White
     Write-Host "    -Eph               Delete audio after transcription" -ForegroundColor White
     Write-Host ""
-    Write-Host "  PRESENCE ROOMS (conversational orb — delegates to @arcanea/voice)" -ForegroundColor Magenta
+    Write-Host "  PRESENCE ROOMS (conversational orb -- delegates to @arcanea/voice)" -ForegroundColor Magenta
     Write-Host "    voice jarvis       Open JARVIS room at arcanea.ai/room/jarvis" -ForegroundColor White
     Write-Host "    voice lumina       Open Lumina room (default persona)" -ForegroundColor White
     Write-Host "    voice draconia     Guardian of Fire" -ForegroundColor White
