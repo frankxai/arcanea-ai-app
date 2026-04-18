@@ -71,6 +71,16 @@ test('/api/converse rejects empty body with 400', async () => {
   assert.equal(r.status, 400);
 });
 
+test('/api/converse rejects tiny blobs before calling Groq', async () => {
+  // 100-byte body — way below the 2000-byte minimum. Should return 400 with a
+  // helpful error message, not get forwarded to Groq.
+  const tiny = new Uint8Array(100).fill(0);
+  const r = await fetch(`${BASE}/api/converse?persona=jarvis`, { method: 'POST', body: tiny });
+  assert.equal(r.status, 400);
+  const body = await r.json();
+  assert.ok(/small|short/i.test(body.error || ''), `expected size error, got: ${body.error}`);
+});
+
 test('/api/converse CORS preflight returns 204', async () => {
   const r = await fetch(`${BASE}/api/converse`, { method: 'OPTIONS' });
   assert.equal(r.status, 204);

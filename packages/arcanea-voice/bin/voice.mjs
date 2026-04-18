@@ -14,8 +14,10 @@
  *   voice help                 → this help
  */
 
-import { spawnSync } from 'child_process';
+import { spawnSync, spawn } from 'child_process';
 import { existsSync } from 'fs';
+import { join } from 'path';
+import { homedir } from 'os';
 import { PERSONAS, resolvePersona } from '../src/persona.mjs';
 import { getKey } from '../src/transcribe.mjs';
 
@@ -24,6 +26,56 @@ const args = process.argv.slice(2);
 const mode = (args[0] || 'help').toLowerCase();
 const groqKey = getKey('GROQ_API_KEY');
 const elevenKey = getKey('ELEVENLABS_API_KEY');
+
+function findChromiumBinary() {
+  const p = process.platform;
+  const override = process.env.ARCANEA_BROWSER_BIN;
+  if (override && existsSync(override)) return override;
+  if (p === 'win32') {
+    const candidates = [
+      join(process.env['ProgramFiles'] || 'C:\\Program Files', 'Google', 'Chrome', 'Application', 'chrome.exe'),
+      join(process.env['ProgramFiles(x86)'] || 'C:\\Program Files (x86)', 'Google', 'Chrome', 'Application', 'chrome.exe'),
+      join(process.env['LOCALAPPDATA'] || '', 'Google', 'Chrome', 'Application', 'chrome.exe'),
+      join(process.env['ProgramFiles(x86)'] || 'C:\\Program Files (x86)', 'Microsoft', 'Edge', 'Application', 'msedge.exe'),
+      join(process.env['ProgramFiles'] || 'C:\\Program Files', 'Microsoft', 'Edge', 'Application', 'msedge.exe'),
+    ];
+    for (const c of candidates) { if (c && existsSync(c)) return c; }
+  } else if (p === 'darwin') {
+    const candidates = [
+      '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+      '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
+      '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser',
+    ];
+    for (const c of candidates) { if (existsSync(c)) return c; }
+  } else {
+    for (const c of ['google-chrome', 'chromium', 'chromium-browser', 'microsoft-edge']) {
+      const r = spawnSync('which', [c], { encoding: 'utf-8' });
+      if (r.status === 0 && r.stdout.trim()) return r.stdout.trim();
+    }
+  }
+  return null;
+}
+
+function openAppWindow(url, persona) {
+  const bin = findChromiumBinary();
+  if (!bin) return { ok: false, reason: 'no Chromium-class browser found (tried Chrome, Edge, Brave)' };
+  // Dedicated user-data-dir per persona keeps each room as its own "app"
+  // with independent icon, history, and localStorage — just like a native app.
+  const udd = join(homedir(), '.arcanea', 'app-windows', persona || 'room');
+  try {
+    spawn(bin, [
+      `--app=${url}`,
+      `--user-data-dir=${udd}`,
+      '--no-first-run',
+      '--no-default-browser-check',
+      '--disable-features=TranslateUI',
+      '--window-size=1100,800',
+    ], { stdio: 'ignore', detached: true }).unref();
+    return { ok: true, bin };
+  } catch (e) {
+    return { ok: false, reason: String(e?.message || e) };
+  }
+}
 
 function openBrowser(url) {
   const p = process.platform;
@@ -46,12 +98,16 @@ ${list}
   Flags:
     --local           Boot on-device server + orb at http://127.0.0.1:7777
                       (default: open the hosted room at arcanea.ai/room/<persona>)
+    --app             Open in a standalone Chrome/Edge "app" window (no browser
+                      chrome). Works with or without --local. Per-persona user
+                      data dir, so each room is its own installable-feeling app.
 
   Env overrides:
     ARCANEA_VOICE_PORT       local server port (default 7777)
     ARCANEA_VOICE_LLM        Groq model (default llama-3.3-70b-versatile)
     ARCANEA_CLAUDE_BIN       path to claude CLI (default: claude on PATH)
     ARCANEA_VOICE_WEB        hosted room base URL (default https://arcanea.ai)
+    ARCANEA_BROWSER_BIN      override the Chrome/Edge binary for --app mode
 
   Keys (read from process env or Windows user registry):
     groq:       ${groqKey ? 'set' : 'missing'}
@@ -72,15 +128,25 @@ if (!PRESENCE_COMMANDS.has(mode)) {
 const persona = (mode === 'presence' || mode === 'room') ? 'lumina' : mode;
 const personaName = resolvePersona(persona).name;
 const useLocal = args.includes('--local') || process.env.ARCANEA_VOICE_LOCAL === '1';
+const useApp = args.includes('--app') || process.env.ARCANEA_VOICE_APP === '1';
 const webBase = process.env.ARCANEA_VOICE_WEB || 'https://arcanea.ai';
+
+function launch(url) {
+  if (useApp) {
+    const r = openAppWindow(url, persona);
+    if (r.ok) { console.log(`  launched in app window (${r.bin})`); return; }
+    console.log(`  [WARN] app window failed: ${r.reason} — falling back to default browser`);
+  }
+  openBrowser(url);
+}
 
 if (!useLocal) {
   const target = `${webBase}/room/${persona}`;
   console.log(`\n  Arcanea Presence Room — ${personaName}`);
   console.log(`  ${target}`);
   console.log(`  (hosted room — no local server needed.)`);
-  console.log(`  pass --local for the on-device server.\n`);
-  openBrowser(target);
+  console.log(`  pass --local for on-device server, --app for a standalone window.\n`);
+  launch(target);
   process.exit(0);
 }
 
@@ -103,7 +169,7 @@ startServer({
     console.log(`  Tools: shell_run, file_write, claude_prompt, claude_code_launch, open_url, linear_issue`);
     console.log(`  Multi-round: up to 4 rounds / 8 total tool calls per turn.`);
     console.log(`  Ctrl+C to stop.\n`);
-    openBrowser(target);
+    launch(target);
   },
 });
 

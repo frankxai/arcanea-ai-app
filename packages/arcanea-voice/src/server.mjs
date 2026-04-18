@@ -290,6 +290,13 @@ async function handleConverse(req, res) {
     return;
   }
   if (!buf.length) { json(res, 400, { error: 'empty body' }); return; }
+  if (buf.length < 2000) {
+    // Guard against the client-side thrash bug: any audio this small almost
+    // certainly won't transcribe and would just waste a Groq call.
+    process.stderr.write(`[VOICE] reject tiny blob (${buf.length} bytes)\n`);
+    json(res, 400, { error: `blob too small (${buf.length} bytes) — record at least half a second of audio` });
+    return;
+  }
 
   try {
     writeFileSync(stash, buf);
@@ -302,7 +309,12 @@ async function handleConverse(req, res) {
   const stt = transcribe(stash);
   const tStt = Math.round(performance.now() - t0);
   try { unlinkSync(stash); } catch {}
-  if (!stt?.text) { json(res, 502, { error: 'transcription failed — check GROQ_API_KEY or install whisper' }); return; }
+  if (!stt?.text) {
+    process.stderr.write(`[VOICE] transcribe empty (${buf.length} bytes, ${tStt}ms)\n`);
+    json(res, 502, { error: 'transcription returned nothing — try again, or check GROQ_API_KEY' });
+    return;
+  }
+  process.stderr.write(`[VOICE] stt "${stt.text.slice(0, 80)}" (${buf.length}b, ${tStt}ms)\n`);
 
   const t1 = performance.now();
   const loop = await runLlmLoop(persona.prompt, stt.text, persona.temperature);

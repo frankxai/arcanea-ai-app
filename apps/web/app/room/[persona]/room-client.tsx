@@ -374,7 +374,19 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         cancelAnimationFrame(vadRafRef.current);
         const blob = new Blob(chunksRef.current, { type: mime });
         chunksRef.current = [];
-        if (!hasSpokenRef.current || !blob.size) { setState('idle'); return; }
+        // eslint-disable-next-line no-console
+        console.log(`[VOICE] blob bytes=${blob.size} hasSpoken=${hasSpokenRef.current}`);
+        if (!blob.size) { setState('idle'); return; }
+        if (blob.size < 4000) {
+          showErr('Too short — hold Space and speak for at least half a second.');
+          setState('idle');
+          return;
+        }
+        if (!hasSpokenRef.current) {
+          showErr('No speech detected — check mic or speak louder.');
+          setState('idle');
+          return;
+        }
         void converse(blob, mime);
       };
       recorderRef.current = rec;
@@ -402,15 +414,47 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   }, [startRecording, stopSpeaking]);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
+    // Hybrid Space: tap = VAD-auto-stop, hold = push-to-talk. e.repeat guard
+    // prevents OS autorepeat from thrashing record start/stop (the root cause
+    // of the original "nothing heard" bug).
+    let spaceDownAt = 0;
+    let spaceHeldTriggeredRecord = false;
+
+    const onKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLElement && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
-      if (e.code === 'Space') { e.preventDefault(); toggleRecord(); }
-      else if (e.key === 'Escape') { stopSpeaking(); }
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (e.repeat) return;
+        spaceDownAt = performance.now();
+        if (!recordingRef.current && !busyRef.current) {
+          spaceHeldTriggeredRecord = true;
+          void startRecording();
+        } else {
+          spaceHeldTriggeredRecord = false;
+        }
+      } else if (e.key === 'Escape') { stopSpeaking(); }
       else if (/^[1-7]$/.test(e.key)) { setPersonaId(ORDER[+e.key - 1]); }
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [toggleRecord, stopSpeaking]);
+
+    const onKeyUp = (e: KeyboardEvent) => {
+      if (e.code !== 'Space') return;
+      const heldMs = performance.now() - spaceDownAt;
+      if (spaceHeldTriggeredRecord && heldMs >= 200 && recordingRef.current) {
+        if (recorderRef.current && recorderRef.current.state !== 'inactive') {
+          recorderRef.current.stop();
+        }
+      }
+      spaceDownAt = 0;
+      spaceHeldTriggeredRecord = false;
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keyup', onKeyUp);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('keyup', onKeyUp);
+    };
+  }, [startRecording, stopSpeaking]);
 
   useEffect(() => {
     return () => {

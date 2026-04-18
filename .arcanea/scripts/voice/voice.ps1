@@ -20,6 +20,7 @@ param(
     [Parameter(Position=1)] [string] $SecondArg = "",
     [switch] $Eph,
     [switch] $Local,
+    [switch] $App,
     [Parameter(ValueFromRemainingArguments=$true)] $ExtraArgs
 )
 
@@ -37,6 +38,7 @@ if ($PresenceCommands -contains $Mode.ToLower()) {
     }
     $forward = @($Mode.ToLower())
     if ($Local) { $forward += '--local' }
+    if ($App) { $forward += '--app' }
     if ($ExtraArgs) { $forward += $ExtraArgs }
     & node $voiceCli @forward
     exit $LASTEXITCODE

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAudioAnalyser } from './use-audio-analyser';
 import { LuminaOrb, type OrbState } from './lumina-orb';
@@ -17,18 +18,18 @@ export interface LuminaPresenceProps {
   className?: string;
 }
 
-const MOTION = {
-  initial: { opacity: 0, scale: 0.82, filter: 'blur(12px)' },
-  animate: { opacity: 1, scale: 1, filter: 'blur(0px)' },
-  exit: { opacity: 0, scale: 0.85, filter: 'blur(14px)' },
-  transition: { duration: 0.45, ease: [0.22, 0.65, 0.25, 1] as [number, number, number, number] },
-};
-
 const STATUS_COPY: Record<OrbState, string> = {
   listening: 'Listening',
   thinking: 'Thinking',
   speaking: 'Speaking',
 };
+
+// Sticky-mount policy: once the orb first activates, keep its WebGL context
+// alive for the rest of the component's lifetime. Rapid state flips (from
+// push-to-talk, barge-in, tool chains) were tearing down and rebuilding the
+// three.js renderer each time, which looked shaky and cost a full context
+// create on every turn. The orb's own shader handles idle vs. active, so
+// visibility is driven purely by opacity.
 
 export function LuminaPresence({
   state,
@@ -42,62 +43,81 @@ export function LuminaPresence({
 }: LuminaPresenceProps) {
   const source = state === 'listening' ? stream : state === 'speaking' ? audio : null;
   const snapshotRef = useAudioAnalyser(source);
-  const active = state !== 'idle';
+  const [hasActivated, setHasActivated] = useState(false);
+  const everActiveRef = useRef(false);
+
+  useEffect(() => {
+    if (state !== 'idle' && !everActiveRef.current) {
+      everActiveRef.current = true;
+      setHasActivated(true);
+    }
+  }, [state]);
+
+  const visible = state !== 'idle';
+  // Render the orb if it has EVER been active; visibility is opacity-only.
+  // Drive the orb with 'listening' as a stable placeholder when idle so shader
+  // uniforms lerp to a calm state without the orb being unmounted.
+  const orbState: OrbState = state === 'idle' ? 'listening' : (state as OrbState);
 
   return (
     <div className={className} style={{ width: size, height: size, position: 'relative' }}>
-      <AnimatePresence>
-        {active && (
-          <motion.div
-            key="orb"
-            {...MOTION}
+      {hasActivated && (
+        <motion.div
+          animate={{
+            opacity: visible ? 1 : 0,
+            scale: visible ? 1 : 0.92,
+            filter: visible ? 'blur(0px)' : 'blur(10px)',
+          }}
+          transition={{ duration: 0.4, ease: [0.22, 0.65, 0.25, 1] }}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'grid',
+            placeItems: 'center',
+            pointerEvents: 'none',
+          }}
+        >
+          <div
+            aria-hidden
             style={{
               position: 'absolute',
               inset: 0,
-              display: 'grid',
-              placeItems: 'center',
-              pointerEvents: 'none',
+              background: `radial-gradient(circle at 50% 50%, ${color}33 0%, ${color}10 35%, transparent 68%)`,
+              filter: 'blur(24px)',
             }}
+          />
+          <LuminaOrb
+            state={orbState}
+            snapshotRef={snapshotRef}
+            color={color}
+            accent={accent}
+            size={size}
+          />
+        </motion.div>
+      )}
+
+      <AnimatePresence>
+        {visible && label !== null && (
+          <motion.div
+            key={`label-${state}`}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.3 }}
+            style={{ position: 'absolute', bottom: 0, left: 0, right: 0, textAlign: 'center' }}
           >
-            <div
-              aria-hidden
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background: `radial-gradient(circle at 50% 50%, ${color}33 0%, ${color}10 35%, transparent 68%)`,
-                filter: 'blur(24px)',
-              }}
-            />
-            <LuminaOrb
-              state={state as OrbState}
-              snapshotRef={snapshotRef}
-              color={color}
-              accent={accent}
-              size={size}
-            />
-            {label !== null && (
-              <motion.div
-                key={`label-${state}`}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.3 }}
-                style={{ position: 'absolute', bottom: 0, left: 0, right: 0, textAlign: 'center' }}
-              >
-                <span
-                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] backdrop-blur-sm"
-                  style={{ fontFamily: 'var(--font-display)' }}
-                >
-                  <span
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{ backgroundColor: color, boxShadow: `0 0 10px ${color}` }}
-                  />
-                  <span className="text-[10px] uppercase tracking-[0.18em] text-white/60">
-                    {label ?? STATUS_COPY[state as OrbState]}
-                  </span>
-                </span>
-              </motion.div>
-            )}
+            <span
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] backdrop-blur-sm"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              <span
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ backgroundColor: color, boxShadow: `0 0 10px ${color}` }}
+              />
+              <span className="text-[10px] uppercase tracking-[0.18em] text-white/60">
+                {label ?? STATUS_COPY[state as OrbState]}
+              </span>
+            </span>
           </motion.div>
         )}
       </AnimatePresence>

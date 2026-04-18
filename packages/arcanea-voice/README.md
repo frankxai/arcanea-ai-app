@@ -1,8 +1,20 @@
 # @arcanea/voice
 
-Voice production system for AI coding agents. Record, transcribe, coach, route.
+Voice production system for AI coding agents. Record, transcribe, coach,
+route — plus a JARVIS-tier **Presence Room** with a god-tier particle
+orb, function-calling, and a voice-to-Claude-Code bridge.
 
-Works with Claude Code, OpenCode, Cursor, and any terminal. Windows, Mac, Linux.
+Works with Claude Code, OpenCode, Cursor, and any terminal. Windows,
+Mac, Linux. Two surfaces share one codebase:
+
+- **Hosted:** `arcanea.ai/room/{persona}` — installable PWA with BYOK
+- **Local:** `voice jarvis --local` — on-device server with tool
+  execution and a Chromium `--app` window option
+
+See [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) for the full
+picture, [`docs/VISION.md`](./docs/VISION.md) for where it's going, and
+[`docs/VIBEVOICE.md`](./docs/VIBEVOICE.md) for the long-form TTS
+integration path.
 
 ## Quick Start
 

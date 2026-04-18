@@ -71,11 +71,40 @@ function resetLatency() {
 setStatus('Ready', 'idle');
 orb.setState('idle');
 
+// Hybrid Space semantics:
+//   tap (<200ms hold) → toggle (start recording, auto-stop on silence)
+//   hold (>=200ms)    → push-to-talk (release stops recording immediately)
+// e.repeat guard is critical — without it, OS autorepeat fires keydown 30x/s
+// and we thrash start/stop, producing "nothing heard" every time.
+let spaceDownAt = 0;
+let spaceHeldTriggeredRecord = false;
+
 window.addEventListener('keydown', (e) => {
   if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
-  if (e.code === 'Space') { e.preventDefault(); toggleRecord(); }
-  else if (e.key === 'Escape') { stopSpeaking(); }
+  if (e.code === 'Space') {
+    e.preventDefault();
+    if (e.repeat) return;
+    spaceDownAt = performance.now();
+    if (!recording && !busy) {
+      spaceHeldTriggeredRecord = true;
+      startRecording();
+    } else {
+      spaceHeldTriggeredRecord = false;
+    }
+  } else if (e.key === 'Escape') { stopSpeaking(); }
   else if (/^[1-7]$/.test(e.key)) { switchPersona(PERSONA_ORDER[+e.key - 1]); }
+});
+
+window.addEventListener('keyup', (e) => {
+  if (e.code !== 'Space') return;
+  const heldMs = performance.now() - spaceDownAt;
+  if (spaceHeldTriggeredRecord && heldMs >= 200 && recording) {
+    // True push-to-talk release — stop immediately, don't wait for VAD.
+    stopRecording();
+  }
+  // Taps (<200ms) leave recording running; VAD auto-stops on silence.
+  spaceDownAt = 0;
+  spaceHeldTriggeredRecord = false;
 });
 
 document.addEventListener('click', (e) => {
@@ -226,7 +255,17 @@ function feedMicToOrb() {
 
 async function handleRecordedBlob(mime) {
   if (!recordChunks.length) { resetToIdle(); return; }
-  if (!hasSpoken) { resetToIdle('Nothing heard — try again.'); return; }
+  const blobSize = recordChunks.reduce((s, c) => s + c.size, 0);
+  console.log(`[VOICE] blob bytes=${blobSize} hasSpoken=${hasSpoken}`);
+  // webm opus at 48kHz averages ~4 KB per 100ms. Require ~400ms of actual audio.
+  if (blobSize < 4000) {
+    resetToIdle('Too short — hold Space and speak for at least half a second.');
+    return;
+  }
+  if (!hasSpoken) {
+    resetToIdle('No speech detected — check mic or speak louder.');
+    return;
+  }
 
   busy = true;
   setStatus('Thinking', 'thinking');
