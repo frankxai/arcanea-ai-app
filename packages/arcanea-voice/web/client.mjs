@@ -41,12 +41,30 @@ let audioCtx = null;
 let audioAnalyser = null;
 let audioSource = null;
 let vadRaf = 0;
+let bargeRaf = 0;
 let vadAbove = 0;
 let vadSilent = 0;
+let bargeAbove = 0;
 let hasSpoken = false;
 let recording = false;
 let busy = false;
+let currentAbortController = null;
 let replyBins = new Uint8Array(128);
+
+// Latency instrumentation — log each stage so we can spot regressions.
+const latency = { stages: [], t0: 0 };
+function logStage(name) {
+  const now = performance.now();
+  const delta = latency.t0 ? (now - latency.t0).toFixed(0) : '0';
+  const prev = latency.stages[latency.stages.length - 1];
+  const sincePrev = prev ? (now - prev.at).toFixed(0) : '0';
+  latency.stages.push({ name, at: now });
+  console.log(`[VOICE] ${name.padEnd(18)} total=${delta}ms  delta=${sincePrev}ms`);
+}
+function resetLatency() {
+  latency.t0 = performance.now();
+  latency.stages = [];
+}
 
 // ---------------------------------------------------------------------------
 
@@ -139,11 +157,47 @@ function vadLoop() {
   else { vadSilent += 16; }
 
   if (!hasSpoken && vadAbove > 180) hasSpoken = true;
-  if (hasSpoken && vadSilent > 1300) { stopRecording(); return; }
-  if (!hasSpoken && performance.now() % 1 < 16 && vadAbove === 0 && performance.now() > 8000) {
-    // no-op — let user decide when to speak
-  }
+  // Tightened from 1300ms to 900ms — closer to ElevenLabs/LiveKit feel.
+  if (hasSpoken && vadSilent > 900) { stopRecording(); return; }
   vadRaf = requestAnimationFrame(vadLoop);
+}
+
+// Barge-in detector — polls mic RMS while the agent is speaking.
+// If the user starts talking for >150ms, we interrupt the agent:
+// pause audio, abort pending fetch, flip back to listening.
+function startBargeInWatcher() {
+  if (!micAnalyser) return;
+  bargeAbove = 0;
+  const buf = new Uint8Array(micAnalyser.fftSize);
+  const loop = () => {
+    if (!audioEl || audioEl.paused || audioEl.ended) return;
+    micAnalyser.getByteTimeDomainData(buf);
+    let sum = 0;
+    for (let i = 0; i < buf.length; i++) {
+      const v = (buf[i] - 128) / 128;
+      sum += v * v;
+    }
+    const rms = Math.sqrt(sum / buf.length);
+    if (rms > 0.045) bargeAbove += 16;
+    else bargeAbove = Math.max(0, bargeAbove - 24);
+    if (bargeAbove > 150) {
+      console.log('[VOICE] barge-in detected');
+      bargeIn();
+      return;
+    }
+    bargeRaf = requestAnimationFrame(loop);
+  };
+  bargeRaf = requestAnimationFrame(loop);
+}
+
+function bargeIn() {
+  cancelAnimationFrame(bargeRaf);
+  if (audioEl && !audioEl.paused) { try { audioEl.pause(); } catch {} }
+  if (currentAbortController) { try { currentAbortController.abort(); } catch {} }
+  // Fire a fresh recording immediately — user is already speaking.
+  setStatus('Listening', 'listening');
+  orb.setState('listening');
+  startRecording();
 }
 
 function feedMicToOrb() {
@@ -186,13 +240,20 @@ async function handleRecordedBlob(mime) {
   const blob = new Blob(recordChunks, { type: mime });
   const ext = mime.includes('webm') ? 'webm' : mime.includes('mp4') ? 'm4a' : 'bin';
 
+  resetLatency();
+  logStage('mic_stop');
+  currentAbortController = new AbortController();
   try {
     let r;
     try {
-      r = await fetch(`/api/converse?persona=${persona}&ext=${ext}`, { method: 'POST', body: blob });
+      r = await fetch(`/api/converse?persona=${persona}&ext=${ext}`, {
+        method: 'POST', body: blob, signal: currentAbortController.signal,
+      });
     } catch (netErr) {
+      if (netErr.name === 'AbortError') return;
       throw new Error('Server offline — the voice jarvis terminal was closed. Run "voice jarvis" again.');
     }
+    logStage('server_response');
     if (!r.ok) {
       const body = await r.json().catch(() => ({}));
       throw new Error(body.error || `server ${r.status}`);
@@ -200,6 +261,10 @@ async function handleRecordedBlob(mime) {
     const transcript = decodeURIComponent(r.headers.get('x-voice-transcript') || '');
     const reply = decodeURIComponent(r.headers.get('x-voice-reply') || '');
     const toolsUsed = (r.headers.get('x-voice-tools-used') || '').split(',').filter(Boolean);
+    const tStt = r.headers.get('x-voice-t-stt-ms');
+    const tLlm = r.headers.get('x-voice-t-llm-ms');
+    const tTts = r.headers.get('x-voice-t-tts-ms');
+    if (tStt || tLlm || tTts) console.log(`[VOICE] server stages  stt=${tStt||'?'}ms  llm=${tLlm||'?'}ms  tts=${tTts||'?'}ms`);
     if (transcript) { transcriptEl.textContent = `"${transcript}"`; transcriptEl.classList.add('visible'); }
     if (reply) {
       replyEl.textContent = reply;
@@ -213,14 +278,17 @@ async function handleRecordedBlob(mime) {
     }
 
     const audioBuf = await r.blob();
+    logStage('tts_ready');
     const url = URL.createObjectURL(audioBuf);
     await playResponse(url);
+    logStage('audio_done');
     URL.revokeObjectURL(url);
   } catch (e) {
-    showError(e.message || 'Something broke.');
+    if (e.name !== 'AbortError') showError(e.message || 'Something broke.');
   } finally {
     busy = false;
-    resetToIdle();
+    currentAbortController = null;
+    if (!recording) resetToIdle();
   }
 }
 
@@ -241,6 +309,7 @@ async function playResponse(url) {
 
   setStatus('Speaking', 'speaking');
   orb.setState('speaking');
+  startBargeInWatcher();
 
   const bins = new Uint8Array(audioAnalyser.frequencyBinCount);
   const tick = () => {

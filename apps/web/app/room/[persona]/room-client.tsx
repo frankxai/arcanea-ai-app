@@ -138,10 +138,21 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const vadSilentRef = useRef(0);
   const hasSpokenRef = useRef(false);
   const vadRafRef = useRef(0);
+  const bargeRafRef = useRef(0);
+  const bargeAboveRef = useRef(0);
   const abortRef = useRef<AbortController | null>(null);
   const recordingRef = useRef(false);
   const busyRef = useRef(false);
   const stateRef = useRef<RoomState>('idle');
+  const audioElRef = useRef<HTMLAudioElement | null>(null);
+  const latencyT0Ref = useRef(0);
+
+  const logStage = useCallback((name: string) => {
+    const now = performance.now();
+    const total = latencyT0Ref.current ? Math.round(now - latencyT0Ref.current) : 0;
+    // eslint-disable-next-line no-console
+    console.log(`[VOICE] ${name.padEnd(18)} total=${total}ms`);
+  }, []);
 
   const persona = PERSONAS[personaId];
 
@@ -200,7 +211,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
     else { vadSilentRef.current += 16; }
 
     if (!hasSpokenRef.current && vadAboveRef.current > 180) hasSpokenRef.current = true;
-    if (hasSpokenRef.current && vadSilentRef.current > 1300) {
+    if (hasSpokenRef.current && vadSilentRef.current > 900) {
       if (recorderRef.current && recorderRef.current.state !== 'inactive') {
         recorderRef.current.stop();
       }
@@ -211,6 +222,8 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
 
   const converse = useCallback(async (blob: Blob, mime: string) => {
     busyRef.current = true;
+    latencyT0Ref.current = performance.now();
+    logStage('mic_stop');
     setState('thinking'); setTranscript(''); setReply('');
     const ctl = new AbortController();
     abortRef.current = ctl;
@@ -285,20 +298,54 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         audioBlob = await ttsRes.blob();
       }
 
+      logStage('tts_ready');
       const url = URL.createObjectURL(audioBlob);
       const audio = new Audio();
       audio.crossOrigin = 'anonymous'; audio.src = url;
+      audioElRef.current = audio;
       setAudioEl(audio); setState('speaking');
+
+      // Barge-in: if the user starts speaking while the agent speaks, pause,
+      // abort the pipeline, and kick a new recording.
+      const bargeTick = () => {
+        const a = audioElRef.current;
+        const analyser = micAnalyserRef.current;
+        if (!a || a.paused || a.ended || !analyser) return;
+        const buf = new Uint8Array(analyser.fftSize);
+        analyser.getByteTimeDomainData(buf);
+        let sum = 0;
+        for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; sum += v * v; }
+        const rms = Math.sqrt(sum / buf.length);
+        if (rms > 0.045) bargeAboveRef.current += 16;
+        else bargeAboveRef.current = Math.max(0, bargeAboveRef.current - 24);
+        if (bargeAboveRef.current > 150) {
+          try { a.pause(); } catch {}
+          abortRef.current?.abort();
+          return;
+        }
+        bargeRafRef.current = requestAnimationFrame(bargeTick);
+      };
+      bargeAboveRef.current = 0;
+      bargeRafRef.current = requestAnimationFrame(bargeTick);
+
       await new Promise<void>((done) => {
         audio.addEventListener('ended', () => done(), { once: true });
         audio.addEventListener('error', () => done(), { once: true });
+        audio.addEventListener('pause', () => done(), { once: true });
         audio.play().catch(() => done());
       });
+      cancelAnimationFrame(bargeRafRef.current);
+      logStage('audio_done');
       URL.revokeObjectURL(url);
     } catch (e) {
       if ((e as Error).name !== 'AbortError') showErr((e as Error).message || 'Something broke.');
-    } finally { busyRef.current = false; setAudioEl(null); setState('idle'); }
-  }, [history, persona, showErr]);
+    } finally {
+      busyRef.current = false;
+      audioElRef.current = null;
+      setAudioEl(null);
+      setState('idle');
+    }
+  }, [history, persona, showErr, logStage]);
 
   const startRecording = useCallback(async () => {
     if (busyRef.current || recordingRef.current) return;

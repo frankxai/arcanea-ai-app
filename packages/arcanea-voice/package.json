@@ -28,7 +28,9 @@
     "voice": "node bin/voice.mjs",
     "jarvis": "node bin/voice.mjs jarvis",
     "lumina": "node bin/voice.mjs lumina",
-    "test": "node test/tools.test.mjs",
+    "test": "node test/tools.test.mjs && node test/server.test.mjs",
+    "test:tools": "node test/tools.test.mjs",
+    "test:server": "node test/server.test.mjs",
     "test:help": "node bin/voice.mjs help"
   },
   "keywords": [

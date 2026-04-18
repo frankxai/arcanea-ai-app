@@ -1,0 +1,53 @@
+name: Orchestrator CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/orchestrator/**'
+      - 'packages/router-spec/**'
+      - '.github/workflows/orchestrator-ci.yml'
+  pull_request:
+    paths:
+      - 'packages/orchestrator/**'
+      - 'packages/router-spec/**'
+      - '.github/workflows/orchestrator-ci.yml'
+
+# Scoped to the two orchestrator packages. Does NOT gate the whole monorepo.
+# Failure here only blocks orchestrator-touching PRs.
+
+jobs:
+  test:
+    name: Test + build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install deps for orchestrator packages only
+        run: pnpm install --filter "@arcanea/router-spec" --filter "@arcanea/orchestrator" --frozen-lockfile=false
+
+      - name: Validate router spec
+        run: pnpm --filter "@arcanea/router-spec" validate
+
+      - name: Build router spec
+        run: pnpm --filter "@arcanea/router-spec" build
+
+      - name: Build orchestrator
+        run: pnpm --filter "@arcanea/orchestrator" build
+
+      - name: Test router spec
+        run: pnpm --filter "@arcanea/router-spec" test
+
+      - name: Test orchestrator
+        run: pnpm --filter "@arcanea/orchestrator" test
