@@ -298,16 +298,24 @@ async function handleConverse(req, res) {
     return;
   }
 
+  const t0 = performance.now();
   const stt = transcribe(stash);
+  const tStt = Math.round(performance.now() - t0);
   try { unlinkSync(stash); } catch {}
   if (!stt?.text) { json(res, 502, { error: 'transcription failed — check GROQ_API_KEY or install whisper' }); return; }
 
+  const t1 = performance.now();
   const loop = await runLlmLoop(persona.prompt, stt.text, persona.temperature);
+  const tLlm = Math.round(performance.now() - t1);
   if (!loop || !loop.reply) { json(res, 502, { error: 'LLM unavailable — check GROQ_API_KEY' }); return; }
   const { reply, toolsUsed, toolResults } = loop;
 
+  const t2 = performance.now();
   const audio = await synthesize(reply, persona);
+  const tTts = Math.round(performance.now() - t2);
   if (!audio) { json(res, 502, { error: 'TTS unavailable — no working voice backend' }); return; }
+
+  process.stderr.write(`[VOICE] ${persona.name.padEnd(8)} stt=${tStt}ms  llm=${tLlm}ms  tts=${tTts}ms  tools=${toolsUsed.join(',') || 'none'}\n`);
 
   // Cap tool-result header size to avoid exceeding HTTP header limits.
   const truncatedResults = toolResults.slice(0, 3).map(({ name, result }) => ({
@@ -322,8 +330,11 @@ async function handleConverse(req, res) {
     'x-voice-persona': persona.name,
     'x-voice-tools-used': toolsUsed.join(','),
     'x-voice-tool-results': encodeURIComponent(JSON.stringify(truncatedResults)),
+    'x-voice-t-stt-ms': String(tStt),
+    'x-voice-t-llm-ms': String(tLlm),
+    'x-voice-t-tts-ms': String(tTts),
     'access-control-expose-headers':
-      'x-voice-transcript,x-voice-reply,x-voice-persona,x-voice-tools-used,x-voice-tool-results',
+      'x-voice-transcript,x-voice-reply,x-voice-persona,x-voice-tools-used,x-voice-tool-results,x-voice-t-stt-ms,x-voice-t-llm-ms,x-voice-t-tts-ms',
   });
 
   if (Buffer.isBuffer(audio.body)) {
