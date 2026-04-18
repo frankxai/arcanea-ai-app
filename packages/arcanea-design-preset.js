@@ -125,6 +125,9 @@ module.exports = {
         "scale-in": "scale-in 0.2s ease-out",
         // Shimmer — loading states
         "shimmer": "shimmer 1.8s ease-in-out infinite",
+        // Marquee — primitives/marquee.tsx (Magic UI port, 2026-04-18)
+        "marquee": "marquee var(--duration, 40s) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration, 40s) linear infinite",
       },
       keyframes: {
         float: {
@@ -146,6 +149,14 @@ module.exports = {
         shimmer: {
           "0%": { transform: "translateX(-100%)" },
           "100%": { transform: "translateX(100%)" },
+        },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap, 1rem)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap, 1rem)))" },
         },
       },
     },

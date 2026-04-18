@@ -1,6 +1,6 @@
 {
   "name": "@arcanea/design-system",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "SEE LICENSE IN LICENSE",
   "private": true,
   "main": "dist/index.js",
@@ -22,6 +22,10 @@
       "types": "./dist/motion.d.ts",
       "default": "./dist/motion.js"
     },
+    "./primitives": {
+      "types": "./dist/primitives/index.d.ts",
+      "default": "./dist/primitives/index.js"
+    },
     "./tokens.css": "./src/tokens.css"
   },
   "scripts": {
@@ -30,10 +34,13 @@
     "clean": "rm -rf dist"
   },
   "peerDependencies": {
-    "framer-motion": ">=11"
+    "framer-motion": ">=11",
+    "react": ">=18"
   },
   "devDependencies": {
     "typescript": "^5.3.3",
-    "framer-motion": "^11.15.0"
+    "framer-motion": "^11.15.0",
+    "@types/react": "^19.0.0",
+    "react": "^19.0.0"
   }
 }
