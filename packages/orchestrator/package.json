@@ -1,7 +1,16 @@
 {
   "name": "@arcanea/orchestrator",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "The Arcanea Orchestrator — headless brain that routes, plans, swarms, and learns across claude / opencode / codex / gemini. Consumes @arcanea/router-spec.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankxai/arcanea-ai-app.git",
+    "directory": "packages/orchestrator"
+  },
+  "homepage": "https://arcanea.ai/orchestrator",
+  "bugs": "https://github.com/frankxai/arcanea-ai-app/issues",
+  "author": "Arcanea (frankxai)",
+  "license": "MIT",
   "keywords": [
     "arcanea",
     "orchestrator",
@@ -27,7 +36,8 @@
     "AGENTS.md",
     "README.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "CONTRIBUTING.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
