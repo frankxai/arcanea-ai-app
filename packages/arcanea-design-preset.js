@@ -128,6 +128,8 @@ module.exports = {
         // Marquee — primitives/marquee.tsx (Magic UI port, 2026-04-18)
         "marquee": "marquee var(--duration, 40s) linear infinite",
         "marquee-vertical": "marquee-vertical var(--duration, 40s) linear infinite",
+        // Border Beam — primitives/border-beam.tsx
+        "border-beam": "border-beam var(--duration, 15s) infinite linear",
       },
       keyframes: {
         float: {
@@ -157,6 +159,9 @@ module.exports = {
         "marquee-vertical": {
           from: { transform: "translateY(0)" },
           to: { transform: "translateY(calc(-100% - var(--gap, 1rem)))" },
+        },
+        "border-beam": {
+          "100%": { "offset-distance": "100%" },
         },
       },
     },
