@@ -32,7 +32,7 @@ Frank asked to "make SIS progress, connected to multiple repos" — starting a n
 ## What's Not Done
 
 - [ ] **Clone 2 decision (Frank's call)** — `C:/Users/frank/Arcanea/starlight-intelligence-system/` still exists locally. Its `feature/canonical-sis-package-surface` branch (on origin) contains a different architectural approach (`canonical-sis.ts` / `canonical-sis-mcp.ts`) that likely got superseded by v6.0's Retrieval/Temporal/Contradiction/Dreaming modules. Frank needs to eyeball the diff at https://github.com/frankxai/Starlight-Intelligence-System/tree/feature/canonical-sis-package-surface and either merge, cherry-pick, or delete.
-- [ ] **Add `starlight-mcp` bin to SIS package.json** — currently `.mcp.json` uses hardcoded Windows path. With a bin, config could use `npx @arcanea/starlight-intelligence-system starlight-mcp` → portable across machines. ~15 min follow-up.
+- [x] **DONE — v6.0.1 published with `starlight-mcp` bin.** Arcanea `.mcp.json` now uses portable form: `npx -y -p @arcanea/starlight-intelligence-system@latest starlight-mcp`. E2E verified in clean temp dir — MCP boots cleanly.
 - [ ] **Restart Claude Code** — Frank needs to close and reopen Claude Code for the new `.mcp.json` to take effect. Current session still running on old wire-up.
 - [ ] **npm web page** — https://www.npmjs.com/package/@arcanea/starlight-intelligence-system was returning 403 at session end (CDN propagation lag on the web tier; registry API resolves fine). Should come online within 10-30 min of 22:47 UTC publish time.
 

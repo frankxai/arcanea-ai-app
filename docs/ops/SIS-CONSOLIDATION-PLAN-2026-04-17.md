@@ -88,7 +88,9 @@ SIS already ships `core/validation-contract.md` (same rules Frank and I discusse
   - `npm access set status=public` confirmed
   - CDN propagation: 5–15 min before `npm view` and web page resolve
   - Install: `pnpm add @arcanea/starlight-intelligence-system`
-- [ ] **Follow-up (nice-to-have):** Add `starlight-mcp` bin to SIS package.json so `.mcp.json` can use `npx @arcanea/starlight-intelligence-system starlight-mcp` (currently the hardcoded Windows path works for Frank, but npx would be portable across machines)
+- [x] **v6.0.1 published with portable MCP invocation** — Added shebang to `src/mcp-server.ts`, registered `starlight-mcp` bin, rebuilt, published, tagged `v6.0.1`.
+- [x] **E2E verified** — `npx -y -p @arcanea/starlight-intelligence-system@6.0.1 starlight-mcp` boots cleanly in a clean temp dir: `[starlight-sis] MCP server started, vault: ~/.starlight/vaults`
+- [x] **Arcanea `.mcp.json` upgraded to portable npx form:** `npx -y -p @arcanea/starlight-intelligence-system@latest starlight-mcp` — works on any machine with no hardcoded paths
 - [ ] **Move 3 (Frank):** Review the feature branch diff on GitHub and decide Clone 2 fate: https://github.com/frankxai/Starlight-Intelligence-System/tree/feature/canonical-sis-package-surface
 
 ## Memory updates (done this session)
