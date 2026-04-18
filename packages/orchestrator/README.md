@@ -1,6 +1,11 @@
 # @arcanea/orchestrator
 
-**The Arcanea Orchestrator.** A headless brain that routes, plans, swarms, and (soon) learns across `claude`, `opencode`, `codex`, and `gemini`. Reads the canonical `@arcanea/router-spec` to pick the right model for each task, respects your subscription economics, and dispatches to the right sub-CLI without you thinking about it.
+[![npm version](https://img.shields.io/npm/v/@arcanea/orchestrator.svg?color=7fffd4)](https://www.npmjs.com/package/@arcanea/orchestrator)
+[![npm downloads](https://img.shields.io/npm/dm/@arcanea/orchestrator.svg)](https://www.npmjs.com/package/@arcanea/orchestrator)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node ≥20](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](https://nodejs.org/)
+
+**The Arcanea Orchestrator.** A headless brain that routes, plans, swarms, and learns across `claude`, `opencode`, `codex`, and `gemini`. Reads the canonical `@arcanea/router-spec` to pick the right model for each task, respects your subscription economics, and dispatches to the right sub-CLI without you thinking about it.
 
 Use this when you want intelligence. Use [`arcanea-code`](https://github.com/frankxai/arcanea-code) (the forthcoming OpenCode fork) when you want a rich TUI on top of it.
 
