@@ -130,12 +130,14 @@ arcanea-opencode-fork/
 .arcanea/AGENTS.md
 .arcanea/projects/NFT_STRATEGY_MASTER.md
 
-# Claude Code local state (per-machine, never commit)
-.claude/
-!.claude/commands/
+# Claude Code local state (per-machine, never commit) — but KEEP public skills/agents/commands/CLAUDE.md
+.claude/*
 !.claude/skills/
+!.claude/commands/
 !.claude/agents/
 !.claude/CLAUDE.md
+.claude/skills/*/
+!.claude/skills/arco/
 .codex/
 .codacy/
 .cursor/
