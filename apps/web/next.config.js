@@ -4,6 +4,10 @@ const path = require('node:path')
 const nextConfig = {
   poweredByHeader: false,
   serverExternalPackages: ['@opentelemetry/api'],
+  // Workspace packages with subpath exports — let Next.js/Turbopack compile from
+  // source rather than relying on prebuilt dist/. Avoids `Module not found` in
+  // CI when the workspace dep hasn't been built before `next build` runs.
+  transpilePackages: ['@arcanea/publishing-house', '@arcanea/world-engine'],
   // Strip console.log/warn in production builds — keeps bundles lean & avoids
   // leaking debug info. console.error is preserved for runtime diagnostics.
   compiler: {
