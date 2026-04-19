@@ -10,7 +10,7 @@
  * - Cosmic color palette (6 depth levels)
  * - Brand colors (aquamarine/teal primary)
  * - Elemental colors (fire, water, wind, earth, void)
- * - Typography (Space Grotesk display, Inter body, JetBrains Mono, Newsreader serif)
+ * - Typography (Geist display + body, Instrument Serif editorial, JetBrains Mono, Newsreader legacy serif)
  * - Animation system (ambient, reveal, celebration)
  * - Elevation shadows
  * - Glow system
@@ -90,9 +90,10 @@ module.exports = {
         info: { DEFAULT: "#3b82f6", light: "#93c5fd", dark: "#1d4ed8" },
       },
       fontFamily: {
-        display: ["var(--font-display)", "Space Grotesk", "system-ui", "sans-serif"],
-        body: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
-        sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Geist", "Geist Sans", "system-ui", "sans-serif"],
+        body: ["var(--font-inter)", "Geist", "Geist Sans", "system-ui", "sans-serif"],
+        sans: ["var(--font-inter)", "Geist", "Geist Sans", "system-ui", "sans-serif"],
+        editorial: ["var(--font-editorial)", "Instrument Serif", "Georgia", "serif"],
         serif: ["var(--font-serif)", "Newsreader", "Georgia", "serif"],
         mono: ["var(--font-jetbrains-mono)", "JetBrains Mono", "Consolas", "monospace"],
       },
@@ -124,6 +125,11 @@ module.exports = {
         "scale-in": "scale-in 0.2s ease-out",
         // Shimmer — loading states
         "shimmer": "shimmer 1.8s ease-in-out infinite",
+        // Marquee — primitives/marquee.tsx (Magic UI port, 2026-04-18)
+        "marquee": "marquee var(--duration, 40s) linear infinite",
+        "marquee-vertical": "marquee-vertical var(--duration, 40s) linear infinite",
+        // Border Beam — primitives/border-beam.tsx
+        "border-beam": "border-beam var(--duration, 15s) infinite linear",
       },
       keyframes: {
         float: {
@@ -145,6 +151,17 @@ module.exports = {
         shimmer: {
           "0%": { transform: "translateX(-100%)" },
           "100%": { transform: "translateX(100%)" },
+        },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap, 1rem)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap, 1rem)))" },
+        },
+        "border-beam": {
+          "100%": { "offset-distance": "100%" },
         },
       },
     },

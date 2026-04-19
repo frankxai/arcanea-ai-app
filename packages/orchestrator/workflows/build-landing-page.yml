@@ -1,0 +1,56 @@
+name: build-landing-page
+version: 1
+description: |
+  Build a production-ready landing page from scratch with copy, frontend,
+  a11y check, and review. Composes research → content → frontend → nav →
+  review into a coherent 5-step workflow.
+
+usage: |
+  arcanea-orchestrator workflow run build-landing-page \
+    --var page=/pricing \
+    --var pitch="3-tier pricing for Arcanea Creator Suite"
+
+tasks:
+  - id: 1
+    task: research.quick
+    prompt: |
+      Analyze existing landing pages in apps/web/app for design patterns,
+      copy tone, and component reuse. Output: one-page brief with
+      recommended structure, palette, and 3 reference pages to mirror.
+      Context: {{pitch}}
+    why: Establish design constraints from existing code before writing anything
+
+  - id: 2
+    task: docs.write
+    prompt: |
+      Write landing page copy for {{page}}: headline, subhead, 3 value
+      props with 1-line proof for each, 2 CTAs, FAQ (5 questions), and
+      microcopy for any form. Tone: {{pitch}}. Output as markdown.
+    why: Copy before code — structure follows message
+
+  - id: 3
+    task: code.frontend
+    prompt: |
+      Implement {{page}} at apps/web/app{{page}}/page.tsx using the copy
+      from task 2. Follow the design-system rules in apps/web/CLAUDE.md
+      (Atlantean Teal #00bcd4, glass cards, Space Grotesk display, no
+      Cinzel). Server component + motion via domAnimation only. Mobile-
+      responsive. Include proper metadata + structured data.
+    why: Production-quality page code, design-system-obedient
+
+  - id: 4
+    task: nav.fast
+    prompt: |
+      Add {{page}} to main navigation (header + footer). Verify link
+      resolves, matches existing nav styling, mobile menu includes it.
+    why: Page must be discoverable from site chrome
+
+  - id: 5
+    task: code.review
+    prompt: |
+      Review the full diff for {{page}}: TypeScript strict compliance,
+      a11y (semantic HTML, ARIA, contrast ≥4.5:1), Core Web Vitals
+      risk (hero image size, CLS from late mounts), design-token usage
+      (no raw hex colors except tokens), SEO metadata completeness.
+      Report issues with severity.
+    why: Independent eyes before ship

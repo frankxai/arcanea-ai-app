@@ -95,7 +95,33 @@ FrankX site imports `frankx`. OSS imports `oss`. No cross-contamination. Adding 
 - ✅ Ship `@arcanea/design-system` package (tokens + brand-kits + motion)
 - ✅ Wire 5 design-oriented MCPs (Magic, v0, Fal, Gemini, Replicate)
 - ✅ Commit spec
+- ✅ v0.2.0 typography elevation: Space Grotesk → Geist + Instrument Serif (see "Typography Evolution" below)
+- ✅ Framework-agnostic `tokens.css` for Astro/Svelte/Vue/HTML consumers
 - Pending user action: drop API keys via `setx`
+
+## Typography Evolution (2026-04-18)
+
+**Why we moved off Space Grotesk:**
+- Anthropic's `frontend-design` skill explicitly lists Space Grotesk as a generic/overused choice to avoid
+- Previous agents defaulted to it without aesthetic justification; it conflicted with the "distinctive AI lab premium" bar
+- Inter is also banned by the same skill — it was our body fallback
+
+**New stack (v0.2.0):**
+- Display + Body: **Geist** — Vercel's font, battle-tested for AI/creator platforms, aligned with our deployment ecosystem, `npm i geist` drop-in
+- Editorial accent: **Instrument Serif** — Google Fonts, dramatic editorial moments (hero, pull-quotes)
+- Code: **Geist Mono** (with JetBrains Mono fallback)
+
+**What stays:** cosmic palette, brand colors, elemental colors, motion variants, glass recipes — all unchanged.
+
+## Patterns Absorbed (2026 GitHub audit)
+
+Research agent audit of shadcn-ui/ui, magicui, vercel/geist, motion-primitives, fontsource yielded:
+
+1. **shadcn/ui v4+ multi-registry pattern** — `components.json` with namespaced `@arcanea/*` registries + Bearer auth for private components. Target: Phase 3.
+2. **Magic UI 5 wow primitives** — Animated Beam, Border Beam, Marquee, Number Ticker, Interactive Grid, Spotlight. Port as `@arcanea/design-system/primitives`. Target: Phase 2.
+3. **Geist typography** — already adopted in v0.2.0.
+4. **Fontsource NPM pattern** — `@arcanea-fonts/*` scoped packages for non-Google fonts with woff2 + CSS imports. Target: Phase 3.
+5. **Motion v12** — migrate `framer-motion` → `motion/react` imports when we bump peerDep to v12. Target: Phase 2.
 
 ### Week 2
 - Pick ONE page (proposed: homepage hero or pricing). Revamp using full stack. Measure before/after.

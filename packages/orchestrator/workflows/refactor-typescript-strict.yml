@@ -1,0 +1,45 @@
+name: refactor-typescript-strict
+version: 1
+description: |
+  Convert a legacy JS/loose-TS directory to strict TypeScript. Surveys,
+  refactors in passes, adds tests, reviews.
+
+usage: |
+  arcanea-orchestrator workflow run refactor-typescript-strict \
+    --var dir=packages/legacy \
+    --var risk=medium
+
+tasks:
+  - id: 1
+    task: research.deep
+    prompt: |
+      Survey {{dir}} for TypeScript strict-mode violations. List every
+      `any`, implicit any, missing return type, null/undefined unsafety,
+      and unsafe index access. Output as prioritized checklist grouped
+      by file, severity: high|medium|low. Risk level: {{risk}}.
+    why: Map the terrain before moving
+
+  - id: 2
+    task: code.refactor
+    prompt: |
+      Using the audit from task 1, refactor the top-priority files to
+      pass tsc --strict. Add explicit types, narrow unknowns with type
+      guards, replace `as any` with real types. Commit as one PR per
+      sibling directory for reviewability. Preserve all public exports.
+    why: Mechanical work, batched for reviewability
+
+  - id: 3
+    task: code.implement
+    prompt: |
+      For every public function touched in task 2, add unit tests
+      asserting the type contract holds at runtime (not just compile-
+      time). Target 80% coverage of refactored modules.
+    why: Strict types without runtime tests are a false guarantee
+
+  - id: 4
+    task: code.review
+    prompt: |
+      Review the refactor PR(s). Check: no regression in behavior,
+      all `as unknown` or `as any` have justifying comments, no barrel
+      reexports hiding type widening, CI passes strict + tests.
+    why: Independent sign-off before merge

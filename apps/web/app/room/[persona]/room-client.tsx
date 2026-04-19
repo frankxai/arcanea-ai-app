@@ -3,6 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { LuminaPresence, type PresenceState } from '@/components/presence/lumina-presence';
+import {
+  chatWithGroq,
+  getStoredKeys,
+  speakWithElevenLabs,
+  transcribeWithGroq,
+  voiceIdForPersona,
+} from './browser-voice';
+import { SettingsPanel } from './settings-panel';
 
 // ---------------------------------------------------------------------------
 // Personas — superset of the local voice room, with arcanea.ai voice mapping
@@ -119,6 +127,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const [audioEl, setAudioEl] = useState<HTMLAudioElement | null>(null);
   const [history, setHistory] = useState<MessageTurn[]>([]);
   const [recording, setRecording] = useState(false);
+  const [hasBYOK, setHasBYOK] = useState(false);
 
   const micStreamRef = useRef<MediaStream | null>(null);
   const micCtxRef = useRef<AudioContext | null>(null);
@@ -129,16 +138,33 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const vadSilentRef = useRef(0);
   const hasSpokenRef = useRef(false);
   const vadRafRef = useRef(0);
+  const bargeRafRef = useRef(0);
+  const bargeAboveRef = useRef(0);
   const abortRef = useRef<AbortController | null>(null);
   const recordingRef = useRef(false);
   const busyRef = useRef(false);
   const stateRef = useRef<RoomState>('idle');
+  const audioElRef = useRef<HTMLAudioElement | null>(null);
+  const latencyT0Ref = useRef(0);
+
+  const logStage = useCallback((name: string) => {
+    const now = performance.now();
+    const total = latencyT0Ref.current ? Math.round(now - latencyT0Ref.current) : 0;
+    // eslint-disable-next-line no-console
+    console.log(`[VOICE] ${name.padEnd(18)} total=${total}ms`);
+  }, []);
 
   const persona = PERSONAS[personaId];
 
   // Keep refs in sync
   useEffect(() => { recordingRef.current = recording; }, [recording]);
   useEffect(() => { stateRef.current = state; }, [state]);
+
+  // BYOK: detect stored keys on mount
+  useEffect(() => {
+    const k = getStoredKeys();
+    setHasBYOK(Boolean(k.groq || k.eleven));
+  }, []);
 
   // URL sync
   useEffect(() => {
@@ -185,7 +211,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
     else { vadSilentRef.current += 16; }
 
     if (!hasSpokenRef.current && vadAboveRef.current > 180) hasSpokenRef.current = true;
-    if (hasSpokenRef.current && vadSilentRef.current > 1300) {
+    if (hasSpokenRef.current && vadSilentRef.current > 900) {
       if (recorderRef.current && recorderRef.current.state !== 'inactive') {
         recorderRef.current.stop();
       }
@@ -196,96 +222,130 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
 
   const converse = useCallback(async (blob: Blob, mime: string) => {
     busyRef.current = true;
-    setState('thinking');
-    setTranscript('');
-    setReply('');
-
+    latencyT0Ref.current = performance.now();
+    logStage('mic_stop');
+    setState('thinking'); setTranscript(''); setReply('');
+    const ctl = new AbortController();
+    abortRef.current = ctl;
     try {
-      // Step 1: transcribe
-      const form = new FormData();
+      const keys = getStoredKeys();
       const ext = mime.includes('webm') ? 'webm' : mime.includes('mp4') ? 'm4a' : 'wav';
-      form.append('audio', blob, `mic.${ext}`);
-      const ctl = new AbortController();
-      abortRef.current = ctl;
-      const sttRes = await fetch('/api/ai/transcribe', { method: 'POST', body: form, signal: ctl.signal });
-      if (!sttRes.ok) throw new Error(`transcribe ${sttRes.status}`);
-      const { text: userText } = (await sttRes.json()) as { text?: string };
-      if (!userText?.trim()) { showErr('Nothing heard — try again.'); return; }
+
+      // 1 — transcribe
+      let userText: string;
+      if (keys.groq) {
+        userText = (await transcribeWithGroq(blob, keys.groq)).trim();
+      } else {
+        const form = new FormData();
+        form.append('audio', blob, `mic.${ext}`);
+        const r = await fetch('/api/ai/transcribe', { method: 'POST', body: form, signal: ctl.signal });
+        if (!r.ok) throw new Error(`transcribe ${r.status}`);
+        userText = ((await r.json()) as { text?: string }).text?.trim() ?? '';
+      }
+      if (!userText) { showErr('Nothing heard — try again.'); return; }
       setTranscript(userText);
 
       const nextHistory: MessageTurn[] = [...history, { role: 'user', content: userText }];
 
-      // Step 2: chat (streaming — we accumulate for TTS once complete)
-      const chatRes = await fetch('/api/ai/chat', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
+      // 2 — chat
+      let full: string;
+      if (keys.groq) {
+        full = await chatWithGroq({
           messages: nextHistory.map((m) => ({ role: m.role, content: m.content })),
-          systemPrompt: persona.prompt,
-          temperature: persona.temperature,
-          maxTokens: 220,
-        }),
-        signal: ctl.signal,
-      });
-      if (!chatRes.ok || !chatRes.body) throw new Error(`chat ${chatRes.status}`);
-
-      const reader = chatRes.body.getReader();
-      const decoder = new TextDecoder();
-      let full = '';
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
-        const chunk = decoder.decode(value, { stream: true });
-        // AI SDK v6 streaming format: data:{...} events OR raw text — accept both
-        const lines = chunk.split(/\r?\n/);
-        for (const line of lines) {
-          if (!line) continue;
-          if (line.startsWith('data:')) {
-            try {
-              const parsed = JSON.parse(line.slice(5).trim());
-              const piece = parsed?.choices?.[0]?.delta?.content ?? parsed?.text ?? parsed?.delta ?? '';
-              if (typeof piece === 'string') full += piece;
-            } catch { /* not JSON — treat as raw */ full += line.replace(/^data:\s?/, ''); }
-          } else if (!line.startsWith('event:') && !line.startsWith(':')) {
-            full += line;
-          }
-        }
+          systemPrompt: persona.prompt, apiKey: keys.groq,
+          temperature: persona.temperature, maxTokens: 220,
+        });
         setReply(full);
+      } else {
+        const chatRes = await fetch('/api/ai/chat', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ messages: nextHistory.map((m) => ({ role: m.role, content: m.content })), systemPrompt: persona.prompt, temperature: persona.temperature, maxTokens: 220 }),
+          signal: ctl.signal,
+        });
+        if (!chatRes.ok || !chatRes.body) throw new Error(`chat ${chatRes.status}`);
+        const reader = chatRes.body.getReader();
+        const decoder = new TextDecoder();
+        let acc = '';
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          for (const line of decoder.decode(value, { stream: true }).split(/\r?\n/)) {
+            if (!line) continue;
+            if (line.startsWith('data:')) {
+              try { const p = JSON.parse(line.slice(5).trim()); const piece = p?.choices?.[0]?.delta?.content ?? p?.text ?? p?.delta ?? ''; if (typeof piece === 'string') acc += piece; }
+              catch { acc += line.replace(/^data:\s?/, ''); }
+            } else if (!line.startsWith('event:') && !line.startsWith(':')) { acc += line; }
+          }
+          setReply(acc);
+        }
+        full = acc.trim();
       }
-      full = full.trim();
-      if (!full) throw new Error('empty reply');
 
+      if (!full) throw new Error('empty reply');
       setHistory([...nextHistory, { role: 'assistant', content: full }]);
 
-      // Step 3: speak
-      const ttsRes = await fetch('/api/ai/speak', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ text: full.slice(0, 4000), persona: persona.voiceKey }),
-        signal: ctl.signal,
-      });
-      if (!ttsRes.ok) throw new Error(`speak ${ttsRes.status}`);
-      const audioBlob = await ttsRes.blob();
+      // 3 — speak
+      let audioBlob: Blob;
+      if (keys.eleven) {
+        audioBlob = await speakWithElevenLabs({ text: full.slice(0, 4000), voiceId: voiceIdForPersona(persona.voiceKey), apiKey: keys.eleven });
+      } else {
+        const ttsRes = await fetch('/api/ai/speak', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ text: full.slice(0, 4000), persona: persona.voiceKey }),
+          signal: ctl.signal,
+        });
+        if (!ttsRes.ok) throw new Error(`speak ${ttsRes.status}`);
+        audioBlob = await ttsRes.blob();
+      }
+
+      logStage('tts_ready');
       const url = URL.createObjectURL(audioBlob);
       const audio = new Audio();
-      audio.crossOrigin = 'anonymous';
-      audio.src = url;
-      setAudioEl(audio);
-      setState('speaking');
+      audio.crossOrigin = 'anonymous'; audio.src = url;
+      audioElRef.current = audio;
+      setAudioEl(audio); setState('speaking');
+
+      // Barge-in: if the user starts speaking while the agent speaks, pause,
+      // abort the pipeline, and kick a new recording.
+      const bargeTick = () => {
+        const a = audioElRef.current;
+        const analyser = micAnalyserRef.current;
+        if (!a || a.paused || a.ended || !analyser) return;
+        const buf = new Uint8Array(analyser.fftSize);
+        analyser.getByteTimeDomainData(buf);
+        let sum = 0;
+        for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; sum += v * v; }
+        const rms = Math.sqrt(sum / buf.length);
+        if (rms > 0.045) bargeAboveRef.current += 16;
+        else bargeAboveRef.current = Math.max(0, bargeAboveRef.current - 24);
+        if (bargeAboveRef.current > 150) {
+          try { a.pause(); } catch {}
+          abortRef.current?.abort();
+          return;
+        }
+        bargeRafRef.current = requestAnimationFrame(bargeTick);
+      };
+      bargeAboveRef.current = 0;
+      bargeRafRef.current = requestAnimationFrame(bargeTick);
+
       await new Promise<void>((done) => {
         audio.addEventListener('ended', () => done(), { once: true });
         audio.addEventListener('error', () => done(), { once: true });
+        audio.addEventListener('pause', () => done(), { once: true });
         audio.play().catch(() => done());
       });
+      cancelAnimationFrame(bargeRafRef.current);
+      logStage('audio_done');
       URL.revokeObjectURL(url);
     } catch (e) {
       if ((e as Error).name !== 'AbortError') showErr((e as Error).message || 'Something broke.');
     } finally {
       busyRef.current = false;
+      audioElRef.current = null;
       setAudioEl(null);
       setState('idle');
     }
-  }, [history, persona, showErr]);
+  }, [history, persona, showErr, logStage]);
 
   const startRecording = useCallback(async () => {
     if (busyRef.current || recordingRef.current) return;
@@ -314,7 +374,19 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         cancelAnimationFrame(vadRafRef.current);
         const blob = new Blob(chunksRef.current, { type: mime });
         chunksRef.current = [];
-        if (!hasSpokenRef.current || !blob.size) { setState('idle'); return; }
+        // eslint-disable-next-line no-console
+        console.log(`[VOICE] blob bytes=${blob.size} hasSpoken=${hasSpokenRef.current}`);
+        if (!blob.size) { setState('idle'); return; }
+        if (blob.size < 4000) {
+          showErr('Too short — hold Space and speak for at least half a second.');
+          setState('idle');
+          return;
+        }
+        if (!hasSpokenRef.current) {
+          showErr('No speech detected — check mic or speak louder.');
+          setState('idle');
+          return;
+        }
         void converse(blob, mime);
       };
       recorderRef.current = rec;
@@ -342,15 +414,47 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   }, [startRecording, stopSpeaking]);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
+    // Hybrid Space: tap = VAD-auto-stop, hold = push-to-talk. e.repeat guard
+    // prevents OS autorepeat from thrashing record start/stop (the root cause
+    // of the original "nothing heard" bug).
+    let spaceDownAt = 0;
+    let spaceHeldTriggeredRecord = false;
+
+    const onKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLElement && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
-      if (e.code === 'Space') { e.preventDefault(); toggleRecord(); }
-      else if (e.key === 'Escape') { stopSpeaking(); }
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (e.repeat) return;
+        spaceDownAt = performance.now();
+        if (!recordingRef.current && !busyRef.current) {
+          spaceHeldTriggeredRecord = true;
+          void startRecording();
+        } else {
+          spaceHeldTriggeredRecord = false;
+        }
+      } else if (e.key === 'Escape') { stopSpeaking(); }
       else if (/^[1-7]$/.test(e.key)) { setPersonaId(ORDER[+e.key - 1]); }
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [toggleRecord, stopSpeaking]);
+
+    const onKeyUp = (e: KeyboardEvent) => {
+      if (e.code !== 'Space') return;
+      const heldMs = performance.now() - spaceDownAt;
+      if (spaceHeldTriggeredRecord && heldMs >= 200 && recordingRef.current) {
+        if (recorderRef.current && recorderRef.current.state !== 'inactive') {
+          recorderRef.current.stop();
+        }
+      }
+      spaceDownAt = 0;
+      spaceHeldTriggeredRecord = false;
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keyup', onKeyUp);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('keyup', onKeyUp);
+    };
+  }, [startRecording, stopSpeaking]);
 
   useEffect(() => {
     return () => {
@@ -404,6 +508,15 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         <span className="text-[11px] tracking-[0.28em] uppercase text-white/80">{persona.name}</span>
         <span className="w-px h-3 bg-white/10" />
         <span className="text-[10px] tracking-[0.22em] uppercase text-white/40">{statusCopy}</span>
+        <span className="w-px h-3 bg-white/10" />
+        <span
+          className="text-[9px] tracking-[0.22em] uppercase px-1.5 py-0.5 rounded"
+          style={hasBYOK
+            ? { backgroundColor: 'rgba(0,188,212,0.15)', color: '#7feaff', border: '1px solid rgba(0,188,212,0.3)' }
+            : { backgroundColor: 'rgba(255,191,0,0.12)', color: '#ffd070', border: '1px solid rgba(255,191,0,0.25)' }}
+        >
+          {hasBYOK ? 'BYOK' : 'Hosted'}
+        </span>
       </div>
 
       {/* Transcript (what you said) */}
@@ -470,6 +583,14 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       >
         ← Arcanea
       </Link>
+
+      {/* BYOK settings gear */}
+      <SettingsPanel
+        onKeysChanged={() => {
+          const k = getStoredKeys();
+          setHasBYOK(Boolean(k.groq || k.eleven));
+        }}
+      />
 
       {error && (
         <div

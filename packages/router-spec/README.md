@@ -1,5 +1,8 @@
 # @arcanea/router-spec
 
+[![npm version](https://img.shields.io/npm/v/@arcanea/router-spec.svg?color=7fffd4)](https://www.npmjs.com/package/@arcanea/router-spec)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Canonical model routing for the Arcanea ecosystem. Single source of truth.
 
 ## Why this exists

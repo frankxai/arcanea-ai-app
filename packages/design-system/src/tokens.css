@@ -1,0 +1,89 @@
+/*
+ * @arcanea/design-system — CSS variables
+ * Framework-agnostic export. Mirror of src/tokens.ts.
+ * Import into any non-React consumer (Astro, Svelte, Vue, plain HTML).
+ *
+ * Typography (2026 premium stack):
+ * - Display/Body: Geist (Vercel) — install `npm i geist` OR via @vercel/geist-font
+ * - Editorial accent: Instrument Serif (Google Fonts)
+ * - Code: Geist Mono with JetBrains Mono fallback
+ *
+ * Rationale: Vercel Geist is the 2026 standard for AI/creator platforms —
+ * battle-tested, ecosystem-aligned with our deployment target, avoids
+ * Anthropic frontend-design's "generic" warning list (Inter, Arial, Space Grotesk).
+ */
+
+:root {
+  /* Cosmic palette */
+  --arc-cosmic-void: #0b0e14;
+  --arc-cosmic-deep: #121826;
+  --arc-cosmic-surface: #1a2332;
+  --arc-cosmic-raised: #242f42;
+  --arc-cosmic-elevated: #2d3a52;
+  --arc-cosmic-overlay: #364562;
+  --arc-cosmic-border: #242f42;
+  --arc-cosmic-border-bright: #364562;
+
+  /* Text */
+  --arc-text-primary: #e6eefc;
+  --arc-text-secondary: #9bb1d0;
+  --arc-text-muted: #708094;
+  --arc-text-disabled: #515b6b;
+
+  /* Brand */
+  --arc-brand-atlantean-teal: #00bcd4;
+  --arc-brand-cosmic-blue: #0d47a1;
+  --arc-brand-arcanean-gold: #ffd700;
+  --arc-brand-aquamarine: #7fffd4;
+
+  /* Elements */
+  --arc-crystal: #7fffd4;
+  --arc-fire: #ff6b35;
+  --arc-water: #78a6ff;
+  --arc-wind: #00ff88;
+  --arc-earth: #8b6f47;
+  --arc-void: #9966ff;
+
+  /* Gold scale */
+  --arc-gold-light: #fff3b3;
+  --arc-gold-medium: #ffd966;
+  --arc-gold-bright: #ffcc33;
+  --arc-gold-deep: #e6b800;
+  --arc-gold-dark: #b38600;
+
+  /* Fonts (Geist-forward 2026 stack) */
+  --arc-font-display: Geist, "Geist Sans", "Satoshi Variable", system-ui, sans-serif;
+  --arc-font-body: Geist, "Geist Sans", system-ui, sans-serif;
+  --arc-font-editorial: "Instrument Serif", "Migra", Georgia, serif;
+  --arc-font-mono: "Geist Mono", "JetBrains Mono", "Fira Code", monospace;
+
+  /* Radii */
+  --arc-radius-sm: 0.25rem;
+  --arc-radius-md: 0.5rem;
+  --arc-radius-lg: 0.75rem;
+  --arc-radius-xl: 1rem;
+  --arc-radius-2xl: 1.5rem;
+  --arc-radius-full: 9999px;
+
+  /* Shadows */
+  --arc-shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --arc-shadow-glow: 0 0 24px rgba(0, 188, 212, 0.35);
+  --arc-shadow-gold-glow: 0 0 32px rgba(255, 215, 0, 0.25);
+  --arc-shadow-elevation-1: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --arc-shadow-elevation-2: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --arc-shadow-elevation-3: 0 16px 48px rgba(0, 0, 0, 0.6);
+
+  /* Easings */
+  --arc-ease-expo-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --arc-ease-expo-in-out: cubic-bezier(0.87, 0, 0.13, 1);
+  --arc-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --arc-ease-swift: cubic-bezier(0.16, 1, 0.3, 1);
+  --arc-ease-magnetic: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Durations */
+  --arc-duration-instant: 100ms;
+  --arc-duration-fast: 200ms;
+  --arc-duration-base: 400ms;
+  --arc-duration-slow: 600ms;
+  --arc-duration-ambient: 1200ms;
+}

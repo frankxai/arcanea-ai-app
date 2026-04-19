@@ -1,0 +1,48 @@
+name: Lighthouse CI
+
+on:
+  pull_request:
+    paths:
+      - 'apps/web/**'
+      - 'packages/design-system/**'
+      - 'packages/arcanea-design-preset.js'
+  workflow_dispatch:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for Vercel Preview
+        id: vercel
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 600
+          check_interval: 15
+          environment: Preview
+
+      - name: Audit with Lighthouse
+        id: lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            ${{ steps.vercel.outputs.url }}
+            ${{ steps.vercel.outputs.url }}/pricing
+            ${{ steps.vercel.outputs.url }}/chat
+          configPath: ./.github/lighthouse/lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+      - name: Comment scores on PR
+        if: always()
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: lighthouse
+          message: |
+            ## Lighthouse scores (design-system gate)
+
+            ${{ steps.lighthouse.outputs.manifest }}
+
+            _Target: performance ≥ 90, accessibility ≥ 95, best-practices ≥ 95, SEO ≥ 95_

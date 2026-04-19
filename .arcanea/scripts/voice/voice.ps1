@@ -17,9 +17,37 @@
 
 param(
     [Parameter(Position=0)] [string] $Mode = "note",
-    [Parameter(Position=1)] [int] $Duration = 0,
-    [switch] $Eph
+    [Parameter(Position=1)] [string] $SecondArg = "",
+    [switch] $Eph,
+    [switch] $Local,
+    [switch] $App,
+    [Parameter(ValueFromRemainingArguments=$true)] $ExtraArgs
 )
+
+# ─── Presence Room delegation ────────────────────────────────────────────
+# Persona commands (jarvis/lumina/etc.) and the `--local` flag belong to the
+# Node @arcanea/voice CLI that powers the web room + on-device orb server.
+# Delegate there and exit before any of the PS recording paths run.
+$PresenceCommands = @('jarvis','lumina','draconia','lyria','alera','shinkami','nero','presence','room')
+$voiceCli = 'C:\Users\frank\Arcanea\packages\arcanea-voice\bin\voice.mjs'
+
+if ($PresenceCommands -contains $Mode.ToLower()) {
+    if (-not (Test-Path $voiceCli)) {
+        Write-Host "  @arcanea/voice CLI not found at $voiceCli" -ForegroundColor Red
+        exit 1
+    }
+    $forward = @($Mode.ToLower())
+    if ($Local) { $forward += '--local' }
+    if ($App) { $forward += '--app' }
+    if ($ExtraArgs) { $forward += $ExtraArgs }
+    & node $voiceCli @forward
+    exit $LASTEXITCODE
+}
+
+# Backward-compat: legacy positional $Duration was an int. Parse SecondArg as
+# duration if it's numeric; otherwise treat it as opaque remaining arg.
+$Duration = 0
+if ($SecondArg -match '^\d+$') { $Duration = [int]$SecondArg }
 
 $ErrorActionPreference = "SilentlyContinue"
 
@@ -228,6 +256,16 @@ function Do-Help {
     Write-Host "    voice clean        Disk audit" -ForegroundColor White
     Write-Host "    voice mic          Show microphones" -ForegroundColor White
     Write-Host "    -Eph               Delete audio after transcription" -ForegroundColor White
+    Write-Host ""
+    Write-Host "  PRESENCE ROOMS (conversational orb -- delegates to @arcanea/voice)" -ForegroundColor Magenta
+    Write-Host "    voice jarvis       Open JARVIS room at arcanea.ai/room/jarvis" -ForegroundColor White
+    Write-Host "    voice lumina       Open Lumina room (default persona)" -ForegroundColor White
+    Write-Host "    voice draconia     Guardian of Fire" -ForegroundColor White
+    Write-Host "    voice lyria        Guardian of Sight" -ForegroundColor White
+    Write-Host "    voice alera        Guardian of Voice" -ForegroundColor White
+    Write-Host "    voice shinkami     The Source" -ForegroundColor White
+    Write-Host "    voice nero         The Primordial Darkness" -ForegroundColor White
+    Write-Host "    ... --local        Boot on-device server + orb at localhost:7777" -ForegroundColor DarkGray
     Write-Host ""
     Write-Host "  GLOBAL (from any app)" -ForegroundColor Yellow
     Write-Host "    Ctrl+Alt+N         Quick Note" -ForegroundColor White

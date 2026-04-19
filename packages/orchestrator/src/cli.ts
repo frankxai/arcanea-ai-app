@@ -11,13 +11,19 @@ import { statusCommand } from './commands/status.js';
 import { planCommand } from './commands/plan.js';
 import { historyCommand } from './commands/history.js';
 import { statsCommand } from './commands/stats.js';
+import { learnCommand } from './commands/learn.js';
+import {
+  workflowListCommand,
+  workflowShowCommand,
+  workflowRunCommand,
+} from './commands/workflow.js';
 
 const program = new Command();
 
 program
   .name('arcanea-orchestrator')
   .description('The Arcanea Orchestrator — routes, plans, swarms, and learns across claude / opencode / codex / gemini.')
-  .version('1.1.0');
+  .version('1.2.0');
 
 program
   .command('list-models')
@@ -92,6 +98,34 @@ program
   .description('Aggregate success rates + avg duration per task→model.')
   .option('--json', 'Output as JSON')
   .action(statsCommand);
+
+program
+  .command('learn <task>')
+  .description('Show baseline vs adaptive routing for a task, using ~/.arcanea/history.jsonl.')
+  .option('-s, --surface <surface>', 'Surface to analyze', 'claude-arcanea')
+  .action(learnCommand);
+
+const workflow = program.command('workflow').description('Built-in multi-task compositions.');
+
+workflow
+  .command('list')
+  .description('List all built-in workflow templates.')
+  .option('--json', 'Output as JSON')
+  .action(workflowListCommand);
+
+workflow
+  .command('show <name>')
+  .description('Show a workflow template.')
+  .option('--json', 'Output as JSON')
+  .action(workflowShowCommand);
+
+workflow
+  .command('run <name>')
+  .description('Expand + emit a workflow as a plan (for piping / manual dispatch).')
+  .option('--var <kv...>', 'Substitute {{vars}} — --var page=/pricing --var pitch="..."')
+  .option('-o, --out <file>', 'Write expanded plan to file')
+  .option('--dry-run', 'Alias — always emits without executing')
+  .action(workflowRunCommand);
 
 program.parseAsync(process.argv).catch((err) => {
   console.error(err instanceof Error ? err.message : err);

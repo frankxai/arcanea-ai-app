@@ -13,6 +13,8 @@ export interface UserConfig {
   auth: Partial<Record<'claude' | 'opencode' | 'codex' | 'gemini', AuthRecord>>;
   /** Optional default surface override (e.g. 'oh-my-arcanea' to always prefer free). */
   defaultSurface?: string;
+  /** Adaptive routing mode: auto (default, on at ≥10 events) | on | off. */
+  adaptiveRouting?: 'auto' | 'on' | 'off';
 }
 
 export interface AuthRecord {
@@ -30,6 +32,7 @@ const CONFIG_PATH = join(CONFIG_DIR, 'config.yaml');
 const DEFAULT_CONFIG: UserConfig = {
   preference: 'sub-first',
   auth: {},
+  adaptiveRouting: 'auto',
 };
 
 export function loadConfig(): UserConfig {

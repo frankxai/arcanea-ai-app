@@ -19,6 +19,7 @@ import { spawnSync } from 'child_process';
 
 import { transcribe, getKey } from './transcribe.mjs';
 import { resolvePersona, PERSONAS } from './persona.mjs';
+import { TOOLS, executeTool, formatToolResult } from './tools.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const WEB_ROOT = resolve(__dirname, '..', 'web');
@@ -41,6 +42,12 @@ const VOICE_MAP = {
   shinkami: { eleven: null,                   groq: 'Thunder-PlayAI' },
 };
 
+// LLM choice: Groq llama-3.3-70b is the default because it pairs strong
+// OpenAI-compatible function-calling with sub-second time-to-first-token —
+// essential for voice UX (any delay past ~800ms starts to feel broken).
+// Switch via `ARCANEA_VOICE_LLM` (e.g. moonshotai/kimi-k2-instruct,
+// openai/gpt-oss-120b) if you want different trade-offs; all Groq models
+// that expose the `tools` param will work without code changes.
 const LLM_MODEL = process.env.ARCANEA_VOICE_LLM || 'llama-3.3-70b-versatile';
 const TTS_MODEL_GROQ = process.env.ARCANEA_VOICE_TTS || 'playai-tts';
 const TTS_MODEL_ELEVEN = process.env.ARCANEA_VOICE_ELEVEN_MODEL || 'eleven_turbo_v2_5';
@@ -95,25 +102,112 @@ function json(res, code, obj) {
   res.end(JSON.stringify(obj));
 }
 
-async function callGroqChat(prompt, userText, temperature = 0.5) {
+async function callGroqChat(messages, temperature = 0.5, tools = null) {
   const key = getKey('GROQ_API_KEY');
   if (!key) return null;
+  const body = {
+    model: LLM_MODEL,
+    temperature,
+    max_tokens: 400,
+    messages,
+  };
+  if (tools && tools.length) {
+    body.tools = tools;
+    body.tool_choice = 'auto';
+  }
   const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
-    body: JSON.stringify({
-      model: LLM_MODEL,
-      temperature,
-      max_tokens: 260,
-      messages: [
-        { role: 'system', content: prompt },
-        { role: 'user', content: userText },
-      ],
-    }),
+    body: JSON.stringify(body),
   });
   if (!r.ok) return null;
   const j = await r.json().catch(() => null);
-  return j?.choices?.[0]?.message?.content?.trim() || null;
+  return j?.choices?.[0]?.message || null;
+}
+
+/**
+ * Multi-round tool-calling loop.
+ *
+ * The model can chain tools across up to MAX_ROUNDS turns — e.g. shell_run
+ * to inspect state, then file_write to apply a fix, then claude_code_launch
+ * to hand off the rest. Hard caps stop runaway loops:
+ *   - MAX_ROUNDS: how many times the model can respond with tool_calls
+ *   - MAX_TOOL_CALLS: total executions across all rounds (batch-safety)
+ *
+ * Returns { reply, toolsUsed, toolResults, rounds }.
+ */
+const MAX_ROUNDS = 4;
+const MAX_TOOL_CALLS = 8;
+
+async function runLlmLoop(systemPrompt, userText, temperature = 0.5) {
+  const messages = [
+    { role: 'system', content: systemPrompt },
+    { role: 'user', content: userText },
+  ];
+  const toolsUsed = [];
+  const toolResults = [];
+  let rounds = 0;
+  let totalCalls = 0;
+  let finalContent = '';
+
+  for (let round = 0; round < MAX_ROUNDS; round++) {
+    const response = await callGroqChat(messages, temperature, TOOLS);
+    if (!response) return null;
+    rounds = round + 1;
+
+    const toolCalls = Array.isArray(response.tool_calls) ? response.tool_calls : [];
+    if (!toolCalls.length) {
+      finalContent = (response.content || '').trim();
+      break;
+    }
+
+    // Assistant turn with tool_calls (must be echoed back before role:tool messages)
+    messages.push({
+      role: 'assistant',
+      content: response.content || '',
+      tool_calls: toolCalls,
+    });
+
+    for (const call of toolCalls) {
+      if (totalCalls >= MAX_TOOL_CALLS) {
+        messages.push({
+          role: 'tool',
+          tool_call_id: call.id,
+          content: JSON.stringify({ error: 'tool-call budget exhausted for this turn' }),
+        });
+        continue;
+      }
+      const name = call?.function?.name;
+      let args = {};
+      try { args = JSON.parse(call?.function?.arguments || '{}'); } catch {}
+      const result = await executeTool(name, args);
+      toolsUsed.push(name);
+      toolResults.push({ name, result });
+      totalCalls++;
+      messages.push({
+        role: 'tool',
+        tool_call_id: call.id,
+        content: JSON.stringify(result).slice(0, 2000),
+      });
+    }
+
+    // After the last permitted round, force a final spoken summary.
+    if (round === MAX_ROUNDS - 1 || totalCalls >= MAX_TOOL_CALLS) {
+      messages.push({
+        role: 'system',
+        content: 'Wrap up in one or two spoken sentences. No more tool calls. No markdown.',
+      });
+      const finalResp = await callGroqChat(messages, temperature, null);
+      finalContent = (finalResp?.content || '').trim();
+      break;
+    }
+  }
+
+  // Fallback if the model never produced narration — describe the first result.
+  if (!finalContent && toolResults.length) {
+    finalContent = formatToolResult(toolsUsed[0], toolResults[0].result);
+  }
+  return { reply: finalContent, toolsUsed, toolResults, rounds };
 }
 
 async function synthesizeElevenLabs(text, voiceId) {
@@ -196,6 +290,13 @@ async function handleConverse(req, res) {
     return;
   }
   if (!buf.length) { json(res, 400, { error: 'empty body' }); return; }
+  if (buf.length < 2000) {
+    // Guard against the client-side thrash bug: any audio this small almost
+    // certainly won't transcribe and would just waste a Groq call.
+    process.stderr.write(`[VOICE] reject tiny blob (${buf.length} bytes)\n`);
+    json(res, 400, { error: `blob too small (${buf.length} bytes) — record at least half a second of audio` });
+    return;
+  }
 
   try {
     writeFileSync(stash, buf);
@@ -204,22 +305,48 @@ async function handleConverse(req, res) {
     return;
   }
 
+  const t0 = performance.now();
   const stt = transcribe(stash);
+  const tStt = Math.round(performance.now() - t0);
   try { unlinkSync(stash); } catch {}
-  if (!stt?.text) { json(res, 502, { error: 'transcription failed — check GROQ_API_KEY or install whisper' }); return; }
+  if (!stt?.text) {
+    process.stderr.write(`[VOICE] transcribe empty (${buf.length} bytes, ${tStt}ms)\n`);
+    json(res, 502, { error: 'transcription returned nothing — try again, or check GROQ_API_KEY' });
+    return;
+  }
+  process.stderr.write(`[VOICE] stt "${stt.text.slice(0, 80)}" (${buf.length}b, ${tStt}ms)\n`);
 
-  const reply = await callGroqChat(persona.prompt, stt.text, persona.temperature);
-  if (!reply) { json(res, 502, { error: 'LLM unavailable — check GROQ_API_KEY' }); return; }
+  const t1 = performance.now();
+  const loop = await runLlmLoop(persona.prompt, stt.text, persona.temperature);
+  const tLlm = Math.round(performance.now() - t1);
+  if (!loop || !loop.reply) { json(res, 502, { error: 'LLM unavailable — check GROQ_API_KEY' }); return; }
+  const { reply, toolsUsed, toolResults } = loop;
 
+  const t2 = performance.now();
   const audio = await synthesize(reply, persona);
+  const tTts = Math.round(performance.now() - t2);
   if (!audio) { json(res, 502, { error: 'TTS unavailable — no working voice backend' }); return; }
+
+  process.stderr.write(`[VOICE] ${persona.name.padEnd(8)} stt=${tStt}ms  llm=${tLlm}ms  tts=${tTts}ms  tools=${toolsUsed.join(',') || 'none'}\n`);
+
+  // Cap tool-result header size to avoid exceeding HTTP header limits.
+  const truncatedResults = toolResults.slice(0, 3).map(({ name, result }) => ({
+    name,
+    summary: formatToolResult(name, result).slice(0, 240),
+  }));
 
   res.writeHead(200, {
     'content-type': audio.mime,
     'x-voice-transcript': encodeURIComponent(stt.text),
     'x-voice-reply': encodeURIComponent(reply),
     'x-voice-persona': persona.name,
-    'access-control-expose-headers': 'x-voice-transcript,x-voice-reply,x-voice-persona',
+    'x-voice-tools-used': toolsUsed.join(','),
+    'x-voice-tool-results': encodeURIComponent(JSON.stringify(truncatedResults)),
+    'x-voice-t-stt-ms': String(tStt),
+    'x-voice-t-llm-ms': String(tLlm),
+    'x-voice-t-tts-ms': String(tTts),
+    'access-control-expose-headers':
+      'x-voice-transcript,x-voice-reply,x-voice-persona,x-voice-tools-used,x-voice-tool-results,x-voice-t-stt-ms,x-voice-t-llm-ms,x-voice-t-tts-ms',
   });
 
   if (Buffer.isBuffer(audio.body)) {

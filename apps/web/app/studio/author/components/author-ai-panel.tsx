@@ -2,6 +2,17 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useChat } from '@ai-sdk/react';
+import { DefaultChatTransport } from 'ai';
+
+// AI SDK v6 removed input/setInput/handleSubmit/isLoading/api from useChat —
+// we manage input state manually and derive isLoading from status.
+function extractMessageText(msg: { parts?: Array<{ type: string; text?: string }> }): string {
+  if (!Array.isArray(msg.parts)) return '';
+  return msg.parts
+    .filter((p) => p.type === 'text')
+    .map((p) => p.text ?? '')
+    .join('');
+}
 
 type ModelTier = 'haiku' | 'sonnet' | 'opus';
 
@@ -47,10 +58,25 @@ export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) 
     }
   }, []);
 
-  const { messages, input, setInput, handleSubmit, isLoading } = useChat({
-    api: '/api/ai/author-chat',
-    body: { bookSlug, currentChapter, model, userApiKey: apiKey || undefined },
+  const [input, setInput] = useState('');
+  const { messages, sendMessage, status } = useChat({
+    transport: new DefaultChatTransport({
+      api: '/api/ai/author-chat',
+      body: { bookSlug, currentChapter, model, userApiKey: apiKey || undefined },
+    }),
   });
+  const isLoading = status === 'streaming' || status === 'submitted';
+
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      const text = input.trim();
+      if (!text) return;
+      sendMessage({ text });
+      setInput('');
+    },
+    [input, sendMessage],
+  );
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -154,7 +180,7 @@ export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) 
                 ? 'bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-white/80'
                 : 'bg-white/[0.02] border border-white/[0.06] text-white/60'
             }`}>
-              <div className="whitespace-pre-wrap">{msg.content}</div>
+              <div className="whitespace-pre-wrap">{extractMessageText(msg)}</div>
             </div>
           </div>
         ))}

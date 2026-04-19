@@ -1,5 +1,27 @@
 # Changelog — @arcanea/orchestrator
 
+## 1.2.0 — 2026-04-18
+
+Adaptive routing + workflow templates.
+
+### Added
+- **Adaptive routing (Phase 8).** `run` now re-ranks candidates by local
+  `~/.arcanea/history.jsonl` success data — success rate × 10 + speed
+  bonus − recent-failure penalty. Never overrides surface/preference, only
+  reorders within. Auto-enables at ≥10 events (`adaptiveRouting: auto`
+  default). Override: `config adaptiveRouting on|off`.
+- **`learn <task>`** — shows baseline vs adaptive ranking side-by-side
+  with per-candidate stats (runs, success%, avg ms).
+- **Workflow templates.** Three starters in `workflows/`:
+  `build-landing-page`, `refactor-typescript-strict`,
+  `add-feature-end-to-end`. Variable substitution via `--var key=value`.
+- **`workflow list/show/run`** commands.
+- Package now ships `workflows/` + `CHANGELOG.md` in the tarball.
+
+### Compatibility
+- No breaking changes from 1.1.0.
+- Config migration: new optional `adaptiveRouting` key. Default `auto`.
+
 ## 1.1.0 — 2026-04-18
 
 Planner + Reasoning Bank.

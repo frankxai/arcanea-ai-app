@@ -17,10 +17,30 @@ Next.js 16 (App Router) + React 19 + TypeScript strict + Tailwind CSS + Supabase
 
 - Primary: Atlantean Teal (#00bcd4) | Secondary: Cosmic Blue (#0d47a1) | Accent: Gold (#ffd700)
 - Background: #09090b
-- Fonts: Space Grotesk (display), Inter (body/UI), JetBrains Mono (code) — NEVER Cinzel
+- Fonts: **Geist** (display + body/UI via `geist/font/sans`), **Instrument Serif** (editorial accent), **JetBrains Mono** (code) — NEVER Cinzel, Space Grotesk, or Inter (v0.2.0 elevation 2026-04-18)
 - Glass cards: `bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm`
 - Effects: Glass morphism, aurora gradients, cosmic glows
 - Framer Motion: use `domAnimation` not `domMax`
+- **Canonical tokens + primitives**: `@arcanea/design-system` v0.3.0 — `tokens`, `brand-kits`, `motion`, `primitives` (AnimatedBeam, NumberTicker, Marquee)
+
+## Design team (subagents + commands)
+
+Distributable plugin at `packages/claude-plugin-design/`. After symlink install (see `install.md`), these are available:
+
+**Slash commands** (`/design-*`):
+- `/design-brief <context>` — start a design brief
+- `/design-ship <target>` — full end-to-end page revamp
+- `/design-review <page>` / `/design-verify <page>` — quality review
+
+**Subagents** (dispatch via Task tool):
+- `design-architect` — brief + aesthetic + brand kit
+- `design-generator` — 3 variants via Magic + v0
+- `design-motion` — Framer Motion choreography
+- `design-imagery` — Fal / Gemini / Replicate
+- `design-verifier` — Playwright + Lighthouse quality gate
+
+**Skill routing:** `.arcanea/skills/design/INDEX.md` — maps canonical vs deprecated
+**Execution protocol:** `planning-with-files/AGENT_EXECUTION_PROTOCOL_2026-04-18_DESIGN.md`
 
 ## Content Loader
 

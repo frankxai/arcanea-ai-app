@@ -12,6 +12,11 @@ import ReactFlow, {
   type Node as ReactFlowNode,
   type Edge as ReactFlowEdge,
 } from '@xyflow/react';
+// @xyflow/react v12 default export has ambiguous JSX signature under our
+// bundler moduleResolution — alias it to bypass the 'not a JSX component'
+// complaint without affecting runtime.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ReactFlowComponent = ReactFlow as any;
 import '@xyflow/react/dist/style.css';
 import { m } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -101,8 +106,12 @@ function NodeShape({
 
 const NODE_SIZE = 48;
 
-function WorldNodeRenderer({ data, selected }: NodeProps<WorldNodeData>) {
-  const { label, nodeType, colors } = data;
+// @xyflow/react v12 NodeProps<T> requires T extends Node<Record<string, unknown>>.
+// Our WorldNodeData is a plain interface — cast at the component boundary so the
+// rest of the body stays cleanly typed.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function WorldNodeRenderer({ data, selected }: NodeProps<any>) {
+  const { label, nodeType, colors } = data as WorldNodeData;
   const size = selected ? NODE_SIZE + 6 : NODE_SIZE;
 
   return (
@@ -171,7 +180,7 @@ export function WorldGraph({ nodes: rawNodes, edges: rawEdges, className }: Worl
 
   const handleNodeClick = React.useCallback(
     (_: React.MouseEvent, node: ReactFlowNode) => {
-      const data = node.data as WorldNodeData;
+      const data = node.data as unknown as WorldNodeData;
 
       // Collect connected node labels
       const connectedIds = edges
@@ -180,7 +189,7 @@ export function WorldGraph({ nodes: rawNodes, edges: rawEdges, className }: Worl
 
       const connectedLabels = connectedIds.map((id) => {
         const found = nodes.find((n) => n.id === id);
-        return found ? (found.data as WorldNodeData).label : id;
+        return found ? (found.data as unknown as WorldNodeData).label : id;
       });
 
       setSelectedPanel({
@@ -212,7 +221,7 @@ export function WorldGraph({ nodes: rawNodes, edges: rawEdges, className }: Worl
       )}
       style={{ background: '#09090b' }}
     >
-      <ReactFlow
+      <ReactFlowComponent
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
@@ -254,7 +263,7 @@ export function WorldGraph({ nodes: rawNodes, edges: rawEdges, className }: Worl
             position="bottom-right"
             nodeStrokeWidth={2}
             nodeColor={(n) => {
-              const d = n.data as WorldNodeData;
+              const d = n.data as unknown as WorldNodeData;
               return d?.colors?.border ?? '#7fffd4';
             }}
             maskColor="rgba(9,9,11,0.75)"
@@ -266,7 +275,7 @@ export function WorldGraph({ nodes: rawNodes, edges: rawEdges, className }: Worl
             }}
           />
         )}
-      </ReactFlow>
+      </ReactFlowComponent>
 
       {/* Detail panel */}
       <WorldGraphPanel
