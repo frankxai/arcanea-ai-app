@@ -10,6 +10,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { Octokit } from '@octokit/rest';
+import { scoreTASTE } from '@arcanea/publishing-house/quality/taste-gate';
+import type { TasteResult } from '@arcanea/publishing-house/quality/types';
 import { createClient } from '@/lib/supabase/server';
 
 const GITHUB_OWNER = process.env.GITHUB_OWNER || 'frankxai';
@@ -26,13 +28,16 @@ interface PublishResult {
   chapter: string;
   sha?: string;
   error?: string;
+  taste?: TasteResult;
 }
 
 export async function POST(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ bookSlug: string }> },
 ) {
   const { bookSlug } = await params;
+  // Optional TASTE quality gate. ?gate=block refuses publish on fail; ?gate=warn (default) publishes anyway and surfaces scores.
+  const gateMode = (req.nextUrl.searchParams.get('gate') ?? 'warn') as 'warn' | 'block' | 'off';
 
   if (!process.env.GITHUB_TOKEN) {
     return NextResponse.json(
@@ -86,6 +91,42 @@ export async function POST(
     return NextResponse.json({ error: 'No drafts to publish' }, { status: 400 });
   }
 
+  // Optional TASTE pre-publish quality gate
+  const tasteByChapter = new Map<string, TasteResult>();
+  const blockedByGate: string[] = [];
+  if (gateMode !== 'off') {
+    for (const d of draftRows) {
+      try {
+        const result = await scoreTASTE({
+          content: d.content,
+          metadata: {
+            title: d.chapter_slug,
+            author: 'Arcanea Author',
+            language: 'en',
+            wordCount: d.word_count,
+          },
+        });
+        tasteByChapter.set(d.chapter_slug, result);
+        if (gateMode === 'block' && !result.passesGate) {
+          blockedByGate.push(d.chapter_slug);
+        }
+      } catch {
+        // Scoring failure is non-fatal in warn mode; in block mode we skip just to be safe.
+        if (gateMode === 'block') blockedByGate.push(d.chapter_slug);
+      }
+    }
+    if (gateMode === 'block' && blockedByGate.length > 0) {
+      return NextResponse.json(
+        {
+          error: 'TASTE gate failed for one or more drafts',
+          blocked: blockedByGate,
+          scores: Object.fromEntries(tasteByChapter),
+        },
+        { status: 412 },
+      );
+    }
+  }
+
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
   const results: PublishResult[] = [];
 
@@ -119,10 +160,18 @@ export async function POST(
         sha,
       });
 
-      results.push({ chapter: draft.chapter_slug, sha: result.data.commit.sha });
+      results.push({
+        chapter: draft.chapter_slug,
+        sha: result.data.commit.sha,
+        taste: tasteByChapter.get(draft.chapter_slug),
+      });
     } catch (e: unknown) {
       const error = e instanceof Error ? e.message : 'Unknown error';
-      results.push({ chapter: draft.chapter_slug, error });
+      results.push({
+        chapter: draft.chapter_slug,
+        error,
+        taste: tasteByChapter.get(draft.chapter_slug),
+      });
     }
   }
 
@@ -141,6 +190,7 @@ export async function POST(
     success: true,
     published: publishedChapters.length,
     failed: results.filter(r => r.error).length,
+    gateMode,
     results,
     deployUrl: `https://arcanea.ai/books/drafts/${bookSlug}`,
   });
