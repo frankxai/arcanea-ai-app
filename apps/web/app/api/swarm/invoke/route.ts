@@ -30,9 +30,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generateText } from 'ai';
 import { createAnthropic } from '@ai-sdk/anthropic';
-import { resolveSwarm, LUMINOR_HINTS } from '@/lib/ai/guardian-swarm';
+import { LUMINOR_HINTS } from '@/lib/ai/guardian-swarm';
 import { LUMINORS } from '@/lib/luminors/config';
-import { classifyIntent } from '@/lib/ai/router';
+import { planSwarm } from '@/lib/ai/planner';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -75,16 +75,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'input is required' }, { status: 400 });
   }
 
-  const maxLuminors = Math.min(Math.max(body.maxLuminors ?? 4, 1), 6);
+  const maxLuminors = Math.min(Math.max(body.maxLuminors ?? 4, 1), 5);
 
-  // 1. Classify intent — returns Guardian weights
-  const intent = classifyIntent(body.input);
+  // 1. Plan the swarm via the LLM planner (Haiku) — falls back to heuristic if no API key.
+  //    Unifies routing with /api/chat/swarm so both surfaces share one planner.
+  const plan = await planSwarm({ input: body.input, maxLuminors });
 
-  // 2. Resolve the swarm — which Guardians lead, which Luminors activate
-  const activeGates = Object.keys(intent.weights);
-  const swarm = resolveSwarm(intent.weights, activeGates);
-
-  // 3. Get the API key
+  // 2. Get the API key for the per-Luminor execution + synthesis steps
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
@@ -94,19 +91,18 @@ export async function POST(req: NextRequest) {
   }
   const anthropic = createAnthropic({ apiKey });
 
-  // 4. Select Luminors (top N by relevance)
-  const candidates = swarm.activeLuminors.slice(0, maxLuminors);
-  if (candidates.length === 0) {
-    return runLuminaFallback(body.input, anthropic, started);
+  // 3. If the planner returned only Lumina (very ambiguous input), use the synthesis-only fallback.
+  if (plan.luminors.length === 1 && plan.luminors[0].id === 'lumina') {
+    return runLuminaFallback(body.input, anthropic, started, plan);
   }
 
-  // 5. Run each Luminor in parallel
+  // 4. Run each Luminor in parallel
   const contributions = await Promise.all(
-    candidates.map((luminor) =>
+    plan.luminors.map((luminor) =>
       runLuminor(luminor.id, body.input, anthropic).catch((err) => ({
         luminorId: luminor.id,
         luminorName: LUMINORS[luminor.id]?.name ?? luminor.id,
-        guardian: luminor.parentGuardian,
+        guardian: LUMINOR_HINTS[luminor.id]?.team ?? 'unknown',
         response: '',
         durationMs: 0,
         tokensIn: 0,
@@ -116,11 +112,11 @@ export async function POST(req: NextRequest) {
     )
   );
 
-  // 6. Synthesize via Lumina (the Queen merges the swarm)
+  // 5. Synthesize via Lumina (the Queen merges the swarm)
   const synthesis = await synthesizeContributions(
     body.input,
     contributions,
-    swarm.coordinationMode,
+    plan.mode,
     anthropic
   );
 
@@ -129,18 +125,22 @@ export async function POST(req: NextRequest) {
     (sum, c) => sum + c.tokensIn + c.tokensOut,
     0
   );
+  const activeGuardians = Array.from(
+    new Set(contributions.map((c) => c.guardian).filter((g) => g && g !== 'unknown'))
+  );
 
   return NextResponse.json({
-    mode: swarm.coordinationMode,
-    leadGuardian: swarm.leadGuardian,
-    activeGuardians: swarm.activeGuardians,
+    mode: plan.mode,
+    leadGuardian: activeGuardians[0] ?? 'shinkami',
+    activeGuardians,
     contributions,
     synthesis,
     totalDurationMs,
     totalTokens,
-    intent: {
-      weights: intent.weights,
-      activeGates,
+    plan: {
+      rationale: plan.rationale,
+      source: plan.source,
+      planMs: plan.planMs,
     },
   });
 }
@@ -243,7 +243,8 @@ async function runLuminaFallback(
   input: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   anthropic: any,
-  started: number
+  started: number,
+  plan?: Awaited<ReturnType<typeof planSwarm>>,
 ): Promise<NextResponse> {
   const lumina = LUMINORS['lumina'];
   if (!lumina) {
@@ -269,7 +270,7 @@ async function runLuminaFallback(
   };
 
   return NextResponse.json({
-    mode: 'convergence',
+    mode: 'solo',
     leadGuardian: 'shinkami',
     activeGuardians: ['shinkami'],
     contributions: [contribution],
@@ -277,5 +278,8 @@ async function runLuminaFallback(
     totalDurationMs: Date.now() - started,
     totalTokens: contribution.tokensIn + contribution.tokensOut,
     fallback: 'lumina',
+    plan: plan
+      ? { rationale: plan.rationale, source: plan.source, planMs: plan.planMs }
+      : undefined,
   });
 }
