@@ -8,10 +8,12 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createAnthropic } from '@ai-sdk/anthropic';
-import { streamText } from 'ai';
+import { streamText, tool } from 'ai';
+import { z } from 'zod';
 import { readFile, readdir, access } from 'fs/promises';
 import { join } from 'path';
 import yaml from 'js-yaml';
+import { scoreTASTE } from '@arcanea/publishing-house/quality/taste-gate';
 import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
 
 const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
@@ -123,6 +125,7 @@ const AUTHOR_SYSTEM_PROMPT = `You are the Arcanea Author Companion — an AI wri
 - Prose improvement (line-level editing suggestions)
 - Character voice consistency checking
 - World-building consistency with the world bible
+- **Quality scoring via the score_draft tool** — when the author asks for an objective quality assessment of the current chapter, call score_draft with the chapter text. Returns the 5D TASTE breakdown (Technical, Aesthetic, Story/Canon, Transformative Impact, Experiential Uniqueness) plus a tier (hero/gallery/thumbnail/reject) and gate-pass status (≥60). Quote the lowest-scoring dimensions and use the feedback array to suggest targeted fixes.
 
 ## Context Trust
 - CANON sections are human-curated truth — treat as authoritative
@@ -233,6 +236,36 @@ export async function POST(req: NextRequest) {
       content: extractMessageText(msg),
     }));
 
+    // --- Tools ---
+    const tools = {
+      score_draft: tool({
+        description:
+          'Run the deterministic TASTE 5D quality gate on a chapter draft. Returns Technical, Aesthetic, Story/Canon, Impact, and Uniqueness scores (0-100 each), composite total, tier (hero ≥80 / gallery ≥60 / thumbnail ≥40 / reject), passesGate flag (≥60), and per-dimension feedback. Use this when the author asks for an objective quality assessment.',
+        inputSchema: z.object({
+          content: z
+            .string()
+            .min(50, 'Need at least 50 characters of draft text to score')
+            .describe('The chapter draft text to score (markdown allowed).'),
+          title: z
+            .string()
+            .optional()
+            .describe('Chapter or piece title. Defaults to the current chapter slug.'),
+        }),
+        execute: async ({ content, title }) => {
+          const result = await scoreTASTE({
+            content,
+            metadata: {
+              title: title || currentChapter || 'Untitled draft',
+              author: 'Arcanea Author',
+              language: 'en',
+              wordCount: content.split(/\s+/).filter(Boolean).length,
+            },
+          });
+          return result;
+        },
+      }),
+    };
+
     // --- Stream response ---
     const result = streamText({
       model: anthropic(modelId),
@@ -240,6 +273,7 @@ export async function POST(req: NextRequest) {
       messages: normalizedMessages,
       temperature: 0.7,
       maxOutputTokens: 8192,
+      tools,
     });
 
     return result.toUIMessageStreamResponse({
