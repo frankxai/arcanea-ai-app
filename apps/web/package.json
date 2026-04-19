@@ -26,6 +26,7 @@
     "@ai-sdk/google": "^3.0.0",
     "@ai-sdk/openai": "^3.0.0",
     "@ai-sdk/react": "^3.0.0",
+    "@arcanea/publishing-house": "workspace:^",
     "@arcanea/world-engine": "workspace:^",
     "@fal-ai/client": "^1.9.4",
     "@google/generative-ai": "^0.21.0",
