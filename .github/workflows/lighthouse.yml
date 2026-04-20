@@ -37,7 +37,7 @@ jobs:
 
       - name: Comment scores on PR
         if: always()
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: lighthouse
           message: |
