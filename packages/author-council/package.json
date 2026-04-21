@@ -35,7 +35,7 @@
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
     "typecheck": "tsc --noEmit",
-    "test": "node --test --experimental-test-module-mocks tests/*.test.mjs",
+    "test": "node --test tests/",
     "mcp": "node dist/mcp/bin.js"
   },
   "keywords": [

@@ -142,16 +142,38 @@ function isContradictory(actions: Set<string>): boolean {
 function normalizeAndCap(raw: Record<string, number>, maxMass: number): Record<string, number> {
   const total = Object.values(raw).reduce((s, v) => s + v, 0);
   if (total === 0) return raw;
+
   const normalized: Record<string, number> = {};
-  for (const [k, v] of Object.entries(raw)) {
-    normalized[k] = Math.min(v / total, maxMass);
+  for (const [k, v] of Object.entries(raw)) normalized[k] = v / total;
+
+  // Iterative cap-and-redistribute — cap any author > maxMass, redistribute
+  // excess among uncapped authors proportionally, repeat until stable.
+  const capped = new Set<string>();
+  for (let pass = 0; pass < 10; pass++) {
+    const over = Object.entries(normalized).filter(([k, v]) => !capped.has(k) && v > maxMass);
+    if (over.length === 0) break;
+
+    let excess = 0;
+    for (const [k] of over) {
+      excess += (normalized[k] ?? 0) - maxMass;
+      normalized[k] = maxMass;
+      capped.add(k);
+    }
+
+    const uncapped = Object.keys(normalized).filter((k) => !capped.has(k));
+    if (uncapped.length === 0) break;
+
+    const uncappedMass = uncapped.reduce((s, k) => s + (normalized[k] ?? 0), 0);
+    if (uncappedMass === 0) {
+      for (const k of uncapped) normalized[k] = (normalized[k] ?? 0) + excess / uncapped.length;
+    } else {
+      for (const k of uncapped) {
+        const share = (normalized[k] ?? 0) / uncappedMass;
+        normalized[k] = (normalized[k] ?? 0) + excess * share;
+      }
+    }
   }
-  // Re-normalize so weights sum to 1 after capping
-  const postCap = Object.values(normalized).reduce((s, v) => s + v, 0);
-  for (const k of Object.keys(normalized)) {
-    const value = normalized[k] ?? 0;
-    normalized[k] = value / postCap;
-  }
+
   return normalized;
 }
 

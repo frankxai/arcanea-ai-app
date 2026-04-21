@@ -52,8 +52,10 @@ export function routeQuestion(
     }
   }
 
-  // If below min, fill from the rest of the roster
-  if (picks.length < minAuthors) {
+  // If caller explicitly set preferAuthors, honor that exactly — do not backfill.
+  // Otherwise fill from roster to reach minAuthors.
+  const explicitPreference = !!(question.preferAuthors && question.preferAuthors.length > 0);
+  if (!explicitPreference && picks.length < minAuthors) {
     for (const a of options.roster) {
       if (picks.length >= minAuthors) break;
       if (!picks.includes(a)) picks.push(a);
