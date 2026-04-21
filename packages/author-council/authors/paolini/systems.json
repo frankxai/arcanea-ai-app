@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Dragon-Rider Bond",
+    "kind": "magic",
+    "laws": [
+      "Bond is established when rider touches hatched dragon's egg and it chooses them",
+      "Mind-link is involuntary; emotions bleed across",
+      "Rider gains extended life, pointed ears, increased strength; dragon grows into full telepathic intelligence",
+      "Death of one devastates the other"
+    ],
+    "costs": [
+      "Loss of privacy; intimate mind-contact",
+      "Bound to the dragon's fate",
+      "Rider's magic depends on emotional state of both parties"
+    ],
+    "limits": [
+      "Cannot break bond by choice",
+      "Cannot access full capability without the dragon's cooperation",
+      "Bond can be corrupted by force (Galbatorix)"
+    ],
+    "examples": [
+      "Eragon and Saphira — full cycle",
+      "Brom's bond severed"
+    ]
+  },
+  {
+    "name": "Ancient Language Magic",
+    "kind": "magic",
+    "laws": [
+      "Cannot lie in the Ancient Language",
+      "Spells require intention + vocabulary + energy",
+      "Energy drawn from magician's own body; can be supplemented from Eldunarí or allies",
+      "Precise wording determines precise outcome"
+    ],
+    "costs": [
+      "Physical exhaustion scaled to magnitude",
+      "Can kill the magician if overreached",
+      "Knowledge of true names is rare and guarded"
+    ],
+    "limits": [
+      "Limited by magician's vocabulary",
+      "Limited by magician's energy reserves",
+      "Limited by the structural constraints of the spell's wording"
+    ],
+    "examples": [
+      "Eragon's first brisingr",
+      "The wardings placed on Eragon by the Elves"
+    ]
+  }
+]

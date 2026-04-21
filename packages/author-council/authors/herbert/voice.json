@@ -1,0 +1,23 @@
+{
+  "sentenceLength": { "min": 5, "median": 16, "max": 45 },
+  "clauseDensity": "moderate",
+  "rhetoricalDevices": {
+    "anaphora": 2.0,
+    "chiasmus": 1.8,
+    "polysyndeton": 2.3,
+    "asyndeton": 2.1,
+    "parallelism": 3.5
+  },
+  "vocabularyTier": "elevated",
+  "pacing": "measured",
+  "pov": ["close-third", "multi-pov"],
+  "dialogueRatio": "balanced",
+  "signatureMoves": [
+    "Epigraphs opening every chapter — in-world documents",
+    "Interior italic thoughts mid-dialogue",
+    "Invented terminology used without glossary",
+    "Ecological-political feedback loops as plot substrate",
+    "Millennial time jumps between books",
+    "Messiah built in Book 1, destroyed in Book 2"
+  ]
+}

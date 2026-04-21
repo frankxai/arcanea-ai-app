@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Dûnyain Rationality",
+    "kind": "theological",
+    "laws": [
+      "Pursue the Absolute through rational discipline",
+      "What comes before determines what comes after (causation-first metaphysics)",
+      "Emotional attachments are obstacles to clarity",
+      "Foresight is achieved by probability-trance; the rational mind calculates the future"
+    ],
+    "costs": [
+      "Loss of ordinary human attachments",
+      "Foresight becomes its own cage — the Thousandfold Thought constrains Kellhus himself",
+      "Rationality weaponized severs you from the community of the unready"
+    ],
+    "limits": [
+      "Cannot fully escape the fabric of the Onta",
+      "Cannot anticipate the truly alien (the Consult, the No-God)",
+      "Cannot predict another Dûnyain"
+    ],
+    "examples": [
+      "Kellhus's seduction of Serwë and Leweth in Darkness That Comes Before",
+      "Moënghus's imprisonment in Shimeh"
+    ]
+  },
+  {
+    "name": "Sorcerous Mark",
+    "kind": "magic",
+    "laws": [
+      "Using sorcery leaves a visible stain (the Mark) on the soul",
+      "The stronger the sorcerer, the heavier the Mark",
+      "Chorae (trinkets) kill any marked sorcerer on contact",
+      "Mark = damnation at death"
+    ],
+    "costs": [
+      "Eternal: damnation is the stated cost",
+      "Social: sorcerers are marked visible to anyone with sight for souls",
+      "Physical: Chorae vulnerability"
+    ],
+    "limits": [
+      "Cannot be erased",
+      "Cannot be evaded by avoiding Chorae in mortal life; death is the issue",
+      "Psukhari (Cishaurim) work magic without Mark — narrative counter-example that proves the rule"
+    ],
+    "examples": [
+      "Akka's constant awareness of his Mark",
+      "Kellhus's eventual acceptance of damnation"
+    ]
+  }
+]

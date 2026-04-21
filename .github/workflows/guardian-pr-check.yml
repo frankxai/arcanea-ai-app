@@ -1,0 +1,183 @@
+name: Guardian PR Check
+
+# Tiered PR review with cost cap.
+# TRIVIAL (dependabot, typos, docs-only): fast checks only, no agent cost
+# STANDARD (code, <50 files):              single domain Guardian via Claude API (~$0.10)
+# HIGH-RISK (>50 files OR sacred paths):   full Council (5 agents, ~$1 max)
+# BLOCKED   (>500 files OR >10k deletions): auto-reject, require human SACRED-DELETE: tag
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+concurrency:
+  group: guardian-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  # ────────────────────────────────────────
+  # 1. Classify risk (free, always runs)
+  # ────────────────────────────────────────
+  classify:
+    name: Classify risk
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      tier: ${{ steps.tier.outputs.tier }}
+      files_changed: ${{ steps.diff.outputs.files_changed }}
+      deletions: ${{ steps.diff.outputs.deletions }}
+      sacred_touched: ${{ steps.diff.outputs.sacred_touched }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Diff stats
+        id: diff
+        run: |
+          BASE="${{ github.event.pull_request.base.sha }}"
+          HEAD="${{ github.event.pull_request.head.sha }}"
+
+          STATS=$(git diff --shortstat "$BASE".."$HEAD")
+          FILES=$(echo "$STATS" | grep -oE '[0-9]+ files? changed' | grep -oE '[0-9]+' || echo 0)
+          DELS=$(echo "$STATS" | grep -oE '[0-9]+ deletions?' | grep -oE '[0-9]+' || echo 0)
+
+          SACRED=""
+          for path in ".claude/commands/" ".claude/agents/" ".arcanea/" "CLAUDE.md" ".github/CODEOWNERS" ".github/workflows/"; do
+            if git diff --name-only "$BASE".."$HEAD" | grep -q "^$path"; then
+              SACRED="yes"
+              break
+            fi
+          done
+
+          echo "files_changed=${FILES:-0}" >> "$GITHUB_OUTPUT"
+          echo "deletions=${DELS:-0}" >> "$GITHUB_OUTPUT"
+          echo "sacred_touched=${SACRED:-no}" >> "$GITHUB_OUTPUT"
+
+      - name: Compute tier
+        id: tier
+        run: |
+          F=${{ steps.diff.outputs.files_changed }}
+          D=${{ steps.diff.outputs.deletions }}
+          S=${{ steps.diff.outputs.sacred_touched }}
+
+          if [ "$F" -gt 500 ] || [ "$D" -gt 10000 ]; then
+            echo "tier=BLOCKED" >> "$GITHUB_OUTPUT"
+          elif [ "$F" -gt 50 ] || [ "$S" = "yes" ]; then
+            echo "tier=HIGH_RISK" >> "$GITHUB_OUTPUT"
+          elif [ "$F" -le 5 ] && [ "$D" -le 100 ]; then
+            echo "tier=TRIVIAL" >> "$GITHUB_OUTPUT"
+          else
+            echo "tier=STANDARD" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Post risk summary
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const tier = '${{ steps.tier.outputs.tier }}';
+            const f = '${{ steps.diff.outputs.files_changed }}';
+            const d = '${{ steps.diff.outputs.deletions }}';
+            const s = '${{ steps.diff.outputs.sacred_touched }}';
+            const emoji = { TRIVIAL: '🟢', STANDARD: '🟡', HIGH_RISK: '🟠', BLOCKED: '🔴' }[tier];
+            const body = [
+              `## ${emoji} Guardian PR Check — tier: **${tier}**`,
+              ``,
+              `| metric | value |`,
+              `|---|---|`,
+              `| files changed | ${f} |`,
+              `| deletions | ${d} |`,
+              `| sacred path touched | ${s} |`,
+              ``,
+              tier === 'TRIVIAL'  ? '_Fast-path: CI only, no agent review._' : '',
+              tier === 'STANDARD' ? '_Single-Guardian review queued._' : '',
+              tier === 'HIGH_RISK'? '_Full Council review queued. Estimated cost: ≤ $1._' : '',
+              tier === 'BLOCKED' ? '_**BLOCKED** — PR exceeds safety thresholds. Add `BIG-CHANGE:` or `SACRED-DELETE:` to at least one commit, or split the PR._' : ''
+            ].filter(Boolean).join('\n');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body
+            });
+
+  # ────────────────────────────────────────
+  # 2. BLOCKED tier → fail unless tagged
+  # ────────────────────────────────────────
+  block-if-oversized:
+    name: Block oversized PR
+    needs: classify
+    if: needs.classify.outputs.tier == 'BLOCKED'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Check for override tags
+        run: |
+          BASE="${{ github.event.pull_request.base.sha }}"
+          HEAD="${{ github.event.pull_request.head.sha }}"
+          if git log --format=%B "$BASE".."$HEAD" | grep -qE 'BIG-CHANGE:|SACRED-DELETE:|MASS-REFACTOR:'; then
+            echo "✓ Override tag found, allowing."
+            exit 0
+          fi
+          echo "✗ PR exceeds size thresholds and no override tag is present."
+          echo "  Files: ${{ needs.classify.outputs.files_changed }}"
+          echo "  Deletions: ${{ needs.classify.outputs.deletions }}"
+          exit 1
+
+  # ────────────────────────────────────────
+  # 3. STANDARD → single-Guardian review
+  # ────────────────────────────────────────
+  single-guardian:
+    name: Single-Guardian review
+    needs: classify
+    if: needs.classify.outputs.tier == 'STANDARD'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - name: Queue single-Guardian review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          # Placeholder: replace with actual Guardian runner script.
+          # Intended: call Anthropic API with ONE Guardian persona
+          # chosen by domain (frontend→Lyria, backend→Lyssandria, etc.)
+          # Hard cap: 60k tokens total, 10 min wall time.
+          echo "TODO: wire scripts/guardian-single-review.mjs"
+          echo "tier=STANDARD, files=${{ needs.classify.outputs.files_changed }}"
+
+  # ────────────────────────────────────────
+  # 4. HIGH-RISK → Council (max 5 Guardians)
+  # ────────────────────────────────────────
+  council:
+    name: Guardian Council (5)
+    needs: classify
+    if: needs.classify.outputs.tier == 'HIGH_RISK'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - name: Convene Council with cost cap
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          COUNCIL_BUDGET_USD: '1.00'
+          COUNCIL_TOKEN_CAP: '300000'
+        run: |
+          # Placeholder: replace with actual Council runner script.
+          # Intended: spawn 5 Guardian personas in parallel via Anthropic API.
+          # Each Guardian reviews from their Gate perspective (structure/design/perf/voice/innovation).
+          # Aggregate into one PR comment with approve/request-changes/block verdict.
+          # Hard cap: 300k tokens total, 15 min wall time, $1 budget alert.
+          echo "TODO: wire scripts/guardian-council.mjs"
+          echo "tier=HIGH_RISK, sacred=${{ needs.classify.outputs.sacred_touched }}"
+
+  # ────────────────────────────────────────
+  # 5. TRIVIAL → nothing; CI alone suffices
+  # ────────────────────────────────────────

@@ -1,0 +1,11 @@
+{
+  "id": "philosophy",
+  "name": "Philosophy Council",
+  "license": "MIT",
+  "authors": ["bakker", "le-guin", "herbert", "gaiman", "erikson"],
+  "pluggable": true,
+  "synthesizer": "neutral",
+  "defaultMode": "adversarial",
+  "version": "0.1.0",
+  "description": "Philosophical-depth audit — consciousness-as-conflict (Bakker), ethics-as-plot (Le Guin), prescience-as-trap (Herbert), stories-as-real (Gaiman), grief-as-ground (Erikson). Adversarial default."
+}

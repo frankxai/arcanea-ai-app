@@ -1,0 +1,69 @@
+[
+  {
+    "name": "Allomancy",
+    "kind": "magic",
+    "laws": [
+      "Power is accessed by ingesting and metabolizing specific metals",
+      "Each of 16 metals grants one specific effect; no overlap",
+      "Mistborn access all metals; Mistings access one"
+    ],
+    "costs": [
+      "Metal must be ingested and is consumed on use",
+      "Pewter-burning accelerates injury recovery but masks wounds that compound",
+      "Atium and other God Metals are finite and extraordinarily rare"
+    ],
+    "limits": [
+      "No power without metal in the stomach",
+      "Aluminum wipes all stored metals instantly",
+      "Push/pull must anchor to a metal mass; cannot affect metal inside living beings beyond narrow cases"
+    ],
+    "examples": [
+      "Mistborn Book 1: Vin learning steel-pushing on coins",
+      "Well of Ascension: atium's true cost revealed"
+    ]
+  },
+  {
+    "name": "Surgebinding",
+    "kind": "magic",
+    "laws": [
+      "Power is granted by bonding a spren via sworn oaths",
+      "Each order of Radiant swears oaths of specific ethical commitment",
+      "Ten surges, each accessed by two orders"
+    ],
+    "costs": [
+      "Stormlight consumption during use",
+      "Breaking an oath severs the spren bond and kills the spren",
+      "Each oath deepens the moral test required to maintain it"
+    ],
+    "limits": [
+      "No stormlight, no surges",
+      "Oaths cannot be faked; the spren knows",
+      "Surges cannot violate their associated domain (gravitation, adhesion, etc.)"
+    ],
+    "examples": [
+      "Kaladin's second oath in Way of Kings",
+      "Dalinar's fifth oath in Oathbringer"
+    ]
+  },
+  {
+    "name": "Promise-Progress-Payoff",
+    "kind": "political",
+    "laws": [
+      "Every arc must state a promise in Act 1",
+      "Progress must be visible and measurable to the reader in Act 2",
+      "Payoff must arrive in the final 20% and feel both earned and surprising"
+    ],
+    "costs": [
+      "Time: payoff cannot be cheaply bought",
+      "Complexity: multiple arcs require careful interleaving"
+    ],
+    "limits": [
+      "No payoff without setup",
+      "No setup without eventual payoff (Chekhov's rule)"
+    ],
+    "examples": [
+      "Stormlight's per-book flashback arcs",
+      "Mistborn 1's Vin-learning-trust promise resolving in betrayal"
+    ]
+  }
+]

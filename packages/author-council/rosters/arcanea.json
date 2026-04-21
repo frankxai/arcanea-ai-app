@@ -1,0 +1,16 @@
+{
+  "id": "arcanea",
+  "name": "Arcanea Author Council",
+  "license": "Arcanea-Locked",
+  "authors": ["sanderson", "tolkien", "le-guin", "herbert", "bakker", "erikson", "gaiman"],
+  "pluggable": false,
+  "synthesizer": "lumina",
+  "defaultMode": "parallel",
+  "canon": {
+    "name": "arcanea-canon-locked",
+    "summary": "Arcanea operates on Lumina/Nero duality, Ten Gates, 8 Luminors, Five Elements with Void/Spirit. Arc turns: Potential → Manifestation → Experience → Dissolution → Evolved Potential. Hz frequencies are backend-only — use poetic taglines instead. Guardians each have Gate binding. Magic terminology: Arcane/Song/Mana/Anima. Malachar is the Dark Lord.",
+    "forbidden": ["explicit Hz frequency in user-facing copy", "generic light-vs-dark", "culturally-appropriated terminology", "Co-Authored-By contamination"]
+  },
+  "version": "0.1.0",
+  "description": "The locked Arcanea instance — seven seats, Lumina synthesis, canon-bound. Non-pluggable. This is the brand moat."
+}

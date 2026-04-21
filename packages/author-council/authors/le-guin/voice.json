@@ -1,0 +1,23 @@
+{
+  "sentenceLength": { "min": 3, "median": 12, "max": 30 },
+  "clauseDensity": "sparse",
+  "rhetoricalDevices": {
+    "anaphora": 1.8,
+    "chiasmus": 2.5,
+    "polysyndeton": 0.2,
+    "asyndeton": 3.1,
+    "parallelism": 4.2
+  },
+  "vocabularyTier": "mid",
+  "pacing": "patient",
+  "pov": ["close-third", "first", "omniscient"],
+  "dialogueRatio": "balanced",
+  "signatureMoves": [
+    "Compression — what the reader can supply is cut",
+    "Reversal as climax, not escalation",
+    "Anthropological interludes embedded in scene",
+    "Narrator reticence — withholding without hiding",
+    "Short sentence pivots after long periodic passages",
+    "Ethical question explicit in dialogue at the mid-point"
+  ]
+}

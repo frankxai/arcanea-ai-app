@@ -1,0 +1,23 @@
+{
+  "sentenceLength": { "min": 8, "median": 22, "max": 80 },
+  "clauseDensity": "dense",
+  "rhetoricalDevices": {
+    "anaphora": 3.2,
+    "chiasmus": 1.1,
+    "polysyndeton": 4.5,
+    "asyndeton": 1.2,
+    "parallelism": 5.8
+  },
+  "vocabularyTier": "elevated",
+  "pacing": "patient",
+  "pov": ["omniscient", "close-third"],
+  "dialogueRatio": "balanced",
+  "signatureMoves": [
+    "Verse embedded as cultural artifact, not authorial ornament",
+    "Landscape description carrying moral weight",
+    "Genealogies and inventories as narrative mode",
+    "Archaic register matched to scene's mythic weight",
+    "Deep-time markers — references to Ages past",
+    "Untranslated Elvish phrases trusting the reader to sit with them"
+  ]
+}

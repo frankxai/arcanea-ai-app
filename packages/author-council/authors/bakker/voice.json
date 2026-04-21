@@ -1,0 +1,23 @@
+{
+  "sentenceLength": { "min": 4, "median": 18, "max": 60 },
+  "clauseDensity": "dense",
+  "rhetoricalDevices": {
+    "anaphora": 3.8,
+    "chiasmus": 3.2,
+    "polysyndeton": 3.0,
+    "asyndeton": 1.6,
+    "parallelism": 4.8
+  },
+  "vocabularyTier": "archaic",
+  "pacing": "measured",
+  "pov": ["close-third", "multi-pov"],
+  "dialogueRatio": "balanced",
+  "signatureMoves": [
+    "Thrown opening — reader disoriented deliberately",
+    "Multiple register braiding (Scylvendi / Dûnyain / sorcerous / demotic)",
+    "Philosophical vocabulary in-scene, in-dialogue",
+    "Interior-catastrophe apocalyptic register",
+    "Proverb-embedded mythic register for pre-philosophical characters",
+    "Brutality tethered to metaphysical weight"
+  ]
+}

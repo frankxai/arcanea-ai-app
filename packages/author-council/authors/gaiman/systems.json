@@ -1,0 +1,49 @@
+[
+  {
+    "name": "Belief-Substrate Divinity",
+    "kind": "theological",
+    "laws": [
+      "Gods exist because they are believed in",
+      "Forgotten gods diminish; unbelieved gods die or change",
+      "New gods rise from new kinds of attention (media, internet, highway)",
+      "Belief is transferable and competitive"
+    ],
+    "costs": [
+      "Gods must work to maintain belief — con, blood, ritual",
+      "Assimilation to a new culture changes the god",
+      "Death comes with obsolescence"
+    ],
+    "limits": [
+      "Cannot survive total forgetting",
+      "Cannot fully escape the form belief gave them",
+      "Old World gods in America are always immigrants"
+    ],
+    "examples": [
+      "American Gods — the full pantheon logic",
+      "Sandman — Morpheus's dependence on the Dreaming's imagination"
+    ]
+  },
+  {
+    "name": "Dreaming as Territory",
+    "kind": "magic",
+    "laws": [
+      "The Dreaming has geography",
+      "Dreams have citizenship",
+      "Morpheus rules; his rule is mostly observation",
+      "Waking breaches the Dreaming at the edges"
+    ],
+    "costs": [
+      "A dream without a dreamer is a risk",
+      "Morpheus binds stories that escape their tellers",
+      "Those who trespass in the Dreaming risk being rewritten"
+    ],
+    "limits": [
+      "Cannot override a dreamer's autonomous imagination",
+      "Cannot prevent nightmares that are owed"
+    ],
+    "examples": [
+      "Preludes & Nocturnes — Morpheus reclaiming the Dreaming",
+      "The Kindly Ones arc"
+    ]
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "sentenceLength": { "min": 6, "median": 19, "max": 55 },
+  "clauseDensity": "dense",
+  "rhetoricalDevices": {
+    "anaphora": 2.2,
+    "chiasmus": 2.0,
+    "polysyndeton": 2.8,
+    "asyndeton": 1.5,
+    "parallelism": 4.0
+  },
+  "vocabularyTier": "elevated",
+  "pacing": "measured",
+  "pov": ["close-third", "first"],
+  "dialogueRatio": "high",
+  "signatureMoves": [
+    "Reluctant-veteran protagonist interior monologue",
+    "Legalistic dialogue during argument scenes",
+    "HEMA-accurate combat choreography",
+    "Aftermath-equal-to-fight pacing",
+    "Institutional theology rendered with bureaucratic precision",
+    "Named-artifact history constraining wielder",
+    "Germanic formal register with complex subordination"
+  ]
+}

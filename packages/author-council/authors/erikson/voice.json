@@ -1,0 +1,23 @@
+{
+  "sentenceLength": { "min": 3, "median": 17, "max": 55 },
+  "clauseDensity": "dense",
+  "rhetoricalDevices": {
+    "anaphora": 2.8,
+    "chiasmus": 2.0,
+    "polysyndeton": 2.5,
+    "asyndeton": 2.7,
+    "parallelism": 4.0
+  },
+  "vocabularyTier": "elevated",
+  "pacing": "patient",
+  "pov": ["multi-pov", "close-third"],
+  "dialogueRatio": "balanced",
+  "signatureMoves": [
+    "Mid-scene chapter opens — reader reconstructs frame",
+    "Soldier-demotic wry humor adjacent to cosmic-horror register",
+    "Poetic interludes during mythic-weight scenes",
+    "Interior philosophical monologue during battle",
+    "Civilization's own chronology embedded in dialogue",
+    "Convergence as structural climax not plot event"
+  ]
+}

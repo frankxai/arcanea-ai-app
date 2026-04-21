@@ -1,0 +1,11 @@
+{
+  "id": "fiction",
+  "name": "Fiction Author Council",
+  "license": "MIT",
+  "authors": ["paolini", "schwartz", "weeks", "sanderson", "le-guin"],
+  "pluggable": true,
+  "synthesizer": "neutral",
+  "defaultMode": "parallel",
+  "version": "0.1.0",
+  "description": "Community-facing fiction council — Frank's favorites + Sanderson's systems rigor + Le Guin's restraint. Execution-focused, not metaphysical-architecture."
+}

@@ -1,0 +1,24 @@
+{
+  "sentenceLength": { "min": 3, "median": 12, "max": 30 },
+  "clauseDensity": "moderate",
+  "rhetoricalDevices": {
+    "anaphora": 1.0,
+    "chiasmus": 0.8,
+    "polysyndeton": 1.0,
+    "asyndeton": 2.5,
+    "parallelism": 3.0
+  },
+  "vocabularyTier": "mid",
+  "pacing": "propulsive",
+  "pov": ["close-third", "multi-pov"],
+  "dialogueRatio": "high",
+  "signatureMoves": [
+    "Short chapters, fast POV rotation",
+    "Chapter-ending cliffhanger or complication",
+    "Wry self-aware interior monologue",
+    "Combat choreography in close camera, functional technique names",
+    "Modern register even in secondary-world fantasy",
+    "Color-as-character mapping in Lightbringer",
+    "Mentor-killer paradox as structural spine"
+  ]
+}

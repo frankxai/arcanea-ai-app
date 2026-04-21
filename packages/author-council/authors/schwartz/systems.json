@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Oath-Binding (Recht)",
+    "kind": "theological",
+    "laws": [
+      "A formally sworn oath has metaphysical weight",
+      "Breaking an oath incurs theological cost as well as legal",
+      "The witnesses matter — oaths sworn before gods are heavier",
+      "Some oaths cannot be unmade; others can be formally released"
+    ],
+    "costs": [
+      "Perjury reduces the soul's standing",
+      "Broken oaths leave visible marks to those with sight",
+      "Some oaths kill the oath-breaker"
+    ],
+    "limits": [
+      "Cannot force compliance; the oath-taker can still break, at cost",
+      "Cannot oath-bind those who have not consented",
+      "Institutional oaths require institutional release"
+    ],
+    "examples": [
+      "Havald's veteran oath to the Emperor",
+      "The Ordensritter's formal vows"
+    ]
+  },
+  {
+    "name": "Götterkriege Cosmology",
+    "kind": "theological",
+    "laws": [
+      "Gods exist as active agents with factions",
+      "Gods war through mortal agents",
+      "Divine conflict propagates at every scale",
+      "The mortal political is the shadow of the divine political"
+    ],
+    "costs": [
+      "Mortal champions pay the price of divine conflict",
+      "Neutrality is not possible for the chosen",
+      "Victory for one divine faction is defeat for another, cascading consequences"
+    ],
+    "limits": [
+      "Gods cannot directly intervene; they must work through agents",
+      "Divine power is finite and contested",
+      "Certain mortal oaths bind even gods"
+    ],
+    "examples": [
+      "Askir empire as stage for divine faction conflict",
+      "Zornblum's role as theological pivot"
+    ]
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Chromaturgy (Drafting)",
+    "kind": "magic",
+    "laws": [
+      "Drafters pull luxin from light of their accessible color(s)",
+      "Each color of luxin has distinct physical properties (sub-red burns, blue is brittle, green is flexible, etc.)",
+      "Emotion tied to color — green emotions draft green luxin",
+      "A drafter's halo (ring in the iris) tracks their approach to breaking"
+    ],
+    "costs": [
+      "Drafting shortens the drafter's life — each use pushes the halo closer to breaking",
+      "Breaking the halo = madness (Color Wights) or death",
+      "Color-blindness takes specific colors off the table permanently",
+      "Some colors are harder on the body than others"
+    ],
+    "limits": [
+      "Cannot draft without source-light",
+      "Cannot draft colors outside your spectrum",
+      "Rare few (Prisms) can draft all seven",
+      "Older drafters risk breaking every use"
+    ],
+    "examples": [
+      "Gavin's Prism-class capabilities",
+      "Kip's late-game Nine King's Letters drafting"
+    ]
+  },
+  {
+    "name": "Ka'kari Artifact Magic",
+    "kind": "magic",
+    "laws": [
+      "Seven ka'kari, one Black",
+      "Each ka'kari has specific elemental affinity and capability",
+      "Bonding requires specific ritual / encounter",
+      "The Black ka'kari devours other ka'kari"
+    ],
+    "costs": [
+      "Bonded user cannot safely separate",
+      "Each ka'kari reshapes the user over time",
+      "The Black isolates and drives toward kill-craft"
+    ],
+    "limits": [
+      "Only one user per ka'kari at a time",
+      "Cannot undo the Black's consumption of other ka'kari",
+      "Certain ritual constraints on transmission"
+    ],
+    "examples": [
+      "Kylar's bond with the Black ka'kari",
+      "Durzo's long-cycle user history"
+    ]
+  }
+]

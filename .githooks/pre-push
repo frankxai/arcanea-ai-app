@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# Arcanea Pre-Push — Force-push + destructive-push guard
+# Blocks force-push to main/master and destructive pushes to protected branches.
+
+set -euo pipefail
+
+RED='\033[0;31m'
+YEL='\033[1;33m'
+GRN='\033[0;32m'
+NC='\033[0m'
+
+PROTECTED_BRANCHES='^(main|master|production)$'
+
+# Read refs from stdin (git pre-push protocol: local_ref local_sha remote_ref remote_sha)
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ -z "$remote_ref" ] && continue
+
+  # Extract branch name
+  branch=${remote_ref#refs/heads/}
+
+  # Only guard protected branches
+  if ! echo "$branch" | grep -qE "$PROTECTED_BRANCHES"; then
+    continue
+  fi
+
+  # Detect force push: remote_sha is non-zero and not an ancestor of local_sha
+  zero="0000000000000000000000000000000000000000"
+  if [ "$remote_sha" != "$zero" ]; then
+    if ! git merge-base --is-ancestor "$remote_sha" "$local_sha" 2>/dev/null; then
+      echo ""
+      echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo -e "${RED}  ✗ BLOCKED: Force push to protected branch '$branch'${NC}"
+      echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+      echo ""
+      echo "  Remote ${remote_sha:0:8} is not an ancestor of local ${local_sha:0:8}."
+      echo "  This is a force push and would rewrite history on '$branch'."
+      echo ""
+      echo "  If this is truly intentional (very rare):"
+      echo "    git push --no-verify ...   # bypass this hook"
+      echo ""
+      exit 1
+    fi
+  fi
+
+  # Check for deletions in protected paths
+  if [ "$remote_sha" != "$zero" ]; then
+    DELETED=$(git diff --name-only --diff-filter=D "$remote_sha".."$local_sha" 2>/dev/null || echo "")
+    SACRED_HIT=""
+    for path in ".claude/commands/" ".claude/agents/" ".arcanea/" "CLAUDE.md" ".github/CODEOWNERS"; do
+      MATCH=$(echo "$DELETED" | grep "^$path" || true)
+      [ -n "$MATCH" ] && SACRED_HIT="${SACRED_HIT}${MATCH}\n"
+    done
+
+    if [ -n "$SACRED_HIT" ]; then
+      # Check commit messages in range for SACRED-DELETE: tag
+      if ! git log --format=%B "$remote_sha".."$local_sha" 2>/dev/null | grep -qE 'SACRED-DELETE:'; then
+        echo ""
+        echo -e "${RED}✗ BLOCKED: Push to '$branch' deletes sacred files${NC}"
+        echo ""
+        echo -e "$SACRED_HIT" | sed 's/^/    /'
+        echo ""
+        echo "  At least one commit in this push must carry 'SACRED-DELETE:' tag."
+        exit 1
+      fi
+    fi
+  fi
+done
+
+echo -e "${GRN}✓ Pre-push passed${NC}" >&2

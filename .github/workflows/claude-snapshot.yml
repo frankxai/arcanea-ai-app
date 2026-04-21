@@ -1,0 +1,112 @@
+name: Claude config snapshot
+
+# Daily immutable snapshot of .claude/, .arcanea/, CLAUDE.md files.
+# Pushes to a backup branch — never touches main.
+# Detects core file loss and alerts.
+
+on:
+  schedule:
+    - cron: '17 3 * * *'  # 03:17 UTC daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: claude-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Compute hashes of sacred files
+        id: hash
+        run: |
+          mkdir -p .snapshot
+          DATE=$(date -u +%Y-%m-%d)
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+
+          {
+            echo "# Claude config snapshot — $DATE"
+            echo ""
+            echo "## .claude/commands/"
+            find .claude/commands -type f -name '*.md' 2>/dev/null | sort | while read -r f; do
+              echo "- \`$f\` — $(sha256sum "$f" | cut -c1-16)"
+            done
+            echo ""
+            echo "## .claude/agents/"
+            find .claude/agents -type f -name '*.md' 2>/dev/null | sort | while read -r f; do
+              echo "- \`$f\` — $(sha256sum "$f" | cut -c1-16)"
+            done
+            echo ""
+            echo "## CLAUDE.md files"
+            find . -maxdepth 4 -name 'CLAUDE.md' -not -path './node_modules/*' 2>/dev/null | sort | while read -r f; do
+              echo "- \`$f\` — $(sha256sum "$f" | cut -c1-16)"
+            done
+          } > ".snapshot/manifest-$DATE.md"
+
+          LUMINA_OK=$([ -f .claude/commands/lumina.md ] && echo yes || echo no)
+          ARCANEA_OK=$([ -f .claude/commands/arcanea.md ] && echo yes || echo no)
+          SI_OK=$([ -f .claude/commands/superintelligence.md ] && echo yes || echo no)
+          echo "lumina_present=$LUMINA_OK" >> "$GITHUB_OUTPUT"
+          echo "arcanea_present=$ARCANEA_OK" >> "$GITHUB_OUTPUT"
+          echo "si_present=$SI_OK" >> "$GITHUB_OUTPUT"
+
+      - name: Push to backup branch
+        run: |
+          git config user.name  "arcanea-snapshot-bot"
+          git config user.email "snapshot@arcanea.ai"
+
+          git fetch origin backup/claude-snapshots:backup/claude-snapshots 2>/dev/null || true
+          git checkout -B backup/claude-snapshots origin/backup/claude-snapshots 2>/dev/null || git checkout --orphan backup/claude-snapshots
+          git reset --hard 2>/dev/null || true
+
+          # Copy current state into snapshot dir
+          DATE=${{ steps.hash.outputs.date }}
+          mkdir -p "snapshots/$DATE"
+          cp -r .claude "snapshots/$DATE/claude" 2>/dev/null || true
+          cp -r .arcanea "snapshots/$DATE/arcanea" 2>/dev/null || true
+          find . -maxdepth 4 -name 'CLAUDE.md' -not -path './snapshots/*' -not -path './node_modules/*' -exec cp --parents {} "snapshots/$DATE/" \; 2>/dev/null || true
+          cp .snapshot/manifest-"$DATE".md "snapshots/$DATE/manifest.md" 2>/dev/null || true
+
+          git add "snapshots/$DATE"
+          git commit -m "snapshot: $DATE" || echo "No changes to snapshot"
+          git push origin backup/claude-snapshots
+
+      - name: Alert if canonical commands missing
+        if: steps.hash.outputs.lumina_present == 'no' || steps.hash.outputs.arcanea_present == 'no' || steps.hash.outputs.si_present == 'no'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const missing = [];
+            if ('${{ steps.hash.outputs.lumina_present }}'  === 'no') missing.push('/lumina');
+            if ('${{ steps.hash.outputs.arcanea_present }}' === 'no') missing.push('/arcanea');
+            if ('${{ steps.hash.outputs.si_present }}'      === 'no') missing.push('/superintelligence');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 Canonical commands missing on main — ${missing.join(', ')}`,
+              body: [
+                `Daily snapshot detected missing canonical commands:`,
+                ``,
+                missing.map(m => `- \`${m}\``).join('\n'),
+                ``,
+                `Restore via:`,
+                `\`\`\``,
+                `gh workflow run restore-from-incident.yml \\`,
+                `  -f commit_sha=<last-good-commit>^ \\`,
+                `  -f path_glob='.claude/commands/**' \\`,
+                `  -f branch_suffix=canonical-restore`,
+                `\`\`\``,
+                ``,
+                `See RECOVERY.md for historical incident references.`
+              ].join('\n'),
+              labels: ['incident', 'priority/high']
+            });

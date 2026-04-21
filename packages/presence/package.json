@@ -1,0 +1,68 @@
+{
+  "name": "@arcanea/presence",
+  "version": "0.1.0",
+  "description": "Presence layer for Arcanea — Lumina orb (482-line GLSL particle shell + icosahedron core + halo + satellites), audio analyser, and presence primitives. The visual substrate for Arcanea Cortex (The Living Second Brain).",
+  "license": "MIT",
+  "author": "FrankX <frank@frankx.ai>",
+  "homepage": "https://arcanea.ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frankxai/arcanea-ai-app.git",
+    "directory": "packages/presence"
+  },
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    },
+    "./lumina-orb": {
+      "types": "./src/lumina-orb.tsx",
+      "import": "./src/lumina-orb.tsx"
+    },
+    "./lumina-presence": {
+      "types": "./src/lumina-presence.tsx",
+      "import": "./src/lumina-presence.tsx"
+    },
+    "./use-audio-analyser": {
+      "types": "./src/use-audio-analyser.ts",
+      "import": "./src/use-audio-analyser.ts"
+    }
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "framer-motion": "^11.15.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "three": "^0.183.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.183.0",
+    "typescript": "^5.5.0"
+  },
+  "keywords": [
+    "arcanea",
+    "presence",
+    "lumina",
+    "three.js",
+    "glsl",
+    "webgl",
+    "particle-system",
+    "voice-ui",
+    "react",
+    "cortex"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

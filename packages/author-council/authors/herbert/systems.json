@@ -1,0 +1,70 @@
+[
+  {
+    "name": "Spice Cycle",
+    "kind": "ecological",
+    "laws": [
+      "Spice is produced by sandworms in arid desert",
+      "Water kills sandworms (drowning)",
+      "Spice is required for Guild navigation, Bene Gesserit prescience, extended life",
+      "Desert preservation preserves spice preserves Imperium"
+    ],
+    "costs": [
+      "Spice extraction is dangerous (worm attacks)",
+      "Spice addiction has biological cost",
+      "Arrakis must remain desert; terraforming it destroys the cycle"
+    ],
+    "limits": [
+      "Only Arrakis produces natural spice",
+      "Spice is a finite yield per unit desert",
+      "Attempts to synthesize spice (Tleilaxu) are imperfect"
+    ],
+    "examples": [
+      "Dune — Paul's rise controls the spice",
+      "God Emperor of Dune — Leto II's ecological intervention"
+    ]
+  },
+  {
+    "name": "Prescience Trap",
+    "kind": "theological",
+    "laws": [
+      "Seeing multiple futures narrows the choosable set",
+      "Each prescient choice forecloses alternatives",
+      "The oracle's capacity is their captivity"
+    ],
+    "costs": [
+      "Self becomes subordinate to the vision",
+      "Loss of spontaneous agency",
+      "Jihad becomes inevitable because it is already seen"
+    ],
+    "limits": [
+      "Cannot see past another prescient (mutual blindness)",
+      "Cannot see past a no-ship (prescience-blocker)",
+      "Cannot see past a self-correcting decision (the Golden Path)"
+    ],
+    "examples": [
+      "Dune Messiah — Paul's Jihad he cannot stop",
+      "God Emperor — Leto II's 3500-year captivity"
+    ]
+  },
+  {
+    "name": "Religion as Political Technology",
+    "kind": "political",
+    "laws": [
+      "Prophecies can be planted generations in advance",
+      "Belief is mobilizable resource",
+      "The Bene Gesserit Missionaria Protectiva plants myths"
+    ],
+    "costs": [
+      "Once planted, the myth cannot be fully controlled",
+      "The tools (belief) reshape the user over generations"
+    ],
+    "limits": [
+      "Requires millennial patience",
+      "Cannot override genuine charisma that exceeds the plant"
+    ],
+    "examples": [
+      "Fremen messiah myth",
+      "Arrakis Lisan al-Gaib prophecy"
+    ]
+  }
+]
