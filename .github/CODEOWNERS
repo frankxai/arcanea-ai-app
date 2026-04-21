@@ -24,3 +24,13 @@ supabase/                   @frankxai
 
 # Packages — specialist per package
 packages/                   @frankxai
+
+# Sacred: Claude commands, agents, instructions — protected after 073bc640 incident
+.claude/                    @frankxai
+.claude/commands/           @frankxai
+.claude/agents/             @frankxai
+CLAUDE.md                   @frankxai
+**/CLAUDE.md                @frankxai
+.githooks/                  @frankxai
+scripts/install-hooks.sh    @frankxai
+RECOVERY.md                 @frankxai

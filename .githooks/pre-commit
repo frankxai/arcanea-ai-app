@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+# Arcanea Pre-Commit — Mass Delete Guardian + Secrets Guardian
+# Prevents the 2026-03-11 incident pattern: wide deletes hidden behind small commit messages.
+# Also blocks commits containing secrets.
+#
+# Install: bash scripts/install-hooks.sh
+# Bypass (emergency only): git commit --no-verify  (never do this on main)
+
+set -euo pipefail
+
+RED='\033[0;31m'
+YEL='\033[1;33m'
+GRN='\033[0;32m'
+NC='\033[0m'
+
+fail() { echo -e "${RED}✗ $1${NC}" >&2; exit 1; }
+warn() { echo -e "${YEL}⚠ $1${NC}" >&2; }
+ok()   { echo -e "${GRN}✓ $1${NC}" >&2; }
+
+# ─────────────────────────────────────────────────────────────
+# 1. MASS DELETE GUARDIAN
+# ─────────────────────────────────────────────────────────────
+# Block commits that delete >100 files or >5000 lines unless message contains BIG-CHANGE:
+STATS=$(git diff --cached --shortstat 2>/dev/null || echo "")
+FILES_CHANGED=$(echo "$STATS" | grep -oE '[0-9]+ files? changed' | grep -oE '[0-9]+' || echo 0)
+DELETIONS=$(echo "$STATS" | grep -oE '[0-9]+ deletions?' | grep -oE '[0-9]+' || echo 0)
+FILES_CHANGED=${FILES_CHANGED:-0}
+DELETIONS=${DELETIONS:-0}
+
+COMMIT_MSG_FILE=".git/COMMIT_EDITMSG"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE" 2>/dev/null || echo "")
+
+if [ "$FILES_CHANGED" -gt 100 ] || [ "$DELETIONS" -gt 5000 ]; then
+  if ! echo "$COMMIT_MSG" | grep -qE 'BIG-CHANGE:|MASS-REFACTOR:|GENERATED:'; then
+    echo ""
+    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${RED}  ✗ BLOCKED: Large commit without scope tag${NC}"
+    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    echo "  Files changed: $FILES_CHANGED"
+    echo "  Deletions:     $DELETIONS"
+    echo ""
+    echo "  This commit looks like the 2026-03-11 mass-revert incident pattern."
+    echo "  If this is intentional, add one of these tags to your commit message:"
+    echo ""
+    echo "    BIG-CHANGE:       wide legitimate refactor"
+    echo "    MASS-REFACTOR:    monorepo-wide rename / migration"
+    echo "    GENERATED:        auto-generated code (dist/, coverage/)"
+    echo ""
+    echo "  To see what you're about to commit:"
+    echo "    git diff --cached --stat | tail -20"
+    echo ""
+    exit 1
+  fi
+  warn "Large commit accepted (scope tag present): $FILES_CHANGED files, $DELETIONS deletions"
+fi
+
+# ─────────────────────────────────────────────────────────────
+# 2. SACRED PATH GUARDIAN
+# ─────────────────────────────────────────────────────────────
+# Warn loudly if deleting files in protected paths
+SACRED_PATHS=(
+  ".claude/commands/"
+  ".claude/agents/"
+  ".arcanea/"
+  "CLAUDE.md"
+  "book/CLAUDE.md"
+  "apps/web/CLAUDE.md"
+  ".github/CODEOWNERS"
+  ".github/workflows/"
+  "packages/design-system/"
+)
+
+DELETED=$(git diff --cached --name-only --diff-filter=D 2>/dev/null || echo "")
+SACRED_DELETIONS=""
+for path in "${SACRED_PATHS[@]}"; do
+  MATCH=$(echo "$DELETED" | grep "^$path" || true)
+  if [ -n "$MATCH" ]; then
+    SACRED_DELETIONS="${SACRED_DELETIONS}${MATCH}\n"
+  fi
+done
+
+if [ -n "$SACRED_DELETIONS" ]; then
+  if ! echo "$COMMIT_MSG" | grep -qE 'SACRED-DELETE:'; then
+    echo ""
+    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${RED}  ✗ BLOCKED: Deletion in protected path${NC}"
+    echo -e "${RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo ""
+    echo "  You are about to delete sacred files:"
+    echo ""
+    echo -e "$SACRED_DELETIONS" | sed 's/^/    /'
+    echo ""
+    echo "  These paths hold canonical Arcanea intelligence (commands, agents,"
+    echo "  lore, CLAUDE.md). Losing them without notice cost 40 days in March."
+    echo ""
+    echo "  If intentional, add 'SACRED-DELETE:' to your commit message."
+    echo ""
+    exit 1
+  fi
+fi
+
+# ─────────────────────────────────────────────────────────────
+# 3. SECRETS GUARDIAN (existing behavior — preserved)
+# ─────────────────────────────────────────────────────────────
+STAGED=$(git diff --cached --name-only --diff-filter=ACM 2>/dev/null || echo "")
+SECRET_PATTERNS=(
+  'sk-[a-zA-Z0-9]{20,}'                    # OpenAI / Anthropic
+  'AIza[0-9A-Za-z\-_]{35}'                 # Google API
+  'ghp_[a-zA-Z0-9]{36}'                    # GitHub PAT
+  'github_pat_[a-zA-Z0-9_]{82}'            # GitHub fine-grained
+  'xox[baprs]-[a-zA-Z0-9\-]{10,}'          # Slack
+  'eyJhbGciOi[A-Za-z0-9_\-\.]+'            # JWT (heuristic)
+  'postgres://[^[:space:]]+:[^[:space:]]+@' # Postgres URL with password
+  '-----BEGIN (RSA |OPENSSH |EC )?PRIVATE KEY-----'
+)
+
+for file in $STAGED; do
+  [ -f "$file" ] || continue
+  # Skip known-safe files
+  case "$file" in
+    *.lock|*.lockb|*.min.js|*.min.css|*package-lock.json|*pnpm-lock.yaml) continue ;;
+    *.svg|*.png|*.jpg|*.jpeg|*.webp|*.gif|*.ico|*.woff*|*.ttf|*.mp3|*.mp4) continue ;;
+    .githooks/*|scripts/install-hooks.sh) continue ;;  # security tooling holds pattern literals
+    .gitleaks.toml|.secrets.baseline|*.test.*) continue ;;
+  esac
+  for pattern in "${SECRET_PATTERNS[@]}"; do
+    if grep -qE "$pattern" "$file" 2>/dev/null; then
+      # Allow if inside .env.example or docs with placeholder
+      if ! echo "$file" | grep -qE '\.env\.example$|README|docs/.*\.md$'; then
+        echo ""
+        echo -e "${RED}✗ Potential secret detected in: $file${NC}"
+        echo -e "${RED}  Pattern: $pattern${NC}"
+        echo "  Remove the secret or add the file to .gitignore."
+        exit 1
+      fi
+    fi
+  done
+done
+
+ok "Pre-commit passed ($FILES_CHANGED files, $DELETIONS deletions)"
