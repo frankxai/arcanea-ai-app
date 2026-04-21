@@ -1,0 +1,70 @@
+{
+  "name": "@arcanea/author-council",
+  "version": "0.1.0",
+  "description": "Author Council protocol — pluggable rosters of author-voiced agents with 4 deliberation modes, neutral synthesizer, and question-taxonomy router. MIT protocol, Arcanea instance locked.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./protocol": {
+      "types": "./dist/protocol/index.d.ts",
+      "import": "./dist/protocol/index.js"
+    },
+    "./modes": {
+      "types": "./dist/modes/index.d.ts",
+      "import": "./dist/modes/index.js"
+    },
+    "./rosters": {
+      "types": "./dist/rosters/index.d.ts",
+      "import": "./dist/rosters/index.js"
+    },
+    "./mcp": {
+      "types": "./dist/mcp/index.d.ts",
+      "import": "./dist/mcp/index.js"
+    }
+  },
+  "bin": {
+    "author-council": "./dist/mcp/bin.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --experimental-test-module-mocks tests/*.test.mjs",
+    "mcp": "node dist/mcp/bin.js"
+  },
+  "keywords": [
+    "arcanea",
+    "author-council",
+    "writing",
+    "craft",
+    "mcp",
+    "sanderson",
+    "tolkien",
+    "le-guin",
+    "deliberation",
+    "synthesis"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist",
+    "authors",
+    "rosters",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.0",
+    "typescript": "^5.5.0"
+  }
+}

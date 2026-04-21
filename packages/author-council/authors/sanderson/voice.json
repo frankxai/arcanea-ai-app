@@ -1,0 +1,23 @@
+{
+  "sentenceLength": { "min": 5, "median": 14, "max": 35 },
+  "clauseDensity": "moderate",
+  "rhetoricalDevices": {
+    "anaphora": 1.2,
+    "chiasmus": 0.3,
+    "polysyndeton": 0.4,
+    "asyndeton": 2.1,
+    "parallelism": 3.5
+  },
+  "vocabularyTier": "mid",
+  "pacing": "propulsive",
+  "pov": ["close-third"],
+  "dialogueRatio": "balanced",
+  "signatureMoves": [
+    "Chapter ending on escalation or reveal, not contemplation",
+    "Interleaved external action and interior thought",
+    "Epigraphs opening each chapter with in-world scholarly voice",
+    "POV rotation where each POV owns a subsystem (magic/politics/trauma/reveal)",
+    "The Avalanche — cascading resolution in final 20%",
+    "Magic-system reveals via character misunderstanding, then correction"
+  ]
+}

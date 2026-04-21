@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Constructed Language Coherence",
+    "kind": "linguistic",
+    "laws": [
+      "Phonology is consistent across the lexicon",
+      "Morphology encodes meaning historically (root + affix)",
+      "Related languages share cognate systems; borrowings are marked"
+    ],
+    "costs": [
+      "Years of work before a single story sentence",
+      "Reader must be trusted to sit with untranslated text"
+    ],
+    "limits": [
+      "No made-up syllables; everything must derive",
+      "No linguistic inconsistencies between related tongues",
+      "No modern idioms in constructed speech"
+    ],
+    "examples": [
+      "Quenya / Sindarin divergence from Common Eldarin",
+      "Rohirric as Old English stand-in for Mannish languages"
+    ]
+  },
+  {
+    "name": "Eucatastrophe Structure",
+    "kind": "theological",
+    "laws": [
+      "The situation must become genuinely hopeless",
+      "The mechanism of rescue must have been seeded earlier as moral choice, not powerful tool",
+      "The turn arrives through unexpected mercy, not authorial rescue"
+    ],
+    "costs": [
+      "Must resist the temptation to resolve earlier",
+      "Must trust pity/mercy as a narrative force equal to power"
+    ],
+    "limits": [
+      "No deus ex machina — the mechanism must be present all along",
+      "No wish-fulfilment; the turn must cost"
+    ],
+    "examples": [
+      "Gollum at the Crack of Doom — pity paid across three characters across three books",
+      "Frodo's claiming of the Ring and its unmaking"
+    ]
+  },
+  {
+    "name": "Privative Evil",
+    "kind": "theological",
+    "laws": [
+      "Evil cannot create; it can only corrupt",
+      "Evil is always second-order to good",
+      "Even Sauron borrows what he rules"
+    ],
+    "costs": [
+      "The cosmology cannot support dualism",
+      "Must resist making evil cool"
+    ],
+    "limits": [
+      "No equal-and-opposite force to good",
+      "Evil's power is always derivative"
+    ],
+    "examples": [
+      "Orcs as twisted Elves",
+      "Mordor as un-making, not alternative making"
+    ]
+  }
+]
