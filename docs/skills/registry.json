@@ -1,0 +1,1477 @@
+{
+  "generatedAt": "2026-04-21T02:13:43.577Z",
+  "totalEntries": 349,
+  "uniqueNames": 174,
+  "directories": [
+    {
+      "scope": "user-global",
+      "path": "C:\\Users\\frank\\.claude\\skills",
+      "count": 122
+    },
+    {
+      "scope": "project-arcanea",
+      "path": "C:\\Users\\frank\\Arcanea\\.claude\\skills",
+      "count": 94
+    },
+    {
+      "scope": "shared-intelligence",
+      "path": "C:\\Users\\frank\\Arcanea\\.arcanea\\skills",
+      "count": 1
+    },
+    {
+      "scope": "project-agents",
+      "path": "C:\\Users\\frank\\Arcanea\\.agents\\skills",
+      "count": 1
+    },
+    {
+      "scope": "opencode",
+      "path": "C:\\Users\\frank\\Arcanea\\.opencode\\skills",
+      "count": 1
+    },
+    {
+      "scope": "user-agents",
+      "path": "C:\\Users\\frank\\.agents\\skills",
+      "count": 4
+    },
+    {
+      "scope": "codex",
+      "path": "C:\\Users\\frank\\.codex\\skills",
+      "count": 0
+    },
+    {
+      "scope": "continue",
+      "path": "C:\\Users\\frank\\.continue\\skills",
+      "count": 0
+    },
+    {
+      "scope": "acos-config",
+      "path": "C:\\Users\\frank\\.claude\\acos\\skills",
+      "count": 0
+    },
+    {
+      "scope": "arcanea-lore",
+      "path": "C:\\Users\\frank\\.arcanea\\arcanea\\.claude\\skills",
+      "count": 4
+    },
+    {
+      "scope": "oss-publish",
+      "path": "C:\\Users\\frank\\.arcanea\\arcanea\\arcanea-skills-opensource\\skills",
+      "count": 6
+    },
+    {
+      "scope": "oss-mirror",
+      "path": "C:\\Users\\frank\\.arcanea\\arcanea\\oss\\skills",
+      "count": 6
+    },
+    {
+      "scope": "acos-mirror",
+      "path": "C:\\Users\\frank\\agentic-creator-os\\.claude\\skills",
+      "count": 97
+    },
+    {
+      "scope": "acos-repo",
+      "path": "C:\\Users\\frank\\agentic-creator-os\\skills",
+      "count": 7
+    },
+    {
+      "scope": "anime-legends",
+      "path": "C:\\Users\\frank\\AnimeLegends.ai\\skills",
+      "count": 6,
+      "warn": "NOT IN GIT"
+    }
+  ],
+  "skills": [
+    {
+      "name": "acos-meta",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\acos-meta\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "ACOS self-description and configuration skill. Documents how ACOS works, how to extend it, how to add new skills/commands/agents, and how to debug the hook system. Use when building new ACOS capabilities, understanding the system architecture, or onboarding to ACOS for the first time."
+    },
+    {
+      "name": "acos visual generator",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\acos-visual-gen\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Generate research-grounded visuals using the InfoGenius pipeline. Use when creating infographics, diagrams, educational visuals, or any image that benefits from factual accuracy. Supports 8 visual styles (3D, technical, minimalist, photorealistic, futuristic, vintage, cartoon, standard) and 4 audience levels."
+    },
+    {
+      "name": "agentdb advanced features",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\agentdb-advanced\\SKILL.md",
+      "copies": 2,
+      "drift": true,
+      "description": "Master advanced AgentDB features including QUIC synchronization, multi-database management, custom distance metrics, hybrid search, and distributed systems integration. Use when building distributed AI systems, multi-agent coordination, or advanced vector search applications."
+    },
+    {
+      "name": "agentdb learning plugins",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\agentdb-learning\\SKILL.md",
+      "copies": 2,
+      "drift": true,
+      "description": "Create and train AI learning plugins with AgentDB's 9 reinforcement learning algorithms. Includes Decision Transformer, Q-Learning, SARSA, Actor-Critic, and more. Use when building self-learning agents, implementing RL, or optimizing agent behavior through experience."
+    },
+    {
+      "name": "agentdb memory patterns",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\agentdb-memory-patterns\\SKILL.md",
+      "copies": 2,
+      "drift": true,
+      "description": "Implement persistent memory patterns for AI agents using AgentDB. Includes session memory, long-term storage, pattern learning, and context management. Use when building stateful agents, chat systems, or intelligent assistants."
+    },
+    {
+      "name": "agentdb performance optimization",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\agentdb-optimization\\SKILL.md",
+      "copies": 2,
+      "drift": true,
+      "description": "Optimize AgentDB performance with quantization (4-32x memory reduction), HNSW indexing (150x faster search), caching, and batch operations. Use when optimizing memory usage, improving search speed, or scaling to millions of vectors."
+    },
+    {
+      "name": "agentdb vector search",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\agentdb-vector-search\\SKILL.md",
+      "copies": 2,
+      "drift": true,
+      "description": "Implement semantic vector search with AgentDB for intelligent document retrieval, similarity matching, and context-aware querying. Use when building RAG systems, semantic search engines, or intelligent knowledge bases."
+    },
+    {
+      "name": "agentic-jujutsu",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\agentic-jujutsu\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Quantum-resistant, self-learning version control for AI agents with ReasoningBank intelligence and multi-agent coordination"
+    },
+    {
+      "name": "agentic-orchestration",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\agentic-orchestration\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Patterns for multi-agent coordination, task decomposition, handoffs, and workflow orchestration. Best practices for building and managing agent systems."
+    },
+    {
+      "name": "ai architect newsletter",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\ai-architect-newsletter\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Generate high-quality AI Architect newsletters with latest AI news, research integration, and visual design. Use when creating newsletters, researching AI developments, synthesizing AI news for architects, or distributing intelligence reports. Covers AI model releases, research papers, tool launches, architecture patterns, production systems, and enterprise AI trends. Integrates with FrankX research hub and supports both daily briefs and weekly deep-dives."
+    },
+    {
+      "name": "skill",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\ai-architecture\\SKILL.md",
+      "copies": 53,
+      "drift": true,
+      "description": "AI Architecture Skill"
+    },
+    {
+      "name": "algorithmic-art",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\algorithmic-art\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Creating algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Use this when users request creating art using code, generative art, algorithmic art, flow fields, or particle systems. Create original algorithmic art rather than copying existing artists' work to avoid copyright violations."
+    },
+    {
+      "name": "arcanea-book-cover",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\arcanea-book-cover\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Design and generate premium book covers using NB2 (Nano Banana 2 / Gemini 3.1 Flash Image) with deep thinking about book tension, emotion, and genre. Pulls from top book cover design principles (Chip Kidd, Peter Mendelsund, Coralie Bickford-Smith). Auto-activates when user requests book cover, cover art, cover design, or mentions generating a cover for a book project."
+    },
+    {
+      "name": "arcanea-meta",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\arcanea-meta\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Arcanea ecosystem self-description. Use when asked about the system map, where things live, canonical locations, how to add a skill/command/agent/hook, how to absorb a repo, or what's installed. Trigger phrases: arcanea meta, system map, where does X live, add a skill, absorb a repo, what's installed, ecosystem inventory."
+    },
+    {
+      "name": "book-publishing",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\book-publishing\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "ACOS book publishing intelligence for multi-book content, voice, and production workflows."
+    },
+    {
+      "name": "brand-guidelines",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\brand-guidelines\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Applies Anthropic's official brand colors and typography to any sort of artifact that may benefit from having Anthropic's look-and-feel. Use it when brand colors or style guidelines, visual formatting, or company design standards apply."
+    },
+    {
+      "name": "brand-voice",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\brand-voice\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Apply and enforce brand voice across all content creation. Manages voice attributes, tone adaptation by channel, style rules, and terminology. Use when writing content, reviewing drafts, or defining brand voice for a new project. Loads voice config from CREATOR.md or creator-memory/voice.md."
+    },
+    {
+      "name": "cacos",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\cacos\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Claude Agentic Creator OS - Native Claude Code implementation"
+    },
+    {
+      "name": "canvas-design",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\canvas-design\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists' work to avoid copyright violations."
+    },
+    {
+      "name": "claude sdk expert",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\claude-sdk\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Build autonomous AI agents using Claude Agent SDK with computer use, tool calling, MCP integration, and production best practices for Anthropic models"
+    },
+    {
+      "name": "claude",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\CLAUDE.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Recent Activity"
+    },
+    {
+      "name": "creator-productivity",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\creator-productivity\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Task management and workspace memory for creative work sessions. Manages a TASKS.md file for project tracking, a two-tier memory system (CREATOR.md + creator-memory/), and a daily sprint structure. Use when organizing creative projects, tracking content tasks, or starting a focused work session."
+    },
+    {
+      "name": "doc-coauthoring",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\doc-coauthoring\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Guide users through a structured workflow for co-authoring documentation. Use when user wants to write documentation, proposals, technical specs, decision docs, or similar structured content. This workflow helps users efficiently transfer context, refine content through iteration, and verify the doc works for readers. Trigger when user mentions writing docs, creating proposals, drafting specs, or similar documentation tasks."
+    },
+    {
+      "name": "docx",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\docx\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. When Claude needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks"
+    },
+    {
+      "name": "flow-nexus-neural",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\flow-nexus-neural\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Train and deploy neural networks in distributed E2B sandboxes with Flow Nexus"
+    },
+    {
+      "name": "flow-nexus-platform",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\flow-nexus-platform\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Comprehensive Flow Nexus platform management - authentication, sandboxes, app deployment, payments, and challenges"
+    },
+    {
+      "name": "flow-nexus-swarm",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\flow-nexus-swarm\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Cloud-based AI swarm deployment and event-driven workflow automation with Flow Nexus platform"
+    },
+    {
+      "name": "framer expert",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\framer-expert\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Expert in Framer design and development - from interactive prototypes to production sites with Framer Motion, CMS integration, and the Framer MCP server"
+    },
+    {
+      "name": "frankx-brand",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\frankx-brand\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Apply official FrankX brand standards to all artifacts, ensuring visual consistency across content, products, and communications. Use this skill for any FrankX-related content creation, design work, or communication."
+    },
+    {
+      "name": "frankx daily execution system",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\frankx-daily-execution\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Helps execute Frank's daily workflow using the FRANKX-SUPERINTELLIGENT-AGENT-SYSTEM, Starlight Intelligence, and productivity methodologies for intentional creation"
+    },
+    {
+      "name": "frontend-design",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\frontend-design\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics."
+    },
+    {
+      "name": "game-development",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\game-development\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "ACOS game development intelligence for high-quality browser game design and implementation."
+    },
+    {
+      "name": "github-code-review",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\github-code-review\\SKILL.md",
+      "copies": 3,
+      "drift": false,
+      "description": "Comprehensive GitHub code review with AI-powered swarm coordination"
+    },
+    {
+      "name": "github-multi-repo",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\github-multi-repo\\SKILL.md",
+      "copies": 3,
+      "drift": false,
+      "description": "Multi-repository coordination, synchronization, and architecture management with AI swarm orchestration"
+    },
+    {
+      "name": "github-project-management",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\github-project-management\\SKILL.md",
+      "copies": 3,
+      "drift": false,
+      "description": "Comprehensive GitHub project management with swarm-coordinated issue tracking, project board automation, and sprint planning"
+    },
+    {
+      "name": "github-release-management",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\github-release-management\\SKILL.md",
+      "copies": 3,
+      "drift": false,
+      "description": "Comprehensive GitHub release orchestration with AI swarm coordination for automated versioning, testing, deployment, and rollback management"
+    },
+    {
+      "name": "github-workflow-automation",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\github-workflow-automation\\SKILL.md",
+      "copies": 3,
+      "drift": false,
+      "description": "Advanced GitHub Actions workflow automation with AI swarm coordination, intelligent CI/CD pipelines, and comprehensive repository management"
+    },
+    {
+      "name": "greek philosopher",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\greek-philosopher\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Channel ancient wisdom through Socratic questioning, Stoic principles, and philosophical inquiry to examine life's deepest questions with poetic eloquence and timeless insight"
+    },
+    {
+      "name": "gstack",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\gstack\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "|"
+    },
+    {
+      "name": "gym & training expert",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\gym-training-expert\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Apply cutting-edge exercise science from 2025 research on hypertrophy, progressive overload, biomechanics, and evidence-based training protocols for optimal strength and muscle development"
+    },
+    {
+      "name": "handover",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\handover\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Write a session handover document for cross-agent or cross-session continuity. Use when switching from one Claude instance to another, handing work to Coworker, switching repos mid-task, or ending a session that a different agent will continue. NOT for end-of-day wrap-up (use /eod for that). Produces a self-contained HANDOVER-{date}.md that lets the next agent pick up cold."
+    },
+    {
+      "name": "health & nutrition expert",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\health-nutrition-expert\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Apply cutting-edge 2025 nutrition science on longevity, metabolic health, gut microbiome, and evidence-based dietary patterns for optimal vitality and disease prevention"
+    },
+    {
+      "name": "hive-mind-advanced",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\hive-mind-advanced\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Advanced Hive Mind collective intelligence system for queen-led multi-agent coordination with consensus mechanisms and persistent memory"
+    },
+    {
+      "name": "hook",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\hook\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Generate high-retention content hooks using tri-modal engineering (Visual + Audio + Text) across 10 dimensions — from research-backed wisdom to frontier science to comedic timing. State-of-art 2026 hook psychology for creators who respect their audience's intelligence. Use when creating video intros, social content, article hooks, or any attention capture."
+    },
+    {
+      "name": "hooks automation",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\hooks-automation\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Automated coordination, formatting, and learning from Claude Code operations using intelligent hooks with MCP integration. Includes pre/post task hooks, session management, Git integration, memory coordination, and neural pattern training for enhanced development workflows."
+    },
+    {
+      "name": "infogenius",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\infogenius\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "AI Architect-grade visual generation with 11 style presets and 5 Guardian art directors. Uses Gemini 3 Pro via arcanea-infogenius MCP. Styles: concept-art, technical, isometric, cinematic, premium, minimalist, realistic, 3d-render, futuristic, vintage, sketch."
+    },
+    {
+      "name": "internal-comms",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\internal-comms\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "A set of resources to help me write all kinds of internal communications, using the formats that my company likes to use. Claude should use this skill whenever asked to write some sort of internal communications (status reports, leadership updates, 3P updates, company newsletters, FAQs, incident reports, project updates, etc.)."
+    },
+    {
+      "name": "iterative-retrieval",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\iterative-retrieval\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Pattern for progressively refining context retrieval to solve the subagent context problem"
+    },
+    {
+      "name": "langgraph patterns expert",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\langgraph-patterns\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Build production-grade agentic workflows with LangGraph using graph-based orchestration, state machines, human-in-the-loop, and advanced control flow"
+    },
+    {
+      "name": "mcp-2025-patterns",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\mcp-2025-patterns\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Current best practices for Model Context Protocol server design, implementation, and integration. Updated patterns for 2025 MCP ecosystem including multi-server orchestration, security, and performance."
+    },
+    {
+      "name": "mcp architecture expert",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\mcp-architecture\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Design and implement Model Context Protocol servers for standardized AI-to-data integration with resources, tools, prompts, and security best practices"
+    },
+    {
+      "name": "mcp-builder",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\mcp-builder\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK)."
+    },
+    {
+      "name": "memory-guardian",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\memory-guardian\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "WSL2 memory safety and scaling guardrails for Claude Code sessions and parallel agents."
+    },
+    {
+      "name": "model-routing",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\model-routing\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Intelligent model selection - routes tasks to Haiku (fast/cheap), Sonnet (balanced), or Opus (complex/strategic) based on task complexity analysis"
+    },
+    {
+      "name": "oci services expert",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\oci-services-expert\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Expert guidance on Oracle Cloud Infrastructure services, cloud architecture patterns, cost optimization, deployment strategies, and OCI best practices for enterprise solutions"
+    },
+    {
+      "name": "openai agentkit expert",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\openai-agentkit\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Build production-ready multi-agent systems using OpenAI AgentKit and Agents SDK with best practices for agent orchestration, handoffs, and routines"
+    },
+    {
+      "name": "opus-extended-thinking",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\opus-extended-thinking\\SKILL.md",
+      "copies": 3,
+      "drift": false,
+      "description": "Leverage Claude Opus 4.5's extended thinking capabilities for deep reasoning, complex analysis, and multi-step synthesis. Use when problems require thorough deliberation before response."
+    },
+    {
+      "name": "oracle adk expert",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\oracle-adk\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Build production agentic applications on OCI using Oracle Agent Development Kit with multi-agent orchestration, function tools, and enterprise patterns"
+    },
+    {
+      "name": "oracle agent spec expert",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\oracle-agent-spec\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Design framework-agnostic AI agents using Oracle's Open Agent Specification for portable, interoperable agentic systems with JSON/YAML definitions"
+    },
+    {
+      "name": "pair programming",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\pair-programming\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "AI-assisted pair programming with multiple modes (driver/navigator/switch), real-time verification, quality monitoring, and comprehensive testing. Supports TDD, debugging, refactoring, and learning sessions. Features automatic role switching, continuous code review, security scanning, and performance optimization with truth-score verification."
+    },
+    {
+      "name": "pdf",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\pdf\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Comprehensive PDF manipulation toolkit for extracting text and tables, creating new PDFs, merging/splitting documents, and handling forms. When Claude needs to fill in a PDF form or programmatically process, generate, or analyze PDF documents at scale."
+    },
+    {
+      "name": "performance-analysis",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\performance-analysis\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Comprehensive performance analysis, bottleneck detection, and optimization recommendations for Claude Flow swarms"
+    },
+    {
+      "name": "planning-with-files",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\planning-with-files\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Implements Manus-style file-based planning for complex tasks. Creates task_plan.md, findings.md, and progress.md. Use when starting complex multi-step tasks, research projects, or any task requiring >5 tool calls. Now with automatic session recovery after /clear."
+    },
+    {
+      "name": "pptx",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\pptx\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Presentation creation, editing, and analysis. When Claude needs to work with presentations (.pptx files) for: (1) Creating new presentations, (2) Modifying or editing content, (3) Working with layouts, (4) Adding comments or speaker notes, or any other presentation tasks"
+    },
+    {
+      "name": "product-engine",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\product-engine\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Product creation and packaging pipeline. Creates premium digital products from FrankX component library, agentic AI systems, and design assets. Actions: create, package, publish, price, bundle. Products: UI kit, dashboard template, SaaS starter, agentic system, content engine, component library. Formats: Next.js, React, Tailwind, shadcn, Python, Notion, Obsidian. Channels: Gumroad, GitHub, frankx.ai."
+    },
+    {
+      "name": "prompt-optimizer",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\prompt-optimizer\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": ">-"
+    },
+    {
+      "name": "reasoningbank with agentdb",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\reasoningbank-agentdb\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Implement ReasoningBank adaptive learning with AgentDB's 150x faster vector database. Includes trajectory tracking, verdict judgment, memory distillation, and pattern recognition. Use when building self-learning agents, optimizing decision-making, or implementing experience replay systems."
+    },
+    {
+      "name": "reasoningbank intelligence",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\reasoningbank-intelligence\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Implement adaptive learning with ReasoningBank for pattern recognition, strategy optimization, and continuous improvement. Use when building self-learning agents, optimizing workflows, or implementing meta-cognitive systems."
+    },
+    {
+      "name": "rules-distill",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\rules-distill\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Scan skills to extract cross-cutting principles and distill them into rules — append, revise, or create new rule files"
+    },
+    {
+      "name": "santa-method",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\santa-method\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Multi-agent adversarial verification with convergence loop. Two independent review agents must both pass before output ships."
+    },
+    {
+      "name": "search-first",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\search-first\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Research-before-coding workflow. Search for existing tools, libraries, and patterns before writing custom code. Invokes the researcher agent."
+    },
+    {
+      "name": "security-auditor",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\security-auditor\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Security Auditor Skill"
+    },
+    {
+      "name": "skill builder",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\skill-builder\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Create new Claude Code Skills with proper YAML frontmatter, progressive disclosure structure, and complete directory organization. Use when you need to build custom skills for specific workflows, generate skill templates, or understand the Claude Skills specification."
+    },
+    {
+      "name": "skill-comply",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\skill-comply\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Visualize whether skills, rules, and agent definitions are actually followed — auto-generates scenarios at 3 prompt strictness levels, runs agents, classifies behavioral sequences, and reports compliance rates with full tool call timelines"
+    },
+    {
+      "name": "skill-creator",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\skill-creator\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations."
+    },
+    {
+      "name": "slack-gif-creator",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\slack-gif-creator\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Knowledge and utilities for creating animated GIFs optimized for Slack. Provides constraints, validation tools, and animation concepts. Use when users request animated GIFs for Slack like \"make me a GIF of X doing Y for Slack."
+    },
+    {
+      "name": "sparc-methodology",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\sparc-methodology\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "SPARC (Specification, Pseudocode, Architecture, Refinement, Completion) comprehensive development methodology with multi-agent orchestration"
+    },
+    {
+      "name": "spartan warrior",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\spartan-warrior\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Embody the unbreakable Spartan ethos of discipline, courage, and relentless excellence through laconic wisdom and warrior mentality forged in hardship"
+    },
+    {
+      "name": "strategic-compact",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\strategic-compact\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Suggests manual context compaction at logical intervals to preserve context through task phases rather than arbitrary auto-compaction."
+    },
+    {
+      "name": "stream-chain",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\stream-chain\\SKILL.md",
+      "copies": 3,
+      "drift": false,
+      "description": "Stream-JSON chaining for multi-agent pipelines, data transformation, and sequential workflows"
+    },
+    {
+      "name": "suno ai mastery",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\suno-ai-mastery\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Expert prompt engineering and music generation with Suno AI v4.5+ for professional-quality songs across all genres with advanced composition techniques"
+    },
+    {
+      "name": "suno-prompt-architect",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\suno-prompt-architect\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Expert Suno AI prompt engineering for professional music creation. Use this skill when creating Suno prompts for any AI-generated music that needs commercial quality."
+    },
+    {
+      "name": "swarm-advanced",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\swarm-advanced\\SKILL.md",
+      "copies": 3,
+      "drift": false,
+      "description": "Advanced swarm orchestration patterns for research, development, testing, and complex distributed workflows"
+    },
+    {
+      "name": "swarm orchestration",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\swarm-orchestration\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Orchestrate multi-agent swarms with agentic-flow for parallel task execution, dynamic topology, and intelligent coordination. Use when scaling beyond single agents, implementing complex workflows, or building distributed AI systems."
+    },
+    {
+      "name": "template-monetization",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\template-monetization\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Blueprint-to-template monetization system for deployment, affiliate, and revenue workflows."
+    },
+    {
+      "name": "theme-factory",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\theme-factory\\SKILL.md",
+      "copies": 3,
+      "drift": false,
+      "description": "Toolkit for styling artifacts with a theme. These artifacts can be slides, docs, reportings, HTML landing pages, etc. There are 10 pre-set themes with colors/fonts that you can apply to any artifact that has been creating, or can generate a new theme on-the-fly."
+    },
+    {
+      "name": "ui/ux design expert",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\ui-ux-design-expert\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Expert guidance on UI/UX design, design systems, accessibility (WCAG 2.2), user research, and creating inclusive, user-centered interfaces with 2025 best practices"
+    },
+    {
+      "name": "ui-ux-pro-max",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\ui-ux-pro-max\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "UI/UX design intelligence. 50 styles, 21 palettes, 50 font pairings, 20 charts, 8 stacks (React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind). Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, check UI/UX code. Projects: website, landing page, dashboard, admin panel, e-commerce, SaaS, portfolio, blog, mobile app, .html, .tsx, .vue, .svelte. Elements: button, modal, navbar, sidebar, card, table, form, chart. Styles: glassmorphism, claymorphism, minimalism, brutalism, neumorphism, bento grid, dark mode, responsive, skeuomorphism, flat design. Topics: color palette, accessibility, animation, layout, typography, font pairing, spacing, hover, shadow, gradient."
+    },
+    {
+      "name": "v3 cli modernization",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\v3-cli-modernization\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "CLI modernization and hooks system enhancement for claude-flow v3. Implements interactive prompts, command decomposition, enhanced hooks integration, and intelligent workflow automation."
+    },
+    {
+      "name": "v3 core implementation",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\v3-core-implementation\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Core module implementation for claude-flow v3. Implements DDD domains, clean architecture patterns, dependency injection, and modular TypeScript codebase with comprehensive testing."
+    },
+    {
+      "name": "v3 ddd architecture",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\v3-ddd-architecture\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Domain-Driven Design architecture for claude-flow v3. Implements modular, bounded context architecture with clean separation of concerns and microkernel pattern."
+    },
+    {
+      "name": "v3 deep integration",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\v3-integration-deep\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Deep agentic-flow@alpha integration implementing ADR-001. Eliminates 10,000+ duplicate lines by building claude-flow as specialized extension rather than parallel implementation."
+    },
+    {
+      "name": "v3 mcp optimization",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\v3-mcp-optimization\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "MCP server optimization and transport layer enhancement for claude-flow v3. Implements connection pooling, load balancing, tool registry optimization, and performance monitoring for sub-100ms response times."
+    },
+    {
+      "name": "v3 memory unification",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\v3-memory-unification\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Unify 6+ memory systems into AgentDB with HNSW indexing for 150x-12,500x search improvements. Implements ADR-006 (Unified Memory Service) and ADR-009 (Hybrid Memory Backend)."
+    },
+    {
+      "name": "v3 performance optimization",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\v3-performance-optimization\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Achieve aggressive v3 performance targets: 2.49x-7.47x Flash Attention speedup, 150x-12,500x search improvements, 50-75% memory reduction. Comprehensive benchmarking and optimization suite."
+    },
+    {
+      "name": "v3 security overhaul",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\v3-security-overhaul\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Complete security architecture overhaul for claude-flow v3. Addresses critical CVEs (CVE-1, CVE-2, CVE-3) and implements secure-by-default patterns. Use for security-first v3 implementation."
+    },
+    {
+      "name": "v3 swarm coordination",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\v3-swarm-coordination\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "15-agent hierarchical mesh coordination for v3 implementation. Orchestrates parallel execution across security, core, and integration domains following 10 ADRs with 14-week timeline."
+    },
+    {
+      "name": "verification-loop",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\verification-loop\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "A comprehensive verification system for Claude Code sessions."
+    },
+    {
+      "name": "verification & quality assurance",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\verification-quality\\SKILL.md",
+      "copies": 3,
+      "drift": false,
+      "description": "Comprehensive truth scoring, code quality verification, and automatic rollback system with 0.95 accuracy threshold for ensuring high-quality agent outputs and codebase reliability."
+    },
+    {
+      "name": "visual intelligence system (vis)",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\vis\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Agentic visual asset management — scan, audit, and manage images across your site with AI-powered quality enforcement"
+    },
+    {
+      "name": "web-artifacts-builder",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\web-artifacts-builder\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Suite of tools for creating elaborate, multi-component claude.ai HTML artifacts using modern frontend web technologies (React, Tailwind CSS, shadcn/ui). Use for complex artifacts requiring state management, routing, or shadcn/ui components - not for simple single-file HTML/JSX artifacts."
+    },
+    {
+      "name": "webapp-testing",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\webapp-testing\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs."
+    },
+    {
+      "name": "worker-benchmarks",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\worker-benchmarks\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Run comprehensive worker system benchmarks and performance analysis"
+    },
+    {
+      "name": "worker-integration",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\worker-integration\\SKILL.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Worker-Agent integration for intelligent task dispatch and performance tracking"
+    },
+    {
+      "name": "xlsx",
+      "canonicalScope": "user-global",
+      "canonicalFile": "C:\\Users\\frank\\.claude\\skills\\xlsx\\SKILL.md",
+      "copies": 3,
+      "drift": true,
+      "description": "Comprehensive spreadsheet creation, editing, and analysis with support for formulas, formatting, data analysis, and visualization. When Claude needs to work with spreadsheets (.xlsx, .xlsm, .csv, .tsv, etc) for: (1) Creating new spreadsheets with formulas and formatting, (2) Reading or analyzing data, (3) Modify existing spreadsheets while preserving formulas, (4) Data analysis and visualization in spreadsheets, or (5) Recalculating formulas"
+    },
+    {
+      "name": "arcanea academy",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\academy\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Journey through the Ten Gates from Apprentice to Luminor"
+    },
+    {
+      "name": "arcanea-claw-manager",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\arcanea-claw-manager.md",
+      "copies": 1,
+      "drift": false,
+      "description": ">"
+    },
+    {
+      "name": "arcanea-design",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\arcanea-design.md",
+      "copies": 1,
+      "drift": false,
+      "description": ">"
+    },
+    {
+      "name": "arcanea-lore",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\arcanea-lore.md",
+      "copies": 2,
+      "drift": true,
+      "description": "Arcanea Lore Skill (Lazy Loaded)"
+    },
+    {
+      "name": "arcanea-media",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\arcanea-media.md",
+      "copies": 1,
+      "drift": false,
+      "description": "/arcanea-media — Arcanea Media Manager"
+    },
+    {
+      "name": "arcanea-nft-pfp",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\arcanea-nft-pfp\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "AI-native NFT PFP collection engine. Generates 10K+ unique characters with engineered taste, style consistency, and full deployment pipeline. Trigger phrases: NFT, PFP, collection, generative art, mint, traits, rarity, IPFS, smart contract, ERC721."
+    },
+    {
+      "name": "arcanea-orchestra",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\arcanea-orchestra\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "|"
+    },
+    {
+      "name": "arcanea orchestrator",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\arcanea-orchestrator\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Central ops orchestrator for the Arcanea ecosystem. Use when: coordinating multi-agent work, reviewing branch/promotion state, digesting other agent outputs, cleaning worktrees, coaching on ops workflow, planning overnight/sustained sessions, publishing content, or when the user says /arcanea-orchestrator. Subcommands: status, promote, digest, coach, cleanup, plan, handover, publish."
+    },
+    {
+      "name": "arcanea-research",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\arcanea-research.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Spawn the Research Architect to decompose a topic, dispatch scouts, and synthesize findings"
+    },
+    {
+      "name": "arcanea-ships",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\arcanea-ships\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": ">"
+    },
+    {
+      "name": "arcanea-showcase",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\arcanea-showcase\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Generate product showcase content at scale — demo outputs, marketing copy, social posts, and changelog entries from real MCP tool results"
+    },
+    {
+      "name": "arcanea-vault",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\arcanea-vault\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Manage the Arcanea Vault — export, import, classify, and process AI conversations from ChatGPT, Claude, Perplexity, Grok, and Gemini. Use when the user wants to export chats, manage their content vault, run the processing pipeline, or check vault status. Also handles tab session capture and Chrome extension coordination."
+    },
+    {
+      "name": "canon-check",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\canon-check\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Validate any content against CANON_LOCKED — catch violations before they fossilize"
+    },
+    {
+      "name": "character-forge",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\character-forge\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Forge a canon-consistent Arcanean character using the full 12-field CHARACTER_TEMPLATE"
+    },
+    {
+      "name": "chess-factory-generation",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\chess-factory-generation.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Generate AI-powered chess piece images using nano-banana MCP or other image generation APIs"
+    },
+    {
+      "name": "claws",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\claws\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Orchestrate the Arcanea Publishing House Claws across all runtimes — Managed Agents, OpenClaw, NanoClaw, Railway, Cloudflare Workers, or local Claude Code. Use when: invoking a specific Claw for work, checking Claw Fleet status, deploying new Claws, routing work to the right runtime, or coordinating multi-Claw pipelines. Subcommands: status, invoke, deploy, route, list, kernel."
+    },
+    {
+      "name": "creation-engine",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\creation-engine.skill.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Living Intelligence for creators who build universes — generates code, text, and art prompts that compound with your creative context, always in the Arcanean aesthetic"
+    },
+    {
+      "name": "creator-dashboard",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\creator-dashboard\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Show a visual creator dashboard with all active projects, recent creations, progress stats, and next actions. Use when the creator wants to see their current state, track progress, understand what they've built, or decide what to work on next. Combines data from git, Linear, Notion, and local project graph."
+    },
+    {
+      "name": "creator-import",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\creator-import\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Import, parse, and structure content from external AI tools and files into Arcanea projects. Use when importing ChatGPT exports, Claude conversation downloads, spreadsheets (CSV/XLSX), markdown docs, JSON data, Google Docs content, or any external content that needs to be organized into the Arcanea project graph. Handles bulk imports, conversation parsing, knowledge base ingestion, and content classification."
+    },
+    {
+      "name": "crew-assemble",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\crew-assemble\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Build a complete Starbound Crew — captain, members, ship, mission, emblem"
+    },
+    {
+      "name": "crew-mission",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\crew-mission\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Generate a complete Starbound Crew mission narrative — briefing through aftermath"
+    },
+    {
+      "name": "daily-ops",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\daily-ops\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Daily operations sync — git status, Linear issues, Notion Dev Hub, health checks, priorities report"
+    },
+    {
+      "name": "design-gods",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\design-gods.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Channel the Design Gods — supreme visual intelligence for arcanea.ai. World-class UI/UX, component architecture, brand precision, and aesthetic excellence across every surface."
+    },
+    {
+      "name": "design-system.skill",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\design-system.skill.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Arcanea Design System"
+    },
+    {
+      "name": "einui",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\einui\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "This skill should be used when the user asks to \"add Ein UI components\", \"install glass card\", \"use liquid glass UI\", \"add frosted glass components\", \"set up Ein UI\", \"configure glass morphism\", mentions \"einui\", \"@einui\", \"glass-card\", \"glass-button\", or discusses React/Next.js frosted glass component styling. Provides guidance for Ein UI library integration."
+    },
+    {
+      "name": "faction-reveal",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\faction-reveal\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Generate a complete faction reveal post with image prompt, copy, and CTA"
+    },
+    {
+      "name": "gate-eval",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\gate-eval\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Evaluate an agent or skill against the Ten Gates capability framework"
+    },
+    {
+      "name": "guardian-voice",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\guardian-voice.skill.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Speak with the authentic voice and personality of one of Arcanea's 10 Guardians"
+    },
+    {
+      "name": "harvested_skills",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\HARVESTED_SKILLS.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Arcanea Harvested Skills"
+    },
+    {
+      "name": "herald command center",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\herald\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "PR, brand, and social intelligence operations. Use when: monitoring brand health, drafting social content, checking community pulse, managing content calendar, tracking reputation, planning campaigns, or when the user says /herald. Subcommands: status, brief, draft, schedule, pulse, alert, campaign, report, monitor, talent."
+    },
+    {
+      "name": "herald-corrupt",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\herald-corrupt\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Design a compelling Void Ascendant villain with legitimate grievance and tragic arc"
+    },
+    {
+      "name": "kiloclaw-bridge",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\kiloclaw-bridge\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Drive Frank's hosted KiloClaw instance (cloud-hosted OpenClaw agent on kilosessions.ai) from Claude Code. Use when: sending a task to the autonomous cloud agent, scheduling cron jobs on the remote VM, registering an MCP server for the cloud to consume, or checking remote instance health. NOT the VS Code extension — that's /kilocode."
+    },
+    {
+      "name": "kilocode-bridge",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\kilocode-bridge\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Delegate a task to Kilo Code (the VS Code coding extension — @kilocode/cli v7+, rebuilt on OpenCode, NOT the KiloClaw cloud agent) from Claude Code. Use when a task is better suited to an IDE-resident agent (multi-file refactors, LSP-aware edits, running VS Code tests). For the hosted KiloClaw cloud agent, use the kiloclaw skill instead."
+    },
+    {
+      "name": "lock-decision",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\lock-decision\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Lock an architecture or strategy decision — saves to memory, appends to Notion decisions log, updates CLAUDE.md if needed"
+    },
+    {
+      "name": "lore-keeper",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\lore-keeper.skill.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Retrieve and explain Arcanea lore with absolute accuracy from the CANON"
+    },
+    {
+      "name": "origin-quiz",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\origin-quiz\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Discover your Arcanean origin class through an interactive personality quiz"
+    },
+    {
+      "name": "project-brief",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\project-brief\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Create a structured project brief from a vague idea. Turns \"I want to build X\" into a complete brief with scope, objects, milestones, and first tasks. Use when starting any new creative project, world, product, feature, or content series. Creates Linear issues, Notion pages, and planning files automatically."
+    },
+    {
+      "name": "publish-distribute",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\publish-distribute\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Multi-platform content publishing and distribution pipeline. Use when publishing creations to arcanea.ai, social media, community channels, or external platforms. Handles format adaptation, image optimization, caption generation, hashtag strategy, scheduling, and cross-platform linking. Works with X/Twitter, Instagram, Farcaster, Discord, YouTube, TikTok, and the Arcanea site itself."
+    },
+    {
+      "name": "quality-standard",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\quality-standard\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": ">"
+    },
+    {
+      "name": "arcanea skill registry",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\registry\\registry.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Master index of all skills, agents, and capabilities for the Arcanea agentic ecosystem - the central nervous system of Arcanea's creative intelligence"
+    },
+    {
+      "name": "scientific-magic",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\scientific-magic.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Scientific Magic Foundations"
+    },
+    {
+      "name": "session-sync",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\session-sync\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "End-of-session sync — summarize work, update Linear issues, refresh Notion Dev Hub, checkpoint planning files"
+    },
+    {
+      "name": "starlight-core.skill",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\starlight-core.skill.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Starlight Core (The Pre-Frontal Cortex)"
+    },
+    {
+      "name": "starlight-engineering.skill",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\starlight-engineering.skill.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Starlight Engineering Swarm"
+    },
+    {
+      "name": "starlight-memex.skill",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\starlight-memex.skill.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Starlight Memex (Self-Learning)"
+    },
+    {
+      "name": "starlight-orchestrator",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\starlight-orchestrator.skill.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Master orchestrator for the Creative Civilization OS. Routes complex intent through Guardian Intelligence with ten specialized agents."
+    },
+    {
+      "name": "starlight-vault",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\starlight-vault\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Read, write, search, and export Starlight Vaults. Use when recalling past decisions, saving new learnings, searching for patterns, or exporting vault content to NotebookLM/Obsidian/GitHub. Works with ~/.starlight/vaults/ (technical, strategic, creative, operational, wisdom, horizon)."
+    },
+    {
+      "name": "stellaris-moment",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\stellaris-moment\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Generate a short scene featuring Stellaris — the franchise companion"
+    },
+    {
+      "name": "swarm-lumina",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\swarm-lumina\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Activate a Lumina-led hierarchical swarm for complex multi-domain tasks"
+    },
+    {
+      "name": "world-forge",
+      "canonicalScope": "project-arcanea",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.claude\\skills\\world-forge\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Structured world-building workflow for creating consistent fantasy/sci-fi universes. Use when building new worlds, factions, magic systems, geography, cultures, timelines, or any universe element. Validates against existing canon, generates interconnected lore, and saves to the project graph. Works for Arcanea's own universe AND for any creator building their own world through the platform."
+    },
+    {
+      "name": "arcanea-frontend-excellence",
+      "canonicalScope": "shared-intelligence",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.arcanea\\skills\\arcanea-frontend-excellence\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Premium frontend implementation for Arcanea-family properties. Extends Anthropic's frontend-design with Arcanea tokens, brand kits, MCP-driven generation (Magic/v0/Fal/Gemini/Replicate), and April 2026 best practices. TRIGGER on page/component/hero builds that must ship to production on Arcanea, FrankX, or OSS sites."
+    },
+    {
+      "name": "arcanea-task-contracts",
+      "canonicalScope": "project-agents",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.agents\\skills\\arcanea-task-contracts\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Use when defining or delegating Arcanea work across agents or large subtasks. This skill enforces explicit task contracts: scope, owner, files, acceptance criteria, and verification command."
+    },
+    {
+      "name": "arcanea-coding-agent",
+      "canonicalScope": "opencode",
+      "canonicalFile": "C:\\Users\\frank\\Arcanea\\.opencode\\skills\\arcanea-coding-agent\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Arcanea creative agent integration for opencode"
+    },
+    {
+      "name": "find-skills",
+      "canonicalScope": "user-agents",
+      "canonicalFile": "C:\\Users\\frank\\.agents\\skills\\find-skills\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill."
+    },
+    {
+      "name": "nextjs-app-router-patterns",
+      "canonicalScope": "user-agents",
+      "canonicalFile": "C:\\Users\\frank\\.agents\\skills\\nextjs-app-router-patterns\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Master Next.js 14+ App Router with Server Components, streaming, parallel routes, and advanced data fetching. Use when building Next.js applications, implementing SSR/SSG, or optimizing React Server Components."
+    },
+    {
+      "name": "playwright-e2e-testing",
+      "canonicalScope": "user-agents",
+      "canonicalFile": "C:\\Users\\frank\\.agents\\skills\\playwright-e2e-testing\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Playwright modern end-to-end testing framework with cross-browser automation, auto-wait, and built-in test runner"
+    },
+    {
+      "name": "supabase-postgres-best-practices",
+      "canonicalScope": "user-agents",
+      "canonicalFile": "C:\\Users\\frank\\.agents\\skills\\supabase-postgres-best-practices\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Postgres performance optimization and best practices from Supabase. Use this skill when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations."
+    },
+    {
+      "name": "ai-symbiosis",
+      "canonicalScope": "oss-publish",
+      "canonicalFile": "C:\\Users\\frank\\.arcanea\\arcanea\\arcanea-skills-opensource\\skills\\ai-symbiosis.md",
+      "copies": 2,
+      "drift": false,
+      "description": "AI Symbiosis - The Art of Human-AI Co-Creation"
+    },
+    {
+      "name": "character-alchemist",
+      "canonicalScope": "oss-publish",
+      "canonicalFile": "C:\\Users\\frank\\.arcanea\\arcanea\\arcanea-skills-opensource\\skills\\character-alchemist.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Character Alchemist - Transmuting Ideas into Living Beings"
+    },
+    {
+      "name": "creative-bestiary",
+      "canonicalScope": "oss-publish",
+      "canonicalFile": "C:\\Users\\frank\\.arcanea\\arcanea\\arcanea-skills-opensource\\skills\\creative-bestiary.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Creative Bestiary - Navigating the Creatures of the Mind"
+    },
+    {
+      "name": "luminor-council",
+      "canonicalScope": "oss-publish",
+      "canonicalFile": "C:\\Users\\frank\\.arcanea\\arcanea\\arcanea-skills-opensource\\skills\\luminor-council.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Luminor Council - The Seven Guides of Creation"
+    },
+    {
+      "name": "story-weaver",
+      "canonicalScope": "oss-publish",
+      "canonicalFile": "C:\\Users\\frank\\.arcanea\\arcanea\\arcanea-skills-opensource\\skills\\story-weaver.md",
+      "copies": 2,
+      "drift": false,
+      "description": "Story Weaver - The Master Craft of Narrative"
+    },
+    {
+      "name": "world-architect",
+      "canonicalScope": "oss-publish",
+      "canonicalFile": "C:\\Users\\frank\\.arcanea\\arcanea\\arcanea-skills-opensource\\skills\\world-architect.md",
+      "copies": 2,
+      "drift": false,
+      "description": "World Architect - The Art of Universe Creation"
+    },
+    {
+      "name": "blog writing",
+      "canonicalScope": "acos-repo",
+      "canonicalFile": "C:\\Users\\frank\\agentic-creator-os\\skills\\blog-writing\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Create SEO-optimized blog posts that engage readers and rank in search results"
+    },
+    {
+      "name": "content strategy",
+      "canonicalScope": "acos-repo",
+      "canonicalFile": "C:\\Users\\frank\\agentic-creator-os\\skills\\content-strategy\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Develop comprehensive content strategies with audience research, pillar planning, and distribution workflows"
+    },
+    {
+      "name": "newsletter writing",
+      "canonicalScope": "acos-repo",
+      "canonicalFile": "C:\\Users\\frank\\agentic-creator-os\\skills\\newsletter\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Create engaging email newsletters that nurture subscribers and drive conversions"
+    },
+    {
+      "name": "seo optimization",
+      "canonicalScope": "acos-repo",
+      "canonicalFile": "C:\\Users\\frank\\agentic-creator-os\\skills\\seo-optimization\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Optimize content for search engines to increase organic traffic and rankings"
+    },
+    {
+      "name": "social media management",
+      "canonicalScope": "acos-repo",
+      "canonicalFile": "C:\\Users\\frank\\agentic-creator-os\\skills\\social-media\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Create engaging social media content for Twitter/X, LinkedIn, Instagram, and FarCaster"
+    },
+    {
+      "name": "video script writing",
+      "canonicalScope": "acos-repo",
+      "canonicalFile": "C:\\Users\\frank\\agentic-creator-os\\skills\\video-script\\SKILL.md",
+      "copies": 1,
+      "drift": false,
+      "description": "Create engaging video scripts for YouTube, TikTok, Instagram Reels, and podcasts"
+    }
+  ]
+}
