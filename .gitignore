@@ -138,6 +138,7 @@ arcanea-opencode-fork/
 !.claude/CLAUDE.md
 .claude/skills/*/
 !.claude/skills/arco/
+!.claude/skills/arcanea-orchestra/
 .codex/
 .codacy/
 .cursor/
