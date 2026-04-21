@@ -1,10 +1,17 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { RoomClient, PERSONAS, type PersonaId } from './room-client';
+import { RoomClient } from './room-client';
+import { PERSONAS, type PersonaId } from './personas';
 
 interface RoomPageProps {
   params: Promise<{ persona: string }>;
 }
+
+// IMPORTANT: PERSONAS is imported from ./personas (server-safe), NOT from
+// ./room-client ('use client'). See personas.ts for the reasoning. Next.js 16
+// + Turbopack treated the client module as an opaque boundary, which made
+// PERSONAS appear empty at server runtime and caused every /room/<persona>
+// request to fall through to notFound() in production (2026-04-21 bug).
 
 export async function generateStaticParams() {
   return Object.keys(PERSONAS).map((persona) => ({ persona }));
