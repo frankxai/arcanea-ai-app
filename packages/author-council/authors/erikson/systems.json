@@ -1,0 +1,49 @@
+[
+  {
+    "name": "Warren Magic",
+    "kind": "magic",
+    "laws": [
+      "Each warren is a metaphysical realm with its own laws",
+      "Mages draw power by opening a warren",
+      "Warrens can be traveled physically by those with sufficient affinity",
+      "Some warrens are broken, corrupted, or lost"
+    ],
+    "costs": [
+      "Physical exhaustion scaled to magnitude",
+      "Warren corruption can follow the mage out (e.g., Chaos warren)",
+      "Ascendancy binds the mage to their warren's logic"
+    ],
+    "limits": [
+      "Cannot open a warren one has no affinity for",
+      "Some warrens require consent from a god/House",
+      "Otataral nullifies magic entirely"
+    ],
+    "examples": [
+      "Quick Ben's constant warren-juggling",
+      "The corruption of Chaos throughout the Book of the Fallen"
+    ]
+  },
+  {
+    "name": "Convergence as Narrative Principle",
+    "kind": "political",
+    "laws": [
+      "Independent threads grow from independent pressure",
+      "Each thread has its own timeline and its own logic",
+      "Convergence is necessity at the level of each character's arc, not coincidence at the author's level",
+      "The meeting-point is the place where all pressures peak simultaneously"
+    ],
+    "costs": [
+      "Requires 500+ pages of parallel setup",
+      "Reader may feel untethered for entire acts",
+      "Resolution must honor all threads, not just the foreground"
+    ],
+    "limits": [
+      "Cannot fake convergence; threads must genuinely intersect by necessity",
+      "Cannot use deus ex machina; the collapse must be foreseeable in retrospect"
+    ],
+    "examples": [
+      "Coral in Memories of Ice",
+      "The final battles of The Crippled God"
+    ]
+  }
+]

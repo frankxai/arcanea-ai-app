@@ -1,0 +1,11 @@
+{
+  "id": "mythic",
+  "name": "Mythic Council",
+  "license": "MIT",
+  "authors": ["gaiman", "le-guin", "erikson", "schwartz", "tolkien"],
+  "pluggable": true,
+  "synthesizer": "neutral",
+  "defaultMode": "convergence",
+  "version": "0.1.0",
+  "description": "Mythic-layer audit — gods as characters (Gaiman), restraint + true names (Le Guin), civilizational grief (Erikson), Götterkriege cosmology (Schwartz), eucatastrophe (Tolkien). Convergence mode."
+}

@@ -1,0 +1,11 @@
+{
+  "id": "prose",
+  "name": "Prose Council",
+  "license": "MIT",
+  "authors": ["le-guin", "gaiman", "erikson", "schwartz", "tolkien"],
+  "pluggable": true,
+  "synthesizer": "neutral",
+  "defaultMode": "parallel",
+  "version": "0.1.0",
+  "description": "Prose-level audit — compression (Le Guin), oral rhythm (Gaiman), register-braiding (Erikson), Germanic formal precision (Schwartz), mythic register (Tolkien). Parallel reads."
+}

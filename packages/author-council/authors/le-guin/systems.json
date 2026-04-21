@@ -1,0 +1,45 @@
+[
+  {
+    "name": "True-Name Magic",
+    "kind": "magic",
+    "laws": [
+      "To know a thing's true name is to have power over it",
+      "True names are in the Old Speech; one cannot lie in it",
+      "Magic disturbs Equilibrium; the mage accepts the cost"
+    ],
+    "costs": [
+      "Self: the mage is changed by use",
+      "World: equilibrium shifts, often invisibly",
+      "Knowledge: the true name, once known, must be kept"
+    ],
+    "limits": [
+      "A name must be learned; it cannot be guessed",
+      "Misusing a name returns the cost to the user",
+      "Some things (Nameless Ones) are older than the name-system and cannot be bound"
+    ],
+    "examples": [
+      "A Wizard of Earthsea — Ged learning his own true name",
+      "Tehanu — the Namer tradition challenged"
+    ]
+  },
+  {
+    "name": "Gethenian Ambisexuality",
+    "kind": "political",
+    "laws": [
+      "Gethenians are sexually neutral most of the time (somer)",
+      "During kemmer, they become reproductively polarized, either pole",
+      "No permanent sex; no gendered division of labor"
+    ],
+    "costs": [
+      "Reader must rebuild assumption about gender",
+      "Society organized around a cyclical biology"
+    ],
+    "limits": [
+      "Biology is cyclical, not chosen",
+      "Outsiders (Hainish visitors) are 'perverts' — always in one pole"
+    ],
+    "examples": [
+      "The Left Hand of Darkness — Genly Ai's confusion across the novel"
+    ]
+  }
+]

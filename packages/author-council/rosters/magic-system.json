@@ -1,0 +1,11 @@
+{
+  "id": "magic-system",
+  "name": "Magic System Council",
+  "license": "MIT",
+  "authors": ["sanderson", "le-guin", "weeks", "herbert", "paolini"],
+  "pluggable": true,
+  "synthesizer": "neutral",
+  "defaultMode": "adversarial",
+  "version": "0.1.0",
+  "description": "Magic-system audit council — Sanderson/Weeks hard-magic rigor vs Le Guin's restraint, Herbert's ecology-tied systems, Paolini's bond-constrained naming magic. Adversarial by default."
+}

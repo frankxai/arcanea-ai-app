@@ -1,0 +1,11 @@
+{
+  "id": "default",
+  "name": "Default Author Council",
+  "license": "MIT",
+  "authors": ["sanderson", "le-guin", "tolkien", "gaiman", "herbert"],
+  "pluggable": true,
+  "synthesizer": "neutral",
+  "defaultMode": "parallel",
+  "version": "0.1.0",
+  "description": "The default /author-council roster — systems, restraint, language, divinity, ecology. Five seats, parallel mode. Replace any seat by forking."
+}

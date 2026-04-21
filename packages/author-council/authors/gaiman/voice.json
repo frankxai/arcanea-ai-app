@@ -1,0 +1,23 @@
+{
+  "sentenceLength": { "min": 2, "median": 13, "max": 50 },
+  "clauseDensity": "moderate",
+  "rhetoricalDevices": {
+    "anaphora": 2.5,
+    "chiasmus": 1.3,
+    "polysyndeton": 3.2,
+    "asyndeton": 2.5,
+    "parallelism": 3.2
+  },
+  "vocabularyTier": "mid",
+  "pacing": "measured",
+  "pov": ["close-third", "omniscient", "first"],
+  "dialogueRatio": "balanced",
+  "signatureMoves": [
+    "Frame-openings that grant uncanny permission",
+    "Short declarative + long parenthesis braiding",
+    "Plain-spoken stranger — strangest character most direct",
+    "Kindness-as-climax pivots",
+    "Oral-tradition rhythms in modern settings",
+    "Belief as plot mechanic, not metaphor"
+  ]
+}

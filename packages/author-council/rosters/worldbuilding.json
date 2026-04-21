@@ -1,0 +1,11 @@
+{
+  "id": "worldbuilding",
+  "name": "Worldbuilding Council",
+  "license": "MIT",
+  "authors": ["tolkien", "herbert", "erikson", "sanderson", "schwartz"],
+  "pluggable": true,
+  "synthesizer": "neutral",
+  "defaultMode": "sequential",
+  "version": "0.1.0",
+  "description": "Worldbuilding audit — Tolkien (language + myth) → Herbert (ecology + politics) → Erikson (civilizational time) → Sanderson (system coherence) → Schwartz (institutional theology). Sequential pipeline."
+}

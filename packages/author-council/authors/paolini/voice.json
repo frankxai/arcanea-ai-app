@@ -1,0 +1,23 @@
+{
+  "sentenceLength": { "min": 5, "median": 16, "max": 45 },
+  "clauseDensity": "moderate",
+  "rhetoricalDevices": {
+    "anaphora": 1.5,
+    "chiasmus": 0.8,
+    "polysyndeton": 1.5,
+    "asyndeton": 1.8,
+    "parallelism": 3.5
+  },
+  "vocabularyTier": "elevated",
+  "pacing": "patient",
+  "pov": ["close-third"],
+  "dialogueRatio": "balanced",
+  "signatureMoves": [
+    "Training montage at chapter-length",
+    "Mentor dialogue revealing system depth",
+    "Landscape as loving worldbuilding",
+    "Combat choreographed like sword-lesson",
+    "Dragon-voice register distinct from human voice",
+    "Classical hero's journey beats honored"
+  ]
+}
