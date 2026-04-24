@@ -23,7 +23,14 @@
       "mcp__notion__*",
       "mcp__linear-server__*",
       "mcp__claude_ai_Excalidraw__*",
-      "mcp__claude_ai_Miro__*"
+      "mcp__claude_ai_Miro__*",
+      "Bash(rm -f /c/Users/frank/Arcanea/forks/arcanea-studio/.git/index.lock)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'docs\\(ops\\): upstream sync procedure + remote wired *)",
+      "Bash(cp C:/Users/frank/.claude/backups/.claude.json.backup.1776766419182 C:/Users/frank/.claude.json)",
+      "Read(//c/Users/frank/**)",
+      "Bash(git commit *)",
+      "Bash(rm -f .git/COMMIT_MSG.txt)"
     ]
   },
   "enableAllProjectMcpServers": true,

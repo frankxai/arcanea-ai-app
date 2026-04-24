@@ -311,7 +311,11 @@ async function handleConverse(req, res) {
   try { unlinkSync(stash); } catch {}
   if (!stt?.text) {
     process.stderr.write(`[VOICE] transcribe empty (${buf.length} bytes, ${tStt}ms)\n`);
-    json(res, 502, { error: 'transcription returned nothing — try again, or check GROQ_API_KEY' });
+    // Disambiguate the two common causes so the user knows which way to act.
+    const hint = buf.length > 200000
+      ? 'likely background noise — try a quieter room, move closer to mic, or press Esc to stop sooner'
+      : 'audio seemed silent — speak a bit louder or check mic input level';
+    json(res, 502, { error: `transcription empty — ${hint}` });
     return;
   }
   process.stderr.write(`[VOICE] stt "${stt.text.slice(0, 80)}" (${buf.length}b, ${tStt}ms)\n`);

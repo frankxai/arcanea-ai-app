@@ -269,3 +269,5 @@ packages/peak-performance/
 
 # Cloned reference repos (not production code)
 infra/
+forks/
+.git-hygiene/

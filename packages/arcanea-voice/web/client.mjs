@@ -43,6 +43,12 @@ let audioSource = null;
 let vadRaf = 0;
 let bargeRaf = 0;
 let vadAbove = 0;
+let recordStartedAt = 0;
+// Hard cap: never record more than 12s in a single turn. Prevents runaway
+// recordings when ambient noise keeps VAD above the silence threshold and
+// the user has actually finished speaking — otherwise we ship 10-second
+// mostly-silent blobs to Whisper that transcribe empty (see fix 2026-04-21).
+const MAX_RECORD_MS = 12000;
 let vadSilent = 0;
 let bargeAbove = 0;
 let hasSpoken = false;
@@ -154,6 +160,7 @@ async function startRecording() {
     hasSpoken = false;
     vadAbove = 0;
     vadSilent = 0;
+    recordStartedAt = performance.now();
     setStatus('Listening', 'listening');
     orb.setState('listening');
     feedMicToOrb();
@@ -182,12 +189,25 @@ function vadLoop() {
   }
   const rms = Math.sqrt(sum / buf.length);
 
+  // Two-threshold hysteresis: SPEECH_ON = 0.035 to trigger hasSpoken, but
+  // SPEECH_OFF = 0.018 to count as silence. Prevents ambient noise from
+  // continuously resetting vadSilent and causing 10-second runaway recordings
+  // that Whisper returns empty for. Fix 2026-04-21 (runaway record regression).
   if (rms > 0.035) { vadAbove += 16; vadSilent = 0; }
-  else { vadSilent += 16; }
+  else if (rms < 0.018) { vadSilent += 16; }
+  // rms in [0.018, 0.035] is dead zone — hold current state, don't count
+  // ambient room noise as either speech or silence.
 
   if (!hasSpoken && vadAbove > 180) hasSpoken = true;
   // Tightened from 1300ms to 900ms — closer to ElevenLabs/LiveKit feel.
   if (hasSpoken && vadSilent > 900) { stopRecording(); return; }
+  // Hard cap — see MAX_RECORD_MS rationale. If hasSpoken, we assume the user
+  // meant to send what they've got. If not, abort as empty.
+  if (performance.now() - recordStartedAt > MAX_RECORD_MS) {
+    console.warn(`[VOICE] hard recording cap hit at ${MAX_RECORD_MS}ms — stopping`);
+    stopRecording();
+    return;
+  }
   vadRaf = requestAnimationFrame(vadLoop);
 }
 
