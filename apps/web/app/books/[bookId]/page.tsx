@@ -181,6 +181,14 @@ const BOOKS: Record<string, BookDef> = {
     status: 'in-progress',
     dir: join(process.cwd(), '..', '..', 'book', 'song-of-van-linh', 'chapters'),
   },
+  'las-tierras-de-luz': {
+    title: 'Las Tierras de Luz',
+    subtitle: 'A Legend of the Kingdom of Light',
+    description:
+      'In the valley-Realm of Veldoria, an eleven-year-old girl named Mira wakes one morning to find a small prismatic light hovering above her chest — her destello, visible for the first time. Soon she discovers she can wake the sleeping lights in every being she passes. No one else can see them. Across the narrow street, behind a blue door, an old woman who has been waiting her whole adult life looks up from a bowl of green beans and sees. A magical-realism novel about the loneliness of the first witness and the quiet joy that lives beneath every ordinary day. A Legend of the Kingdom of Light.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'las-tierras-de-luz', 'chapters'),
+  },
 };
 
 const STATUS_STYLES: Record<BookStatus, { bg: string; text: string; label: string }> = {
