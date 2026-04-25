@@ -68,7 +68,8 @@ The user's first 30 seconds decide if they ever come back.
 
 Clean code is part of the brand.
 
-- **Tokens are truth.** All visual constants live in `@arcanea/design-system` v0.3.0. No raw hex in app code (lint-enforced).
+- **Tokens are truth.** All visual constants live in `@arcanea/design-system` v0.3.0. No raw hex in app code.
+  - **Status (2026-04-25):** Aspirational. The package is published but not yet a workspace dep of `apps/web`, and `tokens.css` is not imported in `globals.css`. ~12 files in `apps/web/app` and `apps/web/components/{premium,landing}` still hold literal hex in data tables. Migration plan: [`planning-with-files/DESIGN_TOKEN_MIGRATION_2026-04-25.md`](./planning-with-files/DESIGN_TOKEN_MIGRATION_2026-04-25.md). Lint enforcement comes after the refactor.
 - **Server Components by default.** `'use client'` only when state, refs, or browser APIs are required.
 - **TypeScript strict, no `any`.** Typed interfaces at every boundary.
 - **No commented-out code in commits.** Delete it; git remembers.
