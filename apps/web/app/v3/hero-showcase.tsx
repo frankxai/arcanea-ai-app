@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { m } from "framer-motion";
+import { Star } from "@/lib/phosphor-icons";
 
 // ---------------------------------------------------------------------------
 // HeroShowcase — "Created in 30 seconds" visual proof strip
@@ -53,15 +54,17 @@ const CARDS = [
 function StarRating({ count }: { count: number }) {
   return (
     <div className="flex items-center gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <span
-          key={i}
-          className="text-[9px]"
-          style={{ color: i < count ? "#ffd700" : "rgba(255,255,255,0.15)" }}
-        >
-          ★
-        </span>
-      ))}
+      {Array.from({ length: 5 }).map((_, i) => {
+        const filled = i < count;
+        return (
+          <Star
+            key={i}
+            size={10}
+            weight={filled ? "fill" : "regular"}
+            color={filled ? "#ffd700" : "rgba(255,255,255,0.18)"}
+          />
+        );
+      })}
     </div>
   );
 }
