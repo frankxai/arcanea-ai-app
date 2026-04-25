@@ -96,6 +96,12 @@ if (mode === 'help' || mode === 'h' || mode === '--help' || mode === '-h') {
 ${list}
   voice dashboard   Voice Command Center — clap, click, voice, ⌘K
                     (opens arcanea.ai/voice/dashboard)
+  voice daemon      Always-on system listener (Tier 1)
+                    captures mic via FFmpeg, double-clap → summon
+                    --persona <id>     default: lumina
+                    --threshold <num>  sensitivity over noise floor (default 4.5)
+                    --device <name>    override audio input device
+                    --silent           no log output
 
   Flags:
     --local           Boot on-device server + orb at http://127.0.0.1:7777
@@ -137,6 +143,21 @@ if (mode === 'dashboard') {
   openBrowser(url);
   console.log(`  voice dashboard → ${url}`);
   process.exit(0);
+}
+
+// `voice daemon` boots the always-on system listener.
+if (mode === 'daemon') {
+  const here = new URL('.', import.meta.url).pathname.replace(/^\/(\w):/, '$1:');
+  const daemonScript = join(here, 'voice-daemon.mjs');
+  const passthrough = args.slice(1); // drop "daemon", forward the rest
+  const child = spawn(process.execPath, [daemonScript, ...passthrough], {
+    stdio: 'inherit',
+    env: process.env,
+  });
+  child.on('exit', (code) => process.exit(code ?? 0));
+  process.on('SIGINT', () => child.kill('SIGINT'));
+  process.on('SIGTERM', () => child.kill('SIGTERM'));
+  // Block here — the daemon owns the rest of the lifecycle
 }
 
 if (!PRESENCE_COMMANDS.has(mode)) {
