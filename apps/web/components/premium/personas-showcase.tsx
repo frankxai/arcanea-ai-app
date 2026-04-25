@@ -2,6 +2,8 @@
 
 import { m } from "framer-motion";
 import Link from "next/link";
+import { Feather, Sword, FilmStrip, Terminal, Sparkle } from "@/lib/phosphor-icons";
+import type { PhosphorIcon } from "@/lib/phosphor-icons";
 
 // ---------------------------------------------------------------------------
 // PersonasShowcase — "Who Arcanea is for" — five creator archetypes
@@ -9,7 +11,7 @@ import Link from "next/link";
 // ---------------------------------------------------------------------------
 
 interface Persona {
-  icon: string;
+  Icon: PhosphorIcon;
   title: string;
   tagline: string;
   useCase: string;
@@ -19,7 +21,7 @@ interface Persona {
 
 const PERSONAS: Persona[] = [
   {
-    icon: "✒",
+    Icon: Feather,
     title: "Novelists & Authors",
     tagline: "For writers building long-form fiction",
     useCase:
@@ -28,7 +30,7 @@ const PERSONAS: Persona[] = [
     cta: { label: "Open Studio", href: "/studio/author" },
   },
   {
-    icon: "⚔",
+    Icon: Sword,
     title: "Game Designers",
     tagline: "For campaign architects and world-builders",
     useCase:
@@ -37,7 +39,7 @@ const PERSONAS: Persona[] = [
     cta: { label: "Build a World", href: "/worlds" },
   },
   {
-    icon: "◈",
+    Icon: FilmStrip,
     title: "Filmmakers & Showrunners",
     tagline: "For visual storytellers",
     useCase:
@@ -46,7 +48,7 @@ const PERSONAS: Persona[] = [
     cta: { label: "Open Imagine", href: "/imagine" },
   },
   {
-    icon: "⎈",
+    Icon: Terminal,
     title: "Developers & Engineers",
     tagline: "For AI-native builders",
     useCase:
@@ -55,7 +57,7 @@ const PERSONAS: Persona[] = [
     cta: { label: "See Ecosystem", href: "/ecosystem" },
   },
   {
-    icon: "❖",
+    Icon: Sparkle,
     title: "Solo Creators",
     tagline: "For everyone building a universe from scratch",
     useCase:
@@ -68,7 +70,9 @@ const PERSONAS: Persona[] = [
 export function PersonasShowcase() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {PERSONAS.map((persona, i) => (
+      {PERSONAS.map((persona, i) => {
+        const Icon = persona.Icon;
+        return (
         <m.div
           key={persona.title}
           initial={{ opacity: 0, y: 24 }}
@@ -109,14 +113,14 @@ export function PersonasShowcase() {
           <div className="relative">
             {/* Icon */}
             <div
-              className="inline-flex items-center justify-center w-10 h-10 rounded-xl mb-4 text-xl"
+              className="inline-flex items-center justify-center w-10 h-10 rounded-xl mb-4"
               style={{
                 background: `${persona.accent}10`,
                 border: `1px solid ${persona.accent}25`,
                 color: persona.accent,
               }}
             >
-              <span className="leading-none">{persona.icon}</span>
+              <Icon size={18} weight="duotone" color={persona.accent} />
             </div>
 
             {/* Title */}
@@ -148,7 +152,8 @@ export function PersonasShowcase() {
             </Link>
           </div>
         </m.div>
-      ))}
+        );
+      })}
     </div>
   );
 }

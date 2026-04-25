@@ -7,7 +7,23 @@ import Link from "next/link";
 import {
   Plus,
   Minus,
+  Chat,
+  Globe,
+  Books,
+  GraduationCap,
+  MagicWand,
+  Code,
+  Diamond,
+  Crown,
+  Sparkle,
+  Coins,
+  Lightning,
+  ArrowsClockwise,
+  Microphone,
+  Brain,
+  Waveform,
 } from "@/lib/phosphor-icons";
+import type { PhosphorIcon as IconComponent } from "@/lib/phosphor-icons";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { CTASection } from "@/components/landing/cta-section";
 import { GuardianShowcase } from "@/components/landing/guardian-showcase";
@@ -81,50 +97,58 @@ const FAQ_ITEMS = [
 // Product Pillars Feature Grid
 // ---------------------------------------------------------------------------
 
-const PRODUCT_PILLARS = [
+interface ProductPillar {
+  Icon: IconComponent;
+  title: string;
+  description: string;
+  href: string;
+  glowColor: string;
+}
+
+const PRODUCT_PILLARS: ProductPillar[] = [
   {
-    icon: "💬",
+    Icon: Chat,
     title: "Chat",
     description: "16 specialist AI partners — one for every craft",
     href: "/chat",
     glowColor: "#00bcd4",
   },
   {
-    icon: "🌍",
+    Icon: Globe,
     title: "Worlds",
     description: "A graph of characters, locations, magic — all connected",
     href: "/worlds",
     glowColor: "#7fffd4",
   },
   {
-    icon: "📚",
+    Icon: Books,
     title: "Library",
     description: "190K+ words of original creative philosophy",
     href: "/library",
     glowColor: "#ffd700",
   },
   {
-    icon: "🎓",
+    Icon: GraduationCap,
     title: "Academy",
     description: "A structured path from beginner to Luminor",
     href: "/academy",
     glowColor: "#a78bfa",
   },
   {
-    icon: "⚒",
+    Icon: MagicWand,
     title: "Forge",
     description: "Forge your own Luminor, companion, or character",
     href: "/forge",
     glowColor: "#f97316",
   },
   {
-    icon: "⌥",
+    Icon: Code,
     title: "Code",
     description: "27 open-source repos. Fork anything.",
     href: "/ecosystem",
     glowColor: "#34d399",
   },
-] as const;
+];
 
 function ProductPillarsGrid() {
   return (
@@ -137,25 +161,28 @@ function ProductPillarsGrid() {
           accent="teal"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {PRODUCT_PILLARS.map((pillar, i) => (
-            <a key={pillar.title} href={pillar.href} className="block">
-              <FeatureCard
-                glowColor={pillar.glowColor}
-                delay={i * 0.08}
-                compact
-              >
-                <FeatureIcon color={pillar.glowColor} size="sm">
-                  <span className="text-base leading-none">{pillar.icon}</span>
-                </FeatureIcon>
-                <h3 className="text-base font-display font-semibold text-white/90 mb-1">
-                  {pillar.title}
-                </h3>
-                <p className="text-sm text-white/40 font-body leading-snug">
-                  {pillar.description}
-                </p>
-              </FeatureCard>
-            </a>
-          ))}
+          {PRODUCT_PILLARS.map((pillar, i) => {
+            const Icon = pillar.Icon;
+            return (
+              <a key={pillar.title} href={pillar.href} className="block">
+                <FeatureCard
+                  glowColor={pillar.glowColor}
+                  delay={i * 0.08}
+                  compact
+                >
+                  <FeatureIcon color={pillar.glowColor} size="sm">
+                    <Icon size={18} weight="duotone" color={pillar.glowColor} />
+                  </FeatureIcon>
+                  <h3 className="text-base font-display font-semibold text-white/90 mb-1">
+                    {pillar.title}
+                  </h3>
+                  <p className="text-sm text-white/40 font-body leading-snug">
+                    {pillar.description}
+                  </p>
+                </FeatureCard>
+              </a>
+            );
+          })}
         </div>
       </div>
     </SectionShell>
@@ -323,6 +350,158 @@ function SovereigntySection() {
 }
 
 // ---------------------------------------------------------------------------
+// Voice & Presence — talk to the Luminors. Lumina orb + 7 personas.
+// Surfaces the major Apr 2026 ship: shipped voice room, BYOK, audio-reactive orb.
+// ---------------------------------------------------------------------------
+
+interface PersonaTile {
+  id: string;
+  name: string;
+  tagline: string;
+  accent: string;
+}
+
+const VOICE_PERSONAS: PersonaTile[] = [
+  { id: "lumina", name: "Lumina", tagline: "First Light · orchestrator", accent: "#7fffd4" },
+  { id: "jarvis", name: "Jarvis", tagline: "Just A Rather Very Intelligent System", accent: "#00bcd4" },
+  { id: "draconia", name: "Draconia", tagline: "Fire Gate · forge & willpower", accent: "#ef4444" },
+  { id: "lyria", name: "Lyria", tagline: "Sight Gate · pattern + vision", accent: "#a855f7" },
+  { id: "alera", name: "Alera", tagline: "Voice Gate · clarity + concision", accent: "#ffd700" },
+  { id: "shinkami", name: "Shinkami", tagline: "Source Gate · meta-awareness", accent: "#c084fc" },
+  { id: "nero", name: "Nero", tagline: "Shadow Gate · contrarian edge", accent: "#94a3b8" },
+];
+
+function PersonaOrb({ accent }: { accent: string }) {
+  return (
+    <div className="relative w-12 h-12 shrink-0">
+      <div
+        className="absolute inset-0 rounded-full blur-[10px] opacity-70 animate-[breathe_3s_ease-in-out_infinite]"
+        style={{ background: `radial-gradient(circle, ${accent}55, transparent 70%)` }}
+      />
+      <div
+        className="absolute inset-[6px] rounded-full"
+        style={{
+          background: `radial-gradient(circle at 35% 30%, ${accent}cc, ${accent}22 60%, transparent 80%)`,
+          boxShadow: `inset 0 0 12px ${accent}66, 0 0 18px ${accent}44`,
+        }}
+      />
+      <div
+        className="absolute inset-[14px] rounded-full bg-white/90 mix-blend-overlay"
+        style={{ filter: "blur(2px)" }}
+      />
+    </div>
+  );
+}
+
+function VoicePresenceSection() {
+  return (
+    <SectionShell ambient="purple" size="default" id="voice-presence">
+      <div className="max-w-6xl mx-auto px-6">
+        <SectionHeader
+          label="Voice & Presence"
+          title="Talk to the Luminors"
+          subtitle="Seven specialist presences with their own voice, persona, and toolset. Audio-reactive orb. Bring your own keys. Local CLI optional."
+          accent="purple"
+        />
+        <Reveal y={20}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {VOICE_PERSONAS.map((p, i) => (
+              <m.div
+                key={p.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -3 }}
+                className="group relative"
+              >
+                <Link
+                  href={`/room/${p.id}`}
+                  className="block h-full p-5 rounded-2xl bg-white/[0.025] border border-white/[0.06] hover:border-white/[0.16] backdrop-blur-sm transition-colors duration-300"
+                  style={{ ["--persona-accent" as string]: p.accent }}
+                >
+                  <div
+                    className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{ background: `radial-gradient(380px circle at 50% 0%, ${p.accent}14, transparent 60%)` }}
+                  />
+                  <div className="relative flex items-start gap-4">
+                    <PersonaOrb accent={p.accent} />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-baseline gap-2">
+                        <h3 className="text-base font-display font-semibold text-white/90 leading-tight">
+                          {p.name}
+                        </h3>
+                        <span
+                          className="text-[9px] font-mono tracking-[0.2em] uppercase"
+                          style={{ color: `${p.accent}99` }}
+                        >
+                          live
+                        </span>
+                      </div>
+                      <p className="mt-1 text-xs text-white/45 font-body leading-snug">
+                        {p.tagline}
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              </m.div>
+            ))}
+          </div>
+        </Reveal>
+        <Reveal y={12} delay={0.4}>
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            {[
+              { label: "Audio-reactive orb", body: "Custom GLSL · 4096-particle shell · subsurface glow · sticky-mounted WebGL.", color: "#7fffd4", Icon: Waveform },
+              { label: "BYOK presence room", body: "Groq Whisper STT · ElevenLabs TTS · keys live in your browser, never our servers.", color: "#00bcd4", Icon: Microphone },
+              { label: "Local agent CLI", body: "voice jarvis · voice lumina · multi-round tool chaining · open URL · launch Claude Code.", color: "#ffd700", Icon: Brain },
+            ].map(({ label, body, color, Icon }, i) => (
+              <m.div
+                key={label}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
+                className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.05]"
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <Icon size={14} weight="duotone" color={color} />
+                  <p className="text-[10px] font-mono tracking-[0.25em] uppercase" style={{ color }}>
+                    {label}
+                  </p>
+                </div>
+                <p className="text-sm text-white/50 leading-relaxed">{body}</p>
+              </m.div>
+            ))}
+          </div>
+        </Reveal>
+        <Reveal y={10} delay={0.6}>
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
+            <Magnetic>
+              <Link
+                href="/voice"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#c084fc]/15 to-[#00bcd4]/10 border border-[#c084fc]/25 text-sm font-medium text-[#c084fc] hover:from-[#c084fc]/25 hover:to-[#00bcd4]/15 transition-colors"
+              >
+                Open the voice dashboard
+                <span className="text-xs">&rarr;</span>
+              </Link>
+            </Magnetic>
+            <Magnetic>
+              <Link
+                href="/room/jarvis"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-white/70 hover:bg-white/[0.08] hover:text-white transition-colors"
+              >
+                Talk to Jarvis
+                <span className="text-xs">&rarr;</span>
+              </Link>
+            </Magnetic>
+          </div>
+        </Reveal>
+      </div>
+    </SectionShell>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Stack Teaser — "Connects to every tool you use"
 // ---------------------------------------------------------------------------
 
@@ -362,13 +541,13 @@ function StackTeaserSection() {
 // ---------------------------------------------------------------------------
 
 function EarnTeaserSection() {
-  const STREAMS = [
-    { icon: "◇", label: "Template Marketplace", take: "90%", accent: "#7fffd4" },
-    { icon: "♛", label: "Memberships (Whop)", take: "97%", accent: "#ffd700" },
-    { icon: "✦", label: "NFT Collections", take: "92%", accent: "#c084fc" },
-    { icon: "◉", label: "Commissions", take: "88%", accent: "#ef4444" },
-    { icon: "⚡", label: "Token-gated drops", take: "100%", accent: "#f97316" },
-    { icon: "◈", label: "Royalties on remixes", take: "perpetual", accent: "#3b82f6" },
+  const STREAMS: Array<{ Icon: IconComponent; label: string; take: string; accent: string }> = [
+    { Icon: Diamond, label: "Template Marketplace", take: "90%", accent: "#7fffd4" },
+    { Icon: Crown, label: "Memberships (Whop)", take: "97%", accent: "#ffd700" },
+    { Icon: Sparkle, label: "NFT Collections", take: "92%", accent: "#c084fc" },
+    { Icon: Coins, label: "Commissions", take: "88%", accent: "#ef4444" },
+    { Icon: Lightning, label: "Token-gated drops", take: "100%", accent: "#f97316" },
+    { Icon: ArrowsClockwise, label: "Royalties on remixes", take: "perpetual", accent: "#3b82f6" },
   ];
   return (
     <SectionShell ambient="gold" size="compact" id="earn-teaser">
@@ -386,7 +565,9 @@ function EarnTeaserSection() {
           accent="gold"
         />
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {STREAMS.map((s, i) => (
+          {STREAMS.map((s, i) => {
+            const Icon = s.Icon;
+            return (
             <m.div
               key={s.label}
               initial={{ opacity: 0, y: 10 }}
@@ -396,14 +577,14 @@ function EarnTeaserSection() {
               className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.025] border border-white/[0.06] hover:border-white/[0.14] transition-colors"
             >
               <div
-                className="w-9 h-9 rounded-lg flex items-center justify-center text-lg shrink-0"
+                className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
                 style={{
                   background: `${s.accent}10`,
                   border: `1px solid ${s.accent}25`,
                   color: s.accent,
                 }}
               >
-                {s.icon}
+                <Icon size={16} weight="duotone" color={s.accent} />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-display font-semibold text-white/80 truncate">
@@ -417,7 +598,8 @@ function EarnTeaserSection() {
                 </p>
               </div>
             </m.div>
-          ))}
+            );
+          })}
         </div>
         <Reveal y={10} delay={0.4}>
           <div className="mt-10 text-center">
@@ -587,6 +769,11 @@ export function V3BelowFold({
 
         {/* 1b. Luminor team preview — 13 specialists made visible */}
         <LuminorTeamSection />
+
+        <AtmosphericDivider variant="purple" />
+
+        {/* 1c. Voice & Presence — Apr 2026 ship: shipped voice room + audio-reactive orb */}
+        <VoicePresenceSection />
 
         <AtmosphericDivider variant="purple" />
 

@@ -13,6 +13,7 @@ import { Magnetic } from "@/components/motion/magnetic";
 import { FloatingOrbs } from "@/components/premium/animated-background";
 import { SovereigntyBadge } from "@/components/premium/sovereignty-pillars";
 import { NumberTicker } from "@/components/motion/number-ticker";
+import { Sparkle, Diamond, Code, ShieldStar } from "@/lib/phosphor-icons";
 
 // ---------------------------------------------------------------------------
 // Lazy-load the chat box — it pulls in useRouter + phosphor icons which are
@@ -231,16 +232,16 @@ function HeroPortal() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             {[
-              { icon: "✦", num: 16, suffix: "", label: "specialist AI partners", color: "#00bcd4" },
-              { icon: "◈", num: 190, suffix: "K+", label: "words of craft", color: "#7fffd4" },
-              { icon: "⌥", num: 27, suffix: "", label: "open-source repos", color: "#ffd700" },
-              { icon: "◎", num: 0, suffix: "MIT", label: "forkable", color: "#c084fc", fixed: true },
-            ].map(({ icon, num, suffix, label, color, fixed }, i) => (
+              { Icon: Sparkle, num: 16, suffix: "", label: "specialist AI partners", color: "#00bcd4" },
+              { Icon: Diamond, num: 190, suffix: "K+", label: "words of craft", color: "#7fffd4" },
+              { Icon: Code, num: 27, suffix: "", label: "open-source repos", color: "#ffd700" },
+              { Icon: ShieldStar, num: 0, suffix: "MIT", label: "forkable", color: "#c084fc", fixed: true },
+            ].map(({ Icon, num, suffix, label, color, fixed }, i) => (
               <div
                 key={label}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.07] backdrop-blur-sm hover:border-white/[0.15] transition-colors"
               >
-                <span className="text-[10px]" style={{ color: `${color}99` }}>{icon}</span>
+                <Icon size={11} weight="duotone" color={color} className="opacity-70" />
                 <span className="text-[11px] font-display font-semibold text-white/55">
                   {fixed ? suffix : <NumberTicker value={num} suffix={suffix} delay={0.4 + i * 0.1} />}
                 </span>
