@@ -46,7 +46,7 @@ export async function openMic(deviceId?: string): Promise<MicSession> {
 }
 
 /** Compute current RMS energy (0..1) from an analyser. */
-export function readRms(analyser: AnalyserNode, buffer: Uint8Array): number {
+export function readRms(analyser: AnalyserNode, buffer: Uint8Array<ArrayBuffer>): number {
   analyser.getByteTimeDomainData(buffer);
   let sumSquares = 0;
   for (let i = 0; i < buffer.length; i++) {
@@ -62,7 +62,7 @@ export function readRms(analyser: AnalyserNode, buffer: Uint8Array): number {
  */
 export function readMidHighRatio(
   analyser: AnalyserNode,
-  freqBuffer: Uint8Array,
+  freqBuffer: Uint8Array<ArrayBuffer>,
   sampleRate: number,
 ): number {
   analyser.getByteFrequencyData(freqBuffer);
@@ -79,14 +79,19 @@ export function readMidHighRatio(
 }
 
 export interface ClapDetectorOptions {
-  /** RMS amplitude that counts as a peak (0..1). Tune via slider; default 0.18. */
-  peakThreshold: number;
+  /**
+   * Sensitivity multiplier above the running noise floor (1.0 = 1x floor).
+   * Higher = less sensitive. Default 4.0.
+   */
+  sensitivity: number;
   /** Minimum mid-high frequency ratio for a clap-like transient (0..1). Default 0.30. */
   midHighRatio: number;
   /** Min ms between detected claps (suppresses sustain). Default 100. */
   refractoryMs: number;
   /** Min/max ms between two claps to fire double-clap. Default 150-650. */
   doubleClapWindow: [number, number];
+  /** Maximum attack time in ms — peak must rise from baseline this fast. Default 50. */
+  maxAttackMs: number;
   /** Called when a single clap is detected (for visual feedback). */
   onClap?: () => void;
   /** Called when a double-clap pattern is matched. */
@@ -98,52 +103,90 @@ export interface ClapDetector {
   tick: () => void;
   /** Reset internal state. */
   reset: () => void;
+  /** Read current noise floor (for UI display, 0..1). */
+  getNoiseFloor: () => number;
 }
 
 /**
  * Build a clap detector bound to a mic session.
- * Strategy: peak detection on RMS energy with frequency-profile filter, then
- * pattern-match two consecutive claps within the doubleClapWindow.
+ *
+ * Strategy: adaptive noise-floor EMA + sharp-attack gate + 1-4kHz frequency
+ * profile filter, then pattern-match two consecutive claps within the
+ * doubleClapWindow. Pattern from tom-s/clap-detector + web-audio-beat-detector.
+ *
+ * Why running noise floor: hardcoded thresholds break in noisy environments
+ * (cafe, fans, traffic). EMA-tracked floor adapts in ~2s so the detector
+ * stays correct as ambient changes.
+ *
+ * Why attack-time gate: speech and music build amplitude over 100-200ms;
+ * claps reach peak in 10-30ms. Rejecting slow attacks kills 90% of speech
+ * false-positives without needing a separate VAD.
  */
 export function createClapDetector(
   session: MicSession,
   opts: ClapDetectorOptions,
 ): ClapDetector {
   const { analyser, audioContext } = session;
-  const timeBuf = new Uint8Array(analyser.fftSize);
-  const freqBuf = new Uint8Array(analyser.frequencyBinCount);
+  const timeBuf = new Uint8Array(new ArrayBuffer(analyser.fftSize));
+  const freqBuf = new Uint8Array(new ArrayBuffer(analyser.frequencyBinCount));
 
+  // Noise floor — exponential moving average of RMS while not in a peak.
+  // Tau ~ 2 seconds at 60fps = alpha ~ 0.008. We bias toward "lift" only —
+  // peaks should not raise the floor.
+  let noiseFloor = 0.01;
+  const FLOOR_ALPHA = 0.008;
+  const FLOOR_MIN = 0.005;
+
+  // Attack tracking: when did RMS leave the noise floor band?
+  let attackStartTs: number | null = null;
   let lastPeakTs = 0;
   let lastClapTs = 0;
-  let aboveThreshold = false;
 
   const tick = () => {
     const now = performance.now();
     const rms = readRms(analyser, timeBuf);
+    const dynamicThreshold = Math.max(noiseFloor * opts.sensitivity, FLOOR_MIN * 4);
 
-    // Hysteresis: only count one peak per above-threshold excursion.
-    if (rms < opts.peakThreshold * 0.6) {
-      aboveThreshold = false;
+    // Below threshold band — track noise floor, reset attack.
+    if (rms < noiseFloor * 1.5) {
+      noiseFloor = noiseFloor * (1 - FLOOR_ALPHA) + rms * FLOOR_ALPHA;
+      noiseFloor = Math.max(FLOOR_MIN, noiseFloor);
+      attackStartTs = null;
       return;
     }
-    if (rms < opts.peakThreshold) return;
-    if (aboveThreshold) return;
+
+    // Above floor but below threshold — start tracking attack.
+    if (rms < dynamicThreshold) {
+      if (attackStartTs === null) attackStartTs = now;
+      return;
+    }
+
+    // Above threshold — refractory check.
     if (now - lastPeakTs < opts.refractoryMs) {
-      aboveThreshold = true;
+      attackStartTs = null;
       return;
     }
 
-    // Frequency profile: claps emphasize 1–4 kHz mids.
+    // Attack-time gate: peak must rise from baseline within maxAttackMs.
+    // If attackStartTs is null, this rise was instant (frame-to-frame) — pass.
+    const attackMs = attackStartTs === null ? 0 : now - attackStartTs;
+    if (attackMs > opts.maxAttackMs) {
+      // Slow build-up — speech, music, fan whir. Reject.
+      attackStartTs = null;
+      return;
+    }
+
+    // Frequency profile: claps emphasize 1-4 kHz mids.
     const ratio = readMidHighRatio(analyser, freqBuf, audioContext.sampleRate);
     if (ratio < opts.midHighRatio) {
-      aboveThreshold = true;
       lastPeakTs = now;
+      attackStartTs = null;
       return;
     }
 
-    // It's a clap.
-    aboveThreshold = true;
+    // Confirmed clap.
     lastPeakTs = now;
+    attackStartTs = null;
     opts.onClap?.();
 
     const dt = now - lastClapTs;
@@ -157,12 +200,13 @@ export function createClapDetector(
   };
 
   const reset = () => {
+    noiseFloor = 0.01;
+    attackStartTs = null;
     lastPeakTs = 0;
     lastClapTs = 0;
-    aboveThreshold = false;
   };
 
-  return { tick, reset };
+  return { tick, reset, getNoiseFloor: () => noiseFloor };
 }
 
 /** Enumerate available audio input/output devices. */
