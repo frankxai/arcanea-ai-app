@@ -157,7 +157,10 @@ function findChromium() {
 }
 
 function openSummon(persona) {
-  const url = `${webBase}/voice/dashboard?summon=${persona}&trigger=clap-daemon&t=${Date.now()}`;
+  // Direct to the persona room — no dashboard intermediary. Avoids
+  // Chromium app-window's same-origin navigation bounce that was
+  // closing the window when the dashboard's auto-summon redirected.
+  const url = `${webBase}/room/${persona}?via=clap-daemon&t=${Date.now()}`;
   log(`SUMMON ${persona.toUpperCase()} → ${url}`);
 
   // Prefer app-window mode for a kiosk-feel persona room.
