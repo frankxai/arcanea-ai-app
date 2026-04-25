@@ -203,4 +203,4 @@ Mira's gift was not creation. It was attention. The chispas were always there. T
 
 ---
 
-*World Bible — Veldoria Edition. Canon-aligned with First Dawn, Ten Guardians, Great Darkness. Built by the Arcanea Author Team: World Architect, Character Psychologist, Consciousness Fiction Master, Sensitivity Reader, Research Librarian. Synthesized by the Lore Master. 2026-04-24.*
+*World Bible — Veldoria Edition. Canon-aligned with First Dawn, Ten Guardians, Great Darkness. Created and directed by FrankX. Co-written with Ana Cancino. Built by the Arcanea Author Team: World Architect, Character Psychologist, Consciousness Fiction Master, Sensitivity Reader, Research Librarian. Synthesized by the Lore Master. 2026-04-24.*

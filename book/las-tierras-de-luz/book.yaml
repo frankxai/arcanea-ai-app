@@ -6,7 +6,9 @@ status: in-progress
 authors:
   - name: FrankX
     github: frankxai
-    role: creator
+    role: creator-and-director
+  - name: Ana Cancino
+    role: co-writer
   - name: Arcanea Author Team
     role: multi-agent-draft-team
 
@@ -18,9 +20,9 @@ ai_transparency:
     - id: nano-banana-pro
       provider: google
       role: cover-art
-  human_contribution: 40%
-  ai_contribution: 60%
-  method: "Human creative direction, world premise, target reader, canon alignment choices. Multi-agent drafting via the Arcanea Author Team (World Architect, Character Psychologist, Consciousness Fiction Master, Sensitivity Reader, Research Librarian). Lore Master synthesis. Human curation of major decisions (setting, realm canon-placement, Believer identity). Prose drafting by Claude Opus 4.7 under human direction."
+  human_contribution: substantial
+  ai_contribution: substantial
+  method: "Human creative direction by FrankX (world premise, target reader, canon alignment, structural decisions). Co-written with Ana Cancino. Multi-agent drafting via the Arcanea Author Team (World Architect, Character Psychologist, Consciousness Fiction Master, Sensitivity Reader, Research Librarian). Lore Master synthesis. Human curation of all major decisions (setting, realm canon-placement, Believer identity, dialogue convention, hero's journey shape, cast wounds and lies, sensitivity protocol). Prose drafted by Claude Opus 4.7 under human direction. Council review of every chapter against the BIBLE before publication."
 
 license: CC-BY-NC-SA-4.0
 content_rating: general
