@@ -150,7 +150,53 @@ After they had eaten, Bela carried her plate to the basin. She washed it. Mira w
 
 When the dishes were done, Bela said:
 
-— Ven afuera, niña. La luz está buena.
+— Ven conmigo, niña. Antes de que se vaya la luz buena.
+
+— ¿Adónde?
+
+— No lejos. Cinco minutos.
+
+She took a small wool shawl from a hook by the door and put it around her shoulders. Mira followed her out into the street.
+
+They walked north — past the bakery, past the small church, up the narrow lane that climbed the slow incline behind the houses, into the grove of old sombraluces the pueblo simply called *el bosquecillo,* the little wood. It was less a wood than a clearing among five very old trees, their canopies overlapping in green-and-silver layers so the floor was always dappled even at midday. At the center, in a shallow depression Mira had walked past her whole life without thinking about, was a small pool of water perhaps three meters across, surrounded by the soft mosses that grew on the roots of the old trees.
+
+— En esta época hay agua aquí — Bela said. — En verano se seca.
+
+She walked to the edge of the pool and stopped. Mira stopped beside her.
+
+The pool was clear. A hand's depth at the center, less at the edges. The bottom was small smooth stones and the same dappled gold of the canopy above. The water reflected the canopy and the late-afternoon sky and the two of them at the edge — the small grey-haired woman and the eleven-year-old girl, perfectly still in the perfectly still water, with the sombraluces' leaves moving slightly above their heads though the water did not move.
+
+Bela took one slow step back from the edge.
+
+The reflection in the water did not move.
+
+Mira's breath stopped.
+
+For two seconds — perhaps three — the water held the image of Bela where Bela had been standing. Then, slowly, like a sound lengthening in a long room, the reflection released, and the water showed only Mira at the edge and the empty space where Bela had been.
+
+Bela had not turned. She was watching Mira.
+
+Mira looked back at the water. She took one step back herself.
+
+The pool held her — perfectly, two seconds, three — and in those seconds Mira saw, for the first time in eight weeks, what hovered above her own right shoulder. She saw Chispa. From outside her body. The small prismatic shape, the colors not settling, the soft pulsing edge — exactly what she had been carrying without ever having seen it from any angle other than the angle of her own shoulder.
+
+Then the pool released the image, and what it showed was the empty space where she had just been, and then her present self again at the edge, looking down.
+
+Chispa hovered, soft, prismatic, at her shoulder.
+
+She put her hand to her chest.
+
+Bela said, quietly:
+
+— Aquí siempre se ve un poco más despacio.
+
+She did not name the pool. She did not explain. She had brought Mira here because Mira was ready to see what could be seen here, and now they had seen it, and the pool was a pool, and the afternoon was the afternoon.
+
+— Sí — Mira said.
+
+That was all she said.
+
+They walked back together, in silence, the way they had walked up.
 
 ---
 
@@ -172,7 +218,7 @@ The Aurevaldan gesture.
 
 Mira saw it.
 
-Mira did not know it was a gesture. She had seen Bela do it twice before — once in the recognition scene three weeks ago, once on the cliff at the coast. She did not know yet that it was an entire culture's small word for *I bring only what I have.* She would learn this later. For now she only saw the hand come to the chest. The hand stayed there. The hand was not deliberate.
+She did not know it was a gesture. She only saw the hand come to the chest. The hand stayed there. The hand was not deliberate.
 
 Bela began to hum.
 
@@ -207,8 +253,6 @@ That was enough.
 ---
 
 Bela's opalescent destello rose.
-
-Not because Mira sang. Because Bela sang.
 
 It rose out of Bela's chest, slowly, in the soft pearl-tone Mira had first seen on the stoop three weeks ago — the inside of an oyster, the edge of a soap bubble, every color simultaneously and no color in particular, holding itself the way a hand cups a candle. It rose, lifted, came to a stop above Bela's right shoulder, at exactly the three-fingers' distance Chispa had always kept above Mira's.
 

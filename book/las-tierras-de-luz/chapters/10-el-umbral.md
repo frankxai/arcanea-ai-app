@@ -212,8 +212,6 @@ The lamp came on in the small high window.
 
 That night Mira slept the kind of sleep one sleeps when the body has decided that whatever it had been working through has, in some small definite way, completed itself.
 
-She did not know, when she fell asleep, that she was finished with the dark interior.
-
 She knew it when she woke.
 
 It was not joy. It was not relief. It was something quieter than both. The thing she woke with was a kind of *settledness,* the way certain rooms feel settled after the furniture has been rearranged and returned. The room had been moved through. The room had not been broken. The room was now a slightly different room, in which the same person could continue to live.

@@ -66,8 +66,6 @@ She did not speak. She did not hum. She turned her face toward Marisol's grey-br
 
 *¿Dónde está? ¿Está bien?*
 
-Where is she. Is she well.
-
 She did not name Bela. The question carried the name without saying it.
 
 For one breath Marisol did nothing. She remained as she had been. Honey eyes on the wall, chin on paws, the slow ribcage rising and falling at the unhurried rate of a very old dog at rest.

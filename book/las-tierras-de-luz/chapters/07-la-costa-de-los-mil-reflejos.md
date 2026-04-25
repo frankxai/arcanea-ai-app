@@ -382,12 +382,6 @@ She wrote, in her careful hand:
 
 She underlined *siempre.*
 
-She did not know, at that moment, that she had just written the seed of the wrong thing. She did not know that *siempre* was the kind of word that, in the company of pride, became its opposite. She had carried home, with the salt still on her lips, a small new shape of pride. The pride was that the valley loved her. The pride was that her gift worked.
-
-The pride did not feel like pride. It felt like gratitude.
-
-That was the danger.
-
 She blew out the candle.
 
 She slept.

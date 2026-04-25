@@ -248,11 +248,9 @@ It hovered. It was there. The prismatic edges, in the gold afternoon light, were
 
 It was waiting.
 
-Mira understood, in a way she did not have language for, that Chispa was waiting for her to understand something.
-
 She did not understand it.
 
-She stood in the center of the plaza of woken destellos, with the carpenter's boy's coral now quieter, and the old men's chord now darker by two shades, and Lucía tuning instead of playing, and the floración azul that she could not see but knew had closed, and the zumbido at *less,* and Chispa at her shoulder not pulsing, and she did not know what had happened. She knew only that something had.
+She stood in the center of the plaza of woken destellos, with the carpenter's boy's coral now quieter, and the old men's chord now darker by two shades, and Lucía tuning instead of playing, and the floración azul that she could not see but knew had closed, and the zumbido at *less,* and Chispa at her shoulder not pulsing.
 
 Across the plaza, in the corner where the path led out toward the carpenter's shop, the place where Señor Vidal had been walking away — Mira looked.
 
@@ -302,9 +300,7 @@ She did not get into bed. She sat on the edge of the bed with the moon in the la
 
 She did not hum.
 
-She thought — without forming the thought into words — that something had gone wrong.
-
-She did not know what.
+She did not know what had gone wrong.
 
 She thought, also without words, that she did not, at this moment, want to ask Bela. She did not want to cross the street. She did not want to be told. She wanted to sit, alone, with the not-knowing, the way certain children, when they have done a thing they cannot yet name, want first the small clean privacy of not yet being known to have done it.
 

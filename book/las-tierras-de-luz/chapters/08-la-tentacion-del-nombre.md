@@ -139,10 +139,6 @@ She did not, at that moment, see what she had just done. She had begun, three we
 
 The pride did not feel like pride. It felt like generosity. *I am going to give them their destellos.* That was the shape of the thought, in the warmth of the candle, in the small clean handwriting that had been growing more confident for a week.
 
-She did not see the gift becoming the giver.
-
-She did not see the seer becoming the doer.
-
 She blew out the candle.
 
 She slept.

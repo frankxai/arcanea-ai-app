@@ -286,22 +286,6 @@ She slept.
 
 ---
 
-*She was always light, practicing being a person.*
-
-*And she would, the rest of her life, go on practicing.*
-
-*And the light, the rest of its life, would go on being light.*
-
-*And neither was diminished by the practice.*
-
-*Neither was ever diminished.*
-
-*That was the secret.*
-
-*That had always been the secret.*
-
----
-
 *End of Chapter Twelve.*
 
 *End of Las Tierras de Luz.*

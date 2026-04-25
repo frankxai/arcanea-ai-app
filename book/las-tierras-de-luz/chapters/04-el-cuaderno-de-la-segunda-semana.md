@@ -90,8 +90,6 @@ She had not been singing for Soledad. She had not been thinking about Soledad. S
 
 Decided was the word that came to Mira. Soledad's destello had decided.
 
-It had not been Mira's choice. It had not been Soledad's choice. The destello itself had chosen.
-
 Mira's hand went up to her chest and pressed there. The place near her heart was sitting down again, the way it had sat down on the first morning. She pressed harder, as if she could hold it there.
 
 The bell rang for the end of recess.
