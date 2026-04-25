@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import {
   type ClapDetector,
   type MicSession,
@@ -53,6 +53,23 @@ const ACTIVATION_MODES: { id: ActivationMode; label: string; hint: string }[] = 
   { id: 'voice', label: 'Voice activation', hint: 'Mic on, sustained voice triggers summon' },
   { id: 'clap', label: 'Double clap', hint: 'Two claps within 600ms summons the selected persona' },
 ];
+
+/* Choreographed entry — expoOut over 60ms stagger. */
+const stageVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06, delayChildren: 0.08 },
+  },
+};
+const panelVariants: Variants = {
+  hidden: { opacity: 0, y: 14 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+  },
+};
 
 /* ------------------------------------------------------------------ */
 /*  Component                                                          */
@@ -237,11 +254,26 @@ export default function VoiceDashboardClient() {
 
   return (
     <div className="min-h-screen bg-[#09090b] text-white relative">
-      {/* BR2049 atmospheric depth haze */}
+      {/* BR2049 atmospheric depth haze — cross-fades on persona swap */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <AnimatePresence mode="sync">
+          <motion.div
+            key={selected.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.18 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
+            className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[1400px] h-[700px] rounded-full blur-[160px]"
+            style={{ background: `radial-gradient(circle, ${selected.color}, transparent 70%)` }}
+          />
+        </AnimatePresence>
+        {/* Subtle film-grain noise — adds materiality, kills banding */}
         <div
-          className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[1400px] h-[700px] rounded-full blur-[160px] opacity-[0.18]"
-          style={{ background: `radial-gradient(circle, ${selected.color}, transparent 70%)` }}
+          className="absolute inset-0 opacity-[0.025] mix-blend-overlay"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+          }}
         />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       </div>
@@ -277,16 +309,21 @@ export default function VoiceDashboardClient() {
         </p>
       </div>
 
-      {/* Three-column main */}
-      <main className="relative px-6 lg:px-10 pb-20 max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[320px_minmax(0,1fr)_380px] gap-6">
+      {/* Three-column main — choreographed entry */}
+      <motion.main
+        variants={stageVariants}
+        initial="hidden"
+        animate="show"
+        className="relative px-6 lg:px-10 pb-20 max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[320px_minmax(0,1fr)_380px] gap-6"
+      >
         {/* LEFT — Agents + Runtimes */}
-        <div className="space-y-6 order-2 lg:order-1">
+        <motion.div variants={panelVariants} className="space-y-6 order-2 lg:order-1">
           <AgentVisualizer />
           <RuntimeLauncher />
-        </div>
+        </motion.div>
 
         {/* CENTER — Stage */}
-        <div className="space-y-6 order-1 lg:order-2 min-w-0">
+        <motion.div variants={panelVariants} className="space-y-6 order-1 lg:order-2 min-w-0">
           <div className="grid sm:grid-cols-2 gap-6">
             <PersonaOrb
               persona={selected}
@@ -335,15 +372,15 @@ export default function VoiceDashboardClient() {
           </div>
 
           <SessionLogCard log={sessionLog} />
-        </div>
+        </motion.div>
 
         {/* RIGHT — Workflows + Logic Stream + Embedded */}
-        <div className="space-y-6 order-3">
+        <motion.div variants={panelVariants} className="space-y-6 order-3">
           <WorkflowGrid onEmbed={setEmbedUrl} />
           <LogicStream />
           <EmbeddedViewer url={embedUrl} onUrlChange={setEmbedUrl} />
-        </div>
-      </main>
+        </motion.div>
+      </motion.main>
 
       {/* Footer */}
       <div className="px-6 lg:px-10 pb-12 max-w-[1600px] mx-auto text-[11px] text-white/25 leading-relaxed">
@@ -401,6 +438,22 @@ function PersonaOrb({
         Selected
       </p>
       <div className="relative w-44 h-44 flex items-center justify-center mb-4">
+        {/* Conic rotating light ring — BR2049 light beat */}
+        <motion.span
+          aria-hidden
+          className="absolute inset-[-6px] rounded-full pointer-events-none"
+          style={{
+            background: `conic-gradient(from 0deg, transparent 0deg, ${persona.color}88 60deg, transparent 140deg, transparent 220deg, ${persona.accent}66 280deg, transparent 360deg)`,
+            filter: 'blur(3px)',
+            opacity: 0.55,
+          }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
+        />
+        <span
+          aria-hidden
+          className="absolute inset-[-6px] rounded-full pointer-events-none border border-white/[0.04]"
+        />
         {/* Outer ring (clap pulse) */}
         <AnimatePresence>
           {ringOpacity > 0.05 ? (
@@ -561,59 +614,115 @@ function PersonaTiles({
         Pick a persona to summon
       </p>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-        {personas.map((p) => {
-          const isSelected = p.id === selected;
-          return (
-            <motion.button
-              key={p.id}
-              type="button"
-              role="button"
-              tabIndex={0}
-              onClick={() => onSelect(p.id)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  onSelect(p.id);
-                }
-              }}
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className={`group rounded-xl p-4 text-left transition-colors border ${
-                isSelected
-                  ? 'bg-white/[0.05] border-white/25'
-                  : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]'
-              }`}
-              style={isSelected ? { boxShadow: `0 0 32px -8px ${p.color}` } : undefined}
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <span
-                  className="inline-block w-3 h-3 rounded-full flex-shrink-0"
-                  style={{ background: p.color, boxShadow: `0 0 8px ${p.color}` }}
-                />
-                <h3 className="text-sm font-semibold tracking-wide">{p.name}</h3>
-              </div>
-              <p className="text-[11px] text-white/40 leading-snug mb-3">{p.tagline}</p>
-              {isSelected && activation === 'click' ? (
-                <Link
-                  href={`/room/${p.id}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onLaunch(p.id);
-                  }}
-                  className="block w-full text-center text-[10px] uppercase tracking-widest py-1.5 rounded-md bg-white/[0.06] hover:bg-white/[0.12] text-white transition-colors"
-                >
-                  Summon →
-                </Link>
-              ) : (
-                <div className="text-[10px] uppercase tracking-widest text-white/30 text-center py-1.5">
-                  {isSelected ? 'Selected' : 'Tap to select'}
-                </div>
-              )}
-            </motion.button>
-          );
-        })}
+        {personas.map((p) => (
+          <PersonaTile
+            key={p.id}
+            persona={p}
+            isSelected={p.id === selected}
+            onSelect={() => onSelect(p.id)}
+            onLaunch={() => onLaunch(p.id)}
+            activation={activation}
+          />
+        ))}
       </div>
     </div>
+  );
+}
+
+/** Cursor-follow spotlight tile — Linear/Stripe-class hover. */
+function PersonaTile({
+  persona: p,
+  isSelected,
+  onSelect,
+  onLaunch,
+  activation,
+}: {
+  persona: Persona;
+  isSelected: boolean;
+  onSelect: () => void;
+  onLaunch: () => void;
+  activation: ActivationMode;
+}) {
+  const tileRef = useRef<HTMLButtonElement | null>(null);
+  const [spot, setSpot] = useState<{ x: number; y: number } | null>(null);
+
+  return (
+    <motion.button
+      ref={tileRef}
+      type="button"
+      role="button"
+      tabIndex={0}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
+      onMouseMove={(e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        setSpot({ x: e.clientX - r.left, y: e.clientY - r.top });
+      }}
+      onMouseLeave={() => setSpot(null)}
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+      className={`group relative rounded-xl p-4 text-left transition-colors border overflow-hidden ${
+        isSelected
+          ? 'bg-white/[0.05] border-white/25'
+          : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.14]'
+      }`}
+      style={isSelected ? { boxShadow: `0 0 32px -8px ${p.color}` } : undefined}
+    >
+      {/* Cursor spotlight */}
+      <span
+        aria-hidden
+        className="absolute pointer-events-none transition-opacity duration-300 rounded-full blur-2xl"
+        style={{
+          left: spot ? spot.x - 90 : '50%',
+          top: spot ? spot.y - 90 : '50%',
+          width: 180,
+          height: 180,
+          background: `radial-gradient(circle, ${p.color}38, transparent 70%)`,
+          opacity: spot ? 0.8 : 0,
+        }}
+      />
+      {/* Liquid-glass top edge highlight */}
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-px pointer-events-none"
+        style={{
+          background:
+            'linear-gradient(to right, transparent, rgba(255,255,255,0.18), transparent)',
+        }}
+      />
+      <div className="relative">
+        <div className="flex items-center gap-3 mb-2">
+          <span
+            className="inline-block w-3 h-3 rounded-full flex-shrink-0"
+            style={{ background: p.color, boxShadow: `0 0 10px ${p.color}` }}
+          />
+          <h3 className="text-sm font-semibold tracking-wide">{p.name}</h3>
+        </div>
+        <p className="text-[11px] text-white/45 leading-snug mb-3">{p.tagline}</p>
+        {isSelected && activation === 'click' ? (
+          <Link
+            href={`/room/${p.id}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              onLaunch();
+            }}
+            className="block w-full text-center text-[10px] uppercase tracking-widest py-1.5 rounded-md bg-white/[0.06] hover:bg-white/[0.12] text-white transition-colors"
+          >
+            Summon →
+          </Link>
+        ) : (
+          <div className="text-[10px] uppercase tracking-widest text-white/30 text-center py-1.5">
+            {isSelected ? 'Selected' : 'Tap to select'}
+          </div>
+        )}
+      </div>
+    </motion.button>
   );
 }
 
