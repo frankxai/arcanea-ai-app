@@ -3,6 +3,22 @@
 import { m } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import {
+  Crown,
+  BracketsSquare,
+  Code,
+  Bug,
+  Palette,
+  MusicNotes,
+  Lightning,
+  Book,
+  Quotes,
+  Feather,
+  MagnifyingGlass,
+  Compass,
+  Link as LinkIcon,
+} from "@/lib/phosphor-icons";
+import type { PhosphorIcon } from "@/lib/phosphor-icons";
 
 // ---------------------------------------------------------------------------
 // LuminorTeamPreview — Compact grid of the 13 Chosen with hover reveal.
@@ -14,33 +30,33 @@ interface Luminor {
   name: string;
   role: string;
   team: "orchestrator" | "dev" | "creative" | "writing" | "research";
-  glyph: string;
+  Icon: PhosphorIcon;
   color: string;
 }
 
 const LUMINORS: Luminor[] = [
   // Orchestrator
-  { id: "lumina", name: "Lumina", role: "Orchestrator", team: "orchestrator", glyph: "✶", color: "#ffd700" },
+  { id: "lumina", name: "Lumina", role: "Orchestrator", team: "orchestrator", Icon: Crown, color: "#ffd700" },
 
   // Development
-  { id: "systems-architect", name: "Systems Architect", role: "Architecture", team: "dev", glyph: "◩", color: "#00bcd4" },
-  { id: "code-crafter", name: "Code Crafter", role: "Implementation", team: "dev", glyph: "⌥", color: "#00bcd4" },
-  { id: "debugger", name: "Debugger", role: "Root-cause", team: "dev", glyph: "⚡", color: "#ef4444" },
+  { id: "systems-architect", name: "Systems Architect", role: "Architecture", team: "dev", Icon: BracketsSquare, color: "#00bcd4" },
+  { id: "code-crafter", name: "Code Crafter", role: "Implementation", team: "dev", Icon: Code, color: "#00bcd4" },
+  { id: "debugger", name: "Debugger", role: "Root-cause", team: "dev", Icon: Bug, color: "#ef4444" },
 
   // Creative
-  { id: "visual-designer", name: "Visual Designer", role: "Color & UI", team: "creative", glyph: "◉", color: "#a855f7" },
-  { id: "composer", name: "Composer", role: "Music & audio", team: "creative", glyph: "♪", color: "#f472b6" },
-  { id: "motion-designer", name: "Motion Designer", role: "Animation", team: "creative", glyph: "↯", color: "#c084fc" },
+  { id: "visual-designer", name: "Visual Designer", role: "Color & UI", team: "creative", Icon: Palette, color: "#a855f7" },
+  { id: "composer", name: "Composer", role: "Music & audio", team: "creative", Icon: MusicNotes, color: "#f472b6" },
+  { id: "motion-designer", name: "Motion Designer", role: "Animation", team: "creative", Icon: Lightning, color: "#c084fc" },
 
   // Writing
-  { id: "storyteller", name: "Storyteller", role: "Narrative arcs", team: "writing", glyph: "✎", color: "#7fffd4" },
-  { id: "voice", name: "Voice", role: "Copy & naming", team: "writing", glyph: "❝", color: "#00bcd4" },
-  { id: "poet", name: "Poet", role: "Verse & rhythm", team: "writing", glyph: "✦", color: "#ffd700" },
+  { id: "storyteller", name: "Storyteller", role: "Narrative arcs", team: "writing", Icon: Book, color: "#7fffd4" },
+  { id: "voice", name: "Voice", role: "Copy & naming", team: "writing", Icon: Quotes, color: "#00bcd4" },
+  { id: "poet", name: "Poet", role: "Verse & rhythm", team: "writing", Icon: Feather, color: "#ffd700" },
 
   // Research
-  { id: "deep-researcher", name: "Deep Researcher", role: "Synthesis", team: "research", glyph: "⌖", color: "#60a5fa" },
-  { id: "strategist", name: "Strategist", role: "Direction", team: "research", glyph: "◈", color: "#c084fc" },
-  { id: "integrator", name: "Integrator", role: "Connection", team: "research", glyph: "◎", color: "#34d399" },
+  { id: "deep-researcher", name: "Deep Researcher", role: "Synthesis", team: "research", Icon: MagnifyingGlass, color: "#60a5fa" },
+  { id: "strategist", name: "Strategist", role: "Direction", team: "research", Icon: Compass, color: "#c084fc" },
+  { id: "integrator", name: "Integrator", role: "Connection", team: "research", Icon: LinkIcon, color: "#34d399" },
 ];
 
 const TEAM_LABEL: Record<Luminor["team"], string> = {
@@ -59,6 +75,7 @@ export function LuminorTeamPreview() {
       <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-13 gap-2 md:gap-3">
         {LUMINORS.map((l, i) => {
           const isHovered = hovered === l.id;
+          const Icon = l.Icon;
           return (
             <m.div
               key={l.id}
@@ -90,14 +107,18 @@ export function LuminorTeamPreview() {
                   }}
                 />
 
-                {/* Glyph */}
+                {/* Icon */}
                 <div
-                  className="absolute inset-0 flex items-center justify-center text-xl md:text-2xl transition-colors duration-300"
+                  className="absolute inset-0 flex items-center justify-center transition-colors duration-300"
                   style={{
                     color: isHovered ? l.color : "rgba(255,255,255,0.55)",
                   }}
                 >
-                  {l.glyph}
+                  <Icon
+                    size={22}
+                    weight={isHovered ? "duotone" : "regular"}
+                    color={isHovered ? l.color : "rgba(255,255,255,0.65)"}
+                  />
                 </div>
 
                 {/* Team dot (top-right) */}
