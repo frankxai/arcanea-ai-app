@@ -20,9 +20,16 @@ import { readFile, writeFile, mkdir, readdir, stat } from 'node:fs/promises';
 import { join, basename, dirname } from 'node:path';
 import { existsSync } from 'node:fs';
 
-const SKILLS_DIR = '.claude/skills';
-const STAGING_DIR = 'clawhub-staging/arcanea';
-const NAMESPACE = 'arcanea';
+// Allow override via env var or --source flag for portability:
+//   SKILLS_DIR=~/.claude/skills node scripts/port-skill-to-clawhub.mjs --all
+//   node scripts/port-skill-to-clawhub.mjs --source wiki/skills --all
+const sourceFlag = process.argv.indexOf('--source');
+const SKILLS_DIR =
+  sourceFlag > -1
+    ? process.argv[sourceFlag + 1]
+    : process.env.SKILLS_DIR || '.claude/skills';
+const STAGING_DIR = process.env.STAGING_DIR || 'clawhub-staging/arcanea';
+const NAMESPACE = process.env.NAMESPACE || 'arcanea';
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
