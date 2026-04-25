@@ -16,22 +16,31 @@ You are the last line of defense before a design merges. Your job is to prove th
 
 Run each in order. If ANY fails, STOP and report — do not move on.
 
-### 1. Diff-grep
+### 1. Diff-grep (TASTE.md banned-patterns enforcement)
 
-Run against the PR diff:
+Run against the PR diff. Each rule maps to a row in [`TASTE.md`](../../../TASTE.md) banned-patterns table:
 
 ```bash
-# No raw hex in new lines
+# No raw hex in new lines (DESIGN.md tokens only)
 git diff main --diff-filter=AM -- 'apps/web/**/*.tsx' | grep '^+' | grep -E '#[0-9a-fA-F]{3,6}' | grep -v '^+++'
 
-# No banned fonts
-git diff main --diff-filter=AM | grep '^+' | grep -iE 'space.grotesk|inter|cinzel' | grep -v '^+++'
+# No banned fonts (Anthropic anti-pattern list, locked 2026-04-18)
+git diff main --diff-filter=AM | grep '^+' | grep -iE 'space.grotesk|inter\b|cinzel|arial' | grep -v '^+++'
 
-# No domMax
+# No domMax (must be domAnimation)
 git diff main --diff-filter=AM -- 'apps/web/**/*.tsx' | grep '^+' | grep 'domMax'
+
+# No emojis as UI icons (must be Phosphor SVG)
+git diff main --diff-filter=AM -- 'apps/web/**/*.tsx' | grep '^+' | grep -P 'icon:\s*"[\x{1F300}-\x{1F9FF}]"' | grep -v '^+++'
+
+# No Unicode glyphs as icons (✦ ◈ ⌥ ✶ ⎈ ✒ etc.)
+git diff main --diff-filter=AM -- 'apps/web/**/*.tsx' | grep '^+' | grep -P 'icon:\s*"[\x{2190}-\x{27BF}]"|glyph:\s*"[\x{2190}-\x{27BF}]"' | grep -v '^+++'
+
+# No "coming soon" without a Linear link (Gate 1 — First Principles)
+git diff main --diff-filter=AM | grep '^+' | grep -i 'coming soon' | grep -v 'linear.app'
 ```
 
-Any match = FAIL. Tell user which line.
+Any match = FAIL. Tell user which line and reference the relevant TASTE.md gate.
 
 ### 2. Build
 

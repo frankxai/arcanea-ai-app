@@ -11,8 +11,11 @@ Agents must read and obey these sources in this order:
 3. `.arcanea/CLAUDE.md`
 4. `.arcanea/MASTER_PLAN.md`
 5. `.arcanea/lore/CANON_LOCKED.md` when touching lore, guardians, voice, or mythology
+6. `TASTE.md` (curatorial judgment) and `DESIGN.md` (Google Labs spec, machine tokens) when touching any visual surface
 
 `.arcanea/` is the shared intelligence substrate for Claude, Codex, Cursor, Gemini, opencode, and internal Arcanea agents.
+
+`DESIGN.md` (root) conforms to the [Google Labs DESIGN.md spec](https://github.com/google-labs-code/design.md) open-sourced 2026-04-21 — YAML frontmatter holds machine-readable tokens, markdown body holds rationale. `TASTE.md` (root) holds the curatorial bar that tokens cannot encode (voice, banned patterns, the seven excellence gates). Both are the runtime authority for any agent generating UI; runtime token package `@arcanea/design-system` v0.3.0 is the implementation surface.
 
 ## Product North Star
 

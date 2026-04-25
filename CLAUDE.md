@@ -2,7 +2,7 @@
 
 ## Source Of Truth
 
-Before substantial work, read: `AGENTS.md` → newest `planning-with-files/CURRENT_STATE_*` → `CURRENT_BACKLOG_*` → `CURRENT_CHANGELOG_*` → `AGENT_EXECUTION_PROTOCOL_*`. For lore/canon: `.arcanea/CLAUDE.md`. For content: `book/CLAUDE.md`.
+Before substantial work, read: `AGENTS.md` → newest `planning-with-files/CURRENT_STATE_*` → `CURRENT_BACKLOG_*` → `CURRENT_CHANGELOG_*` → `AGENT_EXECUTION_PROTOCOL_*`. For lore/canon: `.arcanea/CLAUDE.md`. For content: `book/CLAUDE.md`. **For any UI/visual work: `TASTE.md` (curatorial judgment) → `DESIGN.md` (Google Labs spec, machine tokens) → `@arcanea/design-system` (runtime).**
 
 ## Behavioral Rules
 

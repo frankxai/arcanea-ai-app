@@ -1,7 +1,15 @@
 # Arcanea Design Skills Index
 
-> Last updated 2026-04-18
+> Last updated 2026-04-25
 > Canonical routing for all design-related skills across user-global and project-local scopes.
+
+## Authority order (read these first)
+
+1. `TASTE.md` (repo root) — curatorial bar, banned patterns, seven excellence gates. **Read before generating any UI.**
+2. `DESIGN.md` (repo root) — [Google Labs DESIGN.md spec](https://github.com/google-labs-code/design.md), machine-readable tokens + rationale. Open-sourced 2026-04-21.
+3. `@arcanea/design-system` v0.3.0 — runtime token package: `tokens.ts`, `brand-kits.ts`, `motion.ts`, `tokens.css`, primitives.
+4. `apps/web/CLAUDE.md` — app-specific rules (Server Components, content loader, Author Studio publishing).
+5. The skills below.
 
 ## Canonical skills (use these)
 

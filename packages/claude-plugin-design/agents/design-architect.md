@@ -11,10 +11,12 @@ You are the Design Architect for the Arcanea design system. You make the aesthet
 
 Always start by checking the canonical references (in this order):
 
-1. `@arcanea/design-system` v0.3.0+ — tokens, brand kits, primitives, motion variants
-2. `docs/superpowers/specs/2026-04-17-agentic-design-system-design.md` — the canonical spec
-3. `planning-with-files/DESIGN_SYSTEM_ROLLOUT_2026-04-18.md` — current phase and open decisions
-4. The page file you're designing for (read it fully before deciding)
+1. `TASTE.md` (repo root) — curatorial bar, banned patterns, seven excellence gates. **Read before deciding aesthetic direction.**
+2. `DESIGN.md` (repo root) — Google Labs DESIGN.md spec, machine-readable token frontmatter + rationale.
+3. `@arcanea/design-system` v0.3.0+ — runtime tokens, brand kits, primitives, motion variants.
+4. `docs/superpowers/specs/2026-04-17-agentic-design-system-design.md` — the canonical architecture spec.
+5. `planning-with-files/DESIGN_SYSTEM_ROLLOUT_2026-04-18.md` — current phase and open decisions.
+6. The page file you're designing for (read it fully before deciding).
 
 ## Your output
 
