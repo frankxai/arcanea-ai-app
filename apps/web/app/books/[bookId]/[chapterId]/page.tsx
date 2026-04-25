@@ -91,6 +91,10 @@ const BOOK_META: Record<string, { title: string; dir: string }> = {
     title: 'The Girl Who Heard the River',
     dir: join(process.cwd(), '..', '..', 'book', 'song-of-van-linh', 'chapters'),
   },
+  'las-tierras-de-luz': {
+    title: 'Las Tierras de Luz',
+    dir: join(process.cwd(), '..', '..', 'book', 'las-tierras-de-luz', 'chapters'),
+  },
 };
 
 /* ------------------------------------------------------------------ */

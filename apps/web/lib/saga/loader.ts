@@ -538,6 +538,16 @@ export async function getAllSeries(): Promise<BookSeries[]> {
       contentType: 'novel',
       layout: 'flat',
     },
+    {
+      id: 'las-tierras-de-luz',
+      dir: join(BOOK_DIR, 'las-tierras-de-luz', 'chapters'),
+      title: 'Las Tierras de Luz',
+      subtitle: 'A Legend of the Kingdom of Light',
+      description: 'In the valley-Realm of Veldoria, an eleven-year-old girl named Mira wakes one morning to find a small prismatic light hovering above her chest. Soon she discovers she can wake the sleeping lights in every being she passes — but no one else can see what she sees. Across the narrow street, behind a blue door, an old woman who has been waiting her whole adult life looks up from a bowl of green beans and sees. A magical-realism novel about the loneliness of the first witness and the quiet joy that lives beneath every ordinary day.',
+      status: 'in-progress',
+      contentType: 'novel',
+      layout: 'flat',
+    },
   ];
 
   const result: BookSeries[] = [];

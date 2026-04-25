@@ -210,6 +210,12 @@ export default function VoicePage() {
             >
               Speak Your First Creation
             </Link>
+            <Link
+              href="/voice/dashboard"
+              className="px-6 py-3 rounded-xl font-medium text-sm border border-[#00bcd4]/30 text-white/80 hover:text-white hover:border-[#00bcd4]/60 hover:bg-[#00bcd4]/[0.04] transition-all"
+            >
+              Voice Dashboard &rarr;
+            </Link>
             <a
               href="https://www.npmjs.com/package/@arcanea/voice"
               target="_blank"

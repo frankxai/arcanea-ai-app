@@ -40,6 +40,7 @@ const ACCENT_MAP: Record<string, string> = {
   'tides-of-silence': 'cyan',
   'heart-of-pyrathis': 'amber',
   'song-of-van-linh': 'teal',
+  'las-tierras-de-luz': 'amber',
 };
 
 const COVER_MAP: Record<string, string> = {
@@ -47,6 +48,7 @@ const COVER_MAP: Record<string, string> = {
   'tides-of-silence': '/images/books/tides-of-silence-cover-v2.png',
   'heart-of-pyrathis': '/images/books/heart-of-pyrathis-cover-v2.png',
   'song-of-van-linh': '/images/books/song-of-van-linh-cover.png',
+  'las-tierras-de-luz': '/images/books/las-tierras-de-luz-cover.png',
 };
 
 async function exists(path: string): Promise<boolean> {

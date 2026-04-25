@@ -91,9 +91,17 @@ if (mode === 'help' || mode === 'h' || mode === '--help' || mode === '-h') {
     .map(([id, p]) => `  voice ${id.padEnd(10)} ${p.name} — ${p.tagline}`)
     .join('\n');
   console.log(`
-  @arcanea/voice — Presence Rooms
+  @arcanea/voice — Presence Rooms + Voice Command Center
   ---
 ${list}
+  voice dashboard   Voice Command Center — clap, click, voice, ⌘K
+                    (opens arcanea.ai/voice/dashboard)
+  voice daemon      Always-on system listener (Tier 1)
+                    captures mic via FFmpeg, double-clap → summon
+                    --persona <id>     default: lumina
+                    --threshold <num>  sensitivity over noise floor (default 4.5)
+                    --device <name>    override audio input device
+                    --silent           no log output
 
   Flags:
     --local           Boot on-device server + orb at http://127.0.0.1:7777
@@ -119,9 +127,42 @@ ${list}
   process.exit(0);
 }
 
+// `voice dashboard` opens the command center at /voice/dashboard.
+if (mode === 'dashboard') {
+  const webBase = process.env.ARCANEA_VOICE_WEB || 'https://arcanea.ai';
+  const url = `${webBase}/voice/dashboard`;
+  const useApp = args.includes('--app') || process.env.ARCANEA_VOICE_APP === '1';
+  if (useApp) {
+    const r = openAppWindow(url, 'dashboard');
+    if (r.ok) {
+      console.log(`  voice dashboard launched in app window (${r.bin})`);
+      process.exit(0);
+    }
+    console.log(`  [WARN] app window failed: ${r.reason} — falling back to default browser`);
+  }
+  openBrowser(url);
+  console.log(`  voice dashboard → ${url}`);
+  process.exit(0);
+}
+
+// `voice daemon` boots the always-on system listener.
+if (mode === 'daemon') {
+  const here = new URL('.', import.meta.url).pathname.replace(/^\/(\w):/, '$1:');
+  const daemonScript = join(here, 'voice-daemon.mjs');
+  const passthrough = args.slice(1); // drop "daemon", forward the rest
+  const child = spawn(process.execPath, [daemonScript, ...passthrough], {
+    stdio: 'inherit',
+    env: process.env,
+  });
+  child.on('exit', (code) => process.exit(code ?? 0));
+  process.on('SIGINT', () => child.kill('SIGINT'));
+  process.on('SIGTERM', () => child.kill('SIGTERM'));
+  // Block here — the daemon owns the rest of the lifecycle
+}
+
 if (!PRESENCE_COMMANDS.has(mode)) {
-  console.error(`\n  unknown presence command: "${mode}"`);
-  console.error('  run `voice help` to see available persona rooms.\n');
+  console.error(`\n  unknown command: "${mode}"`);
+  console.error('  run `voice help` to see available commands.\n');
   process.exit(1);
 }
 
