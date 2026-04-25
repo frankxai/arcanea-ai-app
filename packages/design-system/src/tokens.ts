@@ -176,3 +176,36 @@ export const guardianAccents = {
   leyla: '#3b82f6',            // Flow — water, persistence
   shinkami: '#c084fc',         // Source — meta-awareness
 } as const;
+
+/**
+ * Semantic palette — status colors for error / warning / info / success.
+ * Used by error boundaries, toast notifications, status badges, alerts.
+ * These are NOT brand colors — they're universally-recognized signals.
+ */
+export const semantic = {
+  error: '#ef4444',
+  errorHover: '#dc2626',
+  errorSurface: 'rgba(239,68,68,0.10)',
+  warning: '#eab308',
+  warningHover: '#ca8a04',
+  warningSurface: 'rgba(234,179,8,0.10)',
+  success: '#22c55e',
+  successHover: '#16a34a',
+  successSurface: 'rgba(34,197,94,0.10)',
+  info: '#0ea5e9',
+  infoHover: '#0284c7',
+  infoSurface: 'rgba(14,165,233,0.10)',
+} as const;
+
+/**
+ * Cosmic blue scale — used for the secondary brand surface gradient
+ * and the canonical CTA button (dark blue background, white text).
+ * `cosmicBlue` lives on `brand` as the named entry; this scale extends it
+ * for hover/active states without polluting the brand object.
+ */
+export const cosmicBlueScale = {
+  base: '#0d47a1',     // brand.cosmicBlue — also exported there
+  hover: '#1565c0',    // CTA hover state
+  active: '#0a3a82',   // CTA active state
+  surface: 'rgba(13,71,161,0.10)',
+} as const;
