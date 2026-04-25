@@ -1,10 +1,15 @@
-# Arcanea Design Tokens -- Portable across tools
-# Extracted from: tailwind.config.ts, globals.css, layout.tsx
-# Design Bible v2.0: Apple Liquid Glass + Cosmic Mythology + Premium SaaS
-# Last updated: 2026-03-30
-
-# All HSL values use space-separated format: "H S% L%"
-# Convert to CSS: hsl(H, S%, L%) or hsl(H S% L%)
+# Arcanea Design Tokens — Portable across tools
+#
+# AUTHORITATIVE SOURCE: /DESIGN.md (root) — Google Labs DESIGN.md spec.
+# RUNTIME PACKAGE:      packages/design-system/src/tokens.ts (@arcanea/design-system v0.3.0).
+# CURATORIAL BAR:       /TASTE.md (root) — banned patterns + seven excellence gates.
+#
+# This YAML exists for tools that consume HSL-space-separated values (Tailwind v3
+# preset, legacy compilers). When tokens change, DESIGN.md is updated first; this
+# file is regenerated to match. If the two disagree, DESIGN.md wins.
+#
+# Last updated: 2026-04-25 (Geist family elevation per AGENTS.md 2026-04-18 lock)
+# Prior version (2026-03-30) referenced Space Grotesk + Inter — DEPRECATED, removed.
 
 colors:
   # === COSMIC PALETTE (6 depth levels -- near-black foundation) ===
@@ -142,38 +147,39 @@ colors:
 
 typography:
   display:
-    family: "Space Grotesk"
-    weights: [300, 400, 500, 600, 700]
-    css_variable: "--font-display"
-    fallback: "system-ui, sans-serif"
+    family: "Geist"
+    weights: ["variable"]
+    css_variable: "--font-geist-sans"
+    fallback: "Geist Sans, Satoshi Variable, system-ui, sans-serif"
     use: "Bold headings, hero text, page titles"
 
   body:
-    family: "Inter"
+    family: "Geist"
     weights: ["variable"]
-    css_variable: "--font-inter"
-    fallback: "system-ui, sans-serif"
+    css_variable: "--font-geist-sans"
+    fallback: "Geist Sans, system-ui, sans-serif"
     use: "All body text, narrative, UI labels, navigation"
 
   serif:
-    family: "Newsreader"
-    weights: [400, 500, 600, 700]
+    family: "Instrument Serif"
+    weights: [400]
     styles: ["normal", "italic"]
-    css_variable: "--font-serif"
-    fallback: "Georgia, ui-serif, serif"
-    use: "Long-form reading (Library, books, articles)"
+    css_variable: "--font-instrument-serif"
+    fallback: "Migra, Georgia, ui-serif, serif"
+    use: "Editorial accent only — chapter pull quotes, lyrical hero subtitles, Library long-form. Never as UI label or CTA."
 
   mono:
-    family: "JetBrains Mono"
+    family: "Geist Mono"
     weights: ["variable"]
-    css_variable: "--font-jetbrains-mono"
-    fallback: "Consolas, monospace"
-    use: "Code blocks, technical data, terminal output"
+    css_variable: "--font-geist-mono"
+    fallback: "JetBrains Mono, Fira Code, Consolas, monospace"
+    use: "Code blocks, technical data, terminal output, captions with letterSpacing 0.2em"
 
-  # Note: Cinzel and Crimson Pro from original design system
-  # were replaced with Space Grotesk and Inter for a more
-  # modern, tech-forward aesthetic. Newsreader covers the
-  # editorial serif role.
+  # 2026-04-18: Geist family elevation locked at AGENTS.md.
+  # Banned families (Anthropic frontend-design anti-pattern list):
+  # Inter, Space Grotesk, Cinzel, Arial, Roboto. Newsreader deprecated
+  # in favor of Instrument Serif (matches packages/design-system tokens).
+  # See /TASTE.md Gate 3 for rationale.
 
   scale:
     xs: ["0.75rem", "1rem"]       # 12px / 16px
