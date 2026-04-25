@@ -141,16 +141,27 @@ export function IntegrationGrid({
             </div>
           )}
 
-          {/* Glyph */}
+          {/* Monogram */}
           <div
-            className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 text-lg font-bold transition-transform duration-300 group-hover:scale-110"
+            className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110"
             style={{
-              background: `${intg.color}12`,
-              border: `1px solid ${intg.color}25`,
+              background: `linear-gradient(135deg, ${intg.color}1a, ${intg.color}08)`,
+              border: `1px solid ${intg.color}30`,
               color: intg.color,
+              boxShadow: `inset 0 1px 0 ${intg.color}18`,
             }}
+            aria-hidden="true"
           >
-            {intg.glyph}
+            <span
+              className="font-display font-semibold leading-none tracking-tight"
+              style={{
+                fontSize: "0.95rem",
+                letterSpacing: "-0.01em",
+                textShadow: `0 0 12px ${intg.color}55`,
+              }}
+            >
+              {intg.name.replace(/^The\s+/i, "").slice(0, 2)}
+            </span>
           </div>
 
           {/* Name */}
