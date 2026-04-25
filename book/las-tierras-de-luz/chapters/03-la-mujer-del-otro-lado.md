@@ -1,25 +1,10 @@
----
-title: "La Mujer del Otro Lado"
-chapter: 3
-book: "Las Tierras de Luz"
-pov: Mira
-region: El Valle de las Piedras Vivas
-approximate_word_count: 4000
----
-
-# Chapter Three
-
-## La Mujer del Otro Lado
+# Chapter Three: La Mujer del Otro Lado
 
 By the second week, Mira had woken eight destellos.
 
 She kept count in the blue notebook. She wrote them down in a small column on the third page, under the two lines that had been there from the beginning, and she added, at the top of the fourth page, a new line in smaller handwriting:
 
 *Nadie se da cuenta.*
-
-No one noticed.
-
-That was the shape the aloneness was beginning to take.
 
 She had tested it carefully. She was a careful child. On the morning she woke the stray gato plateado's destello — marigold-gold, shaped like a spinning sun, wildly excited to be outside at last — she had watched the cat's owner, who was sitting on the bench across the street drinking bitter morning tea, and the owner had not looked up. She had tested the vegetable-seller, Señora Marquina, whose destello was verde and the size of a plum; Señora Marquina had smiled at nothing, said *hoy sí hay buen día,* and gone on sorting luzfrutas. She had tested the postman. She had tested the blind old man who sold lottery tickets on the corner and who, she had been certain, would hear even if he could not see. He had turned his head slightly — she had held her breath — and then had said, to the empty air, *hoy huele a pan nuevo,* and smiled, and gone on waiting for customers.
 
@@ -115,7 +100,7 @@ It was awake and it was held, deep inside her chest, with a deliberateness Mira 
 
 Mira stopped walking.
 
-From inside Señora Bela's open doorway came a smell — not strong, not insistent, just present — of something baking that was not bread. Something grainier, sweeter, rounder. Something Mira had never smelled in any kitchen in her life. She did not know what it was. She would think, later, trying to name it for the notebook: *como maíz tostado, pero más lento. Con algo de sol adentro.* Like toasted corn, but slower. With something of the sun inside it.
+From inside Señora Bela's open doorway came a smell — not strong, not insistent, just present — of something baking that was not bread. Something grainier, sweeter, rounder. *Como maíz tostado, pero más lento. Con algo de sol adentro.* Mira had never smelled it in any kitchen in her life.
 
 At the same moment, Señora Bela looked up.
 
@@ -129,7 +114,9 @@ Where Chispa was hovering.
 
 For one breath — one single unhurried breath in the gold late afternoon of a Thursday in the second week — Señora Bela looked at Chispa.
 
-And something in her face — nothing dramatic, nothing a stranger would have noticed, only the smallest interior widening, as if a door far back inside her had opened slightly — moved. Her hands did not stop. But for half a heartbeat her hands slowed. And the opalescent light cupped inside her chest, which Mira had just learned to see, brightened — briefly, by a small fraction — as if something inside Bela had lifted its head to look.
+And something in her face — nothing dramatic, nothing a stranger would have noticed, only the smallest interior widening, as if a door far back inside her had opened slightly — moved. Her hands did not stop. But for half a heartbeat her hands slowed. And — without choosing it, without knowing she had done it — Bela's right hand left the bowl and touched her own chest. Palm flat above her heart. The briefest pressure. The way one touches a thing to be sure it is still there. The hand returned to the beans before the touch was finished.
+
+And the opalescent light cupped inside her chest, which Mira had just learned to see, brightened — briefly, by a small fraction — as if something inside Bela had lifted its head to look.
 
 Then it dimmed back. Her hands continued. Her face returned.
 
@@ -169,8 +156,6 @@ It could have been a weather remark. It could have been the kind of thing an old
 
 It could have meant any of these.
 
-Mira heard, in her own chest, the word it actually meant.
-
 She did not answer. She could not. Her throat had closed. Her eyes had begun — without her permission — to fill.
 
 Señora Bela did not look up again.
@@ -197,7 +182,7 @@ Mira stood for another breath. Then — because she did not know what else to do
 
 She walked the last twenty meters to her own door without feeling her feet.
 
-Silencio, the old lechuza on Señora Bela's roof, turned its head a half-rotation and watched her go. Its eyes were pale gold. It did not blink. It was still watching when Mira opened her courtyard door. It was still watching when she closed it behind her.
+Silencio, the old lechuza on Señora Bela's roof, turned its head a half-rotation and watched her go. Its eyes were pale gold. It did not blink. It was still watching when Mira closed her courtyard door behind her.
 
 ---
 
@@ -253,27 +238,13 @@ In the dream the song traveled. It traveled with a young woman across a corridor
 
 She carried it into a valley that was not her valley.
 
-She hummed it for sixty years in a doorway where a woman rolled dough in the house across the narrow street. The dough-maker — who was the mother of a boy who would grow up to be the baker of the pueblo — heard the song, through an open window, every afternoon, without paying attention. The boy grew up humming three notes over every loaf he ever made, and did not know where he had learned them, and did not think to ask.
+In the dream, the young woman was still humming it on a stoop, sixty years later. Her hands moved slowly over green beans in a wooden bowl. Her small opalescent destello, cupped inside her chest the way a hand cups a candle flame, brightened slightly as she hummed.
 
-The baker's three notes leaked, over forty years of mornings, into a blue flower that grew along the river outside his shop.
+And above the girl who was dreaming, in the room across the narrow street, a small prismatic light hovered.
 
-The three notes leaked into a woman who had married into the valley and become pregnant and kneaded bread before her child was born.
+In the dream, the two lights touched.
 
-The three notes leaked into a man who would one day leave his family for work in a city, and who would hum them over his own dough three years before his daughter's eleventh birthday, and who would say, laughing: *Me las enseñaron sin enseñármelas.*
-
-The three notes leaked into a small girl walking to school past an open bakery door, who absorbed them without knowing she had.
-
-When the girl was eleven, the three notes woke up inside her, and she sang them from her center for the first time, and the destello of a fifty-one-year-old baker lifted from his chest like a loaf of late-afternoon light.
-
-The three notes were never hers. They had traveled a very long way to find her.
-
-In the dream, the young woman who had carried the song was still humming it on a stoop. Her hands moved slowly over green beans in a wooden bowl. Her small opalescent destello, cupped inside her chest the way a hand cupped a candle flame, brightened slightly as she hummed.
-
-And above her right shoulder — three fingers above her right shoulder, at exactly the distance Chispa kept — a small prismatic light was hovering, that had been hovering there for a very long time, and that no one in the pueblo had ever seen because no one had known to look, except the lechuza on the roof and the perro in the street, who had both been waiting their entire long lives for the girl who was dreaming of this woman.
-
-In the dream, the two lights — the opalescent and the prismatic — touched.
-
-In the dream, both began, very slowly, to sing.
+What began first — she could not have said. It was not sound. It was the way the valley's hum had sounded for one full breath, that first morning, when everything was at the same frequency. Like that, but longer. Like that, but answered.
 
 ---
 

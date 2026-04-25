@@ -1,15 +1,4 @@
----
-title: "El Pan de Don Emilio"
-chapter: 2
-book: "Las Tierras de Luz"
-pov: Mira
-region: El Valle de las Piedras Vivas
-approximate_word_count: 4100
----
-
-# Chapter Two
-
-## El Pan de Don Emilio
+# Chapter Two: El Pan de Don Emilio
 
 Three days.
 
@@ -25,7 +14,7 @@ In those three days Mira had walked to school, and walked home from school, and 
 
 — Estoy pensando.
 
-And Remedios, who had a shop to run and a small brother to feed and the long narrow thing called being a woman in charge of everything to do, had kissed the top of Mira's head and said *pues piensa, mi reina* and gone back to the ledger.
+And Remedios capped her pen and looked at Mira with the full attention she always brought to the surface of things — then kissed the top of her head, said *pues piensa, mi reina,* and went back to the ledger.
 
 Mira had meant what she said. She was thinking.
 
@@ -183,7 +172,7 @@ And Mira had understood.
 
 Not *I saw it wake.* Not *I watched it happen.* *I can wake them.*
 
-It was the three notes. It was her voice. It was something in her voice meeting something in his destello, and the meeting was the waking.
+It was the three notes. Her voice. Something in her voice meeting something in his destello.
 
 The word *wake* had arrived in her mind unbidden. She had not chosen it. It was the correct word. The destellos were sleeping. And she, with her three notes she had not invented, could meet them in their sleep and say hello, and they would rise.
 
@@ -212,8 +201,6 @@ She pressed her hand flat against the warm piedra viva of the acacia-corner wall
 She walked on.
 
 She walked with the slow careful care of a child carrying something fragile.
-
-She walked with the weight of a power she had not asked for and the quiet of a witness who had just understood that the world had more than one kind of weather.
 
 Because — she realized, halfway to the schoolyard — she had no one to tell. She could not tell her mother. Her mother had not seen Chispa. Her mother would not see Don Emilio's loaf of light, or the chispero at the plaza bench, or the dimming that had crossed the fountain. Her mother would kiss her forehead and leave a print of flour and say *qué imaginación tienes, mi amor,* and mean it kindly, and not see.
 
@@ -247,8 +234,6 @@ And then, because the truth of the sentence seemed to need another sentence bene
 
 *No sé qué significa. Pero es cierto.*
 
-I don't know what it means. But it is true.
-
 She closed the notebook.
 
 She put her hands on the desk.
@@ -270,8 +255,6 @@ Mira sat down when the blessing ended. Chispa hovered, patient, at her shoulder.
 Under her desk, out of sight of her teacher, Mira opened the blue notebook to a blank page and wrote one more sentence, very small, very steady, in the way a girl writes something she needs to remember longer than the day:
 
 *Las tres notas no eran mías. Nunca fueron mías. Yo solo las oí primero.*
-
-The three notes were never mine. I only heard them first.
 
 She closed the notebook again. Her teacher was writing on the slate. Chispa pulsed, slow, at her shoulder. And somewhere in the valley — though Mira could not have said how she knew — a woman she had known her whole life was sitting on a stoop across a street and shelling green beans into a wooden bowl, humming a song under her breath that no one in the pueblo had ever asked her to explain.
 

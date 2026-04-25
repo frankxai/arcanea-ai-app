@@ -1,15 +1,4 @@
----
-title: "El Día que Chispa Despertó"
-chapter: 1
-book: "Las Tierras de Luz"
-pov: Mira
-region: El Valle de las Piedras Vivas
-approximate_word_count: 3900
----
-
-# Chapter One
-
-## El Día que Chispa Despertó
+# Chapter One: El Día que Chispa Despertó
 
 She woke before the bells did. That was the first strange thing.
 
@@ -71,7 +60,7 @@ Mira stood very still. The light hovered. Visible as a candle. Plain as the pend
 
 Her mother had not seen her.
 
-Her mother had seen *something* — the brightness of her eyes, perhaps the shift in the air of the kitchen, the way a room gets warmer when someone you love walks into it. Remedios had seen the shimmer. She had not seen the shape.
+Her mother had seen *something* — the brightness of her eyes, perhaps the shift in the air of the kitchen. Remedios had seen the shimmer. She had not seen the shape. It was so close it was worse than not enough.
 
 Mira made herself breathe. She stood in the doorway while her mother's hands went back to their work. She watched the slow practiced rhythm of Remedios folding the dough over itself — fold, press, turn — and she noticed, for the first time in eleven years, that her mother was humming under her breath. Three notes. Always the same three notes, softer than conversation, exactly at the rhythm of the folding. Mira had heard those notes every morning of her life. She had never paid attention.
 
@@ -223,7 +212,7 @@ The bells rang ten every morning and she had never heard it. She had always stop
 
 She stood up slowly and brushed the dust from her uniform. Chispa lifted from her palm and settled back at her shoulder.
 
-She did not know yet that the lights had been waiting. She did not know that the whole country she lived in was a sleeping thing, held carefully in the palm of itself, complete, content, unawakened. She did not know that Marisol had been waiting for her for four years, or that the ten bells of the campanile had been counting something beyond themselves her whole life, or that every stone in the wall behind her carried a drop of the first morning of the world inside it. She only knew that something had woken in her this morning, and that it was hers, and that her mother — who saw almost everything — had not seen it.
+She only knew that something had woken in her this morning, and that it was hers, and that her mother — who saw almost everything — had not seen it.
 
 The last part made a small old place inside her sit very still.
 

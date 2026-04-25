@@ -24,6 +24,33 @@ A 28-year-old woman of Venezuelan origin living in Spain. Big dreams, deep spiri
 - Arcanean voice: elevated but accessible, mythic but practical, light not dark, active voice
 - Avoid: "delve," "tapestry," "nestled," corporate language, competitive framing
 
+## Dialogue Style — LOCKED 2026-04-25
+
+**Spanish raya (—) for all dialogue throughout the book.** No quotation marks. No bracketed translations. No inline English glosses. McCarthy/García Márquez/Cisneros/Rulfo lineage.
+
+```
+— ¿No puedes dormir, mi vida?
+— Mamá. Mira.
+— Ay, mi niña.
+```
+
+Context-revealing translation is the craft move: the surrounding sentence (action, response, reaction) makes meaning land without anyone defining anything. Trust the reader. Trust the scene.
+
+Auto-translations to strip from current chapters: Ch 3's parenthetical translation of *"como maíz tostado, pero más lento. Con algo de sol adentro"*; Ch 2's notebook entry followed by *"I don't know what it means. But it is true."* The Spanish stands.
+
+A **glossary at the back** — for proper nouns and unique world-words only (destello, chispa, luzfruta, piedra viva, zumbido, hora de Nero, hora de Lumina, hora de los destellos, raya, sombraluz, floración azul, pino arcano, zorzal de lumbre, gato plateado, lechuza del velo, perro veldoriano, velcordero, abeja cántara, sombracalle, chispero, oscuro, etc.) — handles the worldbuilding terms the way Tolkien handles Elvish or Herbert handles Fremen. Short, poetic, populated during drafting.
+
+## Council review — 2026-04-25
+
+Five-agent council reviewed Chapters 1-3. Full plan: `planning-with-files/LAS_TIERRAS_REWRITE_PLAN_2026-04-25.md`. Key locks:
+
+- **Structure:** 12 chapters, ~50-55K words. Chapters 1-3 done (Beat 1 + threshold of Beat 2). Chapters 4-12 mapped.
+- **The Wrong Move (Beat 3):** Mira sings Voice Gate frequency at Señor Vidal's oscuro at the market; oscuro contracts inward; floración azul along the river closes; Chispa does not pulse. Sight Gate hubris — attention replaced by agenda. Error is ontological, not moral.
+- **First Contact (Beat 4):** Bela's opalescent rises while she sings the Aurevaldan harvest song for herself, not for Mira. Mira is fully present, performing nothing. The gift requires only presence.
+- **Academy connection:** Threaded hint only. Single passing folk-level reference in Ch 7 (coast). No Academy representative sees Mira in this book.
+- **Aurevalde:** Pure absence. No physical crossing. Bela's vowels, the bollos, the chest-touch gesture, the Ch 3 dream — these are the entirety of Aurevalde's presence.
+- **Sensitivity protocol:** Two Venezuelan women beta readers (with diaspora experience and aligned spiritual formation) read the full manuscript before publication. Paid honorarium. Their read is heard as primary.
+
 ## Canon vocabulary lock
 
 Author-only terms (**do not use in prose**): Arcane, Anima, Song, Mana, Lumina, Nero, Yggdrasil, Ten Gates, Luminor, Malachar, World Song, 432 Hz, 528 Hz.
