@@ -2,6 +2,7 @@ import { readdir, readFile } from 'fs/promises';
 import { join } from 'path';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import matter from 'gray-matter';
 import { ChapterReader } from '@/components/saga/chapter-reader';
 
 export const dynamic = 'force-dynamic';
@@ -147,25 +148,27 @@ async function loadChapter(bookId: string, chapterId: string) {
   if (!match) return null;
 
   const raw = await readFile(join(bookMeta.dir, match.filename), 'utf-8');
-  const title = extractTitle(raw, match.id);
-  const words = raw.split(/\s+/).length;
+  const { data: fm, content: body } = matter(raw);
+  const title = (fm.title as string)?.trim() || extractTitle(body, match.id);
+  const words = body.split(/\s+/).filter(Boolean).length;
   const readTime = Math.max(1, Math.ceil(words / 250));
 
   const idx = chapters.indexOf(match);
   const prev = idx > 0 ? chapters[idx - 1] : null;
   const next = idx < chapters.length - 1 ? chapters[idx + 1] : null;
 
-  // Load adjacent titles
   let prevNav: { id: string; title: string } | null = null;
   let nextNav: { id: string; title: string } | null = null;
 
   if (prev) {
     const prevRaw = await readFile(join(bookMeta.dir, prev.filename), 'utf-8');
-    prevNav = { id: prev.id, title: extractTitle(prevRaw, prev.id) };
+    const { data: prevFm, content: prevBody } = matter(prevRaw);
+    prevNav = { id: prev.id, title: (prevFm.title as string)?.trim() || extractTitle(prevBody, prev.id) };
   }
   if (next) {
     const nextRaw = await readFile(join(bookMeta.dir, next.filename), 'utf-8');
-    nextNav = { id: next.id, title: extractTitle(nextRaw, next.id) };
+    const { data: nextFm, content: nextBody } = matter(nextRaw);
+    nextNav = { id: next.id, title: (nextFm.title as string)?.trim() || extractTitle(nextBody, next.id) };
   }
 
   return {
@@ -173,7 +176,7 @@ async function loadChapter(bookId: string, chapterId: string) {
     chapterNumber: match.number,
     totalChapters: chapters.length,
     title,
-    content: raw,
+    content: body,
     wordCount: words,
     readTime,
     prev: prevNav,
