@@ -4,6 +4,7 @@ import { m } from "framer-motion";
 import Link from "next/link";
 import { Feather, Sword, FilmStrip, Terminal, Sparkle } from "@/lib/phosphor-icons";
 import type { PhosphorIcon } from "@/lib/phosphor-icons";
+import { creatorAccents } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // PersonasShowcase — "Who Arcanea is for" — five creator archetypes
@@ -26,7 +27,7 @@ const PERSONAS: Persona[] = [
     tagline: "For writers building long-form fiction",
     useCase:
       "Draft chapters, keep 50+ characters consistent across a trilogy, publish to markdown or EPUB.",
-    accent: "#7fffd4",
+    accent: creatorAccents.novelist,
     cta: { label: "Open Studio", href: "/studio/author" },
   },
   {
@@ -35,7 +36,7 @@ const PERSONAS: Persona[] = [
     tagline: "For campaign architects and world-builders",
     useCase:
       "Generate factions, design magic systems, keep lore consistent across dozens of sessions.",
-    accent: "#ef4444",
+    accent: creatorAccents.gameDesigner,
     cta: { label: "Build a World", href: "/worlds" },
   },
   {
@@ -44,7 +45,7 @@ const PERSONAS: Persona[] = [
     tagline: "For visual storytellers",
     useCase:
       "Pitch decks, character sheets, mood boards, scene-by-scene beats — with cover art generated in-line.",
-    accent: "#a855f7",
+    accent: creatorAccents.filmmaker,
     cta: { label: "Open Imagine", href: "/imagine" },
   },
   {
@@ -53,7 +54,7 @@ const PERSONAS: Persona[] = [
     tagline: "For AI-native builders",
     useCase:
       "27 repos, MCP server, agent framework, BYOK inference. Fork anything. Deploy your own Luminors.",
-    accent: "#00bcd4",
+    accent: creatorAccents.developer,
     cta: { label: "See Ecosystem", href: "/ecosystem" },
   },
   {
@@ -62,7 +63,7 @@ const PERSONAS: Persona[] = [
     tagline: "For everyone building a universe from scratch",
     useCase:
       "One creator, one platform, one connected world. Text, image, music — all linked, all exportable.",
-    accent: "#ffd700",
+    accent: creatorAccents.soloCreator,
     cta: { label: "Start Chatting", href: "/chat" },
   },
 ];

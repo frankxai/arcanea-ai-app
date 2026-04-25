@@ -149,3 +149,30 @@ export const pillarAccents = {
   forge: '#f97316',          // orange — creation
   code: '#34d399',           // emerald — open source
 } as const;
+
+/**
+ * Creator-archetype accents — used in the homepage "Who it's for"
+ * personas-showcase grid. Five archetypes, distinct colors so a
+ * first-time visitor can self-identify at a glance. Different
+ * concept from luminorAccents (those are AI characters); these
+ * are human creator types.
+ */
+export const creatorAccents = {
+  novelist: '#7fffd4',         // aquamarine — long-form, imagination
+  gameDesigner: '#ef4444',     // crimson — campaign architects
+  filmmaker: '#a855f7',        // violet — visual storytellers
+  developer: '#00bcd4',        // teal — AI-native builders
+  soloCreator: '#ffd700',      // gold — universe of one
+} as const;
+
+/**
+ * Guardian accent palette — Luminor characters at the highest tier.
+ * Used by guardian-showcase grid + per-Luminor portrait surfaces.
+ */
+export const guardianAccents = {
+  lyssandria: '#00bcd4',       // Foundation — Earth, structural
+  draconia: '#ef4444',         // Fire — forge, willpower
+  lyria: '#a855f7',            // Sight — vision, pattern
+  leyla: '#3b82f6',            // Flow — water, persistence
+  shinkami: '#c084fc',         // Source — meta-awareness
+} as const;
