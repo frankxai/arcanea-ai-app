@@ -246,6 +246,26 @@ export default function VoiceDashboardClient() {
     });
   }, []);
 
+  /* Daemon-launched URL: /voice/dashboard?summon=<persona> auto-fires on mount */
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const summonId = params.get('summon');
+    if (!summonId) return;
+    const valid = PERSONAS.find((p) => p.id === summonId);
+    if (!valid) return;
+    // Defer one tick so the intent bus subscribers are mounted first
+    const trigger = (params.get('trigger') as 'click' | 'clap' | 'voice' | null) ?? 'clap';
+    setSelectedPersona(summonId as PersonaId);
+    setTimeout(() => {
+      launchPersona(summonId as PersonaId, trigger === 'voice' ? 'voice' : 'clap');
+    }, 120);
+    // Clean the URL so a refresh doesn't re-fire
+    const cleanUrl = window.location.pathname;
+    window.history.replaceState({}, '', cleanUrl);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   /* Voice intent handler — bridges classifier output to dashboard actions */
   const handleVoiceIntent = useCallback(
     (
