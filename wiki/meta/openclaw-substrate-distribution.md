@@ -1,10 +1,22 @@
 ---
 title: OpenClaw — Arcanea as Substrate for Personal AI Agents
-status: draft
+status: SUPERSEDED — see openclaw-integration.md (corrected v2)
 created: 2026-04-23
 owner: frankx
 context: How does someone's "Jarvis OpenClaw" or "Peter's Lobster" use the Arcanea ecosystem from Telegram/WhatsApp/Cowork/etc.?
-state: architectural exploration — feeds Phase 2 of arc-nea-economic-architecture.md
+state: false-premise draft — invented a parallel `@arcanea/claw` runtime before researching the actual OpenClaw ecosystem. Kept for historical record only.
+supersedes: none
+superseded_by: openclaw-integration.md
+---
+
+> ## ⚠️ This document was written from a false premise
+>
+> The author (Claude, autonomous session 2026-04-23) wrote this BEFORE researching that **OpenClaw is a real, mature ecosystem** with 13,729 skills on ClawHub, native MCP Registry, and 20+ messaging integrations.
+>
+> The correct architecture is in `openclaw-integration.md` — Arcanea ships INTO OpenClaw as a skill/persona/MCP provider, not as a parallel runtime.
+>
+> This document is preserved for historical record. Do not act on its recommendations.
+
 ---
 
 # OpenClaw — Arcanea as Substrate for Personal AI Agents
