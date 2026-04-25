@@ -129,9 +129,49 @@ Edit `lib/runtimes.ts`:
 - `↵` — execute selected
 - `Esc` — close palette
 
+## Always-on daemon mode (`voice daemon`)
+
+The browser dashboard listens only while the tab is open. For *true* always-on
+clap activation that survives reboots and doesn't need a browser running,
+boot the system daemon:
+
+```bash
+voice daemon                      # default — summons Lumina on double-clap
+voice daemon --persona jarvis     # summon Jarvis instead
+voice daemon --threshold 6        # less sensitive (default 4.5)
+voice daemon --silent             # suppress log output
+```
+
+How it works:
+- Captures system mic via FFmpeg (cross-platform, zero native compile)
+- Same adaptive noise-floor + attack-time + double-clap detector as the
+  dashboard, ported to pure JS (no FFT — kept dep-free)
+- On double-clap, opens `/voice/dashboard?summon=<persona>` in a Chromium
+  app window (no browser chrome) — Tier 1 of the "Jarvis from Iron Man"
+  experience
+- 8-second cooldown after a fired summon prevents accidental re-fires
+
+Requirements:
+- FFmpeg on PATH. Install: `winget install Gyan.FFmpeg` (Windows),
+  `brew install ffmpeg` (macOS), `apt install ffmpeg` (Linux)
+- Mic permission for the terminal/Node process
+
+To run on every login (Windows): create a startup shortcut to
+`node C:\Users\frank\Arcanea\packages\arcanea-voice\bin\voice-daemon.mjs`
+in `shell:startup`. Tray icon and proper service install is the next track.
+
+The dashboard auto-summons via `?summon=<persona>` query param, then
+cleans the URL so a refresh doesn't re-fire.
+
 ## Known boundaries
 
-- **Browser-only** — clap detection runs in the dashboard tab. Always-on system-wide trigger requires `arcanea-voice daemon` (next track).
+- **Daemon needs FFmpeg** — single dependency, no native compile required.
+- **Daemon uses amplitude detection only** — no FFT (kept dep-free). The
+  browser dashboard has the smarter 1-4 kHz frequency-profile filter.
+  Daemon relies on the double-clap *pattern* itself plus an 8-second
+  cooldown to suppress false-fires. In practice this is sufficient
+  because random environmental clap-pairs in a tight 150-650 ms window
+  are extremely rare.
 - **Some sites refuse iframe embed** — X-Frame-Options DENY/SAMEORIGIN sites (Google, Twitter, most banks). Workflows route those to a new tab via `window.open`.
 - **Output device selection (`setSinkId`)** is Chromium-only.
 - **Wake-word ("Hey Lumina")** not yet shipped. See research brief in `docs/voice-dashboard-2.0-research.md` for the Picovoice Porcupine vs openWakeWord vs Web Audio + MFCC tradeoff analysis.

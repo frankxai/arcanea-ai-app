@@ -5,7 +5,8 @@
   "type": "module",
   "bin": {
     "arcanea-voice": "./bin/voice.mjs",
-    "voice": "./bin/voice.mjs"
+    "voice": "./bin/voice.mjs",
+    "arcanea-voice-daemon": "./bin/voice-daemon.mjs"
   },
   "exports": {
     ".": "./src/index.mjs",
@@ -26,6 +27,8 @@
   ],
   "scripts": {
     "voice": "node bin/voice.mjs",
+    "daemon": "node bin/voice-daemon.mjs",
+    "dashboard": "node bin/voice.mjs dashboard",
     "jarvis": "node bin/voice.mjs jarvis",
     "lumina": "node bin/voice.mjs lumina",
     "test": "node test/persona.test.mjs && node test/tools.test.mjs && node test/server.test.mjs",
