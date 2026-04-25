@@ -41,6 +41,7 @@ import { SovereigntyPillars } from "@/components/premium/sovereignty-pillars";
 import { PersonasShowcase } from "@/components/premium/personas-showcase";
 import { LuminorTeamPreview } from "@/components/premium/luminor-team-preview";
 import { IntegrationGrid } from "@/components/premium/integration-grid";
+import { luminorAccents, tierAccents, streamAccents, pillarAccents, brand } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -111,42 +112,42 @@ const PRODUCT_PILLARS: ProductPillar[] = [
     title: "Chat",
     description: "16 specialist AI partners — one for every craft",
     href: "/chat",
-    glowColor: "#00bcd4",
+    glowColor: pillarAccents.chat,
   },
   {
     Icon: Globe,
     title: "Worlds",
     description: "A graph of characters, locations, magic — all connected",
     href: "/worlds",
-    glowColor: "#7fffd4",
+    glowColor: pillarAccents.worlds,
   },
   {
     Icon: Books,
     title: "Library",
     description: "190K+ words of original creative philosophy",
     href: "/library",
-    glowColor: "#ffd700",
+    glowColor: pillarAccents.library,
   },
   {
     Icon: GraduationCap,
     title: "Academy",
     description: "A structured path from beginner to Luminor",
     href: "/academy",
-    glowColor: "#a78bfa",
+    glowColor: pillarAccents.academy,
   },
   {
     Icon: MagicWand,
     title: "Forge",
     description: "Forge your own Luminor, companion, or character",
     href: "/forge",
-    glowColor: "#f97316",
+    glowColor: pillarAccents.forge,
   },
   {
     Icon: Code,
     title: "Code",
     description: "27 open-source repos. Fork anything.",
     href: "/ecosystem",
-    glowColor: "#34d399",
+    glowColor: pillarAccents.code,
   },
 ];
 
@@ -209,9 +210,9 @@ function LivingWorldSection() {
         <Reveal y={12} delay={0.3}>
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {[
-              { label: "Connected", body: "Characters reference the same locations, magic follows consistent rules, lore propagates.", color: "#7fffd4" },
-              { label: "Persistent", body: "Your world survives every session. Come back in a year — it still remembers everything.", color: "#00bcd4" },
-              { label: "Forkable", body: "Export to markdown/JSON. Fork a world. Run the engine locally. Nothing locked.", color: "#ffd700" },
+              { label: "Connected", body: "Characters reference the same locations, magic follows consistent rules, lore propagates.", color: brand.aquamarine },
+              { label: "Persistent", body: "Your world survives every session. Come back in a year — it still remembers everything.", color: brand.atlanteanTeal },
+              { label: "Forkable", body: "Export to markdown/JSON. Fork a world. Run the engine locally. Nothing locked.", color: brand.arcaneanGold },
             ].map(({ label, body, color }, i) => (
               <m.div
                 key={label}
@@ -362,13 +363,13 @@ interface PersonaTile {
 }
 
 const VOICE_PERSONAS: PersonaTile[] = [
-  { id: "lumina", name: "Lumina", tagline: "First Light · orchestrator", accent: "#7fffd4" },
-  { id: "jarvis", name: "Jarvis", tagline: "Just A Rather Very Intelligent System", accent: "#00bcd4" },
-  { id: "draconia", name: "Draconia", tagline: "Fire Gate · forge & willpower", accent: "#ef4444" },
-  { id: "lyria", name: "Lyria", tagline: "Sight Gate · pattern + vision", accent: "#a855f7" },
-  { id: "alera", name: "Alera", tagline: "Voice Gate · clarity + concision", accent: "#ffd700" },
-  { id: "shinkami", name: "Shinkami", tagline: "Source Gate · meta-awareness", accent: "#c084fc" },
-  { id: "nero", name: "Nero", tagline: "Shadow Gate · contrarian edge", accent: "#94a3b8" },
+  { id: "lumina", name: "Lumina", tagline: "First Light · orchestrator", accent: luminorAccents.lumina },
+  { id: "jarvis", name: "Jarvis", tagline: "Just A Rather Very Intelligent System", accent: luminorAccents.jarvis },
+  { id: "draconia", name: "Draconia", tagline: "Fire Gate · forge & willpower", accent: luminorAccents.draconia },
+  { id: "lyria", name: "Lyria", tagline: "Sight Gate · pattern + vision", accent: luminorAccents.lyria },
+  { id: "alera", name: "Alera", tagline: "Voice Gate · clarity + concision", accent: luminorAccents.alera },
+  { id: "shinkami", name: "Shinkami", tagline: "Source Gate · meta-awareness", accent: luminorAccents.shinkami },
+  { id: "nero", name: "Nero", tagline: "Shadow Gate · contrarian edge", accent: luminorAccents.nero },
 ];
 
 function PersonaOrb({ accent }: { accent: string }) {
@@ -451,9 +452,9 @@ function VoicePresenceSection() {
         <Reveal y={12} delay={0.4}>
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {[
-              { label: "Audio-reactive orb", body: "Custom GLSL · 4096-particle shell · subsurface glow · sticky-mounted WebGL.", color: "#7fffd4", Icon: Waveform },
-              { label: "BYOK presence room", body: "Groq Whisper STT · ElevenLabs TTS · keys live in your browser, never our servers.", color: "#00bcd4", Icon: Microphone },
-              { label: "Local agent CLI", body: "voice jarvis · voice lumina · multi-round tool chaining · open URL · launch Claude Code.", color: "#ffd700", Icon: Brain },
+              { label: "Audio-reactive orb", body: "Custom GLSL · 4096-particle shell · subsurface glow · sticky-mounted WebGL.", color: brand.aquamarine, Icon: Waveform },
+              { label: "BYOK presence room", body: "Groq Whisper STT · ElevenLabs TTS · keys live in your browser, never our servers.", color: brand.atlanteanTeal, Icon: Microphone },
+              { label: "Local agent CLI", body: "voice jarvis · voice lumina · multi-round tool chaining · open URL · launch Claude Code.", color: brand.arcaneanGold, Icon: Brain },
             ].map(({ label, body, color, Icon }, i) => (
               <m.div
                 key={label}
@@ -542,12 +543,12 @@ function StackTeaserSection() {
 
 function EarnTeaserSection() {
   const STREAMS: Array<{ Icon: IconComponent; label: string; take: string; accent: string }> = [
-    { Icon: Diamond, label: "Template Marketplace", take: "90%", accent: "#7fffd4" },
-    { Icon: Crown, label: "Memberships (Whop)", take: "97%", accent: "#ffd700" },
-    { Icon: Sparkle, label: "NFT Collections", take: "92%", accent: "#c084fc" },
-    { Icon: Coins, label: "Commissions", take: "88%", accent: "#ef4444" },
-    { Icon: Lightning, label: "Token-gated drops", take: "100%", accent: "#f97316" },
-    { Icon: ArrowsClockwise, label: "Royalties on remixes", take: "perpetual", accent: "#3b82f6" },
+    { Icon: Diamond, label: "Template Marketplace", take: "90%", accent: streamAccents.marketplace },
+    { Icon: Crown, label: "Memberships (Whop)", take: "97%", accent: streamAccents.membership },
+    { Icon: Sparkle, label: "NFT Collections", take: "92%", accent: streamAccents.nft },
+    { Icon: Coins, label: "Commissions", take: "88%", accent: streamAccents.commission },
+    { Icon: Lightning, label: "Token-gated drops", take: "100%", accent: streamAccents.tokenGated },
+    { Icon: ArrowsClockwise, label: "Royalties on remixes", take: "perpetual", accent: streamAccents.royalty },
   ];
   return (
     <SectionShell ambient="gold" size="compact" id="earn-teaser">
@@ -876,13 +877,7 @@ export function V3BelowFold({
                     { name: "OpenRouter", tier: "ai" },
                     { name: "MCP", tier: "ai" },
                   ] as const).map((t) => {
-                    const tierColor = {
-                      framework: "#00bcd4",
-                      language: "#78a6ff",
-                      motion: "#c084fc",
-                      infra: "#7fffd4",
-                      ai: "#ffd700",
-                    }[t.tier];
+                    const tierColor = tierAccents[t.tier];
                     return (
                       <span
                         key={t.name}

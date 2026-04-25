@@ -1,3 +1,12 @@
+/* Arcanea token system — DESIGN.md (root) is the spec, this is runtime.
+ * Imports --arc-* CSS variables: brand colors, element accents, fonts,
+ * radii, shadows, easings. JSX inline-style and Tailwind arbitrary
+ * values can reference them: var(--arc-brand-atlantean-teal).
+ *
+ * MUST be at the top of this file — CSS @import rules must precede all
+ * other rules (including @tailwind). */
+@import "@arcanea/design-system/tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

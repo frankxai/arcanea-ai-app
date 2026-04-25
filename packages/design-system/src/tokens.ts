@@ -89,3 +89,63 @@ export const glass = {
   liquid:
     'bg-gradient-to-br from-white/[0.04] to-white/[0.01] border border-white/[0.06] backdrop-blur-md',
 } as const;
+
+/**
+ * Luminor character accents — the locked per-character palette.
+ * Used wherever a Luminor needs identification color (orb gradient,
+ * card glow, badge tint, hover ring). Authoritative reference for
+ * apps/web/app/v3/v3-below-fold.tsx VOICE_PERSONAS, /room/[persona]
+ * theme, and any Luminor-bound surface.
+ *
+ * Locked per `feedback_luminor_naming_depth.md` — Luminors are
+ * Skyrim-NPC-deep characters, never generic agent labels. Their
+ * colors are part of their character.
+ */
+export const luminorAccents = {
+  lumina: '#7fffd4',     // First Light · orchestrator · aquamarine
+  jarvis: '#00bcd4',     // Just A Rather Very Intelligent System · cyan
+  draconia: '#ef4444',   // Fire Gate · forge & willpower · crimson
+  lyria: '#a855f7',      // Sight Gate · pattern + vision · violet
+  alera: '#ffd700',      // Voice Gate · clarity + concision · gold
+  shinkami: '#c084fc',   // Source Gate · meta-awareness · lavender
+  nero: '#94a3b8',       // Shadow Gate · contrarian edge · slate
+} as const;
+
+/**
+ * Tech-stack tier accents — used in the homepage Marquee signal-dot
+ * pattern. Each tier maps to a brand color so the stack is scannable.
+ */
+export const tierAccents = {
+  framework: '#00bcd4',  // teal — Next.js / React / Tailwind
+  language: '#78a6ff',   // water-blue — TypeScript
+  motion: '#c084fc',     // lavender — Framer Motion / Three.js
+  infra: '#7fffd4',      // aquamarine — Supabase / Vercel
+  ai: '#ffd700',         // gold — Claude / Gemini / OpenRouter / MCP
+} as const;
+
+/**
+ * Creator-economy stream accents — used in EarnTeaserSection STREAMS.
+ * Each stream's color marks its category in the overall scheme.
+ */
+export const streamAccents = {
+  marketplace: '#7fffd4',   // aqua — template marketplace
+  membership: '#ffd700',    // gold — Whop / paid community
+  nft: '#c084fc',           // lavender — onchain collections
+  commission: '#ef4444',    // crimson — patronage
+  tokenGated: '#f97316',    // orange — token-gated drops
+  royalty: '#3b82f6',       // blue — perpetual royalties
+} as const;
+
+/**
+ * Pillar accents — used for the homepage product-pillar grid.
+ * Each pillar carries a distinct hue so the six can be told apart
+ * at a glance without text.
+ */
+export const pillarAccents = {
+  chat: '#00bcd4',          // teal — primary surface
+  worlds: '#7fffd4',         // aqua — living graph
+  library: '#ffd700',        // gold — knowledge
+  academy: '#a78bfa',        // soft purple — learning
+  forge: '#f97316',          // orange — creation
+  code: '#34d399',           // emerald — open source
+} as const;

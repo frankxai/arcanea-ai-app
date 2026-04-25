@@ -187,6 +187,9 @@ importers:
       '@ai-sdk/react':
         specifier: ^3.0.0
         version: 3.0.166(react@19.2.5)(zod@3.25.76)
+      '@arcanea/design-system':
+        specifier: workspace:^
+        version: link:../../packages/design-system
       '@arcanea/publishing-house':
         specifier: workspace:^
         version: link:../../packages/publishing-house
