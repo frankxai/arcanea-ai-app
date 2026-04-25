@@ -69,7 +69,7 @@ const REFRACTORY_MS = 100;
 const MAX_ATTACK_MS = 60;
 const DOUBLE_CLAP_MIN_MS = 150;
 const DOUBLE_CLAP_MAX_MS = 650;
-const COOLDOWN_AFTER_FIRE_MS = 8000;
+const COOLDOWN_AFTER_FIRE_MS = 60000; // 60s — prevent spamming new windows
 
 const log = (...args) => {
   if (!silent) console.log('[voice-daemon]', ...args);
@@ -156,21 +156,57 @@ function findChromium() {
   return null;
 }
 
+/** Single shared user-data-dir for ALL daemon launches — mic permission persists. */
+const SHARED_UDD = join(homedir(), '.arcanea', 'voice-room');
+
+/** Detect if Chromium is currently using our shared profile (SingletonLock present). */
+function isExistingWindowOpen() {
+  return existsSync(join(SHARED_UDD, 'SingletonLock')) ||
+    existsSync(join(SHARED_UDD, 'Singleton Lock')) ||
+    existsSync(join(SHARED_UDD, 'lockfile'));
+}
+
+/** Try to bring an existing daemon-launched window to the front (Windows only, best effort). */
+function focusExistingWindow() {
+  if (process.platform !== 'win32') return false;
+  try {
+    spawnSync('powershell', ['-NoProfile', '-Command',
+      `$wshell = New-Object -ComObject wscript.shell; $wshell.AppActivate('Arcanea')`
+    ], { stdio: 'ignore', timeout: 1500 });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function openSummon(persona) {
   // Direct to the persona room — no dashboard intermediary. Avoids
   // Chromium app-window's same-origin navigation bounce that was
   // closing the window when the dashboard's auto-summon redirected.
-  const url = `${webBase}/room/${persona}?via=clap-daemon&t=${Date.now()}`;
+  const url = `${webBase}/room/${persona}?via=clap-daemon`;
+
+  // Singleton: if a daemon window is already open with our shared profile,
+  // try to focus it instead of spawning another instance. Chromium's own
+  // SingletonLock will route a second launch to the existing window, but
+  // that's flaky — we explicitly check first.
+  if (isExistingWindowOpen()) {
+    log(`SUMMON ${persona.toUpperCase()} → existing window detected, focusing`);
+    focusExistingWindow();
+    // We don't navigate the existing window to a different persona room;
+    // user can press a persona tile inside it. Mic permission persists
+    // across summons because the user-data-dir is the same.
+    return;
+  }
+
   log(`SUMMON ${persona.toUpperCase()} → ${url}`);
 
-  // Prefer app-window mode for a kiosk-feel persona room.
+  // Spawn fresh Chromium app-window with the SHARED user-data-dir.
   const bin = findChromium();
   if (bin) {
-    const udd = join(homedir(), '.arcanea', 'app-windows', `daemon-${persona}`);
     try {
       spawn(bin, [
         `--app=${url}`,
-        `--user-data-dir=${udd}`,
+        `--user-data-dir=${SHARED_UDD}`,
         '--no-first-run',
         '--no-default-browser-check',
         '--disable-features=TranslateUI',
