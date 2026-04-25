@@ -862,14 +862,45 @@ export function V3BelowFold({
                   The stack that makes it possible
                 </p>
                 <Marquee duration={40}>
-                  {["Next.js 16", "React 19", "TypeScript", "Tailwind", "Framer Motion", "Three.js", "Supabase", "Vercel", "Claude", "Gemini", "OpenRouter", "MCP"].map((tech) => (
-                    <span
-                      key={tech}
-                      className="inline-flex items-center px-5 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-xs font-mono text-white/50 whitespace-nowrap hover:bg-white/[0.06] hover:border-[#00bcd4]/20 transition-colors duration-300"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                  {([
+                    { name: "Next.js 16", tier: "framework" },
+                    { name: "React 19", tier: "framework" },
+                    { name: "TypeScript", tier: "language" },
+                    { name: "Tailwind", tier: "framework" },
+                    { name: "Framer Motion", tier: "motion" },
+                    { name: "Three.js", tier: "motion" },
+                    { name: "Supabase", tier: "infra" },
+                    { name: "Vercel", tier: "infra" },
+                    { name: "Claude", tier: "ai" },
+                    { name: "Gemini", tier: "ai" },
+                    { name: "OpenRouter", tier: "ai" },
+                    { name: "MCP", tier: "ai" },
+                  ] as const).map((t) => {
+                    const tierColor = {
+                      framework: "#00bcd4",
+                      language: "#78a6ff",
+                      motion: "#c084fc",
+                      infra: "#7fffd4",
+                      ai: "#ffd700",
+                    }[t.tier];
+                    return (
+                      <span
+                        key={t.name}
+                        className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-xs font-mono text-white/55 whitespace-nowrap hover:bg-white/[0.06] hover:text-white/80 transition-colors duration-300"
+                        style={{ ["--tier-color" as string]: tierColor }}
+                      >
+                        <span
+                          className="w-1.5 h-1.5 rounded-full"
+                          style={{
+                            background: tierColor,
+                            boxShadow: `0 0 6px ${tierColor}80`,
+                          }}
+                          aria-hidden="true"
+                        />
+                        {t.name}
+                      </span>
+                    );
+                  })}
                 </Marquee>
               </div>
             </Reveal>

@@ -1,4 +1,4 @@
-import { readdir, readFile } from 'fs/promises';
+import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -248,6 +248,22 @@ async function getChapters(bookDir: string): Promise<ChapterInfo[]> {
   }
 }
 
+async function fileExists(path: string): Promise<boolean> {
+  try { await access(path); return true; } catch { return false; }
+}
+
+async function getCompanionFlags(bookDir: string): Promise<{ hasAuthorsNote: boolean; hasGlossary: boolean }> {
+  // Book root is one level up from chapters/ — fall back to bookDir if no /chapters suffix
+  const root = bookDir.endsWith('chapters') || bookDir.endsWith('chapters/') || bookDir.endsWith('chapters\\')
+    ? join(bookDir, '..')
+    : bookDir;
+  const [hasAuthorsNote, hasGlossary] = await Promise.all([
+    fileExists(join(root, 'AUTHORS_NOTE.md')),
+    fileExists(join(root, 'GLOSSARY.md')),
+  ]);
+  return { hasAuthorsNote, hasGlossary };
+}
+
 /* ------------------------------------------------------------------ */
 /*  Metadata                                                           */
 /* ------------------------------------------------------------------ */
@@ -277,6 +293,8 @@ export default async function BookOverviewPage({ params }: PageProps) {
   if (!book) notFound();
 
   const chapters = await getChapters(book.dir);
+  const { hasAuthorsNote, hasGlossary } = await getCompanionFlags(book.dir);
+  const hasCompanion = hasAuthorsNote || hasGlossary;
   const totalWords = chapters.reduce((sum, c) => sum + c.wordCount, 0);
   const totalTime = chapters.reduce((sum, c) => sum + c.readTime, 0);
   const status = STATUS_STYLES[book.status];
@@ -376,6 +394,30 @@ export default async function BookOverviewPage({ params }: PageProps) {
           <p className="py-12 text-center text-sm text-white/30">
             Chapters coming soon. This book is currently being outlined.
           </p>
+        )}
+
+        {/* Companion materials — Author's Note + Glossary */}
+        {hasCompanion && (
+          <div className="mt-16 border-t border-white/[0.06] pt-10">
+            <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-[#00bcd4]/50">
+              Behind the book
+            </p>
+            <Link
+              href={`/books/${bookId}/about`}
+              className="group inline-flex items-center gap-3 text-base text-white/70 transition-colors hover:text-white/95"
+            >
+              <span>
+                {hasAuthorsNote && hasGlossary
+                  ? "Author's Note & Glossary"
+                  : hasAuthorsNote
+                  ? "Author's Note"
+                  : 'Glossary'}
+              </span>
+              <svg className="h-4 w-4 text-[#00bcd4]/50 transition-colors group-hover:text-[#00bcd4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
         )}
 
         {/* Back to saga */}
