@@ -21,6 +21,9 @@ import { WorkflowGrid } from './components/workflow-grid';
 import { LogicStream } from './components/logic-stream';
 import { CommandPalette } from './components/command-palette';
 import { EmbeddedViewer } from './components/embedded-viewer';
+import { VoiceControl } from './components/voice-control';
+import { WORKFLOWS } from './lib/workflows';
+import { RUNTIMES } from './lib/runtimes';
 
 /* ------------------------------------------------------------------ */
 /*  Personas                                                           */
@@ -243,6 +246,68 @@ export default function VoiceDashboardClient() {
     });
   }, []);
 
+  /* Voice intent handler — bridges classifier output to dashboard actions */
+  const handleVoiceIntent = useCallback(
+    (
+      result: {
+        kind: 'summon' | 'workflow' | 'runtime' | 'embed' | 'unknown';
+        targetId: string | null;
+        summary: string;
+      },
+      transcript: string,
+    ) => {
+      if (!result.targetId) return;
+      if (result.kind === 'summon') {
+        const personaId = result.targetId as PersonaId;
+        if (PERSONAS.find((p) => p.id === personaId)) {
+          setSelectedPersona(personaId);
+          launchPersona(personaId, 'voice');
+        }
+      } else if (result.kind === 'workflow') {
+        const w = WORKFLOWS.find((wf) => wf.id === result.targetId);
+        if (!w) return;
+        emit({
+          kind: 'workflow',
+          workflowId: w.id,
+          trigger: 'voice',
+          summary: `Voice → ${w.label}`,
+        });
+        if (w.action.kind === 'route') {
+          window.location.href = w.action.href;
+        } else if (w.action.kind === 'cli') {
+          navigator.clipboard?.writeText(w.action.command).catch(() => {});
+        } else if (w.action.kind === 'external') {
+          if (/^https:\/\/(www\.)?(youtube|github|vercel|figma)\./.test(w.action.url)) {
+            setEmbedUrl(w.action.url);
+          } else {
+            window.open(w.action.url, '_blank', 'noopener,noreferrer');
+          }
+        }
+      } else if (result.kind === 'runtime') {
+        const r = RUNTIMES.find((rt) => rt.id === result.targetId);
+        if (!r) return;
+        emit({
+          kind: 'runtime',
+          runtimeId: r.id,
+          command: r.command,
+          trigger: 'voice',
+          summary: `Voice → ${r.name}`,
+        });
+        navigator.clipboard?.writeText(r.command).catch(() => {});
+      } else if (result.kind === 'embed' && result.targetId) {
+        setEmbedUrl(result.targetId);
+        emit({
+          kind: 'embed',
+          url: result.targetId,
+          surface: /youtube/.test(result.targetId) ? 'youtube' : 'web',
+          trigger: 'voice',
+          summary: `Voice embed → "${transcript.slice(0, 40)}"`,
+        });
+      }
+    },
+    [launchPersona],
+  );
+
   const selected = PERSONAS.find((p) => p.id === selectedPersona) ?? PERSONAS[0];
 
   /* Clap visual pulse */
@@ -316,8 +381,9 @@ export default function VoiceDashboardClient() {
         animate="show"
         className="relative px-6 lg:px-10 pb-20 max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[320px_minmax(0,1fr)_380px] gap-6"
       >
-        {/* LEFT — Agents + Runtimes */}
+        {/* LEFT — Voice Control + Agents + Runtimes */}
         <motion.div variants={panelVariants} className="space-y-6 order-2 lg:order-1">
+          <VoiceControl onIntent={handleVoiceIntent} />
           <AgentVisualizer />
           <RuntimeLauncher />
         </motion.div>
