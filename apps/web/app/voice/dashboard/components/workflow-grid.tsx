@@ -13,11 +13,19 @@ const CATEGORY_LABEL: Record<Workflow['category'], string> = {
   discover: 'Discover',
 };
 
-export function WorkflowGrid({ onEmbed }: { onEmbed: (url: string) => void }) {
+export function WorkflowGrid({
+  onEmbed,
+  workflows,
+}: {
+  onEmbed: (url: string) => void;
+  /** Optional tenant-scoped workflow set. Defaults to full WORKFLOWS catalog. */
+  workflows?: Workflow[];
+}) {
   const [filter, setFilter] = useState<Workflow['category'] | 'all'>('all');
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const visible = filter === 'all' ? WORKFLOWS : WORKFLOWS.filter((w) => w.category === filter);
+  const source = workflows ?? WORKFLOWS;
+  const visible = filter === 'all' ? source : source.filter((w) => w.category === filter);
 
   const trigger = async (w: Workflow) => {
     emit({

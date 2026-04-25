@@ -27,6 +27,8 @@ const ORDER = PERSONA_ORDER;
 type RoomState = PresenceState;
 type MessageTurn = { role: 'user' | 'assistant'; content: string };
 
+type MicPermissionState = 'unknown' | 'prompt' | 'granted' | 'denied';
+
 export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const [personaId, setPersonaId] = useState<PersonaId>(initial);
   const [state, setState] = useState<RoomState>('idle');
@@ -37,6 +39,13 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const [history, setHistory] = useState<MessageTurn[]>([]);
   const [recording, setRecording] = useState(false);
   const [hasBYOK, setHasBYOK] = useState(false);
+  const [micPermission, setMicPermission] = useState<MicPermissionState>('unknown');
+  const [debugMode, setDebugMode] = useState(false);
+  const [debugInfo, setDebugInfo] = useState({ ctxState: '—', streamTracks: 0, recorderState: '—' });
+  const [viaClap, setViaClap] = useState(false);
+  const [tenantId, setTenantId] = useState<string>('arcanea');
+  const [greetingPlayed, setGreetingPlayed] = useState(false);
+  const greetingAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const micStreamRef = useRef<MediaStream | null>(null);
   const micCtxRef = useRef<AudioContext | null>(null);
@@ -73,6 +82,139 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   useEffect(() => {
     const k = getStoredKeys();
     setHasBYOK(Boolean(k.groq || k.eleven));
+  }, []);
+
+  // Day 1 fixes: permission gate + debug + via=clap detection
+  // Daemon-launched windows live in a fresh Chromium profile (--user-data-dir
+  // ~/.arcanea/voice-room). Without an upfront permission check, getUserMedia
+  // rejects silently inside startRecording() and the user thinks Space is
+  // broken. Detect early and surface state.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    setViaClap(params.get('via') === 'clap-daemon');
+    setDebugMode(params.get('debug') === '1');
+    const t = params.get('tenant');
+    if (t && /^[a-z][a-z0-9-]{0,30}$/.test(t)) setTenantId(t);
+    // Try to focus the window — daemon-launched app-window may lack focus.
+    try { window.focus(); } catch {}
+    // Permissions API isn't on Safari; fall back to 'unknown'.
+    if (!navigator.permissions || typeof navigator.permissions.query !== 'function') {
+      setMicPermission('unknown');
+      return;
+    }
+    let cancelled = false;
+    navigator.permissions
+      .query({ name: 'microphone' as PermissionName })
+      .then((status) => {
+        if (cancelled) return;
+        const map: Record<string, MicPermissionState> = {
+          granted: 'granted',
+          prompt: 'prompt',
+          denied: 'denied',
+        };
+        setMicPermission(map[status.state] ?? 'unknown');
+        status.onchange = () => {
+          if (!cancelled) setMicPermission(map[status.state] ?? 'unknown');
+        };
+      })
+      .catch(() => {
+        if (!cancelled) setMicPermission('unknown');
+      });
+    return () => { cancelled = true; };
+  }, []);
+
+  // Debug overlay refresh
+  useEffect(() => {
+    if (!debugMode) return;
+    const id = window.setInterval(() => {
+      setDebugInfo({
+        ctxState: micCtxRef.current?.state ?? '—',
+        streamTracks: micStreamRef.current?.getAudioTracks().length ?? 0,
+        recorderState: recorderRef.current?.state ?? '—',
+      });
+    }, 250);
+    return () => window.clearInterval(id);
+  }, [debugMode]);
+
+  // Eagerly request mic on mount when arriving via clap (i.e. daemon-launched
+  // app-window). The clap itself counts as a user gesture in Chrome's view of
+  // the originating tab, but daemon spawn is out-of-process so the gesture
+  // doesn't transfer. We still request on mount because:
+  //   - if granted in this profile, no prompt fires (silent success)
+  //   - if 'prompt', the permission dialog renders immediately so user
+  //     doesn't have to discover Space first
+  // Stream is held in micStreamRef so first Space press skips the await.
+  const primeMic = useCallback(async (): Promise<boolean> => {
+    if (micStreamRef.current) return true;
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+      });
+      micStreamRef.current = stream;
+      const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      micCtxRef.current = new Ctx();
+      // Probe #3 fix: AudioContext starts suspended on Chrome's autoplay
+      // policy. Resume explicitly before reading samples.
+      if (micCtxRef.current.state === 'suspended') {
+        try { await micCtxRef.current.resume(); } catch {}
+      }
+      const src = micCtxRef.current.createMediaStreamSource(stream);
+      micAnalyserRef.current = micCtxRef.current.createAnalyser();
+      micAnalyserRef.current.fftSize = 512;
+      src.connect(micAnalyserRef.current);
+      setMicPermission('granted');
+      // eslint-disable-next-line no-console
+      console.log('[VOICE] mic primed — ctx=' + micCtxRef.current.state + ' tracks=' + stream.getAudioTracks().length);
+      return true;
+    } catch (e) {
+      const err = e as DOMException;
+      // eslint-disable-next-line no-console
+      console.warn('[VOICE] mic prime failed:', err.name, err.message);
+      if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+        setMicPermission('denied');
+      } else if (err.name === 'NotFoundError' || err.name === 'OverconstrainedError') {
+        setError('No microphone found.');
+      }
+      return false;
+    }
+  }, []);
+
+  // Auto-prime on mount when permission is already granted, OR after the user
+  // taps the activation overlay.
+  useEffect(() => {
+    if (micPermission === 'granted' && !micStreamRef.current) {
+      void primeMic();
+    }
+  }, [micPermission, primeMic]);
+
+  // Day 2: Premium activation greeting. Only fires when arriving via clap.
+  // Autoplay works because the clap → window-spawn is treated as a user
+  // gesture by Chrome in app-window mode. Falls back to a no-op if the audio
+  // element rejects play() (NotAllowedError) — the activation overlay still
+  // primes mic, so the user gets a working session either way.
+  useEffect(() => {
+    if (!viaClap || greetingPlayed) return;
+    if (typeof window === 'undefined') return;
+    const audio = new Audio(`/api/voice/greeting?persona=${personaId}&tenant=${tenantId}`);
+    audio.preload = 'auto';
+    greetingAudioRef.current = audio;
+    setGreetingPlayed(true);
+    // Tiny delay lets the BR2049 haze fade-in start first — the orb is mounted
+    // by then and reactive elements are in place.
+    const t = window.setTimeout(() => {
+      audio.play().catch((e) => {
+        // eslint-disable-next-line no-console
+        console.warn('[VOICE] greeting autoplay blocked:', e?.name || 'unknown');
+      });
+    }, 350);
+    return () => {
+      window.clearTimeout(t);
+      try { audio.pause(); } catch {}
+      greetingAudioRef.current = null;
+    };
+    // We deliberately ignore personaId/tenantId changes after first play.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // URL sync
@@ -260,22 +402,28 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
     if (busyRef.current || recordingRef.current) return;
     try {
       if (!micStreamRef.current) {
-        micStreamRef.current = await navigator.mediaDevices.getUserMedia({
-          audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
-        });
-        const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-        micCtxRef.current = new Ctx();
-        const src = micCtxRef.current.createMediaStreamSource(micStreamRef.current);
-        micAnalyserRef.current = micCtxRef.current.createAnalyser();
-        micAnalyserRef.current.fftSize = 512;
-        src.connect(micAnalyserRef.current);
+        const ok = await primeMic();
+        if (!ok) {
+          showErr('Microphone blocked — grant permission in the browser.');
+          return;
+        }
+      }
+      // Probe #3 fix: even if context exists, it can transition back to
+      // 'suspended' on tab visibility change. Always resume before recording.
+      if (micCtxRef.current && micCtxRef.current.state === 'suspended') {
+        try { await micCtxRef.current.resume(); } catch {}
       }
 
       const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
         ? 'audio/webm;codecs=opus'
         : MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4';
 
-      const rec = new MediaRecorder(micStreamRef.current, { mimeType: mime });
+      const stream = micStreamRef.current;
+      if (!stream) {
+        showErr('Microphone unavailable.');
+        return;
+      }
+      const rec = new MediaRecorder(stream, { mimeType: mime });
       chunksRef.current = [];
       rec.ondataavailable = (e) => { if (e.data.size) chunksRef.current.push(e.data); };
       rec.onstop = () => {
@@ -311,7 +459,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
     } catch {
       showErr('Microphone blocked — grant permission in the browser.');
     }
-  }, [converse, runVad, showErr]);
+  }, [converse, runVad, showErr, primeMic]);
 
   const toggleRecord = useCallback(() => {
     if (busyRef.current) { stopSpeaking(); return; }
@@ -508,6 +656,52 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
           className="absolute top-20 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg text-[12px] bg-rose-500/10 border border-rose-500/30 text-rose-200 backdrop-blur-md"
         >
           {error}
+        </div>
+      )}
+
+      {/* Permission activation overlay — only renders when via=clap-daemon and
+          mic permission is not granted. Single tap primes the mic + AudioContext
+          inside a fresh user gesture, which Chrome's autoplay policy needs. */}
+      {viaClap && (micPermission === 'prompt' || micPermission === 'unknown' || micPermission === 'denied') && !micStreamRef.current && (
+        <div
+          data-ignore-click
+          className="absolute inset-0 z-30 grid place-items-center bg-black/40 backdrop-blur-md cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation();
+            void primeMic();
+          }}
+        >
+          <div className="text-center px-8 max-w-md">
+            <div
+              className="mx-auto mb-6 w-2 h-2 rounded-full animate-pulse"
+              style={{ backgroundColor: persona.color, boxShadow: `0 0 24px ${persona.color}` }}
+            />
+            <h2 className="text-[14px] tracking-[0.32em] uppercase text-white/90" style={{ fontFamily: 'var(--font-display)' }}>
+              {persona.name} is ready
+            </h2>
+            <p className="mt-3 text-[12px] leading-relaxed text-white/60">
+              {micPermission === 'denied'
+                ? 'Microphone is blocked in this profile. Click the lock icon → Site settings → allow Microphone, then tap to retry.'
+                : 'Tap anywhere to activate. Grant microphone access when prompted.'}
+            </p>
+            <p className="mt-6 text-[10px] tracking-[0.22em] uppercase text-white/30">
+              Tap → speak → reply
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Debug overlay — ?debug=1 */}
+      {debugMode && (
+        <div
+          data-ignore-click
+          className="absolute top-4 right-4 z-40 px-3 py-2 rounded-lg text-[10px] font-mono bg-black/60 border border-white/10 text-emerald-300 backdrop-blur-md"
+        >
+          <div>mic={micPermission}</div>
+          <div>ctx={debugInfo.ctxState}</div>
+          <div>tracks={debugInfo.streamTracks}</div>
+          <div>recorder={debugInfo.recorderState}</div>
+          <div>via={viaClap ? 'clap-daemon' : 'direct'}</div>
         </div>
       )}
     </main>

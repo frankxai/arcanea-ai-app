@@ -24,6 +24,7 @@ import { EmbeddedViewer } from './components/embedded-viewer';
 import { VoiceControl } from './components/voice-control';
 import { WORKFLOWS } from './lib/workflows';
 import { RUNTIMES } from './lib/runtimes';
+import { getTenant, type TenantId } from '@/lib/tenants';
 
 /* ------------------------------------------------------------------ */
 /*  Personas                                                           */
@@ -78,8 +79,16 @@ const panelVariants: Variants = {
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 
-export default function VoiceDashboardClient() {
-  const [selectedPersona, setSelectedPersona] = useState<PersonaId>('lumina');
+interface VoiceDashboardClientProps {
+  /** Tenant override for alias routes (/voice/sis, /voice/frankx). Default: read ?tenant= or 'arcanea'. */
+  tenantId?: TenantId;
+}
+
+export default function VoiceDashboardClient({ tenantId: tenantOverride }: VoiceDashboardClientProps = {}) {
+  // Resolve tenant: prop wins, then ?tenant=, then default.
+  const [tenantId, setTenantId] = useState<TenantId>(tenantOverride ?? 'arcanea');
+  const tenant = getTenant(tenantId);
+  const [selectedPersona, setSelectedPersona] = useState<PersonaId>(tenant.defaultPersona);
   const [activation, setActivation] = useState<ActivationMode>('click');
   const [micDeviceId, setMicDeviceId] = useState<string>('');
   const [inputDevices, setInputDevices] = useState<MediaDeviceInfo[]>([]);
@@ -94,6 +103,13 @@ export default function VoiceDashboardClient() {
   const [micActive, setMicActive] = useState(false);
   const [embedUrl, setEmbedUrl] = useState<string | null>(null);
 
+  /* Day 4: local agent discovery */
+  const [agentMode, setAgentMode] = useState(false);
+  const [agentPort, setAgentPort] = useState<number | null>(null);
+  const [agentMemoryMb, setAgentMemoryMb] = useState<number | null>(null);
+  const agentTokenRef = useRef<string | null>(null);
+  const agentWsRef = useRef<WebSocket | null>(null);
+
   const sessionRef = useRef<MicSession | null>(null);
   const detectorRef = useRef<ClapDetector | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -103,6 +119,101 @@ export default function VoiceDashboardClient() {
   useEffect(() => {
     selectedRef.current = selectedPersona;
   }, [selectedPersona]);
+
+  /* Day 4: Discover local agent on mount.
+   * Race a 250ms timeout against fetch('/health'). If 200, switch to agent
+   * mode. Otherwise stay in v2 (clipboard) mode. Workflows fall back
+   * gracefully so the dashboard stays useful when the agent is offline. */
+  const discoverAgent = useCallback(async () => {
+    if (typeof window === 'undefined') return;
+    // Only discover when running locally — Vercel-hosted /voice/dashboard
+    // can't talk to a user's localhost without a desktop wrapper.
+    const host = window.location.hostname;
+    if (host !== 'localhost' && host !== '127.0.0.1') return;
+    try {
+      // Resolve port (may be 7777+).
+      let port = 7777;
+      try {
+        const portRes = await fetch('/api/voice/agent-port');
+        if (portRes.ok) {
+          const data = await portRes.json();
+          if (typeof data.port === 'number') port = data.port;
+        }
+      } catch {}
+      const ctl = new AbortController();
+      const timer = window.setTimeout(() => ctl.abort(), 250);
+      const r = await fetch(`http://127.0.0.1:${port}/health`, { signal: ctl.signal });
+      window.clearTimeout(timer);
+      if (!r.ok) return;
+      const body = await r.json();
+      if (!body.ok) return;
+      setAgentMode(true);
+      setAgentPort(port);
+      // Pull token (local-only route).
+      try {
+        const tokRes = await fetch('/api/voice/agent-token');
+        if (tokRes.ok) {
+          const td = await tokRes.json();
+          if (td.token) agentTokenRef.current = td.token;
+        }
+      } catch {}
+      // Open WS for events.
+      if (agentTokenRef.current) {
+        try {
+          const ws = new WebSocket(`ws://127.0.0.1:${port}/events?token=${encodeURIComponent(agentTokenRef.current)}`);
+          ws.onmessage = (e) => {
+            try {
+              const evt = JSON.parse(e.data);
+              if (evt.kind === 'memory' && typeof evt.payload?.rss === 'number') {
+                setAgentMemoryMb(evt.payload.rss);
+              }
+              emit({
+                kind: 'workflow',
+                workflowId: evt.kind,
+                trigger: 'click',
+                summary: `Agent → ${evt.kind}`,
+              });
+            } catch {}
+          };
+          ws.onclose = () => { agentWsRef.current = null; };
+          agentWsRef.current = ws;
+        } catch {}
+      }
+    } catch {
+      // Timed out or connection refused — stay in v2 mode silently.
+    }
+  }, []);
+
+  useEffect(() => {
+    void discoverAgent();
+    return () => {
+      try { agentWsRef.current?.close(); } catch {}
+      agentWsRef.current = null;
+    };
+  }, [discoverAgent]);
+
+  /* Read ?tenant= on mount (only when no explicit prop override) */
+  useEffect(() => {
+    if (tenantOverride) return;
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const t = params.get('tenant');
+    if (t === 'arcanea' || t === 'sis' || t === 'frankx') {
+      setTenantId(t);
+      const next = getTenant(t);
+      setSelectedPersona(next.defaultPersona);
+    }
+  }, [tenantOverride]);
+
+  /* Filter personas + workflows by current tenant */
+  const visiblePersonas = useMemo(() => {
+    return PERSONAS.filter((p) => tenant.personaAllowlist.includes(p.id));
+  }, [tenant]);
+  const allowedWorkflowIds = useMemo(() => new Set(tenant.workflowAllowlist), [tenant]);
+  const visibleWorkflows = useMemo(() => {
+    if (allowedWorkflowIds.size === 0) return WORKFLOWS;
+    return WORKFLOWS.filter((w) => allowedWorkflowIds.has(w.id));
+  }, [allowedWorkflowIds]);
 
   /* Load session log + devices */
   useEffect(() => {
@@ -129,10 +240,10 @@ export default function VoiceDashboardClient() {
       });
       // Brief delay so the Logic Stream renders before navigation
       setTimeout(() => {
-        window.location.href = `/room/${id}`;
+        window.location.href = `/room/${id}?tenant=${tenantId}`;
       }, 250);
     },
-    [],
+    [tenantId],
   );
 
   /* Mic + clap detection lifecycle */
@@ -328,7 +439,7 @@ export default function VoiceDashboardClient() {
     [launchPersona],
   );
 
-  const selected = PERSONAS.find((p) => p.id === selectedPersona) ?? PERSONAS[0];
+  const selected = visiblePersonas.find((p) => p.id === selectedPersona) ?? visiblePersonas[0] ?? PERSONAS[0];
 
   /* Clap visual pulse */
   const clapPulse = useMemo(() => {
@@ -373,11 +484,39 @@ export default function VoiceDashboardClient() {
             ← Voice
           </Link>
           <span className="w-px h-3 bg-white/10" />
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#00bcd4]/60">
-            Voice Command Center
+          <span
+            className="text-[10px] uppercase tracking-[0.3em]"
+            style={{ color: `${tenant.color}99` }}
+          >
+            {tenant.shortName} · Voice Command Center
           </span>
         </div>
         <div className="flex items-center gap-3 text-[10px] text-white/30">
+          {agentMode ? (
+            <button
+              type="button"
+              onClick={() => void discoverAgent()}
+              className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/15 transition-colors cursor-pointer"
+              title={`Local agent on :${agentPort}${agentMemoryMb != null ? ` · ${agentMemoryMb} MB` : ''}`}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="tracking-[0.22em] uppercase">Agent</span>
+              {agentMemoryMb != null && (
+                <span className="text-emerald-300/60">{agentMemoryMb}MB</span>
+              )}
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => void discoverAgent()}
+              className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-white/[0.03] border border-white/10 text-white/30 hover:text-white/60 hover:border-white/20 transition-colors cursor-pointer"
+              title="Click to retry local agent discovery"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
+              <span className="tracking-[0.22em] uppercase">v2</span>
+            </button>
+          )}
+          <span className="w-px h-3 bg-white/10" />
           <span>⌘K</span>
           <span className="hidden sm:inline">to summon anything</span>
         </div>
@@ -386,7 +525,7 @@ export default function VoiceDashboardClient() {
       {/* Hero strip */}
       <div className="relative px-6 lg:px-10 pt-6 pb-8 max-w-[1600px] mx-auto">
         <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-tight">
-          Voice Dashboard
+          {tenant.shortName === 'Arcanea' ? 'Voice Dashboard' : `${tenant.shortName} Voice`}
         </h1>
         <p className="text-white/40 max-w-2xl mt-2 text-sm">
           The clap, the click, the voice — all equivalent paths to the same Guardian.
@@ -432,7 +571,7 @@ export default function VoiceDashboardClient() {
           </div>
 
           <PersonaTiles
-            personas={PERSONAS}
+            personas={visiblePersonas}
             selected={selectedPersona}
             onSelect={setSelectedPersona}
             onLaunch={(id) => launchPersona(id, 'click')}
@@ -462,7 +601,7 @@ export default function VoiceDashboardClient() {
 
         {/* RIGHT — Workflows + Logic Stream + Embedded */}
         <motion.div variants={panelVariants} className="space-y-6 order-3">
-          <WorkflowGrid onEmbed={setEmbedUrl} />
+          <WorkflowGrid onEmbed={setEmbedUrl} workflows={visibleWorkflows} />
           <LogicStream />
           <EmbeddedViewer url={embedUrl} onUrlChange={setEmbedUrl} />
         </motion.div>

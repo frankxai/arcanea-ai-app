@@ -46,6 +46,7 @@ const arg = (name, fallback = null) => {
 const flag = (name) => argv.includes(`--${name}`);
 
 const persona = arg('persona', process.env.ARCANEA_VOICE_PERSONA || 'lumina');
+const tenant = arg('tenant', process.env.ARCANEA_VOICE_TENANT || 'arcanea');
 const webBase = arg('web', process.env.ARCANEA_VOICE_WEB || 'https://arcanea.ai');
 const sensitivity = parseFloat(arg('threshold', '4.5')); // multiplier over noise floor
 const inputDevice = arg('device', null); // platform-specific override
@@ -54,6 +55,12 @@ const silent = flag('silent') || flag('quiet');
 const PERSONAS = ['lumina', 'jarvis', 'draconia', 'lyria', 'alera', 'shinkami', 'nero'];
 if (!PERSONAS.includes(persona)) {
   console.error(`unknown persona: "${persona}". choose one of: ${PERSONAS.join(', ')}`);
+  process.exit(1);
+}
+
+const TENANTS = ['arcanea', 'sis', 'frankx'];
+if (!TENANTS.includes(tenant)) {
+  console.error(`unknown tenant: "${tenant}". choose one of: ${TENANTS.join(', ')}`);
   process.exit(1);
 }
 
@@ -179,11 +186,35 @@ function focusExistingWindow() {
   }
 }
 
+/**
+ * Try to notify the local agent (Day 4 build). Best-effort — if the agent
+ * isn't running, we silently fall through to direct browser launch. This
+ * preserves v2 behavior whenever the agent is offline.
+ */
+async function notifyAgent(persona, tenant) {
+  try {
+    const res = await fetch(`http://127.0.0.1:7777/health`, {
+      signal: AbortSignal.timeout(150),
+    }).catch(() => null);
+    if (!res || !res.ok) return false;
+    // We don't auth the clap-fanout — agent's /intent requires bearer token,
+    // but the daemon doesn't have one. The agent is happy to record an
+    // event-only intent without auth via a future /event public endpoint;
+    // for v0.1 we just use this as a discovery signal, so the agent's
+    // dashboard knows the daemon is alive (memory event + WS broadcast).
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function openSummon(persona) {
   // Direct to the persona room — no dashboard intermediary. Avoids
   // Chromium app-window's same-origin navigation bounce that was
   // closing the window when the dashboard's auto-summon redirected.
-  const url = `${webBase}/room/${persona}?via=clap-daemon`;
+  const url = `${webBase}/room/${persona}?via=clap-daemon&tenant=${tenant}`;
+  // Day 4: best-effort agent notification. Doesn't block the browser launch.
+  void notifyAgent(persona, tenant);
 
   // Singleton: if a daemon window is already open with our shared profile,
   // try to focus it instead of spawning another instance. Chromium's own
@@ -203,6 +234,13 @@ function openSummon(persona) {
   // Spawn fresh Chromium app-window with the SHARED user-data-dir.
   const bin = findChromium();
   if (bin) {
+    const isEdge = /msedge\.exe$|Microsoft Edge/i.test(bin);
+    const isChrome = /chrome\.exe$|Google Chrome/i.test(bin);
+    const browserName = isChrome ? 'Chrome' : isEdge ? 'Edge' : 'Chromium';
+    log(`browser=${browserName} bin=${bin}`);
+    if (isEdge) {
+      warn('Edge selected — mic permissions in app-window mode may be restricted by enterprise policy. Install Chrome for best results.');
+    }
     try {
       spawn(bin, [
         `--app=${url}`,
@@ -211,6 +249,9 @@ function openSummon(persona) {
         '--no-default-browser-check',
         '--disable-features=TranslateUI',
         '--window-size=1300,900',
+        // --use-fake-ui-for-media-stream would auto-grant mic in *test* mode;
+        // we don't ship it because it bypasses real permission UI. Listed
+        // here so future devs know it exists for headless CI.
       ], { stdio: 'ignore', detached: true }).unref();
       return;
     } catch (e) {
@@ -352,7 +393,7 @@ Install:
   }
 
   const args = ffmpegArgs();
-  log(`starting — persona=${persona}  threshold=${sensitivity}×floor  device=${inputDevice ?? 'default'}`);
+  log(`starting — tenant=${tenant} persona=${persona}  threshold=${sensitivity}×floor  device=${inputDevice ?? 'default'}`);
   log(`ffmpeg=${ffmpeg}`);
   log(`web=${webBase}`);
   log(`(double-clap to summon. Ctrl+C to stop.)`);

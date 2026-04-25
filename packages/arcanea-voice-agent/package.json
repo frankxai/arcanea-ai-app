@@ -1,0 +1,40 @@
+{
+  "name": "@arcanea/voice-agent",
+  "version": "0.1.0",
+  "description": "Local agent for the Arcanea Voice Dashboard. HTTP + WebSocket on 127.0.0.1:7777. Spawns CLI runtimes, executes workflows, bridges browser ↔ OS.",
+  "type": "module",
+  "bin": {
+    "arcanea-agent": "./bin/agent.mjs",
+    "arcanea-voice-agent": "./bin/agent.mjs"
+  },
+  "exports": {
+    ".": "./src/server.mjs",
+    "./auth": "./src/auth.mjs",
+    "./dispatch": "./src/dispatch.mjs"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node --max-old-space-size=256 bin/agent.mjs",
+    "test": "node test/agent.test.mjs"
+  },
+  "keywords": [
+    "arcanea",
+    "voice",
+    "agent",
+    "local",
+    "websocket",
+    "jarvis"
+  ],
+  "author": "Arcanea",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

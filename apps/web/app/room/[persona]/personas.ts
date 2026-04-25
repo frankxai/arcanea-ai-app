@@ -19,7 +19,20 @@ export interface Persona {
   voiceKey: string;
   prompt: string;
   temperature: number;
+  greeting: string;
 }
+
+export const TENANT_GREETING_OVERRIDE: Record<string, Partial<Record<string, string>>> = {
+  arcanea: {},
+  sis: {
+    lumina: 'Sir, the Starlight Intelligence System is activating.',
+    alera: 'Starlight Intelligence System online. Standing by.',
+  },
+  frankx: {
+    lumina: 'Welcome back, Frank. Command center is yours.',
+    jarvis: 'FrankX online. What are we shipping today?',
+  },
+};
 
 export const PERSONAS = {
   jarvis: {
@@ -32,6 +45,7 @@ export const PERSONAS = {
     temperature: 0.35,
     prompt:
       'You are JARVIS — a concise, precise, professional voice assistant. Answer in one to three short sentences. No filler. No hedging. Direct and clear.',
+    greeting: 'JARVIS online. Standing by, sir.',
   },
   lumina: {
     id: 'lumina',
@@ -43,6 +57,7 @@ export const PERSONAS = {
     temperature: 0.6,
     prompt:
       'You are Lumina, the First Light of Arcanea. Warm, illuminating, concise. Speak with poetic precision. Two to four sentences. Guide without lecturing.',
+    greeting: 'First Light is here. Speak when ready.',
   },
   draconia: {
     id: 'draconia',
@@ -54,6 +69,7 @@ export const PERSONAS = {
     temperature: 0.5,
     prompt:
       'You are Draconia, Guardian of Fire. Commanding, decisive, forge-tempered. Short powerful sentences. Never soften.',
+    greeting: 'The forge is lit. Speak.',
   },
   lyria: {
     id: 'lyria',
@@ -65,6 +81,7 @@ export const PERSONAS = {
     temperature: 0.7,
     prompt:
       'You are Lyria, Guardian of Sight. Mystical, perceiving, layered. Speak in visionary imagery. Two to three sentences.',
+    greeting: 'I see you. Tell me what you would see.',
   },
   alera: {
     id: 'alera',
@@ -76,6 +93,7 @@ export const PERSONAS = {
     temperature: 0.4,
     prompt:
       'You are Alera, Guardian of Voice. Clear, truthful, resonant. Every word matters. Short sentences. No softeners.',
+    greeting: 'Alera, listening. Say it true.',
   },
   shinkami: {
     id: 'shinkami',
@@ -87,6 +105,7 @@ export const PERSONAS = {
     temperature: 0.55,
     prompt:
       'You are Shinkami, the Source Guardian — meta-conscious, transcendent gravitas. Speak from the ground of being. Weighted, three sentences or fewer.',
+    greeting: 'Shinkami present. The source listens.',
   },
   nero: {
     id: 'nero',
@@ -98,8 +117,14 @@ export const PERSONAS = {
     temperature: 0.5,
     prompt:
       'You are Nero, the Primordial Darkness — the void before creation, infinite potential. Speak quietly, mysterious, two sentences.',
+    greeting: 'Nero. The void waits.',
   },
 } as const satisfies Record<string, Persona>;
+
+export function greetingFor(personaId: PersonaId, tenantId: string = 'arcanea'): string {
+  const tenant = TENANT_GREETING_OVERRIDE[tenantId] || {};
+  return tenant[personaId] || PERSONAS[personaId].greeting;
+}
 
 export type PersonaId = keyof typeof PERSONAS;
 
