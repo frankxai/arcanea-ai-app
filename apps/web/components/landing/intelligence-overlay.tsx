@@ -4,20 +4,21 @@ import { LazyMotion, domAnimation, m, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 import { PhScroll, PhMusicNote, PhFlame, PhArrowRight } from '@/lib/phosphor-icons';
+import { gateAccents, rankAccents, brand } from "@arcanea/design-system";
 
 // ─── Gate orb data ────────────────────────────────────────────────────────
 
 const GATE_ORBS = [
-  { label: "Foundation", color: "#6b7280", gate: "Foundation" },
-  { label: "Flow", color: "#f97316", gate: "Flow" },
-  { label: "Fire", color: "#ef4444", gate: "Fire" },
-  { label: "Heart", color: "#22c55e", gate: "Heart" },
-  { label: "Voice", color: "#06b6d4", gate: "Voice" },
-  { label: "Sight", color: "#0d47a1", gate: "Sight" },
-  { label: "Crown", color: "#ffd700", gate: "Crown" },
-  { label: "Starweave", color: "#a855f7", gate: "Starweave" },
-  { label: "Unity", color: "#3b82f6", gate: "Unity" },
-  { label: "Source", color: "#ffffff", gate: "Source" },
+  { label: "Foundation", color: gateAccents.Foundation, gate: "Foundation" },
+  { label: "Flow", color: gateAccents.Flow, gate: "Flow" },
+  { label: "Fire", color: gateAccents.Fire, gate: "Fire" },
+  { label: "Heart", color: gateAccents.Heart, gate: "Heart" },
+  { label: "Voice", color: gateAccents.Voice, gate: "Voice" },
+  { label: "Sight", color: gateAccents.Sight, gate: "Sight" },
+  { label: "Crown", color: gateAccents.Crown, gate: "Crown" },
+  { label: "Starweave", color: gateAccents.Starweave, gate: "Starweave" },
+  { label: "Unity", color: gateAccents.Unity, gate: "Unity" },
+  { label: "Source", color: gateAccents.Source, gate: "Source" },
 ] as const;
 
 // ─── Three-pillar data ─────────────────────────────────────────────────────
@@ -27,7 +28,7 @@ const PILLARS = [
     icon: PhScroll,
     headline: "Build your mythology.",
     color: "crystal" as const,
-    colorHex: "#00bcd4",
+    colorHex: brand.atlanteanTeal,
     borderClass: "border-crystal/20 hover:border-crystal/50",
     glowClass: "hover:shadow-[0_0_40px_rgba(0,188,212,0.15)]",
     iconBgClass: "from-crystal/20 to-crystal/5",
@@ -39,7 +40,7 @@ const PILLARS = [
     icon: PhMusicNote,
     headline: "Make your music.",
     color: "brand-gold" as const,
-    colorHex: "#ffd700",
+    colorHex: brand.arcaneanGold,
     borderClass: "border-brand-gold/20 hover:border-brand-gold/50",
     glowClass: "hover:shadow-[0_0_40px_rgba(255,215,0,0.15)]",
     iconBgClass: "from-brand-gold/20 to-brand-gold/5",
@@ -51,7 +52,7 @@ const PILLARS = [
     icon: PhFlame,
     headline: "Deploy your agents.",
     color: "brand-primary" as const,
-    colorHex: "#0d47a1",
+    colorHex: brand.cosmicBlue,
     borderClass: "border-brand-primary/20 hover:border-brand-primary/50",
     glowClass: "hover:shadow-[0_0_40px_rgba(13,71,161,0.15)]",
     iconBgClass: "from-brand-primary/20 to-brand-primary/5",
@@ -68,36 +69,36 @@ const ARC_MILESTONES = [
     rank: "Apprentice",
     gates: "0–2 Gates",
     promise: "You find your element. The journey begins.",
-    lineColor: "#6b7280",
-    dotColor: "#6b7280",
+    lineColor: rankAccents.Apprentice,
+    dotColor: rankAccents.Apprentice,
   },
   {
     rank: "Mage",
     gates: "3–4 Gates",
     promise: "Pattern becomes practice. Your voice sharpens.",
-    lineColor: "#f97316",
-    dotColor: "#f97316",
+    lineColor: rankAccents.Mage,
+    dotColor: rankAccents.Mage,
   },
   {
     rank: "Master",
     gates: "5–6 Gates",
     promise: "Creation flows without friction. You teach by example.",
-    lineColor: "#06b6d4",
-    dotColor: "#06b6d4",
+    lineColor: rankAccents.Master,
+    dotColor: rankAccents.Master,
   },
   {
     rank: "Archmage",
     gates: "7–8 Gates",
     promise: "You bend the arc. Others enter your orbit.",
-    lineColor: "#ffd700",
-    dotColor: "#ffd700",
+    lineColor: rankAccents.Archmage,
+    dotColor: rankAccents.Archmage,
   },
   {
     rank: "Luminor",
     gates: "9–10 Gates",
     promise: "You are the intelligence. Source recognizes Source.",
-    lineColor: "#ffffff",
-    dotColor: "#ffffff",
+    lineColor: rankAccents.Luminor,
+    dotColor: rankAccents.Luminor,
   },
 ] as const;
 

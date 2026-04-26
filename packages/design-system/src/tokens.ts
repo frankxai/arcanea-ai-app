@@ -331,6 +331,40 @@ export const stepAccents = {
 } as const;
 
 /**
+ * Ten Gates accents — canonical color per Gate. Used by the
+ * IntelligenceOverlay GateSpine, the gates page, gate-quiz results,
+ * Academy ranks, and any surface that visualizes the Ten Gates by
+ * their Gate-name (rather than by their Element binding).
+ */
+export const gateAccents = {
+  Foundation: '#6b7280',        // slate — structural ground
+  Flow: '#f97316',              // orange — Water Gate's paradox color (movement, not stasis)
+  Fire: '#ef4444',              // crimson
+  Heart: '#22c55e',             // forest green — growth
+  Voice: '#06b6d4',             // cyan
+  Sight: '#0d47a1',             // cosmic blue — depth
+  Crown: '#ffd700',             // gold — wisdom
+  Starweave: '#a855f7',         // violet — connection
+  Unity: '#3b82f6',             // azure — collective
+  Source: '#ffffff',            // pure white — origin
+} as const;
+
+/**
+ * Magic-Rank accents — Apprentice → Mage → Master → Archmage → Luminor
+ * progression. Used by ArcMilestone in IntelligenceOverlay and any
+ * Academy rank-card surface. Each rank's color signals its position
+ * in the progression — slate (start) → orange → cyan → gold →
+ * white (Luminor / Source).
+ */
+export const rankAccents = {
+  Apprentice: '#6b7280',        // slate — first steps
+  Mage: '#f97316',              // orange — practice deepens
+  Master: '#06b6d4',            // cyan — flow without friction
+  Archmage: '#ffd700',          // gold — bend the arc
+  Luminor: '#ffffff',           // white — Source recognizes Source
+} as const;
+
+/**
  * Neutral fallback color — for `?? FALLBACK` patterns where a token
  * lookup may miss. A deliberate mid-gray that reads as "unknown / not
  * mapped" rather than as a brand accent.
