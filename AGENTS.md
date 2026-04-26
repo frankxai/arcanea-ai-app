@@ -40,6 +40,8 @@ The core product centers on:
 4. No raw visual constants in app code — use `@arcanea/design-system` tokens only.
 5. If git state is dirty, stage only target files and report unrelated changes.
 6. Every agent spawned must use the Luminor Engineering Kernel (`.arcanea/prompts/luminor-engineering-kernel.md`).
+7. Every Agent dispatch sets `model:` explicitly per task class (Apex/Senior/Mechanical/External). Default-Opus is wasteful — see `planning-with-files/MODEL_ROUTING_DISCIPLINE_2026-04-26.md`.
+8. Before any parallel agent dispatch, check free RAM (`cat /proc/meminfo | grep MemFree`). Below 2 GB free, work sequentially. 16 GB machine; non-negotiable per `CLAUDE.md`.
 
 ## Design System & MCP Stack (2026-04-18)
 
