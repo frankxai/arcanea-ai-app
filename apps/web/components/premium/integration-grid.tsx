@@ -1,11 +1,17 @@
 "use client";
 
 import { m } from "framer-motion";
+import { thirdPartyBrand, brand, competitorAccent } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // IntegrationGrid — Logo grid of all Arcanea integrations.
 // Shows the breadth of the stack: coding CLIs, creative tools, social
 // platforms, game engines, blockchain, etc.
+//
+// Brand colors are sourced from `thirdPartyBrand` in @arcanea/design-system —
+// the third-party brand identity map. The destination for brand SVGs is
+// `apps/web/public/integrations/<slug>.svg` per integration; until those are
+// vendored, the tile renders a 2-letter monogram tinted with the brand color.
 // ---------------------------------------------------------------------------
 
 export type IntegrationCategory =
@@ -33,58 +39,63 @@ export interface Integration {
 // "live" = working end-to-end today. "beta" = partial/opt-in. "soon" = planned.
 // Audit done 2026-04-17 against CURRENT_BACKLOG_2026-04-13.md — most surface-level
 // marketing claims were downgraded to honest status.
+// NOTE: the `glyph` field is unused in the current rendering (the tile shows
+// a 2-letter monogram via `intg.name.slice(0, 2)`). Per TASTE.md Gate 3,
+// Unicode glyphs are banned as UI icons anyway. Field retained on the
+// interface for forward compatibility with vendored brand SVGs but no
+// integration carries one today.
 export const INTEGRATIONS: Integration[] = [
   // Coding & Dev — the IDE/CLI layer
-  { name: "Claude Code", category: "coding", glyph: "✶", color: "#f97316", status: "live", note: "MCP server + 80 skills" },
-  { name: "Cursor", category: "coding", glyph: "⎈", color: "#ffffff", status: "beta", note: "MCP via .cursor/mcp.json" },
-  { name: "VS Code", category: "coding", glyph: "◧", color: "#007acc", status: "beta", note: "MCP-ready, no extension yet" },
-  { name: "Windsurf", category: "coding", glyph: "⎔", color: "#00bcd4", status: "beta", note: "MCP + rules bridge" },
-  { name: "Antigravity", category: "coding", glyph: "↟", color: "#a855f7", status: "soon", note: "Browser-native IDE" },
-  { name: "GitHub", category: "coding", glyph: "◉", color: "#ffffff", status: "live", note: "27 public repos" },
+  { name: "Claude Code", category: "coding", color: thirdPartyBrand.anthropicClaude, status: "live", note: "MCP server + 80 skills" },
+  { name: "Cursor", category: "coding", color: thirdPartyBrand.cursor, status: "beta", note: "MCP via .cursor/mcp.json" },
+  { name: "VS Code", category: "coding", color: thirdPartyBrand.vsCode, status: "beta", note: "MCP-ready, no extension yet" },
+  { name: "Windsurf", category: "coding", color: thirdPartyBrand.windsurf, status: "beta", note: "MCP + rules bridge" },
+  { name: "Antigravity", category: "coding", color: thirdPartyBrand.antigravity, status: "soon", note: "Browser-native IDE" },
+  { name: "GitHub", category: "coding", color: thirdPartyBrand.github, status: "live", note: "27 public repos" },
 
   // Creative AI — inline generation
-  { name: "Nano Banana 2", category: "ai", glyph: "◈", color: "#fbbf24", status: "live", note: "/imagine uses it today" },
-  { name: "Anthropic Claude", category: "ai", glyph: "✶", color: "#f97316", status: "live", note: "Default chat provider" },
-  { name: "Google Gemini", category: "ai", glyph: "◎", color: "#4285f4", status: "live", note: "Chat + imagine routing" },
-  { name: "Suno", category: "ai", glyph: "♪", color: "#f472b6", status: "soon", note: "Music gen — API planned" },
-  { name: "ElevenLabs", category: "ai", glyph: "▶", color: "#a855f7", status: "soon", note: "Voice — Presence Layer" },
-  { name: "Runway", category: "ai", glyph: "▸", color: "#00ff88", status: "soon", note: "Video — researched" },
-  { name: "Midjourney", category: "ai", glyph: "✦", color: "#ffffff", status: "soon", note: "Style reference" },
-  { name: "Hedra", category: "ai", glyph: "◐", color: "#7fffd4", status: "soon", note: "Avatar — Presence Layer" },
+  { name: "Nano Banana 2", category: "ai", color: thirdPartyBrand.nanoBanana, status: "live", note: "/imagine uses it today" },
+  { name: "Anthropic Claude", category: "ai", color: thirdPartyBrand.anthropicClaude, status: "live", note: "Default chat provider" },
+  { name: "Google Gemini", category: "ai", color: thirdPartyBrand.googleGemini, status: "live", note: "Chat + imagine routing" },
+  { name: "Suno", category: "ai", color: thirdPartyBrand.suno, status: "soon", note: "Music gen — API planned" },
+  { name: "ElevenLabs", category: "ai", color: thirdPartyBrand.elevenLabs, status: "soon", note: "Voice — Presence Layer" },
+  { name: "Runway", category: "ai", color: thirdPartyBrand.runway, status: "soon", note: "Video — researched" },
+  { name: "Midjourney", category: "ai", color: thirdPartyBrand.midjourney, status: "soon", note: "Style reference" },
+  { name: "Hedra", category: "ai", color: thirdPartyBrand.hedra, status: "soon", note: "Avatar — Presence Layer" },
 
   // Distribution / Social — publishing
-  { name: "Blotato", category: "social", glyph: "◬", color: "#ef4444", status: "soon", note: "Multi-channel posting" },
-  { name: "Postiz", category: "social", glyph: "◱", color: "#3b82f6", status: "soon", note: "Scheduling" },
-  { name: "n8n", category: "social", glyph: "⏚", color: "#ea580c", status: "soon", note: "Self-host workflows" },
-  { name: "Zapier", category: "social", glyph: "⚡", color: "#ff4a00", status: "soon", note: "Trigger automation" },
+  { name: "Blotato", category: "social", color: thirdPartyBrand.blotato, status: "soon", note: "Multi-channel posting" },
+  { name: "Postiz", category: "social", color: thirdPartyBrand.postiz, status: "soon", note: "Scheduling" },
+  { name: "n8n", category: "social", color: thirdPartyBrand.n8n, status: "soon", note: "Self-host workflows" },
+  { name: "Zapier", category: "social", color: thirdPartyBrand.zapier, status: "soon", note: "Trigger automation" },
 
   // Community — where Arcanea gathers (manual links today, no sync)
-  { name: "Discord", category: "community", glyph: "◎", color: "#5865F2", status: "beta", note: "Server open; bot soon" },
-  { name: "Reddit", category: "community", glyph: "◐", color: "#ff4500", status: "beta", note: "r/Arcanea live" },
-  { name: "Whop", category: "community", glyph: "⎊", color: "#f59e0b", status: "soon", note: "Membership tiers" },
-  { name: "Telegram", category: "community", glyph: "✈", color: "#0088cc", status: "soon", note: "Creator bots" },
+  { name: "Discord", category: "community", color: thirdPartyBrand.discord, status: "beta", note: "Server open; bot soon" },
+  { name: "Reddit", category: "community", color: thirdPartyBrand.reddit, status: "beta", note: "r/Arcanea live" },
+  { name: "Whop", category: "community", color: thirdPartyBrand.whop, status: "soon", note: "Membership tiers" },
+  { name: "Telegram", category: "community", color: thirdPartyBrand.telegram, status: "soon", note: "Creator bots" },
 
   // Game Engines — no exporters shipped yet
-  { name: "Unreal Engine", category: "game", glyph: "⧉", color: "#313131", status: "soon", note: "World export spec" },
-  { name: "Unity", category: "game", glyph: "◇", color: "#ffffff", status: "soon", note: "Prefab pipeline spec" },
-  { name: "Godot", category: "game", glyph: "◈", color: "#3d8fcc", status: "soon", note: "Scene bridge" },
-  { name: "Roblox Studio", category: "game", glyph: "◼", color: "#ef4444", status: "soon", note: "Experience export" },
+  { name: "Unreal Engine", category: "game", color: thirdPartyBrand.unrealEngine, status: "soon", note: "World export spec" },
+  { name: "Unity", category: "game", color: thirdPartyBrand.unity, status: "soon", note: "Prefab pipeline spec" },
+  { name: "Godot", category: "game", color: thirdPartyBrand.godot, status: "soon", note: "Scene bridge" },
+  { name: "Roblox Studio", category: "game", color: thirdPartyBrand.roblox, status: "soon", note: "Experience export" },
 
   // Blockchain / Web3 — onchain is a separate workstream (non-goal per backlog)
-  { name: "Base", category: "chain", glyph: "◉", color: "#0052ff", status: "soon", note: "L2 anchoring planned" },
-  { name: "Story Protocol", category: "chain", glyph: "✍", color: "#ffffff", status: "soon", note: "IP licensing P5" },
-  { name: "Farcaster", category: "chain", glyph: "△", color: "#855dcd", status: "soon", note: "Agent handles" },
-  { name: "Lens", category: "chain", glyph: "❁", color: "#00501e", status: "soon", note: "Social graph" },
+  { name: "Base", category: "chain", color: thirdPartyBrand.base, status: "soon", note: "L2 anchoring planned" },
+  { name: "Story Protocol", category: "chain", color: thirdPartyBrand.storyProtocol, status: "soon", note: "IP licensing P5" },
+  { name: "Farcaster", category: "chain", color: thirdPartyBrand.farcaster, status: "soon", note: "Agent handles" },
+  { name: "Lens", category: "chain", color: thirdPartyBrand.lens, status: "soon", note: "Social graph" },
 
   // Platforms & Infra — what the app actually runs on
-  { name: "Vercel", category: "infra", glyph: "▲", color: "#ffffff", status: "live", note: "Production hosting" },
-  { name: "Supabase", category: "infra", glyph: "◎", color: "#3ecf8e", status: "live", note: "DB + Auth + pgvector" },
-  { name: "Vercel AI SDK", category: "infra", glyph: "◱", color: "#ffffff", status: "live", note: "Chat streaming" },
-  { name: "Notion", category: "infra", glyph: "◰", color: "#ffffff", status: "soon", note: "Docs sync" },
-  { name: "Linear", category: "infra", glyph: "▰", color: "#5e6ad2", status: "soon", note: "ARC project sync" },
-  { name: "Google Drive", category: "infra", glyph: "G", color: "#4285f4", status: "soon", note: "Studio ingestion" },
-  { name: "Obsidian", category: "infra", glyph: "◰", color: "#7c3aed", status: "soon", note: "Vault sync" },
-  { name: "Stripe", category: "infra", glyph: "◱", color: "#635bff", status: "soon", note: "x402 preferred first" },
+  { name: "Vercel", category: "infra", color: thirdPartyBrand.vercel, status: "live", note: "Production hosting" },
+  { name: "Supabase", category: "infra", color: thirdPartyBrand.supabase, status: "live", note: "DB + Auth + pgvector" },
+  { name: "Vercel AI SDK", category: "infra", color: thirdPartyBrand.vercel, status: "live", note: "Chat streaming" },
+  { name: "Notion", category: "infra", color: thirdPartyBrand.notion, status: "soon", note: "Docs sync" },
+  { name: "Linear", category: "infra", color: thirdPartyBrand.linear, status: "soon", note: "ARC project sync" },
+  { name: "Google Drive", category: "infra", color: thirdPartyBrand.googleDrive, status: "soon", note: "Studio ingestion" },
+  { name: "Obsidian", category: "infra", color: thirdPartyBrand.obsidian, status: "soon", note: "Vault sync" },
+  { name: "Stripe", category: "infra", color: thirdPartyBrand.stripe, status: "soon", note: "x402 preferred first" },
 ];
 
 const STATUS_LABEL: Record<NonNullable<Integration["status"]>, string> = {
@@ -94,9 +105,9 @@ const STATUS_LABEL: Record<NonNullable<Integration["status"]>, string> = {
 };
 
 const STATUS_COLOR: Record<NonNullable<Integration["status"]>, string> = {
-  live: "#7fffd4",
-  beta: "#ffd700",
-  soon: "#94a3b8",
+  live: brand.aquamarine,        // shipped
+  beta: brand.arcaneanGold,      // partial / opt-in
+  soon: competitorAccent,        // muted gray for not-yet-built
 };
 
 export function IntegrationGrid({

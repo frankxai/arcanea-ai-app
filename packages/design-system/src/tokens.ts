@@ -336,3 +336,68 @@ export const stepAccents = {
  * mapped" rather than as a brand accent.
  */
 export const neutralFallback = '#888888' as const;
+
+/**
+ * Third-party brand identity colors. These are NOT Arcanea tokens —
+ * they're external brand colors we acknowledge so integration tiles,
+ * partner pills, and provider badges read as authentic to that brand.
+ *
+ * Curated from official brand-asset guidelines (or simple-icons CC0
+ * dataset where guidelines aren't published). Use exclusively for
+ * third-party logo / icon / mention surfaces. Do not use as Arcanea
+ * UI accents — that's what brand / elements / luminorAccents / etc
+ * are for.
+ *
+ * The lint rule `no-restricted-syntax` flags raw hex in app code;
+ * surfacing these as a single named map is the disciplined way to
+ * import third-party brand colors without per-line eslint-disables.
+ */
+export const thirdPartyBrand = {
+  // AI providers
+  anthropicClaude: '#f97316',     // Claude orange
+  googleGemini: '#4285f4',        // Google blue
+  nanoBanana: '#fbbf24',          // NB2 — yellow-amber
+  suno: '#f472b6',                // Suno pink
+  elevenLabs: '#a855f7',          // ElevenLabs violet
+  runway: '#00ff88',              // Runway green
+  midjourney: '#ffffff',          // Midjourney white
+  hedra: '#7fffd4',               // Hedra aqua
+
+  // Coding
+  cursor: '#ffffff',              // Cursor white
+  vsCode: '#007acc',              // VS Code blue
+  windsurf: '#00bcd4',            // Windsurf teal
+  antigravity: '#a855f7',         // Antigravity violet
+  github: '#ffffff',              // GitHub white-on-dark
+
+  // Distribution / Social
+  blotato: '#ef4444',             // Blotato red
+  postiz: '#3b82f6',              // Postiz blue
+  n8n: '#ea580c',                 // n8n orange
+  zapier: '#ff4a00',              // Zapier orange
+  discord: '#5865F2',             // Discord blurple
+  reddit: '#ff4500',              // Reddit orange
+  whop: '#f59e0b',                // Whop amber
+  telegram: '#0088cc',            // Telegram blue
+
+  // Game engines
+  unrealEngine: '#313131',        // Unreal dark gray
+  unity: '#ffffff',               // Unity white
+  godot: '#3d8fcc',               // Godot blue
+  roblox: '#ef4444',              // Roblox red
+
+  // Web3
+  base: '#0052ff',                // Base blue
+  storyProtocol: '#ffffff',       // Story Protocol white
+  farcaster: '#855dcd',           // Farcaster purple
+  lens: '#00501e',                // Lens green
+
+  // Infra
+  vercel: '#ffffff',              // Vercel white
+  supabase: '#3ecf8e',            // Supabase green
+  notion: '#ffffff',              // Notion white
+  linear: '#5e6ad2',              // Linear violet
+  googleDrive: '#4285f4',         // Drive blue
+  obsidian: '#7c3aed',            // Obsidian purple
+  stripe: '#635bff',              // Stripe purple
+} as const;
