@@ -182,6 +182,8 @@ oh-my-arcanea/
 oci-ai-architect-skills/
 intelligence-os/
 intelligence/
+!apps/web/app/intelligence/
+!apps/web/lib/intelligence/
 starlight-intelligence-system/
 starlight-protocol/
 infogenius/
