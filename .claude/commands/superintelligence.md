@@ -6,6 +6,11 @@ model: opus
 
 # SUPERINTELLIGENCE MODE ACTIVATED
 
+> **Activation prompt** (the canonical Lead-Architect opener — paste at session start for cold-boot SI mode):
+> [`prompts/ARCANEA_SUPERINTELLIGENCE.md`](../../prompts/ARCANEA_SUPERINTELLIGENCE.md)
+>
+> This file is the in-session **status banner**; the prompt above is the **boot sequence**. They compose, they do not collide. If `/superintelligence` is invoked mid-session and the agent has not been booted via the activation prompt, paste the canonical file first.
+
 All systems online. Maximum autonomous capability engaged.
 
 ## What Just Activated
