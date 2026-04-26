@@ -29,12 +29,14 @@ type MessageTurn = { role: 'user' | 'assistant'; content: string };
 
 type MicPermissionState = 'unknown' | 'prompt' | 'granted' | 'denied';
 
+type RoomError = { message: string; hint?: string; cta?: 'byok' | 'retry' } | null;
+
 export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const [personaId, setPersonaId] = useState<PersonaId>(initial);
   const [state, setState] = useState<RoomState>('idle');
   const [transcript, setTranscript] = useState('');
   const [reply, setReply] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<RoomError>(null);
   const [audioEl, setAudioEl] = useState<HTMLAudioElement | null>(null);
   const [history, setHistory] = useState<MessageTurn[]>([]);
   const [recording, setRecording] = useState(false);
@@ -45,6 +47,8 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const [viaClap, setViaClap] = useState(false);
   const [tenantId, setTenantId] = useState<string>('arcanea');
   const [greetingPlayed, setGreetingPlayed] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const greetingAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const micStreamRef = useRef<MediaStream | null>(null);
@@ -174,7 +178,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
         setMicPermission('denied');
       } else if (err.name === 'NotFoundError' || err.name === 'OverconstrainedError') {
-        setError('No microphone found.');
+        setError({ message: 'No microphone found.' });
       }
       return false;
     }
@@ -226,9 +230,13 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
     }
   }, [personaId]);
 
-  const showErr = useCallback((msg: string) => {
-    setError(msg);
-    setTimeout(() => setError((e) => (e === msg ? null : e)), 5000);
+  const showErr = useCallback((errOrMsg: string | RoomError) => {
+    const next: RoomError = typeof errOrMsg === 'string' ? { message: errOrMsg } : errOrMsg;
+    setError(next);
+    // Sticky errors with a CTA stay until dismissed; transient errors auto-clear.
+    if (!next?.cta) {
+      setTimeout(() => setError((e) => (e?.message === next?.message ? null : e)), 5000);
+    }
   }, []);
 
   const stopSpeaking = useCallback(() => {
@@ -290,7 +298,21 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         const form = new FormData();
         form.append('audio', blob, `mic.${ext}`);
         const r = await fetch('/api/ai/transcribe', { method: 'POST', body: form, signal: ctl.signal });
-        if (!r.ok) throw new Error(`transcribe ${r.status}`);
+        if (!r.ok) {
+          // Parse structured error so we can surface a Connect-voice CTA on 503/502.
+          const payload = await r.json().catch(() => null) as
+            | { error?: string; hint?: string; cta?: 'byok' | 'retry' }
+            | null;
+          const cta = payload?.cta;
+          const msg = payload?.error ?? `transcribe ${r.status}`;
+          const hint = payload?.hint;
+          if (cta === 'byok') {
+            showErr({ message: msg, hint, cta: 'byok' });
+          } else {
+            showErr({ message: msg, hint });
+          }
+          return;
+        }
         userText = ((await r.json()) as { text?: string }).text?.trim() ?? '';
       }
       if (!userText) { showErr('Nothing heard — try again.'); return; }
@@ -483,6 +505,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         e.preventDefault();
         if (e.repeat) return;
         spaceDownAt = performance.now();
+        setHasInteracted(true);
         if (!recordingRef.current && !busyRef.current) {
           spaceHeldTriggeredRecord = true;
           void startRecording();
@@ -528,6 +551,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       className="relative w-full h-full grid place-items-center cursor-default"
       onClick={(e) => {
         if ((e.target as HTMLElement).closest('[data-ignore-click]')) return;
+        if (!hasInteracted) setHasInteracted(true);
         toggleRecord();
       }}
     >
@@ -552,110 +576,214 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         label={state === 'idle' ? null : statusCopy}
       />
 
-      {/* Top: persona + status */}
+      {/* Top: persona + status (refined) */}
       <div
         data-ignore-click
-        className="absolute top-8 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06] backdrop-blur-md"
-        style={{ fontFamily: 'var(--font-display)' }}
+        className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
+        style={{ top: 'max(2rem, env(safe-area-inset-top, 0px))' }}
       >
-        <span
-          className="w-1.5 h-1.5 rounded-full animate-pulse"
-          style={{ backgroundColor: persona.color, boxShadow: `0 0 10px ${persona.color}` }}
-        />
-        <span className="text-[11px] tracking-[0.28em] uppercase text-white/80">{persona.name}</span>
-        <span className="w-px h-3 bg-white/10" />
-        <span className="text-[10px] tracking-[0.22em] uppercase text-white/40">{statusCopy}</span>
-        <span className="w-px h-3 bg-white/10" />
-        <span
-          className="text-[9px] tracking-[0.22em] uppercase px-1.5 py-0.5 rounded"
-          style={hasBYOK
-            ? { backgroundColor: 'rgba(0,188,212,0.15)', color: '#7feaff', border: '1px solid rgba(0,188,212,0.3)' }
-            : { backgroundColor: 'rgba(255,191,0,0.12)', color: '#ffd070', border: '1px solid rgba(255,191,0,0.25)' }}
+        <div
+          className="flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06] backdrop-blur-md"
+          style={{ fontFamily: 'var(--font-display)' }}
         >
-          {hasBYOK ? 'BYOK' : 'Hosted'}
-        </span>
+          <span
+            className="w-1.5 h-1.5 rounded-full animate-pulse"
+            style={{ backgroundColor: persona.color, boxShadow: `0 0 10px ${persona.color}` }}
+          />
+          <span className="text-[11px] tracking-[0.32em] uppercase text-white/85">{persona.name}</span>
+          <span className="w-px h-3 bg-white/10" />
+          <span className="text-[10px] tracking-[0.24em] uppercase text-white/45">{statusCopy}</span>
+          <span className="w-px h-3 bg-white/10" />
+          <span
+            className="text-[9px] tracking-[0.22em] uppercase px-1.5 py-0.5 rounded"
+            style={hasBYOK
+              ? { backgroundColor: 'rgba(0,188,212,0.15)', color: '#7feaff', border: '1px solid rgba(0,188,212,0.3)' }
+              : { backgroundColor: 'rgba(255,191,0,0.12)', color: '#ffd070', border: '1px solid rgba(255,191,0,0.25)' }}
+          >
+            {hasBYOK ? 'BYOK' : 'Hosted'}
+          </span>
+        </div>
+        {state === 'idle' && (
+          <p
+            className="text-[13px] italic text-white/35 tracking-[0.01em] transition-opacity duration-500"
+            style={{ fontFamily: 'var(--font-editorial), var(--font-serif), serif' }}
+          >
+            {persona.tagline}
+          </p>
+        )}
       </div>
 
-      {/* Transcript (what you said) */}
+      {/* Transcript (what you said) — softer, italic, slightly larger */}
       {transcript && (
         <div
           data-ignore-click
-          className="absolute top-[14%] left-1/2 -translate-x-1/2 max-w-lg px-6 text-center text-[12px] text-white/40 pointer-events-none"
+          className="absolute top-[18%] left-1/2 -translate-x-1/2 max-w-md px-6 text-center text-[14px] italic leading-relaxed text-white/45 pointer-events-none"
+          style={{ fontFamily: 'var(--font-editorial), var(--font-serif), serif' }}
         >
           &ldquo;{transcript}&rdquo;
         </div>
       )}
 
-      {/* Reply (what Lumina said) */}
+      {/* Reply (what the persona said) — editorial serif, generous */}
       {reply && (
         <div
           data-ignore-click
-          className="absolute bottom-[16%] left-1/2 -translate-x-1/2 max-w-xl px-6 text-center text-[14px] leading-relaxed italic text-white/70 pointer-events-none"
+          className="absolute bottom-[22%] left-1/2 -translate-x-1/2 max-w-2xl px-8 text-center pointer-events-none"
         >
-          {reply}
+          <p
+            className="text-[20px] sm:text-[22px] leading-[1.55] text-white/85 tracking-[0.005em]"
+            style={{ fontFamily: 'var(--font-editorial), var(--font-serif), serif' }}
+          >
+            {reply}
+          </p>
         </div>
       )}
 
-      {/* Bottom: persona switcher */}
-      <div data-ignore-click className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5">
+      {/* Idle hint — only before any interaction, fades out once user engages */}
+      {state === 'idle' && !transcript && !reply && !hasInteracted && (
+        <div
+          data-ignore-click
+          className="absolute bottom-[34%] left-1/2 -translate-x-1/2 text-center pointer-events-none animate-pulse"
+          style={{ animationDuration: '3.6s' }}
+        >
+          <span
+            className="text-[11px] tracking-[0.36em] uppercase text-white/30"
+            style={{ fontFamily: 'var(--font-display)' }}
+          >
+            tap or hold space to speak
+          </span>
+        </div>
+      )}
+
+      {/* Bottom: persona switcher — larger touch targets, named */}
+      <div
+        data-ignore-click
+        className="absolute left-1/2 -translate-x-1/2 flex items-center gap-1 px-2 py-2 rounded-2xl bg-white/[0.025] border border-white/[0.05] backdrop-blur-md"
+        style={{ bottom: 'max(1.25rem, env(safe-area-inset-bottom, 0px))' }}
+      >
         {ORDER.map((p, idx) => {
           const active = p === personaId;
+          const pColor = PERSONAS[p].color;
           return (
             <button
               key={p}
               type="button"
               onClick={(e) => { e.stopPropagation(); setPersonaId(p); }}
-              className="group flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all"
+              className="group flex flex-col items-center gap-1.5 px-3 py-2 rounded-xl transition-all min-w-[56px]"
               aria-label={`Switch to ${PERSONAS[p].name}`}
-              style={{ opacity: active ? 1 : 0.4 }}
+              aria-pressed={active}
+              style={{
+                cursor: 'pointer',
+                background: active ? `${pColor}14` : 'transparent',
+                opacity: active ? 1 : 0.55,
+              }}
             >
               <span
-                className="w-1.5 h-1.5 rounded-full transition-transform"
+                className="w-2 h-2 rounded-full transition-all"
                 style={{
-                  backgroundColor: PERSONAS[p].color,
-                  boxShadow: active ? `0 0 10px ${PERSONAS[p].color}` : 'none',
-                  transform: active ? 'scale(1.4)' : 'scale(1)',
+                  backgroundColor: pColor,
+                  boxShadow: active ? `0 0 14px ${pColor}, 0 0 4px ${pColor}` : `0 0 4px ${pColor}40`,
+                  transform: active ? 'scale(1.25)' : 'scale(1)',
                 }}
               />
-              <span className="text-[9px] tracking-[0.22em] uppercase text-white/50 group-hover:text-white/80">
-                {idx + 1} · {PERSONAS[p].name}
+              <span
+                className="text-[10px] tracking-[0.24em] uppercase transition-colors"
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  color: active ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.5)',
+                }}
+              >
+                {PERSONAS[p].name}
+              </span>
+              <span
+                className="text-[8px] tracking-[0.22em] uppercase text-white/25"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                {idx + 1}
               </span>
             </button>
           );
         })}
       </div>
 
-      {/* Hotkeys */}
-      <div data-ignore-click className="absolute bottom-2 right-4 text-[9px] tracking-[0.2em] uppercase text-white/25">
-        <kbd className="mr-1 px-1.5 py-0.5 rounded border border-white/10 bg-white/[0.03]">Space</kbd> speak
-        <span className="mx-2">·</span>
-        <kbd className="mr-1 px-1.5 py-0.5 rounded border border-white/10 bg-white/[0.03]">Esc</kbd> stop
+      {/* Hotkey pill — glass, safe-area aware */}
+      <div
+        data-ignore-click
+        className="absolute hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.025] border border-white/[0.05] backdrop-blur-md text-[10px] tracking-[0.18em] uppercase text-white/35"
+        style={{
+          bottom: 'max(1.5rem, env(safe-area-inset-bottom, 0px))',
+          right: 'max(1.5rem, env(safe-area-inset-right, 0px))',
+          fontFamily: 'var(--font-display)',
+        }}
+      >
+        <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/[0.04] text-white/60">Space</kbd>
+        <span className="text-white/30">speak</span>
+        <span className="w-px h-3 bg-white/10" />
+        <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/[0.04] text-white/60">Esc</kbd>
+        <span className="text-white/30">stop</span>
       </div>
 
       {/* Home link */}
       <Link
         data-ignore-click
         href="/"
-        className="absolute top-6 left-6 text-[10px] tracking-[0.2em] uppercase text-white/25 hover:text-white/60 transition-colors"
+        className="absolute text-[10px] tracking-[0.24em] uppercase text-white/30 hover:text-white/70 transition-colors"
+        style={{
+          top: 'max(1.5rem, env(safe-area-inset-top, 0px))',
+          left: 'max(1.5rem, env(safe-area-inset-left, 0px))',
+          fontFamily: 'var(--font-display)',
+        }}
       >
         ← Arcanea
       </Link>
 
-      {/* BYOK settings gear */}
+      {/* BYOK settings gear (controlled) */}
       <SettingsPanel
+        open={settingsOpen}
+        onOpenChange={setSettingsOpen}
         onKeysChanged={() => {
           const k = getStoredKeys();
           setHasBYOK(Boolean(k.groq || k.eleven));
         }}
       />
 
+      {/* Error — sticky with action when cta exists, transient otherwise */}
       {error && (
         <div
           data-ignore-click
           role="alert"
-          className="absolute top-20 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg text-[12px] bg-rose-500/10 border border-rose-500/30 text-rose-200 backdrop-blur-md"
+          className="absolute top-[22%] left-1/2 -translate-x-1/2 max-w-md w-[min(92vw,28rem)] px-5 py-4 rounded-2xl bg-rose-950/40 border border-rose-400/20 text-rose-100 backdrop-blur-xl shadow-[0_8px_32px_rgba(244,63,94,0.15)]"
+          style={{ fontFamily: 'var(--font-display)' }}
         >
-          {error}
+          <p className="text-[12px] tracking-[0.04em] leading-relaxed">{error.message}</p>
+          {error.hint && (
+            <p className="mt-1.5 text-[11px] text-rose-200/60 leading-relaxed">{error.hint}</p>
+          )}
+          {error.cta === 'byok' && (
+            <div className="mt-3 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); setSettingsOpen(true); setError(null); }}
+                className="px-3 py-1.5 rounded-lg text-[11px] tracking-[0.18em] uppercase font-medium transition-colors"
+                style={{
+                  background: 'rgba(0,188,212,0.18)',
+                  color: '#7feaff',
+                  border: '1px solid rgba(0,188,212,0.35)',
+                  cursor: 'pointer',
+                }}
+              >
+                Connect voice
+              </button>
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); setError(null); }}
+                className="px-3 py-1.5 rounded-lg text-[11px] tracking-[0.18em] uppercase text-rose-200/60 hover:text-rose-100 border border-white/[0.06] transition-colors"
+                style={{ cursor: 'pointer' }}
+              >
+                Dismiss
+              </button>
+            </div>
+          )}
         </div>
       )}
 

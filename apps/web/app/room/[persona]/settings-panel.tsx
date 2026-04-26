@@ -16,6 +16,8 @@ import {
 // ---------------------------------------------------------------------------
 
 export interface SettingsPanelProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
   onKeysChanged?: () => void;
 }
 
@@ -36,8 +38,8 @@ const DRAWER = {
 // Component
 // ---------------------------------------------------------------------------
 
-export function SettingsPanel({ onKeysChanged }: SettingsPanelProps) {
-  const [open, setOpen] = useState(false);
+export function SettingsPanel({ open, onOpenChange, onKeysChanged }: SettingsPanelProps) {
+  const setOpen = onOpenChange;
   const [groqVal, setGroqVal] = useState('');
   const [elevenVal, setElevenVal] = useState('');
   const [groqState, setGroqState] = useState<VerifyState>('idle');

@@ -50,8 +50,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ── Try Groq Whisper first (faster, cheaper) ───────────────────────
     const groqKey = process.env.GROQ_API_KEY;
+    const openaiKey = process.env.OPENAI_API_KEY;
+
+    if (!groqKey && !openaiKey) {
+      return NextResponse.json(
+        {
+          error: 'Voice transcription is not connected on this deployment.',
+          provider: 'none',
+          cta: 'byok',
+          hint: 'Add your own Groq or OpenAI key in Settings to use voice immediately.',
+        },
+        { status: 503 },
+      );
+    }
+
     if (groqKey) {
       try {
         const groqForm = new FormData();
@@ -76,13 +89,26 @@ export async function POST(req: NextRequest) {
             provider: 'groq',
           });
         }
-      } catch {
-        // Fall through to OpenAI
+
+        const body = await res.text().catch(() => res.statusText);
+        console.error(`[transcribe] Groq failed status=${res.status} body=${body.slice(0, 400)}`);
+
+        if (!openaiKey) {
+          return NextResponse.json(
+            {
+              error: 'Voice provider is misconfigured.',
+              provider: 'groq',
+              cta: 'byok',
+              hint: 'Hosted Groq key rejected the request. Add your own key in Settings to bypass.',
+            },
+            { status: 502 },
+          );
+        }
+      } catch (e) {
+        console.error('[transcribe] Groq threw:', (e as Error).message);
       }
     }
 
-    // ── Fallback: OpenAI Whisper ───────────────────────────────────────
-    const openaiKey = process.env.OPENAI_API_KEY;
     if (openaiKey) {
       const oaiForm = new FormData();
       oaiForm.append('file', audioFile, audioFile.name || 'audio.webm');
@@ -103,20 +129,33 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ text: data.text, provider: 'openai' });
       }
 
+      const body = await res.text().catch(() => res.statusText);
+      console.error(`[transcribe] OpenAI failed status=${res.status} body=${body.slice(0, 400)}`);
+
       return NextResponse.json(
-        { error: 'Transcription failed' },
-        { status: 500 },
+        {
+          error: 'Voice provider is misconfigured.',
+          provider: 'openai',
+          cta: 'byok',
+          hint: 'Hosted OpenAI key rejected the request. Add your own key in Settings to bypass.',
+        },
+        { status: 502 },
       );
     }
 
     return NextResponse.json(
-      { error: 'No speech-to-text provider configured. Set GROQ_API_KEY or OPENAI_API_KEY.' },
+      {
+        error: 'Voice transcription is not connected on this deployment.',
+        provider: 'none',
+        cta: 'byok',
+        hint: 'Add your own Groq or OpenAI key in Settings to use voice immediately.',
+      },
       { status: 503 },
     );
   } catch (error) {
-    console.error('Transcribe API error:', error);
+    console.error('[transcribe] unexpected error:', error);
     return NextResponse.json(
-      { error: 'Transcription error' },
+      { error: 'Transcription error', cta: 'retry' },
       { status: 500 },
     );
   }
