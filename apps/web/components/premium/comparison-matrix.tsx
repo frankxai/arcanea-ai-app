@@ -2,6 +2,7 @@
 
 import { m } from "framer-motion";
 import { Check, X } from "@/lib/phosphor-icons";
+import { brand, competitorAccent } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // ComparisonMatrix — "Why Arcanea" differentiator table.
@@ -82,10 +83,10 @@ const FEATURES: Feature[] = [
 ];
 
 const COLUMNS = [
-  { key: "arcanea", label: "Arcanea", accent: "#7fffd4" },
-  { key: "chatgpt", label: "ChatGPT", accent: "#9ca3af" },
-  { key: "claude", label: "Claude", accent: "#9ca3af" },
-  { key: "character", label: "Character.AI", accent: "#9ca3af" },
+  { key: "arcanea", label: "Arcanea", accent: brand.aquamarine },
+  { key: "chatgpt", label: "ChatGPT", accent: competitorAccent },
+  { key: "claude", label: "Claude", accent: competitorAccent },
+  { key: "character", label: "Character.AI", accent: competitorAccent },
 ] as const;
 
 function CellIcon({ value }: { value: Cell }) {

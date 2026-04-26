@@ -19,6 +19,7 @@ import {
   Link as LinkIcon,
 } from "@/lib/phosphor-icons";
 import type { PhosphorIcon } from "@/lib/phosphor-icons";
+import { roleAccents, teamAccents } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // LuminorTeamPreview — Compact grid of the 13 Chosen with hover reveal.
@@ -36,27 +37,27 @@ interface Luminor {
 
 const LUMINORS: Luminor[] = [
   // Orchestrator
-  { id: "lumina", name: "Lumina", role: "Orchestrator", team: "orchestrator", Icon: Crown, color: "#ffd700" },
+  { id: "lumina", name: "Lumina", role: "Orchestrator", team: "orchestrator", Icon: Crown, color: roleAccents.lumina },
 
   // Development
-  { id: "systems-architect", name: "Systems Architect", role: "Architecture", team: "dev", Icon: BracketsSquare, color: "#00bcd4" },
-  { id: "code-crafter", name: "Code Crafter", role: "Implementation", team: "dev", Icon: Code, color: "#00bcd4" },
-  { id: "debugger", name: "Debugger", role: "Root-cause", team: "dev", Icon: Bug, color: "#ef4444" },
+  { id: "systems-architect", name: "Systems Architect", role: "Architecture", team: "dev", Icon: BracketsSquare, color: roleAccents.systemsArchitect },
+  { id: "code-crafter", name: "Code Crafter", role: "Implementation", team: "dev", Icon: Code, color: roleAccents.codeCrafter },
+  { id: "debugger", name: "Debugger", role: "Root-cause", team: "dev", Icon: Bug, color: roleAccents.debugger },
 
   // Creative
-  { id: "visual-designer", name: "Visual Designer", role: "Color & UI", team: "creative", Icon: Palette, color: "#a855f7" },
-  { id: "composer", name: "Composer", role: "Music & audio", team: "creative", Icon: MusicNotes, color: "#f472b6" },
-  { id: "motion-designer", name: "Motion Designer", role: "Animation", team: "creative", Icon: Lightning, color: "#c084fc" },
+  { id: "visual-designer", name: "Visual Designer", role: "Color & UI", team: "creative", Icon: Palette, color: roleAccents.visualDesigner },
+  { id: "composer", name: "Composer", role: "Music & audio", team: "creative", Icon: MusicNotes, color: roleAccents.composer },
+  { id: "motion-designer", name: "Motion Designer", role: "Animation", team: "creative", Icon: Lightning, color: roleAccents.motionDesigner },
 
   // Writing
-  { id: "storyteller", name: "Storyteller", role: "Narrative arcs", team: "writing", Icon: Book, color: "#7fffd4" },
-  { id: "voice", name: "Voice", role: "Copy & naming", team: "writing", Icon: Quotes, color: "#00bcd4" },
-  { id: "poet", name: "Poet", role: "Verse & rhythm", team: "writing", Icon: Feather, color: "#ffd700" },
+  { id: "storyteller", name: "Storyteller", role: "Narrative arcs", team: "writing", Icon: Book, color: roleAccents.storyteller },
+  { id: "voice", name: "Voice", role: "Copy & naming", team: "writing", Icon: Quotes, color: roleAccents.voice },
+  { id: "poet", name: "Poet", role: "Verse & rhythm", team: "writing", Icon: Feather, color: roleAccents.poet },
 
   // Research
-  { id: "deep-researcher", name: "Deep Researcher", role: "Synthesis", team: "research", Icon: MagnifyingGlass, color: "#60a5fa" },
-  { id: "strategist", name: "Strategist", role: "Direction", team: "research", Icon: Compass, color: "#c084fc" },
-  { id: "integrator", name: "Integrator", role: "Connection", team: "research", Icon: LinkIcon, color: "#34d399" },
+  { id: "deep-researcher", name: "Deep Researcher", role: "Synthesis", team: "research", Icon: MagnifyingGlass, color: roleAccents.deepResearcher },
+  { id: "strategist", name: "Strategist", role: "Direction", team: "research", Icon: Compass, color: roleAccents.strategist },
+  { id: "integrator", name: "Integrator", role: "Connection", team: "research", Icon: LinkIcon, color: roleAccents.integrator },
 ];
 
 const TEAM_LABEL: Record<Luminor["team"], string> = {
@@ -155,11 +156,11 @@ export function LuminorTeamPreview() {
       {/* Legend */}
       <div className="mt-6 flex flex-wrap justify-center gap-4 md:gap-6">
         {[
-          { label: "Queen", color: "#ffd700" },
-          { label: "Development", color: "#00bcd4" },
-          { label: "Creative", color: "#a855f7" },
-          { label: "Writing", color: "#7fffd4" },
-          { label: "Research", color: "#60a5fa" },
+          { label: "Queen", color: teamAccents.queen },
+          { label: "Development", color: teamAccents.dev },
+          { label: "Creative", color: teamAccents.creative },
+          { label: "Writing", color: teamAccents.writing },
+          { label: "Research", color: teamAccents.research },
         ].map(({ label, color }) => (
           <div key={label} className="flex items-center gap-1.5">
             <span

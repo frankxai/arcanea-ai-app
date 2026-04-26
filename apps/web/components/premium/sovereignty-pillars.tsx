@@ -3,6 +3,7 @@
 import { m } from "framer-motion";
 import { Keyboard, Shield, Code, ArrowSquareOut } from "@/lib/phosphor-icons";
 import type { PhosphorIcon } from "@/lib/phosphor-icons";
+import { brand, ambient } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // SovereigntyPillars — The "Keep your keys. Keep your IP." section.
@@ -22,25 +23,25 @@ const PILLARS: Pillar[] = [
     icon: Keyboard,
     title: "Your keys, always",
     body: "BYOK by default. Your OpenAI, Anthropic, or Google key lives in your browser. We never see it, store it, or mark it up.",
-    accent: "#7fffd4",
+    accent: brand.aquamarine,
   },
   {
     icon: Shield,
     title: "Your IP, always",
     body: "Everything you create is yours. No claims on output. No training on your data. Export as markdown, JSON, or fork the whole stack.",
-    accent: "#00bcd4",
+    accent: brand.atlanteanTeal,
   },
   {
     icon: Code,
     title: "Open source core",
     body: "27 repos, 43 packages, MIT licensed. The entire world engine, compiler, and agent framework is forkable. Run it locally if you want.",
-    accent: "#ffd700",
+    accent: brand.arcaneanGold,
   },
   {
     icon: ArrowSquareOut,
     title: "No lock-in",
     body: "Your worlds, characters, and chats export as portable files. Works with Claude Code, Cursor, GPT, Gemini — anywhere you want to go next.",
-    accent: "#c084fc",
+    accent: ambient.lavender,
   },
 ];
 

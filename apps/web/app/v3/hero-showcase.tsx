@@ -3,50 +3,55 @@
 import Link from "next/link";
 import { m } from "framer-motion";
 import { Star } from "@/lib/phosphor-icons";
+import { brand, guardianAccents } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // HeroShowcase — "Created in 30 seconds" visual proof strip
 // Renders 3 example creation cards between the hero and below-fold content.
 // ---------------------------------------------------------------------------
 
+// Light slate used for character "Wind" element — a near-white neutral
+// that reads as ethereal vs the saturated brand accents.
+const WIND_NEUTRAL = "#e2e8f0";
+
 const CARDS = [
   {
     type: "World",
     title: "Sonorium",
     subtitle: "12 characters · 3 locations",
-    elements: ["#ef4444", "#3b82f6", "#a855f7"],
+    elements: [guardianAccents.draconia, guardianAccents.leyla, guardianAccents.lyria],
     gradient: "from-[#0d47a1]/40 via-[#00897b]/30 to-[#4a148c]/40",
     gradientAlt: "from-[#1565c0]/50 via-[#00bcd4]/25 to-[#4a148c]/50",
     borderGlow: "rgba(0,188,212,0.25)",
     stars: 5,
     badge: "Living Universe",
-    badgeColor: "#00bcd4",
+    badgeColor: brand.atlanteanTeal,
     href: "/worlds",
   },
   {
     type: "Character",
     title: "Kael Duskwalker",
     subtitle: "Wind · Rogue · Restless",
-    elements: ["#e2e8f0"],
+    elements: [WIND_NEUTRAL],
     gradient: "from-[#1a237e]/40 via-[#006064]/30 to-[#1b5e20]/40",
     gradientAlt: "from-[#283593]/50 via-[#00838f]/30 to-[#2e7d32]/40",
     borderGlow: "rgba(127,255,212,0.20)",
     stars: 4,
     badge: "Wind",
-    badgeColor: "#7fffd4",
+    badgeColor: brand.aquamarine,
     href: "/chat",
   },
   {
     type: "Image",
     title: "Crystalline Citadel",
     subtitle: "Fantasy · Cinematic Lighting",
-    elements: ["#ffd700", "#00bcd4"],
+    elements: [brand.arcaneanGold, brand.atlanteanTeal],
     gradient: "from-[#4a148c]/50 via-[#00bcd4]/30 to-[#e65100]/40",
     gradientAlt: "from-[#6a1b9a]/50 via-[#0097a7]/35 to-[#ef6c00]/40",
     borderGlow: "rgba(255,215,0,0.20)",
     stars: 5,
     badge: "Cinematic",
-    badgeColor: "#ffd700",
+    badgeColor: brand.arcaneanGold,
     href: "/imagine",
   },
 ] as const;
@@ -61,7 +66,7 @@ function StarRating({ count }: { count: number }) {
             key={i}
             size={10}
             weight={filled ? "fill" : "regular"}
-            color={filled ? "#ffd700" : "rgba(255,255,255,0.18)"}
+            color={filled ? brand.arcaneanGold : "rgba(255,255,255,0.18)"}
           />
         );
       })}

@@ -2,6 +2,7 @@
 
 import { m } from "framer-motion";
 import { useEffect, useState } from "react";
+import { nodeTypeAccents, guardianAccents } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // WorldGraphCanvas — Animated visualization of the Living World engine.
@@ -27,13 +28,14 @@ interface Edge {
 }
 
 const NODES: Node[] = [
-  { id: "seed", label: "a cyberpunk detective", type: "seed", x: 50, y: 50, color: "#7fffd4", size: "lg", delay: 0 },
-  { id: "char-1", label: "Kael Duskwalker", type: "character", x: 20, y: 25, color: "#ef4444", size: "md", delay: 0.4 },
-  { id: "char-2", label: "Mira Vex", type: "character", x: 78, y: 22, color: "#a855f7", size: "md", delay: 0.6 },
-  { id: "loc-1", label: "Neon District", type: "location", x: 15, y: 70, color: "#3b82f6", size: "md", delay: 0.8 },
-  { id: "loc-2", label: "The Underspire", type: "location", x: 80, y: 75, color: "#3b82f6", size: "sm", delay: 1.0 },
-  { id: "mag-1", label: "Signal Weaving", type: "magic", x: 50, y: 12, color: "#ffd700", size: "sm", delay: 1.2 },
-  { id: "lore-1", label: "The Shard Accord", type: "lore", x: 50, y: 88, color: "#c084fc", size: "sm", delay: 1.4 },
+  { id: "seed", label: "a cyberpunk detective", type: "seed", x: 50, y: 50, color: nodeTypeAccents.seed, size: "lg", delay: 0 },
+  { id: "char-1", label: "Kael Duskwalker", type: "character", x: 20, y: 25, color: nodeTypeAccents.character, size: "md", delay: 0.4 },
+  // Mira intentionally violet to differentiate from Kael — same character TYPE, distinct visual.
+  { id: "char-2", label: "Mira Vex", type: "character", x: 78, y: 22, color: guardianAccents.lyria, size: "md", delay: 0.6 },
+  { id: "loc-1", label: "Neon District", type: "location", x: 15, y: 70, color: nodeTypeAccents.location, size: "md", delay: 0.8 },
+  { id: "loc-2", label: "The Underspire", type: "location", x: 80, y: 75, color: nodeTypeAccents.location, size: "sm", delay: 1.0 },
+  { id: "mag-1", label: "Signal Weaving", type: "magic", x: 50, y: 12, color: nodeTypeAccents.magic, size: "sm", delay: 1.2 },
+  { id: "lore-1", label: "The Shard Accord", type: "lore", x: 50, y: 88, color: nodeTypeAccents.lore, size: "sm", delay: 1.4 },
 ];
 
 const EDGES: Edge[] = [
@@ -205,10 +207,10 @@ export function WorldGraphCanvas() {
       {/* Legend — bottom */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 md:gap-5 px-4 py-2 rounded-full bg-black/30 border border-white/[0.06] backdrop-blur-md">
         {[
-          { label: "CHARACTER", color: "#ef4444" },
-          { label: "LOCATION", color: "#3b82f6" },
-          { label: "MAGIC", color: "#ffd700" },
-          { label: "LORE", color: "#c084fc" },
+          { label: "CHARACTER", color: nodeTypeAccents.character },
+          { label: "LOCATION", color: nodeTypeAccents.location },
+          { label: "MAGIC", color: nodeTypeAccents.magic },
+          { label: "LORE", color: nodeTypeAccents.lore },
         ].map(({ label, color }) => (
           <div key={label} className="flex items-center gap-1.5">
             <span
