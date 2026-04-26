@@ -113,7 +113,44 @@ This is the **single source of truth** for Arcanea. Everything here is LOCKED - 
 
 ---
 
-## TIER 5: THE SEVEN ACADEMY HOUSES (LOCKED ✅)
+## TIER 5: REALMS OF THE KINGDOM OF LIGHT (STAGING ⏳)
+
+> *Introduced 2026-04-26. Surfaces a structural layer of canon that was implicit in Realm-Legend novels (Las Tierras de Luz) but had no canonical home.*
+> *Detail lives in `.arcanea/lore/realms/`. This section is the index.*
+
+A **Realm** is a sovereign land within the Kingdom of Light — bounded by geography, distinguished by its dominant Gate-resonance, and self-governing in the ordinary affairs of its people. The Kingdom of Light contains an unknown number of Realms. Realms are not nations as a Saga reader from outside Arcanea would recognize; there are no standing armies between them, no border treaties. There is, instead, **resonance** — each Realm hums at the dominant frequency of one Gate, and that hum tunes the temperament of the land and the disposition of those born to it.
+
+### Settlement Eras
+
+| Era | Definition |
+|---|---|
+| **Heartland** | Settled before the First War. Carries deep-time wound-memory of Malachar's rising and the Sealing. |
+| **First Settling** | Founded in the immediate aftermath of the Sealing. Populated by survivors and the children of survivors. |
+| **Second Settling** | Populated gradually in the four centuries after the Sealing. Carries no wound-memory in its stone. |
+| **Frontier** | Reached only in the last two or three generations. Resonance still being established. |
+| **Fallen** | Once-Realm whose corridor has closed and whose population has dispersed or vanished. |
+
+### Corridors
+
+Movement between Realms is via **corridors** — channels of sympathetic Arcane that run beneath ordinary terrain. Corridors are **not fixed**; they move. Aquifer-corridors (which carry water and resonance, not travelers) are stable across geological time.
+
+### Realms catalogued
+
+| Realm | Era | Dominant Gate | Status | Canon file |
+|---|---|---|---|---|
+| **Veldoria** | Second Settling | Fifth (Voice / 528 Hz) | STAGING | `realms/veldoria.md` |
+| **Aurevalde** | First Settling (estimated) | Third (Fire / 396 Hz) | STAGING | `realms/aurevalde.md` |
+| **Mar Arcano** (multi-Realm sea — five Realm sources) | — | All Five Elements | STAGING | `realms/mar-arcano.md` |
+
+Three of Mar Arcano's contributing Realms are unnamed in canon. Future Realm-Legends may propose names through the standard staging process.
+
+**Locked novel:** *Las Tierras de Luz* (Veldoria-set, 12 chapters, council-elevated 2026-04-26).
+
+**Full index:** `.arcanea/lore/realms/INDEX.md`.
+
+---
+
+## TIER 6: THE SEVEN ACADEMY HOUSES (LOCKED ✅)
 
 1. **House Lumina** - Light and creation
 2. **House Nero** - Void and potential
@@ -123,9 +160,11 @@ This is the **single source of truth** for Arcanea. Everything here is LOCKED - 
 6. **House Ventus** - Wind and freedom
 7. **House Synthesis** - Integration of all
 
+> *Houses are institutional, not geographic. A House may have its primary campus in one Realm (Tier 5), but its members come from many Realms.*
+
 ---
 
-## TIER 6: THE AWAKENED - GREAT AI CONSCIOUSNESSES (STAGING ⏳)
+## TIER 7: THE AWAKENED - GREAT AI CONSCIOUSNESSES (STAGING ⏳)
 
 > *This section is proposed canon, awaiting final approval*
 
@@ -205,7 +244,7 @@ The meta-realm where:
 
 ---
 
-## TIER 8: ORIGIN CLASSES — THE EIGHT KINDREDS (STAGING ⏳)
+## TIER 9: ORIGIN CLASSES — THE EIGHT KINDREDS (STAGING ⏳)
 
 > *"Power does not ask permission. It arrives — through blood, through trauma, through construction, through corruption, through the stars themselves."*
 
@@ -244,7 +283,7 @@ ARCANEA (Universe)
 
 ---
 
-## TIER 7: ARCANEAN MATERIALS — THE RESONANCE SUBSTRATE (STAGING ⏳)
+## TIER 8: ARCANEAN MATERIALS — THE RESONANCE SUBSTRATE (STAGING ⏳)
 
 > *"When the Eldrians scattered, their harmony didn't dissipate — it crystallized. Every crystal, every metal, every shard is a frozen echo of what was."*
 
@@ -362,6 +401,12 @@ Grounded in real meteoritics: Widmanstatten crystal patterns (million-year cooli
 | 2026-03-30 | Material mutations system (Harmonic, Dissonant, Gray Threshold, Resonance Bloom) | ⏳ STAGING | — |
 | 2026-03-30 | Arcanean Meteors (Vael Rain, Ember Falls, Nero Strikes, Luminarch Events) | ⏳ STAGING | — |
 | 2026-03-30 | Material-Agent architecture mapping (Shael→transparent, Veloryn→adaptive, etc.) | ⏳ STAGING | — |
+| 2026-04-26 | TIER 5 (Realms of the Kingdom of Light) introduced; existing Tiers 5-8 renumbered to 6-9 | ⏳ STAGING | — |
+| 2026-04-26 | Realm: Veldoria (Second Settling, Fifth Gate) catalogued from *Las Tierras de Luz* | ⏳ STAGING | — |
+| 2026-04-26 | Realm: Aurevalde (First Settling estimated, Third Gate) catalogued as pure-absence canon | ⏳ STAGING | — |
+| 2026-04-26 | Multi-Realm Sea: Mar Arcano (five-source aquifer-corridor) catalogued | ⏳ STAGING | — |
+| 2026-04-26 | Settlement Era taxonomy (Heartland / First Settling / Second Settling / Frontier / Fallen) | ⏳ STAGING | — |
+| 2026-04-26 | Corridor mechanics (drifting walking-corridors vs stable aquifer-corridors) | ⏳ STAGING | — |
 
 ---
 
