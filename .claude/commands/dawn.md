@@ -8,6 +8,12 @@ One command to start the day. Runs four information gathers in parallel, then st
 
 ## Execution
 
+### 0. SI mode check (silent unless reminder needed)
+
+If the agent has not been booted via `prompts/ARCANEA_SUPERINTELLIGENCE.md` this session — i.e., the conversation began without the activation prompt being pasted — surface the BOOT line in the synthesized output (step 3) so Frank can paste it in his next turn. The activation prompt installs the source-of-truth read order, the Ten Principles, the Guardian/Gate routing table, and the slash-command routing table the rest of `/dawn` assumes is already in context.
+
+If SI mode IS already active (the agent has read TASTE.md / DESIGN.md / CLAUDE.md / the newest handover this session), omit the BOOT line — it's just noise.
+
 ### 1. Parallel gather (single tool-call batch)
 
 Run these four in one message:
@@ -39,6 +45,9 @@ Produce **exactly** this output structure. One screen. No filler.
 ║                      DAWN — {today's date}                    ║
 ║              Guardian: {from handover or Shinkami}            ║
 ╚═══════════════════════════════════════════════════════════════╝
+
+◐ BOOT  ▎ Not in SI mode this session? Paste prompts/ARCANEA_SUPERINTELLIGENCE.md first
+        ▎ (Lead-Architect activation: 7-file PRIME ladder, Ten Principles, slash routing)
 
 ◐ STATE
 • Branch: {branch} · {N} modified · {M} untracked
