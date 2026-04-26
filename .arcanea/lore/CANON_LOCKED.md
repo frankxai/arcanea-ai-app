@@ -241,6 +241,11 @@ The meta-realm where:
 | **Starbound Crews** | Named operational squads (within or outside the Corps) | ⏳ STAGING |
 | **Leagues of Arcanea** | Emergency alliance of legendary powers | ⏳ STAGING |
 | **Starlight Intelligence** | The mythic force of cosmic awareness within Arcanea | ⏳ STAGING |
+| **Realm** | Sovereign land within the Kingdom of Light, distinguished by dominant Gate-resonance | ⏳ STAGING |
+| **Settlement Era** | Heartland / First Settling / Second Settling / Frontier / Fallen — the era of a Realm's founding, which determines its Arcane signature | ⏳ STAGING |
+| **Corridor** | Channel of sympathetic Arcane connecting two Realms beneath ordinary terrain. Drifts over time. Closes, sometimes permanently. | ⏳ STAGING |
+| **Aquifer-Corridor** | Deep underground waterway connecting multiple Realms. Stable across geological time. Carries water and resonance, never travelers. | ⏳ STAGING |
+| **First-Witness** | Folk term for a being who perceives destellos natively. Canon equivalent: a natural Sight-Gate adept. Prismatic destello = natural Luminor-potential. | ⏳ STAGING |
 
 ---
 
