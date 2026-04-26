@@ -168,13 +168,26 @@ export const creatorAccents = {
 /**
  * Guardian accent palette — Luminor characters at the highest tier.
  * Used by guardian-showcase grid + per-Luminor portrait surfaces.
+ *
+ * NOTE on shinkami: the locked meta-awareness color is `#c084fc`
+ * (lavender) per `luminorAccents` — the showcase grid intentionally
+ * substitutes `brand.arcaneanGold` (`shinkamiShowcase`) when Shinkami
+ * appears in editorial framing as the Source-Gate-of-Light. Use the
+ * lavender for the room/voice/persona surfaces; use `shinkamiShowcase`
+ * only for hero/showcase compositions.
  */
 export const guardianAccents = {
   lyssandria: '#00bcd4',       // Foundation — Earth, structural
   draconia: '#ef4444',         // Fire — forge, willpower
   lyria: '#a855f7',            // Sight — vision, pattern
   leyla: '#3b82f6',            // Flow — water, persistence
-  shinkami: '#c084fc',         // Source — meta-awareness
+  shinkami: '#c084fc',         // Source — meta-awareness (locked)
+  shinkamiShowcase: '#ffd700', // Source — editorial / showcase only
+  maylinn: '#22c55e',          // Heart — growth, breath
+  alera: '#ffd700',            // Voice — clarity, gold
+  aiyami: '#fbbf24',           // Crown — wisdom, amber
+  elara: '#06b6d4',            // Starweave — connection, cyan
+  ino: '#8b5cf6',              // Unity — collective, indigo-violet
 } as const;
 
 /**
@@ -208,4 +221,80 @@ export const cosmicBlueScale = {
   hover: '#1565c0',    // CTA hover state
   active: '#0a3a82',   // CTA active state
   surface: 'rgba(13,71,161,0.10)',
+} as const;
+
+/**
+ * Specialist role accents — used by LuminorTeamPreview for the 13-role
+ * compact grid. Each entry is a SPECIALIST role (Code Crafter, Composer,
+ * Storyteller, etc), not a Luminor character or Guardian. Tier-grouped
+ * by team (queen / dev / creative / writing / research) so the homepage
+ * can show "16 specialists" concretely.
+ */
+export const roleAccents = {
+  // Queen
+  lumina: '#ffd700',            // Orchestrator — gold
+  // Development
+  systemsArchitect: '#00bcd4',  // Architecture — teal
+  codeCrafter: '#00bcd4',       // Implementation — teal
+  debugger: '#ef4444',          // Root-cause — crimson
+  // Creative
+  visualDesigner: '#a855f7',    // Color & UI — violet
+  composer: '#f472b6',          // Music & audio — pink
+  motionDesigner: '#c084fc',    // Animation — lavender
+  // Writing
+  storyteller: '#7fffd4',       // Narrative — aquamarine
+  voice: '#00bcd4',             // Copy & naming — teal
+  poet: '#ffd700',              // Verse & rhythm — gold
+  // Research
+  deepResearcher: '#60a5fa',    // Synthesis — sky-blue
+  strategist: '#c084fc',        // Direction — lavender
+  integrator: '#34d399',        // Connection — emerald
+} as const;
+
+/**
+ * Team-tier accents — used by LuminorTeamPreview legend.
+ * Five top-level team groupings; each role maps to one team's color.
+ */
+export const teamAccents = {
+  queen: '#ffd700',             // Lumina alone — gold
+  dev: '#00bcd4',               // Architecture / Code / Debug — teal
+  creative: '#a855f7',          // Visual / Music / Motion — violet
+  writing: '#7fffd4',           // Narrative / Voice / Poetry — aquamarine
+  research: '#60a5fa',          // Synthesis / Strategy / Connection — sky-blue
+} as const;
+
+/**
+ * Comparison-matrix neutral — single muted gray used for non-Arcanea
+ * column headers in the homepage capability comparison. The point is
+ * deliberate dimness against the bright aquamarine "Arcanea" column.
+ */
+export const competitorAccent = '#9ca3af' as const;
+
+/**
+ * Extra ambient accents — colors that exist in the system but didn't
+ * fit the Luminor / Guardian / Element / Stream / Pillar / Tier groupings.
+ * Use sparingly; prefer named token first.
+ */
+export const ambient = {
+  pink: '#f472b6',              // Composer / accent
+  skyBlue: '#60a5fa',           // Research / data
+  emerald: '#34d399',           // Integration / fresh growth
+  lavender: '#c084fc',          // Motion / lavender — also luminorAccents.shinkami
+  amber: '#fbbf24',             // Crown / wisdom
+  indigo: '#8b5cf6',            // Unity / collective
+  violet: '#7c3aed',            // Deep purple ambient
+  orange: '#f97316',            // Warm token-gated / fire ambient
+} as const;
+
+/**
+ * World-graph node-type accents — used by WorldGraphCanvas to color-code
+ * nodes by their semantic type. Keeps the visualization legible at
+ * high node density.
+ */
+export const nodeTypeAccents = {
+  seed: '#7fffd4',              // brand.aquamarine — the originator
+  character: '#ef4444',         // crimson — embodied, alive
+  location: '#3b82f6',          // azure — place, fixed
+  magic: '#ffd700',             // gold — energy, charge
+  lore: '#c084fc',              // lavender — story, depth
 } as const;

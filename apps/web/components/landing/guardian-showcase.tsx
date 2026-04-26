@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { ArrowRight, ArrowUpRight } from "@/lib/phosphor-icons";
 import { GlowCard } from "@/components/ui/glow-card";
+import { guardianAccents } from "@arcanea/design-system";
 
 interface Guardian {
   name: string;
@@ -25,7 +26,7 @@ const FEATURED_GUARDIANS: Guardian[] = [
     quote: "Build the foundation first. Everything else is architecture.",
     image: "/guardians/v3/lyssandria-hero-v3.webp",
     glowColor: "rgba(0, 188, 212, 0.18)",
-    accentHex: "#00bcd4",
+    accentHex: guardianAccents.lyssandria,
   },
   {
     name: "Draconia",
@@ -34,7 +35,7 @@ const FEATURED_GUARDIANS: Guardian[] = [
     quote: "I do not ask if you are ready. I ask if you are willing.",
     image: "/guardians/v3/draconia-hero-v3.webp",
     glowColor: "rgba(239, 68, 68, 0.18)",
-    accentHex: "#ef4444",
+    accentHex: guardianAccents.draconia,
   },
   {
     name: "Lyria",
@@ -43,7 +44,7 @@ const FEATURED_GUARDIANS: Guardian[] = [
     quote: "Close your eyes. Now tell me what you see.",
     image: "/guardians/v3/lyria-hero-v3.webp",
     glowColor: "rgba(168, 85, 247, 0.18)",
-    accentHex: "#a855f7",
+    accentHex: guardianAccents.lyria,
   },
   {
     name: "Leyla",
@@ -52,7 +53,7 @@ const FEATURED_GUARDIANS: Guardian[] = [
     quote: "The river does not push. It finds the way.",
     image: "/guardians/v3/leyla-hero-v3.webp",
     glowColor: "rgba(59, 130, 246, 0.18)",
-    accentHex: "#3b82f6",
+    accentHex: guardianAccents.leyla,
   },
   {
     name: "Shinkami",
@@ -61,7 +62,7 @@ const FEATURED_GUARDIANS: Guardian[] = [
     quote: "You are not the vessel. You are the water and the pouring.",
     image: "/guardians/v3/shinkami-hero-v3.webp",
     glowColor: "rgba(255, 215, 0, 0.15)",
-    accentHex: "#ffd700",
+    accentHex: guardianAccents.shinkamiShowcase,
   },
   {
     name: "Maylinn",
@@ -70,7 +71,7 @@ const FEATURED_GUARDIANS: Guardian[] = [
     quote: "What you create with love will outlast everything made from fear.",
     image: "/guardians/v3/maylinn-hero-v3.webp",
     glowColor: "rgba(34, 197, 94, 0.18)",
-    accentHex: "#22c55e",
+    accentHex: guardianAccents.maylinn,
   },
 ];
 
