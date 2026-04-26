@@ -6,14 +6,15 @@ import Link from "next/link";
 import { useRef } from "react";
 import { ArrowRight } from "@/lib/phosphor-icons";
 import { getFeaturedLuminors } from "@/lib/luminor-images";
+import { elementNameAccents, brand } from "@arcanea/design-system";
 
 const ELEMENT_COLORS: Record<string, { accent: string; glow: string }> = {
-  Fire: { accent: "#ef4444", glow: "rgba(239, 68, 68, 0.25)" },
-  Water: { accent: "#3b82f6", glow: "rgba(59, 130, 246, 0.25)" },
-  Earth: { accent: "#22c55e", glow: "rgba(34, 197, 94, 0.25)" },
-  Wind: { accent: "#a78bfa", glow: "rgba(167, 139, 250, 0.25)" },
-  Void: { accent: "#8b5cf6", glow: "rgba(139, 92, 246, 0.25)" },
-  Spirit: { accent: "#ffd700", glow: "rgba(255, 215, 0, 0.25)" },
+  Fire: { accent: elementNameAccents.Fire, glow: "rgba(239, 68, 68, 0.25)" },
+  Water: { accent: elementNameAccents.Water, glow: "rgba(59, 130, 246, 0.25)" },
+  Earth: { accent: elementNameAccents.Earth, glow: "rgba(34, 197, 94, 0.25)" },
+  Wind: { accent: elementNameAccents.WindCompanion, glow: "rgba(167, 139, 250, 0.25)" },
+  Void: { accent: elementNameAccents.VoidDeep, glow: "rgba(139, 92, 246, 0.25)" },
+  Spirit: { accent: brand.arcaneanGold, glow: "rgba(255, 215, 0, 0.25)" },
 };
 
 export function CompanionShowcase() {

@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { m, useInView } from "framer-motion";
+import { stepAccents } from "@arcanea/design-system";
 
 const STEPS = [
   {
@@ -10,7 +11,7 @@ const STEPS = [
     title: "Imagine",
     description:
       "Type one sentence. Sixteen specialized Luminors help you write, paint, compose, and build — each trained on 190K words of creative philosophy.",
-    accent: "#00bcd4",
+    accent: stepAccents.imagine,
     href: "/chat",
   },
   {
@@ -18,7 +19,7 @@ const STEPS = [
     title: "Build",
     description:
       "Create entire worlds with characters, factions, locations, and magic systems. Every element auto-links into a living universe you own.",
-    accent: "#7c4dff",
+    accent: stepAccents.build,
     href: "/worlds",
   },
   {
@@ -26,7 +27,7 @@ const STEPS = [
     title: "Share",
     description:
       "Fork other creators' worlds. Star what inspires you. Build on each other's mythology in a growing multiverse of shared imagination.",
-    accent: "#f59e0b",
+    accent: stepAccents.share,
     href: "/gallery",
   },
   {
@@ -34,7 +35,7 @@ const STEPS = [
     title: "Grow",
     description:
       "Progress through the Ten Gates. Earn recognition through creation, not consumption. From Apprentice to Luminor — the path is the product.",
-    accent: "#00897b",
+    accent: stepAccents.grow,
     href: "/academy",
   },
 ];

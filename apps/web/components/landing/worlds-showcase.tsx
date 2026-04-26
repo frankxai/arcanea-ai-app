@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { ArrowRight } from "@/lib/phosphor-icons";
 import { GlowCard } from "@/components/ui/glow-card";
+import { elementNameAccents, neutralFallback } from "@arcanea/design-system";
 
 const SHOWCASE_WORLDS = [
   {
@@ -31,12 +32,12 @@ const SHOWCASE_WORLDS = [
 ];
 
 const ELEMENT_HEX: Record<string, string> = {
-  Fire: "#ef4444",
-  Water: "#3b82f6",
-  Earth: "#22c55e",
-  Wind: "#e2e8f0",
-  Void: "#a855f7",
-  Spirit: "#fbbf24",
+  Fire: elementNameAccents.Fire,
+  Water: elementNameAccents.Water,
+  Earth: elementNameAccents.Earth,
+  Wind: elementNameAccents.Wind,
+  Void: elementNameAccents.Void,
+  Spirit: elementNameAccents.Spirit,
 };
 
 export function WorldsShowcase() {
@@ -98,7 +99,7 @@ export function WorldsShowcase() {
                           <span
                             key={el}
                             className="w-2 h-2 rounded-full ring-1 ring-white/10"
-                            style={{ backgroundColor: ELEMENT_HEX[el] ?? "#888" }}
+                            style={{ backgroundColor: ELEMENT_HEX[el] ?? neutralFallback }}
                             title={el}
                           />
                         ))}

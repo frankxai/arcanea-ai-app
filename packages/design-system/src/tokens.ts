@@ -298,3 +298,41 @@ export const nodeTypeAccents = {
   magic: '#ffd700',             // gold — energy, charge
   lore: '#c084fc',              // lavender — story, depth
 } as const;
+
+/**
+ * Element-name accents — looked up by Element string name (Fire/Water/...).
+ * Used by surfaces that bind to user-readable element labels (Companion
+ * dots, World element chips, Gate-Element badges) rather than the
+ * element TYPE map. Different palette from `elements.<el>.base` —
+ * these are saturated UI accents (crimson/azure/...), the `elements`
+ * tokens are more nuanced base/bright/deep tonal pairs.
+ */
+export const elementNameAccents = {
+  Fire: '#ef4444',              // crimson — Draconia gate
+  Water: '#3b82f6',             // azure — Leyla gate
+  Earth: '#22c55e',             // forest — Lyssandria gate
+  Wind: '#e2e8f0',              // pale slate — Maylinn (air-light)
+  WindCompanion: '#a78bfa',     // lilac variant for the Companion grid
+  Void: '#a855f7',              // violet — Lyria gate
+  VoidDeep: '#8b5cf6',          // deep indigo for Companion grid
+  Spirit: '#fbbf24',             // amber — Source / wisdom
+} as const;
+
+/**
+ * Step-progression accents — used by HowItWorks 4-step carousel.
+ * Each step gets its own hue so the Imagine→Build→Share→Grow loop
+ * reads as four distinct beats.
+ */
+export const stepAccents = {
+  imagine: '#00bcd4',           // teal — start of the loop
+  build: '#7c4dff',             // electric violet — building energy
+  share: '#f59e0b',             // warm amber — community heat
+  grow: '#00897b',              // deep teal-green — growth
+} as const;
+
+/**
+ * Neutral fallback color — for `?? FALLBACK` patterns where a token
+ * lookup may miss. A deliberate mid-gray that reads as "unknown / not
+ * mapped" rather than as a brand accent.
+ */
+export const neutralFallback = '#888888' as const;
