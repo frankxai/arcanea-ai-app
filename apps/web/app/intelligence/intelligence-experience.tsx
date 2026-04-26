@@ -7,10 +7,12 @@ import { AGENTS, AGENT_BY_ID, type Agent } from '@/lib/intelligence/agents';
 import { Constellation } from './constellation';
 import { AgentDetailPanel } from './agent-detail-panel';
 import { ArchitectureSection } from './architecture-section';
+import { CouncilMode } from './council-mode';
 
 export function IntelligenceExperience() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [councilOpen, setCouncilOpen] = useState(false);
 
   const selected = useMemo<Agent | null>(
     () => (selectedId ? AGENT_BY_ID[selectedId] ?? null : null),
@@ -63,16 +65,27 @@ export function IntelligenceExperience() {
             ← Arcanea
           </Link>
           <nav
-            className="flex items-center gap-5 text-[10px] tracking-[0.28em] uppercase text-white/35"
+            className="flex items-center gap-4 sm:gap-5 text-[10px] tracking-[0.28em] uppercase text-white/35"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            <a href="#architecture" className="hover:text-white/80 transition-colors">
+            <button
+              type="button"
+              onClick={() => setCouncilOpen(true)}
+              className="hover:text-white/95 transition-colors"
+              style={{
+                cursor: 'pointer',
+                color: '#ffd700',
+              }}
+            >
+              ✦ Council
+            </button>
+            <a href="#architecture" className="hover:text-white/80 transition-colors hidden sm:inline">
               Architecture
             </a>
             <Link href="/room/lumina" className="hover:text-white/80 transition-colors">
-              Voice Room
+              Voice
             </Link>
-            <Link href="/luminors" className="hover:text-white/80 transition-colors hidden sm:inline">
+            <Link href="/luminors" className="hover:text-white/80 transition-colors hidden md:inline">
               Luminors
             </Link>
           </nav>
@@ -172,6 +185,11 @@ export function IntelligenceExperience() {
               onClose={handleClose}
             />
           )}
+        </AnimatePresence>
+
+        {/* Council mode — five voices in parallel */}
+        <AnimatePresence>
+          {councilOpen && <CouncilMode onClose={() => setCouncilOpen(false)} />}
         </AnimatePresence>
       </main>
     </LazyMotion>

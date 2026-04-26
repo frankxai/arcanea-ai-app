@@ -96,13 +96,23 @@ export function AgentDetailPanel({ agent, onClose }: AgentDetailPanelProps) {
         for (const line of chunk.split(/\r?\n/)) {
           if (!line) continue;
           if (line.startsWith('data:')) {
+            const body = line.slice(5).trim();
+            // SSE terminator emitted by Vercel AI SDK / OpenAI-style streams.
+            if (!body || body === '[DONE]') continue;
             try {
-              const p = JSON.parse(line.slice(5).trim());
+              const p = JSON.parse(body);
+              // Skip control events that carry no content; they have no
+              // delta/text/content but valid JSON shape.
+              if (p?.type && !['text-delta'].includes(p.type) &&
+                  p?.choices === undefined && p?.text === undefined) {
+                continue;
+              }
               const piece =
                 p?.choices?.[0]?.delta?.content ?? p?.text ?? p?.delta ?? '';
               if (typeof piece === 'string') acc += piece;
             } catch {
-              acc += line.replace(/^data:\s?/, '');
+              // Not JSON — treat as raw streaming text.
+              acc += body;
             }
           } else if (!line.startsWith('event:') && !line.startsWith(':')) {
             acc += line;

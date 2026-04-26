@@ -345,8 +345,17 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
           for (const line of decoder.decode(value, { stream: true }).split(/\r?\n/)) {
             if (!line) continue;
             if (line.startsWith('data:')) {
-              try { const p = JSON.parse(line.slice(5).trim()); const piece = p?.choices?.[0]?.delta?.content ?? p?.text ?? p?.delta ?? ''; if (typeof piece === 'string') acc += piece; }
-              catch { acc += line.replace(/^data:\s?/, ''); }
+              const body = line.slice(5).trim();
+              if (!body || body === '[DONE]') continue;
+              try {
+                const p = JSON.parse(body);
+                if (p?.type && !['text-delta'].includes(p.type) &&
+                    p?.choices === undefined && p?.text === undefined) {
+                  continue;
+                }
+                const piece = p?.choices?.[0]?.delta?.content ?? p?.text ?? p?.delta ?? '';
+                if (typeof piece === 'string') acc += piece;
+              } catch { acc += body; }
             } else if (!line.startsWith('event:') && !line.startsWith(':')) { acc += line; }
           }
           setReply(acc);
