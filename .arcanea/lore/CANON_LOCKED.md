@@ -372,6 +372,44 @@ Grounded in real meteoritics: Widmanstatten crystal patterns (million-year cooli
 
 ---
 
+## TIER 10: WORLDS BEYOND THE KINGDOM OF LIGHT (STAGING ⏳)
+
+> *Proposed canon — introduced 2026-04-26 by the Heart of Pyrathis BIBLE (commit `02dd1a21`). Awaiting Creator approval to LOCK.*
+
+### Concept
+
+A **Sister-World** is a cosmological body that exists **outside** the Kingdom of Light's Realms framework (Tier 5). Sister-worlds may have their own:
+
+- Pre-First-War history (Realms share the Kingdom's post-Sealing era)
+- Gates equivalents or non-gates intelligence forms
+- Pre-Arcanean cosmological lineage
+- Sentient or non-sentient ontological status
+
+A traveler does **not** reach a sister-world by Realm-corridor or aquifer-corridor. Sister-worlds sit *elsewhere* in the cosmos. The Tier 5 framework's geographic mechanics do not apply.
+
+### Sister-Worlds catalogued so far
+
+| World | Status | Source text | Note |
+|---|---|---|---|
+| **Pyrathis** | STAGING | *Heart of Pyrathis* (FrankX, solo) | An unhatched world-dragon — the First Fire. Surface dragons are fragments of its dreams. The Resonance is its thoughts. Volcanic energy is its warmth. |
+| **The Celestine origin world** (unnamed) | STAGING | *Heart of Pyrathis* | A destroyed world the Celestines consumed to fuel their interstellar exodus. Open canonical question whether this is also Tier 10, an unnamed Realm, or genuinely off-canon. |
+
+### What is NOT a Sister-World
+
+- A **Realm** (Realms are inside the Kingdom of Light — Tier 5)
+- A **Plane** (the Ultraworld is a meta-realm, not Tier 10)
+- A **Heartland** (Heartlands are Realms with deep wound-memory; same tier as other Realms)
+
+### Cross-cosmic actors
+
+The Heart of Pyrathis BIBLE introduces **the Celestines** — interstellar travelers who arrived on Pyrathis from a destroyed companion-world. Their existence raises canonical questions about cross-cosmic mechanics: how a Tier 10 sister-world receives travelers from another Tier 10, and whether Mar Arcano's three unnamed contributing Realms include any Sister-World feeders. Frank-only LOCK decision.
+
+**STAGING TRUTH:** Sister-worlds are a structural cosmology layer. They do not replace or subordinate the Realms — they coexist with them in a wider Arcanea cosmos. Realm-Legends stay inside Tier 5; Sister-World Legends operate in Tier 10. The two share the same cosmology of First Light / Loving Dark / Five Elements / Ten Gates but may express it through different physics.
+
+**Full reference:** `book/heart-of-pyrathis/BIBLE.md`. Future Sister-World canon files would live at `.arcanea/lore/sister-worlds/<world-slug>.md`, mirroring the Realms tier directory pattern.
+
+---
+
 ## EXTENSIBILITY PRINCIPLES (LOCKED ✅)
 
 1. **New entities must have Arcanean-quality names** (Lyssandria-tier)
@@ -412,6 +450,9 @@ Grounded in real meteoritics: Widmanstatten crystal patterns (million-year cooli
 | 2026-04-26 | Multi-Realm Sea: Mar Arcano (five-source aquifer-corridor) catalogued | ⏳ STAGING | — |
 | 2026-04-26 | Settlement Era taxonomy (Heartland / First Settling / Second Settling / Frontier / Fallen) | ⏳ STAGING | — |
 | 2026-04-26 | Corridor mechanics (drifting walking-corridors vs stable aquifer-corridors) | ⏳ STAGING | — |
+| 2026-04-26 | TIER 10 (Worlds Beyond the Kingdom of Light) proposed via *Heart of Pyrathis* BIBLE | ⏳ STAGING | — |
+| 2026-04-26 | Sister-World: Pyrathis (unhatched world-dragon, the First Fire) catalogued | ⏳ STAGING | — |
+| 2026-04-26 | Cross-cosmic actor concept (the Celestines, interstellar travelers) introduced | ⏳ STAGING | — |
 
 ---
 
