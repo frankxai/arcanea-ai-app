@@ -50,8 +50,8 @@
     "directory": "packages/core"
   },
   "devDependencies": {
-    "@types/node": "^25.3.0",
-    "typescript": "^5.9.3"
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.3"
   },
   "publishConfig": {
     "access": "public"
