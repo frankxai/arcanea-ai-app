@@ -101,14 +101,18 @@ export function SettingsPanel({ open, onOpenChange, onKeysChanged }: SettingsPan
 
   return (
     <>
-      {/* Gear trigger */}
+      {/* Gear trigger — safe-area aware for daemon-launched and notched windows */}
       <button
         data-ignore-click
         type="button"
         aria-label="Open API key settings"
         onClick={(e) => { e.stopPropagation(); setOpen(true); }}
-        className="absolute top-6 right-6 flex items-center justify-center w-8 h-8 rounded-full bg-white/[0.04] border border-white/[0.06] backdrop-blur-sm text-white/40 hover:text-white/80 hover:bg-white/[0.08] transition-colors"
-        style={{ cursor: 'pointer' }}
+        className="absolute flex items-center justify-center w-9 h-9 rounded-full bg-white/[0.05] border border-white/[0.08] backdrop-blur-md text-white/45 hover:text-white/95 hover:bg-white/[0.10] transition-colors"
+        style={{
+          cursor: 'pointer',
+          top: 'max(1.5rem, env(safe-area-inset-top, 0px))',
+          right: 'max(1.5rem, env(safe-area-inset-right, 0px))',
+        }}
       >
         <GearSix size={16} weight="regular" />
         {/* Status dot */}
