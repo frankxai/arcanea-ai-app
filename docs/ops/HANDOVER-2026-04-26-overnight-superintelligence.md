@@ -258,10 +258,37 @@ The next agent inheriting this state should:
 
 ---
 
-## Closing note
+## ADDENDUM (2026-04-27 ~04:30 UTC) — Prism-Luxin + The Hall of White
 
-Eight commits. Five book BIBLEs. Three canon-tier proposals (one shipped as STAGING; two proposed for Frank's promotion). The Realms layer that fossilized into Las Tierras is now structural canon. The Author Team pattern works across magical realism, grimdark, elegiac literary fantasy, genre-mashup epic, and contemporary literary fantasy. The discipline ladder held under RAM pressure and parallel-session interference. The lamp stays on.
+After the initial handover was written, Frank's continuation message extended the mandate with two new questions:
 
-The book exists. The pattern is set. The infrastructure surfaces it. The night did not waste itself.
+1. *Does Arcanea have a book on the Dawnsworn / Radiant Orders / Prism System material? Should we?*
+2. *Where in our magic system can we fully absorb Brent Weeks' Lightbringer chromatic-drafting mechanics?*
 
-— Shinkami, 2026-04-26 ~04:00 UTC, in the closing turn of the overnight session that took the activation prompt at its word.
+**Answers shipped in commit `244aa230`:**
+
+- **Q1 answer:** **No book yet — yes, we should.** The canon material is rich: 7 League Convocations × 7 Radiant Orders × the Founding Seven (Dawnsworn / Kaelindra Voss et al.) × the Prism System × House Synthesis × the Order of Refracted Light. Four canon documents (LEAGUES_AND_ORDERS.md, FLAGSHIP_TEAM.md, FLAGSHIP_TEAM_V2.md, STARBOUND_CREWS.md) catalogue the institutions and characters. **The Hall of White (book #6 in the Author Team set) is the first book to center this material narratively.** It deliberately scopes to the Order of Refracted Light + the Prism State threshold — the most narratively load-bearing single setting in the institutional canon. Future books may center the Athenaeum, the Cartographers, the Dusk Compact, the League itself, or the Founding Seven's actual founding moment.
+
+- **Q2 answer: at the practitioner-level mechanics layer of the Prism System, integrated through the Eleven Frequencies (Ten Gates plus pre-color White / Lumina) mapped 1:1 onto Brent Weeks' nine drafter-colors plus White (Lightbringer) plus Black (Shadow).** The complete absorption document is `.arcanea/lore/PRISM_LUXIN_SYSTEM.md` (~10K words). Halo phenomenon, Wight transformation, Freeing protocol, Drafter Compact, Yumiko-Prism crystal lenses, polychrome ladder, Element-bridges, Cell Dimming (chi-drafting cancer equivalent) — all canonical now. The five existing Author Team books each receive a drafting-system reading explaining how their Realm-specific practice (Tide-Speech / Tieng Goi / Cinderfang Resonance / Tu Linh / Mira's Voice-Gate) is a drafting-equivalent expression of the same underlying physics.
+
+**New canonical proposal: White Aspirant tier** — between sustained Prism State (existing canon: 11 historical Prisms) and Architect transcendence (existing canon: Tier 9 origin class, 4 documented since the Sealing). Arcanea's structural equivalent of the Lightbringer narrative-function. **Lysara Sablecourt** (Hall of White protagonist) is the first canonically-documented White Aspirant candidate. Whether she crosses is the novella's open ending.
+
+**3 canon fixes captured but not auto-applied** (Seravyn/Selvyn near-collision, Thessaly multi-collision Riverborn/Voiceborn/Ironwright, Synth Corps rank — last is already partially resolved in VOID_ASCENDANTS.md). Recommended renames documented in PRISM_LUXIN_SYSTEM.md final section. Frank's call.
+
+**Total commits this addendum: 1** (`244aa230` — Prism canon + Hall of White scaffold). All four files staged, verified-set, committed clean. Pushed to origin/main.
+
+**Pattern position update:** the Author Team set now spans **six books, six genre lineages, four cosmological scales (Realm / Sister-World / Mirror Realm / Institutional-Center), three authorship modes, and two formats (novel / novella).** The skeleton holds. The Hall of White demonstrates that the pattern works at novella scale and at institutional-center setting.
+
+**For next session:** Frank's decisions on the two open commission questions:
+1. Commission The Hall of White manuscript? (Estimated 4-6 sessions to first-draft completion under Opus drafting + Sonnet council.)
+2. Promote White Aspirant tier to LOCKED canon? (Adds to CANON_LOCKED.md alongside the previously-proposed Tier 5 Realms / Tier 10 Sister-Worlds / Tier 11 Mirror Realms.)
+
+---
+
+## Closing note (final)
+
+Nine intentional commits. Five novel BIBLEs + one novella BIBLE. Four canon-tier proposals (Realms shipped as STAGING; Sister-Worlds + Mirror Realms + White Aspirant proposed). Three structural canon expansions and one full magic-system practitioner-mechanics absorption. The Author Team pattern works across magical realism, grimdark, elegiac literary fantasy, genre-mashup epic, contemporary literary fantasy, and institutional literary fantasy with magic-system-as-spine.
+
+The book exists. The pattern is set. The Lightbringer mechanics are now Arcanean canon. The infrastructure surfaces all of it. The discipline ladder held under RAM pressure and parallel-session interference. The night did not waste itself.
+
+— Shinkami, 2026-04-27 ~04:30 UTC, in the closing turn of the overnight session that took the activation prompt at its word and then took Frank's follow-up at its word again.
