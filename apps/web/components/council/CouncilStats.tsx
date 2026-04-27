@@ -1,6 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
+import { brand, ambient, gateAccents } from "@arcanea/design-system";
 
 interface CouncilStatsProps {
   streak?: number;
@@ -26,13 +27,13 @@ export function CouncilStats({
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
           <path
             d="M9 2C9 2 13.5 5.5 13.5 9.5C13.5 12.09 11.48 14 9 14C6.52 14 4.5 12.09 4.5 9.5C4.5 7.5 6 6 6 6C6 6 6.5 8.5 8 9C8 9 7.5 6.5 9 4C9.5 5 10 6 10 7.5C11 6.5 11 5 9 2Z"
-            fill="#f97316"
+            fill={ambient.orange}
             stroke="#fb923c"
             strokeWidth="0.5"
           />
         </svg>
       ),
-      color: "#f97316",
+      color: ambient.orange,
       bg: "rgba(249,115,22,0.08)",
     },
     {
@@ -41,12 +42,12 @@ export function CouncilStats({
       sub: "Sessions completed",
       icon: (
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
-          <circle cx="9" cy="9" r="6" stroke="#0d47a1" strokeWidth="1.5" fill="none" />
-          <circle cx="9" cy="9" r="2.5" fill="#0d47a1" opacity="0.7" />
-          <path d="M9 3V6M9 12V15M3 9H6M12 9H15" stroke="#0d47a1" strokeWidth="1.2" strokeLinecap="round" />
+          <circle cx="9" cy="9" r="6" stroke={brand.cosmicBlue} strokeWidth="1.5" fill="none" />
+          <circle cx="9" cy="9" r="2.5" fill={brand.cosmicBlue} opacity="0.7" />
+          <path d="M9 3V6M9 12V15M3 9H6M12 9H15" stroke={brand.cosmicBlue} strokeWidth="1.2" strokeLinecap="round" />
         </svg>
       ),
-      color: "#0d47a1",
+      color: brand.cosmicBlue,
       bg: "rgba(13,71,161,0.08)",
     },
     {
@@ -55,11 +56,11 @@ export function CouncilStats({
       sub: "Most recent session",
       icon: (
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
-          <rect x="3" y="4" width="12" height="11" rx="2" stroke="#06b6d4" strokeWidth="1.5" fill="none" />
-          <path d="M6 2V5M12 2V5M3 7H15" stroke="#06b6d4" strokeWidth="1.2" strokeLinecap="round" />
+          <rect x="3" y="4" width="12" height="11" rx="2" stroke={gateAccents.Voice} strokeWidth="1.5" fill="none" />
+          <path d="M6 2V5M12 2V5M3 7H15" stroke={gateAccents.Voice} strokeWidth="1.2" strokeLinecap="round" />
         </svg>
       ),
-      color: "#06b6d4",
+      color: gateAccents.Voice,
       bg: "rgba(6,182,212,0.08)",
     },
   ];

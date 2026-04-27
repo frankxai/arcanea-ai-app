@@ -3,6 +3,15 @@
 import { m, AnimatePresence } from "framer-motion";
 import { useCallback, useRef, useState } from "react";
 import Link from "next/link";
+import {
+  brand,
+  semantic,
+  ambient,
+  guardianAccents,
+  nodeTypeAccents,
+  competitorAccent,
+  thirdPartyBrand,
+} from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // DropZone — Universal ingestion surface for Arcanea Studio.
@@ -18,12 +27,12 @@ interface AcceptedType {
 }
 
 const ACCEPTED_TYPES: AcceptedType[] = [
-  { label: "Markdown", extensions: [".md", ".mdx"], icon: "◩", color: "#7fffd4" },
-  { label: "PDF", extensions: [".pdf"], icon: "◧", color: "#ef4444" },
-  { label: "DOCX", extensions: [".docx"], icon: "◆", color: "#3b82f6" },
-  { label: "Text", extensions: [".txt"], icon: "◐", color: "#00bcd4" },
-  { label: "URLs", extensions: ["https://"], icon: "⎆", color: "#c084fc" },
-  { label: "Paste (⌘V)", extensions: [], icon: "◈", color: "#ffd700" },
+  { label: "Markdown", extensions: [".md", ".mdx"], icon: "◩", color: brand.aquamarine },
+  { label: "PDF", extensions: [".pdf"], icon: "◧", color: semantic.error },
+  { label: "DOCX", extensions: [".docx"], icon: "◆", color: guardianAccents.leyla },
+  { label: "Text", extensions: [".txt"], icon: "◐", color: brand.atlanteanTeal },
+  { label: "URLs", extensions: ["https://"], icon: "⎆", color: ambient.lavender },
+  { label: "Paste (⌘V)", extensions: [], icon: "◈", color: brand.arcaneanGold },
 ];
 
 interface SourceOption {
@@ -35,12 +44,12 @@ interface SourceOption {
 }
 
 const SOURCES: SourceOption[] = [
-  { label: "Google Drive", glyph: "▲", color: "#4285f4", action: "drive" },
-  { label: "Paste URL", glyph: "⎆", color: "#c084fc", action: "paste" },
-  { label: "Obsidian vault", glyph: "◰", color: "#7c3aed", action: "coming-soon", note: "Q2 2026" },
-  { label: "Notion", glyph: "▰", color: "#ffffff", action: "coming-soon", note: "Q3 2026" },
-  { label: "Syncthing", glyph: "⟲", color: "#4fa4d4", action: "coming-soon", note: "Q3 2026" },
-  { label: "GitHub", glyph: "◉", color: "#ffffff", action: "coming-soon", note: "Q2 2026" },
+  { label: "Google Drive", glyph: "▲", color: thirdPartyBrand.googleDrive, action: "drive" },
+  { label: "Paste URL", glyph: "⎆", color: ambient.lavender, action: "paste" },
+  { label: "Obsidian vault", glyph: "◰", color: thirdPartyBrand.obsidian, action: "coming-soon", note: "Q2 2026" },
+  { label: "Notion", glyph: "▰", color: thirdPartyBrand.notion, action: "coming-soon", note: "Q3 2026" },
+  { label: "Syncthing", glyph: "⟲", color: thirdPartyBrand.syncthing, action: "coming-soon", note: "Q3 2026" },
+  { label: "GitHub", glyph: "◉", color: thirdPartyBrand.github, action: "coming-soon", note: "Q2 2026" },
 ];
 
 type Phase = "idle" | "submitting" | "success" | "error";
@@ -56,14 +65,14 @@ interface IngestResult {
 }
 
 const CLASSIFICATION_COLOR: Record<string, string> = {
-  character: "#ef4444",
-  location: "#3b82f6",
-  magic: "#ffd700",
-  scene: "#7fffd4",
-  lore: "#c084fc",
-  reference: "#94a3b8",
-  chapter: "#f472b6",
-  note: "#34d399",
+  character: nodeTypeAccents.character,
+  location: nodeTypeAccents.location,
+  magic: nodeTypeAccents.magic,
+  scene: brand.aquamarine,
+  lore: nodeTypeAccents.lore,
+  reference: competitorAccent,
+  chapter: ambient.pink,
+  note: ambient.emerald,
 };
 
 async function readFileAsText(file: File): Promise<string> {
@@ -225,7 +234,7 @@ export function DropZone() {
     <div className="relative" onPaste={handlePaste}>
       <m.div
         animate={{
-          borderColor: isDragging ? "#7fffd4" : "rgba(255,255,255,0.08)",
+          borderColor: isDragging ? brand.aquamarine : "rgba(255,255,255,0.08)",
           backgroundColor: isDragging ? "rgba(127,255,212,0.04)" : "rgba(255,255,255,0.02)",
         }}
         transition={{ duration: 0.3 }}
@@ -313,7 +322,7 @@ export function DropZone() {
                 </div>
                 <h3 className="text-xl md:text-2xl font-display font-bold mb-2 text-white">
                   Ingested as{" "}
-                  <span style={{ color: CLASSIFICATION_COLOR[lastResult.classification] ?? "#7fffd4" }}>
+                  <span style={{ color: CLASSIFICATION_COLOR[lastResult.classification] ?? brand.aquamarine }}>
                     {lastResult.classification}
                   </span>
                 </h3>
@@ -401,7 +410,7 @@ export function DropZone() {
                 >
                   <span
                     className="text-4xl"
-                    style={{ color: isDragging ? "#7fffd4" : "rgba(255,255,255,0.5)" }}
+                    style={{ color: isDragging ? brand.aquamarine : "rgba(255,255,255,0.5)" }}
                   >
                     ⇡
                   </span>

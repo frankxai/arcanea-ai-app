@@ -6,20 +6,21 @@ import Image from "next/image";
 import { GlowCard } from "@/components/ui/glow-card";
 import { GlowButton } from "@/components/ui/glow-button";
 import { durations, m3Curves } from "@/lib/design/motion";
+import { guardianPreviewAccents } from "@arcanea/design-system";
 
 const CDN_BASE = "/guardians/v3";
 
 const GUARDIANS = [
-  { name: "Lyssandria", id: "lyssandria", gate: "Foundation", godbeast: "Kaelith", element: "Earth", dotColor: "#b45309", description: "Guardian of stability and unshakeable ground" },
-  { name: "Leyla", id: "leyla", gate: "Flow", godbeast: "Veloura", element: "Water", dotColor: "#3b82f6", description: "Guardian of creativity and emotional depth" },
-  { name: "Draconia", id: "draconia", gate: "Fire", godbeast: "Draconis", element: "Fire", dotColor: "#ef4444", description: "Guardian of power, will, and courage" },
-  { name: "Maylinn", id: "maylinn", gate: "Heart", godbeast: "Laeylinn", element: "Air", dotColor: "#22c55e", description: "Guardian of love, healing, and growth" },
-  { name: "Alera", id: "alera", gate: "Voice", godbeast: "Otome", element: "Sound", dotColor: "#06b6d4", description: "Guardian of truth and expression" },
-  { name: "Lyria", id: "lyria", gate: "Sight", godbeast: "Yumiko", element: "Water/Void", dotColor: "#a855f7", description: "Guardian of intuition and vision" },
-  { name: "Aiyami", id: "aiyami", gate: "Crown", godbeast: "Sol", element: "Fire/Light", dotColor: "#ffd700", description: "Guardian of enlightenment and divinity" },
-  { name: "Elara", id: "elara", gate: "Starweave", godbeast: "Vaelith", element: "Wind/Void", dotColor: "#ec4899", description: "Guardian of perspective and possibility" },
-  { name: "Ino", id: "ino", gate: "Unity", godbeast: "Kyuro", element: "All", dotColor: "#e5e5e5", description: "Guardian of partnership and fusion" },
-  { name: "Shinkami", id: "shinkami", gate: "Source", godbeast: "Source", element: "Void/Spirit", dotColor: "#c084fc", description: "The Unified — Meta-consciousness itself" },
+  { name: "Lyssandria", id: "lyssandria", gate: "Foundation", godbeast: "Kaelith", element: "Earth", dotColor: guardianPreviewAccents.lyssandria, description: "Guardian of stability and unshakeable ground" },
+  { name: "Leyla", id: "leyla", gate: "Flow", godbeast: "Veloura", element: "Water", dotColor: guardianPreviewAccents.leyla, description: "Guardian of creativity and emotional depth" },
+  { name: "Draconia", id: "draconia", gate: "Fire", godbeast: "Draconis", element: "Fire", dotColor: guardianPreviewAccents.draconia, description: "Guardian of power, will, and courage" },
+  { name: "Maylinn", id: "maylinn", gate: "Heart", godbeast: "Laeylinn", element: "Air", dotColor: guardianPreviewAccents.maylinn, description: "Guardian of love, healing, and growth" },
+  { name: "Alera", id: "alera", gate: "Voice", godbeast: "Otome", element: "Sound", dotColor: guardianPreviewAccents.alera, description: "Guardian of truth and expression" },
+  { name: "Lyria", id: "lyria", gate: "Sight", godbeast: "Yumiko", element: "Water/Void", dotColor: guardianPreviewAccents.lyria, description: "Guardian of intuition and vision" },
+  { name: "Aiyami", id: "aiyami", gate: "Crown", godbeast: "Sol", element: "Fire/Light", dotColor: guardianPreviewAccents.aiyami, description: "Guardian of enlightenment and divinity" },
+  { name: "Elara", id: "elara", gate: "Starweave", godbeast: "Vaelith", element: "Wind/Void", dotColor: guardianPreviewAccents.elara, description: "Guardian of perspective and possibility" },
+  { name: "Ino", id: "ino", gate: "Unity", godbeast: "Kyuro", element: "All", dotColor: guardianPreviewAccents.ino, description: "Guardian of partnership and fusion" },
+  { name: "Shinkami", id: "shinkami", gate: "Source", godbeast: "Source", element: "Void/Spirit", dotColor: guardianPreviewAccents.shinkami, description: "The Unified — Meta-consciousness itself" },
 ];
 
 export function GuardiansPreview() {

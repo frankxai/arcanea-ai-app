@@ -13,6 +13,7 @@ import {
   PhChatTeardrop,
   type PhosphorIcon,
 } from '@/lib/phosphor-icons';
+import { brand, thirdPartyBrand } from "@arcanea/design-system";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -27,10 +28,10 @@ interface Node {
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const HUB_NODES: Node[] = [
-  { id: "chat", label: "Chat", Icon: PhChatTeardrop, color: "#00bcd4" },
-  { id: "imagine", label: "Imagine", Icon: PhPaintBrush, color: "#00bcd4" },
-  { id: "studio", label: "Studio", Icon: PhPlanetX, color: "#00bcd4" },
-  { id: "records", label: "Records", Icon: PhDatabase, color: "#00bcd4" },
+  { id: "chat", label: "Chat", Icon: PhChatTeardrop, color: brand.atlanteanTeal },
+  { id: "imagine", label: "Imagine", Icon: PhPaintBrush, color: brand.atlanteanTeal },
+  { id: "studio", label: "Studio", Icon: PhPlanetX, color: brand.atlanteanTeal },
+  { id: "records", label: "Records", Icon: PhDatabase, color: brand.atlanteanTeal },
 ];
 
 const INNER_TOOLS: (Node & { angle: number; description: string })[] = [
@@ -40,7 +41,7 @@ const INNER_TOOLS: (Node & { angle: number; description: string })[] = [
     sublabel: "Chrome Extension",
     description: "Export AI conversations from ChatGPT, Claude, Gemini",
     Icon: PhDatabase,
-    color: "#00bcd4",
+    color: brand.atlanteanTeal,
     angle: 0,
   },
   {
@@ -49,7 +50,7 @@ const INNER_TOOLS: (Node & { angle: number; description: string })[] = [
     sublabel: "VS Code Extension",
     description: "AI companion sidebar inside your editor",
     Icon: PhCode,
-    color: "#0d47a1",
+    color: brand.cosmicBlue,
     angle: 120,
   },
   {
@@ -58,7 +59,7 @@ const INNER_TOOLS: (Node & { angle: number; description: string })[] = [
     sublabel: "Multi-Agent OS",
     description: "Orchestrate 60+ AI agents in parallel",
     Icon: PhGraphNetwork,
-    color: "#ffd700",
+    color: brand.arcaneanGold,
     angle: 240,
   },
 ];
@@ -69,7 +70,7 @@ const OUTER_TOOLS: (Node & { angle: number; description: string })[] = [
     label: "ChatGPT Overlay",
     description: "Inject Arcanea intelligence into ChatGPT",
     Icon: PhBrowser,
-    color: "#74aa9c",
+    color: thirdPartyBrand.openaiTeal,
     angle: 0,
   },
   {
@@ -77,7 +78,7 @@ const OUTER_TOOLS: (Node & { angle: number; description: string })[] = [
     label: "Claude Overlay",
     description: "Bring Arcanea lore into Claude conversations",
     Icon: PhBrowser,
-    color: "#cc785c",
+    color: thirdPartyBrand.anthropicCopper,
     angle: 72,
   },
   {
@@ -85,7 +86,7 @@ const OUTER_TOOLS: (Node & { angle: number; description: string })[] = [
     label: "Gemini Overlay",
     description: "Arcanea system prompts for Google Gemini",
     Icon: PhBrowser,
-    color: "#4285f4",
+    color: thirdPartyBrand.googleGemini,
     angle: 144,
   },
   {
@@ -93,7 +94,7 @@ const OUTER_TOOLS: (Node & { angle: number; description: string })[] = [
     label: "n8n Workflows",
     description: "3 companion automation templates",
     Icon: PhLightning,
-    color: "#ea4b71",
+    color: thirdPartyBrand.n8nPink,
     angle: 216,
   },
   {
@@ -101,7 +102,7 @@ const OUTER_TOOLS: (Node & { angle: number; description: string })[] = [
     label: "Arcanea On-Chain",
     description: "Story Protocol + Base NFT IP protection",
     Icon: PhLink,
-    color: "#6366f1",
+    color: thirdPartyBrand.onchainIndigo,
     angle: 288,
   },
 ];

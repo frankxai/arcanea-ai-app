@@ -365,6 +365,31 @@ export const rankAccents = {
 } as const;
 
 /**
+ * Guardian-preview accents — element-bound palette used by the lore
+ * GuardiansPreview grid. Different from `guardianAccents` (which is the
+ * Gate-affinity palette used in homepage editorial framing). This map
+ * binds each Guardian's color to their PRIMARY ELEMENT, so the lore
+ * page reads Earth-amber, Water-blue, Fire-red, Air-green, etc.
+ *
+ * Both palettes are correct in their context. Use this on any surface
+ * where the Guardian's element is the load-bearing identity (lore,
+ * codex, godbeast pages); use `guardianAccents` where Gate identity
+ * carries (showcase, persona surfaces).
+ */
+export const guardianPreviewAccents = {
+  lyssandria: '#b45309',        // Earth — amber-brown
+  leyla: '#3b82f6',             // Water — blue
+  draconia: '#ef4444',          // Fire — crimson
+  maylinn: '#22c55e',           // Air — green
+  alera: '#06b6d4',             // Sound — cyan
+  lyria: '#a855f7',             // Void — violet
+  aiyami: '#ffd700',            // Light — gold
+  elara: '#ec4899',             // Wind/Void — pink
+  ino: '#e5e5e5',               // All — pale slate
+  shinkami: '#c084fc',          // Spirit — lavender
+} as const;
+
+/**
  * Neutral fallback color — for `?? FALLBACK` patterns where a token
  * lookup may miss. A deliberate mid-gray that reads as "unknown / not
  * mapped" rather than as a brand accent.
@@ -434,4 +459,12 @@ export const thirdPartyBrand = {
   googleDrive: '#4285f4',         // Drive blue
   obsidian: '#7c3aed',            // Obsidian purple
   stripe: '#635bff',              // Stripe purple
+
+  // Alt brand variants (used by ecosystem-diagram and similar surfaces
+  // that need a softer palette than the saturated brand defaults)
+  openaiTeal: '#74aa9c',          // ChatGPT softer teal
+  anthropicCopper: '#cc785c',     // Claude alt copper variant
+  n8nPink: '#ea4b71',             // n8n alt pink
+  onchainIndigo: '#6366f1',       // generic chain / Story / wallet indigo
+  syncthing: '#4fa4d4',           // Syncthing brand blue
 } as const;
