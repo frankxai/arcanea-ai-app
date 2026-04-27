@@ -410,6 +410,63 @@ The Heart of Pyrathis BIBLE introduces **the Celestines** — interstellar trave
 
 ---
 
+## TIER 11: MIRROR REALMS OF EARTH (STAGING ⏳)
+
+> *Proposed canon — introduced 2026-04-26 by the Song of Van Linh BIBLE (commit `95c021bb`). Awaiting Creator approval to LOCK. **The largest canonical expansion in the Author Team set: brings real Earth into the Arcanea cosmos as a catalogued world.***
+
+### Concept
+
+A **Mirror Realm** is an Arcanean overlay of a real-world geography. Each Mirror Realm corresponds 1:1 to a region of the human-world Earth. Changes on Earth-side cause changes in the Mirror with a **20–30 year lag**. The two worlds breathe the same air.
+
+Mirror Realms are the canonical home for **real-world mythologies**. The Tu Linh, the Hoan Kiem turtle, Long Vuong, the Yang spirits, the orisha, Norse gods, the kami — these are not allegories or borrowings; they are catalogued Arcanean entities expressed through the cosmological layer of Earth's specific cultural traditions.
+
+### How Mirror Realms relate to Godbeasts and Gates
+
+The Tier 2 canon (Ten Gates × Ten Godbeasts × Ten Arcanean Gods) is universal. Mirror Realms carry **echoes** of those frequencies, expressed through their region's mythological tradition. Example from *Song of Van Linh*:
+
+| Tu Linh | Earth tradition | Arcanean echo | Gate / Frequency |
+|---|---|---|---|
+| **Rua** (Tortoise) | Vietnamese | Echo of Kaelith | Foundation / 174 Hz |
+| **Long** (Dragon) | Vietnamese | Echo of Draconis | Fire / 396 Hz |
+| **Phuong Hoang** (Phoenix) | Vietnamese | Echo of Laeylinn | Heart / 417 Hz |
+| **Ky Lin** (Unicorn) | Vietnamese | Echo of Sol | Crown / 741 Hz |
+
+The Tu Linh and the canonical Godbeasts are **not the same beings**. They are the same frequencies expressed through different cosmological strata. Vietnamese mythology canonically picked up these resonances and gave them Vietnamese names. The same is true for any Mirror Realm's mythological inheritance.
+
+### Mirror Realms catalogued so far
+
+| Mirror Realm | Earth correspondence | Gate-resonance | Status | Source text |
+|---|---|---|---|---|
+| **Van Linh** | Vietnam | Unity (963 Hz, Ino-aspect) — partnership / connection | STAGING | *Song of Van Linh* (FrankX, solo) |
+
+### Plausibly extending to (open canon)
+
+Each future contemporary-Earth-set book in the Author Team pattern can establish its own Mirror Realm:
+
+- A Mirror of West Africa (orisha tradition)
+- A Mirror of Mexico (pre-Columbian + Catholic syncretism)
+- A Mirror of Japan (kami + Shinto + Mahayana Buddhism)
+- A Mirror of the Andes
+- A Mirror of Northern Europe (Norse)
+- Mirrors of any region with a mythological tradition the writer is rooted in
+
+### The sensitivity protocol becomes structural
+
+When canon includes real-world traditions, **writers from those traditions must be the primary readers** before publication. Per `book/song-of-van-linh/AUTHORS_NOTE.md`, this is the strongest sensitivity protocol of any book in the set. Any Mirror Realm work without this protocol is unsafe to publish.
+
+### What is NOT a Mirror Realm
+
+- A **Realm of the Kingdom of Light** (Tier 5 — Veldoria, Aurevalde, Aethon, etc. are Arcanean-original, not Earth-correspondent)
+- A **Sister-World** (Tier 10 — Pyrathis is its own world, not Earth-paired)
+- A **Plane** (the Ultraworld is meta-realm, not a Mirror)
+- An **allegory** (a Mirror Realm is canonically real, not symbolic)
+
+**STAGING TRUTH:** Mirror Realms make the Arcanea cosmos a *frame* that contains Earth, not a parallel imagining of it. Real geography, real mythology, real sensitivity stakes — all canonized. This is the most consequential canon decision in the Author Team set; LOCK it carefully.
+
+**Full reference:** `book/song-of-van-linh/BIBLE.md`. Future Mirror Realm canon files would live at `.arcanea/lore/mirror-realms/<region-slug>.md`, mirroring the Realms tier directory pattern.
+
+---
+
 ## EXTENSIBILITY PRINCIPLES (LOCKED ✅)
 
 1. **New entities must have Arcanean-quality names** (Lyssandria-tier)
@@ -453,6 +510,10 @@ The Heart of Pyrathis BIBLE introduces **the Celestines** — interstellar trave
 | 2026-04-26 | TIER 10 (Worlds Beyond the Kingdom of Light) proposed via *Heart of Pyrathis* BIBLE | ⏳ STAGING | — |
 | 2026-04-26 | Sister-World: Pyrathis (unhatched world-dragon, the First Fire) catalogued | ⏳ STAGING | — |
 | 2026-04-26 | Cross-cosmic actor concept (the Celestines, interstellar travelers) introduced | ⏳ STAGING | — |
+| 2026-04-26 | TIER 11 (Mirror Realms of Earth) proposed via *Song of Van Linh* BIBLE | ⏳ STAGING | — |
+| 2026-04-26 | Mirror Realm: Van Linh (Mirror of Vietnam, Unity Gate / 963 Hz) catalogued | ⏳ STAGING | — |
+| 2026-04-26 | Tu Linh as Godbeast Echoes — Earth-side Mirror Realm resonance pattern | ⏳ STAGING | — |
+| 2026-04-26 | Real-world mythologies canonical-as-Mirror (orisha, kami, Norse, etc. as future Mirror Realm extensions) | ⏳ STAGING | — |
 
 ---
 
