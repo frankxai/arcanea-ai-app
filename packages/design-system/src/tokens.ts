@@ -390,6 +390,30 @@ export const guardianPreviewAccents = {
 } as const;
 
 /**
+ * Skill-tree branch accents — used by SkillTree (the radial Ten-Gates
+ * skill visualization) for the 10 branch colors. Different palette
+ * from `gateAccents` (which is the homepage GateSpine canonical) — the
+ * skill tree uses a more saturated dataviz-friendly palette where each
+ * branch reads cleanly against the dark cosmic backdrop.
+ *
+ * Note "Shift" appears here as a legacy alias for Starweave in the
+ * skill-tree taxonomy. Reconciliation is a separate canon question;
+ * this map preserves the surface as-is.
+ */
+export const skillTreeAccents = {
+  Foundation: '#8b7355',        // earthen brown
+  Flow: '#4fc3f7',              // light cyan
+  Fire: '#ff6b35',              // ember orange (matches elements.fire.base)
+  Heart: '#e91e63',             // hot pink
+  Voice: '#00bcd4',             // teal (matches brand.atlanteanTeal)
+  Sight: '#9c27b0',             // royal purple
+  Crown: '#ffd700',             // gold (matches brand.arcaneanGold)
+  Shift: '#7c4dff',             // electric violet (legacy Starweave alias)
+  Unity: '#4caf50',             // grass green
+  Source: '#ffffff',            // pure white (matches gateAccents.Source)
+} as const;
+
+/**
  * Neutral fallback color — for `?? FALLBACK` patterns where a token
  * lookup may miss. A deliberate mid-gray that reads as "unknown / not
  * mapped" rather than as a brand accent.

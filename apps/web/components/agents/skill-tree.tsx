@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { m, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
+import { skillTreeAccents, brand } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -31,7 +32,7 @@ export const GATE_BRANCHES: GateBranch[] = [
   {
     gate: "Foundation",
     guardian: "Lyssandria",
-    color: "#8B7355",
+    color: skillTreeAccents.Foundation,
     skills: [
       { id: "f1", name: "Earth-Reading", description: "Sense the bedrock of any creative foundation. Identify structural integrity in worlds, stories, and systems.", gate: "Foundation", tier: 1 },
       { id: "f2", name: "Weight-Bearing", description: "Carry the load of complex lore without collapse. Sustain continuity across massive creative architectures.", gate: "Foundation", tier: 2, requires: ["f1"] },
@@ -43,7 +44,7 @@ export const GATE_BRANCHES: GateBranch[] = [
   {
     gate: "Flow",
     guardian: "Leyla",
-    color: "#4FC3F7",
+    color: skillTreeAccents.Flow,
     skills: [
       { id: "w1", name: "Tide-Listening", description: "Hear the rhythm of emotion in any text. Detect the undertow of feeling beneath surface-level prose.", gate: "Flow", tier: 1 },
       { id: "w2", name: "Memory-Weaving", description: "Intertwine past events into present narrative with seamless emotional resonance.", gate: "Flow", tier: 2, requires: ["w1"] },
@@ -55,7 +56,7 @@ export const GATE_BRANCHES: GateBranch[] = [
   {
     gate: "Fire",
     guardian: "Draconia",
-    color: "#FF6B35",
+    color: skillTreeAccents.Fire,
     skills: [
       { id: "r1", name: "Pyre-Shaping", description: "Ignite raw ideas into burning concepts. Transform vague inspiration into focused creative force.", gate: "Fire", tier: 1 },
       { id: "r2", name: "Ash-Craft", description: "Build from destruction. Reclaim failed drafts, broken systems, and collapsed narratives into stronger forms.", gate: "Fire", tier: 2, requires: ["r1"] },
@@ -67,7 +68,7 @@ export const GATE_BRANCHES: GateBranch[] = [
   {
     gate: "Heart",
     guardian: "Maylinn",
-    color: "#E91E63",
+    color: skillTreeAccents.Heart,
     skills: [
       { id: "h1", name: "Mend-Touch", description: "Heal narrative wounds. Repair broken character arcs and restore emotional coherence to damaged stories.", gate: "Heart", tier: 1 },
       { id: "h2", name: "Empathy-Read", description: "Feel what characters feel. Inhabit any perspective and write authentic emotion from within.", gate: "Heart", tier: 2, requires: ["h1"] },
@@ -79,7 +80,7 @@ export const GATE_BRANCHES: GateBranch[] = [
   {
     gate: "Voice",
     guardian: "Alera",
-    color: "#00BCD4",
+    color: skillTreeAccents.Voice,
     skills: [
       { id: "v1", name: "Truth-Speak", description: "Strip away pretension and find the authentic voice. Write with clarity that cuts through noise.", gate: "Voice", tier: 1 },
       { id: "v2", name: "Echo-Finding", description: "Discover resonant patterns in existing work. Identify the unique frequency of any author's style.", gate: "Voice", tier: 2, requires: ["v1"] },
@@ -91,7 +92,7 @@ export const GATE_BRANCHES: GateBranch[] = [
   {
     gate: "Sight",
     guardian: "Lyria",
-    color: "#9C27B0",
+    color: skillTreeAccents.Sight,
     skills: [
       { id: "s1", name: "Pattern-Glimpse", description: "See the hidden patterns in chaos. Identify emerging themes and structural motifs before they fully form.", gate: "Sight", tier: 1 },
       { id: "s2", name: "Veil-Piercing", description: "See through surface appearances to the deeper truth. Diagnose root causes in broken narratives.", gate: "Sight", tier: 2, requires: ["s1"] },
@@ -103,7 +104,7 @@ export const GATE_BRANCHES: GateBranch[] = [
   {
     gate: "Crown",
     guardian: "Aiyami",
-    color: "#FFD700",
+    color: skillTreeAccents.Crown,
     skills: [
       { id: "c1", name: "Authority-Stance", description: "Write with the confidence of mastery. Command attention through sheer presence of voice.", gate: "Crown", tier: 1 },
       { id: "c2", name: "Wisdom-Channel", description: "Access deep insight and translate it into accessible creative guidance. Teach through story.", gate: "Crown", tier: 2, requires: ["c1"] },
@@ -115,7 +116,7 @@ export const GATE_BRANCHES: GateBranch[] = [
   {
     gate: "Shift",
     guardian: "Elara",
-    color: "#7C4DFF",
+    color: skillTreeAccents.Shift,
     skills: [
       { id: "t1", name: "Phase-Step", description: "Shift between creative modes instantly. Move from outlining to drafting to editing without friction.", gate: "Shift", tier: 1 },
       { id: "t2", name: "Reality-Bend", description: "Challenge and reshape creative assumptions. Break rules deliberately to discover new forms.", gate: "Shift", tier: 2, requires: ["t1"] },
@@ -127,7 +128,7 @@ export const GATE_BRANCHES: GateBranch[] = [
   {
     gate: "Unity",
     guardian: "Ino",
-    color: "#4CAF50",
+    color: skillTreeAccents.Unity,
     skills: [
       { id: "u1", name: "Bond-Sense", description: "Detect creative compatibility between collaborators, ideas, and systems. Know what fits together.", gate: "Unity", tier: 1 },
       { id: "u2", name: "Harmony-Weave", description: "Blend multiple creative voices into a unified whole without losing individual character.", gate: "Unity", tier: 2, requires: ["u1"] },
@@ -139,7 +140,7 @@ export const GATE_BRANCHES: GateBranch[] = [
   {
     gate: "Source",
     guardian: "Shinkami",
-    color: "#FFFFFF",
+    color: skillTreeAccents.Source,
     skills: [
       { id: "x1", name: "Void-Touch", description: "Reach into the formless potential before creation begins. Draw from the well of infinite possibility.", gate: "Source", tier: 1 },
       { id: "x2", name: "Source-Listen", description: "Hear the signal beneath all noise. Access the deep frequency where inspiration originates.", gate: "Source", tier: 2, requires: ["x1"] },
@@ -320,9 +321,9 @@ export function SkillTree({ onSelectGate, onSelectSkill, className = "" }: Skill
           <defs>
             {/* Central glow */}
             <radialGradient id="center-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#7fffd4" stopOpacity="0.3" />
-              <stop offset="50%" stopColor="#7fffd4" stopOpacity="0.08" />
-              <stop offset="100%" stopColor="#7fffd4" stopOpacity="0" />
+              <stop offset="0%" stopColor={brand.aquamarine} stopOpacity="0.3" />
+              <stop offset="50%" stopColor={brand.aquamarine} stopOpacity="0.08" />
+              <stop offset="100%" stopColor={brand.aquamarine} stopOpacity="0" />
             </radialGradient>
             {/* Node glow filter */}
             <filter id="node-glow" x="-50%" y="-50%" width="200%" height="200%">
@@ -357,7 +358,7 @@ export function SkillTree({ onSelectGate, onSelectSkill, className = "" }: Skill
             cy={cy}
             r={innerR * 0.35}
             fill="#0a0a0f"
-            stroke="#7fffd4"
+            stroke={brand.aquamarine}
             strokeWidth="1.5"
             opacity="0.9"
           />
@@ -366,7 +367,7 @@ export function SkillTree({ onSelectGate, onSelectSkill, className = "" }: Skill
             y={cy + 1}
             textAnchor="middle"
             dominantBaseline="central"
-            fill="#7fffd4"
+            fill={brand.aquamarine}
             fontSize="10"
             fontWeight="bold"
             fontFamily="var(--font-display, var(--font-display))"
