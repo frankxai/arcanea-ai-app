@@ -1,0 +1,77 @@
+title: "The Hall of White"
+slug: the-hall-of-white
+tier: featured
+status: bible-draft
+format: novella
+target_word_count: 20000
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator-and-director
+
+ai_transparency:
+  models_used:
+    - id: claude-opus-4-7
+      provider: anthropic
+      role: bible-drafting-and-prose-pending
+    - id: nano-banana-pro
+      provider: google
+      role: cover-art-pending
+  human_contribution: pending
+  ai_contribution: pending
+  method: "BIBLE seed authored by Shinkami under autonomous-execution mandate. Manuscript awaits FrankX commission. Drafting protocol: Opus 4.7 for prose, Sonnet 4.6 for council pass per planning-with-files/MODEL_ROUTING_DISCIPLINE_2026-04-26.md."
+
+curated_context:
+  worldbuilding: true
+  canon: true
+
+license: CC-BY-NC-SA-4.0
+content_rating: general
+tags:
+  - literary-fantasy
+  - institutional-fantasy
+  - magic-system
+  - prism-luxin
+  - chromatic-drafting
+  - lightbringer-lineage
+  - novella
+  - house-synthesis
+  - arcanea-saga
+
+acknowledgments: |
+  Sixth book in the Arcanea Author Team set. First novella-format work.
+  Companion to .arcanea/lore/PRISM_LUXIN_SYSTEM.md — the Prism-Luxin
+  canon expansion that fully absorbs Brent Weeks' Lightbringer chromatic-
+  drafting magic system into Arcanean canon at the practitioner-level.
+
+  Lineage: Brent Weeks' Lightbringer (chromatic mechanics homage), Lois
+  McMaster Bujold's late Vorkosigan (institutional attention), Susanna
+  Clarke's Piranesi (single-chamber gravity), Le Guin's The Dispossessed
+  (political weight of choice within constraint).
+
+  Setting: the Hall of White, in House Synthesis's Cinderwall complex,
+  Year 799 of the Eighth Age — twelve months into the Seventh League.
+  Protagonist: Lysara Sablecourt, the current White of the Order of
+  Refracted Light, approaching Halo's Edge with sustained Prism State
+  capacity. The threshold question: White Aspirant emergence or slow-curve
+  Wight transformation? The Order cannot tell which.
+
+  Spiritual signature: "The light came back through the prism. She came
+  back through the light."
+
+  Published on Arcanea — written in the open. CC-BY-NC-SA-4.0.
+
+structure:
+  format: novella
+  target_chapters: 7
+  target_words_per_chapter: 2500-3500
+  pov: first-person close, single (Lysara)
+  beats:
+    1: "The Eight Minutes"
+    2: "The Compact's Calculus"
+    3: "The Wrong Move (forced state)"
+    4: "The Wellspring (Aranya)"
+    5: "Aelindra at Starhold's Gate / The Seven-Band Lens"
+    6: "Tezerin in the Hall at Dusk"
+    7: "Hour of the Quiet (the threshold opens)"
