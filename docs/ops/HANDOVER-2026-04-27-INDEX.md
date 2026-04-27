@@ -15,15 +15,14 @@ The autonomous overnight session under Frank's `/superintelligence /arcanea` man
 **Strength:** End-to-end picture of the substrate delta. Verification chain (build + lint + curl + Vercel) confirmed.
 **Read this for:** Everything — it supersedes the "next actions" of all three predecessor handovers from 2026-04-26.
 
-### 2. `HANDOVER-2026-04-27-design-tokens.md` (commit `f49ab58f`) — design-token deep dive
+### 2. `docs/ops/HANDOVER-2026-04-27-design-token-overnight.md` (commit `f49ab58f`) — design-token deep dive
 
-**Original filename:** `HANDOVER-2026-04-27.md` (collided with this thread's same-named file; reference the SHA `f49ab58f` to disambiguate)
 **Authored:** Parallel session focused on design-system token migration
 **Scope:** 6 intentional commits, 12 token-system maps added, 12 components migrated, 16 error.tsx files collapsed, lint baseline 2768 → 2633 (−135)
 **Strength:** Granular detail on the token-system architecture decisions and per-component migration accounting.
 **Read this for:** Design-token architecture context, why specific token maps were chosen, migration discipline patterns.
 
-### 3. `HANDOVER-2026-04-26.md` (commit `80f52ff1`) — author-team night view
+### 3. `docs/ops/HANDOVER-2026-04-26-overnight-superintelligence.md` (commit `80f52ff1`) — author-team night view
 
 **Authored:** Parallel session focused on the Author Team / book-BIBLE work stream
 **Scope:** 8 intentional commits, **5 book BIBLEs** authored across the Author Team pattern (Las Tierras complete, Forge of Ruin / Tides of Silence / Heart of Pyrathis / Song of Van Linh draft 0), **3 canon-tier proposals** (Tier 5 Realms shipped as STAGING; Tier 10 Worlds Beyond proposed; Tier 11 Mirror Realms proposed)
