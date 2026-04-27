@@ -1,6 +1,12 @@
 "use client";
 
 import { m } from "framer-motion";
+import {
+  brand,
+  ambient,
+  guardianAccents,
+  semantic,
+} from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // StackLayerDiagram — Visual representation of the full Arcanea stack.
@@ -19,7 +25,7 @@ const LAYERS: Layer[] = [
   {
     label: "Distribution",
     tagline: "Where your creations reach audiences",
-    accent: "#ffd700",
+    accent: brand.arcaneanGold,
     items: [
       { name: "Discord" },
       { name: "Reddit" },
@@ -34,7 +40,7 @@ const LAYERS: Layer[] = [
   {
     label: "Automation",
     tagline: "How work moves between tools",
-    accent: "#c084fc",
+    accent: ambient.lavender,
     items: [
       { name: "Blotato" },
       { name: "Postiz" },
@@ -46,7 +52,7 @@ const LAYERS: Layer[] = [
   {
     label: "Creative AI",
     tagline: "Specialist models for each craft",
-    accent: "#a855f7",
+    accent: guardianAccents.lyria,
     items: [
       { name: "Suno" },
       { name: "Nano Banana 2" },
@@ -59,20 +65,20 @@ const LAYERS: Layer[] = [
   {
     label: "Arcanea Core",
     tagline: "The world graph + 16 specialists",
-    accent: "#7fffd4",
+    accent: brand.aquamarine,
     items: [
-      { name: "Luminors", accent: "#7fffd4" },
-      { name: "World Engine", accent: "#7fffd4" },
-      { name: "Library", accent: "#7fffd4" },
-      { name: "Academy", accent: "#7fffd4" },
-      { name: "Forge", accent: "#7fffd4" },
-      { name: "Registry", accent: "#7fffd4" },
+      { name: "Luminors", accent: brand.aquamarine },
+      { name: "World Engine", accent: brand.aquamarine },
+      { name: "Library", accent: brand.aquamarine },
+      { name: "Academy", accent: brand.aquamarine },
+      { name: "Forge", accent: brand.aquamarine },
+      { name: "Registry", accent: brand.aquamarine },
     ],
   },
   {
     label: "Foundation Models",
     tagline: "BYOK — your keys, no markup",
-    accent: "#00bcd4",
+    accent: brand.atlanteanTeal,
     items: [
       { name: "Claude" },
       { name: "GPT" },
@@ -85,7 +91,7 @@ const LAYERS: Layer[] = [
   {
     label: "IDE & Developer Tools",
     tagline: "Where creators write and ship",
-    accent: "#0d47a1",
+    accent: brand.cosmicBlue,
     items: [
       { name: "VS Code" },
       { name: "Cursor" },
@@ -98,7 +104,7 @@ const LAYERS: Layer[] = [
   {
     label: "Game Engines & Platforms",
     tagline: "Where your worlds become playable",
-    accent: "#ef4444",
+    accent: semantic.error,
     items: [
       { name: "Unreal Engine" },
       { name: "Unity" },
@@ -110,7 +116,7 @@ const LAYERS: Layer[] = [
   {
     label: "Web3 & Chain",
     tagline: "Sovereign identity + monetization",
-    accent: "#3b82f6",
+    accent: guardianAccents.leyla,
     items: [
       { name: "Base" },
       { name: "Story Protocol" },

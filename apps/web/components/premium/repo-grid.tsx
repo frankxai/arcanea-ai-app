@@ -1,6 +1,12 @@
 "use client";
 
 import { m } from "framer-motion";
+import {
+  brand,
+  guardianAccents,
+  semantic,
+  competitorAccent,
+} from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // RepoGrid — Visualize the Arcanea monorepo / multi-repo landscape.
@@ -55,27 +61,27 @@ export const REPOS: Repo[] = [
 const GROUP_META: Record<Repo["group"], { label: string; color: string; description: string }> = {
   core: {
     label: "Core",
-    color: "#7fffd4",
+    color: brand.aquamarine,
     description: "The main products — web app, CLI, intelligence runtime",
   },
   packages: {
     label: "Packages",
-    color: "#00bcd4",
+    color: brand.atlanteanTeal,
     description: "npm-published libraries the community can depend on",
   },
   tools: {
     label: "Tools",
-    color: "#a855f7",
+    color: guardianAccents.lyria,
     description: "Developer tooling, CLIs, harnesses, extensions",
   },
   protocol: {
     label: "Protocol",
-    color: "#ffd700",
+    color: brand.arcaneanGold,
     description: "Open specs, AIPs, on-chain protocols",
   },
   experiments: {
     label: "Experiments",
-    color: "#ef4444",
+    color: semantic.error,
     description: "Research branches, early-stage projects",
   },
 };
@@ -88,10 +94,10 @@ const STATUS_LABEL: Record<Repo["status"], string> = {
 };
 
 const STATUS_COLOR: Record<Repo["status"], string> = {
-  active: "#7fffd4",
-  stable: "#00bcd4",
-  beta: "#ffd700",
-  archived: "#94a3b8",
+  active: brand.aquamarine,
+  stable: brand.atlanteanTeal,
+  beta: brand.arcaneanGold,
+  archived: competitorAccent,
 };
 
 export function RepoGrid() {

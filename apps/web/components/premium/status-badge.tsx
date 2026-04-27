@@ -1,6 +1,11 @@
 "use client";
 
 import { m } from "framer-motion";
+import {
+  brand,
+  ambient,
+  competitorAccent,
+} from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // StatusBadge — Honest labels for product state.
@@ -23,32 +28,32 @@ const STATUS_META: Record<
 > = {
   live: {
     label: "LIVE",
-    color: "#7fffd4",
-    dot: "#7fffd4",
+    color: brand.aquamarine,
+    dot: brand.aquamarine,
     hint: "Wired end-to-end — try it now.",
   },
   beta: {
     label: "BETA",
-    color: "#00bcd4",
-    dot: "#00bcd4",
+    color: brand.atlanteanTeal,
+    dot: brand.atlanteanTeal,
     hint: "Works with rough edges. Opt-in.",
   },
   preview: {
     label: "PREVIEW",
-    color: "#ffd700",
-    dot: "#ffd700",
+    color: brand.arcaneanGold,
+    dot: brand.arcaneanGold,
     hint: "Design + UX ready. Connective plumbing in progress.",
   },
   planned: {
     label: "PLANNED",
-    color: "#c084fc",
-    dot: "#c084fc",
+    color: ambient.lavender,
+    dot: ambient.lavender,
     hint: "Scheduled on the public backlog.",
   },
   roadmap: {
     label: "ROADMAP",
-    color: "#94a3b8",
-    dot: "#94a3b8",
+    color: competitorAccent,
+    dot: competitorAccent,
     hint: "On the long-range roadmap — no date yet.",
   },
 };
