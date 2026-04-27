@@ -3,6 +3,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { m, AnimatePresence } from "framer-motion";
+import {
+  brand,
+  ambient,
+  nodeTypeAccents,
+  competitorAccent,
+} from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // VaultContextStrip — shows "related vault docs" above the chat input.
@@ -11,6 +17,8 @@ import { m, AnimatePresence } from "framer-motion";
 // is drawing on.
 //
 // Lives above the ChatInputBar. Hides itself when there's nothing to show.
+// Mirrors the same CLASSIFICATION_COLOR map shape as drop-zone.tsx —
+// both share the eight content classifications.
 // ---------------------------------------------------------------------------
 
 interface VaultDoc {
@@ -23,14 +31,14 @@ interface VaultDoc {
 }
 
 const CLASSIFICATION_COLOR: Record<string, string> = {
-  character: "#ef4444",
-  location: "#3b82f6",
-  magic: "#ffd700",
-  scene: "#7fffd4",
-  lore: "#c084fc",
-  reference: "#94a3b8",
-  chapter: "#f472b6",
-  note: "#34d399",
+  character: nodeTypeAccents.character,
+  location: nodeTypeAccents.location,
+  magic: nodeTypeAccents.magic,
+  scene: brand.aquamarine,
+  lore: nodeTypeAccents.lore,
+  reference: competitorAccent,
+  chapter: ambient.pink,
+  note: ambient.emerald,
 };
 
 export interface VaultContextStripProps {
@@ -130,7 +138,7 @@ export function VaultContextStrip({
               </span>
             )}
             {docs.map((doc) => {
-              const color = CLASSIFICATION_COLOR[doc.classification] ?? "#7fffd4";
+              const color = CLASSIFICATION_COLOR[doc.classification] ?? brand.aquamarine;
               return (
                 <Link
                   key={doc.id}

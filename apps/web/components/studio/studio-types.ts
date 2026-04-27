@@ -14,6 +14,11 @@ import {
   Wind,
   Lightning,
 } from "@/lib/phosphor-icons";
+import {
+  elementNameAccents,
+  brand,
+  guardianAccents,
+} from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -62,7 +67,7 @@ export const MODES: ModeConfig[] = [
     gate: "Foundation",
     frequency: "174 Hz",
     element: "Earth",
-    elementColor: "#22c55e",
+    elementColor: elementNameAccents.Earth,
     description: "Write stories, poems, and wisdom scrolls with AI assistance.",
   },
   {
@@ -73,7 +78,7 @@ export const MODES: ModeConfig[] = [
     gate: "Fire",
     frequency: "396 Hz",
     element: "Fire",
-    elementColor: "#ef4444",
+    elementColor: elementNameAccents.Fire,
     description: "Describe and generate images with AI-powered creation.",
   },
   {
@@ -84,7 +89,7 @@ export const MODES: ModeConfig[] = [
     gate: "Source",
     frequency: "1111 Hz",
     element: "Void",
-    elementColor: "#ffd700",
+    elementColor: brand.arcaneanGold,
     description: "Write code with AI pair programming and intelligence.",
   },
   {
@@ -95,17 +100,21 @@ export const MODES: ModeConfig[] = [
     gate: "Flow",
     frequency: "285 Hz",
     element: "Water",
-    elementColor: "#3b82f6",
+    elementColor: elementNameAccents.Water,
     description: "Describe music to compose with AI sound generation.",
   },
 ];
 
+// Studio's element palette intentionally uses Wind=violet and Void=gold —
+// different convention from `elementNameAccents` (where Wind is pale slate
+// and Void is violet). Both conventions are correct in their own surface;
+// the Studio is more saturated to compete with the dense AI panel layout.
 export const ELEMENTS: ElementConfig[] = [
-  { name: "Fire", color: "#ef4444", icon: Flame },
-  { name: "Water", color: "#3b82f6", icon: Drop },
-  { name: "Earth", color: "#22c55e", icon: Leaf },
-  { name: "Wind", color: "#a855f7", icon: Wind },
-  { name: "Void", color: "#ffd700", icon: Lightning },
+  { name: "Fire", color: elementNameAccents.Fire, icon: Flame },
+  { name: "Water", color: elementNameAccents.Water, icon: Drop },
+  { name: "Earth", color: elementNameAccents.Earth, icon: Leaf },
+  { name: "Wind", color: guardianAccents.lyria, icon: Wind },
+  { name: "Void", color: brand.arcaneanGold, icon: Lightning },
 ];
 
 export const GATES: GateConfig[] = [
