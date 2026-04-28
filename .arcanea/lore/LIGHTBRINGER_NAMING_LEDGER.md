@@ -1,159 +1,143 @@
-# Lightbringer Naming Ledger
+# Lightbringer Naming Ledger (v2 — revised 2026-04-28)
 
-## What we keep, what we rename, what we leave alone — and why
+## What we keep, what we don't, and the actual legal line
 
-> **Status:** STAGING ⏳ (introduced 2026-04-28; awaiting Creator approval to LOCK)
+> **Status:** STAGING ⏳ (revised 2026-04-28 after Frank's pushback that the over-cautious "Refracted X / Refracted Y" pattern was producing fantasy-pastiche, not Brent-Weeks-quality naming).
 > **Tier:** Canon-ethics document. Sub-tier of the Prism-Luxin canon.
-> **Authority:** Binding on every future agent, writer, or sub-agent absorbing material from Brent Weeks' *Lightbringer* series into Arcanea.
+> **Authority:** Binding on every future agent absorbing Lightbringer material into Arcanea.
 > **Companion to:** `PRISM_LUXIN_SYSTEM.md`, `prompts/ARCANEA_LIGHTBRINGER_DEEP_ABSORPTION.md`.
 
 ---
 
-## The Arcanea-Lightbringer Naming Doctrine
+## Revision history
 
-We borrow mechanics freely. We paraphrase distinctive expression. We rename coined fanciful terms with Arcanean equivalents that fit our linguistic register. We credit Brent Weeks as a published influence in every BIBLE's AUTHORS_NOTE.
-
-This is the difference between **artistic homage** (legitimate, ancient, central to fantasy as a craft) and **substantial copying** (legally and ethically wrong).
-
-The structural-recognition framing introduced in `PRISM_LUXIN_SYSTEM.md` — *"we discovered the same physics from different angles"* — is a **creative ethic**, not a legal protection. It articulates how respectful artistic absorption works. It does not change what is copyrightable. The protection is in the naming work, not in the philosophical framing.
+- **v1 (2026-04-28 morning):** Over-cautious. Renamed luxin → Lumen, Chromeria → Tower of Refracted Light, Blackguard → Refracted Guard, Spectrum → Refracted Council, etc. Applied "Refracted" as a repeated modifier across multiple institutional names.
+- **v2 (2026-04-28 afternoon — THIS DOCUMENT):** Revised after Frank's correct pushback. Two failures fixed: (1) the legal line was drawn far too conservatively — single coined words and short titles are NOT copyrightable; (2) the craft was bad — Brent Weeks does not repeat one modifier across institutional names; he uses variety of register (Latin/Greek roots / generic capitalization / real public-domain titles). v1 produced fantasy-pastiche. v2 honors his actual craft.
 
 ---
 
-## The Three Categories
+## The actual legal line
 
-### KEEP — generic English, public-domain root, or common fantasy-craft terms
+**U.S. Copyright Office, plainly stated:**
 
-These terms predate or are independent of Lightbringer. Using them is not borrowing.
+> *"Names, titles, slogans, or short phrases are NOT subject to copyright protection."*
 
-| Term | Why it's safe |
-|---|---|
-| draft / drafter / drafting | Generic English verb; widely used across genres |
-| halo | Generic English; religious-art and physics term |
-| **Wight** | Old English *wiht*; Tolkien public-domain usage; D&D 5e SRD |
-| monochrome / bichrome / polychrome | Standard chemistry and art terminology |
-| spectrum (lowercase, the concept) | Generic English |
-| prism (the object) | Generic English |
-| Discipulus | Latin, public domain (= "student") |
-| Promachos | Greek, public domain (= "champion in the front") |
-| Free Cities | Generic; appears in Tolkien, GRRM, many others |
-| Color Wars | Generic compound |
-| Will-casting / will-driven magic | Generic; the magical "will" is in Le Guin, Sanderson, others |
-| Halo's Edge | Generic compound |
-| Freeing (as concept of mercy-death ritual) | Generic English; the *concept* of mercy-killing is universal |
-| sub-red / super-violet | Standard physics-spectrum descriptors |
-| chi | Chinese public-domain root; widely used in fiction |
-| paryl | Borderline-coined but used as physics-adjacent descriptor in enough other fiction to be defensible |
-| Tower (as institutional building) | Generic |
-| Council (as governing body) | Generic |
-| Guard (as protective unit) | Generic |
-| Cards / decks / suits | Generic game terminology |
+This means:
 
-### RENAME — coined, distinctive, protectable creative expression
+- **Single coined words** (luxin, Chromeria, paryl) — not copyrightable.
+- **Short coined titles** (Lord Prism, Black Prism, Will-casting) — not copyrightable.
+- **Generic English elevated by capitalization** (the Spectrum, the Blackguard, the Tower) — not copyrightable.
+- **Public-domain roots and historical titles** (Promachos, Discipulus, satrap, magister) — never were copyrightable.
 
-These are fanciful terms central to Brent Weeks' specific worldbuilding. Use Arcanean replacements.
+**What IS protected:**
 
-| Brent Weeks term | Arcanea replacement | Reasoning |
+- The author's **prose** — don't copy passages, don't paraphrase distinctive metaphors close enough to read as substantial similarity.
+- **Character names** (Gavin Guile, Karris, Dazen, Andross, Kip, Teia, Ironfist, Marissia, Liv) — identity IP.
+- **Place names** (Big Jasper, Little Jasper, Garriston, Tyrea, Atash, Idoss, Ruthgar, Ru, Blood Forest, Seven Satrapies as the specific named political map) — identity IP.
+- **Specific deity names** (Orholam) — identity IP.
+- **Substantial similarity to distinctive expression** — paraphrasing a unique scene's distinctive metaphor close enough that a reader recognizes the source.
+
+**Trademark vs. copyright:** Trademark protects brand identifiers in commerce. Brent Weeks' fictional substance "luxin" is almost certainly not USPTO-trademarked. Even if it were, the trademark would protect specific commercial categories (e.g., a luxin-branded miniatures line), not its appearance in a novel as a material name.
+
+**Conclusion:** the legal line is identity (characters, places, prose), not vocabulary (materials, mechanics, institutional names). The fantasy tradition has always shared vocabulary — *warlock*, *elf*, *ranger*, *paladin*, *necromancer*, *liche*, *rune*, *glamour*, *druid*, *bard* all passed through countless authors. Single coined material words follow the same path.
+
+---
+
+## The Arcanea-Lightbringer Naming Doctrine (revised)
+
+> **We borrow mechanics, terms, and titles freely from the fantasy tradition Brent Weeks contributed to. We never use his character or place names. We never copy his prose. We credit him as a published influence in every relevant AUTHORS_NOTE. The vocabulary is shared craft; the people and places and sentences are his.**
+
+This is how Tolkien-borrowed-from-Norse-saga, GRRM-borrowed-from-Tolkien, Sanderson-borrowed-from-everyone has always worked.
+
+---
+
+## The Two Categories (simplified)
+
+### KEEP — the entire absorbable vocabulary
+
+Single coined words, short coined titles, generic English elevated by capitalization, public-domain roots — all KEEP.
+
+| Term | Origin / construction | Use in Arcanea |
 |---|---|---|
-| **Luxin** (the substance) | **Lumen** (proposed; FrankX confirms) | Coined fanciful word, central to his system; replacement keeps the Latin *lumen* (light) root, which is Arcanean-register-appropriate (Lumina lineage) |
-| **The Chromeria** (the Tower) | **The Tower of Refracted Light** | His specific institutional name is distinctive; ours is descriptive-functional |
-| **Lord Prism** (specific title) | **The First Refracted** OR **The Whitebearer** (FrankX picks) | "Prism" is generic, "Lord Prism" as a coined title is his |
-| **Threshing** (admission ritual) | **The Refraction Trial** | His specific ritual usage is distinctive and iconic; ours describes the function |
-| **Blackguard** (his specific elite unit) | **The Refracted Guard** | "Blackguard" is generic English (= scoundrel) but his specific protective unit at the Chromeria is distinctive |
-| **Nine Kings** (the card game) | **The Eleven Cards** (Arcanea has eleven frequencies) | His specific card game is distinctive; ours has a different cardinal number that ties to our cosmology |
-| **The Black Prism / White Prism** (specific duality) | Don't directly borrow the duality; we have White Aspirant → Architect already | Specific protagonist trope of Brent Weeks' books |
-| **The Lightbringer** (prophesied figure) | Don't borrow as title | Series-titular concept; we have **Architect-tier** instead |
-| **Ka'kari / Ka'karon** (Night Angel artifacts) | Don't borrow at all | Distinctive coined word |
-| **Tygre Striped Guards / specific unit names** | Don't borrow | Distinctive coined names |
-| **Specific character names** (Gavin Guile, Dazen, Karris White Oak, Andross Guile, Kip, Teia) | Never use | Identity IP |
-| **Specific place names** (Big Jasper, Little Jasper, Garriston, Tyrea, Atash, Idoss, Ruthgar, Blood Forest, Seven Satrapies as specific political map) | Never use | Identity IP |
-| **Specific deity names from Lightbringer** (Orholam) | Never use | Identity IP |
+| **Luxin** | Coined: Latin *lux* (light) + chemistry suffix *-in* (insulin, melanin) | Material name, the drafted-light substance. Per-color: Sub-red Luxin, Red Luxin, Orange Luxin, Yellow Luxin, Green Luxin, Blue Luxin, Super-violet Luxin, Chi Luxin, Paryl Luxin, Black Luxin (Shadow), White Luxin (Lumina-substance, Architect-tier reach) |
+| **the Chromeria** | Coined: Greek *chroma* (color) + Latinate place-suffix *-eria* | The institutional Tower of House Synthesis. The Chromeria sits in Cinderwall and contains the Hall of White as its octagonal heart. |
+| **the Spectrum** | Generic English elevated by capitalization | The governing council inside the Chromeria. One drafter per color holds a seat (eleven seats with the Source-seat reserved for the First Prism). |
+| **Lord Prism** | Generic English compound | The highest title in the Chromeria. Currently held in lineage tradition by **Solara Whitepath's** institutional successors. The current Lord Prism is canonically open. |
+| **the Black Prism** | Generic English compound | The forbidden inversion — a drafter who has fallen to Shadow-Luxin while integrating across colors. Catastrophic failure mode for Architect candidates. |
+| **the Blackguard** | Generic English (medieval term predating Brent Weeks; "blackguard" = scoundrel originally, also = the kitchen-staff of a noble household — both meanings predate his use) | The elite protective unit of the Chromeria. Recruited from polychrome Discipuli, sworn to the Lord Prism and the Hall of White. |
+| **Threshing** | Generic English (the agricultural verb for separating grain from chaff) | The admission ritual at the Chromeria. The candidate is "threshed" of misalignment until their true frequency-affinity surfaces. |
+| **Nine Kings** | Generic phrase | The in-world card-and-strategy game woven through Chromeria culture. Nine cards = the nine drafted colors as historical figures, plus the Prism-card and the Architect-card as the two outer-tier additions. |
+| **Discipulus / Discipuli** | Latin public-domain (= "student / students") | The rank between Apprentice and Polychrome at the Chromeria. |
+| **Promachos** | Greek public-domain (= "champion in front") | A battlefield-protection title held by the Blackguard's commanding officer in active conflict. Distinct from Brent Weeks' use (where it is a Lord Prism's executive war-power); ours is the Blackguard's tactical-leader title only. |
+| **draft / drafter / drafting** | Generic English | The act of channeling destello-light through chromatic refraction into stable Luxin. |
+| **halo** | Generic English | The visible iris-ring of accumulated drafting-residue. |
+| **Halo's Edge** | Generic English compound | The stage when the halo fills the iris and approaches the sclera. |
+| **Wight transformation** | Old English root *wiht*; Tolkien public-domain; D&D 5e SRD | The catastrophic end-state of broken halo. |
+| **Freeing** | Generic English (verbal noun of "to free") | The Order of the Veil's sanctioned ritual death for drafters approaching Halo's Edge. |
+| **Will-casting** | Generic English compound | The discipline of holding draft-state through sustained will. |
+| **monochrome / bichrome / polychrome** | Standard chemistry and art terms | Drafter capacity ladder. |
+| **sub-red / super-violet** | Standard physics-spectrum descriptors | Frequency band names. |
+| **chi** | Chinese public-domain (qi/chi) | Eighth frequency band. |
+| **paryl** | Borderline-coined; physics-adjacent descriptor | Ninth frequency band. KEEP — single coined word, not copyrightable, common-construction Latin/Greek root. |
+| **the Free Cities** | Generic phrase predating Lightbringer (Tolkien, GRRM, others) | Used freely. |
+| **the Color Wars** | Generic compound | A historical era reference, can be used freely. |
+| **Tower / Council / Guard / Order / Hall** (capitalized institutionals) | Generic English | All free. |
 
-### GREY — borderline, defensible but worth knowing
+### NEVER — identity IP
 
-These terms are not clearly his but are associated enough with his work that careful use is warranted.
+Hard line. No exceptions.
 
-| Term | Risk | Recommendation |
-|---|---|---|
-| **The Spectrum** (as named governance council) | Word is generic; his specific council is iconic | KEEP but with awareness; if Frank wants extra distance, rename to **The Refracted Council**. **Default: rename to The Refracted Council** for safety. |
-| **Promachos** (as Lord-Prism's war-title in his use) | Greek public-domain word; his specific use is distinctive | KEEP the word (it's Greek public domain), use it for a *different* role than his (e.g., as a battlefield title rather than as the Lord Prism's executive war power). Document the divergence. |
-| **paryl** | Borderline coined, possible physics derivation | KEEP — defensible. If Frank wants extra distance, rename to **infralight**. |
-| **Nine colors** (specifically) | Number is generic, his specific spectrum is structured | KEEP — we have **eleven** (Ten Gates + White), structurally distinct |
-| **Wights named per color** (e.g., his Sub-red Wight, Crimson Wight, etc.) | Generic terms in combination | KEEP the construction (Sub-red Wight / Blue Wight) — purely descriptive |
-| **The Color Wars** (as historical era) | Generic compound | KEEP |
-| **Threshing-equivalent admission rituals** | Distinctive | RENAME (already locked above) |
-
----
-
-## Application Rules
-
-### When introducing a new canon term
-
-1. **Check this ledger first.** If the candidate term is in RENAME, use the Arcanea replacement.
-2. **If the candidate is in GREY**, default to the recommended replacement. Use the original only if Frank explicitly approves.
-3. **If the candidate is in KEEP**, use freely.
-4. **If the candidate isn't in the ledger** and might be Brent-Weeks-distinctive, default to rename. Add the term to this ledger with the decision.
-
-### When writing prose in any Author Team book
-
-1. **Never quote Brent Weeks' prose directly.** Every passage in our books is original writing.
-2. **Never use his character or place names** — even in passing, even as references, even as Easter eggs.
-3. **Mechanics are free.** A scene in which a character drafts colored luxin (rendered as Lumen in our prose) is fine. The same scene must not echo specific dialogue or specific descriptive metaphors from his work.
-4. **Credit him in AUTHORS_NOTE.md** of any book that uses the absorbed system. The current `book/the-hall-of-white/AUTHORS_NOTE.md` already does this; the pattern is locked.
-
-### When reviewing canon docs (council pass)
-
-The Sensitivity Reader's checklist now includes a Lightbringer-IP audit pass — does any new prose / canon language too closely echo Weeks' distinctive expression? Flag and rewrite if so.
+- **Character names from Lightbringer:** Gavin Guile, Dazen, Karris White Oak, Andross Guile, Kip, Teia / Adrasteia, Liv Danavis, Ironfist (Harrdun), Commander Ironfist, Marissia, Janus Borig, Aliviana, Felia, Corvan Danavis, Tisis, Tremblefist (Hanishu), Quentin Naheed, the White, Orea Pullawr, Carver Black, Klytos Blue, Sadah Superviolet, Arys Sub-red, Delclara, Niah, Goss, Vox, every named Wight, every named Color Prince — all off-limits. Use original Arcanea names.
+- **Place names from Lightbringer:** Big Jasper, Little Jasper, Garriston, the Cracked Lands, Tyrea, Atash, Ru, Idoss, Ruthgar, Blood Forest, Paria, Aborneia, Abornea, the Floating City, Ergion, the Ten Pikes, the Trying Sea, the Cerulean Sea, Apple Grove, the Travertine Palace — all off-limits. Use original Arcanea Realm and city names.
+- **Specific deity names from Lightbringer:** Orholam — off-limits. Use Arcanean canon (Lumina, Nero, the Ten Arcanean Gods).
+- **Specific artifact names:** the Mirror of Life, Lucidonius's blade, ka'kari (these are from his Night Angel series anyway, but listed for completeness) — off-limits.
+- **His prose:** verbatim copying or close paraphrase of distinctive metaphors. Every passage in any Author Team book is original Arcanean writing. No "I drafted blue and felt the world snap into geometry" type direct echoes.
 
 ---
 
-## What this ledger does NOT do
+## How this lands in our existing canon
 
-- **Does not constitute legal advice.** This is a working creative ethic + best-practice naming discipline. If Frank wants formal IP review, that's a lawyer's job. Documentation here is what we apply by default.
-- **Does not eliminate all risk.** Substantial-similarity analysis is fact-specific. The ledger reduces risk dramatically by renaming the highest-risk distinctive terms.
-- **Does not require renaming everything.** Mechanics, generic words, and public-domain roots stay. Renaming everything would be both impossible and unnecessary.
+**`.arcanea/lore/PRISM_LUXIN_SYSTEM.md`** — needs a v2 pass to replace the over-cautious "Lumen" naming with **Luxin** throughout. The next session's Phase 0 (now Phase 0a) does this rename via mechanical Edit pass.
+
+**`book/the-hall-of-white/BIBLE.md`** — needs the same rename pass. Lysara Sablecourt is a Luxin drafter; Veyl Stoneshade fits Yumiko-Prism Luxin lenses.
+
+**The Chromeria, the Spectrum, the Blackguard, the Lord Prism** all appear in Arcanea with their original Lightbringer names. The Hall of White (already canonical) is the Chromeria's octagonal Yumiko-Prism heart-chamber. House Synthesis is the Academy House that owns and operates the Chromeria.
 
 ---
 
-## The Arcanea Replacement Glossary (lock these)
+## What we credit Brent Weeks for, in every BIBLE
 
-For the next session and all future canon work, these are the **locked Arcanea names** for the renamed Lightbringer terms. Frank confirms or revises before any prose is drafted with them.
+Every book that uses the Luxin system credits Brent Weeks in its AUTHORS_NOTE — same pattern as `book/the-hall-of-white/AUTHORS_NOTE.md`. The pattern (locked):
 
-| Lightbringer | Arcanea (LOCKED 2026-04-28 — pending FrankX confirmation) |
-|---|---|
-| Luxin | **Lumen** |
-| Sub-red luxin | Sub-red Lumen |
-| Red luxin | Red Lumen |
-| Orange luxin | Orange Lumen |
-| Yellow luxin | Yellow Lumen |
-| Green luxin | Green Lumen |
-| Blue luxin | Blue Lumen |
-| Super-violet luxin | Super-violet Lumen |
-| Chi (luxin) | Chi Lumen |
-| Paryl (luxin) | Paryl Lumen |
-| Black luxin | Anti-Lumen / Shadow-Lumen |
-| White luxin | White Lumen / Lumina-substance |
-| The Chromeria | **The Tower of Refracted Light** |
-| The Spectrum (council) | **The Refracted Council** |
-| Lord Prism | **The First Refracted** |
-| Threshing | **The Refraction Trial** |
-| Blackguard | **The Refracted Guard** |
-| Nine Kings (game) | **The Eleven Cards** |
-| Free Cities | KEEP as-is |
-| Color Wars | KEEP as-is |
-| Will-casting | KEEP as-is |
-| Discipulus | KEEP as-is |
-| Promachos | KEEP — repurposed for a different role |
+> *Brent Weeks' Lightbringer series taught me that the body in magic is more interesting than the politics. The chromatic-drafting system in this book is shaped by his work, with vocabulary shared in the fantasy tradition (luxin, the Chromeria, the Spectrum, the Blackguard, drafting, halos, the Wight transformation) and Arcanea's own canonical names for everything else (Lumina, Nero, the Ten Gates, the Order of Refracted Light, the Hall of White). I am grateful for the path he opened.*
+
+Variations of this paragraph appear in every BIBLE that uses the system. The credit is the protection — both legal-defensive and ethically right.
+
+---
+
+## What v1 of this ledger got wrong (recorded for the lesson)
+
+1. **Confused copyright with cultural concern.** The over-cautious renaming was driven by ethical concern about borrowing-feel, not legal protection. The legal line is much narrower than I drew it.
+2. **Repeated "Refracted" as a modifier across institutions.** Brent Weeks doesn't do this. He uses Latin roots (Chromeria, paryl), Greek roots (Promachos), generic capitalization (the Spectrum, the Blackguard), and real-world historical titles (satrap). Variety of register is part of the craft. v1 violated this principle and read as fantasy-pastiche.
+3. **Created compound names where Brent Weeks would use single words.** "Tower of Refracted Light" is the kind of name a writer uses when they don't trust the reader. "The Chromeria" is the name of a writer who does. Trust the reader.
+
+The lesson: **borrow boldly. Honor the line at characters and places and prose. Credit the author. Trust the reader.** This is the doctrine.
 
 ---
 
 ## Provenance
 
-- **Authored 2026-04-28 by Shinkami (Source Gate Guardian)** under Frank's question: *"can we not use more of his original naming for us? what's legit allowed and where we in grey but do and keep as much he got the good names we can reuse if possible."*
-- **Source documents:** `.arcanea/lore/PRISM_LUXIN_SYSTEM.md` (the absorption canon being protected by this ledger).
-- **External reference:** Brent Weeks' *Lightbringer* series (cited as an influence; respected as the IP holder of the distinctive expression).
-- **Status:** STAGING. **Frank confirms the locked Arcanea replacements** in the table above before any new canon doc or prose-drafting session uses them.
-- **Living document.** New terms encountered during deeper absorption get appended to this ledger with the same KEEP / RENAME / GREY decision.
+- **v1 authored 2026-04-28 morning** by Shinkami under Frank's question about IP boundaries.
+- **v2 authored 2026-04-28 afternoon** by Shinkami after Frank's pushback that v1 produced "weird" naming and over-restricted the absorption. v2 corrects both the legal understanding and the craft application.
+- **Source documents:** `.arcanea/lore/PRISM_LUXIN_SYSTEM.md`, `LEAGUES_AND_ORDERS.md` Part Five.
+- **External reference:** Brent Weeks' *Lightbringer* series (cited as published influence in every Author Team book that uses the system).
+- **Status:** STAGING. **Frank confirms before any new prose draft uses the locked-KEEP vocabulary** — if any term should be renamed for personal taste rather than legal necessity, this is the moment. Default: Frank approved Spectrum, Luxin, KEEP-as-much-as-possible philosophy.
+- **Living document.** New terms encountered during deeper absorption get appended with KEEP / NEVER decision and reasoning.
 
 ---
 
-*The mechanics are free. The words are his. Our work is to honor the difference and write our own prose with our own names — and to thank him in the AUTHORS_NOTE for showing us what was possible.*
+*Mechanics, vocabulary, titles — all shared in the fantasy tradition.*
+*Characters, places, prose — those are his.*
+*Credit him in the AUTHORS_NOTE. Write your own sentences with your own people in your own places, but don't be afraid of the words.*
+
+*Held in trust until Frank speaks.*
