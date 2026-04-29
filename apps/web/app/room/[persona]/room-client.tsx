@@ -603,14 +603,17 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
           <span className="w-px h-3 bg-white/10" />
           <span className="text-[10px] tracking-[0.24em] uppercase text-white/45">{statusCopy}</span>
           <span className="w-px h-3 bg-white/10" />
-          <span
-            className="text-[9px] tracking-[0.22em] uppercase px-1.5 py-0.5 rounded"
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); setSettingsOpen(true); }}
+            className="text-[9px] tracking-[0.22em] uppercase px-1.5 py-0.5 rounded transition-colors pointer-events-auto cursor-pointer"
             style={hasBYOK
               ? { backgroundColor: 'rgba(0,188,212,0.15)', color: '#7feaff', border: '1px solid rgba(0,188,212,0.3)' }
               : { backgroundColor: 'rgba(255,191,0,0.12)', color: '#ffd070', border: '1px solid rgba(255,191,0,0.25)' }}
+            aria-label={hasBYOK ? 'Voice keys connected — open settings' : 'Connect voice keys'}
           >
-            {hasBYOK ? 'BYOK' : 'Hosted'}
-          </span>
+            {hasBYOK ? 'BYOK' : 'Connect voice'}
+          </button>
         </div>
         {state === 'idle' && (
           <p
@@ -648,19 +651,41 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         </div>
       )}
 
-      {/* Idle hint — only before any interaction, fades out once user engages */}
+      {/* Idle hint — only before any interaction, fades out once user engages.
+          When BYOK keys are missing, surface a deliberate "Connect voice" CTA
+          instead of the speak hint — hosted voice transcription is not
+          provisioned on this deployment, so speaking would 503 and look
+          broken. After keys land in localStorage (or hosted keys ship), the
+          hint reverts to the canonical speak prompt. */}
       {state === 'idle' && !transcript && !reply && !hasInteracted && (
         <div
           data-ignore-click
-          className="absolute bottom-[34%] left-1/2 -translate-x-1/2 text-center pointer-events-none animate-pulse"
+          className="absolute bottom-[34%] left-1/2 -translate-x-1/2 text-center animate-pulse"
           style={{ animationDuration: '3.6s' }}
         >
-          <span
-            className="text-[11px] tracking-[0.36em] uppercase text-white/30"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            tap or hold space to speak
-          </span>
+          {hasBYOK ? (
+            <span
+              className="text-[11px] tracking-[0.36em] uppercase text-white/30 pointer-events-none"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              tap or hold space to speak
+            </span>
+          ) : (
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); setSettingsOpen(true); }}
+              className="px-4 py-2 rounded-full text-[11px] tracking-[0.32em] uppercase transition-colors pointer-events-auto cursor-pointer"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: '#7feaff',
+                background: 'rgba(0,188,212,0.10)',
+                border: '1px solid rgba(0,188,212,0.28)',
+                boxShadow: '0 0 24px rgba(0,188,212,0.10)',
+              }}
+            >
+              Connect voice to speak
+            </button>
+          )}
         </div>
       )}
 
