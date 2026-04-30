@@ -33,6 +33,10 @@ export async function middleware(request: NextRequest) {
       // Core creation APIs — must work without auth (keys are client-side)
       '/api/ai', '/api/chat', '/api/imagine', '/api/luminors',
       '/api/media', '/api/arcs', '/api/apl', '/api/studio',
+      // Voice surfaces — /api/voice/cognition probes COGNITION_BRIDGE_URL
+      // (returns 503 in cloud where bridge is unset), /api/voice/greeting
+      // and /api/voice/classify are room-mounted helpers.
+      '/api/voice',
     ],
     authPrefixes: ['/auth/login', '/auth/signup'],
     loginPath: '/auth/login',

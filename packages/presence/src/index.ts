@@ -19,3 +19,22 @@ export type { PresenceState, LuminaPresenceProps } from './lumina-presence';
 
 export { useAudioAnalyser } from './use-audio-analyser';
 export type { AudioSnapshot, UseAudioAnalyserOptions } from './use-audio-analyser';
+
+export { HUDOverlay } from './hud-overlay';
+export type {
+  HUDState,
+  HUDOverlayProps,
+  ApprovalTier,
+  ApprovalPacket,
+  AgentRosterEntry,
+} from './hud-overlay';
+
+export { BrainAtlas, DEFAULT_DISPATCH_FLEET } from './brain-atlas';
+export type {
+  BrainAtlasProps,
+  BrainAtlasNode,
+  BrainAtlasEdge,
+  PacketEnvelope,
+  IntentClass,
+  ForceGraphRenderProps,
+} from './brain-atlas';
