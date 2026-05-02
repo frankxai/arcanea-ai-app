@@ -11,7 +11,7 @@ Aus dem Nebenzimmer kam ein leises Gluckern. Theo schlief schon. Er nuschelte et
 
 Draußen war das Meer.
 
-Mila hörte es. Es machte nicht viel — nur ein leises *schhh, schhh, schhh*, wie wenn jemand ein Geheimnis erzählt, das man nicht ganz verstehen soll. Manchmal kam ein anderes Geräusch dazu, ein Ploppen, als würde ein Fisch nach oben schauen.
+Mila hörte es. Es machte nicht viel — nur ein leises *schhh, schhh, schhh*, wie wenn jemand ein Geheimnis erzählt, das man nicht ganz verstehen soll. Manchmal kam ein anderes Geräusch dazu, ein Ploppen, als würde ein Fisch nach oben schauen. Und ganz weit weg, vom Hafen herauf, das leise *putt-putt-putt-putt* eines Fischerbootes, das spät heimfuhr.
 
 Mama saß auf der Bettkante. Sie sang das Lied, das sie immer sang. *»Der Mond ist aufgegangen…«* Mila kannte jedes Wort. Aber heute klangen die Wörter anders, weil draußen kein deutscher Hof war und kein deutscher Hund von Frau Schreiber. Draußen war Meer, und das Meer kannte das Lied nicht.
 

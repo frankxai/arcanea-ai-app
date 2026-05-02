@@ -41,7 +41,7 @@ Sie schrieb langsam.
 
 > *Liebe Oma,*
 >
-> *Heute ist der vorletzte Tag vor der Schule. Theo hat gestern in eine Feige gebissen, die noch nicht reif war, und seitdem will er nur noch reife Feigen, sonst nichts. Mama schläft mehr als früher, weil sie sich an die Hitze gewöhnt. Papa hat den Rasenmäher verschenkt, weil hier kein Rasen ist.*
+> *Heute ist der vorletzte Tag vor der Schule. Theo hat gestern in eine Feige gebissen, die noch nicht reif war, und seitdem will er nur noch reife Feigen, sonst nichts. Mama macht jeden Tag eine kleine Mittagsruhe. Papa hat den Rasenmäher verschenkt, weil hier kein Rasen ist.*
 >
 > *Ich habe drei Freunde. Eine heißt Rela, eine heißt Luna, einer heißt Val. Rela ist ein Mädchen aus dem Nachbarhaus. Luna ist eine Katze mit einem Mond auf dem Auge. Val ist ein Delfin. Es gibt auch noch Oli, aber der ist mit dem Boot wieder weggesegelt — er kommt aber nächsten Sommer wieder.*
 >
@@ -117,10 +117,7 @@ Genau wie sie.
 | **O**-ba **DO**-ma | Beide Zuhause | Both homes |
 | **ZA**-u-vi-jek | für immer | forever |
 | **DO VI**-đe-nja | Auf Wiedersehen | goodbye |
-| **a-li ne ZBO**-gom | aber nicht für immer | but not forever-goodbye |
-
-> *Sada znam tvoje tajno ime.*
-> *Jetzt kenne ich deinen geheimen Namen.*
+| **ZBO**-gom | endgültiges Auf Wiedersehen (sagt man fast nie) | final farewell (rarely said) |
 
 ---
 

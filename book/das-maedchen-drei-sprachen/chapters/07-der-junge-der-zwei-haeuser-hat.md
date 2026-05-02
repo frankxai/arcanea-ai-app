@@ -101,8 +101,6 @@ Mila schaute auf die Seite und dachte zum ersten Mal nicht *ich vermisse Deutsch
 
 Luna schloss die Augen.
 
-Das Smilje in Milas Tasche war den ganzen Nachmittag warm.
-
 ### Wörter, die ich heute gelernt habe
 
 | Kroatisch | Deutsch | Englisch |

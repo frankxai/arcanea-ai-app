@@ -11,7 +11,7 @@ Das fühlte sich groß an.
 
 ---
 
-Der Markt war ein langer Tisch aus blauen Kacheln am Rand des Hafens. Auf dem Tisch lagen Fische, die Mila noch nie gesehen hatte: silbrige, rote, fast durchsichtige, einige mit Flossen wie kleinen Federn. Es roch nach Salz und Eisen und Algen, und das Wasser, das aus einem Schlauch lief, klang wie das Geräusch, das Mila gestern im Halbschlaf geträumt hatte.
+Der Markt war ein langer Tisch aus blauen Kacheln. Er lag direkt am Hafen. Auf ihm lagen Fische, die Mila noch nie gesehen hatte: silbrige, rote, fast durchsichtige. Einige hatten Flossen wie kleine Federn. Es roch nach Salz und Eisen und Algen. Das Wasser aus dem Schlauch klang wie das Geräusch, das Mila gestern im Halbschlaf geträumt hatte.
 
 Eine *bura* war heute morgen aufgekommen. Das war ein Wind, hatte Nona Marica erklärt, der von den Bergen runterkam und kalt war und plötzlich kam. Heute war er noch leicht. Aber er machte die Mützen der alten Männer wackeln und drückte gegen Milas Hosenbeine.
 
@@ -71,13 +71,23 @@ Auf dem Rückweg setzte sich Mila kurz auf eine Bank. Der Wind, die *bura*, hatt
 
 In der Stille knabberte Mila vom warmen Brot. Es war salzig und grün und ein bisschen dampfig im Mund. Es schmeckte nach diesem Vormittag, nach Rela, nach dem alten Mann ohne Zähne, nach dem Tintenfisch, dem es leid getan hatte, dass er nicht mehr im Wasser war.
 
-Mila biss noch ein Stück ab. Rela schaute sie von der Seite an.
+Mila biss noch ein Stück ab.
 
-»*Lijepo?*«, fragte Rela.
+Aber dieses Brot war heute morgen sehr warm gewesen, und der Geruch erinnerte plötzlich an etwas, das Mila gar nicht hatte erinnern wollen — an Omas Sonntagsbrötchen, das immer in einem braunen Korb auf dem Frühstückstisch gestanden hatte, mit Butter und Honig und einer gelben Lampe darüber, weil Sonntagmorgen in Deutschland länger dunkel waren als hier.
+
+Etwas in Milas Hals wurde eng. Sie weinte nicht. Aber eine einzige Träne machte sich von selbst auf den Weg, ohne zu fragen, und blieb in ihrer Wimper hängen.
+
+Rela schaute sie von der Seite an.
+
+Sie sagte nichts. Sie fragte nichts.
+
+Sie rückte nur ganz langsam ein Stück näher auf der Bank, bis ihre Schulter an Milas Schulter lehnte. Eine Weile blieben sie so. Eine kleine deutsche Schulter. Eine kleine kroatische Schulter. Dazwischen ein bisschen Salz, das Mila weggewischt hatte, und ein bisschen Stille, die in der Luft hing.
+
+»*Lijepo?*«, fragte Rela schließlich. Ihre Stimme war ganz weich.
 
 Mila wusste, was das hieß. Mama hatte es ihr gestern gesagt. *Lijepo*: schön.
 
-»Lijepo«, antwortete Mila mit vollem Mund.
+»Lijepo«, antwortete Mila. Sie sagte es leise. Es war ein anderes *lijepo* als sonst — eines, das auch das andere mit hineinnahm, das, was nicht ganz schön war, das mit der Wimper. Aber es war trotzdem *lijepo*.
 
 Und dann, ganz aus dem Nichts, fing die *bura* wieder an, hob den Sand in kleinen Wirbeln an und blies Mila eine Brotkrume vom Kinn.
 
@@ -88,7 +98,6 @@ Beide Mädchen lachten gleichzeitig.
 | Kroatisch | Deutsch | Englisch |
 |---|---|---|
 | **DO**-bro **JU**-tro | Guten Morgen | good morning |
-| **KO**-li-ko **KOŠ**-ta? | Was kostet das? | how much? |
 | **RI**-ba | Fisch | fish |
 | **KRUH** | Brot | bread |
 | **HO**-bot-ni-ca | Tintenfisch | octopus |

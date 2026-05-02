@@ -17,7 +17,7 @@ Rela traf sie am Hafen. Sie hatte ihre eigene rote Schwimmweste dabei. Sie war s
 
 Das Boot war klein und blau und hieß *Ribica* — Fischlein. Nona Maricas Sohn — er hieß Marko, hatte breite Schultern und eine Stimme, die wie ein leise gestimmtes Cello klang — startete den Motor. Das Boot machte *putt-putt-putt-putt*, und langsam wurde der Hafen kleiner.
 
-Mila saß ganz vorne auf einer Holzbank. Theo war zwischen Mama und Papa eingeklemmt. Rela hockte vorne neben Mila wie eine kleine Galionsfigur, mit den Füßen gegen das Bug.
+Mila saß ganz vorne auf einer Holzbank. Theo war zwischen Mama und Papa eingeklemmt. Rela hockte vorne neben Mila wie eine kleine Königin, mit den Füßen gegen das Bug.
 
 Das Wasser unter ihnen war erst noch grün — durchsichtig grün, wie wenn man durch ein Glas Apfelsaft schaut. Dann wurde es plötzlich tiefblau, und Mila wusste: jetzt war es tief.
 
@@ -88,8 +88,6 @@ Sie war sich sicher, dass das Meer es weitergab.
 | **VI**-di! | Schau! | Look! |
 | **PLO**-vi | schwimmt / segelt | sails / swims |
 | **SRE**-tan | glücklich / froh | happy |
-
-> *Sada znam tvoje tajno ime.*
 
 ---
 

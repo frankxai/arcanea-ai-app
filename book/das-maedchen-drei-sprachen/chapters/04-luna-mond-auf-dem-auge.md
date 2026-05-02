@@ -79,7 +79,7 @@ Und sie sagte es laut, in den drei Sprachen, die sie jetzt zusammen hatte und au
 
 Das Smilje, das Mila vom Garten in der Tasche dabei hatte, fühlte sich für einen winzigen Moment warm an. Nur einen einzigen Atemzug lang. Aber es war warm.
 
-Theo zog Mila am Pulli. »Eis«, sagte er ernst. »Mein Eis ist Pulli.«
+Theo zog Mila am Pulli. »Eis«, sagte er ernst. »Pulli! Eis-Pulli!«
 
 Rela lachte so sehr, dass sie sich auf die warme Steinkante setzen musste. Sie wischte sich Tränen aus den Augen und sagte etwas auf Kroatisch, das Mila nicht verstand — und Mila lachte mit, weil man manchmal ein Wort nicht braucht, um zu wissen, was es bedeutet.
 
@@ -92,8 +92,6 @@ Rela lachte so sehr, dass sie sich auf die warme Steinkante setzen musste. Sie w
 | **SJE**-di | Sitz | sit |
 | **DRA**-ga | Liebe | dear |
 | **PRI**-ja-telj | Freund / Freundin | friend |
-
-> *Sada znam tvoje tajno ime.*
 
 ---
 

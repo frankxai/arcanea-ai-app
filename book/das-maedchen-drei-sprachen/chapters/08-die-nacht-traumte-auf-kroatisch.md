@@ -39,7 +39,7 @@ Es war Oli. Oli rannte auch.
 
 Das war Theo. Theo war auf einem Esel.
 
-Mila lachte im Traum. Im Traum konnte Theo Esel reiten. Niemand hatte das jemals widerlegt.
+Mila lachte im Traum. Im Traum konnte Theo Esel reiten. Niemand hatte je nein gesagt.
 
 ---
 

@@ -25,6 +25,8 @@ Theo wachte auf. Er war ganz weich vor Schlaf. »Mama?«, brummte er. Dann sah e
 
 Mila stieg aus. Die Luft war anders. Sie roch nach warmem Stein und nach Salz und nach etwas Würzigem, das Mila nicht kannte. Vielleicht eine Pflanze. Vielleicht zwei Pflanzen. Vielleicht der ganze Hügel.
 
+Auf dem Dach des Hauses gegenüber lag ein Bündel grau-grüner Zweige zum Trocknen, ordentlich aufgereiht in der Sonne. Es roch von dort herüber — würziger als alles, was Mila kannte.
+
 Über ihr schrie wieder die Möwe. Sie war so groß. Größer als die Tauben in Deutschland.
 
 Eine alte Frau kam aus dem Haus daneben. Sie hatte eine blaue Schürze und ein freundliches Gesicht voller Fältchen. Sie sah die Möwe und zeigte nach oben. »**GA**-leb!«, sagte sie. Dann lächelte sie Mila an. »*Galeb.*«
