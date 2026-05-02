@@ -1,0 +1,60 @@
+title: "Das Mädchen, das drei Sprachen hörte"
+subtitle: "Die Geschichte von Mila und der Blume, die niemals stirbt"
+slug: das-maedchen-drei-sprachen
+tier: featured
+status: in-progress
+language: de
+languages_woven: [de, hr, en]
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator
+  - name: Arcanea Author Council
+    role: co-author
+
+ai_transparency:
+  models_used:
+    - id: claude-opus-4-7
+      provider: anthropic
+      role: story-architecture-and-drafting
+  human_contribution: 30%
+  ai_contribution: 70%
+  method: "Human concept and direction (book for a real 6-year-old in transition from Germany to Croatia). AI orchestrated by Master Story Architect across 5 specialist agents (World Architect, Character Psychologist, Deep Fiction Master, Sensitivity Reader, Research Librarian), then drafted from synthesis. Human curation."
+
+license: CC-BY-NC-SA-4.0
+content_rating: all-ages
+tags: [children, bilingual, trilingual, croatia, deutsch, picture-book, ghibli-influence, ages-5-8]
+
+setting: "Mali Lošinj, Kvarner Gulf, Croatia · Mai bis September"
+
+reading_time: "120-140 minutes total · 12-14 minutes per chapter · 10 bedtime sessions"
+
+cast:
+  - { name: "Mila", role: "Heldin (6)" }
+  - { name: "Theo", role: "kleiner Bruder (3) mit Stoffhase Hops" }
+  - { name: "Mama, Papa", role: "Eltern" }
+  - { name: "Nona Marica", role: "kroatische Nachbarin auf Lošinj" }
+  - { name: "Mirela / Rela", role: "kroatische Freundin (6)" }
+  - { name: "Oli / Oliver", role: "kroatisch-britischer Freund (7)" }
+  - { name: "Marko", role: "Nona Maricas Sohn, Bootsführer" }
+  - { name: "Luna", role: "Hafenkatze mit weißem Mond auf dem Auge" }
+  - { name: "Val", role: "junger Großer Tümmler (Adriatic bottlenose)" }
+
+magic_system: |
+  Smilje (Helichrysum italicum / Strohblume / immortelle) — eine echte Pflanze
+  auf den Inseln Kroatiens, die ihre goldene Farbe nie verliert. Wenn Mila ein
+  Lebewesen in allen drei Sprachen begrüßt (Deutsch, Kroatisch, Englisch),
+  pulsiert das Smilje einmal kurz golden und teilt ihr ein wahres sinnliches
+  Geheimnis dieses Wesens mit. Magie kann den Umzug nicht rückgängig machen.
+  Magie kann nur das Sehen lehren.
+
+acknowledgments: |
+  Geschrieben für ein sechsjähriges Kind im Übergang zwischen Deutschland
+  und Kroatien. Author-team orchestrated by Master Story Architect: World
+  Architect, Character Psychologist, Deep Fiction Master, Sensitivity Reader,
+  Research Librarian. Voice DNA aus Janosch, Astrid Lindgren (Saltkrokan),
+  Cornelia Funke (Adriatic), Otfried Preußler, Ivana Brlić-Mažuranić, mit
+  Studio-Ghibli-Lehrtechniken (Ma / Stille als Lehre, Tier ohne Sprache,
+  Natur als Person). Cover: Nano Banana 2 (Gemini 3.1 Flash Image).
+  Published on Arcanea — geschrieben in der Öffentlichkeit.
