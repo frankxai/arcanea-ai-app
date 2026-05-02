@@ -1,5 +1,7 @@
 # DAS MÄDCHEN, DAS DREI SPRACHEN HÖRTE
 
+![Kapitel 6: Val im Wasser](/images/books/das-maedchen-drei-sprachen-ch06.png)
+
 ## Kapitel 6: Das erste Mal Delfine
 *(Prvi put dupini)*
 

@@ -1,5 +1,7 @@
 # DAS MÄDCHEN, DAS DREI SPRACHEN HÖRTE
 
+![Kapitel 10: Beide Zuhause im selben Bild](/images/books/das-maedchen-drei-sprachen-ch10.png)
+
 ## Kapitel 10: Beide Zuhause
 *(Oba doma)*
 

@@ -1,5 +1,7 @@
 # DAS MÄDCHEN, DAS DREI SPRACHEN HÖRTE
 
+![Kapitel 2: Der Gušter an der Wand](/images/books/das-maedchen-drei-sprachen-ch02.png)
+
 ## Kapitel 2: Das Haus mit den grünen Fensterläden
 *(Kuća sa zelenim kapcima)*
 

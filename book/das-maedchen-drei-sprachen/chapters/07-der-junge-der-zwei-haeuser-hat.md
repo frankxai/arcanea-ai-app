@@ -1,5 +1,7 @@
 # DAS MÄDCHEN, DAS DREI SPRACHEN HÖRTE
 
+![Kapitel 7: Die geteilte Seite](/images/books/das-maedchen-drei-sprachen-ch07.png)
+
 ## Kapitel 7: Der Junge, der zwei Häuser hat
 *(Dječak s dvije kuće)*
 

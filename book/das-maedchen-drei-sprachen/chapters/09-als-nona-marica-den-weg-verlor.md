@@ -1,5 +1,7 @@
 # DAS MÄDCHEN, DAS DREI SPRACHEN HÖRTE
 
+![Kapitel 9: Beim Tausendjährigen Olivenbaum](/images/books/das-maedchen-drei-sprachen-ch09.png)
+
 ## Kapitel 9: Als Nona Marica den Weg verlor
 *(Kad je Nona Marica izgubila put)*
 

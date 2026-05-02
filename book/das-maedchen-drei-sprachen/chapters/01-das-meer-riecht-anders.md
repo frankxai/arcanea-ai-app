@@ -1,5 +1,7 @@
 # DAS MÄDCHEN, DAS DREI SPRACHEN HÖRTE
 
+![Kapitel 1: Mila am Autofenster](/images/books/das-maedchen-drei-sprachen-ch01.png)
+
 ## Kapitel 1: Das Meer riecht anders als alles andere
 *(More miriši drugačije od svega)*
 

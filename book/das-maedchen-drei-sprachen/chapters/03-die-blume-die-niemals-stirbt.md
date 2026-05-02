@@ -1,5 +1,7 @@
 # DAS MÄDCHEN, DAS DREI SPRACHEN HÖRTE
 
+![Kapitel 3: Die erste goldene Pulse](/images/books/das-maedchen-drei-sprachen-ch03.png)
+
 ## Kapitel 3: Die Blume, die niemals stirbt
 *(Smilje koje nikada ne umire)*
 

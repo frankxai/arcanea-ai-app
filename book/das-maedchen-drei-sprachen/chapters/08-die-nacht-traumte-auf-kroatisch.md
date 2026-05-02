@@ -1,5 +1,7 @@
 # DAS MÄDCHEN, DAS DREI SPRACHEN HÖRTE
 
+![Kapitel 8: Die unmögliche Mauer](/images/books/das-maedchen-drei-sprachen-ch08.png)
+
 ## Kapitel 8: Die Nacht, in der sie auf Kroatisch träumte
 *(Noć u kojoj je sanjala na hrvatskom)*
 

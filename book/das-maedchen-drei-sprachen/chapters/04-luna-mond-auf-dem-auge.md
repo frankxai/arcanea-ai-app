@@ -1,5 +1,7 @@
 # DAS MÄDCHEN, DAS DREI SPRACHEN HÖRTE
 
+![Kapitel 4: Luna wählt einen Fuß](/images/books/das-maedchen-drei-sprachen-ch04.png)
+
 ## Kapitel 4: Luna, die einen Mond auf dem Auge trägt
 *(Luna koja nosi mjesec na oku)*
 

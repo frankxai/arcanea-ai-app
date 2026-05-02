@@ -1,5 +1,7 @@
 # DAS MÄDCHEN, DAS DREI SPRACHEN HÖRTE
 
+![Kapitel 5: Die Sanftheit auf dem Eis](/images/books/das-maedchen-drei-sprachen-ch05.png)
+
 ## Kapitel 5: Der Mann, der Tintenfische verkauft
 *(Čovjek koji prodaje hobotnice)*
 
