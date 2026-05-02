@@ -5,41 +5,51 @@
 ## Kapitel 1: Das Meer riecht anders als alles andere
 *(More miriši drugačije od svega)*
 
-Das Auto hielt an, und das Meer war einfach da.
+Mila hatte siebenundzwanzig Dinge auf ihrer Liste.
 
-Mila hatte gedacht, man würde es von Weitem sehen, so wie man einen Wald sieht: zuerst ein kleines Grün am Horizont, dann mehr, dann noch mehr. Aber das Meer war plötzlich da — zwischen zwei Häusern, blau wie etwas, das kein Wort kannte, das sie kannte. Sie drückte die Nase gegen die warme Fensterscheibe.
+Nicht auf Papier. Im Kopf. Siebenundzwanzig Dinge, die sie vermissen würde: Frau Schreibers Hund. Die Treppe mit der quietschenden Stufe. Das Licht in der Küche. Oma. Die Eiche. Den Weg zur Schule. Noch die Schule selbst, obwohl die Schule manchmal doof war. Lena. Und noch Lena nochmal, das zählte doppelt.
 
-Neben ihr auf dem Rücksitz schlief Theo. Er war drei und schnarchte leise. Sein viel zu großer Stoffhase Hops lag auf seinem Bauch und hob und senkte sich.
+Das Auto bog ab. Und da war das Meer.
 
-Eine Möwe schrie. Ein Junge auf einem Fahrrad sah herein und rief etwas in einer Sprache, die klang wie Musik, die jemand anders erfunden hatte. Dann bog Papa ab, und das Meer verschwand hinter den Häusern.
+Mila vergaß alle siebenundzwanzig Dinge auf einmal. Das machte sie wütend. Das machte sie neugierig. Das machte sie — etwas, für das sie kein Wort hatte.
 
-Aber Mila wusste: Es war noch da.
+Vielleicht gab es das Wort auf Kroatisch.
 
 ---
 
-Das neue Haus war schmal und weiß und hatte grüne Fensterläden. Davor lag ein glatter alter Stein, der so aussah, als hätten ihn schon viele Füße betreten. Eine Katze saß auf der Mauer gegenüber und schaute herüber, als hätte sie schon lange gewartet.
+Papa hielt an. Neben ihr auf dem Rücksitz schlief Theo, drei Jahre alt und schwer wie Stein. Sein viel zu großer Stoffhase Hops lag auf seinem Bauch und hob und senkte sich mit jedem Atemzug. Theo hatte keine Liste. Theo war zu klein für Listen.
+
+*Glücklicher Theo*, dachte Mila.
+
+Eine Möwe schrie. Groß. Viel größer als die Tauben daheim. *Daheim.* Das Wort passte nicht mehr ganz.
+
+---
+
+Das neue Haus war schmal und weiß und hatte grüne Fensterläden. Davor lag ein alter Stein, ganz glatt von vielen Füßen. Eine Katze saß auf der Mauer gegenüber und schaute herüber, als hätte sie schon lange gewartet.
 
 »So«, sagte Mama. »Wir sind da.«
 
-Theo wachte auf. Er war ganz weich vor Schlaf. »Mama?«, brummte er. Dann sah er aus dem Fenster, und seine Augen wurden rund. »Wassa«, sagte er und zeigte mit einem dicken Zeigefinger auf das blaue Stückchen Meer zwischen den Häusern.
+Theo wachte auf. »Mama?«, brummte er, ganz weich vor Schlaf. Dann sah er aus dem Fenster, und seine Augen wurden rund. »Wassa«, sagte er und zeigte mit einem dicken Zeigefinger auf das blaue Stückchen Meer zwischen den Häusern.
 
 »Ja, Schatz«, sagte Mama. »Das Wasser ist jetzt vor unserer Tür.«
 
-Mila stieg aus. Die Luft war anders. Sie roch nach warmem Stein und nach Salz und nach etwas Würzigem, das Mila nicht kannte. Vielleicht eine Pflanze. Vielleicht zwei Pflanzen. Vielleicht der ganze Hügel.
+Mila stieg aus. Die Luft traf sie zuerst — warm, salzig, und darunter etwas Würziges, das sie nicht kannte. Vielleicht eine Pflanze. Vielleicht der ganze Hügel.
 
-Auf dem Dach des Hauses gegenüber lag ein Bündel grau-grüner Zweige zum Trocknen, ordentlich aufgereiht in der Sonne. Es roch von dort herüber — würziger als alles, was Mila kannte.
+Auf dem Dach des Hauses gegenüber lag ein Bündel grau-grüner Zweige zum Trocknen, ordentlich aufgereiht in der Sonne. Es roch von dort herüber, würziger als alles, was Mila kannte. Und gleichzeitig irgendwie — richtig. Als hätte das Würzige immer da sein sollen, und Deutschland hatte es nur vergessen.
 
-Über ihr schrie wieder die Möwe. Sie war so groß. Größer als die Tauben in Deutschland.
+Über ihr schrie wieder die Möwe.
 
-Eine alte Frau kam aus dem Haus daneben. Sie hatte eine blaue Schürze und ein freundliches Gesicht voller Fältchen. Sie sah die Möwe und zeigte nach oben. »**GA**-leb!«, sagte sie. Dann lächelte sie Mila an. »*Galeb.*«
+Eine alte Frau kam aus dem Haus daneben. Sie hatte eine blaue Schürze und ein Gesicht voller Fältchen, die alle freundlich aussahen. Sie schaute zu der Möwe hinauf und sagte, ganz normal, als wäre es das Selbstverständlichste der Welt: »**GA**-leb.«
 
-Mila schaute hoch zu der Möwe. *Galeb.* Sie sagte es leise, nur in den Mund hinein. *Galeb.* Es klang wie das richtige Wort für einen Vogel, der so groß und so weiß war.
+Dann lächelte sie Mila an. »*Galeb.*«
+
+Mila schaute zu der Möwe. *Galeb.* Sie sagte es leise, nur in den Mund hinein, damit es niemand hörte. *Galeb.* Es klang wie das richtige Wort. Wie ein Wort, das der Vogel selbst erfunden haben könnte.
 
 »Möwe auf Kroatisch«, erklärte Papa, der gerade Theo aus dem Auto hob.
 
 »Ich weiß«, sagte Mila.
 
-Sie wusste es wirklich. Sie hatte es gerade gewusst.
+Und sie wusste es wirklich. Sie wusste es einfach.
 
 ---
 

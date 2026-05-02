@@ -81,7 +81,7 @@ Mila setzte sich im Bett auf und atmete ganz langsam.
 
 Sie hatte etwas geträumt. Sie wusste noch alles.
 
-Sie hatte einen Traum gehabt, in dem ihr Mund kroatische Wörter gesagt hatte, ohne dass jemand sie ihr beigebracht hatte. Sie hatte Wörter im Mund gehabt, die noch keine Lehrerin ihr gegeben hatte. Die Wörter waren einfach in ihrem Kopf gewesen. Wie Mietfreunde, die ihren Schlüssel hatten und einfach reinkamen.
+Sie hatte einen Traum gehabt, in dem ihr Mund kroatische Wörter gesagt hatte, ohne dass jemand sie ihr beigebracht hatte. Sie hatte Wörter im Mund gehabt, die noch keine Lehrerin ihr gegeben hatte. Die Wörter waren einfach in ihrem Kopf gewesen. Wie Freunde, die einen Schlüssel hatten und einfach reinkamen.
 
 Sie ging barfuß zum Fenster. Draußen war der Mond — ganz rund, wie der weiße Fleck auf Lunas Auge.
 
@@ -93,7 +93,7 @@ Und dann, weil sie heute mutig war, sagte sie es auch in Kroatisch ohne nachzude
 
 »**ZVI**-jez-de.«
 
-*Sterne.* Das Wort hatte Nona Marica ihr letzte Woche gezeigt, als sie auf dem Dach Lavendel zum Trocknen hinlegten.
+*Sterne.* Das Wort hatte Nona Marica ihr letzte Woche gezeigt, als sie auf dem Dach Smilje und Kräuter zum Trocknen hinlegten.
 
 Mila stand am Fenster und atmete die Luft ein, in der vier Sprachen waren — Deutsch, Kroatisch, Englisch und die Sprache, die nur Tiere und Mond und Meer sprachen.
 

@@ -57,9 +57,9 @@ Sie setzte sich auf Milas linken Fuß.
 
 Mila wagte nicht, sich zu bewegen. Es kribbelte in ihrer Brust, und das Kribbeln war das Gegenteil von Bauchweh.
 
-Rela lachte leise. »Luna ti je rekla *prijatelj*«, sagte sie. Sie wiederholte das letzte Wort und zeigte zwischen sich und Mila hin und her. »Pri-ja-telj. Freund.«
+Rela lachte leise. »Luna ti je rekla *prijateljica*«, sagte sie. Sie wiederholte das letzte Wort und zeigte zwischen sich und Mila hin und her. »Pri-ja-te-lji-ca. Freundin.«
 
-»Prijatelj«, sagte Mila.
+»Prijateljica«, sagte Mila. Es war ein langes Wort. Es passte aber.
 
 Theo, der alles falsch verstand, was er hörte, und alles richtig verstand, was er fühlte, klatschte einmal in die Hände und rief mit großer Bestimmtheit: »MAU!«
 
@@ -93,7 +93,8 @@ Rela lachte so sehr, dass sie sich auf die warme Steinkante setzen musste. Sie w
 | **JA SAM** … | Ich bin … / Ich heiße … | I am … |
 | **SJE**-di | Sitz | sit |
 | **DRA**-ga | Liebe | dear |
-| **PRI**-ja-telj | Freund / Freundin | friend |
+| **PRI**-ja-te-lji-ca | Freundin (zwei Mädchen) | friend (girl) |
+| **PRI**-ja-telj | Freund (Junge) | friend (boy) |
 
 ---
 

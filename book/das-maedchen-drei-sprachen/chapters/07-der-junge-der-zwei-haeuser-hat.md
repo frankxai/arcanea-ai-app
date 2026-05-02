@@ -37,7 +37,7 @@ Der Junge lachte. Er lachte ohne Grund. Das war erstaunlich. In Deutschland muss
 
 »Ja«, sagte Mila. Sie nickte heftig.
 
-»Cool!« Oli drehte sich um und rief etwas zum Boot. Eine Frau auf dem Boot — sie trug einen Strohhut und winkte — antwortete in einem Mix aus etwas, das wie Englisch klang, und etwas, das wie Kroatisch klang. Mila konnte beide Sprachen jetzt unterscheiden, auch wenn sie keine ganz verstand. Das war neu.
+»Toll!« Oli drehte sich um und rief etwas zum Boot. Eine Frau auf dem Boot — sie trug einen Strohhut und winkte — antwortete in einem Mix aus etwas, das wie Englisch klang, und etwas, das wie Kroatisch klang. Mila konnte beide Sprachen jetzt unterscheiden, auch wenn sie keine ganz verstand. Das war neu.
 
 »My mum is Croatian«, sagte Oli. »Mein — Mama — Kroatien. Mein Papa — Britisch. Wir — *zwei* — Häuser.« Er hielt zwei Finger hoch. »Two homes.«
 
@@ -53,7 +53,7 @@ Oli verstand. Er strahlte.
 
 ---
 
-Das nächste, was passierte, war eines der besten Dinge, die Mila in diesem Sommer erleben würde.
+Was als Nächstes geschah, war eines der schönsten Dinge dieses Sommers.
 
 Oli holte aus seiner Tasche ein Spiel mit drei kleinen Holzwürfeln, auf denen Tiere abgebildet waren. Er warf sie auf den Steg. Auf einem stand ein Vogel, auf einem ein Fisch, auf einem eine Katze.
 

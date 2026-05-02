@@ -88,7 +88,7 @@ Sie war sich sicher, dass das Meer es weitergab.
 | **DU**-pin | Delfin | dolphin |
 | **VAL** | Welle | wave |
 | **VI**-di! | Schau! | Look! |
-| **PLO**-vi | schwimmt / segelt | sails / swims |
+| **PLO**-vi | fährt (übers Wasser) | sails / travels by water |
 | **SRE**-tan | glücklich / froh | happy |
 
 ---

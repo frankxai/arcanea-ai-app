@@ -122,7 +122,7 @@ Mila hörte ihn und summte mit, ganz leise. Sie kannte die Melodie. Sie hatte si
 | **IZ**-gu-bljen | verloren | lost |
 | **I**-de-mo **KU**-ći | Lass uns nach Hause gehen | Let's go home |
 | **NE**-moj se **BRI**-nu-ti | Mach dir keine Sorgen | Don't worry |
-| **ZNAJ** | Wisse / Du weißt | Know |
+| **ZNAJ** | Merke dir das! | Know! (remember it) |
 | **KA**-le | Steingasse | stone alley |
 
 > *Sada znam tvoje tajno ime.*
