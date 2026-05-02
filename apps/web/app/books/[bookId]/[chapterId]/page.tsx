@@ -96,6 +96,10 @@ const BOOK_META: Record<string, { title: string; dir: string }> = {
     title: 'Las Tierras de Luz',
     dir: join(process.cwd(), '..', '..', 'book', 'las-tierras-de-luz', 'chapters'),
   },
+  'das-maedchen-drei-sprachen': {
+    title: 'Das Mädchen, das drei Sprachen hörte',
+    dir: join(process.cwd(), '..', '..', 'book', 'das-maedchen-drei-sprachen', 'chapters'),
+  },
 };
 
 /* ------------------------------------------------------------------ */
@@ -125,15 +129,23 @@ async function getChapterFiles(bookDir: string): Promise<ChapterFile[]> {
 }
 
 function extractTitle(content: string, fallbackId: string): string {
-  // Try "# Chapter One: The Storm That Remembered" pattern
-  const chapterHeading = content.match(/^#\s+Chapter\s+\w+:\s+(.+)$/m);
-  if (chapterHeading) return chapterHeading[1].trim();
+  // Most specific: ## Chapter / Kapitel / Capítulo with explicit prefix (multilingual)
+  const h2WithPrefix = content.match(/^##\s+(?:Chapter\s+\w+:\s+|Kapitel\s+\d+:\s+|Capítulo\s+\d+:\s+)(.+)$/m);
+  if (h2WithPrefix) return h2WithPrefix[1].trim();
 
-  // Try "# PROLOGUE: BEFORE THE FLOOD" pattern
-  const heading = content.match(/^#\s+(.+)$/m);
-  if (heading) return heading[1].trim();
+  // Next: # Chapter X: pattern (single-hash chapter heading)
+  const h1Chapter = content.match(/^#\s+Chapter\s+\w+:\s+(.+)$/m);
+  if (h1Chapter) return h1Chapter[1].trim();
 
-  // Fallback: humanize the slug
+  // Next: any ## heading (chapter section header without explicit prefix)
+  const h2 = content.match(/^##\s+(.+)$/m);
+  if (h2) return h2[1].trim();
+
+  // Fallback: # heading (often the book title, weakest signal)
+  const h1 = content.match(/^#\s+(.+)$/m);
+  if (h1) return h1[1].trim();
+
+  // Final fallback: humanize the slug
   return fallbackId
     .replace(/-/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase());

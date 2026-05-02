@@ -189,6 +189,14 @@ const BOOKS: Record<string, BookDef> = {
     status: 'in-progress',
     dir: join(process.cwd(), '..', '..', 'book', 'las-tierras-de-luz', 'chapters'),
   },
+  'das-maedchen-drei-sprachen': {
+    title: 'Das Mädchen, das drei Sprachen hörte',
+    subtitle: 'Die Geschichte von Mila und der Blume, die niemals stirbt',
+    description:
+      'Ein zauberhaftes dreisprachiges Vorlesebuch (Deutsch primär, Kroatisch und Englisch eingewoben) für ein sechsjähriges Kind im Übergang von Deutschland nach Kroatien. Mila kommt mit ihrem dreijährigen Bruder Theo auf der Insel Mali Lošinj an. In zehn Kapiteln lernt sie, dass jede Pflanze, jedes Tier und jeder Ort drei geheime Namen hat — und dass Zuhause nicht ein Ort ist, sondern das, was man kennt. Mit einer schwarzen Hafenkatze namens Luna, einem jungen Delfin namens Val, einer kroatischen Nachbarin Nona Marica, einem kroatisch-britischen Freund Oli und einer Blume namens Smilje, die niemals ihre goldene Farbe verliert. Geschrieben in der Stimme von Janosch, Astrid Lindgren und Cornelia Funke, mit Studio-Ghibli-Wärme.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'das-maedchen-drei-sprachen', 'chapters'),
+  },
 };
 
 const STATUS_STYLES: Record<BookStatus, { bg: string; text: string; label: string }> = {
