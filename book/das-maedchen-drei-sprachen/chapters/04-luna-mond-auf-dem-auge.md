@@ -5,17 +5,15 @@
 ## Kapitel 4: Luna, die einen Mond auf dem Auge trägt
 *(Luna koja nosi mjesec na oku)*
 
-Mila hatte die Katze schon einmal gesehen. Am ersten Tag, als sie mit dem Auto angekommen waren. Damals hatte die Katze auf der Mauer gegenüber gesessen, schwarz, und nur geschaut.
+Heute war Mila mit Mama und Theo am Hafen. Sie hatten Eis. Theo hatte sein Eis schon halb auf dem Pyjama.
 
-Heute war alles anders.
+Da saß sie wieder. Die Katze.
 
-Heute war Mila mit Mama und Theo am Hafen. Sie hatten Eis. Theo hatte sein Eis schon halb auf dem Pyjama. Mila hatte ihres noch fast unangetastet, weil sie gerade die Katze entdeckt hatte.
-
-Die Katze saß auf einer warmen Steinkante neben einem alten Fischerboot. Sie war schwarz wie eine kleine Nacht. Über dem linken Auge hatte sie einen weißen Fleck, klein und rund, genau wie ein Mond.
+Sie saß auf einer warmen Steinkante neben einem alten Fischerboot. Sie war schwarz wie eine kleine Nacht. Über dem linken Auge hatte sie einen weißen Fleck, klein und rund, genau wie ein Mond.
 
 Mila vergaß ihr Eis.
 
-Sie trat zwei Schritte näher. Die Katze schaute. Mila trat noch einen Schritt. Die Katze schaute weiter, ohne wegzugehen, ohne hinzukommen — als würde sie die Welt aus einem ruhigen Theatersaal beobachten.
+Sie trat zwei Schritte näher. Die Katze schaute. Mila trat noch einen Schritt. Die Katze schaute weiter. Sie ging nicht weg. Sie kam auch nicht näher. Es war, als würde sie alles aus einem ruhigen Theater beobachten.
 
 »Vorsicht, Schatz«, sagte Mama leise von hinten. »Manche Hafenkatzen mögen es nicht, wenn man sie anfasst.«
 
@@ -27,7 +25,7 @@ Da hörte sie eine Stimme. Eine Kinderstimme.
 
 »**KA**-ko se **ZO**-veš?«
 
-Mila drehte sich um. Hinter ihr stand das Mädchen. Das Mädchen von der Mauer im Garten. Es trug ein gelbes Kleid und keine Schuhe. In seiner Hand war ein winziger Plastikbecher mit getrockneten Fischflocken.
+Mila drehte sich um. Hinter ihr stand das Mädchen. Das Mädchen von der Mauer im Garten. Sie trug ein gelbes Kleid und keine Schuhe. In ihrer Hand war ein kleiner Plastikbecher voll mit getrockneten Fischflocken.
 
 Mila wusste, dass es eine Frage war. Sie wusste nicht, was.
 
@@ -61,7 +59,7 @@ Rela lachte leise. »Luna ti je rekla *prijateljica*«, sagte sie. Sie wiederhol
 
 »Prijateljica«, sagte Mila. Es war ein langes Wort. Es passte aber.
 
-Theo, der alles falsch verstand, was er hörte, und alles richtig verstand, was er fühlte, klatschte einmal in die Hände und rief mit großer Bestimmtheit: »MAU!«
+Theo verstand alles falsch, was er hörte. Aber alles richtig, was er fühlte. Er klatschte einmal in die Hände und rief mit großer Bestimmtheit: »MAU!«
 
 ---
 
@@ -83,7 +81,7 @@ Das Smilje, das Mila vom Garten in der Tasche dabei hatte, fühlte sich für ein
 
 Theo zog Mila am Pulli. »Eis«, sagte er ernst. »Pulli! Eis-Pulli!«
 
-Rela lachte so sehr, dass sie sich auf die warme Steinkante setzen musste. Sie wischte sich Tränen aus den Augen und sagte etwas auf Kroatisch, das Mila nicht verstand — und Mila lachte mit, weil man manchmal ein Wort nicht braucht, um zu wissen, was es bedeutet.
+Rela lachte so sehr, dass sie sich auf die warme Steinkante setzen musste. Sie wischte sich Tränen aus den Augen und sagte etwas auf Kroatisch, das Mila nicht verstand. Und Mila lachte mit. Manchmal braucht man kein Wort, um zu verstehen.
 
 ### Wörter, die ich heute gelernt habe
 

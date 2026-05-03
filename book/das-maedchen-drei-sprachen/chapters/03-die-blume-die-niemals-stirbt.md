@@ -7,19 +7,19 @@
 
 Am dritten Morgen stand Mila zuerst auf.
 
-Theo schlief noch. Mama schlief noch. Papa war schon mit dem Telefon im Garten. Mila zog Sandalen an und ging barfüßig raus — barfüßig, weil sie ihre Sandalen vergaß, sobald sie die Tür öffnete. Der Stein vor dem Haus war noch kühl. Der Stein an der Mauer war schon warm. Die Sonne war erst wenige Finger über dem Horizont.
+Theo schlief noch. Mama schlief noch. Papa war schon mit dem Telefon im Garten. Mila zog Sandalen an. Dann ging sie barfuß raus, weil sie die Sandalen sofort wieder vergaß. Der Stein vor dem Haus war noch kühl. Der Stein an der Mauer war schon warm. Die Sonne war erst wenige Finger über dem Horizont.
 
 Ein Galeb schrie weit weg. Mila hob die Hand zum Mund und rief leise: »Bok, **MO**-re!« — Hallo, Meer. Sie hatte gestern entdeckt, dass *bok* einfach *hallo* hieß. Es war das einfachste Wort, das es gab.
 
 Das Meer antwortete nicht. Aber es machte sein leises *schhh, schhh, schhh*.
 
-Hinter dem Haus gab es eine kleine Pforte. Mila hatte sie noch nicht entdeckt. Heute entdeckte sie sie. Die Pforte war aus altem Holz und stand einen Spalt offen.
+Hinter dem Haus stand eine kleine Holzpforte einen Spalt offen. Mila hatte sie nie zuvor gesehen.
 
-Dahinter lag ein Garten, den Mila noch nie gesehen hatte.
+Sie schob den Spalt etwas weiter auf — und dahinter lag ein Garten.
 
 ---
 
-Es war kein Garten wie in Deutschland. Kein Rasen. Keine Beete. Stattdessen: eine Mauer aus aufeinandergelegten grauen Steinen, ohne Mörtel, ganz alt und ganz lebendig. Aus den Ritzen wuchs etwas Silbergrünes mit blau-violetten Blüten und einem starken, frischen Geruch. Und überall, an den heißen Stellen, wo die Sonne schon hinkam, leuchteten kleine gelbe Knöpfe. Sie sahen aus wie Stroh und wie Gold zur gleichen Zeit.
+Es war kein Garten wie in Deutschland. Kein Rasen. Keine Beete. Stattdessen eine Mauer. Aus grauen Steinen, einer auf den anderen, ohne Mörtel. Ganz alt. Ganz lebendig. Aus den Ritzen wuchs etwas Silbergrünes mit blau-violetten Blüten und einem starken, frischen Geruch. Und überall, an den heißen Stellen, wo die Sonne schon hinkam, leuchteten kleine gelbe Knöpfe. Sie sahen aus wie Stroh und wie Gold zur gleichen Zeit.
 
 Nona Marica war auch im Garten. Sie kniete vor einem Busch und schnitt mit einer kleinen Schere etwas ab. Sie sah Mila und nickte, ohne sich zu erschrecken — als hätte sie auf sie gewartet.
 
@@ -77,13 +77,15 @@ Sie sah die Eidechse an und sagte langsam, ganz deutlich:
 
 Drei Sprachen. Drei Mal denselben Gruß.
 
-Und dann — Mila schwor später, sie hatte sich das nicht eingebildet — *pulsierte* das Smilje neben ihrer Hand kurz golden. Nur einmal. Nur einen Atemzug lang. Wie wenn man eine Lampe ganz kurz an- und ausmacht.
+Und dann pulsierte das Smilje neben ihrer Hand. Ganz kurz. Golden. Wie wenn man eine Lampe einen Atemzug lang an- und ausmacht.
+
+Mila hatte es nicht geträumt. Das wusste sie ganz sicher.
 
 Die Eidechse blinzelte.
 
 Dann lief sie nicht weg.
 
-Sie blieb sitzen, und ihr kleiner Bauch hob und senkte sich, und Mila wusste plötzlich — sie wusste es einfach, ohne dass jemand es ihr sagte — dass die Eidechse ihren Lieblingsstein hatte. Genau diesen. Weil er morgens zuerst warm wurde und abends zuletzt kalt.
+Sie blieb sitzen. Ihr kleiner Bauch hob und senkte sich. Und Mila wusste plötzlich, einfach so, ohne dass jemand es ihr gesagt hätte: Die Eidechse hatte ihren Lieblingsstein. Genau diesen. Weil er morgens zuerst warm wurde und abends zuletzt kalt.
 
 Das war das Geheimnis.
 

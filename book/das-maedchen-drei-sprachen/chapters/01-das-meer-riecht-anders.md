@@ -55,13 +55,19 @@ Und sie wusste es wirklich. Sie wusste es einfach.
 
 Im Auto roch es nach Pappe und nach Mama. Mila kletterte zurück hinein, suchte die graue Tasche. Bärchen musste oben liegen. Bärchen lag immer oben.
 
-Bärchen war nicht oben.
+Mila schaute. Ganz unten. Ganz oben. Zwischen den Büchern. Zwischen den Kissen.
 
-Etwas in Milas Brust wurde sehr klein und sehr hart.
+Bärchen war nicht da.
+
+In Milas Brust wurde etwas klein und hart.
 
 »Mama?« Ihre Stimme war auch klein. »Bärchen ist weg.«
 
-Mama hörte sofort auf, was sie tat. Das machte Mila Mut. Mama suchte und Papa suchte, und Theo lief auf seinen kleinen festen Beinen einmal um das Auto herum und brüllte »Bär! Bär! Bär!«, als würde er ihn herrufen können. Endlich lag Bärchen unten in der großen Kiste mit den Büchern, ein bisschen platt gedrückt, aber er war es. Mila drückte ihre Nase in sein Fell. Bärchen roch noch nach Deutschland. Nach dem alten Zimmer. Nach Oma.
+Mama hörte sofort auf, was sie tat. Mama suchte. Papa suchte. Theo lief auf seinen kleinen festen Beinen einmal um das Auto herum und brüllte »Bär! Bär! Bär!«, als würde er ihn herrufen können.
+
+Mila stand still auf dem warmen Stein und sagte gar nichts. Manchmal, wenn man ganz still ist, hört man besser. Sie hörte ihren eigenen Atem. Sie hörte ihr eigenes Herz, das sehr laut geworden war.
+
+Dann — endlich — lag Bärchen unten in der großen Kiste mit den Büchern, ein bisschen platt gedrückt, aber er war es. Mila drückte ihre Nase in sein Fell. Bärchen roch noch nach Deutschland. Nach dem alten Zimmer. Nach Oma.
 
 Mila atmete langsam aus.
 
@@ -81,7 +87,7 @@ Die Katze blinzelte langsam. Sie schloss die Augen und öffnete sie wieder, ganz
 
 Mila hielt Bärchen fest und schaute auf das schmale Stück Meer, das man zwischen den Häusern sehen konnte. Es war nicht verschwunden.
 
-Es war nur woanders hingegangen für einen Moment.
+Es war nur kurz woanders.
 
 ### Wörter, die ich heute gelernt habe
 *(Riječi koje sam danas naučila · Words I learned today)*

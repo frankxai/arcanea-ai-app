@@ -5,23 +5,25 @@
 ## Kapitel 6: Das erste Mal Delfine
 *(Prvi put dupini)*
 
-Papa hatte eine Idee.
+Mila stand schon am Hafen, als Papa noch am Frühstückstisch saß.
 
-»Wir fahren raus aufs Meer«, sagte er beim Frühstück. »Mit einem Boot. Nona Maricas Sohn hat ein Boot.«
+Sie hatte ihren Badeanzug an. Einen Pulli darüber. Bärchen war eingepackt. Das kleine Stück getrocknetes Smilje hatte sie in eine extra Innentasche gelegt, damit es nicht verloren ging.
 
-Theo schrie *jaaaa* und kippte fast die Marmelade um. Mila sagte nichts. Mila hatte noch nie ein Boot gefahren. Sie hatte nur einmal im Schwimmbad eine Schwimmnudel gehabt, und auf der war sie gleich umgekippt.
+Mila hatte noch nie ein Boot gefahren. Aber heute würde sie es tun.
 
-Aber sie zog ihren Badeanzug an und einen Pulli darüber. Sie packte Bärchen ein. Sie packte das kleine Stück getrocknetes Smilje aus ihrer Tasche in eine extra Innentasche, damit es nicht verloren ging.
+Theo schrie irgendwo hinter ihr *jaaaa* und kippte vermutlich die Marmelade um. Papa rief etwas. Mama lachte.
 
-Rela traf sie am Hafen. Sie hatte ihre eigene rote Schwimmweste dabei. Sie war schon sehr oft Boot gefahren.
+Vor Mila lag das Boot. Klein und blau. Auf dem Rumpf stand ein Name in altmodischer Schrift: *Ribica.* Fischlein.
+
+Rela kam dazu mit einer eigenen roten Schwimmweste. Sie war schon sehr oft Boot gefahren. Mila war das anzusehen — Rela ging mit derselben ruhigen Selbstverständlichkeit auf den Steg, wie sie barfuß über heiße Steine ging.
 
 ---
 
-Das Boot war klein und blau und hieß *Ribica* — Fischlein. Nona Maricas Sohn — er hieß Marko, hatte breite Schultern und eine Stimme, die wie ein leise gestimmtes Cello klang — startete den Motor. Das Boot machte *putt-putt-putt-putt*, und langsam wurde der Hafen kleiner.
+Marko, Nona Maricas Sohn, hatte breite Schultern und eine Stimme, die wie ein leise gestimmtes Cello klang. Er startete den Motor. Das Boot machte *putt-putt-putt-putt*. Langsam wurde der Hafen kleiner.
 
 Mila saß ganz vorne auf einer Holzbank. Theo war zwischen Mama und Papa eingeklemmt. Rela hockte vorne neben Mila wie eine kleine Königin, mit den Füßen gegen das Bug.
 
-Das Wasser unter ihnen war erst noch grün — durchsichtig grün, wie wenn man durch ein Glas Apfelsaft schaut. Dann wurde es plötzlich tiefblau, und Mila wusste: jetzt war es tief.
+Das Wasser unter ihnen war erst grün. Durchsichtig grün, wie durch ein Glas Apfelsaft. Dann wurde es tiefblau, und Mila wusste: jetzt war es tief.
 
 Sie spürte ihre Brust groß werden. Nicht aus Angst. Aus etwas anderem.
 
@@ -31,7 +33,9 @@ Sie spürte ihre Brust groß werden. Nicht aus Angst. Aus etwas anderem.
 
 Mila sah hin.
 
-Aus dem dunkelblauen Wasser, etwa zwanzig Meter vom Boot entfernt, hob sich eine Flosse. Eine Flosse aus Tintengrau. Sie tauchte langsam wieder ein. Dann kam noch eine. Dann ein ganzer Bogen — ein Rücken, glänzend, der sich im Wasser drehte, und ein winziger Wasserstrahl, weil das Tier ausatmete.
+Aus dem dunkelblauen Wasser, etwa zwanzig Meter vom Boot entfernt, hob sich eine Flosse. Eine Flosse aus Tintengrau. Sie tauchte langsam wieder ein. Dann kam noch eine. Dann ein ganzer Bogen — ein Rücken, glänzend, der sich im Wasser drehte. Ein kleiner Wasserstrahl. Das Tier atmete aus.
+
+Mila stand still. Sie hörte ihren eigenen Atem.
 
 »**DU**-pin«, flüsterte Marko hinter ihnen. »Dolphin.«
 
@@ -69,7 +73,9 @@ Val tauchte unter dem Bug ab. Er kam auf der anderen Seite wieder hoch und blies
 
 Mila hörte das Geräusch. *Pfff.* Wie ein winziges Lachen.
 
-Und sie wusste — sie wusste es einfach — Vals Geheimnis: dass er morgens immer als Erster wach wurde, vor seinen Geschwistern, weil er die Sonne unter dem Wasser kommen sehen wollte, bevor sie über dem Wasser kam.
+Und sie wusste Vals Geheimnis. Sie wusste es einfach.
+
+Er wurde morgens immer als Erster wach. Vor seinen Geschwistern. Weil er die Sonne unter dem Wasser kommen sehen wollte, bevor sie über dem Wasser kam.
 
 ---
 

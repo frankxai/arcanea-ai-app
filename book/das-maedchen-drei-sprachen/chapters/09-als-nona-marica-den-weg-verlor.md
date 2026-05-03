@@ -33,6 +33,10 @@ Mila hörte die Erwachsenen draußen rufen. Sie hörte Mamas Stimme, sie hörte 
 
 Theo schlief. Mila stand am Fenster.
 
+Sie wollte rufen. Sie wollte runterlaufen. Sie wollte Theo wachrütteln und sagen: *Komm, wir gehen sie suchen.* Aber Mama hatte gesagt, sie solle bleiben. Mila biss sich auf die Lippe und blieb.
+
+Bis sie Luna sah.
+
 Da, an der Mauer gegenüber, saß Luna.
 
 Luna saß nicht still. Luna lief drei Schritte hin, drei Schritte her, drehte sich, schaute Mila direkt ins Fenster.
@@ -65,7 +69,7 @@ Sie hatte sie diesen Sommer hundertmal benutzt. Mit Mama zum Bäcker. Mit Rela z
 
 Luna nahm die Treppe.
 
-Mila zögerte einen Moment. Theo war müde. Aber Theo, weil er drei war und nicht wusste, dass Müdigkeit eine Ausrede war, kletterte Stufe für Stufe, festgehalten an Milas Hand.
+Mila zögerte einen Moment. Theo war müde. Aber Theo war drei. Er wusste noch nicht, dass Müdigkeit eine Ausrede sein kann. Er kletterte Stufe für Stufe. Mila hielt seine Hand.
 
 Oben am Olivenhain wurde es heller. Der Mond war aufgegangen — der dicke Spätsommer-Mond, der gold war wie das Smilje.
 

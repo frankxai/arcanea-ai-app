@@ -43,13 +43,11 @@ Sie schrieb langsam.
 
 > *Liebe Oma,*
 >
-> *Heute ist der vorletzte Tag vor der Schule. Theo hat gestern in eine Feige gebissen, die noch nicht reif war, und seitdem will er nur noch reife Feigen, sonst nichts. Mama macht jeden Tag eine kleine Mittagsruhe. Papa hat den Rasenmäher verschenkt, weil hier kein Rasen ist.*
->
-> *Ich habe drei Freunde. Eine heißt Rela, eine heißt Luna, einer heißt Val. Rela ist ein Mädchen aus dem Nachbarhaus. Luna ist eine Katze mit einem Mond auf dem Auge. Val ist ein Delfin. Es gibt auch noch Oli, aber der ist mit dem Boot wieder weggesegelt — er kommt aber nächsten Sommer wieder.*
+> *Ich habe drei Freunde. Eine heißt Rela, eine heißt Luna, einer heißt Val. Rela ist ein Mädchen aus dem Nachbarhaus. Luna ist eine Katze mit einem Mond auf dem Auge. Val ist ein Delfin.*
 >
 > *Nona Marica wohnt nebenan und hat mir die Blume gezeigt, die niemals stirbt. Sie heißt Smilje. Ich schicke dir eine. Sie wird gold bleiben, immer.*
 >
-> *Ich kann jetzt zwölf kroatische Sätze. Vielleicht dreizehn. Ich kann auch ein paar englische Sätze. Ich kann zählen bis zehn auf Kroatisch: jedan, dva, tri, četiri, pet, šest, sedam, osam, devet, deset.*
+> *Ich kann jetzt zwölf kroatische Sätze. Ich kann zählen bis zehn: jedan, dva, tri, četiri, pet, šest, sedam, osam, devet, deset.*
 >
 > *Oma, ich hab dich lieb. **Volim te.** Auf Kroatisch heißt das: Ich hab dich lieb.*
 >
@@ -97,7 +95,7 @@ Mila lachte.
 
 Sie hob Theo hoch und drehte sich zur Mauer und schaute über sie hinweg auf das schmale Stück Meer, das man von hier sehen konnte. Es war noch da.
 
-Sie wusste jetzt: Ein Zuhause war kein Ort. Ein Zuhause war das, was man kannte. Sie kannte Deutschland. Und sie kannte jetzt auch dies hier.
+Sie wusste jetzt. Ein Zuhause war kein Ort. Ein Zuhause war das, was man kannte. Sie kannte Deutschland. Und sie kannte jetzt auch dies hier.
 
 »*Sada znam tvoje tajno ime*«, flüsterte sie. *Jetzt kenne ich deinen geheimen Namen.*
 

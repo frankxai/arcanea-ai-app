@@ -7,7 +7,7 @@
 
 Es war August geworden, ohne dass Mila gemerkt hatte, wie.
 
-Die Tage waren lang und langsam und voll Sonne. Die Zikaden — *cvrčci* hießen sie — sangen ab Mittag so laut, dass man sich anschreien musste, wenn man im Pinienwald lief. Die Feigen — *smokve* — waren weich und tropften süß, wenn man sie aufmachte. Mila hatte zwölf neue kroatische Wörter pro Woche gelernt, hatte Mama gesagt, das sei sehr viel — sogar Mama sei beeindruckt.
+Die Tage waren lang und langsam und voll Sonne. Die Zikaden — *cvrčci* hießen sie — sangen ab Mittag so laut, dass man sich anschreien musste, wenn man im Pinienwald lief. Die Feigen — *smokve* — waren weich und tropften süß, wenn man sie aufmachte. Mila hatte zwölf neue kroatische Wörter pro Woche gelernt. Mama hatte gesagt, das sei sehr viel. Sogar Mama sei beeindruckt.
 
 An einem heißen Abend ließ Mama das Fenster offen. Es war keine *bura*, kein Wind überhaupt, nur eine warme Luft, die roch wie alles auf einmal: Salz, Pinien, getrocknete Kräuter, Eselsdung von dem Hügel oberhalb.
 
@@ -19,7 +19,7 @@ Sie schloss die Augen.
 
 Im Traum war Mila auf einer Mauer.
 
-Es war die Mauer hinter Nona Maricas Garten. Aber sie war länger als in Wirklichkeit, viel länger, sie ging immer weiter und weiter bis ans Meer und dann ins Wasser hinein und dann unter dem Wasser weiter, ganz tief.
+Es war die Mauer hinter Nona Maricas Garten. Aber sie war länger als in Wirklichkeit. Viel länger. Sie ging immer weiter und weiter, bis ans Meer. Und dann ins Wasser hinein. Und dann unter dem Wasser weiter, ganz tief.
 
 Vor Mila lief Luna. Luna ließ den Schwanz hochgestellt, wie eine kleine schwarze Flagge mit einem winzigen weißen Mond auf dem Auge. Manchmal drehte sie sich um und blinzelte langsam und ging weiter.
 
@@ -51,7 +51,7 @@ Vor ihnen wurde die Mauer schmäler. Eine Eidechse saß da. Genau die Eidechse v
 
 Sie schaute Mila an.
 
-Mila kniete sich hin. Ihre Brust machte etwas, das im wachen Leben nur Erwachsene konnten — sie hörte ihren eigenen Atem von außen.
+Mila kniete sich hin. Sie hörte ihren eigenen Atem. Von außen, als wäre er nicht ganz ihrer.
 
 Die Eidechse fragte etwas, ohne ein Wort.
 

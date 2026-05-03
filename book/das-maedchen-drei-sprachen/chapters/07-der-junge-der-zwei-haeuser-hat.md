@@ -7,7 +7,7 @@
 
 Im Hafen lag plötzlich ein neues Boot.
 
-Es war ein Segelboot, kleiner als die Fähren, größer als die Fischerboote, weiß mit einer hellroten Linie. Auf dem Heck stand ein Name in zwei Sprachen: *Sirena / Sirena*. (Auf Englisch und Kroatisch hieß das Wort dasselbe — *Meerjungfrau*. Mila hatte das gerade gelernt.)
+Es war ein Segelboot, kleiner als die Fähren, größer als die Fischerboote, weiß mit einer hellroten Linie. Auf dem Heck stand ein Name in zwei Sprachen: *Sirena / Sirena*. Auf Englisch und Kroatisch klang das Wort fast gleich. Es bedeutete Meerjungfrau. Das hatte Mila gerade gelernt.
 
 Auf dem Boot saß ein Junge.
 
@@ -99,7 +99,7 @@ Und Oli — der bis dahin nur ein paar Wörter gemalt hatte, niemals einen ganze
 
 Drei Sätze. Drei Sprachen. Eine Seite.
 
-Mila schaute auf die Seite und dachte zum ersten Mal nicht *ich vermisse Deutschland*, und auch nicht *Kroatien ist anders*, sondern etwas Drittes, etwas, das sie noch nicht in Worte fassen konnte, aber das in ihrem Herzen wie eine warme Tasse stand.
+Mila schaute auf die Seite und dachte zum ersten Mal nicht *ich vermisse Deutschland*. Und auch nicht *Kroatien ist anders*. Sondern etwas Drittes. Etwas, das sie noch nicht in Worte fassen konnte. Aber das in ihrem Herzen stand wie eine warme Tasse.
 
 Luna schloss die Augen.
 

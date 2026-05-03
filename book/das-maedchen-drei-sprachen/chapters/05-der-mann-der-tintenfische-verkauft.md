@@ -15,7 +15,7 @@ Das fühlte sich groß an.
 
 Der Markt war ein langer Tisch aus blauen Kacheln. Er lag direkt am Hafen. Auf ihm lagen Fische, die Mila noch nie gesehen hatte: silbrige, rote, fast durchsichtige. Einige hatten Flossen wie kleine Federn. Es roch nach Salz und Eisen und Algen. Das Wasser aus dem Schlauch klang wie das Geräusch, das Mila gestern im Halbschlaf geträumt hatte.
 
-Eine *bura* war heute morgen aufgekommen. Das war ein Wind, hatte Nona Marica erklärt, der von den Bergen runterkam und kalt war und plötzlich kam. Heute war er noch leicht. Aber er machte die Mützen der alten Männer wackeln und drückte gegen Milas Hosenbeine.
+Heute morgen war die *bura* aufgekommen. Das war ein Wind, hatte Nona Marica erklärt. Er kommt von den Bergen. Er ist kalt. Und er kommt plötzlich. Heute war er noch leicht. Aber er machte die Mützen der alten Männer wackeln und drückte gegen Milas Hosenbeine.
 
 Rela lief vor. Sie kannte alle. Sie sagte »**DO**-bro **JU**-tro« zu einem alten Mann ohne Zähne, und der Mann grinste und tippte ihr auf den Kopf und sagte etwas, das wie ein Lied klang.
 
@@ -57,13 +57,13 @@ Mama hörte sie und blieb still. Der Mann mit dem Bart hatte es auch gehört. Er
 
 Der Mann antwortete mit einer Zahl. Mama bezahlte. Mila hörte zu und versuchte die Zahlen zu unterscheiden, aber sie verlor sie unterwegs. Macht nichts. Morgen vielleicht.
 
-Während Mama bezahlte, zog Rela Mila zum Brotstand. Auf dem Tisch lagen drei Sorten **KRUH** — Brot — eines war flach und dunkel und mit kleinen Kräutern oben drauf, das andere rund und weich, das dritte lang und knusprig.
+Während Mama bezahlte, zog Rela Mila zum Brotstand. Auf dem Tisch lagen drei Sorten **KRUH** — Brot. Das eine war flach und dunkel, mit kleinen Kräutern obendrauf. Das andere war rund und weich. Das dritte lang und knusprig.
 
 »**PER**-šin-Brot«, sagte Rela und zeigte auf das mit den Kräutern. »Peršin ist — diese kleine grüne Pflanze — du weißt schon.«
 
 »Petersilie?«
 
-»Petersilie!« Rela strahlte, weil sie ein deutsches Wort gelernt hatte.
+»Petersilie!«, strahlte Rela. Sie hatte ein deutsches Wort gelernt.
 
 Sie kauften das Petersilienbrot. Es war noch warm.
 
@@ -75,7 +75,7 @@ In der Stille knabberte Mila vom warmen Brot. Es war salzig und grün und ein bi
 
 Mila biss noch ein Stück ab.
 
-Aber dieses Brot war heute morgen sehr warm gewesen, und der Geruch erinnerte plötzlich an etwas, das Mila gar nicht hatte erinnern wollen — an Omas Sonntagsbrötchen, das immer in einem braunen Korb auf dem Frühstückstisch gestanden hatte, mit Butter und Honig und einer gelben Lampe darüber, weil Sonntagmorgen in Deutschland länger dunkel waren als hier.
+Aber dieses Brot war heute morgen sehr warm gewesen. Und der Geruch erinnerte plötzlich an etwas anderes. An Omas Sonntagsbrötchen. An den braunen Korb auf dem Frühstückstisch. An Butter und Honig. An die gelbe Lampe darüber, weil Sonntagmorgen in Deutschland länger dunkel waren.
 
 Etwas in Milas Hals wurde eng. Sie weinte nicht. Aber eine einzige Träne machte sich von selbst auf den Weg, ohne zu fragen, und blieb in ihrer Wimper hängen.
 
