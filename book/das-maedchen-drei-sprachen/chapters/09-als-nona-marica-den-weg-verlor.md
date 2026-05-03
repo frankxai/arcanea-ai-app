@@ -57,7 +57,7 @@ Vor der Tür wartete schon Rela. Rela hatte ihre Schuhe falsch herum an. Sie hat
 
 »Luna«, nickte Rela.
 
-Die schwarze Katze mit dem Mond auf dem Auge drehte sich und lief in die kleine Steingasse — die *kale*, hatte Rela das Wort beigebracht — die seitlich vom Hafen wegging.
+Die schwarze Katze mit dem Mond auf dem Auge drehte sich und lief in die kleine Steingasse. Die *kale*, hatte Rela das Wort beigebracht. Sie ging seitlich vom Hafen weg.
 
 Die drei Kinder folgten.
 
@@ -71,7 +71,7 @@ Luna nahm die Treppe.
 
 Mila zögerte einen Moment. Theo war müde. Aber Theo war drei. Er wusste noch nicht, dass Müdigkeit eine Ausrede sein kann. Er kletterte Stufe für Stufe. Mila hielt seine Hand.
 
-Oben am Olivenhain wurde es heller. Der Mond war aufgegangen — der dicke Spätsommer-Mond, der gold war wie das Smilje.
+Oben am Olivenhain wurde es heller. Der Mond war aufgegangen. Der dicke Spätsommer-Mond, der gold war wie das Smilje.
 
 Luna lief weiter, durch den Hain, unter dem alten knorrigen Baum durch, den Nona Marica ihr im Juli gezeigt hatte. Der Baum war über tausend Jahre alt. Er hatte ein Loch im Stamm, in das man fast hineinkriechen konnte.
 
@@ -81,7 +81,7 @@ Da saß Nona Marica.
 
 ---
 
-Sie saß ganz ruhig in einer Steinmulde. In ihrem Schoß lag ein kleines Bündel frisch geschnittenes Smilje. Sie hielt sich die linke Hand. Mila sah, dass sie ein bisschen geblutet hatte — nichts Schlimmes, ein Kratzer am Finger.
+Sie saß ganz ruhig in einer Steinmulde. In ihrem Schoß lag ein kleines Bündel frisch geschnittenes Smilje. Sie hielt sich die linke Hand. Mila sah, dass sie ein bisschen geblutet hatte. Nichts Schlimmes, nur ein Kratzer am Finger.
 
 »Nona?«, flüsterte Mila.
 
@@ -97,7 +97,7 @@ Nona Marica strich ihm über die Haare.
 
 »**NE**-moj se **BRI**-nu-ti«, sagte sie zu Theo, sehr sanft. *Mach dir keine Sorgen.*
 
-Mila zog ihr Handy aus der Pulli-Tasche — Mama hatte es ihr für Notfälle mitgegeben — und drückte den grünen Knopf.
+Mila zog ihr Handy aus der Pulli-Tasche. Mama hatte es ihr für Notfälle mitgegeben. Sie drückte den grünen Knopf.
 
 »Mama? Wir haben sie gefunden. Beim alten Olivenbaum.«
 
@@ -115,7 +115,7 @@ Sie wusste den Weg. Sie wusste die Namen der Straßen. Sie wusste, wo Nona gerne
 
 Sie war jemand geworden, der diese Insel kannte.
 
-Vom Hafen kam ein leiser Ton — eine *klapa*-Stimme, ein Mann, der ein altes Lied sang, zu spät am Abend, weil er nicht aufhören wollte.
+Vom Hafen kam ein leiser Ton. Eine *klapa*-Stimme, ein Mann, der ein altes Lied sang, zu spät am Abend, weil er nicht aufhören wollte.
 
 Mila hörte ihn und summte mit, ganz leise. Sie kannte die Melodie. Sie hatte sie schon hundertmal gehört.
 

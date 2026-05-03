@@ -17,7 +17,7 @@ Und das Etwas schaute sie an.
 
 Mila erstarrte. Das Etwas erstarrte auch.
 
-Es war ein kleines Tier. Beige, mit großen schwarzen Augen. Die Augen blinzelten nicht. Die Zehen sahen aus wie winzige Hände. Es hatte sich flach an die Wand gedrückt — so flach, als wüsste es schon, wie das hier funktioniert. Als hätte es das schon hundertmal gemacht, dieses Stillhalten, wenn jemand Neues ins Zimmer kam.
+Es war ein kleines Tier. Beige, mit großen schwarzen Augen. Die Augen blinzelten nicht. Die Zehen sahen aus wie winzige Hände. Es hatte sich flach an die Wand gedrückt. So flach, als wüsste es schon, wie das hier funktioniert. Als hätte es das schon hundertmal gemacht, dieses Stillhalten, wenn jemand Neues ins Zimmer kam.
 
 Mila wagte nicht zu atmen.
 
@@ -49,7 +49,7 @@ Sie wandte sich wieder dem kleinen Tier an der Wand zu. Es schaute sie immer noc
 
 Aus dem Nebenzimmer kam Theos Stimme, schlummerweich und selbstvergessen: »*Mau, Mau, hopsi.*«
 
-Mila lachte leise. Dann roch sie an Bärchens Fell — Deutschland, ein bisschen, schon weniger als gestern — und dann an der Luft im Zimmer: Meer und Stein und das Würzige, das sie morgen herausfinden würde.
+Mila lachte leise. Dann roch sie an Bärchens Fell. Es roch nach Deutschland, ein bisschen, schon weniger als gestern. Dann roch sie an der Luft im Zimmer: Meer und Stein und das Würzige, das sie morgen herausfinden würde.
 
 Beide Gerüche waren da.
 

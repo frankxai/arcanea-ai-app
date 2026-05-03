@@ -11,7 +11,7 @@ Es war ein Segelboot, kleiner als die Fähren, größer als die Fischerboote, we
 
 Auf dem Boot saß ein Junge.
 
-Er war ein bisschen größer als Mila. Er hatte sandfarbene Haare und ziemlich braune Beine. Er las ein Buch — auf Englisch, Mila konnte den Titel nicht lesen — und zwischendurch warf er Brotkrumen ins Wasser, und kleine silbrige Fische sprangen danach.
+Er war ein bisschen größer als Mila. Er hatte sandfarbene Haare und ziemlich braune Beine. Er las ein Buch (auf Englisch, Mila konnte den Titel nicht lesen) und warf zwischendurch Brotkrumen ins Wasser. Kleine silbrige Fische sprangen danach.
 
 »Das ist Olis Boot!«, rief Rela. »Er kommt jeden Sommer!«
 
@@ -37,7 +37,7 @@ Der Junge lachte. Er lachte ohne Grund. Das war erstaunlich. In Deutschland muss
 
 »Ja«, sagte Mila. Sie nickte heftig.
 
-»Toll!« Oli drehte sich um und rief etwas zum Boot. Eine Frau auf dem Boot — sie trug einen Strohhut und winkte — antwortete in einem Mix aus etwas, das wie Englisch klang, und etwas, das wie Kroatisch klang. Mila konnte beide Sprachen jetzt unterscheiden, auch wenn sie keine ganz verstand. Das war neu.
+»Toll!« Oli drehte sich um und rief etwas zum Boot. Eine Frau auf dem Boot, mit Strohhut, winkte und antwortete in einem Mix aus etwas, das wie Englisch klang, und etwas, das wie Kroatisch klang. Mila konnte beide Sprachen jetzt unterscheiden, auch wenn sie keine ganz verstand. Das war neu.
 
 »My mum is Croatian«, sagte Oli. »Mein — Mama — Kroatien. Mein Papa — Britisch. Wir — *zwei* — Häuser.« Er hielt zwei Finger hoch. »Two homes.«
 
@@ -93,7 +93,7 @@ Dann schrieb Rela darunter:
 
 > *»Ja sam Mirela.«*
 
-Und Oli — der bis dahin nur ein paar Wörter gemalt hatte, niemals einen ganzen Satz — schrieb darunter, sehr langsam und mit der Zunge zwischen den Zähnen:
+Und Oli, der bis dahin nur ein paar Wörter gemalt hatte, niemals einen ganzen Satz, schrieb darunter, sehr langsam und mit der Zunge zwischen den Zähnen:
 
 > *»My name is Oliver and I am happy.«*
 

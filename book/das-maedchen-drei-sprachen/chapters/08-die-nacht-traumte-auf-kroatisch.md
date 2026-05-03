@@ -75,7 +75,7 @@ Die Eidechse blinzelte. Dann lief sie weiter ins Smiljeland hinein, und die ande
 
 Es war noch dunkel.
 
-Theo schnarchte leise nebenan. Im Garten unten zirpte einer der letzten Cvrčci des Tages — er hatte vergessen, dass die Nacht da war.
+Theo schnarchte leise nebenan. Im Garten unten zirpte einer der letzten Cvrčci des Tages. Er hatte vergessen, dass die Nacht da war.
 
 Mila setzte sich im Bett auf und atmete ganz langsam.
 
@@ -83,7 +83,7 @@ Sie hatte etwas geträumt. Sie wusste noch alles.
 
 Sie hatte einen Traum gehabt, in dem ihr Mund kroatische Wörter gesagt hatte, ohne dass jemand sie ihr beigebracht hatte. Sie hatte Wörter im Mund gehabt, die noch keine Lehrerin ihr gegeben hatte. Die Wörter waren einfach in ihrem Kopf gewesen. Wie Freunde, die einen Schlüssel hatten und einfach reinkamen.
 
-Sie ging barfuß zum Fenster. Draußen war der Mond — ganz rund, wie der weiße Fleck auf Lunas Auge.
+Sie ging barfuß zum Fenster. Draußen war der Mond. Ganz rund, wie der weiße Fleck auf Lunas Auge.
 
 Sie öffnete das Fenster ein bisschen mehr.
 
@@ -95,7 +95,7 @@ Und dann, weil sie heute mutig war, sagte sie es auch in Kroatisch ohne nachzude
 
 *Sterne.* Das Wort hatte Nona Marica ihr letzte Woche gezeigt, als sie auf dem Dach Smilje und Kräuter zum Trocknen hinlegten.
 
-Mila stand am Fenster und atmete die Luft ein, in der vier Sprachen waren — Deutsch, Kroatisch, Englisch und die Sprache, die nur Tiere und Mond und Meer sprachen.
+Mila stand am Fenster und atmete die Luft ein. In der Luft waren vier Sprachen: Deutsch, Kroatisch, Englisch und die Sprache, die nur Tiere und Mond und Meer sprachen.
 
 Sie ging zurück ins Bett. Bärchen war noch warm von ihr. Sie kuschelte sich an ihn und schlief ein.
 

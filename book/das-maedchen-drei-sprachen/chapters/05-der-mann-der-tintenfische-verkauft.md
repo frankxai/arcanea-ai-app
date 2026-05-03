@@ -45,7 +45,7 @@ Der Tintenfisch schaute sie an. Mila schaute zurück. Sie versuchte sich an das 
 
 »Hallo«, sagte sie sehr leise zum Tintenfisch. »Es tut mir leid, dass du nicht mehr im Wasser bist.«
 
-Mama hörte sie und blieb still. Der Mann mit dem Bart hatte es auch gehört. Er nickte einmal — als hätte er verstanden, ohne ein einziges deutsches Wort zu kennen — und legte den Tintenfisch behutsam auf eine flache Schüssel mit Eis. Nicht hart. Sanft.
+Mama hörte sie und blieb still. Der Mann mit dem Bart hatte es auch gehört. Er nickte einmal, als hätte er verstanden, ohne ein einziges deutsches Wort zu kennen. Dann legte er den Tintenfisch behutsam auf eine flache Schüssel mit Eis. Nicht hart. Sanft.
 
 »Hvala«, sagte Mila zum Mann.
 
@@ -89,7 +89,7 @@ Sie rückte nur ganz langsam ein Stück näher auf der Bank, bis ihre Schulter a
 
 Mila wusste, was das hieß. Mama hatte es ihr gestern gesagt. *Lijepo*: schön.
 
-»Lijepo«, antwortete Mila. Sie sagte es leise. Es war ein anderes *lijepo* als sonst — eines, das auch das andere mit hineinnahm, das, was nicht ganz schön war, das mit der Wimper. Aber es war trotzdem *lijepo*.
+»Lijepo«, antwortete Mila. Sie sagte es leise. Es war ein anderes *lijepo* als sonst. Eines, das auch das andere mit hineinnahm. Das, was nicht ganz schön war, das mit der Wimper. Aber es war trotzdem *lijepo*.
 
 Und dann, ganz aus dem Nichts, fing die *bura* wieder an, hob den Sand in kleinen Wirbeln an und blies Mila eine Brotkrume vom Kinn.
 

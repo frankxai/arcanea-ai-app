@@ -15,7 +15,7 @@ Theo schrie irgendwo hinter ihr *jaaaa* und kippte vermutlich die Marmelade um. 
 
 Vor Mila lag das Boot. Klein und blau. Auf dem Rumpf stand ein Name in altmodischer Schrift: *Ribica.* Fischlein.
 
-Rela kam dazu mit einer eigenen roten Schwimmweste. Sie war schon sehr oft Boot gefahren. Mila war das anzusehen — Rela ging mit derselben ruhigen Selbstverständlichkeit auf den Steg, wie sie barfuß über heiße Steine ging.
+Rela kam dazu mit einer eigenen roten Schwimmweste. Sie war schon sehr oft Boot gefahren. Mila war das anzusehen. Rela ging mit derselben ruhigen Selbstverständlichkeit auf den Steg, wie sie barfuß über heiße Steine ging.
 
 ---
 
@@ -47,7 +47,7 @@ Ein zweiter Delfin tauchte auf. Dann ein dritter. Es waren mindestens fünf, vie
 
 Mila stand auf und hielt sich am Bug fest. Marko machte den Motor kleiner. Das Boot wurde fast still. Nur die Wellen klatschten leise an die Seite.
 
-Einer der Delfine — ein junger, kleinerer, mit einem kleinen Riss in der Rückenflosse — kam direkt unter Milas Seite des Bootes. Er drehte sich auf die Seite. Sein Auge schaute nach oben. Mila schaute nach unten.
+Einer der Delfine kam direkt unter Milas Seite des Bootes. Ein junger, kleinerer, mit einem kleinen Riss in der Rückenflosse. Er drehte sich auf die Seite. Sein Auge schaute nach oben. Mila schaute nach unten.
 
 Sie schauten einander an.
 

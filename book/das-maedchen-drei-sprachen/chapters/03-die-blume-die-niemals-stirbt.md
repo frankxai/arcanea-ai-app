@@ -15,13 +15,13 @@ Das Meer antwortete nicht. Aber es machte sein leises *schhh, schhh, schhh*.
 
 Hinter dem Haus stand eine kleine Holzpforte einen Spalt offen. Mila hatte sie nie zuvor gesehen.
 
-Sie schob den Spalt etwas weiter auf — und dahinter lag ein Garten.
+Sie schob den Spalt etwas weiter auf. Und dahinter lag ein Garten.
 
 ---
 
 Es war kein Garten wie in Deutschland. Kein Rasen. Keine Beete. Stattdessen eine Mauer. Aus grauen Steinen, einer auf den anderen, ohne Mörtel. Ganz alt. Ganz lebendig. Aus den Ritzen wuchs etwas Silbergrünes mit blau-violetten Blüten und einem starken, frischen Geruch. Und überall, an den heißen Stellen, wo die Sonne schon hinkam, leuchteten kleine gelbe Knöpfe. Sie sahen aus wie Stroh und wie Gold zur gleichen Zeit.
 
-Nona Marica war auch im Garten. Sie kniete vor einem Busch und schnitt mit einer kleinen Schere etwas ab. Sie sah Mila und nickte, ohne sich zu erschrecken — als hätte sie auf sie gewartet.
+Nona Marica war auch im Garten. Sie kniete vor einem Busch und schnitt mit einer kleinen Schere etwas ab. Sie sah Mila und nickte. Ohne sich zu erschrecken. Als hätte sie auf sie gewartet.
 
 »**KA**-du-lja«, sagte sie und hielt einen Zweig hoch. Die Blätter waren weich und silbrig wie Mäuseohren. »Salbei.«
 
@@ -51,13 +51,13 @@ Aber Mila hatte gesehen, dass es gelächelt hatte, gerade bevor es weg war.
 
 Nona Marica zeigte mit einem alten Finger auf die kleinen gelben Knöpfe. »**SMI**-lje«, sagte sie.
 
-Mila kniete sich neben sie. Die Blümchen waren winzig — papierdünn, trocken, fast als wären sie schon gepflückt worden. Aber sie wuchsen lebendig aus den Felsritzen.
+Mila kniete sich neben sie. Die Blümchen waren winzig. Papierdünn, trocken, fast als wären sie schon gepflückt worden. Aber sie wuchsen lebendig aus den Felsritzen.
 
 »Smilje«, flüsterte Mila.
 
 »*Ne umire*«, sagte Nona Marica und schüttelte sanft den Kopf. Sie suchte nach den deutschen Wörtern. »Sie — stirbt nicht. Auch nicht, wenn man sie pflückt. Sie bleibt gold. Immer.«
 
-Mila streckte einen Finger aus. Sie berührte eine der Blüten — ganz, ganz leicht — und ihr Finger roch hinterher nach Sommer und nach etwas Warmem, das sie nicht benennen konnte.
+Mila streckte einen Finger aus. Sie berührte eine der Blüten, ganz leicht. Ihr Finger roch hinterher nach Sommer und nach etwas Warmem, das sie nicht benennen konnte.
 
 In diesem Moment fiel ein Schatten über den Stein. Ein winziger Schatten.
 
@@ -103,7 +103,7 @@ Theo erschien an der Pforte, in seinem Pyjama, Hops im Arm. Er sah die kleinen g
 
 »*Mi-ye*«, versuchte Theo. »*Mi-ye!*«
 
-Theo bückte sich, brach eine kleine Blüte ab — bevor Mila ihn stoppen konnte — und drückte sie in seinen Mund.
+Theo bückte sich und brach eine kleine Blüte ab, bevor Mila ihn stoppen konnte. Dann drückte er sie in seinen Mund.
 
 »Theo!«
 

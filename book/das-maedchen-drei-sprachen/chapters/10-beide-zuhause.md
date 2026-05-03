@@ -7,7 +7,7 @@
 
 Im September fing die Schule an.
 
-Mila hatte bisher noch nie eine Schule gehabt. In Deutschland wäre sie jetzt in die erste Klasse gekommen. Hier auch. Aber hier war alles anders: die Schule lag fünf Minuten vom Hafen entfernt, sie hieß *Osnovna škola*, und die Lehrerin hieß *učiteljica Maja*. Mila hatte die Worte schon gelernt. Sie hatte einen Ranzen, der nicht in Deutschland gekauft worden war, sondern hier — er hatte einen Delfin drauf, und Mila hatte ihn ausgesucht.
+Mila hatte bisher noch nie eine Schule gehabt. In Deutschland wäre sie jetzt in die erste Klasse gekommen. Hier auch. Aber hier war alles anders: die Schule lag fünf Minuten vom Hafen entfernt, sie hieß *Osnovna škola*, und die Lehrerin hieß *učiteljica Maja*. Mila hatte die Worte schon gelernt. Sie hatte einen Ranzen, der nicht in Deutschland gekauft worden war, sondern hier. Er hatte einen Delfin drauf, und Mila hatte ihn selbst ausgesucht.
 
 Aber bevor die Schule anfing, hatte sie noch zwei Tage frei.
 
@@ -81,7 +81,7 @@ Sie sagte langsam und deutlich:
 
 Drei Sprachen.
 
-Das Smilje im Garten — Mila spürte es genau — wurde ein winziges, allerletztes Mal warm.
+Das Smilje im Garten wurde ein winziges, allerletztes Mal warm. Mila spürte es genau.
 
 Die Eidechse blinzelte.
 
