@@ -1,0 +1,45 @@
+{
+  "name": "@arcanea/multilingual-config",
+  "version": "0.1.0",
+  "license": "SEE LICENSE IN LICENSE",
+  "private": true,
+  "description": "Arcanea property preset for @starlight/multilingual. Bundles canon glossary, section pathnames, Lumina/Guardian voice guides, royalty defaults, and locale list. Import this in any Arcanean Next.js property to get fully-configured multilingual support in one line.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./glossary": {
+      "types": "./dist/glossary.d.ts",
+      "default": "./dist/glossary.js"
+    },
+    "./pathnames": {
+      "types": "./dist/pathnames.d.ts",
+      "default": "./dist/pathnames.js"
+    },
+    "./voices": {
+      "types": "./dist/voices.d.ts",
+      "default": "./dist/voices.js"
+    },
+    "./guardians": {
+      "types": "./dist/guardians.d.ts",
+      "default": "./dist/guardians.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist dist-test",
+    "build:test": "tsc -p tsconfig.test.json",
+    "test": "pnpm run build:test && node --test dist-test/test/"
+  },
+  "dependencies": {
+    "@starlight/multilingual": "file:../multilingual"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0"
+  }
+}
