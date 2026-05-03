@@ -107,42 +107,108 @@ export function lookupTerm(
 }
 
 /**
+ * Detect whether a term contains characters from a script without word
+ * separators (CJK, Thai, etc.). For such terms, word-boundary lookarounds
+ * are wrong — Japanese sentences write `彼は門の鍵を持っていた` with no
+ * separator before/after `門の鍵`, so any boundary check sees the term
+ * surrounded by letters and rejects the match.
+ */
+function isUnseparatedScript(term: string): boolean {
+  // CJK Unified Ideographs, Hiragana, Katakana, Hangul, Thai
+  return /[぀-ゟ゠-ヿ一-鿿가-힯฀-๿]/.test(term);
+}
+
+/**
+ * Build a Unicode-aware word-boundary regex for a glossary term.
+ *
+ * JavaScript's \b only works for ASCII word characters (per ECMA-262 \w =
+ * [A-Za-z0-9_]). For canon terms containing apostrophes (Vel'Tara),
+ * non-Latin scripts, or any non-ASCII letters, \b mismatches.
+ *
+ * Strategy:
+ * - Latin/Greek/Cyrillic terms (script with word separators) → use Unicode
+ *   lookarounds against \p{L}/\p{N} so 'cat' doesn't match 'category'
+ * - CJK/Thai/Hangul terms → no boundaries (these scripts don't use word
+ *   separators; boundary check would always fail when surrounded by other
+ *   characters of the same script)
+ */
+function buildTermRegex(term: string, flags: string): RegExp {
+  const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  if (isUnseparatedScript(term)) {
+    return new RegExp(escaped, flags + 'u');
+  }
+  return new RegExp(`(?<![\\p{L}\\p{N}])${escaped}(?![\\p{L}\\p{N}])`, flags + 'u');
+}
+
+interface ScanHit {
+  term: string;
+  rendering: string;
+  flag: GlossaryFlag;
+  index: number;
+  length: number;
+}
+
+/**
  * Scan a passage of text, find all glossary terms it contains, and return
  * the rendering each one should have in the target locale. Caller can use
  * this to apply substitutions or surface suggestions.
+ *
+ * Substring-overlap handling: when two glossary entries overlap (e.g.
+ * "Vel'Tara" and "Vel'Tara Sword"), the longest match wins at any given
+ * position. This prevents false-positive validation violations.
  */
 export function scanPassage(
   glossary: Glossary,
   text: string,
   targetLocale: string,
   world?: string,
-): Array<{ term: string; rendering: string; flag: GlossaryFlag; index: number }> {
-  const hits: Array<{ term: string; rendering: string; flag: GlossaryFlag; index: number }> = [];
+): ScanHit[] {
+  const allHits: ScanHit[] = [];
 
   for (const entry of glossary.entries) {
     if (world && entry.world && entry.world !== world) continue;
 
-    // Word-boundary match, case-insensitive (but preserves entry.term casing in output)
-    const escaped = entry.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
+    let regex: RegExp;
+    try {
+      regex = buildTermRegex(entry.term, 'gi');
+    } catch {
+      // Term contains no matchable content; skip
+      continue;
+    }
+
     let match: RegExpExecArray | null;
     while ((match = regex.exec(text)) !== null) {
       const rendering =
         entry.perLocale[targetLocale] ??
         entry.perLocale[glossary.defaultLocale] ??
         entry.term;
-      hits.push({
+      allHits.push({
         term: entry.term,
         rendering,
         flag: entry.flag,
         index: match.index,
+        length: match[0].length,
       });
+      // Prevent zero-width match infinite loop
+      if (match.index === regex.lastIndex) regex.lastIndex++;
     }
   }
 
-  // Sort by position in text
-  hits.sort((a, b) => a.index - b.index);
-  return hits;
+  // Sort by position, then by length descending (longer matches preferred)
+  allHits.sort((a, b) => a.index - b.index || b.length - a.length);
+
+  // Filter overlapping matches: keep longest, drop shorter ones inside it
+  const filtered: ScanHit[] = [];
+  let lastEnd = -1;
+  for (const hit of allHits) {
+    if (hit.index >= lastEnd) {
+      filtered.push(hit);
+      lastEnd = hit.index + hit.length;
+    }
+    // else: this hit is inside a previously-accepted longer match; skip
+  }
+
+  return filtered;
 }
 
 /**
@@ -174,9 +240,8 @@ export function validateTranslation(
 
   for (const hit of sourceHits) {
     if (hit.flag === 'preserve') {
-      // Term must appear verbatim in translated text
-      const escaped = hit.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(`\\b${escaped}\\b`);
+      // Term must appear verbatim in translated text. Use Unicode-aware regex.
+      const regex = buildTermRegex(hit.term, '');
       if (!regex.test(translatedText)) {
         violations.push({
           term: hit.term,
@@ -187,8 +252,7 @@ export function validateTranslation(
       }
     } else if (hit.flag === 'translate') {
       // Translated text should contain the canonical target-locale rendering
-      const escaped = hit.rendering.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(`\\b${escaped}\\b`, 'i');
+      const regex = buildTermRegex(hit.rendering, 'i');
       if (!regex.test(translatedText)) {
         violations.push({
           term: hit.term,

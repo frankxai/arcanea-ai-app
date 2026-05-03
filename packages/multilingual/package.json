@@ -43,8 +43,9 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "clean": "rm -rf dist",
-    "test": "node --test dist/**/*.test.js"
+    "clean": "rm -rf dist dist-test",
+    "build:test": "tsc -p tsconfig.test.json",
+    "test": "pnpm run build:test && node --test dist-test/test/"
   },
   "peerDependencies": {
     "next": ">=14",

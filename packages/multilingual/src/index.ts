@@ -28,6 +28,9 @@ export {
   createCreativeWorkSchema,
   createArticleSchema,
   renderJsonLdScript,
+  stringifyJsonLdSafe,
+  escapeJsonForScript,
+  STARLIGHT_JSONLD_CONTEXT,
 } from './schema';
 export { asciiSlug, validateSlug, buildLocaleSlugMap } from './slugs';
 export {
@@ -50,6 +53,7 @@ export {
   getRoyaltySplit,
   splitTranslatorShare,
   validateBookRecord,
+  assertValidRoyaltySplit,
   ROYALTY_SPLIT_PROFILES,
 } from './book';
 export type {

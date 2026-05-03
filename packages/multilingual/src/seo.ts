@@ -38,12 +38,40 @@ export function generateHreflang(
 }
 
 /**
+ * Escape a string for safe inclusion in an HTML attribute.
+ */
+function htmlAttrEscape(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/**
+ * Escape a string for safe inclusion in an XML element body.
+ */
+function xmlEscape(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+/**
  * Render hreflang alternates as HTML <link> tags. Useful when generating
  * sitemap.xml or pre-rendering <head> content as a string.
+ *
+ * All values are HTML-attribute-escaped to defend against injection from
+ * URL query strings, content slugs containing special characters, etc.
  */
 export function renderHreflangLinks(alternates: HreflangAlternate[]): string {
   return alternates
-    .map((a) => `<link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`)
+    .map(
+      (a) =>
+        `<link rel="alternate" hreflang="${htmlAttrEscape(a.hreflang)}" href="${htmlAttrEscape(a.href)}" />`,
+    )
     .join('\n');
 }
 
@@ -96,6 +124,11 @@ export function generateLocaleSitemap(
 /**
  * Render sitemap entries as XML. The entries already include hreflang
  * alternates. Wraps with the standard urlset header.
+ *
+ * All URLs and locale codes are XML-escaped to defend against ampersand /
+ * angle-bracket characters that would otherwise produce invalid XML
+ * (common when URLs contain query strings or content slugs leak special
+ * characters).
  */
 export function renderSitemapXml(entries: SitemapEntry[]): string {
   const urls = entries
@@ -103,19 +136,21 @@ export function renderSitemapXml(entries: SitemapEntry[]): string {
       const altLinks = (e.alternates ?? [])
         .map(
           (a) =>
-            `    <xhtml:link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`,
+            `    <xhtml:link rel="alternate" hreflang="${htmlAttrEscape(a.hreflang)}" href="${htmlAttrEscape(a.href)}" />`,
         )
         .join('\n');
-      const lastmod = e.lastModified ? `    <lastmod>${e.lastModified}</lastmod>` : '';
+      const lastmod = e.lastModified
+        ? `    <lastmod>${xmlEscape(e.lastModified)}</lastmod>`
+        : '';
       const changefreq = e.changeFrequency
-        ? `    <changefreq>${e.changeFrequency}</changefreq>`
+        ? `    <changefreq>${xmlEscape(e.changeFrequency)}</changefreq>`
         : '';
       const priority =
         e.priority !== undefined ? `    <priority>${e.priority.toFixed(1)}</priority>` : '';
 
       return [
         '  <url>',
-        `    <loc>${e.url}</loc>`,
+        `    <loc>${xmlEscape(e.url)}</loc>`,
         lastmod,
         changefreq,
         priority,
@@ -141,7 +176,7 @@ export function renderSitemapIndex(config: LocaleConfig): string {
   const entries = config.locales
     .map(
       (l) =>
-        `  <sitemap>\n    <loc>${config.domain}/sitemap-${l}.xml</loc>\n  </sitemap>`,
+        `  <sitemap>\n    <loc>${xmlEscape(config.domain)}/sitemap-${xmlEscape(l)}.xml</loc>\n  </sitemap>`,
     )
     .join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>
