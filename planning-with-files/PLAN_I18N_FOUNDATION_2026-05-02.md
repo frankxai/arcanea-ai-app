@@ -1,9 +1,19 @@
-# Plan: i18n Foundation + Translation Studio
+# Plan: Starlight Multilingual Foundation + Translation Studio
 
-**Date:** 2026-05-02
-**Branch:** `feature/i18n-foundation`
+**Date:** 2026-05-02 (renamed 2026-05-03)
+**Branch:** `feature/i18n-foundation` → next PRs on `feature/multilingual-*`
+**Package:** `@starlight/multilingual` (was `@arcanea/i18n`)
+**Skill:** `multilingual` (was `arcanea-i18n`)
 **Owner:** Frank + Lumina
-**Status:** Architecture locked, foundation in progress
+**Status:** Architecture locked, Phase 1 + 1.5 in progress
+
+## Naming rationale
+
+- **Starlight** = the foundation/standards layer beneath all Frank properties (memory: SIS, Architect, Vault, Orchestrator already live here). Cross-property infrastructure.
+- **Arcanea** = a creative-platform product built on Starlight. Has Arcanea-specific extensions (canon glossary, Lumina/Guardian voices per locale, book translation economy).
+- **FrankX** = personal brand product built on Starlight. Simpler multilingual needs.
+
+`@starlight/multilingual` is the right namespace because this system is meant for *every* Next.js property Frank operates, not just Arcanea. The convention extends: future foundation packages live as `@starlight/seo`, `@starlight/auth`, `@starlight/checkout`, etc.
 
 ## North Star
 

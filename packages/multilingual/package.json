@@ -1,9 +1,9 @@
 {
-  "name": "@arcanea/i18n",
+  "name": "@starlight/multilingual",
   "version": "0.1.0",
   "license": "SEE LICENSE IN LICENSE",
   "private": true,
-  "description": "Arcanean i18n foundation — path-based routing, translated slugs, AEO/SEO helpers, JSON-LD schema, llms.txt + sitemap generation. Reusable across all Frank properties.",
+  "description": "Starlight multilingual foundation — path-based routing, translated slugs, canon glossary, AEO JSON-LD with provenance, llms.txt + sitemap generation, community translation pipeline. Cross-property infrastructure for any Next.js site in the Frank ecosystem.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -30,6 +30,14 @@
     "./slugs": {
       "types": "./dist/slugs.d.ts",
       "default": "./dist/slugs.js"
+    },
+    "./glossary": {
+      "types": "./dist/glossary.d.ts",
+      "default": "./dist/glossary.js"
+    },
+    "./book": {
+      "types": "./dist/book.d.ts",
+      "default": "./dist/book.js"
     }
   },
   "scripts": {

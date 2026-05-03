@@ -30,3 +30,32 @@ export {
   renderJsonLdScript,
 } from './schema';
 export { asciiSlug, validateSlug, buildLocaleSlugMap } from './slugs';
+export {
+  defineGlossary,
+  lookupTerm,
+  scanPassage,
+  validateTranslation,
+  SAMPLE_ARCANEAN_GLOSSARY_ENTRIES,
+} from './glossary';
+export type {
+  Glossary,
+  GlossaryEntry,
+  GlossaryFlag,
+  GlossaryViolation,
+  DefineGlossaryInput,
+} from './glossary';
+export {
+  bookSchemaForLocale,
+  generateTranslationTasks,
+  getRoyaltySplit,
+  splitTranslatorShare,
+  validateBookRecord,
+  ROYALTY_SPLIT_PROFILES,
+} from './book';
+export type {
+  BookSchemaForLocaleInput,
+  GenerateTranslationTasksInput,
+  RoyaltySplitProfile,
+  RoyaltySplit,
+  TranslatorContribution,
+} from './book';
