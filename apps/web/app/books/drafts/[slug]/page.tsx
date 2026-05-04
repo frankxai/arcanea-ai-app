@@ -57,6 +57,7 @@ const COVER_MAP: Record<string, string> = {
   'heart-of-pyrathis': '/images/books/heart-of-pyrathis-cover-v2.png',
   'song-of-van-linh': '/images/books/song-of-van-linh-cover.png',
   'das-maedchen-drei-sprachen': '/images/books/das-maedchen-drei-sprachen-cover-v2.png',
+  'las-tierras-de-luz': '/images/books/las-tierras-de-luz-cover.png',
 };
 
 const ACCENT_MAP: Record<string, { primary: string; bg: string; border: string; glow: string }> = {
@@ -89,6 +90,12 @@ const ACCENT_MAP: Record<string, { primary: string; bg: string; border: string; 
     bg: 'bg-amber-400/10',
     border: 'border-amber-400/20',
     glow: 'bg-amber-900/[0.08]',
+  },
+  'las-tierras-de-luz': {
+    primary: 'text-amber-200',
+    bg: 'bg-amber-300/10',
+    border: 'border-amber-300/20',
+    glow: 'bg-amber-800/[0.10]',
   },
 };
 
@@ -137,6 +144,14 @@ const BOOK_DESCRIPTIONS: Record<string, { tagline: string; paragraphs: string[] 
       'Geschrieben in Deutsch für ein echtes sechsjähriges Kind im Übergang. Kroatisch und Englisch sind eingewoben — du lernst sie nicht durch Vokabellisten, sondern weil die Personen sie sprechen. Mit der gentlen Lehrtechnik von Studio Ghibli (Stille als Lehre, Tier ohne Sprache, Natur als Person) und der Stimme von Janosch, Lindgren und Funke. Ein Buch über zwei Zuhause.',
     ],
   },
+  'las-tierras-de-luz': {
+    tagline: 'An eleven-year-old in a quiet Realm of the Kingdom of Light wakes to a small prismatic light hovering above her chest — and discovers no one else can see it. Across the narrow street, behind a blue door, an old woman who has been waiting her whole adult life looks up from a bowl of green beans and sees.',
+    paragraphs: [
+      'Mira lives in Veldoria, a Realm of the Second Settling — a valley of piedra viva and slow rivers, where the old stones still hold yesterday\'s heat against your palm and the great sombraluz tree in the schoolyard has been called La Abuela for longer than anyone remembers. On an ordinary morning in la hora de Nero, the warmth above her heart resolves into something visible. She names her, very quietly, in the chamber of her own mouth: Chispa.',
+      'In the days that follow, Mira learns that every being in her pueblo carries a small light — the baker who has hummed three notes for forty years, the dog who has been walking her to school for four, the silver cat who decides things about people, the carpenter whose oscuro is so deep it does not glow, it receives. But her mother sees something and not the something. Her best certainty becomes her loneliest knowing.',
+      'Then, across the narrow street, Señora Bela — who came to Veldoria from Aurevalde sixty years ago through a transit corridor that has since shifted course — looks up from a bowl of green beans and lets her gaze settle three fingers above Mira\'s shoulder. A magical-realism novel of the Kingdom of Light. Of inherited longing. Of the three notes that crossed a lost Realm-corridor to find their child. Written in the Veldarín tradition, in the open, with a woman who heard the song first.',
+    ],
+  },
 };
 
 const BOOK_CHARACTERS: Record<string, { name: string; role: string; desc: string }[]> = {
@@ -179,6 +194,16 @@ const BOOK_CHARACTERS: Record<string, { name: string; role: string; desc: string
     { name: 'Oli / Oliver', role: 'Der englische Junge (7)', desc: 'Zwei Häuser. Wie Mila jetzt auch. Kommt jeden Sommer.' },
     { name: 'Luna', role: 'Die Hafenkatze', desc: 'Schwarz wie eine kleine Nacht. Weißer Mond über dem Auge.' },
     { name: 'Val', role: 'Der junge Delfin', desc: 'Großer Tümmler. Riss in der Rückenflosse. Liebt Wellen.' },
+  ],
+  'las-tierras-de-luz': [
+    { name: 'Mira', role: 'The First Witness (11)', desc: 'Prismatic destello she has named Chispa. Hears the valley\'s zumbido no one else admits to.' },
+    { name: 'Señora Bela', role: 'The Believer (78)', desc: 'Came from Aurevalde sixty years ago. Opalescent destello, held the way a hand cups a candle.' },
+    { name: 'Remedios', role: 'The Mother', desc: 'Twenty-six years at the bread shop. Wears a piedra viva pendant she has stopped noticing.' },
+    { name: 'Tomás', role: 'The Brother (6)', desc: 'Azul-claro destello so bright it erupts. Mira does not sing near him often.' },
+    { name: 'Don Emilio', role: 'The Baker', desc: 'Hummed three notes every morning for forty years. Earned his sweetness after a quiet grief.' },
+    { name: 'Marisol', role: 'The Witness-Dog', desc: 'Has walked Mira to school for four years at six feet distance. Sees, cannot wake.' },
+    { name: 'Señor Vidal', role: 'The Sealed One', desc: 'Oscuro destello — Nero\'s natural mystery. Trusts nothing he cannot measure twice.' },
+    { name: 'La Abuela', role: 'The Old Sombraluz', desc: 'The schoolyard tree. Older than any living person. Verde light moves slow inside her trunk.' },
   ],
 };
 
@@ -288,7 +313,7 @@ export default async function DraftBookPage({ params }: PageProps) {
       ? 'fire'
       : slug === 'tides-of-silence' || slug === 'song-of-van-linh'
       ? 'crystal'
-      : slug === 'heart-of-pyrathis'
+      : slug === 'heart-of-pyrathis' || slug === 'las-tierras-de-luz' || slug === 'das-maedchen-drei-sprachen'
       ? 'gold'
       : 'neutral';
 
