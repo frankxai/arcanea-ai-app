@@ -11,8 +11,7 @@
     "env": {
       "NEXT_PUBLIC_APP_NAME": "Arcanea",
       "NODE_ENV": "production",
-      "NODE_OPTIONS": "--max-old-space-size=4096",
-      "VERCEL_FORCE_NO_BUILD_CACHE": "1"
+      "NODE_OPTIONS": "--max-old-space-size=4096"
     }
   },
 
