@@ -1,0 +1,111 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":automergeMinor",
+    ":automergePatch",
+    ":pinDevDependencies"
+  ],
+  "timezone": "Europe/Amsterdam",
+  "schedule": [
+    "after 8am every weekday",
+    "before 5pm every weekday"
+  ],
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 5,
+  "labels": ["dependencies", "renovate"],
+  "rangeStrategy": "bump",
+  "rebaseWhen": "behind-base-branch",
+  "platformAutomerge": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 5am on monday"]
+  },
+  "vulnerabilityAlerts": {
+    "labels": ["security", "dependencies"],
+    "schedule": ["at any time"],
+    "minimumReleaseAge": "0 days"
+  },
+  "packageRules": [
+    {
+      "description": "Group all non-major prod deps together — but cap at 8 per PR via prConcurrentLimit upstream behavior",
+      "matchDepTypes": ["dependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "production deps (non-major)",
+      "groupSlug": "prod-non-major",
+      "automerge": false
+    },
+    {
+      "description": "Dev deps — auto-merge patches, group minors",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch"],
+      "groupName": "dev deps (patch)",
+      "groupSlug": "dev-patch",
+      "automerge": true,
+      "platformAutomerge": true
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor"],
+      "groupName": "dev deps (minor)",
+      "groupSlug": "dev-minor",
+      "automerge": false
+    },
+    {
+      "description": "Block major bumps for foundation libraries — manual migration only",
+      "matchPackageNames": [
+        "next",
+        "react",
+        "react-dom",
+        "tailwindcss",
+        "typescript",
+        "zod",
+        "stripe",
+        "framer-motion",
+        "openai",
+        "react-markdown",
+        "@types/node",
+        "@anthropic-ai/sdk"
+      ],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "description": "Pin GH Actions by SHA but track major releases — security best practice 2026",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["github-actions", "security"]
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true,
+      "platformAutomerge": true,
+      "labels": ["github-actions"]
+    },
+    {
+      "description": "pnpm/action-setup v6 still problematic — block until ecosystem catches up",
+      "matchPackageNames": ["pnpm/action-setup"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "description": "Workspace internal deps — let pnpm handle",
+      "matchPackagePatterns": ["^@arcanea/", "^@starlight/"],
+      "enabled": false
+    }
+  ],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/dist-test/**",
+    "archive/**",
+    ".claude/worktrees/**",
+    "forks/**"
+  ],
+  "postUpdateOptions": ["pnpmDedupe"],
+  "configMigration": true
+}
