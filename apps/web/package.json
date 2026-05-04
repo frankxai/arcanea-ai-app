@@ -29,6 +29,8 @@
     "@arcanea/design-system": "workspace:^",
     "@arcanea/publishing-house": "workspace:^",
     "@arcanea/world-engine": "workspace:^",
+    "@starlight/multilingual": "workspace:^",
+    "next-intl": "^4.11.0",
     "@fal-ai/client": "^1.9.4",
     "@google/generative-ai": "^0.21.0",
     "@gsap/react": "^2.1.2",
@@ -105,6 +107,7 @@
     "@types/three": "^0.183.0",
     "eslint": "10.2.0",
     "eslint-config-next": "16.2.3",
+    "schema-dts": "^1.1.5",
     "sharp": "^0.33.0"
   }
 }
