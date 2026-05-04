@@ -115,9 +115,12 @@ test.describe('chapter reader', () => {
     page,
   }) => {
     await gotoChapter(page, BOOK_ID, CHAPTER_ID);
+    await expect(
+      page.getByRole('button', { name: /Cycle reading theme/i }),
+    ).toBeVisible({ timeout: 20_000 });
 
     // Ensure focus is on the body so the keydown listener fires
-    await page.locator('body').click({ position: { x: 5, y: 5 } });
+    await page.locator('body').click({ position: { x: 500, y: 200 } });
     await page.keyboard.press('ArrowRight');
 
     // URL should change to the next chapter (still under /books/forge-of-ruin/*)

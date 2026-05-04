@@ -1,10 +1,10 @@
 {
-  "$schema": "Arcanea cross-repo registry — source of truth for multi-repo automation",
-  "lastUpdated": "2026-03-30",
+  "$schema": "Arcanea cross-repo registry - source of truth for multi-repo automation",
+  "lastUpdated": "2026-04-23",
   "repos": [
     {
       "name": "arcanea-ai-app",
-      "description": "Main platform — arcanea.ai production",
+      "description": "Main platform - arcanea.ai production",
       "github": "frankxai/arcanea-ai-app",
       "role": "production",
       "stack": ["next.js", "react", "typescript", "supabase"],
@@ -15,7 +15,7 @@
     },
     {
       "name": "arcanea",
-      "description": "OSS framework — the open-source engine",
+      "description": "OSS framework - the open-source engine",
       "github": "frankxai/arcanea",
       "role": "oss",
       "stack": ["typescript", "node"],
@@ -25,16 +25,16 @@
     },
     {
       "name": "oh-my-arcanea",
-      "description": "Canonical Claude Code harness — agents, skills, hooks",
+      "description": "Universal Arcanea agent harness target; current code remains OpenCode-derived until adapter cleanup",
       "github": "frankxai/oh-my-arcanea",
       "role": "harness",
-      "stack": ["yaml", "markdown", "shell"],
-      "branch": "main",
+      "stack": ["typescript", "bun", "yaml", "markdown"],
+      "branch": "dev",
       "active": true
     },
     {
       "name": "arcanea-records",
-      "description": "Music studio — Suno integration, soundscapes",
+      "description": "Music studio - Suno integration, soundscapes",
       "github": "frankxai/arcanea-records",
       "role": "product",
       "stack": ["next.js", "typescript"],
@@ -42,30 +42,85 @@
       "active": true
     },
     {
+      "name": "starlight-intelligence-system",
+      "description": "Starlight Intelligence System - SIS/SIP substrate, memory/context layer, MCP servers, adapters",
+      "github": "frankxai/Starlight-Intelligence-System",
+      "role": "substrate",
+      "stack": ["typescript", "node", "next.js", "mcp"],
+      "publishes": ["@arcanea/starlight-intelligence-system"],
+      "branch": "main",
+      "active": true
+    },
+    {
+      "name": "starlight",
+      "description": "Minimal SIP adoption kit for Starlight Intelligence System",
+      "github": "frankxai/starlight",
+      "role": "adoption-kit",
+      "stack": ["markdown"],
+      "branch": "main",
+      "active": true
+    },
+    {
+      "name": "vibe-os-substrate",
+      "description": "SIP-conformant vertical scaffold for state engineering",
+      "github": "frankxai/vibe-os-substrate",
+      "role": "vertical",
+      "stack": ["markdown"],
+      "branch": "main",
+      "active": true
+    },
+    {
+      "name": "arcanea-orchestrator",
+      "description": "Parallel AI coding agent orchestration runtime across repos and agent runtimes",
+      "github": "frankxai/arcanea-orchestrator",
+      "role": "orchestration",
+      "stack": ["typescript", "node", "pnpm"],
+      "branch": "main",
+      "active": true
+    },
+    {
+      "name": "arcanea-code",
+      "description": "Guardian-powered coding CLI fork; consumes harness/substrate but is not the universal harness",
+      "github": "frankxai/arcanea-code",
+      "role": "coding-cli",
+      "stack": ["typescript", "bun", "opencode"],
+      "branch": "dev-v2",
+      "active": true
+    },
+    {
+      "name": "arcanea-vault",
+      "description": "Browser extension and capture/export/provenance layer feeding Arcanea and SIS",
+      "github": "frankxai/arcanea-vault",
+      "role": "capture",
+      "stack": ["typescript", "vite", "extension"],
+      "branch": "codex/excellence-vault-baseline",
+      "active": true
+    },
+    {
       "name": "arcanea-mcp",
-      "description": "MCP server — Arcanea tools for Claude Code",
+      "description": "Historical MCP infrastructure entry - verify URL/access/name before use",
       "github": "frankxai/arcanea-mcp",
-      "role": "infrastructure",
+      "role": "infrastructure-unresolved",
       "stack": ["typescript", "node"],
       "publishes": ["@arcanea/mcp"],
       "branch": "main",
-      "active": true
+      "active": false
     },
     {
       "name": "arcanea-memory",
-      "description": "Memory MCP server — vault, horizon, sync",
+      "description": "Historical memory MCP entry - likely superseded or absorbed by Starlight Intelligence System",
       "github": "frankxai/arcanea-memory",
-      "role": "infrastructure",
+      "role": "infrastructure-unresolved",
       "stack": ["typescript", "node"],
       "publishes": ["@arcanea/memory-mcp"],
       "branch": "main",
-      "active": true
+      "active": false
     },
     {
       "name": "claude-flow",
-      "description": "Multi-agent orchestration framework",
+      "description": "Upstream multi-agent orchestration framework; Arcanea fork is arcanea-flow",
       "github": "ruvnet/claude-flow",
-      "role": "infrastructure",
+      "role": "upstream-runtime",
       "stack": ["typescript", "node"],
       "publishes": ["@claude-flow/cli"],
       "branch": "main",
@@ -75,12 +130,17 @@
   "syncRules": {
     "sharedTypes": {
       "source": "arcanea",
-      "targets": ["arcanea-ai-app", "arcanea-mcp", "arcanea-memory"],
+      "targets": ["arcanea-ai-app"],
       "trigger": "tag"
+    },
+    "substrate": {
+      "source": "starlight-intelligence-system",
+      "targets": ["arcanea-ai-app", "oh-my-arcanea", "arcanea-orchestrator", "arcanea-code", "arcanea-vault"],
+      "trigger": "release"
     },
     "harness": {
       "source": "oh-my-arcanea",
-      "targets": ["arcanea-ai-app"],
+      "targets": ["arcanea-ai-app", "arcanea-orchestrator", "arcanea-code"],
       "trigger": "manual",
       "syncPaths": [".claude/agents/", ".claude/skills/", ".arcanea/"]
     }

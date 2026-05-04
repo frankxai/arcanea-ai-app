@@ -48,13 +48,12 @@ for (const book of KNOWN_BOOKS) {
         page.getByRole('heading', { name: /The Cast/i }),
       ).toBeVisible();
 
-      // Each character card is a <div> inside the grid; we scope under the
-      // heading's parent section. Just assert >= 1 card exists.
+      // Character cards are rendered through the LiquidGlass primitive, so
+      // assert stable visible text in the section instead of a CSS class.
       const section = page
         .getByRole('heading', { name: /The Cast/i })
         .locator('xpath=ancestor::section[1]');
-      const cards = section.locator('div.rounded-xl');
-      expect(await cards.count()).toBeGreaterThan(0);
+      await expect(section.getByText(/The /).first()).toBeVisible();
     });
 
     test('chapter list is visible with at least one chapter link', async ({
