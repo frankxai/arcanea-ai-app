@@ -47,15 +47,15 @@
   },
   "dependencies": {
     "@arcanea/router-spec": "workspace:*",
-    "commander": "^12.1.0",
+    "commander": "^14.0.3",
     "execa": "^9.5.0",
     "kleur": "^4.1.5",
-    "yaml": "^2.6.0"
+    "yaml": "^2.8.4"
   },
   "devDependencies": {
     "tsx": "^4.19.0",
-    "typescript": "^5.5.0",
-    "@types/node": "^20.0.0"
+    "typescript": "^6.0.3",
+    "@types/node": "^25.6.0"
   },
   "publishConfig": {
     "access": "public"

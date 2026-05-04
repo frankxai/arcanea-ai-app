@@ -34,11 +34,11 @@
     "test": "tsx --test tests/validate.test.ts"
   },
   "dependencies": {
-    "yaml": "^2.6.0"
+    "yaml": "^2.8.4"
   },
   "devDependencies": {
     "tsx": "^4.19.0",
-    "typescript": "^5.5.0"
+    "typescript": "^6.0.3"
   },
   "publishConfig": {
     "access": "public"

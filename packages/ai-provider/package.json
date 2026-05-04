@@ -60,10 +60,10 @@
     "ai": ">=6.0.0"
   },
   "dependencies": {
-    "@ai-sdk/openai-compatible": "^2.0.0"
+    "@ai-sdk/openai-compatible": "^2.0.45"
   },
   "devDependencies": {
     "tsup": "^8.0.0",
-    "typescript": "^5.5.0"
+    "typescript": "^6.0.3"
   }
 }
