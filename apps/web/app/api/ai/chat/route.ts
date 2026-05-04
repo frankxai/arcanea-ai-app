@@ -15,6 +15,7 @@ import { streamText } from 'ai';
 import { createArcanea } from '@/lib/ai/arcanea-intelligence';
 import { GATEWAY_MODELS, EXTENDED_PROVIDERS } from '@/lib/gateway/catalog';
 import { createChatTools } from '@/lib/chat/tools';
+import { buildJarvisTools } from '@/lib/luminors/tools/jarvis';
 import { buildArcaneaRuntimeHeaders } from '@/lib/chat/runtime-metadata';
 import {
   buildProjectRetrievalBlock,
@@ -669,6 +670,16 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       // Handoff is opt-in because it changes the active Luminor — too surprising as default
       if (enabledTools.includes('handoff') && chatToolSet.handoff_to_luminor) {
         selected.handoff_to_luminor = chatToolSet.handoff_to_luminor;
+      }
+      // Jarvis bundle: live system awareness for the voice-room operator.
+      // Six tools — system_status, git_today, list_open_prs, search_repo,
+      // read_file, explain_arcanea. They self-fetch /api/voice/tools (Node
+      // runtime) since the chat route is Edge and cannot use child_process.
+      if (enabledTools.includes('jarvis')) {
+        const jarvisTools = buildJarvisTools();
+        for (const [name, t] of Object.entries(jarvisTools)) {
+          selected[name] = t;
+        }
       }
       return Object.keys(selected).length > 0 ? selected : undefined;
     })();
