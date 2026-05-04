@@ -1,5 +1,31 @@
 # Handover: Starlight Multilingual System (overnight session 2026-05-02 → 2026-05-03)
 
+## Update 2026-05-03 evening — quality pass complete
+
+After the initial commit, dispatched code-reviewer subagent for adversarial review. Found 10 real issues; fixed all critical/high-severity ones (commit `676b0d7b`):
+
+- **Security:** JSON-LD XSS escape (escapeJsonForScript + stringifyJsonLdSafe), XML escape in sitemap, HTML attribute escape in hreflang links
+- **Correctness:** Unicode-aware glossary regex (apostrophes, hyphens, Japanese now match), substring/longest-match resolution (Vel'Tara vs Vel'Tara Sword), asciiSlug Polish Ł fix + null/throw/preserve modes for CJK input, bookSchemaForLocale throws on missing originalLanguage, royalty split sum validation
+- **AEO:** STARLIGHT_JSONLD_CONTEXT properly maps arcanea: prefix (without this, custom properties were silently discarded by crawlers)
+- **Tests:** 133 unit tests, all passing. `pnpm test` runs them.
+
+Branch pushed to GitHub at commits `99063e13` → `5f231951` → `676b0d7b`.
+
+## Remaining reviewer items (tomorrow can address)
+
+Not blocking Phase 2, but worth fixing before extracting to standalone repo:
+
+1. `parseAcceptLanguage` accepts malformed q-values silently — tighten with strict regex
+2. `LocaleConfig.locales` is `ReadonlyArray<LocaleCode | string>` — `| string` widens it; should be generic `LocaleConfig<L extends string = LocaleCode>`
+3. `ContentSlugInput` silently falls back to default-locale slug when target missing → produces mixed-language URLs like `/de/library/english-slug`. Add opt-in strict mode that returns null instead.
+4. `generateTranslationTasks` calls `Date.now()` directly — inject a clock for testability
+5. `validateBookRecord` should also flag cross-locale slug collisions (same slug used by different locales of the same book)
+6. Document open-redirect risk in `shouldRedirectToLocale` (assumes trusted `nextUrl.host`)
+7. Future: split fiction-specific code (`glossary.ts`, `book.ts`) into `@starlight/multilingual-fiction` so non-fiction sites (FrankX) don't pull in canon-glossary types
+8. Add LICENSE file (package.json references it, file is missing) — required before npm publish
+
+
+
 ## Context for tomorrow's first agent
 
 Frank asked for a multilingual foundation that:

@@ -45,8 +45,7 @@ jobs:
       - name: TypeScript Check (report only)
         continue-on-error: true
         run: |
-          cd apps/web
-          npx tsc --noEmit 2>&1 | tee /tmp/tsc-output.txt || true
+          pnpm --dir apps/web run type-check 2>&1 | tee /tmp/tsc-output.txt || true
           ERROR_COUNT=$(grep -c "error TS" /tmp/tsc-output.txt || echo "0")
           echo "## TypeScript Report" >> $GITHUB_STEP_SUMMARY
           echo "- **Errors found:** ${ERROR_COUNT}" >> $GITHUB_STEP_SUMMARY
@@ -85,7 +84,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: cd apps/web && npx next lint
+        run: pnpm --dir apps/web run lint
         continue-on-error: true
 
   # ============================================

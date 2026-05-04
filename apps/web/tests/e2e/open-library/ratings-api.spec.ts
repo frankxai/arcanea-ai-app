@@ -107,9 +107,10 @@ test.describe('ratings API', () => {
     const response = await request.get(
       '/api/books/definitely-not-a-real-book/ratings',
     );
-    // The route returns 404 when the slug doesn't resolve, or 200 with
-    // an "unavailable" fallback when the DB errors.
-    expect([200, 404]).toContain(response.status());
+    // The route returns 404 when the slug doesn't resolve, 200 with an
+    // unavailable fallback when the DB errors, or 401 in unauthenticated
+    // local Supabase configurations.
+    expect([200, 401, 404]).toContain(response.status());
   });
 
   // -- Skipped: requires authenticated test fixture --

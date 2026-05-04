@@ -70,15 +70,23 @@ export function bookSchemaForLocale(
   let originalLanguage: string | undefined;
   if (locale !== book.originalLanguage) {
     const original = book.locales.find((l) => l.locale === book.originalLanguage);
-    if (original) {
-      originalWorkUrl = buildLocalizedUrl(
-        config,
-        bookRoutePath,
-        book.originalLanguage,
-        original.slug,
+    if (!original) {
+      // A translation that can't link back to its original is an AEO/SEO
+      // trust hit — LLM crawlers see what looks like a German "original"
+      // when it's actually translated from a missing English source.
+      throw new Error(
+        `bookSchemaForLocale: book ${book.id} declares originalLanguage="${book.originalLanguage}" ` +
+          `but that locale is not in book.locales. Cannot generate workTranslation chain. ` +
+          `Either add the original-language locale to book.locales, or correct originalLanguage.`,
       );
-      originalLanguage = book.originalLanguage;
     }
+    originalWorkUrl = buildLocalizedUrl(
+      config,
+      bookRoutePath,
+      book.originalLanguage,
+      original.slug,
+    );
+    originalLanguage = book.originalLanguage;
   }
 
   const schemaInput: BookSchemaInput = {
@@ -168,6 +176,28 @@ export const ROYALTY_SPLIT_PROFILES: Record<RoyaltySplitProfile, RoyaltySplit> =
   generous: { author: 0.5, translator: 0.2, platform: 0.3 },
   'community-prioritized': { author: 0.4, translator: 0.3, platform: 0.3 },
 };
+
+/**
+ * Validate that a royalty split sums to 1.0 (within floating-point tolerance)
+ * and all values are in [0, 1]. Throws if invalid.
+ *
+ * Use when accepting a custom split from configuration. Built-in profiles are
+ * tested in unit tests; this guards against future contributors defining
+ * splits that overpay (e.g. {author:0.7, translator:0.5, platform:0.3}).
+ */
+export function assertValidRoyaltySplit(split: RoyaltySplit): void {
+  for (const [k, v] of Object.entries(split)) {
+    if (v < 0 || v > 1) {
+      throw new Error(`assertValidRoyaltySplit: ${k}=${v} is outside [0,1].`);
+    }
+  }
+  const sum = split.author + split.translator + split.platform;
+  if (Math.abs(sum - 1) > 0.0001) {
+    throw new Error(
+      `assertValidRoyaltySplit: sum is ${sum.toFixed(4)}, must be 1.0. Got ${JSON.stringify(split)}.`,
+    );
+  }
+}
 
 export function getRoyaltySplit(profile: RoyaltySplitProfile = 'generous'): RoyaltySplit {
   return ROYALTY_SPLIT_PROFILES[profile];

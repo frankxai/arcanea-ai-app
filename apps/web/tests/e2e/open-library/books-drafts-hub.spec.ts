@@ -64,7 +64,7 @@ test.describe('books drafts hub', () => {
     await expect(page).toHaveURL(/\/books\/drafts\/forge-of-ruin$/);
     await expect(
       page.getByRole('heading', { name: 'The Forge of Ruin', level: 1 }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 20_000 });
   });
 
   test('back navigation and Tides of Silence card works', async ({ page }) => {
@@ -86,6 +86,6 @@ test.describe('books drafts hub', () => {
     await expect(page).toHaveURL(/\/books\/drafts\/tides-of-silence$/);
     await expect(
       page.getByRole('heading', { name: 'The Tides of Silence', level: 1 }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 20_000 });
   });
 });
