@@ -26,6 +26,7 @@ type Voice = (typeof VOICES)[number];
 // Arcanea character → voice + quality mapping
 // Each Guardian/character gets a distinct voice that matches their personality
 const PERSONA_MAP: Record<string, { voice: Voice; model: 'tts-1' | 'tts-1-hd' }> = {
+  jarvis:     { voice: 'onyx',    model: 'tts-1-hd' },  // Deep, unhurried — Sir's instrument
   lumina:     { voice: 'nova',    model: 'tts-1-hd' },  // Warm, clear, authoritative
   arcanea:    { voice: 'nova',    model: 'tts-1-hd' },  // Default Arcanea voice
   lyssandria: { voice: 'shimmer', model: 'tts-1' },     // Grounded, earthy

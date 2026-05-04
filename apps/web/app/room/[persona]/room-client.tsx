@@ -49,6 +49,8 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const [greetingPlayed, setGreetingPlayed] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [micArmed, setMicArmed] = useState(true);
+  const [briefing, setBriefing] = useState<string>('');
   const greetingAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const micStreamRef = useRef<MediaStream | null>(null);
@@ -230,6 +232,31 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
     }
   }, [personaId]);
 
+  // Daily briefing — fetched once per session for situational awareness.
+  // The route runs Node-side (not edge) so it has git + filesystem access in
+  // local dev. On Vercel it returns a remote-mode placeholder. Either way the
+  // result is prepended to the persona's system prompt at chat time so the
+  // model can answer "what was I working on" without tool calls.
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/voice/briefing', { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data: { brief?: string } | null) => {
+        if (cancelled || !data?.brief) return;
+        setBriefing(data.brief);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
+  // Compose the system prompt at call time: briefing block (if any) +
+  // persona instructions. Briefing first because it grounds the model in
+  // *current* state; persona second because behavioral rules win on conflict.
+  const composeSystemPrompt = useCallback(() => {
+    if (!briefing) return persona.prompt;
+    return `${briefing}\n\n---\n\n${persona.prompt}`;
+  }, [briefing, persona.prompt]);
+
   const showErr = useCallback((errOrMsg: string | RoomError) => {
     const next: RoomError = typeof errOrMsg === 'string' ? { message: errOrMsg } : errOrMsg;
     setError(next);
@@ -322,17 +349,18 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
 
       // 2 — chat
       let full: string;
+      const systemPrompt = composeSystemPrompt();
       if (keys.groq) {
         full = await chatWithGroq({
           messages: nextHistory.map((m) => ({ role: m.role, content: m.content })),
-          systemPrompt: persona.prompt, apiKey: keys.groq,
+          systemPrompt, apiKey: keys.groq,
           temperature: persona.temperature, maxTokens: 220,
         });
         setReply(full);
       } else {
         const chatRes = await fetch('/api/ai/chat', {
           method: 'POST', headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ messages: nextHistory.map((m) => ({ role: m.role, content: m.content })), systemPrompt: persona.prompt, temperature: persona.temperature, maxTokens: 220 }),
+          body: JSON.stringify({ messages: nextHistory.map((m) => ({ role: m.role, content: m.content })), systemPrompt, temperature: persona.temperature, maxTokens: 220 }),
           signal: ctl.signal,
         });
         if (!chatRes.ok || !chatRes.body) throw new Error(`chat ${chatRes.status}`);
@@ -427,7 +455,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       setAudioEl(null);
       setState('idle');
     }
-  }, [history, persona, showErr, logStage]);
+  }, [history, persona, showErr, logStage, composeSystemPrompt]);
 
   const startRecording = useCallback(async () => {
     if (busyRef.current || recordingRef.current) return;
@@ -492,14 +520,35 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
     }
   }, [converse, runVad, showErr, primeMic]);
 
+  // Mic disarm: a hard switch the user can flip when they want quiet. Stops any
+  // active recording immediately, prevents new ones, and keeps Space/click
+  // inert until re-armed. Speech playback still finishes — disarming is about
+  // input, not output.
+  const toggleMicArmed = useCallback(() => {
+    setMicArmed((prev) => {
+      const next = !prev;
+      if (!next && recorderRef.current && recorderRef.current.state !== 'inactive') {
+        try { recorderRef.current.stop(); } catch {}
+      }
+      return next;
+    });
+  }, []);
+
   const toggleRecord = useCallback(() => {
+    if (!micArmed) {
+      showErr({
+        message: 'Mic is off.',
+        hint: 'Tap MIC at the top — or press M — to enable.',
+      });
+      return;
+    }
     if (busyRef.current) { stopSpeaking(); return; }
     if (recordingRef.current) {
       if (recorderRef.current && recorderRef.current.state !== 'inactive') recorderRef.current.stop();
     } else {
       void startRecording();
     }
-  }, [startRecording, stopSpeaking]);
+  }, [startRecording, stopSpeaking, micArmed, showErr]);
 
   useEffect(() => {
     // Hybrid Space: tap = VAD-auto-stop, hold = push-to-talk. e.repeat guard
@@ -515,6 +564,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         if (e.repeat) return;
         spaceDownAt = performance.now();
         setHasInteracted(true);
+        if (!micArmed) return;
         if (!recordingRef.current && !busyRef.current) {
           spaceHeldTriggeredRecord = true;
           void startRecording();
@@ -522,6 +572,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
           spaceHeldTriggeredRecord = false;
         }
       } else if (e.key === 'Escape') { stopSpeaking(); }
+      else if (e.key === 'm' || e.key === 'M') { toggleMicArmed(); }
       else if (/^[1-7]$/.test(e.key)) { setPersonaId(ORDER[+e.key - 1]); }
     };
 
@@ -543,7 +594,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       window.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('keyup', onKeyUp);
     };
-  }, [startRecording, stopSpeaking]);
+  }, [startRecording, stopSpeaking, micArmed, toggleMicArmed]);
 
   useEffect(() => {
     return () => {
@@ -570,7 +621,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
         style={{
           background: `radial-gradient(ellipse at 50% 48%, ${persona.color}22 0%, ${persona.color}0a 30%, transparent 62%), radial-gradient(ellipse at 50% 90%, ${persona.accent}12 0%, transparent 55%)`,
           filter: 'blur(40px)',
-          opacity: state === 'speaking' ? 1 : 0.7,
+          opacity: state === 'speaking' ? 1 : (micArmed ? 0.7 : 0.32),
           mixBlendMode: 'screen',
         }}
       />
@@ -614,6 +665,32 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
           >
             {hasBYOK ? 'BYOK' : 'Connect voice'}
           </button>
+          <span className="w-px h-3 bg-white/10" />
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); toggleMicArmed(); }}
+            className="text-[9px] tracking-[0.22em] uppercase px-2 py-0.5 rounded-md transition-all pointer-events-auto cursor-pointer flex items-center gap-1.5"
+            style={micArmed
+              ? { color: '#a7f3d0', background: 'rgba(34,197,94,0.10)', border: '1px solid rgba(34,197,94,0.28)' }
+              : { color: '#fda4af', background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.28)' }}
+            aria-label={micArmed ? 'Mute microphone (press M)' : 'Unmute microphone (press M)'}
+            aria-pressed={!micArmed}
+            title="Press M to toggle"
+          >
+            <span
+              className={micArmed ? 'animate-pulse' : ''}
+              style={{
+                display: 'inline-block',
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                backgroundColor: micArmed ? '#22c55e' : '#ef4444',
+                boxShadow: micArmed ? '0 0 8px rgba(34,197,94,0.6)' : 'none',
+              }}
+              aria-hidden
+            />
+            {micArmed ? 'Mic' : 'Off'}
+          </button>
         </div>
         {state === 'idle' && (
           <p
@@ -652,18 +729,31 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       )}
 
       {/* Idle hint — only before any interaction, fades out once user engages.
-          When BYOK keys are missing, surface a deliberate "Connect voice" CTA
-          instead of the speak hint — hosted voice transcription is not
-          provisioned on this deployment, so speaking would 503 and look
-          broken. After keys land in localStorage (or hosted keys ship), the
-          hint reverts to the canonical speak prompt. */}
+          Three states: mic disarmed → re-enable hint; BYOK missing → connect
+          voice CTA; everything ready → canonical speak prompt. After keys land
+          in localStorage (or hosted keys ship), the hint reverts to the
+          canonical speak prompt. */}
       {state === 'idle' && !transcript && !reply && !hasInteracted && (
         <div
           data-ignore-click
           className="absolute bottom-[34%] left-1/2 -translate-x-1/2 text-center animate-pulse"
           style={{ animationDuration: '3.6s' }}
         >
-          {hasBYOK ? (
+          {!micArmed ? (
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); toggleMicArmed(); }}
+              className="px-4 py-2 rounded-full text-[11px] tracking-[0.32em] uppercase transition-colors pointer-events-auto cursor-pointer"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: '#fda4af',
+                background: 'rgba(239,68,68,0.08)',
+                border: '1px solid rgba(239,68,68,0.25)',
+              }}
+            >
+              Mic off — tap to enable
+            </button>
+          ) : hasBYOK ? (
             <span
               className="text-[11px] tracking-[0.36em] uppercase text-white/30 pointer-events-none"
               style={{ fontFamily: 'var(--font-display)' }}
@@ -752,6 +842,9 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       >
         <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/[0.04] text-white/60">Space</kbd>
         <span className="text-white/30">speak</span>
+        <span className="w-px h-3 bg-white/10" />
+        <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/[0.04] text-white/60">M</kbd>
+        <span className="text-white/30">mute</span>
         <span className="w-px h-3 bg-white/10" />
         <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-white/[0.04] text-white/60">Esc</kbd>
         <span className="text-white/30">stop</span>
