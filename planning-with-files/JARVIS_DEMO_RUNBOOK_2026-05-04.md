@@ -22,12 +22,17 @@ Four files. ~130 net lines added.
 Add ONE line to `apps/web/.env.local`:
 
 ```
-OPENAI_API_KEY=sk-...
+GROQ_API_KEY=gsk_...
 ```
 
-That key alone unlocks Jarvis's voice (TTS) + transcription fallback + chat fallback. Cost for the demo: under $0.10. Get one at platform.openai.com → API keys.
+That single key now covers the full pipeline:
+- **STT** — Groq Whisper-large-v3-turbo (already wired in `/api/ai/transcribe`)
+- **LLM** — Groq Llama 3.3 70B Versatile via the BYOK browser path, OR via the existing chat route
+- **TTS** — Groq PlayAI (Atlas voice for Jarvis), wired into `/api/ai/speak` as the primary path on this branch
 
-If you also want streaming Groq LLM (~3× faster first-token), drop `GROQ_API_KEY=gsk_...` next to it. Free at console.groq.com.
+Free tier at console.groq.com. Total cost for the demo: $0.
+
+OpenAI is now an *optional* fallback. If you have `OPENAI_API_KEY` set, the speak route uses it only when Groq fails. The original "you need OpenAI" guidance is obsolete on this branch.
 
 ## Demo runbook (90 seconds, in order)
 
@@ -73,7 +78,7 @@ localhost:3000 Next.js dev server (brain)
   ├─ /api/voice/briefing  → git + fs + memory snapshot (local-only superpower)
   ├─ /api/ai/transcribe   → Groq Whisper-large-v3-turbo (or OpenAI fallback)
   ├─ /api/ai/chat         → Vercel AI SDK → Anthropic / OpenRouter / Google / xAI
-  └─ /api/ai/speak        → OpenAI TTS, voice="onyx", model="tts-1-hd"
+  └─ /api/ai/speak        → Groq PlayAI Atlas-PlayAI (or OpenAI onyx fallback)
 ```
 
 Run on Vercel = no briefing context (serverless can't read your filesystem). Run on localhost = full awareness of your repo, branch, commits, planning files. Today's demo runs locally.
@@ -81,18 +86,22 @@ Run on Vercel = no briefing context (serverless can't read your filesystem). Run
 ## What's deliberately NOT in this build
 
 - Tool calling (open_url, system_status as live tools) — deferred. Today's Jarvis answers from briefing context, not live tool calls. Cleaner demo.
-- ElevenLabs TTS via server route — works only on the BYOK path (browser → ElevenLabs direct). Server uses OpenAI onyx. Both produce a deep voice; ElevenLabs "George" is slightly warmer if you BYOK.
-- Picovoice wake-word — using existing clap daemon. Can be upgraded next sprint.
+- ElevenLabs server route — BYOK path keeps George voice for users with their own key. Server now defaults to Groq Atlas-PlayAI.
+- Picovoice wake-word — closed by Sir's decision. Clap detection stays primary; we polish the daemon, we do not replace it.
 - HUD overlay state machine — exists in `@arcanea/presence`, not yet mounted in `/room`.
 - SIS voice-operator (`:7373` FastAPI) — never installed. Tonight's demo runs entirely off Arcanea.
 
 ## Next sprint tasks (when ready)
 
-1. Wire Jarvis tool calling via Vercel AI SDK — `open_url`, `git_status`, `system_status` as proper tools
-2. Migrate the brain into SIS voice-operator (`:7373`); keep Arcanea as the distribution shell
-3. HUD overlay mounted on `/room/jarvis` with state machine
-4. Demo video recorded for the homepage
-5. Decompose 871-line `room-client.tsx` (over the 500-line ceiling per `apps/web/CLAUDE.md`)
+Full backlog with scope, touch-points, and definition-of-done lives at
+`planning-with-files/VOICE_BACKLOG_2026-05-04.md`. Five items:
+- VOICE-1 — Tool calling for Jarvis (open_url, git_status, system_status, explain_arcanea)
+- VOICE-2 — Migrate brain into SIS voice-operator (`:7373`); Arcanea stays the distribution shell
+- VOICE-3 — HUD overlay state machine on `/room/jarvis`
+- VOICE-4 — Decompose 871-line `room-client.tsx` (over the 500-line limit)
+- VOICE-5 — Daily Briefing v2 (calendar + Linear + Vercel + memory)
+
+**Closed:** Picovoice wake-word. Clap detection stays primary — Sir's call.
 
 ## Verification
 
