@@ -86,7 +86,11 @@ let spaceDownAt = 0;
 let spaceHeldTriggeredRecord = false;
 
 window.addEventListener('keydown', (e) => {
-  if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) {
+    // T-mode (text input) — Esc closes, Enter is handled by form submit.
+    if (e.key === 'Escape') hideTextInput();
+    return;
+  }
   if (e.code === 'Space') {
     e.preventDefault();
     if (e.repeat) return;
@@ -98,8 +102,85 @@ window.addEventListener('keydown', (e) => {
       spaceHeldTriggeredRecord = false;
     }
   } else if (e.key === 'Escape') { stopSpeaking(); }
+  else if (e.key === 't' || e.key === 'T') {
+    e.preventDefault();
+    showTextInput();
+  }
   else if (/^[1-7]$/.test(e.key)) { switchPersona(PERSONA_ORDER[+e.key - 1]); }
 });
+
+// ---------------------------------------------------------------------------
+// Text-input mode — fallback when mic is gated by Windows permissions.
+// ---------------------------------------------------------------------------
+
+function showTextInput() {
+  const form = document.getElementById('text-input-form');
+  const input = document.getElementById('text-input');
+  if (!form || !input) return;
+  form.hidden = false;
+  input.value = '';
+  input.focus();
+}
+
+function hideTextInput() {
+  const form = document.getElementById('text-input-form');
+  const input = document.getElementById('text-input');
+  if (!form) return;
+  form.hidden = true;
+  if (input) input.blur();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('text-input-form');
+  const input = document.getElementById('text-input');
+  if (!form || !input) return;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text || busy) return;
+    hideTextInput();
+    await sendText(text);
+  });
+});
+
+async function sendText(text) {
+  busy = true;
+  setStatus('Thinking', 'thinking');
+  orb.setState('thinking');
+  const transcriptEl = document.getElementById('transcript');
+  const replyEl = document.getElementById('reply');
+  transcriptEl.textContent = `"${text}"`;
+  transcriptEl.classList.add('visible');
+  replyEl.textContent = '';
+  replyEl.classList.remove('visible');
+
+  try {
+    const r = await fetch(`/api/text?persona=${encodeURIComponent(persona)}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ text }),
+    });
+    if (!r.ok) {
+      const err = await r.json().catch(() => ({ error: `HTTP ${r.status}` }));
+      throw new Error(err.error || `text request failed (${r.status})`);
+    }
+    const reply = decodeURIComponent(r.headers.get('x-voice-reply') || '');
+    if (reply) {
+      replyEl.textContent = reply;
+      replyEl.classList.add('visible');
+    }
+    const audioBuf = await r.blob();
+    const url = URL.createObjectURL(audioBuf);
+    await playResponse(url);
+    URL.revokeObjectURL(url);
+  } catch (e) {
+    showError(e?.message || 'text mode failed');
+    console.error('[text]', e);
+  } finally {
+    busy = false;
+    resetToIdle();
+  }
+}
 
 window.addEventListener('keyup', (e) => {
   if (e.code !== 'Space') return;
@@ -136,6 +217,21 @@ async function toggleRecord() {
 }
 
 async function startRecording() {
+  // Pre-flight: surface specific environment problems before they hide behind
+  // a generic "mic unavailable" error.
+  if (!window.isSecureContext) {
+    showError('Mic blocked: insecure context. Open via http://127.0.0.1:7777 or http://localhost:7777, not an IP from another network.');
+    return;
+  }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    showError('Mic API missing in this browser. Use Chrome/Edge/Firefox.');
+    return;
+  }
+  if (typeof MediaRecorder === 'undefined') {
+    showError('MediaRecorder not supported. Use Chrome/Edge/Firefox.');
+    return;
+  }
+
   try {
     if (!micStream) {
       micStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } });
@@ -166,8 +262,38 @@ async function startRecording() {
     feedMicToOrb();
     vadLoop();
   } catch (e) {
-    showError('Mic unavailable — grant permission or plug a mic in.');
-    console.warn(e);
+    // Map specific DOMException names to actionable messages so the user
+    // knows exactly which knob to turn.
+    const name = e?.name || 'Error';
+    let msg;
+    switch (name) {
+      case 'NotAllowedError':
+      case 'PermissionDeniedError':
+        msg = 'Mic permission denied. Click the lock/camera icon in the address bar, allow microphone, then refresh. On Windows: also check Settings → Privacy & security → Microphone → "Let apps access your microphone" AND "Let desktop apps access your microphone".';
+        break;
+      case 'NotFoundError':
+      case 'DevicesNotFoundError':
+        msg = 'No microphone detected. Plug one in, OR open Settings → System → Sound → Input and ensure a device is selected, then refresh.';
+        break;
+      case 'NotReadableError':
+      case 'TrackStartError':
+        msg = 'Mic is busy in another app (Teams, Discord, OBS, another browser tab?). Close that app or release the mic, then refresh.';
+        break;
+      case 'OverconstrainedError':
+      case 'ConstraintNotSatisfiedError':
+        msg = 'Mic does not support the requested constraints. Try a different audio device in Windows Sound settings.';
+        break;
+      case 'SecurityError':
+        msg = 'Browser security blocked mic access. Open via http://127.0.0.1:7777 (not via an HTTP IP from another machine).';
+        break;
+      case 'AbortError':
+        msg = 'Mic request was aborted before completion. Click Speak again.';
+        break;
+      default:
+        msg = `Mic error (${name}): ${e?.message || 'unknown'}. Open browser DevTools → Console for the stack.`;
+    }
+    showError(msg);
+    console.error('[mic startRecording]', name, e);
   }
 }
 
@@ -421,6 +547,8 @@ function switchPersona(next) {
   const url = new URL(location.href);
   url.searchParams.set('persona', next);
   history.replaceState(null, '', url);
+  // Notify cockpit feed (best-effort, non-blocking).
+  fetch(`/api/persona-switch?to=${encodeURIComponent(next)}`, { method: 'POST' }).catch(() => {});
 }
 
 function applyPaletteCss(id) {

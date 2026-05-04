@@ -20,6 +20,7 @@ import { join } from 'path';
 import { homedir } from 'os';
 import { PERSONAS, resolvePersona } from '../src/persona.mjs';
 import { getKey } from '../src/transcribe.mjs';
+import { TOOLS } from '../src/tools.mjs';
 
 const PRESENCE_COMMANDS = new Set(['jarvis', 'lumina', 'draconia', 'lyria', 'alera', 'shinkami', 'nero', 'presence', 'room']);
 const args = process.argv.slice(2);
@@ -207,7 +208,9 @@ startServer({
     console.log(`\n  Arcanea Presence (local) — ${personaName}`);
     console.log(`  ${target}`);
     console.log(`  groq: ${groqKey ? 'yes' : 'no'}   eleven: ${elevenKey ? 'yes' : 'no'}`);
-    console.log(`  Tools: shell_run, file_write, claude_prompt, claude_code_launch, open_url, linear_issue`);
+    // Banner derives the tool list from TOOLS so it never goes stale.
+    const toolNames = TOOLS.map((t) => t.function?.name).filter(Boolean).join(', ');
+    console.log(`  Tools: ${toolNames}`);
     console.log(`  Multi-round: up to 4 rounds / 8 total tool calls per turn.`);
     console.log(`  Ctrl+C to stop.\n`);
     launch(target);

@@ -13,6 +13,7 @@ import { homedir, platform } from 'os';
 import { dirname, resolve, join } from 'path';
 
 import { getKey } from './transcribe.mjs';
+import { runWorkflow, listWorkflows } from './workflows.mjs';
 
 const IS_WIN = platform() === 'win32';
 const IS_MAC = platform() === 'darwin';
@@ -75,6 +76,19 @@ export const TOOLS = [
     { prompt: { type: 'string', description: 'The full prompt Claude Code should execute.' } },
     ['prompt'],
   ),
+  fn(
+    'workflow_run',
+    'PREFERRED for ops requests. Run a named multi-step recipe instead of guessing individual shell commands. Recipes: "project_status" (git+gh status of a project), "morning_brief" (24h+7d commits across repos + WIP awareness + today captures), "demo_prep" (verify cockpit ports + drafts folder), "port_health" (lightweight port check), "capture_thought" (append to today\'s voice log), "build_handoff" (bundle git context + task for Claude Code), "ship_it_preview" (show what would commit — read-only preview, never ships), "meeting_prep" (given a topic, gather matching commits + captures + drafts), "recent_drafts" (list recent jarvis-drafts files). ALWAYS prefer this over raw shell_run when the user asks about project state, daily ops, status, meeting prep, or recent docs. NEVER call shell_run with install/build commands for status checks — workflows are read-only and never install anything.',
+    {
+      name: { type: 'string', description: 'Workflow name. Must be one of: project_status, morning_brief, demo_prep, port_health, capture_thought, build_handoff, ship_it_preview, meeting_prep, recent_drafts.' },
+      project: { type: 'string', description: 'Optional project hint (e.g. "starlight", "orb", "cockpit", "arcanea"). Resolves to a repo path. Omit for nullary workflows.' },
+      task: { type: 'string', description: 'For build_handoff: the user\'s task description.' },
+      text: { type: 'string', description: 'For capture_thought: the thought to capture.' },
+      topic: { type: 'string', description: 'For meeting_prep: the topic to look up.' },
+      limit: { type: 'string', description: 'For recent_drafts: how many drafts to return (default 8, max 30).' },
+    },
+    ['name'],
+  ),
 ];
 
 // ---------------------------------------------------------------------------
@@ -131,10 +145,18 @@ function insideSandbox(abs) {
   return abs.startsWith(home) || abs.startsWith(cwd);
 }
 
+function expandHome(p) {
+  if (typeof p !== 'string' || !p) return p;
+  if (p === '~') return homedir();
+  if (p.startsWith('~/') || p.startsWith('~\\')) return join(homedir(), p.slice(2));
+  return p;
+}
+
 async function toolFileWrite(pathArg, content) {
   if (!pathArg || typeof pathArg !== 'string') return { error: 'path required' };
   if (typeof content !== 'string') return { error: 'content must be a string' };
-  const abs = resolve(pathArg);
+  const expanded = expandHome(pathArg);
+  const abs = resolve(expanded);
   if (!insideSandbox(abs)) return { error: `path outside sandbox (home or cwd): ${abs}` };
   logTool('file_write', `${abs} (${content.length} chars)`);
   try {
@@ -259,6 +281,7 @@ export async function executeTool(name, args) {
       case 'claude_code_launch':  return await toolClaudeCodeLaunch(a.prompt);
       case 'open_url':            return await toolOpenUrl(a.url);
       case 'linear_issue':        return await toolLinearIssue(a.title, a.body);
+      case 'workflow_run':        return await runWorkflow(a.name, a);
       default:              return { error: `unknown tool: ${name}` };
     }
   } catch (e) { return { error: String(e?.message || e) }; }
@@ -283,6 +306,7 @@ export function formatToolResult(name, result) {
       : `prompt saved to ${result.path}, but launch failed`;
     case 'open_url':      return `opened ${result.url}`;
     case 'linear_issue':  return `created ${result.identifier} — ${result.url}`;
+    case 'workflow_run':  return `workflow ${result.workflow || '?'}: ${JSON.stringify(result).slice(0, 400)}`;
     default:              return `${name}: ${JSON.stringify(result).slice(0, 300)}`;
   }
 }

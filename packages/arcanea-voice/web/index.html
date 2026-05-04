@@ -4,6 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Arcanea · Presence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./style.css" />
 <script type="importmap">
 {
@@ -24,12 +27,26 @@
       <span id="status-label">Ready</span>
     </div>
 
+    <a id="cockpit-link" href="http://127.0.0.1:3007/cockpit" target="_blank" rel="noreferrer">
+      Cockpit ↗
+    </a>
+
     <div id="transcript" class="line dim"></div>
     <div id="reply" class="line"></div>
 
     <div id="hotkeys" aria-hidden="true">
-      <kbd>Space</kbd> speak · <kbd>Esc</kbd> stop · <kbd>1–7</kbd> switch persona
+      <kbd>Space</kbd> speak · <kbd>Esc</kbd> stop · <kbd>1–7</kbd> switch persona · <kbd>T</kbd> type
     </div>
+
+    <form id="text-input-form" hidden>
+      <input
+        id="text-input"
+        type="text"
+        autocomplete="off"
+        placeholder="Type to JARVIS — Enter to send, Esc to cancel"
+        maxlength="4000"
+      />
+    </form>
 
     <div id="error" role="alert" hidden></div>
   </main>

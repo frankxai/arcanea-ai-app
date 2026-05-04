@@ -1,14 +1,16 @@
 /**
- * Text-to-Speech API Route (OpenAI TTS)
+ * Text-to-Speech API Route — Groq PlayAI primary, OpenAI fallback
  *
- * Generates speech audio from text using OpenAI's TTS models.
- * Streams mp3 audio back to the client.
+ * Generates speech audio from text. Tries Groq PlayAI first (faster + same key
+ * as STT/LLM, so Sir's Groq-only stack covers the full pipeline), falls back to
+ * OpenAI TTS if GROQ_API_KEY is absent. Returns 503 if neither is set.
  *
  * Accepts JSON: { text, voice?, model?, persona?, speed? }
  * - voice: raw OpenAI voice (alloy, echo, fable, onyx, nova, shimmer)
- * - persona: Arcanea character name → maps to curated voice + quality
- * - speed: playback speed (0.25–4.0, default 1.0)
- * Returns audio/mpeg stream.
+ *   (ignored when Groq path is used; persona-mapped Groq voice wins)
+ * - persona: Arcanea character name → maps to curated voice on each provider
+ * - speed: playback speed (0.25–4.0, default 1.0; OpenAI only)
+ * Returns audio stream (wav from Groq, mp3 from OpenAI).
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -17,7 +19,7 @@ import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limit
 export const runtime = 'edge';
 export const maxDuration = 30;
 
-// 10 TTS requests per minute — protects OpenAI TTS quota
+// 10 TTS requests per minute — protects provider quota
 const TTS_RATE_LIMIT = { maxRequests: 10, windowMs: 60_000 };
 
 const VOICES = ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer'] as const;
@@ -26,6 +28,7 @@ type Voice = (typeof VOICES)[number];
 // Arcanea character → voice + quality mapping
 // Each Guardian/character gets a distinct voice that matches their personality
 const PERSONA_MAP: Record<string, { voice: Voice; model: 'tts-1' | 'tts-1-hd' }> = {
+  jarvis:     { voice: 'onyx',    model: 'tts-1-hd' },  // Deep, unhurried
   lumina:     { voice: 'nova',    model: 'tts-1-hd' },  // Warm, clear, authoritative
   arcanea:    { voice: 'nova',    model: 'tts-1-hd' },  // Default Arcanea voice
   lyssandria: { voice: 'shimmer', model: 'tts-1' },     // Grounded, earthy
@@ -40,6 +43,27 @@ const PERSONA_MAP: Record<string, { voice: Voice; model: 'tts-1' | 'tts-1-hd' }>
   shinkami:   { voice: 'echo',    model: 'tts-1-hd' },  // Transcendent, gravitas
   nero:       { voice: 'onyx',    model: 'tts-1-hd' },  // Deep, primordial
   coach:      { voice: 'alloy',   model: 'tts-1' },     // Professional, clear
+};
+
+// Groq PlayAI voices — 19 English voices via the playai-tts model.
+// Same Groq key Sir uses for Whisper STT + Llama LLM. One key, full pipeline.
+// Voice names per https://console.groq.com/docs/text-to-speech.
+const GROQ_PERSONA_MAP: Record<string, string> = {
+  jarvis:     'Atlas-PlayAI',     // Deep, composed — closest match to Tony Stark Jarvis
+  lumina:     'Celeste-PlayAI',   // Warm, illuminating
+  arcanea:    'Celeste-PlayAI',
+  lyssandria: 'Mamaw-PlayAI',     // Grounded, earthy
+  leyla:      'Quinn-PlayAI',     // Fluid, creative
+  draconia:   'Briggs-PlayAI',    // Commanding, fire-tempered
+  maylinn:    'Gail-PlayAI',      // Gentle, warm
+  alera:      'Indigo-PlayAI',    // Clear, resonant
+  lyria:      'Cheyenne-PlayAI',  // Mystical
+  aiyami:     'Mason-PlayAI',     // Wise, enlightened
+  elara:      'Arista-PlayAI',    // Transformative
+  ino:        'Calum-PlayAI',     // Collaborative, warm
+  shinkami:   'Fritz-PlayAI',     // Transcendent, gravitas
+  nero:       'Mason-PlayAI',     // Deep, primordial
+  coach:      'Mikail-PlayAI',    // Professional, clear
 };
 
 export async function POST(req: NextRequest) {
@@ -81,18 +105,72 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const groqKey = process.env.GROQ_API_KEY;
     const openaiKey = process.env.OPENAI_API_KEY;
-    if (!openaiKey) {
+
+    if (!groqKey && !openaiKey) {
       return NextResponse.json(
-        { error: 'Text-to-speech not configured. Set OPENAI_API_KEY.' },
+        {
+          error: 'Text-to-speech not configured.',
+          hint: 'Set GROQ_API_KEY (preferred — same key as STT and LLM) or OPENAI_API_KEY.',
+        },
         { status: 503 },
       );
     }
 
-    const response = await fetch('https://api.openai.com/v1/audio/speech', {
+    // ---- Groq PlayAI path (preferred) ------------------------------------
+    if (groqKey) {
+      const groqVoice =
+        (persona && GROQ_PERSONA_MAP[persona.toLowerCase()]) || 'Atlas-PlayAI';
+
+      const groqRes = await fetch('https://api.groq.com/openai/v1/audio/speech', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${groqKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'playai-tts',
+          voice: groqVoice,
+          input: trimmedText,
+          response_format: 'wav',
+        }),
+      });
+
+      if (groqRes.ok) {
+        return new NextResponse(groqRes.body, {
+          headers: {
+            'Content-Type': 'audio/wav',
+            'Cache-Control': 'no-cache',
+            'X-Voice': groqVoice,
+            'X-Model': 'playai-tts',
+            'X-Provider': 'groq',
+            'X-Persona': persona || 'default',
+          },
+        });
+      }
+
+      // Groq failed — log and try OpenAI if available, otherwise surface error
+      const groqErr = await groqRes.text().catch(() => groqRes.statusText);
+      console.error('Groq TTS error:', groqRes.status, groqErr);
+      if (!openaiKey) {
+        return NextResponse.json(
+          {
+            error: 'Groq TTS request failed and no OpenAI fallback configured.',
+            provider: 'groq',
+            status: groqRes.status,
+          },
+          { status: 502 },
+        );
+      }
+      // fall through to OpenAI
+    }
+
+    // ---- OpenAI fallback (or primary if no Groq key) ---------------------
+    const openaiRes = await fetch('https://api.openai.com/v1/audio/speech', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${openaiKey}`,
+        Authorization: `Bearer ${openaiKey!}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -104,21 +182,22 @@ export async function POST(req: NextRequest) {
       }),
     });
 
-    if (!response.ok) {
-      const err = await response.text();
-      console.error('OpenAI TTS error:', response.status, err);
+    if (!openaiRes.ok) {
+      const err = await openaiRes.text();
+      console.error('OpenAI TTS error:', openaiRes.status, err);
       return NextResponse.json(
-        { error: 'TTS generation failed' },
+        { error: 'TTS generation failed', provider: 'openai' },
         { status: 502 },
       );
     }
 
-    return new NextResponse(response.body, {
+    return new NextResponse(openaiRes.body, {
       headers: {
         'Content-Type': 'audio/mpeg',
         'Cache-Control': 'no-cache',
         'X-Voice': resolvedVoice,
         'X-Model': resolvedModel,
+        'X-Provider': 'openai',
         'X-Persona': persona || 'default',
       },
     });
