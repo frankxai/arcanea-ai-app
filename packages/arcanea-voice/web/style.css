@@ -1,9 +1,12 @@
 :root {
   --orb-amp: 0;
-  --core: #ffd700;
-  --accent: #00bcd4;
-  --ink: #fafafa;
-  --bg: #050507;
+  --core: #ffd700;          /* persona core color (overridden per-persona) */
+  --accent: #00bcd4;        /* persona accent (overridden per-persona) */
+  --ink: #e6e6ee;           /* primary text — aligned with Starlight signal */
+  --whisper: #9090a8;       /* dim text — aligned with Starlight whisper */
+  --bg: #0a0a0f;            /* base — aligned with Starlight ink */
+  --edge: rgba(144, 144, 168, 0.16);
+  --starlight-accent: #7c5cff;  /* unified brand purple */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -12,7 +15,9 @@ html, body {
   height: 100%;
   background: var(--bg);
   color: var(--ink);
-  font-family: 'Space Grotesk', 'SF Pro Display', -apple-system, Inter, system-ui, sans-serif;
+  font-family: 'Inter', 'SF Pro Display', -apple-system, system-ui, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';  /* premium Inter alts */
+  letter-spacing: -0.011em;
   overflow: hidden;
   overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
@@ -147,8 +152,40 @@ body[data-state="speaking"]  #status-line .sep { animation: pulse 0.8s ease-in-o
   50% { transform: scale(1.6); opacity: 0.5; }
 }
 
+/* Idle pulse on status pill — subtle breath so the orb feels alive at rest */
+body[data-state="idle"] #status-line {
+  animation: breath 4s ease-in-out infinite;
+}
+@keyframes breath {
+  0%, 100% { opacity: 0.85; box-shadow: 0 0 0 0 transparent; }
+  50%      { opacity: 1;    box-shadow: 0 0 22px color-mix(in oklab, var(--core) 18%, transparent); }
+}
+
+/* Cockpit cohesion — link to dashboard for unified entry point */
+#cockpit-link {
+  position: absolute;
+  top: 42px;
+  right: 28px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--ink) 50%, transparent);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--edge);
+  background: color-mix(in oklab, var(--bg) 60%, transparent);
+  backdrop-filter: blur(10px);
+  z-index: 4;
+  transition: color 200ms ease, border-color 200ms ease;
+}
+#cockpit-link:hover {
+  color: var(--ink);
+  border-color: color-mix(in oklab, var(--starlight-accent) 60%, transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  #orb, #glow, #status-line .sep { animation: none !important; transition: none !important; }
+  #orb, #glow, #status-line, #status-line .sep { animation: none !important; transition: none !important; }
 }
 
 .tool-pill {
@@ -164,3 +201,33 @@ body[data-state="speaking"]  #status-line .sep { animation: pulse 0.8s ease-in-o
   color: var(--core);
   font-family: 'JetBrains Mono', ui-monospace, monospace;
 }
+
+/* Text-input fallback (T key) — minimal, premium, frosted */
+#text-input-form {
+  position: fixed;
+  bottom: 7vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(560px, 80vw);
+  z-index: 50;
+}
+#text-input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 14px;
+  background: rgba(8,8,12,0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--ink);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,188,212,0.05);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+#text-input:focus {
+  border-color: rgba(0,188,212,0.55);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.4), 0 0 0 2px rgba(0,188,212,0.18);
+}
+#text-input::placeholder { color: rgba(250,250,250,0.42); }

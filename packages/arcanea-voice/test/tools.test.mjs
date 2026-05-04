@@ -21,8 +21,8 @@ const test = (name, fn) => suite.push({ name, fn });
 // Schema integrity
 // ---------------------------------------------------------------------------
 
-test('TOOLS array has six tools with OpenAI-compatible shape', () => {
-  assert.equal(TOOLS.length, 6);
+test('TOOLS array has seven tools with OpenAI-compatible shape', () => {
+  assert.equal(TOOLS.length, 7);
   const names = TOOLS.map(t => t.function.name).sort();
   assert.deepEqual(names, [
     'claude_code_launch',
@@ -31,6 +31,7 @@ test('TOOLS array has six tools with OpenAI-compatible shape', () => {
     'linear_issue',
     'open_url',
     'shell_run',
+    'workflow_run',
   ]);
   for (const t of TOOLS) {
     assert.equal(t.type, 'function');

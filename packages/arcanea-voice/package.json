@@ -31,9 +31,10 @@
     "dashboard": "node bin/voice.mjs dashboard",
     "jarvis": "node bin/voice.mjs jarvis",
     "lumina": "node bin/voice.mjs lumina",
-    "test": "node test/persona.test.mjs && node test/tools.test.mjs && node test/server.test.mjs",
+    "test": "node test/persona.test.mjs && node test/tools.test.mjs && node test/workflows.test.mjs && node test/server.test.mjs",
     "test:persona": "node test/persona.test.mjs",
     "test:tools": "node test/tools.test.mjs",
+    "test:workflows": "node test/workflows.test.mjs",
     "test:server": "node test/server.test.mjs",
     "test:help": "node bin/voice.mjs help"
   },
