@@ -350,17 +350,28 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       // 2 — chat
       let full: string;
       const systemPrompt = composeSystemPrompt();
+      // Jarvis persona gets server-side live tools (system_status, git_today,
+      // open PRs, repo search, file reads, brand brief). The BYOK Groq path
+      // hits Groq direct and skips them — those users get persona reasoning
+      // only. Inline [OPEN: url] markers handle browser actions on both paths.
+      const enabledTools = persona.id === 'jarvis' ? ['jarvis'] : undefined;
       if (keys.groq) {
         full = await chatWithGroq({
           messages: nextHistory.map((m) => ({ role: m.role, content: m.content })),
           systemPrompt, apiKey: keys.groq,
-          temperature: persona.temperature, maxTokens: 220,
+          temperature: persona.temperature, maxTokens: 240,
         });
         setReply(full);
       } else {
         const chatRes = await fetch('/api/ai/chat', {
           method: 'POST', headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ messages: nextHistory.map((m) => ({ role: m.role, content: m.content })), systemPrompt, temperature: persona.temperature, maxTokens: 220 }),
+          body: JSON.stringify({
+            messages: nextHistory.map((m) => ({ role: m.role, content: m.content })),
+            systemPrompt,
+            temperature: persona.temperature,
+            maxTokens: 240,
+            ...(enabledTools ? { enabledTools } : {}),
+          }),
           signal: ctl.signal,
         });
         if (!chatRes.ok || !chatRes.body) throw new Error(`chat ${chatRes.status}`);
@@ -392,6 +403,27 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       }
 
       if (!full) throw new Error('empty reply');
+
+      // Parse inline action markers — currently only [OPEN: url] is supported.
+      // Pattern: [OPEN: https://arcanea.ai] or [OPEN:https://arcanea.ai].
+      // Execute browser-side, strip from displayed reply + TTS payload so the
+      // model never speaks "open square bracket open colon".
+      const actionRe = /\[OPEN:\s*(https?:\/\/[^\s\]]+)\s*\]/gi;
+      const urls = Array.from(full.matchAll(actionRe), (m) => m[1]);
+      if (urls.length > 0) {
+        for (const url of urls) {
+          try {
+            window.open(url, '_blank', 'noopener,noreferrer');
+            // eslint-disable-next-line no-console
+            console.log('[VOICE] opened', url);
+          } catch (e) {
+            console.warn('[VOICE] window.open failed', e);
+          }
+        }
+        full = full.replace(actionRe, '').replace(/\s{2,}/g, ' ').trim();
+        setReply(full);
+      }
+
       setHistory([...nextHistory, { role: 'assistant', content: full }]);
 
       // 3 — speak
