@@ -42,10 +42,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: TypeScript Check (report only)
+      - name: TypeScript Check (report only — via turbo for workspace-deps build)
         continue-on-error: true
         run: |
-          pnpm --dir apps/web run type-check 2>&1 | tee /tmp/tsc-output.txt || true
+          pnpm turbo run type-check --filter=@arcanea/web 2>&1 | tee /tmp/tsc-output.txt || true
           ERROR_COUNT=$(grep -c "error TS" /tmp/tsc-output.txt || echo "0")
           echo "## TypeScript Report" >> $GITHUB_STEP_SUMMARY
           echo "- **Errors found:** ${ERROR_COUNT}" >> $GITHUB_STEP_SUMMARY
