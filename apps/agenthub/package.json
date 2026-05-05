@@ -5,7 +5,7 @@
 		"@react-three/postprocessing": "^3.0.4",
 		"@theatre/core": "^0.7.2",
 		"@theatre/studio": "^0.7.2",
-		"@types/three": "^0.183.1",
+		"@types/three": "^0.184.0",
 		"@xyflow/react": "^12.10.1",
 		"clsx": "^2.1.1",
 		"framer-motion": "^11.15.0",
@@ -13,7 +13,7 @@
 		"postprocessing": "^6.39.0",
 		"tailwind-merge": "^2.6.0",
 		"theatre": "^0.2.3",
-		"three": "^0.183.2",
+		"three": "^0.184.0",
 		"zod": "^4.3.6"
 	},
 	"devDependencies": {
