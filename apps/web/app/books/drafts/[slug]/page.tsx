@@ -57,7 +57,7 @@ const COVER_MAP: Record<string, string> = {
   'heart-of-pyrathis': '/images/books/heart-of-pyrathis-cover-v2.png',
   'song-of-van-linh': '/images/books/song-of-van-linh-cover.png',
   'das-maedchen-drei-sprachen': '/images/books/das-maedchen-drei-sprachen-cover-v2.png',
-  'las-tierras-de-luz': '/images/books/las-tierras-de-luz-cover.png',
+  'las-tierras-de-luz': '/images/books/las-tierras-de-luz-cover-v2.png',
 };
 
 const ACCENT_MAP: Record<string, { primary: string; bg: string; border: string; glow: string }> = {
@@ -149,7 +149,7 @@ const BOOK_DESCRIPTIONS: Record<string, { tagline: string; paragraphs: string[] 
     paragraphs: [
       'Mira lives in Veldoria, a Realm of the Second Settling — a valley of piedra viva and slow rivers, where the old stones still hold yesterday\'s heat against your palm and the great sombraluz tree in the schoolyard has been called La Abuela for longer than anyone remembers. On an ordinary morning in la hora de Nero, the warmth above her heart resolves into something visible. She names her, very quietly, in the chamber of her own mouth: Chispa.',
       'In the days that follow, Mira learns that every being in her pueblo carries a small light — the baker who has hummed three notes for forty years, the dog who has been walking her to school for four, the silver cat who decides things about people, the carpenter whose oscuro is so deep it does not glow, it receives. But her mother sees something and not the something. Her best certainty becomes her loneliest knowing.',
-      'Then, across the narrow street, Señora Bela — who came to Veldoria from Aurevalde sixty years ago through a transit corridor that has since shifted course — looks up from a bowl of green beans and lets her gaze settle three fingers above Mira\'s shoulder. A magical-realism novel of the Kingdom of Light. Of inherited longing. Of the three notes that crossed a lost Realm-corridor to find their child. Written in the Veldarín tradition, in the open, with a woman who heard the song first.',
+      'Then, across the narrow street, Señora Bela — who came to Veldoria from Aurevalde sixty years ago through a transit corridor that has since shifted course — looks up from a bowl of green beans and lets her gaze settle three fingers above Mira\'s shoulder. A magical-realism novel of the Kingdom of Light. Of inherited longing. Of the three notes that crossed a lost Realm-corridor to find their child. Written in Spanish in the Veldarín tradition, in the open, with a woman who heard the song first.',
     ],
   },
 };

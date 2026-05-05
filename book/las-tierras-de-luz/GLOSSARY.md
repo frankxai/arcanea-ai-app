@@ -126,6 +126,24 @@ The book never names the song. The notes are the song's smallest unit, the seed 
 
 ---
 
+## Aurevaldan — words Bela carries
+
+**los esparcidos** — *the scattered ones.* What Aurevaldan grandmothers call the destellos when speaking from the old tradition. The First Light scattered through abundance, not fracture; the *esparcidos* are still being scattered, still being gathered.
+
+**los retornantes** — *those who gather, those who return.* The seers who can perceive the *esparcidos*. Bela is one. Mira is one. The retornantes do not generate light. They are the condition under which it rises.
+
+**la piedra de los velos** — *the stone of veils.* A small translucent crystal of the Aurevaldan tradition. Functions as a lens, not a power source. Removes perceptual noise for two breaths, then returns to ordinary stone. Bela's grandmother carried one. Bela has it in a tin box.
+
+**el zumbido madre** — *the mother-hum.* The Aurevaldan name for the deep frequency the tradition holds is the conversation between the First Light and the loving dark, ongoing, never having stopped.
+
+**la primera mañana** — *the First Morning.* Aurevaldan name for the ongoing, present-continuous First Dawn. It has not ended. We live inside it.
+
+**la conversación que no se acaba** — *the conversation that does not end.* The tradition's name for itself. Both a name and a cosmological claim.
+
+**los nombrados / los sin nombrar** — *the named / the unnamed.* Those whose esparcido has been seen by another retornante; those whose esparcido has not yet been seen.
+
+---
+
 ## A note on the dialogue
 
 The dialogue in this book is set with the *raya* — the long dash that opens a line of speech in Spanish-language literature. There are no quotation marks. There are no inline translations. This is the convention of García Márquez, Rulfo, Cisneros, McCarthy in his Border Trilogy, and the wider tradition the book stands inside.

@@ -1,237 +1,137 @@
-# Chapter One: El Día que Chispa Despertó
+# Capítulo Uno: El Día que Chispa Despertó
 
-She woke before the bells did. That was the first strange thing.
+![Capítulo 1: El Día que Chispa Despertó](/images/books/las-tierras-de-luz-ch01.png)
 
-The second was the warmth over her heart — not the warmth of a blanket pulled close, not the warmth of a good dream still holding on after sleep. A different warmth. A warmth that was waiting for her to open her eyes.
+Despertó antes que las campanas. Sobre su corazón había una tibieza esperando a que ella abriera los ojos.
 
-So she opened them.
+Así que los abrió.
 
-Above her chest, three fingers above the white cotton of her nightgown, a small light was hovering.
+A tres dedos del algodón blanco de su camisón, una pequeña luz flotaba.
 
-She did not sit up. She did not call for her mother. She lay very still, the way you lie still when a zorzal has landed on the windowsill and you do not want it to leave. The light was the size of the zorzal's bright chest and the color of — she tried to name it, and gave up. Green. Gold. Green again. The color of a luzfruta leaf held up to sunlight with a lamp behind it. A color she had never had a word for because she had never needed one.
+No se incorporó. No llamó a su madre. Se quedó muy quieta, como uno se queda quieto cuando un zorzal ha aterrizado en el alféizar y no quieres que vuele. La luz era del tamaño del pecho encendido de un zorzal — naranja vivo, casi coral, pulsando como ascua — y del color de... intentó nombrarlo y no pudo. Verde. Dorado. Verde otra vez. El color de una hoja de luzfruta sostenida a contraluz con una lámpara detrás. Un color para el que nunca había tenido nombre porque nunca lo había necesitado.
 
-It drifted. Not fast. Not afraid. It moved the way certain peces moved in the shallows of the Río Claro where the water had learned to go slowly — unhurried, familiar with its medium.
+Derivaba. Sin prisa. Sin miedo. Se movía como ciertos peces en los remansos del Río Claro donde el agua había aprendido a ir despacio — segura de su medio.
 
-Mira watched it for what might have been a minute and might have been longer. The room was still dark. The piedra viva of the walls still held a memory of the day's heat, the way the old stones always did, warm if you pressed your palm against them even in the coldest hour. That hour was this hour. *La hora de Nero,* the grandmothers called it — the hour when nothing had yet chosen to be the day. Outside the shuttered window the street was perfectly silent. The first zorzal had not yet begun its chorus. Even the *zumbido* — the hum Mira had always felt beneath her ribs and never had a word for — was thinner than usual, as if the valley itself were holding its breath.
+Mira la observó durante lo que podía haber sido un minuto o mucho más. La habitación seguía oscura. La piedra viva de las paredes guardaba aún la memoria del calor del día, como siempre hacen las piedras viejas — cálidas si apoyabas la palma contra ellas incluso en la hora más fría. Esa hora era esta hora. La hora de Nero, llamaban las abuelas a ese momento — la hora en que nada ha elegido todavía ser el día. Afuera, la calle estaba en silencio perfecto. El primer zorzal de lumbre no había comenzado aún su coro — esas criaturas de cola herrumbre y pecho encendido que anidaban en los aleros y cantaban antes que cualquier otro pájaro, como si tuvieran un trato con la madrugada. Incluso el zumbido — el zumbido que Mira había sentido siempre debajo de las costillas y para el que nunca había tenido una palabra — era más tenue de lo habitual, como si el valle entero contuviera el aliento.
 
-Then, because she had always been a child who tested whether things were real by speaking to them, she whispered.
+Entonces, porque siempre había sido una niña que comprobaba si las cosas eran reales hablándoles, susurró.
 
-— Hola.
+—Hola.
 
-The light brightened. Just a little. Then dimmed back, as if embarrassed to have answered.
+La luz se avivó. Solo un poco. Luego volvió a atenuarse, como avergonzada de haber respondido.
 
-Something turned over in her chest. Not her heart. A place near her heart.
+Algo giró en su pecho. No su corazón. Un lugar cerca de su corazón.
 
-*Mía,* she thought. And the word was not in any language she had learned from a book. It was the oldest word she knew. Mine. The way a song is yours, or a dream is yours — not because you made it, but because it made itself inside you and now you have to carry it.
+Mía, pensó. Y la palabra no era de ningún idioma que hubiera aprendido en un libro. Era la palabra más antigua que conocía. Mío. Como una canción es tuya, o un sueño es tuyo — no porque lo hayas hecho, sino porque se hizo dentro de ti y ahora tienes que cargarlo.
 
-She sat up slowly. The light moved with her, keeping its place three fingers above her chest. Like her breath. Like something she had been doing her whole life without noticing.
+Se incorporó despacio. La luz se movió con ella, manteniendo su lugar a tres dedos de su pecho. Como su respiración. Como algo que hubiera estado haciendo toda la vida sin notarlo.
 
-From down the hall she heard the first soft sounds of the kitchen — the lifting of a cloth, the murmur of water being poured. Her mother. *La hora de Nero* in Remedios's practice was the hour of bread, as it had been for twenty-six years.
+Desde el pasillo llegaron los primeros sonidos suaves de la cocina — el levantamiento de un paño, el murmullo del agua al verterse. Su madre. La hora de Nero en la práctica de Remedios era la hora del pan, como lo había sido durante veintisiete años.
 
-Mira swung her feet over the edge of the bed. The tile was cold. The light followed. She pulled her shawl around her shoulders, and as she did she caught sight of herself in the small mirror her father had hung by the door for her tenth birthday — a face she knew, a shawl she knew, and a soft hovering shape that was already learning the distance above her shoulder as if it had always been there.
-
-*Mía,* she thought again.
-
-Then she went to find her mother.
+Mira se levantó de la cama. La luz fue con ella.
 
 ---
 
-Remedios at the kitchen table looked up when Mira appeared in the doorway, and the first thing Remedios did was smile — because that was what she always did when Mira appeared, and Remedios was a woman whose first answers to her daughter were always warm. The oil lamp on the shelf above the stove threw honey-colored light across her forearms, across the flour on her forearms, across the small piedra viva pendant she had worn for twenty-six years and had stopped noticing she wore. In the lamp-glow the pendant had the faintest warmth to it — warm the way the wall-stones were warm, as if it were a tiny sibling of the whole valley, kept close to her heart for reasons Remedios had never thought to examine.
+El desayuno era cacao con un poco de maíz tostado, y tortillas dobladas con sal, que su madre ponía sobre la mesa sin decir nada porque ciertas cosas no necesitaban decirse. Había una taza para Mira y una para ella, y el gato — un animal plateado sin nombre que vivía en los aleros y a veces dormía dentro — estaba sentado en el umbral de la puerta, mirando hacia el lugar donde la luz de Mira flotaba.
 
-— ¿No puedes dormir, mi vida?
+—El gato te está mirando —dijo Mira.
 
-Mira stood in the doorway. She had meant to run in. She had meant to say look, look, look. But the closer she had come to the kitchen the quieter she had grown, and now, standing in the doorway with the light hovering above her chest, she found she could only speak softly.
+—El gato mira todo —dijo su madre, y le puso la tortilla en el plato—. Come antes de que enfríe.
 
-— Mamá. Mira.
+Mira comió. La luz se quedó.
 
-She pointed down at the air above her ribs.
+—Mamá.
 
-Remedios stopped kneading. She wiped her hands on her apron and came close. She looked where Mira was pointing. She looked at Mira's face, and then at Mira's chest, and then at Mira's face again.
+—Mm.
 
-— Ay, mi niña.
+—Hay algo.
 
-Mira waited.
+Su madre no levantó la vista de la masa. Las manos seguían doblando.
 
-— Tienes los ojos que brillan. Como si hubieras soñado con cosas buenas.
+—Hay muchas cosas —dijo.
 
-Remedios bent and kissed her forehead, and left a small soft print of flour there, and returned to the bread, because there were forty families in the pueblo who would come through the shop door before midday, and the bread had never once been late.
+—Aquí. —Mira señaló con un dedo el espacio sobre su pecho—. Hay algo aquí que no estaba antes.
 
-Mira stood very still. The light hovered. Visible as a candle. Plain as the pendant on her mother's neck.
+Su madre dobló la tortilla, la giró, la puso sobre el comal.
 
-Her mother had not seen her.
+—¿Te duele?
 
-Her mother had seen *something* — the brightness of her eyes, perhaps the shift in the air of the kitchen. Remedios had seen the shimmer. She had not seen the shape. It was so close it was worse than not enough.
+—No.
 
-Mira made herself breathe. She stood in the doorway while her mother's hands went back to their work. She watched the slow practiced rhythm of Remedios folding the dough over itself — fold, press, turn — and she noticed, for the first time in eleven years, that her mother was humming under her breath. Three notes. Always the same three notes, softer than conversation, exactly at the rhythm of the folding. Mira had heard those notes every morning of her life. She had never paid attention.
+—¿Te molesta?
 
-The light at her chest pulsed, once, in the rhythm of the humming.
+—No.
 
-— Chispa — Mira whispered. Silently. Only in the chamber of her own mouth.
+—Entonces come.
 
-The name arrived without her choosing it. It was the kind of name you recognize, not the kind you invent. *Chispa. Mi Chispa.*
+Así que comió.
 
-She did not say it aloud. Some names you do not say aloud yet.
-
-She stood in the doorway a moment longer, long enough for her mother to glance back and smile the small reassuring smile that had been Mira's horizon for three years — since her father's visits had grown shorter, since the phone calls between the city and the valley had grown routine, since the house had learned to be warm without him — and then Mira turned and went to put on her school uniform.
-
-In the hallway, alone, she looked down at the light.
-
-— Chispa — she said, this time out loud, very quiet.
-
-The light turned — if something without a face can turn — toward the sound of its name. It pulsed once, at the rhythm of her heartbeat, and went still.
-
-She did not cry. She was not a child who cried easily. But something in her sat down very quietly and folded its hands.
+El gato plateado no se movió del umbral durante todo el desayuno. Miraba la luz con la cabeza ligeramente ladeada, no con el hambre ni la curiosidad de un gato mirando un pájaro, sino con algo más parecido al reconocimiento. Como si ya lo hubiera visto antes. Como si solo estuviera comprobando que seguía ahí.
 
 ---
 
-The street at that hour was grey at the edges and gold where the light had begun to reach it. The pueblo was waking. The butcher two doors down was setting up his chopping block of oiled pino arcano wood. The baker's boy was running with his flat basket of warm loaves balanced on his head — Panadería Almería, Don Emilio's shop, three streets away. A woman Mira had known her whole life was sweeping her doorstep with a reed broom, the rhythm of her sweeping as regular as a clock. The first zorzales were just beginning their morning speech from the roofs — complicated, layered, a little hoarse. Above the terracotta tiles, the sky had turned the color of the inside of a luzfruta — pale gold edging toward rose.
+La escuela estaba a siete cuadras, cuesta abajo por la calle del molino y luego a la izquierda por el callejón que olía a cal y a gardenias del jardín de Doña Flor. Mira hizo ese recorrido todos los días desde que tenía seis años. Lo conocía por el sonido: el chirriante tercer escalón de la casa de los Herrera, el cubo metálico que la señora del puesto de chicharrones dejaba siempre en la misma baldosa rota, el sonido del agua de la acequia cuando la calle empezaba a bajar.
 
-Mira walked slowly.
+Hoy lo conoció diferente.
 
-She walked slowly because the world had changed.
+Los zorzales de lumbre — cuatro de ellos, posados en los cables sobre la calle del molino — tenían los pechos más vivos que de costumbre. Cada uno encendía y apagaba su luz al ritmo de su propia canción, y los cuatro ritmos se tocaban y se separaban como dedos que tejen. Mira se detuvo a mirarlos y uno la miró de vuelta con un ojo naranja muy pequeño y muy serio.
 
-In the butcher, as he lifted his cleaver to test its edge, a soft amber light pulsed beneath his ribs — the color of old honey held in a jar that had been kept a long time. In the woman with the broom, a rose glow so gentle it seemed to be the color of her sweeping itself. The baker's boy went past her at a run, and Mira saw in him a warm coral spark — not big, not showy, but bright with the specific brightness of a child who wanted to be somewhere and was going there as fast as his feet would carry him.
+—Buenos días —dijo, porque era lo que se decía.
 
-She stopped in the street.
+El zorzal gorjeó una nota corta y giró la cabeza.
 
-Two shepherds passed her, leading half a dozen velcorderos down from the plateau road. The lambs were the color of moonlight and the rainbow at the edge of oil on water. Mira saw, running all through the small herd, an unambiguous gold — certain, hungry, present. She laughed once, involuntarily, and one of the shepherds gave her the suspicious glance that shepherds give to town children who laugh at animals.
+La luz sobre su pecho pulsó. Una vez. Como una respuesta.
 
-The lights were everywhere.
-
-She had walked this street every day of her life. The lights had been there every day of her life. She had never seen them.
-
-Something in her grew very still.
-
-It was not fear, exactly. It was closer to the feeling of standing in the doorway of a room you had lived in for eleven years and realizing, for the first time, that the room had a floor below it, that the floor went down further than you had ever thought to ask. The house had not changed. She had.
-
-Chispa stayed at her shoulder, moving with her, keeping three fingers' distance as if Chispa had been measuring her whole life without letting on.
-
-Mira walked on.
-
-She passed the fountain, where two old women were filling clay jars. Their destellos were soft lavender and amber — the dreamer and the rememberer — and the two colors leaned toward each other across the space between the women, the way old friends' voices lean. Past the low wall where the stray gato plateado lived; the cat was awake, sitting in perfect stillness in the way cats become very still when they are deciding whether something is worth their attention, and Mira felt — without having words for it — that the cat was deciding something about her. She walked past with her head down.
-
-She passed the open archway of Señor Vidal's carpenter shop, and there she slowed.
-
-Señor Vidal was at his bench already. A tall, thin, quiet man. He was measuring a length of pino arcano with a piece of string marked at intervals, as he always did, because Señor Vidal trusted nothing that could not be measured and measured twice. Mira had known him her whole life. She had known his face, his long patient hands, the slight stoop of his shoulders.
-
-She had not known his destello.
-
-It was not amber. It was not gold. It was not any of the colors she had been seeing.
-
-It was — she stood perfectly still in the street, looking — a deep indigo-black. The color of the Río Claro in the deepest pool beneath the stone bridge, where the water held itself in shadow even at midday. The color of a well looked down into at noon. It did not glow. It received. It did not radiate — it was radiated *into,* as if it were the thing the world around it was trying to reach.
-
-Mira could not have said how she knew the difference between this light and the others. She knew.
-
-Señor Vidal did not look up. He measured his length of pino arcano and made a small mark with a bit of graphite and began to measure it again. His deep indigo-black light rested, unmoving, exactly where his heart was. The place in her chest that was not her heart turned over, slowly, and watched.
-
-— Oscuro — she whispered. She did not know where the word came from.
-
-She walked on.
-
-She walked faster.
-
-She would remember, later, that Señor Vidal had been the first person whose light had made her afraid. Not because there was anything wrong with it. Because there was so clearly something right with it, and she did not have any idea what to do with something that right.
+Mira bajó la vista, luego la subió. El zorzal ya miraba hacia otro lado, desinteresado, importante, ocupado con el asunto de ser un zorzal. Ella siguió caminando.
 
 ---
 
-She had almost reached the schoolyard when the dog joined her.
+En la escuela, la señorita Inés les hizo copiar un párrafo sobre los ríos del altiplano. Tomás, que se sentaba a su izquierda, le pasó una nota que decía *¿Por qué tienes cara de que viste algo raro?* y Mira escribió debajo *Porque sí* y se la devolvió. Tomás la leyó y asintió con la seriedad de alguien que acepta que hay cosas que no necesitan más explicación.
 
-It happened the way it had happened every morning for four years: Marisol, the village perro veldoriano, appeared at the corner of the Calle del Almendro and fell in beside her at her right, at exactly six feet distance — never closer, never farther — and walked her the last block to the gate of the school.
+A la hora del recreo, Mira se sentó sola en el borde del patio donde crecía la hierba alta y dejó que la luz saliera un poco más. Sin que nadie la viera. Solo para ver qué hacía.
 
-Marisol belonged to no one. Marisol belonged to the pueblo. She was grey-brown and rough-coated and impossibly old, with eyes the color of honey in deep shade. She had been following Mira since Mira was seven. Nobody else in the pueblo received this particular companionship, though nobody else in the pueblo particularly minded. Marisol's choosings were her own.
+Hizo lo mismo que siempre: flotar, pulsar, quedarse cerca. Pero cuando una mariposa del color del cobre se posó en la hierba a un palmo de su rodilla, la luz se inclinó — no mucho, solo un grado o dos — en su dirección. Como si saludara. Como si reconociera algo.
 
-This morning was different.
+La mariposa se fue. La luz volvió a su lugar.
 
-Mira noticed — walking, feeling Chispa hover, feeling the new seeing behind her eyes — that Marisol was looking at her.
-
-Not at her face. At her right shoulder.
-
-At the three-fingers-above-shoulder space where Chispa rode.
-
-Marisol was looking at Chispa.
-
-Mira did not turn her head. She did not acknowledge it. She walked the last block with her chest very tight, and Marisol walked beside her, and at the gate of the school Marisol stopped — as always — and sat down on the warm stone step to wait. Mira glanced at her sidelong as she passed through the gate, and Marisol's honey eyes met hers directly for the first time in four years. Just once. A look that held something old and something patient and — Mira understood, with a quiet certainty — something that had been waiting.
-
-*You too,* Mira thought, not knowing what she meant.
-
-Marisol put her head down on her paws. She was still looking.
-
-Mira walked into the schoolyard and did not look back.
+Mira guardó eso.
 
 ---
 
-The schoolyard was empty.
+De regreso a casa, por el callejón de las gardenias, pasó frente a la tienda de la señora Bela. Bela tenía setenta y dos años y vendía hilos, botones y cosas pequeñas de barro cocido que ella misma hacía en un horno del patio. Siempre había tenido una manera de mirar a Mira que era diferente de la manera en que miraba a los otros niños — no fija, no inquietante, sino atenta. Como si esperara algo.
 
-She was early. She was always early, because her mother opened the bread shop at six and there was nowhere else for Mira to be, and because Mira had learned, during the year her father's visits first began to get shorter, that being alone under the great sombraluz before the other children arrived was a kind of peace she had not known she needed until she had it.
+Hoy Bela estaba sentada en su silla de madera frente a la puerta, con las manos en el regazo y los ojos cerrados. El sol de las cuatro de la tarde le daba en el cuello.
 
-The sombraluz of the schoolyard was very old. Older than any living person in the pueblo. It was called La Abuela by the children — a name so long-standing that no child could remember being told it, the way certain names simply *are* — and by the adults, when they spoke of it at all, it was just "the old one." Its trunk was thick enough that three children could stand inside its hollow at the base and not touch each other. Its canopy, in the full-summer months, spread so wide that the whole plaza-side of the schoolyard was in its shade. The leaves were green above and silver-white beneath, so when the wind moved through the crown it looked, at a glance, as though someone were turning the pages of an enormous book.
+—Señora Bela.
 
-Mira sat against the trunk. The earth was cold. The stone wall behind her was cold. The bark against her back was warm.
+Bela abrió los ojos.
 
-She looked up into the canopy, and what she saw — what she had never seen, what had always been there — was an enormous slow green light moving inside the wood itself. Verde, the color of the rooted, the patient. It was the size of the tree. It filled the whole trunk and branched upward into every limb. La Abuela was lit. She was more than lit — she was singing, in the way trees sing, which is the slowest song in the valley and the one most beings never hear.
+—Mira. —No dijo nada más por un momento. Luego—: ¿Cómo está tu chispa hoy?
 
-Chispa lifted from Mira's shoulder — the first time Chispa had moved away from that spot since the kitchen — and floated upward, about two feet, and hovered there, looking at the tree.
+Mira se quedó quieta.
 
-Mira watched.
+—¿Mi qué?
 
-La Abuela's slow green destello pulsed once, gently, at the rhythm of something that was not Mira's heartbeat.
+—Tu chispa. —La señora señaló el lugar sobre el pecho de Mira con un dedo artrítico, sin apartar los ojos—. La que llevas ahí desde siempre. ¿Cómo está hoy?
 
-Chispa pulsed back, a half-beat slower.
+—¿Usted... puede verla?
 
-Then Chispa returned to her shoulder.
+—A ratos —dijo Bela, y cerró los ojos otra vez—. Hoy está especialmente activa. Bien por ti.
 
-Mira let out a breath she had not known she was holding.
+Mira quiso preguntar qué significaba eso, o cuándo había empezado, o cómo era posible. Pero la señora Bela ya tenía el gesto cerrado de alguien que ha dicho lo que iba a decir y no va a decir más. Así que Mira siguió caminando.
 
-— Hola — she whispered. To the tree. To Chispa. To whatever this was.
+Esa noche, acostada en la cama, puso una mano sobre el lugar donde la luz flotaba.
 
-She held out her hand, palm up. Chispa drifted down into her palm. Settled. The warmth was the warmth of a luzfruta held just after it had been picked. She closed her fingers slowly. Chispa passed through her skin without effort, and stayed where she was, in the cup of Mira's hand, unbothered.
+—Chispa —dijo, en voz muy baja, porque el nombre había estado ahí esperando el tiempo que hiciera falta.
 
-— ¿Qué eres? — Mira whispered, and the Veldarín came out softer than she had meant it to, the way certain questions ask themselves without asking for answers.
+La luz pulsó. Cálida. Cierta.
 
-Chispa pulsed, slow, at the rhythm of Mira's heart.
+Afuera, en el alero, el gato plateado hizo un ruido suave — no un maullido, sino ese sonido entre el ronroneo y el murmullo que los gatos hacen cuando reconocen algo que les parece correcto.
 
-She is the question I have been, Mira thought.
+Mira cerró los ojos.
 
-She is the question that woke up asking itself.
-
-The thought was too big for an eleven-year-old sitting under a sombraluz at dawn, and Mira laughed once, softly, because she had learned already that thoughts too big must be laughed at or they will take over.
-
-And the *zumbido* — the background hum of the valley that Mira had always felt beneath her ribs and had never known was anything at all — rose, for one full breath, into audibility. Not sound exactly. A sensation that was close to sound. A steady low tone that was not in her ears but in the cavity below her ribs, and which, for one breath, was everywhere — in the stones and the tree and her own hands and the cold earth and the morning light on the whitewashed walls and Chispa in her palm. Everything at the same frequency. Everything singing.
-
-Then, as softly as it had risen, the hum settled back to the level of the unnoticeable. The valley returned to being a valley.
-
-Mira sat very still.
-
-Somewhere above the rooftops, the first bells rang from the campanile of the little church — a pattern the valley had used for longer than anyone remembered. Three strokes. Then four. Then the single low tone that meant the day had started. Mira had heard the pattern every school morning of her life and had never counted it. She counted it now, without meaning to. Three and four and one. *Ocho.* Eight. No — wait. She counted again. Three and four and one and — no, there was one more, a slightly delayed low tone, almost a suggestion of a tone, at the very end. Three and four and one and one and one. Ten.
-
-Ten.
-
-The bells rang ten every morning and she had never heard it. She had always stopped counting at eight.
-
-*¿Qué más hay que nunca he contado?* she thought. What else is there I have never counted?
-
-She stood up slowly and brushed the dust from her uniform. Chispa lifted from her palm and settled back at her shoulder.
-
-She only knew that something had woken in her this morning, and that it was hers, and that her mother — who saw almost everything — had not seen it.
-
-The last part made a small old place inside her sit very still.
-
-She put it away to look at later.
-
-She had a day to live. And she would live it. And she would watch.
-
-She turned toward the classroom door. The first of the other children was coming through the schoolyard gate. Mira tucked Chispa gently against her chest the way her aunts carried small birds home in winter, and walked.
-
-She did not look back at La Abuela.
-
-But the tree — whose slow green light moved deep inside her old bark, awake and patient and ancient — watched her go.
-
-And three streets away, without anyone noticing, in a warm flour-dusted kitchen, a woman who had been humming three notes since before her daughter was born paused for half a heartbeat in her kneading. She looked at the window. The light through the piedra viva was beautiful today. She smiled at nobody, and went back to her work, and the three notes continued, soft and precise, into the dough.
-
-The bread was almost ready.
-
-The day had begun.
+En algún lugar debajo de los sonidos de la noche, el zumbido de las cosas vivas del valle seguía su respiración lenta, como siempre. Solo que esta noche Mira podía oírlo.
 
 ---
 
-*End of Chapter One.*
+*Las Tierras de Luz* / Ana Cecilia Cancino & FrankX
