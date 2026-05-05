@@ -1,0 +1,44 @@
+{
+  "common": {
+    "siteName": "Arcanea",
+    "tagline": "A creator platform for living worlds",
+    "switchLocale": "Switch language",
+    "loading": "Loading…",
+    "error": "Something went wrong",
+    "skipToMain": "Skip to main content"
+  },
+  "nav": {
+    "home": "Home",
+    "library": "Library",
+    "books": "Books",
+    "worlds": "Worlds",
+    "about": "About",
+    "pricing": "Pricing",
+    "chat": "Chat",
+    "academy": "Academy",
+    "community": "Community"
+  },
+  "home": {
+    "hero": "Build worlds with AI",
+    "subhero": "A creative multiverse where you chat with AI partners, build fantasy worlds, share what you make, and turn imagination into products.",
+    "cta": "Start creating",
+    "secondaryCta": "Explore the library",
+    "tagline": "190K+ words of creative philosophy. Free to start."
+  },
+  "books": {
+    "title": "Books",
+    "description": "Living books that grow with their readers — guided by AI Guardians, illustrated with Nano Banana, free to read.",
+    "browse": "Browse all books",
+    "continueReading": "Continue reading",
+    "readNow": "Read now",
+    "newBook": "New book"
+  },
+  "about": {
+    "title": "About Arcanea",
+    "description": "Where creators and AI build worlds together.",
+    "mission": "Our mission",
+    "missionBody": "Make creative intelligence accessible to every storyteller, world-builder, and dreamer. Tools first. Community always. Open by default.",
+    "team": "Team",
+    "values": "Values"
+  }
+}

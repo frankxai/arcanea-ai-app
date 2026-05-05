@@ -1,0 +1,44 @@
+{
+  "common": {
+    "siteName": "Arcanea",
+    "tagline": "Eine Schöpferplattform für lebendige Welten",
+    "switchLocale": "Sprache wechseln",
+    "loading": "Wird geladen…",
+    "error": "Etwas ist schiefgelaufen",
+    "skipToMain": "Zum Hauptinhalt springen"
+  },
+  "nav": {
+    "home": "Start",
+    "library": "Bibliothek",
+    "books": "Bücher",
+    "worlds": "Welten",
+    "about": "Über uns",
+    "pricing": "Preise",
+    "chat": "Chat",
+    "academy": "Akademie",
+    "community": "Gemeinschaft"
+  },
+  "home": {
+    "hero": "Erschaffe Welten mit KI",
+    "subhero": "Ein kreatives Multiversum, in dem du mit KI-Partnern chattest, Fantasy-Welten baust, deine Werke teilst und Vorstellungskraft in Produkte verwandelst.",
+    "cta": "Loslegen",
+    "secondaryCta": "Bibliothek erkunden",
+    "tagline": "190.000+ Wörter kreativer Philosophie. Kostenlos starten."
+  },
+  "books": {
+    "title": "Bücher",
+    "description": "Lebendige Bücher, die mit ihren Lesern wachsen — geführt von KI-Wächtern, illustriert mit Nano Banana, kostenlos zu lesen.",
+    "browse": "Alle Bücher durchstöbern",
+    "continueReading": "Weiterlesen",
+    "readNow": "Jetzt lesen",
+    "newBook": "Neues Buch"
+  },
+  "about": {
+    "title": "Über Arcanea",
+    "description": "Wo Schöpfer und KI gemeinsam Welten erschaffen.",
+    "mission": "Unsere Mission",
+    "missionBody": "Kreative Intelligenz für jeden Geschichtenerzähler, Weltenbauer und Träumer zugänglich machen. Werkzeuge zuerst. Gemeinschaft immer. Offen als Standard.",
+    "team": "Team",
+    "values": "Werte"
+  }
+}

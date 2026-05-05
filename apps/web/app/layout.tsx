@@ -105,6 +105,11 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/",
+    languages: {
+      en: "/",
+      de: "/de",
+      "x-default": "/",
+    },
   },
   manifest: "/manifest.webmanifest",
 };
