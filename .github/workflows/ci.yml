@@ -158,9 +158,9 @@ jobs:
             packages/*/node_modules
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
 
-      - name: TypeScript check
+      - name: TypeScript check (via turbo — builds workspace deps first)
         run: |
-          pnpm --dir apps/web run type-check 2>&1 | tee /tmp/tsc-output.txt
+          pnpm turbo run type-check --filter=@arcanea/web 2>&1 | tee /tmp/tsc-output.txt
           ERROR_COUNT=$(grep -c "error TS" /tmp/tsc-output.txt || echo "0")
           echo "## TypeScript Report" >> $GITHUB_STEP_SUMMARY
           echo "**Errors**: ${ERROR_COUNT}" >> $GITHUB_STEP_SUMMARY
@@ -201,8 +201,8 @@ jobs:
             packages/*/node_modules
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
 
-      - name: Build web app
-        run: pnpm --filter @arcanea/web build
+      - name: Build web app (via turbo — builds workspace deps first)
+        run: pnpm turbo run build --filter=@arcanea/web
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
