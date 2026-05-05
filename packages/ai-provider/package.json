@@ -60,7 +60,7 @@
     "ai": ">=6.0.0"
   },
   "dependencies": {
-    "@ai-sdk/openai-compatible": "^2.0.0"
+    "@ai-sdk/openai-compatible": "^2.0.46"
   },
   "devDependencies": {
     "tsup": "^8.0.0",

@@ -50,7 +50,7 @@
     "commander": "^12.1.0",
     "execa": "^9.5.0",
     "kleur": "^4.1.5",
-    "yaml": "^2.6.0"
+    "yaml": "^2.8.4"
   },
   "devDependencies": {
     "tsx": "^4.19.0",
