@@ -49,7 +49,7 @@ const COVER_MAP: Record<string, string> = {
   'tides-of-silence': '/images/books/tides-of-silence-cover-v2.png',
   'heart-of-pyrathis': '/images/books/heart-of-pyrathis-cover-v2.png',
   'song-of-van-linh': '/images/books/song-of-van-linh-cover.png',
-  'las-tierras-de-luz': '/images/books/las-tierras-de-luz-cover.png',
+  'las-tierras-de-luz': '/images/books/las-tierras-de-luz-cover-v2.png',
   'das-maedchen-drei-sprachen': '/images/books/das-maedchen-drei-sprachen-cover-v2.png',
 };
 

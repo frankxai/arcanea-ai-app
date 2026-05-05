@@ -1,46 +1,42 @@
-# Chapter Seven: La Costa de los Mil Reflejos
+# Capítulo Siete: La Costa de los Mil Reflejos
 
-She crossed the street on Saturday morning.
+![Capítulo 7: La Costa de los Mil Reflejos](/images/books/las-tierras-de-luz-ch07.png)
 
-She had decided in the night, after the call, after the humming, after the destello had risen for no one. She had decided in the way certain decisions are made — without ceremony, without effort, the way a fruit decides to fall.
+Cruzó la calle el sábado por la mañana.
 
-The morning was the kind of valley morning that begins by being grey at the edges and by ten o'clock has remembered itself completely. Mira ate her bread. She kissed her mother. She told her she was going to visit Señora Bela, and Remedios looked up from the ledger with the particular slowed-down look she had begun to wear with Mira this week — half an attention longer than usual, the pen capped, the eyes meeting — and said only, *está bien, mi vida.*
+La había cruzado antes en la cabeza, durante la semana entera — en el camino al colegio, lavándose la cara en la palangana, al dejar el cuaderno sobre la mesa antes de dormir. La cruzaba en la imaginación y llegaba a la puerta azul y se paraba. Pero el sábado, sin haberlo decidido del todo, simplemente la cruzó.
 
-Mira walked across the street.
+La puerta azul estaba entornada tres dedos. Mira llamó con los nudillos en el marco, muy suave, y desde adentro llegó la voz de Bela — la voz de mañana, más blanda que la de los atardeceres en el escalón — diciendo pasa, niña.
 
-The blue door was open three fingers, the way some doors in the valley were left open in the morning to let the previous day's air out. Mira knocked very softly on the wood beside the latch. From inside, Bela's voice — softer than the voice in the doorway last week, the morning voice — said *pasa, niña.*
+Mira empujó la puerta y entró.
 
-Mira pushed the door open and stepped inside.
+La casa era pequeña y honesta. Paredes de piedra viva sin adornos, sin retablos, sin los pequeños estantes de barro cocido que tenían las otras casas de las vecinas. Una mesa de madera gastada. Dos sillas. Un altar pequeño con una vela apagada. Una alfombra azul descolorida. A través del umbral del fondo, la cocina.
 
-The house was small. One room downstairs, the kitchen at the back. The walls were the same piedra viva as everywhere else in the pueblo, but on the inside Bela had let them be. No paintings. No tiles. No little decorative shelves with small ceramic things on them, the way the other houses of the old women had. Only a worn wooden table. Two chairs. A small altar with one candle, unlit. A blue rug. A doorway through to the kitchen.
+Bela estaba en la cocina dándole la espalda a la puerta.
 
-In the kitchen, Bela was at the stove with her back to the door.
+Estaba haciendo bollos. Mira lo supo antes de verlos, por el olor — maíz tostado, pero más lento, con algo de sol adentro — el olor que había llegado hasta el escalón hacía dos semanas. El olor del país al que Bela no podía volver. El olor de la aproximación que era casi correcta, nunca del todo.
 
-She was making bollos. Mira knew this without being told. The smell — *como maíz tostado, pero más lento. Con algo de sol adentro* — was the smell that had reached her on the stoop two weeks ago. The smell of the country Bela could not go back to. The smell of the approximation that was almost right, never quite.
+— Siéntate — dijo Bela, sin girarse —. Hay uno casi listo.
 
-— Siéntate — Bela said, without turning. — Hay uno casi listo.
+Mira se sentó a la mesa. Chispa flotaba sobre su hombro derecho. La luz opalescente que vivía en el pecho de Bela — visible desde aquí, a través de la pequeña casa — estaba quieta. Sostenida. No exactamente escondida como en el escalón, sino guardada con cuidado, la forma en que se guarda algo frágil.
 
-Mira sat down at the wooden table. She did not say anything. Chispa hovered at her shoulder. The opalescent light cupped inside Bela's chest, which Mira could see even from across the small house, was steady. Held. Not hidden the way it had been on the stoop, exactly — but quiet.
+Bela trabajó. Mira la observó.
 
-Bela worked. Mira watched.
+Bela era más vieja de lo que Mira había calculado desde la calle. De cerca, en su cocina, con la luz de la mañana, era la clase de vieja que se gana despacio. Sus manos eran pequeñas y morenas y cuidadosas. El pelo recogido en un moño bajo exactamente igual que en el escalón. El vestido gris gastado, que desde afuera parecía simplemente viejo, adentro, en su propia cocina, era otra cosa — era el gris de estar en casa, que es un color distinto.
 
-Bela was older than Mira had thought. Up close, in her own kitchen, in the morning light, Bela was — Mira saw — the kind of old that has been earned slowly. Her hands were small and brown and careful. Her hair was pinned in a low coil exactly the way it had been on the stoop. Her dress was the same worn grey, but on her own body, in her own house, the dress was not worn-grey but at-home-grey, which was a different color.
+Bela giró el bollo con una espátula de madera. Lo pasó a un plato. Puso el plato frente a Mira.
 
-She turned the bollo with a small wooden spatula. She slid it onto a plate. She set the plate on the table in front of Mira.
+— Despacio. Está caliente.
 
-— Despacio. Caliente.
-
-Mira looked at the bollo.
-
-It was the size of her two hands held together. Round. Golden-brown on the outside, with a dimple in the middle where Bela had pressed her thumb. The smell rose up from it, warm and grainy and slow.
+Mira miró el bollo. Era del tamaño exacto de sus dos manos juntas. Redondo. Dorado por fuera, con una marca de pulgar en el centro. El olor subía de él, tibio, lento, con ese algo por debajo que era casi — pero no del todo — el sabor que tenían las piedras vivas de las paredes cuando en un amanecer de invierno apoyabas la mejilla.
 
 — Gracias.
 
 — Come.
 
-Mira broke a small piece off. She put it in her mouth. The taste was like nothing she had eaten in her life. Sweeter than the corn she knew. Slower. With something underneath it that was almost — but not quite — the way the warm wall-stones tasted if you pressed your cheek against them on a winter morning.
+Mira lo partió. Lo puso en la boca. El sabor no se parecía a nada que hubiera comido. Más dulce que el maíz que conocía. Más lento. Con algo debajo que era casi la piedra tibia, casi la luz que entra en un cuarto antes que la persona que la va a ver.
 
-Bela watched her.
+Bela la observaba.
 
 — ¿Está bueno?
 
@@ -52,219 +48,217 @@ Bela watched her.
 
 — No. Falta el grano de allá. Aquí no crece. Lo hago con el grano de aquí, y queda parecido.
 
-Bela said this without complaint. Without sadness. Like a woman naming the weather.
+Lo dijo sin queja. Sin tristeza. Como una mujer nombrando el clima.
 
-Mira chewed. She thought — without thinking it as a thought — that *parecido* was not the same word as *almost.* That *almost* was a complaint. That *parecido* was a kind of acceptance.
+Mira masticó. Pensó, sin pensarlo como un pensamiento, que parecido no era lo mismo que casi. Que casi era una queja. Que parecido era una clase de aceptación.
 
-She did not say this.
+No lo dijo.
 
-She ate the bollo.
+Terminó el bollo.
 
-When she was finished, Bela was sitting in the second chair across the table, not eating, watching the morning come through the small window. Her hands were folded in her lap. The opalescent light cupped inside her chest had not changed in size or color since Mira had walked in. It was the same. It was the steady same.
+Cuando acabó, Bela estaba sentada en la segunda silla al otro lado de la mesa, sin comer, mirando cómo la mañana entraba por la ventana pequeña. Las manos unidas en el regazo. La luz opalescente en su pecho no había cambiado de tamaño ni de tono desde que Mira había entrado. Era la misma. La misma quieta.
 
-Bela said:
+Bela dijo:
 
 — ¿Has visto el mar, niña?
 
-Mira shook her head.
+Mira negó con la cabeza.
 
 — No. Solo en libros.
 
-— Hoy entonces. Si tu madre lo permite.
-
-Mira looked at her.
+— Pues hoy. Si tu madre lo permite.
 
 — ¿Hoy?
 
-— Hoy. Don Hilario sale al mediodía con un carro vacío. Va por sal. Vuelve a la noche. Hay sitio para dos.
+— Don Hilario sale al mediodía con el carro vacío. Va por sal. Vuelve a la noche. Hay sitio para dos.
 
 — ¿Tú vas?
 
 — Voy contigo.
 
-Mira sat very still. The bollo in her stomach felt warm and slow.
+Mira se quedó muy quieta. El bollo en el estómago era cálido y lento.
 
-— Voy a preguntar a mi mamá.
+— Voy a preguntarle a mi mamá.
 
 — Pregunta.
 
 ---
 
-Remedios paused with the rolling pin halfway across the dough.
+Remedios estaba en la tahona con el rodillo a la mitad del camino sobre la masa cuando Mira llegó.
 
-It was the third time, this week, that Remedios had paused with the implement of her work in her hand. The first had been at the soup with the ladle. The second had been last night at the cloth before the lamp. This time was the rolling pin. The pause was longer this time. Long enough that Mira saw it without having to be looking for it.
+Era la tercera vez esta semana que Remedios paraba con el instrumento de su trabajo en la mano. La primera había sido con el cucharón en la sopa. La segunda, anoche, con el paño de la lámpara. Esta vez el rodillo. La pausa era más larga que las anteriores. Lo suficiente para que Mira la viera sin necesidad de buscarla.
 
-Remedios looked at her daughter.
+Remedios miró a su hija.
 
-— ¿Con la Señora Bela?
+— ¿Con la señora Bela?
 
-— Con la Señora Bela.
+— Con la señora Bela.
 
 — ¿Al mar?
 
-— A la Costa de los Mil Reflejos. Don Hilario lleva. Vuelven en la noche.
+— A la Costa de los Mil Reflejos. Don Hilario lleva. Vuelven de noche.
 
-Remedios did not say anything for the length of time it took the dough beneath the rolling pin to stop steaming.
+Remedios no dijo nada durante el tiempo que tardó la masa debajo del rodillo en dejar de echar vapor.
 
-Then she set the pin down.
+Luego dejó el rodillo.
 
-— Llévate el chal. Y come algo antes de salir. Y no te alejes de la Señora Bela en los acantilados, *me lo prometes,* Mira.
+— Llévate el chal. Come algo antes de salir. Y no te alejes de la señora Bela en los acantilados, *me lo prometes,* Mira.
 
 — Me lo prometo.
 
-— Y si hay viento del oeste, te vuelves antes de que oscurezca.
+— Y si hay viento del oeste, vuelves antes de que oscurezca.
 
 — Sí, mamá.
 
-Remedios held her gaze for one more breath. Then she picked up the rolling pin and went back to the dough, and did not say *don't go,* and did not say *be careful,* and did not say all the small fluttering motherly things that other valley mothers said when their children left for the coast for the first time.
+Remedios la sostuvo con los ojos un momento más. Luego tomó el rodillo y volvió a la masa, y no dijo no vayas, y no dijo ten cuidado, y no dijo ninguna de las cosas pequeñas y aleteantes que dicen las madres cuando sus hijas se van al mar por primera vez.
 
-What she said was:
+Lo que dijo fue:
 
 — Anda. Sé buena.
 
-Mira understood, in the small unwording way she had begun to understand everything, that what her mother had just said was the closest thing to *yes, mi vida, go and become whatever you are becoming, I will be here when you come back* that her mother could yet say without saying it.
+Mira entendió, en la manera sin palabras en que había empezado a entender las cosas, que lo que su madre acababa de decir era lo más cercano a sí, mi vida, ve y hazte lo que estás haciéndote, aquí estaré cuando vuelvas que su madre todavía podía decir sin decirlo.
 
-She kissed her mother's flour-dusted forearm.
+Le besó el antebrazo enharinado.
 
-She went to find Bela.
+Fue a buscar a Bela.
 
 ---
 
-Don Hilario was a small man with a large mule and a cart that smelled, all the way to the coast and all the way back, of dried sage. He was a man who said little. He liked Bela. He had, Mira gathered, liked Bela for many years. He helped Mira up onto the cart bench beside Bela without comment and clicked his tongue at the mule and the cart started forward.
+Don Hilario era un hombre pequeño con una mula grande y un carro que olía, en todo el camino a la costa y en todo el de vuelta, a salvia seca. Era un hombre de pocas palabras. Le gustaba Bela. Le había gustado, entendió Mira, durante muchos años. La ayudó a subir al banco del carro sin decir nada, chasqueó la lengua a la mula y el carro empezó a moverse.
 
-The road from the valley to the coast was half a day at the mule's pace. They went out through the western gap in the Shoulders — the first time in Mira's life she had seen the valley from outside it. She turned in the seat as they crested the rise and looked back. The pueblo lay below in its small handful of warm white walls and red tile roofs, with the Río Claro silver in the late morning light, with La Abuela's slow green canopy lifting above the schoolyard wall. From this height she saw what she had never seen, which was that her valley was small. The size of a held breath. The size of a thing you could hold in your two hands.
+El camino del valle a la costa era medio día al paso de la mula. Salieron por el paso occidental de los Hombros — la primera vez en la vida de Mira que veía el valle desde afuera. Se giró en el asiento cuando subieron el repecho y miró atrás. El pueblo estaba abajo en su puñado de paredes blancas y tejados de teja roja, con el Río Claro plateado en la luz de media mañana, con la copa lenta de La Abuela visible sobre el muro del patio del colegio. Desde esta altura vio lo que nunca había visto: que su valle era pequeño. Del tamaño de un aliento contenido. Del tamaño de algo que cabría en las dos manos.
 
-She turned back to the road.
+Se giró de vuelta hacia el camino.
 
-Bela said nothing.
+Bela no dijo nada.
 
-The road climbed and turned and dropped through low hills, and the air slowly changed. Drier. Higher. By two o'clock the air had a salt to it that Mira had never tasted. By three the sage had gone and a different plant was scenting the road — a low silver shrub Bela did not name, that smelled like rosemary and something else, something Mira would later think of as *sea-rosemary,* the way certain things have to be named for what they are next to.
+El camino subió y giró y bajó por colinas bajas, y el aire fue cambiando poco a poco. Más seco. Más alto. Hacia las dos de la tarde ya tenía sal — una sal que Mira no había probado nunca. Hacia las tres el campo de salvia había dado paso a otro arbusto bajo y plateado, sin nombre que Bela dijera, que olía a romero y a otra cosa, algo que Mira pensaría más tarde como romero-de-mar, porque ciertas cosas necesitan nombrarse por lo que tienen al lado.
 
-By four they had reached the chalk cliffs.
+Hacia las cuatro habían llegado a los acantilados.
 
-The chalk cliffs rose, white and pale, against a sky that was bigger than any sky Mira had ever seen. The cart went down a narrow road cut into the cliff face. They came out into a small town built into the cliff in tiered terraces, with stone houses leaning against each other and dyed-cloth awnings stretched between them, and the smell of fish, and a different language being spoken in the streets — the same Veldarín Mira knew, but faster, with vowels that bent differently, the way Bela's vowels bent.
+Los acantilados de caliza se alzaban blancos y pálidos bajo un cielo que era más grande que cualquier cielo que Mira hubiera visto. El carro bajó por una carretera estrecha tallada en la roca. Salieron a un pueblo pequeño construido en terrazas escalonadas en el acantilado, con casas de piedra apoyadas unas en las otras y toldos de tela teñida tendidos entre ellas, y olor a pescado, y una manera diferente de hablar el Veldarín — el mismo que Mira conocía, pero más rápido, con vocales que se doblaban de otra manera, como se doblaban las vocales de Bela.
 
-Don Hilario pulled the cart up at the lower square. He helped them down. He said he would be at the salt-house until dusk and they should be back by then.
+Don Hilario paró el carro en la plaza baja. Les ayudó a bajar. Dijo que estaría en la casa de la sal hasta el atardecer y que tuvieran que estar de vuelta para entonces.
 
-Bela took Mira's hand.
+Bela tomó la mano de Mira.
 
 — Por aquí.
 
-She led Mira up. Up the tiered streets. Past the small shops with their dried fish and their salt and their dyed cloth and their bread that was a different bread from the valley bread. Past the small church with its blue tile roof. Past the last houses. Up onto the chalk path that climbed to the highest cliff, the one the locals called El Mirador, the lookout, where the gulls cried and where the wind, even in the still afternoons, did not stop.
+La llevó hacia arriba. Por las calles escalonadas. Más allá de las tiendas con su pescado seco y su sal y su tela teñida y su pan diferente al pan del valle. Pasaron la iglesia pequeña con su tejado de teja azul. Pasaron las últimas casas. Subieron por el sendero de caliza que llegaba hasta el acantilado más alto, el que los locales llamaban El Mirador, donde gritaban las gaviotas y donde el viento, incluso en las tardes quietas, no paraba.
 
-They came out onto the cliff.
+Salieron al borde.
 
-Mira stopped.
+Mira se detuvo.
 
-The sea was below them and out and gone — gone in a way no thing she had ever looked at had been gone. The water stretched. It went out and out and did not stop. There was no other side. There was only water, and water, and a darker line at the horizon where the water became sky, and beyond that there was — Mira knew, because Bela had said *otros países, hay cinco bajo las piedras,* she would say it later but Mira would remember it even now — beyond the horizon there were five different countries that did not show themselves and that fed their hidden rivers into this sea by ways no one had yet mapped.
+El mar estaba debajo de ellas y afuera y ya. Ido de una manera que ninguna cosa que Mira hubiera mirado había estado ida nunca. El agua se extendía. Salía y salía y no paraba. No había otro lado. Había solo agua, y agua, y una línea más oscura en el horizonte donde el agua se convertía en cielo, y más allá de eso — Mira lo sabía porque Bela iba a decirlo dentro de un momento, dicen que este mar nace de cinco países distintos, bajo las piedras, pero Mira lo iba a recordar como si lo hubiera sabido ya — había cinco países distintos que no se mostraban y que enviaban sus ríos escondidos a este mar por caminos que nadie había cartografiado todavía.
 
-The wind was on her face.
+El viento le daba en la cara.
 
-The wind was nothing like the valley wind.
+El viento no se parecía en nada al viento del valle.
 
-She stood on the chalk path and held Bela's hand and did not know what to do.
+Estaba en el sendero de caliza con la mano de Bela en la suya y no sabía qué hacer.
 
-— Camina conmigo — Bela said. — Despacio.
+— Camina conmigo — dijo Bela —. Despacio.
 
-They walked the path along the cliff. The grass at the cliff edge was bent permanently westward, frozen by years of wind. The gulls cried. Mira had thought gulls would be loud, in a way she would not like. They were loud. She liked them.
+Caminaron por el sendero del acantilado. El pasto al borde estaba inclinado permanentemente hacia el oeste, congelado por años de viento. Gritaban las gaviotas. Mira había pensado que las gaviotas serían ruidosas de una manera que no le gustaría. Eran ruidosas. Le gustaron.
 
-After a while Bela stopped at a flat place where two stones had been set as a bench. She sat. Mira sat beside her.
+Al rato Bela se detuvo en un lugar plano donde dos piedras habían sido puestas a modo de banco. Se sentó. Mira se sentó a su lado.
 
-The Mar Arcano stretched.
+El Mar Arcano se extendía.
 
-Mira closed her eyes. She felt for the zumbido.
+Mira cerró los ojos. Buscó el zumbido.
 
-It was thinner.
+Estaba más delgado.
 
-That was the first thing she noticed. The zumbido in her chest — the constant low tone she had been carrying her whole life and had only known was anything at all for two weeks — was thinner up here, on the cliff above the sea, than it had been at any point since the morning Chispa had appeared.
+Eso fue lo primero que notó. El zumbido en el pecho — el tono bajo constante que había cargado toda la vida y que solo supo que era algo desde hacía dos semanas — estaba más delgado aquí, en el acantilado sobre el mar, que en cualquier momento desde la mañana en que Chispa había aparecido.
 
-Not gone.
+No ausente.
 
-Less.
+Menos.
 
-She sat with the less. She did not understand the less. The valley's zumbido was thicker than ordinary at the river, and ordinary in the streets, and thinner in open flat places — she had begun, vaguely, to notice this. But the cliff above the sea was less than thinner. The cliff was more like — she searched for it — like a place where the hum had decided to be careful. Quieted, the way a guest's voice is quiet in a room that does not yet know it.
+Se quedó con el menos. No lo entendía. El zumbido del valle era más espeso que lo ordinario junto al río, ordinario en las calles, más delgado en los espacios abiertos y planos — había empezado, vagamente, a notarlo. Pero el acantilado sobre el mar era menos que más delgado. El acantilado era más bien como un lugar donde el zumbido había decidido ir con cuidado. Acallado, como se acalla una voz de visita en un cuarto que todavía no la conoce.
 
-Chispa hovered at her shoulder, not pulsing, slow.
+Chispa flotaba sobre su hombro. Sin pulsar. Lenta.
 
-Mira opened her eyes.
+Mira abrió los ojos.
 
-She looked at the sea.
+Miró el mar.
 
-She did the thing she had been doing without thinking for two weeks now. She looked at the sea the way she looked at every place — with the second seeing behind her eyes, the seeing for destellos. She looked for the lights.
+Hizo lo que había estado haciendo sin pensarlo durante dos semanas: mirar con el segundo ver, el ver de los destellos. Buscó las luces.
 
-The sea had no destellos.
+El mar no tenía destellos.
 
-It had its own glow. Down where the water moved, in the late afternoon light, there was a kind of soft luminescence — not destello. Not chispa. A pale silver-blue moving through the deeper water in patterns Mira could not read. Bela had told her, on the road, that these were the *peces de luz,* a kind of fish that glowed at this hour, and that the captains of the coast read the patterns the way valley people read clouds.
+Tenía su propio brillo. Allá abajo donde se movía el agua, en la luz de la tarde, había una clase de luminiscencia suave — no destello, no chispa — un azul-plateado pálido que se movía por el agua más profunda en patrones que Mira no sabía leer. Bela le había dicho, en el camino, que eran los peces de luz, un tipo de pez que brillaba a esta hora y cuyos patrones los capitanes de la costa aprendían a leer como el valle lee las nubes.
 
-The fish were beautiful.
+Los peces eran hermosos.
 
-The fish were not destellos.
+Los peces no eran destellos.
 
-The sea held no light that wanted to be woken.
+El mar no contenía ninguna luz que quisiera despertarse.
 
-Mira sat with this. It was the first time, in two weeks, that she had looked at a thing and found no light in it.
+Mira se quedó con esto. Era la primera vez, en dos semanas, que miraba una cosa y no encontraba luz en ella.
 
-She did not understand it.
+No lo entendía.
 
-She tried — without choosing to — the small private thing she had been doing for two weeks. She hummed, softly, to herself, on the bench beside Bela in the wind. The three notes. Quietly.
+Probó — sin elegirlo — la cosa pequeña y privada que había estado haciendo durante dos semanas. Tarareó, en voz baja, sola, en el banco junto a Bela en el viento. Las tres notas. Apenas sonido.
 
-The sea did not answer.
+El mar no respondió.
 
-She had not expected, exactly, that the sea would answer. The sea was not the bakery doorway. The sea was not Don Emilio. But she had thought — somewhere, in the place where she had not yet articulated her thoughts — that *something* would respond. Some shimmer in the foam. Some lift in the deep silver-blue of the peces. Some tone in the wind.
+No había esperado, exactamente, que el mar respondiera. El mar no era el umbral de la panadería. El mar no era don Emilio. Pero había pensado — en algún lugar donde los pensamientos no se articulan todavía — que algo respondería. Algún brillo en la espuma. Algún movimiento en el azul-plateado de los peces. Algún tono en el viento.
 
-Nothing.
+Nada.
 
-She hummed again. A little louder.
+Tarareó otra vez. Un poco más fuerte.
 
-Nothing.
+Nada.
 
-She felt — for the first time in her two weeks of seeing — a small heat in her chest. It was not anger. It was not even frustration, exactly. It was something smaller. The shape of the heat was: *why is the sea different?*
+Sintió, por primera vez en sus dos semanas de ver, un calor pequeño en el pecho. No era rabia. Ni siquiera frustración, exactamente. Era algo más pequeño. La forma del calor era: ¿por qué el mar es diferente?
 
-She tried a third time.
+Lo intentó una tercera vez.
 
-The wind blew her hair across her face. She pushed it back. The sea continued to be the sea. The peces de luz continued their patterns down in the water, indifferent. The gulls cried. Bela sat beside her, breathing, looking at the horizon.
+El viento le pasó el pelo por la cara. Se lo apartó. El mar siguió siendo el mar. Los peces de luz siguieron sus patrones en el agua, indiferentes. Gritaron las gaviotas. Bela estaba sentada a su lado, respirando, mirando el horizonte.
 
-Mira's hands had clenched in her lap.
+Las manos de Mira se habían apretado en el regazo.
 
-Bela's old brown hand, without ceremony, came over and rested on top of Mira's clenched ones.
+La mano vieja y morena de Bela vino, sin ceremonia, a posarse sobre las de Mira.
 
 — No siempre, niña.
 
-Mira did not answer.
+Mira no respondió.
 
-Bela said nothing else for a long time. Then, gently:
+Bela no dijo nada más por un rato. Luego, con suavidad:
 
 — Mira allí.
 
-She lifted Mira's chin with one finger and turned her face toward the horizon.
+Le levantó la barbilla con un dedo y le giró la cara hacia el horizonte.
 
-Far out — perhaps a mile out, perhaps further, Mira could not have said — there was a figure in the water. It was hard to see at first. The waves moved against it. The light at the horizon was uncertain. But there was a figure. The figure was half-submerged. The water came to its waist, or what would have been its waist if the figure had a waist exactly, and the upper half rose above the water, dark against the lighter sky, and the figure was facing the horizon.
+Lejos — quizás a un kilómetro, quizás más, Mira no hubiera podido decirlo — había una figura en el agua. Era difícil verla al principio. Las olas se movían contra ella. La luz en el horizonte era incierta. Pero había una figura. La figura estaba semihundida. El agua le llegaba a la cintura, o a lo que hubiera sido su cintura si la figura hubiera tenido una cintura exacta, y la mitad de arriba emergía sobre el agua, oscura contra el cielo más claro, y la figura miraba el horizonte.
 
-It was not moving.
+No se movía.
 
-The waves moved around it. The figure did not.
+Las olas se movían a su alrededor. La figura no.
 
-Mira's breath stopped.
+La respiración de Mira se detuvo.
 
-— ¿Qué — ?
+— ¿Qué —?
 
 — *La Que Espera.*
 
-Bela said the name once. She did not explain. She did not say *that is — .* She did not say *do not be afraid.* She said only the name and let the name lie between them.
+Bela dijo el nombre una vez. No explicó. No dijo es. No dijo no tengas miedo. Dijo solo el nombre y lo dejó entre las dos.
 
-Mira looked at the figure for the length of time it took the sun to drop a finger's width down the sky.
+Mira miró la figura durante el tiempo que tardó el sol en bajar el ancho de un dedo por el cielo.
 
-The figure did not turn. Did not move. Did not seem to be doing anything other than facing the horizon.
+La figura no giró. No se movió. No pareció estar haciendo nada que no fuera mirar el horizonte.
 
-— ¿Qué espera? — Mira whispered.
+— ¿Qué espera? — susurró Mira.
 
-Bela was quiet for a long moment.
+Bela guardó silencio un momento largo.
 
 — Algo que aún no ha llegado.
 
-Mira sat with that.
+Mira se quedó con eso.
 
-Down the cliff path, behind them, a woman in a dyed-blue apron had appeared with a basket. She was selling fish from the basket — small bright things wrapped in rushes. She walked the path slowly. She greeted Bela in a voice that suggested she had known Bela once, perhaps long ago, and had forgotten where exactly.
+Por el sendero detrás de ellas apareció una mujer con un delantal azul teñido y una cesta. Vendía pescado desde la cesta — piezas brillantes envueltas en juncos. Caminaba despacio por el sendero. Saludó a Bela con una voz que sugería que la había conocido, quizás hacía mucho tiempo, y había olvidado en cuál ocasión exactamente.
 
 — Hola, Bela.
 
@@ -274,7 +268,7 @@ Down the cliff path, behind them, a woman in a dyed-blue apron had appeared with
 
 — De visita. Con la niña.
 
-Mariselva looked down at Mira and gave her the polite distant smile that adults give visiting children. She turned back to Bela.
+Mariselva miró a Mira y le dio la sonrisa amable y lejana que los adultos le dan a los niños de visita. Se volvió hacia Bela.
 
 — Mi sobrino se fue. Para el este.
 
@@ -286,59 +280,81 @@ Mariselva looked down at Mira and gave her the polite distant smile that adults 
 
 — Pa qué quieren a los callados, no entiendo.
 
-Bela smiled a small smile.
+Bela sonrió una sonrisa pequeña.
 
 — Quieren a los callados porque escuchan, Mariselva.
 
 — Pues ojalá. Era buen muchacho.
 
-She handed Bela two of the small bright fish wrapped in rush. Bela paid her in coin. Mariselva nodded to Mira and continued down the path.
+Le dio a Bela dos de los peces pequeños envueltos en juncos. Bela pagó con moneda. Mariselva le hizo un gesto a Mira y siguió por el sendero.
 
-Mira watched her go.
+Mira la vio alejarse.
 
-She did not know what *Casa Grande* meant. She did not know where east was, exactly, or what they did to the quiet ones in the east. She filed the information the way she had filed many things in two weeks — without understanding, in a quiet place inside her where she had begun to keep things until they made sense.
+No sabía qué era una Casa Grande. No sabía dónde quedaba el este, exactamente, ni qué le hacían a los callados allá. Guardó la información de la manera en que había guardado muchas cosas en dos semanas — sin entenderla, en un lugar tranquilo donde había empezado a guardar las cosas hasta que tuvieran sentido.
 
-Bela said, by way of nothing:
+Bela dijo, de la nada:
 
 — Dicen que este mar nace de cinco países distintos, bajo las piedras.
 
 — ¿Cinco?
 
-— Cinco. Cada uno trae su agua. Por eso no se puede pescar el mismo pez dos veces. Cada pez viene de un lugar distinto.
+— Cinco. Cada uno trae su agua por debajo. Por eso no se puede pescar el mismo pez dos veces. Cada pez viene de un lugar distinto.
 
-Mira looked at the sea.
+Mira miró el mar.
 
-She did not see five countries. She only saw water. But the water, now that Bela had said it, looked different. Older. With a kind of layered weight that had not been there before.
+No veía cinco países. Solo veía agua. Pero el agua, ahora que Bela lo había dicho, parecía diferente. Más vieja. Con un peso por capas que antes no estaba ahí.
 
-The sun had moved another finger.
+El sol había bajado otro dedo.
 
-Bela stood up.
+Bela se puso de pie.
 
-— Vámonos. Don Hilario nos espera. Si esperamos más, te perderás la luz buena en el camino.
+— Vámonos. Don Hilario nos espera. Si esperamos más te perderás la buena luz en el camino.
 
-Mira stood. She turned. She looked one last time at the figure on the horizon.
+Mira se levantó. Se giró. Miró una última vez la figura en el horizonte.
 
-La Que Espera had not moved.
+La Que Espera no se había movido.
 
-Mira understood, without language, that the figure had been there before she came and would be there after she left, and that this was a different way for a thing to be in the world than the way the destellos in the valley were in the world, and that she had not, at eleven, learned all the ways things could be.
-
-She turned away.
-
-She followed Bela down the path.
+Bajaron por el sendero.
 
 ---
 
-The cart-ride home was in the dusk, then in the dark.
+Al bajar del acantilado, en los charcos de roca que la marea baja dejaba a los pies de la caliza, Mira vio por primera vez la planta que los pescadores del pueblo llamaban espejo de agua: hojas redondas y perfectas flotando en el agua de los charcos, cada una del tamaño de una moneda grande, reflejando el cielo con una precisión que no tenía derecho a ser tan exacta.
 
-Don Hilario rode at the front. Mira and Bela rode in the back, on the bench, with a blanket Don Hilario had brought for the cold. The mule's bells made a small steady sound on the road.
+Se detuvo. Se agachó.
 
-The road from the coast went up over the hills and then down into the gap and then into the long slow descent into the valley. As they came over the last rise, Mira saw it: the pueblo below, in its handful of small lit windows, with the Río Claro silver in the moonlight, and the slow green destello of La Abuela visible — visible to her — even from here, even at this distance, a soft pale verde at the heart of the schoolyard, faintly pulsing.
+En el espejo del agua, en vez del cielo, vio por un instante su propia cara.
 
-She felt the zumbido.
+No era el reflejo de siempre. Era más claro. Con algo detrás de los ojos que Mira reconoció como suyo, aunque nunca antes lo había visto desde afuera.
 
-It had thickened. Not all at once — the thickening had begun on the descent, gradually, as if the valley had been waiting for her and was now reaching up to meet her. By the time they were level with the floor of the valley, the zumbido was at the proper depth she had carried her whole life.
+— ¿Ves algo? — preguntó Bela, desde detrás.
 
-She let out a breath she had not known she was holding.
+— Veo mi cara.
+
+— ¿Y?
+
+— Es diferente.
+
+Bela se agachó a su lado y miró el charco.
+
+— El espejo de agua muestra lo que hay. No lo que crees que hay.
+
+Mira miró el reflejo un momento más. Luego se incorporó.
+
+La planta siguió reflejando el cielo, indiferente, perfecta.
+
+---
+
+El viaje de vuelta fue con el crepúsculo y luego con la oscuridad.
+
+Don Hilario iba adelante. Mira y Bela iban en la parte de atrás, en el banco, con una manta que Don Hilario había traído para el frío. Los cascabeles de la mula hacían un sonido constante y pequeño en el camino.
+
+El camino de la costa subía por las colinas y bajaba por el paso y luego descendía lentamente hacia el valle. Cuando pasaron por la última cresta, Mira lo vio: el pueblo abajo, en su puñado de ventanas encendidas, con el Río Claro plateado en la luz de la luna, y el destello verde lento de La Abuela visible — visible para ella — incluso desde aquí, incluso a esta distancia, un verde pálido y suave en el corazón del patio del colegio, pulsando en sordina.
+
+Sintió el zumbido.
+
+Se había espesado. No de golpe — el espesamiento había empezado en el descenso, poco a poco, como si el valle la hubiera estado esperando y ahora viniera a su encuentro. Cuando estuvieron al nivel del piso del valle, el zumbido volvía a su profundidad correcta.
+
+Exhaló despacio.
 
 — Bela.
 
@@ -352,27 +368,27 @@ She let out a breath she had not known she was holding.
 
 — Porque no son tuyas, mi vida.
 
-Bela said this as she had said *no es como debería* about the bollos. Without complaint. Without sadness. Like a woman naming the weather.
+Bela lo dijo igual que había dicho no es como debería sobre los bollos. Sin queja. Sin tristeza. Como una mujer nombrando el clima.
 
-Mira sat with it for the rest of the ride home.
+Mira se quedó con eso lo que quedaba del viaje.
 
 ---
 
-Don Hilario dropped them at the lower end of the Calle del Almendro. Bela took Mira to her own courtyard door. She squeezed Mira's hand once, briefly. She did not embrace her. She did not say *visit again soon.* She said:
+Don Hilario las dejó en el extremo inferior de la Calle del Almendro. Bela acompañó a Mira hasta su propia puerta. Le apretó la mano una vez, brevemente. No la abrazó. No dijo visítame pronto. Dijo:
 
 — Duerme bien, niña.
 
-She crossed the street to the blue door.
+Cruzó la calle hacia la puerta azul.
 
-Mira watched her go in. The lamp in the window was lit before Bela had even closed the door behind her — Mariselva's daughter, perhaps, had been keeping the house. The yellow light of the lamp threw a small square into the dark street.
+Mira la vio entrar. La lámpara en la ventana se encendió antes de que Bela hubiera terminado de cerrar la puerta. La luz amarilla de la lámpara dibujó un cuadrado pequeño en la calle oscura.
 
-Mira lifted the latch and went in.
+Mira levantó el pestillo y entró.
 
-Inside, her mother had already gone to bed, but there was a small plate of warm bread set out for her at the kitchen table, with a folded cloth over it and a glass of water beside. Mira ate the bread slowly. She drank the water. She washed her face in the basin. She climbed the stairs.
+Adentro, su madre ya estaba acostada, pero había un platito con pan caliente en la mesa de la cocina, cubierto con un paño doblado, y un vaso de agua al lado. Mira comió el pan despacio. Bebió el agua. Se lavó la cara en la palangana. Subió la escalera.
 
-In her room, with the candle lit, she opened the blue notebook to the eighth page.
+En su cuarto, con la vela encendida, abrió el cuaderno verde en la octava página.
 
-She wrote, in her careful hand:
+Escribió, con su letra cuidadosa:
 
 *El mar no responde.*
 
@@ -380,20 +396,20 @@ She wrote, in her careful hand:
 
 *El valle siempre responde.*
 
-She underlined *siempre.*
+Subrayó siempre.
 
-She blew out the candle.
+Apagó la vela.
 
-She slept.
+Durmió.
 
-Across the street, in the warm yellow lamp-light of the blue-door house, Bela sat at her wooden table with the basket of two small bright fish wrapped in rushes, and did not unwrap them, and did not put them in water, and did not put them away. She sat with them on the table in front of her. After a long time she put her hand flat on her own chest — the Aurevaldan gesture, the *I bring only what I have* — and closed her eyes.
+Al otro lado de la calle, en la luz amarilla cálida de la casa de la puerta azul, Bela se sentó a la mesa de madera con la cesta de dos peces pequeños envueltos en juncos, y no los desenvoltió, y no los puso en agua, y no los guardó. Se sentó con ellos sobre la mesa. Después de un buen rato puso la mano plana sobre su propio pecho — el gesto de Aurevalde, el traigo solo lo que tengo — y cerró los ojos.
 
-She did not pray, exactly.
+No rezó exactamente.
 
-She held what she was holding, in the only way she knew how to hold it.
+Sostuvo lo que estaba sosteniendo, de la única manera que sabía.
 
-The lamp burned. The bollos cooled in their tin. Somewhere on the roof, Silencio the lechuza turned its head a half-rotation and watched the dark street, the way it had been watching for eleven years.
+La lámpara ardió. Los bollos se enfriaron en su lata. En algún lugar del tejado, Silencio la lechuza giró la cabeza media vuelta y vigiló la calle oscura, igual que llevaba once años vigilando.
 
 ---
 
-*End of Chapter Seven.*
+*Las Tierras de Luz* / Ana Cecilia Cancino & FrankX

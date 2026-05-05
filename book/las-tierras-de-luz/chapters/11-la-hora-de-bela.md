@@ -1,38 +1,40 @@
-# Chapter Eleven: La Hora de Bela
+# Capítulo Once: La Hora de Bela
 
-Thursday afternoon she went to Bela's.
+![Capítulo 11: La Hora de Bela](/images/books/las-tierras-de-luz-ch11.png)
 
-She had not asked herself, in the morning, whether she was going to go. She had walked to school and walked home and at the top of the Calle del Almendro, instead of continuing to her own door, she had stopped at the blue door and lifted her hand and knocked.
+Un jueves por la tarde fue a casa de Bela.
 
-Bela's voice from inside: *pasa, niña.*
+No se había preguntado, en la mañana, si iba a ir. Había caminado al colegio y había vuelto a casa y en lo alto de la Calle del Almendro, en vez de seguir hasta su propia puerta, se había detenido ante la puerta azul y había levantado la mano y había llamado.
 
-She pushed the door open.
+La voz de Bela desde adentro: pasa, niña.
 
-The kitchen was warm. The smell of bollos was in the air, but slightly different from the first time — spicier, with something the first batch had not had. A note of clove, maybe. A note of the small coastal salt Bela had brought back from Don Hilario's cart. Bela was at the table shelling beans into the wooden bowl, the way she had been shelling beans on the stoop the first afternoon Mira had stopped in front of the blue door, three weeks ago, in the gold hour.
+Empujó la puerta y entró.
 
-Bela did not stand up. She did not say anything. She did not ask Mira where she had been.
+La cocina estaba tibia. El olor a bollos estaba en el aire, pero diferente al de la primera vez — con algo especiado que la primera hornada no había tenido. Un poco de clavo, quizás. La sal de la costa que Bela había traído del carro de Don Hilario. Bela estaba a la mesa desgranando frijoles en el cuenco de madera, de la misma manera en que había estado desgranando frijoles en el escalón la primera tarde que Mira se había parado delante de la puerta azul, hacía tres semanas, en la hora dorada.
 
-She gestured at the second chair.
+Bela no se levantó. No dijo nada. No le preguntó a Mira dónde había estado.
 
-Mira sat.
+Señaló la segunda silla.
 
-After a long quiet, Mira reached forward and took a handful of unshelled beans from the basket and began to shell them, the way she had been shown at her grandmother's house years ago — the small careful pinch and pull, the pop of the pod, the beans into the wooden bowl, the pod into a smaller basket on the floor. The work was rhythmic. The work did not require a face.
+Mira se sentó.
 
-They worked in silence for what might have been twenty minutes.
+Después de un silencio largo, Mira alargó la mano y tomó un puñado de frijoles sin desgranar de la cesta y empezó a desgranarlos, de la manera que le habían enseñado en casa de su abuela años atrás — el pellizco pequeño y cuidadoso, el crujido de la vaina, los frijoles al cuenco de madera, la vaina a la cesta más pequeña en el suelo. El trabajo era rítmico. El trabajo no requería cara.
 
-Bela did not hum.
+Trabajaron en silencio durante lo que pudieron haber sido veinte minutos.
 
-Mira did not hum.
+Bela no tarareó.
 
-Chispa hovered at her shoulder, slow, pulsing at the rhythm of her heart now, the way it had been pulsing in the not-yet-light Wednesday morning. The opalescent destello cupped inside Bela's chest — Mira saw, at intervals, looking up briefly from the beans — was steady. Held. The same as the first afternoon. Cupped, but no longer dimming. As if a hand that had been pressing further over the candle for a week had, in the last day, eased.
+Mira no tarareó.
 
-After a while Bela said, without looking up:
+Chispa flotaba en su hombro, lenta, pulsando al ritmo del corazón, de la manera en que había estado pulsando en el aún-no-luz del miércoles. El destello opalescente guardado en el pecho de Bela — Mira lo vio, en intervalos, levantando brevemente los ojos de los frijoles — estaba quieto. Sostenido. El mismo que la primera tarde. Guardado, pero ya no disminuyendo. Como si la mano que había estado cubriéndolo más y más durante una semana, en el último día, se hubiera relajado un poco.
+
+Al rato Bela dijo, sin levantar los ojos:
 
 — En Aurevalde, las casas son rojas.
 
-She said it the way a person says a thing they have been holding in their mouth for sixty years.
+Lo dijo de la manera en que uno dice algo que ha tenido en la boca durante sesenta años.
 
-Mira looked up.
+Mira levantó los ojos.
 
 — ¿Rojas?
 
@@ -42,11 +44,11 @@ Mira looked up.
 
 — Aquí también, sí. Pero distinto. Allá la pared es como un horno apagado. Aquí es como un cuerpo dormido.
 
-Mira thought about the difference. *Un horno apagado.* *Un cuerpo dormido.* The difference between an oven that has been turned off and a body that is sleeping was a real difference. The oven had had its work and was holding the heat of the work. The body was alive and had its own warmth. Both warm. Different.
+Mira pensó en la diferencia. Un horno apagado. Un cuerpo dormido. La diferencia entre un horno que ha acabado su trabajo y guarda el calor del trabajo, y un cuerpo que está vivo y tiene su propio calor. Los dos tibios. Distintos.
 
-She did not say so.
+No lo dijo.
 
-Bela went on, in the slow practical voice of a woman naming things she had not named in many years.
+Bela siguió, con la voz lenta y práctica de una mujer nombrando cosas que no había nombrado en muchos años.
 
 — En Aurevalde el sol sale antes. Los mercados abren con la primera campana. Las mujeres no ponen las verduras en la mesa con calma como aquí. Las ponen rápido. La gente compra rápido. Compran dos cosas y siguen.
 
@@ -56,11 +58,11 @@ Bela went on, in the slow practical voice of a woman naming things she had not n
 
 — ¿Por qué?
 
-Bela paused. She put a bean carefully into the bowl. She picked up another pod.
+Bela paró. Puso un frijol cuidadosamente en el cuenco. Recogió otra vaina.
 
 — Porque aquí el día es más largo. En Aurevalde el día es corto. El sol está alto poco tiempo. Hay que apurarse.
 
-Mira shelled a bean. She thought about a sun that was high for a short time. She thought about a market where you bought two things and went on. She thought about her mother's bread shop and the forty families who came through the door before midday, and how that was, here, considered a slow morning.
+Mira desgranó un frijol. Pensó en un sol que era alto poco tiempo. Pensó en un mercado donde comprabas dos cosas y seguías. Pensó en la tahona de su madre y las cuarenta familias que pasaban por la puerta antes del mediodía, y cómo eso aquí era considerado una mañana tranquila.
 
 — ¿Eso te gusta? ¿Aquí?
 
@@ -68,7 +70,7 @@ Mira shelled a bean. She thought about a sun that was high for a short time. She
 
 — ¿Pero extrañas?
 
-Bela did not answer for the count of three breaths.
+Bela no respondió durante el tiempo de tres respiraciones.
 
 — Extraño una cosa. El cielo.
 
@@ -76,287 +78,465 @@ Bela did not answer for the count of three breaths.
 
 — El cielo de Aurevalde es más bajo. No sé cómo explicarlo. Aquí el cielo es alto. El cielo es como un techo muy lejano. Allá el cielo es como un techo cerca. Como si pudieras tocarlo si te subes a la pared.
 
-Mira looked up at the kitchen ceiling, which was the ordinary low ceiling of an old valley house. She tried to imagine a sky like that. A sky you could nearly touch from a wall. She could not quite. The valley sky was the sky she had known her whole life. The valley sky was high and patient, the way the Shoulders were patient, the way La Abuela was patient. A low sky was a different kind of sky. A close sky.
+Mira miró el techo bajo de la cocina, el techo ordinario de una casa vieja del valle. Intentó imaginar un cielo así. Un cielo que casi se podía tocar desde una pared. No pudo del todo. El cielo del valle era el cielo que había conocido toda la vida. El cielo del valle era alto y paciente, como son pacientes los Hombros, como es paciente La Abuela. Un cielo bajo era otro tipo de cielo. Un cielo cercano.
 
-— Quiero verlo — Mira said.
+— Quiero verlo — dijo Mira.
 
 — Tal vez.
 
-Bela said *tal vez* the way she had said *no es como debería* about the bollos. Without complaint. Without sadness. Like a woman naming the weather. The corridor home had closed sixty years ago. Whether it would open again was not a thing Bela had any reason to expect or deny. She had stopped expecting things, decades ago, that depended on doors she did not control. She had not stopped wanting them. She had only stopped expecting.
+Bela dijo tal vez de la manera en que había dicho no es como debería sobre los bollos. Sin queja. Sin tristeza. Como una mujer nombrando el clima. El corredor a casa se había cerrado hacía sesenta años. Si volvería a abrirse no era algo que Bela tuviera ninguna razón para esperar o negar. Había dejado de esperar cosas, hacía décadas, que dependían de puertas que no controlaba. No había dejado de quererlas. Solo había dejado de esperarlas.
 
-— Tal vez — Mira agreed.
+— Tal vez — convino Mira.
 
-They went back to the beans.
+Volvieron a los frijoles.
 
 ---
 
-The sun moved a finger across the kitchen floor.
+El sol cruzó un dedo por el suelo de la cocina.
 
-After a while Bela said:
+Al rato Bela dijo:
 
 — Voy a hacer algo de comer. ¿Te quedas?
 
 — Si puedo.
 
-— Manda a Tomás a decir a tu madre.
+— Manda a Tomás a decirle a tu madre.
 
-Mira went out the front door and called across the street to her own courtyard, where Tomás had been playing with a piece of stick in the cobblestone gutter, and asked him to tell their mother she was eating with Señora Bela. Tomás considered this with the seriousness of a six-year-old who had been entrusted with a message. He nodded once and ran in.
+Mira salió a la puerta delantera y llamó al otro lado de la calle, a su propio patio, donde Tomás había estado jugando con un palo en el canalón del adoquín, y le pidió que le dijera a su madre que comía con la señora Bela. Tomás consideró esto con la seriedad de un niño de seis años al que han confiado un mensaje. Asintió una vez y entró corriendo.
 
-Mira went back into the kitchen.
+Mira volvió a la cocina.
 
-Bela had begun to mix the dough for the bollos. The grain she used was the valley grain. The water she used was the valley water. The technique was Aurevaldan. Mira watched her hands. The hands were small and brown and careful. The hands had been making bollos in this kitchen for sixty years, with the wrong grain, with the wrong water, with the right technique.
+Bela había empezado a mezclar la masa de los bollos. El grano que usaba era el grano del valle. El agua era el agua del valle. La técnica era de Aurevalde. Mira miraba sus manos. Las manos eran pequeñas y morenas y cuidadosas. Las manos habían estado haciendo bollos en esta cocina durante sesenta años, con el grano equivocado, con el agua equivocada, con la técnica correcta.
 
-— Siempre quedan parecidos — Bela said, without being asked.
+— Siempre quedan parecidos — dijo Bela, sin que nadie preguntara.
 
 — Pero siguen siendo bollos.
 
 — Siguen siendo bollos.
 
-She kneaded.
+Amasó.
 
-Mira stood at the kitchen window and watched the courtyard outside. A small grey-brown perro veldoriano was lying in a patch of late sun against the courtyard wall. The dog had not been there when Mira had come in. The dog had appeared in the way Marisol had been appearing again for the last day and a half — not approaching, not making contact, simply present at the edge of things, the way an old animal returns when the house has, in some unannounced way, become safe again.
+Mira se paró en la ventana de la cocina y miró el patio de afuera. Un perro veldoriano gris-marrón pequeño estaba tendido en un charco de sol tardío junto a la pared del patio. El perro no había estado ahí cuando Mira había entrado. Había aparecido de la manera en que Marisol había estado apareciendo de nuevo desde el día y medio anterior — sin acercarse, sin hacer contacto, simplemente presente en el borde de las cosas, de la manera en que un animal viejo vuelve cuando la casa ha vuelto a ser, de alguna manera no anunciada, segura.
 
-Marisol's eyes were closed.
+Los ojos de Marisol estaban cerrados.
 
-She was not watching anything.
+No vigilaba nada.
 
-She was sleeping in the sun, the way old dogs sleep when they have walked very far and have decided that the walking is done.
+Dormía al sol, de la manera en que duermen los perros viejos cuando han caminado muy lejos y han decidido que el caminar ha terminado.
 
-Mira watched her for a long time.
+Mira la miró durante un rato largo.
 
-Then Bela's voice: *está casi listo el primero.*
+Luego la voz de Bela: está casi listo el primero.
 
 ---
 
-They ate in the kitchen.
+Comieron en la cocina.
 
-Bela handed Mira a bollo on the small chipped plate. Mira broke a piece off. She put it in her mouth. The taste was the taste of the first bollo, the one Bela had given her three weeks ago in the morning of the day they had gone to the coast — sweet, slow, with something underneath it that was *almost the warm wall-stones,* something underneath it that was *parecido* to the country Bela could not return to. Today the bollo had a touch of clove. The clove brought it forward. The clove made it not Aurevaldan.
+Bela le pasó a Mira un bollo en el plato pequeño desportillado. Mira lo partió. Lo puso en la boca. El sabor era el sabor del primer bollo, el que Bela le había dado hacía tres semanas en la mañana del día que habían ido a la costa — dulce, lento, con algo debajo que era casi las piedras vivas tibias, casi parecido al país al que Bela no podía volver. Hoy el bollo tenía un toque de clavo. El clavo lo traía adelante. El clavo lo hacía no-de-Aurevalde.
 
-— Le pusiste algo nuevo — Mira said.
+— Le pusiste algo nuevo — dijo Mira.
 
-— Sí. Una pizca de clavo. No tienen clavo en Aurevalde.
+— Sí. Una pizca de clavo. En Aurevalde no tienen clavo.
 
 — ¿Por qué le pusiste?
 
-Bela looked at her across the table. The look was not the *I see you* look from three weeks ago on the stoop. The look was a longer, slower look — the look of a woman who had spent sixty years making the closest approximation she could to a thing she could not have, and had, this week, in the small unannounced kitchen of an old woman alone, decided that the approximation was, in some way, becoming a different thing entirely.
+Bela la miró desde el otro lado de la mesa. La mirada no era la mirada de yo te veo de hacía tres semanas en el escalón. La mirada era más larga, más lenta — la mirada de una mujer que había pasado sesenta años haciendo la aproximación más cercana que podía de algo que no podía tener, y que esta semana, en la cocina pequeña y sin anunciar de una vieja sola, había decidido que la aproximación era, de alguna manera, convirtiéndose en otra cosa completamente.
 
-— Porque está bueno — Bela said.
+— Porque está bueno — dijo Bela.
 
-She did not elaborate.
+No elaboró.
 
-Mira ate the bollo.
+Mira comió el bollo.
 
-After they had eaten, Bela carried her plate to the basin. She washed it. Mira washed her own. They did this in silence. The work was rhythmic. The work did not require a face.
+Después de comer, Bela llevó su plato a la palangana. Lo lavó. Mira lavó el suyo. Lo hicieron en silencio. El trabajo era rítmico. El trabajo no requería cara.
 
-When the dishes were done, Bela said:
+Cuando los platos estaban listos, Bela dijo:
 
-— Ven conmigo, niña. Antes de que se vaya la luz buena.
+— Ven conmigo, niña. Antes de que se vaya la buena luz.
 
 — ¿Adónde?
 
 — No lejos. Cinco minutos.
 
-She took a small wool shawl from a hook by the door and put it around her shoulders. Mira followed her out into the street.
+Se puso un chal de lana de un gancho junto a la puerta y se lo echó a los hombros. Mira la siguió a la calle.
 
-They walked north — past the bakery, past the small church, up the narrow lane that climbed the slow incline behind the houses, into the grove of old sombraluces the pueblo simply called *el bosquecillo,* the little wood. It was less a wood than a clearing among five very old trees, their canopies overlapping in green-and-silver layers so the floor was always dappled even at midday. At the center, in a shallow depression Mira had walked past her whole life without thinking about, was a small pool of water perhaps three meters across, surrounded by the soft mosses that grew on the roots of the old trees.
+Caminaron hacia el norte — más allá de la panadería, más allá de la iglesia pequeña, por el callejón estrecho que subía la inclinación lenta detrás de las casas, hacia la arboleda de sombraluces viejos que el pueblo llamaba simplemente el bosquecillo. Era menos arboleda que un claro entre cinco árboles muy viejos, con las copas solapándose en capas verde y plateado de manera que el suelo siempre estaba jaspeado incluso al mediodía. En el centro, en una depresión poco profunda que Mira había pasado toda su vida sin pensar en ella, había una pozita de agua de quizás tres metros de ancho, rodeada de los musgos suaves que crecían en las raíces de los árboles viejos.
 
-— En esta época hay agua aquí — Bela said. — En verano se seca.
+— En esta época hay agua aquí — dijo Bela —. En verano se seca.
 
-She walked to the edge of the pool and stopped. Mira stopped beside her.
+Caminó hasta el borde de la pozita y se paró. Mira se paró a su lado.
 
-The pool was clear. A hand's depth at the center, less at the edges. The bottom was small smooth stones and the same dappled gold of the canopy above. The water reflected the canopy and the late-afternoon sky and the two of them at the edge — the small grey-haired woman and the eleven-year-old girl, perfectly still in the perfectly still water, with the sombraluces' leaves moving slightly above their heads though the water did not move.
+El agua era clara. Una palma de profundidad en el centro, menos en los bordes. El fondo era piedras pequeñas y lisas y el mismo jaspeado dorado de la copa de arriba. El agua reflejaba la copa y el cielo de última hora de la tarde y a las dos en el borde — la mujer pequeña y canosa y la niña de once años, perfectamente quietas en el agua perfectamente quieta, con las hojas de los sombraluces moviéndose levemente arriba aunque el agua no se moviera.
 
-Bela took one slow step back from the edge.
+Bela dio un paso lento hacia atrás desde el borde.
 
-The reflection in the water did not move.
+El reflejo en el agua no se movió.
 
-Mira's breath stopped.
+La respiración de Mira se detuvo.
 
-For two seconds — perhaps three — the water held the image of Bela where Bela had been standing. Then, slowly, like a sound lengthening in a long room, the reflection released, and the water showed only Mira at the edge and the empty space where Bela had been.
+Por dos segundos — quizás tres — el agua sostuvo la imagen de Bela en el lugar donde Bela había estado parada. Luego, despacio, como un sonido que se alarga en un cuarto largo, el reflejo se fue, y el agua mostró solo a Mira al borde y el espacio vacío donde Bela había estado.
 
-Bela had not turned. She was watching Mira.
+Bela no se había girado. Estaba mirando a Mira.
 
-Mira looked back at the water. She took one step back herself.
+Mira miró el agua. Dio un paso hacia atrás ella también.
 
-The pool held her — perfectly, two seconds, three — and in those seconds Mira saw, for the first time in eight weeks, what hovered above her own right shoulder. She saw Chispa. From outside her body. The small prismatic shape, the colors not settling, the soft pulsing edge — exactly what she had been carrying without ever having seen it from any angle other than the angle of her own shoulder.
+La pozita la sostuvo — perfectamente, dos segundos, tres — y en esos segundos Mira vio, por primera vez en ocho semanas, lo que flotaba sobre su propio hombro derecho. Vio a Chispa. Desde fuera de su cuerpo. La forma prismática pequeña, los colores que no se asentaban, el borde suave que pulsaba — exactamente lo que había estado cargando sin jamás haberlo visto desde ningún ángulo que no fuera el del propio hombro.
 
-Then the pool released the image, and what it showed was the empty space where she had just been, and then her present self again at the edge, looking down.
+Luego la pozita soltó la imagen, y lo que mostraba era el espacio vacío donde ella acababa de estar, y luego ella misma otra vez en el borde, mirando abajo.
 
-Chispa hovered, soft, prismatic, at her shoulder.
+Chispa flotaba, suave, prismática, en su hombro.
 
-She put her hand to her chest.
+Mira se llevó la mano al pecho.
 
-Bela said, quietly:
+Bela dijo, en voz baja:
 
 — Aquí siempre se ve un poco más despacio.
 
-She did not name the pool. She did not explain. She had brought Mira here because Mira was ready to see what could be seen here, and now they had seen it, and the pool was a pool, and the afternoon was the afternoon.
+No nombró la pozita. No explicó. Había traído a Mira aquí porque Mira estaba lista para ver lo que se podía ver aquí, y ahora lo habían visto, y la pozita era una pozita, y la tarde era la tarde.
 
-— Sí — Mira said.
+— Sí — dijo Mira.
 
-That was all she said.
+Eso fue todo lo que dijo.
 
-They walked back together, in silence, the way they had walked up.
-
----
-
-The courtyard at *la hora de los destellos* was the small enclosed kind of courtyard that the older houses of the pueblo all had — three meters by four, with a single sombraluz at the corner whose canopy reached half over the courtyard, and a small stone bench against the inner wall, and a smaller raised bed where Bela grew rosemary and a few tomatoes, and the cobblestone gutter that ran along the far wall.
-
-Marisol was still asleep against the courtyard wall.
-
-Bela sat on the stone bench. She gestured for Mira to sit beside her.
-
-Mira sat.
-
-The light through the sombraluz canopy was the small dappled gold of the hour. The wall behind them was warm with the day's accumulated heat. Bela closed her eyes for a long moment. Then she opened them, and looked, for a long time, at nothing in particular — at the angle of the late light against the courtyard wall, at the small grey-brown shape of Marisol breathing slowly, at the cobblestones.
-
-Bela's hand, without her appearing to know that it had moved, lifted from her lap.
-
-It came to rest, palm flat, above her own heart.
-
-The Aurevaldan gesture.
-
-Mira saw it.
-
-She did not know it was a gesture. She only saw the hand come to the chest. The hand stayed there. The hand was not deliberate.
-
-Bela began to hum.
-
-Softly. Not for Mira. Not for the courtyard. For the memory.
-
-The song was the song from the first afternoon. The harvest song from the country she could not go back to. The slow gentle phrase that returned to itself again and again, the way certain old songs return. The same song.
-
-At the very beginning of the phrase the song returned to, at the top of each repetition, there were three notes.
-
-The same three notes.
-
-The same three notes Don Emilio had been humming over his dough for fifty-one years. The same three notes Mira's mother had been humming over the kneading every morning since before Mira was born. The same three notes Mira's father had hummed once in a kitchen three years ago, laughing, *me las enseñaron sin enseñármelas.* The same three notes that had threaded through the morning blessing at the school for as long as the school had existed. The same three notes that had traveled, sixty years ago, in the mouth of a young woman named Bela who had crossed a corridor between Realms with nothing else, because she could not carry her neighbors or her kitchen or the color of her native sun, only the song.
-
-Bela hummed.
-
-Mira did not hum along.
-
-She did not try.
-
-She sat on the stone bench beside Bela in the dappled gold of the sombraluz canopy in the small enclosed courtyard, and she did nothing. She did not lift her voice. She did not aim her three notes. She did not test her humming. She did not, in any direction, send a thing at any other thing.
-
-She was simply there.
-
-She was in the room with the old woman who was singing for memory.
-
-She was a person on a bench, eleven years old, eating the last of a bollo in her mouth, the clove on her tongue, the warm wall behind her shoulders, Chispa hovering at her shoulder, breathing.
-
-That was all she was doing.
-
-That was enough.
+Volvieron juntas, en silencio, de la manera en que habían subido.
 
 ---
 
-Bela's opalescent destello rose.
+El patio, en la hora de los destellos, era el tipo de patio pequeño y cerrado que tenían todas las casas viejas del pueblo — tres metros por cuatro, con una sombraluz en el rincón cuya copa llegaba hasta la mitad del patio, y un banco de piedra contra la pared del fondo, y un cantero levantado pequeño donde Bela tenía romero y unos tomates, y el canalón de adoquín que corría a lo largo de la pared lejana.
 
-It rose out of Bela's chest, slowly, in the soft pearl-tone Mira had first seen on the stoop three weeks ago — the inside of an oyster, the edge of a soap bubble, every color simultaneously and no color in particular, holding itself the way a hand cups a candle. It rose, lifted, came to a stop above Bela's right shoulder, at exactly the three-fingers' distance Chispa had always kept above Mira's.
+Marisol seguía dormida contra la pared del patio.
 
-It pulsed.
+Bela se sentó en el banco de piedra. Le hizo señas a Mira de que se sentara a su lado.
 
-In the rhythm of the harvest song.
+Mira se sentó.
 
-Bela stopped humming.
+La luz por la copa de la sombraluz era el dorado jaspeado pequeño de la hora. La pared detrás de ellas estaba tibia con el calor acumulado del día. Bela cerró los ojos durante un momento largo. Luego los abrió, y miró, durante un buen rato, nada en particular — el ángulo de la luz última contra la pared del patio, la forma gris-marrón pequeña de Marisol respirando despacio, los adoquines.
 
-Her hand, which had been against her chest for the length of the song, fell away.
+La mano de Bela, sin que ella pareciera saber que se había movido, se levantó del regazo.
 
-She turned her head, very slowly, and she looked at the air above her right shoulder.
+Se posó, palma plana, sobre su propio corazón.
 
-For one full breath she did not move.
+El gesto de Aurevalde.
 
-Mira watched her.
+Mira lo vio.
 
-Bela's face — her old face, the seventy-eight-year-old face that had been, since before Mira was born, the worn warm careful face of *la vecina vieja del otro lado* — became, in that breath, a different face.
+No supo que era un gesto. Solo vio la mano llegar al pecho. La mano se quedó ahí. La mano no era deliberada.
 
-It became the face of a woman who, at twenty, had stood in a market in another country and had seen the destello of her neighbor's infant and had told her family about it, and had been told she was tired, imaginative, that she would grow out of it. It became the face of a woman who, in her first week in Veldoria, had stood in the central plaza and had wept at the abundance of destellos, and had stopped naming what she saw a decade later because the naming had become a thing she did to herself in private and could not share with anyone. It became the face of a woman who had been waiting, in a doorway behind a blue door, for sixty years, for something she did not know was a person, who had not known until three weeks ago that the person she had been waiting for had been walking past her stoop her whole life saying *buenas tardes* four hundred times, who had only known that there was a kind of waiting that was not for anything in particular, that was only the long patient act of staying open in case.
+Bela empezó a tararear.
 
-It became the face of a woman who, for the first time in her life, was seeing her own destello from the outside.
+En voz baja. No para Mira. No para el patio. Para la memoria.
 
-It happened in one breath.
+La canción era la canción de la primera tarde. La canción de la cosecha del país al que no podía volver. La frase lenta y suave que volvía sobre sí misma una y otra vez, de la manera en que vuelven ciertas canciones viejas. La misma canción.
 
-Then her face was the face of an old woman again, and she put her hand to her mouth, and she did not weep, but her eyes filled, and she watched the small opalescent thing that had risen out of her own chest and was hovering, quiet, above her shoulder, pulsing softly, in a rhythm that was not her heartbeat.
+Al principio de la frase a la que la canción volvía, en la cima de cada repetición, había tres notas.
 
-She held her hand at her mouth for a long time.
+Las mismas tres notas.
 
-Mira sat very still.
+Las mismas tres notas que don Emilio había estado tarareando sobre la masa durante cincuenta y un años. Las mismas tres notas que su madre tarareaba amasando cada mañana desde antes de que Mira naciera. Las mismas tres notas que su padre había tarareado una vez en una cocina hacía tres años, riéndose, me las enseñaron sin enseñármelas. Las mismas tres notas que habían bordado el bendito del colegio durante todo el tiempo que el colegio había existido. Las mismas tres notas que habían viajado, sesenta años atrás, en la boca de una mujer joven llamada Bela que había cruzado un corredor entre Reinos sin nada más, porque no había podido llevarse a sus vecinas ni su cocina ni el color de su sol nativo, solo la canción.
 
-She did not say anything.
+Bela tarareó.
 
-She did not move.
+Mira no tarareó junto a ella.
 
-Chispa, at her shoulder, pulsed once — slow — at the rhythm of Bela's destello. Not Mira's heart. Bela's.
+No lo intentó.
 
-It was the first time, in three weeks, that Chispa had pulsed at the rhythm of someone else's heart.
+Se quedó en el banco de piedra junto a Bela en el dorado jaspeado de la copa de la sombraluz en el patio pequeño cerrado, y no hizo nada. No levantó la voz. No apuntó sus tres notas. No puso a prueba su tarareo. No mandó, en ninguna dirección, una cosa hacia ninguna otra cosa.
 
-Bela lowered her hand.
+Simplemente estaba ahí.
 
-She did not look at Mira.
+Estaba en el cuarto con la vieja que cantaba para la memoria.
 
-She looked, for another long breath, at the destello above her shoulder.
+Era una persona en un banco, once años, terminándose el último trozo de bollo en la boca, el clavo en la lengua, la pared tibia detrás de los hombros, Chispa flotando en el hombro, respirando.
 
-Then she said, in the soft slow voice of a woman who was saying a sentence she had never said aloud:
+Eso era todo lo que estaba haciendo.
+
+Era suficiente.
+
+---
+
+El destello opalescente de Bela subió.
+
+Subió del pecho de Bela, despacio, en el tono perlado suave que Mira había visto por primera vez en el escalón hacía tres semanas — el interior de una ostra, el borde de una pompa de jabón, cada color al mismo tiempo y ningún color en particular, sosteniéndose de la manera en que una mano sostiene una vela. Subió, se elevó, se detuvo sobre el hombro derecho de Bela, a exactamente los tres dedos de distancia que Chispa siempre había guardado sobre el hombro de Mira.
+
+Pulsó.
+
+Al ritmo de la canción de la cosecha.
+
+Bela dejó de tararear.
+
+La mano que había estado sobre el pecho durante toda la duración de la canción cayó.
+
+Giró la cabeza, muy despacio, y miró el aire sobre su hombro derecho.
+
+Por una respiración completa no se movió.
+
+Mira la miraba.
+
+El rostro de Bela — su rostro viejo, el rostro de setenta y ocho años que había sido, desde antes de que Mira naciera, el rostro gastado y cálido y cuidadoso de la vecina vieja del otro lado — se volvió, en esa respiración, otro rostro.
+
+Se volvió el rostro de una mujer que a los veinte había estado en un mercado en otro país y había visto el destello del bebé de su vecina y se lo había dicho a su familia, y la familia le había dicho que estaba cansada, imaginativa, que se le pasaría. El rostro de una mujer que en su primera semana en Veldoria había estado en la plaza central y había llorado de la abundancia de destellos, y había dejado de nombrar lo que veía diez años después porque el nombrar se había vuelto una cosa que se hacía sola en privado y no podía compartirse con nadie. El rostro de una mujer que había estado esperando, detrás de una puerta azul, sesenta años, algo que no sabía que era una persona, que no había sabido hasta hacía tres semanas que la persona que había estado esperando había estado pasando por su escalón toda la vida diciendo buenas tardes cuatrocientas veces, que solo había sabido que había una clase de espera que no era para nada en particular, que era solo el acto largo y paciente de permanecer abierta por si acaso.
+
+Se volvió el rostro de una mujer que, por primera vez en la vida, estaba viendo su propio destello desde afuera.
+
+Fue en una respiración.
+
+Luego el rostro era el rostro de una vieja otra vez, y se llevó la mano a la boca, y no lloró, pero los ojos se le llenaron, y miró la cosa opalescente pequeña que había subido de su propio pecho y flotaba, quieta, sobre el hombro, pulsando suavemente, a un ritmo que no era el de su corazón.
+
+Sostuvo la mano en la boca durante un tiempo largo.
+
+Mira estaba muy quieta.
+
+No dijo nada.
+
+No se movió.
+
+Chispa, en su hombro, pulsó una vez — lenta — al ritmo del destello de Bela. No del corazón de Mira. Del de Bela.
+
+Era la primera vez, en tres semanas, que Chispa había pulsado al ritmo del corazón de otra persona.
+
+Afuera de la pared del patio, la sombraluz mayor del callejón — la que tendía sus raíces bajo los adoquines hacia el bosquecillo y la pozita — se quedó más quieta. No menos viva. Más quieta. Como si algo debajo de la tierra se hubiera asentado un poco. Como si la red de raíces que nadie veía hubiera, por un momento, respirado toda a la vez.
+
+Bela bajó la mano.
+
+No miró a Mira.
+
+Miró, durante otra respiración larga, el destello sobre su hombro.
+
+Luego dijo, en la voz suave y lenta de una mujer que estaba diciendo una frase que nunca había dicho en voz alta:
 
 — Ah.
 
-That was all.
+Eso fue todo.
 
-After a while she turned her face to Mira.
+Después de un rato giró el rostro hacia Mira.
 
-Her eyes were wet. They were not weeping. They were the wet of a long withheld pressure releasing through the small available channel.
+Los ojos estaban húmedos. No lloraban. Eran la humedad de una presión largo tiempo contenida liberándose por el único canal disponible.
 
-She said:
+Dijo:
 
 — Conocí a alguien como tú una vez. Cuando tenía veinte años. He estado esperando.
 
-Mira did not ask for what.
+Mira no preguntó para qué.
 
-Bela did not answer.
+Bela no respondió.
 
-The two of them sat on the stone bench in the gold dappled light of the courtyard, with the small grey-brown shape of Marisol asleep against the wall, and the opalescent destello hovering above Bela's right shoulder, and the prismatic destello hovering above Mira's right shoulder, and the harvest song that no one was singing now still living, somehow, in the air between them.
+Las dos se quedaron en el banco de piedra en la luz dorada jaspeada del patio, con la forma pequeña y gris-marrón de Marisol dormida contra la pared, y el destello opalescente flotando sobre el hombro derecho de Bela, y el destello prismático flotando sobre el hombro derecho de Mira, y la canción de la cosecha que ya nadie tarareaba viviendo, de alguna manera, en el aire entre las dos.
 
-The two destellos pulsed.
+Los dos destellos pulsaron.
 
-Slow.
+Despacio.
 
-In the same rhythm.
+Al mismo ritmo.
 
-Once. Twice. Three times.
+Una vez. Dos. Tres.
 
-Then they settled.
+Luego se asentaron.
 
-The opalescent did not return to Bela's chest. It stayed where it had risen, above her shoulder. After half a minute it dimmed slightly, took on the cupped quality it had always had — but cupped now in the open air, not inside the chest. As if Bela had taken the small candle out of the cabinet she had kept it in for sixty years and set it, gently, on a shelf where it could be seen.
+El opalescente no volvió al pecho de Bela. Se quedó donde había subido, sobre el hombro. Después de medio minuto se opacó un poco, tomó la cualidad guardada que siempre había tenido — pero guardada ahora en el aire abierto, no dentro del pecho. Como si Bela hubiera sacado la vela pequeña del armario en que la había tenido durante sesenta años y la hubiera puesto, con cuidado, en un estante donde pudiera verse.
 
-Bela breathed once, all the way out.
+Bela exhaló una vez, hasta el fondo.
 
-She said nothing.
+No dijo nada.
 
-The afternoon went on around them.
+La tarde seguía a su alrededor.
 
 ---
 
-Mira walked home in the dusk.
+Después de un rato Bela se levantó y entró a la cocina. Mira la oyó moverse adentro. Cuando volvió al patio traía una caja pequeña de hojalata que Mira no había visto antes — del tamaño de una caja de zapatos de niña, con la tapa que había sido roja y el tiempo había vuelto de un color que no era ningún color.
 
-The blue door closed behind her with a small soft click. She crossed the narrow street to her own courtyard. She lifted the latch. She went in.
+Se sentó en el banco. La puso en el regazo. Sus manos se quedaron quietas encima.
 
-In the kitchen her mother had set out a piece of bread and a cup of warm milk for her, and a small folded cloth covering the bread, the way her mother had set out food for her since she had been small, in the careful unspoken way of a mother who had learned, over years, that there were nights when a child needed food without conversation.
+No la abrió de inmediato.
 
-Mira ate the bread.
+Mira esperó.
 
-She drank the milk.
+— Esta es la caja de mi abuela — dijo Bela —. La cruzó conmigo cuando vine. No la abro seguido.
 
-She washed the cup.
+— ¿Qué hay adentro?
 
-She did not say anything to her mother. Her mother, at the table with the ledger, did not say anything to her. Remedios looked up once, briefly, and her face wore an expression Mira had never seen on her face — the small specific expression of a woman who had been watching her daughter from a distance for several weeks, and who had, this evening, seen something new, and did not yet know what.
+— Cosas de ella.
 
-Mira kissed the top of her mother's head, the way her mother had been kissing the top of hers for eleven years.
+Bela abrió la tapa.
 
-Remedios's hand came up and rested, briefly, on the side of Mira's face.
+Adentro había hierbas secas — un manojo pequeño atado con hilo café, con un olor que llegó hasta Mira como una cosa recordada a medias, algo a la vez vegetal y mineral, el olor de la hierba del recuerdo pero más antiguo, con algo de resina debajo. Una fotografía en blanco y negro, puesta boca abajo. Y debajo de todo, envuelta en un cuadrado de tela oscura, algo pequeño y pesado.
 
-— Mi vida — Remedios said.
+Bela desdobló la tela.
+
+La piedra era hexagonal. Casi sin color. Del tamaño de la uña del pulgar de Mira. Con algo en el interior — no una luz exactamente, pero una cualidad de la luz, como si la piedra fuera más transparente de lo que una piedra tiene derecho a ser.
+
+Bela la sostuvo en la palma abierta.
+
+Mira la miraba.
+
+— Es sorprendentemente pesada — dijo Bela.
+
+Mira alargó la mano sin que nadie le dijera. Bela depositó la piedra en la palma de Mira.
+
+Era verdad. La piedra era demasiado pesada para lo que era. Del tamaño de un diente de bebé, pero con el peso de algo que ha estado guardando algo durante mucho tiempo. Un peso que no era desagradable. Era el peso de lo que ha estado esperando.
+
+— ¿Qué es? — preguntó Mira.
+
+Bela no respondió de inmediato. Miró la piedra en la palma de Mira durante un momento.
+
+— Mi abuela la llamaba la piedra de los velos. Decía que no te da lo que no tienes. Te muestra lo que siempre estuvo.
+
+— ¿Cómo?
+
+— Como un cristal que limpia el vidrio. Cuando el vidrio está empañado no pasa bien la luz. La piedra quita el empañado. Nada más.
+
+Mira miró la piedra en la palma. La cerró despacio en el puño.
+
+No sintió nada diferente. Solo el peso.
+
+— ¿La tuya se la dieron a ti?
+
+— Me la dio mi abuela. Me la dió a guardar, no a usar. Para tener. — Bela miró la caja —. Creo que es hora de que la tengas tú.
+
+— Yo no soy tu nieta.
+
+— No. — Bela la miró —. Pero eres lo que soy, en alguien todavía joven. Y eso es suficiente.
+
+Mira no dijo nada.
+
+— Es de mi abuela — dijo Bela —. Te la doy a guardar. No para usar. Para tener.
+
+Mira cerró el puño más. La piedra estaba tibia con el calor de la palma de Bela, y luego con el de la suya.
+
+---
+
+Bela dejó la caja en el banco a su lado. Sacó la fotografía boca abajo.
+
+La sostuvo un momento sin darle la vuelta.
+
+— Esta es mi abuela. — La voz era quieta —. Arcelia. Tenía veinte años cuando la sacaron. Yo tenía siete. Ella era la que me enseñó a ver.
+
+Giró la fotografía.
+
+Mira miró.
+
+Una mujer joven en un umbral de piedra roja. Con el pelo recogido y la mano derecha levantada levemente — no saludando, sino tocando el aire, comprobando algo invisible. Los ojos directos a la cámara. Una expresión que Mira reconoció de la única manera en que se puede reconocer el propio rostro en una fotografía ajena: de un golpe, desde dentro del pecho.
+
+Bela miró la fotografía.
+
+Luego miró a Mira.
+
+No dijo nada durante un momento.
+
+— Se parece — dijo finalmente, en voz muy baja.
+
+— ¿A quién?
+
+Bela no respondió. Le dio la vuelta a la fotografía. En el reverso, en una letra que no era la de Bela, estaba escrito: *Arcelia. 1946.*
+
+Bela puso la fotografía boca abajo otra vez, con cuidado, y la devolvió a la caja. Cerró la tapa. La puso en el banco a su lado.
+
+Luego miró hacia el patio, hacia nada en particular, durante el tiempo que tardó la sombraluz en mover la sombra un palmo por el suelo.
+
+—¿Te cuento una cosa? — dijo.
+
+— Sí.
+
+— Una cosa que me contó ella. Que me contaron en su cocina cuando tenía siete años y el cielo era el color de las brasas.
+
+Mira esperó.
+
+Bela habló despacio, con la voz de alguien que está buscando la historia debajo de la historia, la historia exacta que guardó durante sesenta años.
+
+— Cuentan en Aurevalde que la primera luz fue tan llena de sí misma que no pudo quedarse en un solo sitio. Se esparció. No por fractura, hija. Por abundancia. De la manera en que un río se desborda no porque esté roto sino porque se ha vuelto demasiado para caber en una sola dirección. Y desde entonces cada piedra y cada perro y cada niña al despertar lleva un trozo. La oscuridad amorosa entre los trozos sigue diciendo: sí, muéstrame lo que contienes. Y nosotras somos la respuesta, todavía contestando.
+
+Mira no dijo nada.
+
+Bela siguió.
+
+— A las que ven los trozos las llamamos retornantes. No los hacemos. Los reunimos. La reunión es la atención misma. Eres la ventana, no la luz. Una ventana no hace el sol. Pero sin una ventana limpia, el sol no entra igual.
+
+— Naciste viendo. Nadie te lo enseñó. Nadie tampoco te lo puede quitar.
+
+Se quedaron quietas.
+
+El patio sostuvo el silencio de la manera en que los patios viejos sostienen el silencio — sin llenarlo, dejándolo ser lo que era.
+
+Mira pensó en el horno apagado y el cuerpo dormido. En las tres notas que habían viajado en la boca de esta mujer durante sesenta años. En el peso de la piedra pequeña todavía en su puño.
+
+No dijo ninguna de esas cosas.
+
+Lo que dijo fue:
+
+— ¿Arcelia podía ver?
+
+— Sí — dijo Bela —. Igual que tú. Igual que yo, cuando era joven. Mejor que yo, creo.
+
+— ¿Y se fue?
+
+— Se fue. Las que ven a veces tienen que irse. No porque quieran. Porque el camino las llama.
+
+— ¿Y tú no te fuiste?
+
+Bela no respondió de inmediato. Miró sus propias manos en el regazo.
+
+— Sí me fui — dijo —. Solo que llegué aquí en vez de allá.
+
+El destello opalescente en su hombro pulsó una vez, suave, como confirmando algo.
+
+---
+
+Al poco rato Bela dijo:
+
+— Ven.
+
+La llevó de vuelta al bosquecillo, a la pozita.
+
+Era casi la hora de los destellos. La luz por las copas era la luz que más quería la hora — dorada, jaspeada, con los destellos de los troncos viejos de los sombraluces apenas visibles en el musgo de las raíces, la bioluminiscencia nocturna de los musgos empezando a despertar.
+
+Se pararon al borde de la pozita.
+
+Mira abrió el puño.
+
+La piedra de los velos estaba ahí, hexagonal, casi sin color, con esa cualidad de la luz en el interior.
+
+La levantó hacia el amanecer que llegaba por entre las copas.
+
+Por dos latidos del corazón: el chispero pequeño en el patio de Bela — la brasa pequeña que vivía en el rincón junto al romero, que Mira había visto siempre como una forma en el borde de la legibilidad — se volvió nítida. No más grande. Nítida. Con lo que podría haber sido una cara, o podría haber sido solo la forma en que la luz tiene a veces de verse como una cara. La conversación del patio entre el chispero y la sombraluz y el aire mismo — que Mira había sentido siempre como el zumbido, como algo debajo de la audición — se volvió audible. No en palabras. En tono. En la profundidad exacta del zumbido madre que había cargado toda la vida, ahora sin ruido alrededor.
+
+La percepción ordinaria no era diferente. Solo estaba más limpia.
+
+Luego la piedra volvió a ser piedra ordinaria.
+
+Bela no explicó.
+
+No había nada que explicar.
+
+Mira bajó la mano.
+
+Cerró el puño.
+
+La pozita los reflejó a las dos en el borde — la mujer canosa y la niña — y sostuvo el reflejo dos segundos más de lo que debería, de la manera en que lo hacía siempre, de la manera en que lo había hecho siempre antes de que Mira supiera que lo hacía.
+
+Luego soltó la imagen.
+
+Y el agua mostró solo el cielo.
+
+---
+
+Mira caminó a casa al caer el atardecer.
+
+La puerta azul se cerró detrás de ella con un clic suave. Cruzó la calle estrecha hasta su propio patio. Levantó el pestillo. Entró.
+
+En la cocina, su madre había puesto un trozo de pan y un vaso de leche caliente, y un pañito pequeño tapando el pan, de la manera en que había puesto comida para ella desde pequeña, en la manera callada y cuidadosa de una madre que había aprendido, a lo largo de años, que había noches en que una niña necesitaba comida sin conversación.
+
+Mira comió el pan.
+
+Bebió la leche.
+
+Lavó el vaso.
+
+No le dijo nada a su madre. Su madre, en la mesa con el libro de cuentas, no le dijo nada. Remedios levantó los ojos una vez, brevemente, y su rostro tenía una expresión que Mira nunca le había visto — la expresión pequeña y específica de una mujer que había estado mirando a su hija desde lejos durante varias semanas, y que esta noche había visto algo nuevo, y no sabía todavía qué.
+
+Mira le besó la cabeza a su madre, de la manera en que su madre había estado besándole la suya durante once años.
+
+La mano de Remedios subió y se posó, brevemente, en el costado del rostro de Mira.
+
+— Mi vida — dijo Remedios.
 
 — Sí, mamá.
 
@@ -364,26 +544,26 @@ Remedios's hand came up and rested, briefly, on the side of Mira's face.
 
 — Sí, mamá.
 
-Remedios did not say anything else. She turned back to the ledger. Mira went up to her room.
+Remedios no dijo nada más. Volvió al libro de cuentas. Mira subió a su cuarto.
 
-In her room, with the candle lit, she did not open the blue notebook. She did not have anything to write yet. She sat on the edge of the bed with the moon coming through the lace curtain and Chispa hovering at her shoulder. The prismatic edges, in the moon-light, were softly visible. Pulsing, slow, at the rhythm of her own heart now.
+En su cuarto, con la vela encendida, no abrió el cuaderno verde. No tenía nada que escribir todavía. Se sentó al borde de la cama con la luna entrando por el encaje de la cortina y Chispa flotando en el hombro. Los bordes prismáticos, en la luz de la luna, eran suavemente visibles. Pulsando, despacio, al ritmo del propio corazón.
 
-She lay down.
+La piedra de los velos estaba en el bolsillo del delantal. La palpó. Estaba tibia con el calor de la tarde.
 
-She turned her head sideways on the pillow.
+Se tumbó.
 
-Through the lace she could see the row of houses across the narrow street.
+Giró la cabeza sobre la almohada.
 
-The blue door was closed.
+Por el encaje veía la fila de casas del otro lado de la calle estrecha.
 
-The small high window beside it had a single warm yellow lamp burning.
+La puerta azul estaba cerrada. La ventana pequeña y alta junto a ella tenía una lámpara amarilla encendida, cálida.
 
-She did not have to look to know that, on the chimney above, Silencio the lechuza was watching the dark street with its pale gold eyes, the way it had been watching for eleven years and had been watching with new attention for the last week, since Bela had returned.
+No necesitaba mirar para saber que en la chimenea de arriba, Silencio la lechuza estaba vigilando la calle oscura con los ojos de oro pálido, de la manera en que había vigilado durante once años y había vigilado con atención nueva durante la última semana, desde que Bela había vuelto.
 
-She closed her eyes.
+Cerró los ojos.
 
-She slept the kind of sleep one sleeps when the body has decided, with a clarity that has no language, that whatever it had needed to learn was, in some quiet definite way, learned, and that the learning had not been a thing it had done, but a thing that had been done to it, and that this was the right relationship between a person and a learning that mattered.
+Durmió la clase de sueño que uno duerme cuando el cuerpo ha decidido, con una claridad que no tiene idioma, que lo que necesitaba aprender estaba, de alguna manera tranquila y definitiva, aprendido, y que el aprender no había sido una cosa que había hecho, sino una cosa que le había sido hecha, y que esa era la relación correcta entre una persona y un aprendizaje que importa.
 
 ---
 
-*End of Chapter Eleven.*
+*Las Tierras de Luz* / Ana Cecilia Cancino & FrankX

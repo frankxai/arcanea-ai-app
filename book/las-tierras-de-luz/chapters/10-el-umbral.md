@@ -1,233 +1,259 @@
-# Chapter Ten: El Umbral
+# Capítulo Diez: El Umbral
 
-She did not get out of bed on Saturday.
+![Capítulo 10: El Umbral](/images/books/las-tierras-de-luz-ch10.png)
 
-Tomás knocked at her door at nine. Her mother had told him to. Tomás stood in the hallway in his nightshirt and asked, through the wood, *¿Mira? ¿Vas a desayunar?* and Mira said, in the flat voice of a child who has decided to be sick, *no tengo hambre.*
+El sábado no se levantó de la cama.
 
-Tomás considered this with the seriousness of a six-year-old. He went and reported to their mother.
+Tomás llamó a su puerta a las nueve. Su madre lo había mandado. Tomás se paró en el pasillo con el camisón puesto y preguntó, a través de la madera, ¿Mira? ¿Vas a desayunar? y Mira dijo, con la voz plana de una niña que ha decidido estar enferma, no tengo hambre.
 
-Remedios came up an hour later with a small bowl of broth. She set the bowl on the table by the bed. She put her hand on Mira's forehead. Her hand was cool. Her hand was the same hand that had held Mira's own hand on the first morning, three weeks ago, when Chispa had appeared in the kitchen and Remedios had not seen the shape. Mira lay with her face to the wall.
+Tomás consideró esto con la seriedad de sus seis años. Fue a reportarle a su madre.
+
+Remedios subió una hora más tarde con un tazón de caldo pequeño. Lo puso en la mesa junto a la cama. Puso la mano en la frente de Mira. La mano estaba fresca. Era la misma mano que había tomado la de Mira en la primera mañana, hacía tres semanas, cuando Chispa había aparecido en la cocina y Remedios no había visto la forma. Mira yacía con la cara hacia la pared.
 
 — ¿Qué te duele, mi vida?
 
 — No sé.
 
-Remedios sat on the edge of the bed for the count of ten breaths. She did not press. She did not ask again. She did not hum.
+Remedios se sentó al borde de la cama durante el tiempo de diez respiraciones. No presionó. No preguntó más. No tarareó.
 
 — Bebe el caldo. Te dejo dormir.
 
 — Sí, mamá.
 
-Remedios kissed the top of her head. She left. She closed the door very softly behind her.
+Remedios le besó la cabeza. Salió. Cerró la puerta muy suavemente.
 
-Mira lay with her face to the wall. She did not drink the broth. The broth grew cool. Outside, the pueblo did its Saturday business. The bells rang ten. The bells rang noon. The bells rang two in the afternoon. Mira did not move, except to turn over.
+Mira yacía con la cara hacia la pared. No bebió el caldo. El caldo se fue enfriando. Afuera, el pueblo hacía su negocio del sábado. Las campanas tañeron las diez. Las campanas tañeron el mediodía. Las campanas tañeron las dos de la tarde. Mira no se movió, salvo para darse vuelta.
 
-Chispa hovered above her chest. It did not pulse.
+Chispa flotaba sobre su pecho. No pulsaba.
 
-She did not look at it.
-
----
-
-Sunday she did not get up either. Tomás brought her a drawing of the fish, which he had decided would cheer her up. She thanked him. She put the drawing on the table by the bed without looking at it. Tomás watched her for a moment with the considering frown of a six-year-old who has begun to suspect that the cheering up of a sister might be a more difficult undertaking than he had prepared for. He left the room.
-
-Mira heard him on the stairs telling Remedios that *Mira no quiere mirar el pez.*
-
-Remedios's voice in response was lower and warmer than usual, carrying the particular tone she used when she was speaking to Tomás about a thing that was not for him. *Es porque está enferma, mi amor. Cuando se sienta mejor lo va a mirar. Es un pez muy bonito.*
-
-Tomás was satisfied. Tomás was satisfied easily.
-
-Mira lay with her face to the wall.
+Mira no la miraba.
 
 ---
 
-Monday morning the bells rang seven and she got up.
+El domingo tampoco se levantó. Tomás le trajo un dibujo del pez, que había decidido que la animaría. Mira le dio las gracias. Puso el dibujo en la mesa junto a la cama sin mirarlo. Tomás la observó un momento con la frente arrugada de un niño de seis años que empieza a sospechar que animar a una hermana es una empresa más complicada de lo que había calculado. Salió del cuarto.
 
-She did not know why. She had not decided to. The body did the deciding the way bodies sometimes do — the legs swung over the edge of the bed before the mind had assented, the feet found the cold tile, the small ordinary motions of a school morning began. She washed her face. She braided her own hair with the two even ribbons. She did not look in the mirror.
+Mira lo oyó en la escalera diciéndole a Remedios que Mira no quiere mirar el pez.
 
-She walked to school.
+La voz de Remedios en respuesta era más baja y más cálida de lo habitual, con el tono que usaba para hablarle a Tomás de las cosas que no eran para él. Es porque está enferma, mi amor. Cuando se sienta mejor lo va a mirar. Es un pez muy bonito.
 
-She did not look at the blue door as she passed.
+Tomás quedó satisfecho. Tomás quedaba satisfecho con facilidad.
 
-She did not, walking up the Calle del Almendro, allow her eyes to track up the row of houses to where the small high window was. She did not see whether the lamp was lit. She did not see whether the wooden bowl was on the stoop. She kept her eyes on the cobblestones.
-
-At the school gate, Marisol was not there.
-
-Marisol had not been there for a week.
-
-Mira did not, this morning, register the absence. The not-registering had become, in five days, its own kind of habit. The mind had built a small careful wall around the things it was not yet ready to look at, and Marisol's absence was on the far side of that wall.
-
-She sat in the classroom. She copied the morning numbers. She said the morning blessing. She did not, in the cadence of the words, hear the three notes. They were there. She did not hear them.
-
-She kept her eyes on her exercise book all through arithmetic.
-
-When Señorita Inés's destello rose, halfway, in the corner of the room, Mira pretended she had not seen.
-
-When Soledad's coral pulsed at the wall, soft and steady, Mira pretended she had not seen.
-
-When the bell rang for first recess, Mira put her head down on her arms at her desk and did not go out into the yard.
+Mira yacía con la cara hacia la pared.
 
 ---
 
-Tuesday was the same.
+El lunes por la mañana las campanas tañeron las siete y se levantó.
 
-Wednesday was the same.
+No sabía por qué. No lo había decidido. El cuerpo lo decidió de la manera en que los cuerpos lo hacen a veces — las piernas giraron sobre el borde de la cama antes de que la mente hubiera asentido, los pies encontraron el frío de las baldosas, los movimientos pequeños y ordinarios de una mañana de colegio empezaron. Se lavó la cara. Se trenzó el pelo con las dos cintas iguales. No se miró en el espejo.
 
-Wednesday after school she did not stop at any shop. She did not pass the second-barrio bakery. She did not look at the carpenter's. She walked the long way home, the way she had walked at the beginning of all this, through the low road by the river, and she kept her eyes on the path.
+Caminó al colegio.
 
-The floración azul along the bank had reopened.
+No miró la puerta azul al pasar.
 
-She did not see them. She kept her eyes on the path.
+Caminando por la Calle del Almendro no dejó que los ojos buscaran la ventana alta de la casa de enfrente. No vio si la lámpara estaba encendida. No vio si el cuenco de madera estaba en el escalón. Mantuvo los ojos en los adoquines.
 
-She came home. She ate the soup her mother left out. She went up to her room. She lay on the bed without taking off her uniform.
+En la reja del colegio, Marisol no estaba.
 
-The blue notebook was on the floor where she had dropped it Friday night. She did not pick it up.
+Marisol no había estado en una semana.
+
+Mira no lo registró esta mañana. El no registrar se había convertido, en cinco días, en su propia clase de costumbre. La mente había construido un muro pequeño y cuidadoso alrededor de las cosas que no estaba lista para mirar todavía, y la ausencia de Marisol estaba al otro lado de ese muro.
+
+Se sentó en el salón. Copió los números de la mañana. Dijo el bendito. No escuchó, en la cadencia de las palabras, las tres notas. Las notas estaban ahí. No las escuchó.
+
+Mantuvo los ojos en el cuaderno de ejercicios durante toda la aritmética.
+
+Cuando el destello de la señorita Inés subió, a la mitad, en un rincón del salón, Mira fingió no haberlo visto.
+
+Cuando el coral de Soledad pulsó en la pared, suave y constante, Mira fingió no haberlo visto.
+
+Cuando sonó el timbre del primer recreo, Mira apoyó la cabeza sobre los brazos en el pupitre y no salió al patio.
 
 ---
 
-It was Wednesday at *la hora de Nero,* the hour before dawn, that something turned.
+El martes fue igual.
 
-She woke without intending to. She did not turn on the lamp. She lay on her back in the dark with the moon long since set and the first faint silver beginning at the edge of the lace curtain.
+El miércoles fue igual — hasta la tarde.
 
-She did not hum.
+El miércoles por la tarde, de vuelta del colegio, pasó por la Calle del Almendro y se paró sin querer delante de la puerta azul.
 
-She did not try to do anything.
+No lo había planeado. Los pies simplemente se pararon.
 
-She lay there.
+La puerta azul estaba cerrada. El cuenco de madera estaba en el escalón. La lámpara adentro, encendida. Nada diferente de las últimas semanas. El mismo cuadrado de luz amarilla detrás del cristal de la ventana baja. El mismo olor que llegaba a veces hasta la calle — bollos enfriados, algo de leña, la hierba seca que Bela guardaba en manojos del techo.
 
-She did this for what might have been ten minutes and might have been an hour.
+Mira estuvo parada delante de la puerta durante lo que pueden haber sido dos minutos.
 
-After a while — without warning, the way Chispa had risen for no one in this same room two weeks ago — Chispa pulsed.
+No llamó.
 
-Once. Slow. At the rhythm of Mira's heart.
+Se quedó parada, con la mochila en la espalda y el uniforme del colegio y los ojos en la madera azul gastada de la puerta, y no hizo nada.
 
-Mira looked up.
+Lo que pasó en esos dos minutos no era vacío exactamente. Era una conversación que no requería que ninguna de las dos hablara. Era la clase de conversación que tiene lugar entre una puerta y la persona parada delante, en la que la puerta no dice nada y la persona tampoco, y sin embargo algo pasa de todas formas.
 
-Chispa was prismatic in the not-yet-light. Pulsing slow.
+Luego siguió caminando.
 
-She watched it. She did not hum. She did not lift her hand. She did not, in any way, ask for the pulse.
+El miércoles después del colegio no paró en ninguna tienda. No pasó por la panadería del segundo barrio. No miró el taller del carpintero. Caminó por el camino largo a casa, el del bajo junto al río, el camino de antes de todo esto, y mantuvo los ojos en el sendero.
 
-It pulsed again.
+La floración azul en la orilla había vuelto a abrir.
 
-She felt — somewhere below the ribs, somewhere deeper than the place where the calls from her father used to land, somewhere that had not been touched in five days — a small turning. Not a feeling. A movement. The way certain old joints, long held in one position, sometimes click softly when the body finally relaxes.
+No la vio. Mantuvo los ojos en el sendero.
 
-She closed her eyes.
+Llegó a casa. Comió la sopa que su madre había dejado. Subió a su cuarto. Se tumbó en la cama sin quitarse el uniforme.
 
-She thought, with no language, in the small empty space her chest had become for five days:
+El cuaderno verde estaba en el suelo donde lo había dejado caer el viernes a la noche. No lo recogió.
+
+Chispa flotaba sobre el pecho. No pulsaba.
+
+Mira miró el techo. El techo era el techo de siempre — las mismas vigas de madera oscura, el mismo yeso blanco entre ellas, la misma grieta pequeña en el rincón que llevaba ahí desde antes de que Mira naciera.
+
+El techo seguía siendo el techo. El pueblo seguía siendo el pueblo. La equivocación seguía siendo la equivocación.
+
+Había algo tranquilizador en eso. No tranquilizador de buen modo. Tranquilizador del modo en que lo es la solidez de las paredes cuando no puedes hacer nada más que estar dentro de ellas.
+
+---
+
+Fue el miércoles en la hora de Nero, la hora antes del amanecer, que algo giró.
+
+Despertó sin querer. No encendió la lámpara. Yacía de espaldas en la oscuridad con la luna ya puesta y el primer plateado pálido empezando en el borde del encaje de la cortina.
+
+No tarareó.
+
+No intentó nada.
+
+Yació ahí.
+
+Hizo eso durante lo que podían haber sido diez minutos o podía haber sido una hora.
+
+Después de un rato — sin aviso, de la manera en que Chispa había subido para nadie en este mismo cuarto dos semanas atrás — Chispa pulsó.
+
+Una vez. Lenta. Al ritmo del corazón de Mira.
+
+Mira miró hacia arriba.
+
+Chispa era prismática en el aún-no-luz. Pulsando despacio.
+
+La miraba. No tarareó. No levantó la mano. No pidió, de ninguna manera, el pulso.
+
+Pulsó otra vez.
+
+Sintió — en algún lugar debajo de las costillas, en algún lugar más profundo que el lugar donde caían las llamadas de su padre, en algún lugar que no había sido tocado en cinco días — un giro pequeño. No un sentimiento. Un movimiento. De la manera en que ciertas articulaciones viejas, sostenidas mucho tiempo en una postura, a veces crujen suavemente cuando el cuerpo finalmente se relaja.
+
+Cerró los ojos.
+
+Pensó, sin idioma, en el espacio pequeño y vacío en que se había convertido el pecho durante cinco días:
 
 *No soy la luz.*
 
-The thought had no language because the thought was not in language. It was in the body. It arrived as a kind of weight setting down, the way a basket of full things, carried for too long, finally finds the table.
+El pensamiento no tenía idioma porque el pensamiento no estaba en el idioma. Estaba en el cuerpo. Llegó como un peso que se posa, de la manera en que una cesta llena de cosas, cargada demasiado tiempo, finalmente encuentra la mesa.
 
 *No soy la luz. Soy una persona. Eso es todo. Y eso es bastante.*
 
-She had been carrying a thing for five days that she had not allowed herself to name. The shape of the thing had been: *I broke something. I broke a person. I am a child who broke a man.* The shape of the thing had been a small terrible wrongness lodged in her chest, sharper than grief, cooler than fear, the specific shape of having done a thing she could not undo with good intentions.
+Había cargado una cosa durante cinco días que no se había permitido nombrar. La forma de esa cosa había sido: rompí algo. Rompí a una persona. Soy una niña que rompió a un hombre. La forma de la cosa había sido una pequeña equivocación terrible alojada en el pecho, más aguda que el duelo, más fría que el miedo, la forma específica de haber hecho algo que no podía deshacerse con buenas intenciones.
 
-The thing did not fully leave, in the not-yet-light, when the small turning happened. It softened. The edges blunted. The wrongness was still there. But the wrongness, with the small turning, had begun to be something she could carry instead of something that was carrying her.
+La cosa no se fue del todo, en el aún-no-luz, cuando ocurrió el giro pequeño. Se suavizó. Los bordes se embotaron. La equivocación seguía ahí. Pero la equivocación, con el giro pequeño, había empezado a ser algo que podía cargarse en vez de algo que la cargaba a ella.
 
-Chispa pulsed.
+Chispa pulsó.
 
-She watched.
+Mira la miraba.
 
-After a long time she fell back asleep, and slept until the bells rang seven, and got up and went to school.
+Después de un rato largo volvió a dormirse, y durmió hasta que las campanas tañeron las siete, y se levantó y fue al colegio.
 
-This day she lifted her head once during arithmetic, and the corner of her eye caught Señorita Inés's pale-tea destello drifting halfway out, and she did not pretend she had not seen.
+Ese día levantó la cabeza una vez durante aritmética, y el ángulo del ojo le alcanzó el destello té claro de la señorita Inés asomando a la mitad, y no fingió no haberlo visto.
 
-She had not, for five days, allowed herself to look at the destellos.
+Durante cinco días no se había permitido mirar los destellos.
 
-She looked.
+Los miraba.
 
-She did not approach. She did not hum. She did not, in any way, do anything. She only looked, the way she had looked on the first morning under La Abuela. As witness.
+No se acercó. No tarareó. No hizo nada en ninguna dirección. Solo miró, de la manera en que había mirado en la primera mañana bajo La Abuela. Como testigo.
 
-The destello drifted, soft, pale brown-gold at the edges, slow.
+El destello se asomó, suave, marrón-dorado pálido en los bordes, lento.
 
-She filed it.
+Lo archivó.
 
-She put her head back down to her exercise book and went on with the column of numbers.
-
----
-
-Thursday at dusk she went to her window.
-
-She did this without thinking about it. Tomás had been calling her from the courtyard and her mother had told him to come in for supper, and Mira had been at the table with the soup and had finished and had gone upstairs without taking off her uniform, and at the window — for the first time in a week — she had pulled the lace curtain aside and looked out into the gold late-afternoon light.
-
-The pueblo lay below her.
-
-The streets were the streets she had walked her whole life. The roofs were the warm terracotta she had known. The Río Claro, silver-green, ran along the far edge of the row of houses opposite. The plaza was visible in the gap between two tall houses across the street. The Shoulders — the two ranges of limestone hills cradling the valley — rose to the north.
-
-On the ridge of the eastern Shoulder, against the gold sky, a figure stood.
-
-Mira's breath caught.
-
-The figure was not a person.
-
-It was the shape of a person, made of stones. Stacked piedra viva, head-tall, then taller, then much taller — perhaps ten feet, perhaps more, hard to tell at this distance — the rough manifest shape of a thing that the hills had assembled out of themselves, the way certain piles of stones assemble into cairns over centuries until the cairn is a thing the road respects.
-
-It stood very still.
-
-It did not move.
-
-It was, Mira thought without a word for it, looking at the valley.
-
-She watched it for the count of ten breaths.
-
-Then — without taking her eyes off the figure — she moved her gaze a fraction down, to the row of houses across the narrow street, to the blue door, to the stoop in front of the blue door.
-
-Bela was on the stoop.
-
-Bela's face was tilted upward, toward the eastern Shoulder, toward the figure on the ridge. Bela's hands were folded in her lap. Bela was sitting very still.
-
-Mira understood — without articulating it, the way she had understood things on the first morning — that Bela had been on the stoop, watching, since before Mira had opened the curtain. Bela had known the figure was there. Bela had known the kind of figure it was. Bela had been waiting, perhaps, for Mira to look up.
-
-Bela did not turn.
-
-Mira did not call out.
-
-The figure on the ridge did not move.
-
-The gold light deepened. The shadow of the eastern Shoulder began to creep down across the rooftops. The figure remained — outlined now against a sky that was beginning to be the color of luzfruta flesh — and then, in the way the gold light had of going at this hour, the figure's outline began to soften, began to melt, began to belong less to the ridge and more to the deepening blue.
-
-Mira watched until she could no longer see it.
-
-When the light had finally gone, the ridge was empty.
-
-She did not know whether the figure had walked away or whether the figure had unmade itself back into the stones it had been before. She did not know whether the figure would come back tomorrow or whether it had been a thing that came once a generation, the way the grandmothers said it came. She did not know what it had been looking at.
-
-She knew only that she had seen it, and that Bela had seen it, and that the two of them had watched it together across the narrow street, in the same hour, without a word.
-
-Bela rose, slowly, from the stoop.
-
-Bela walked up the two steps to her own door. At the door, she turned once, briefly, and looked across the street. Up. To Mira's window.
-
-Bela saw Mira.
-
-Bela did not smile. Bela did not nod. Bela only saw her — the small specific gravity of seeing that belonged to Bela alone, the gravity of a woman who had been seeing for sixty years.
-
-Mira raised her hand to the curtain.
-
-Bela went inside.
-
-The lamp came on in the small high window.
+Volvió la cabeza a su cuaderno de ejercicios y siguió con la columna de números.
 
 ---
 
-That night Mira slept the kind of sleep one sleeps when the body has decided that whatever it had been working through has, in some small definite way, completed itself.
+El jueves al atardecer fue a su ventana.
 
-She knew it when she woke.
+Lo hizo sin pensarlo. Tomás había estado llamándola desde el patio y su madre le había dicho que entrara a cenar, y Mira había estado a la mesa con la sopa y había terminado y había subido sin quitarse el uniforme, y en la ventana — por primera vez en una semana — había apartado el encaje de la cortina y había mirado hacia afuera, hacia la luz dorada de la tarde.
 
-It was not joy. It was not relief. It was something quieter than both. The thing she woke with was a kind of *settledness,* the way certain rooms feel settled after the furniture has been rearranged and returned. The room had been moved through. The room had not been broken. The room was now a slightly different room, in which the same person could continue to live.
+El pueblo estaba abajo.
 
-She got up.
+Las calles eran las calles que había caminado toda la vida. Los tejados eran el terracota cálido que había conocido. El Río Claro, verde-plateado, corría al borde lejano de la fila de casas de enfrente. La plaza era visible en el hueco entre dos casas altas de la calle de enfrente. Los Hombros — las dos sierras de caliza que acunaban el valle — se alzaban al norte.
 
-She washed her face.
+En la cresta del Hombro oriental, contra el cielo dorado, había una figura.
 
-She picked up the blue notebook from the floor where it had been lying for a week.
+La respiración de Mira se detuvo.
 
-She did not open it.
+La figura no era una persona.
 
-She set it on the table by the bed, the way a child sets down a small object she wants to come back to but is not quite ready to use yet.
+Era la forma de una persona, hecha de piedras. Piedra viva apilada, a la altura de una cabeza, y luego más alta, y luego mucho más alta — quizás tres metros, quizás más, difícil de calcular desde aquí — la forma tosca y manifiesta de algo que las colinas habían ensamblado de sí mismas, de la manera en que ciertos montones de piedras se convierten en mojones con los siglos hasta que el mojón es algo que el camino respeta.
 
-She went down to breakfast.
+Estaba muy quieta.
+
+No se movía.
+
+Era, pensó Mira sin tener una palabra para ello, mirando el valle.
+
+La observó durante el tiempo de diez respiraciones.
+
+Luego — sin apartar los ojos de la figura — movió la mirada un poco hacia abajo, hacia la fila de casas al otro lado de la calle estrecha, hacia la puerta azul, hacia el escalón delante de la puerta azul.
+
+Bela estaba en el escalón.
+
+El rostro de Bela estaba inclinado hacia arriba, hacia el Hombro oriental, hacia la figura en la cresta. Las manos de Bela unidas en el regazo. Bela estaba muy quieta.
+
+Mira entendió — sin articularlo, de la manera en que había entendido cosas en la primera mañana — que Bela había estado en el escalón, mirando, desde antes de que Mira hubiera abierto la cortina. Bela sabía que la figura estaba ahí. Bela sabía de qué clase de figura era. Bela había estado esperando, quizás, a que Mira mirara hacia arriba.
+
+Bela no se giró.
+
+Mira no llamó.
+
+La figura en la cresta no se movió.
+
+La luz dorada se profundizó. La sombra del Hombro oriental empezó a arrastrarse por los tejados. La figura permaneció — perfilada ahora contra un cielo que empezaba a ser el color de la carne de la luzfruta — y luego, de la manera en que la luz dorada se iba a esa hora, el contorno de la figura empezó a suavizarse, a fundirse, a pertenecer menos a la cresta y más al azul que se profundizaba.
+
+Mira miraba hasta que ya no pudo verla.
+
+Cuando la luz se fue por fin, la cresta estaba vacía.
+
+No sabía si la figura había caminado o si la figura se había deshecho de vuelta en las piedras que había sido. No sabía si la figura volvería mañana o si era una cosa que venía una vez por generación, como decían las abuelas que venía. No sabía qué había estado mirando.
+
+Sabía solo que lo había visto, y que Bela lo había visto, y que los dos habían mirado juntas a través de la calle estrecha, en la misma hora, sin una palabra.
+
+Bela se levantó del escalón, despacio.
+
+Caminó los dos peldaños hasta su propia puerta. En la puerta, se giró una vez, brevemente, y miró al otro lado de la calle. Arriba. A la ventana de Mira.
+
+Bela vio a Mira.
+
+Bela no sonrió. Bela no asintió. Solo la vio — la gravedad pequeña y específica del ver que pertenecía a Bela sola, la gravedad de una mujer que llevaba sesenta años viendo.
+
+Mira levantó la mano a la cortina.
+
+Bela entró.
+
+La lámpara se encendió en la ventana alta.
 
 ---
 
-*End of Chapter Ten.*
+Esa noche Mira durmió la clase de sueño que uno duerme cuando el cuerpo ha decidido que lo que hubiera estado trabajando tiene, de alguna manera pequeña y definitiva, algo de completado.
+
+Lo supo al despertar.
+
+No era alegría. No era alivio. Era algo más tranquilo que los dos. Lo que despertó con ella era una clase de asentamiento, de la manera en que ciertos cuartos se sienten asentados después de que se reordena el mobiliario. El cuarto había sido atravesado. El cuarto no había sido roto. El cuarto era ahora un cuarto levemente diferente en el que la misma persona podía seguir viviendo.
+
+Se levantó.
+
+Se lavó la cara.
+
+Recogió el cuaderno verde del suelo donde había estado tirado una semana.
+
+No lo abrió.
+
+Lo puso en la mesa junto a la cama, de la manera en que una niña pone un objeto pequeño que quiere volver a usar pero no está lista todavía.
+
+Bajó al desayuno.
+
+---
+
+*Las Tierras de Luz* / Ana Cecilia Cancino & FrankX

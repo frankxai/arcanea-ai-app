@@ -1,262 +1,271 @@
-# Chapter Eight: La Tentación del Nombre
+# Capítulo Ocho: La Tentación del Nombre
 
-She woke in the morning with the word *siempre* still in her mouth.
+![Capítulo 8: La Tentación del Nombre](/images/books/las-tierras-de-luz-ch08.png)
 
-She had written the word in the notebook the night before, after coming home from the coast, after the bollos and the cliff and the half-submerged figure facing the horizon and the thin zumbido above the sea. She had written: *El valle siempre responde,* and underlined the *siempre,* and gone to bed.
+Despertó con la palabra siempre todavía en la boca.
 
-She lay now in the early light with the word held in the bowl of her tongue, the way a child holds a piece of hard candy without sucking. *Siempre.* The word felt good. The word was the kind of word that arrived in the body before it arrived in the mind. *Always.* The valley always answered.
+La había escrito la noche anterior en el cuaderno, al volver de la costa, después de los bollos y el acantilado y la figura semihundida mirando el horizonte y el zumbido delgado sobre el mar. Había escrito: *El valle siempre responde*, y había subrayado el siempre, y se había dormido.
 
-She got up.
+Ahora yacía en la luz temprana con la palabra sostenida como una pastilla de menta en la lengua. Siempre. La palabra llegaba al cuerpo antes que a la cabeza. Siempre. El valle siempre respondía.
 
-Chispa hovered at her shoulder, slow, prismatic at the edges. The zumbido in her chest was at the proper depth — thicker than it had been at the cliff, thicker than it had been in the kitchen at six o'clock, the proper valley depth she had carried her whole life and now carried with new attention.
+Se levantó.
 
-She washed her face. She put on her uniform.
+Chispa flotaba en su hombro, lenta, prismática en los bordes. El zumbido en el pecho tenía la profundidad correcta — más espeso que en el acantilado, más espeso que en la cocina a las seis de la mañana, la profundidad correcta del valle que había cargado toda la vida y que ahora cargaba con atención nueva.
 
-Downstairs, her mother was at the bread. Tomás was eating. Remedios looked up at Mira and held the look for the count of two breaths — the new kind of looking Remedios had been doing — and went back to the dough. Mira ate her bread and drank her milk. She kissed her mother's cheek. She left for school.
+Se lavó la cara. Se puso el uniforme.
 
-She had a list to make.
+Abajo, su madre estaba con el pan. Tomás comía. Remedios levantó los ojos hacia Mira y la sostuvo con la mirada durante el tiempo de dos respiraciones — la nueva manera de mirar que Remedios había empezado esta semana — y volvió a la masa. Mira comió el pan y tomó la leche. Le dio un beso en la mejilla a su madre. Salió al colegio.
+
+Tenía una lista que hacer.
 
 ---
 
-The list lived in the blue notebook on the ninth page.
+La lista vivía en el cuaderno verde en la novena página.
 
-Mira began it during arithmetic. She made it casually, the way she had begun the first list two weeks ago — a column of names down the right margin of her exercise book, hidden under the shadow of her hand whenever Señorita Inés walked past. She wrote in small careful letters:
+Mira la empezó durante aritmética. La hizo con calma, como había empezado la primera lista hacía dos semanas — una columna de nombres por el margen derecho del cuaderno de ejercicios, escondida bajo la sombra de su mano cada vez que la señorita Inés pasaba. Escribía en letras pequeñas y cuidadosas:
 
 *Mamá*
 *Tomás*
-*Don Emilio* (already)
+*Don Emilio* (ya)
 *La viuda Herreros*
-*Marisol* (no — Marisol no)
 *Señor Vidal*
 *Señora Marquina*
 *El cartero*
-*El ciego de los lotes*
+*Lucía la guitarrista*
 
-She stopped. She thought.
+Paró. Pensó.
 
-She added:
+Añadió:
 
 *La maestra Inés*
 *La panadera del segundo barrio*
 *El zapatero*
-*Lucía la guitarrista*
+*La viuda Herreros*
 
-She had begun, in the last two weeks, to know who carried what destello, even at distances. She knew Lucía the plaza guitarist had a destello the color of an old red rose, half-asleep, that pulsed in the rhythm of the song she was thinking about playing next. She knew the shoemaker's destello was the small steady amber of a man who had decided long ago to be exactly the size of his work. She knew Señorita Inés's was weak tea, soft, drifting halfway out when no one was looking.
+Había empezado, en las últimas dos semanas, a saber quién cargaba qué destello incluso desde lejos. Sabía que Lucía la guitarrista de la plaza tenía un destello del color de una rosa vieja, semidormida, que pulsaba al ritmo de la canción que estaba pensando en tocar la próxima vez. Sabía que el zapatero tenía el ámbar pequeño y constante de un hombre que hacía mucho tiempo había decidido ser exactamente del tamaño de su trabajo. Sabía que el de la señorita Inés era té claro, suave, que se asomaba a la mitad cuando nadie miraba.
 
-She wrote down the names she knew. Then she paused, and she added:
+Escribió los nombres que conocía. Luego añadió al final:
 
 *Y todos los que aún no he visto.*
 
-She looked at the page. The list, as it was, came to fourteen names. With the *all the rest I haven't yet seen* line at the bottom, the list was open at the end — the way a real list is open at the end, the way a project is.
+Miró la página. La lista llegaba a catorce nombres. Con la línea de todos los que aún no había visto al final, la lista quedaba abierta — como una lista de verdad queda abierta, como queda un proyecto.
 
-That was the word. *Project.*
+Esa era la palabra. *Proyecto.*
 
-Mira looked at the word in her mind without saying it. She had not had a project, ever, that was hers. She had had homework. She had had chores. She had had small games she had played with Tomás. None of those had been projects. The destellos — the seeing, the waking — for two weeks now had been a thing happening to her, the way weather happens, the way puberty was beginning, somewhere in the future, to happen to her body without her permission.
+Mira la miró en la cabeza sin decirla. Nunca había tenido un proyecto que fuera suyo. Había tenido tareas. Había tenido quehaceres. Había tenido juegos pequeños con Tomás. Ninguno había sido un proyecto. Los destellos — el ver, el despertar — durante dos semanas habían sido una cosa que le pasaba, como pasa el clima, como iba a pasarle al cuerpo la pubertad, sin pedírselo.
 
-A project was different. A project was what you did when you took a thing happening to you and made it a thing you did.
+Un proyecto era diferente. Un proyecto era lo que hacías cuando tomabas una cosa que te estaba pasando y la hacías una cosa que hacías tú.
 
-She did not, at eleven, articulate this distinction. She felt it. She felt it as a kind of forward lean in her chest, a small heat that was not the heat of the cliff but a different heat, more local, more cheerful. The heat of having something to do.
+No articuló esa distinción. La sintió. La sintió como un inclinarse hacia adelante en el pecho, un calor pequeño que no era el calor del acantilado sino un calor diferente, más local, más alegre. El calor de tener algo que hacer.
 
-She closed the exercise book over the list.
+Cerró el cuaderno de ejercicios sobre la lista.
 
-The bell rang.
-
----
-
-At first recess she did not go to La Abuela.
-
-This was the first thing.
-
-For three weeks, every morning recess, she had sat against La Abuela's bark and watched the yard and counted destellos. The tree had been her station. The tree's slow green destello had been her companion the way Chispa was her companion — present, breathing, asking nothing.
-
-This morning she did not go to the tree.
-
-She went to the far corner of the yard, where the children played the elastic and the stone games, and she sat on the low stone wall, and she watched. She watched the way she had been watching all along, but with a new seam in the watching — the seam was: *whom can I sing for next.*
-
-She watched Soledad. Soledad's coral destello was fully visible now, glowing softly above her heart, in the open posture of a girl who had begun, in the last week, to rejoin the small world of the schoolyard. Soledad did not yet know what had happened to her. Mira did not need her to know. Soledad was on the list of those who had been woken. Soledad was complete.
-
-She watched the other children. Coral, lavender, gold, verde, rose. Rosa la del barrio bajo, whose destello was a soft mauve she had never seen before. Pablo el del molino, whose destello was the bright deliberate orange of a boy who was, in his small way, building things. Each one a candle Mira could imagine herself, in the afternoons to come, walking past, humming softly, lifting briefly.
-
-She did not, at recess, sing for any of them.
-
-She did not, that morning, plan to sing for any of them yet.
-
-The list came first.
-
-She watched. She named. She filed. She added two more names to the column under her hand: *Pablo del molino. Rosa del barrio bajo.*
-
-The bell rang. She closed the book. She went inside.
+Sonó el timbre.
 
 ---
 
-Marisol was not at the school gate that afternoon.
+Al mediodía, de regreso al aula después de comer, pasó junto al ventanal que daba al norte. Desde ese ventanal, en los días claros, se veían los Hombros y, más allá, la línea del altiplano.
 
-Mira noticed without noticing. She walked home alone, the way she had walked home alone for four years before two weeks ago, the way she had walked home alone for the past three afternoons in a row. She did not register it as absence. She registered it as ordinary.
+Ese día el altiplano era visible. Y en la distancia, en la franja donde el altiplano se juntaba con el cielo, había unas flores. Altas, amarillo-blancas, finas como velas, brillando levemente en la luz de mediodía con esa luminiscencia que solo mostraban cuando el viento las doblaba. Velas de campo, las llamaban los pastores del pueblo — las flores del altiplano que los niños cargaban en la procesión de las velas en las tardes más largas del año.
 
-Walking up the Calle del Almendro, she slowed at the blue door. The lamp was lit. The wooden bowl was on the stoop. Bela was not on the step today. Mira slowed for the count of three breaths — and then walked on.
+Mira se paró en el ventanal.
 
-Three afternoons ago she had not yet crossed the street.
+No había estado nunca en el altiplano. El altiplano era el lugar de los pastores y los velcorderos y el pino arcano con su resina que quemaba azul-verde, el lugar donde la lluvia cantaba cuando caía sobre las depresiones de roca y hacía ese sonido bajo y sostenido que las abuelas decían se escuchaba hasta el valle en las noches quietas.
 
-Two afternoons ago she had crossed.
+Hoy las velas de campo en el altiplano se doblaban y se enderezaban al viento, y la luz en ellas iba y venía, y Mira pensó sin ninguna razón: allá también hay destellos que nadie ve.
 
-Today she walked past.
+Guardó el pensamiento.
 
-She did not make the gesture in her chest that connected those three afternoons. She did not articulate the line between them. She had a list to make. She had a project to begin. The blue door, this afternoon, was a thing on the side of the project, the way the river was a thing on the side, the way the sombraluz was a thing on the side. The list was the central thing.
+No lo añadió a la lista.
 
-She came to her own door. She lifted the latch.
-
-She did not, this evening, open the notebook the way she had been opening it. She did not, by candlelight, sit with single sentences and let them unfold their meaning over an hour. She opened the notebook briskly, at the ninth page, and she wrote in a more confident hand:
-
-*Mañana — el panadero del segundo barrio.*
-
-She wrote it as the kind of sentence that is more decision than observation.
-
-*Pasado mañana — la viuda Herreros.*
-
-*El día siguiente — Lucía.*
-
-She stopped. She had to consider order. She had to consider proximity. She had to consider whom to do first, whom to do last, whom to do alone, whom to do in the public hour of *la hora de los destellos* when the streets were full of children being called in.
-
-She thought about it for the length of time it took the candle to burn down by half a finger.
-
-Then she wrote, at the bottom of the ninth page, in the small neat letters she had been using for the pieces of the project that were going to be the project itself:
-
-*Día de mercado. Plaza grande. La hora de los destellos.*
-
-She added, smaller, under it:
-
-*Treinta y dos.*
-
-Thirty-two.
-
-That was the count. Fourteen names she had written down by morning, eight more she had added by recess, ten more she had added on the long walk home as she had passed people in the streets and named their destellos under her breath. Thirty-two beings she had not yet sung for, whose destellos she had seen and named, who lived in the pueblo, who could be reached, in the hour the grandmothers had called *la hora de los destellos,* in the plaza on market day.
-
-Thirty-two.
-
-She underlined the number.
-
-She did not, at that moment, see what she had just done. She had begun, three weeks ago, the kind of book a child keeps to record the world. She had become — in this entry, in the underlining of *treinta y dos* — the kind of child who plans the world.
-
-The pride did not feel like pride. It felt like generosity. *I am going to give them their destellos.* That was the shape of the thought, in the warmth of the candle, in the small clean handwriting that had been growing more confident for a week.
-
-She blew out the candle.
-
-She slept.
+Entró al aula.
 
 ---
 
-In the morning she went to the bakery.
+En el primer recreo no fue a La Abuela.
 
-Not Don Emilio's. Don Emilio was already complete. She went to the smaller bakery in the second barrio, the one her mother sometimes sent her to for the rolls that Don Emilio did not make — the *bollos pequeños* of the second-barrio panadera, a woman named Clemencia whose destello, Mira had noted on Tuesday, was a cool soft jade green sleeping just below her ribs.
+Eso era lo primero.
 
-The shop was small. The morning was early. Clemencia was alone behind the counter. Mira asked for six rolls. Clemencia counted them into a paper. As she counted, Mira hummed — soft, almost under her breath, the way she had been humming for three weeks now, the way Don Emilio had been humming over his dough for fifty-one years.
+Durante tres semanas, cada recreo de la mañana, se había sentado contra la corteza de La Abuela y miraba el patio y contaba destellos. El árbol había sido su estación. El destello verde lento del árbol había sido su compañero como lo era Chispa — presente, respirando, sin pedir nada.
 
-Three notes.
+Esta mañana no fue al árbol.
 
-Clemencia did not look up. She finished the count, took the coin, gave the paper of rolls.
+Fue al rincón lejano del patio, donde los niños jugaban a la cuerda y a las piedras, y se sentó en el muro de piedra bajo, y miró. Miró de la manera en que había estado mirando, pero con una costura nueva en el mirar — la costura era: a quién le puedo cantar.
+
+Miraba a Soledad. El destello coral de Soledad era visible ahora por completo, brillando suavemente sobre su corazón, en la postura abierta de una niña que había empezado, durante la última semana, a reunirse con el pequeño mundo del patio. Soledad no sabía lo que le había pasado. Mira no necesitaba que lo supiera. Soledad estaba en la lista de las despertadas. Soledad era completa.
+
+Miraba a los otros niños. Coral, lavanda, dorado, verde, rosa. Cada uno una vela que Mira podía imaginar paseando junto a sí misma, tarareando suavemente, encendiendo brevemente.
+
+No tarareó para ninguno en el recreo.
+
+No ese día.
+
+Primero la lista.
+
+Miró. Nombró. Archivó. Añadió dos nombres más a la columna bajo la mano: *Pablo del molino. Rosa del barrio bajo.*
+
+Sonó el timbre. Cerró el cuaderno. Entró.
+
+---
+
+Una tarde de esa semana — era miércoles, la hora de Lumina ya pasada — Mira subía por la Calle del Almendro con el cuaderno apretado bajo el brazo cuando se paró delante de la puerta de Bela.
+
+La puerta azul estaba entornada. La lámpara adentro encendida.
+
+Mira levantó la mano.
+
+Tres centímetros de la aldaba.
+
+La mano se quedó quieta.
+
+Desde adentro llegó la voz de Bela, baja, que cantaba algo — una frase repetida, un poco de melodía, la clase de canción que uno canta para sí mismo en la cocina y que no está dirigida a ningún oído. La voz de una mujer que no sabe que la están oyendo.
+
+Mira escuchó.
+
+En algún lugar de la melodía — en el lugar donde la frase volvía sobre sí misma, en la cima de la repetición — estaban las tres notas. Las mismas tres notas. Las de don Emilio amasando. Las del bendito del colegio. Las del tarareo de su madre.
+
+Mira bajó la mano.
+
+Se quedó de pie en la acera durante un momento más, con el corazón haciendo un trabajo que no era exactamente zumbido pero que tampoco era distinto del zumbido.
+
+Luego se giró y siguió caminando hacia su casa.
+
+No llamó.
+
+No entró.
+
+La mano que no tocó la aldaba siguió su camino colgando del brazo, ordinaria, como si nada.
+
+---
+
+Antes de llegar al taller, pasó junto a la panadería de don Emilio.
+
+Don Emilio estaba en el umbral con las manos en el delantal, mirando la calle con el gesto del hombre que ha terminado el último pan y ya no sabe qué hacer con las manos. El destello ámbar-rosa en su pecho era la misma forma de pan de siempre, firme, cálida, asomada a la mitad como siempre al caer la tarde.
+
+Mira se paró.
+
+— Don Emilio.
+
+— Niña.
+
+— ¿Está contento hoy?
+
+Don Emilio la miró con el gesto de alguien a quien le han preguntado algo que no esperaba.
+
+— Contento como siempre — dijo —. Más que ayer. Menos que mañana.
+
+— ¿Y ayer?
+
+— Ayer también — dijo, y volvió a meter las manos en el delantal.
+
+Mira lo miró un momento más. El destello en su pecho pulsó una vez, lento, al ritmo del silencio entre las dos palabras.
+
+No lo señaló. No tarareó. Siguió caminando.
+
+---
+
+Al pasar por el taller de Señor Vidal — de camino a casa, sin buscarlo — se detuvo en el arco abierto.
+
+Señor Vidal estaba en su banco. No levantó la vista. Medía un trozo de pino arcano con un cordel marcado, como siempre hacía, porque Señor Vidal no se fiaba de nada que no pudiera medirse y volver a medirse.
+
+El destello oscuro en su pecho — el índigo-negro profundo que no irradiaba sino que era irradiado, que no brillaba sino que recibía — estaba exactamente donde había estado siempre. Igual que en el primer día.
+
+Mira tarareó.
+
+Muy suave. Las tres notas. Casi sin sonido, la clase de tarareo que uno hace cuando está parado en un umbral con las manos vacías y espera algo sin saber qué espera.
+
+Observó el oscuro.
+
+El oscuro no se movió. No se elevó. No respondió. Estaba donde siempre había estado, en el pecho de ese hombre, oscuro, deliberado, recibiendo. Como si las tres notas de Mira hubieran hablado en un idioma que el oscuro no hablaba.
+
+Tarareó una vez más.
+
+Nada.
+
+Sintió — por primera vez desde el acantilado — un calor pequeño en el pecho. No era rabia. Ni siquiera frustración. Era: ¿por qué no él?
+
+No lo entendía.
+
+Se dijo — sin decirlo, sin hablarlo, en la voz privada que había ido ganando confianza durante toda la semana — que el oscuro debía ser más difícil de alcanzar. Que un destello oscuro era más hondo, más lento, como el agua profunda del río es más lenta que el agua junto a la orilla, y que sus tres notas tenían que aprender a llegar más abajo.
+
+Se dijo que la próxima vez lo intentaría diferente.
+
+Siguió caminando.
+
+Fue a casa.
+
+Añadió el nombre de Señor Vidal al pie de la lista en la novena página.
+
+Lo subrayó dos veces.
+
+---
+
+---
+
+Por la mañana del día siguiente, antes del colegio, pasó por la panadería del segundo barrio.
+
+Era la panadería de Clemencia, la panadera de manos rápidas que hacía los bollos pequeños que su madre le pedía a veces — los bollos del segundo barrio, diferentes a los de don Emilio, más planos y con más sal, los que se comían con el caldo del mediodía. Clemencia tenía un destello verde jade frío, suave, que Mira había visto dormido bajo sus costillas como una piedra del río debajo del agua.
+
+La tienda era pequeña. La mañana era temprana. Clemencia estaba sola detrás del mostrador.
+
+Mira pidió seis bollos pequeños.
+
+Clemencia los contó hacia el papel. Mientras contaba, Mira tarareó — suave, casi bajo el aliento, de la manera en que había estado tarareando durante tres semanas, de la manera en que don Emilio tarareaba sobre su masa hacía cincuenta y un años.
+
+Las tres notas.
+
+Clemencia no levantó la vista. Terminó de contar, tomó la moneda, dio el paquete de papel.
 
 — Adiós, niña.
 
 — Adiós, señora.
 
-Mira walked out of the shop with the paper of rolls.
+Mira salió de la tienda con el paquete de bollos.
 
-Behind her, in the small bakery, Clemencia paused at the counter. She had been about to wipe it down with a cloth. The cloth was in her hand. She paused. She did not know why she had paused. She felt, briefly, as if a small good thing had walked through the shop without making a sound. Above her ribs, where Mira had been looking on Tuesday, the cool soft jade-green destello was no longer sleeping. It rose halfway, slow, the way a cat rises halfway from a windowsill nap. Clemencia did not see it. She felt only a kind of pleasant lift, an unaccountable warmth, the way some mornings begin to feel themselves.
+Detrás de ella, en la panadería pequeña, Clemencia se paró frente al mostrador. Había estado a punto de limpiarlo con un paño. El paño estaba en la mano. Se paró. No supo por qué se había parado. Sintió, brevemente, que algo pequeño y bueno había caminado por la tienda sin hacer ruido. Sobre las costillas, donde Mira había estado mirando el martes, el destello verde jade frío ya no dormía del todo. Subió a la mitad, lento, de la manera en que un gato sube a la mitad desde la siesta en un alféizar. Clemencia no lo vio. Sintió solo un calor sin motivo, como sienten ciertos amaneceres que llegan algo temprano.
 
-She wiped the counter.
+Limpió el mostrador.
 
-She went on with her day.
+Siguió con su día.
 
----
-
-Mira ate one of the rolls walking home. The roll was warm. The roll was, she noticed, the same word in the second barrio that the bakery's word for the rolls had always been — *bollo* — and not the same word at all. Different shape. Different crumb. Different warmth in the hand.
-
-She thought about this without thinking about it.
-
-She thought, *all the bollos in the pueblo are different,* and she thought it with satisfaction, the satisfaction of a child who is beginning to understand that knowing the differences between things is its own kind of having.
-
-She walked past the carpenter's shop.
-
-Señor Vidal was at his bench. He had not, in three weeks, looked up from his bench when she had passed. She had passed nine times. Each time, she had looked at his oscuro destello — the deep indigo-black cupped in his chest, *that did not radiate, that was radiated into* — and she had felt the small old fear she had felt on the first morning. *The first person whose light had made her afraid. Not because there was anything wrong with it. Because there was so clearly something right with it, and she did not have any idea what to do with something that right.*
-
-Today she did not feel afraid.
-
-Today she felt — she stopped at the open archway of his shop — *curious.*
-
-The curiosity was a new feeling. It was a kind of leaning-forward in her chest, the way her body had been leaning forward at the bakery, the way her body had been leaning forward all week. The curiosity was: *I have woken everyone else's. I have not woken his.*
-
-She did not, at eleven, articulate the *yet* at the end of the sentence. The *yet* was implied by the lean.
-
-She stood in the archway.
-
-Señor Vidal did not look up. He was measuring a length of pino arcano with his marked string, as he always was, because Señor Vidal trusted nothing that could not be measured and measured twice.
-
-Mira hummed.
-
-She hummed very softly. The three notes. Almost not a sound. The kind of humming a girl does when she is standing in a doorway at nine in the morning and her hands are empty and she is waiting for something without knowing what she is waiting for.
-
-She watched his oscuro.
-
-The oscuro did not move. It did not lift. It did not contract, the way Bela's opalescent had brightened. It sat where it had always sat, in his chest, dark, deliberate, receiving. As if Mira's three notes had been spoken in a language the oscuro did not speak.
-
-She hummed once more.
-
-Nothing.
-
-She felt — for the first time since the cliff — a small heat in her chest. The heat was not anger. It was not even frustration. The heat was: *why not him?*
-
-She did not understand it.
-
-She told herself — without saying it, without speaking it, in the small private voice that had been getting more confident all week — that the oscuro must be harder to reach. That an oscuro destello was deeper, slower, the way deep river water was slower than the water at the edge of the bank, and that her three notes had to learn how to reach down further.
-
-She told herself that next time she would try a different way.
-
-She walked away.
-
-She went home.
-
-She added Señor Vidal's name to the bottom of the list on the ninth page.
-
-She underlined his name twice.
+Mira comió uno de los bollos caminando al colegio. Era bueno. Era diferente al de don Emilio. Diferente al de Bela. Todos los bollos del pueblo eran distintos, pensó, y la pensó con satisfacción — la satisfacción de la niña que está empezando a entender que conocer las diferencias entre las cosas es en sí mismo una manera de tenerlas.
 
 ---
 
-That night she did not hum alone in her room.
+Esa noche no tarareó sola en su cuarto.
 
-She did not need to. The destello had risen for no one, three nights ago, and the question had been answered. *Soy real aunque nadie me mire.* She had filed the answer. She had moved on.
+No necesitaba. El destello había subido para nadie tres noches antes, y la pregunta había sido respondida. *Soy real aunque nadie me mire.* Había archivado la respuesta. Había seguido adelante.
 
-She lay in bed with the moon in the lace curtain and Chispa hovering above her chest and the zumbido at its proper valley depth, and she thought about the next morning. Tomorrow was the morning of the second-barrio panadera's full waking. She would walk past the small bakery on her way to school, and she would look in through the window, and she would see whether the cool soft jade green that had risen halfway yesterday had begun to rise on its own without her there.
+Se acostó con la luna en el encaje de la cortina y Chispa flotando sobre el pecho y el zumbido a su profundidad correcta del valle, y pensó en el día siguiente. Vería si el destello verde jade frío de Clemencia había empezado a moverse solo sin que ella estuviera.
 
-She thought about Lucía the guitarist.
+Pensó en Lucía la guitarrista.
 
-She thought about the viuda Herreros's pale violet, almond-small.
+Pensó en el destello violeta pálido de la viuda Herreros, pequeño como una almendra.
 
-She thought about market day. Two days from now. Thirty-two destellos in the central plaza in the gold hour.
+Pensó en el día de mercado. Dos días. Treinta y dos destellos en la plaza central en la hora dorada.
 
-She fell asleep with the satisfaction of a child whose project was, finally, beginning to become a project.
+Se durmió con la satisfacción de una niña cuyo proyecto estaba, por fin, empezando a ser un proyecto.
 
-She did not, that night, look out through the lace curtain at the row of houses across the narrow street.
+No miró hacia la calle por el encaje de la cortina.
 
-She did not see whether the lamp in the blue door was lit.
+No vio si la lámpara en la puerta azul estaba encendida.
 
-She did not, that night, count Bela.
+Esa noche no contó a Bela.
 
-Across the street, behind the closed door, in the warm yellow lamplight of a kitchen that smelled of bollos that had been left in their tin too long, an old woman sat at a wooden table with her hand flat on her own chest, the Aurevaldan way, and watched the small candle on the small altar burn slowly down. The opalescent destello cupped inside her chest had grown, in the last three days, slightly less bright. As if a hand were beginning, very slowly, to cup further over the flame.
+Al otro lado de la calle, detrás de la puerta cerrada, en la luz amarilla cálida de una cocina que olía a bollos que habían estado demasiado tiempo en su lata, una vieja estaba sentada a la mesa de madera con las palmas planas sobre el propio pecho, y miraba cómo la vela pequeña del altar quemaba despacio hacia abajo. El destello opalescente guardado en su pecho había crecido, en los últimos tres días, levemente menos brillante. Como si una mano fuera, muy despacio, cubriendo más la llama.
 
-Bela did not move.
+Bela no se movió.
 
-She was not waiting for anything tonight.
+Sabía, desde hacía tres días, que algo en el valle estaba empezando a torcerse de una manera que ella no sabía nombrar aún, porque el torcimiento no había roto nada todavía, y porque Mira — al otro lado de la calle, dormida en su cama, rodeada de un cuaderno abierto en el suelo y medio bollo en la mesa — no había hecho todavía lo que iba a hacer.
 
-She had only known, for three days, that something in the valley was beginning to bend the wrong way, and that she could not, this time, name it, because it had no name yet, because the bending had not yet broken anything, and because Mira — across the street, asleep in her bed, surrounded by an open notebook on the floor and a half-eaten roll on the table — had not yet done what she was about to do.
+La lámpara ardió.
 
-The lamp burned.
+La noche estaba quieta.
 
-The night was quiet.
+El día siguiente sería viernes.
 
-Tomorrow would be Friday.
-
-The day after tomorrow would be market day.
+El otro día sería día de mercado.
 
 ---
 
-*End of Chapter Eight.*
+*Las Tierras de Luz* / Ana Cecilia Cancino & FrankX

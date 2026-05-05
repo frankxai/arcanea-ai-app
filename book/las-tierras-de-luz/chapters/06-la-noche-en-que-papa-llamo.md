@@ -1,262 +1,123 @@
-# Chapter Six: La Noche en que Papá Llamó
+# Capítulo Seis: La Noche en que Papá Llamó
 
-Three days passed and Mira did not cross the street.
+![Capítulo 6: La Noche en que Papá Llamó](/images/books/las-tierras-de-luz-ch06.png)
 
-The blue door had been open since Wednesday — not literally open, but the lamp was lit again most evenings, and the wooden bowl had returned to the stoop, and Silencio the lechuza had returned to the chimney where it had perched for eleven years. The pattern had restored itself. The vecina vieja del otro lado was, by all the signs the pueblo could read, simply back.
+La puerta azul volvió a estar abierta el miércoles.
 
-Mira had been ready to cross the street. Each afternoon, walking home from school, she had passed the row of houses and slowed at the end of the row and looked at the blue door and not stopped. Each afternoon her feet had carried her on. Each afternoon she had told herself she would stop tomorrow.
+No abierta del todo — nunca estaba abierta del todo — pero la lámpara volvió a encenderse la mayoría de las noches, y el cuenco de madera regresó al escalón de entrada, y Silencio la lechuza volvió a la chimenea donde había posado durante once años. El patrón se había restaurado. La vecina vieja del otro lado estaba, por todas las señales que el pueblo sabía leer, simplemente de vuelta.
 
-She did not understand it.
+Mira no cruzó la calle.
 
-She was not afraid. She did not think Bela would refuse her. She had even, on the second afternoon, stopped exactly opposite the blue door for the count of ten breaths, looking at the door, and Bela had not been on the stoop and the door had not opened, and Mira had simply stood there until the count was done and then walked on. It had been like that.
+No ese miércoles ni el jueves. El viernes se detuvo en la acera de enfrente durante dos minutos completos — los contó, porque era metódica cuando estaba nerviosa — y luego siguió caminando hacia casa. Sabía que Marisol tenía razón. Sabía que la piedra en el alféizar era un mensaje. Pero hay cosas que sabes con la cabeza y cosas que sabes con el resto del cuerpo, y el resto del cuerpo a veces necesita más tiempo.
 
-She thought, in the small private way she thought most things now, that the not-crossing had to do with the river.
-
-At the river, on Thursday, she had felt the zumbido at a depth she had not known existed. She had sat on the bank for what might have been an hour, and Chispa had hovered out over the water, and she had not asked for anything, and the river had been there, and the company had been the kind of company that did not require a face.
-
-She thought — without thinking it as a thought, the way certain children think — that the company of the blue door, when she finally crossed to it, would be a different kind of company. Bigger. Faced. With words. And that, before she crossed, she wanted to spend a little time with the smaller company first. The unfaced, unwording, unhurried kind. Like learning to sit at a table alone before the meal arrives.
-
-So three days passed, and she did not cross.
+El sábado por la tarde estaba sentada en la mesa de la cocina haciendo la tarea de geografía cuando el teléfono sonó.
 
 ---
 
-The father called on Thursday evening.
+No sonaba seguido. El teléfono de la casa era uno de esos aparatos grandes de plástico color crema que habían existido desde antes de que Mira naciera, y sonaba cuando llamaba la tía Esperanza desde la capital, o cuando había algún asunto del pueblo, o cuando su padre llamaba desde donde estuviera.
 
-He had been calling roughly every two weeks. Sometimes three. Sometimes longer. The phone in the kitchen — the small wooden box mounted on the wall by the back door, with the round dial her mother had been turning for twenty-six years — would ring, and Remedios would lift the receiver and say *bueno?* in the careful neutral tone of a woman who had learned, over three years, to keep her voice from betraying which of three or four possible callers she was hoping it was. And then, when it was him, the tone would change. Not warmer. Not colder. More careful.
+Su padre estaba desde hacía ocho meses en el norte, trabajando en las obras de la carretera nueva. Llamaba los sábados cuando podía, que era irregular — a veces dos sábados seguidos, a veces cada tres semanas. Cuando llamaba, la voz llegaba con ese retraso de medio segundo que tienen las voces de lejos, como si cruzaran algo espeso para llegar.
 
-He had asked to speak to Mira.
+Su madre descolgó. Mira escuchó el cambio en su respiración que significaba que era él.
 
-Tomás had already been on the phone for the four small sentences he was capable of giving an absent father. *Hola papá. Estoy bien. Sí. Sí. Adiós papá.* Tomás had the kind of relationship with his father that fits inside a phone call. He was six. He had not learned, yet, that some absences did not fit inside phone calls. He hung up cleanly and went back to drawing fish.
+—Sebastián. —Y luego, en voz más baja—: Sí, está aquí. Te la paso.
 
-Mira had taken the receiver from her mother and had sat down on the high wooden stool by the wall, and her mother had touched the top of her head once, lightly, and gone back into the kitchen to give them the privacy that was not really privacy because the kitchen was three steps away.
-
-— Hola, papá.
-
-— Mira, mi reina. ¿Cómo estás?
-
-His voice was the same. That was always the thing. After three years of the voice growing thinner over the line, the voice itself had stopped changing. It had reached a kind of low equilibrium — warm, careful, not too long, not too detailed, the voice of a man who had decided what he could afford to give and was giving exactly that.
-
-— Bien, papá.
-
-— ¿Bien bien?
-
-— Bien bien.
-
-— ¿La escuela?
-
-— Sí. Bien.
-
-— ¿Tu madre?
-
-— Bien.
-
-— ¿Tomás?
-
-— Hizo un dibujo de un pez con todas las escamas.
-
-He laughed. It was the laugh he had laughed when she was small and he had been home, a laugh that came out of his whole body. It was the same laugh. She had not realized, until this moment, that she had been waiting for the laugh.
-
-— Cuéntame del pez.
-
-She told him about the fish. She told him about the scale near the gill plate that Tomás had decided was the favorite. She told him about the way Tomás had counted the scales twice to be sure he had drawn them all, the way Tomás counted everything twice now because his teacher had taught him that real men measured twice. She did not tell him that Tomás's teacher was Señorita Inés and that Señorita Inés had a destello the color of weak tea and that, when Mira was not looking, the destello sometimes drifted halfway out of Señorita Inés's chest.
-
-— Ay, qué hermoso. ¿Y tú cómo dibujas estos días, mi reina?
-
-— No estoy dibujando, papá.
-
-— ¿No?
-
-— Estoy escribiendo. En el cuaderno.
-
-— ¿En el cuaderno azul?
-
-— Sí.
-
-There was a small pause. Her father remembered the cuaderno. He had bought it. He had bought it when she was nine, at the small papelería in the city where he had moved, with the gold-stamped letters MI CUADERNO on the cover, because he had thought a girl of ten should have a notebook of her own. He had wrapped it himself. He had brought it on the visit when she had been ten years old and four months, and he had given it to her with a small ceremonial gesture, and he had said: *para que escribas lo que quieras, mi reina. Lo que sea.*
-
-She had not used it for two years.
-
-— ¿Y qué escribes? — he asked now.
-
-— Cosas que noto.
-
-— ¿Qué cosas notas?
-
-She held the receiver against her ear. She looked at the wall. The wall was warm piedra viva, slightly translucent at one corner, the way the walls of the kitchen always were at this hour. Through the warm stone she could feel the early evening's light.
-
-— Cosas pequeñas. Cómo huele el pan en la mañana. Cómo cantan los zorzales. Cómo Marisol mira las cosas.
-
-— Mi reina poeta.
-
-He said it warmly. He said it the way fathers say such things to daughters at a distance — the way of a man who has decided he will praise the small thing his daughter offers him because praising the small thing is what an absent father can do. She heard the warmth. She also heard the thing that was missing inside the warmth, which was the question that would have followed if the warmth had been a different kind: *qué cosas pequeñas, mi vida? cuéntame una. dime cuál zorzal canta primero. dime qué miró Marisol el miércoles.* She heard the absence of that question by the shape of the place in his voice where it would have lived.
-
-He did not ask.
-
-— ¿Y tú, papá?
-
-— Bien. Trabajando.
-
-— ¿Mucho?
-
-— Mucho.
-
-— ¿Cuándo vienes?
-
-The pause was a beat longer than the pause about the cuaderno. Mira had learned to count pauses.
-
-— Pronto, mi reina. Estoy viendo las fechas.
-
-— Sí.
-
-— Pronto.
-
-— Sí.
-
-— Te quiero mucho.
-
-— Yo también, papá.
-
-— Pásame a tu madre.
-
-She passed the receiver to her mother, and she got down off the high wooden stool, and she went up to her room.
+Mira dejó el lápiz y fue al pasillo.
 
 ---
 
-In her room with the door closed and the candle lit and the blue notebook open on her knees, she did not cry.
+—Mira.
 
-She had thought she might. She had carried a small private prediction up the stairs that she might, that the call would land in her chest the way the calls had landed when she was nine — sharp, sudden, hot — and that she would close the door and lie down on her bed and let the chest do what it needed to do for a few minutes, and afterwards she would feel cleaner.
+—Papá.
 
-She had been wrong.
+La voz de su padre llegaba con ese retraso y esa textura áspera de las llamadas largas. Pero debajo de la distorsión era su voz: grave, con una pausa breve antes de cada frase como si pesara las palabras.
 
-The chest did not do anything. The chest sat. The chest watched. The chest, in the way it had been doing for two weeks, behaved like something that had begun to live further down inside her than the place where the calls used to land.
+—¿Cómo estás, mija?
 
-She put the notebook on her knees and she opened it to the seventh page, where two days ago she had written *Marisol no me dejó preguntar,* and she turned past that page, and she stopped at a fresh page, and she wrote:
+—Bien. Haciendo tarea.
 
-*Hoy llamó papá.*
+—¿Qué tarea?
 
-*No lloré.*
+—Geografía. Los ríos del altiplano.
 
-*Tengo que pensar qué quiere decir esto.*
+—Ah. —Pausa—. ¿Y el Río Claro está en esa lista?
 
-She sat with the page.
+—No. Es demasiado pequeño para el libro.
 
-She had thought about her father seven times since the last time he had called. She knew the count because she had begun, last week, to count things that mattered to her. She had counted the destellos she had woken (still the same eight, all of them now openly glowing in their owners). She had counted the times she had walked past the blue door without crossing (twelve). She had counted the times Marisol had appeared at distances closer than four feet (six, all in the last three days). She had counted, this evening, walking home from school, the times she had thought of her father since his last call.
+—Qué lástima —dijo su padre—. Los libros se pierden los ríos pequeños y esos son los que más cosas saben.
 
-Seven.
+Mira apoyó la espalda en la pared del pasillo. Afuera, por la ventana abierta sobre el lavadero, el pueblo hacía sus sonidos de tarde de sábado: radios, niños en la calle, el motor de algún carro de reparto pasando despacio.
 
-Two of those had been because Tomás had asked when papá was coming. Two had been because the kitchen phone had rung. One had been because of a man in the plaza who had carried his briefcase the way her father had carried his. Two had been her own thinking, unprompted, at no particular hour.
+Y entonces, por la ventana, en el límite del ojo — los murciélagos brillantes.
 
-Two unprompted thoughts, in fourteen days.
+Cuatro, quizás cinco, sus alas con el borde de un azul-blanco pálido que solo la luna sacaba a relucir. Pasaron en silencio, en fila oblicua, rozando la cornisa del tejado de enfrente. No los murciélagos grises del pueblo. Estos eran los otros — los que aparecían pocas veces al año, siempre de noche, siempre en silencio, y que los niños del barrio llamaban brillantes porque tenían esa franja en el borde del ala que parpadeaba un instante en la oscuridad.
 
-She had not been counting Bela.
+Mira los siguió con los ojos sin moverse del teléfono.
 
-She had not had to count Bela. Bela had been with her, in the small unwording way Bela had been with her, every hour of every day for the last week. The blue door had been with her even when it was dark. The opalescent destello cupped inside Bela's chest had been with her every time her own Chispa pulsed.
+—¿Mira?
 
-Mira looked at the words on the page.
-
-*Hoy llamó papá.*
-*No lloré.*
-
-She did not cross them out. She did not rewrite them. She closed the notebook, very carefully, and put her hand flat on the blue cover.
-
-Then — for reasons she could not have explained, the way she could not have explained most of the things in the last two weeks — she opened the notebook again, this time to the very first page. The page she had been keeping blank since the beginning. The page that should have held her own destello entry. The page she had not been able to write.
-
-She picked up her pencil. She wrote, in the very small careful handwriting she used for the truer sentences:
-
-*Chispa — no tiene color. O tiene todos.*
-
-She stared at it.
-
-She crossed it out with one neat line.
-
-She wrote underneath:
-
-*Chispa — no tiene color. O tiene todos. No me importa cuál.*
-
-Below it, smaller:
-
-*Es mía.*
-
-She did not cross that out.
+—Aquí estoy, papá. Te escucho.
 
 ---
 
-She blew out the candle.
+Su padre habló durante veinte minutos. Habló del trabajo — mucho polvo, buenos compañeros, la comida de la señora que llevaba el puesto cerca de las obras y que hacía un caldo que le recordaba al de la abuela. Habló del dinero, en el lenguaje oblicuo que usaban los adultos para hablar del dinero cuando había niños escuchando — bien, sin problemas, el mes que viene mejor. Habló de que extrañaba el Río Claro, que allá arriba los ríos eran rápidos y fríos y no tenían la calma del de aquí.
 
-She did not get into bed. She sat on the edge of the bed, with the moon coming through the lace curtain and the warm stone of the wall behind her, and Chispa hovering at her shoulder doing the slow pearl-toned thing it did when something in Mira had grown very quiet inside her.
+Y mientras hablaba, Mira miraba hacia la ventana.
 
-She hummed.
+Los murciélagos brillantes habían desaparecido de ese ángulo, pero podía escuchar — o creía escuchar — su vuelo: no un sonido exactamente, sino la ausencia de sonido que los acompaña, un silencio limpio moviéndose contra el ruido del sábado.
 
-Three notes. The three notes. Soft, almost under her breath, the way her mother hummed them while kneading and the way Don Emilio had been humming them for fifty-one years and the way someone, sixty years ago, had carried them across a corridor between Realms with nothing else but the song.
+Chispa pulsó. Suave. Regular.
 
-She hummed them to herself. To the empty room. To the moonlight.
+Como si dijera: estás aquí. Todo esto está aquí. La voz de tu padre en el teléfono y los murciélagos brillantes y el zumbido del valle debajo de todo, y tú estás aquí en el centro de todas estas cosas al mismo tiempo, y eso es suficiente.
 
-She had not been planning to hum. She had not chosen to. She had been sitting and her mouth had begun to make the notes, the way a body that has been holding its breath for a long time eventually exhales without permission.
+—¿Estás bien? —preguntó su padre—. Te noto callada.
 
-The zumbido in her chest rose.
+—Estoy pensando —dijo Mira.
 
-It was not the schoolyard zumbido of the first morning. It was not the river-bank zumbido of the week before. It was something quieter than both — closer, more interior, as if the hum had decided to live just below her ribs for tonight, instead of in the air around her.
+—¿En qué?
 
-Chispa pulsed.
+—En los murciélagos brillantes. Acaban de pasar.
 
-Then, slowly, Chispa lifted from her shoulder.
+Silencio breve al otro lado de la línea.
 
-Not far. Not toward the window. Not toward the door. Straight up. About two feet above her. To the height where the candle had been hanging in the small lantern her mother had lit for her every night when she was small. Chispa hovered there. The prismatic edges, in the moon-light, were softly visible — green, then gold, then green again, then a color Mira had no word for, then prismatic.
+—¿Los azules?
 
-Chispa pulsed in a rhythm that was not Mira's heart.
+—Sí.
 
-It was the rhythm of the three notes.
+—Ah. —Otra pausa—. Hace mucho que no los veo. Qué buena señal.
 
-There was no one to see it. There was no audience. Tomás was asleep across the hall. Remedios was downstairs with the dishes. Bela was three doors down behind a closed door. The pueblo was the pueblo at this hour — quiet, prepared for night, doing its slow private business with itself.
+—¿Por qué buena señal?
 
-But the destello had risen anyway.
+—Las abuelas decían que cuando aparecen es porque algo está cambiando de fase —dijo su padre—. Como cuando el maíz pasa de crecer a madurar. No mejor ni peor. Solo siguiente.
 
-For no one. For nothing. For its own reasons.
+Mira dejó que eso se asentara.
 
-Mira felt something she did not have a word for — something that arrived with the same wordlessness as Chispa had arrived on the first morning. The thing was a kind of relief. Not the relief of a problem being solved. The relief of a question being unasked.
+—¿Tú crees eso?
 
-She had been carrying, for fourteen days, a question she had not articulated.
-
-She had not known she was carrying it until it stopped.
-
-The destello hovered. The notes finished. The zumbido settled. Chispa drifted, slow, back to its place at her shoulder. The candle had not been relit. The moon moved a fraction of an inch in the lace curtain. The house went on doing what houses do when no one is watching.
-
-Mira lay down on the bed.
-
-She pulled the blanket up to her shoulders.
-
-She thought, with a clarity that had no language and that felt, for the first time in two weeks, exactly the right size to hold:
-
-*Soy real aunque nadie me mire.*
-
-She closed her eyes.
-
-She slept the kind of sleep one sleeps when the body has decided that, against all advice, the world has become a slightly different shape, and the new shape is bearable.
+—Creo que las abuelas sabían cosas —dijo su padre—. Y creo que los murciélagos brillantes no aparecen cuando nada está pasando.
 
 ---
 
-In the kitchen below, Remedios at the basin had finished the last of the dishes. She dried her hands on the apron. She turned to put the cloth away on the hook by the stove, and as she turned, the soft three notes she had been humming under her breath at the kneading every morning for twenty-six years — and that, days ago, while serving soup, had paused half a heartbeat with the ladle over the pot — paused again. The three notes stopped, at the third note, before the resolve.
+Después de colgar, Mira se quedó en el pasillo un momento. Su madre estaba de vuelta en la cocina, el sonido del agua en la olla. El pueblo afuera seguía siendo sábado por la tarde.
 
-She stood very still.
+Fue a la ventana del lavadero y miró hacia el tejado de enfrente, donde los murciélagos habían pasado. No había ninguno ya. La cornisa estaba vacía y gris bajo el cielo que comenzaba a oscurecerse.
 
-She did not know why she had stopped. She knew, in the small distracted corner of herself that had been growing slightly less small since Wednesday, that something in the house was different, and that the difference was upstairs, and that the difference was Mira, and that she — Remedios — did not yet know what to do with the difference.
+Pero sobre el escalón de la casa de Celeste — lo vio desde aquí, diagonal, a través de la calle — el cuenco de madera estaba en su lugar, y la lámpara dentro de la casa empezaba a encenderse con la luz suave del final del día.
 
-She put the cloth on the hook.
-
-She turned out the lamp.
-
-She listened, for one full breath, to the silence of the house.
-
-Then she went to bed.
-
-Above her, behind the closed bedroom door at the top of the stairs, her daughter slept under the moon, and Chispa hovered above her chest at three fingers' distance, pulsing slowly, slowly, slowly at the rhythm of a song no one in the house had taught her.
-
-The pueblo was quiet.
-
-The blue door across the street was closed.
-
-The lamp inside it was warm and yellow and on.
+El lunes, pensó Mira. El lunes cruzo.
 
 ---
 
-*End of Chapter Six.*
+Esa noche escribió en el cuaderno:
+
+*Papá llamó. Los murciélagos brillantes pasaron por la ventana mientras hablábamos. Él los conoce. Dice que las abuelas les llamaban señal de cambio de fase.*
+
+Y debajo:
+
+*No peor ni mejor. Solo siguiente.*
+
+Lo subrayó. Dos veces.
+
+---
+
+*Las Tierras de Luz* / Ana Cecilia Cancino & FrankX

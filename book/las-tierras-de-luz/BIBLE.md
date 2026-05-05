@@ -156,6 +156,12 @@ She is not a cause. She is a condition. This is the lesson she must learn.
 
 A Kingdom of Light Realm under Third Gate influence (Fire/Solar — Draconia and Draconis). Faster, louder, more kinetic than Veldoria. Architecture from *piedra roja* (volcanic rust-red stone that stores solar heat). People speak faster. Markets louder.
 
+**Aurevaldan oral cosmology — *la conversación que no se acaba***
+
+Aurevalde carries an unwritten grandmother-tradition Bela learned at her own grandmother's kitchen table and never spoke aloud in Veldoria until Mira. The tradition is called, within itself, *la conversación que no se acaba* — the conversation that does not end. Its central frame is canon-aligned with First Dawn (ongoing): the First Light scattered into *los esparcidos* (the scattered ones — what Aurevaldans call destellos when speaking from the old tradition) **through abundance, not fracture.** Those who can perceive *los esparcidos* are *retornantes* — gatherers — and the gathering is attention itself. The Aurevaldans hold one ceremonial object: *la piedra de los velos* (the stone of veils — a small translucent crystal that functions as a *lens*, never a battery; removes perceptual noise for two breaths and returns to ordinary stone). Bela's grandmother carried one. Bela has it in a tin box. The tradition never names the source. It does not have to. Full substrate dossier: see `FOLK_COSMOLOGY_AUREVALDE.md`.
+
+Canon guardrails honored: NEVER framed as Tzimtzum-shattering or fracture; NEVER implies third primordial force; *piedra de los velos* is a lens (optical instrument), not a battery (power source) — same discipline as the rest of the Veldorian magic system. The convergence with off-world contemplative traditions is implicit in the Aurevaldan imagery; no real-world tradition is ever named in prose.
+
 Bela carries from Aurevalde:
 - The particular speed of her speech before she learned to slow for Veldoria
 - A recipe for **bollos de maíz solar** — round flatbreads from an Aurevaldan grain. She approximates with Veldorian grain. Almost right, never quite.
@@ -203,4 +209,4 @@ Mira's gift was not creation. It was attention. The chispas were always there. T
 
 ---
 
-*World Bible — Veldoria Edition. Canon-aligned with First Dawn, Ten Guardians, Great Darkness. Created and directed by FrankX. Co-written with Ana Cancino. Built by the Arcanea Author Team: World Architect, Character Psychologist, Consciousness Fiction Master, Sensitivity Reader, Research Librarian. Synthesized by the Lore Master. 2026-04-24.*
+*World Bible — Veldoria Edition. Canon-aligned with First Dawn, Ten Guardians, Great Darkness. Created and directed by FrankX. Co-written with Ana Cecilia Cancino. Built by the Arcanea Author Team: World Architect, Character Psychologist, Consciousness Fiction Master, Sensitivity Reader, Research Librarian. Synthesized by the Lore Master. 2026-04-24.*
