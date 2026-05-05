@@ -59,15 +59,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Type check
-        run: pnpm --filter @arcanea/web type-check
+      - name: Type check (via turbo — builds workspace deps first)
+        run: pnpm turbo run type-check --filter=@arcanea/web
 
       - name: Lint
         run: pnpm --filter @arcanea/web lint
         continue-on-error: true
 
-      - name: Build
-        run: pnpm --filter @arcanea/web build
+      - name: Build (via turbo — builds workspace deps first)
+        run: pnpm turbo run build --filter=@arcanea/web
         env:
           NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL || 'https://arcanea.ai' }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
