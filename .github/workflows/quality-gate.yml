@@ -178,7 +178,11 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: pnpm --filter @arcanea/web build
+        # Use turbo so workspace deps (@arcanea/design-system, @arcanea/publishing-house,
+        # @starlight/multilingual) are built first via dependsOn ^build chain.
+        # Plain `pnpm --filter @arcanea/web build` skips upstream deps and fails with
+        # "Module not found: Can't resolve '@arcanea/design-system'".
+        run: npx turbo run build --filter=@arcanea/web
         env:
           # Provide dummy env vars for build
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
@@ -227,7 +231,8 @@ jobs:
         run: pnpm --filter @arcanea/web exec playwright install --with-deps chromium
 
       - name: Build app for smoke test
-        run: pnpm --filter @arcanea/web build
+        # Use turbo so workspace deps build first (see Production Build step above).
+        run: npx turbo run build --filter=@arcanea/web
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
