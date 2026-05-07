@@ -77,7 +77,12 @@ jobs:
         run: pnpm --filter @arcanea/web exec playwright install --with-deps chromium
 
       - name: Run smoke tests
-        run: pnpm --filter @arcanea/web test:e2e -- --grep @smoke
+        # NOTE: invoke playwright directly via `pnpm exec` to avoid the
+        # `pnpm script -- --flag` quoting trap. pnpm forwards "--", "--grep",
+        # "@smoke" as 3 separate positional args to the script, which makes
+        # playwright interpret "--" as a test-file regex and find no tests.
+        # `pnpm exec` runs the binary directly with clean argv.
+        run: pnpm --filter @arcanea/web exec playwright test --grep @smoke
         env:
           NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL || 'https://arcanea.ai' }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
