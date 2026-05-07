@@ -79,6 +79,7 @@ jobs:
       - name: Run smoke tests
         run: pnpm --filter @arcanea/web test:e2e -- --grep @smoke
         env:
+          PLAYWRIGHT_NO_WEB_SERVER: '1'
           NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL || 'https://arcanea.ai' }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
