@@ -1,0 +1,85 @@
+name: Design Fence
+
+# Block banned design tokens from re-entering apps/web and packages/.
+# Banned per .claude/CLAUDE.md (2026-04-18) and Anthropic frontend-design
+# anti-pattern list:
+#   - Fonts: Cinzel, Space Grotesk, Inter (use Geist + Instrument Serif instead)
+#   - Aquamarine literal #7fffd4 (use #00bcd4 Atlantean Teal)
+#   - Slate-blue literal #78a6ff (use #0d47a1 Cosmic Blue)
+#   - Background literal #0b0e14 (use #09090b)
+#   - Framer Motion `domMax` (use `domAnimation`)
+#
+# Diff-only check: only fails when a banned token is *introduced* by this PR.
+# Existing matches in unchanged code don't block (allows incremental migration).
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "apps/**"
+      - "packages/**"
+      - ".arcanea/**/*.md"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Diff-only banned-token scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Scan added lines for banned tokens
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+          # Get only ADDED lines in the PR diff (exclude file headers and removals)
+          ADDED=$(git diff --no-color "$BASE_SHA" "$HEAD_SHA" -- apps packages .arcanea \
+                  | grep -E '^\+[^+]' || true)
+
+          if [ -z "$ADDED" ]; then
+            echo "::notice::No added lines under apps/, packages/, or .arcanea/ to scan."
+            exit 0
+          fi
+
+          FAIL=0
+
+          check() {
+            local pattern="$1"
+            local label="$2"
+            local hits
+            hits=$(echo "$ADDED" | grep -i -E "$pattern" || true)
+            if [ -n "$hits" ]; then
+              echo "::error title=Design fence violation: ${label}::${label}"
+              echo "$hits" | head -20 | sed 's/^/  /'
+              echo
+              FAIL=1
+            fi
+          }
+
+          check '\bCinzel\b'                          'Cinzel font is banned (use Geist)'
+          check '\bSpace[ _-]?Grotesk\b'              'Space Grotesk font is banned (use Geist)'
+          check "['\"](Inter|inter)['\"]"             'Inter font literal is banned (use Geist)'
+          check '#7fffd4'                             'Hex #7fffd4 (aquamarine) banned (use --arc-brand-atlantean-teal #00bcd4)'
+          check '#78a6ff'                             'Hex #78a6ff (slate-blue) banned (use --arc-brand-cosmic-blue #0d47a1)'
+          check '#0b0e14'                             'Hex #0b0e14 (old void) banned (use #09090b)'
+          check '\bdomMax\b'                          'Framer Motion domMax banned (use domAnimation)'
+
+          if [ "$FAIL" -ne 0 ]; then
+            echo
+            echo "Reference: .claude/CLAUDE.md design system specification."
+            echo "Use @arcanea/design-system tokens or CSS vars (--arc-brand-*) instead of literal hex."
+            exit 1
+          fi
+
+          echo "::notice::No banned design tokens introduced. Fence holds."
