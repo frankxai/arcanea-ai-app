@@ -77,7 +77,8 @@ jobs:
         run: pnpm --filter @arcanea/web exec playwright install --with-deps chromium
 
       - name: Run smoke tests
-        run: pnpm --filter @arcanea/web test:e2e -- --grep @smoke
+        working-directory: apps/web
+        run: npx playwright test --grep @smoke
         env:
           PLAYWRIGHT_NO_WEB_SERVER: '1'
           NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL || 'https://arcanea.ai' }}
