@@ -622,21 +622,64 @@ async function handleConverse(req, res) {
  * Windows permissions / hardware. The reply still flows through the Starlight
  * cognition bridge (if COGNITION_BRIDGE_URL is set) and gets ElevenLabs TTS.
  */
+// B3-lite (2026-05-11): publish voice.turn to SIS brain SSE so the orb's
+// native path is observable in the dashboard even when the cognition bridge
+// is off / failing. Mirrors the SIS voice-operator voice.turn event contract
+// from private/voice-operator/service/brain_publisher.py make_voice_turn().
+// Fire-and-forget — orb turn never blocks on dashboard reachability.
+const BRAIN_INJECT_URL = process.env.BRAIN_INJECT_URL || 'http://127.0.0.1:3007/api/brain/inject';
+const BRAIN_PUBLISH_DISABLED = process.env.BRAIN_PUBLISH_DISABLED === '1';
+
+function newTraceId() {
+  return 't-' + Math.random().toString(36).slice(2, 14) + Date.now().toString(36).slice(-4);
+}
+
+function publishVoiceTurn(payload) {
+  if (BRAIN_PUBLISH_DISABLED) return;
+  try {
+    const event = {
+      kind: 'voice.turn',
+      ts: new Date().toISOString(),
+      ...payload,
+    };
+    // Don't await — caller is HTTP handler and must not stall on dashboard.
+    fetch(BRAIN_INJECT_URL, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(event),
+      signal: AbortSignal.timeout(500),
+    }).catch(() => {});
+  } catch {
+    // Constructor errors only — fully swallowed; observability never blocks the turn.
+  }
+}
+
 async function handleText(req, res) {
   const u = new URL(req.url, `http://${req.headers.host}`);
   const persona = resolvePersona(u.searchParams.get('persona'));
+  const traceId = newTraceId();
+  const tTurnStart = performance.now();
 
   let body;
   try {
     const raw = await readRawBody(req);
     body = JSON.parse(raw.toString('utf-8'));
   } catch (e) {
+    publishVoiceTurn({ trace_id: traceId, ok: false, route: 'invalid-json', backend: 'orb', turn_total_ms: Math.round(performance.now() - tTurnStart) });
     json(res, 400, { error: 'invalid JSON body' });
     return;
   }
   const text = (body?.text || '').trim();
-  if (!text) { json(res, 400, { error: 'text required' }); return; }
-  if (text.length > 4000) { json(res, 413, { error: 'text too long' }); return; }
+  if (!text) {
+    publishVoiceTurn({ trace_id: traceId, ok: false, route: 'empty', backend: 'orb', turn_total_ms: Math.round(performance.now() - tTurnStart) });
+    json(res, 400, { error: 'text required' });
+    return;
+  }
+  if (text.length > 4000) {
+    publishVoiceTurn({ trace_id: traceId, ok: false, route: 'too-long', backend: 'orb', turn_total_ms: Math.round(performance.now() - tTurnStart) });
+    json(res, 413, { error: 'text too long' });
+    return;
+  }
 
   process.stderr.write(`[TEXT] "${text.slice(0, 80)}"\n`);
   pushFeedEvent({ type: 'transcript', persona: persona.name, text, source: 'typed' });
@@ -645,6 +688,7 @@ async function handleText(req, res) {
   const loop = await runLlmLoop(persona.prompt, text, persona.temperature);
   const tLlm = Math.round(performance.now() - t1);
   if (!loop || !loop.reply) {
+    publishVoiceTurn({ trace_id: traceId, ok: false, route: 'llm-unavailable', backend: 'orb', cognition_ms: tLlm, turn_total_ms: Math.round(performance.now() - tTurnStart) });
     json(res, 502, { error: `LLM unavailable: ${lastGroqError || 'check GROQ_API_KEY or cognition bridge'}` });
     return;
   }
@@ -654,9 +698,22 @@ async function handleText(req, res) {
   const t2 = performance.now();
   const audio = await synthesize(reply, persona);
   const tTts = Math.round(performance.now() - t2);
-  if (!audio) { json(res, 502, { error: 'TTS unavailable — no working voice backend' }); return; }
+  if (!audio) {
+    publishVoiceTurn({ trace_id: traceId, ok: false, route: 'tts-unavailable', backend: 'orb', cognition_ms: tLlm, turn_total_ms: Math.round(performance.now() - tTurnStart) });
+    json(res, 502, { error: 'TTS unavailable — no working voice backend' });
+    return;
+  }
 
+  const turnTotalMs = Math.round(performance.now() - tTurnStart);
   process.stderr.write(`[TEXT] ${persona.name.padEnd(8)} llm=${tLlm}ms  tts=${tTts}ms  tools=${toolsUsed.join(',') || 'none'}\n`);
+  publishVoiceTurn({
+    trace_id: traceId,
+    ok: true,
+    route: toolsUsed.length ? 'orb-tools' : 'orb-reply',
+    backend: 'orb',
+    cognition_ms: tLlm,
+    turn_total_ms: turnTotalMs,
+  });
 
   const truncatedResults = toolResults.slice(0, 3).map(({ name, result }) => ({
     name,
