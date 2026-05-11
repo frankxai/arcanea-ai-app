@@ -42,12 +42,12 @@
   },
   "dependencies": {
     "zod": "^3.22.4",
-    "ai": "^3.0.19",
+    "ai": "^6.0.177",
     "@ai-sdk/anthropic": "^0.0.9",
     "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "typescript": "^5.3.3",
-    "@types/node": "^20.11.19"
+    "@types/node": "^20.19.40"
   }
 }
