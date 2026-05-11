@@ -1,3 +1,8 @@
+/**
+ * Zod schemas for the Arcanea ecosystem graph.
+ * - ManifestNodeSchema: curated source-of-truth (hand-edited YAML).
+ * - EcosystemNodeSchema: post-generator hydrated record (status/consumedBy/lastVerifiedAt populated).
+ */
 import { z } from 'zod';
 
 export const GATES = ['source', 'form', 'pattern', 'voice', 'vision', 'story', 'world', 'soul', 'unity', 'mastery'] as const;
@@ -28,7 +33,7 @@ export const EcosystemNodeSchema = z.object({
   consumedBy: z.array(z.string()),
   isExternal: z.boolean(),
   owner: z.string().optional(),
-  links: z.record(z.string(), z.string()),
+  links: z.record(z.string(), z.union([z.string().url(), z.string().regex(/^\//)])),
 });
 
 export type EcosystemNode = z.infer<typeof EcosystemNodeSchema>;

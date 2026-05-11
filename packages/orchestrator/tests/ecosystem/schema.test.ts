@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { EcosystemNodeSchema, ManifestSchema, GATES } from '../../src/ecosystem/schema.ts';
+import { EcosystemNodeSchema, ManifestSchema, ManifestNodeSchema, GATES } from '../../src/ecosystem/schema.js';
 
 describe('EcosystemNodeSchema', () => {
   it('parses a valid node', () => {
@@ -37,5 +37,55 @@ describe('EcosystemNodeSchema', () => {
 describe('ManifestSchema', () => {
   it('parses an empty manifest', () => {
     assert.doesNotThrow(() => ManifestSchema.parse({ nodes: [] }));
+  });
+});
+
+describe('ManifestNodeSchema', () => {
+  it('parses a curated node without status/lastVerifiedAt/consumedBy', () => {
+    const node = {
+      id: 'author-council',
+      name: '@arcanea/author-council',
+      description: '10 voices',
+      layer: 'product',
+      gate: 'soul',
+      hemisphere: 'arc',
+      consumes: ['anthropic-sdk'],
+      isExternal: false,
+      links: {},
+    };
+    assert.doesNotThrow(() => ManifestNodeSchema.parse(node));
+  });
+
+  it('accepts last_curated and status_override', () => {
+    const node = {
+      id: 'x',
+      name: 'X',
+      description: '',
+      layer: 'product',
+      gate: 'form',
+      hemisphere: 'arc',
+      consumes: [],
+      isExternal: false,
+      links: {},
+      last_curated: '2026-05-11',
+      status_override: 'wip',
+    };
+    assert.doesNotThrow(() => ManifestNodeSchema.parse(node));
+  });
+
+  it('rejects an invalid status_override', () => {
+    const node = {
+      id: 'x',
+      name: 'X',
+      description: '',
+      layer: 'product',
+      gate: 'form',
+      hemisphere: 'arc',
+      consumes: [],
+      isExternal: false,
+      links: {},
+      status_override: 'NOT_A_STATUS',
+    };
+    assert.throws(() => ManifestNodeSchema.parse(node));
   });
 });
