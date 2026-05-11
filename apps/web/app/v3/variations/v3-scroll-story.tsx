@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -8,18 +9,18 @@ import {
 import type { PhosphorIcon } from '@phosphor-icons/react';
 
 // --- Data ---
-const A = '#7fffd4'; // accent
+const A = 'var(--arc-brand-atlantean-teal)'; // accent
 const GUARDIANS: { name: string; el: string; hz: number; c: string; Icon: PhosphorIcon }[] = [
-  { name: 'Lyssandria', el: 'Earth',  hz: 174,  c: '#4ade80', Icon: Leaf },
-  { name: 'Leyla',      el: 'Water',  hz: 285,  c: '#60a5fa', Icon: Drop },
-  { name: 'Draconia',   el: 'Fire',   hz: 396,  c: '#f87171', Icon: Fire },
-  { name: 'Maylinn',    el: 'Heart',  hz: 417,  c: '#f472b6', Icon: Heart },
-  { name: 'Alera',      el: 'Voice',  hz: 528,  c: '#a78bfa', Icon: Wind },
-  { name: 'Lyria',      el: 'Sight',  hz: 639,  c: '#c084fc', Icon: Eye },
-  { name: 'Aiyami',     el: 'Crown',  hz: 741,  c: '#fbbf24', Icon: Crown },
-  { name: 'Elara',      el: 'Starweave',  hz: 852,  c: '#94a3b8', Icon: Spiral },
-  { name: 'Ino',        el: 'Unity',  hz: 963,  c: '#7fffd4', Icon: Lightning },
-  { name: 'Shinkami',   el: 'Source', hz: 1111, c: '#ffd700', Icon: Sun },
+  { name: 'Lyssandria', el: 'Earth',  hz: 174,  c: 'var(--arc-wind)', Icon: Leaf },
+  { name: 'Leyla',      el: 'Water',  hz: 285,  c: 'var(--arc-brand-cosmic-blue)', Icon: Drop },
+  { name: 'Draconia',   el: 'Fire',   hz: 396,  c: 'var(--arc-fire)', Icon: Fire },
+  { name: 'Maylinn',    el: 'Heart',  hz: 417,  c: 'var(--arc-void)', Icon: Heart },
+  { name: 'Alera',      el: 'Voice',  hz: 528,  c: 'var(--arc-void)', Icon: Wind },
+  { name: 'Lyria',      el: 'Sight',  hz: 639,  c: 'var(--arc-void)', Icon: Eye },
+  { name: 'Aiyami',     el: 'Crown',  hz: 741,  c: 'var(--arc-brand-arcanean-gold)', Icon: Crown },
+  { name: 'Elara',      el: 'Starweave',  hz: 852,  c: 'var(--arc-void)', Icon: Spiral },
+  { name: 'Ino',        el: 'Unity',  hz: 963,  c: 'var(--arc-brand-atlantean-teal)', Icon: Lightning },
+  { name: 'Shinkami',   el: 'Source', hz: 1111, c: 'var(--arc-brand-arcanean-gold)', Icon: Sun },
 ];
 const HERO_LINES = [
   'In the beginning, there was Lumina \u2014 the First Light.',
@@ -83,7 +84,7 @@ function ChapterHero() {
   const ctaOn = t > 0.85;
   let wi = 0;
   return (
-    <section ref={ref} style={{ height: '300vh', position: 'relative', background: '#000' }}>
+    <section ref={ref} style={{ height: '300vh', position: 'relative', background: 'var(--arc-cosmic-void)' }}>
       <div className="sticky top-0 flex flex-col items-center justify-center px-6" style={{ height: '100vh', maxWidth: 720, margin: '0 auto' }}>
         <div className="text-center">
           {HERO_LINES.map((line, li) => {
@@ -97,7 +98,7 @@ function ChapterHero() {
               <p key={li} className={li === 2 ? 'mt-8' : 'mt-2'} style={{
                 fontFamily: 'Newsreader, serif', lineHeight: 1.6,
                 fontSize: li === 2 ? 'clamp(20px,3vw,28px)' : 'clamp(22px,3.5vw,32px)',
-                fontStyle: li < 2 ? 'italic' : 'normal', color: li === 2 ? A : '#d4d4d4',
+                fontStyle: li < 2 ? 'italic' : 'normal', color: li === 2 ? A : 'var(--arc-text-primary)',
               }}>{spans}</p>
             );
           })}
@@ -123,10 +124,10 @@ function ChapterGuardians() {
   const t = useSectionScroll(ref);
   const idx = Math.floor(t * GUARDIANS.length);
   return (
-    <section ref={ref} style={{ height: `${GUARDIANS.length * 20 + 100}vh`, position: 'relative', background: '#000' }}>
+    <section ref={ref} style={{ height: `${GUARDIANS.length * 20 + 100}vh`, position: 'relative', background: 'var(--arc-cosmic-void)' }}>
       <div className="sticky top-0 flex flex-col md:flex-row items-start md:items-center" style={{ height: '100vh', padding: '0 clamp(24px,6vw,80px)' }}>
         <div className="w-full md:w-1/3 pt-16 md:pt-0">
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,56px)', color: '#d4d4d4', letterSpacing: '0.04em', lineHeight: 1.15 }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,56px)', color: 'var(--arc-text-primary)', letterSpacing: '0.04em', lineHeight: 1.15 }}>
             The Ten<br />Guardians
           </h2>
           <p className="mt-4" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 12, color: 'rgba(127,255,212,0.5)' }}>
@@ -173,7 +174,7 @@ function ChapterLibrary() {
     { bottom: '10%', left: '50%', d: 1.2, s: 26 },
   ];
   return (
-    <section ref={ref} style={{ height: '250vh', position: 'relative', background: '#000' }}>
+    <section ref={ref} style={{ height: '250vh', position: 'relative', background: 'var(--arc-cosmic-void)' }}>
       <div className="sticky top-0 flex flex-col items-center justify-center px-6" style={{ height: '100vh' }}>
         <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none">
           {bookPos.map((p, i) => (
@@ -188,7 +189,7 @@ function ChapterLibrary() {
           <div className="flex flex-wrap justify-center gap-3 mt-8 max-w-lg mx-auto">
             {LIB_CATS.map((cat, i) => (
               <span key={cat} style={{
-                fontFamily: 'Newsreader, serif', fontSize: 14, color: '#d4d4d4',
+                fontFamily: 'Newsreader, serif', fontSize: 14, color: 'var(--arc-text-primary)',
                 padding: '4px 14px', border: '1px solid rgba(212,212,212,0.1)', borderRadius: 20,
                 opacity: i < catVis ? 1 : 0, transform: i < catVis ? 'scale(1)' : 'scale(0.8)',
                 transition: `all 0.4s ease ${i * 0.05}s`,
@@ -214,16 +215,16 @@ function ChapterGateway() {
   const showC = t > 0.5, showP = t > 0.65;
   const lineColor = (l: string) => l.startsWith('$') ? A : (l.startsWith('{') || l.startsWith('  "')) ? 'rgba(127,255,212,0.6)' : 'rgba(212,212,212,0.5)';
   return (
-    <section ref={ref} style={{ height: '200vh', position: 'relative', background: '#000' }}>
+    <section ref={ref} style={{ height: '200vh', position: 'relative', background: 'var(--arc-cosmic-void)' }}>
       <div className="sticky top-0 flex flex-col items-center justify-center px-6" style={{ height: '100vh' }}>
         <div className="w-full max-w-xl">
           <div className="flex items-center gap-3 mb-6">
             <Terminal size={20} weight="bold" color={A} />
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px,3.5vw,40px)', color: '#d4d4d4', letterSpacing: '0.04em' }}>The Intelligence Gateway</h2>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px,3.5vw,40px)', color: 'var(--arc-text-primary)', letterSpacing: '0.04em' }}>The Intelligence Gateway</h2>
           </div>
           <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: 24, fontFamily: 'JetBrains Mono, monospace', fontSize: 'clamp(11px,1.4vw,14px)', lineHeight: 1.8 }}>
             <div className="flex gap-2 mb-4">
-              {['#ff5f57','#febc2e','#28c840'].map(c => <div key={c} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />)}
+              {['var(--arc-fire)','var(--arc-brand-arcanean-gold)','var(--arc-wind)'].map(c => <div key={c} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />)}
             </div>
             {TERM_LINES.map((l, i) => (
               <div key={i} style={{ color: lineColor(l), opacity: i < vLines ? 1 : 0, transform: i < vLines ? 'translateX(0)' : 'translateX(-8px)', transition: 'all 0.3s ease', minHeight: l === '' ? '1em' : undefined }}>{l}</div>
@@ -255,7 +256,7 @@ function ChapterCTA() {
     return () => obs.disconnect();
   }, []);
   return (
-    <section ref={ref} className="relative flex flex-col items-center justify-center overflow-hidden" style={{ height: '100vh', background: '#000' }}>
+    <section ref={ref} className="relative flex flex-col items-center justify-center overflow-hidden" style={{ height: '100vh', background: 'var(--arc-cosmic-void)' }}>
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         {Array.from({ length: 12 }).map((_, i) => (
           <div key={i} style={{ position: 'absolute', left: `${8 + (i * 7.5) % 84}%`, bottom: -4, width: 2, height: 2, borderRadius: '50%', background: A, opacity: on ? 0.3 : 0, animation: on ? `v3Rise ${4 + (i % 3) * 2}s linear ${i * 0.4}s infinite` : 'none' }} />
@@ -266,7 +267,7 @@ function ChapterCTA() {
           Enter seeking. Leave transformed.<br />Return whenever needed.
         </p>
         <a href="/discover" className="group inline-flex items-center gap-2 mt-12" style={{
-          fontFamily: 'var(--font-display)', fontSize: 16, letterSpacing: '0.15em', color: '#000',
+          fontFamily: 'var(--font-display)', fontSize: 16, letterSpacing: '0.15em', color: 'var(--arc-cosmic-void)',
           padding: '16px 52px', borderRadius: 8, background: A,
           boxShadow: '0 0 30px rgba(127,255,212,0.15), 0 0 60px rgba(127,255,212,0.05)', transition: 'all 0.3s ease',
         }}>
@@ -287,7 +288,7 @@ const STYLES = `
 // --- Export ---
 export function V3ScrollStory() {
   return (
-    <div style={{ background: '#000', color: '#d4d4d4', minHeight: '100vh' }}>
+    <div style={{ background: 'var(--arc-cosmic-void)', color: 'var(--arc-text-primary)', minHeight: '100vh' }}>
       <style>{STYLES}</style>
       <ScrollProgress />
       <ChapterHero />

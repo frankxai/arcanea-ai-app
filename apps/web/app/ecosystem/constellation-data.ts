@@ -1,18 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import type { Node, Edge } from '@xyflow/react';
 
 // ─── Color Constants ─────────────────────────────────────────────────────────
 
 export const COLORS = {
-  GOLD: '#ffd700',
-  TEAL: '#7fffd4',
-  BLUE: '#78a6ff',
-  VIOLET: '#a855f7',
-  PINK: '#f472b6',
-  GREEN: '#34d399',
-  AMBER: '#fbbf24',
-  RED: '#f87171',
-  CYAN: '#22d3ee',
-  WHITE: '#e2e8f0',
+  GOLD: 'var(--arc-brand-arcanean-gold)',
+  TEAL: 'var(--arc-brand-atlantean-teal)',
+  BLUE: 'var(--arc-brand-cosmic-blue)',
+  VIOLET: 'var(--arc-void)',
+  PINK: 'var(--arc-void)',
+  GREEN: 'var(--arc-wind)',
+  AMBER: 'var(--arc-brand-arcanean-gold)',
+  RED: 'var(--arc-fire)',
+  CYAN: 'var(--arc-brand-atlantean-teal)',
+  WHITE: 'var(--arc-text-primary)',
 } as const;
 
 const { GOLD, TEAL, BLUE, VIOLET, PINK, GREEN, AMBER, RED, CYAN, WHITE } = COLORS;

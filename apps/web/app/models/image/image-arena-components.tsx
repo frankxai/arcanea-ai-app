@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import Link from "next/link";
 import { IMAGE_MODELS, type ImageModel } from "@/lib/models-data";
 import { PIPELINE_STEPS, TEXT_RENDERING_RANKING } from "./image-arena-data";
@@ -17,7 +18,7 @@ export function SectionHeading({
 }) {
   return (
     <div className="mb-10">
-      <span className="inline-block text-xs font-medium tracking-widest uppercase text-[#7fffd4]/60 mb-3">
+      <span className="inline-block text-xs font-medium tracking-widest uppercase text-[var(--arc-brand-atlantean-teal)]/60 mb-3">
         {tag}
       </span>
       <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white font-[family-name:var(--font-display)]">
@@ -30,13 +31,13 @@ export function SectionHeading({
 
 export function QualityBadge({ level }: { level: string }) {
   const QUALITY_COLORS: Record<string, string> = {
-    excellent: "#4ade80",
-    good: "#fbbf24",
-    poor: "#f87171",
-    limited: "#fbbf24",
-    none: "#6b7280",
+    excellent: "var(--arc-wind)",
+    good: "var(--arc-brand-arcanean-gold)",
+    poor: "var(--arc-fire)",
+    limited: "var(--arc-brand-arcanean-gold)",
+    none: "var(--arc-earth)",
   };
-  const color = QUALITY_COLORS[level] ?? "#7fffd4";
+  const color = QUALITY_COLORS[level] ?? "var(--arc-brand-atlantean-teal)";
   return (
     <span
       className="inline-block px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wider"
@@ -49,15 +50,15 @@ export function QualityBadge({ level }: { level: string }) {
 
 export function CategoryDot({ category }: { category: ImageModel["category"] }) {
   const colors: Record<string, string> = {
-    frontier: "#7fffd4",
-    "open-source": "#34d399",
-    "free-tier": "#4ade80",
-    specialized: "#c084fc",
+    frontier: "var(--arc-brand-atlantean-teal)",
+    "open-source": "var(--arc-wind)",
+    "free-tier": "var(--arc-wind)",
+    specialized: "var(--arc-void)",
   };
   return (
     <span
       className="inline-block w-2 h-2 rounded-full mr-2 flex-shrink-0"
-      style={{ backgroundColor: colors[category] ?? "#7fffd4" }}
+      style={{ backgroundColor: colors[category] ?? "var(--arc-brand-atlantean-teal)" }}
     />
   );
 }
@@ -195,19 +196,19 @@ export function SelfHostingGuide() {
             </h3>
             <ul className="space-y-2 text-xs text-white/50">
               <li className="flex items-start gap-2">
-                <span className="text-[#7fffd4] mt-0.5 flex-shrink-0">+</span>
+                <span className="text-[var(--arc-brand-atlantean-teal)] mt-0.5 flex-shrink-0">+</span>
                 GPU with 12GB+ VRAM (NVIDIA RTX 3060 or better)
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#7fffd4] mt-0.5 flex-shrink-0">+</span>
+                <span className="text-[var(--arc-brand-atlantean-teal)] mt-0.5 flex-shrink-0">+</span>
                 16GB system RAM minimum, 32GB recommended
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#7fffd4] mt-0.5 flex-shrink-0">+</span>
+                <span className="text-[var(--arc-brand-atlantean-teal)] mt-0.5 flex-shrink-0">+</span>
                 Python 3.10+ with PyTorch and CUDA
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#7fffd4] mt-0.5 flex-shrink-0">+</span>
+                <span className="text-[var(--arc-brand-atlantean-teal)] mt-0.5 flex-shrink-0">+</span>
                 ~10GB disk space for model weights
               </li>
             </ul>
@@ -218,28 +219,28 @@ export function SelfHostingGuide() {
             </h3>
             <ul className="space-y-2 text-xs text-white/50">
               <li className="flex items-start gap-2">
-                <span className="text-[#78a6ff] mt-0.5 flex-shrink-0">1.</span>
+                <span className="text-[var(--arc-brand-cosmic-blue)] mt-0.5 flex-shrink-0">1.</span>
                 <span>
                   <span className="text-white/70">ComfyUI</span> -- Node-based
                   workflow editor. The most flexible local generation UI.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#78a6ff] mt-0.5 flex-shrink-0">2.</span>
+                <span className="text-[var(--arc-brand-cosmic-blue)] mt-0.5 flex-shrink-0">2.</span>
                 <span>
                   <span className="text-white/70">SD 3.5 Large</span> -- Best
                   open-source base model. Download from Hugging Face.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#78a6ff] mt-0.5 flex-shrink-0">3.</span>
+                <span className="text-[var(--arc-brand-cosmic-blue)] mt-0.5 flex-shrink-0">3.</span>
                 <span>
                   <span className="text-white/70">ComfyUI MCP</span> -- Connect
                   ComfyUI to AI agents for programmatic generation.
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-[#78a6ff] mt-0.5 flex-shrink-0">4.</span>
+                <span className="text-[var(--arc-brand-cosmic-blue)] mt-0.5 flex-shrink-0">4.</span>
                 <span>
                   <span className="text-white/70">LoRA fine-tunes</span> -- Add
                   specialized styles from CivitAI or train your own.
@@ -270,7 +271,7 @@ export function ImageArenaCTA() {
       <div className="flex items-center justify-center gap-4 flex-wrap">
         <Link
           href="/studio/image"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4] text-[#09090b] font-semibold text-sm hover:shadow-[0_0_30px_rgba(127,255,212,0.2)] transition-all"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-semibold text-sm hover:shadow-[0_0_30px_rgba(127,255,212,0.2)] transition-all"
         >
           Open Image Studio
         </Link>

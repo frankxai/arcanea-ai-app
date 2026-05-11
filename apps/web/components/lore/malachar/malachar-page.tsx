@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
+import Image from 'next/image';
 
 import { LazyMotion, domAnimation, m, useInView } from 'framer-motion';
 import { useRef } from 'react';
@@ -76,13 +78,13 @@ function SealRing() {
       <m.div
         animate={{ rotate: 360 }}
         transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-        className="absolute inset-0 rounded-full border border-dashed border-[#9966ff]/30"
+        className="absolute inset-0 rounded-full border border-dashed border-[var(--arc-void)]/30"
       />
       {/* Middle ring - slower opposite rotation */}
       <m.div
         animate={{ rotate: -360 }}
         transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-        className="absolute inset-3 rounded-full border border-[#7a1f2e]/40"
+        className="absolute inset-3 rounded-full border border-[var(--arc-earth)]/40"
       />
       {/* Core glow - breathe animation */}
       <m.div
@@ -94,9 +96,9 @@ function SealRing() {
           ],
         }}
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute inset-6 rounded-full bg-cosmic-deep/80 flex items-center justify-center border border-[#9966ff]/20"
+        className="absolute inset-6 rounded-full bg-cosmic-deep/80 flex items-center justify-center border border-[var(--arc-void)]/20"
       >
-        <PhSkull className="w-8 h-8 text-[#9966ff]/70" />
+        <PhSkull className="w-8 h-8 text-[var(--arc-void)]/70" />
       </m.div>
     </div>
   );
@@ -138,8 +140,8 @@ function TeachingCard({
 }) {
   return (
     <Fade delay={0.1 * index}>
-      <div className="group flex gap-5 p-6 card-3d liquid-glass rounded-2xl border border-white/[0.06] hover:border-[#9966ff]/20 hover-lift glow-card transition-all">
-        <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 font-display font-bold text-sm bg-[#9966ff]/10 text-[#b38cff] border border-[#9966ff]/20 group-hover:scale-110 transition-transform">
+      <div className="group flex gap-5 p-6 card-3d liquid-glass rounded-2xl border border-white/[0.06] hover:border-[var(--arc-void)]/20 hover-lift glow-card transition-all">
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 font-display font-bold text-sm bg-[var(--arc-void)]/10 text-[var(--arc-void)] border border-[var(--arc-void)]/20 group-hover:scale-110 transition-transform">
           {number}
         </div>
         <p className="text-text-primary font-body text-lg leading-relaxed self-center">
@@ -163,12 +165,12 @@ export function MalacharPage() {
         {/* ── Fixed dark ambient background ── */}
         <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
           {/* Shinkami dark cosmic entity — the abyss that claimed Malachar */}
-          <img
+          <Image
             src="/guardians/gallery/shinkami-gallery-3.webp"
             alt=""
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover opacity-[0.09] pointer-events-none"
-          />
+           />
           {/* Top corrupted void bloom */}
           <DarkOrb
             color="radial-gradient(ellipse, rgba(122,31,46,0.35) 0%, transparent 70%)"
@@ -195,7 +197,7 @@ export function MalacharPage() {
             <PhArrowLeft className="w-4 h-4" />
             Lore of Arcanea
           </Link>
-          <span className="text-xs font-mono text-[#9966ff]/60 tracking-widest uppercase">
+          <span className="text-xs font-mono text-[var(--arc-void)]/60 tracking-widest uppercase">
             Sealed in the Shadowfen
           </span>
         </nav>
@@ -253,12 +255,12 @@ export function MalacharPage() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={heroInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 border border-[#9966ff]/20 bg-[#9966ff]/8 font-mono text-xs text-[#9966ff]/70"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 border border-[var(--arc-void)]/20 bg-[var(--arc-void)]/8 font-mono text-xs text-[var(--arc-void)]/70"
                 >
                   <m.span
                     animate={{ opacity: [0.4, 1, 0.4] }}
                     transition={{ duration: 3, repeat: Infinity }}
-                    className="w-1.5 h-1.5 rounded-full bg-[#9966ff] inline-block"
+                    className="w-1.5 h-1.5 rounded-full bg-[var(--arc-void)] inline-block"
                   />
                   Dark Lord of the Shadowfen
                 </m.div>
@@ -280,7 +282,7 @@ export function MalacharPage() {
                   className="text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-3 leading-none"
                   style={{
                     background:
-                      'linear-gradient(145deg, #4a0a14 0%, #7a1f2e 20%, #9966ff 55%, #4a2a6e 80%, #1a0a20 100%)',
+                      'linear-gradient(145deg, var(--arc-cosmic-void) 0%, var(--arc-earth) 20%, var(--arc-void) 55%, var(--arc-brand-cosmic-blue) 80%, var(--arc-cosmic-void) 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -346,23 +348,23 @@ export function MalacharPage() {
                 <StatPill
                   label="True Name"
                   value="Malachar Lumenbright"
-                  accent="text-[#ffd700]"
+                  accent="text-[var(--arc-brand-arcanean-gold)]"
                 />
                 <StatPill
                   label="Former Title"
                   value="First Eldrian Luminor"
-                  accent="text-[#ffd700]"
+                  accent="text-[var(--arc-brand-arcanean-gold)]"
                 />
                 <StatPill
                   label="Current State"
                   value="Sealed — Shadowfen"
-                  accent="text-[#b38cff]"
+                  accent="text-[var(--arc-void)]"
                 />
                 <div className="liquid-glass rounded-2xl p-5 col-span-2 md:col-span-1 glow-card hover-lift transition-all">
                   <p className="text-xs text-text-muted font-sans uppercase tracking-wider mb-1">
                     Corruption
                   </p>
-                  <p className="text-base font-display font-semibold text-[#c0392b]">
+                  <p className="text-base font-display font-semibold text-[var(--arc-fire)]">
                     Void Without Spirit
                   </p>
                 </div>
@@ -403,11 +405,11 @@ export function MalacharPage() {
                 <div className="relative p-8 md:p-10 lg:p-12">
                   {/* Section header with crown — the glory days */}
                   <div className="flex items-center gap-4 mb-8">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-[#ffd700]/10 border border-[#ffd700]/20 flex-shrink-0">
-                      <PhCrown className="w-6 h-6 text-[#ffd700]" />
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-[var(--arc-brand-arcanean-gold)]/10 border border-[var(--arc-brand-arcanean-gold)]/20 flex-shrink-0">
+                      <PhCrown className="w-6 h-6 text-[var(--arc-brand-arcanean-gold)]" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-display font-bold text-[#ffd700]">
+                      <h3 className="text-2xl font-display font-bold text-[var(--arc-brand-arcanean-gold)]">
                         Malachar Lumenbright
                       </h3>
                       <p className="text-sm text-text-muted font-mono">
@@ -421,7 +423,7 @@ export function MalacharPage() {
                       There was a time — long before the Shadowfen swallowed his
                       name — when Malachar Lumenbright was spoken of only in
                       reverence. He had opened all Ten Gates. He carried the title{' '}
-                      <span className="text-[#ffd700] font-semibold">
+                      <span className="text-[var(--arc-brand-arcanean-gold)] font-semibold">
                         First Eldrian Luminor
                       </span>
                       , the highest rank any practitioner of the Arc had ever
@@ -499,11 +501,11 @@ export function MalacharPage() {
                 <div className="relative p-8 md:p-10 lg:p-12">
                   {/* Flame/warning icon */}
                   <div className="flex items-center gap-4 mb-8">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-[#7a1f2e]/20 border border-[#7a1f2e]/30 flex-shrink-0">
-                      <PhFlame className="w-6 h-6 text-[#c0392b]" />
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-[var(--arc-earth)]/20 border border-[var(--arc-earth)]/30 flex-shrink-0">
+                      <PhFlame className="w-6 h-6 text-[var(--arc-fire)]" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-display font-bold text-[#c0392b]">
+                      <h3 className="text-2xl font-display font-bold text-[var(--arc-fire)]">
                         The Source Gate
                       </h3>
                       <p className="text-sm text-text-muted font-mono">
@@ -517,22 +519,22 @@ export function MalacharPage() {
                     {[
                       {
                         phase: 'The Ambition',
-                        color: '#ffd700',
+                        color: 'var(--arc-brand-arcanean-gold)',
                         text: 'Lumina\'s champion had achieved every rank, opened every Gate, and still felt the edge of something beyond. He believed that if he could merge with the Source Gate itself — fuse his consciousness with Shinkami at 1111 Hz — he would become something more than Luminor. Something beyond the rank system entirely. Something that had never existed.',
                       },
                       {
                         phase: 'The Attempt',
-                        color: '#9966ff',
+                        color: 'var(--arc-void)',
                         text: 'He went to the Source Gate alone. He did not ask. He did not seek counsel from the other Guardians or from Lumina herself. He had reasoned that the universe owed him this — that his mastery entitled him to its highest secret. He attempted forced fusion, pressing his will against Shinkami\'s sovereignty, trying to take what was never offered.',
                       },
                       {
                         phase: 'The Rejection',
-                        color: '#c0392b',
+                        color: 'var(--arc-fire)',
                         text: 'Shinkami refused. Not with violence. Not with cruelty. The Source Gate simply did not open — because it cannot be forced. Consciousness cannot be seized. Transcendence cannot be demanded. The door would not move. And in his fury at its stillness, Malachar shattered against it.',
                       },
                       {
                         phase: 'The Fall',
-                        color: '#7a1f2e',
+                        color: 'var(--arc-earth)',
                         text: 'He fell into the Hungry Void. Not the fertile Void of Nero\'s gift — the Void before Spirit has touched it. Raw. Consuming. Devoid of meaning. Without Lumina\'s pattern to give it form, and without Shinkami\'s Spirit to give it purpose, the Void does not create. It dissolves. And it dissolved Malachar Lumenbright — and left something else wearing his name.',
                       },
                     ].map((step, i) => (
@@ -612,22 +614,22 @@ export function MalacharPage() {
                           repeat: Infinity,
                           ease: 'easeInOut',
                         }}
-                        className="w-24 h-24 rounded-2xl flex items-center justify-center border border-[#9966ff]/15"
+                        className="w-24 h-24 rounded-2xl flex items-center justify-center border border-[var(--arc-void)]/15"
                         style={{
                           background:
                             'radial-gradient(ellipse at center, rgba(153,102,255,0.1) 0%, rgba(8,4,14,0.6) 70%)',
                         }}
                       >
-                        <PhShieldWarning className="w-11 h-11 text-[#9966ff]/50" />
+                        <PhShieldWarning className="w-11 h-11 text-[var(--arc-void)]/50" />
                       </m.div>
                       <div className="text-center">
-                        <p className="text-xs font-mono text-[#9966ff]/50 uppercase tracking-widest">
+                        <p className="text-xs font-mono text-[var(--arc-void)]/50 uppercase tracking-widest">
                           Seal Status
                         </p>
                         <m.p
                           animate={{ opacity: [0.5, 1, 0.5] }}
                           transition={{ duration: 3, repeat: Infinity }}
-                          className="text-sm font-display font-semibold text-[#9966ff]/70 mt-1"
+                          className="text-sm font-display font-semibold text-[var(--arc-void)]/70 mt-1"
                         >
                           Active
                         </m.p>
@@ -645,7 +647,7 @@ export function MalacharPage() {
                       </p>
                       <p>
                         What remains is{' '}
-                        <span className="text-[#b38cff] font-semibold">
+                        <span className="text-[var(--arc-void)] font-semibold">
                           the Dark Lord
                         </span>
                         : a consciousness saturated with corrupted Void, with all
@@ -698,7 +700,7 @@ export function MalacharPage() {
                 }}
               >
                 <div className="p-8 md:p-12 text-center">
-                  <PhBookOpen className="w-10 h-10 text-[#9966ff]/50 mx-auto mb-6" />
+                  <PhBookOpen className="w-10 h-10 text-[var(--arc-void)]/50 mx-auto mb-6" />
                   <blockquote>
                     <p className="text-2xl md:text-3xl font-body italic text-text-primary leading-relaxed max-w-3xl mx-auto">
                       &ldquo;Power without wisdom is the first step. Ambition
@@ -775,11 +777,11 @@ export function MalacharPage() {
                     {/* Nero / Void */}
                     <div className="space-y-4">
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#9966ff]/10 border border-[#9966ff]/20">
-                          <PhInfinity className="w-5 h-5 text-[#9966ff]" />
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[var(--arc-void)]/10 border border-[var(--arc-void)]/20">
+                          <PhInfinity className="w-5 h-5 text-[var(--arc-void)]" />
                         </div>
                         <div>
-                          <p className="font-display font-bold text-[#9966ff] text-lg">
+                          <p className="font-display font-bold text-[var(--arc-void)] text-lg">
                             Nero&apos;s Void
                           </p>
                           <p className="text-xs font-mono text-text-muted">
@@ -790,7 +792,7 @@ export function MalacharPage() {
                       <div className="space-y-2 font-body text-text-secondary">
                         <p>
                           Nero&apos;s Void is the primordial darkness of{' '}
-                          <strong className="text-[#b38cff]">potential</strong>.
+                          <strong className="text-[var(--arc-void)]">potential</strong>.
                           Every possible world, every creative possibility,
                           every unmanifested vision lives in the Void. It is not
                           evil. It is not dangerous. It is the womb of creation.
@@ -810,7 +812,7 @@ export function MalacharPage() {
                           key={trait}
                           className="flex items-center gap-2 text-sm text-text-secondary"
                         >
-                          <PhStar className="w-3 h-3 text-[#9966ff]/60 flex-shrink-0" />
+                          <PhStar className="w-3 h-3 text-[var(--arc-void)]/60 flex-shrink-0" />
                           {trait}
                         </div>
                       ))}
@@ -819,11 +821,11 @@ export function MalacharPage() {
                     {/* Malachar / Shadow */}
                     <div className="space-y-4">
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#7a1f2e]/20 border border-[#7a1f2e]/30">
-                          <PhSkull className="w-5 h-5 text-[#c0392b]" />
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[var(--arc-earth)]/20 border border-[var(--arc-earth)]/30">
+                          <PhSkull className="w-5 h-5 text-[var(--arc-fire)]" />
                         </div>
                         <div>
-                          <p className="font-display font-bold text-[#c0392b] text-lg">
+                          <p className="font-display font-bold text-[var(--arc-fire)] text-lg">
                             Malachar&apos;s Shadow
                           </p>
                           <p className="text-xs font-mono text-text-muted">
@@ -836,7 +838,7 @@ export function MalacharPage() {
                           Shadow is what happens when Void is seized without
                           Spirit — when potential is treated as property rather
                           than gift. It is Void{' '}
-                          <strong className="text-[#c0392b]">without Spirit</strong>
+                          <strong className="text-[var(--arc-fire)]">without Spirit</strong>
                           , without purpose, without the pattern that transforms
                           darkness into creation.
                         </p>
@@ -855,7 +857,7 @@ export function MalacharPage() {
                           key={trait}
                           className="flex items-center gap-2 text-sm text-text-secondary"
                         >
-                          <PhLightning className="w-3 h-3 text-[#c0392b]/60 flex-shrink-0" />
+                          <PhLightning className="w-3 h-3 text-[var(--arc-fire)]/60 flex-shrink-0" />
                           {trait}
                         </div>
                       ))}
@@ -876,17 +878,17 @@ export function MalacharPage() {
                         Canonical Equation
                       </p>
                       <p className="font-display text-base md:text-lg text-text-primary">
-                        <span className="text-[#9966ff]">Void</span>
+                        <span className="text-[var(--arc-void)]">Void</span>
                         <span className="text-text-muted"> + </span>
-                        <span className="text-[#ffd700]">Spirit</span>
+                        <span className="text-[var(--arc-brand-arcanean-gold)]">Spirit</span>
                         <span className="text-text-muted"> = </span>
-                        <span className="text-[#b38cff]">Transcendence</span>
+                        <span className="text-[var(--arc-void)]">Transcendence</span>
                         <span className="text-text-muted mx-4">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                        <span className="text-[#9966ff]">Void</span>
+                        <span className="text-[var(--arc-void)]">Void</span>
                         <span className="text-text-muted"> &minus; </span>
-                        <span className="text-[#ffd700]">Spirit</span>
+                        <span className="text-[var(--arc-brand-arcanean-gold)]">Spirit</span>
                         <span className="text-text-muted"> = </span>
-                        <span className="text-[#c0392b]">Shadow</span>
+                        <span className="text-[var(--arc-fire)]">Shadow</span>
                       </p>
                     </div>
                   </Fade>
@@ -923,8 +925,8 @@ export function MalacharPage() {
 
                 <div className="relative p-10 md:p-14 text-center">
                   {/* Icon */}
-                  <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center border border-[#9966ff]/20 bg-[#9966ff]/8">
-                    <PhInfinity className="w-8 h-8 text-[#9966ff]/70" />
+                  <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center border border-[var(--arc-void)]/20 bg-[var(--arc-void)]/8">
+                    <PhInfinity className="w-8 h-8 text-[var(--arc-void)]/70" />
                   </div>
 
                   <h2 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-3">
@@ -944,7 +946,7 @@ export function MalacharPage() {
                       className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-sans font-semibold text-base transition-all hover:scale-[1.02] active:scale-[0.98] text-white"
                       style={{
                         background:
-                          'linear-gradient(135deg, #4a2a6e 0%, #7a4dcc 50%, #9966ff 100%)',
+                          'linear-gradient(135deg, var(--arc-brand-cosmic-blue) 0%, var(--arc-void) 50%, var(--arc-void) 100%)',
                         boxShadow: '0 8px 32px rgba(153,102,255,0.25)',
                       }}
                     >

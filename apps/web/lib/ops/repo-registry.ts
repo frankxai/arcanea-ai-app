@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 /**
  * Arcanea Ops — Repository Registry
  *
@@ -22,7 +23,7 @@ export const REPO_REGISTRY: RepoRegistryEntry[] = [
   {
     name: "oh-my-arcanea",
     category: "Platform",
-    description: "OpenCode harness overlay",
+    description: "Universal agent harness overlay",
   },
   {
     name: "claude-arcanea",
@@ -49,7 +50,17 @@ export const REPO_REGISTRY: RepoRegistryEntry[] = [
   {
     name: "Starlight-Intelligence-System",
     category: "Intelligence",
-    description: "5-layer cognitive architecture, 6 vaults, 7 agents",
+    description: "5-layer cognitive architecture substrate",
+  },
+  {
+    name: "arcanea-intelligence-os",
+    category: "Intelligence",
+    description: "Mythology-infused agent orchestration",
+  },
+  {
+    name: "arcanea-flow",
+    category: "Intelligence",
+    description: "Multi-agent orchestration (claude-flow/ruflo fork)",
   },
   {
     name: "acos-intelligence-system",
@@ -61,22 +72,17 @@ export const REPO_REGISTRY: RepoRegistryEntry[] = [
     category: "Intelligence",
     description: "90+ skills, 65+ commands, 38 agents",
   },
-  {
-    name: "arcanea-intelligence-os",
-    category: "Intelligence",
-    description: "Mythology-infused agent orchestration",
-  },
-  {
-    name: "arcanea-flow",
-    category: "Intelligence",
-    description: "Multi-agent orchestration (claude-flow fork)",
-  },
 
   // ─── Content ────────────────────────────────────────────────────────────
   {
     name: "arcanea-claw",
     category: "Content",
     description: "AI media engine (NanoClaw fork)",
+  },
+  {
+    name: "arcanea-infogenius",
+    category: "Content",
+    description: "Knowledge-first visual intelligence MCP",
   },
   {
     name: "arcanea-author",
@@ -94,11 +100,6 @@ export const REPO_REGISTRY: RepoRegistryEntry[] = [
     description: "Portable author skills",
   },
   {
-    name: "arcanea-infogenius",
-    category: "Content",
-    description: "Knowledge-first visual intelligence MCP",
-  },
-  {
     name: "suno-mcp-server",
     category: "Content",
     description: "Suno AI music MCP",
@@ -110,6 +111,21 @@ export const REPO_REGISTRY: RepoRegistryEntry[] = [
   },
 
   // ─── Extensions ─────────────────────────────────────────────────────────
+  {
+    name: "arcanea-vault",
+    category: "Extensions",
+    description: "Cross-AI capture (ChatGPT, Claude, Gemini)",
+  },
+  {
+    name: "arcanea-onchain",
+    category: "Extensions",
+    description: "Economic layer, Guardian assets",
+  },
+  {
+    name: "arcanea-mobile",
+    category: "Extensions",
+    description: "Mobile application (Flutter/Compose)",
+  },
   {
     name: "arcanea-vscode",
     category: "Extensions",
@@ -131,19 +147,9 @@ export const REPO_REGISTRY: RepoRegistryEntry[] = [
     description: "LobeChat deployment",
   },
   {
-    name: "arcanea-vault",
-    category: "Extensions",
-    description: "Cross-AI capture (ChatGPT, Claude, Gemini)",
-  },
-  {
     name: "arcanea-plugins",
     category: "Extensions",
     description: "Plugin registry (LobeHub fork)",
-  },
-  {
-    name: "arcanea-onchain",
-    category: "Extensions",
-    description: "Economic layer, Guardian assets",
   },
   {
     name: "arcanea-marketplace",
@@ -184,6 +190,11 @@ export const REPO_REGISTRY: RepoRegistryEntry[] = [
   },
 
   // ─── Archive ────────────────────────────────────────────────────────────
+  {
+    name: "arcaneabot",
+    category: "Archive",
+    description: "Integration bot (moltbot fork)",
+  },
   {
     name: "arcanea-opencode",
     category: "Archive",

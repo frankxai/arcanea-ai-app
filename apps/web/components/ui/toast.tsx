@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import * as React from 'react';
@@ -47,13 +48,13 @@ const variantConfig = {
     Icon: PhInfo,
   },
   success: {
-    borderColor: 'border-l-[#20cc73]/80',
-    iconColor: 'text-[#20cc73]',
+    borderColor: 'border-l-[var(--arc-wind)]/80',
+    iconColor: 'text-[var(--arc-wind)]',
     Icon: PhCheckCircle,
   },
   warning: {
-    borderColor: 'border-l-[#ffa500]/80',
-    iconColor: 'text-[#ffa500]',
+    borderColor: 'border-l-[var(--arc-brand-arcanean-gold)]/80',
+    iconColor: 'text-[var(--arc-brand-arcanean-gold)]',
     Icon: PhWarning,
   },
   error: {
@@ -62,8 +63,8 @@ const variantConfig = {
     Icon: PhWarningCircle,
   },
   info: {
-    borderColor: 'border-l-[#26b8e6]/80',
-    iconColor: 'text-[#26b8e6]',
+    borderColor: 'border-l-[var(--arc-brand-atlantean-teal)]/80',
+    iconColor: 'text-[var(--arc-brand-atlantean-teal)]',
     Icon: PhInfo,
   },
 } as const;

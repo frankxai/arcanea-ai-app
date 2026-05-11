@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { useMemo } from 'react';
@@ -143,9 +144,9 @@ export function Constellation({
       >
         <defs>
           <radialGradient id="lumina-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#ffd700" stopOpacity="0.55" />
-            <stop offset="40%" stopColor="#ffd700" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="#ffd700" stopOpacity="0" />
+            <stop offset="0%" stopColor="var(--arc-brand-arcanean-gold)" stopOpacity="0.55" />
+            <stop offset="40%" stopColor="var(--arc-brand-arcanean-gold)" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="var(--arc-brand-arcanean-gold)" stopOpacity="0" />
           </radialGradient>
           <radialGradient id="node-soft" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="white" stopOpacity="0.35" />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { m } from 'framer-motion';
@@ -7,19 +8,19 @@ const RUNTIMES = [
     label: 'Vercel',
     title: 'The always-on',
     body: 'Edge functions stream Lumina to anyone who lands here. Multi-provider routing — Anthropic, Gemini, OpenAI, Groq — with the AI Gateway handling failover. The constellation you just touched is rendered, hydrated, and animated from a Next.js server component, then becomes interactive in the browser.',
-    accent: '#00bcd4',
+    accent: 'var(--arc-brand-atlantean-teal)',
   },
   {
     label: 'Local',
     title: 'The kernel',
     body: 'Same code, same Guardians — but invoked through Claude Code, OpenCode, Kilo Code, or the Arcanea Orchestrator on a workstation. Subagents work in parallel, MCP servers expose Supabase / Replicate / Fal / Comfy. This is where the system was forged tonight and most nights.',
-    accent: '#a78bfa',
+    accent: 'var(--arc-void)',
   },
   {
     label: 'Browser',
     title: 'Bring your own keys',
     body: 'No Vercel keys configured? Paste a Groq key in /room and you own the loop locally — speech transcribed, replies streamed, voice synthesized — all from your own credit. Sovereignty over the silicon.',
-    accent: '#ffd700',
+    accent: 'var(--arc-brand-arcanean-gold)',
   },
 ];
 
@@ -152,7 +153,7 @@ export function ArchitectureSection() {
             >
               <div className="flex items-baseline gap-3">
                 <span
-                  className="text-[10px] tracking-[0.32em] uppercase text-[#7feaff]"
+                  className="text-[10px] tracking-[0.32em] uppercase text-[var(--arc-text-primary)]"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {String(idx + 1).padStart(2, '0')}

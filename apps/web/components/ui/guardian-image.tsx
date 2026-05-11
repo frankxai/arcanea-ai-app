@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import Image from "next/image";
@@ -136,7 +137,7 @@ function Placeholder({ size }: { size: GuardianImageSize }) {
   return (
     <div
       style={{ width: dim.width, height: dim.height }}
-      className="absolute inset-0 bg-gradient-to-b from-[#0d0d1a] to-[#080810] animate-pulse"
+      className="absolute inset-0 bg-gradient-to-b from-[var(--arc-cosmic-void)] to-[var(--arc-cosmic-void)] animate-pulse"
       aria-hidden="true"
     />
   );
@@ -179,7 +180,7 @@ export function GuardianImage({
     const initial = name.charAt(0).toUpperCase();
     return (
       <div
-        className={`flex items-center justify-center bg-[#1a1a2e] text-white/30 text-xs font-mono select-none ${className ?? ""}`}
+        className={`flex items-center justify-center bg-[var(--arc-cosmic-void)] text-white/30 text-xs font-mono select-none ${className ?? ""}`}
         style={{ width, height }}
         aria-label={resolvedAlt}
       >

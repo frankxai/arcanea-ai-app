@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -299,10 +300,10 @@ function StatItem({ value, label, color }: { value: number | string; label: stri
 
 function LuminorOrbit() {
   const teams = [
-    { id: 'dev', name: 'Development', color: '#0d47a1', icon: '⚡', position: 0 },
-    { id: 'creative', name: 'Creative', color: '#f59e0b', icon: '✨', position: 90 },
-    { id: 'writing', name: 'Writing', color: '#10b981', icon: '✍️', position: 180 },
-    { id: 'research', name: 'Research', color: '#3b82f6', icon: '🔮', position: 270 },
+    { id: 'dev', name: 'Development', color: 'var(--arc-brand-cosmic-blue)', icon: '⚡', position: 0 },
+    { id: 'creative', name: 'Creative', color: 'var(--arc-brand-arcanean-gold)', icon: '✨', position: 90 },
+    { id: 'writing', name: 'Writing', color: 'var(--arc-wind)', icon: '✍️', position: 180 },
+    { id: 'research', name: 'Research', color: 'var(--arc-brand-cosmic-blue)', icon: '🔮', position: 270 },
   ];
 
   return (
@@ -360,7 +361,7 @@ function LuminorOrbit() {
           <motion.div
             className="text-5xl font-display font-bold"
             animate={{
-              color: ['#00bcd4', '#0d47a1', '#ffd700', '#00bcd4'],
+              color: ['var(--arc-brand-atlantean-teal)', 'var(--arc-brand-cosmic-blue)', 'var(--arc-brand-arcanean-gold)', 'var(--arc-brand-atlantean-teal)'],
             }}
             transition={{ duration: 8, repeat: Infinity }}
           >

@@ -128,12 +128,12 @@ export const tierAccents = {
  * Each stream's color marks its category in the overall scheme.
  */
 export const streamAccents = {
-  marketplace: '#7fffd4',   // aqua — template marketplace
+  marketplace: '#00bcd4',   // teal — template marketplace
   membership: '#ffd700',    // gold — Whop / paid community
   nft: '#c084fc',           // lavender — onchain collections
   commission: '#ef4444',    // crimson — patronage
   tokenGated: '#f97316',    // orange — token-gated drops
-  royalty: '#3b82f6',       // blue — perpetual royalties
+  royalty: '#0d47a1',       // blue — perpetual royalties
 } as const;
 
 /**
@@ -143,7 +143,7 @@ export const streamAccents = {
  */
 export const pillarAccents = {
   chat: '#00bcd4',          // teal — primary surface
-  worlds: '#7fffd4',         // aqua — living graph
+  worlds: '#00bcd4',         // teal — living graph
   library: '#ffd700',        // gold — knowledge
   academy: '#a78bfa',        // soft purple — learning
   forge: '#f97316',          // orange — creation

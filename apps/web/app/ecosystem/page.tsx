@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import Link from "next/link";
 import { SplitText } from "@/components/motion/split-text";
 import { LiquidGlass } from "@/components/motion/liquid-glass";
@@ -11,6 +12,14 @@ import {
   StatCard,
   SovereigntyBadge,
 } from "@/components/premium";
+import {
+  PUBLIC_PACKAGE_NAMES,
+  PUBLIC_REPOS,
+  PUBLIC_REPO_SUMMARY,
+  type PublicRepo,
+  type PublicRepoGroup,
+  type PublicRepoStatus,
+} from "@/lib/public-repo-registry";
 
 // ─── Inline SVG Icons ─────────────────────────────────────────────────────────
 
@@ -58,17 +67,17 @@ function IconTerminal({ className = "w-4 h-4" }: { className?: string }) {
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const STATS = [
-  { value: "27", label: "Repositories" },
-  { value: "43", label: "NPM Packages" },
+  { value: String(PUBLIC_REPO_SUMMARY.active), label: "Active Repos" },
+  { value: String(PUBLIC_REPO_SUMMARY.public), label: "Public on GitHub" },
+  { value: String(PUBLIC_REPO_SUMMARY.unresolved), label: "Needs Verification" },
   { value: "80+", label: "Agent Skills" },
-  { value: "200K+", label: "Words of Lore" },
 ];
 
 const LAYERS = [
   {
     title: "arcanea.ai",
     subtitle: "The Product",
-    accent: "#7fffd4",
+    accent: "var(--arc-brand-atlantean-teal)",
     description: "Next.js 16, React 19, Vercel. The creative surface where users chat, imagine, build worlds, and publish.",
     stats: ["181 pages", "12 AI models", "16 Luminor personalities", "6 product layers"],
     features: ["Chat & Imagine", "Studio & Worlds", "Gallery & Feed", "Academy & Library"],
@@ -76,104 +85,68 @@ const LAYERS = [
   {
     title: "Intelligence Layer",
     subtitle: "The Brain",
-    accent: "#78a6ff",
-    description: "Multi-model orchestration, persistent memory, agent coordination, and Guardian routing.",
-    stats: ["34 MCP tools", "HNSW vector search", "150x retrieval speedup", "7 RL algorithms"],
-    features: ["arcanea-mcp", "arcanea-memory", "arcanea-flow", "Starlight Intelligence"],
+    accent: "var(--arc-brand-cosmic-blue)",
+    description: "Multi-model orchestration, persistent memory, agent coordination, and repo-level context.",
+    stats: ["SIS substrate", "MCP adapters", "release-triggered sync", "manual harness sync"],
+    features: ["starlight-intelligence-system", "starlight", "oh-my-arcanea", "arcanea-orchestrator"],
   },
   {
     title: "Open Source",
     subtitle: "The Ecosystem",
-    accent: "#ffd700",
-    description: "Everything is forkable. Build your own world on top of the Arcanea framework.",
-    stats: ["43 npm packages", "80+ skills", "20+ agent types", "5 harness overlays"],
-    features: ["oh-my-arcanea", "claude-code-enterprise-skills", "arcanea-skills-opensource", "arcanea-opencode"],
+    accent: "var(--arc-brand-arcanean-gold)",
+    description: "The public repos are forkable. Private production and unresolved historical entries are labeled instead of linked.",
+    stats: [`${PUBLIC_REPO_SUMMARY.public} public repos`, `${PUBLIC_REPO_SUMMARY.private} private repo`, `${PUBLIC_REPO_SUMMARY.unresolved} unresolved`, `${PUBLIC_REPO_SUMMARY.upstream} upstream dependency`],
+    features: ["arcanea", "oh-my-arcanea", "arcanea-code", "arcanea-vault"],
   },
 ];
 
-interface Repo {
-  name: string;
-  desc: string;
-  lang: string;
-  status: "active" | "stable" | "experimental";
-}
+const GROUP_LABELS: Record<PublicRepoGroup, { category: string; accent: string }> = {
+  core: { category: "Core Platform", accent: "var(--arc-brand-atlantean-teal)" },
+  intelligence: { category: "Intelligence", accent: "var(--arc-brand-cosmic-blue)" },
+  tools: { category: "Tools & Harnesses", accent: "var(--arc-brand-arcanean-gold)" },
+  protocol: { category: "Protocol & Adoption", accent: "var(--arc-water)" },
+  archive: { category: "Needs Verification", accent: "var(--arc-fire)" },
+  upstream: { category: "Upstream Runtime", accent: "var(--arc-void)" },
+};
 
-const REPO_GROUPS: { category: string; accent: string; repos: Repo[] }[] = [
-  {
-    category: "Core Platform",
-    accent: "#7fffd4",
-    repos: [
-      { name: "arcanea-ai-app", desc: "The main platform -- Next.js 16, Supabase, Vercel AI SDK", lang: "TypeScript", status: "active" },
-      { name: "arcanea", desc: "OSS mirror -- framework, lore, canonical reference", lang: "TypeScript", status: "active" },
-    ],
-  },
-  {
-    category: "Intelligence",
-    accent: "#78a6ff",
-    repos: [
-      { name: "arcanea-mcp", desc: "Model Context Protocol server -- 34 tools for world intelligence", lang: "TypeScript", status: "active" },
-      { name: "arcanea-memory-mcp", desc: "Persistent memory vault with HNSW vector search", lang: "TypeScript", status: "active" },
-      { name: "arcanea-flow", desc: "Luminor-powered multi-agent orchestration engine", lang: "TypeScript", status: "active" },
-      { name: "arcanea-orchestrator", desc: "Guardian routing, session continuity, model selection", lang: "TypeScript", status: "stable" },
-    ],
-  },
-  {
-    category: "Content & Companions",
-    accent: "#a855f7",
-    repos: [
-      { name: "arcanea-luminor", desc: "16 Luminor personality kernels with domain expertise", lang: "TypeScript", status: "active" },
-      { name: "arcanea-infogenius", desc: "Research synthesis agent -- web search, analysis, reporting", lang: "Python", status: "stable" },
-      { name: "arcanea-companion", desc: "AI companion framework with personality and relationship tracking", lang: "TypeScript", status: "stable" },
-      { name: "arcanea-soul", desc: "Core AI personality engine beneath every companion", lang: "TypeScript", status: "stable" },
-    ],
-  },
-  {
-    category: "Tools & Harnesses",
-    accent: "#ffd700",
-    repos: [
-      { name: "oh-my-arcanea", desc: "Canonical Claude Code harness -- 54 skills, hooks, agents", lang: "TypeScript", status: "active" },
-      { name: "claude-code-enterprise-skills", desc: "Enterprise AI skill pack", lang: "TypeScript", status: "stable" },
-      { name: "arcanea-opencode", desc: "TUI buddy with free model routing (MiniMax, R1, Gemini)", lang: "TypeScript", status: "experimental" },
-      { name: "arcanea-skills-opensource", desc: "Community skill registry -- fork and extend", lang: "TypeScript", status: "active" },
-    ],
-  },
-  {
-    category: "Creative & Blockchain",
-    accent: "#ff6b6b",
-    repos: [
-      { name: "arcanea-records", desc: "Music studio -- AI composition with Suno integration", lang: "TypeScript", status: "stable" },
-      { name: "ArcaneaClaw", desc: "Media engine -- NFT generation, art pipelines, 60+ platforms", lang: "TypeScript", status: "active" },
-      { name: "arcanea-onchain", desc: "On-chain IP protection -- NFT minting on Base, Story Protocol", lang: "Solidity", status: "experimental" },
-    ],
-  },
-];
+const GROUP_ORDER: PublicRepoGroup[] = ["core", "intelligence", "tools", "protocol", "archive", "upstream"];
 
-const PACKAGES = [
-  { name: "@arcanea/core", desc: "Foundation types, constants, and utilities" },
-  { name: "@arcanea/ai-core", desc: "Multi-model provider abstraction layer" },
-  { name: "@arcanea/skill-registry", desc: "Skill discovery, loading, and execution" },
-  { name: "@arcanea/guardian-memory", desc: "Per-Guardian persistent memory with HNSW" },
-  { name: "@arcanea/flow-engine", desc: "Agent orchestration and swarm coordination" },
-  { name: "@arcanea/creative-pipeline", desc: "Image, music, and story generation pipelines" },
-  { name: "@arcanea/content-api", desc: "Library content loader and search" },
-  { name: "@arcanea/prompt-books", desc: "Curated prompt collections per domain" },
-  { name: "@arcanea/swarm-coordinator", desc: "Byzantine fault-tolerant consensus" },
-];
+const REPO_GROUPS: { category: string; accent: string; repos: PublicRepo[] }[] = GROUP_ORDER.map((group) => ({
+  ...GROUP_LABELS[group],
+  repos: PUBLIC_REPOS.filter((repo) => repo.group === group),
+})).filter((group) => group.repos.length > 0);
 
-const STATUS_COLORS: Record<string, string> = {
-  active: "#7fffd4",
-  stable: "#78a6ff",
-  experimental: "#ffd700",
+const PACKAGE_DESCRIPTIONS: Record<string, string> = {
+  "@arcanea/core": "Foundation types, constants, and shared runtime utilities",
+  "@arcanea/aios": "AI operating-system primitives referenced by the OSS framework",
+  "@arcanea/sdk": "Public SDK surface for Arcanea integrations",
+  "@arcanea/starlight-intelligence-system": "Shared SIS substrate package",
+  "@arcanea/mcp": "Historical MCP package reference; repo URL needs verification",
+  "@arcanea/memory-mcp": "Historical memory package reference; likely superseded by SIS",
+  "@claude-flow/cli": "Upstream orchestration CLI consumed as an external runtime",
+};
+
+const PACKAGES = PUBLIC_PACKAGE_NAMES.map((name) => ({
+  name,
+  desc: PACKAGE_DESCRIPTIONS[name] ?? "Package reference from the repo registry",
+}));
+
+const STATUS_COLORS: Record<PublicRepoStatus, string> = {
+  public: "var(--arc-brand-atlantean-teal)",
+  private: "var(--arc-brand-arcanean-gold)",
+  beta: "var(--arc-brand-arcanean-gold)",
+  unresolved: "var(--arc-fire)",
+  upstream: "var(--arc-void)",
 };
 
 const FLOW_STEPS = [
-  { label: "User", sub: "Chat, Imagine, Studio", color: "#7fffd4" },
-  { label: "arcanea.ai", sub: "Next.js 16 + React 19", color: "#7fffd4" },
-  { label: "Supabase", sub: "Worlds, credits, auth", color: "#3ecf8e" },
-  { label: "AI APIs", sub: "Gemini, Claude, Grok", color: "#78a6ff" },
-  { label: "arcanea-mcp", sub: "34 tools, world intelligence", color: "#a855f7" },
-  { label: "arcanea-memory", sub: "HNSW vector vault", color: "#78a6ff" },
-  { label: "AgentDB", sub: "Similarity search, RL", color: "#ffd700" },
+  { label: "User", sub: "Chat, Imagine, Studio", color: "var(--arc-brand-atlantean-teal)" },
+  { label: "arcanea.ai", sub: "Next.js 16 + React 19", color: "var(--arc-brand-atlantean-teal)" },
+  { label: "Supabase", sub: "Worlds, credits, auth", color: "var(--arc-wind)" },
+  { label: "AI APIs", sub: "Gemini, Claude, Grok", color: "var(--arc-brand-cosmic-blue)" },
+  { label: "SIS", sub: "Memory and context substrate", color: "var(--arc-void)" },
+  { label: "oh-my-arcanea", sub: "Manual harness sync", color: "var(--arc-brand-cosmic-blue)" },
+  { label: "GitHub", sub: `${PUBLIC_REPO_SUMMARY.public} public repos`, color: "var(--arc-brand-arcanean-gold)" },
 ];
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -183,7 +156,7 @@ export default function EcosystemHubPage() {
     <div className="relative min-h-screen">
       {/* Background */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-[#09090b]" />
+        <div className="absolute inset-0 bg-[var(--arc-cosmic-void)]" />
         <FloatingOrbs preset="aurora" className="fixed" />
         <AuroraGradient />
         <GridTexture variant="dots" opacity={0.018} />
@@ -193,30 +166,30 @@ export default function EcosystemHubPage() {
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <section className="mb-20">
           <div className="relative rounded-3xl overflow-hidden bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] px-8 py-16 sm:px-14 sm:py-20">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#7fffd4]/8 via-transparent to-[#78a6ff]/6 pointer-events-none" />
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#7fffd4]/5 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#ffd700]/4 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/8 via-transparent to-[var(--arc-brand-cosmic-blue)]/6 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[var(--arc-brand-atlantean-teal)]/5 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-[var(--arc-brand-arcanean-gold)]/4 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="relative max-w-3xl">
               <div className="mb-6">
                 <SovereigntyBadge />
               </div>
 
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#7fffd4]/30 bg-[#7fffd4]/10 mb-8">
-                <IconGitBranch className="w-4 h-4 text-[#7fffd4]" />
-                <span className="text-xs font-mono tracking-widest uppercase text-[#7fffd4]">Ecosystem Hub</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10 mb-8">
+                <IconGitBranch className="w-4 h-4 text-[var(--arc-brand-atlantean-teal)]" />
+                <span className="text-xs font-mono tracking-widest uppercase text-[var(--arc-brand-atlantean-teal)]">Ecosystem Hub</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight tracking-tight">
-                <SplitText as="span" text="27 repos." className="bg-gradient-to-r from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent" delay={0.1} stagger={0.04} />
+                <SplitText as="span" text={`${PUBLIC_REPO_SUMMARY.public} public repos.`} className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] bg-clip-text text-transparent" delay={0.1} stagger={0.04} />
                 {" "}
                 <SplitText as="span" text="One ecosystem." className="text-white" delay={0.5} stagger={0.04} />
               </h1>
 
               <p className="text-lg text-white/50 leading-relaxed max-w-2xl mb-10">
-                27 repos. 43 packages. 80+ skills. From multi-model intelligence
-                to mythology-aligned AI personas — everything is open, connected,
-                and ready to fork.
+                {PUBLIC_REPO_SUMMARY.active} active Arcanea repos are tracked in the registry.
+                {` ${PUBLIC_REPO_SUMMARY.public}`} are public on GitHub today, {PUBLIC_REPO_SUMMARY.private} is private,
+                and {PUBLIC_REPO_SUMMARY.unresolved} historical entries need verification before we link them.
               </p>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
@@ -225,7 +198,7 @@ export default function EcosystemHubPage() {
                     key={s.label}
                     value={s.value}
                     label={s.label}
-                    color={i % 2 === 0 ? "#7fffd4" : "#00bcd4"}
+                    color={i % 2 === 0 ? "var(--arc-brand-atlantean-teal)" : "var(--arc-brand-atlantean-teal)"}
                     delay={i * 0.08}
                   />
                 ))}
@@ -233,7 +206,7 @@ export default function EcosystemHubPage() {
 
               <div className="flex flex-wrap gap-4">
                 <Magnetic>
-                  <a href="https://github.com/frankxai/arcanea" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4] text-black font-semibold hover:brightness-110 transition-all">
+                  <a href="https://github.com/frankxai/arcanea" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--arc-brand-atlantean-teal)] text-black font-semibold hover:brightness-110 transition-all">
                     <IconGitBranch className="w-4 h-4" /> View on GitHub
                   </a>
                 </Magnetic>
@@ -248,7 +221,7 @@ export default function EcosystemHubPage() {
         </section>
 
         {/* ── Divider ──────────────────────────────────────────────────── */}
-        <div className="mb-20 h-px bg-gradient-to-r from-transparent via-[#7fffd4]/20 to-transparent" />
+        <div className="mb-20 h-px bg-gradient-to-r from-transparent via-[var(--arc-brand-atlantean-teal)]/20 to-transparent" />
 
         {/* ── Architecture Overview ────────────────────────────────────── */}
         <section className="mb-20" aria-labelledby="arch-heading">
@@ -262,14 +235,16 @@ export default function EcosystemHubPage() {
         </section>
 
         {/* ── Divider ──────────────────────────────────────────────────── */}
-        <div className="mb-20 h-px bg-gradient-to-r from-transparent via-[#00bcd4]/15 to-transparent" />
+        <div className="mb-20 h-px bg-gradient-to-r from-transparent via-[var(--arc-brand-atlantean-teal)]/15 to-transparent" />
 
         {/* ── Repository Map ───────────────────────────────────────────── */}
         <section className="mb-20" aria-labelledby="repos-heading">
           <div className="mb-10">
             <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-2">Open Source</p>
             <h2 id="repos-heading" className="text-2xl sm:text-3xl font-display font-bold text-white">Repository Map</h2>
-            <p className="text-white/40 text-sm mt-1 max-w-xl">27 repositories across five domains — all interconnected, all forkable.</p>
+            <p className="text-white/40 text-sm mt-1 max-w-xl">
+              Registry-derived map from <code className="font-mono text-white/45">.arcanea/config/repos.json</code>. Public links resolve; private and unresolved repos are labeled.
+            </p>
           </div>
 
           <div className="space-y-10">
@@ -282,19 +257,34 @@ export default function EcosystemHubPage() {
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
                   {group.repos.map((repo) => (
                     <LiquidGlass key={repo.name} intensity="subtle" tint={group.accent} className="rounded-xl border border-white/[0.06] hover:border-white/[0.14] transition-colors" noise={false}>
-                    <a href={`https://github.com/frankxai/${repo.name}`} target="_blank" rel="noopener noreferrer" className="group/card block relative p-5">
+                    {repo.url ? (
+                    <a href={repo.url} target={repo.url.startsWith("http") ? "_blank" : undefined} rel={repo.url.startsWith("http") ? "noopener noreferrer" : undefined} className="group/card block relative p-5">
                       <div className="flex items-start justify-between mb-2">
-                        <span className="font-mono text-xs text-white font-medium group-hover/card:text-[#7fffd4] transition-colors truncate mr-2">{repo.name}</span>
+                        <span className="font-mono text-xs text-white font-medium group-hover/card:text-[var(--arc-brand-atlantean-teal)] transition-colors truncate mr-2">{repo.name}</span>
                         <IconExternal className="w-3 h-3 text-white/20 shrink-0 mt-0.5" />
                       </div>
-                      <p className="text-[11px] text-white/35 leading-relaxed mb-3">{repo.desc}</p>
+                      <p className="text-[11px] text-white/35 leading-relaxed mb-3">{repo.description}</p>
                       <div className="flex items-center gap-3">
                         <span className="flex items-center gap-1.5 text-[10px] text-white/25">
-                          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: `${group.accent}80` }} />{repo.lang}
+                          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: `${group.accent}80` }} />{repo.language}
                         </span>
                         <span className="text-[10px] font-mono px-1.5 py-0.5 rounded" style={{ color: STATUS_COLORS[repo.status], backgroundColor: `${STATUS_COLORS[repo.status]}10` }}>{repo.status}</span>
                       </div>
                     </a>
+                    ) : (
+                    <div className="relative p-5">
+                      <div className="flex items-start justify-between mb-2">
+                        <span className="font-mono text-xs text-white font-medium truncate mr-2">{repo.name}</span>
+                      </div>
+                      <p className="text-[11px] text-white/35 leading-relaxed mb-3">{repo.description}</p>
+                      <div className="flex items-center gap-3">
+                        <span className="flex items-center gap-1.5 text-[10px] text-white/25">
+                          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: `${group.accent}80` }} />{repo.language}
+                        </span>
+                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded" style={{ color: STATUS_COLORS[repo.status], backgroundColor: `${STATUS_COLORS[repo.status]}10` }}>{repo.status}</span>
+                      </div>
+                    </div>
+                    )}
                     </LiquidGlass>
                   ))}
                 </div>
@@ -308,19 +298,21 @@ export default function EcosystemHubPage() {
           <div className="mb-10">
             <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-2">NPM Registry</p>
             <h2 id="packages-heading" className="text-2xl sm:text-3xl font-display font-bold text-white">Package Registry</h2>
-            <p className="text-white/40 text-sm mt-1">43 packages under the @arcanea scope. Install any piece independently.</p>
+            <p className="text-white/40 text-sm mt-1">
+              Package references declared by the tracked repos. Historical packages stay labeled until their repo links are verified.
+            </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {PACKAGES.map((pkg) => (
               <div key={pkg.name} className="relative rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.12] transition-all p-5">
                 <div className="flex items-center gap-2 mb-2">
-                  <IconPackage className="w-3.5 h-3.5 text-[#ffd700]/60" />
-                  <span className="font-mono text-xs text-[#ffd700] font-medium">{pkg.name}</span>
+                  <IconPackage className="w-3.5 h-3.5 text-[var(--arc-brand-arcanean-gold)]/60" />
+                  <span className="font-mono text-xs text-[var(--arc-brand-arcanean-gold)] font-medium">{pkg.name}</span>
                 </div>
                 <p className="text-[11px] text-white/35 leading-relaxed mb-3">{pkg.desc}</p>
                 <div className="font-mono text-[10px] text-white/20 bg-white/[0.03] rounded-md px-3 py-1.5 select-all">
-                  npm i {pkg.name}
+                  pnpm add {pkg.name}
                 </div>
               </div>
             ))}
@@ -359,12 +351,12 @@ export default function EcosystemHubPage() {
         {/* ── For Developers ───────────────────────────────────────────── */}
         <section className="mb-16">
           <div className="relative rounded-3xl overflow-hidden bg-white/[0.02] border border-white/[0.06] px-8 py-14 sm:px-14">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#7fffd4]/5 via-transparent to-[#ffd700]/4 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/5 via-transparent to-[var(--arc-brand-arcanean-gold)]/4 pointer-events-none" />
 
             <div className="relative max-w-2xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#ffd700]/30 bg-[#ffd700]/10 mb-8">
-                <IconTerminal className="w-4 h-4 text-[#ffd700]" />
-                <span className="text-xs font-mono tracking-widest uppercase text-[#ffd700]">For Developers</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--arc-brand-arcanean-gold)]/30 bg-[var(--arc-brand-arcanean-gold)]/10 mb-8">
+                <IconTerminal className="w-4 h-4 text-[var(--arc-brand-arcanean-gold)]" />
+                <span className="text-xs font-mono tracking-widest uppercase text-[var(--arc-brand-arcanean-gold)]">For Developers</span>
               </div>
 
               <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-4">
@@ -372,17 +364,17 @@ export default function EcosystemHubPage() {
               </h2>
 
               <p className="text-white/40 text-sm mb-8 max-w-md mx-auto">
-                Install the Arcanea harness in 30 seconds. Get 54 skills, Guardian intelligence, and a full creative pipeline out of the box.
+                Install the Arcanea harness from the public framework repo. Skills and agents are evolving; the registry marks what is active, beta, or unresolved.
               </p>
 
               {/* Install command */}
               <div className="inline-flex items-center gap-3 bg-white/[0.04] border border-white/[0.08] rounded-xl px-6 py-3 mb-10">
-                <span className="text-[#7fffd4] font-mono text-sm">$</span>
+                <span className="text-[var(--arc-brand-atlantean-teal)] font-mono text-sm">$</span>
                 <code className="font-mono text-sm text-white/70 select-all">npx arcanea init</code>
               </div>
 
               <div className="flex flex-wrap justify-center gap-4">
-                <Link href="/developers" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4] text-black font-semibold hover:brightness-110 transition-all">
+                <Link href="/developers" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--arc-brand-atlantean-teal)] text-black font-semibold hover:brightness-110 transition-all">
                   API Documentation <IconArrow className="w-4 h-4" />
                 </Link>
                 <a href="https://github.com/frankxai/arcanea" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all">

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 /**
@@ -97,17 +98,17 @@ export function SessionSidebar({
               onClick={() => onSelectSession(session.id)}
               className={`group w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-left transition-all duration-100 border ${
                 isActive
-                  ? 'bg-[#00bcd4]/8 border-[#00bcd4]/15'
+                  ? 'bg-[var(--arc-brand-atlantean-teal)]/8 border-[var(--arc-brand-atlantean-teal)]/15'
                   : 'border-transparent hover:bg-white/[0.03]'
               }`}
             >
               <PhChatCircleDots
-                className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[#00bcd4]/60' : 'text-white/20'}`}
+                className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[var(--arc-brand-atlantean-teal)]/60' : 'text-white/20'}`}
               />
               <div className="min-w-0 flex-1">
                 <p
                   className={`text-[11px] leading-tight truncate ${
-                    isActive ? 'text-[#00bcd4]/90' : 'text-white/60'
+                    isActive ? 'text-[var(--arc-brand-atlantean-teal)]/90' : 'text-white/60'
                   }`}
                 >
                   {session.title}

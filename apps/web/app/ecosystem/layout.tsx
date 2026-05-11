@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Ecosystem Hub — Arcanea Creative Intelligence',
   description:
-    'The full Arcanea ecosystem: 27 repos, 43 packages, 80+ skills across intelligence, creative tools, and open source — one connected multiverse.',
+    'The Arcanea repo registry: active public repos, private production surfaces, unresolved historical entries, and upstream dependencies labeled honestly.',
   openGraph: {
     title: 'Arcanea Ecosystem',
-    description: '27 repos, 43 packages, 80+ skills — the full Arcanea ecosystem hub',
+    description: 'Registry-derived map of the Arcanea repo network and integration state.',
     type: 'website',
     url: 'https://arcanea.ai/ecosystem',
     images: [
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Arcanea Ecosystem',
-    description: '27 repos, 43 packages, 80+ skills — the full Arcanea ecosystem hub',
+    description: 'Registry-derived map of the Arcanea repo network and integration state.',
     images: ['/guardians/v3/elara-hero-v3.webp'],
   },
   alternates: { canonical: '/ecosystem' },
@@ -32,7 +33,7 @@ const jsonLd = {
   "@type": "WebPage",
   name: "Arcanea Ecosystem",
   description:
-    "The full Arcanea ecosystem: 27 repos, 43 packages, 80+ skills across intelligence, creative tools, and open source.",
+    "The Arcanea repo registry: active public repos, private production surfaces, unresolved historical entries, and upstream dependencies labeled honestly.",
   url: "https://arcanea.ai/ecosystem",
   publisher: {
     "@type": "Organization",

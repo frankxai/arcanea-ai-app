@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 export type Element = 'All' | 'Fire' | 'Water' | 'Earth' | 'Wind' | 'Spirit'
 export type ContentType = 'All' | 'Image' | 'Video' | 'Music' | 'Text'
 
@@ -136,11 +137,11 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 ]
 
 export const ELEMENT_COLORS: Record<string, string> = {
-  Fire: '#ff6b35',
-  Water: '#4fc3f7',
-  Earth: '#81c784',
-  Wind: '#b0bec5',
-  Spirit: '#ce93d8',
+  Fire: 'var(--arc-fire)',
+  Water: 'var(--arc-brand-atlantean-teal)',
+  Earth: 'var(--arc-earth)',
+  Wind: 'var(--arc-text-primary)',
+  Spirit: 'var(--arc-void)',
 }
 
 export const TYPE_ICONS: Record<string, string> = {

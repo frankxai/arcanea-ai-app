@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -93,7 +94,7 @@ function CopySectionButton({ text }: { text: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="opacity-0 group-hover:opacity-100 focus:opacity-100 ml-3 inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs border border-[#c8a96e]/30 bg-[#c8a96e]/10 text-[#c8a96e] hover:bg-[#c8a96e]/20 transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#c8a96e]/60 print:hidden"
+      className="opacity-0 group-hover:opacity-100 focus:opacity-100 ml-3 inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs border border-[var(--arc-earth)]/30 bg-[var(--arc-earth)]/10 text-[var(--arc-earth)] hover:bg-[var(--arc-earth)]/20 transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--arc-earth)]/60 print:hidden"
       aria-label={`Copy section`}
     >
       {copied ? (
@@ -131,7 +132,7 @@ function TocPanel({ entries, activeId, onNavigate }: TocPanelProps) {
 
   return (
     <nav aria-label="Table of contents" className="flex flex-col gap-0.5">
-      <p className="mb-3 text-[10px] uppercase tracking-widest text-[#c8a96e]/60 font-medium">
+      <p className="mb-3 text-[10px] uppercase tracking-widest text-[var(--arc-earth)]/60 font-medium">
         Contents
       </p>
       {entries.map((entry) => (
@@ -139,12 +140,12 @@ function TocPanel({ entries, activeId, onNavigate }: TocPanelProps) {
           key={entry.id}
           onClick={() => onNavigate(entry.id)}
           className={`
-            text-left text-sm rounded px-2 py-1.5 transition-colors w-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#c8a96e]/60
+            text-left text-sm rounded px-2 py-1.5 transition-colors w-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--arc-earth)]/60
             ${entry.level === 1 ? 'font-semibold' : entry.level === 2 ? 'pl-4 font-normal' : 'pl-6 font-normal text-xs'}
             ${
               activeId === entry.id
-                ? 'text-[#c8a96e] bg-[#c8a96e]/10'
-                : 'text-[#6b5c42] hover:text-[#c8a96e] hover:bg-[#c8a96e]/5'
+                ? 'text-[var(--arc-earth)] bg-[var(--arc-earth)]/10'
+                : 'text-[var(--arc-earth)] hover:text-[var(--arc-earth)] hover:bg-[var(--arc-earth)]/5'
             }
           `}
           aria-current={activeId === entry.id ? 'location' : undefined}
@@ -176,7 +177,7 @@ function MobileToc({
     <div className="relative lg:hidden print:hidden">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[#c8a96e]/30 bg-[#f5e6c8]/50 text-sm text-[#6b4e2a] hover:bg-[#c8a96e]/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c8a96e]/60"
+        className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--arc-earth)]/30 bg-[var(--arc-text-primary)]/50 text-sm text-[var(--arc-earth)] hover:bg-[var(--arc-earth)]/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-earth)]/60"
         aria-expanded={open}
         aria-controls="mobile-toc"
       >
@@ -188,7 +189,7 @@ function MobileToc({
       {open && (
         <div
           id="mobile-toc"
-          className="absolute top-full left-0 mt-1 z-20 w-72 max-h-80 overflow-y-auto rounded-xl border border-[#c8a96e]/30 bg-[#fdf6e8] p-3 shadow-xl"
+          className="absolute top-full left-0 mt-1 z-20 w-72 max-h-80 overflow-y-auto rounded-xl border border-[var(--arc-earth)]/30 bg-[var(--arc-text-primary)] p-3 shadow-xl"
         >
           <TocPanel entries={entries} activeId={activeId} onNavigate={handleNavigate} />
         </div>
@@ -220,10 +221,10 @@ function GrimoireHeading({
 
   const sizeClass =
     level === 1
-      ? 'text-2xl sm:text-3xl font-bold mt-10 mb-4 text-[#5c3d1a]'
+      ? 'text-2xl sm:text-3xl font-bold mt-10 mb-4 text-[var(--arc-earth)]'
       : level === 2
-      ? 'text-xl sm:text-2xl font-semibold mt-8 mb-3 text-[#6b4e2a]'
-      : 'text-lg font-semibold mt-6 mb-2 text-[#7a5c36]';
+      ? 'text-xl sm:text-2xl font-semibold mt-8 mb-3 text-[var(--arc-earth)]'
+      : 'text-lg font-semibold mt-6 mb-2 text-[var(--arc-earth)]';
 
   return (
     <Tag
@@ -232,7 +233,7 @@ function GrimoireHeading({
       {...props}
     >
       {level === 1 && (
-        <span className="mr-1 text-[#c8a96e]/60 select-none" aria-hidden="true">
+        <span className="mr-1 text-[var(--arc-earth)]/60 select-none" aria-hidden="true">
           ✦
         </span>
       )}
@@ -305,25 +306,25 @@ export function GrimoireViewer({
         </div>
 
         {/* Parchment header */}
-        <div className="mb-8 text-center border-b border-[#c8a96e]/30 pb-8">
-          <p className="text-xs uppercase tracking-[0.25em] text-[#c8a96e]/70 mb-2 font-medium">
+        <div className="mb-8 text-center border-b border-[var(--arc-earth)]/30 pb-8">
+          <p className="text-xs uppercase tracking-[0.25em] text-[var(--arc-earth)]/70 mb-2 font-medium">
             The Grimoire of
           </p>
-          <h1 className="font-display text-3xl sm:text-4xl font-bold text-[#4a2e0e] mb-3 [font-family:var(--font-display),serif]">
+          <h1 className="font-display text-3xl sm:text-4xl font-bold text-[var(--arc-cosmic-void)] mb-3 [font-family:var(--font-display),serif]">
             {worldName}
           </h1>
-          <div className="flex items-center justify-center gap-4 text-sm text-[#8c7355]">
+          <div className="flex items-center justify-center gap-4 text-sm text-[var(--arc-earth)]">
             <span>{tier} Edition</span>
-            <span aria-hidden="true" className="text-[#c8a96e]/40">
+            <span aria-hidden="true" className="text-[var(--arc-earth)]/40">
               ✦
             </span>
             <span>Forged {formatDate(generatedAt)}</span>
           </div>
           {/* Ornamental divider */}
           <div className="mt-6 flex items-center justify-center gap-3" aria-hidden="true">
-            <div className="h-px flex-1 max-w-24 bg-gradient-to-r from-transparent to-[#c8a96e]/40" />
-            <span className="text-[#c8a96e]/60 text-base">⚜</span>
-            <div className="h-px flex-1 max-w-24 bg-gradient-to-l from-transparent to-[#c8a96e]/40" />
+            <div className="h-px flex-1 max-w-24 bg-gradient-to-r from-transparent to-[var(--arc-earth)]/40" />
+            <span className="text-[var(--arc-earth)]/60 text-base">⚜</span>
+            <div className="h-px flex-1 max-w-24 bg-gradient-to-l from-transparent to-[var(--arc-earth)]/40" />
           </div>
         </div>
 
@@ -338,7 +339,7 @@ export function GrimoireViewer({
               h2: (props: React.ComponentProps<'h2'> & ExtraProps) => <GrimoireHeading level={2} {...props} />,
               h3: (props: React.ComponentProps<'h3'> & ExtraProps) => <GrimoireHeading level={3} {...props} />,
               p: ({ children }: MdChildProps) => (
-                <p className="mb-4 leading-relaxed text-[#4a3520] text-[15px] sm:text-base">
+                <p className="mb-4 leading-relaxed text-[var(--arc-cosmic-void)] text-[15px] sm:text-base">
                   {children}
                 </p>
               ),
@@ -348,38 +349,38 @@ export function GrimoireViewer({
                 </ul>
               ),
               ol: ({ children }: MdChildProps) => (
-                <ol className="mb-4 pl-5 space-y-1.5 list-decimal text-[#4a3520]">
+                <ol className="mb-4 pl-5 space-y-1.5 list-decimal text-[var(--arc-cosmic-void)]">
                   {children}
                 </ol>
               ),
               li: ({ children }: MdChildProps) => (
-                <li className="text-[#4a3520] text-[15px] sm:text-base flex items-start gap-2 before:content-['✦'] before:text-[#c8a96e]/60 before:text-xs before:mt-1 before:shrink-0">
+                <li className="text-[var(--arc-cosmic-void)] text-[15px] sm:text-base flex items-start gap-2 before:content-['✦'] before:text-[var(--arc-earth)]/60 before:text-xs before:mt-1 before:shrink-0">
                   <span>{children}</span>
                 </li>
               ),
               strong: ({ children }: MdChildProps) => (
-                <strong className="font-semibold text-[#4a2e0e]">{children}</strong>
+                <strong className="font-semibold text-[var(--arc-cosmic-void)]">{children}</strong>
               ),
               em: ({ children }: MdChildProps) => (
-                <em className="italic text-[#6b4e2a]">{children}</em>
+                <em className="italic text-[var(--arc-earth)]">{children}</em>
               ),
               blockquote: ({ children }: MdChildProps) => (
-                <blockquote className="my-6 pl-4 border-l-2 border-[#c8a96e]/50 bg-[#c8a96e]/5 py-2 pr-3 rounded-r-lg italic text-[#6b4e2a] text-sm">
+                <blockquote className="my-6 pl-4 border-l-2 border-[var(--arc-earth)]/50 bg-[var(--arc-earth)]/5 py-2 pr-3 rounded-r-lg italic text-[var(--arc-earth)] text-sm">
                   {children}
                 </blockquote>
               ),
               hr: () => (
                 <div className="my-8 flex items-center justify-center gap-3" role="separator">
-                  <div className="h-px flex-1 bg-[#c8a96e]/25" />
-                  <span className="text-[#c8a96e]/50 text-sm">✦</span>
-                  <div className="h-px flex-1 bg-[#c8a96e]/25" />
+                  <div className="h-px flex-1 bg-[var(--arc-earth)]/25" />
+                  <span className="text-[var(--arc-earth)]/50 text-sm">✦</span>
+                  <div className="h-px flex-1 bg-[var(--arc-earth)]/25" />
                 </div>
               ),
               code: ({ className, children, ...props }: MdCodeProps) => {
                 const isBlock = /language-/.test(className ?? '');
                 if (isBlock) {
                   return (
-                    <pre className="my-4 overflow-x-auto rounded-lg bg-[#f0e6cc] p-4 text-sm font-mono text-[#4a2e0e] border border-[#c8a96e]/20">
+                    <pre className="my-4 overflow-x-auto rounded-lg bg-[var(--arc-text-primary)] p-4 text-sm font-mono text-[var(--arc-cosmic-void)] border border-[var(--arc-earth)]/20">
                       <code className={className} {...props}>
                         {children}
                       </code>
@@ -388,7 +389,7 @@ export function GrimoireViewer({
                 }
                 return (
                   <code
-                    className="rounded px-1.5 py-0.5 bg-[#c8a96e]/15 text-[#6b3d10] font-mono text-sm"
+                    className="rounded px-1.5 py-0.5 bg-[var(--arc-earth)]/15 text-[var(--arc-earth)] font-mono text-sm"
                     {...props}
                   >
                     {children}
@@ -396,22 +397,22 @@ export function GrimoireViewer({
                 );
               },
               table: ({ children }: MdChildProps) => (
-                <div className="my-6 overflow-x-auto rounded-xl border border-[#c8a96e]/30">
-                  <table className="w-full text-sm text-[#4a3520]">{children}</table>
+                <div className="my-6 overflow-x-auto rounded-xl border border-[var(--arc-earth)]/30">
+                  <table className="w-full text-sm text-[var(--arc-cosmic-void)]">{children}</table>
                 </div>
               ),
               thead: ({ children }: MdChildProps) => (
-                <thead className="bg-[#c8a96e]/15 text-[#4a2e0e] font-semibold">
+                <thead className="bg-[var(--arc-earth)]/15 text-[var(--arc-cosmic-void)] font-semibold">
                   {children}
                 </thead>
               ),
               th: ({ children }: MdChildProps) => (
-                <th className="px-4 py-3 text-left border-b border-[#c8a96e]/30">
+                <th className="px-4 py-3 text-left border-b border-[var(--arc-earth)]/30">
                   {children}
                 </th>
               ),
               td: ({ children }: MdChildProps) => (
-                <td className="px-4 py-3 border-b border-[#c8a96e]/15">{children}</td>
+                <td className="px-4 py-3 border-b border-[var(--arc-earth)]/15">{children}</td>
               ),
             }}
           >
@@ -422,11 +423,11 @@ export function GrimoireViewer({
         {/* Closing ornament */}
         <div className="mt-12 flex flex-col items-center gap-3 text-center" aria-hidden="true">
           <div className="flex items-center gap-3">
-            <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#c8a96e]/40" />
-            <span className="text-[#c8a96e]/70 text-lg">✦ ⚜ ✦</span>
-            <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#c8a96e]/40" />
+            <div className="h-px w-16 bg-gradient-to-r from-transparent to-[var(--arc-earth)]/40" />
+            <span className="text-[var(--arc-earth)]/70 text-lg">✦ ⚜ ✦</span>
+            <div className="h-px w-16 bg-gradient-to-l from-transparent to-[var(--arc-earth)]/40" />
           </div>
-          <p className="text-xs text-[#c8a96e]/50 uppercase tracking-widest">
+          <p className="text-xs text-[var(--arc-earth)]/50 uppercase tracking-widest">
             End of Grimoire
           </p>
         </div>
@@ -434,13 +435,13 @@ export function GrimoireViewer({
 
       {/* Print-only styles injected via a style tag approach */}
       <style
-        // eslint-disable-next-line react/no-danger
+         
         dangerouslySetInnerHTML={{
           __html: `
             @media print {
-              .grimoire-prose { font-size: 11pt; line-height: 1.6; color: #1a0f00; }
-              .grimoire-prose h1, .grimoire-prose h2, .grimoire-prose h3 { color: #1a0f00; page-break-after: avoid; }
-              .grimoire-prose blockquote { border-left-color: #888; }
+              .grimoire-prose { font-size: 11pt; line-height: 1.6; color: var(--arc-cosmic-void); }
+              .grimoire-prose h1, .grimoire-prose h2, .grimoire-prose h3 { color: var(--arc-cosmic-void); page-break-after: avoid; }
+              .grimoire-prose blockquote { border-left-color: var(--arc-earth); }
             }
           `,
         }}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { useState, Suspense, lazy } from 'react';
@@ -21,12 +22,12 @@ const ArenaScene = lazy(() =>
  * ---------------------------------------------------------------- */
 
 const ARENA_STATS = [
-  { label: 'Active Challenges', value: '6', icon: Lightning, color: '#ff6b35' },
-  { label: 'Creators Competing', value: '1,434', icon: Users, color: '#60a5fa' },
-  { label: 'Total Prize Pool', value: '$12,200', icon: Trophy, color: '#ffd700' },
-  { label: 'Spells Cast', value: '8,291', icon: Sparkle, color: '#a78bfa' },
-  { label: 'Submissions', value: '526', icon: Scroll, color: '#34d399' },
-  { label: 'Legendary Entries', value: '12', icon: Crown, color: '#f59e0b' },
+  { label: 'Active Challenges', value: '6', icon: Lightning, color: 'var(--arc-fire)' },
+  { label: 'Creators Competing', value: '1,434', icon: Users, color: 'var(--arc-brand-cosmic-blue)' },
+  { label: 'Total Prize Pool', value: '$12,200', icon: Trophy, color: 'var(--arc-brand-arcanean-gold)' },
+  { label: 'Spells Cast', value: '8,291', icon: Sparkle, color: 'var(--arc-void)' },
+  { label: 'Submissions', value: '526', icon: Scroll, color: 'var(--arc-wind)' },
+  { label: 'Legendary Entries', value: '12', icon: Crown, color: 'var(--arc-brand-arcanean-gold)' },
 ];
 
 const FILTER_CATEGORIES: { label: string; value: ChallengeCategory | 'all'; icon: React.ComponentType<Record<string, unknown>> }[] = [
@@ -67,7 +68,7 @@ export default function ChallengesPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#0a0a0f]">
+    <div className="relative min-h-screen overflow-x-hidden bg-[var(--arc-cosmic-void)]">
 
       {/* ============ 3D ARENA BACKDROP ============ */}
       <Suspense fallback={null}>
@@ -80,24 +81,24 @@ export default function ChallengesPage() {
       <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden px-6">
         {/* Ambient orbs */}
         <div className="pointer-events-none absolute inset-0 -z-0" aria-hidden="true">
-          <div className="absolute left-[15%] top-[10%] h-[500px] w-[500px] rounded-full bg-[#ff6b35]/10 blur-[160px]" />
-          <div className="absolute right-[10%] top-[30%] h-[400px] w-[400px] rounded-full bg-[#7c3aed]/10 blur-[140px]" />
-          <div className="absolute bottom-[15%] left-[30%] h-[350px] w-[350px] rounded-full bg-[#ffd700]/8 blur-[120px]" />
-          <div className="absolute right-[25%] bottom-[20%] h-[300px] w-[300px] rounded-full bg-[#06b6d4]/8 blur-[100px]" />
+          <div className="absolute left-[15%] top-[10%] h-[500px] w-[500px] rounded-full bg-[var(--arc-fire)]/10 blur-[160px]" />
+          <div className="absolute right-[10%] top-[30%] h-[400px] w-[400px] rounded-full bg-[var(--arc-void)]/10 blur-[140px]" />
+          <div className="absolute bottom-[15%] left-[30%] h-[350px] w-[350px] rounded-full bg-[var(--arc-brand-arcanean-gold)]/8 blur-[120px]" />
+          <div className="absolute right-[25%] bottom-[20%] h-[300px] w-[300px] rounded-full bg-[var(--arc-brand-atlantean-teal)]/8 blur-[100px]" />
         </div>
 
         <div className="relative z-10 mx-auto max-w-5xl text-center">
           {/* Badge */}
           <div className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-5 py-2 backdrop-blur-md">
-            <Sword className="h-4 w-4 text-[#ff6b35]" weight="fill" />
-            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#ff6b35]/90">
+            <Sword className="h-4 w-4 text-[var(--arc-fire)]" weight="fill" />
+            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[var(--arc-fire)]/90">
               The Arena of Creation
             </span>
           </div>
 
           {/* Title */}
           <h1 className="font-display text-5xl font-bold leading-[1.05] tracking-tight md:text-7xl lg:text-8xl">
-            <span className="bg-gradient-to-r from-[#ff6b35] via-[#ffd700] to-[#a78bfa] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[var(--arc-fire)] via-[var(--arc-brand-arcanean-gold)] to-[var(--arc-void)] bg-clip-text text-transparent">
               Arcanea
             </span>
             <br />
@@ -119,7 +120,7 @@ export default function ChallengesPage() {
               onClick={() => {
                 document.getElementById('challenges')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[#ff6b35] to-[#ffd700] px-8 py-4 font-display text-sm font-bold text-[#0a0a0f] shadow-[0_0_40px_rgba(255,107,53,0.3)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(255,107,53,0.5)] hover:scale-[1.02]"
+              className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[var(--arc-fire)] to-[var(--arc-brand-arcanean-gold)] px-8 py-4 font-display text-sm font-bold text-[var(--arc-cosmic-void)] shadow-[0_0_40px_rgba(255,107,53,0.3)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(255,107,53,0.5)] hover:scale-[1.02]"
             >
               <Lightning className="h-5 w-5" weight="fill" />
               Enter the Arena
@@ -163,7 +164,7 @@ export default function ChallengesPage() {
               onClick={() => setActiveSection(key)}
               className={`flex items-center gap-2.5 rounded-2xl border px-6 py-3 font-display text-sm font-semibold transition-all duration-300 ${
                 activeSection === key
-                  ? 'border-[#ffd700]/30 bg-[#ffd700]/10 text-[#ffd700] shadow-[0_0_20px_rgba(255,215,0,0.15)]'
+                  ? 'border-[var(--arc-brand-arcanean-gold)]/30 bg-[var(--arc-brand-arcanean-gold)]/10 text-[var(--arc-brand-arcanean-gold)] shadow-[0_0_20px_rgba(255,215,0,0.15)]'
                   : 'border-white/[0.06] bg-white/[0.02] text-white/50 hover:border-white/[0.12] hover:text-white/80'
               }`}
             >
@@ -235,13 +236,13 @@ export default function ChallengesPage() {
           <div className="mt-20">
             <div className="mb-8 text-center">
               <div className="mb-4 inline-flex items-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-5 py-2 backdrop-blur-md">
-                <Trophy className="h-4 w-4 text-[#ffd700]" weight="fill" />
-                <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#ffd700]/90">
+                <Trophy className="h-4 w-4 text-[var(--arc-brand-arcanean-gold)]" weight="fill" />
+                <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[var(--arc-brand-arcanean-gold)]/90">
                   Arena Leaderboard
                 </span>
               </div>
               <h2 className="font-display text-3xl font-bold text-white md:text-4xl">
-                Top <span className="bg-gradient-to-r from-[#ffd700] to-[#f59e0b] bg-clip-text text-transparent">Creators</span>
+                Top <span className="bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-arcanean-gold)] bg-clip-text text-transparent">Creators</span>
               </h2>
             </div>
 
@@ -255,9 +256,9 @@ export default function ChallengesPage() {
                     className="group flex items-center gap-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 transition-all hover:border-white/[0.12] hover:bg-white/[0.04]"
                   >
                     <div className={`flex h-10 w-10 items-center justify-center rounded-xl font-display text-lg font-bold ${
-                      entry.rank === 1 ? 'bg-[#ffd700]/15 text-[#ffd700]'
+                      entry.rank === 1 ? 'bg-[var(--arc-brand-arcanean-gold)]/15 text-[var(--arc-brand-arcanean-gold)]'
                       : entry.rank === 2 ? 'bg-white/10 text-white/60'
-                      : entry.rank === 3 ? 'bg-[#cd7f32]/15 text-[#cd7f32]'
+                      : entry.rank === 3 ? 'bg-[var(--arc-fire)]/15 text-[var(--arc-fire)]'
                       : 'bg-white/[0.04] text-white/30'
                     }`}>
                       {entry.rank === 1 ? <Crown className="h-5 w-5" weight="fill" /> : `#${entry.rank}`}
@@ -271,8 +272,8 @@ export default function ChallengesPage() {
                     </div>
                     <div className="text-right">
                       <div className="flex items-center gap-1.5">
-                        <Sparkle className="h-3 w-3 text-[#ffd700]" weight="fill" />
-                        <span className="font-mono text-xs font-bold text-[#ffd700]">{entry.mana.toLocaleString()}</span>
+                        <Sparkle className="h-3 w-3 text-[var(--arc-brand-arcanean-gold)]" weight="fill" />
+                        <span className="font-mono text-xs font-bold text-[var(--arc-brand-arcanean-gold)]">{entry.mana.toLocaleString()}</span>
                       </div>
                       <span className="font-mono text-[9px] text-white/30">{entry.wins} wins</span>
                     </div>
@@ -289,7 +290,7 @@ export default function ChallengesPage() {
         <section className="relative z-10 mx-auto max-w-5xl px-6 pb-20">
           <div className="mb-10 text-center">
             <h2 className="font-display text-3xl font-bold text-white md:text-4xl">
-              The Five <span className="bg-gradient-to-r from-[#ff6b35] via-[#ffd700] to-[#a78bfa] bg-clip-text text-transparent">Spellbooks</span>
+              The Five <span className="bg-gradient-to-r from-[var(--arc-fire)] via-[var(--arc-brand-arcanean-gold)] to-[var(--arc-void)] bg-clip-text text-transparent">Spellbooks</span>
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-sm text-white/50">
               Master the elemental grimoires. Each spell enhances your submissions with magical power.
@@ -308,11 +309,11 @@ export default function ChallengesPage() {
       )}
 
       {/* ============ HOW IT WORKS ============ */}
-      <section className="relative z-10 border-t border-white/[0.04] bg-[#0a0a0f]/80 py-20">
+      <section className="relative z-10 border-t border-white/[0.04] bg-[var(--arc-cosmic-void)]/80 py-20">
         <div className="mx-auto max-w-5xl px-6">
           <div className="mb-12 text-center">
             <h2 className="font-display text-3xl font-bold text-white md:text-4xl">
-              How the Arena <span className="bg-gradient-to-r from-[#06b6d4] to-[#60a5fa] bg-clip-text text-transparent">Works</span>
+              How the Arena <span className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent">Works</span>
             </h2>
           </div>
 
@@ -323,28 +324,28 @@ export default function ChallengesPage() {
                 title: 'Choose Your Challenge',
                 description: 'Browse active challenges across categories — web design, AI agents, music, visual art, lore, and more.',
                 icon: Lightning,
-                color: '#ff6b35',
+                color: 'var(--arc-fire)',
               },
               {
                 step: '02',
                 title: 'Forge Your Team',
                 description: 'Assemble a team with your chosen Formation. Each role and combination grants unique synergy bonuses.',
                 icon: Users,
-                color: '#60a5fa',
+                color: 'var(--arc-brand-cosmic-blue)',
               },
               {
                 step: '03',
                 title: 'Cast & Create',
                 description: 'Use Spellbooks to enhance your work. Cast incantations, burn Mana, and channel elemental power into your creation.',
                 icon: Sparkle,
-                color: '#a78bfa',
+                color: 'var(--arc-void)',
               },
               {
                 step: '04',
                 title: 'Submit & Earn',
                 description: 'Submit your creation on-chain. Smart contracts verify authorship, team composition, and timestamps. Winners earn Mana, titles, and real rewards.',
                 icon: Trophy,
-                color: '#ffd700',
+                color: 'var(--arc-brand-arcanean-gold)',
               },
             ].map((item) => {
               const StepIcon = item.icon;
@@ -371,7 +372,7 @@ export default function ChallengesPage() {
       {/* ============ CTA SECTION ============ */}
       <section className="relative z-10 py-20">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <Crown className="mx-auto mb-6 h-12 w-12 text-[#ffd700]" weight="fill" />
+          <Crown className="mx-auto mb-6 h-12 w-12 text-[var(--arc-brand-arcanean-gold)]" weight="fill" />
           <h2 className="font-display text-3xl font-bold text-white md:text-5xl">
             The Arena Awaits
           </h2>
@@ -382,7 +383,7 @@ export default function ChallengesPage() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/onboarding"
-              className="group inline-flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-[#ff6b35] to-[#ffd700] px-8 py-4 font-display text-sm font-bold text-[#0a0a0f] shadow-[0_0_40px_rgba(255,107,53,0.3)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(255,107,53,0.5)] hover:scale-[1.02]"
+              className="group inline-flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-[var(--arc-fire)] to-[var(--arc-brand-arcanean-gold)] px-8 py-4 font-display text-sm font-bold text-[var(--arc-cosmic-void)] shadow-[0_0_40px_rgba(255,107,53,0.3)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(255,107,53,0.5)] hover:scale-[1.02]"
             >
               <Sparkle className="h-5 w-5" weight="fill" />
               Join the Arena

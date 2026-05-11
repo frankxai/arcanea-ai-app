@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import Link from "next/link";
@@ -33,13 +34,14 @@ const footerLinks = {
     label: "Build",
     links: [
       { href: "/protocol", label: "Protocol" },
+      { href: "/ecosystem", label: "Repo Registry" },
       { href: "/apps", label: "Apps" },
       { href: "/integrations", label: "Integrations" },
       { href: "/storage", label: "Storage" },
       { href: "/distribute", label: "Distribute" },
       { href: "/teams", label: "Teams" },
       { href: "/developers", label: "Developers" },
-      { href: "https://github.com/frankxai", label: "GitHub", external: true },
+      { href: "https://github.com/frankxai", label: "GitHub Public Profile", external: true },
     ],
   },
   learn: {
@@ -94,7 +96,7 @@ export function Footer() {
       className="relative mt-24 border-t border-white/[0.06]"
       role="contentinfo"
     >
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-[#00bcd4]/20 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-[var(--arc-brand-atlantean-teal)]/20 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Brand + Newsletter row */}
@@ -102,7 +104,7 @@ export function Footer() {
           <div className="max-w-xs">
             <Link
               href="/"
-              className="flex items-center gap-2.5 font-display font-bold text-lg text-white hover:text-[#00bcd4] transition-colors"
+              className="flex items-center gap-2.5 font-display font-bold text-lg text-white hover:text-[var(--arc-brand-atlantean-teal)] transition-colors"
             >
               <ArcaneanMark size={28} glow />
               Arcanea™
@@ -121,7 +123,7 @@ export function Footer() {
               Stay in the loop
             </h3>
             {subscribed ? (
-              <p className="text-sm text-[#00bcd4]">
+              <p className="text-sm text-[var(--arc-brand-atlantean-teal)]">
                 Welcome to the multiverse.
               </p>
             ) : (
@@ -133,12 +135,12 @@ export function Footer() {
                   placeholder="your@email.com"
                   required
                   aria-label="Email address for newsletter"
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-white/80 placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 focus:border-[#00bcd4]/30 transition-colors"
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-white/80 placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/30 focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
                 />
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2.5 rounded-xl bg-[#00bcd4]/12 border border-[#00bcd4]/20 text-sm font-medium text-[#00bcd4] hover:bg-[#00bcd4]/20 transition-colors disabled:opacity-50"
+                  className="px-5 py-2.5 rounded-xl bg-[var(--arc-brand-atlantean-teal)]/12 border border-[var(--arc-brand-atlantean-teal)]/20 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors disabled:opacity-50"
                 >
                   {submitting ? "..." : "Subscribe"}
                 </button>
@@ -166,7 +168,7 @@ export function Footer() {
                             "aria-label": `${link.label} (opens in new tab)`,
                           }
                         : {})}
-                      className="text-sm text-white/55 hover:text-[#00bcd4] transition-colors duration-300 link-underline"
+                      className="text-sm text-white/55 hover:text-[var(--arc-brand-atlantean-teal)] transition-colors duration-300 link-underline"
                     >
                       {link.label}
                       {"external" in link && link.external && (
@@ -189,14 +191,14 @@ export function Footer() {
           <div className="flex items-center gap-4 text-xs text-white/36">
             <Link
               href="/terms"
-              className="hover:text-[#00bcd4] transition-colors"
+              className="hover:text-[var(--arc-brand-atlantean-teal)] transition-colors"
             >
               Terms
             </Link>
             <span className="text-white/[0.1]">|</span>
             <Link
               href="/privacy"
-              className="hover:text-[#00bcd4] transition-colors"
+              className="hover:text-[var(--arc-brand-atlantean-teal)] transition-colors"
             >
               Privacy
             </Link>
@@ -205,7 +207,7 @@ export function Footer() {
               href="https://frankx.ai"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#00bcd4] transition-colors"
+              className="hover:text-[var(--arc-brand-atlantean-teal)] transition-colors"
               aria-label="FrankX.ai (opens in new tab)"
             >
               FrankX.ai

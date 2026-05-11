@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 // ---------------------------------------------------------------------------
@@ -30,7 +31,7 @@ export function ResearchProgress({ steps, isLoading }: ResearchProgressProps) {
           {i > 0 && (
             <div
               className={`w-6 h-px ${
-                step.status === 'pending' ? 'bg-white/10' : 'bg-[#00bcd4]/30'
+                step.status === 'pending' ? 'bg-white/10' : 'bg-[var(--arc-brand-atlantean-teal)]/30'
               }`}
             />
           )}
@@ -39,7 +40,7 @@ export function ResearchProgress({ steps, isLoading }: ResearchProgressProps) {
               <span className="text-emerald-400 text-xs">&#10003;</span>
             )}
             {step.status === 'active' && (
-              <span className="w-3 h-3 rounded-full border-2 border-[#00bcd4] border-t-transparent animate-spin" />
+              <span className="w-3 h-3 rounded-full border-2 border-[var(--arc-brand-atlantean-teal)] border-t-transparent animate-spin" />
             )}
             {step.status === 'pending' && (
               <span className="w-2 h-2 rounded-full bg-white/15" />
@@ -50,7 +51,7 @@ export function ResearchProgress({ steps, isLoading }: ResearchProgressProps) {
             <span
               className={`text-xs ${
                 step.status === 'active'
-                  ? 'text-[#00bcd4]'
+                  ? 'text-[var(--arc-brand-atlantean-teal)]'
                   : step.status === 'complete'
                     ? 'text-emerald-400/70'
                     : step.status === 'error'

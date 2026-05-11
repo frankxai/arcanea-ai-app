@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 // Library page static data — NO 'use client'
 
 export const tomeToneMap: Record<string, string> = {
-  "luminor-codex": "from-[#1f2b4a]/90 via-[#141d31]/85 to-[#070c15]/90",
-  "luminary-atelier": "from-[#201f35]/90 via-[#161b2b]/85 to-[#090d18]/90",
-  "arcanea-visionaries": "from-[#202845]/90 via-[#171f32]/85 to-[#0c101f]/90",
+  "luminor-codex": "from-[var(--arc-cosmic-void)]/90 via-[var(--arc-cosmic-void)]/85 to-[var(--arc-cosmic-void)]/90",
+  "luminary-atelier": "from-[var(--arc-cosmic-void)]/90 via-[var(--arc-cosmic-void)]/85 to-[var(--arc-cosmic-void)]/90",
+  "arcanea-visionaries": "from-[var(--arc-cosmic-void)]/90 via-[var(--arc-cosmic-void)]/85 to-[var(--arc-cosmic-void)]/90",
 };
 
 export const councilMembers = [

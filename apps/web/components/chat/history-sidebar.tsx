@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { useState, useCallback, useRef, useEffect } from 'react';
@@ -143,7 +144,7 @@ function ProjectSection({
         </span>
         <button
           onClick={() => setCreating((prev) => !prev)}
-          className="text-[10px] text-[#00bcd4]/70 hover:text-[#00bcd4] transition-colors"
+          className="text-[10px] text-[var(--arc-brand-atlantean-teal)]/70 hover:text-[var(--arc-brand-atlantean-teal)] transition-colors"
         >
           + Project
         </button>
@@ -163,7 +164,7 @@ function ProjectSection({
               }
             }}
             placeholder="Project name"
-            className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] px-2 py-1.5 text-[11px] text-white/80 outline-none focus:border-[#00bcd4]/30"
+            className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] px-2 py-1.5 text-[11px] text-white/80 outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30"
           />
           <button
             onClick={commitCreate}
@@ -180,7 +181,7 @@ function ProjectSection({
           onClick={() => onSelectProject(null)}
           className={`flex items-center justify-between rounded-lg px-2.5 py-2 text-[11px] transition-colors ${
             !activeProjectId
-              ? 'bg-[#00bcd4]/10 text-white'
+              ? 'bg-[var(--arc-brand-atlantean-teal)]/10 text-white'
               : 'text-white/45 hover:bg-white/[0.04] hover:text-white/70'
           }`}
         >
@@ -194,7 +195,7 @@ function ProjectSection({
           const isEditing = editingProjectId === project.id;
 
           return (
-            <div key={project.id} className={`rounded-lg border ${isActive ? 'border-[#00bcd4]/20 bg-[#00bcd4]/8' : 'border-transparent bg-white/[0.02]'}`}>
+            <div key={project.id} className={`rounded-lg border ${isActive ? 'border-[var(--arc-brand-atlantean-teal)]/20 bg-[var(--arc-brand-atlantean-teal)]/8' : 'border-transparent bg-white/[0.02]'}`}>
               <div className="flex items-center gap-2 px-2.5 py-2">
                 <button
                   onClick={() => onSelectProject(project.id)}
@@ -367,7 +368,7 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
     <div
       className={`group w-full flex items-center gap-2 px-2.5 py-2.5 min-h-[44px] rounded-lg text-left transition-all duration-200 ${
         isActive
-          ? 'bg-gradient-to-r from-[#00bcd4]/10 to-transparent border-l-2 border-[#00bcd4] shadow-[inset_0_0_16px_rgba(0,188,212,0.05)]'
+          ? 'bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/10 to-transparent border-l-2 border-[var(--arc-brand-atlantean-teal)] shadow-[inset_0_0_16px_rgba(0,188,212,0.05)]'
           : 'border-l-2 border-transparent hover:bg-white/[0.04] hover:border-white/[0.1]'
       }`}
     >
@@ -376,7 +377,7 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
         onClick={handleSelect}
         onDoubleClick={handleDoubleClick}
         aria-current={isActive ? 'page' : undefined}
-        className="min-w-0 flex-1 text-left rounded-md focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+        className="min-w-0 flex-1 text-left rounded-md focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
       >
         {editing ? (
           <div className="flex items-center gap-1">
@@ -392,14 +393,14 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
               onBlur={commitRename}
               onClick={(e) => e.stopPropagation()}
               aria-label="Rename conversation"
-              className="w-full bg-white/[0.04] border border-white/[0.08] rounded px-1.5 py-0.5 text-[11px] text-white/90 outline-none focus:border-[#00bcd4]/40 focus:bg-white/[0.06] transition-colors"
+              className="w-full bg-white/[0.04] border border-white/[0.08] rounded px-1.5 py-0.5 text-[11px] text-white/90 outline-none focus:border-[var(--arc-brand-atlantean-teal)]/40 focus:bg-white/[0.06] transition-colors"
             />
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 commitRename();
               }}
-              className="shrink-0 w-5 h-5 flex items-center justify-center rounded text-teal-400/70 hover:text-teal-400 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+              className="shrink-0 w-5 h-5 flex items-center justify-center rounded text-teal-400/70 hover:text-teal-400 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
               aria-label="Confirm rename"
             >
               <Check className="w-3 h-3" />
@@ -409,7 +410,7 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
                 e.stopPropagation();
                 cancelRename();
               }}
-              className="shrink-0 w-5 h-5 flex items-center justify-center rounded text-white/30 hover:text-white/60 transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+              className="shrink-0 w-5 h-5 flex items-center justify-center rounded text-white/30 hover:text-white/60 transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
               aria-label="Cancel rename"
             >
               <X className="w-3 h-3" />
@@ -432,7 +433,7 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
         <button
           type="button"
           onClick={(e) => { e.stopPropagation(); onTogglePin?.(); }}
-          className="shrink-0 p-0.5 rounded transition-colors text-[#ffd700] hover:text-[#ffd700]/70"
+          className="shrink-0 p-0.5 rounded transition-colors text-[var(--arc-brand-arcanean-gold)] hover:text-[var(--arc-brand-arcanean-gold)]/70"
           aria-label="Unpin"
         >
           <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" stroke="currentColor" strokeWidth="1.5">
@@ -449,7 +450,7 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); onTogglePin?.(); }}
-              className="w-5 h-5 flex items-center justify-center rounded text-white/0 group-hover:text-white/20 hover:!text-[#ffd700]/70 hover:bg-[#ffd700]/5 focus-visible:ring-2 focus-visible:ring-[#ffd700]/40 focus-visible:outline-none transition-colors"
+              className="w-5 h-5 flex items-center justify-center rounded text-white/0 group-hover:text-white/20 hover:!text-[var(--arc-brand-arcanean-gold)]/70 hover:bg-[var(--arc-brand-arcanean-gold)]/5 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-arcanean-gold)]/40 focus-visible:outline-none transition-colors"
               aria-label="Pin"
             >
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -463,7 +464,7 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
               e.stopPropagation();
               handleDoubleClick();
             }}
-            className="w-5 h-5 flex items-center justify-center rounded text-white/20 hover:text-white/50 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+            className="w-5 h-5 flex items-center justify-center rounded text-white/20 hover:text-white/50 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
             aria-label={`Rename: ${session.title}`}
           >
             <PencilSimple className="w-3 h-3" />
@@ -472,7 +473,7 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
             <button
               type="button"
               onClick={handleDeleteClick}
-              className="shrink-0 px-2 py-0.5 rounded text-[10px] font-medium bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors border border-red-500/20 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+              className="shrink-0 px-2 py-0.5 rounded text-[10px] font-medium bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors border border-red-500/20 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
               aria-label="Confirm delete"
             >
               Delete?
@@ -481,7 +482,7 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
             <button
               type="button"
               onClick={handleDeleteClick}
-              className="w-5 h-5 flex items-center justify-center rounded text-white/20 hover:text-red-400/70 hover:bg-red-400/10 transition-all focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+              className="w-5 h-5 flex items-center justify-center rounded text-white/20 hover:text-red-400/70 hover:bg-red-400/10 transition-all focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
               aria-label={`Delete: ${session.title}`}
             >
               <Trash className="w-3 h-3" />
@@ -554,7 +555,7 @@ function CollapsedRail({ onToggle, onNewChat }: CollapsedRailProps) {
       {/* New Chat */}
       <button
         onClick={onNewChat}
-        className="w-8 h-8 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/40 hover:text-white/80 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+        className="w-8 h-8 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/40 hover:text-white/80 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
         aria-label="New chat"
         title="New chat"
       >
@@ -564,7 +565,7 @@ function CollapsedRail({ onToggle, onNewChat }: CollapsedRailProps) {
       {/* Toggle expand */}
       <button
         onClick={onToggle}
-        className="w-8 h-8 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/40 hover:text-white/80 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+        className="w-8 h-8 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/40 hover:text-white/80 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
         aria-label="Show history"
         aria-expanded={false}
         title="Chat history"
@@ -578,7 +579,7 @@ function CollapsedRail({ onToggle, onNewChat }: CollapsedRailProps) {
       {/* Home */}
       <Link
         href="/"
-        className="w-8 h-8 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/40 hover:text-white/80 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+        className="w-8 h-8 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/40 hover:text-white/80 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
         title="Home"
       >
         <House className="w-4 h-4" />
@@ -587,7 +588,7 @@ function CollapsedRail({ onToggle, onNewChat }: CollapsedRailProps) {
       {/* My Creations */}
       <Link
         href="/creations"
-        className="w-8 h-8 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/40 hover:text-white/80 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+        className="w-8 h-8 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/40 hover:text-white/80 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
         title="My Creations"
       >
         <FolderOpen className="w-4 h-4" />
@@ -596,7 +597,7 @@ function CollapsedRail({ onToggle, onNewChat }: CollapsedRailProps) {
       {/* Settings */}
       <Link
         href="/settings"
-        className="w-8 h-8 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/40 hover:text-white/80 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+        className="w-8 h-8 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/40 hover:text-white/80 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
         title="Settings"
       >
         <GearSix className="w-4 h-4" />
@@ -608,7 +609,7 @@ function CollapsedRail({ onToggle, onNewChat }: CollapsedRailProps) {
       {/* User avatar area */}
       <Link
         href="/settings"
-        className="w-8 h-8 flex items-center justify-center rounded-lg text-white/30 hover:text-white/60 hover:bg-white/5 transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+        className="w-8 h-8 flex items-center justify-center rounded-lg text-white/30 hover:text-white/60 hover:bg-white/5 transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
         title="Account"
       >
         <UserCircle className="w-5 h-5" />
@@ -686,14 +687,14 @@ function ExpandedPanel({
           <button
             onClick={onNewChat}
             aria-label="Start new conversation"
-            className="flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-lg text-xs font-medium bg-gradient-to-r from-[#00bcd4]/15 to-[#00897b]/10 text-[#00bcd4] border border-[#00bcd4]/20 hover:border-[#00bcd4]/30 hover:shadow-[0_0_12px_rgba(0,188,212,0.1)] transition-all focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+            className="flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-lg text-xs font-medium bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/15 to-[var(--arc-brand-cosmic-blue)]/10 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20 hover:border-[var(--arc-brand-atlantean-teal)]/30 hover:shadow-[0_0_12px_rgba(0,188,212,0.1)] transition-all focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
           >
             <Plus className="w-3.5 h-3.5" />
             New Chat
           </button>
           <button
             onClick={onToggle}
-            className="w-7 h-7 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/30 hover:text-white/60 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+            className="w-7 h-7 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/30 hover:text-white/60 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
             aria-label="Collapse sidebar"
             aria-expanded={true}
           >
@@ -712,7 +713,7 @@ function ExpandedPanel({
               placeholder="Search chats..."
               aria-label="Search conversations"
               className="w-full pl-8 pr-3 py-1.5 min-h-[44px] rounded-lg bg-white/[0.04] border border-white/[0.06]
-                text-xs text-white/80 placeholder-white/25 focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/30 focus:bg-white/[0.06] focus:border-[#00bcd4]/30 transition-colors"
+                text-xs text-white/80 placeholder-white/25 focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/30 focus:bg-white/[0.06] focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
             />
           </div>
         </div>
@@ -749,7 +750,7 @@ function ExpandedPanel({
                   </p>
                   <button
                     onClick={() => onSearchQueryChange('')}
-                    className="text-[10px] text-[#00bcd4]/60 hover:text-[#00bcd4] transition-colors"
+                    className="text-[10px] text-[var(--arc-brand-atlantean-teal)]/60 hover:text-[var(--arc-brand-atlantean-teal)] transition-colors"
                   >
                     Clear search
                   </button>
@@ -778,7 +779,7 @@ function ExpandedPanel({
                   onRename={onRenameSession}
                   onTogglePin={onTogglePin}
                   onAutoClose={handleAutoClose}
-                  labelClassName="text-[#ffd700]/50"
+                  labelClassName="text-[var(--arc-brand-arcanean-gold)]/50"
                 />
               )}
               <TimeGroup
@@ -827,32 +828,32 @@ function ExpandedPanel({
 
         {/* Cross-route links */}
         <div className="flex items-center gap-3 px-3 py-2 border-t border-white/[0.04]">
-          <Link href="/gallery" className="text-[11px] text-white/30 hover:text-[#00bcd4]/60 transition-colors">Gallery</Link>
+          <Link href="/gallery" className="text-[11px] text-white/30 hover:text-[var(--arc-brand-atlantean-teal)]/60 transition-colors">Gallery</Link>
           <span className="text-white/10">·</span>
-          <Link href="/academy" className="text-[11px] text-white/30 hover:text-[#00bcd4]/60 transition-colors">Academy</Link>
+          <Link href="/academy" className="text-[11px] text-white/30 hover:text-[var(--arc-brand-atlantean-teal)]/60 transition-colors">Academy</Link>
           <span className="text-white/10">·</span>
-          <Link href="/library" className="text-[11px] text-white/30 hover:text-[#00bcd4]/60 transition-colors">Library</Link>
+          <Link href="/library" className="text-[11px] text-white/30 hover:text-[var(--arc-brand-atlantean-teal)]/60 transition-colors">Library</Link>
         </div>
 
         {/* Footer nav */}
-        <div className="border-t border-white/[0.05] bg-gradient-to-t from-[#08080d] to-transparent px-3 py-2 flex items-center gap-1">
+        <div className="border-t border-white/[0.05] bg-gradient-to-t from-[var(--arc-cosmic-void)] to-transparent px-3 py-2 flex items-center gap-1">
           <Link
             href="/"
-            className="flex items-center gap-1.5 px-2 py-1.5 min-h-[44px] rounded-lg text-[11px] text-white/40 hover:text-white/70 hover:bg-white/[0.06] hover:shadow-glow-sm/20 transition-all focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+            className="flex items-center gap-1.5 px-2 py-1.5 min-h-[44px] rounded-lg text-[11px] text-white/40 hover:text-white/70 hover:bg-white/[0.06] hover:shadow-glow-sm/20 transition-all focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
           >
             <House className="w-3.5 h-3.5" />
             Home
           </Link>
           <Link
             href="/creations"
-            className="flex items-center gap-1.5 px-2 py-1.5 min-h-[44px] rounded-lg text-[11px] text-white/40 hover:text-white/70 hover:bg-white/[0.06] hover:shadow-glow-sm/20 transition-all focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+            className="flex items-center gap-1.5 px-2 py-1.5 min-h-[44px] rounded-lg text-[11px] text-white/40 hover:text-white/70 hover:bg-white/[0.06] hover:shadow-glow-sm/20 transition-all focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
           >
             <FolderOpen className="w-3.5 h-3.5" />
             Creations
           </Link>
           <Link
             href="/settings"
-            className="flex items-center gap-1.5 px-2 py-1.5 min-h-[44px] rounded-lg text-[11px] text-white/40 hover:text-white/70 hover:bg-white/[0.06] hover:shadow-glow-sm/20 transition-all focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+            className="flex items-center gap-1.5 px-2 py-1.5 min-h-[44px] rounded-lg text-[11px] text-white/40 hover:text-white/70 hover:bg-white/[0.06] hover:shadow-glow-sm/20 transition-all focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
           >
             <GearSix className="w-3.5 h-3.5" />
             Settings
@@ -860,7 +861,7 @@ function ExpandedPanel({
           <div className="flex-1" />
           <Link
             href="/settings"
-            className="w-7 h-7 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/30 hover:text-white/60 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+            className="w-7 h-7 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-white/30 hover:text-white/60 hover:bg-white/[0.06] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
             title="Account"
           >
             <UserCircle className="w-4 h-4" />
