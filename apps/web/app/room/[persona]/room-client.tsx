@@ -31,6 +31,20 @@ type MicPermissionState = 'unknown' | 'prompt' | 'granted' | 'denied';
 
 type RoomError = { message: string; hint?: string; cta?: 'byok' | 'retry' } | null;
 
+// Cognition bridge — when the room runs on the local cockpit (next dev at
+// :3000 alongside SIS voice-operator at :7373), the chat round-trip can
+// route through voice-operator instead of /api/ai/chat. Gives access to the
+// dispatch fleet (claude/codex/gemini/opencode), packet logging, and the
+// approval gate. Activated by ?via=local in the URL; falls back silently
+// to cloud chat when the bridge GET probe says it's not configured.
+type CognitionPacket = {
+  intent?: string;
+  target_system?: string;
+  approval_tier?: 'A' | 'B' | 'C';
+  approval_required?: boolean;
+  packet_id?: string;
+};
+
 export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const [personaId, setPersonaId] = useState<PersonaId>(initial);
   const [state, setState] = useState<RoomState>('idle');
@@ -51,7 +65,12 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [micArmed, setMicArmed] = useState(true);
   const [briefing, setBriefing] = useState<string>('');
+  const [viaLocal, setViaLocal] = useState(false);
+  const [bridgeAvailable, setBridgeAvailable] = useState(false);
+  const [packet, setPacket] = useState<CognitionPacket | null>(null);
   const greetingAudioRef = useRef<HTMLAudioElement | null>(null);
+  // useBridge is derived — local mode + bridge configured server-side.
+  const useBridge = viaLocal && bridgeAvailable;
 
   const micStreamRef = useRef<MediaStream | null>(null);
   const micCtxRef = useRef<AudioContext | null>(null);
@@ -98,7 +117,12 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const params = new URLSearchParams(window.location.search);
-    setViaClap(params.get('via') === 'clap-daemon');
+    const viaParam = params.get('via');
+    setViaClap(viaParam === 'clap-daemon');
+    // ?via=local routes chat through SIS voice-operator bridge instead of
+    // cloud /api/ai/chat. Falls back to cloud if /api/voice/cognition GET
+    // probe reports bridge_configured:false. clap-daemon also implies local.
+    setViaLocal(viaParam === 'local' || viaParam === 'clap-daemon');
     setDebugMode(params.get('debug') === '1');
     const t = params.get('tenant');
     if (t && /^[a-z][a-z0-9-]{0,30}$/.test(t)) setTenantId(t);
@@ -249,6 +273,21 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
     return () => { cancelled = true; };
   }, []);
 
+  // Bridge probe — fires once on mount, regardless of via=local, so we can
+  // upgrade the user from cloud chat to bridge chat the moment they flip the
+  // URL flag. GET is cheap (server reads one env var) and result is cached.
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/voice/cognition', { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data: { bridge_configured?: boolean } | null) => {
+        if (cancelled) return;
+        setBridgeAvailable(Boolean(data?.bridge_configured));
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
   // Compose the system prompt at call time: briefing block (if any) +
   // persona instructions. Briefing first because it grounds the model in
   // *current* state; persona second because behavioral rules win on conflict.
@@ -355,7 +394,43 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       // hits Groq direct and skips them — those users get persona reasoning
       // only. Inline [OPEN: url] markers handle browser actions on both paths.
       const enabledTools = persona.id === 'jarvis' ? ['jarvis'] : undefined;
-      if (keys.groq) {
+      // Bridge mode wins over both cloud paths when ?via=local is set AND
+      // /api/voice/cognition reports the bridge is configured. SIS voice-
+      // operator owns cognition + dispatch; the room just renders + speaks.
+      if (useBridge) {
+        const cogRes = await fetch('/api/voice/cognition', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ text: userText, persona: persona.id, source: 'arcanea-room' }),
+          signal: ctl.signal,
+        });
+        if (!cogRes.ok) {
+          const payload = await cogRes.json().catch(() => null) as
+            | { error?: string; hint?: string; cta?: 'no-bridge' | 'retry' | 'auth' }
+            | null;
+          showErr({
+            message: payload?.error ?? `cognition ${cogRes.status}`,
+            hint: payload?.hint ?? 'Falling back to cloud chat would help — drop ?via=local from the URL.',
+          });
+          return;
+        }
+        const cog = (await cogRes.json()) as {
+          text?: string;
+          intent?: string;
+          target_system?: string;
+          approval_tier?: 'A' | 'B' | 'C';
+          approval_required?: boolean;
+          packet_id?: string;
+        };
+        full = (cog.text ?? '').trim();
+        setReply(full);
+        setPacket({
+          intent: cog.intent,
+          target_system: cog.target_system,
+          approval_tier: cog.approval_tier,
+          approval_required: cog.approval_required,
+          packet_id: cog.packet_id,
+        });
+      } else if (keys.groq) {
         full = await chatWithGroq({
           messages: nextHistory.map((m) => ({ role: m.role, content: m.content })),
           systemPrompt, apiKey: keys.groq,
@@ -487,7 +562,7 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
       setAudioEl(null);
       setState('idle');
     }
-  }, [history, persona, showErr, logStage, composeSystemPrompt]);
+  }, [history, persona, showErr, logStage, composeSystemPrompt, useBridge]);
 
   const startRecording = useCallback(async () => {
     if (busyRef.current || recordingRef.current) return;
@@ -861,6 +936,60 @@ export function RoomClient({ persona: initial }: { persona: PersonaId }) {
           );
         })}
       </div>
+
+      {/* Bridge indicator — shows when cognition is going through SIS voice-
+          operator instead of cloud /api/ai/chat. Static chip when idle (just
+          identifies the path); expands with packet metadata once a turn lands. */}
+      {useBridge && (
+        <div
+          data-ignore-click
+          className="absolute flex flex-col items-end gap-1 pointer-events-none"
+          style={{
+            top: 'max(1.5rem, env(safe-area-inset-top, 0px))',
+            right: 'max(1.5rem, env(safe-area-inset-right, 0px))',
+            fontFamily: 'var(--font-display)',
+          }}
+        >
+          <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] backdrop-blur-md">
+            <span
+              className="w-1.5 h-1.5 rounded-full animate-pulse"
+              style={{ backgroundColor: 'var(--arc-brand-atlantean-teal)', boxShadow: '0 0 8px var(--arc-brand-atlantean-teal)' }}
+            />
+            <span className="text-[10px] tracking-[0.24em] uppercase text-white/70">Local · SIS</span>
+          </div>
+          {packet && (packet.intent || packet.target_system || packet.approval_tier) && (
+            <div
+              className="px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06] backdrop-blur-md text-right"
+              style={{ minWidth: '11rem' }}
+            >
+              {packet.intent && (
+                <div className="text-[9px] tracking-[0.22em] uppercase text-white/40">
+                  intent <span className="text-white/80">{packet.intent}</span>
+                </div>
+              )}
+              {packet.target_system && (
+                <div className="mt-0.5 text-[9px] tracking-[0.22em] uppercase text-white/40">
+                  target <span className="text-white/80">{packet.target_system}</span>
+                </div>
+              )}
+              {packet.approval_tier && (
+                <div className="mt-0.5 text-[9px] tracking-[0.22em] uppercase text-white/40">
+                  tier{' '}
+                  <span
+                    className="px-1 py-px rounded"
+                    style={{
+                      color: packet.approval_required ? 'var(--arc-brand-arcanean-gold)' : 'var(--arc-text-primary)',
+                      background: packet.approval_required ? 'rgba(255,191,0,0.12)' : 'rgba(255,255,255,0.06)',
+                    }}
+                  >
+                    {packet.approval_tier}{packet.approval_required ? ' · approval' : ''}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Hotkey pill — glass, safe-area aware */}
       <div
