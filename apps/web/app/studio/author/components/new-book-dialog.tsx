@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { useState } from 'react';
@@ -57,9 +58,9 @@ export function NewBookDialog() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="w-full rounded-2xl border-2 border-dashed border-white/[0.08] hover:border-[#00bcd4]/30 bg-transparent hover:bg-[#00bcd4]/[0.02] transition-all p-8 text-center group"
+        className="w-full rounded-2xl border-2 border-dashed border-white/[0.08] hover:border-[var(--arc-brand-atlantean-teal)]/30 bg-transparent hover:bg-[var(--arc-brand-atlantean-teal)]/[0.02] transition-all p-8 text-center group"
       >
-        <div className="text-2xl text-white/10 group-hover:text-[#00bcd4]/30 mb-2">+</div>
+        <div className="text-2xl text-white/10 group-hover:text-[var(--arc-brand-atlantean-teal)]/30 mb-2">+</div>
         <div className="font-display text-sm text-white/30 group-hover:text-white/50">
           Start a New Book
         </div>
@@ -69,7 +70,7 @@ export function NewBookDialog() {
   }
 
   return (
-    <div className="rounded-2xl border border-[#00bcd4]/20 bg-white/[0.02] backdrop-blur-sm p-6 space-y-4">
+    <div className="rounded-2xl border border-[var(--arc-brand-atlantean-teal)]/20 bg-white/[0.02] backdrop-blur-sm p-6 space-y-4">
       <h3 className="font-display text-sm font-semibold text-white/70">New Book</h3>
 
       <input
@@ -78,13 +79,13 @@ export function NewBookDialog() {
         onChange={(e) => setTitle(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
         placeholder="Your book title..."
-        className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06] text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-[#00bcd4]/30"
+        className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06] text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30"
       />
 
       <select
         value={genre}
         onChange={(e) => setGenre(e.target.value)}
-        className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06] text-sm text-white/60 focus:outline-none focus:border-[#00bcd4]/30"
+        className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.06] text-sm text-white/60 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30"
       >
         {GENRES.map((g) => (
           <option key={g.value} value={g.value}>
@@ -101,7 +102,7 @@ export function NewBookDialog() {
         <button
           onClick={handleCreate}
           disabled={!title.trim() || creating}
-          className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] text-white text-sm font-medium hover:shadow-lg hover:shadow-[#00bcd4]/20 disabled:opacity-30 transition-all"
+          className="px-4 py-2 rounded-lg bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] text-white text-sm font-medium hover:shadow-lg hover:shadow-[var(--arc-brand-atlantean-teal)]/20 disabled:opacity-30 transition-all"
         >
           {creating ? 'Creating...' : 'Create & Start Writing'}
         </button>

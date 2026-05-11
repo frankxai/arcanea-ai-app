@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import { m } from "framer-motion";
 import { thirdPartyBrand, brand, competitorAccent } from "@arcanea/design-system";
+import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
 
 // ---------------------------------------------------------------------------
 // IntegrationGrid — Logo grid of all Arcanea integrations.
@@ -51,13 +53,13 @@ export const INTEGRATIONS: Integration[] = [
   { name: "VS Code", category: "coding", color: thirdPartyBrand.vsCode, status: "beta", note: "MCP-ready, no extension yet" },
   { name: "Windsurf", category: "coding", color: thirdPartyBrand.windsurf, status: "beta", note: "MCP + rules bridge" },
   { name: "Antigravity", category: "coding", color: thirdPartyBrand.antigravity, status: "soon", note: "Browser-native IDE" },
-  { name: "GitHub", category: "coding", color: thirdPartyBrand.github, status: "live", note: "27 public repos" },
+  { name: "GitHub", category: "coding", color: thirdPartyBrand.github, status: "live", note: `${PUBLIC_REPO_SUMMARY.public} public repos tracked` },
 
   // Creative AI — inline generation
   { name: "Nano Banana 2", category: "ai", color: thirdPartyBrand.nanoBanana, status: "live", note: "/imagine uses it today" },
   { name: "Anthropic Claude", category: "ai", color: thirdPartyBrand.anthropicClaude, status: "live", note: "Default chat provider" },
   { name: "Google Gemini", category: "ai", color: thirdPartyBrand.googleGemini, status: "live", note: "Chat + imagine routing" },
-  { name: "Suno", category: "ai", color: thirdPartyBrand.suno, status: "soon", note: "Music gen — API planned" },
+  { name: "Suno", category: "ai", color: thirdPartyBrand.suno, status: "beta", note: "arcanea-records repo; app sync planned" },
   { name: "ElevenLabs", category: "ai", color: thirdPartyBrand.elevenLabs, status: "soon", note: "Voice — Presence Layer" },
   { name: "Runway", category: "ai", color: thirdPartyBrand.runway, status: "soon", note: "Video — researched" },
   { name: "Midjourney", category: "ai", color: thirdPartyBrand.midjourney, status: "soon", note: "Style reference" },

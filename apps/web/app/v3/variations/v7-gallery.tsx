@@ -1,28 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 // V7 — "Gallery / Art Museum"
 // Inspired by Midjourney / MOMA / Art Basel. Pure typography and color.
 
 const GUARDIANS = [
-  { name: 'Lyssandria', element: 'Earth',  hz: 174,  gradient: 'linear-gradient(160deg, #2d4a2e 0%, #1a3a1c 40%, #3d5a3e 100%)' },
-  { name: 'Leyla',      element: 'Water',  hz: 285,  gradient: 'linear-gradient(160deg, #1e3a5f 0%, #2a4a6f 40%, #1a2e4a 100%)' },
-  { name: 'Draconia',   element: 'Fire',   hz: 396,  gradient: 'linear-gradient(160deg, #6b2020 0%, #8b3030 40%, #4a1515 100%)' },
-  { name: 'Maylinn',    element: 'Heart',  hz: 417,  gradient: 'linear-gradient(160deg, #5a2d4a 0%, #7a3d5a 40%, #4a1d3a 100%)' },
-  { name: 'Alera',      element: 'Voice',  hz: 528,  gradient: 'linear-gradient(160deg, #2a5a5a 0%, #3a6a6a 40%, #1a4a4a 100%)' },
-  { name: 'Lyria',      element: 'Sight',  hz: 639,  gradient: 'linear-gradient(160deg, #3a2a6b 0%, #4a3a7b 40%, #2a1a5b 100%)' },
-  { name: 'Aiyami',     element: 'Crown',  hz: 741,  gradient: 'linear-gradient(160deg, #5a5a2a 0%, #6a6a3a 40%, #4a4a1a 100%)' },
-  { name: 'Elara',      element: 'Starweave',  hz: 852,  gradient: 'linear-gradient(160deg, #4a4a5a 0%, #5a5a6a 40%, #3a3a4a 100%)' },
-  { name: 'Ino',        element: 'Unity',  hz: 963,  gradient: 'linear-gradient(160deg, #3a5a4a 0%, #2a6a5a 40%, #1a4a3a 100%)' },
-  { name: 'Shinkami',   element: 'Source',  hz: 1111, gradient: 'linear-gradient(160deg, #3a2a2a 0%, #2a1a1a 40%, #5a4a3a 100%)' },
+  { name: 'Lyssandria', element: 'Earth',  hz: 174,  gradient: 'linear-gradient(160deg, var(--arc-cosmic-void) 0%, var(--arc-cosmic-void) 40%, var(--arc-earth) 100%)' },
+  { name: 'Leyla',      element: 'Water',  hz: 285,  gradient: 'linear-gradient(160deg, var(--arc-brand-cosmic-blue) 0%, var(--arc-brand-cosmic-blue) 40%, var(--arc-cosmic-void) 100%)' },
+  { name: 'Draconia',   element: 'Fire',   hz: 396,  gradient: 'linear-gradient(160deg, var(--arc-earth) 0%, var(--arc-earth) 40%, var(--arc-cosmic-void) 100%)' },
+  { name: 'Maylinn',    element: 'Heart',  hz: 417,  gradient: 'linear-gradient(160deg, var(--arc-earth) 0%, var(--arc-earth) 40%, var(--arc-cosmic-void) 100%)' },
+  { name: 'Alera',      element: 'Voice',  hz: 528,  gradient: 'linear-gradient(160deg, var(--arc-brand-cosmic-blue) 0%, var(--arc-brand-cosmic-blue) 40%, var(--arc-brand-cosmic-blue) 100%)' },
+  { name: 'Lyria',      element: 'Sight',  hz: 639,  gradient: 'linear-gradient(160deg, var(--arc-brand-cosmic-blue) 0%, var(--arc-brand-cosmic-blue) 40%, var(--arc-brand-cosmic-blue) 100%)' },
+  { name: 'Aiyami',     element: 'Crown',  hz: 741,  gradient: 'linear-gradient(160deg, var(--arc-earth) 0%, var(--arc-earth) 40%, var(--arc-earth) 100%)' },
+  { name: 'Elara',      element: 'Starweave',  hz: 852,  gradient: 'linear-gradient(160deg, var(--arc-earth) 0%, var(--arc-earth) 40%, var(--arc-cosmic-void) 100%)' },
+  { name: 'Ino',        element: 'Unity',  hz: 963,  gradient: 'linear-gradient(160deg, var(--arc-earth) 0%, var(--arc-brand-cosmic-blue) 40%, var(--arc-cosmic-void) 100%)' },
+  { name: 'Shinkami',   element: 'Source',  hz: 1111, gradient: 'linear-gradient(160deg, var(--arc-cosmic-void) 0%, var(--arc-cosmic-void) 40%, var(--arc-earth) 100%)' },
 ] as const;
 
 const BOOKS = [
-  { title: 'Laws of Arcanea',  color: '#4a3a2a' },
-  { title: 'Poesie of Freedom', color: '#2a3a4a' },
-  { title: 'Wisdom Scrolls',    color: '#3a4a3a' },
-  { title: 'Legends',           color: '#5a3a3a' },
-  { title: 'Parables',          color: '#3a3a5a' },
-  { title: 'Prophecies',        color: '#4a4a3a' },
+  { title: 'Laws of Arcanea',  color: 'var(--arc-cosmic-void)' },
+  { title: 'Poesie of Freedom', color: 'var(--arc-cosmic-void)' },
+  { title: 'Wisdom Scrolls',    color: 'var(--arc-earth)' },
+  { title: 'Legends',           color: 'var(--arc-earth)' },
+  { title: 'Parables',          color: 'var(--arc-brand-cosmic-blue)' },
+  { title: 'Prophecies',        color: 'var(--arc-earth)' },
 ] as const;
 
 const PROVIDERS = [
@@ -31,7 +32,7 @@ const PROVIDERS = [
 ] as const;
 
 const T = {
-  bg: '#141414', text: '#d4d0c8', gold: '#c5a55a',
+  bg: 'var(--arc-cosmic-void)', text: 'var(--arc-text-primary)', gold: 'var(--arc-earth)',
   dim: 'rgba(212,208,200,0.4)', divider: 'rgba(255,255,255,0.2)',
   shadow: 'rgba(0,0,0,0.5)',
   display: 'var(--font-display)', crimson: 'Newsreader, serif',

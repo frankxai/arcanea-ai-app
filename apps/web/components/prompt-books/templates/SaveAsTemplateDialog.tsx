@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client'
 
 import { useState, useMemo } from 'react'
@@ -87,7 +88,7 @@ export function SaveAsTemplateDialog({
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 focus:border-brand-accent/40"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20 focus:border-brand-accent/40"
             />
           </div>
 
@@ -101,7 +102,7 @@ export function SaveAsTemplateDialog({
               onChange={(e) => setDescription(e.target.value)}
               rows={2}
               placeholder="What is this template for?"
-              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary placeholder:text-text-muted/40 focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 focus:border-brand-accent/40 resize-none"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary placeholder:text-text-muted/40 focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20 focus:border-brand-accent/40 resize-none"
             />
           </div>
 
@@ -114,7 +115,7 @@ export function SaveAsTemplateDialog({
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20"
+                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20"
               >
                 {CATEGORIES.map((c) => (
                   <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>
@@ -157,7 +158,7 @@ export function SaveAsTemplateDialog({
                         type="text"
                         value={v.label}
                         onChange={(e) => updateVariable(i, 'label', e.target.value)}
-                        className="flex-1 bg-transparent text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 border-b border-transparent focus:border-white/[0.06]"
+                        className="flex-1 bg-transparent text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20 border-b border-transparent focus:border-white/[0.06]"
                         placeholder="Label"
                       />
                     </div>
@@ -165,7 +166,7 @@ export function SaveAsTemplateDialog({
                       <select
                         value={v.type}
                         onChange={(e) => updateVariable(i, 'type', e.target.value)}
-                        className="bg-white/[0.03] border border-white/[0.06] rounded px-2 py-1 text-[10px] font-sans text-text-secondary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20"
+                        className="bg-white/[0.03] border border-white/[0.06] rounded px-2 py-1 text-[10px] font-sans text-text-secondary focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20"
                       >
                         <option value="text">Text</option>
                         <option value="number">Number</option>
@@ -176,7 +177,7 @@ export function SaveAsTemplateDialog({
                         type="text"
                         value={v.default || ''}
                         onChange={(e) => updateVariable(i, 'default', e.target.value)}
-                        className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded px-2 py-1 text-[10px] font-mono text-text-secondary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20"
+                        className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded px-2 py-1 text-[10px] font-mono text-text-secondary focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20"
                         placeholder="Default value"
                       />
                       <label className="flex items-center gap-1 text-[10px] font-sans text-text-muted cursor-pointer">

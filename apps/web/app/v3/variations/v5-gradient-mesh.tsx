@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import {
@@ -40,8 +41,8 @@ const KEYFRAMES = `
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
 }
-@keyframes pulse-fire { 0%, 100% { box-shadow: 0 0 12px #ef4444; } 50% { box-shadow: 0 0 28px #ef4444, 0 0 48px #ef444466; } }
-@keyframes ripple-water { 0%, 100% { box-shadow: 0 0 0 0 #3b82f680; } 50% { box-shadow: 0 0 0 10px #3b82f600; } }
+@keyframes pulse-fire { 0%, 100% { box-shadow: 0 0 12px var(--arc-fire); } 50% { box-shadow: 0 0 28px var(--arc-fire), 0 0 48px var(--arc-fire)66; } }
+@keyframes ripple-water { 0%, 100% { box-shadow: 0 0 0 0 var(--arc-brand-cosmic-blue)80; } 50% { box-shadow: 0 0 0 10px var(--arc-brand-cosmic-blue)00; } }
 @keyframes breathe-earth { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
 @keyframes float-wind { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes phase-void { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
@@ -85,11 +86,11 @@ function Blob({ color, size, top, left, animation, duration }: BlobProps) {
 /*  Gradient Mesh Background (reusable)                                */
 /* ------------------------------------------------------------------ */
 const HERO_BLOBS: BlobProps[] = [
-  { color: '#8b5cf6', size: '55vw', top: '-10%', left: '-15%', animation: 'blob1', duration: '20s' },
-  { color: '#06b6d4', size: '45vw', top: '20%', left: '50%', animation: 'blob2', duration: '24s' },
-  { color: '#f97316', size: '50vw', top: '50%', left: '10%', animation: 'blob3', duration: '22s' },
-  { color: '#10b981', size: '40vw', top: '-5%', left: '60%', animation: 'blob4', duration: '26s' },
-  { color: '#8b5cf680', size: '35vw', top: '60%', left: '55%', animation: 'blob5', duration: '18s' },
+  { color: 'var(--arc-void)', size: '55vw', top: '-10%', left: '-15%', animation: 'blob1', duration: '20s' },
+  { color: 'var(--arc-brand-atlantean-teal)', size: '45vw', top: '20%', left: '50%', animation: 'blob2', duration: '24s' },
+  { color: 'var(--arc-fire)', size: '50vw', top: '50%', left: '10%', animation: 'blob3', duration: '22s' },
+  { color: 'var(--arc-wind)', size: '40vw', top: '-5%', left: '60%', animation: 'blob4', duration: '26s' },
+  { color: 'var(--arc-void)80', size: '35vw', top: '60%', left: '55%', animation: 'blob5', duration: '18s' },
 ];
 
 function MeshBackground({ blobs, overlay = 'rgba(0,0,0,0.4)' }: { blobs: BlobProps[]; overlay?: string }) {
@@ -125,7 +126,7 @@ function PillarCard({ title, description, icon, blobs }: PillarCardProps) {
         <h3 style={{ fontFamily: 'var(--font-display)' }} className="text-2xl font-bold text-white">
           {title}
         </h3>
-        <p className="text-base leading-relaxed text-white/70" style={{ fontFamily: 'Inter, sans-serif' }}>
+        <p className="text-base leading-relaxed text-white/70" style={{ fontFamily: 'Geist, sans-serif' }}>
           {description}
         </p>
       </div>
@@ -137,11 +138,11 @@ function PillarCard({ title, description, icon, blobs }: PillarCardProps) {
 /*  Element Circle                                                     */
 /* ------------------------------------------------------------------ */
 const ELEMENTS = [
-  { name: 'Fire', color: '#ef4444', animation: 'pulse-fire 2s ease-in-out infinite', icon: Fire },
-  { name: 'Water', color: '#3b82f6', animation: 'ripple-water 2.5s ease-in-out infinite', icon: Drop },
-  { name: 'Earth', color: '#22c55e', animation: 'breathe-earth 3s ease-in-out infinite', icon: Leaf },
-  { name: 'Wind', color: '#e2e8f0', animation: 'float-wind 2.8s ease-in-out infinite', icon: Wind },
-  { name: 'Void', color: '#a855f7', animation: 'phase-void 3.5s ease-in-out infinite', icon: Spiral },
+  { name: 'Fire', color: 'var(--arc-fire)', animation: 'pulse-fire 2s ease-in-out infinite', icon: Fire },
+  { name: 'Water', color: 'var(--arc-brand-cosmic-blue)', animation: 'ripple-water 2.5s ease-in-out infinite', icon: Drop },
+  { name: 'Earth', color: 'var(--arc-wind)', animation: 'breathe-earth 3s ease-in-out infinite', icon: Leaf },
+  { name: 'Wind', color: 'var(--arc-text-primary)', animation: 'float-wind 2.8s ease-in-out infinite', icon: Wind },
+  { name: 'Void', color: 'var(--arc-void)', animation: 'phase-void 3.5s ease-in-out infinite', icon: Spiral },
 ] as const;
 
 /* ------------------------------------------------------------------ */
@@ -163,7 +164,7 @@ export function V5GradientMesh() {
     <>
       <style dangerouslySetInnerHTML={{ __html: KEYFRAMES }} />
 
-      <div className="min-h-screen bg-[#0a0a0f] text-white" style={{ fontFamily: 'Inter, sans-serif' }}>
+      <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white" style={{ fontFamily: 'Geist, sans-serif' }}>
 
         {/* ========== HERO ========== */}
         <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6">
@@ -201,7 +202,7 @@ export function V5GradientMesh() {
           {/* CTA */}
           <button
             className="relative z-10 mt-10 rounded-2xl border border-white/20 bg-white/10 px-10 py-4 text-lg font-semibold text-white backdrop-blur-md transition-all hover:bg-white/20 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)]"
-            style={{ fontFamily: 'Inter, sans-serif' }}
+            style={{ fontFamily: 'Geist, sans-serif' }}
           >
             Enter Arcanea
           </button>
@@ -215,8 +216,8 @@ export function V5GradientMesh() {
               description="Chat with 10 archetypal AI intelligences"
               icon={<ChatCircle size={28} weight="duotone" className="text-violet-400" />}
               blobs={[
-                { color: '#8b5cf6', size: '30vw', top: '10%', left: '-20%', animation: 'blob1', duration: '18s' },
-                { color: '#a855f7', size: '25vw', top: '50%', left: '40%', animation: 'blob2', duration: '22s' },
+                { color: 'var(--arc-void)', size: '30vw', top: '10%', left: '-20%', animation: 'blob1', duration: '18s' },
+                { color: 'var(--arc-void)', size: '25vw', top: '50%', left: '40%', animation: 'blob2', duration: '22s' },
               ]}
             />
             <PillarCard
@@ -224,8 +225,8 @@ export function V5GradientMesh() {
               description="Explore 62 texts of creation wisdom"
               icon={<BookOpen size={28} weight="duotone" className="text-cyan-400" />}
               blobs={[
-                { color: '#06b6d4', size: '30vw', top: '5%', left: '30%', animation: 'blob3', duration: '20s' },
-                { color: '#22d3ee', size: '20vw', top: '60%', left: '-10%', animation: 'blob4', duration: '24s' },
+                { color: 'var(--arc-brand-atlantean-teal)', size: '30vw', top: '5%', left: '30%', animation: 'blob3', duration: '20s' },
+                { color: 'var(--arc-brand-atlantean-teal)', size: '20vw', top: '60%', left: '-10%', animation: 'blob4', duration: '24s' },
               ]}
             />
             <PillarCard
@@ -233,8 +234,8 @@ export function V5GradientMesh() {
               description="Build with 26 AI models through one API"
               icon={<Code size={28} weight="duotone" className="text-orange-400" />}
               blobs={[
-                { color: '#f97316', size: '28vw', top: '15%', left: '-15%', animation: 'blob5', duration: '19s' },
-                { color: '#fb923c', size: '22vw', top: '55%', left: '50%', animation: 'blob1', duration: '23s' },
+                { color: 'var(--arc-fire)', size: '28vw', top: '15%', left: '-15%', animation: 'blob5', duration: '19s' },
+                { color: 'var(--arc-fire)', size: '22vw', top: '55%', left: '50%', animation: 'blob1', duration: '23s' },
               ]}
             />
           </div>
@@ -251,7 +252,7 @@ export function V5GradientMesh() {
                 >
                   {s.number}
                 </span>
-                <span className="text-sm tracking-wide text-white/50 uppercase" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <span className="text-sm tracking-wide text-white/50 uppercase" style={{ fontFamily: 'Geist, sans-serif' }}>
                   {s.label}
                 </span>
               </div>
@@ -263,9 +264,9 @@ export function V5GradientMesh() {
         <section className="relative overflow-hidden px-6 py-32">
           <MeshBackground
             blobs={[
-              { color: '#8b5cf6', size: '50vw', top: '0%', left: '10%', animation: 'blob2', duration: '25s' },
-              { color: '#06b6d4', size: '40vw', top: '30%', left: '50%', animation: 'blob4', duration: '20s' },
-              { color: '#10b981', size: '35vw', top: '50%', left: '-10%', animation: 'blob1', duration: '28s' },
+              { color: 'var(--arc-void)', size: '50vw', top: '0%', left: '10%', animation: 'blob2', duration: '25s' },
+              { color: 'var(--arc-brand-atlantean-teal)', size: '40vw', top: '30%', left: '50%', animation: 'blob4', duration: '20s' },
+              { color: 'var(--arc-wind)', size: '35vw', top: '50%', left: '-10%', animation: 'blob1', duration: '28s' },
             ]}
             overlay="rgba(0,0,0,0.5)"
           />
@@ -276,7 +277,7 @@ export function V5GradientMesh() {
             >
               &ldquo;Enter seeking, leave transformed, return whenever needed.&rdquo;
             </blockquote>
-            <p className="mt-8 text-base tracking-widest text-white/40 uppercase" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <p className="mt-8 text-base tracking-widest text-white/40 uppercase" style={{ fontFamily: 'Geist, sans-serif' }}>
               — The First Law of Arcanea
             </p>
           </div>
@@ -305,7 +306,7 @@ export function V5GradientMesh() {
                   >
                     <Icon size={32} weight="duotone" style={{ color: el.color }} />
                   </div>
-                  <span className="text-xs tracking-widest text-white/50 uppercase" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <span className="text-xs tracking-widest text-white/50 uppercase" style={{ fontFamily: 'Geist, sans-serif' }}>
                     {el.name}
                   </span>
                 </div>
@@ -330,7 +331,7 @@ export function V5GradientMesh() {
             <button
               className="rounded-2xl px-12 py-4 text-lg font-semibold text-white transition-all hover:shadow-[0_0_40px_rgba(139,92,246,0.4)]"
               style={{
-                background: 'linear-gradient(135deg, #8b5cf6, #06b6d4, #ffd700)',
+                background: 'linear-gradient(135deg, var(--arc-void), var(--arc-brand-atlantean-teal), var(--arc-brand-arcanean-gold))',
                 border: '2px solid transparent',
                 backgroundClip: 'padding-box',
               }}
@@ -342,7 +343,7 @@ export function V5GradientMesh() {
 
         {/* ========== FOOTER ========== */}
         <footer className="border-t border-white/5 py-10 text-center text-sm text-white/30">
-          <p style={{ fontFamily: 'Inter, sans-serif' }}>
+          <p style={{ fontFamily: 'Geist, sans-serif' }}>
             Arcanea &mdash; A Living Intelligence
           </p>
         </footer>

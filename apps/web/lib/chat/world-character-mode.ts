@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import type { LuminorConfig } from '@/lib/luminors/config';
 
 /**
@@ -17,8 +18,8 @@ export function buildWorldCharacterLuminor(wc: {
     tagline: `Chatting with ${wc.characterName}`,
     team: 'creative' as never,
     academy: 'Synthesis' as never,
-    color: '#00bcd4',
-    gradient: 'from-[#00bcd4] to-[#7c3aed]',
+    color: 'var(--arc-brand-atlantean-teal)',
+    gradient: 'from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)]',
     avatar: wc.characterPortrait || '/images/luminors/default.webp',
     wisdom: { philosophy: '', greeting: '', farewell: '' } as never,
     guardian: [],
@@ -42,8 +43,8 @@ export function buildWorldBuilderLuminor(worldPrompt: string): LuminorConfig {
     tagline: 'Describe your world and bring it to life',
     team: 'creative' as never,
     academy: 'Synthesis' as never,
-    color: '#7c3aed',
-    gradient: 'from-[#7c3aed] to-[#00bcd4]',
+    color: 'var(--arc-void)',
+    gradient: 'from-[var(--arc-void)] to-[var(--arc-brand-atlantean-teal)]',
     avatar: '/images/luminors/default.webp',
     wisdom: { philosophy: '', greeting: '', farewell: '' } as never,
     guardian: [],

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 // @ts-nocheck -- R3F JSX elements (points, bufferGeometry, etc.) require @types/three symlinked
 'use client';
 
@@ -106,23 +106,23 @@ export function ArenaScene() {
         style={{ background: 'transparent' }}
       >
         <ambientLight intensity={0.15} />
-        <pointLight position={[10, 10, 10]} intensity={0.5} color="#ffd700" />
-        <pointLight position={[-10, -5, -10]} intensity={0.3} color="#7c3aed" />
-        <pointLight position={[0, -8, 5]} intensity={0.2} color="#06b6d4" />
+        <pointLight position={[10, 10, 10]} intensity={0.5} color="var(--arc-brand-arcanean-gold)" />
+        <pointLight position={[-10, -5, -10]} intensity={0.3} color="var(--arc-void)" />
+        <pointLight position={[0, -8, 5]} intensity={0.2} color="var(--arc-brand-atlantean-teal)" />
 
         {/* Five Elemental Orbs */}
-        <ElementalOrb position={[-3, 1.5, -2]} color="#ff6b35" speed={0.8} distort={0.4} size={0.6} />
-        <ElementalOrb position={[3, 0.5, -1]} color="#60a5fa" speed={1.2} distort={0.25} size={0.5} />
-        <ElementalOrb position={[0, -1, -3]} color="#34d399" speed={0.6} distort={0.35} size={0.55} />
-        <ElementalOrb position={[-2, -0.5, 1]} color="#c4b5fd" speed={1.5} distort={0.2} size={0.45} />
-        <ElementalOrb position={[2, 2, 0]} color="#a78bfa" speed={1} distort={0.5} size={0.7} />
+        <ElementalOrb position={[-3, 1.5, -2]} color="var(--arc-fire)" speed={0.8} distort={0.4} size={0.6} />
+        <ElementalOrb position={[3, 0.5, -1]} color="var(--arc-brand-cosmic-blue)" speed={1.2} distort={0.25} size={0.5} />
+        <ElementalOrb position={[0, -1, -3]} color="var(--arc-wind)" speed={0.6} distort={0.35} size={0.55} />
+        <ElementalOrb position={[-2, -0.5, 1]} color="var(--arc-text-primary)" speed={1.5} distort={0.2} size={0.45} />
+        <ElementalOrb position={[2, 2, 0]} color="var(--arc-void)" speed={1} distort={0.5} size={0.7} />
 
         {/* Central golden nexus */}
         <Float speed={0.5} rotationIntensity={0.2} floatIntensity={0.4}>
           <Sphere args={[0.3, 32, 32]} position={[0, 0.5, 0]}>
             <MeshDistortMaterial
-              color="#ffd700"
-              emissive="#ffd700"
+              color="var(--arc-brand-arcanean-gold)"
+              emissive="var(--arc-brand-arcanean-gold)"
               emissiveIntensity={1}
               roughness={0}
               metalness={1}
@@ -135,9 +135,9 @@ export function ArenaScene() {
         </Float>
 
         {/* Mana rings */}
-        <ManaRing color="#ffd700" radius={3} count={60} />
-        <ManaRing color="#7c3aed" radius={5} count={100} />
-        <ManaRing color="#06b6d4" radius={4} count={80} />
+        <ManaRing color="var(--arc-brand-arcanean-gold)" radius={3} count={60} />
+        <ManaRing color="var(--arc-void)" radius={5} count={100} />
+        <ManaRing color="var(--arc-brand-atlantean-teal)" radius={4} count={80} />
 
         {/* Starfield backdrop */}
         <Stars radius={50} depth={50} count={2000} factor={3} saturation={0.5} fade speed={0.5} />

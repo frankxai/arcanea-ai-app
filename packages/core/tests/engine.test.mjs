@@ -122,11 +122,12 @@ describe('DesignTokens', () => {
     assert.ok(json.includes('7fffd4') || json.includes('teal'), 'Missing teal');
   });
 
-  it('FONTS should include Cinzel and Crimson Pro', () => {
+  it('FONTS should use Geist + Instrument Serif + JetBrains Mono (2026 stack)', () => {
     assert.ok(FONTS, 'FONTS not exported');
     const json = JSON.stringify(FONTS);
-    assert.ok(json.includes('Cinzel'), 'Missing Cinzel');
-    assert.ok(json.includes('Crimson'), 'Missing Crimson Pro');
+    assert.ok(json.includes('Geist'), 'Missing Geist (canonical UI font)');
+    assert.ok(json.includes('Instrument Serif'), 'Missing Instrument Serif (editorial)');
+    assert.ok(json.includes('JetBrains Mono'), 'Missing JetBrains Mono (code)');
   });
 
   it('toCSSVariables should return valid CSS', () => {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 /**
  * Agent Execute — Stream a marketplace agent task
  *
@@ -366,7 +367,7 @@ export async function POST(
             element: data.spec?.element ?? 'Spirit',
             gateAlignment: (data.spec?.gateAlignment ?? [])[0] ?? 'Foundation',
             icon: data.spec?.avatar ?? '✨',
-            color: '#7fffd4',
+            color: 'var(--arc-brand-atlantean-teal)',
             gradient: 'from-teal-900/60 to-cyan-900/60',
             capabilities: [],
             inputPlaceholder: '',

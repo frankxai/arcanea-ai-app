@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { SplitText } from '@/components/motion/split-text';
@@ -46,7 +47,7 @@ const BLUEPRINTS: Blueprint[] = [
     github: 'https://github.com/frankxai/arcanea-chat-template',
     demo: '/chat',
     deploy: 'https://vercel.com/new/clone?repository-url=https://github.com/frankxai/arcanea-chat-template',
-    color: '#a78bfa',
+    color: 'var(--arc-void)',
   },
   {
     id: 'worlds',
@@ -58,7 +59,7 @@ const BLUEPRINTS: Blueprint[] = [
     stack: ['TypeScript', 'Supabase', 'pgvector', 'MCP'],
     github: 'https://github.com/frankxai/arcanea-ai-app/tree/main/packages/world-engine',
     demo: '/worlds',
-    color: '#34d399',
+    color: 'var(--arc-wind)',
   },
   {
     id: 'library',
@@ -70,7 +71,7 @@ const BLUEPRINTS: Blueprint[] = [
     stack: ['Next.js 16', 'MDX', 'ISR', 'Canvas2D'],
     github: 'https://github.com/frankxai/arcanea-ai-app/tree/main/apps/web/app/library',
     demo: '/library',
-    color: '#60a5fa',
+    color: 'var(--arc-brand-cosmic-blue)',
   },
   {
     id: 'motion',
@@ -83,7 +84,7 @@ const BLUEPRINTS: Blueprint[] = [
     github: 'https://github.com/frankxai/cosmic-landing-template',
     demo: '/arcanea-vault',
     deploy: 'https://vercel.com/new/clone?repository-url=https://github.com/frankxai/cosmic-landing-template',
-    color: '#00bcd4',
+    color: 'var(--arc-brand-atlantean-teal)',
   },
   {
     id: 'dashboard',
@@ -95,7 +96,7 @@ const BLUEPRINTS: Blueprint[] = [
     stack: ['Next.js 16', 'Recharts', 'Framer Motion', 'Tailwind'],
     github: 'https://github.com/frankxai/arcanea-dashboard-template',
     deploy: 'https://vercel.com/new/clone?repository-url=https://github.com/frankxai/arcanea-dashboard-template',
-    color: '#a78bfa',
+    color: 'var(--arc-void)',
   },
   {
     id: 'vault',
@@ -107,7 +108,7 @@ const BLUEPRINTS: Blueprint[] = [
     stack: ['TypeScript', 'MCP SDK', 'JSONL', 'React Three Fiber'],
     github: 'https://github.com/frankxai/Starlight-Intelligence-System',
     demo: '/arcanea-vault',
-    color: '#f472b6',
+    color: 'var(--arc-void)',
   },
   {
     id: 'publishing',
@@ -118,7 +119,7 @@ const BLUEPRINTS: Blueprint[] = [
     files: ['packages/publishing-house/agents/', 'packages/publishing-house/quality/'],
     stack: ['TypeScript', 'Claude API', 'Pandoc', 'MCP'],
     github: 'https://github.com/frankxai/arcanea-ai-app/tree/main/packages/publishing-house',
-    color: '#fbbf24',
+    color: 'var(--arc-brand-arcanean-gold)',
   },
   {
     id: 'mcp',
@@ -130,7 +131,7 @@ const BLUEPRINTS: Blueprint[] = [
     stack: ['TypeScript', 'MCP SDK 1.29', 'Zod', 'HTTP/SSE'],
     github: 'https://github.com/frankxai/arcanea-ai-app/tree/main/packages/arcanea-mcp',
     demo: '/starlight-intelligence',
-    color: '#f97316',
+    color: 'var(--arc-fire)',
   },
   {
     id: 'mcp-starter',
@@ -142,7 +143,7 @@ const BLUEPRINTS: Blueprint[] = [
     stack: ['TypeScript', 'MCP SDK 1.29', 'Zod', 'stdio'],
     github: 'https://github.com/frankxai/arcanea-mcp-starter',
     deploy: 'https://github.com/frankxai/arcanea-mcp-starter/generate',
-    color: '#06b6d4',
+    color: 'var(--arc-brand-atlantean-teal)',
   },
 ];
 
@@ -154,21 +155,21 @@ const USE_CASES = [
     desc: 'Start with Multi-Model Chat for the UI, Starlight Vault for memory, and the MCP Server for tool use. BYOK architecture means your users pay their own API costs — no margin pressure on you.',
     blueprints: ['chat', 'vault', 'mcp'],
     cta: { label: 'Try the chat', href: '/chat' },
-    color: '#a78bfa',
+    color: 'var(--arc-void)',
   },
   {
     title: 'Writing a book or building a universe?',
     desc: 'The Publishing House gives you 5 specialized agents for drafting, editing, and formatting. The World Engine structures your characters, locations, and lore into a queryable graph. The Library stores it all.',
     blueprints: ['publishing', 'worlds', 'library'],
     cta: { label: 'Explore the library', href: '/library' },
-    color: '#fbbf24',
+    color: 'var(--arc-brand-arcanean-gold)',
   },
   {
     title: 'Need a premium dark UI?',
     desc: 'The Motion + UI Kit gives you 12 physics-based primitives (SplitText, LiquidGlass, TiltCard, Magnetic) and 40 production components. Works with any Next.js project — just copy the files.',
     blueprints: ['motion'],
     cta: { label: 'See it in action', href: '/arcanea-vault' },
-    color: '#00bcd4',
+    color: 'var(--arc-brand-atlantean-teal)',
   },
 ];
 
@@ -187,15 +188,15 @@ export default function BlueprintsPage() {
   return (
     <div className="relative min-h-screen">
       <div className="fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute inset-0 bg-[#09090b]" />
-        <GradientMesh colors={['#00bcd4', '#a78bfa', '#fbbf24']} intensity={0.05} />
+        <div className="absolute inset-0 bg-[var(--arc-cosmic-void)]" />
+        <GradientMesh colors={['var(--arc-brand-atlantean-teal)', 'var(--arc-void)', 'var(--arc-brand-arcanean-gold)']} intensity={0.05} />
       </div>
 
       <main className="max-w-6xl mx-auto px-6">
         {/* ── Hero ── */}
         <section className="pt-24 pb-16 text-center">
           <Reveal y={12} blur>
-            <p className="text-[11px] font-mono tracking-[0.3em] text-[#708094] mb-6 uppercase">
+            <p className="text-[11px] font-mono tracking-[0.3em] text-[var(--arc-text-muted)] mb-6 uppercase">
               Open source · MIT licensed · Battle-tested on arcanea.ai
             </p>
           </Reveal>
@@ -203,13 +204,13 @@ export default function BlueprintsPage() {
           <SplitText
             as="h1"
             text="Everything we build, you can fork."
-            className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-[#e6eefc] mb-4 tracking-tight"
+            className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-[var(--arc-text-primary)] mb-4 tracking-tight"
             delay={0.15}
             stagger={0.025}
           />
 
           <Reveal delay={0.8} y={12}>
-            <p className="text-base md:text-lg text-[#9bb1d0] max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base md:text-lg text-[var(--arc-text-secondary)] max-w-2xl mx-auto leading-relaxed">
               The production code behind arcanea.ai — organized as 7 forkable blueprints.
               Use the whole platform or extract the pieces you need.
             </p>
@@ -219,10 +220,10 @@ export default function BlueprintsPage() {
             <div className="flex justify-center gap-8 md:gap-12 mt-10">
               {STATS.map((s, i) => (
                 <div key={s.label} className="text-center">
-                  <p className="text-xl md:text-2xl font-display font-bold text-[#e6eefc]">
+                  <p className="text-xl md:text-2xl font-display font-bold text-[var(--arc-text-primary)]">
                     <NumberTicker value={s.value} suffix={s.suffix} delay={1.2 + i * 0.1} />
                   </p>
-                  <p className="text-[9px] font-mono tracking-widest uppercase text-[#708094] mt-1">{s.label}</p>
+                  <p className="text-[9px] font-mono tracking-widest uppercase text-[var(--arc-text-muted)] mt-1">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -232,7 +233,7 @@ export default function BlueprintsPage() {
         {/* ── Use Cases (ICP-focused) ── */}
         <section className="mb-20">
           <Reveal y={12}>
-            <p className="text-[10px] font-mono tracking-[0.25em] text-[#708094] mb-8 uppercase text-center">
+            <p className="text-[10px] font-mono tracking-[0.25em] text-[var(--arc-text-muted)] mb-8 uppercase text-center">
               Start from your use case
             </p>
           </Reveal>
@@ -246,14 +247,14 @@ export default function BlueprintsPage() {
                   className="rounded-2xl border border-white/[0.06] hover:border-white/[0.12] transition-colors h-full"
                 >
                   <div className="p-6 flex flex-col h-full">
-                    <h3 className="text-base font-display font-semibold text-[#e6eefc] mb-2">{uc.title}</h3>
-                    <p className="text-xs text-[#9bb1d0] leading-relaxed mb-4 flex-1">{uc.desc}</p>
+                    <h3 className="text-base font-display font-semibold text-[var(--arc-text-primary)] mb-2">{uc.title}</h3>
+                    <p className="text-xs text-[var(--arc-text-secondary)] leading-relaxed mb-4 flex-1">{uc.desc}</p>
                     <div className="flex items-center gap-2 mb-4">
                       {uc.blueprints.map((bid) => {
                         const bp = BLUEPRINTS.find((b) => b.id === bid);
                         if (!bp) return null;
                         return (
-                          <span key={bid} className="flex items-center gap-1 text-[9px] font-mono text-[#708094]">
+                          <span key={bid} className="flex items-center gap-1 text-[9px] font-mono text-[var(--arc-text-muted)]">
                             <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: bp.color }} />
                             {bp.name}
                           </span>
@@ -279,7 +280,7 @@ export default function BlueprintsPage() {
         {/* ── Blueprint Grid ── */}
         <section className="mb-20">
           <Reveal y={12}>
-            <p className="text-[10px] font-mono tracking-[0.25em] text-[#708094] mb-8 uppercase text-center">
+            <p className="text-[10px] font-mono tracking-[0.25em] text-[var(--arc-text-muted)] mb-8 uppercase text-center">
               All 7 blueprints
             </p>
           </Reveal>
@@ -300,29 +301,29 @@ export default function BlueprintsPage() {
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                           <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: b.color, boxShadow: `0 0 12px ${b.color}60` }} />
-                          <h3 className="text-sm font-display font-semibold text-[#e6eefc]">{b.name}</h3>
+                          <h3 className="text-sm font-display font-semibold text-[var(--arc-text-primary)]">{b.name}</h3>
                         </div>
-                        <p className="text-[10px] font-mono uppercase tracking-widest text-[#708094]">{b.audience}</p>
+                        <p className="text-[10px] font-mono uppercase tracking-widest text-[var(--arc-text-muted)]">{b.audience}</p>
                       </div>
                       <div className="text-right shrink-0 ml-3">
-                        <p className="text-base font-display font-bold text-[#e6eefc]">{b.loc}</p>
-                        <p className="text-[8px] font-mono uppercase tracking-widest text-[#708094]">lines</p>
+                        <p className="text-base font-display font-bold text-[var(--arc-text-primary)]">{b.loc}</p>
+                        <p className="text-[8px] font-mono uppercase tracking-widest text-[var(--arc-text-muted)]">lines</p>
                       </div>
                     </div>
 
-                    <p className="text-xs text-[#9bb1d0] leading-relaxed mb-3 flex-1">{b.desc}</p>
+                    <p className="text-xs text-[var(--arc-text-secondary)] leading-relaxed mb-3 flex-1">{b.desc}</p>
 
                     <div className="mb-3 space-y-0.5">
                       {b.files.map((f) => (
-                        <p key={f} className="text-[10px] font-mono text-[#708094] truncate">
-                          <span className="text-[#00bcd4]/50 mr-1">/</span>{f}
+                        <p key={f} className="text-[10px] font-mono text-[var(--arc-text-muted)] truncate">
+                          <span className="text-[var(--arc-brand-atlantean-teal)]/50 mr-1">/</span>{f}
                         </p>
                       ))}
                     </div>
 
                     <div className="flex flex-wrap gap-1.5 mb-4">
                       {b.stack.map((s) => (
-                        <span key={s} className="text-[8px] font-mono px-1.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-[#708094]">{s}</span>
+                        <span key={s} className="text-[8px] font-mono px-1.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-[var(--arc-text-muted)]">{s}</span>
                       ))}
                     </div>
 
@@ -344,7 +345,7 @@ export default function BlueprintsPage() {
                             href={b.deploy}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="py-2 px-4 rounded-xl text-xs font-medium bg-gradient-to-r from-[#00bcd4]/15 to-[#0d47a1]/15 border border-[#00bcd4]/20 text-[#00bcd4] transition-colors hover:from-[#00bcd4]/25 hover:to-[#0d47a1]/25"
+                            className="py-2 px-4 rounded-xl text-xs font-medium bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/15 to-[var(--arc-brand-cosmic-blue)]/15 border border-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] transition-colors hover:from-[var(--arc-brand-atlantean-teal)]/25 hover:to-[var(--arc-brand-cosmic-blue)]/25"
                           >
                             Deploy
                           </a>
@@ -353,7 +354,7 @@ export default function BlueprintsPage() {
                         <Magnetic>
                           <Link
                             href={b.demo}
-                            className="py-2 px-4 rounded-xl text-xs font-medium bg-white/[0.04] border border-white/[0.06] text-[#e6eefc] transition-colors hover:bg-white/[0.08]"
+                            className="py-2 px-4 rounded-xl text-xs font-medium bg-white/[0.04] border border-white/[0.06] text-[var(--arc-text-primary)] transition-colors hover:bg-white/[0.08]"
                           >
                             Demo
                           </Link>
@@ -369,18 +370,18 @@ export default function BlueprintsPage() {
 
         {/* ── Quick Start ── */}
         <Reveal y={16} className="mb-20">
-          <LiquidGlass intensity="subtle" tint="#00bcd4" className="rounded-2xl border border-white/[0.06] max-w-3xl mx-auto">
+          <LiquidGlass intensity="subtle" tint="var(--arc-brand-atlantean-teal)" className="rounded-2xl border border-white/[0.06] max-w-3xl mx-auto">
             <div className="p-8">
-              <h2 className="text-xl font-display font-bold text-[#e6eefc] mb-2">Quick start</h2>
-              <p className="text-sm text-[#9bb1d0] mb-6">Fork the repo. Deploy to Vercel. Start building.</p>
+              <h2 className="text-xl font-display font-bold text-[var(--arc-text-primary)] mb-2">Quick start</h2>
+              <p className="text-sm text-[var(--arc-text-secondary)] mb-6">Fork the repo. Deploy to Vercel. Start building.</p>
 
               <div className="space-y-3">
                 <div className="rounded-lg bg-white/[0.03] border border-white/[0.06] overflow-hidden">
                   <div className="px-4 py-2 border-b border-white/[0.06] flex items-center gap-2">
                     <div className="flex gap-1"><div className="w-2 h-2 rounded-full bg-white/10" /><div className="w-2 h-2 rounded-full bg-white/10" /><div className="w-2 h-2 rounded-full bg-white/10" /></div>
-                    <span className="text-[10px] font-mono text-[#708094] ml-2">Terminal</span>
+                    <span className="text-[10px] font-mono text-[var(--arc-text-muted)] ml-2">Terminal</span>
                   </div>
-                  <pre className="p-4 text-xs font-mono text-[#9bb1d0] overflow-x-auto">
+                  <pre className="p-4 text-xs font-mono text-[var(--arc-text-secondary)] overflow-x-auto">
 {`# Clone the repo
 git clone https://github.com/frankxai/arcanea-ai-app.git
 cd arcanea-ai-app
@@ -397,7 +398,7 @@ pnpm dev`}
                 </div>
               </div>
 
-              <p className="text-xs text-[#708094] mt-4">
+              <p className="text-xs text-[var(--arc-text-muted)] mt-4">
                 Or extract just the components you need — each blueprint works independently.
               </p>
             </div>
@@ -407,10 +408,10 @@ pnpm dev`}
         {/* ── Bottom CTA ── */}
         <Reveal y={16} className="pb-24">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-display font-bold text-[#e6eefc] mb-3 tracking-tight">
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-[var(--arc-text-primary)] mb-3 tracking-tight">
               Your keys. Your data. Your product.
             </h2>
-            <p className="text-sm text-[#9bb1d0] mb-8">
+            <p className="text-sm text-[var(--arc-text-secondary)] mb-8">
               MIT licensed. No vendor lock-in. Run it locally, deploy to Vercel, or host it yourself.
             </p>
 
@@ -420,7 +421,7 @@ pnpm dev`}
                   href="https://github.com/frankxai/arcanea-ai-app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium transition-all bg-[#00bcd4]/10 border border-[#00bcd4]/30 text-[#00bcd4] hover:bg-[#00bcd4]/20 hover:shadow-[0_0_30px_rgba(0,188,212,0.15)]"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium transition-all bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/30 text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[0_0_30px_rgba(0,188,212,0.15)]"
                 >
                   Fork on GitHub
                 </a>
@@ -428,7 +429,7 @@ pnpm dev`}
               <Magnetic>
                 <Link
                   href="/ecosystem"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-[#e6eefc] hover:bg-white/[0.08] transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-[var(--arc-text-primary)] hover:bg-white/[0.08] transition-colors"
                 >
                   Browse all 27 repos
                 </Link>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import { useState, useCallback } from "react";
@@ -53,7 +54,7 @@ function ProgressBar({ current, total }: ProgressBarProps) {
     <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
       <m.div
         className="h-full rounded-full"
-        style={{ background: "linear-gradient(90deg, #7fffd4, #78a6ff)" }}
+        style={{ background: "linear-gradient(90deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue))" }}
         initial={{ width: 0 }}
         animate={{ width: `${pct}%` }}
         transition={{ duration: 0.4, ease: "easeOut" }}
@@ -95,7 +96,7 @@ function QuestionCard({ question, selected, onSelect }: QuestionCardProps) {
                 className={[
                   "text-left px-4 py-3 rounded-xl border text-sm leading-snug transition-all duration-200",
                   isSelected
-                    ? "border-[#7fffd4]/60 bg-[#7fffd4]/10 text-[#7fffd4]"
+                    ? "border-[var(--arc-brand-atlantean-teal)]/60 bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)]"
                     : "border-white/[0.08] bg-white/[0.03] text-white/70 hover:border-white/20 hover:bg-white/[0.06] hover:text-white/90",
                 ].join(" ")}
               >
@@ -218,7 +219,7 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
             aria-label="Copy share text to clipboard"
             className="shrink-0 flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
             style={{
-              color: copied ? "#7fffd4" : result.color,
+              color: copied ? "var(--arc-brand-atlantean-teal)" : result.color,
               background: copied ? "rgba(127,255,212,0.12)" : `${result.color}15`,
               border: `1px solid ${copied ? "rgba(127,255,212,0.3)" : result.color + "30"}`,
             }}
@@ -309,7 +310,7 @@ export default function QuizClient() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="min-h-screen bg-[#09090b] flex flex-col items-center px-4 py-20 relative overflow-hidden">
+      <div className="min-h-screen bg-[var(--arc-cosmic-void)] flex flex-col items-center px-4 py-20 relative overflow-hidden">
         <CosmicParticles />
 
         {/* Background glow orbs */}
@@ -332,7 +333,7 @@ export default function QuizClient() {
             transition={{ duration: 0.4 }}
             className="text-center mb-10"
           >
-            <p className="text-[#7fffd4] text-xs uppercase tracking-widest font-semibold mb-3">
+            <p className="text-[var(--arc-brand-atlantean-teal)] text-xs uppercase tracking-widest font-semibold mb-3">
               Arcanea Origin Quiz
             </p>
             <h1

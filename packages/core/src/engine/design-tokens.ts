@@ -62,9 +62,14 @@ export const COLORS = {
 // ============================================
 
 export const FONTS = {
-  display: "'Space Grotesk', sans-serif",
-  body: "'Inter', sans-serif",
-  serif: "'Newsreader', serif",
+  /** Display / marketing headings — Geist (canonical per DESIGN.md 2026-04-18) */
+  display: "'Geist', sans-serif",
+  /** Body copy */
+  body: "'Geist', sans-serif",
+  /** Tailwind `font-sans` alias */
+  sans: "'Geist', sans-serif",
+  /** Editorial accent — Instrument Serif */
+  serif: "'Instrument Serif', serif",
   code: "'JetBrains Mono', monospace",
 } as const;
 

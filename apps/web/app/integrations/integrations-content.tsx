@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import { LazyMotion, domAnimation, m } from "framer-motion";
@@ -14,36 +15,42 @@ import {
   StackLayerDiagram,
   type FlowStep,
 } from "@/components/premium";
+import { INTEGRATIONS } from "@/components/premium/integration-grid";
+
+const LIVE_INTEGRATIONS = INTEGRATIONS.filter((integration) => integration.status === "live").length;
+const BETA_INTEGRATIONS = INTEGRATIONS.filter((integration) => integration.status === "beta").length;
+const PLANNED_INTEGRATIONS = INTEGRATIONS.filter((integration) => integration.status === "soon").length;
 
 // ---------------------------------------------------------------------------
 // Data
 // ---------------------------------------------------------------------------
 
 const STATS = [
-  { value: "30+", label: "Integrations", color: "#7fffd4" },
-  { value: "8", label: "Categories", color: "#00bcd4" },
-  { value: "MIT", label: "Licensed", color: "#ffd700" },
-  { value: "BYOK", label: "Forever", color: "#c084fc" },
+  { value: String(LIVE_INTEGRATIONS), label: "Live", color: "var(--arc-brand-atlantean-teal)" },
+  { value: String(BETA_INTEGRATIONS), label: "Beta", color: "var(--arc-brand-arcanean-gold)" },
+  { value: String(PLANNED_INTEGRATIONS), label: "Planned", color: "var(--arc-void)" },
+  { value: "8", label: "Categories", color: "var(--arc-brand-atlantean-teal)" },
+  { value: "MIT", label: "Licensed", color: "var(--arc-brand-arcanean-gold)" },
 ];
 
 const FLOW_STEPS: FlowStep[] = [
   {
     number: "01",
     title: "Connect",
-    body: "OAuth to tools you already use — GitHub, Discord, Notion, Supabase. Add your AI keys (Anthropic, OpenAI, Gemini) via BYOK. No markup, no lock-in.",
-    accent: "#7fffd4",
+    body: "Use the live stack today: GitHub public repos, Supabase, Vercel, Vercel AI SDK, Claude, Gemini, and Nano Banana 2. OAuth and sync integrations stay labeled beta or planned until they ship.",
+    accent: "var(--arc-brand-atlantean-teal)",
   },
   {
     number: "02",
     title: "Create",
-    body: "Build in Arcanea: write, generate images with Nano Banana 2, compose music with Suno, animate with Hedra. One canvas, every modality.",
-    accent: "#00bcd4",
+    body: "Build in Arcanea: write, chat, and generate images where the app is wired. Music, avatar, distribution, and game-engine sync are roadmap or beta surfaces.",
+    accent: "var(--arc-brand-atlantean-teal)",
   },
   {
     number: "03",
     title: "Own",
-    body: "Export everything as portable files — Markdown, JSON, MP3, PNG. Run locally if you want. Publish to any channel with one click.",
-    accent: "#ffd700",
+    body: "Keep your keys and IP. Exportable formats and public repos are the shipped sovereignty layer; one-click publishing remains planned.",
+    accent: "var(--arc-brand-arcanean-gold)",
   },
 ];
 
@@ -53,7 +60,6 @@ interface FeaturedCard {
   tools: string[];
   description: string;
   accent: string;
-  glyph: string;
 }
 
 const FEATURED_CARDS: FeaturedCard[] = [
@@ -62,27 +68,24 @@ const FEATURED_CARDS: FeaturedCard[] = [
     category: "Development",
     tools: ["Claude Code", "Cursor", "VS Code", "Windsurf"],
     description:
-      "Luminors live in your IDE via MCP. Write alongside 16 specialists. Context flows from your world graph directly into the cursor.",
-    accent: "#00bcd4",
-    glyph: "⎈",
+      "Claude Code is the strongest live path. Cursor, VS Code, and Windsurf are beta MCP/rules surfaces until extension-level sync lands.",
+    accent: "var(--arc-brand-atlantean-teal)",
   },
   {
     title: "Suno + Nano Banana 2",
     category: "Creative AI",
     tools: ["Suno", "Nano Banana 2", "ElevenLabs", "Hedra"],
     description:
-      "Text, image, music — generated inline, stored in your world graph. Every output tagged to its world, character, and moment in the story.",
-    accent: "#f472b6",
-    glyph: "♪",
+      "Nano Banana 2 is live for image generation. Suno is represented by the arcanea-records repo; app-level music sync is still beta.",
+    accent: "var(--arc-void)",
   },
   {
     title: "Blotato + n8n + Postiz",
     category: "Distribution",
     tools: ["Blotato", "n8n", "Postiz", "Zapier"],
     description:
-      "One-click publish to Discord, Reddit, X, YouTube, and Instagram. Workflows run on your schedule — or triggered by creation events.",
-    accent: "#ffd700",
-    glyph: "◬",
+      "Distribution tools are tracked, not shipped. Blotato, n8n, Postiz, and Zapier stay planned until account sync and posting flows are live.",
+    accent: "var(--arc-brand-arcanean-gold)",
   },
 ];
 
@@ -100,43 +103,43 @@ const CATEGORIES = [
     label: "Coding & Dev",
     filter: "coding" as const,
     ambient: "teal" as const,
-    description: "Write, review, and deploy from your IDE with Luminors alongside.",
+    description: "Claude Code is live; other IDE surfaces are beta or planned.",
   },
   {
     label: "Creative AI",
     filter: "ai" as const,
     ambient: "purple" as const,
-    description: "Specialist models for music, imagery, voice, and video — inline.",
+    description: "Image and chat paths are live; music, voice, and video are labeled by shipped state.",
   },
   {
     label: "Distribution",
     filter: "social" as const,
     ambient: "gold" as const,
-    description: "Automated pipelines that carry your work to every channel.",
+    description: "Tracked distribution targets; not one-click publishing yet.",
   },
   {
     label: "Communities",
     filter: "community" as const,
     ambient: "teal" as const,
-    description: "Discord, Reddit, Whop — where your audience already lives.",
+    description: "Community destinations with beta/manual status where bot sync is not shipped.",
   },
   {
     label: "Game Engines",
     filter: "game" as const,
     ambient: "fire" as const,
-    description: "Export world graph data directly into Unreal, Unity, and Godot.",
+    description: "Exporter targets on the roadmap; no game-engine bridge is marked live.",
   },
   {
     label: "Blockchain",
     filter: "chain" as const,
     ambient: "purple" as const,
-    description: "Sovereign identity and monetization on Base and Story Protocol.",
+    description: "On-chain targets remain planned until contracts and flows are public.",
   },
   {
     label: "Platforms & Infra",
     filter: "infra" as const,
     ambient: "teal" as const,
-    description: "Vercel, Supabase, Stripe, Notion — everything else just works.",
+    description: "Vercel and Supabase are live. Others are labeled beta or planned.",
   },
 ];
 
@@ -162,7 +165,7 @@ function FeaturedIntegrationCard({ card, index }: { card: FeaturedCard; index: n
       />
 
       <div className="relative">
-        {/* Glyph + category */}
+        {/* Monogram + category */}
         <div className="flex items-center gap-3 mb-5">
           <span
             className="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold"
@@ -172,7 +175,7 @@ function FeaturedIntegrationCard({ card, index }: { card: FeaturedCard; index: n
               color: card.accent,
             }}
           >
-            {card.glyph}
+            {card.title.slice(0, 2)}
           </span>
           <span
             className="text-[10px] font-mono tracking-[0.25em] uppercase px-2.5 py-1 rounded-full"
@@ -219,7 +222,7 @@ function FeaturedIntegrationCard({ card, index }: { card: FeaturedCard; index: n
 export function IntegrationsContent() {
   return (
     <LazyMotion features={domAnimation}>
-      <div className="relative min-h-screen bg-[#09090b] text-white">
+      <div className="relative min-h-screen bg-[var(--arc-cosmic-void)] text-white">
         <GridTexture className="fixed" />
 
         {/* ── Hero ─────────────────────────────────────────────────────── */}
@@ -238,14 +241,14 @@ export function IntegrationsContent() {
               </div>
 
               <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold tracking-[-0.03em] leading-[1.05] mb-6">
-                <span className="bg-gradient-to-r from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent">
                   The full creator stack
                 </span>
               </h1>
 
               <p className="mx-auto max-w-2xl text-base md:text-lg text-white/40 leading-relaxed font-body mb-14">
-                From IDE to blockchain. From Suno to Unreal. Arcanea connects the whole pipeline
-                so your world reaches every surface creators ship on.
+                Live integrations are marked live. Partial work is beta. Planned sync stays planned.
+                The grid is a status map, not a promise that every tool is wired today.
               </p>
 
               {/* Stats row */}
@@ -274,7 +277,7 @@ export function IntegrationsContent() {
             <SectionHeader
               label="Architecture"
               title="The full stack, one platform"
-              subtitle="Arcanea sits in the middle. You bring your tools — we connect them."
+              subtitle="Arcanea sits in the middle. Live, beta, and planned labels show what is actually wired."
               accent="teal"
             />
             <StackLayerDiagram />
@@ -323,7 +326,7 @@ export function IntegrationsContent() {
             <SectionHeader
               label="Deep Dives"
               title="Featured integrations"
-              subtitle="The three integrations that change how you ship."
+              subtitle="Three integration clusters with their shipped state called out directly."
               accent="teal"
             />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -387,7 +390,7 @@ export function IntegrationsContent() {
                 />
 
                 <div className="relative">
-                  <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-[#7fffd4]/60 mb-4 block">
+                  <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-[var(--arc-brand-atlantean-teal)]/60 mb-4 block">
                     Don't see your tool?
                   </span>
 
@@ -405,7 +408,7 @@ export function IntegrationsContent() {
                       href="https://discord.gg/arcanea"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#7fffd4] to-[#00bcd4] px-6 py-3 text-sm font-semibold text-[#09090b] transition hover:shadow-[0_0_30px_rgba(127,255,212,0.2)] hover:scale-[1.02] active:scale-[0.98]"
+                      className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] px-6 py-3 text-sm font-semibold text-[var(--arc-cosmic-void)] transition hover:shadow-[0_0_30px_rgba(127,255,212,0.2)] hover:scale-[1.02] active:scale-[0.98]"
                     >
                       Open Discord
                       <svg

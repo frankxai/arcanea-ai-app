@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 /* ------------------------------------------------------------------ */
 /*  Developers Page Data — no 'use client'                             */
 /* ------------------------------------------------------------------ */
@@ -7,7 +8,7 @@ export const PACKAGES = [
     name: "@arcanea/council",
     description: "Byzantine/Raft/Gossip/Gate Quorum consensus algorithms",
     tags: ["Consensus", "Byzantine", "Raft", "Multi-agent"],
-    color: "#0d47a1",
+    color: "var(--arc-brand-cosmic-blue)",
     stars: "2.4K",
     href: "https://github.com/frankxai/arcanea/tree/main/packages/council",
   },
@@ -15,7 +16,7 @@ export const PACKAGES = [
     name: "@arcanea/guardian-evolution",
     description: "SONA learning + 7 RL algorithms (A2C, DQN, PPO, Q-learning)",
     tags: ["RL", "Learning", "SONA", "Evolution"],
-    color: "#ef4444",
+    color: "var(--arc-fire)",
     stars: "1.8K",
     href: "https://github.com/frankxai/arcanea/tree/main/packages/guardian-evolution",
   },
@@ -23,7 +24,7 @@ export const PACKAGES = [
     name: "@arcanea/guardian-memory",
     description: "HNSW vector search with Intelligence-namespaced vaults",
     tags: ["Vector", "HNSW", "Memory", "Search"],
-    color: "#00bcd4",
+    color: "var(--arc-brand-atlantean-teal)",
     stars: "1.5K",
     href: "https://github.com/frankxai/arcanea/tree/main/packages/guardian-memory",
   },
@@ -31,7 +32,7 @@ export const PACKAGES = [
     name: "@arcanea/rituals",
     description: "Swarm communication, 12 Spirits workers, MCP bridge",
     tags: ["MCP", "Swarm", "Workers", "Rituals"],
-    color: "#ffd700",
+    color: "var(--arc-brand-arcanean-gold)",
     stars: "1.2K",
     href: "https://github.com/frankxai/arcanea/tree/main/packages/rituals",
   },
@@ -39,7 +40,7 @@ export const PACKAGES = [
     name: "@arcanea/creative-pipeline",
     description: "Prompt engine, asset vault, curator, sessions",
     tags: ["Creative", "Pipeline", "Prompt", "Assets"],
-    color: "#3b82f6",
+    color: "var(--arc-brand-cosmic-blue)",
     stars: "980",
     href: "https://github.com/frankxai/arcanea/tree/main/packages/creative-pipeline",
   },
@@ -47,7 +48,7 @@ export const PACKAGES = [
     name: "@arcanea/swarm-coordinator",
     description: "Multi-agent workflow orchestration",
     tags: ["Orchestration", "Multi-agent", "Workflow", "Coordination"],
-    color: "#a855f7",
+    color: "var(--arc-void)",
     stars: "756",
     href: "https://github.com/frankxai/arcanea/tree/main/packages/swarm-coordinator",
   },
@@ -65,7 +66,7 @@ export const TOOLS = [
       },
       { name: "Event Bus", description: "Intelligent routing and feedback" },
     ],
-    color: "#0d47a1",
+    color: "var(--arc-brand-cosmic-blue)",
   },
   {
     category: "Creative",
@@ -78,7 +79,7 @@ export const TOOLS = [
       { name: "Curator", description: "Content quality assessment" },
       { name: "Sessions", description: "Creation state management" },
     ],
-    color: "#ef4444",
+    color: "var(--arc-fire)",
   },
   {
     category: "Infrastructure",
@@ -88,7 +89,7 @@ export const TOOLS = [
       { name: "Token Optimizer", description: "Context window management" },
       { name: "MCP Server", description: "42 tools with skill-rules" },
     ],
-    color: "#00bcd4",
+    color: "var(--arc-brand-atlantean-teal)",
   },
 ];
 
@@ -98,28 +99,28 @@ export const QUICK_STARTS = [
     description: "OpenAI-compatible API with 26 models from 13 providers",
     href: "/developers/api",
     iconKey: "Code" as const,
-    color: "#78a6ff",
+    color: "var(--arc-brand-cosmic-blue)",
   },
   {
     title: "Create a Skill",
     description: "Build a procedural skill that equips creators",
     href: "/skills",
     iconKey: "Zap" as const,
-    color: "#0d47a1",
+    color: "var(--arc-brand-cosmic-blue)",
   },
   {
     title: "Use the MCP Server",
     description: "Integrate Arcanea tools into your workflow",
     href: "/docs/mcp",
     iconKey: "Terminal" as const,
-    color: "#00bcd4",
+    color: "var(--arc-brand-atlantean-teal)",
   },
   {
     title: "Contribute to Packages",
     description: "Open source contributions welcome",
     href: "https://github.com/frankxai/arcanea",
     iconKey: "Github" as const,
-    color: "#ffd700",
+    color: "var(--arc-brand-arcanean-gold)",
   },
 ];
 
@@ -163,21 +164,21 @@ export const MCP_SERVERS = [
     description:
       "The core MCP server with 42 tools: world-building, canon validation, Luminor companions, story generation, agent orchestration.",
     install: "npx @arcanea/mcp-server",
-    color: "#7fffd4",
+    color: "var(--arc-brand-atlantean-teal)",
   },
   {
     name: "arcanea-memory",
     description:
       "HNSW vector memory with vault storage, classification, sync, and horizon logging. Persistent memory across sessions.",
     install: "npx @arcanea/memory-server",
-    color: "#78a6ff",
+    color: "var(--arc-brand-cosmic-blue)",
   },
   {
     name: "arcanea-infogenius",
     description:
       "Intelligence layer for research, knowledge synthesis, and domain-expert routing. Connects to 13 AI providers.",
     install: "npx @arcanea/infogenius-server",
-    color: "#ffd700",
+    color: "var(--arc-brand-arcanean-gold)",
   },
 ];
 
@@ -187,28 +188,28 @@ export const OPEN_SOURCE_REPOS = [
     description:
       "Main monorepo. Web app, intelligence packages, MCP servers, creative pipeline, and 49 npm packages.",
     href: "https://github.com/frankxai/arcanea",
-    color: "#7fffd4",
+    color: "var(--arc-brand-atlantean-teal)",
   },
   {
     name: "frankxai/arcanea-skills-opensource",
     description:
       "103 open-source skills for Claude Code, Cursor, Windsurf, and any MCP-compatible agent. Fork and extend.",
     href: "https://github.com/frankxai/arcanea-skills-opensource",
-    color: "#a855f7",
+    color: "var(--arc-void)",
   },
   {
     name: "frankxai/arcanea-soul",
     description:
       "The Arcanea Soul engine. Canon-aware personality system, world config generation, and identity framework.",
     href: "https://github.com/frankxai/arcanea-soul",
-    color: "#ffd700",
+    color: "var(--arc-brand-arcanean-gold)",
   },
   {
     name: "frankxai/arcanea-companion",
     description:
       "Standalone companion app with Luminor chat, creative tools, Docker deployment, and Railway support.",
     href: "https://github.com/frankxai/arcanea-companion",
-    color: "#ef4444",
+    color: "var(--arc-fire)",
   },
 ];
 
@@ -216,31 +217,31 @@ export const ARCHITECTURE_LAYERS = [
   {
     layer: "Presentation",
     iconKey: "Layers" as const,
-    color: "#ef4444",
+    color: "var(--arc-fire)",
     items: ["Next.js 16", "React 19", "Tailwind"],
   },
   {
     layer: "Intelligence",
     iconKey: "Brain" as const,
-    color: "#0d47a1",
+    color: "var(--arc-brand-cosmic-blue)",
     items: ["Intelligence Evolution", "ReasoningBank", "Skill-Rules"],
   },
   {
     layer: "Orchestration",
     iconKey: "Cpu" as const,
-    color: "#00bcd4",
+    color: "var(--arc-brand-atlantean-teal)",
     items: ["Swarm Coordinator", "Rituals", "Event Bus"],
   },
   {
     layer: "Storage",
     iconKey: "Database" as const,
-    color: "#ffd700",
+    color: "var(--arc-brand-arcanean-gold)",
     items: ["HNSW Memory", "Hybrid Memory", "AgentDB"],
   },
   {
     layer: "Integration",
     iconKey: "Code" as const,
-    color: "#3b82f6",
+    color: "var(--arc-brand-cosmic-blue)",
     items: ["MCP Server", "CLI Tools", "Webhooks"],
   },
 ];

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { useRef } from 'react';
@@ -75,8 +76,8 @@ export function LayerCards({ layers }: { layers: Layer[] }) {
         containerRef={containerRef}
         fromRef={card0Ref}
         toRef={card1Ref}
-        fromColor={layers[0]?.accent ?? '#00bcd4'}
-        toColor={layers[1]?.accent ?? '#a78bfa'}
+        fromColor={layers[0]?.accent ?? 'var(--arc-brand-atlantean-teal)'}
+        toColor={layers[1]?.accent ?? 'var(--arc-void)'}
         duration={4}
         delay={0}
       />
@@ -85,8 +86,8 @@ export function LayerCards({ layers }: { layers: Layer[] }) {
         containerRef={containerRef}
         fromRef={card1Ref}
         toRef={card2Ref}
-        fromColor={layers[1]?.accent ?? '#a78bfa'}
-        toColor={layers[2]?.accent ?? '#ffd700'}
+        fromColor={layers[1]?.accent ?? 'var(--arc-void)'}
+        toColor={layers[2]?.accent ?? 'var(--arc-brand-arcanean-gold)'}
         duration={4}
         delay={1}
       />

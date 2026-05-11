@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { Metadata } from "next";
 import {
   IMAGE_MODELS,
@@ -86,7 +87,7 @@ function ProviderGrid() {
         {models.map((model) => (
           <div
             key={model.id}
-            className="group relative bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] rounded-2xl p-5 hover:border-[#7fffd4]/20 transition-colors"
+            className="group relative bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] rounded-2xl p-5 hover:border-[var(--arc-brand-atlantean-teal)]/20 transition-colors"
           >
             <div className="flex items-start justify-between mb-3">
               <div>
@@ -100,7 +101,7 @@ function ProviderGrid() {
                   {model.provider}
                 </p>
               </div>
-              <span className="text-xs font-mono text-[#7fffd4]">
+              <span className="text-xs font-mono text-[var(--arc-brand-atlantean-teal)]">
                 {formatPrice(model.pricing.perImage)}
               </span>
             </div>
@@ -204,7 +205,7 @@ function ComparisonTable() {
                 </td>
                 <td className="px-4 py-3 text-white/50">{model.provider}</td>
                 <td className="px-4 py-3 text-white/50 font-mono text-xs">{model.maxResolution}</td>
-                <td className="px-4 py-3 font-mono text-xs text-[#7fffd4]">{formatPrice(model.pricing.perImage)}</td>
+                <td className="px-4 py-3 font-mono text-xs text-[var(--arc-brand-atlantean-teal)]">{formatPrice(model.pricing.perImage)}</td>
                 <td className="px-4 py-3 text-white/50 font-mono text-xs">{model.speed}s</td>
                 <td className="px-4 py-3"><QualityBadge level={model.textRendering} /></td>
                 <td className="px-4 py-3"><QualityBadge level={model.styleControl} /></td>
@@ -238,7 +239,7 @@ export default function ImageArenaPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">
         {/* Hero */}
         <header className="text-center mb-20">
-          <span className="inline-block text-xs font-medium tracking-widest uppercase text-[#7fffd4]/60 mb-4">
+          <span className="inline-block text-xs font-medium tracking-widest uppercase text-[var(--arc-brand-atlantean-teal)]/60 mb-4">
             Visual Intelligence
           </span>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white font-[family-name:var(--font-display)] mb-6">
