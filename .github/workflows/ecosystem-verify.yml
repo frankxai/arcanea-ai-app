@@ -1,0 +1,32 @@
+name: Ecosystem Verify
+
+on:
+  pull_request:
+    paths:
+      - '.arcanea/config/repos.json'
+      - '.arcanea/config/manifest.yaml'
+      - 'packages/*/package.json'
+      - 'apps/*/package.json'
+      - 'apps/web/lib/ecosystem/derived.ts'
+      - 'packages/orchestrator/src/ecosystem/**'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: pnpm
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Build orchestrator deps
+        run: pnpm -F @arcanea/orchestrator build
+      - name: Verify ecosystem derived.ts is in sync
+        run: pnpm -F @arcanea/orchestrator ecosystem:verify
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
