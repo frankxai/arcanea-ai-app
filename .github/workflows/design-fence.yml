@@ -43,9 +43,26 @@ jobs:
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
           HEAD_SHA="${{ github.event.pull_request.head.sha }}"
 
-          # Get only ADDED lines in the PR diff (exclude file headers and removals)
+          # All added lines under tracked dirs (used for hex + Framer checks).
           ADDED=$(git diff --no-color "$BASE_SHA" "$HEAD_SHA" -- apps packages .arcanea \
                   | grep -E '^\+[^+]' || true)
+
+          # Added lines EXCLUDING policy/audit markdown — those docs legitimately
+          # need to name banned fonts to enforce the ban (e.g. "NEVER Cinzel").
+          # Used for font-name checks only. Hex literals + domMax remain blocked
+          # everywhere since they're never legitimate even in docs.
+          ADDED_CODE_ONLY=$(git diff --no-color "$BASE_SHA" "$HEAD_SHA" -- \
+                            apps packages .arcanea \
+                            ':(exclude).arcanea/audits/**' \
+                            ':(exclude).arcanea/prompts/**' \
+                            ':(exclude).arcanea/skills/**' \
+                            ':(exclude).arcanea/strategy/**' \
+                            ':(exclude).arcanea/projects/**' \
+                            ':(exclude)**/CLAUDE.md' \
+                            ':(exclude)**/AGENTS.md' \
+                            ':(exclude)**/GEMINI.md' \
+                            ':(exclude)**/CHANGELOG*.md' \
+                            | grep -E '^\+[^+]' || true)
 
           if [ -z "$ADDED" ]; then
             echo "::notice::No added lines under apps/, packages/, or .arcanea/ to scan."
@@ -54,7 +71,10 @@ jobs:
 
           FAIL=0
 
-          check() {
+          # check_all <pattern> <label> — scans EVERY added line.
+          # Use for tokens that should never appear anywhere (hex literals,
+          # Framer Motion misconfigurations).
+          check_all() {
             local pattern="$1"
             local label="$2"
             local hits
@@ -67,13 +87,36 @@ jobs:
             fi
           }
 
-          check '\bCinzel\b'                          'Cinzel font is banned (use Geist)'
-          check '\bSpace[ _-]?Grotesk\b'              'Space Grotesk font is banned (use Geist)'
-          check "['\"](Inter|inter)['\"]"             'Inter font literal is banned (use Geist)'
-          check '#7fffd4'                             'Hex #7fffd4 (aquamarine) banned (use --arc-brand-atlantean-teal #00bcd4)'
-          check '#78a6ff'                             'Hex #78a6ff (slate-blue) banned (use --arc-brand-cosmic-blue #0d47a1)'
-          check '#0b0e14'                             'Hex #0b0e14 (old void) banned (use #09090b)'
-          check '\bdomMax\b'                          'Framer Motion domMax banned (use domAnimation)'
+          # check_code <pattern> <label> — scans only code/non-policy lines.
+          # Use for tokens that policy/audit docs legitimately mention by name
+          # (e.g. font names listed in "NEVER X" style guides).
+          check_code() {
+            local pattern="$1"
+            local label="$2"
+            if [ -z "$ADDED_CODE_ONLY" ]; then
+              return
+            fi
+            local hits
+            hits=$(echo "$ADDED_CODE_ONLY" | grep -i -E "$pattern" || true)
+            if [ -n "$hits" ]; then
+              echo "::error title=Design fence violation: ${label}::${label}"
+              echo "$hits" | head -20 | sed 's/^/  /'
+              echo
+              FAIL=1
+            fi
+          }
+
+          # Font names — only block in code (TSX/CSS/JS); allow in policy markdown
+          # so that docs can say "NEVER use Cinzel" without tripping the gate.
+          check_code '\bCinzel\b'                'Cinzel font is banned (use Geist)'
+          check_code '\bSpace[ _-]?Grotesk\b'    'Space Grotesk font is banned (use Geist)'
+          check_code "['\"](Inter|inter)['\"]"   'Inter font literal is banned (use Geist)'
+
+          # Hex literals + Framer Motion misconfig — never legitimate, scan all.
+          check_all '#7fffd4'                    'Hex #7fffd4 (aquamarine) banned (use --arc-brand-atlantean-teal #00bcd4)'
+          check_all '#78a6ff'                    'Hex #78a6ff (slate-blue) banned (use --arc-brand-cosmic-blue #0d47a1)'
+          check_all '#0b0e14'                    'Hex #0b0e14 (old void) banned (use #09090b)'
+          check_all '\bdomMax\b'                 'Framer Motion domMax banned (use domAnimation)'
 
           if [ "$FAIL" -ne 0 ]; then
             echo
