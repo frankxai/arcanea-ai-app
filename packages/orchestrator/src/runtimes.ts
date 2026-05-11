@@ -38,8 +38,9 @@ const RUNTIMES: Record<RuntimeId, Runtime> = {
   gemini: {
     id: 'gemini',
     binary: 'gemini',
-    // `gemini -p "<prompt>"` — Google's Gemini CLI.
-    argv: (_modelId, prompt) => ['-p', prompt],
+    // `gemini -p "<prompt>" --yolo --compress-subagents --sis-sync`
+    // non-interactive end-to-end mode with cross-session memory bridge.
+    argv: (_modelId, prompt) => ['-p', prompt, '--yolo', '--compress-subagents', '--sis-sync'],
   },
 };
 
