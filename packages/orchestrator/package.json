@@ -43,6 +43,8 @@
     "build": "tsc -p tsconfig.json",
     "dev": "tsx src/cli.ts",
     "test": "pnpm build && tsx --test tests/**/*.test.ts",
+    "ecosystem:build": "tsx src/ecosystem/cli.ts build",
+    "ecosystem:verify": "tsx src/ecosystem/cli.ts verify",
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
