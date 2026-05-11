@@ -445,7 +445,15 @@ export default async function DraftBookPage({ params }: PageProps) {
       <section className="max-w-2xl mx-auto px-6 pb-16">
         <LiquidGlass intensity="medium" tint={bookTint} glow="soft" className="p-8 flex flex-col sm:flex-row gap-6">
           {cover && (
-            <Image src={cover} alt={`${manifest.title} cover`} width={160} height={240} className="w-32 sm:w-40 flex-shrink-0 rounded-lg shadow-2xl self-start" />
+            <Image
+              src={cover}
+              alt={`${manifest.title} cover`}
+              width={160}
+              height={240}
+              sizes="(min-width: 640px) 10rem, 8rem"
+              style={{ height: 'auto' }}
+              className="w-32 sm:w-40 flex-shrink-0 rounded-lg shadow-2xl self-start"
+            />
           )}
           <div>
             <h2 className="text-sm font-display font-semibold text-white/60 uppercase tracking-wider mb-4">About This Draft</h2>

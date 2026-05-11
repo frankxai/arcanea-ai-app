@@ -196,6 +196,7 @@ export default async function PrintPage() {
           alt="Cover: Das Mädchen, das drei Sprachen hörte"
           width={440}
           height={660}
+          priority
           unoptimized
         />
         <p className="title">Das Mädchen,<br />das drei Sprachen hörte</p>
@@ -213,6 +214,7 @@ export default async function PrintPage() {
                   alt={(props as { alt?: string }).alt ?? ""}
                   width={1200}
                   height={800}
+                  style={{ height: "auto" }}
                   className="chapter-art"
                  />
               ),

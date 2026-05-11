@@ -160,7 +160,7 @@ export default async function DraftsHubPage() {
       {/* Book Cards */}
       <section className="max-w-3xl mx-auto px-6 pb-32">
         <div className="space-y-6">
-          {books.map((book) => (
+          {books.map((book, index) => (
             <Link
               key={book.slug}
               href={`/books/drafts/${book.slug}`}
@@ -176,6 +176,8 @@ export default async function DraftsHubPage() {
                       alt={`${book.title} cover`}
                       width={384}
                       height={576}
+                      priority={index === 0}
+                      sizes="(min-width: 640px) 12rem, 100vw"
                       className="w-full h-48 sm:h-full object-cover"
                      />
                   </div>
