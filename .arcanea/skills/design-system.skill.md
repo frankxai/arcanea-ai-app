@@ -105,7 +105,7 @@ Fluid scale: `text-fluid-xs` through `text-fluid-hero`
 ### Gradient Text
 ```tsx
 <h1 className="text-gradient-crystal">Crystal</h1>
-<h1 className="text-gradient-brand">Violet → Crystal</h1>
+<h1 className="text-gradient-brand">Teal → Gold</h1>
 <h1 className="text-gradient-fire">Fire → Gold</h1>
 <h1 className="text-gradient-gold">Gold</h1>
 ```

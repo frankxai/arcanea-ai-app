@@ -81,6 +81,8 @@ if [ ! -f ".codex/instructions.md" ]; then
 Read `.arcanea/ops/AGENT_BOOTSTRAP.md` first.
 Read `.arcanea/ops/ao.md` for ops protocol.
 Read `.arcanea/ops/commands/*.md` for shared commands.
+Use `.agents/skills/claude-native-bridge/SKILL.md` for Claude slash commands and skills.
+Run `pnpm agents:bridge` after changing `.claude/commands/` or `.claude/skills/`.
 Write handover docs at session end: `docs/ops/SHORT_STATUS_AND_HANDOVER_{date}.md`
 EOF
 else
@@ -132,12 +134,21 @@ else
   echo "  Starlight already exists at $STARLIGHT_HOME"
 fi
 
-# --- 6. Verify ---
+# --- 6. Agent bridge ---
+if [ -f "scripts/generate-codex-claude-bridge.mjs" ]; then
+  echo "  Refreshing Codex/OpenCode Claude bridge"
+  node scripts/generate-codex-claude-bridge.mjs >/dev/null
+else
+  echo "  Bridge generator missing: scripts/generate-codex-claude-bridge.mjs"
+fi
+
+# --- 7. Verify ---
 echo ""
 echo "Done. Verify:"
 echo ""
 echo "  Shared ops:  $(ls .arcanea/ops/commands/*.md 2>/dev/null | wc -l) commands"
 echo "  Claude:      $(ls .claude/commands/*.md 2>/dev/null | wc -l) commands, $(ls .claude/skills/*/SKILL.md 2>/dev/null | wc -l) skills"
+echo "  Bridge:      $(grep -c '^[|] /' .agents/claude-command-index.md 2>/dev/null || echo 0) indexed commands"
 echo "  Codex:       $([ -f .codex/instructions.md ] && echo 'ready' || echo 'missing')"
 echo "  Gemini:      $([ -f .gemini/instructions.md ] && echo 'ready' || echo 'missing')"
 echo "  Cursor:      $([ -f .cursor/rules/arcanea.mdc ] && echo 'ready' || echo 'missing')"
