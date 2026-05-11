@@ -1,0 +1,210 @@
+# .arcanea/config/manifest.yaml
+# Curated overlay for nodes that aren't repos.
+# Generator merges this with repos.json + repo scans → derived.ts.
+#
+# Update last_curated when you change a node.
+# Status is inferred unless status_override is set.
+
+nodes:
+  # ────── In-monorepo packages ──────
+  - id: author-council
+    name: "@arcanea/author-council"
+    description: "10 author voices · 8 rosters · 4 deliberation modes · MCP server"
+    layer: product
+    gate: soul
+    hemisphere: arc
+    repo: packages/author-council
+    consumes: [anthropic-sdk, sis]
+    isExternal: false
+    owner: frank
+    links:
+      package: /packages/author-council
+      mcp: /packages/author-council/src/mcp/server.ts
+    last_curated: "2026-05-11"
+
+  - id: design-system
+    name: "@arcanea/design-system"
+    description: "Tokens, brand kits, motion variants, primitives (AnimatedBeam, NumberTicker, Marquee)"
+    layer: substrate
+    gate: form
+    hemisphere: seam
+    repo: packages/design-system
+    consumes: []
+    isExternal: false
+    owner: frank
+    links:
+      package: /packages/design-system
+    last_curated: "2026-05-11"
+
+  - id: orchestrator
+    name: "@arcanea/orchestrator"
+    description: "Multi-agent runtime + ecosystem build pipeline"
+    layer: substrate
+    gate: unity
+    hemisphere: seam
+    repo: packages/orchestrator
+    consumes: [sis, anthropic-sdk]
+    isExternal: false
+    owner: frank
+    links:
+      package: /packages/orchestrator
+    last_curated: "2026-05-11"
+
+  - id: multilingual
+    name: "@starlight/multilingual"
+    description: "i18n foundation — locales, translated slugs, canon glossary"
+    layer: substrate
+    gate: voice
+    hemisphere: seam
+    repo: packages/multilingual
+    consumes: []
+    isExternal: false
+    owner: frank
+    links:
+      package: /packages/multilingual
+    last_curated: "2026-05-11"
+
+  # ────── External integrations ──────
+  - id: anthropic-sdk
+    name: "Anthropic SDK"
+    description: "Claude Sonnet/Opus/Haiku via @anthropic-ai/sdk"
+    layer: substrate
+    gate: source
+    hemisphere: seam
+    isExternal: true
+    consumes: []
+    links:
+      docs: "https://docs.anthropic.com"
+    last_curated: "2026-05-11"
+
+  - id: vercel
+    name: "Vercel"
+    description: "Hosting, Fluid Compute, AI Gateway, Functions, Blob, Queues"
+    layer: substrate
+    gate: mastery
+    hemisphere: nea
+    isExternal: true
+    consumes: []
+    links:
+      docs: "https://vercel.com/docs"
+    last_curated: "2026-05-11"
+
+  - id: supabase
+    name: "Supabase"
+    description: "Postgres, Auth, Realtime, Storage, pgvector"
+    layer: substrate
+    gate: pattern
+    hemisphere: seam
+    isExternal: true
+    consumes: []
+    links:
+      docs: "https://supabase.com/docs"
+    last_curated: "2026-05-11"
+
+  - id: sis
+    name: "Starlight Intelligence System"
+    description: "Cross-session memory + horizon vaults + entry stream"
+    layer: substrate
+    gate: source
+    hemisphere: seam
+    repo: "https://github.com/frankxai/Starlight-Intelligence-System"
+    consumes: []
+    isExternal: false
+    owner: frank
+    links:
+      github: "https://github.com/frankxai/Starlight-Intelligence-System"
+    last_curated: "2026-05-11"
+
+  # ────── Books (products) ──────
+  - id: book-mila
+    name: "Das Mädchen, das drei Sprachen hörte"
+    description: "Trilingual children's book, Mila-bedtime test grade"
+    layer: product
+    gate: story
+    hemisphere: arc
+    repo: book/das-maedchen-drei-sprachen
+    consumes: [author-council, multilingual, design-system]
+    isExternal: false
+    owner: frank
+    links:
+      live: "https://arcanea.ai/books/das-maedchen-drei-sprachen"
+    last_curated: "2026-05-11"
+
+  - id: book-tierras
+    name: "Las Tierras de Luz"
+    description: "Co-authored with Ana Cecilia Cancino — Veldoria setting"
+    layer: product
+    gate: story
+    hemisphere: arc
+    repo: book/las-tierras-de-luz
+    consumes: [author-council, multilingual, design-system]
+    isExternal: false
+    owner: frank
+    links:
+      live: "https://arcanea.ai/books/las-tierras-de-luz"
+    last_curated: "2026-05-11"
+
+  - id: book-forge
+    name: "Forge of Ruin"
+    description: "First Open Library book — 45K+ words, 4 chapters"
+    layer: product
+    gate: story
+    hemisphere: arc
+    repo: book/forge-of-ruin
+    consumes: [author-council, design-system]
+    isExternal: false
+    owner: frank
+    links:
+      repo: /book/forge-of-ruin
+    last_curated: "2026-05-11"
+
+  # ────── Surfaces ──────
+  - id: surface-ecosystem
+    name: "/ecosystem"
+    description: "The connected experience map (this page)"
+    layer: surface
+    gate: unity
+    hemisphere: seam
+    consumes: [orchestrator]
+    isExternal: false
+    links:
+      live: "https://arcanea.ai/ecosystem"
+    last_curated: "2026-05-11"
+
+  - id: surface-author
+    name: "/author"
+    description: "Public Author Council — paste chapter, pick roster, see deliberation"
+    layer: surface
+    gate: soul
+    hemisphere: arc
+    consumes: [author-council, anthropic-sdk]
+    isExternal: false
+    status_override: wip
+    links: {}
+    last_curated: "2026-05-11"
+
+  - id: surface-library
+    name: "/library"
+    description: "Library OS — books, quotes, chapter summaries"
+    layer: surface
+    gate: story
+    hemisphere: arc
+    consumes: [book-mila, book-tierras, book-forge]
+    isExternal: false
+    links:
+      live: "https://arcanea.ai/library"
+    last_curated: "2026-05-11"
+
+  - id: surface-imagine
+    name: "/imagine"
+    description: "Image generation — NB2, Fal, Replicate"
+    layer: surface
+    gate: vision
+    hemisphere: arc
+    consumes: []
+    isExternal: false
+    links:
+      live: "https://arcanea.ai/imagine"
+    last_curated: "2026-05-11"
+
+# Add new nodes here. The generator validates against schema.ts on every build.
