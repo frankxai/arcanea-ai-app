@@ -44,6 +44,8 @@ import { characterToImagePrompt, locationToImagePrompt, creatureToImagePrompt, }
 import { AGENTS, getAgent, assessWorldState, orchestrateCreativeSession, getActiveSessions, matchCreativeSkill, } from "./agents/index.js";
 // Guardian-Swarm Coordination
 import { getAgentSwarmInfo, resolveForMode, GUARDIANS, } from "./data/guardian-swarm/index.js";
+// Arcanea Web Vault Bridge
+import { searchArcaneaVault, saveToArcaneaVault, listArcaneaWorlds, getArcaneaBridgeStatus, } from "./tools/arcanea-web-vault.js";
 // Gates with frequency bands matching ARCANEA_CANON.md
 const gates = [
     { gate: 1, frequencyBand: "174–285 Hz", guardian: "Lyssandria", veltara: "Kaelith", domain: "Foundation", element: "Earth", chakra: "1st (Root)", region: "Forest of Roots", material: "Stone, Roots", coreEmotion: "Grounding, Stability" },
@@ -1000,6 +1002,48 @@ The goal is to remember that creation is supposed to be joyful.`,
         },
     ],
 }));
+// =========================================================================
+// ARCANEA WEB VAULT BRIDGE
+// Exposes the deployed Arcanea Studio vault to any MCP host (Claude Code,
+// Cursor, Windsurf). Requires ARCANEA_WEB_URL + ARCANEA_SESSION_TOKEN env.
+// =========================================================================
+const VAULT_CLASSIFICATIONS = [
+    "character",
+    "location",
+    "magic",
+    "scene",
+    "lore",
+    "reference",
+    "chapter",
+    "note",
+];
+server.registerTool("search_arcanea_vault", {
+    description: "Search the creator's Arcanea Studio vault — their ingested characters, locations, magic, scenes, lore, chapters, and notes. Semantic search; returns top matches with snippets. Requires ARCANEA_WEB_URL + ARCANEA_SESSION_TOKEN env.",
+    inputSchema: {
+        query: z.string().min(2).max(400),
+        limit: z.number().int().min(1).max(32).optional(),
+        worldId: z.string().uuid().optional(),
+        classification: z.enum(VAULT_CLASSIFICATIONS).optional(),
+    },
+}, async (args) => searchArcaneaVault(args));
+server.registerTool("save_to_arcanea_vault", {
+    description: "Save a piece of creative content to the creator's Arcanea Studio vault. Becomes part of their world graph and retrievable by future chats. Requires ARCANEA_WEB_URL + ARCANEA_SESSION_TOKEN env.",
+    inputSchema: {
+        title: z.string().min(2).max(180),
+        content: z.string().min(10).max(60000),
+        classification: z.enum(VAULT_CLASSIFICATIONS),
+        tags: z.array(z.string().max(32)).max(10).optional(),
+        worldId: z.string().uuid().optional(),
+    },
+}, async (args) => saveToArcaneaVault(args));
+server.registerTool("list_arcanea_worlds", {
+    description: "List the creator's Arcanea Worlds so vault saves can be scoped to a specific world. Requires ARCANEA_WEB_URL + ARCANEA_SESSION_TOKEN env.",
+    inputSchema: {},
+}, async () => listArcaneaWorlds());
+server.registerTool("get_arcanea_bridge_status", {
+    description: "Check whether the Arcanea web bridge is configured and reachable. Use this first to verify env vars before trying the vault tools.",
+    inputSchema: {},
+}, async () => getArcaneaBridgeStatus());
 // =========================================================================
 // EXPORTS
 // =========================================================================

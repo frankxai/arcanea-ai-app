@@ -71,6 +71,12 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.76.1
         version: 2.103.2
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.6.1
+      glob:
+        specifier: ^11.0.0
+        version: 11.1.0
       stripe:
         specifier: ^20.4.1
         version: 20.4.1(@types/node@20.19.39)
@@ -1227,6 +1233,9 @@ importers:
         specifier: '>=2.8.3'
         version: 2.8.3
     devDependencies:
+      '@types/node':
+        specifier: ^25.6.2
+        version: 25.6.2
       tsx:
         specifier: ^4.19.0
         version: 4.21.0
@@ -8030,6 +8039,12 @@ packages:
       undici-types: 7.19.2
     dev: true
 
+  /@types/node@25.6.2:
+    resolution: {integrity: sha512-sokuT28dxf9JT5Kady1fsXOvI4HVpjZa95NKT5y9PNTIrs2AsobR4GFAA90ZG8M+nxVRLysCXsVj6eGC7Vbrlw==}
+    dependencies:
+      undici-types: 7.19.2
+    dev: true
+
   /@types/normalize-package-data@2.4.4:
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
     dev: true
@@ -13166,7 +13181,7 @@ packages:
   /next-intl@4.11.0(next@16.2.2)(react@19.2.5)(typescript@5.9.3):
     resolution: {integrity: sha512-Chp8rgEVUYOX/bCtYy+PXH6lDX3X+GPT9sR9HScHroL283em/4urP9btfdHEMEHJJXdq2W/5wDaDDtWONPdNSA==}
     peerDependencies:
-      next: '>=16.1.7'
+      next: 16.2.2
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc <19.0.0 || ^19.0.0
       typescript: '*'
     peerDependenciesMeta:

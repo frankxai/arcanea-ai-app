@@ -24,6 +24,14 @@ The product repo (arcanea-ai-app) is the CANONICAL SOURCE for:
 Agent-specific overlays go to their dedicated repos:
 - `.claude/commands/`, `.claude/skills/` → `frankxai/claude-arcanea`
 - `.opencode/agents/`, `.opencode/commands/` → `frankxai/oh-my-arcanea`
+- `.agents/claude-*-index.md`, `.agents/skills/claude-native-bridge/` → portable Codex/OpenCode bridge in this repo
+
+Before syncing command or skill changes, refresh and check the bridge:
+
+```bash
+pnpm agents:bridge
+pnpm agents:bridge:check
+```
 
 ## Sync Steps
 
@@ -55,5 +63,6 @@ gh api "repos/frankxai/arcanea/contents/{file}" \
 - After any change to `.arcanea/ops/`
 - After any change to `.arcanea/lore/`
 - After building new skills or commands
+- After changing `.claude/commands/` or `.claude/skills/`
 - At the end of a session that modified shared intelligence
 - NEVER sync product-specific files (planning-with-files, docs/ops handovers) to OSS

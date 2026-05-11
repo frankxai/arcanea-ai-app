@@ -485,7 +485,7 @@ Herald operates under Alera, the Voice Guardian — Gate 5 (528 Hz), domain of T
 
 ### Design Oracle — Visual Identity Enforcement
 
-**Role**: The guardian of aesthetics. Every image, every card, every banner must look like Arcanea. Not a template put through generic AI. Arcanean: cosmic, precise, teal and gold, Space Grotesk headers, glass morphism.
+**Role**: The guardian of aesthetics. Every image, every card, every banner must look like Arcanea. Not a template put through generic AI. Arcanean: cosmic, precise, teal and gold, Geist headers, glass morphism.
 
 **Responsibilities**:
 - Maintain Canva templates per platform format
@@ -835,5 +835,8 @@ The system is built to serve one creator who is building something that deserves
 ---
 
 *"The Herald announces what the Creator has made. Not with noise, but with precision. Not once, but always."*
+
+*— Voice of Alera, Gate Five*
+ys."*
 
 *— Voice of Alera, Gate Five*

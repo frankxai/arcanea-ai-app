@@ -8,6 +8,7 @@ $arcaneaCodeRoot = Join-Path $repoRoot "arcanea-code"
 $arcaneaConfigDir = Join-Path $arcaneaCodeRoot ".arcanea"
 $globalOpenCode = Join-Path $env:APPDATA "npm\opencode.cmd"
 $sisBootstrap = Join-Path $PSScriptRoot "sis-bootstrap.ps1"
+$bridgeScript = Join-Path $repoRoot "scripts\generate-codex-claude-bridge.mjs"
 
 if (-not (Test-Path $arcaneaConfigDir)) {
     Write-Error "Arcanea config directory not found: $arcaneaConfigDir"
@@ -26,6 +27,9 @@ $env:STARLIGHT_BRIDGE_OUT = Join-Path $repoRoot ".arcanea\sis"
 
 Push-Location $repoRoot
 try {
+    if (Test-Path $bridgeScript) {
+        node $bridgeScript | Out-Null
+    }
     if (Test-Path $sisBootstrap) {
         & $sisBootstrap -Quiet | Out-Null
     }

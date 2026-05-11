@@ -32,6 +32,8 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo run build --filter=!@arcanea/mobile && changeset publish",
+    "agents:bridge": "node scripts/generate-codex-claude-bridge.mjs",
+    "agents:bridge:check": "node scripts/generate-codex-claude-bridge.mjs --check",
     "ops:health": "node scripts/ops-health-check.js --quick",
     "ops:health:deep": "node scripts/ops-health-check.js --quick --deep",
     "ops:release-gate": "node scripts/ops-health-check.js --quick --deep --json",
@@ -52,6 +54,8 @@
     "@google/generative-ai": "^0.21.0",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.76.1",
+    "dotenv": "^16.4.5",
+    "glob": "^11.0.0",
     "stripe": "^20.4.1"
   },
   "devDependencies": {

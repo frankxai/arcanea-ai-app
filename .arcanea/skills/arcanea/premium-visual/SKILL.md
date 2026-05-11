@@ -44,7 +44,7 @@ Every visual MUST satisfy BOTH criteria:
 ### Color Palette (Strict)
 ```
 VOID:      #0b0e14  (Background — infinite dark)
-CRYSTAL:   #7fffd4  (Primary accent — teal glass glow)
+CRYSTAL:   #00bcd4  (Primary accent — teal glass glow)
 GOLD:      #ffd700  (Secondary accent — warm highlights)
 VIOLET:    #9966ff  (Tertiary — depth and mystery)
 TEXT:      #e6eefc  (Primary text — cool white)
