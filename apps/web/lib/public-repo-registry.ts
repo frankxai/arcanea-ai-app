@@ -1,6 +1,13 @@
 import repoConfig from "../../../.arcanea/config/repos.json";
 
-type ConfigRepo = (typeof repoConfig.repos)[number];
+// `visibility` and `publicUrl` are present on some repo entries in
+// .arcanea/config/repos.json but not all — JSON-derived union types lose
+// optional fields. Widen with explicit optionals so statusFor() / url mapping
+// type-check without per-site `in` guards.
+type ConfigRepo = (typeof repoConfig.repos)[number] & {
+  visibility?: "public" | "private" | "unresolved" | "upstream-public";
+  publicUrl?: string | null;
+};
 
 export type PublicRepoGroup =
   | "core"
