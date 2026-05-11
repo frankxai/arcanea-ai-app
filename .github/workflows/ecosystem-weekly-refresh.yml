@@ -1,0 +1,40 @@
+name: Ecosystem Weekly Refresh
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Mondays 09:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: pnpm
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Build orchestrator deps
+        run: pnpm -F @arcanea/orchestrator build
+      - name: Refresh ecosystem derived.ts
+        run: pnpm -F @arcanea/orchestrator ecosystem:build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Open PR with diff
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'chore(ecosystem): weekly auto-refresh of derived.ts'
+          title: 'chore(ecosystem): weekly auto-refresh'
+          body: |
+            Auto-generated weekly refresh of `apps/web/lib/ecosystem/derived.ts`.
+            Review the diff to confirm nothing surprising changed (typically just `lastCommitAt` timestamps).
+          branch: chore/ecosystem-weekly-refresh
+          delete-branch: true
