@@ -1,90 +1,118 @@
 {
   "$schema": "Arcanea cross-repo registry - source of truth for multi-repo automation",
-  "lastUpdated": "2026-05-10",
+  "lastUpdated": "2026-05-11",
   "repos": [
     {
       "name": "arcanea-ai-app",
       "description": "Main platform - arcanea.ai production",
       "github": "frankxai/arcanea-ai-app",
-      "visibility": "private",
-      "publicUrl": "https://arcanea.ai",
       "role": "production",
       "stack": ["next.js", "react", "typescript", "supabase"],
       "vercel": "arcanea-ai-appx",
       "branch": "main",
       "dependencies": ["@arcanea/core", "@arcanea/aios"],
-      "active": true
+      "active": true,
+      "layer": "surface",
+      "gate": "unity",
+      "hemisphere": "seam"
     },
     {
       "name": "arcanea",
       "description": "OSS monorepo - the open-source engine",
       "github": "frankxai/arcanea",
-      "visibility": "public",
-      "publicUrl": "https://github.com/frankxai/arcanea",
       "role": "oss",
       "stack": ["typescript", "node"],
       "branch": "main",
       "publishes": ["@arcanea/core", "@arcanea/aios", "@arcanea/sdk"],
-      "active": true
+      "active": true,
+      "layer": "substrate",
+      "gate": "source",
+      "hemisphere": "seam"
     },
     {
       "name": "oh-my-arcanea",
-      "description": "Universal Arcanea agent harness target",
+      "description": "Universal Arcanea agent harness target; current code remains OpenCode-derived until adapter cleanup",
       "github": "frankxai/oh-my-arcanea",
-      "upstream": "code-yeongyu/oh-my-openagent",
-      "visibility": "public",
-      "publicUrl": "https://github.com/frankxai/oh-my-arcanea",
       "role": "harness",
       "stack": ["typescript", "bun", "yaml", "markdown"],
       "branch": "dev",
-      "active": true
+      "active": true,
+      "layer": "surface",
+      "gate": "voice",
+      "hemisphere": "arc"
     },
     {
       "name": "arcanea-records",
       "description": "Music studio - Suno integration, soundscapes",
       "github": "frankxai/arcanea-records",
-      "visibility": "public",
-      "publicUrl": "https://github.com/frankxai/arcanea-records",
       "role": "product",
       "stack": ["next.js", "typescript"],
       "branch": "main",
-      "active": true
+      "active": true,
+      "layer": "product",
+      "gate": "voice",
+      "hemisphere": "arc"
     },
     {
       "name": "starlight-intelligence-system",
-      "description": "Starlight Intelligence System substrate",
+      "description": "Starlight Intelligence System - SIS/SIP substrate, memory/context layer, MCP servers, adapters",
       "github": "frankxai/Starlight-Intelligence-System",
-      "visibility": "public",
-      "publicUrl": "https://github.com/frankxai/Starlight-Intelligence-System",
       "role": "substrate",
       "stack": ["typescript", "node", "next.js", "mcp"],
       "publishes": ["@arcanea/starlight-intelligence-system"],
       "branch": "main",
-      "active": true
+      "active": true,
+      "layer": "substrate",
+      "gate": "source",
+      "hemisphere": "seam"
+    },
+    {
+      "name": "starlight",
+      "description": "Minimal SIP adoption kit for Starlight Intelligence System",
+      "github": "frankxai/starlight",
+      "role": "adoption-kit",
+      "stack": ["markdown"],
+      "branch": "main",
+      "active": true,
+      "layer": "product",
+      "gate": "form",
+      "hemisphere": "arc"
+    },
+    {
+      "name": "vibe-os-substrate",
+      "description": "SIP-conformant vertical scaffold for state engineering",
+      "github": "frankxai/vibe-os-substrate",
+      "role": "vertical",
+      "stack": ["markdown"],
+      "branch": "main",
+      "active": true,
+      "layer": "product",
+      "gate": "form",
+      "hemisphere": "arc"
     },
     {
       "name": "arcanea-orchestrator",
-      "description": "Multi-agent orchestration runtime",
+      "description": "Parallel AI coding agent orchestration runtime across repos and agent runtimes",
       "github": "frankxai/arcanea-orchestrator",
-      "upstream": "ComposioHQ/agent-orchestrator",
-      "visibility": "public",
-      "publicUrl": "https://github.com/frankxai/arcanea-orchestrator",
       "role": "orchestration",
       "stack": ["typescript", "node", "pnpm"],
       "branch": "main",
-      "active": true
+      "active": true,
+      "layer": "substrate",
+      "gate": "unity",
+      "hemisphere": "seam"
     },
     {
       "name": "arcanea-code",
-      "description": "Guardian-powered coding CLI",
+      "description": "Guardian-powered coding CLI fork; consumes harness/substrate but is not the universal harness",
       "github": "frankxai/arcanea-code",
-      "upstream": "anomalyco/opencode",
-      "visibility": "public",
-      "publicUrl": "https://github.com/frankxai/arcanea-code",
       "role": "coding-cli",
       "stack": ["typescript", "bun", "opencode"],
-      "branch": "dev",
-      "active": true
+      "branch": "dev-v2",
+      "active": true,
+      "layer": "surface",
+      "gate": "form",
+      "hemisphere": "seam"
     },
     {
       "name": "arcanea-claw",
@@ -94,7 +122,10 @@
       "role": "content-engine",
       "stack": ["typescript", "node", "nanoclaw"],
       "branch": "main",
-      "active": true
+      "active": true,
+      "layer": "product",
+      "gate": "flow",
+      "hemisphere": "arc"
     },
     {
       "name": "arcanea-flow",
@@ -105,7 +136,10 @@
       "role": "intelligence-orchestration",
       "stack": ["typescript", "node"],
       "branch": "main",
-      "active": true
+      "active": true,
+      "layer": "substrate",
+      "gate": "flow",
+      "hemisphere": "seam"
     },
     {
       "name": "arcanea-onchain",
@@ -115,7 +149,10 @@
       "role": "economy",
       "stack": ["solidity", "typescript"],
       "branch": "main",
-      "active": true
+      "active": true,
+      "layer": "substrate",
+      "gate": "foundation",
+      "hemisphere": "seam"
     },
     {
       "name": "arcanea-mobile",
@@ -125,7 +162,10 @@
       "role": "mobile",
       "stack": ["flutter", "compose"],
       "branch": "master",
-      "active": true
+      "active": true,
+      "layer": "product",
+      "gate": "form",
+      "hemisphere": "arc"
     },
     {
       "name": "arcanea-intelligence-os",
@@ -136,7 +176,10 @@
       "role": "intelligence-os",
       "stack": ["typescript", "node"],
       "branch": "master",
-      "active": true
+      "active": true,
+      "layer": "substrate",
+      "gate": "unity",
+      "hemisphere": "seam"
     },
     {
       "name": "arcanea-infogenius",
@@ -146,17 +189,22 @@
       "role": "knowledge-mcp",
       "stack": ["typescript", "mcp"],
       "branch": "main",
-      "active": true
+      "active": true,
+      "layer": "substrate",
+      "gate": "sight",
+      "hemisphere": "seam"
     },
     {
       "name": "arcanea-vault",
-      "description": "Cross-AI capture and provenance layer",
+      "description": "Browser extension and capture/export/provenance layer feeding Arcanea and SIS",
       "github": "frankxai/arcanea-vault",
-      "visibility": "public",
       "role": "capture",
       "stack": ["typescript", "vite", "extension"],
       "branch": "codex/excellence-vault-baseline",
-      "active": true
+      "active": true,
+      "layer": "product",
+      "gate": "form",
+      "hemisphere": "arc"
     },
     {
       "name": "arcaneabot",
@@ -166,7 +214,49 @@
       "role": "integration",
       "stack": ["typescript"],
       "branch": "main",
-      "active": true
+      "active": true,
+      "layer": "product",
+      "gate": "form",
+      "hemisphere": "arc"
+    },
+    {
+      "name": "arcanea-mcp",
+      "description": "Historical MCP infrastructure entry - verify URL/access/name before use",
+      "github": "frankxai/arcanea-mcp",
+      "role": "infrastructure-unresolved",
+      "stack": ["typescript", "node"],
+      "publishes": ["@arcanea/mcp"],
+      "branch": "main",
+      "active": false,
+      "layer": "product",
+      "gate": "form",
+      "hemisphere": "arc"
+    },
+    {
+      "name": "arcanea-memory",
+      "description": "Historical memory MCP entry - likely superseded or absorbed by Starlight Intelligence System",
+      "github": "frankxai/arcanea-memory",
+      "role": "infrastructure-unresolved",
+      "stack": ["typescript", "node"],
+      "publishes": ["@arcanea/memory-mcp"],
+      "branch": "main",
+      "active": false,
+      "layer": "product",
+      "gate": "form",
+      "hemisphere": "arc"
+    },
+    {
+      "name": "claude-flow",
+      "description": "Upstream multi-agent orchestration framework; Arcanea fork is arcanea-flow",
+      "github": "ruvnet/claude-flow",
+      "role": "upstream-runtime",
+      "stack": ["typescript", "node"],
+      "publishes": ["@claude-flow/cli"],
+      "branch": "main",
+      "active": true,
+      "layer": "product",
+      "gate": "form",
+      "hemisphere": "arc"
     }
   ],
   "syncRules": {
