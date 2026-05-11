@@ -15,6 +15,11 @@ export const LayerSchema = z.enum(LAYERS);
 export const HemisphereSchema = z.enum(HEMISPHERES);
 export const StatusSchema = z.enum(STATUSES);
 
+export type Gate = z.infer<typeof GateSchema>;
+export type Layer = z.infer<typeof LayerSchema>;
+export type Hemisphere = z.infer<typeof HemisphereSchema>;
+export type Status = z.infer<typeof StatusSchema>;
+
 export const EcosystemNodeSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
