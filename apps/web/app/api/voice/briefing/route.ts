@@ -45,6 +45,8 @@ interface Brief {
     planningFiles?: number;
     memTotalGb?: number;
     memFreeGb?: number;
+    openPrs?: number;
+    topPrs?: Array<{ number: number; title: string; isDraft: boolean }>;
   };
 }
 
@@ -67,6 +69,27 @@ async function gitToday(repoRoot: string): Promise<{ count: number; lines: strin
   if (!log) return { count: 0, lines: [], branch };
   const lines = log.split('\n').filter(Boolean);
   return { count: lines.length, lines, branch };
+}
+
+async function openPrs(repoRoot: string): Promise<{ count: number; top: Array<{ number: number; title: string; isDraft: boolean }> }> {
+  // gh CLI lists open PRs on the linked GitHub repo. Fails silently if gh
+  // isn't authed or the repo isn't a GitHub remote — keeps the briefing alive.
+  const out = await safeExec(
+    'gh',
+    ['pr', 'list', '--state', 'open', '--limit', '8', '--json', 'number,title,isDraft'],
+    repoRoot,
+    5000,
+  );
+  if (!out) return { count: 0, top: [] };
+  try {
+    const parsed = JSON.parse(out) as Array<{ number: number; title: string; isDraft: boolean }>;
+    return {
+      count: parsed.length,
+      top: parsed.slice(0, 5).map((p) => ({ number: p.number, title: p.title, isDraft: p.isDraft })),
+    };
+  } catch {
+    return { count: 0, top: [] };
+  }
 }
 
 async function recentPlanning(repoRoot: string): Promise<string[]> {
@@ -112,9 +135,10 @@ export async function GET() {
   }
 
   const repoRoot = detectRepoRoot();
-  const [git, planning] = await Promise.all([
+  const [git, planning, prs] = await Promise.all([
     gitToday(repoRoot),
     recentPlanning(repoRoot),
+    openPrs(repoRoot),
   ]);
   const mem = memSnapshot();
 
@@ -134,6 +158,14 @@ export async function GET() {
 
   if (planning.length) {
     lines.push(`Latest planning files: ${planning.join(', ')}.`);
+  }
+
+  if (prs.count > 0) {
+    const titles = prs.top
+      .slice(0, 3)
+      .map((p) => `#${p.number} ${p.title}${p.isDraft ? ' [draft]' : ''}`)
+      .join('; ');
+    lines.push(`Open pull requests (${prs.count}): ${titles}.`);
   }
 
   lines.push(
@@ -156,6 +188,8 @@ export async function GET() {
       planningFiles: planning.length,
       memTotalGb: mem.totalGb,
       memFreeGb: mem.freeGb,
+      openPrs: prs.count,
+      topPrs: prs.top,
     },
   };
 
