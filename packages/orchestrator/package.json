@@ -42,7 +42,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsx src/cli.ts",
-    "test": "pnpm build && tsx --test tests/config.test.ts tests/runtimes.test.ts tests/cli-smoke.test.ts tests/ecosystem/schema.test.ts",
+    "test": "pnpm build && tsx --test tests/**/*.test.ts",
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
