@@ -18,7 +18,56 @@ import type {
   SystemHealth,
   SessionEntry,
 } from "./types";
-import { REPO_REGISTRY, GITHUB_ORG, CATEGORY_ORDER } from "./repo-registry";
+import { PUBLIC_REPOS, type PublicRepo, type PublicRepoGroup } from "../public-repo-registry";
+
+// ─── Source-of-truth adapter ───────────────────────────────────────────────
+//
+// All repo data flows from apps/web/lib/ecosystem/derived.ts via
+// public-repo-registry. We only map the ecosystem `group` enum onto the
+// ops-dashboard `RepoCategory` enum here — the dashboard's category buckets
+// stay stable, but the underlying list is now generator-driven.
+
+const GITHUB_ORG = "frankxai";
+
+const GROUP_TO_CATEGORY: Record<PublicRepoGroup, RepoCategory> = {
+  core: "Platform",
+  intelligence: "Intelligence",
+  tools: "Content",
+  protocol: "Extensions",
+  archive: "Archive",
+  upstream: "Extensions",
+};
+
+const CATEGORY_ORDER: readonly RepoCategory[] = [
+  "Platform",
+  "Intelligence",
+  "Content",
+  "Extensions",
+  "Skills",
+  "Archive",
+] as const;
+
+interface OpsRepoEntry {
+  name: string;
+  category: RepoCategory;
+  description: string;
+}
+
+function toOpsEntry(repo: PublicRepo): OpsRepoEntry {
+  // Strip the GitHub URL prefix to get bare repo name (matches old REPO_REGISTRY shape).
+  const bareName = repo.github
+    ? repo.github.replace(/^https:\/\/github\.com\/[^/]+\//, "")
+    : repo.name.replace(/^@arcanea\//, "").replace(/^@starlight\//, "");
+  return {
+    name: bareName,
+    category: GROUP_TO_CATEGORY[repo.group],
+    description: repo.description,
+  };
+}
+
+const OPS_REPO_REGISTRY: OpsRepoEntry[] = PUBLIC_REPOS
+  .filter((r) => r.github && r.github.startsWith(`https://github.com/${GITHUB_ORG}/`))
+  .map(toOpsEntry);
 
 // ─── GitHub API Types ──────────────────────────────────────────────────────
 
@@ -368,7 +417,7 @@ function getSessionHistory(): SessionEntry[] {
 export async function fetchOpsDashboard(): Promise<OpsDashboardData> {
   // Fetch all repos in parallel (batched to avoid rate limits)
   const repos = await Promise.all(
-    REPO_REGISTRY.map((entry) =>
+    OPS_REPO_REGISTRY.map((entry) =>
       fetchRepoHealth(entry.name, entry.category, entry.description),
     ),
   );
@@ -376,9 +425,7 @@ export async function fetchOpsDashboard(): Promise<OpsDashboardData> {
   // Group by category
   const reposByCategory = {} as Record<RepoCategory, RepoHealth[]>;
   for (const cat of CATEGORY_ORDER) {
-    reposByCategory[cat as RepoCategory] = repos.filter(
-      (r) => r.category === cat,
-    );
+    reposByCategory[cat] = repos.filter((r) => r.category === cat);
   }
 
   const agents = getAgentStatuses();

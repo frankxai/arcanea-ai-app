@@ -113,10 +113,3 @@ export interface DashboardSummary {
   averageHealthScore: number;
 }
 
-// ─── Repo Registry ─────────────────────────────────────────────────────────
-
-export interface RepoRegistryEntry {
-  name: string;
-  category: RepoCategory;
-  description: string;
-}
