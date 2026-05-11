@@ -42,7 +42,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsx src/cli.ts",
-    "test": "pnpm build && tsx --test tests/config.test.ts tests/runtimes.test.ts tests/cli-smoke.test.ts",
+    "test": "pnpm build && tsx --test tests/config.test.ts tests/runtimes.test.ts tests/cli-smoke.test.ts tests/ecosystem/schema.test.ts",
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
@@ -50,12 +50,13 @@
     "commander": "^12.1.0",
     "execa": "^9.5.0",
     "kleur": "^4.1.5",
-    "yaml": "^2.6.0"
+    "yaml": "^2.6.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.5.0",
-    "@types/node": "^20.0.0"
+    "typescript": "^5.5.0"
   },
   "publishConfig": {
     "access": "public"
