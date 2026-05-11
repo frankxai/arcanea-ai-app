@@ -1,28 +1,13 @@
-import repoConfig from "../../../.arcanea/config/repos.json";
+// apps/web/lib/public-repo-registry.ts
+//
+// Thin adapter over the generated ecosystem source of truth.
+// Reads from ./ecosystem/derived (auto-generated from .arcanea/config/{repos.json,manifest.yaml}).
+// DO NOT add hand-coded data here — edit the config files and re-run `pnpm -F @arcanea/orchestrator ecosystem:build`.
 
-// `visibility` and `publicUrl` are present on some repo entries in
-// .arcanea/config/repos.json but not all — JSON-derived union types lose
-// optional fields. Widen with explicit optionals so statusFor() / url mapping
-// type-check without per-site `in` guards.
-type ConfigRepo = (typeof repoConfig.repos)[number] & {
-  visibility?: "public" | "private" | "unresolved" | "upstream-public";
-  publicUrl?: string | null;
-};
+import { NODES, type EcosystemNode } from './ecosystem/derived';
 
-export type PublicRepoGroup =
-  | "core"
-  | "intelligence"
-  | "tools"
-  | "protocol"
-  | "archive"
-  | "upstream";
-
-export type PublicRepoStatus =
-  | "public"
-  | "private"
-  | "beta"
-  | "unresolved"
-  | "upstream";
+export type PublicRepoGroup = 'core' | 'intelligence' | 'tools' | 'protocol' | 'archive' | 'upstream';
+export type PublicRepoStatus = 'public' | 'private' | 'beta' | 'unresolved' | 'upstream';
 
 export interface PublicRepo {
   name: string;
@@ -37,74 +22,50 @@ export interface PublicRepo {
   packages: string[];
 }
 
-const ROLE_GROUP: Record<string, PublicRepoGroup> = {
-  production: "core",
-  oss: "core",
-  product: "core",
-  substrate: "intelligence",
-  harness: "tools",
-  orchestration: "tools",
-  "coding-cli": "tools",
-  capture: "tools",
-  "adoption-kit": "protocol",
-  vertical: "protocol",
-  "infrastructure-unresolved": "archive",
-  "upstream-runtime": "upstream",
-};
-
-function titleCase(value: string) {
-  return value
-    .split(/[-.]/)
-    .filter(Boolean)
-    .map((part) => part.slice(0, 1).toUpperCase() + part.slice(1))
-    .join(" ");
+function statusFromNode(node: EcosystemNode): PublicRepoStatus {
+  if (node.isExternal) return 'upstream';
+  if (node.status === 'shipped' || node.status === 'built') return 'public';
+  if (node.status === 'wip') return 'beta';
+  if (node.status === 'sunset' || node.status === 'orphan') return 'unresolved';
+  return 'public';
 }
 
-function languageFor(repo: ConfigRepo) {
-  if (repo.stack.includes("typescript")) return "TypeScript";
-  if (repo.stack.includes("markdown")) return "Markdown";
-  if (repo.stack.includes("yaml")) return "YAML";
-  if (repo.stack.includes("node")) return "Node";
-  return titleCase(repo.stack[0] ?? "Mixed");
+function groupFromNode(node: EcosystemNode): PublicRepoGroup {
+  if (node.isExternal) return 'upstream';
+  if (node.layer === 'substrate') return 'intelligence';
+  if (node.layer === 'surface') return 'core';
+  return 'tools';
 }
 
-function statusFor(repo: ConfigRepo): PublicRepoStatus {
-  if (repo.visibility === "unresolved" || !repo.active) return "unresolved";
-  if (repo.visibility === "private") return "private";
-  if (repo.visibility === "upstream-public") return "upstream";
-  if (repo.branch !== "main") return "beta";
-  return "public";
-}
+export const PUBLIC_REPOS: PublicRepo[] = NODES
+  .filter((n) => n.repo || n.github)
+  .map((n) => ({
+    name: n.name,
+    group: groupFromNode(n),
+    description: n.description,
+    language: 'TypeScript',
+    status: statusFromNode(n),
+    url: n.publicUrl ?? n.github ?? null,
+    github: n.github ?? '',
+    role: n.layer,
+    branch: 'main',
+    packages: n.packageVersion ? [n.name] : [],
+  }));
 
-export const PUBLIC_REPOS: PublicRepo[] = (repoConfig.repos as ConfigRepo[]).map((repo) => ({
-  name: repo.name,
-  group: ROLE_GROUP[repo.role] ?? "tools",
-  description: repo.description,
-  language: languageFor(repo),
-  status: statusFor(repo),
-  url: repo.publicUrl ?? null,
-  github: repo.github,
-  role: repo.role,
-  branch: repo.branch,
-  packages: "publishes" in repo ? repo.publishes ?? [] : [],
-}));
-
-export const ARC_REPOS = PUBLIC_REPOS.filter((repo) => repo.group !== "upstream");
-export const ACTIVE_ARC_REPOS = ARC_REPOS.filter((repo) => repo.status !== "unresolved");
-export const PUBLIC_ARC_REPOS = ACTIVE_ARC_REPOS.filter((repo) => repo.url?.startsWith("https://github.com/"));
-export const UNRESOLVED_ARC_REPOS = ARC_REPOS.filter((repo) => repo.status === "unresolved");
-export const UPSTREAM_REPOS = PUBLIC_REPOS.filter((repo) => repo.group === "upstream");
+export const ARC_REPOS = PUBLIC_REPOS.filter((r) => r.group !== 'upstream');
+export const ACTIVE_ARC_REPOS = ARC_REPOS.filter((r) => r.status !== 'unresolved');
+export const PUBLIC_ARC_REPOS = ACTIVE_ARC_REPOS.filter((r) => r.url?.startsWith('https://github.com/'));
+export const UNRESOLVED_ARC_REPOS = ARC_REPOS.filter((r) => r.status === 'unresolved');
+export const UPSTREAM_REPOS = PUBLIC_REPOS.filter((r) => r.group === 'upstream');
 
 export const PUBLIC_REPO_SUMMARY = {
   tracked: ARC_REPOS.length,
   active: ACTIVE_ARC_REPOS.length,
   public: PUBLIC_ARC_REPOS.length,
-  private: ACTIVE_ARC_REPOS.filter((repo) => repo.status === "private").length,
+  private: ACTIVE_ARC_REPOS.filter((r) => r.status === 'private').length,
   unresolved: UNRESOLVED_ARC_REPOS.length,
   upstream: UPSTREAM_REPOS.length,
-  packages: Array.from(new Set(PUBLIC_REPOS.flatMap((repo) => repo.packages))).length,
+  packages: Array.from(new Set(PUBLIC_REPOS.flatMap((r) => r.packages))).length,
 };
 
-export const PUBLIC_PACKAGE_NAMES = Array.from(
-  new Set(PUBLIC_REPOS.flatMap((repo) => repo.packages)),
-).sort();
+export const PUBLIC_PACKAGE_NAMES = Array.from(new Set(PUBLIC_REPOS.flatMap((r) => r.packages))).sort();
