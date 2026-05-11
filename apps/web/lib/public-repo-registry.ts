@@ -76,7 +76,7 @@ function statusFor(repo: ConfigRepo): PublicRepoStatus {
   return "public";
 }
 
-export const PUBLIC_REPOS: PublicRepo[] = repoConfig.repos.map((repo: ConfigRepo) => ({
+export const PUBLIC_REPOS: PublicRepo[] = (repoConfig.repos as ConfigRepo[]).map((repo) => ({
   name: repo.name,
   group: ROLE_GROUP[repo.role] ?? "tools",
   description: repo.description,
