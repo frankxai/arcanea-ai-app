@@ -5,6 +5,7 @@ import { LiquidGlass } from "@/components/motion/liquid-glass";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal } from "@/components/motion/reveal";
 import { LayerCards } from "./layer-cards";
+import { EcosystemViews } from "./ecosystem-views";
 import {
   FloatingOrbs,
   GridTexture,
@@ -236,6 +237,22 @@ export default function EcosystemHubPage() {
 
         {/* ── Divider ──────────────────────────────────────────────────── */}
         <div className="mb-20 h-px bg-gradient-to-r from-transparent via-[var(--arc-brand-atlantean-teal)]/15 to-transparent" />
+
+        {/* ── Live Ecosystem Explorer (3 views) ────────────────────────── */}
+        <section className="mb-20" aria-labelledby="explorer-heading">
+          <div className="mb-10">
+            <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-2">Live Data</p>
+            <h2 id="explorer-heading" className="text-2xl sm:text-3xl font-display font-bold text-white">Ecosystem Explorer</h2>
+            <p className="text-white/40 text-sm mt-1 max-w-xl">
+              All nodes derived from <code className="text-white/60">.arcanea/config/manifest.yaml</code> + <code className="text-white/60">repos.json</code>.
+              Switch between Layered, Ten Gates, and Arc ⊕ Nea views — click any node to open its details.
+            </p>
+          </div>
+          <EcosystemViews />
+        </section>
+
+        {/* ── Divider ──────────────────────────────────────────────────── */}
+        <div className="mb-20 h-px bg-gradient-to-r from-transparent via-[#00bcd4]/15 to-transparent" />
 
         {/* ── Repository Map ───────────────────────────────────────────── */}
         <section className="mb-20" aria-labelledby="repos-heading">
