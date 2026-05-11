@@ -48,7 +48,7 @@
     "directory": "packages/arcanea-security"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
+    "@types/node": "^20.19.40",
     "typescript": "^5.5.0"
   },
   "publishConfig": {
