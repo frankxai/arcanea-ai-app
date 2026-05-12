@@ -1,6 +1,28 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('chat entry experience', () => {
+  test('hands a homepage hero prompt into the chat composer', async ({ page }) => {
+    await page.route('**/api/ai/chat', async (route) => {
+      if (route.request().method() === 'GET') {
+        return route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({ status: 'ok' }),
+        });
+      }
+      return route.continue();
+    });
+
+    const prompt = 'Design a harbor city built on glass reefs';
+
+    await page.goto('/');
+    await page.getByRole('textbox', { name: /Describe what you want to create/i }).fill(prompt);
+    await page.getByRole('button', { name: 'Start creating in chat' }).click();
+
+    await expect(page).toHaveURL(/\/chat/);
+    await expect(page.getByRole('textbox', { name: 'Message input' })).toHaveValue(prompt);
+  });
+
   test('renders starter prompts and hands one into the composer', async ({ page }) => {
     await page.route('**/api/ai/chat', async (route) => {
       if (route.request().method() === 'GET') {

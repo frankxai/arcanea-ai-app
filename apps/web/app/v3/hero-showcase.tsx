@@ -23,7 +23,7 @@ const CARDS = [
     elements: [guardianAccents.draconia, guardianAccents.leyla, guardianAccents.lyria],
     gradient: "from-[var(--arc-brand-cosmic-blue)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-cosmic-blue)]/40",
     gradientAlt: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-cosmic-blue)]/50",
-    borderGlow: "rgba(0,188,212,0.25)",
+    borderGlow: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 25%, transparent)",
     stars: 5,
     badge: "Living Universe",
     badgeColor: brand.atlanteanTeal,
@@ -36,7 +36,7 @@ const CARDS = [
     elements: [WIND_NEUTRAL],
     gradient: "from-[var(--arc-brand-cosmic-blue)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-cosmic-void)]/40",
     gradientAlt: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-earth)]/40",
-    borderGlow: "rgba(127,255,212,0.20)",
+    borderGlow: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 20%, transparent)",
     stars: 4,
     badge: "Wind",
     badgeColor: brand.aquamarine,
@@ -49,7 +49,7 @@ const CARDS = [
     elements: [brand.arcaneanGold, brand.atlanteanTeal],
     gradient: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/30 to-[var(--arc-fire)]/40",
     gradientAlt: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/35 to-[var(--arc-fire)]/40",
-    borderGlow: "rgba(255,215,0,0.20)",
+    borderGlow: "color-mix(in srgb, var(--arc-brand-arcanean-gold) 20%, transparent)",
     stars: 5,
     badge: "Cinematic",
     badgeColor: brand.arcaneanGold,
@@ -67,7 +67,7 @@ function StarRating({ count }: { count: number }) {
             key={i}
             size={10}
             weight={filled ? "fill" : "regular"}
-            color={filled ? brand.arcaneanGold : "rgba(255,255,255,0.18)"}
+            color={filled ? brand.arcaneanGold : "color-mix(in srgb, var(--arc-text-primary) 18%, transparent)"}
           />
         );
       })}
@@ -102,16 +102,16 @@ function ShowcaseCard({
           className="absolute inset-0 rounded-2xl -z-10"
           animate={{
             boxShadow: [
-              `0 0 0 1px rgba(255,255,255,0.07), 0 0 20px 0 transparent`,
-              `0 0 0 1px ${card.borderGlow}, 0 0 28px 4px ${card.borderGlow.replace("0.", "0.08")}`,
-              `0 0 0 1px rgba(255,255,255,0.07), 0 0 20px 0 transparent`,
+              `0 0 0 1px color-mix(in srgb, var(--arc-text-primary) 7%, transparent), 0 0 20px 0 transparent`,
+              `0 0 0 1px ${card.borderGlow}, 0 0 28px 4px ${card.borderGlow}`,
+              `0 0 0 1px color-mix(in srgb, var(--arc-text-primary) 7%, transparent), 0 0 20px 0 transparent`,
             ],
           }}
           transition={{ duration: 4, repeat: Infinity, delay, ease: "easeInOut" }}
         />
         <div
           className="absolute inset-0 rounded-2xl z-0"
-          style={{ boxShadow: `0 0 0 1px rgba(255,255,255,0.07)` }}
+          style={{ boxShadow: `0 0 0 1px color-mix(in srgb, var(--arc-text-primary) 7%, transparent)` }}
         />
 
         {/* Glass background */}
@@ -133,9 +133,9 @@ function ShowcaseCard({
             style={{ skewX: "-20deg" }}
           />
           {/* Vignette overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)]/50 via-transparent to-transparent" />
           {/* Type label */}
-          <span className="absolute top-3 left-3 text-[9px] font-mono uppercase tracking-wider text-white/50 bg-black/40 px-2 py-0.5 rounded-full border border-white/[0.08]">
+          <span className="absolute top-3 left-3 text-[9px] font-mono uppercase tracking-wider text-white/50 bg-[var(--arc-cosmic-void)]/40 px-2 py-0.5 rounded-full border border-white/[0.08]">
             {card.type}
           </span>
           {/* Star rating */}
@@ -156,7 +156,7 @@ function ShowcaseCard({
                   {card.elements.map((color, i) => (
                     <span
                       key={i}
-                      className="w-2 h-2 rounded-full ring-1 ring-black/40"
+                      className="w-2 h-2 rounded-full ring-1 ring-[var(--arc-cosmic-void)]/40"
                       style={{ backgroundColor: color }}
                     />
                   ))}
