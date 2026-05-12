@@ -7,9 +7,7 @@ export default function Loading() {
         {/* Header bar */}
         <div className="flex items-center justify-between py-4 border-b border-white/[0.06]">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-[var(--arc-brand-atlantean-teal)]/10" style={{
-              background: 'linear-gradient(135deg, rgba(0,188,212,0.15), rgba(124,58,237,0.1))',
-            }} />
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/15 to-[var(--arc-brand-cosmic-blue)]/10" />
             <div>
               <div className="w-20 h-4 bg-white/[0.08] rounded" />
               <div className="w-32 h-3 bg-white/[0.04] rounded mt-1.5" />
@@ -21,9 +19,7 @@ export default function Loading() {
         {/* Empty chat area with welcome message */}
         <div className="flex-1 flex items-center justify-center py-20">
           <div className="text-center space-y-4">
-            <div className="w-12 h-12 rounded-xl mx-auto" style={{
-              background: 'linear-gradient(135deg, rgba(0,188,212,0.2), rgba(124,58,237,0.15))',
-            }} />
+            <div className="w-12 h-12 rounded-xl mx-auto bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/20 to-[var(--arc-brand-cosmic-blue)]/15" />
             <p className="text-white/30 text-sm">Loading your creative studio...</p>
             {/* Quick action hints */}
             <div className="flex flex-wrap justify-center gap-2 mt-6">
