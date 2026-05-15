@@ -159,18 +159,3 @@ But that night I was four. I was asleep. My mother was wrapping the bread. My fa
 The summer of 1989 had two months left in it. The wall in Berlin had three months left. The country we lived in had two years and seven days. None of us in the apartment on the fifth floor of block twelve in Yunusabad knew this. We were not supposed to know.
 
 This is what *before* means. It is the word for the time when you do not know.
-
----
-
-`[END CHAPTER 1 · Working count: ~3,400 words — short of Genre Master's 4,000–5,000 target. The chapter wants one more pass to expand the kitchen scene with the carrots, the father at table, and possibly a neighbor knocking for sugar. Author's call on whether to extend or leave at this register.]`
-
----
-
-### Chapter notes for the author
-
-- **The name.** I left the protagonist unnamed on the page. Mother calls him *sonok* and refers to "the boy." When you choose the name, the simplest insertion is on the second page, mother's voice on the balcony: replace "calling my name — which I will not write down here" with the name and a line about the name. Or leave it withheld — there is a literary tradition for it (see Bezmozgis's *Free World*, where the boy's name is delayed).
-- **The sister.** Per your confirmation, mother and sister stayed in Tashkent. I did not write the sister into Chapter 1 — she can arrive in Chapter 2 (1991 collapse) as a newborn, or in Chapter 3 (mid-90s school years) as a small presence, depending on her actual age relative to you. **Tell me the year of her birth and I'll place her exactly.**
-- **The father.** I rendered him present in 1989 — engineer, quiet, factory worker. If your father was not in the household in 1989, or had a different relationship to it, this is a structural revision and the kitchen scene re-shapes around mother alone. **Was your father present in your early childhood?**
-- **The Fergana detail.** I used the June 1989 pogroms against Meskhetian Turks as the "thing on the news" because it is real, period-correct, foreshadows the 1999 hinge, and gives the adult narrator an honest place to do his work without lecturing. If your family had no such conversation, or a different one (the 1989 language law? the August 1989 Tajik protests? Gorbachev addressing the Congress?), I can swap.
-- **The chinar tree in 2007.** I invented its cutting-down for the closing pivot. If the actual chinar still stands, or was cut at a different time, that line is the easiest fix.
-- **What the chapter doesn't do.** It doesn't explain Yunusabad to a Western reader. It doesn't translate *podstakannik* or *bayu-bayushki-bayu*. It doesn't name your ethnicity. It doesn't render your mother's interiority. It doesn't sentimentalize. It does carry the adult narrator's voice as ghost. Tell me which of these is right and which is wrong for your truth.

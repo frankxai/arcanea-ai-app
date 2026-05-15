@@ -3,7 +3,7 @@
 **Working title** (alternatives in `genre-direction.md` §4)
 **Slug:** `russian-from-tashkent`
 **Genre:** Memoir-fiction / literary realism / post-Soviet diaspora
-**Status:** In progress — bible phase complete, prose pending author confirmation
+**Status:** Full 12-chapter draft on disk · council-audited 2026-05-15 · SHIP WITH STRUCTURAL REVISION (3 of 4 applied)
 
 **Based on the life of Ruslan** — a friend of the writer (FrankX), born 1985 in Yunusabad, Tashkent, who grew up through Perestroika and the collapse, was displaced to St. Petersburg and Moscow as a teenager, and returned to Uzbekistan for the hotel → Chirchiq Transformer Plant → US Embassy Tashkent career arc.
 
@@ -12,6 +12,27 @@ The book lives in the in-between: not Russian enough for Russia, not Uzbek enoug
 **Frank writes; Ruslan is the subject and primary source.** The "I" voice on the page is Ruslan's, rendered by Frank with Ruslan's permission and direction. This is biographical memoir-fiction in the tradition of William Maxwell's *So Long, See You Tomorrow* — a writer giving voice to a friend's life with consent.
 
 This is **not Arcanea canon**. No Luminor, no Guardian, no Kingdom of Light. Realist literary fiction grounded in historical record and Ruslan's lived experience. The book proves `/arcanea-author` can scaffold worlds outside the Arcanea universe with the same multi-agent discipline.
+
+---
+
+## The manuscript
+
+12 chapters, ~54,000 words on disk. All chapters live at `chapters/`:
+
+| # | Title | Period | Words |
+|---|-------|--------|-------|
+| 1 | Before the Fall | 1989, Yunusabad | ~3,200 |
+| 2 | Independence | 1991–1992 | ~3,500 |
+| 3 | The Long Adjustment | 1993–1995 | ~4,600 |
+| 4 | Hotel Work and the World | 1996–1998 | ~4,400 |
+| 5 | February 16, 1999 — *the hinge* | Feb 1999 | ~5,000 |
+| 6 | After the Bombs | 1999–2000 | ~4,400 |
+| 7 | St. Petersburg | 2000–2001 | ~5,600 |
+| 8 | Moscow | 2001–2002 | ~5,500 |
+| 9 | Return | 2002–2003 | ~3,000 |
+| 10 | Hotel Years | 2003–2006 | ~4,700 |
+| 11 | Chirchiq Transformer Plant | 2006–2007 | ~3,500 |
+| 12 | The Embassy — *closing chamber* | 2007–2010 | ~6,800 |
 
 ---
 
@@ -27,53 +48,53 @@ Produced by the Arcanea Author Council in a single parallel dispatch on 2026-05-
 | Historical research stack | [`research-bible.md`](./research-bible.md) | Research Librarian |
 | Sensitivity & authenticity | [`sensitivity-direction.md`](./sensitivity-direction.md) | Sensitivity Reader |
 
-The Genre Master's twelve-chapter outline lives at `genre-direction.md` §3. Until prose drafts override it, that is the working spine.
+The Genre Master's twelve-chapter outline lives at `genre-direction.md` §3.
 
 ---
 
-## Recommended structure (locked unless author overrides)
+## /author-council audit (2026-05-15)
 
-- **Frame narrative** opening in the Embassy years (~2008–2009), 10–15 pages.
-- **In medias res hinge** at February 16, 1999 — the Tashkent bombings as the book's structural center, not just chronological.
-- **Chronological body** 1985 → 2010 across 12 chapters, returning briefly to the frame at close.
-- **Voice:** Past tense, first person, retrospective adult voice with variable proximity to the younger self. Mid-length sentences as the default. Dry, occasional humor. Krasikov-Bezmozgis-Hemon shelf.
-- **Opening:** Chirchiq, 1988 or 1989. The protagonist is 3 or 4. An ordinary afternoon. Sensory specificity. The adult narrator as ghost behind the child's perception.
+Full audit at [`council-audits/2026-05-15-full-manuscript.md`](./council-audits/2026-05-15-full-manuscript.md). Roster: Bezmozgis, Krasikov, Hemon, Matar, Alexievich, Maxwell, Ernaux.
 
-Full rationale: `genre-direction.md` §2, §5, §6.
+**VERDICT: SHIP WITH STRUCTURAL REVISION.** Four required changes. Three applied in this branch; one blocks on Ruslan's biographical input.
 
----
+### Applied
 
-## Author confirmation queue — Chapter 1 prose blocks on these
+1. ✅ **Stripped chapter-end scaffolding notes** (publishing hygiene — single biggest concern). Every chapter previously ended with `[END CHAPTER N · Working count]` + multi-page meta-commentary; all stripped so the manuscript reads as a manuscript.
+2. ✅ **Cut Chapter 5's adult-retrospect overexplanation** (Bezmozgis + Matar joint). The four-paragraph italicized "what the bombings did to me" section and the Sanjar hypothetical attribution — both removed. The chapter's hinge status is now earned through scene alone.
+3. ✅ **Added FSN double-exposure scene to Chapter 12** (Krasikov + Alexievich). One scene: October 2008, Dilnoza places a politically-loaded visa file on the narrator's desk without comment. The applicant receives the refusal he came for. The Americans see a routine 214(b) denial. The two FSNs share coffee the next morning and talk about the chinar trees. This is the book's most original literary contribution — the post-Andijan FSN texture rendered in behavior and restraint, never named.
 
-The five bibles flagged convergent open questions. The author must answer these (truth, not invention) before prose can land cleanly.
+### Outstanding — blocks on Ruslan
 
-### Top 3 blocking
-
-1. **Which Russian-speaker identity, precisely?** (Sensitivity §1) Ethnic Russian / Koryo-saram / Bukharan Jew / Volga German / Tatar / Crimean Tatar / mixed family — which? This sets the book's interior authority.
-
-2. **Childhood ground — which place?** (World §2; Genre §6) Chirchiq itself, Tashkent's Chilanzar district, Yunusabad, or somewhere else. The opening scene's sensory specificity hinges on this.
-
-3. **WHO LEFT and WHO STAYED in the family?** (Character §3) Sibling configuration; whether a sibling emigrated to Israel / Germany / Russia / Canada; what happened to the father's profession after 1991.
-
-### Important but not Chapter-1 blocking
-
-4. **Russia years — actual sequence and duration?** (World; Character) "Petersburg 1999 to 2001, Moscow 2001 to 2002" or different?
-
-5. **Embassy tenure and section?** (World §2; Research §2) Consular FSN vs Public Affairs vs Economic vs other. Years.
-
-6. **Andijan May 13, 2005 — were you already at the Embassy?** (Sensitivity §3, §4) If yes, the week of Andijan from inside the compound may become the book's most original chapter.
-
-7. **Uzbek language relationship?** (Sensitivity §5) What you understood, what you spoke, what you refused. This is the structural question the narrator's credibility turns on.
+4. ⏳ **Resolve the sister's fate** (Maxwell, ethical priority overrides ranking). She appears as a named, specific presence in six chapters (the cloth rabbit, the *bomby* scene, the Uzbek vocabulary at the dinner table) — and then **vanishes** from the narrative entirely. Council: *"This is not a craft choice; it is an unresolved biographical fact."* Required before the manuscript moves past working-draft state:
+   - **Where is she by Chapter 9 (2002–2003 return)?** Still in Tashkent? Emigrated? At university?
+   - **Where is she by Chapter 12 (2007–2010 Embassy)?** Married? Abroad? Still in the Yunusabad apartment?
+   - Whatever the truth is, the manuscript needs one explicit placement per chapter where she's currently absent.
 
 ---
 
-## Genre Master's next moves for the author (verbatim)
+## Council's biggest strength + biggest concern
 
-1. Read the stack before writing Chapter 1 — Bezmozgis "Natasha," Krasikov "One More Year," Ismailov "The Railway," Matar "The Return." Study sentence rhythm and structural decisions, not plot.
-2. **Write Chapter 5 first, out of order.** The 1999 bombing morning. It is the book's nerve center; writing it early tells you what voice and distance the book actually is.
-3. Locate 3–5 specific physical objects from Chirchiq childhood and draft one page on each without narrative.
-4. Decide the protagonist's name on page one and hold it.
-5. Keep a one-page document of what you will *not* explain.
+- **Strength:** The mother. *"She does not have an interior (the book correctly denies her one). She has three sentences across twelve chapters — each a complete worldview delivered without commentary. The mother and her refusal to sentimentalize are the book's publishing argument."*
+- **Concern (now resolved):** The chapter-end notes. *"If Ruslan opens this file to review his life story, he will encounter extensive meta-commentary on how his life story was drafted."* — stripped.
+
+---
+
+## Working assumptions inherited from Ch1 (consistent across all 12 chapters)
+
+- **Childhood ground:** Yunusabad, Tashkent (confirmed by Frank)
+- **Mother and sister stayed** in Tashkent (confirmed by Frank)
+- **Protagonist traveled to Russia alone** at 14, ~1999/2000, Petersburg then Moscow, returned ~2002 (confirmed by Frank)
+- **Family ethnicity:** mixed — specifics withheld from the page until Ruslan locks (`[CONFIRM-MIX]` flags throughout)
+- **Father:** present in 1989 household, maintenance engineer at Tashkent factory `[CONFIRM-FATHER-PROFESSION]`
+- **Sister:** born early 1990s `[CONFIRM-SISTER-BIRTH-YEAR]` — first appears in Ch3 as toddler
+- **Protagonist name:** withheld on the page entirely; mother calls him *sonok*. Literary tradition for it (Bezmozgis's *Free World*).
+
+---
+
+## Inline [CONFIRM] flag policy
+
+All chapters carry `[CONFIRM-...]` flags inline where the prose committed to a specific Ruslan/Frank should override. These are intentionally visible in the draft state — the book lives at `/books/drafts/` for a reason. They will be resolved once Ruslan reviews. Not removing them in this pass: they're transparent draft-state markers and they tell readers exactly where the lived experience needs to land.
 
 ---
 
@@ -91,4 +112,8 @@ Alternates: *In-Between Country*, *From Tashkent with Russian*, *The Long Return
 
 ## Status log
 
-- **2026-05-15** — `/arcanea-author` invoked. Five specialist agents dispatched in parallel. All five bibles delivered. Manifest committed. Awaiting author truth on the three blocking questions before Chapter 1 prose.
+- **2026-05-15 (morning)** — `/arcanea-author` invoked. Five specialist agents dispatched in parallel. All five bibles delivered. Manifest committed. (PR #118)
+- **2026-05-15 (midday)** — Cover via NB2 (Gemini 3.1 Flash Image Preview). Chinar tree, Yunusabad August 1989. Live on `/books/drafts/russian-from-tashkent`.
+- **2026-05-15 (afternoon)** — Routing fix for `/books/[bookId]/[chapterId]`. (PR #119) Chapter 1 live at `arcanea.ai/books/russian-from-tashkent/before-the-fall`.
+- **2026-05-15 (evening)** — Chapters 2–12 drafted by four parallel Deep Fiction Master agents (~50K new words). Manuscript total: ~60K → ~54K post-revision.
+- **2026-05-15 (night)** — `/author-council` audit (7-author literary-realism roster). Verdict: SHIP WITH STRUCTURAL REVISION. 3 of 4 recommendations applied. Sister-fate outstanding, blocks on Ruslan.
