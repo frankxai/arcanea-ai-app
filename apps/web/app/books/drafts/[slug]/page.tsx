@@ -59,6 +59,7 @@ const COVER_MAP: Record<string, string> = {
   'song-of-van-linh': '/images/books/song-of-van-linh-cover.png',
   'das-maedchen-drei-sprachen': '/images/books/das-maedchen-drei-sprachen-cover-v2.png',
   'las-tierras-de-luz': '/images/books/las-tierras-de-luz-cover-v2.png',
+  'russian-from-tashkent': '/images/books/russian-from-tashkent-cover-nb2.png',
 };
 
 const ACCENT_MAP: Record<string, { primary: string; bg: string; border: string; glow: string }> = {
@@ -97,6 +98,12 @@ const ACCENT_MAP: Record<string, { primary: string; bg: string; border: string; 
     bg: 'bg-amber-300/10',
     border: 'border-amber-300/20',
     glow: 'bg-amber-800/[0.10]',
+  },
+  'russian-from-tashkent': {
+    primary: 'text-amber-300',
+    bg: 'bg-amber-500/10',
+    border: 'border-amber-500/20',
+    glow: 'bg-amber-900/[0.10]',
   },
 };
 
@@ -151,6 +158,14 @@ const BOOK_DESCRIPTIONS: Record<string, { tagline: string; paragraphs: string[] 
       'Mira lives in Veldoria, a Realm of the Second Settling — a valley of piedra viva and slow rivers, where the old stones still hold yesterday\'s heat against your palm and the great sombraluz tree in the schoolyard has been called La Abuela for longer than anyone remembers. On an ordinary morning in la hora de Nero, the warmth above her heart resolves into something visible. She names her, very quietly, in the chamber of her own mouth: Chispa.',
       'In the days that follow, Mira learns that every being in her pueblo carries a small light — the baker who has hummed three notes for forty years, the dog who has been walking her to school for four, the silver cat who decides things about people, the carpenter whose oscuro is so deep it does not glow, it receives. But her mother sees something and not the something. Her best certainty becomes her loneliest knowing.',
       'Then, across the narrow street, Señora Bela — who came to Veldoria from Aurevalde sixty years ago through a transit corridor that has since shifted course — looks up from a bowl of green beans and lets her gaze settle three fingers above Mira\'s shoulder. A magical-realism novel of the Kingdom of Light. Of inherited longing. Of the three notes that crossed a lost Realm-corridor to find their child. Written in Spanish in the Veldarín tradition, in the open, with a woman who heard the song first.',
+    ],
+  },
+  'russian-from-tashkent': {
+    tagline: 'Born in Tashkent in 1985 to a Russian-speaking family. Exiled to Russia at fourteen. Returned to work the hotel lobbies, the transformer plant, and finally the American embassy of a country that watched him from the day he was born.',
+    paragraphs: [
+      'Ruslan was four years old in the courtyard between blocks twelve and fourteen in Yunusabad, watching ants carry a grain of bread into a crack in the asphalt, on the afternoon his country had two years and seven days left. He did not know this. The adults on the fifth floor where his mother was wrapping bread for dinner did not know it either. This is what before means. It is the word for the time when you do not know.',
+      'In 1991 the country disappeared. In 1999 the bombs went off in Tashkent and the city closed its hands. At fourteen Ruslan went to St. Petersburg, then to Moscow, where the police looked at his face and asked him where he was really from. He came back. He worked a hotel desk in Tashkent. He worked the floor of the Chirchiq Transformer Plant. He walked into the American embassy on a morning in 2007 and had his photograph taken for a badge.',
+      'A novel of categorical homelessness — not Russian enough for Russia, not Uzbek enough for Uzbekistan, fluent in both and at home in neither. Based on the life of Ruslan, written by his friend Frank, with his permission and care. Comp shelf: Bezmozgis, Krasikov, Hemon, Ismailov, Matar, Alexievich. Scaffolded in a single parallel dispatch via /arcanea-author — the proof that this command holds worlds outside its own canon.',
     ],
   },
 };
