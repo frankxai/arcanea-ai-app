@@ -6,7 +6,7 @@
 
 ---
 
-## Chapter 1 · Before the Fall
+## Chapter 1: Before the Fall
 
 *Yunusabad, Tashkent — Summer 1989* `[CONFIRM-YEAR: 1988 or 1989]`
 

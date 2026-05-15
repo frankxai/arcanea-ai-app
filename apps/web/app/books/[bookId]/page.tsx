@@ -198,6 +198,14 @@ const BOOKS: Record<string, BookDef> = {
     status: 'in-progress',
     dir: join(process.cwd(), '..', '..', 'book', 'das-maedchen-drei-sprachen', 'chapters'),
   },
+  'russian-from-tashkent': {
+    title: 'The Russian-Speaker',
+    subtitle: 'A novel of Tashkent, Petersburg, Moscow — 1985–2010',
+    description:
+      'Biographical memoir-fiction based on the life of Ruslan — a friend of the writer (FrankX) — born 1985 in Yunusabad, Tashkent, who grew up through Perestroika and the collapse, was exiled to St. Petersburg and Moscow as a teenager after the 1999 Tashkent bombings, and returned to Uzbekistan to work a hotel lobby, then the Chirchiq Transformer Plant, then the US Embassy of a country that watched him from the day he was born. A novel of categorical homelessness — not Russian enough for Russia, not Uzbek enough for Uzbekistan, fluent in both and at home in neither. Comp shelf: Bezmozgis, Krasikov, Hemon, Ismailov, Matar, Alexievich.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'russian-from-tashkent', 'chapters'),
+  },
 };
 
 const STATUS_STYLES: Record<BookStatus, { bg: string; text: string; label: string }> = {
