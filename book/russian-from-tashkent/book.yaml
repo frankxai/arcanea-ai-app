@@ -9,12 +9,14 @@ languages_woven: [en, ru, uz]
 authors:
   - name: FrankX
     github: frankxai
-    role: writer
+    role: creator
+    note: "Writer · gives voice to Ruslan's life with permission"
   - name: Ruslan
-    role: subject · lived experience
-    note: "Surname withheld pending consent. Story rendered with Ruslan's permission and collaboration."
+    role: co-author
+    note: "Subject · lived experience · surname withheld pending consent"
   - name: Arcanea Author Council
-    role: scaffolding · five-specialist parallel dispatch
+    role: co-author
+    note: "Scaffolding · five-specialist parallel dispatch via /arcanea-author"
 
 ai_transparency:
   models_used:
