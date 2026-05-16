@@ -284,10 +284,71 @@ What went well:
 
 What's wobbly:
 - The scrapers are still untested against current platform DOMs.
-  Until I see one real capture land cleanly in `ArcaneaKura/`,
+  Until I see one real capture land cleanly in `Kura/`,
   everything above v0.2.0 is theory.
 - The `/kura-process` skill is well-specified but has not been run
   against any actual vault yet. Quality of entity extraction is
   unknown until evaluated.
 - The monorepo branch is mixing concerns. Cherry-pick the Kura
   commit to a clean branch before PR'ing if you want a tidy review.
+
+---
+
+## Wave 4 addendum — Council split ratification (2026-05-16)
+
+The FrankX Superintelligent Council convened on 2026-05-16 to ratify a
+brand split. Verdict: **4/4 YES, 0.91 confidence**.
+
+### The split
+
+- **Kura** — sovereign, brand-neutral export tool. Repo, extension,
+  format spec, generic `/kura-process` skill. Tagline:
+  *"Kura — export your most precious writing."*
+- **Arcanea Kura** — Arcanea's specialization on top of Kura. The
+  `/arcanea-kura-process` skill (worldbuilding entity extraction),
+  the opt-in `Send to Arcanea` button in the popup, and the
+  `arcanea.ai/kura` marketing page.
+
+### Extension repo (`~/arcanea-vault`, commit `5327ca2`)
+
+- `manifest.json`: name `"Kura — Export your most precious writing…"`,
+  short_name `"Kura"`
+- `package.json`: name `kura`
+- `frontmatter.ts`: `VAULT_ROOT = 'Kura'`, `CAPTURED_BY = 'kura/0.2.0'`
+- Vault on disk: `~/Downloads/Kura/` (was `~/Downloads/ArcaneaKura/`)
+- popup + sidepanel: "Kura" everywhere; "Arcanea" only in the opt-in button
+- Service worker boot log: `[Kura] Service worker initialized`
+- Bridge payload: `{ source: "kura", integration: "arcanea", … }`;
+  header `X-Kura-Source`
+- `.claude/commands/kura-process.md` (new generic skill — format
+  enforcement + index refresh, no entity extraction)
+- `.claude/commands/arcanea-kura-process.md` (was `kura-process.md` —
+  keeps the Arcanea worldbuilding extraction)
+- Full README, FORMAT_SPEC, CLAUDE.md, STORE_LISTING, EXCELLENCE_AUDIT
+  rebranded
+- Playwright assertions + smoke-test script updated to "Kura"
+
+### Monorepo state (no change this wave)
+
+- **PR #116** (`apps/web/app/kura/*` + `apps/web/app/api/kura/*`) stays
+  in **Draft**. Now correctly positioned as the Arcanea specialization
+  surface — `arcanea.ai/kura` is Arcanea's specialization page, not
+  Kura's home.
+- **PR #117** (delete stale `packages/arcanea-vault/` +
+  `packages/arcanea-vault-cli/`) ready to merge anytime.
+
+### Verification status (still pending desktop)
+
+- `pnpm test:extension` — Playwright must run green
+- Manual `dist/` load → real ChatGPT/Claude/Grok capture → files in `~/Downloads/Kura/`
+- `/kura-process` and `/arcanea-kura-process` against the captured folder
+
+### Updated next-stack order
+
+1. `pnpm test:extension` on desktop (5 min — first real browser validation)
+2. Manual capture from one platform → verify `~/Downloads/Kura/` shape
+3. Merge PR #1 (extension) once tests + manual pass
+4. `gh repo rename arcanea-vault kura`
+5. Un-draft + merge PR #116 (monorepo specialization)
+6. Merge PR #117 (cleanup stale packages)
+7. Generate Web Store assets, submit as **Kura**
