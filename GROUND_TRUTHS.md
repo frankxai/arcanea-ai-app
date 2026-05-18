@@ -43,10 +43,11 @@ The Arcanea ecosystem has more canon than memory suggests. Most of it is correct
 
 | Concern | Canonical | Status | One-line |
 |---|---|---|---|
+| **Measurable quality enforcement layer** | [`QUALITY_CANON.md`](./QUALITY_CANON.md) | **Authoritative (v0.1.0, 2026-05-18).** | ~70 rules across code/design/perf/test/docs/api/git. BLOCKING vs WARN vs MANUAL vs ASPIRATIONAL. Tier-1 CI wiring is the immediate next step. |
 | Cached-belief validation contract (5 layers) | `~/.claude/skills/arcanea-meta/references/validation-contract.md` | **L2 shipped** to root `CLAUDE.md`; L0/L1/L3/L4 designed, deferred. | Memory ≠ current state. Verify on disk before claiming. |
 | Active validation rule (L2) | [`CLAUDE.md`](./CLAUDE.md) § Cached-Belief Validation Protocol | **Authoritative & shipped.** | Same-turn verify OR explicit "unverified, from memory:" prefix. |
 | Resource discipline (16GB) | [`CLAUDE.md`](./CLAUDE.md) § Resource Management | **Authoritative.** | Max 4-5 concurrent Claude instances; no `pnpm dev` left running; haiku for background. |
-| Git discipline | [`CLAUDE.md`](./CLAUDE.md) § Git Discipline | **Authoritative.** | `type(scope): desc` messages, no `git add .`, push origin (not records). |
+| Git discipline (extended) | [`CLAUDE.md`](./CLAUDE.md) § Git Discipline + [`QUALITY_CANON.md`](./QUALITY_CANON.md) §7 | **Authoritative.** | `type(scope): desc` messages, no `git add .`, push origin (not records). |
 
 ### §1.3 — Agents & Execution
 
@@ -114,16 +115,11 @@ Brand-family architecture is **a canonical pattern**, not a one-off. See `projec
 
 What canon does *not* yet exist, and where the lack actively bites.
 
-### §2.1 — No QUALITY_CANON.md
+### §2.1 — ~~No QUALITY_CANON.md~~ — **RESOLVED 2026-05-18**
 
-The 7-gate filter lives in TASTE.md §1-7 (curatorial) and `feedback_quality_standard.md` (memory). Neither is a **measurable, CI-enforceable contract** with thresholds:
-- "Lighthouse 90+" — not gated
-- "≥80% test coverage" — not gated (per user prompt aspiration)
-- "No raw hex in app code" — designed in TASTE.md Gate 6, **not lint-enforced** (status: "Aspirational" per TASTE.md line 72)
-- "TypeScript strict, no `any`" — claimed in AGENTS.md, **no CI rule** confirmed
-- "Frozen lockfile in CI" — AGENTS.md Execution Law #3, **enforcement state unverified this session**
+Closed by [`QUALITY_CANON.md`](./QUALITY_CANON.md) v0.1.0. ~70 measurable rules across 7 sections (code/design/perf/test/docs/api/git), each marked `BLOCKING` / `WARN` / `MANUAL` / `ASPIRATIONAL` with named CI checks.
 
-**Net:** there is a *taste canon* (TASTE.md) and a *token canon* (DESIGN.md), but no *quality gate canon* with measurable thresholds and CI enforcement. This is the next file to write, as per Frank's "consolidate canon first" choice.
+**Remaining sub-gap:** most `BLOCKING` rules are intent-only — Tier-1 CI wiring (see QUALITY_CANON §10.1) is not yet shipped. ~3 hours of work for the highest-ROI 7 rules (banned fonts, domMax, SVG logo, lockfile drift, no-coauthor-contamination, empty catch, commented-out code).
 
 ### §2.2 — Planning-doc staleness
 
@@ -278,7 +274,7 @@ Frank asked for an honest assessment of how good existing canon is and whether i
 
 | # | Improvement | Impact | Effort | Why |
 |---|---|---|---|---|
-| 1 | Write **QUALITY_CANON.md** with measurable thresholds + CI rule mapping | High | 1 session | Closes the largest gap (§2.1). Frank chose this as step 2. |
+| 1 | ~~Write **QUALITY_CANON.md**~~ — **DONE 2026-05-18 v0.1.0.** Next: ship Tier-1 CI wiring (QUALITY_CANON §10.1) | High | ~3 hr | Closes §2.1. Wiring closes the BLOCKING-on-paper gap. |
 | 2 | Decide planning-with-files refresh-or-deprecate | High | 30 min | Stops agents reading 27-day-old facts as truth (§2.2). |
 | 3 | Add CI lint: ban Inter/Cinzel/Space Grotesk + raw hex in `apps/web/` | High | 1 session | Enforces TASTE Gate 3 and Gate 6 mechanically. |
 | 4 | Promote `feedback_design_tier.md` motion patterns into TASTE.md or new MOTION.md | Medium | 30 min | Moves April motion bar out of memory-only. |
