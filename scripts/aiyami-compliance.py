@@ -17,7 +17,6 @@ BANNED_AI_PATTERNS = {
     "myriad": "AI descriptor for abundance. Use specific quantities or let the depth speak.",
     "beacon": "Cliché indicator of hope/wisdom. Detail the source and force of light instead.",
     "testament": "Cliché verification phrase. Use evidence or delete the sentence.",
-    "worldbuilding": "Do not break the fourth wall. Show the universe, don't mention building it.",
     "realm": "Generic fantasy cliché. Specify the province, state, gate, or district."
 }
 
