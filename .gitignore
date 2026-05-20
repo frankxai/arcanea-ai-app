@@ -104,7 +104,9 @@ agents/daily-ideas/*/
 
 # Archive content (preserved but not synced)
 archive/
+_archive/
 frank-input/
+.tmp-*.ps1
 
 # Ignore vscode AI rules
 .github/instructions/codacy.instructions.md

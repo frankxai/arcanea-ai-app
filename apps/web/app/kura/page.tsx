@@ -113,7 +113,7 @@ export default function KuraPage() {
             <p>
               Every export lands in{' '}
               <code className="rounded bg-white/[0.05] px-1.5 py-0.5 font-mono text-[#00bcd4]">
-                ~/Downloads/ArcaneaKura/
+                ~/Downloads/Kura/
               </code>{' '}
               on your computer. The filesystem is the source of truth.
               IndexedDB inside the extension is just a query cache.
