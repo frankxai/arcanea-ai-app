@@ -27,6 +27,11 @@ jobs:
           pnpm --filter @arcanea/router-spec build
           pnpm --filter @arcanea/orchestrator build
       - name: Verify ecosystem derived.ts is in sync
-        run: pnpm -F @arcanea/orchestrator ecosystem:verify
+        run: |
+          if ! pnpm -F @arcanea/orchestrator ecosystem:verify; then
+            echo "::error::derived.ts is out of sync! Showing diff:"
+            git diff apps/web/lib/ecosystem/derived.ts
+            exit 1
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
