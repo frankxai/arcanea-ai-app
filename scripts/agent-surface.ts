@@ -23,6 +23,7 @@ function parseArgs(argv: string[]): CliOptions {
 }
 
 async function emitSnapshot(): Promise<void> {
+  console.error('[agent-surface] collecting snapshot');
   const snapshot = await collectLiveSurfaceSnapshot(process.cwd());
   const summary = summarizeLiveSurface(snapshot);
 
@@ -39,13 +40,14 @@ async function emitSnapshot(): Promise<void> {
     'utf8',
   );
 
-  console.log(`wrote ${OUTPUT_PATH}`);
-  console.log(`claude: ${summary.claude.join(' · ') || '(idle or hidden)'}`);
-  console.log(`antigravity: ${summary.antigravity.join(' · ') || '(idle or hidden)'}`);
+  console.error(`[agent-surface] wrote ${OUTPUT_PATH}`);
+  console.error(`claude: ${summary.claude.join(' · ') || '(idle or hidden)'}`);
+  console.error(`antigravity: ${summary.antigravity.join(' · ') || '(idle or hidden)'}`);
 }
 
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
+  console.error(`[agent-surface] mode=${options.watch ? 'watch' : 'once'} interval=${options.intervalMs}`);
   if (!options.watch) {
     await emitSnapshot();
     return;
