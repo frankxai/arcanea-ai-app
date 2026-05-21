@@ -23,7 +23,7 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
       - name: Build orchestrator deps
-        run: pnpm -F @arcanea/orchestrator build
+        run: pnpm --filter ...@arcanea/orchestrator build
       - name: Verify ecosystem derived.ts is in sync
         run: pnpm -F @arcanea/orchestrator ecosystem:verify
         env:
