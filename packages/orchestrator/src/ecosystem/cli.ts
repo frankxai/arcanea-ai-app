@@ -15,8 +15,12 @@ const __dirname = path.dirname(__filename);
 // CLI runs from packages/orchestrator/dist/ecosystem/cli.js → repo root is 4 levels up.
 const REPO_ROOT = path.resolve(__dirname, '../../../..');
 
-const command = process.argv[2];
-
+let command = process.argv[2];
+if (process.argv.includes('build')) {
+  command = 'build';
+} else if (process.argv.includes('verify')) {
+  command = 'verify';
+}
 (async () => {
   if (command === 'build') {
     const result = await build({ repoRoot: REPO_ROOT });

@@ -75,26 +75,41 @@ Every Brief must end with 3 decision-ready actions. If the Council can't produce
 - [ ] Top 3 Moves always decision-ready (verb + object + deadline)
 - [ ] Skips gracefully if prior day had zero captures (emits "rest day" Brief)
 - [ ] Archives prior day's Brief as child page before publishing new one
-- [ ] Posts Top 3 Moves (only) to Slack `#ops`
-- [ ] Never publishes a Brief that hasn't been through all 5 Luminor passes
+- [ ] Posts Top 3 Moves (only) to Slack `#arcanea`
+- [ ] Never publishes a Brief that hasn't been through all 5 Luminor passes (unless in circuit-breaker bypass mode)
 
-## Failure modes + escalation
+## v2 Circuit-Breaker & Self-Halt Specification
 
-- **Observer fails to cluster**: fall back to Type+Project grouping
-- **Strategist finds no active Gate**: emit warning "No active Gate — Starlight OS is hobbying, not compiling"
-- **Coach produces tautology (upgrade == original)**: skip that slot
-- **Connector finds zero matches**: acceptable, note "no cross-brand overlap today"
-- **Distiller finds zero candidates**: acceptable, note "no promotion-ready prompts"
-- **3 missed days in a row**: Council is broken; block other scheduled tasks until resolved
+The Daily Brief is the load-bearing reflective system. However, generating empty syntheses during prolonged periods of inactivity creates analytical drift and administrative noise.
+
+### 1. Cold Pipeline Circuit-Breaker
+- **Definition**: The prompt capture pipeline is considered **Cold** if yesterday's captured prompt count is 0.
+- **Trigger**: If prompt captures are 0 for $\ge 3$ consecutive days:
+  - The Daily Brief pipeline **collapses** into a single binary alert page.
+  - The Reflective Council passes (Observer, Coach, Connector, Strategist, Distiller) are **bypassed** to conserve token usage and prevent empty hallucinations.
+  - The output brief is generated containing only:
+    - Current Active Gate Status.
+    - Cold pipeline warning stating the consecutive day count of zero captures.
+    - 1-2 system diagnostics / meta-failures.
+  - Slack notification contains only the system warning/halt status.
+  - Notion and Obsidian remain the canonical repositories for these collapsed briefs.
+
+### 2. Self-Halt and Auto-Disable
+- **Halt Threshold**: If the system remains in a cold pipeline state for $\ge 4$ consecutive days:
+  - The `daily-brief` enters a **Self-Halt** state.
+  - **Task Authority**: The daily-brief CLI task is granted the explicitly defined authority to self-disable/exit early (with exit code `0`) when in a self-halt state to avoid producing Notion page clutter or Slack spam.
+  - **Resumption**: Halted state persists until one of the un-halt conditions is met:
+    - The Gate 0 binary lands (Option A: publish PWYW-capable URL; Option B: reclassify in Goals DB + create Linear issue).
+    - Operator explicitly clears the halt state or re-enables the task.
 
 ## Dependencies
 
 - `/prompt-harvest` must have run (previous night 02:00 UTC)
 - Active Goal exists with a Gate tag
 - Notion MCP (read Captured Prompts, write Brief pages)
-- Slack MCP
+- Slack MCP (target channel: `#arcanea`)
 - Obsidian vault write access
-- LLM access for Observer clustering and Coach upgrades (Claude Sonnet sufficient)
+- LLM access (Claude Sonnet sufficient, bypassed in circuit-breaker mode)
 
 ## Scheduled Task
 

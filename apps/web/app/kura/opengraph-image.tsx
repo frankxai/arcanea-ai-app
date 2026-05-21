@@ -85,7 +85,7 @@ export default function KuraOG() {
               background: brand.atlanteanTeal,
             }}
           />
-          Arcanea Kura · v0.2.0
+          <span>Arcanea Kura · v0.2.0</span>
         </div>
 
         {/* Display K monolith */}
@@ -147,6 +147,7 @@ export default function KuraOG() {
         {/* Tagline */}
         <div
           style={{
+            display: 'flex',
             fontSize: 44,
             color: text.primary,
             letterSpacing: '-0.015em',
@@ -155,11 +156,12 @@ export default function KuraOG() {
             lineHeight: 1.15,
           }}
         >
-          Export your most precious writing —{' '}
+          <span>Export your most precious writing — </span>
           <span
             style={{
               color: brand.atlanteanTeal,
               fontWeight: 600,
+              marginLeft: 8,
             }}
           >
             local-first, no cloud.
