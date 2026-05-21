@@ -10,7 +10,7 @@ export interface UserConfig {
   /** User's tier preference for routing. Determines fallback order. */
   preference: TierPreference;
   /** Known auth per runtime. Set by `arcanea-orchestrator doctor`. */
-  auth: Partial<Record<'claude' | 'opencode' | 'codex' | 'gemini', AuthRecord>>;
+  auth: Partial<Record<'claude' | 'opencode' | 'codex' | 'antigravity', AuthRecord>>;
   /** Optional default surface override (e.g. 'oh-my-arcanea' to always prefer free). */
   defaultSurface?: string;
   /** Adaptive routing mode: auto (default, on at ≥10 events) | on | off. */

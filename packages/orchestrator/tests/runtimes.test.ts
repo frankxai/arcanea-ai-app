@@ -25,8 +25,8 @@ test('runtimeFor maps openai → codex', () => {
   assert.equal(runtimeFor(m('openai')), 'codex');
 });
 
-test('runtimeFor maps google → gemini', () => {
-  assert.equal(runtimeFor(m('google')), 'gemini');
+test('runtimeFor maps google → antigravity', () => {
+  assert.equal(runtimeFor(m('google')), 'antigravity');
 });
 
 test('runtimeFor unknown provider defaults to claude (safest auth path)', () => {
@@ -52,8 +52,8 @@ test('getRuntime(codex) uses exec without --model flag', () => {
   assert.deepEqual(argv, ['exec', 'hello']);
 });
 
-test('getRuntime(gemini) uses -p flag with yolo + compress + sis-sync', () => {
-  const rt = getRuntime('gemini');
-  const argv = rt.argv('gemini-3-pro', 'hello');
-  assert.deepEqual(argv, ['-p', 'hello', '--yolo', '--compress-subagents', '--sis-sync']);
+test('getRuntime(antigravity) uses print mode', () => {
+  const rt = getRuntime('antigravity');
+  const argv = rt.argv('agy-model', 'hello');
+  assert.deepEqual(argv, ['-p', 'hello']);
 });

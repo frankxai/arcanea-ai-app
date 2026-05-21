@@ -4,7 +4,7 @@ This file is readable by any coding agent. It declares what this package is, how
 
 ## What this is
 
-The **Arcanea Orchestrator** — a headless routing/planning/swarming/learning brain that executes via `claude`, `opencode`, `codex`, `gemini` sub-CLIs. Consumes `@arcanea/router-spec`. Sub-economics aware: Claude Max covers `claude -p`, OpenCode Zen covers `opencode`, BYOK covers the rest. This package is the orchestrator; `arcanea-code` (separate repo) is the rich OpenCode-fork TUI that can sit on top of it.
+The **Arcanea Orchestrator** — a headless routing/planning/swarming/learning brain that executes via `claude`, `opencode`, `codex`, `agy` sub-CLIs. Consumes `@arcanea/router-spec`. Sub-economics aware: Claude Max covers `claude -p`, OpenCode Zen covers `opencode`, BYOK covers the rest. This package is the orchestrator; `arcanea-code` (separate repo) is the rich OpenCode-fork TUI that can sit on top of it.
 
 ## Contracts
 
@@ -47,8 +47,8 @@ Bin names: `arcanea-orchestrator` (canonical), `arco` (short alias).
 ## Related
 
 - `packages/router-spec/` — the spec this CLI consumes.
-- `frankxai/oh-my-arcanea`, `frankxai/claude-arcanea`, `frankxai/codex-arcanea`, `frankxai/gemini-arcanea` — per-runtime overlays that should read the same router-spec.
+- `frankxai/oh-my-arcanea`, `frankxai/claude-arcanea`, `frankxai/codex-arcanea`, `frankxai/antigravity-arcanea` — per-runtime overlays that should read the same router-spec.
 - `frankxai/arcanea-orchestrator` — Composio AO fork for swarm / worktree / dashboard.
-- `frankxai/claude-codex-gemini-opencode-settings` — install.sh distribution pipeline.
+- `frankxai/claude-codex-antigravity-opencode-settings` — install.sh distribution pipeline.
 
 See also: `planning-with-files/AMCAS_DESIGN_2026-04-17.md` for the full system design.

@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node ≥20](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](https://nodejs.org/)
 
-**The Arcanea Orchestrator.** A headless brain that routes, plans, swarms, and learns across `claude`, `opencode`, `codex`, and `gemini`. Reads the canonical `@arcanea/router-spec` to pick the right model for each task, respects your subscription economics, and dispatches to the right sub-CLI without you thinking about it.
+**The Arcanea Orchestrator.** A headless brain that routes, plans, swarms, and learns across `claude`, `opencode`, `codex`, and `antigravity`. Reads the canonical `@arcanea/router-spec` to pick the right model for each task, respects your subscription economics, and dispatches to the right sub-CLI without you thinking about it.
 
 Use this when you want intelligence. Use [`arcanea-code`](https://github.com/frankxai/arcanea-code) (the forthcoming OpenCode fork) when you want a rich TUI on top of it.
 
@@ -76,7 +76,7 @@ arco plan "build a landing page"
 3. Looks up the surface (defaults to `claude-arcanea` — Claude Code with Max sub).
 4. Re-ranks candidates by your tier preference from `~/.arcanea/config.yaml`.
 5. Filters out runtimes not installed on your machine.
-6. Picks the first valid model. Maps to runtime (`claude -p`, `opencode run -p`, `codex exec`, `gemini -p`).
+6. Picks the first valid model. Maps to runtime (`claude -p`, `opencode run -p`, `codex exec`, `agy -p`).
 7. Execs it, streams stdout back to you.
 
 ## What it is / is not
@@ -107,7 +107,7 @@ If you want a rich TUI daily driver, see **[arcanea-code](https://github.com/fra
 
 ## Legal / disclaimer
 
-**This package is a thin wrapper.** It does not process model requests itself — it shells out to CLIs you install and authenticate yourself (`claude`, `opencode`, `codex`, `gemini`). Everything that flows through those sub-CLIs is governed by the vendor's terms.
+**This package is a thin wrapper.** It does not process model requests itself — it shells out to CLIs you install and authenticate yourself (`claude`, `opencode`, `codex`, `agy`). Everything that flows through those sub-CLIs is governed by the vendor's terms.
 
 - **MIT licensed, provided "AS IS"**, without warranty of any kind. See `LICENSE`.
 - **Not affiliated with** Anthropic, OpenAI, Google, Alibaba, MiniMax, Zhipu, Moonshot, NVIDIA, Xiaomi, or any other model provider. All trademarks belong to their respective owners.

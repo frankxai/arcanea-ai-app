@@ -1,7 +1,7 @@
 {
   "name": "@arcanea/orchestrator",
   "version": "1.2.1",
-  "description": "The Arcanea Orchestrator — headless brain that routes, plans, swarms, and learns across claude / opencode / codex / gemini. Consumes @arcanea/router-spec.",
+  "description": "The Arcanea Orchestrator — headless brain that routes, plans, swarms, and learns across claude / opencode / codex / antigravity. Consumes @arcanea/router-spec.",
   "repository": {
     "type": "git",
     "url": "https://github.com/frankxai/arcanea-ai-app.git",
@@ -20,7 +20,7 @@
     "claude-code",
     "opencode",
     "codex",
-    "gemini",
+    "antigravity",
     "routing"
   ],
   "type": "module",

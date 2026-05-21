@@ -4,7 +4,7 @@ import type { Model } from '@arcanea/router-spec';
  * Maps a model's provider to a concrete CLI runtime.
  * Each runtime knows how to shell out to the right binary in headless mode.
  */
-export type RuntimeId = 'claude' | 'opencode' | 'codex' | 'gemini';
+export type RuntimeId = 'claude' | 'opencode' | 'codex' | 'antigravity';
 
 export interface Runtime {
   id: RuntimeId;
@@ -35,12 +35,11 @@ const RUNTIMES: Record<RuntimeId, Runtime> = {
     // `codex exec "<prompt>"` — OpenAI Codex CLI.
     argv: (_modelId, prompt) => ['exec', prompt],
   },
-  gemini: {
-    id: 'gemini',
-    binary: 'gemini',
-    // `gemini -p "<prompt>" --yolo --compress-subagents --sis-sync`
-    // non-interactive end-to-end mode with cross-session memory bridge.
-    argv: (_modelId, prompt) => ['-p', prompt, '--yolo', '--compress-subagents', '--sis-sync'],
+  antigravity: {
+    id: 'antigravity',
+    binary: 'agy',
+    // `agy -p "<prompt>"` — non-interactive print mode.
+    argv: (_modelId, prompt) => ['-p', prompt],
   },
 };
 
@@ -56,7 +55,7 @@ export function runtimeFor(model: Model): RuntimeId {
     case 'openai':
       return 'codex';
     case 'google':
-      return 'gemini';
+      return 'antigravity';
     default:
       // Default to claude for unknown providers (safest auth path).
       return 'claude';

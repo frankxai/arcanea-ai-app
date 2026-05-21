@@ -2,9 +2,9 @@ import { execa } from 'execa';
 import kleur from 'kleur';
 import { loadConfig, saveConfig, type AuthRecord } from '../config.js';
 
-type RuntimeId = 'claude' | 'opencode' | 'codex' | 'gemini';
+type RuntimeId = 'claude' | 'opencode' | 'codex' | 'antigravity';
 
-const RUNTIMES: RuntimeId[] = ['claude', 'opencode', 'codex', 'gemini'];
+const RUNTIMES: RuntimeId[] = ['claude', 'opencode', 'codex', 'antigravity'];
 
 async function which(binary: string): Promise<string | null> {
   try {
@@ -44,8 +44,8 @@ async function detectAuth(runtime: RuntimeId): Promise<AuthRecord['tier']> {
         if (process.env.OPENAI_API_KEY) return 'byok';
         return 'unknown';
       }
-      case 'gemini': {
-        const res = await execa('gemini', ['--version'], { reject: false, timeout: 5000 });
+      case 'antigravity': {
+        const res = await execa('agy', ['--version'], { reject: false, timeout: 5000 });
         if (res.exitCode !== 0) return 'unknown';
         if (process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY) return 'byok';
         return 'unknown';
@@ -130,8 +130,8 @@ function installHint(rt: RuntimeId): string {
       return 'npm i -g opencode-ai  (free Zen tier works out of the box)';
     case 'codex':
       return 'npm i -g @openai/codex  (then set OPENAI_API_KEY)';
-    case 'gemini':
-      return 'npm i -g @google/gemini-cli  (then set GOOGLE_API_KEY)';
+    case 'antigravity':
+      return 'install agy / Antigravity CLI, then set GOOGLE_API_KEY if needed';
   }
 }
 
@@ -141,7 +141,7 @@ function authHint(rt: RuntimeId): string {
       return 'Run `claude login` for Max sub, or set ANTHROPIC_API_KEY for BYOK.';
     case 'codex':
       return 'Set OPENAI_API_KEY to enable BYOK.';
-    case 'gemini':
+    case 'antigravity':
       return 'Set GOOGLE_API_KEY (or GEMINI_API_KEY) to enable BYOK.';
     default:
       return 'Check the vendor docs.';

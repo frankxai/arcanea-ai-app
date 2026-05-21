@@ -22,7 +22,7 @@ const program = new Command();
 
 program
   .name('arcanea-orchestrator')
-  .description('The Arcanea Orchestrator — routes, plans, swarms, and learns across claude / opencode / codex / gemini.')
+  .description('The Arcanea Orchestrator — routes, plans, swarms, and learns across claude / opencode / codex / antigravity.')
   .version('1.2.0');
 
 program

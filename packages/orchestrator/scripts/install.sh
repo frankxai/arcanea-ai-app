@@ -6,13 +6,13 @@
 # PowerShell installer — use `pnpm add -g @arcanea/arcanea-code` on Windows.
 #
 # What this does:
-#   1. Detects installed CLIs (claude, opencode, codex, gemini).
+#   1. Detects installed CLIs (claude, opencode, codex, antigravity).
 #   2. Installs @arcanea/arcanea-code globally via pnpm (or npm fallback).
 #   3. Runs `arcanea-code doctor` to populate ~/.arcanea/config.yaml.
 #   4. Prints a summary.
 #
 # What this does NOT do:
-#   - Install the sub-CLIs themselves (claude, opencode, codex, gemini).
+#   - Install the sub-CLIs themselves (claude, opencode, codex, antigravity).
 #     Those are vendor-owned; we point at their installers if missing.
 #   - Write to anything under /etc or /usr. User-scope only.
 #
@@ -53,7 +53,7 @@ fi
 # ── Detect sub-CLIs ───────────────────────────────────────────────────────────
 
 info "Checking sub-CLIs..."
-for cli in claude opencode codex gemini; do
+for cli in claude opencode codex antigravity; do
   if command -v "$cli" >/dev/null 2>&1; then
     ok "found: $cli → $(command -v "$cli")"
   else
@@ -62,7 +62,7 @@ for cli in claude opencode codex gemini; do
       claude)   warn "  → npm i -g @anthropic-ai/claude-code && claude login";;
       opencode) warn "  → npm i -g opencode-ai  (free Zen tier works out of the box)";;
       codex)    warn "  → npm i -g @openai/codex  (then set OPENAI_API_KEY)";;
-      gemini)   warn "  → npm i -g @google/gemini-cli  (then set GOOGLE_API_KEY)";;
+      antigravity) warn "  → install agy / Antigravity CLI  (then set GOOGLE_API_KEY)";;
     esac
   fi
 done
