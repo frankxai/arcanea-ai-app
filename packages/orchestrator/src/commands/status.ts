@@ -1,6 +1,7 @@
 import { loadSpec } from '@arcanea/router-spec';
 import { loadConfig } from '../config.js';
 import { aoStatus } from '../ao-bridge.js';
+import { collectLiveSurfaceSnapshot, summarizeLiveSurface } from '../live-surfaces.js';
 import kleur from 'kleur';
 import { execa } from 'execa';
 
@@ -53,6 +54,31 @@ export async function statusCommand(): Promise<void> {
   }
   if (ao.hint) {
     console.log(kleur.dim(`    hint:         ${ao.hint}`));
+  }
+  console.log();
+
+  // ── Live agent surfaces ──────────────────────────────────────────────────
+  console.log(kleur.bold('  Live Agent Surfaces'));
+  try {
+    const snapshot = await collectLiveSurfaceSnapshot(process.cwd());
+    const summary = summarizeLiveSurface(snapshot);
+
+    console.log(`    claude:       ${summary.claude.join(' · ') || '(idle or hidden)'}`);
+    console.log(`    antigravity:  ${summary.antigravity.join(' · ') || '(idle or hidden)'}`);
+    console.log(`    snapshot:     ${kleur.cyan(snapshot.timestamp)}`);
+    console.log(`    processes:    ${kleur.cyan(String(snapshot.processes.length))} detected`);
+
+    const topClaude = snapshot.claude.worktrees[0];
+    if (topClaude) {
+      console.log(`    claude-wt:    ${kleur.dim(topClaude.branch)} ${kleur.dim(topClaude.path)}`);
+    }
+
+    const topAntigravity = snapshot.antigravity.brains[0] ?? snapshot.antigravity.conversations[0];
+    if (topAntigravity?.summary) {
+      console.log(`    ag-latest:    ${kleur.dim(topAntigravity.summary)}`);
+    }
+  } catch {
+    console.log(`    ${kleur.dim('(live surface probe unavailable)')}`);
   }
   console.log();
 

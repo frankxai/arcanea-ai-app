@@ -56,7 +56,13 @@ All shared Arcanea knowledge lives in `.arcanea/`:
 | Cursor | `.cursor/` | rules/*.mdc | (uses this repo) |
 | Gemini | `.gemini/` | instructions.md, GEMINI.md | (uses this repo) |
 | OpenCode | `.opencode/` | commands/*.md, agents/*.md | `frankxai/oh-my-arcanea` |
-| Antigravity | `.antigravity/` | (TBD) | (planned) |
+| Antigravity | `.antigravity/` | instructions.md | `agy` / Antigravity CLI |
+
+Live agent visibility:
+
+- `pnpm agents:surface` writes `~/.arcanea/machine/agent-surface-status.json`
+- `pnpm agents:surface:watch` refreshes that snapshot in real time
+- `arcanea-orchestrator status` includes the current Claude / Antigravity probe summary
 
 All configs should be thin shims pointing to `.arcanea/ops/AGENT_BOOTSTRAP.md`.
 
