@@ -1,0 +1,12 @@
+{
+  "risk": "private",
+  "health": "npm run health",
+  "agentFiles": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    ".codex/instructions.md",
+    ".gemini/GEMINI.md"
+  ],
+  "deployPolicy": "manual",
+  "globalHooksAllowed": false
+}
