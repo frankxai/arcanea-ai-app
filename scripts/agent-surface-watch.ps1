@@ -201,14 +201,14 @@ function Write-Snapshot([string]$RepoRoot) {
   $snapshot | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $JsonPath -Encoding UTF8
   @(
     "timestamp: $($snapshot.timestamp)"
-    "claude: $($summary.claude -join ' · ')"
-    "antigravity: $($summary.antigravity -join ' · ')"
+    "claude: $($summary.claude -join ' | ')"
+    "antigravity: $($summary.antigravity -join ' | ')"
     "processes: $($snapshot.processes.Count)"
   ) | Set-Content -LiteralPath $TextPath -Encoding UTF8
 
   Write-Host "[agent-surface] wrote $JsonPath"
-  Write-Host ("claude: " + ($summary.claude -join ' · '))
-  Write-Host ("antigravity: " + ($summary.antigravity -join ' · '))
+  Write-Host ("claude: " + ($summary.claude -join ' | '))
+  Write-Host ("antigravity: " + ($summary.antigravity -join ' | '))
 }
 
 $repoRoot = (Get-Location).Path

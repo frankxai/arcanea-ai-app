@@ -63,8 +63,8 @@ export async function statusCommand(): Promise<void> {
     const snapshot = await collectLiveSurfaceSnapshot(process.cwd());
     const summary = summarizeLiveSurface(snapshot);
 
-    console.log(`    claude:       ${summary.claude.join(' · ') || '(idle or hidden)'}`);
-    console.log(`    antigravity:  ${summary.antigravity.join(' · ') || '(idle or hidden)'}`);
+    console.log(`    claude:       ${summary.claude.join(' | ') || '(idle or hidden)'}`);
+    console.log(`    antigravity:  ${summary.antigravity.join(' | ') || '(idle or hidden)'}`);
     console.log(`    snapshot:     ${kleur.cyan(snapshot.timestamp)}`);
     console.log(`    processes:    ${kleur.cyan(String(snapshot.processes.length))} detected`);
 
