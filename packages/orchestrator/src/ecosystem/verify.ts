@@ -17,12 +17,12 @@ export interface VerifyResult {
 }
 
 const NORMALIZE_GENERATED_AT = /export const GENERATED_AT = "[^"]+";/;
-const NORMALIZE_LAST_VERIFIED = /"lastVerifiedAt": "[^"]+"/g;
+const NORMALIZE_LAST_VERIFIED = /"?lastVerifiedAt"?: "[^"]+"/g;
 
 function normalize(s: string): string {
   return s
     .replace(NORMALIZE_GENERATED_AT, 'export const GENERATED_AT = "<normalized>";')
-    .replace(NORMALIZE_LAST_VERIFIED, '"lastVerifiedAt": "<normalized>"');
+    .replace(NORMALIZE_LAST_VERIFIED, 'lastVerifiedAt: "<normalized>"');
 }
 
 export async function verify(repoRoot: string): Promise<VerifyResult> {
