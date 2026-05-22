@@ -18,6 +18,9 @@ dist/
 # MCP config (contains per-developer tokens — use .mcp.json.example as template)
 .mcp.json
 
+# Aiyami submission swarm report — CI artifact, generated per-run
+aiyami-report.md
+
 # IDE
 .vscode/
 .idea/
