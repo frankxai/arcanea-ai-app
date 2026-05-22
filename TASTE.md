@@ -86,6 +86,77 @@ The interface must serve the business reality, not aesthetic ambition.
 
 ---
 
+## Motion Canon
+
+Gate 3 says "animation is rare and intentional." This section names the *specific* patterns that count as intentional, and the easings, timings, and reference sites that hit the April 2026 AI-lab premium bar. Cargo-culted Framer Motion defaults fail Gate 3 — every motion ships with deliberate choices, not library defaults.
+
+> Promoted to TASTE.md on 2026-05-22 from memory `feedback_design_tier.md`. Reference sites: linear.app, vercel.com, anthropic.com/claude, rauno.me, emilkowal.ski, framer.com, apple.com/airpods-pro.
+
+### Motion patterns that earn their pixels
+
+- **Scroll-linked animation** — `useScroll` + `useTransform`. Reveals respond to scroll position, not autoplay timers.
+- **Shared-element transitions** — `layoutId` between routes/states. The hero card on /worlds becomes the lore card on /worlds/[slug].
+- **Spring physics** — custom `stiffness`/`damping`. Never default `easeOut`.
+- **Staggered children** — `staggerChildren: 0.05` with `delayChildren`. Lists reveal as a wave, not a wall.
+- **Split-text character reveal** — map each char with stagger. Reserve for one hero line per page.
+- **Magnetic hover** — cursor attraction via mouse position. CTAs that earn the moment.
+- **Parallax depth** — multiple layers responding to mouse with different speeds. Background drift, foreground steady.
+- **Blur-to-focus** — `filter: blur(20px) → blur(0)` on enter. Replaces basic opacity fade.
+- **`whileInView`** — with `viewport={{ once: true, margin: "-100px" }}`. Below-fold content earns reveal.
+- **Ambient motion** — subtle Brownian drift on hero elements. Never sleep on the brand.
+- **View Transitions API** — for route changes where supported. Cross-route continuity.
+
+### Canvas / 3D — when used at all
+
+- **React Three Fiber** for hero moments. Not Canvas2D circles.
+- **Particle systems** with bloom shaders for atmospheric depth.
+- **Depth parallax** with camera pan on mouse position.
+- **Gradient mesh backgrounds** (Shadertoy-style) for premium hero canvases.
+
+### Easing curves — never the default
+
+| Curve | Bezier | Use for |
+|---|---|---|
+| Linear-style premium | `[0.22, 1, 0.36, 1]` | Standard reveals, transitions |
+| Apple expo-out | `[0.16, 1, 0.3, 1]` | Hero reveals with cinematic feel |
+| Material standard | `[0.4, 0, 0.2, 1]` | UI affordances, accordions |
+| Spring | `{ type: "spring", stiffness: 260, damping: 20 }` | Anything that should feel physical |
+
+### Timing ladder
+
+| Duration | Use for |
+|---|---|
+| 150 ms | Micro — hover, button press |
+| 300 ms | Standard — reveals, transitions |
+| 500 ms | Dramatic — hero reveals, modal entry |
+| 800 ms+ | Cinematic — one key moment per page, no more |
+
+### Motion anti-patterns (fail Gate 3 immediately)
+
+| Anti-pattern | Why it fails |
+|---|---|
+| Flat `opacity: 0 → 1` fade without stagger or spring | 2022-tier default |
+| `height: auto` accordion without layout animation | Jank on every open |
+| Canvas2D for fewer than 200 points | WebGL or SVG-with-motion is the bar |
+| Glass cards stacked without scroll choreography | Static density that looks like Notion |
+| `transition-colors` Tailwind class as the only hover state | Color-only hovers feel un-finished |
+| Default Framer `duration: 0.3` with no spring or custom ease | The library default that screams cargo-cult |
+| "Awaiting first insight" / "the constellation waits" empty-state copy | Skyrim-tier voice, not Anthropic-tier |
+
+### Reference sites — study these monthly
+
+The motion bar is set by these properties, in 2026. If your page would feel slow next to these, push it harder.
+
+- `linear.app` — landing + pricing scroll choreography
+- `vercel.com` — homepage + `v0` interaction grammar
+- `anthropic.com/claude` — model page restraint
+- `rauno.me` — the personal-portfolio gold standard
+- `emilkowal.ski` — interaction-design playground
+- `framer.com` — official motion examples
+- `apple.com/airpods-pro` — scroll-driven storytelling
+
+---
+
 ## Banned Patterns
 
 A non-exhaustive list of things that immediately fail Gate 3:
