@@ -1,7 +1,14 @@
 import { ImageResponse } from 'next/og';
 import { brand, cosmic, text } from '@arcanea/design-system/tokens';
 
+// Generate on-demand at request time, not at build/prerender time. The
+// nodejs-runtime ImageResponse pipeline fails Next.js's static prerender
+// step (broke main CI 2026-05-20 → 2026-05-22). Dynamic generation costs
+// one Vercel function invocation per OG fetch, which is negligible for
+// social-card traffic and unblocks every PR's Production Build gate.
 export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 export const alt = 'Arcanea Kura — Export your most precious writing';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
