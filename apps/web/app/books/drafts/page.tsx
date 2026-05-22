@@ -44,6 +44,7 @@ const ACCENT_MAP: Record<string, string> = {
   'song-of-van-linh': 'teal',
   'las-tierras-de-luz': 'amber',
   'das-maedchen-drei-sprachen': 'amber',
+  'russian-from-tashkent': 'amber',
 };
 
 const COVER_MAP: Record<string, string> = {
@@ -53,6 +54,7 @@ const COVER_MAP: Record<string, string> = {
   'song-of-van-linh': '/images/books/song-of-van-linh-cover.png',
   'las-tierras-de-luz': '/images/books/las-tierras-de-luz-cover-v2.png',
   'das-maedchen-drei-sprachen': '/images/books/das-maedchen-drei-sprachen-cover-v2.png',
+  'russian-from-tashkent': '/images/books/russian-from-tashkent-cover-nb2.png',
 };
 
 async function exists(path: string): Promise<boolean> {

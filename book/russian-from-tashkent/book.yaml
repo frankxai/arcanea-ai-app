@@ -1,0 +1,88 @@
+title: "The Russian-Speaker"
+subtitle: "A novel of Tashkent, Petersburg, Moscow — 1985–2010"
+slug: russian-from-tashkent
+tier: community
+status: in-progress
+language: en
+languages_woven: [en, ru, uz]
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator
+    note: "Writer · gives voice to Ruslan's life with permission"
+  - name: Ruslan
+    role: co-author
+    note: "Subject · lived experience · surname withheld pending consent"
+  - name: Arcanea Author Council
+    role: co-author
+    note: "Scaffolding · five-specialist parallel dispatch via /arcanea-author"
+
+ai_transparency:
+  models_used:
+    - id: claude-opus-4-7
+      provider: anthropic
+      role: bible-synthesis-and-drafting
+    - id: gemini-3.1-flash-image-preview
+      provider: google
+      role: cover-generation-nb2
+  human_contribution: 60%
+  ai_contribution: 40%
+  method: |
+    Biographical memoir-fiction. Based on the life of Ruslan — a friend of
+    the writer (FrankX) — born 1985 in Uzbekistan, displaced to St. Petersburg
+    and Moscow, returned to Tashkent for the hotel → Chirchiq Transformer
+    Plant → US Embassy career arc. The protagonist's "I" voice is Ruslan's,
+    rendered by Frank with Ruslan's consent. Five specialist agents dispatched
+    in parallel via /arcanea-author (World Architect, Character Psychologist,
+    Deep Fiction Master, Sensitivity Reader, Research Librarian) built the
+    bibles before any prose. Cover via NB2 (Gemini 3.1 Flash Image Preview)
+    using /arcanea-book-cover 5-phase method.
+    Off-Arcanea-canon — realist literary fiction.
+
+license: CC-BY-NC-SA-4.0
+content_rating: mature
+tags:
+  - memoir-fiction
+  - post-soviet
+  - uzbekistan
+  - russian-diaspora
+  - literary-realism
+  - autobiographical
+  - central-asia
+  - tashkent
+  - russian-from-tashkent
+
+setting: "Tashkent · Chirchiq · St. Petersburg · Moscow · 1985–2010"
+
+reading_time: "~10–12 hours · 12 chapters · 60K–70K words target"
+
+cast:
+  - { name: "Ruslan", role: "Protagonist · Russian-speaker · born 1985 Yunusabad, Tashkent" }
+  - { name: "Mother", role: "Russian-speaker · stayed in Tashkent through collapse and crackdown" }
+  - { name: "Sister", role: "Stayed with mother · age relative to protagonist [CONFIRM]" }
+  - { name: "Father", role: "Presence in 1989 household [CONFIRM]" }
+  - { name: "The plant colleague", role: "Older Russian-speaker at Chirchiq Transformer Plant" }
+  - { name: "Embassy colleagues", role: "American diplomats and FSN peers · 2007–2010" }
+
+historical_anchors:
+  - "Perestroika & Glasnost (1985–1991)"
+  - "Uzbek independence (Sept 1, 1991) and economic collapse"
+  - "Russian-speaker exodus from Uzbekistan (1989–2002)"
+  - "Tashkent bombings (Feb 16, 1999)"
+  - "Karimov crackdown era (1999–2010)"
+  - "Andijan massacre (May 13, 2005)"
+  - "US Embassy Tashkent post-K2 chill (2005–2010)"
+
+acknowledgments: |
+  For Ruslan, who lived it. Written by Frank, who listened.
+
+  The Arcanea Author Council (World Architect, Character Psychologist,
+  Deep Fiction Master, Sensitivity Reader, Research Librarian) built the
+  scaffolding in a single parallel dispatch on 2026-05-15. The voice on the
+  page is Ruslan's, rendered by Frank under Ruslan's direction and consent.
+  Comp shelf: Bezmozgis, Krasikov, Hemon, Ismailov, Matar, Alexievich.
+
+  This book is realist memoir-fiction — it has nothing to do with Arcanea
+  canon, and that distinction is the proof that /arcanea-author can hold
+  worlds outside its own.

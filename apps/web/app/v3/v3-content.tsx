@@ -117,32 +117,34 @@ function HeroPortal() {
       <div className="absolute inset-0 -z-20 bg-[var(--arc-cosmic-void)]">
         <FloatingOrbs preset="aurora" />
         {/* Subtle bottom warmth */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_30%_at_50%_100%,rgba(0,188,212,0.03),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_30%_at_50%_100%,color-mix(in_srgb,var(--arc-brand-atlantean-teal)_3%,transparent),transparent_60%)]" />
 
         {/* Guardian portrait accents — visible only on xl screens, low opacity */}
         <div
           className="hidden xl:block absolute left-0 top-0 bottom-0 w-[340px] pointer-events-none"
-          style={{ maskImage: "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.55) 70%, transparent 100%)" }}
+          style={{ maskImage: "linear-gradient(to right, transparent 0%, color-mix(in srgb, var(--arc-cosmic-void) 55%, transparent) 35%, color-mix(in srgb, var(--arc-cosmic-void) 55%, transparent) 70%, transparent 100%)" }}
         >
           <Image
             src="/guardians/v3/lyria-hero-v3.webp"
             alt="Lyria — Sight Gate Guardian"
-            fill
+            width={340}
+            height={1024}
             sizes="340px"
-            className="object-cover object-top opacity-[0.18] mix-blend-luminosity"
+            className="h-full w-full object-cover object-top opacity-[0.18] mix-blend-luminosity"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[var(--arc-cosmic-void)] via-transparent to-[var(--arc-cosmic-void)]" />
         </div>
         <div
           className="hidden xl:block absolute right-0 top-0 bottom-0 w-[340px] pointer-events-none"
-          style={{ maskImage: "linear-gradient(to left, transparent 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.55) 70%, transparent 100%)" }}
+          style={{ maskImage: "linear-gradient(to left, transparent 0%, color-mix(in srgb, var(--arc-cosmic-void) 55%, transparent) 35%, color-mix(in srgb, var(--arc-cosmic-void) 55%, transparent) 70%, transparent 100%)" }}
         >
           <Image
             src="/guardians/v3/shinkami-hero-v3.webp"
             alt="Shinkami — Source Gate Guardian"
-            fill
+            width={340}
+            height={1024}
             sizes="340px"
-            className="object-cover object-top opacity-[0.18] mix-blend-luminosity"
+            className="h-full w-full object-cover object-top opacity-[0.18] mix-blend-luminosity"
           />
           <div className="absolute inset-0 bg-gradient-to-l from-[var(--arc-cosmic-void)] via-transparent to-[var(--arc-cosmic-void)]" />
         </div>
@@ -153,7 +155,7 @@ function HeroPortal() {
         className="absolute inset-0 -z-10 opacity-[0.015]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)",
+            "linear-gradient(color-mix(in srgb, var(--arc-text-primary) 30%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--arc-text-primary) 30%, transparent) 1px, transparent 1px)",
           backgroundSize: "80px 80px",
         }}
       />
@@ -172,13 +174,14 @@ function HeroPortal() {
             className="mb-7 md:mb-9"
           >
             <div className="relative">
-              <div className="absolute inset-[-12px] rounded-full bg-[radial-gradient(circle,rgba(127,255,212,0.12)_0%,rgba(255,215,0,0.04)_50%,transparent_70%)] blur-md animate-[breathe_3s_ease-in-out_infinite]" />
+              <div className="absolute inset-[-12px] rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--arc-brand-atlantean-teal)_12%,transparent)_0%,color-mix(in_srgb,var(--arc-brand-arcanean-gold)_4%,transparent)_50%,transparent_70%)] blur-md animate-[breathe_3s_ease-in-out_infinite]" />
               <Image
                 src="/images/mascot/arcanea-primary.png"
                 alt="Arcanea"
                 width={88}
                 height={88}
-                className="relative drop-shadow-[0_4px_24px_rgba(127,255,212,0.2)] animate-[mascot-float_3s_ease-in-out_infinite]"
+                sizes="88px"
+                className="relative drop-shadow-[0_4px_24px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_20%,transparent)] animate-[mascot-float_3s_ease-in-out_infinite]"
                 priority
               />
             </div>
@@ -315,7 +318,7 @@ export function V3Content({
       <div className="relative h-px mx-6 md:mx-auto md:max-w-4xl">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[120px] pointer-events-none"
-          style={{ background: "radial-gradient(ellipse, rgba(0,188,212,0.12), transparent 70%)" }}
+          style={{ background: "radial-gradient(ellipse, color-mix(in srgb, var(--arc-brand-atlantean-teal) 12%, transparent), transparent 70%)" }}
         />
       </div>
 

@@ -79,8 +79,8 @@ export function HeroChatBox() {
       <div
         className={`relative rounded-2xl transition-all duration-300 ${
           isFocused
-            ? "shadow-[0_0_0_1px_rgba(0,188,212,0.3),0_8px_40px_rgba(0,0,0,0.4),0_0_80px_rgba(0,188,212,0.08)]"
-            : "shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_4px_24px_rgba(0,0,0,0.4)]"
+            ? "shadow-[0_0_0_1px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_30%,transparent),0_8px_40px_color-mix(in_srgb,var(--arc-cosmic-void)_72%,transparent),0_0_80px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_8%,transparent)]"
+            : "shadow-[0_0_0_1px_color-mix(in_srgb,var(--arc-text-primary)_6%,transparent),0_4px_24px_color-mix(in_srgb,var(--arc-cosmic-void)_72%,transparent)]"
         }`}
       >
         {/* Glass fill with gradient */}
@@ -91,8 +91,8 @@ export function HeroChatBox() {
           style={{
             padding: '1px',
             background: isFocused
-              ? 'linear-gradient(135deg, rgba(0,188,212,0.35), rgba(13,71,161,0.2), rgba(0,137,123,0.35))'
-              : 'linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03), rgba(255,255,255,0.06))',
+              ? 'linear-gradient(135deg, color-mix(in srgb, var(--arc-brand-atlantean-teal) 35%, transparent), color-mix(in srgb, var(--arc-brand-cosmic-blue) 20%, transparent), color-mix(in srgb, var(--arc-brand-atlantean-teal) 28%, transparent))'
+              : 'linear-gradient(135deg, color-mix(in srgb, var(--arc-text-primary) 8%, transparent), color-mix(in srgb, var(--arc-text-primary) 3%, transparent), color-mix(in srgb, var(--arc-text-primary) 6%, transparent))',
             mask: 'linear-gradient(var(--arc-text-primary) 0 0) content-box, linear-gradient(var(--arc-text-primary) 0 0)',
             maskComposite: 'exclude',
             WebkitMaskComposite: 'xor',
@@ -108,6 +108,7 @@ export function HeroChatBox() {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             placeholder="What do you want to create?"
+            aria-label="Describe what you want to create"
             rows={1}
             className="flex-1 px-5 py-4 bg-transparent text-white/90 placeholder-white/20 resize-none focus:outline-none font-body text-[15px] leading-relaxed"
             style={{ minHeight: "56px", maxHeight: "120px" }}
@@ -120,10 +121,10 @@ export function HeroChatBox() {
               disabled={!hasText}
               className={`p-2.5 rounded-xl transition-all duration-200 ${
                 hasText
-                  ? "bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] shadow-[0_2px_16px_rgba(0,188,212,0.35)] hover:shadow-[0_4px_24px_rgba(0,188,212,0.5)] hover:scale-105 active:scale-95"
+                  ? "bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] shadow-[0_2px_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_35%,transparent)] hover:shadow-[0_4px_24px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_50%,transparent)] hover:scale-105 active:scale-95"
                   : "bg-white/[0.04] cursor-default"
               }`}
-              aria-label="Start creating"
+              aria-label={hasText ? "Start creating in chat" : "Enter a prompt to start creating"}
             >
               <PhPaperPlane
                 className={`w-4 h-4 transition-colors ${hasText ? "text-white" : "text-white/15"}`}
@@ -165,7 +166,8 @@ export function HeroChatBox() {
             <button
               key={card.label}
               onClick={handleClick}
-              className="group flex items-center gap-2 px-4 py-2.5 rounded-full text-[13px] text-white/30 hover:text-white/65 bg-white/[0.02] hover:bg-gradient-to-r hover:from-[var(--arc-brand-atlantean-teal)]/[0.06] hover:to-transparent border border-white/[0.04] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[0_0_16px_rgba(0,188,212,0.06)] hover:scale-[1.03] active:scale-[0.97] transition-all duration-300"
+              className="group flex items-center gap-2 px-4 py-2.5 rounded-full text-[13px] text-white/30 hover:text-white/65 bg-white/[0.02] hover:bg-gradient-to-r hover:from-[var(--arc-brand-atlantean-teal)]/[0.06] hover:to-transparent border border-white/[0.04] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[0_0_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_6%,transparent)] hover:scale-[1.03] active:scale-[0.97] transition-all duration-300"
+              aria-label={`${card.label}: ${card.prompt}`}
             >
               <Icon className="w-3.5 h-3.5 text-white/20 group-hover:text-[var(--arc-brand-atlantean-teal)]/70 transition-colors" />
               {card.label}
