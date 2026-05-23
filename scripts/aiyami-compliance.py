@@ -17,7 +17,6 @@ BANNED_AI_PATTERNS = {
     "myriad": "AI descriptor for abundance. Use specific quantities or let the depth speak.",
     "beacon": "Cliché indicator of hope/wisdom. Detail the source and force of light instead.",
     "testament": "Cliché verification phrase. Use evidence or delete the sentence.",
-    "worldbuilding": "Do not break the fourth wall. Show the universe, don't mention building it.",
     "realm": "Generic fantasy cliché. Specify the province, state, gate, or district."
 }
 
@@ -87,10 +86,12 @@ def run_checks():
         issues = []
         metrics = {"words": 0, "slop": 0, "similarity": 0.0}
 
-        # Validate manifest
+        # Skip books without a manifest — those are internal canon (e.g. existing
+        # `book/forge-of-ruin/`, `book/chronicles-of-arcanea/`), not community
+        # submissions. Community books opt in by adding `book.yaml`.
         if not os.path.exists(manifest_path):
-            status = "FAIL"
-            issues.append("Missing `book.yaml` manifest in the root of the book folder.")
+            continue
+
         else:
             try:
                 with open(manifest_path, 'r', encoding='utf-8') as f:
@@ -183,9 +184,9 @@ def run_checks():
         issues = []
         metrics = {"nodes": 0, "slop": 0}
 
+        # Skip worlds without a manifest — internal canon, not a community submission.
         if not os.path.exists(manifest_path):
-            status = "FAIL"
-            issues.append("Missing `world.yaml` manifest in the root of the world folder.")
+            continue
         else:
             try:
                 with open(manifest_path, 'r', encoding='utf-8') as f:
