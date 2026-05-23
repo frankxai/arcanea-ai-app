@@ -47,7 +47,7 @@
     "directory": "packages/hybrid-memory"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
+    "@types/node": "^20.19.41",
     "typescript": "^5.5.0"
   },
   "publishConfig": {
