@@ -98,12 +98,36 @@ export async function statusCommand(): Promise<void> {
           };
         });
       console.log(kleur.bold(`  Git Worktrees (${trees.length})`));
-      for (const t of trees.slice(0, 6)) {
-        console.log(`    ${kleur.dim(t.branch.padEnd(40))} ${t.path}`);
+      const inspections = await Promise.all(
+        trees.slice(0, 6).map(async (t) => {
+          const probe = await execa(
+            'git',
+            ['-C', t.path, 'status', '--short', '--branch', '--untracked-files=no'],
+            { reject: false },
+          );
+          const signal = (probe.stderr || probe.stdout).trim().split(/\r?\n/).find(Boolean) ?? '';
+          return {
+            ...t,
+            ok: probe.exitCode === 0,
+            signal,
+          };
+        }),
+      );
+      for (const t of inspections) {
+        const health = t.ok ? kleur.green('ok') : kleur.red('issue');
+        console.log(`    ${health.padEnd(6)} ${kleur.dim(t.branch.padEnd(36))} ${t.path}`);
+        if (!t.ok && t.signal) {
+          console.log(kleur.dim(`      ${t.signal}`));
+        }
       }
       if (trees.length > 6) {
         console.log(kleur.dim(`    … +${trees.length - 6} more`));
       }
+      console.log();
+    } else {
+      const reason = wt.stderr.trim().split(/\r?\n/).find(Boolean) ?? 'unknown git worktree failure';
+      console.log(kleur.bold('  Git Worktrees'));
+      console.log(kleur.red(`    unavailable: ${reason}`));
       console.log();
     }
   } catch {

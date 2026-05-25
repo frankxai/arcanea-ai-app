@@ -20,7 +20,7 @@ nodes:
     links:
       package: /packages/author-council
       mcp: /packages/author-council/src/mcp/server.ts
-    last_curated: "2026-05-11"
+    last_curated: "2026-05-22"
 
   - id: design-system
     name: "@arcanea/design-system"
@@ -48,7 +48,7 @@ nodes:
     owner: frank
     links:
       package: /packages/orchestrator
-    last_curated: "2026-05-11"
+    last_curated: "2026-05-22"
 
   - id: multilingual
     name: "@starlight/multilingual"
@@ -181,7 +181,7 @@ nodes:
     isExternal: false
     status_override: wip
     links: {}
-    last_curated: "2026-05-11"
+    last_curated: "2026-05-22"
 
   - id: surface-library
     name: "/library"

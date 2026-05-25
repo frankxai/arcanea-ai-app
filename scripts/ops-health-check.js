@@ -74,6 +74,7 @@ function execInRepo(repoPath, command) {
       cwd: repoPath,
       encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'pipe'],
+      timeout: 10000,
     }).trim();
   } catch {
     return null;

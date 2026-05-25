@@ -250,6 +250,104 @@ export default function PricingPage() {
           </div>
         </section>
 
+        {/* ─── Premium Sovereign Bundle Card ─── */}
+        <section className="py-12 pb-20">
+          <div className="relative rounded-3xl overflow-hidden border border-white/[0.08] bg-white/[0.01] shadow-[0_8px_60px_rgba(0,188,212,0.02)] max-w-5xl mx-auto">
+            {/* Background elements */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/5 via-transparent to-[var(--arc-brand-arcanean-gold)]/5 opacity-50" />
+            
+            <div className="relative p-8 md:p-12">
+              <div className="grid lg:grid-cols-12 gap-8 items-center">
+                {/* Product Copy */}
+                <div className="lg:col-span-7">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--arc-brand-atlantean-teal)]/20 bg-[var(--arc-brand-atlantean-teal)]/8 mb-6">
+                    <Sparkle size={12} weight="bold" style={{ color: "var(--arc-brand-atlantean-teal)" }} />
+                    <span className="text-xs text-[var(--arc-brand-atlantean-teal)] font-mono tracking-widest uppercase">
+                      Premium Release
+                    </span>
+                  </div>
+                  
+                  <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white">
+                    Obsidian Worldbuilding Kit
+                    <span 
+                      className="block text-xl md:text-2xl font-serif italic text-[var(--arc-brand-arcanean-gold)] font-normal mt-1"
+                      style={{ fontFamily: 'var(--font-instrument-serif, "Instrument Serif"), Georgia, serif' }}
+                    >
+                      & Sovereign Developer Bundle
+                    </span>
+                  </h2>
+                  
+                  <p className="text-text-secondary text-sm md:text-base leading-relaxed mb-6">
+                    Take your creative multiverse entirely local. Packaged with professional, sovereign markdown schemas, deep Obsidian canvas systems, advanced prompt books for our 16 creative Luminors, and local-first orchestrator harnesses to run everything directly on your machine.
+                  </p>
+                  
+                  <div className="grid sm:grid-cols-2 gap-4 mb-8">
+                    {[
+                      { title: "Obsidian Canvas System", desc: "Interactive graph layouts and markdown schemas for deep lore architecture." },
+                      { title: "Local-First Developer Harness", desc: "Complete scripts and configs to run your own local-first orchestration." },
+                      { title: "Luminor Prompt Books", desc: "Highly optimized system instructions for 16 specialized creative agents." },
+                      { title: "100% Sovereign & Offline", desc: "No vendor lock-in, no telemetry. Your keys, your IP, forever." }
+                    ].map(({ title, desc }) => (
+                      <div key={title} className="flex gap-2">
+                        <CheckIcon className="w-4 h-4 text-[var(--arc-brand-atlantean-teal)] shrink-0 mt-0.5" />
+                        <div>
+                          <h4 className="text-xs font-semibold text-white/90">{title}</h4>
+                          <p className="text-[11px] text-text-secondary/60 leading-snug">{desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Purchase / Price CTA Card */}
+                <div className="lg:col-span-5 flex justify-center">
+                  <div className="relative w-full max-w-sm rounded-2xl border border-white/[0.08] bg-white/[0.02] p-8 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.2)]">
+                    <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-[var(--arc-brand-atlantean-teal)]/30 to-transparent" />
+                    
+                    <div className="text-center mb-6">
+                      <span className="text-[10px] font-mono text-text-secondary/50 tracking-wider uppercase block mb-1">
+                        Sovereign Ownership
+                      </span>
+                      <h3 className="text-lg font-bold mb-2 text-white">Offline Bundle</h3>
+                      <div className="flex items-baseline justify-center gap-1.5 mt-2">
+                        <span className="text-sm font-semibold text-text-secondary/50">PWYW</span>
+                        <span className="text-3xl font-display font-extrabold text-[var(--arc-brand-atlantean-teal)]">$0+</span>
+                      </div>
+                      <p className="text-xs text-text-secondary/40 mt-2">
+                        Pay what you want. Support open-source sovereign creative AI.
+                      </p>
+                    </div>
+                    
+                    <div className="space-y-3 mb-6">
+                      {[
+                        "Instant digital download",
+                        "Lifetime access & updates",
+                        "MIT Licensed templates",
+                        "Direct support of the core developers"
+                      ].map((item) => (
+                        <div key={item} className="flex items-center gap-2 text-xs text-text-secondary">
+                          <CheckIcon className="w-3.5 h-3.5 text-[var(--arc-brand-arcanean-gold)]/60 shrink-0" />
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <Link
+                      href="https://frankxai.gumroad.com/l/obsidian-bundle"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] text-[var(--arc-cosmic-void)] font-bold text-sm hover:shadow-[0_0_30px_rgba(0,188,212,0.25)] transition-all duration-300"
+                    >
+                      <Lightning size={14} weight="fill" />
+                      Get Sovereign Access
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ─── Free Capabilities Grid ─── */}
         <section className="pb-20">
           <div className="text-center mb-10">

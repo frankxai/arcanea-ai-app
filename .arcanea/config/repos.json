@@ -124,7 +124,7 @@
       "branch": "main",
       "active": true,
       "layer": "product",
-      "gate": "flow",
+      "gate": "vision",
       "hemisphere": "arc"
     },
     {
@@ -138,7 +138,7 @@
       "branch": "main",
       "active": true,
       "layer": "substrate",
-      "gate": "flow",
+      "gate": "pattern",
       "hemisphere": "seam"
     },
     {
@@ -151,7 +151,7 @@
       "branch": "main",
       "active": true,
       "layer": "substrate",
-      "gate": "foundation",
+      "gate": "pattern",
       "hemisphere": "seam"
     },
     {
@@ -191,7 +191,7 @@
       "branch": "main",
       "active": true,
       "layer": "substrate",
-      "gate": "sight",
+      "gate": "vision",
       "hemisphere": "seam"
     },
     {

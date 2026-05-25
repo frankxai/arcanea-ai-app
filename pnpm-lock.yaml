@@ -196,6 +196,9 @@ importers:
       '@arcanea/design-system':
         specifier: workspace:^
         version: link:../../packages/design-system
+      '@arcanea/orchestrator':
+        specifier: workspace:*
+        version: link:../../packages/orchestrator
       '@arcanea/publishing-house':
         specifier: workspace:^
         version: link:../../packages/publishing-house
@@ -632,50 +635,6 @@ importers:
 
   packages/arcanea-skills: {}
 
-  packages/arcanea-vault:
-    dependencies:
-      dexie:
-        specifier: ^4.0.11
-        version: 4.4.2
-      preact:
-        specifier: ^10.25.4
-        version: 10.29.1
-    devDependencies:
-      '@types/chrome':
-        specifier: ^0.1.42
-        version: 0.1.42
-      esbuild:
-        specifier: '>=0.25.0'
-        version: 0.28.0
-      typescript:
-        specifier: ~5.5.4
-        version: 5.5.4
-      vitest:
-        specifier: ^4.1.5
-        version: 4.1.5(vite@8.0.12)
-
-  packages/arcanea-vault-cli:
-    dependencies:
-      chokidar:
-        specifier: ^4.0.0
-        version: 4.0.3
-      commander:
-        specifier: ^12.0.0
-        version: 12.1.0
-      glob:
-        specifier: ^11.0.0
-        version: 11.1.0
-      gray-matter:
-        specifier: ^4.0.3
-        version: 4.0.3
-    devDependencies:
-      '@types/node':
-        specifier: ^22.0.0
-        version: 22.19.17
-      typescript:
-        specifier: ^5.5.0
-        version: 5.9.3
-
   packages/arcanea-voice: {}
 
   packages/arcanea-voice-agent:
@@ -1043,6 +1002,9 @@ importers:
       '@arcanea/router-spec':
         specifier: workspace:*
         version: link:../router-spec
+      '@modelcontextprotocol/sdk':
+        specifier: '>=1.24.0'
+        version: 1.29.0(zod@4.4.3)
       '@octokit/rest':
         specifier: ^22.0.1
         version: 22.0.1
@@ -1144,6 +1106,15 @@ importers:
         version: 20.19.39
       typescript:
         specifier: ^5.3.0
+        version: 5.9.3
+
+  packages/peak-performance:
+    devDependencies:
+      tsx:
+        specifier: ^4.19.0
+        version: 4.21.0
+      typescript:
+        specifier: ^5.7.0
         version: 5.9.3
 
   packages/presence:
@@ -9584,6 +9555,7 @@ packages:
     engines: {node: '>= 14.16.0'}
     dependencies:
       readdirp: 4.1.2
+    dev: true
 
   /chownr@1.1.4:
     resolution: {integrity: sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==}
@@ -14894,6 +14866,7 @@ packages:
   /readdirp@4.1.2:
     resolution: {integrity: sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg==}
     engines: {node: '>= 14.18.0'}
+    dev: true
 
   /recharts@3.8.1(@types/react@19.2.14)(react-dom@19.2.5)(react-is@19.2.6)(react@19.2.5)(redux@5.0.1):
     resolution: {integrity: sha512-mwzmO1s9sFL0TduUpwndxCUNoXsBw3u3E/0+A+cLcrSfQitSG62L32N69GhqUrrT5qKcAE3pCGVINC6pqkBBQg==}

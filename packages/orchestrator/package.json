@@ -42,13 +42,14 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsx src/cli.ts",
-    "test": "pnpm build && tsx --test tests/**/*.test.ts",
+    "test": "pnpm build && node scripts/run-tests.mjs",
     "ecosystem:build": "tsx src/ecosystem/cli.ts build",
     "ecosystem:verify": "tsx src/ecosystem/cli.ts verify",
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
     "@arcanea/router-spec": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.0.0",
     "@octokit/rest": "^22.0.1",
     "commander": "^12.1.0",
     "execa": "^9.5.0",

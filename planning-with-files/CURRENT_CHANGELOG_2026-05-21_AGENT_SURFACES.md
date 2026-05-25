@@ -6,9 +6,10 @@
 - `arcanea-orchestrator status` now prints current process, worktree, and session summaries.
 - `pnpm agents:surface` writes `~/.arcanea/machine/agent-surface-status.json`.
 - `pnpm agents:surface:watch` refreshes that snapshot continuously.
+- `@arcanea/orchestrator` test execution on Windows now uses `node --import tsx --test`, which avoids a pnpm child-process PATH issue.
+- `arcanea-orchestrator status` now labels each listed worktree with explicit health so local checkout problems are visible without raw git noise.
 
 ## Runtime shift
 
 - Arcanea orchestrator runtime routing now treats Google-backed tasks as `agy` / Antigravity CLI instead of Gemini CLI.
 - `arcanea-orchestrator doctor` and install docs now reflect the Antigravity runtime surface.
-

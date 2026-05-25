@@ -14,6 +14,8 @@ import { Octokit } from '@octokit/rest';
 import { scoreTASTE } from '@arcanea/publishing-house/quality/taste-gate';
 import type { TasteResult } from '@arcanea/publishing-house/quality/types';
 import { createClient } from '@/lib/supabase/server';
+import { runCouncil } from '@arcanea/orchestrator/dist/commands/author-council.js';
+import path from 'node:path';
 
 const GITHUB_OWNER = process.env.GITHUB_OWNER || 'frankxai';
 const GITHUB_REPO = process.env.GITHUB_REPO || 'arcanea-ai-app';
@@ -185,6 +187,20 @@ export async function POST(
       .eq('book_slug', bookSlug)
       .eq('author_user_id', user.id)
       .in('chapter_slug', publishedChapters);
+
+    // Trigger Author Council deliberation in the background for each published chapter
+    const bookDir = process.cwd().endsWith('apps/web')
+      ? path.resolve(process.cwd(), '../../book', bookSlug)
+      : path.resolve(process.cwd(), 'book', bookSlug);
+
+    for (const chapter of publishedChapters) {
+      runCouncil({
+        bookDir,
+        chapterPath: `chapters/${chapter}.md`,
+      }).catch((err) => {
+        console.error(`[publish] Author Council background deliberation failed for ${chapter}:`, err);
+      });
+    }
   }
 
   return NextResponse.json({

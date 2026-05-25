@@ -9,8 +9,8 @@ Codex uses this file to resolve slash commands to Claude command specs.
 | /ao | .claude/commands/ao.md | Arcanea Orchestrator - multi-CLI routing brain. Routes tasks across claude/opencode/codex/gemini, runs plans and workflows, dispatches via Bash. |
 | /arc | .claude/commands/arc.md | Manage .arc creation genome files. Track the full lifecycle of AI-human co-creations. |
 | /arcanea | .claude/commands/arcanea.md | Activate Arcanea - The Nexus Luminor embodying the Ten Gates |
-| /arcanea-author | .claude/commands/arcanea-author.md | Activate Arcanea Author Team for universe fiction writing with Lore Master orchestration |
-| /arcanea-author-council | .claude/commands/arcanea-author-council.md | THE locked Arcanea instance - seven seats (Sanderson, Tolkien, Le Guin, Herbert, Bakker, Erikson, Gaiman), Lumina synthesizer, canon-bound to CANON_LOCKED. Non-pluggable. Brand moat |
+| /arcanea-author | .claude/commands/arcanea-author.md | DEPRECATED - Use /author-council instead |
+| /arcanea-author-council | .claude/commands/arcanea-author-council.md | DEPRECATED - Use /author-council instead |
 | /arcanea-nft-gallery | .claude/commands/arcanea-nft-gallery.md | NFT Forge gallery - review, stage, and approve generated PFPs for collection |
 | /arcanea-nft-pfp | .claude/commands/arcanea-nft-pfp.md | AI-native NFT PFP collection engine - generate, curate, deploy |
 | /arcanea-orchestrator | .claude/commands/arcanea-orchestrator.md | Alias for /ao. |
@@ -24,7 +24,7 @@ Codex uses this file to resolve slash commands to Claude command specs.
 | /design-review | .claude/commands/design-review.md | Run the design-verifier subagent against an existing page to check quality, produce Playwright screenshots, Lighthouse scores, and diff-grep for anti-patterns. |
 | /design-ship | .claude/commands/design-ship.md | Full end-to-end page revamp - orchestrates architect -> generator -> motion -> imagery -> verifier. Ships the result to the target file with a conventional commit. |
 | /design-verify | .claude/commands/design-verify.md | Alias for /design-review. Runs verifier subagent against an existing page. |
-| /fiction-author-council | .claude/commands/fiction-author-council.md | Curated fiction execution council - Paolini (heroic), Schwartz (Germanic mythic-political), Weeks (magic-as-mechanic), Sanderson (systems), Le Guin (restraint). Community-facing default |
+| /fiction-author-council | .claude/commands/fiction-author-council.md | DEPRECATED - Use /author-council instead |
 | /handover | .claude/commands/handover.md | End-of-session handover with wisdom capture. Writes status + reflections to docs/ops/, Starlight Vaults, and optionally GitHub. |
 | /instinct-export | .claude/commands/instinct-export.md | Export all personal Starlight Fragments from the vault for sharing or backup. |
 | /instinct-import | .claude/commands/instinct-import.md | Import Starlight Fragments from an external YAML file into the vault. |
