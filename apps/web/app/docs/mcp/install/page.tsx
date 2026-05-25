@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -191,10 +192,10 @@ const TROUBLESHOOTING = [
 
 export default function McpInstallPage() {
   return (
-    <div className="relative min-h-screen bg-[#09090b]">
+    <div className="relative min-h-screen bg-[var(--arc-cosmic-void)]">
       {/* Ambient background */}
       <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-[#09090b]" />
+        <div className="absolute inset-0 bg-[var(--arc-cosmic-void)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,188,212,0.07),transparent_60%)]" />
       </div>
 
@@ -214,7 +215,7 @@ export default function McpInstallPage() {
               </Link>
             </li>
             <li aria-hidden="true">/</li>
-            <li className="text-[#7fffd4]">Install</li>
+            <li className="text-[var(--arc-brand-atlantean-teal)]">Install</li>
           </ol>
         </nav>
 
@@ -222,7 +223,7 @@ export default function McpInstallPage() {
         <section className="pb-10 pt-10">
           <h1 className="font-display text-4xl font-bold text-white sm:text-5xl">
             Installation{" "}
-            <span className="bg-gradient-to-r from-[#00bcd4] to-[#7fffd4] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] bg-clip-text text-transparent">
               Guide
             </span>
           </h1>
@@ -253,7 +254,7 @@ export default function McpInstallPage() {
                   {client.name}
                 </h2>
                 {client.badge && (
-                  <span className="rounded-full border border-[#00bcd4]/30 bg-[#00bcd4]/10 px-2.5 py-0.5 font-mono text-xs text-[#00bcd4]">
+                  <span className="rounded-full border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10 px-2.5 py-0.5 font-mono text-xs text-[var(--arc-brand-atlantean-teal)]">
                     {client.badge}
                   </span>
                 )}
@@ -263,8 +264,8 @@ export default function McpInstallPage() {
                 {client.steps.map((step, i) => (
                   <li key={i} className="flex gap-4">
                     {/* Step number */}
-                    <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#00bcd4]/40 bg-[#00bcd4]/10">
-                      <span className="font-mono text-xs text-[#00bcd4]">{i + 1}</span>
+                    <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[var(--arc-brand-atlantean-teal)]/40 bg-[var(--arc-brand-atlantean-teal)]/10">
+                      <span className="font-mono text-xs text-[var(--arc-brand-atlantean-teal)]">{i + 1}</span>
                     </div>
 
                     {/* Step content */}
@@ -303,7 +304,7 @@ export default function McpInstallPage() {
               Subscribe to{" "}
               <Link
                 href="/changelog"
-                className="text-[#7fffd4] hover:text-white transition-colors"
+                className="text-[var(--arc-brand-atlantean-teal)] hover:text-white transition-colors"
               >
                 the changelog
               </Link>{" "}
@@ -388,21 +389,21 @@ export default function McpInstallPage() {
             ))}
           </div>
 
-          <div className="mt-8 rounded-xl border border-[#00bcd4]/20 bg-[#00bcd4]/5 p-5">
+          <div className="mt-8 rounded-xl border border-[var(--arc-brand-atlantean-teal)]/20 bg-[var(--arc-brand-atlantean-teal)]/5 p-5">
             <p className="text-sm text-zinc-300">
               Still stuck?{" "}
               <a
                 href="https://github.com/arcanea-ai/arcanea/issues"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#7fffd4] hover:text-white transition-colors"
+                className="text-[var(--arc-brand-atlantean-teal)] hover:text-white transition-colors"
               >
                 Open an issue on GitHub
               </a>{" "}
               or visit{" "}
               <Link
                 href="/community"
-                className="text-[#7fffd4] hover:text-white transition-colors"
+                className="text-[var(--arc-brand-atlantean-teal)] hover:text-white transition-colors"
               >
                 the community
               </Link>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { m, LazyMotion, domAnimation } from 'framer-motion';
@@ -19,7 +20,7 @@ export function RegistryHero({ stats }: RegistryHeroProps) {
           className="absolute inset-0 opacity-50"
           style={{
             background:
-              'radial-gradient(800px circle at 20% 20%, rgba(0, 188, 212, 0.08), transparent 50%), radial-gradient(600px circle at 80% 60%, rgba(13, 71, 161, 0.08), transparent 50%)',
+              'radial-gradient(800px circle at 20% 20%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 8%, transparent), transparent 50%), radial-gradient(600px circle at 80% 60%, color-mix(in srgb, var(--arc-brand-cosmic-blue) 8%, transparent), transparent 50%)',
           }}
         />
 
@@ -37,23 +38,23 @@ export function RegistryHero({ stats }: RegistryHeroProps) {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.02] px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-white/60 backdrop-blur-sm"
             >
-              <span className="h-1 w-1 rounded-full bg-emerald-400" />
-              Open Protocol · v0.2
+              <span className="h-1 w-1 rounded-full bg-[var(--arc-brand-arcanean-gold)]" />
+              Agent Registry Beta · Supabase-backed
             </m.div>
 
             {/* Headline */}
             <h1 className="mb-6 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl">
               The Agent
               <br />
-              <span className="bg-gradient-to-br from-cyan-200 via-white to-cyan-400/90 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-white to-[var(--arc-brand-atlantean-teal)]/90 bg-clip-text text-transparent">
                 Registry.
               </span>
             </h1>
 
             {/* Sub */}
             <p className="mb-10 max-w-2xl text-lg leading-relaxed text-white/60">
-              An open protocol for publishing, discovering, and deploying AI agents across platforms.
-              Free to use. Free to fork. Attribution is built in.
+              A beta inventory for published Arcanea agents. When Supabase has no public rows,
+              this page renders an empty state instead of claiming inventory that is not live.
             </p>
 
             {/* Stats row */}

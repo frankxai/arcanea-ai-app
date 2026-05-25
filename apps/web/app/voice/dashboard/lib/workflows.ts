@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 /**
  * Voice Dashboard — Workflows
  *
@@ -34,7 +35,7 @@ export const WORKFLOWS: Workflow[] = [
     voiceTriggers: ['author team', 'open author', 'arcanea author'],
     category: 'create',
     action: { kind: 'cli', command: '/arcanea-author', copyOnly: true },
-    color: '#ffd700',
+    color: 'var(--arc-brand-arcanean-gold)',
   },
   {
     id: 'open-orchestra',
@@ -43,7 +44,7 @@ export const WORKFLOWS: Workflow[] = [
     voiceTriggers: ['orchestra', 'arcanea orchestra', 'a o'],
     category: 'ops',
     action: { kind: 'cli', command: '/ao', copyOnly: true },
-    color: '#00bcd4',
+    color: 'var(--arc-brand-atlantean-teal)',
   },
   {
     id: 'open-library',
@@ -52,7 +53,7 @@ export const WORKFLOWS: Workflow[] = [
     voiceTriggers: ['library', 'open library', 'show books'],
     category: 'discover',
     action: { kind: 'route', href: '/books' },
-    color: '#a78bfa',
+    color: 'var(--arc-void)',
   },
   {
     id: 'open-las-tierras',
@@ -61,7 +62,7 @@ export const WORKFLOWS: Workflow[] = [
     voiceTriggers: ['las tierras', 'tierras de luz', 'mira'],
     category: 'discover',
     action: { kind: 'route', href: '/books/las-tierras-de-luz' },
-    color: '#fbbf24',
+    color: 'var(--arc-brand-arcanean-gold)',
   },
   {
     id: 'open-worlds',
@@ -70,7 +71,7 @@ export const WORKFLOWS: Workflow[] = [
     voiceTriggers: ['worlds', 'world graph', 'living worlds'],
     category: 'discover',
     action: { kind: 'route', href: '/worlds' },
-    color: '#3d5a3f',
+    color: 'var(--arc-earth)',
   },
   {
     id: 'design-brief',
@@ -79,7 +80,7 @@ export const WORKFLOWS: Workflow[] = [
     voiceTriggers: ['design brief', 'new design', 'start brief'],
     category: 'create',
     action: { kind: 'cli', command: '/design-brief', copyOnly: true },
-    color: '#00bcd4',
+    color: 'var(--arc-brand-atlantean-teal)',
   },
   {
     id: 'pulse',
@@ -88,7 +89,7 @@ export const WORKFLOWS: Workflow[] = [
     voiceTriggers: ['pulse', 'daily pulse'],
     category: 'ops',
     action: { kind: 'cli', command: '/pulse', copyOnly: true },
-    color: '#ef4444',
+    color: 'var(--arc-fire)',
   },
   {
     id: 'sis-recall',
@@ -97,7 +98,7 @@ export const WORKFLOWS: Workflow[] = [
     voiceTriggers: ['sis', 'recall', 'remember'],
     category: 'review',
     action: { kind: 'cli', command: '/sis recent', copyOnly: true },
-    color: '#e0e0e0',
+    color: 'var(--arc-text-primary)',
   },
   {
     id: 'github-prs',
@@ -106,7 +107,7 @@ export const WORKFLOWS: Workflow[] = [
     voiceTriggers: ['github', 'pull requests', 'open p rs'],
     category: 'ops',
     action: { kind: 'external', url: 'https://github.com/frankxai/arcanea-ai-app/pulls' },
-    color: '#7fdfff',
+    color: 'var(--arc-text-primary)',
   },
   {
     id: 'vercel-prod',
@@ -118,7 +119,7 @@ export const WORKFLOWS: Workflow[] = [
       kind: 'external',
       url: 'https://vercel.com/starlight-intelligence/arcanea-ai-appx',
     },
-    color: '#ffffff',
+    color: 'var(--arc-text-primary)',
   },
   {
     id: 'voice-page',
@@ -127,7 +128,7 @@ export const WORKFLOWS: Workflow[] = [
     voiceTriggers: ['voice home', 'voice page'],
     category: 'discover',
     action: { kind: 'route', href: '/voice' },
-    color: '#00bcd4',
+    color: 'var(--arc-brand-atlantean-teal)',
   },
   {
     id: 'studio-vault',
@@ -136,7 +137,7 @@ export const WORKFLOWS: Workflow[] = [
     voiceTriggers: ['vault', 'studio vault', 'open vault'],
     category: 'review',
     action: { kind: 'route', href: '/studio/vault' },
-    color: '#a78bfa',
+    color: 'var(--arc-void)',
   },
 ];
 

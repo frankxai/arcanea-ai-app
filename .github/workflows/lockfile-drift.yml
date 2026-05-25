@@ -1,0 +1,85 @@
+name: Lockfile Drift Check
+
+# Blocks PRs that modify package.json without committing the corresponding
+# pnpm-lock.yaml change. Catches the recurring main-break pattern:
+#   2026-05-04 PR #77 — package.json changed, lockfile not committed → main red
+#   2026-05-05 PR #87 — same pattern → main red 5 days
+#
+# When this fires, the PR author must:
+#   1. Run `pnpm install` locally
+#   2. Stage and commit the updated pnpm-lock.yaml
+#   3. Push to the same branch
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '**/package.json'
+      - 'pnpm-lock.yaml'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  check-drift:
+    name: Verify lockfile matches package.json
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Compare package.json vs pnpm-lock.yaml in PR
+        id: drift
+        run: |
+          BASE_REF="${{ github.event.pull_request.base.sha }}"
+          HEAD_REF="${{ github.event.pull_request.head.sha }}"
+
+          PKG_CHANGED=$(git diff --name-only "$BASE_REF" "$HEAD_REF" -- '**/package.json' | wc -l)
+          LOCK_CHANGED=$(git diff --name-only "$BASE_REF" "$HEAD_REF" -- 'pnpm-lock.yaml' | wc -l)
+
+          echo "package.json files changed: $PKG_CHANGED"
+          echo "pnpm-lock.yaml changed: $LOCK_CHANGED"
+
+          echo "pkg_changed=$PKG_CHANGED" >> "$GITHUB_OUTPUT"
+          echo "lock_changed=$LOCK_CHANGED" >> "$GITHUB_OUTPUT"
+
+          if [ "$PKG_CHANGED" -gt 0 ] && [ "$LOCK_CHANGED" -eq 0 ]; then
+            echo "::error::package.json modified but pnpm-lock.yaml unchanged"
+            echo "## Lockfile drift detected" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "Run \`pnpm install\` locally, then stage and commit \`pnpm-lock.yaml\`." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+          echo "## Lockfile in sync" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Setup pnpm
+        if: steps.drift.outputs.pkg_changed != '0' || steps.drift.outputs.lock_changed != '0'
+        uses: pnpm/action-setup@v4
+        with:
+          version: '8.15.0'
+
+      - name: Setup Node.js
+        if: steps.drift.outputs.pkg_changed != '0' || steps.drift.outputs.lock_changed != '0'
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Verify --frozen-lockfile install succeeds
+        if: steps.drift.outputs.pkg_changed != '0' || steps.drift.outputs.lock_changed != '0'
+        run: |
+          pnpm install --frozen-lockfile 2>&1 | tee /tmp/install-output.txt
+          if grep -q "ERR_PNPM_OUTDATED_LOCKFILE\|ERR_PNPM_LOCKFILE_BREAKING_CHANGE" /tmp/install-output.txt; then
+            echo "::error::pnpm-lock.yaml is out of sync with package.json"
+            echo "## Lockfile out of sync" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "Run \`pnpm install\` locally, then commit the updated lockfile." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi

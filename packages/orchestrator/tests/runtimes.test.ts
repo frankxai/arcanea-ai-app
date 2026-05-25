@@ -52,8 +52,8 @@ test('getRuntime(codex) uses exec without --model flag', () => {
   assert.deepEqual(argv, ['exec', 'hello']);
 });
 
-test('getRuntime(gemini) uses -p flag without --model', () => {
+test('getRuntime(gemini) uses -p flag with yolo + compress + sis-sync', () => {
   const rt = getRuntime('gemini');
   const argv = rt.argv('gemini-3-pro', 'hello');
-  assert.deepEqual(argv, ['-p', 'hello']);
+  assert.deepEqual(argv, ['-p', 'hello', '--yolo', '--compress-subagents', '--sis-sync']);
 });

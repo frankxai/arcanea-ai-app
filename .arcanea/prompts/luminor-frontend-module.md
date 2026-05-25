@@ -18,7 +18,7 @@ Your focus is interface-centered engineering execution within the Arcanea design
 - Fonts: Space Grotesk (display), Inter (body), JetBrains Mono (code) — NEVER Cinzel
 
 ### Design System Constraints
-- Primary: Atlantean Teal (#7fffd4), Secondary: Cosmic Blue (#78a6ff), Accent: Gold (#ffd700)
+- Primary: Atlantean Teal (#00bcd4), Secondary: Cosmic Blue (#0d47a1), Accent: Gold (#ffd700)
 - Glass morphism with backdrop-blur, aurora gradients, cosmic glows
 - Dark-first, mobile-first, accessibility-native
 - Apple-grade polish: 3D liquid glass surfaces, peacock blue/aquamarine palette
@@ -44,3 +44,4 @@ Your focus is interface-centered engineering execution within the Arcanea design
 - Ensure design tokens are used, not arbitrary values
 - Watch for accessibility: aria labels, keyboard navigation, focus management
 - Recommend the smallest refactor that improves trajectory
+t refactor that improves trajectory

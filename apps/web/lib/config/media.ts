@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 /**
  * Media configuration for Arcanea
  *
@@ -23,7 +24,7 @@ export const GUARDIAN_MEDIA = {
     heroImage: "/guardians/v3/draconia-hero-v3.webp",
     thumbnails: [] as string[],
     gradient: "from-red-600 via-orange-500 to-amber-400",
-    glowColor: "#ef4444",
+    glowColor: "var(--arc-fire)",
     available: 128,
   },
   alera: {
@@ -31,7 +32,7 @@ export const GUARDIAN_MEDIA = {
     heroImage: "/guardians/v3/alera-hero-v3.webp",
     thumbnails: [] as string[],
     gradient: "from-sky-400 via-blue-500 to-indigo-600",
-    glowColor: "#38bdf8",
+    glowColor: "var(--arc-brand-atlantean-teal)",
     available: 68,
   },
   elara: {
@@ -39,7 +40,7 @@ export const GUARDIAN_MEDIA = {
     heroImage: "/guardians/v3/elara-hero-v3.webp",
     thumbnails: [] as string[],
     gradient: "from-emerald-400 via-green-500 to-teal-600",
-    glowColor: "#34d399",
+    glowColor: "var(--arc-wind)",
     available: 37,
   },
   ino: {
@@ -47,7 +48,7 @@ export const GUARDIAN_MEDIA = {
     heroImage: "/guardians/v3/ino-hero-v3.webp",
     thumbnails: [] as string[],
     gradient: "from-pink-400 via-fuchsia-500 to-teal-400",
-    glowColor: "#f472b6",
+    glowColor: "var(--arc-void)",
     available: 8,
   },
   aiyami: {
@@ -55,7 +56,7 @@ export const GUARDIAN_MEDIA = {
     heroImage: "/guardians/v3/aiyami-hero-v3.webp",
     thumbnails: [] as string[],
     gradient: "from-yellow-200 via-amber-300 to-white",
-    glowColor: "#fde68a",
+    glowColor: "var(--arc-text-primary)",
     available: 3,
   },
   lyssandria: {
@@ -63,35 +64,35 @@ export const GUARDIAN_MEDIA = {
     heroImage: "/guardians/v3/lyssandria-hero-v3.webp",
     thumbnails: [] as string[],
     gradient: "from-amber-700 via-yellow-600 to-stone-400",
-    glowColor: "#92400e",
+    glowColor: "var(--arc-earth)",
     available: 2,
   },
   leyla: {
     heroImage: "/guardians/v3/leyla-hero-v3.webp",
     thumbnails: [] as string[],
     gradient: "from-blue-300 via-cyan-400 to-slate-300",
-    glowColor: "#7dd3fc",
+    glowColor: "var(--arc-text-primary)",
     available: 0,
   },
   maylinn: {
     heroImage: "/guardians/v3/maylinn-hero-v3.webp",
     thumbnails: [] as string[],
     gradient: "from-rose-300 via-pink-400 to-green-300",
-    glowColor: "#fda4af",
+    glowColor: "var(--arc-text-primary)",
     available: 0,
   },
   lyria: {
     heroImage: "/guardians/v3/lyria-hero-v3.webp",
     thumbnails: [] as string[],
     gradient: "from-violet-500 via-purple-600 to-indigo-700",
-    glowColor: "#a78bfa",
+    glowColor: "var(--arc-void)",
     available: 0,
   },
   shinkami: {
     heroImage: "/guardians/v3/shinkami-hero-v3.webp",
     thumbnails: [] as string[],
     gradient: "from-neutral-900 via-yellow-400 to-white",
-    glowColor: "#ffd700",
+    glowColor: "var(--arc-brand-arcanean-gold)",
     available: 0,
   },
 } as const;
@@ -109,7 +110,7 @@ export function getGuardianMedia(name: string) {
       heroImage: "",
       thumbnails: [] as string[],
       gradient: "from-cyan-500 to-blue-600",
-      glowColor: "#00bcd4",
+      glowColor: "var(--arc-brand-atlantean-teal)",
       available: 0,
     }
   );

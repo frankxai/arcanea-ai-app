@@ -105,7 +105,7 @@ Circular as foundation (inspired by Google logo structure). Gradients are the pr
 #### Typography
 
 - **Wordmark**: Custom sans-serif, moderate weight, geometric but warm letterforms
-- **UI font**: Clean sans-serif, high readability at small sizes — appearance of `Inter` or similar
+- **UI font**: Clean sans-serif, high readability at small sizes — appearance of `Geist` or similar
 - **Search bar**: Slightly larger font size than typical input fields, center of gravity
 - **Citation numbers**: Inline superscript with teal color `#20B8CD`
 
@@ -1302,8 +1302,8 @@ Text tertiary (#555555–#666666)
 ### 7.3 Typography Hierarchy in Production
 
 **The "Linear Style" (dominant in 2025 SaaS)**:
-- Inter Variable as primary
-- Inter Display for large headings
+- Geist Variable as primary
+- Geist Display for large headings
 - Letter-spacing: `-0.02em` to `-0.04em` at large sizes
 - Color tokens: `#F7F8F8` (headings), `#95A2B3` (secondary)
 

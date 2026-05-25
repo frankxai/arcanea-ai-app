@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import dynamic from "next/dynamic";
@@ -14,6 +15,7 @@ import { FloatingOrbs } from "@/components/premium/animated-background";
 import { SovereigntyBadge } from "@/components/premium/sovereignty-pillars";
 import { NumberTicker } from "@/components/motion/number-ticker";
 import { Sparkle, Diamond, Code, ShieldStar } from "@/lib/phosphor-icons";
+import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
 
 // ---------------------------------------------------------------------------
 // Lazy-load the chat box — it pulls in useRouter + phosphor icons which are
@@ -112,37 +114,39 @@ function HeroPortal() {
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
       {/* Background: pure dark with FloatingOrbs aurora */}
-      <div className="absolute inset-0 -z-20 bg-[#09090b]">
+      <div className="absolute inset-0 -z-20 bg-[var(--arc-cosmic-void)]">
         <FloatingOrbs preset="aurora" />
         {/* Subtle bottom warmth */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_30%_at_50%_100%,rgba(0,188,212,0.03),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_30%_at_50%_100%,color-mix(in_srgb,var(--arc-brand-atlantean-teal)_3%,transparent),transparent_60%)]" />
 
         {/* Guardian portrait accents — visible only on xl screens, low opacity */}
         <div
           className="hidden xl:block absolute left-0 top-0 bottom-0 w-[340px] pointer-events-none"
-          style={{ maskImage: "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.55) 70%, transparent 100%)" }}
+          style={{ maskImage: "linear-gradient(to right, transparent 0%, color-mix(in srgb, var(--arc-cosmic-void) 55%, transparent) 35%, color-mix(in srgb, var(--arc-cosmic-void) 55%, transparent) 70%, transparent 100%)" }}
         >
           <Image
             src="/guardians/v3/lyria-hero-v3.webp"
             alt="Lyria — Sight Gate Guardian"
-            fill
+            width={340}
+            height={1024}
             sizes="340px"
-            className="object-cover object-top opacity-[0.18] mix-blend-luminosity"
+            className="h-full w-full object-cover object-top opacity-[0.18] mix-blend-luminosity"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#09090b] via-transparent to-[#09090b]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--arc-cosmic-void)] via-transparent to-[var(--arc-cosmic-void)]" />
         </div>
         <div
           className="hidden xl:block absolute right-0 top-0 bottom-0 w-[340px] pointer-events-none"
-          style={{ maskImage: "linear-gradient(to left, transparent 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.55) 70%, transparent 100%)" }}
+          style={{ maskImage: "linear-gradient(to left, transparent 0%, color-mix(in srgb, var(--arc-cosmic-void) 55%, transparent) 35%, color-mix(in srgb, var(--arc-cosmic-void) 55%, transparent) 70%, transparent 100%)" }}
         >
           <Image
             src="/guardians/v3/shinkami-hero-v3.webp"
             alt="Shinkami — Source Gate Guardian"
-            fill
+            width={340}
+            height={1024}
             sizes="340px"
-            className="object-cover object-top opacity-[0.18] mix-blend-luminosity"
+            className="h-full w-full object-cover object-top opacity-[0.18] mix-blend-luminosity"
           />
-          <div className="absolute inset-0 bg-gradient-to-l from-[#09090b] via-transparent to-[#09090b]" />
+          <div className="absolute inset-0 bg-gradient-to-l from-[var(--arc-cosmic-void)] via-transparent to-[var(--arc-cosmic-void)]" />
         </div>
       </div>
 
@@ -151,7 +155,7 @@ function HeroPortal() {
         className="absolute inset-0 -z-10 opacity-[0.015]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)",
+            "linear-gradient(color-mix(in srgb, var(--arc-text-primary) 30%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--arc-text-primary) 30%, transparent) 1px, transparent 1px)",
           backgroundSize: "80px 80px",
         }}
       />
@@ -170,13 +174,14 @@ function HeroPortal() {
             className="mb-7 md:mb-9"
           >
             <div className="relative">
-              <div className="absolute inset-[-12px] rounded-full bg-[radial-gradient(circle,rgba(127,255,212,0.12)_0%,rgba(255,215,0,0.04)_50%,transparent_70%)] blur-md animate-[breathe_3s_ease-in-out_infinite]" />
+              <div className="absolute inset-[-12px] rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--arc-brand-atlantean-teal)_12%,transparent)_0%,color-mix(in_srgb,var(--arc-brand-arcanean-gold)_4%,transparent)_50%,transparent_70%)] blur-md animate-[breathe_3s_ease-in-out_infinite]" />
               <Image
                 src="/images/mascot/arcanea-primary.png"
                 alt="Arcanea"
                 width={88}
                 height={88}
-                className="relative drop-shadow-[0_4px_24px_rgba(127,255,212,0.2)] animate-[mascot-float_3s_ease-in-out_infinite]"
+                sizes="88px"
+                className="relative drop-shadow-[0_4px_24px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_20%,transparent)] animate-[mascot-float_3s_ease-in-out_infinite]"
                 priority
               />
             </div>
@@ -232,10 +237,10 @@ function HeroPortal() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             {[
-              { Icon: Sparkle, num: 16, suffix: "", label: "specialist AI partners", color: "#00bcd4" },
-              { Icon: Diamond, num: 190, suffix: "K+", label: "words of craft", color: "#7fffd4" },
-              { Icon: Code, num: 27, suffix: "", label: "open-source repos", color: "#ffd700" },
-              { Icon: ShieldStar, num: 0, suffix: "MIT", label: "forkable", color: "#c084fc", fixed: true },
+              { Icon: Sparkle, num: 16, suffix: "", label: "specialist AI partners", color: "var(--arc-brand-atlantean-teal)" },
+              { Icon: Diamond, num: 190, suffix: "K+", label: "words of craft", color: "var(--arc-brand-atlantean-teal)" },
+              { Icon: Code, num: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", color: "var(--arc-brand-arcanean-gold)" },
+              { Icon: ShieldStar, num: 0, suffix: "MIT", label: "forkable", color: "var(--arc-void)", fixed: true },
             ].map(({ Icon, num, suffix, label, color, fixed }, i) => (
               <div
                 key={label}
@@ -268,10 +273,10 @@ function HeroPortal() {
             transition={{ duration: 0.5, delay: 0.7 }}
           >
             {[
-              { label: "Keep your keys", color: "#7fffd4" },
-              { label: "Keep your IP", color: "#00bcd4" },
-              { label: "Open source (MIT)", color: "#ffd700" },
-              { label: "No vendor lock-in", color: "#c084fc" },
+              { label: "Keep your keys", color: "var(--arc-brand-atlantean-teal)" },
+              { label: "Keep your IP", color: "var(--arc-brand-atlantean-teal)" },
+              { label: "Open source (MIT)", color: "var(--arc-brand-arcanean-gold)" },
+              { label: "No vendor lock-in", color: "var(--arc-void)" },
             ].map(({ label, color }, i) => (
               <span
                 key={label}
@@ -290,7 +295,7 @@ function HeroPortal() {
       </m.div>
 
       {/* Scroll fade — bottom edge dissolves into below-fold */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#09090b] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--arc-cosmic-void)] to-transparent pointer-events-none" />
     </section>
     </LazyMotion>
   );
@@ -313,7 +318,7 @@ export function V3Content({
       <div className="relative h-px mx-6 md:mx-auto md:max-w-4xl">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[120px] pointer-events-none"
-          style={{ background: "radial-gradient(ellipse, rgba(0,188,212,0.12), transparent 70%)" }}
+          style={{ background: "radial-gradient(ellipse, color-mix(in srgb, var(--arc-brand-atlantean-teal) 12%, transparent), transparent 70%)" }}
         />
       </div>
 

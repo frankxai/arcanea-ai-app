@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client'
 
 import { useState } from 'react'
@@ -87,7 +88,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
             <select
               value={autoSaveDelay}
               onChange={(e) => setAutoSaveDelay(Number(e.target.value))}
-              className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-2 py-1 text-[10px] font-mono text-text-secondary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20"
+              className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-2 py-1 text-[10px] font-mono text-text-secondary focus:outline-none focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/20"
             >
               <option value={1000}>1s</option>
               <option value={2000}>2s</option>

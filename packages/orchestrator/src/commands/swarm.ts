@@ -19,7 +19,7 @@ export async function swarmCommand(opts: Options): Promise<void> {
       process.exit(1);
     }
     const text = readFileSync(opts.from, 'utf8');
-    for (const line of text.split('\n')) {
+    for (const line of text.split(/\r?\n/)) {
       const m = line.match(/^\s*[-*]\s+(.+)$/);
       if (m) items.push(m[1].trim());
     }

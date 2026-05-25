@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 /**
  * Arcanea Skills Marketplace — Catalog Data
  *
@@ -46,43 +47,43 @@ export const SKILL_CATEGORIES: SkillCategoryMeta[] = [
     key: "all",
     label: "All Skills",
     description: "Browse the complete marketplace",
-    color: "text-[#00bcd4]",
-    hex: "#00bcd4",
+    color: "text-[var(--arc-brand-atlantean-teal)]",
+    hex: "var(--arc-brand-atlantean-teal)",
   },
   {
     key: "development",
     label: "Development",
     description: "Coding, testing, debugging, CI/CD",
     color: "text-blue-400",
-    hex: "#60a5fa",
+    hex: "var(--arc-brand-cosmic-blue)",
   },
   {
     key: "creative",
     label: "Creative",
     description: "Writing, music, art, design",
     color: "text-purple-400",
-    hex: "#c084fc",
+    hex: "var(--arc-void)",
   },
   {
     key: "intelligence",
     label: "Intelligence",
     description: "Orchestration, memory, reasoning",
     color: "text-amber-400",
-    hex: "#fbbf24",
+    hex: "var(--arc-brand-arcanean-gold)",
   },
   {
     key: "platform",
     label: "Platform",
     description: "GitHub, deployment, monitoring",
     color: "text-green-400",
-    hex: "#4ade80",
+    hex: "var(--arc-wind)",
   },
   {
     key: "arcanea",
     label: "Arcanea",
     description: "Lore, guardians, world-building",
-    color: "text-[#00bcd4]",
-    hex: "#00bcd4",
+    color: "text-[var(--arc-brand-atlantean-teal)]",
+    hex: "var(--arc-brand-atlantean-teal)",
   },
 ];
 

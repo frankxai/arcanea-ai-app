@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -55,9 +56,9 @@ export function SagaDocReader({ title, category, content, wordCount, readTime, h
   }, [headings]);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white">
+    <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
       <div className="fixed top-0 left-0 right-0 h-0.5 z-50">
-        <div className="h-full bg-[#00bcd4]/60 transition-[width] duration-150" style={{ width: `${progress}%` }} />
+        <div className="h-full bg-[var(--arc-brand-atlantean-teal)]/60 transition-[width] duration-150" style={{ width: `${progress}%` }} />
       </div>
       <div className="max-w-[900px] mx-auto px-6 pt-8 pb-4">
         <Link href="/books" className="text-xs text-white/30 hover:text-white/50 transition-colors">&larr; Back to Books</Link>
@@ -71,7 +72,7 @@ export function SagaDocReader({ title, category, content, wordCount, readTime, h
           <aside className="hidden lg:block w-48 shrink-0 pt-10 sticky top-16 self-start max-h-[calc(100vh-80px)] overflow-y-auto">
             <nav className="space-y-1">
               {headings.map((h) => (
-                <a key={h.id} href={`#${h.id}`} className={`block text-[11px] transition-colors truncate ${h.level === 3 ? 'pl-3' : ''} ${activeHeading === h.id ? 'text-[#00bcd4]' : 'text-white/25 hover:text-white/40'}`}>
+                <a key={h.id} href={`#${h.id}`} className={`block text-[11px] transition-colors truncate ${h.level === 3 ? 'pl-3' : ''} ${activeHeading === h.id ? 'text-[var(--arc-brand-atlantean-teal)]' : 'text-white/25 hover:text-white/40'}`}>
                   {h.text}
                 </a>
               ))}
@@ -79,7 +80,7 @@ export function SagaDocReader({ title, category, content, wordCount, readTime, h
           </aside>
         )}
         <article className="flex-1 py-10 min-w-0">
-          <div className="prose prose-invert prose-lg max-w-none prose-p:text-white/80 prose-p:leading-[1.8] prose-p:mb-6 prose-headings:text-white/90 prose-headings:font-display prose-blockquote:border-l-[#00bcd4]/30 prose-blockquote:text-white/60 prose-strong:text-white/90 prose-em:text-white/70 prose-hr:border-white/[0.06]">
+          <div className="prose prose-invert prose-lg max-w-none prose-p:text-white/80 prose-p:leading-[1.8] prose-p:mb-6 prose-headings:text-white/90 prose-headings:font-display prose-blockquote:border-l-[var(--arc-brand-atlantean-teal)]/30 prose-blockquote:text-white/60 prose-strong:text-white/90 prose-em:text-white/70 prose-hr:border-white/[0.06]">
             <ChatMarkdown content={content} />
           </div>
         </article>

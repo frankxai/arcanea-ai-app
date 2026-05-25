@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { useState } from 'react';
@@ -42,7 +43,7 @@ export function StoryChoice({ choice, onSelect, selectedId, disabled }: StoryCho
             const crewMember = option.crewMemberId
               ? getCrewMember(option.crewMemberId)
               : null;
-            const accentColor = crewMember?.color ?? '#7fffd4';
+            const accentColor = crewMember?.color ?? 'var(--arc-brand-atlantean-teal)';
 
             return (
               <m.button

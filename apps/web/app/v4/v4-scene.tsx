@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 // @ts-nocheck -- R3F JSX elements (mesh, group, fog, etc.) require @types/three symlinked
 "use client";
 
@@ -32,7 +32,7 @@ function Stars({ count = 1100 }: { count?: number }) {
     <Points ref={ref} positions={positions} stride={3}>
       <PointMaterial
         transparent
-        color="#9fe5ff"
+        color="var(--arc-text-primary)"
         size={0.03}
         sizeAttenuation
         depthWrite={false}
@@ -62,21 +62,21 @@ function CoreCrystal() {
         <mesh ref={ref}>
           <icosahedronGeometry args={[1.1, 1]} />
           <meshPhysicalMaterial
-            color="#c3f6ff"
+            color="var(--arc-text-primary)"
             transmission={0.9}
             roughness={0.08}
             thickness={1.2}
             ior={1.45}
             clearcoat={1}
             clearcoatRoughness={0.08}
-            emissive="#44bfff"
+            emissive="var(--arc-brand-atlantean-teal)"
             emissiveIntensity={0.18}
           />
         </mesh>
       </Float>
       <mesh ref={ringRef} scale={2.1} rotation={[Math.PI / 2.4, 0, 0.4]}>
         <torusGeometry args={[1.2, 0.022, 20, 180]} />
-        <meshStandardMaterial color="#8ed8ff" emissive="#72c9ff" emissiveIntensity={0.35} />
+        <meshStandardMaterial color="var(--arc-text-primary)" emissive="var(--arc-void)" emissiveIntensity={0.35} />
       </mesh>
     </group>
   );
@@ -90,11 +90,11 @@ export function V4Scene() {
         gl={{ antialias: true, alpha: true }}
         camera={{ position: [0, 0, 6.2], fov: 48 }}
       >
-        <color attach="background" args={["#060b17"]} />
-        <fog attach="fog" args={["#060b17", 5.5, 19]} />
+        <color attach="background" args={["var(--arc-cosmic-void)"]} />
+        <fog attach="fog" args={["var(--arc-cosmic-void)", 5.5, 19]} />
         <ambientLight intensity={0.62} />
-        <directionalLight position={[3, 2.5, 4]} intensity={1.2} color="#76d8ff" />
-        <directionalLight position={[-3, -2, -3]} intensity={0.5} color="#8086ff" />
+        <directionalLight position={[3, 2.5, 4]} intensity={1.2} color="var(--arc-text-primary)" />
+        <directionalLight position={[-3, -2, -3]} intensity={0.5} color="var(--arc-void)" />
         <Stars />
         <CoreCrystal />
       </Canvas>

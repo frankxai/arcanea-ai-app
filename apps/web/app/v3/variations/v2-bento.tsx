@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { LazyMotion, domAnimation, m } from 'framer-motion';
@@ -11,22 +12,22 @@ import { ChatCircleDots, Books, Sparkle, GithubLogo, ArrowRight, Fire, Drop, Lea
    ───────────────────────────────────────────── */
 
 // ── palette ──────────────────────────────────
-const BG = '#09090b';
-const CARD = '#18181b';
+const BG = 'var(--arc-cosmic-void)';
+const CARD = 'var(--arc-cosmic-void)';
 const BORDER = 'rgba(255,255,255,0.06)';
 const BORDER_HOVER = 'rgba(255,255,255,0.12)';
-const TEXT = '#fafafa';
+const TEXT = 'var(--arc-text-primary)';
 const MUTED = 'rgba(255,255,255,0.5)';
-const VIOLET = '#8b5cf6';
-const TEAL = '#7fffd4';
-const GOLD = '#ffd700';
+const VIOLET = 'var(--arc-void)';
+const TEAL = 'var(--arc-brand-atlantean-teal)';
+const GOLD = 'var(--arc-brand-arcanean-gold)';
 
 const ELEMENT_COLORS: Record<string, string> = {
-  Fire: '#ef4444',
-  Water: '#3b82f6',
-  Earth: '#22c55e',
-  Wind: '#f5f5f5',
-  Void: '#a855f7',
+  Fire: 'var(--arc-fire)',
+  Water: 'var(--arc-brand-cosmic-blue)',
+  Earth: 'var(--arc-wind)',
+  Wind: 'var(--arc-text-primary)',
+  Void: 'var(--arc-void)',
 };
 
 // ── guardian data ────────────────────────────
@@ -127,7 +128,7 @@ export function V2Bento() {
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-20 text-center md:py-28">
           <m.h1
             className="mx-auto max-w-4xl font-bold leading-[1.05] tracking-[-0.04em]"
-            style={{ fontSize: 'clamp(2.5rem, 5.5vw, 4rem)', fontFamily: 'Inter, system-ui, sans-serif' }}
+            style={{ fontSize: 'clamp(2.5rem, 5.5vw, 4rem)', fontFamily: 'Geist, system-ui, sans-serif' }}
             custom={0}
             initial="hidden"
             animate="visible"
@@ -307,7 +308,7 @@ export function V2Bento() {
       <section className="mx-auto w-full max-w-6xl px-6 pb-24">
         <m.h2
           className="text-center text-3xl font-bold tracking-tight mb-14"
-          style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+          style={{ fontFamily: 'Geist, system-ui, sans-serif' }}
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

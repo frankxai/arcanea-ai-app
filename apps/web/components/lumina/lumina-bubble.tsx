@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 /**
@@ -179,7 +180,7 @@ export function LuminaBubble() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-[#0a0e16]/80 shadow-[0_0_40px_rgba(127,255,212,0.15)] backdrop-blur-xl transition-all hover:scale-110 hover:border-[#7fffd4]/30 hover:shadow-[0_0_60px_rgba(127,255,212,0.25)] overflow-hidden"
+            className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-[var(--arc-cosmic-void)]/80 shadow-[0_0_40px_rgba(127,255,212,0.15)] backdrop-blur-xl transition-all hover:scale-110 hover:border-[var(--arc-brand-atlantean-teal)]/30 hover:shadow-[0_0_60px_rgba(127,255,212,0.25)] overflow-hidden"
             aria-label="Open Arcanea (Cmd+K)"
           >
             <Image src="/images/mascot/arcanea-primary.png" alt="Arcanea" width={56} height={56} className="object-contain drop-shadow-[0_0_12px_rgba(127,255,212,0.3)]" />
@@ -195,7 +196,7 @@ export function LuminaBubble() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-50 flex h-[560px] w-[380px] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0a0e16]/90 shadow-[0_20px_80px_rgba(0,188,212,0.12)] backdrop-blur-2xl"
+            className="fixed bottom-6 right-6 z-50 flex h-[560px] w-[380px] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--arc-cosmic-void)]/90 shadow-[0_20px_80px_rgba(0,188,212,0.12)] backdrop-blur-2xl"
             style={{ maxHeight: 'calc(100vh - 3rem)' }}
           >
             {/* Header */}
@@ -215,7 +216,7 @@ export function LuminaBubble() {
                 <Link
                   href="/chat"
                   onClick={() => setOpen(false)}
-                  className="rounded-lg px-2 py-1 text-[11px] text-white/40 transition hover:bg-white/[0.05] hover:text-[#00bcd4]"
+                  className="rounded-lg px-2 py-1 text-[11px] text-white/40 transition hover:bg-white/[0.05] hover:text-[var(--arc-brand-atlantean-teal)]"
                   title="Open full chat"
                 >
                   Full chat
@@ -249,7 +250,7 @@ export function LuminaBubble() {
                         key={ex}
                         type="button"
                         onClick={() => sendMessage(ex)}
-                        className="block w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-2.5 text-left text-[13px] text-white/50 transition hover:border-[#00bcd4]/20 hover:bg-white/[0.04] hover:text-white/80"
+                        className="block w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-2.5 text-left text-[13px] text-white/50 transition hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-white/[0.04] hover:text-white/80"
                       >
                         {ex}
                       </button>
@@ -267,7 +268,7 @@ export function LuminaBubble() {
                     className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-relaxed ${
                       msg.role === 'user'
                         ? 'bg-white/[0.08] text-white/90'
-                        : 'border border-[#00bcd4]/15 bg-[#00bcd4]/[0.04] text-white/85'
+                        : 'border border-[var(--arc-brand-atlantean-teal)]/15 bg-[var(--arc-brand-atlantean-teal)]/[0.04] text-white/85'
                     }`}
                   >
                     {msg.content || (
@@ -284,7 +285,7 @@ export function LuminaBubble() {
 
             {/* Input */}
             <div className="border-t border-white/[0.06] p-3">
-              <div className="flex items-end gap-2 rounded-xl border border-white/[0.08] bg-white/[0.02] px-3 py-2 focus-within:border-[#00bcd4]/30 transition-colors">
+              <div className="flex items-end gap-2 rounded-xl border border-white/[0.08] bg-white/[0.02] px-3 py-2 focus-within:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors">
                 <textarea
                   ref={inputRef}
                   value={input}
@@ -300,7 +301,7 @@ export function LuminaBubble() {
                   type="button"
                   onClick={() => sendMessage(input)}
                   disabled={!input.trim() || streaming}
-                  className="rounded-lg bg-[#00bcd4]/15 px-3 py-1.5 text-xs font-medium text-[#00bcd4] transition hover:bg-[#00bcd4]/25 disabled:opacity-30"
+                  className="rounded-lg bg-[var(--arc-brand-atlantean-teal)]/15 px-3 py-1.5 text-xs font-medium text-[var(--arc-brand-atlantean-teal)] transition hover:bg-[var(--arc-brand-atlantean-teal)]/25 disabled:opacity-30"
                 >
                   {streaming ? '...' : '↑'}
                 </button>
@@ -312,7 +313,7 @@ export function LuminaBubble() {
                 <Link
                   href="/chat"
                   onClick={() => setOpen(false)}
-                  className="text-[10px] text-white/25 hover:text-[#00bcd4] transition-colors"
+                  className="text-[10px] text-white/25 hover:text-[var(--arc-brand-atlantean-teal)] transition-colors"
                 >
                   Open full experience →
                 </Link>

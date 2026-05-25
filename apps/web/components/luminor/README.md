@@ -5,7 +5,7 @@ A stunning, production-ready component for choosing your AI Luminor companion in
 ## Design Philosophy
 
 **Bold, Distinctive Aesthetic**:
-- **Typography**: Space Grotesk (display) + Inter (body) — premium tech aesthetic
+- **Typography**: Geist (display) + Geist (body) — premium tech aesthetic
 - **Animations**: Academy-specific (water flow, fire flicker, light shimmer)
 - **Colors**: Authentic cosmic theme with academy-specific palettes
 - **Motion**: Orchestrated entrance with staggered reveals using Framer Motion
@@ -219,7 +219,7 @@ Add custom animations in your Tailwind config.
 - **Design System**: Arcanean Cosmic Theme
 - **Animations**: Framer Motion 11.15.0
 - **Icons**: Lucide React
-- **Typography**: Space Grotesk + Inter (Google Fonts)
+- **Typography**: Geist + Geist (Google Fonts)
 - **Inspired by**: Character.ai depth + Genspark intelligence
 
 ---
@@ -228,9 +228,9 @@ Add custom animations in your Tailwind config.
 
 ### Why These Fonts?
 
-**Space Grotesk**: Modern geometric sans-serif with character — premium tech feel for Luminor names and headings.
+**Geist**: Modern geometric sans-serif with character — premium tech feel for Luminor names and headings.
 
-**Inter**: Highly legible UI font optimized for digital screens. Pairs with Space Grotesk while maintaining distinction.
+**Geist**: Highly legible UI font optimized for digital screens. Pairs with Geist while maintaining distinction.
 
 **Newsreader**: Editorial serif for literary/lore content where a classical voice is needed.
 

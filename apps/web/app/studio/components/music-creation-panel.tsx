@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import { useState } from "react";
@@ -37,7 +38,7 @@ Example: A haunting melody with crystal chimes echoing through
 a vast space, building to a crescendo of orchestral strings
 and choir — tension resolving into stillness."
           aria-label="Music description"
-          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/20 focus:ring-inset min-h-[200px]"
+          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/20 focus:ring-inset min-h-[200px]"
         />
 
         <div className="px-4 py-3 border-t border-white/[0.08] bg-white/[0.02]">

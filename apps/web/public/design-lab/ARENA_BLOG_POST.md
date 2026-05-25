@@ -8,7 +8,7 @@
 
 Here is the uncomfortable truth about AI design tools: they are extraordinarily good at producing work that looks finished. The gradients are smooth. The typography is tight. The layout breathes. And it is completely, irredeemably forgettable.
 
-This is the AI slop problem — not that the output is bad, but that it is competent in exactly the same way that everything else is competent. Ask Claude to design a landing page. Ask GPT-4 the same thing. Ask Gemini. You will get three variations of the same answer: dark background, hero text in Inter or Geist, a gradient that goes from purple to indigo, a row of floating cards below the fold. All technically solid. All aesthetically inert.
+This is the AI slop problem — not that the output is bad, but that it is competent in exactly the same way that everything else is competent. Ask Claude to design a landing page. Ask GPT-4 the same thing. Ask Gemini. You will get three variations of the same answer: dark background, hero text in Geist or Geist, a gradient that goes from purple to indigo, a row of floating cards below the fold. All technically solid. All aesthetically inert.
 
 This is not a model quality problem. It is an architecture problem.
 
@@ -45,7 +45,7 @@ The arena is not a gimmick. It is the correct solution to a well-defined problem
 
 In February 2026, building the homepage for arcanea.ai — a platform for AI-powered creative work — we ran the first formal Arena competition I am aware of for a production interface.
 
-The brief was simple: design the homepage for a billion-dollar AI creation platform. The constraints were real: the Arcanean design system, specific brand colors (Violet #8b5cf6, Crystal #7fffd4, Gold #ffd700), Playfair Display headings, a specific content hierarchy, conversion as the primary success metric.
+The brief was simple: design the homepage for a billion-dollar AI creation platform. The constraints were real: the Arcanean design system, specific brand colors (Violet #8b5cf6, Crystal var(--arc-brand-atlantean-teal), Gold #ffd700), Playfair Display headings, a specific content hierarchy, conversion as the primary success metric.
 
 Before any design team received the brief, a dedicated research scout agent spent time analyzing the competitive landscape. It catalogued the homepage design patterns of Gemini, Perplexity, Claude.ai, Canva, Suno, Midjourney, Runway, and Pika. It identified where they converged (everyone uses a dark hero, everyone puts the CTA above the fold, everyone has a feature grid), where they diverged (Canva is warm and approachable, Midjourney is mysterious and sparse, Suno is kinetic and music-forward), and where there were genuine gaps. That intelligence was given to all five design teams simultaneously.
 

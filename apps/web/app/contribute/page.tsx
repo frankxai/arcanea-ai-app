@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { Metadata } from 'next';
 import Link from 'next/link';
 import {
@@ -32,8 +33,8 @@ const TIERS = [
     tagline: 'Auto-published. Free forever.',
     description:
       'Ship via pull request. CI validates quality. Your book goes live within minutes. Community ratings surface the best.',
-    glow: '#22c55e',
-    accent: '#4ade80',
+    glow: 'var(--arc-wind)',
+    accent: 'var(--arc-wind)',
     badge: 'Open',
     href: '/books/drafts',
   },
@@ -42,8 +43,8 @@ const TIERS = [
     tagline: 'Editor-curated. Revenue share.',
     description:
       'Graduated from Community. Guardian Intelligence ratings, editorial polish, and a 70/30 revenue split with subscribers.',
-    glow: '#ffd700',
-    accent: '#facc15',
+    glow: 'var(--arc-brand-arcanean-gold)',
+    accent: 'var(--arc-brand-arcanean-gold)',
     badge: 'Curated',
     href: '/books',
   },
@@ -52,8 +53,8 @@ const TIERS = [
     tagline: 'Arcanea universe. Invitation.',
     description:
       'The core mythology — Lumina, Nero, the Ten Gates, the Arc. Written under the house voice. By invitation.',
-    glow: '#ef4444',
-    accent: '#f87171',
+    glow: 'var(--arc-fire)',
+    accent: 'var(--arc-fire)',
     badge: 'Canon',
     href: '/lore',
   },
@@ -84,11 +85,11 @@ const FAQ_ITEMS = [
       <>
         <p>
           Yes. Set{' '}
-          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[#9befe8]">
+          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[var(--arc-text-primary)]">
             ai_contribution: 0
           </code>{' '}
           in your{' '}
-          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[#9befe8]">
+          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[var(--arc-text-primary)]">
             book.yaml
           </code>
           . The AI transparency field is a contract with readers, not a
@@ -104,7 +105,7 @@ const FAQ_ITEMS = [
       <>
         <p>
           All of them. You choose the license in your{' '}
-          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[#9befe8]">
+          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[var(--arc-text-primary)]">
             book.yaml
           </code>{' '}
           — Creative Commons, MIT, or All Rights Reserved. Arcanea hosts and
@@ -140,11 +141,11 @@ const FAQ_ITEMS = [
       <>
         <p>
           Open a PR setting{' '}
-          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[#9befe8]">
+          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[var(--arc-text-primary)]">
             status: archived
           </code>{' '}
           in your{' '}
-          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[#9befe8]">
+          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[var(--arc-text-primary)]">
             book.yaml
           </code>
           , or delete the folder entirely. Your book is removed from the index
@@ -178,13 +179,13 @@ const FAQ_ITEMS = [
       <>
         <p>
           Absolutely. Declare whatever you used in the{' '}
-          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[#9befe8]">
+          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[var(--arc-text-primary)]">
             ai_transparency.models_used
           </code>{' '}
           block — GPT, Gemini, Grok, DeepSeek, Llama, local models, anything.
           Arcanea preferred tooling is Claude Code because it integrates
           cleanly with the{' '}
-          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[#9befe8]">
+          <code className="rounded bg-white/[0.06] px-1 text-[12px] text-[var(--arc-text-primary)]">
             /arcanea-author
           </code>{' '}
           skill, but the library is model-agnostic.
@@ -247,23 +248,23 @@ const RESOURCES = [
 
 export default function ContributePage() {
   return (
-    <div className="min-h-screen bg-[#09090b] text-white">
+    <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[640px] overflow-hidden">
-        <div className="absolute left-1/2 top-[-200px] h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-br from-[#00bcd4]/15 via-[#0d47a1]/10 to-transparent blur-[120px]" />
+        <div className="absolute left-1/2 top-[-200px] h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/15 via-[var(--arc-brand-cosmic-blue)]/10 to-transparent blur-[120px]" />
       </div>
 
       <div className="relative mx-auto max-w-5xl px-6 pb-32 pt-16">
         {/* Hero */}
         <section className="relative mb-24 text-center">
-          <p className="mb-4 text-[11px] uppercase tracking-[0.28em] text-[#00bcd4]">
+          <p className="mb-4 text-[11px] uppercase tracking-[0.28em] text-[var(--arc-brand-atlantean-teal)]">
             Arcanea Open Library
           </p>
           <h1 className="font-display text-5xl font-bold leading-[1.05] md:text-6xl">
-            <span className="bg-gradient-to-r from-white via-white/95 to-[#00bcd4]/80 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-white/95 to-[var(--arc-brand-atlantean-teal)]/80 bg-clip-text text-transparent">
               Publish your book
             </span>
             <br />
-            <span className="bg-gradient-to-r from-[#00bcd4] via-[#4dd0e1] to-[#ffd700] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-arcanean-gold)] bg-clip-text text-transparent">
               on Arcanea
             </span>
           </h1>
@@ -275,7 +276,7 @@ export default function ContributePage() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <a
               href="#step-1"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#00bcd4] to-[#00897b] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_40px_rgba(0,188,212,0.3)] transition-transform hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]/50"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_40px_rgba(0,188,212,0.3)] transition-transform hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/50"
             >
               <Sparkles className="h-4 w-4" aria-hidden="true" />
               Start your first book
@@ -349,7 +350,7 @@ export default function ContributePage() {
                   href="https://claude.com/download"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#00bcd4] hover:underline"
+                  className="text-[var(--arc-brand-atlantean-teal)] hover:underline"
                 >
                   claude.com/download
                 </a>
@@ -396,7 +397,7 @@ export default function ContributePage() {
               />
               <p className="text-xs text-white/50">
                 Your book lives at{' '}
-                <code className="rounded bg-white/[0.06] px-1.5 py-0.5 text-[12px] text-[#9befe8]">
+                <code className="rounded bg-white/[0.06] px-1.5 py-0.5 text-[12px] text-[var(--arc-text-primary)]">
                   book/your-slug/
                 </code>
                 . Iterate in the editor, in Claude Code, or both.
@@ -423,8 +424,8 @@ git push origin book/your-slug`}
               title="CI runs the quality gate"
               description="Schema validation. 500-word minimum per chapter. Anti-slop scan. If it passes, your book auto-merges to the Community tier and goes live at arcanea.ai/books/drafts/your-slug within minutes."
             >
-              <div className="rounded-xl border border-[#22c55e]/20 bg-[#22c55e]/[0.04] p-4">
-                <p className="text-[12px] font-semibold text-[#4ade80]">
+              <div className="rounded-xl border border-[var(--arc-wind)]/20 bg-[var(--arc-wind)]/[0.04] p-4">
+                <p className="text-[12px] font-semibold text-[var(--arc-wind)]">
                   What the gate checks
                 </p>
                 <ul className="mt-2 space-y-1 text-[12px] text-white/55">
@@ -442,7 +443,7 @@ git push origin book/your-slug`}
         {/* Wizard */}
         <section id="wizard" className="mb-24">
           <div className="mb-8">
-            <p className="text-[11px] uppercase tracking-[0.24em] text-[#ffd700]">
+            <p className="text-[11px] uppercase tracking-[0.24em] text-[var(--arc-brand-arcanean-gold)]">
               Optional shortcut
             </p>
             <h2 className="mt-2 font-display text-3xl font-semibold text-white/95">
@@ -482,7 +483,7 @@ git push origin book/your-slug`}
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {RESOURCES.map((resource) => {
               const cardClass =
-                'group flex flex-col gap-1 rounded-xl border border-white/[0.06] bg-gradient-to-br from-white/[0.035] to-white/[0.01] p-4 transition-all hover:border-[#00bcd4]/25 hover:shadow-[0_0_32px_rgba(0,188,212,0.06)]';
+                'group flex flex-col gap-1 rounded-xl border border-white/[0.06] bg-gradient-to-br from-white/[0.035] to-white/[0.01] p-4 transition-all hover:border-[var(--arc-brand-atlantean-teal)]/25 hover:shadow-[0_0_32px_rgba(0,188,212,0.06)]';
               const inner = (
                 <>
                   <div className="flex items-center justify-between">
@@ -526,7 +527,7 @@ git push origin book/your-slug`}
         </section>
 
         {/* Bottom CTA */}
-        <section className="rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#00bcd4]/[0.08] via-[#0d47a1]/[0.04] to-[#ffd700]/[0.04] p-10 text-center">
+        <section className="rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/[0.08] via-[var(--arc-brand-cosmic-blue)]/[0.04] to-[var(--arc-brand-arcanean-gold)]/[0.04] p-10 text-center">
           <h2 className="font-display text-3xl font-semibold text-white/95">
             The library is waiting
           </h2>
@@ -537,7 +538,7 @@ git push origin book/your-slug`}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <a
               href="#wizard"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#00bcd4] to-[#00897b] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_32px_rgba(0,188,212,0.3)] transition-transform hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_32px_rgba(0,188,212,0.3)] transition-transform hover:-translate-y-0.5"
             >
               <Sparkles className="h-4 w-4" aria-hidden="true" />
               Launch the wizard

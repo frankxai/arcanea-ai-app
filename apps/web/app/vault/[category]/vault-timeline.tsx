@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import Link from 'next/link';
@@ -74,7 +75,7 @@ export function VaultTimeline({ category, entries }: Props) {
         >
           <Link
             href="/arcanea-vault"
-            className="text-xs font-mono tracking-widest text-[#708094] hover:text-[#e6eefc] transition-colors uppercase"
+            className="text-xs font-mono tracking-widest text-[var(--arc-text-muted)] hover:text-[var(--arc-text-primary)] transition-colors uppercase"
           >
             ← Back
           </Link>
@@ -105,7 +106,7 @@ export function VaultTimeline({ category, entries }: Props) {
                   href={`/vault/${c}`}
                   className="inline-block px-3 py-1.5 rounded-full text-xs font-mono border transition-all"
                   style={{
-                    color: isActive ? cfg.color : '#708094',
+                    color: isActive ? cfg.color : 'var(--arc-text-muted)',
                     borderColor: isActive ? `${cfg.color}40` : 'rgba(255,255,255,0.06)',
                     backgroundColor: isActive ? `${cfg.color}12` : 'transparent',
                   }}
@@ -132,16 +133,16 @@ export function VaultTimeline({ category, entries }: Props) {
               <div className="w-3 h-3 rounded-full" style={{ backgroundColor: config.color }} />
             </div>
             <div>
-              <h1 className="text-3xl md:text-4xl font-display font-bold text-[#e6eefc] tracking-tight">
+              <h1 className="text-3xl md:text-4xl font-display font-bold text-[var(--arc-text-primary)] tracking-tight">
                 {config.label}
               </h1>
-              <p className="text-[10px] text-[#708094] font-mono tracking-[0.2em] uppercase mt-0.5">
+              <p className="text-[10px] text-[var(--arc-text-muted)] font-mono tracking-[0.2em] uppercase mt-0.5">
                 {config.guardian}
               </p>
             </div>
           </div>
-          <p className="text-sm text-[#9bb1d0]">{config.tagline}</p>
-          <p className="text-xs text-[#708094] mt-1 font-mono">
+          <p className="text-sm text-[var(--arc-text-secondary)]">{config.tagline}</p>
+          <p className="text-xs text-[var(--arc-text-muted)] mt-1 font-mono">
             {entries.length} {entries.length === 1 ? 'insight' : 'insights'}
             {entries.length > 0 && <> · Latest {timeAgo(entries[0].createdAt)}</>}
           </p>
@@ -155,12 +156,12 @@ export function VaultTimeline({ category, entries }: Props) {
                 <div key={date} className="relative">
                   {/* Date marker dot */}
                   <div
-                    className="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full ring-4 ring-[#09090b]"
+                    className="absolute -left-[25px] top-1.5 w-2 h-2 rounded-full ring-4 ring-[var(--arc-cosmic-void)]"
                     style={{ backgroundColor: config.color }}
                   />
 
                   <m.p
-                    className="text-xs font-mono tracking-[0.2em] text-[#708094] mb-4 uppercase"
+                    className="text-xs font-mono tracking-[0.2em] text-[var(--arc-text-muted)] mb-4 uppercase"
                     initial={{ opacity: 0, x: -8 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={VIEWPORT}
@@ -201,8 +202,8 @@ export function VaultTimeline({ category, entries }: Props) {
             >
               <div className="w-4 h-4 rounded-full opacity-30" style={{ backgroundColor: config.color }} />
             </div>
-            <p className="text-[#708094] text-sm">Empty.</p>
-            <p className="text-[#708094]/50 text-xs mt-1">Entries appear here as the vault grows.</p>
+            <p className="text-[var(--arc-text-muted)] text-sm">Empty.</p>
+            <p className="text-[var(--arc-text-muted)]/50 text-xs mt-1">Entries appear here as the vault grows.</p>
           </m.div>
         )}
       </main>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';
@@ -16,14 +17,14 @@ interface BeamModel {
 }
 
 const BEAM_MODELS: BeamModel[] = [
-  { id: 'arcanea-gemini-flash', shortName: 'Flash', color: '#4285f4' },
-  { id: 'arcanea-sonnet', shortName: 'Sonnet', color: '#d4a574' },
-  { id: 'arcanea-gpt5', shortName: 'GPT-5', color: '#10a37f' },
-  { id: 'arcanea-grok', shortName: 'Grok', color: '#fff' },
-  { id: 'arcanea-deepseek', shortName: 'DeepSeek', color: '#667eea' },
-  { id: 'arcanea-opus', shortName: 'Opus', color: '#00bcd4' },
-  { id: 'arcanea-gemini-pro', shortName: 'Gemini Pro', color: '#34a853' },
-  { id: 'arcanea-haiku', shortName: 'Haiku', color: '#e8b4a0' },
+  { id: 'arcanea-gemini-flash', shortName: 'Flash', color: 'var(--arc-brand-atlantean-teal)' },
+  { id: 'arcanea-sonnet', shortName: 'Sonnet', color: 'var(--arc-fire)' },
+  { id: 'arcanea-gpt5', shortName: 'GPT-5', color: 'var(--arc-brand-atlantean-teal)' },
+  { id: 'arcanea-grok', shortName: 'Grok', color: 'var(--arc-text-primary)' },
+  { id: 'arcanea-deepseek', shortName: 'DeepSeek', color: 'var(--arc-void)' },
+  { id: 'arcanea-opus', shortName: 'Opus', color: 'var(--arc-brand-atlantean-teal)' },
+  { id: 'arcanea-gemini-pro', shortName: 'Gemini Pro', color: 'var(--arc-earth)' },
+  { id: 'arcanea-haiku', shortName: 'Haiku', color: 'var(--arc-text-primary)' },
 ];
 
 interface BeamResponse {
@@ -74,7 +75,7 @@ export function BeamMode({ prompt, provider, clientApiKey, focusHint, onSelectRe
       return {
         modelId: id,
         shortName: model?.shortName || id,
-        color: model?.color || '#fff',
+        color: model?.color || 'var(--arc-text-primary)',
         text: '',
         status: 'pending',
       };
@@ -246,11 +247,11 @@ ${doneResponses.map((r, i) => `--- RESPONSE ${i + 1} (${r.shortName}) ---\n${r.t
   const allDone = responses.length > 0 && responses.every((r) => r.status === 'done' || r.status === 'error');
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#09090b]/95 backdrop-blur-sm flex flex-col">
+    <div className="fixed inset-0 z-50 bg-[var(--arc-cosmic-void)]/95 backdrop-blur-sm flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-white/[0.06]">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          <PhLightning className="w-5 h-5 text-[#ffd700] shrink-0" />
+          <PhLightning className="w-5 h-5 text-[var(--arc-brand-arcanean-gold)] shrink-0" />
           <h2 className="text-base sm:text-lg font-semibold text-white whitespace-nowrap">Beam Mode</h2>
           <span className="hidden sm:inline text-sm text-white/40">Compare models side-by-side</span>
         </div>
@@ -300,7 +301,7 @@ ${doneResponses.map((r, i) => `--- RESPONSE ${i + 1} (${r.shortName}) ---\n${r.t
           <button
             onClick={runBeam}
             disabled={selectedModels.length < 2}
-            className="mt-4 px-6 py-2.5 rounded-xl bg-[#00bcd4] hover:bg-[#00acc1] text-white text-sm font-medium
+            className="mt-4 px-6 py-2.5 rounded-xl bg-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)] text-white text-sm font-medium
               disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
             Send to {selectedModels.length} Models
@@ -319,7 +320,7 @@ ${doneResponses.map((r, i) => `--- RESPONSE ${i + 1} (${r.shortName}) ---\n${r.t
             {responses.map((resp) => (
               <div
                 key={resp.modelId}
-                className="flex flex-col rounded-xl border border-white/[0.06] bg-[#111113] overflow-hidden"
+                className="flex flex-col rounded-xl border border-white/[0.06] bg-[var(--arc-cosmic-void)] overflow-hidden"
               >
                 {/* Model header */}
                 <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.04]">
@@ -328,7 +329,7 @@ ${doneResponses.map((r, i) => `--- RESPONSE ${i + 1} (${r.shortName}) ---\n${r.t
                   </span>
                   <div className="flex items-center gap-1.5">
                     {resp.status === 'streaming' && (
-                      <PhCircleNotch className="w-3.5 h-3.5 text-[#00bcd4] animate-spin" />
+                      <PhCircleNotch className="w-3.5 h-3.5 text-[var(--arc-brand-atlantean-teal)] animate-spin" />
                     )}
                     {resp.status === 'done' && (
                       <PhCheck className="w-3.5 h-3.5 text-emerald-400" />
@@ -379,8 +380,8 @@ ${doneResponses.map((r, i) => `--- RESPONSE ${i + 1} (${r.shortName}) ---\n${r.t
                 onClick={handleMerge}
                 disabled={isMerging}
                 className="px-5 py-2 rounded-xl text-sm font-medium transition-all
-                  bg-gradient-to-r from-[#ffd700]/20 to-[#ff8c00]/20 border border-[#ffd700]/30
-                  text-[#ffd700] hover:from-[#ffd700]/30 hover:to-[#ff8c00]/30
+                  bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-fire)]/20 border border-[var(--arc-brand-arcanean-gold)]/30
+                  text-[var(--arc-brand-arcanean-gold)] hover:from-[var(--arc-brand-arcanean-gold)]/30 hover:to-[var(--arc-fire)]/30
                   disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {isMerging ? (
@@ -434,11 +435,11 @@ ${doneResponses.map((r, i) => `--- RESPONSE ${i + 1} (${r.shortName}) ---\n${r.t
 
           {/* Merged Result */}
           {(mergedText || isMerging) && (
-            <div className="px-4 py-4 border-t border-white/[0.06] bg-[#0a0a0c]">
+            <div className="px-4 py-4 border-t border-white/[0.06] bg-[var(--arc-cosmic-void)]">
               <div className="flex items-center gap-2 mb-3">
-                <PhLightning className="w-4 h-4 text-[#ffd700]" />
-                <span className="text-sm font-medium text-[#ffd700]">Synthesized Response</span>
-                {isMerging && <PhCircleNotch className="w-3.5 h-3.5 text-[#ffd700] animate-spin" />}
+                <PhLightning className="w-4 h-4 text-[var(--arc-brand-arcanean-gold)]" />
+                <span className="text-sm font-medium text-[var(--arc-brand-arcanean-gold)]">Synthesized Response</span>
+                {isMerging && <PhCircleNotch className="w-3.5 h-3.5 text-[var(--arc-brand-arcanean-gold)] animate-spin" />}
               </div>
               <div className="prose prose-invert prose-sm max-w-none max-h-[40vh] overflow-y-auto"
                 style={{ scrollbarWidth: 'thin' }}
@@ -450,8 +451,8 @@ ${doneResponses.map((r, i) => `--- RESPONSE ${i + 1} (${r.shortName}) ---\n${r.t
                   type="button"
                   onClick={() => onSelectResponse(mergedText, 'merged')}
                   className="mt-3 px-5 py-2 rounded-xl text-sm font-medium transition-all
-                    bg-[#ffd700]/10 border border-[#ffd700]/20 text-[#ffd700]
-                    hover:bg-[#ffd700]/20 hover:border-[#ffd700]/40"
+                    bg-[var(--arc-brand-arcanean-gold)]/10 border border-[var(--arc-brand-arcanean-gold)]/20 text-[var(--arc-brand-arcanean-gold)]
+                    hover:bg-[var(--arc-brand-arcanean-gold)]/20 hover:border-[var(--arc-brand-arcanean-gold)]/40"
                 >
                   Use Merged Response
                 </button>

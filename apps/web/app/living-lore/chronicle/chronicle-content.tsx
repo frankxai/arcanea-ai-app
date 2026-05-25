@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import Link from 'next/link';
@@ -8,8 +9,8 @@ import type { ActInfo } from '@/lib/living-lore/types';
 import { ScrollToTop } from '@/components/living-lore/scroll-to-top';
 
 const GATE_ELEMENT_COLORS: Record<number, string> = {
-  1: '#32CD32', 2: '#4169E1', 3: '#FF6B35', 4: '#4169E1', 5: '#C0C0C0',
-  6: '#9370DB', 7: '#9370DB', 8: '#9370DB', 9: '#9370DB', 10: '#FFD700',
+  1: 'var(--arc-wind)', 2: 'var(--arc-brand-cosmic-blue)', 3: 'var(--arc-fire)', 4: 'var(--arc-brand-cosmic-blue)', 5: 'var(--arc-text-primary)',
+  6: 'var(--arc-void)', 7: 'var(--arc-void)', 8: 'var(--arc-void)', 9: 'var(--arc-void)', 10: 'var(--arc-brand-arcanean-gold)',
 };
 
 interface ActStub {

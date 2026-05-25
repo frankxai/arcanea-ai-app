@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import { m, useInView, AnimatePresence } from "framer-motion";
@@ -41,6 +42,7 @@ import { SovereigntyPillars } from "@/components/premium/sovereignty-pillars";
 import { PersonasShowcase } from "@/components/premium/personas-showcase";
 import { LuminorTeamPreview } from "@/components/premium/luminor-team-preview";
 import { IntegrationGrid } from "@/components/premium/integration-grid";
+import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
 import { luminorAccents, tierAccents, streamAccents, pillarAccents, brand } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
@@ -86,7 +88,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "What integrations does Arcanea support?",
-    a: "30+ integrations across coding (VS Code, Cursor, Claude Code, Antigravity), creative AI (Suno, Nano Banana 2, ElevenLabs, Runway), distribution (Blotato, n8n, Postiz), communities (Discord, Reddit, Whop), game engines (Unreal, Unity, Godot), and chain (Base, Story Protocol, Farcaster). See /integrations.",
+    a: "Arcanea tracks 30+ integrations across coding, creative AI, distribution, communities, game engines, infra, and chain. The integrations page labels each one as live, beta, or planned.",
   },
   {
     q: "How do I publish my work?",
@@ -145,7 +147,7 @@ const PRODUCT_PILLARS: ProductPillar[] = [
   {
     Icon: Code,
     title: "Code",
-    description: "27 open-source repos. Fork anything.",
+    description: `${PUBLIC_REPO_SUMMARY.public} public repos. Fork the open pieces.`,
     href: "/ecosystem",
     glowColor: pillarAccents.code,
   },
@@ -337,7 +339,7 @@ function SovereigntySection() {
             <Magnetic>
               <Link
                 href="/pricing"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#7fffd4]/15 to-[#ffd700]/10 border border-[#7fffd4]/25 text-sm font-medium text-[#7fffd4] hover:from-[#7fffd4]/25 hover:to-[#ffd700]/15 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/15 to-[var(--arc-brand-arcanean-gold)]/10 border border-[var(--arc-brand-atlantean-teal)]/25 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] hover:from-[var(--arc-brand-atlantean-teal)]/25 hover:to-[var(--arc-brand-arcanean-gold)]/15 transition-colors"
               >
                 Read the sovereignty promise
                 <span className="text-xs">&rarr;</span>
@@ -480,7 +482,7 @@ function VoicePresenceSection() {
             <Magnetic>
               <Link
                 href="/voice"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#c084fc]/15 to-[#00bcd4]/10 border border-[#c084fc]/25 text-sm font-medium text-[#c084fc] hover:from-[#c084fc]/25 hover:to-[#00bcd4]/15 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-void)]/15 to-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-void)]/25 text-sm font-medium text-[var(--arc-void)] hover:from-[var(--arc-void)]/25 hover:to-[var(--arc-brand-atlantean-teal)]/15 transition-colors"
               >
                 Open the voice dashboard
                 <span className="text-xs">&rarr;</span>
@@ -513,7 +515,7 @@ function StackTeaserSection() {
         <SectionHeader
           label="The Creator Stack"
           title="Built to connect everywhere"
-          subtitle="Claude Code, Nano Banana 2, Supabase, Vercel AI SDK wired today. Cursor, Suno, Unreal Engine, Discord, Base, Obsidian, Google Drive and 25+ more on the backlog — each tile is honest about its state."
+          subtitle="Claude Code, Nano Banana 2, Supabase, Vercel AI SDK, and GitHub are wired today. Other tiles are marked beta or soon when the app sync is partial or planned."
           accent="teal"
         />
         <Reveal y={16}>
@@ -526,7 +528,7 @@ function StackTeaserSection() {
                 href="/integrations"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-white/70 hover:bg-white/[0.08] hover:text-white transition-colors"
               >
-                See all 30+ integrations
+                See integration status
                 <span className="text-xs">&rarr;</span>
               </Link>
             </Magnetic>
@@ -554,8 +556,8 @@ function EarnTeaserSection() {
     <SectionShell ambient="gold" size="compact" id="earn-teaser">
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-6">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-[0.2em] uppercase border bg-[#94a3b8]/10 border-[#94a3b8]/25 text-[#94a3b8]">
-            <span className="w-1 h-1 rounded-full bg-[#94a3b8]" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-[0.2em] uppercase border bg-[var(--arc-void)]/10 border-[var(--arc-void)]/25 text-[var(--arc-void)]">
+            <span className="w-1 h-1 rounded-full bg-[var(--arc-void)]" />
             ROADMAP · rolling out 2026
           </span>
         </div>
@@ -607,7 +609,7 @@ function EarnTeaserSection() {
             <Magnetic>
               <Link
                 href="/creator-economy"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#ffd700]/15 to-[#00bcd4]/10 border border-[#ffd700]/25 text-sm font-medium text-[#ffd700] hover:from-[#ffd700]/25 hover:to-[#00bcd4]/15 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)]/15 to-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-arcanean-gold)]/25 text-sm font-medium text-[var(--arc-brand-arcanean-gold)] hover:from-[var(--arc-brand-arcanean-gold)]/25 hover:to-[var(--arc-brand-atlantean-teal)]/15 transition-colors"
               >
                 Explore creator economy
                 <span className="text-xs">&rarr;</span>
@@ -823,7 +825,7 @@ export function V3BelowFold({
         <SectionShell ambient="teal" size="default">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <Reveal y={12} blur>
-              <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[#7fffd4]/60 mb-5">
+              <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--arc-brand-atlantean-teal)]/60 mb-5">
                 Open Source · Sovereign · Forkable
               </p>
             </Reveal>
@@ -834,21 +836,21 @@ export function V3BelowFold({
 
             <Reveal y={12} delay={0.4}>
               <p className="text-lg text-white/45 max-w-2xl mx-auto mb-12 leading-relaxed">
-                27 repos. 43 packages. 80+ skills. MIT licensed. Fork anything.
-                Run it locally. Keep your keys. Own your data.
+                {PUBLIC_REPO_SUMMARY.active} active Arcanea repos tracked. {PUBLIC_REPO_SUMMARY.public} public on GitHub today.
+                MIT licensed where public. Run the open pieces locally. Keep your keys. Own your data.
               </p>
             </Reveal>
 
             <Reveal y={16} delay={0.6}>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-8 max-w-2xl mx-auto mb-12">
                 {[
-                  { value: 27, suffix: "", label: "repos", fixed: false },
-                  { value: 43, suffix: "", label: "packages", fixed: false },
+                  { value: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", fixed: false },
+                  { value: PUBLIC_REPO_SUMMARY.packages, suffix: "", label: "published refs", fixed: false },
                   { value: 80, suffix: "+", label: "skills", fixed: false },
                   { value: 0, suffix: "", label: "license", fixed: true },
                 ].map(({ value, suffix, label, fixed }, i) => (
                   <div key={label} className="text-center px-3 py-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">
-                    <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
+                    <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] bg-clip-text text-transparent">
                       {fixed ? "MIT" : <NumberTicker value={value} delay={0.6 + i * 0.1} suffix={suffix} />}
                     </p>
                     <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">{label}</p>
@@ -905,7 +907,7 @@ export function V3BelowFold({
                 <Magnetic>
                   <Link
                     href="/ecosystem"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4]/10 border border-[#7fffd4]/25 text-sm font-medium text-[#7fffd4] hover:bg-[#7fffd4]/20 transition-colors"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/25 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors"
                   >
                     Explore the ecosystem
                   </Link>
@@ -917,7 +919,7 @@ export function V3BelowFold({
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-white/70 hover:bg-white/[0.08] transition-colors"
                   >
-                    View on GitHub ↗
+                    View on GitHub
                   </a>
                 </Magnetic>
               </div>

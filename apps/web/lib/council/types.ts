@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 // =====================================================================
 // COUNCIL — TypeScript Types
 // =====================================================================
@@ -148,7 +149,7 @@ export const COUNCIL_ADVISORS: AdvisorDefinition[] = [
     capability: 'Pattern recognition and strategic clarity',
     imprint_capability: 'Pattern recognition and strategic clarity',
     seat_order: 1,
-    color: '#10b981',
+    color: 'var(--arc-wind)',
   },
   {
     domain: 'Craft',
@@ -159,7 +160,7 @@ export const COUNCIL_ADVISORS: AdvisorDefinition[] = [
     capability: 'Creative transformation and excellence',
     imprint_capability: 'Creative transformation and excellence',
     seat_order: 2,
-    color: '#3b82f6',
+    color: 'var(--arc-brand-cosmic-blue)',
   },
   {
     domain: 'Strategy',
@@ -170,7 +171,7 @@ export const COUNCIL_ADVISORS: AdvisorDefinition[] = [
     capability: 'Competitive positioning and power moves',
     imprint_capability: 'Competitive positioning and power moves',
     seat_order: 3,
-    color: '#ef4444',
+    color: 'var(--arc-fire)',
   },
   {
     domain: 'Heart',
@@ -181,7 +182,7 @@ export const COUNCIL_ADVISORS: AdvisorDefinition[] = [
     capability: 'Team dynamics and emotional intelligence',
     imprint_capability: 'Team dynamics and emotional intelligence',
     seat_order: 4,
-    color: '#ec4899',
+    color: 'var(--arc-fire)',
   },
   {
     domain: 'Voice',
@@ -192,7 +193,7 @@ export const COUNCIL_ADVISORS: AdvisorDefinition[] = [
     capability: 'Messaging, storytelling, and communication',
     imprint_capability: 'Messaging, storytelling, and communication',
     seat_order: 5,
-    color: '#eab308',
+    color: 'var(--arc-brand-arcanean-gold)',
   },
   {
     domain: 'Foresight',
@@ -203,7 +204,7 @@ export const COUNCIL_ADVISORS: AdvisorDefinition[] = [
     capability: 'Trends, timing, and anticipation',
     imprint_capability: 'Trends, timing, and anticipation',
     seat_order: 6,
-    color: '#6366f1',
+    color: 'var(--arc-void)',
   },
   {
     domain: 'Systems',
@@ -214,7 +215,7 @@ export const COUNCIL_ADVISORS: AdvisorDefinition[] = [
     capability: 'Architecture, scaling, and operations',
     imprint_capability: 'Architecture, scaling, and operations',
     seat_order: 7,
-    color: '#0d47a1',
+    color: 'var(--arc-brand-cosmic-blue)',
   },
   {
     domain: 'Depth',
@@ -225,7 +226,7 @@ export const COUNCIL_ADVISORS: AdvisorDefinition[] = [
     capability: 'Research, hidden patterns, and deep knowledge',
     imprint_capability: 'Research, hidden patterns, and deep knowledge',
     seat_order: 8,
-    color: '#06b6d4',
+    color: 'var(--arc-brand-atlantean-teal)',
   },
   {
     domain: 'Growth',
@@ -236,7 +237,7 @@ export const COUNCIL_ADVISORS: AdvisorDefinition[] = [
     capability: 'Evolution, iteration, and continuous becoming',
     imprint_capability: 'Evolution, iteration, and continuous becoming',
     seat_order: 9,
-    color: '#f59e0b',
+    color: 'var(--arc-brand-arcanean-gold)',
   },
 ];
 

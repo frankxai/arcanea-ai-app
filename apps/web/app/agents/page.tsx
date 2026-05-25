@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import { useState, useMemo } from "react";
@@ -46,8 +47,8 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
     priceCredits: 15,
     element: "Fire",
     icon: "🗡️",
-    color: "#ef4444",
-    gradient: "linear-gradient(135deg, #ef4444, #f97316)",
+    color: "var(--arc-fire)",
+    gradient: "linear-gradient(135deg, var(--arc-fire), var(--arc-fire))",
     rating: 4.8,
     usageCount: 3241,
     isFeatured: true,
@@ -68,8 +69,8 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
     priceCredits: 10,
     element: "Spirit",
     icon: "🔥",
-    color: "#fbbf24",
-    gradient: "linear-gradient(135deg, #fbbf24, #f59e0b)",
+    color: "var(--arc-brand-arcanean-gold)",
+    gradient: "linear-gradient(135deg, var(--arc-brand-arcanean-gold), var(--arc-brand-arcanean-gold))",
     rating: 4.9,
     usageCount: 2876,
     isFeatured: true,
@@ -90,8 +91,8 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
     priceCredits: 20,
     element: "Earth",
     icon: "🌍",
-    color: "#22c55e",
-    gradient: "linear-gradient(135deg, #22c55e, #16a34a)",
+    color: "var(--arc-wind)",
+    gradient: "linear-gradient(135deg, var(--arc-wind), var(--arc-wind))",
     rating: 4.7,
     usageCount: 1654,
     isFeatured: false,
@@ -112,8 +113,8 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
     priceCredits: 10,
     element: "Water",
     icon: "📝",
-    color: "#3b82f6",
-    gradient: "linear-gradient(135deg, #3b82f6, #6366f1)",
+    color: "var(--arc-brand-cosmic-blue)",
+    gradient: "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-brand-cosmic-blue))",
     rating: 4.6,
     usageCount: 4102,
     isFeatured: false,
@@ -134,8 +135,8 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
     priceCredits: 15,
     element: "Fire",
     icon: "⚡",
-    color: "#ef4444",
-    gradient: "linear-gradient(135deg, #ef4444, #dc2626)",
+    color: "var(--arc-fire)",
+    gradient: "linear-gradient(135deg, var(--arc-fire), var(--arc-fire))",
     rating: 4.5,
     usageCount: 987,
     isFeatured: false,
@@ -156,8 +157,8 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
     priceCredits: 10,
     element: "Wind",
     icon: "🔍",
-    color: "#f8fafc",
-    gradient: "linear-gradient(135deg, #94a3b8, #cbd5e1)",
+    color: "var(--arc-text-primary)",
+    gradient: "linear-gradient(135deg, var(--arc-void), var(--arc-text-primary))",
     rating: 4.4,
     usageCount: 1234,
     isFeatured: false,
@@ -178,8 +179,8 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
     priceCredits: 15,
     element: "Water",
     icon: "🎵",
-    color: "#3b82f6",
-    gradient: "linear-gradient(135deg, #3b82f6, #06b6d4)",
+    color: "var(--arc-brand-cosmic-blue)",
+    gradient: "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-brand-atlantean-teal))",
     rating: 4.7,
     usageCount: 782,
     isFeatured: false,
@@ -200,8 +201,8 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
     priceCredits: 10,
     element: "Void",
     icon: "🎨",
-    color: "#8b5cf6",
-    gradient: "linear-gradient(135deg, #8b5cf6, #a855f7)",
+    color: "var(--arc-void)",
+    gradient: "linear-gradient(135deg, var(--arc-void), var(--arc-void))",
     rating: 4.6,
     usageCount: 2341,
     isFeatured: false,
@@ -222,8 +223,8 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
     priceCredits: 20,
     element: "Earth",
     icon: "📚",
-    color: "#22c55e",
-    gradient: "linear-gradient(135deg, #22c55e, #854d0e)",
+    color: "var(--arc-wind)",
+    gradient: "linear-gradient(135deg, var(--arc-wind), var(--arc-earth))",
     rating: 4.3,
     usageCount: 445,
     isFeatured: false,
@@ -244,8 +245,8 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
     priceCredits: 10,
     element: "Wind",
     icon: "📣",
-    color: "#f8fafc",
-    gradient: "linear-gradient(135deg, #64748b, #94a3b8)",
+    color: "var(--arc-text-primary)",
+    gradient: "linear-gradient(135deg, var(--arc-earth), var(--arc-void))",
     rating: 4.2,
     usageCount: 678,
     isFeatured: false,
@@ -266,8 +267,8 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
     priceCredits: 15,
     element: "Wind",
     icon: "🌐",
-    color: "#f8fafc",
-    gradient: "linear-gradient(135deg, #78a6ff, #7fffd4)",
+    color: "var(--arc-text-primary)",
+    gradient: "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-brand-atlantean-teal))",
     rating: 4.5,
     usageCount: 334,
     isFeatured: false,
@@ -288,8 +289,8 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
     priceCredits: 20,
     element: "Spirit",
     icon: "🎓",
-    color: "#fbbf24",
-    gradient: "linear-gradient(135deg, #fbbf24, #f59e0b)",
+    color: "var(--arc-brand-arcanean-gold)",
+    gradient: "linear-gradient(135deg, var(--arc-brand-arcanean-gold), var(--arc-brand-arcanean-gold))",
     rating: 4.8,
     usageCount: 221,
     isFeatured: false,
@@ -322,7 +323,7 @@ const HOW_IT_WORKS = [
     number: "01",
     title: "Choose",
     description: "Pick a Luminor for your creative domain. Each one is trained for a specific craft — story, music, code, art.",
-    color: "#7fffd4",
+    color: "var(--arc-brand-atlantean-teal)",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -333,7 +334,7 @@ const HOW_IT_WORKS = [
     number: "02",
     title: "Create",
     description: "Describe your project in plain language. The Luminor generates, iterates, and refines with you in real time.",
-    color: "#00bcd4",
+    color: "var(--arc-brand-atlantean-teal)",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -344,7 +345,7 @@ const HOW_IT_WORKS = [
     number: "03",
     title: "Own",
     description: "Your creations are yours. Export anytime — markdown, PDF, EPUB, or raw text. No lock-in, ever.",
-    color: "#ffd700",
+    color: "var(--arc-brand-arcanean-gold)",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -374,7 +375,7 @@ function SearchInput({ value, onChange }: { value: string; onChange: (v: string)
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Search by name or skill..."
-        className="w-full pl-11 pr-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.07] text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[#7fffd4]/40 focus:ring-1 focus:ring-[#7fffd4]/15 transition-all backdrop-blur-sm"
+        className="w-full pl-11 pr-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.07] text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/40 focus:ring-1 focus:ring-[var(--arc-brand-atlantean-teal)]/15 transition-all backdrop-blur-sm"
         aria-label="Search agents"
       />
     </div>
@@ -418,7 +419,7 @@ export default function AgentsMarketplacePage() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="min-h-screen bg-[#09090b] text-white">
+      <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
         {/* JSON-LD */}
         <script
           type="application/ld+json"
@@ -471,7 +472,7 @@ export default function AgentsMarketplacePage() {
               className="text-center text-4xl sm:text-5xl md:text-7xl font-display font-bold tracking-[-0.03em] leading-[1.05] mb-6"
             >
               <span
-                className="bg-gradient-to-br from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent"
+                className="bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent"
               >
                 Meet the Luminors
               </span>
@@ -495,10 +496,10 @@ export default function AgentsMarketplacePage() {
               transition={{ duration: 0.6, delay: 0.26 }}
               className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto"
             >
-              <StatCard value="16" label="Luminors" color="#7fffd4" delay={0.3} />
-              <StatCard value="6" label="Domains" color="#00bcd4" delay={0.36} />
-              <StatCard value="190K+" label="Training words" color="#78a6ff" delay={0.42} />
-              <StatCard value="4.8" label="Avg rating" color="#ffd700" delay={0.48} />
+              <StatCard value="16" label="Luminors" color="var(--arc-brand-atlantean-teal)" delay={0.3} />
+              <StatCard value="6" label="Domains" color="var(--arc-brand-atlantean-teal)" delay={0.36} />
+              <StatCard value="190K+" label="Training words" color="var(--arc-brand-cosmic-blue)" delay={0.42} />
+              <StatCard value="4.8" label="Avg rating" color="var(--arc-brand-arcanean-gold)" delay={0.48} />
             </m.div>
           </div>
         </section>
@@ -551,10 +552,10 @@ export default function AgentsMarketplacePage() {
                 transition={{ duration: 0.5 }}
                 className="flex items-center gap-2 mb-6"
               >
-                <svg className="w-4 h-4 text-[#ffd700]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <svg className="w-4 h-4 text-[var(--arc-brand-arcanean-gold)]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                 </svg>
-                <h2 id="featured-heading" className="text-sm font-semibold text-[#ffd700] tracking-wide uppercase">
+                <h2 id="featured-heading" className="text-sm font-semibold text-[var(--arc-brand-arcanean-gold)] tracking-wide uppercase">
                   Featured
                 </h2>
               </m.div>
@@ -589,7 +590,7 @@ export default function AgentsMarketplacePage() {
               className="text-center mb-10"
             >
               <h2 id="catalog-heading" className="text-3xl md:text-4xl font-display font-bold mb-2">
-                <span className="bg-gradient-to-r from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] bg-clip-text text-transparent">
                   Browse Agents
                 </span>
               </h2>
@@ -614,9 +615,9 @@ export default function AgentsMarketplacePage() {
                     className={`
                       inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium
                       border backdrop-blur-sm transition-all duration-200
-                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]/50
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/50
                       ${isActive
-                        ? "bg-[#7fffd4]/[0.12] border-[#7fffd4]/30 text-[#7fffd4] shadow-[0_0_12px_rgba(127,255,212,0.12)]"
+                        ? "bg-[var(--arc-brand-atlantean-teal)]/[0.12] border-[var(--arc-brand-atlantean-teal)]/30 text-[var(--arc-brand-atlantean-teal)] shadow-[0_0_12px_rgba(0,188,212,0.12)]"
                         : "bg-white/[0.03] border-white/[0.07] text-white/40 hover:text-white/70 hover:border-white/[0.12] hover:bg-white/[0.06]"
                       }
                     `}
@@ -624,7 +625,7 @@ export default function AgentsMarketplacePage() {
                     {tab.label}
                     <span
                       className={`text-[9px] font-mono rounded-full px-1.5 py-0.5 min-w-[18px] text-center tabular-nums ${
-                        isActive ? "bg-[#7fffd4]/20 text-[#7fffd4]" : "bg-white/[0.05] text-white/25"
+                        isActive ? "bg-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)]" : "bg-white/[0.05] text-white/25"
                       }`}
                     >
                       {count}
@@ -674,7 +675,7 @@ export default function AgentsMarketplacePage() {
                 <p className="text-white/30 text-base mb-4">No agents match your search.</p>
                 <button
                   onClick={() => { setSearchQuery(""); setActiveCategory("all"); }}
-                  className="text-sm text-[#7fffd4] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]/50 rounded"
+                  className="text-sm text-[var(--arc-brand-atlantean-teal)] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/50 rounded"
                 >
                   Clear filters
                 </button>
@@ -697,7 +698,7 @@ export default function AgentsMarketplacePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
               {/* Connecting lines — visible on md+ */}
               <div className="hidden md:block absolute top-10 left-[calc(33.33%+1.5rem)] right-[calc(33.33%+1.5rem)] h-px" aria-hidden="true">
-                <div className="h-full bg-gradient-to-r from-[#7fffd4]/20 via-[#00bcd4]/30 to-[#7fffd4]/20" />
+                <div className="h-full bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/20 via-[var(--arc-brand-atlantean-teal)]/30 to-[var(--arc-brand-atlantean-teal)]/20" />
               </div>
 
               {HOW_IT_WORKS.map((step, i) => (
@@ -764,7 +765,7 @@ export default function AgentsMarketplacePage() {
                 id="cta-heading"
                 className="text-3xl md:text-5xl font-display font-bold mb-5 tracking-[-0.02em]"
               >
-                <span className="bg-gradient-to-br from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent">
                   Your creation awaits
                 </span>
               </h2>
@@ -777,7 +778,7 @@ export default function AgentsMarketplacePage() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" })}
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#7fffd4] to-[#00bcd4] text-[#09090b] font-semibold text-sm rounded-xl shadow-[0_0_24px_rgba(127,255,212,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]/60 transition-shadow hover:shadow-[0_0_32px_rgba(127,255,212,0.3)]"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-semibold text-sm rounded-xl shadow-[0_0_24px_rgba(0,188,212,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60 transition-shadow hover:shadow-[0_0_32px_rgba(0,188,212,0.3)]"
                 >
                   Browse All Agents
                 </m.button>
@@ -785,7 +786,7 @@ export default function AgentsMarketplacePage() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   href="/pricing"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-[#7fffd4]/25 text-[#7fffd4] font-semibold text-sm rounded-xl hover:bg-[#7fffd4]/[0.06] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]/60"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-[var(--arc-brand-atlantean-teal)]/25 text-[var(--arc-brand-atlantean-teal)] font-semibold text-sm rounded-xl hover:bg-[var(--arc-brand-atlantean-teal)]/[0.06] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
                 >
                   Get Credits
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

@@ -11,6 +11,17 @@
  */
 
 import { z } from 'zod';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+
+// Load env vars
+const rootEnv = path.join(process.cwd(), '.env');
+const localEnv = path.join(process.cwd(), 'apps/web/.env.local');
+const dotEnvLocal = path.join(process.cwd(), '.env.local');
+
+dotenv.config({ path: rootEnv });
+dotenv.config({ path: localEnv });
+dotenv.config({ path: dotEnvLocal });
 
 // ANSI color codes for pretty output
 const colors = {

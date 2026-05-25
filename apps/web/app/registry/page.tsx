@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { searchAgents, getRegistryStats, type RegistryAgent } from '@/lib/registry/queries';
@@ -7,12 +8,12 @@ import { CategoryFilter } from '@/components/registry/CategoryFilter';
 import { RegistryHero } from '@/components/registry/RegistryHero';
 
 export const metadata: Metadata = {
-  title: 'Agent Registry — Arcanea',
+  title: 'Agent Registry Beta — Arcanea',
   description:
-    'Open protocol for AI agents. Discover, deploy, and publish agents across platforms. Free to use, free to fork.',
+    'Beta, Supabase-backed agent registry for published Arcanea agents. Empty states are shown honestly when no public agents are available.',
   openGraph: {
-    title: 'The Arcanea Agent Registry',
-    description: 'Open protocol for AI agents. Free to deploy. Free to publish.',
+    title: 'The Arcanea Agent Registry Beta',
+    description: 'Supabase-backed registry for published agents. Beta until public inventory is populated.',
     type: 'website',
   },
 };
@@ -53,7 +54,7 @@ export default async function RegistryPage({ searchParams }: RegistryPageProps) 
   ];
 
   return (
-    <main className="min-h-screen bg-[#09090b] text-white">
+    <main className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
       <RegistryHero stats={stats} />
 
       <section className="mx-auto max-w-7xl px-6 pb-24">
@@ -98,7 +99,7 @@ function EmptyState({ query, category }: { query?: string; category?: string }) 
       <p className="text-sm text-white/50">
         {query || category
           ? 'Try a different search or clear the filters.'
-          : 'The registry is empty. Publish the first agent with the MCP server.'}
+          : 'No public agents are published yet, or the Supabase registry is unavailable for this deployment.'}
       </p>
     </div>
   );

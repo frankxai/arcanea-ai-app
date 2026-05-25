@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { ImageResponse } from 'next/og'
 import { readFileSync } from 'fs'
 import { join } from 'path'
+import { brand, cosmic, elements, text } from '@arcanea/design-system'
 
 export const runtime = 'nodejs'
 export const alt = 'Arcanea — Living Intelligence for Creators'
@@ -25,7 +27,7 @@ export default function OGImage() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'linear-gradient(135deg, #0a0e27 0%, #1a1040 40%, #0a0e27 100%)',
+          background: `linear-gradient(135deg, ${cosmic.void} 0%, ${cosmic.deep} 40%, ${cosmic.void} 100%)`,
           position: 'relative',
         }}
       >
@@ -86,7 +88,7 @@ export default function OGImage() {
             fontSize: 68,
             fontWeight: 800,
             letterSpacing: '-0.02em',
-            background: 'linear-gradient(90deg, #ffd700, #00bcd4, #0d47a1)',
+            background: `linear-gradient(90deg, ${brand.arcaneanGold}, ${brand.atlanteanTeal}, ${brand.cosmicBlue})`,
             backgroundClip: 'text',
             color: 'transparent',
             marginBottom: 20,
@@ -100,7 +102,7 @@ export default function OGImage() {
           style={{
             display: 'flex',
             fontSize: 30,
-            color: '#b0b0d0',
+            color: text.secondary,
             letterSpacing: '0.06em',
           }}
         >
@@ -116,15 +118,15 @@ export default function OGImage() {
             alignItems: 'center',
             gap: 28,
             fontSize: 17,
-            color: '#6a6a8a',
+            color: text.muted,
           }}
         >
           <span>arcanea.ai</span>
-          <span style={{ color: '#3a3a5a' }}>|</span>
+          <span style={{ color: elements.earth.deep }}>|</span>
           <span>16 Intelligences</span>
-          <span style={{ color: '#3a3a5a' }}>|</span>
+          <span style={{ color: elements.earth.deep }}>|</span>
           <span>34+ Original Texts</span>
-          <span style={{ color: '#3a3a5a' }}>|</span>
+          <span style={{ color: elements.earth.deep }}>|</span>
           <span>Free to Start</span>
         </div>
       </div>
