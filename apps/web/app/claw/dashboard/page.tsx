@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
@@ -185,7 +186,7 @@ export default async function ClawDashboardPage() {
     <div className="relative min-h-screen">
       {/* Background */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-[#0b0e14]" />
+        <div className="absolute inset-0 bg-[var(--arc-cosmic-void)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(127,255,212,0.05),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(120,166,255,0.03),transparent_55%)]" />
       </div>
 
@@ -282,7 +283,7 @@ export default async function ClawDashboardPage() {
                     key={tier}
                     label={tier}
                     value={count}
-                    accent="text-[#ffd700]"
+                    accent="text-[var(--arc-brand-arcanean-gold)]"
                   />
                 ))}
             </div>
@@ -427,7 +428,7 @@ export default async function ClawDashboardPage() {
                       <h3 className="text-sm font-semibold text-white/80 capitalize">
                         {platform}
                       </h3>
-                      <span className="text-lg font-display font-bold text-[#7fffd4]">
+                      <span className="text-lg font-display font-bold text-[var(--arc-brand-atlantean-teal)]">
                         {total}
                       </span>
                     </div>

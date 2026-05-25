@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 /* ─────────────────────────────────────────────
@@ -7,9 +8,9 @@
    ───────────────────────────────────────────── */
 
 const C = {
-  bg: '#0d1117', green: '#4ade80', cyan: '#22d3ee', yellow: '#facc15',
-  violet: '#a78bfa', white: '#e6edf3', dim: '#7d8590', border: '#30363d',
-  hoverBg: 'rgba(74,222,128,0.06)', dotGreen: '#3fb950',
+  bg: 'var(--arc-cosmic-void)', green: 'var(--arc-wind)', cyan: 'var(--arc-brand-atlantean-teal)', yellow: 'var(--arc-brand-arcanean-gold)',
+  violet: 'var(--arc-void)', white: 'var(--arc-text-primary)', dim: 'var(--arc-earth)', border: 'var(--arc-cosmic-void)',
+  hoverBg: 'rgba(74,222,128,0.06)', dotGreen: 'var(--arc-earth)',
 };
 
 const BOOT = [

@@ -15,7 +15,7 @@
 
 :root {
   /* Cosmic palette */
-  --arc-cosmic-void: #0b0e14;
+  --arc-cosmic-void: #09090b;
   --arc-cosmic-deep: #121826;
   --arc-cosmic-surface: #1a2332;
   --arc-cosmic-raised: #242f42;
@@ -34,12 +34,11 @@
   --arc-brand-atlantean-teal: #00bcd4;
   --arc-brand-cosmic-blue: #0d47a1;
   --arc-brand-arcanean-gold: #ffd700;
-  --arc-brand-aquamarine: #7fffd4;
 
   /* Elements */
-  --arc-crystal: #7fffd4;
+  --arc-crystal: #00bcd4;
   --arc-fire: #ff6b35;
-  --arc-water: #78a6ff;
+  --arc-water: #0d47a1;
   --arc-wind: #00ff88;
   --arc-earth: #8b6f47;
   --arc-void: #9966ff;

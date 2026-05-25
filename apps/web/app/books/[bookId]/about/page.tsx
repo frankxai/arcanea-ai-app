@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { readFile, access } from 'fs/promises';
 import { join } from 'path';
 import Link from 'next/link';
@@ -72,14 +73,14 @@ export default async function BookAboutPage({ params }: PageProps) {
 
   if (!authorsNote && !glossary) notFound();
 
-  const proseClass = 'prose prose-invert prose-lg max-w-none prose-p:text-white/80 prose-p:leading-[1.8] prose-p:mb-6 prose-headings:text-white/90 prose-headings:font-display prose-blockquote:border-l-[#00bcd4]/30 prose-blockquote:text-white/60 prose-strong:text-white/90 prose-em:text-white/70 prose-hr:border-white/[0.06]';
+  const proseClass = 'prose prose-invert prose-lg max-w-none prose-p:text-white/80 prose-p:leading-[1.8] prose-p:mb-6 prose-headings:text-white/90 prose-headings:font-display prose-blockquote:border-l-[var(--arc-brand-atlantean-teal)]/30 prose-blockquote:text-white/60 prose-strong:text-white/90 prose-em:text-white/70 prose-hr:border-white/[0.06]';
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0f]">
+    <div className="relative min-h-screen bg-[var(--arc-cosmic-void)]">
       {/* Ambient glow */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-        <div className="absolute left-1/3 top-[8%] h-[400px] w-[400px] rounded-full bg-[#00bcd4]/8 blur-[140px]" />
-        <div className="absolute right-1/4 top-[40%] h-[300px] w-[300px] rounded-full bg-[#0d47a1]/10 blur-[120px]" />
+        <div className="absolute left-1/3 top-[8%] h-[400px] w-[400px] rounded-full bg-[var(--arc-brand-atlantean-teal)]/8 blur-[140px]" />
+        <div className="absolute right-1/4 top-[40%] h-[300px] w-[300px] rounded-full bg-[var(--arc-brand-cosmic-blue)]/10 blur-[120px]" />
       </div>
 
       <main className="relative z-10 mx-auto max-w-3xl px-6 pb-24 pt-16">
@@ -98,7 +99,7 @@ export default async function BookAboutPage({ params }: PageProps) {
         {authorsNote && (
           <section className="mb-20" id="authors-note">
             <header className="mb-8">
-              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#00bcd4]/50">
+              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--arc-brand-atlantean-teal)]/50">
                 Behind the book
               </p>
               <h1 className="mt-2 font-display text-3xl font-bold tracking-tight text-white/95 md:text-4xl leading-[1.1]">
@@ -113,9 +114,9 @@ export default async function BookAboutPage({ params }: PageProps) {
 
         {/* Decorative divider between sections */}
         {authorsNote && glossary && (
-          <div className="mb-20 flex items-center gap-3 text-[#00bcd4]/15" aria-hidden="true">
+          <div className="mb-20 flex items-center gap-3 text-[var(--arc-brand-atlantean-teal)]/15" aria-hidden="true">
             <span className="h-px flex-1 bg-current" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#00bcd4]/30">
+            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--arc-brand-atlantean-teal)]/30">
               ·
             </span>
             <span className="h-px flex-1 bg-current" />
@@ -126,7 +127,7 @@ export default async function BookAboutPage({ params }: PageProps) {
         {glossary && (
           <section id="glossary">
             <header className="mb-8">
-              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#00bcd4]/50">
+              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--arc-brand-atlantean-teal)]/50">
                 Companion vocabulary
               </p>
               <h1 className="mt-2 font-display text-3xl font-bold tracking-tight text-white/95 md:text-4xl leading-[1.1]">

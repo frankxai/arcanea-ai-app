@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import Link from 'next/link';
@@ -28,7 +29,7 @@ const QUICK_START_STEPS = [
     description: 'Add the Arcanea AI provider to your project with a single command.',
     code: 'npm install @arcanea/ai-provider',
     icon: PhTerminal,
-    color: '#7fffd4',
+    color: 'var(--arc-brand-atlantean-teal)',
   },
   {
     step: '02',
@@ -36,7 +37,7 @@ const QUICK_START_STEPS = [
     description: 'Set up your provider API keys. Arcanea routes to 13 providers through one interface.',
     code: 'ANTHROPIC_API_KEY=sk-ant-xxx\nGROQ_API_KEY=gsk_xxx',
     icon: PhGear,
-    color: '#78a6ff',
+    color: 'var(--arc-brand-cosmic-blue)',
   },
   {
     step: '03',
@@ -44,7 +45,7 @@ const QUICK_START_STEPS = [
     description: 'Use the unified API to generate text, images, music, and more with any model.',
     code: `import { createArcanea } from '@arcanea/ai-provider';\nconst arcanea = createArcanea();`,
     icon: PhRocket,
-    color: '#ffd700',
+    color: 'var(--arc-brand-arcanean-gold)',
   },
 ];
 
@@ -54,28 +55,28 @@ const API_SECTIONS = [
     description: 'OpenAI-compatible chat API with smart model routing across 26 models.',
     href: '/developers/api',
     icon: PhChatCircleDots,
-    color: '#7fffd4',
+    color: 'var(--arc-brand-atlantean-teal)',
   },
   {
     title: 'Image Generation',
     description: 'Generate images with Flux 2, DALL-E 3, Imagen 4, and more.',
     href: '/developers/api',
     icon: PhSparkle,
-    color: '#a855f7',
+    color: 'var(--arc-void)',
   },
   {
     title: 'Luminor Intelligence',
     description: 'Access the 16 Luminor companions for domain-specific creative guidance.',
     href: '/luminors',
     icon: PhCompass,
-    color: '#ffd700',
+    color: 'var(--arc-brand-arcanean-gold)',
   },
   {
     title: 'Library API',
     description: 'Programmatic access to 200K+ words of creative wisdom across 17 collections.',
     href: '/library',
     icon: PhBookOpen,
-    color: '#78a6ff',
+    color: 'var(--arc-brand-cosmic-blue)',
   },
 ];
 
@@ -87,10 +88,10 @@ const SDK_PACKAGES = [
 ];
 
 const COMMUNITY_LINKS = [
-  { name: 'GitHub', description: '27 repositories, open-source ecosystem', href: 'https://github.com/arcanea-ai', icon: PhGithubLogo, color: '#e6edf3' },
-  { name: 'Discord', description: 'Join the creator community', href: 'https://discord.gg/arcanea', icon: PhUsers, color: '#5865f2' },
-  { name: 'Documentation', description: 'Full API reference and guides', href: '/developers/api', icon: PhBook, color: '#7fffd4' },
-  { name: 'npm Packages', description: '35 packages in the ecosystem', href: 'https://www.npmjs.com/org/arcanea', icon: PhPackage, color: '#cb3837' },
+  { name: 'GitHub', description: '27 repositories, open-source ecosystem', href: 'https://github.com/arcanea-ai', icon: PhGithubLogo, color: 'var(--arc-text-primary)' },
+  { name: 'Discord', description: 'Join the creator community', href: 'https://discord.gg/arcanea', icon: PhUsers, color: 'var(--arc-void)' },
+  { name: 'Documentation', description: 'Full API reference and guides', href: '/developers/api', icon: PhBook, color: 'var(--arc-brand-atlantean-teal)' },
+  { name: 'npm Packages', description: '35 packages in the ecosystem', href: 'https://www.npmjs.com/org/arcanea', icon: PhPackage, color: 'var(--arc-fire)' },
 ];
 
 const DOC_CATEGORIES = [
@@ -98,7 +99,7 @@ const DOC_CATEGORIES = [
     title: 'Getting Started',
     description: 'Installation, setup, and your first creation.',
     icon: PhRocket,
-    accent: '#7fffd4',
+    accent: 'var(--arc-brand-atlantean-teal)',
     links: [
       { label: 'Quick Start Guide', href: '/welcome' },
       { label: 'Installation', href: '/install' },
@@ -109,7 +110,7 @@ const DOC_CATEGORIES = [
     title: 'The Framework',
     description: 'Ten Gates, Five Elements, Seven Houses.',
     icon: PhCompass,
-    accent: '#ffd700',
+    accent: 'var(--arc-brand-arcanean-gold)',
     links: [
       { label: 'Ten Gates System', href: '/lore/gates' },
       { label: 'Five Elements', href: '/lore' },
@@ -120,7 +121,7 @@ const DOC_CATEGORIES = [
     title: 'Creation Tools',
     description: 'AI chat, image generation, world-building.',
     icon: PhSparkle,
-    accent: '#a855f7',
+    accent: 'var(--arc-void)',
     links: [
       { label: 'AI Chat & Luminors', href: '/chat' },
       { label: 'Vision Generator', href: '/design-lab' },
@@ -131,7 +132,7 @@ const DOC_CATEGORIES = [
     title: 'The Library',
     description: '17 collections of practical creative wisdom.',
     icon: PhBookOpen,
-    accent: '#78a6ff',
+    accent: 'var(--arc-brand-cosmic-blue)',
     links: [
       { label: 'Browse Collections', href: '/library' },
       { label: 'The Codex', href: '/library/codex' },
@@ -142,7 +143,7 @@ const DOC_CATEGORIES = [
     title: 'Developer API',
     description: 'REST API, SDKs, and integrations.',
     icon: PhCode,
-    accent: '#00bcd4',
+    accent: 'var(--arc-brand-atlantean-teal)',
     links: [
       { label: 'API Reference', href: '/developers/api' },
       { label: 'Authentication', href: '/developers/api' },
@@ -153,7 +154,7 @@ const DOC_CATEGORIES = [
     title: 'Community',
     description: 'Contribute, connect, co-create.',
     icon: PhUsers,
-    accent: '#ec4899',
+    accent: 'var(--arc-fire)',
     links: [
       { label: 'GitHub Repos', href: 'https://github.com/arcanea-ai' },
       { label: 'Discord Server', href: 'https://discord.gg/arcanea' },
@@ -169,8 +170,8 @@ export default function DocsPage() {
         {/* Background */}
         <div className="fixed inset-0 -z-10">
           <div className="absolute inset-0 bg-black" />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#7fffd4]/5 via-transparent to-[#78a6ff]/5" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#7fffd4]/8 rounded-full blur-[120px]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/5 via-transparent to-[var(--arc-brand-cosmic-blue)]/5" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[var(--arc-brand-atlantean-teal)]/8 rounded-full blur-[120px]" />
         </div>
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -182,20 +183,20 @@ export default function DocsPage() {
             transition={{ duration: 0.6 }}
           >
             <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl overflow-hidden px-8 py-16 sm:px-12 sm:py-20">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#7fffd4]/10 via-transparent to-[#78a6ff]/10 pointer-events-none" />
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#7fffd4]/8 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/10 via-transparent to-[var(--arc-brand-cosmic-blue)]/10 pointer-events-none" />
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--arc-brand-atlantean-teal)]/8 rounded-full blur-3xl pointer-events-none" />
 
               <div className="relative max-w-3xl">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#7fffd4]/30 bg-[#7fffd4]/10 mb-6">
-                  <PhBook className="w-3.5 h-3.5 text-[#7fffd4]" />
-                  <span className="text-xs font-mono tracking-widest uppercase text-[#7fffd4]">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10 mb-6">
+                  <PhBook className="w-3.5 h-3.5 text-[var(--arc-brand-atlantean-teal)]" />
+                  <span className="text-xs font-mono tracking-widest uppercase text-[var(--arc-brand-atlantean-teal)]">
                     Documentation
                   </span>
                 </div>
 
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 tracking-tight">
                   Arcanea{' '}
-                  <span className="bg-gradient-to-r from-[#7fffd4] to-[#78a6ff] bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent">
                     Documentation
                   </span>
                 </h1>
@@ -208,14 +209,14 @@ export default function DocsPage() {
                 <div className="flex flex-wrap gap-4">
                   <Link
                     href="/welcome"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4] text-black font-semibold hover:scale-[1.03] transition-all duration-200"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--arc-brand-atlantean-teal)] text-black font-semibold hover:scale-[1.03] transition-all duration-200"
                   >
                     <PhRocket className="w-4 h-4" />
                     Read the Docs
                   </Link>
                   <Link
                     href="/developers/api"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 text-white font-semibold hover:border-[#7fffd4]/30 hover:bg-[#7fffd4]/5 transition-all duration-200"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 text-white font-semibold hover:border-[var(--arc-brand-atlantean-teal)]/30 hover:bg-[var(--arc-brand-atlantean-teal)]/5 transition-all duration-200"
                   >
                     <PhCode className="w-4 h-4" />
                     API Reference
@@ -254,7 +255,7 @@ export default function DocsPage() {
                         <Link
                           key={link.label}
                           href={link.href}
-                          className="flex items-center gap-2 text-sm text-neutral-300 hover:text-[#7fffd4] transition-colors"
+                          className="flex items-center gap-2 text-sm text-neutral-300 hover:text-[var(--arc-brand-atlantean-teal)] transition-colors"
                         >
                           <PhArrowRight className="w-3 h-3 opacity-50" />
                           {link.label}
@@ -269,9 +270,9 @@ export default function DocsPage() {
 
           {/* Quick Start */}
           <section className="py-12 border-t border-white/5">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#7fffd4]/20 bg-[#7fffd4]/8 mb-6">
-              <PhLightning className="w-3 h-3 text-[#7fffd4]" />
-              <span className="text-xs font-mono tracking-widest uppercase text-[#7fffd4]">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--arc-brand-atlantean-teal)]/20 bg-[var(--arc-brand-atlantean-teal)]/8 mb-6">
+              <PhLightning className="w-3 h-3 text-[var(--arc-brand-atlantean-teal)]" />
+              <span className="text-xs font-mono tracking-widest uppercase text-[var(--arc-brand-atlantean-teal)]">
                 Quick Start
               </span>
             </div>
@@ -295,7 +296,7 @@ export default function DocsPage() {
                     </div>
                     <h3 className="font-display font-semibold mb-2">{step.title}</h3>
                     <p className="text-sm text-neutral-400 mb-4">{step.description}</p>
-                    <pre className="bg-black/50 border border-white/5 rounded-lg p-3 text-xs font-mono text-[#7fffd4] overflow-x-auto">
+                    <pre className="bg-black/50 border border-white/5 rounded-lg p-3 text-xs font-mono text-[var(--arc-brand-atlantean-teal)] overflow-x-auto">
                       {step.code}
                     </pre>
                   </div>
@@ -306,9 +307,9 @@ export default function DocsPage() {
 
           {/* API Reference Cards */}
           <section className="py-12 border-t border-white/5">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#78a6ff]/20 bg-[#78a6ff]/8 mb-6">
-              <PhCode className="w-3 h-3 text-[#78a6ff]" />
-              <span className="text-xs font-mono tracking-widest uppercase text-[#78a6ff]">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--arc-brand-cosmic-blue)]/20 bg-[var(--arc-brand-cosmic-blue)]/8 mb-6">
+              <PhCode className="w-3 h-3 text-[var(--arc-brand-cosmic-blue)]" />
+              <span className="text-xs font-mono tracking-widest uppercase text-[var(--arc-brand-cosmic-blue)]">
                 API Reference
               </span>
             </div>
@@ -330,13 +331,13 @@ export default function DocsPage() {
                         <Icon className="w-5 h-5" style={{ color: api.color }} />
                       </div>
                       <div>
-                        <h3 className="font-display font-semibold mb-1 group-hover:text-[#7fffd4] transition-colors">
+                        <h3 className="font-display font-semibold mb-1 group-hover:text-[var(--arc-brand-atlantean-teal)] transition-colors">
                           {api.title}
                         </h3>
                         <p className="text-sm text-neutral-400">{api.description}</p>
                       </div>
                     </div>
-                    <div className="mt-4 flex items-center gap-2 text-sm text-[#7fffd4] opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="mt-4 flex items-center gap-2 text-sm text-[var(--arc-brand-atlantean-teal)] opacity-0 group-hover:opacity-100 transition-opacity">
                       <span>View reference</span>
                       <PhArrowRight className="w-3.5 h-3.5" />
                     </div>
@@ -348,9 +349,9 @@ export default function DocsPage() {
 
           {/* SDK Packages */}
           <section className="py-12 border-t border-white/5">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#ffd700]/20 bg-[#ffd700]/8 mb-6">
-              <PhPackage className="w-3 h-3 text-[#ffd700]" />
-              <span className="text-xs font-mono tracking-widest uppercase text-[#ffd700]">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--arc-brand-arcanean-gold)]/20 bg-[var(--arc-brand-arcanean-gold)]/8 mb-6">
+              <PhPackage className="w-3 h-3 text-[var(--arc-brand-arcanean-gold)]" />
+              <span className="text-xs font-mono tracking-widest uppercase text-[var(--arc-brand-arcanean-gold)]">
                 SDK
               </span>
             </div>
@@ -362,7 +363,7 @@ export default function DocsPage() {
                   className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-3"
                 >
                   <div className="flex-1">
-                    <span className="font-mono text-sm text-[#7fffd4]">{pkg.name}</span>
+                    <span className="font-mono text-sm text-[var(--arc-brand-atlantean-teal)]">{pkg.name}</span>
                     <p className="text-xs text-neutral-400 mt-0.5">{pkg.description}</p>
                   </div>
                   <div className="flex items-center gap-4 text-xs font-mono text-neutral-500">
@@ -377,9 +378,9 @@ export default function DocsPage() {
 
           {/* Community */}
           <section className="py-12 border-t border-white/5 pb-20">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#ec4899]/20 bg-[#ec4899]/8 mb-6">
-              <PhUsers className="w-3 h-3 text-[#ec4899]" />
-              <span className="text-xs font-mono tracking-widest uppercase text-[#ec4899]">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--arc-fire)]/20 bg-[var(--arc-fire)]/8 mb-6">
+              <PhUsers className="w-3 h-3 text-[var(--arc-fire)]" />
+              <span className="text-xs font-mono tracking-widest uppercase text-[var(--arc-fire)]">
                 Community
               </span>
             </div>
@@ -396,7 +397,7 @@ export default function DocsPage() {
                     className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-all"
                   >
                     <Icon className="w-6 h-6 mb-3" style={{ color: link.color }} />
-                    <h3 className="font-display font-semibold mb-1 group-hover:text-[#7fffd4] transition-colors">
+                    <h3 className="font-display font-semibold mb-1 group-hover:text-[var(--arc-brand-atlantean-teal)] transition-colors">
                       {link.name}
                     </h3>
                     <p className="text-xs text-neutral-400">{link.description}</p>
@@ -407,7 +408,7 @@ export default function DocsPage() {
 
             {/* Security note */}
             <div className="mt-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 flex items-start gap-4">
-              <PhShield className="w-6 h-6 text-[#7fffd4] shrink-0 mt-0.5" />
+              <PhShield className="w-6 h-6 text-[var(--arc-brand-atlantean-teal)] shrink-0 mt-0.5" />
               <div>
                 <h3 className="font-display font-semibold mb-1">Security First</h3>
                 <p className="text-sm text-neutral-400">

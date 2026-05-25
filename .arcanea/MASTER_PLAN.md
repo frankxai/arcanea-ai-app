@@ -48,8 +48,8 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Achievement | Status |
 |-------------|--------|
 | Engineering Kernel (CANONICAL prompt) | COMPLETE |
-| 10 domain modules (github, frontend, backend, mcp, ops, security, test, research, lore) | COMPLETE |
-| Spawn config (25+ agent types mapped) | COMPLETE |
+| 12 domain modules (github, frontend, backend, mcp, ops, security, test, research, lore, onchain, mobile, claw) | COMPLETE |
+| Spawn config (30+ agent types mapped) | COMPLETE |
 | @arcanea/flow v0.1.0 package | COMPLETE |
 | Proven: haiku+kernel = senior engineer output | VALIDATED |
 
@@ -817,6 +817,10 @@ When an agent starts work, consult this table for the right specialist:
 | Testing | `tester` | Starweave | Elara |
 | Community | `Arcanea World Expander` | Unity | Ino |
 | Orchestration | `Arcanea Master Orchestrator` | Source | Shinkami |
+| Economy/Onchain | `Arcanea Onchain Architect` | Fire | Draconia |
+| Mobile | `Arcanea Mobile Specialist` | Flow | Leyla |
+| Media/Video | `Arcanea Media Engine` | Flow | Leyla |
+| Knowledge/Search | `Arcanea Knowledge Scout` | Sight | Lyria |
 
 ---
 

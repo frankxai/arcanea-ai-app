@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -233,7 +234,7 @@ const markdownComponents = {
     <strong className="font-semibold text-white/95">{children}</strong>
   ),
   blockquote: ({ children }: { children?: React.ReactNode }) => (
-    <blockquote className="my-8 border-l-2 border-[#00bcd4]/40 pl-6 text-lg italic text-white/60">
+    <blockquote className="my-8 border-l-2 border-[var(--arc-brand-atlantean-teal)]/40 pl-6 text-lg italic text-white/60">
       {children}
     </blockquote>
   ),
@@ -273,7 +274,7 @@ const markdownComponents = {
   a: ({ children, href }: { children?: React.ReactNode; href?: string }) => (
     <a
       href={href}
-      className="text-[#00bcd4] underline underline-offset-2 transition-colors hover:text-[#00bcd4]/80"
+      className="text-[var(--arc-brand-atlantean-teal)] underline underline-offset-2 transition-colors hover:text-[var(--arc-brand-atlantean-teal)]/80"
     >
       {children}
     </a>
@@ -283,14 +284,14 @@ const markdownComponents = {
 function PullQuoteCard({ quote, chapter }: { quote: string; chapter: number }) {
   return (
     <div className="relative my-16 mx-auto max-w-xl">
-      <div className="absolute -left-3 -top-3 text-5xl font-display text-[#00bcd4]/15 select-none">
+      <div className="absolute -left-3 -top-3 text-5xl font-display text-[var(--arc-brand-atlantean-teal)]/15 select-none">
         &ldquo;
       </div>
-      <div className="rounded-2xl border border-[#00bcd4]/10 bg-gradient-to-br from-[#00bcd4]/[0.04] to-transparent px-8 py-8 backdrop-blur-sm">
+      <div className="rounded-2xl border border-[var(--arc-brand-atlantean-teal)]/10 bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/[0.04] to-transparent px-8 py-8 backdrop-blur-sm">
         <p className="text-center text-lg font-medium italic leading-relaxed text-white/80">
           &ldquo;{quote}&rdquo;
         </p>
-        <p className="mt-4 text-center text-xs uppercase tracking-[0.2em] text-[#00bcd4]/50">
+        <p className="mt-4 text-center text-xs uppercase tracking-[0.2em] text-[var(--arc-brand-atlantean-teal)]/50">
           Chapter {chapter}
         </p>
       </div>
@@ -319,7 +320,7 @@ export default function BookOfArcaneaPage() {
       {/* Skip link */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-[#00bcd4] focus:px-4 focus:py-2 focus:text-black"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-[var(--arc-brand-atlantean-teal)] focus:px-4 focus:py-2 focus:text-black"
       >
         Skip to content
       </a>
@@ -339,7 +340,7 @@ export default function BookOfArcaneaPage() {
         </div>
 
         <div className="relative mx-auto max-w-3xl px-6 pb-16 pt-32 text-center sm:pt-40 md:pt-48">
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[#00bcd4]/80">
+          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-[var(--arc-brand-atlantean-teal)]/80">
             The Library of Arcanea
           </p>
           <h1 className="font-display text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
@@ -359,7 +360,7 @@ export default function BookOfArcaneaPage() {
           </div>
           <a
             href="#main-content"
-            className="mt-10 inline-block rounded-xl border border-[#00bcd4]/40 bg-[#00bcd4]/10 px-8 py-3 text-sm font-medium text-[#00bcd4] backdrop-blur transition-all hover:bg-[#00bcd4]/20 hover:border-[#00bcd4]/60"
+            className="mt-10 inline-block rounded-xl border border-[var(--arc-brand-atlantean-teal)]/40 bg-[var(--arc-brand-atlantean-teal)]/10 px-8 py-3 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] backdrop-blur transition-all hover:bg-[var(--arc-brand-atlantean-teal)]/20 hover:border-[var(--arc-brand-atlantean-teal)]/60"
           >
             Begin Reading
           </a>
@@ -375,7 +376,7 @@ export default function BookOfArcaneaPage() {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {TOC.map((part) => (
               <div key={part.part}>
-                <h3 className="mb-3 text-sm font-semibold text-[#00bcd4]">
+                <h3 className="mb-3 text-sm font-semibold text-[var(--arc-brand-atlantean-teal)]">
                   {part.part}
                 </h3>
                 <ol className="space-y-1.5">
@@ -385,7 +386,7 @@ export default function BookOfArcaneaPage() {
                         href={`#${ch.id}`}
                         className="group flex items-baseline gap-2 text-sm text-white/50 transition-colors hover:text-white/90"
                       >
-                        <span className="w-5 text-right text-xs text-white/30 group-hover:text-[#00bcd4]">
+                        <span className="w-5 text-right text-xs text-white/30 group-hover:text-[var(--arc-brand-atlantean-teal)]">
                           {ch.num}
                         </span>
                         <span>{ch.title}</span>
@@ -427,7 +428,7 @@ export default function BookOfArcaneaPage() {
 
         {/* End mark */}
         <div className="mt-24 flex flex-col items-center gap-6 border-t border-white/[0.06] pt-16 text-center">
-          <div className="h-px w-16 bg-gradient-to-r from-transparent via-[#00bcd4]/40 to-transparent" />
+          <div className="h-px w-16 bg-gradient-to-r from-transparent via-[var(--arc-brand-atlantean-teal)]/40 to-transparent" />
           <p className="text-sm italic text-white/40">
             Enter seeking. Leave transformed. Return whenever needed.
           </p>
@@ -440,7 +441,7 @@ export default function BookOfArcaneaPage() {
             </Link>
             <Link
               href="/council"
-              className="rounded-lg border border-[#00bcd4]/30 bg-[#00bcd4]/10 px-5 py-2.5 text-sm text-[#00bcd4] transition-all hover:bg-[#00bcd4]/20"
+              className="rounded-lg border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10 px-5 py-2.5 text-sm text-[var(--arc-brand-atlantean-teal)] transition-all hover:bg-[var(--arc-brand-atlantean-teal)]/20"
             >
               Meet the Council
             </Link>

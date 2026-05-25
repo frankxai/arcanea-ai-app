@@ -39,8 +39,8 @@ Commit: "perf([page]): [specific improvement]"
 
 ```
 Read .arcanea/config/design-tokens.yaml and the design system:
-- Primary: #7fffd4 (Atlantean Teal), Secondary: #78a6ff (Cosmic Blue), Accent: #ffd700 (Gold)
-- Fonts: Space Grotesk (display), Inter (body), JetBrains Mono (code) — NEVER Cinzel
+- Primary: #00bcd4 (Atlantean Teal), Secondary: #0d47a1 (Cosmic Blue), Accent: #ffd700 (Gold)
+- Fonts: Geist (display + body), Instrument Serif (accent), Geist Mono (code) — NEVER Cinzel, Space Grotesk, Inter, Arial
 - Glass morphism, aurora gradients, dark-first
 
 Scan 5 random pages in apps/web/app/. For each page check:

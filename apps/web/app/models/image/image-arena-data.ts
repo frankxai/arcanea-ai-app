@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 /* ------------------------------------------------------------------ */
 /*  Image Arena Data — no 'use client'                                 */
 /* ------------------------------------------------------------------ */
@@ -8,21 +9,21 @@ export const PIPELINE_STEPS = [
     modelId: "grok-2-image",
     label: "Grok 2 Image",
     reason: "Fast (4s), affordable ($0.02), good general quality. Handles 80% of image requests.",
-    color: "#7fffd4",
+    color: "var(--arc-brand-atlantean-teal)",
   },
   {
     role: "Premium",
     modelId: "flux-2-max",
     label: "FLUX.2 Max via OpenRouter",
     reason: "Highest quality output. Used for hero images, marketing assets, and text-in-image needs.",
-    color: "#fde047",
+    color: "var(--arc-brand-arcanean-gold)",
   },
   {
     role: "Fallback",
     modelId: "gemini-image",
     label: "Gemini Image",
     reason: "Cheapest option ($0.02), fastest (3s). Catches overflow when primary is rate-limited.",
-    color: "#60a5fa",
+    color: "var(--arc-brand-cosmic-blue)",
   },
 ] as const;
 

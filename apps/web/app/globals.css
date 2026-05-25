@@ -647,42 +647,42 @@
 
   /* Text Gradients (Design Bible v2.0) */
   .text-gradient-crystal {
-    background: linear-gradient(135deg, #00bcd4, #00e5ff);
+    background: linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-atlantean-teal));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-fire {
-    background: linear-gradient(135deg, #ff6b35, #ffa726);
+    background: linear-gradient(135deg, var(--arc-fire), var(--arc-brand-arcanean-gold));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-cosmic {
-    background: linear-gradient(135deg, #00bfa5, #1a237e, #0d47a1);
+    background: linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue), var(--arc-brand-cosmic-blue));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-peacock {
-    background: linear-gradient(135deg, #00897b, #0d47a1, #00bcd4);
+    background: linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-brand-cosmic-blue), var(--arc-brand-atlantean-teal));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-gold {
-    background: linear-gradient(135deg, #ffd700, #ffe44d);
+    background: linear-gradient(135deg, var(--arc-brand-arcanean-gold), var(--arc-brand-arcanean-gold));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-brand {
-    background: linear-gradient(135deg, #0d47a1, #00bfa5);
+    background: linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-brand-atlantean-teal));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -707,7 +707,7 @@
       radial-gradient(ellipse at 100% 0%, rgba(0, 188, 212, 0.1) 0%, transparent 50%),
       radial-gradient(ellipse at 50% 100%, rgba(0, 137, 123, 0.08) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 50%, rgba(0, 137, 123, 0.05) 0%, transparent 40%);
-    background-color: #09090b;
+    background-color: var(--arc-cosmic-void);
   }
 
   /* Aurora gradient */
@@ -889,13 +889,13 @@
     font-feature-settings: 'rlig' 1, 'calt' 1;
   }
 
-  /* Display headings use Space Grotesk */
+  /* Display headings use Geist */
   h1, h2 {
     font-family: var(--font-display), Geist, 'Geist Sans', system-ui, sans-serif;
     letter-spacing: -0.03em;
   }
 
-  /* Body text uses Inter */
+  /* Body text uses Geist */
   .prose, .narrative, article p {
     font-family: var(--font-inter), Geist, 'Geist Sans', system-ui, sans-serif;
   }
@@ -1071,7 +1071,7 @@
 }
 
 .thinking-gradient-text {
-  background: linear-gradient(90deg, #00bcd4, #78a6ff, #e040fb, #00bcd4);
+  background: linear-gradient(90deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue), var(--arc-void), var(--arc-brand-atlantean-teal));
   background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1373,7 +1373,7 @@ p a, span a, li a {
   position: absolute;
   inset: 1px;
   border-radius: inherit;
-  background: var(--cosmic-void, #09090b);
+  background: var(--cosmic-void, var(--arc-cosmic-void));
   z-index: 1;
 }
 

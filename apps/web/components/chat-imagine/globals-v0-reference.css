@@ -5,31 +5,31 @@
 
 :root {
   /* Cosmic Depth Layers */
-  --cosmic-void: #0b0e14;
-  --cosmic-deep: #121826;
-  --cosmic-surface: #1a2332;
-  --cosmic-raised: #242f42;
-  --cosmic-elevated: #2d3a52;
-  --cosmic-overlay: #364562;
+  --cosmic-void: var(--arc-cosmic-void);
+  --cosmic-deep: var(--arc-cosmic-void);
+  --cosmic-surface: var(--arc-cosmic-void);
+  --cosmic-raised: var(--arc-cosmic-void);
+  --cosmic-elevated: var(--arc-brand-cosmic-blue);
+  --cosmic-overlay: var(--arc-brand-cosmic-blue);
   
   /* Brand Colors */
-  --brand-primary: #8b5cf6;
-  --brand-accent: #7fffd4;
-  --brand-gold: #ffd700;
-  --brand-secondary: #78a6ff;
+  --brand-primary: var(--arc-void);
+  --brand-accent: var(--arc-brand-atlantean-teal);
+  --brand-gold: var(--arc-brand-arcanean-gold);
+  --brand-secondary: var(--arc-brand-cosmic-blue);
   
   /* Elemental Accents */
-  --element-crystal: #7fffd4;
-  --element-fire: #ff6b35;
-  --element-water: #78a6ff;
-  --element-void: #9966ff;
-  --element-wind: #00ff88;
-  --element-earth: #8b7355;
+  --element-crystal: var(--arc-brand-atlantean-teal);
+  --element-fire: var(--arc-fire);
+  --element-water: var(--arc-brand-cosmic-blue);
+  --element-void: var(--arc-void);
+  --element-wind: var(--arc-wind);
+  --element-earth: var(--arc-earth);
   
   /* Text Colors */
-  --text-primary: #e6eefc;
-  --text-secondary: #9bb1d0;
-  --text-muted: #708094;
+  --text-primary: var(--arc-text-primary);
+  --text-secondary: var(--arc-text-secondary);
+  --text-muted: var(--arc-text-muted);
   
   /* Semantic Tokens */
   --background: var(--cosmic-void);
@@ -55,10 +55,10 @@
 }
 
 @theme inline {
-  --font-sans: 'Inter', 'Inter Fallback', system-ui;
+  --font-sans: 'Geist', 'Geist Fallback', system-ui;
   --font-serif: 'Newsreader', 'Newsreader Fallback', serif;
   --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', monospace;
-  --font-display: var(--font-display), 'Space Grotesk Fallback', serif;
+  --font-display: var(--font-display), 'Geist Fallback', serif;
   
   /* Color Tokens */
   --color-cosmic-void: var(--cosmic-void);

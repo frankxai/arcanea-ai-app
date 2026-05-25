@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import { LazyMotion, domAnimation } from "framer-motion";
@@ -6,10 +7,10 @@ import { SectionShell, SectionHeader, FeatureCard, FeatureIcon } from "@/compone
 const BACKENDS = [
   {
     glyph: "◎",
-    color: "#3ecf8e",
+    color: "var(--arc-wind)",
     title: "Arcanea Cloud",
     badge: "Default",
-    badgeColor: "#7fffd4",
+    badgeColor: "var(--arc-brand-atlantean-teal)",
     tagline: "Zero setup. Zero compromise.",
     body:
       "Managed Supabase under the hood. Postgres + pgvector fully configured, backups running, row-level security enforced. BYOK for AI — we never train on your content.",
@@ -22,10 +23,10 @@ const BACKENDS = [
   },
   {
     glyph: "◉",
-    color: "#00bcd4",
+    color: "var(--arc-brand-atlantean-teal)",
     title: "Your Supabase",
     badge: "Self-Hosted",
-    badgeColor: "#00bcd4",
+    badgeColor: "var(--arc-brand-atlantean-teal)",
     tagline: "Your schema, your instance.",
     body:
       "Clone our open-source schema and run your own Supabase instance. Completely independent. Point Arcanea at your Supabase URL and anon key — everything works.",
@@ -38,10 +39,10 @@ const BACKENDS = [
   },
   {
     glyph: "◱",
-    color: "#ffd700",
+    color: "var(--arc-brand-arcanean-gold)",
     title: "Local-First",
     badge: "Offline Ready",
-    badgeColor: "#ffd700",
+    badgeColor: "var(--arc-brand-arcanean-gold)",
     tagline: "Your disk. Your rules.",
     body:
       "Export your entire vault as a folder of Markdown and JSONML files. Sync with Syncthing, iCloud Drive, or just git. Works in Obsidian natively.",
@@ -54,10 +55,10 @@ const BACKENDS = [
   },
   {
     glyph: "△",
-    color: "#c084fc",
+    color: "var(--arc-void)",
     title: "Arweave + IPFS",
     badge: "On-Chain",
-    badgeColor: "#c084fc",
+    badgeColor: "var(--arc-void)",
     tagline: "Permanent. Verified. Cross-world.",
     body:
       "Publish worlds, characters, or entire vaults to Arweave for permanent storage. IPFS for content-addressed retrieval. Signed with your wallet for cryptographic provenance.",

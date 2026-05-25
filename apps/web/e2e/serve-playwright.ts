@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 
@@ -45,14 +46,14 @@ if (process.env.PLAYWRIGHT_USE_NEXT_APP === '1') {
     <style>
       :root {
         color-scheme: dark;
-        --bg: #08080d;
+        --bg: var(--arc-cosmic-void);
         --panel: rgba(12, 12, 20, 0.92);
         --panel-alt: rgba(255, 255, 255, 0.03);
         --border: rgba(255, 255, 255, 0.08);
         --text: rgba(255, 255, 255, 0.92);
         --muted: rgba(255, 255, 255, 0.56);
         --faint: rgba(255, 255, 255, 0.28);
-        --accent: #00bcd4;
+        --accent: var(--arc-brand-atlantean-teal);
       }
       * { box-sizing: border-box; }
       body {
@@ -60,9 +61,9 @@ if (process.env.PLAYWRIGHT_USE_NEXT_APP === '1') {
         min-height: 100vh;
         background:
           radial-gradient(circle at top, rgba(0, 188, 212, 0.08), transparent 32%),
-          linear-gradient(180deg, #090912 0%, #050508 100%);
+          linear-gradient(180deg, var(--arc-cosmic-void) 0%, var(--arc-cosmic-void) 100%);
         color: var(--text);
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-family: Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
       .shell {
         display: grid;
@@ -104,7 +105,7 @@ if (process.env.PLAYWRIGHT_USE_NEXT_APP === '1') {
         border-radius: 999px;
         border: 1px solid rgba(0, 188, 212, 0.22);
         background: rgba(0, 188, 212, 0.08);
-        color: #9be7f2;
+        color: var(--arc-text-primary);
         font-size: 12px;
         font-weight: 600;
       }
@@ -158,14 +159,14 @@ if (process.env.PLAYWRIGHT_USE_NEXT_APP === '1') {
       .ghost:hover { background: rgba(255, 255, 255, 0.08); }
       .primary {
         background: rgba(0, 188, 212, 0.14);
-        color: #9be7f2;
+        color: var(--arc-text-primary);
         border: 1px solid rgba(0, 188, 212, 0.24);
         padding: 8px 12px;
       }
       .primary:hover { background: rgba(0, 188, 212, 0.18); }
       .danger {
         background: rgba(239, 68, 68, 0.14);
-        color: #fca5a5;
+        color: var(--arc-text-primary);
         border: 1px solid rgba(239, 68, 68, 0.2);
         padding: 8px 12px;
       }

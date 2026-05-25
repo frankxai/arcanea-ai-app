@@ -18,6 +18,9 @@ dist/
 # MCP config (contains per-developer tokens — use .mcp.json.example as template)
 .mcp.json
 
+# Aiyami submission swarm report — CI artifact, generated per-run
+aiyami-report.md
+
 # IDE
 .vscode/
 .idea/
@@ -104,7 +107,9 @@ agents/daily-ideas/*/
 
 # Archive content (preserved but not synced)
 archive/
+_archive/
 frank-input/
+.tmp-*.ps1
 
 # Ignore vscode AI rules
 .github/instructions/codacy.instructions.md

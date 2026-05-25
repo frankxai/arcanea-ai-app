@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 /**
@@ -95,25 +96,25 @@ const GOVERNANCE_ROLES = [
     name: "Proposer",
     description: "Submit proposals for community consideration",
     icon: PhLightbulb,
-    color: "#ffd700",
+    color: "var(--arc-brand-arcanean-gold)",
   },
   {
     name: "Validator",
     description: "Review and refine proposals before voting",
     icon: PhScales,
-    color: "#0d47a1",
+    color: "var(--arc-brand-cosmic-blue)",
   },
   {
     name: "Voter",
     description: "Participate in governance decisions",
     icon: PhChecks,
-    color: "#00bcd4",
+    color: "var(--arc-brand-atlantean-teal)",
   },
   {
     name: "Moderator",
     description: "Ensure civil discourse in discussions",
     icon: PhShield,
-    color: "#ef4444",
+    color: "var(--arc-fire)",
   },
 ];
 

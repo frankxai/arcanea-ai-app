@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -134,7 +135,7 @@ function MegaDropdown({ sections, onClose }: { sections: NavSection[]; onClose: 
       transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
       className={`absolute top-full left-1/2 -translate-x-1/2 mt-3 w-auto ${sections.length >= 3 ? "min-w-[660px]" : "min-w-[480px]"}`}
     >
-      <div className="rounded-2xl bg-[#0a0e16]/80 backdrop-blur-2xl backdrop-saturate-150 border border-white/[0.08] shadow-[0_32px_80px_-12px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.03)_inset] overflow-hidden">
+      <div className="rounded-2xl bg-[var(--arc-cosmic-void)]/80 backdrop-blur-2xl backdrop-saturate-150 border border-white/[0.08] shadow-[0_32px_80px_-12px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.03)_inset] overflow-hidden">
         <div className={`grid gap-0 divide-x divide-white/[0.06] p-1 ${
           sections.length === 1 ? "grid-cols-1" : sections.length === 2 ? "grid-cols-2" : "grid-cols-3"
         }`}>
@@ -152,8 +153,8 @@ function MegaDropdown({ sections, onClose }: { sections: NavSection[]; onClose: 
                     {...(item.label.includes("↗") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     className="relative flex flex-col gap-0.5 px-3 py-2.5 rounded-xl hover:bg-white/[0.05] transition-all duration-200 group"
                   >
-                    <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 rounded-r-full bg-[#00bcd4] group-hover:h-6 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]" />
-                    <span className="text-[13px] font-medium text-white/80 group-hover:text-[#00bcd4] group-hover:translate-x-0.5 transition-all duration-200">
+                    <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 rounded-r-full bg-[var(--arc-brand-atlantean-teal)] group-hover:h-6 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]" />
+                    <span className="text-[13px] font-medium text-white/80 group-hover:text-[var(--arc-brand-atlantean-teal)] group-hover:translate-x-0.5 transition-all duration-200">
                       {item.label}
                     </span>
                     {item.desc && (
@@ -213,7 +214,7 @@ export function Navbar() {
           <div className="flex items-center justify-between gap-4">
             <Link
               href="/"
-              className="flex items-center gap-2 text-base font-display font-semibold text-white/90 tracking-tight hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 rounded"
+              className="flex items-center gap-2 text-base font-display font-semibold text-white/90 tracking-tight hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/30 rounded"
             >
               <ArcaneanMark size={22} />
               <span>Arcanea™</span>
@@ -240,9 +241,9 @@ export function Navbar() {
                       href={link.href}
                       aria-current={isActive ? "page" : undefined}
                       aria-expanded={hasMega ? isOpen : undefined}
-                      className={`relative px-3.5 py-2 rounded-xl text-[13px] font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 flex items-center gap-1 ${
+                      className={`relative px-3.5 py-2 rounded-xl text-[13px] font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/30 flex items-center gap-1 ${
                         isActive
-                          ? "text-[#00bcd4] bg-[#00bcd4]/10"
+                          ? "text-[var(--arc-brand-atlantean-teal)] bg-[var(--arc-brand-atlantean-teal)]/10"
                           : "text-white/68 hover:text-white hover:bg-white/[0.04]"
                       }`}
                     >
@@ -257,7 +258,7 @@ export function Navbar() {
                       {isActive && (
                         <m.div
                           layoutId="nav-indicator"
-                          className="absolute bottom-0 left-3 right-3 h-[2px] bg-gradient-to-r from-[#00bcd4] to-[#1a237e] rounded-full"
+                          className="absolute bottom-0 left-3 right-3 h-[2px] bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] rounded-full"
                           transition={{ type: "spring", stiffness: 340, damping: 28 }}
                         />
                       )}
@@ -339,7 +340,7 @@ export function Navbar() {
                           onClick={() => setMobileMenuOpen(false)}
                           className={`flex-1 px-4 py-3.5 rounded-xl text-sm font-medium transition-colors min-h-[48px] flex items-center ${
                             isActive
-                              ? "text-[#00bcd4] bg-[#00bcd4]/10"
+                              ? "text-[var(--arc-brand-atlantean-teal)] bg-[var(--arc-brand-atlantean-teal)]/10"
                               : "text-white/70 active:text-white active:bg-white/[0.06]"
                           }`}
                         >

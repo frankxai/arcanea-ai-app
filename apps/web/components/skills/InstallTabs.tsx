@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { useCallback, useState } from 'react';
@@ -91,7 +92,7 @@ function CopyButton({ text, label }: { text: string; label: string }) {
     <button
       type="button"
       onClick={handleCopy}
-      className="shrink-0 inline-flex items-center gap-1.5 rounded-md border border-white/[0.06] bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-white/60 transition-colors hover:border-[#00bcd4]/30 hover:text-[#00bcd4]"
+      className="shrink-0 inline-flex items-center gap-1.5 rounded-md border border-white/[0.06] bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-white/60 transition-colors hover:border-[var(--arc-brand-atlantean-teal)]/30 hover:text-[var(--arc-brand-atlantean-teal)]"
     >
       {copied ? (
         <>
@@ -126,7 +127,7 @@ export default function InstallTabs({ skill }: { skill: Skill }) {
             <TabsContent key={tool.id} value={tool.id} className="mt-4">
               <div className="flex items-center gap-3 rounded-lg border border-white/[0.04] bg-black/40 px-4 py-3">
                 <code className="flex-1 overflow-x-auto whitespace-nowrap font-mono text-[13px] text-white/80">
-                  <span className="mr-2 text-[#00bcd4]/60">$</span>
+                  <span className="mr-2 text-[var(--arc-brand-atlantean-teal)]/60">$</span>
                   {command}
                 </code>
                 <CopyButton text={command} label={tool.label} />

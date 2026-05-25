@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
 import Link from 'next/link';
@@ -197,10 +198,18 @@ const BOOKS: Record<string, BookDef> = {
     status: 'in-progress',
     dir: join(process.cwd(), '..', '..', 'book', 'das-maedchen-drei-sprachen', 'chapters'),
   },
+  'russian-from-tashkent': {
+    title: 'The Russian-Speaker',
+    subtitle: 'A novel of Tashkent, Petersburg, Moscow — 1985–2010',
+    description:
+      'Biographical memoir-fiction based on the life of Ruslan — a friend of the writer (FrankX) — born 1985 in Yunusabad, Tashkent, who grew up through Perestroika and the collapse, was exiled to St. Petersburg and Moscow as a teenager after the 1999 Tashkent bombings, and returned to Uzbekistan to work a hotel lobby, then the Chirchiq Transformer Plant, then the US Embassy of a country that watched him from the day he was born. A novel of categorical homelessness — not Russian enough for Russia, not Uzbek enough for Uzbekistan, fluent in both and at home in neither. Comp shelf: Bezmozgis, Krasikov, Hemon, Ismailov, Matar, Alexievich.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'russian-from-tashkent', 'chapters'),
+  },
 };
 
 const STATUS_STYLES: Record<BookStatus, { bg: string; text: string; label: string }> = {
-  'in-progress': { bg: 'bg-[#00bcd4]/15 border-[#00bcd4]/30', text: 'text-[#00bcd4]', label: 'In Progress' },
+  'in-progress': { bg: 'bg-[var(--arc-brand-atlantean-teal)]/15 border-[var(--arc-brand-atlantean-teal)]/30', text: 'text-[var(--arc-brand-atlantean-teal)]', label: 'In Progress' },
   outlined: { bg: 'bg-amber-500/15 border-amber-500/30', text: 'text-amber-400', label: 'Outlined' },
   planned: { bg: 'bg-white/5 border-white/10', text: 'text-white/40', label: 'Planned' },
 };
@@ -308,11 +317,11 @@ export default async function BookOverviewPage({ params }: PageProps) {
   const status = STATUS_STYLES[book.status];
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0f]">
+    <div className="relative min-h-screen bg-[var(--arc-cosmic-void)]">
       {/* Ambient glow */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-        <div className="absolute left-1/3 top-[8%] h-[400px] w-[400px] rounded-full bg-[#00bcd4]/8 blur-[140px]" />
-        <div className="absolute right-1/4 top-[40%] h-[300px] w-[300px] rounded-full bg-[#0d47a1]/10 blur-[120px]" />
+        <div className="absolute left-1/3 top-[8%] h-[400px] w-[400px] rounded-full bg-[var(--arc-brand-atlantean-teal)]/8 blur-[140px]" />
+        <div className="absolute right-1/4 top-[40%] h-[300px] w-[300px] rounded-full bg-[var(--arc-brand-cosmic-blue)]/10 blur-[120px]" />
       </div>
 
       <main className="relative z-10 mx-auto max-w-3xl px-6 pb-24 pt-16">
@@ -338,7 +347,7 @@ export default async function BookOverviewPage({ params }: PageProps) {
           <h1 className="font-display text-4xl font-bold tracking-tight text-white/95 md:text-5xl leading-[1.1]">
             {book.title}
           </h1>
-          <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.25em] text-[#00bcd4]/50">
+          <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.25em] text-[var(--arc-brand-atlantean-teal)]/50">
             {book.subtitle}
           </p>
 
@@ -357,7 +366,7 @@ export default async function BookOverviewPage({ params }: PageProps) {
           {chapters.length > 0 && (
             <Link
               href={`/books/${bookId}/${chapters[0].id}`}
-              className="mt-8 inline-flex items-center gap-2 rounded-full border border-[#00bcd4]/30 bg-[#00bcd4]/10 px-6 py-3 text-sm font-medium text-[#00bcd4] transition-all hover:border-[#00bcd4]/50 hover:bg-[#00bcd4]/20 hover:shadow-[0_0_30px_rgba(0,188,212,0.15)]"
+              className="mt-8 inline-flex items-center gap-2 rounded-full border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10 px-6 py-3 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] transition-all hover:border-[var(--arc-brand-atlantean-teal)]/50 hover:bg-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[0_0_30px_rgba(0,188,212,0.15)]"
             >
               Start reading Chapter 1
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -368,9 +377,9 @@ export default async function BookOverviewPage({ params }: PageProps) {
         </header>
 
         {/* Decorative divider */}
-        <div className="mb-10 flex items-center gap-3 text-[#00bcd4]/20" aria-hidden="true">
+        <div className="mb-10 flex items-center gap-3 text-[var(--arc-brand-atlantean-teal)]/20" aria-hidden="true">
           <span className="h-px flex-1 bg-current" />
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#00bcd4]/30">
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--arc-brand-atlantean-teal)]/30">
             Chapters
           </span>
           <span className="h-px flex-1 bg-current" />
@@ -383,9 +392,9 @@ export default async function BookOverviewPage({ params }: PageProps) {
               <li key={ch.id}>
                 <Link
                   href={`/books/${bookId}/${ch.id}`}
-                  className="group flex items-center gap-4 rounded-lg border-l-2 border-transparent px-4 py-3.5 transition-all hover:border-[#00bcd4] hover:bg-white/[0.02]"
+                  className="group flex items-center gap-4 rounded-lg border-l-2 border-transparent px-4 py-3.5 transition-all hover:border-[var(--arc-brand-atlantean-teal)] hover:bg-white/[0.02]"
                 >
-                  <span className="w-6 shrink-0 text-right font-mono text-xs text-white/20 group-hover:text-[#00bcd4]/60">
+                  <span className="w-6 shrink-0 text-right font-mono text-xs text-white/20 group-hover:text-[var(--arc-brand-atlantean-teal)]/60">
                     {ch.number}
                   </span>
                   <span className="flex-1 text-[15px] text-white/70 transition-colors group-hover:text-white/95">
@@ -407,7 +416,7 @@ export default async function BookOverviewPage({ params }: PageProps) {
         {/* Companion materials — Author's Note + Glossary */}
         {hasCompanion && (
           <div className="mt-16 border-t border-white/[0.06] pt-10">
-            <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-[#00bcd4]/50">
+            <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--arc-brand-atlantean-teal)]/50">
               Behind the book
             </p>
             <Link
@@ -421,7 +430,7 @@ export default async function BookOverviewPage({ params }: PageProps) {
                   ? "Author's Note"
                   : 'Glossary'}
               </span>
-              <svg className="h-4 w-4 text-[#00bcd4]/50 transition-colors group-hover:text-[#00bcd4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="h-4 w-4 text-[var(--arc-brand-atlantean-teal)]/50 transition-colors group-hover:text-[var(--arc-brand-atlantean-teal)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </Link>

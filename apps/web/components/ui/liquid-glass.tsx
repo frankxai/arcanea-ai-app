@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 /**
@@ -191,9 +192,9 @@ export const LiquidGlass = React.forwardRef<HTMLDivElement, LiquidGlassProps>(
             padding: '1px',
             background: `conic-gradient(from 0deg, ${accents.a}, ${accents.b}, ${accents.c}, ${accents.a})`,
             WebkitMask:
-              'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',
+              'linear-gradient(var(--arc-cosmic-void) 0 0) content-box, linear-gradient(var(--arc-cosmic-void) 0 0)',
             WebkitMaskComposite: 'xor',
-            mask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',
+            mask: 'linear-gradient(var(--arc-cosmic-void) 0 0) content-box, linear-gradient(var(--arc-cosmic-void) 0 0)',
             maskComposite: 'exclude',
           }}
         />

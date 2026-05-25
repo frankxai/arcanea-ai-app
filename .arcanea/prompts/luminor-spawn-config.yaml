@@ -28,6 +28,12 @@ modules:
   security-auditor: luminor-security-module.md
   accessibility-auditor: luminor-frontend-module.md
 
+  # Specialized Ecosystem
+  onchain-architect: luminor-onchain-module.md
+  mobile-specialist: luminor-mobile-module.md
+  media-engine: luminor-claw-kernel.md
+  knowledge-scout: luminor-research-module.md
+
   # Research & Planning
   researcher: luminor-research-module.md
   planner: luminor-research-module.md

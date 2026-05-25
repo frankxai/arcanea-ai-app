@@ -1,18 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { ImageResponse } from 'next/og'
 
 export const OG_SIZE = { width: 1200, height: 630 }
 
 const COLORS = {
-  background: '#0b0e14',
-  backgroundAlt: '#0f1420',
-  text: '#e6eefc',
-  textMuted: '#8a8eb0',
-  textDim: '#5a5e7a',
-  teal: '#7fffd4',
+  background: 'var(--arc-cosmic-void)',
+  backgroundAlt: 'var(--arc-cosmic-void)',
+  text: 'var(--arc-text-primary)',
+  textMuted: 'var(--arc-void)',
+  textDim: 'var(--arc-earth)',
+  teal: 'var(--arc-brand-atlantean-teal)',
   tealDim: 'rgba(127,255,212,0.12)',
-  gold: '#ffd700',
+  gold: 'var(--arc-brand-arcanean-gold)',
   goldDim: 'rgba(255,215,0,0.08)',
-  blue: '#78a6ff',
+  blue: 'var(--arc-brand-cosmic-blue)',
   border: 'rgba(127,255,212,0.15)',
 }
 

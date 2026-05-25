@@ -65,6 +65,8 @@ Write-If-Missing ".codex/instructions.md" @(
     'Read `.arcanea/ops/AGENT_BOOTSTRAP.md` first.'
     'Read `.arcanea/ops/ao.md` for ops protocol.'
     'Read `.arcanea/ops/commands/*.md` for shared commands.'
+    'Use `.agents/skills/claude-native-bridge/SKILL.md` for Claude slash commands and skills.'
+    'Run `pnpm agents:bridge` after changing `.claude/commands/` or `.claude/skills/`.'
     'Write handover docs at session end.'
 ) "Codex: instructions"
 
@@ -102,14 +104,25 @@ if (-not (Test-Path "$StarlightHome/vaults")) {
     Write-Host "  Starlight exists at $StarlightHome" -ForegroundColor DarkGray
 }
 
-# 6. Verify
+# 6. Agent bridge
+$BridgeScript = "scripts/generate-codex-claude-bridge.mjs"
+if (Test-Path $BridgeScript) {
+    Write-Host "  Refreshing Codex/OpenCode Claude bridge" -ForegroundColor Green
+    node $BridgeScript | Out-Null
+} else {
+    Write-Host "  Bridge generator missing: $BridgeScript" -ForegroundColor Yellow
+}
+
+# 7. Verify
 Write-Host ""
 Write-Host "Done." -ForegroundColor Cyan
 $sc = (Get-ChildItem ".arcanea/ops/commands/*.md" -ErrorAction SilentlyContinue).Count
 $cc = (Get-ChildItem ".claude/commands/*.md" -ErrorAction SilentlyContinue).Count
+$bc = if (Test-Path ".agents/claude-command-index.md") { (Select-String -Path ".agents/claude-command-index.md" -Pattern '^\| /' -ErrorAction SilentlyContinue).Count } else { 0 }
 $vt = (Get-ChildItem "$StarlightHome/vaults/*.jsonl" -ErrorAction SilentlyContinue).Count
 Write-Host "  Shared ops:  $sc commands"
 Write-Host "  Claude:      $cc commands"
+Write-Host "  Bridge:      $bc indexed commands"
 Write-Host "  Codex:       $(if (Test-Path '.codex/instructions.md') { 'ready' } else { 'missing' })"
 Write-Host "  Gemini:      $(if (Test-Path '.gemini/instructions.md') { 'ready' } else { 'missing' })"
 Write-Host "  Cursor:      $(if (Test-Path '.cursor/rules/arcanea.mdc') { 'ready' } else { 'missing' })"

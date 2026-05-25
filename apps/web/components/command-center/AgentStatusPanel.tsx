@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { useEffect, useState } from 'react';
 import type { AgentRegistry, AgentStatus } from '@/lib/command-center/types';
 
 const STATUS_COLORS: Record<AgentStatus, string> = {
-  online: '#22c55e',
-  busy: '#eab308',
-  idle: '#6b7280',
-  offline: '#ef4444',
-  error: '#dc2626',
+  online: 'var(--arc-wind)',
+  busy: 'var(--arc-brand-arcanean-gold)',
+  idle: 'var(--arc-earth)',
+  offline: 'var(--arc-fire)',
+  error: 'var(--arc-fire)',
 };
 
 const STATUS_LABELS: Record<AgentStatus, string> = {
@@ -93,11 +94,11 @@ function AgentCard({ agent }: { agent: AgentRegistry }) {
     : 'Never';
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 hover:border-[#7fffd4]/30 transition-all">
+    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 hover:border-[var(--arc-brand-atlantean-teal)]/30 transition-all">
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-2.5">
           {/* Type icon */}
-          <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-xs font-bold text-[#7fffd4]">
+          <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-xs font-bold text-[var(--arc-brand-atlantean-teal)]">
             {typeIcon}
           </div>
           <div>

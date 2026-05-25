@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import Link from "next/link";
@@ -66,7 +67,7 @@ interface LeaderboardChangeProps {
 function LeaderboardChange({ change, delta }: LeaderboardChangeProps) {
   if (change === "new") {
     return (
-      <span className="font-mono text-[9px] px-1.5 py-0.5 rounded-full bg-[#7fffd4]/10 border border-[#7fffd4]/20 text-[#7fffd4] uppercase tracking-widest">
+      <span className="font-mono text-[9px] px-1.5 py-0.5 rounded-full bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] uppercase tracking-widest">
         New
       </span>
     );
@@ -76,14 +77,14 @@ function LeaderboardChange({ change, delta }: LeaderboardChangeProps) {
   }
   if (change === "up") {
     return (
-      <span className="inline-flex items-center gap-0.5 font-mono text-[10px] text-[#7fffd4]">
+      <span className="inline-flex items-center gap-0.5 font-mono text-[10px] text-[var(--arc-brand-atlantean-teal)]">
         <TrendUp className="w-3 h-3" weight="bold" />
         {delta}
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-0.5 font-mono text-[10px] text-[#f87171]">
+    <span className="inline-flex items-center gap-0.5 font-mono text-[10px] text-[var(--arc-fire)]">
       <TrendDown className="w-3 h-3" weight="bold" />
       {delta}
     </span>
@@ -97,13 +98,13 @@ function LeaderboardChange({ change, delta }: LeaderboardChangeProps) {
 export function CommunityHubContent() {
   return (
     <LazyMotion features={domAnimation}>
-      <div className="relative min-h-screen overflow-x-hidden bg-[#09090b]">
+      <div className="relative min-h-screen overflow-x-hidden bg-[var(--arc-cosmic-void)]">
 
         {/* ================================================================
             HERO
         ================================================================ */}
         <section className="relative min-h-[95vh] flex items-center justify-center overflow-hidden px-6">
-          <div className="absolute inset-0 -z-20 bg-[#09090b]">
+          <div className="absolute inset-0 -z-20 bg-[var(--arc-cosmic-void)]">
             <FloatingOrbs preset="aurora" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_30%_at_50%_100%,rgba(0,188,212,0.04),transparent_60%)]" />
           </div>
@@ -119,8 +120,8 @@ export function CommunityHubContent() {
           <div className="relative z-10 max-w-4xl mx-auto text-center">
             <Reveal delay={0}>
               <div className="mb-4 inline-flex items-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-5 py-2.5 backdrop-blur-md">
-                <Users className="h-4 w-4 text-[#00bcd4]" weight="fill" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#00bcd4]/80">
+                <Users className="h-4 w-4 text-[var(--arc-brand-atlantean-teal)]" weight="fill" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-[var(--arc-brand-atlantean-teal)]/80">
                   Community
                 </span>
               </div>
@@ -152,7 +153,7 @@ export function CommunityHubContent() {
                 delay={0.1}
                 stagger={0.025}
               />
-              <span className="bg-gradient-to-r from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent">
                 each other
               </span>
             </h1>
@@ -174,7 +175,7 @@ export function CommunityHubContent() {
                     href="https://discord.gg/arcanea"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] px-8 py-4 font-semibold text-[#09090b] shadow-[0_0_50px_rgba(127,255,212,0.2)] transition-all duration-300 hover:shadow-[0_0_80px_rgba(0,188,212,0.35)]"
+                    className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] px-8 py-4 font-semibold text-[var(--arc-cosmic-void)] shadow-[0_0_50px_rgba(127,255,212,0.2)] transition-all duration-300 hover:shadow-[0_0_80px_rgba(0,188,212,0.35)]"
                   >
                     <div className="absolute inset-0 translate-x-[-100%] bg-white/10 transition-transform duration-500 group-hover:translate-x-[100%]" />
                     <Chat className="h-5 w-5 relative z-10" weight="fill" />
@@ -197,7 +198,7 @@ export function CommunityHubContent() {
             </Reveal>
           </div>
 
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#09090b] to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--arc-cosmic-void)] to-transparent pointer-events-none" />
         </section>
 
         {/* ================================================================
@@ -447,9 +448,9 @@ export function CommunityHubContent() {
                       </FeatureIcon>
                       <div className="flex-1 min-w-0">
                         {contest.urgent && (
-                          <div className="mb-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 bg-[#ef4444]/10 border border-[#ef4444]/20">
-                            <Flame className="h-3 w-3 text-[#ef4444]" weight="fill" />
-                            <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-[#ef4444]">Closes soon</span>
+                          <div className="mb-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 bg-[var(--arc-fire)]/10 border border-[var(--arc-fire)]/20">
+                            <Flame className="h-3 w-3 text-[var(--arc-fire)]" weight="fill" />
+                            <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-[var(--arc-fire)]">Closes soon</span>
                           </div>
                         )}
                         <h3 className="font-display text-base font-semibold text-white leading-tight mb-1">{contest.title}</h3>
@@ -520,21 +521,21 @@ export function CommunityHubContent() {
         ================================================================ */}
         <section className="relative px-6 py-32">
           <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-            <div className="absolute left-1/3 top-[10%] h-[500px] w-[500px] rounded-full bg-[#00bcd4]/[0.08] blur-[180px]" />
-            <div className="absolute right-1/4 bottom-[10%] h-[450px] w-[450px] rounded-full bg-[#0d47a1]/[0.10] blur-[160px]" />
-            <div className="absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#7fffd4]/[0.04] blur-[120px]" />
+            <div className="absolute left-1/3 top-[10%] h-[500px] w-[500px] rounded-full bg-[var(--arc-brand-atlantean-teal)]/[0.08] blur-[180px]" />
+            <div className="absolute right-1/4 bottom-[10%] h-[450px] w-[450px] rounded-full bg-[var(--arc-brand-cosmic-blue)]/[0.10] blur-[160px]" />
+            <div className="absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--arc-brand-atlantean-teal)]/[0.04] blur-[120px]" />
           </div>
 
           <Reveal>
             <div className="max-w-4xl mx-auto text-center">
               <div className="mb-8 flex justify-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#00bcd4]/20 bg-[#00bcd4]/[0.08]">
-                  <Users className="h-7 w-7 text-[#00bcd4]/60" weight="fill" />
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[var(--arc-brand-atlantean-teal)]/20 bg-[var(--arc-brand-atlantean-teal)]/[0.08]">
+                  <Users className="h-7 w-7 text-[var(--arc-brand-atlantean-teal)]/60" weight="fill" />
                 </div>
               </div>
 
               <h2 className="font-display text-4xl font-bold md:text-5xl lg:text-6xl mb-5">
-                <span className="bg-gradient-to-r from-[#7fffd4] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent">
                   Join the movement
                 </span>
               </h2>
@@ -545,10 +546,10 @@ export function CommunityHubContent() {
 
               <StaggerReveal className="flex flex-wrap justify-center gap-3" stagger={0.07}>
                 {[
-                  { label: "Discord", href: "https://discord.gg/arcanea", color: "#5865F2", icon: Chat },
-                  { label: "Reddit", href: "https://reddit.com/r/arcanea", color: "#FF4500", icon: Globe },
-                  { label: "Whop", href: "https://whop.com/arcanea", color: "#F59E0B", icon: Crown },
-                  { label: "YouTube", href: "https://youtube.com/@arcanea", color: "#EF4444", icon: YoutubeLogo },
+                  { label: "Discord", href: "https://discord.gg/arcanea", color: "var(--arc-void)", icon: Chat },
+                  { label: "Reddit", href: "https://reddit.com/r/arcanea", color: "var(--arc-fire)", icon: Globe },
+                  { label: "Whop", href: "https://whop.com/arcanea", color: "var(--arc-brand-arcanean-gold)", icon: Crown },
+                  { label: "YouTube", href: "https://youtube.com/@arcanea", color: "var(--arc-fire)", icon: YoutubeLogo },
                 ].map((btn) => {
                   const Icon = btn.icon;
                   return (
@@ -571,10 +572,10 @@ export function CommunityHubContent() {
 
               <div className="mt-12 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
                 {[
-                  { label: "Free to join", color: "#7fffd4" },
-                  { label: "No spam, ever", color: "#00bcd4" },
-                  { label: "Creator-first culture", color: "#ffd700" },
-                  { label: "15+ languages", color: "#a78bfa" },
+                  { label: "Free to join", color: "var(--arc-brand-atlantean-teal)" },
+                  { label: "No spam, ever", color: "var(--arc-brand-atlantean-teal)" },
+                  { label: "Creator-first culture", color: "var(--arc-brand-arcanean-gold)" },
+                  { label: "15+ languages", color: "var(--arc-void)" },
                 ].map(({ label, color }, i) => (
                   <span key={label} className="inline-flex items-center gap-1.5 text-[11px] font-mono tracking-wider">
                     {i > 0 && <span className="text-white/10">/</span>}

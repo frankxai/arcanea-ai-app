@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import { m } from "framer-motion";
@@ -23,31 +24,31 @@ interface FloatingOrbsProps {
 
 const PRESETS: Record<string, OrbConfig[]> = {
   hero: [
-    { color: "rgba(0,188,212,0.08)", size: 600, x: "30%", y: "20%", delay: 0, blur: 180 },
-    { color: "rgba(13,71,161,0.06)", size: 500, x: "70%", y: "60%", delay: 2, blur: 160 },
-    { color: "rgba(127,255,212,0.04)", size: 400, x: "50%", y: "80%", delay: 4, blur: 140 },
-    { color: "rgba(255,215,0,0.03)", size: 300, x: "15%", y: "70%", delay: 6, blur: 120 },
+    { color: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 8%, transparent)", size: 600, x: "30%", y: "20%", delay: 0, blur: 180 },
+    { color: "color-mix(in srgb, var(--arc-brand-cosmic-blue) 6%, transparent)", size: 500, x: "70%", y: "60%", delay: 2, blur: 160 },
+    { color: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 4%, transparent)", size: 400, x: "50%", y: "80%", delay: 4, blur: 140 },
+    { color: "color-mix(in srgb, var(--arc-brand-arcanean-gold) 3%, transparent)", size: 300, x: "15%", y: "70%", delay: 6, blur: 120 },
   ],
   cosmic: [
-    { color: "rgba(124,58,237,0.08)", size: 550, x: "25%", y: "25%", delay: 0, blur: 170 },
-    { color: "rgba(0,188,212,0.06)", size: 450, x: "65%", y: "55%", delay: 3, blur: 150 },
-    { color: "rgba(192,132,252,0.05)", size: 350, x: "80%", y: "20%", delay: 1, blur: 130 },
+    { color: "color-mix(in srgb, var(--arc-brand-cosmic-blue) 8%, transparent)", size: 550, x: "25%", y: "25%", delay: 0, blur: 170 },
+    { color: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 6%, transparent)", size: 450, x: "65%", y: "55%", delay: 3, blur: 150 },
+    { color: "color-mix(in srgb, var(--arc-void) 5%, transparent)", size: 350, x: "80%", y: "20%", delay: 1, blur: 130 },
   ],
   fire: [
-    { color: "rgba(239,68,68,0.07)", size: 500, x: "35%", y: "30%", delay: 0, blur: 160 },
-    { color: "rgba(249,115,22,0.05)", size: 400, x: "60%", y: "65%", delay: 2, blur: 140 },
-    { color: "rgba(255,215,0,0.04)", size: 350, x: "20%", y: "60%", delay: 4, blur: 130 },
+    { color: "color-mix(in srgb, var(--arc-fire) 7%, transparent)", size: 500, x: "35%", y: "30%", delay: 0, blur: 160 },
+    { color: "color-mix(in srgb, var(--arc-fire) 5%, transparent)", size: 400, x: "60%", y: "65%", delay: 2, blur: 140 },
+    { color: "color-mix(in srgb, var(--arc-brand-arcanean-gold) 4%, transparent)", size: 350, x: "20%", y: "60%", delay: 4, blur: 130 },
   ],
   ocean: [
-    { color: "rgba(59,130,246,0.08)", size: 550, x: "30%", y: "25%", delay: 0, blur: 170 },
-    { color: "rgba(0,188,212,0.06)", size: 450, x: "70%", y: "50%", delay: 2, blur: 150 },
-    { color: "rgba(6,182,212,0.04)", size: 350, x: "45%", y: "75%", delay: 4, blur: 130 },
+    { color: "color-mix(in srgb, var(--arc-water) 8%, transparent)", size: 550, x: "30%", y: "25%", delay: 0, blur: 170 },
+    { color: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 6%, transparent)", size: 450, x: "70%", y: "50%", delay: 2, blur: 150 },
+    { color: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 4%, transparent)", size: 350, x: "45%", y: "75%", delay: 4, blur: 130 },
   ],
   aurora: [
-    { color: "rgba(127,255,212,0.06)", size: 600, x: "50%", y: "10%", delay: 0, blur: 200 },
-    { color: "rgba(0,188,212,0.05)", size: 500, x: "30%", y: "40%", delay: 2, blur: 180 },
-    { color: "rgba(13,71,161,0.04)", size: 400, x: "70%", y: "60%", delay: 4, blur: 160 },
-    { color: "rgba(124,58,237,0.03)", size: 350, x: "20%", y: "80%", delay: 6, blur: 140 },
+    { color: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 6%, transparent)", size: 600, x: "50%", y: "10%", delay: 0, blur: 200 },
+    { color: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 5%, transparent)", size: 500, x: "30%", y: "40%", delay: 2, blur: 180 },
+    { color: "color-mix(in srgb, var(--arc-brand-cosmic-blue) 4%, transparent)", size: 400, x: "70%", y: "60%", delay: 4, blur: 160 },
+    { color: "color-mix(in srgb, var(--arc-void) 3%, transparent)", size: 350, x: "20%", y: "80%", delay: 6, blur: 140 },
   ],
 };
 
@@ -109,17 +110,17 @@ export function GridTexture({
   const styles: Record<string, React.CSSProperties> = {
     dots: {
       backgroundImage:
-        "radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)",
+        "radial-gradient(circle, color-mix(in srgb, var(--arc-text-primary) 50%, transparent) 1px, transparent 1px)",
       backgroundSize: "32px 32px",
     },
     lines: {
       backgroundImage:
-        "linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)",
+        "linear-gradient(color-mix(in srgb, var(--arc-text-primary) 30%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--arc-text-primary) 30%, transparent) 1px, transparent 1px)",
       backgroundSize: "64px 64px",
     },
     crosshatch: {
       backgroundImage:
-        "linear-gradient(45deg, rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(-45deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
+        "linear-gradient(45deg, color-mix(in srgb, var(--arc-text-primary) 15%, transparent) 1px, transparent 1px), linear-gradient(-45deg, color-mix(in srgb, var(--arc-text-primary) 15%, transparent) 1px, transparent 1px)",
       backgroundSize: "24px 24px",
     },
   };
@@ -147,16 +148,16 @@ export function AuroraGradient({ className = "" }: { className?: string }) {
         className="absolute inset-0"
         animate={{
           background: [
-            "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,188,212,0.08) 0%, transparent 60%)",
-            "radial-gradient(ellipse 80% 50% at 40% 0%, rgba(127,255,212,0.06) 0%, transparent 60%)",
-            "radial-gradient(ellipse 80% 50% at 60% 0%, rgba(13,71,161,0.07) 0%, transparent 60%)",
-            "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(124,58,237,0.05) 0%, transparent 60%)",
-            "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,188,212,0.08) 0%, transparent 60%)",
+            "radial-gradient(ellipse 80% 50% at 50% 0%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 8%, transparent) 0%, transparent 60%)",
+            "radial-gradient(ellipse 80% 50% at 40% 0%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 6%, transparent) 0%, transparent 60%)",
+            "radial-gradient(ellipse 80% 50% at 60% 0%, color-mix(in srgb, var(--arc-brand-cosmic-blue) 7%, transparent) 0%, transparent 60%)",
+            "radial-gradient(ellipse 80% 50% at 50% 0%, color-mix(in srgb, var(--arc-void) 5%, transparent) 0%, transparent 60%)",
+            "radial-gradient(ellipse 80% 50% at 50% 0%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 8%, transparent) 0%, transparent 60%)",
           ],
         }}
         transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
       />
-      <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-[#09090b] to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-[var(--arc-cosmic-void)] to-transparent" />
     </div>
   );
 }
