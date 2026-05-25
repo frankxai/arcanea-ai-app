@@ -31,6 +31,9 @@ jobs:
             ${{ steps.vercel.outputs.url }}
             ${{ steps.vercel.outputs.url }}/pricing
             ${{ steps.vercel.outputs.url }}/chat
+            ${{ steps.vercel.outputs.url }}/worlds
+            ${{ steps.vercel.outputs.url }}/library
+            ${{ steps.vercel.outputs.url }}/imagine
           configPath: ./.github/lighthouse/lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
@@ -41,8 +44,9 @@ jobs:
         with:
           header: lighthouse
           message: |
-            ## Lighthouse scores (design-system gate)
+            ## Lighthouse scores (design-system + a11y gate)
 
             ${{ steps.lighthouse.outputs.manifest }}
 
-            _Target: performance ≥ 90, accessibility ≥ 95, best-practices ≥ 95, SEO ≥ 95_
+            **Hard gates (fail PR):** accessibility ≥ 95, SEO ≥ 95, CLS ≤ 0.1
+            _Soft gates (warn): performance ≥ 90, best-practices ≥ 95, TBT ≤ 300ms, LCP ≤ 2.5s_
