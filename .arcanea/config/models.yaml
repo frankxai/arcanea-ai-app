@@ -112,24 +112,25 @@ gateway:
     label: "Lightning (750 tok/s)"
     tier: speed
 
-# === LEGACY PROVIDER DEFAULTS ===
-# Used when no Gateway model is specified in the chat API
+# === PROVIDER DEFAULTS (formerly "legacy") ===
+# Used when no Gateway model is specified in the chat API.
+# Refreshed 2026-05-27 to May-2026 GA flagships across providers.
 legacy_defaults:
   openrouter:
-    model: "google/gemini-2.5-flash"
-    label: "Gemini 2.5 Flash (OpenRouter)"
+    model: "google/gemini-3-flash"
+    label: "Gemini 3 Flash (OpenRouter)"
     env_key: "OPENROUTER_API_KEY"
   google:
-    model: "gemini-2.0-flash"
-    label: "Gemini 2.0 Flash"
+    model: "gemini-3-flash"
+    label: "Gemini 3 Flash"
     env_keys: ["GOOGLE_GENERATIVE_AI_API_KEY", "GEMINI_API_KEY"]
   anthropic:
-    model: "claude-sonnet-4-20250514"
-    label: "Claude Sonnet 4"
+    model: "claude-sonnet-4-6"
+    label: "Claude Sonnet 4.6"
     env_key: "ANTHROPIC_API_KEY"
   openai:
-    model: "gpt-4o"
-    label: "GPT-4o"
+    model: "gpt-5-mini"
+    label: "GPT-5 mini"
     env_key: "OPENAI_API_KEY"
 
 # === EXTENDED PROVIDERS ===
