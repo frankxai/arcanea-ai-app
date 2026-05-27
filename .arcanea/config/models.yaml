@@ -10,8 +10,8 @@ gateway:
   # --- Frontier Reasoning ---
   arcanea-opus:
     provider: anthropic
-    model_id: "claude-opus-4-6"
-    label: "Opus 4.6"
+    model_id: "claude-opus-4-7"
+    label: "Opus 4.7"
     tier: premium
     use: "Complex reasoning, architecture, security, creative writing"
 
@@ -263,7 +263,7 @@ speech:
 
 # === CLAUDE CODE ROUTING (Development) ===
 claude_code:
-  primary: "claude-opus-4-6"
+  primary: "claude-opus-4-7"
   fast: "claude-sonnet-4-6"
   haiku: "claude-haiku-4-5"
 
@@ -287,4 +287,4 @@ routing:
     latency: "2-5s"
     cost: "$0.003-$0.015"
     use: "Complex reasoning, architecture, security (>30%)"
-    models: ["claude-sonnet-4-6", "claude-opus-4-6"]
+    models: ["claude-sonnet-4-6", "claude-opus-4-7"]
