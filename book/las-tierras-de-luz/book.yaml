@@ -1,5 +1,7 @@
 title: "Las Tierras de Luz"
+title_en: "Lands of Light"
 slug: las-tierras-de-luz
+edition: mature-academy
 tier: featured
 status: in-progress
 
@@ -7,8 +9,6 @@ authors:
   - name: FrankX
     github: frankxai
     role: creator
-  - name: Ana Cecilia Cancino
-    role: co-writer
   - name: Arcanea Author Team
     role: multi-agent-draft-team
 
@@ -17,26 +17,58 @@ ai_transparency:
     - id: claude-opus-4-7
       provider: anthropic
       role: lore-master-orchestration-and-prose-drafting
-    - id: nano-banana-pro
-      provider: google
-      role: cover-art
   human_contribution: substantial
   ai_contribution: substantial
-  method: "Human creative direction by FrankX (world premise, target reader, canon alignment, structural decisions). Co-written with Ana Cecilia Cancino. Multi-agent drafting via the Arcanea Author Team (World Architect, Character Psychologist, Consciousness Fiction Master, Sensitivity Reader, Research Librarian). Lore Master synthesis. Human curation of all major decisions (setting, realm canon-placement, Believer identity, dialogue convention, hero's journey shape, cast wounds and lies, sensitivity protocol). Prose drafted by Claude Opus 4.7 under human direction. Council review of every chapter against the BIBLE before publication."
+  method: "Human creative direction by FrankX (premise, target reader, protagonist identity, Realm canon-placement, reboot decision, Outer-World Echoes framing, Avilara invention, plot spine). Prose drafted by Claude Opus 4.7 under human direction. Bilingual parallel composition — English and Spanish editions co-developed."
 
 license: CC-BY-NC-SA-4.0
-content_rating: general
-tags: [magical-realism, kingdom-of-light, first-witness, consciousness-fiction, bilingual, veldoria, destellos]
+content_rating: mature
+language_primary: en
+language_secondary: es
+tags:
+  - epic-fantasy
+  - mystic-academy
+  - kingdom-of-light
+  - arcanea-academy
+  - bilingual
+  - portal-fantasy
+  - avilara
+  - ten-gates
+  - selene-velara
+  - first-witness
+
+comp_titles:
+  - "Brent Weeks — The Black Prism (Lightbringer pacing)"
+  - "Christopher Paolini — Eragon (companion-creature awe)"
+  - "Ursula K. Le Guin — The Tombs of Atuan (initiation dungeons)"
+  - "Susanna Clarke — Piranesi (sentient architecture)"
+  - "Hermann Hesse — Das Glasperlenspiel (academy as inner work)"
+  - "Leigh Bardugo — Ninth House (mystic academy with teeth)"
+
+target_reader: |
+  Feminine, 25-45, mystic-seeker who reads epic fantasy. Spanish-language identity
+  central but not gatekept — readers who code-switch between English and Spanish daily
+  will recognize themselves. Knows enough about Kabbalah, Hindu tantra, or Buddhist
+  meditation to feel the cosmology land; does not need a glossary. Has been told her
+  whole life that what she sees is imagination, and is one good book away from
+  believing herself.
 
 acknowledgments: |
-  In the valley-Realm of Veldoria, an eleven-year-old named Mira wakes one morning to find a
-  small prismatic light hovering above her chest. Soon she discovers she can wake the sleeping
-  lights in every being she passes — and that no one else can see them. Across the narrow street,
-  behind a blue door, an old woman who has been waiting her whole adult life looks up from a
-  bowl of green beans and sees. A magical-realism novel of the Kingdom of Light — about the
-  loneliness of the first witness, the three notes that crossed a lost Realm-corridor to find
-  her, and the quiet joy that lives beneath every ordinary day.
+  In Caracas, Venezuela, a nineteen-year-old named Selene Velara climbs the Ávila
+  mountain alone at dawn on the eve of her birthday — and the mountain speaks her
+  name back. By nightfall her grandmother has opened a corridor that closed sixty
+  years ago, and Selene steps through into Avilara, a sister-Realm of the Kingdom of
+  Light she has only ever heard about in recipes and songs. The Arcanea Academy of
+  Light is waiting for her. A first dungeon. A Godbeast hatchling. A friend whose
+  bloodline carries three of the Outer-World Echoes. And ten chambers beneath
+  Crystalpeak Citadel where what you deny is made into a room around you.
 
-  World-building by the Arcanea Author Team multi-agent dispatch. Canon-aligned with the
-  Legends of Arcanea — Nero/Lumina duality, Ten Gates, Yggdrasil's World Song, Malachar sealed.
-  Voice engineered for the bilingual literary reader. Written in the open.
+  Canon-aligned with the Legends of Arcanea — Lumina/Nero duality, Ten Gates, the
+  Seven Academy Houses, Malachar sealed in Shadowfen. The historical mystic
+  traditions of our world (Kabbalah, Vedic, Buddhist, Hermetic, Sufi) appear in-world
+  as Outer-World Echoes — fragmentary reflections of the same underlying truth the
+  Academy teaches directly through frequency, breath, element, image.
+
+  This is the canonical Terras de Luz. A sister novella set in Veldoria — quieter,
+  literary, eleven-year-old protagonist — is preserved at
+  `book/las-tierras-de-luz-valle-v0/` as a Tier-2 Legend of the Kingdom of Light.

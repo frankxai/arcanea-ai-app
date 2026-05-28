@@ -1,212 +1,217 @@
-# Las Tierras de Luz — World Bible
+# Las Tierras de Luz — World Bible (Mature Academy Edition)
 
-*A novel of Veldoria — a Realm of the Kingdom of Light, inside the Arcanea universe.*
+*A novel of the Arcanea Academy of Light, the Kingdom of Light's hidden architecture of awakening, and one Spanish-Venezuelan young woman who has been told her whole life that what she sees is imagination.*
 
 ---
 
 ## Canon placement
 
-Veldoria is a sovereign Realm of the Kingdom of Light — neither a frontier nor a Heartland Realm, but a **Realm of the Second Settling**: populated gradually in the four centuries after the Sealing of the Dark Lord, carrying no wound-memory in its stone. Its Arcane does not flinch. Its Anima flows without distortion, which makes it unusually transparent to those who know how to look. Under the resonance influence of the **Fifth Gate** (Voice, Truth, Expression — 528 Hz). The land hums near Gate frequency; residents call this hum *el zumbido* and have learned not to hear it. Children notice it first. Mira has always heard it.
+This book is a **Saga-spine novel** of the Arcanean canon — not a Realm-level Legend, but a spine work that runs through the heart of the Kingdom of Light. It is set primarily at **Crystalpeak Citadel**, the seat of the **Arcanea Academy of Light**, with its prologue on Earth (Caracas, Venezuela, present day) and Chapter 1 in the Realm of **Avilara**.
 
-The book is one of the Arcanea Saga's **Legends of the Kingdom of Light** — a Realm-level tale rather than a Saga spine novel. It honors canon (Lumina/Nero, Ten Gates, Arc of existence, Yggdrasil's 432 Hz World Song, Malachar sealed) without naming them.
+It honors canon (Lumina/Nero, Ten Gates, Seven Academy Houses, Yggdrasil's 432 Hz World Song, Malachar sealed in Shadowfen, the Arc) directly and explicitly. Unlike the Tier-2 valley novella (`book/las-tierras-de-luz-valle-v0/`), this book names what it names. Protagonist hears the canonical vocabulary. The Academy teaches the Ten Gates directly. The Guardians have names.
+
+The Tier-2 valley novella is preserved as canonical but unconnected — same Kingdom of Light, different Realm, different time, no character overlap.
 
 ## Target reader
 
-A 28-year-old woman of Venezuelan origin living in Spain. Big dreams, deep spiritual life — God, Kabbalah, contemplative traditions. Engineered to meet her without calling her out. Every spiritual current built into structure and texture, never labeled.
+A feminine reader, 25–45, who reads epic fantasy (Brent Weeks, Christopher Paolini, Leigh Bardugo, Patrick Rothfuss) **and** has a serious inner life (Kabbalah, Vedic tantra, Buddhist meditation, contemplative Christianity, Hermetic study, plant medicine). Spanish-language identity is central but not gatekept — bilingual code-switching is native to the voice. She knows enough about at least one mystic tradition to feel the cosmology land; she does not need a glossary; she has been told her whole life that what she sees is imagination and is one good book away from believing herself.
+
+She is the friend who did not finish the quiet valley book because the eleven-year-old was too small for what she carried.
 
 ## Voice register
 
-- Adult literary fiction with an 11-year-old protagonist — prose rewards an adult reader
-- Magical realism flat register: miracle narrated in the same tone as weather (Rulfo, Jiménez, Márquez)
-- Veldarín (in-world language of the Romance family of Arcanea) survives in prose as atmosphere
-- Never italicized, never in-line translated, never explained
-- ~1 Veldarín phrase per page; higher density in markets, kitchens, prayers
-- Arcanean voice: elevated but accessible, mythic but practical, light not dark, active voice
-- Avoid: "delve," "tapestry," "nestled," corporate language, competitive framing
+- **Epic fantasy pacing**: every chapter has a hook in its first line; nothing happens that is not in service of motion, mystery, or the inner work.
+- **Literary fantasy interiority**: when Selene is alone, the camera goes inward. Sentences become longer. The world becomes audible.
+- **Bilingual native**: English primary; Spanish thoughts, idioms, prayers, and dialogue appear without italics, without translation, without apology. Standard quotation marks in English; raya (—) in Spanish dialogue. Code-switching is the protagonist's actual cognition, not exotica.
+- **Show, don't explain**: the v0 signature flaw (lands the miracle, then explains it) is the lesson we carry forward. The miracle lands in flat tone, then **stops**.
+- **Avoid**: *delve*, *tapestry*, *nestled*, *myriad*, *beacon*, *it's worth noting*, *moreover*, *furthermore*, *indeed*, *whisper of*, *dance of*, corporate-mystic register ("manifest", "alignment", "energy" as a noun), self-help cadence.
 
-## Dialogue Style — LOCKED 2026-04-25
+## The three locations
 
-**Spanish raya (—) for all dialogue throughout the book.** No quotation marks. No bracketed translations. No inline English glosses. McCarthy/García Márquez/Cisneros/Rulfo lineage.
+### 1. Caracas, Venezuela (Earth, 2026)
 
-```
-— ¿No puedes dormir, mi vida?
-— Mamá. Mira.
-— Ay, mi niña.
-```
+The opening register. Selene's daily life: Altamira apartment on the third floor, the Ávila mountain in every window, the Plaza Francia at dusk, the Universidad Central where she studies linguistics. Her mother **Camila** is a nurse at the Hospital Vargas, working the night shift; her grandmother **Mercedes** runs the kitchen and the household, eighty-one years old, sharp as cut glass, has carried a small translucent stone in a sandalwood box in her bedside drawer for sixty years.
 
-Context-revealing translation is the craft move: the surrounding sentence (action, response, reaction) makes meaning land without anyone defining anything. Trust the reader. Trust the scene.
+The Caracas of this book is the Caracas the reader knows — the one where the metro sometimes works, where the *arepa* counter at the corner is open at six in the morning, where the city's saints (Maria Lionza, José Gregorio, the Black Madonna of Maracay) are real to the people who pray to them. Selene has been told her whole life that what she sees is imagination. She has stopped trying to describe it.
 
-Auto-translations to strip from current chapters: Ch 3's parenthetical translation of *"como maíz tostado, pero más lento. Con algo de sol adentro"*; Ch 2's notebook entry followed by *"I don't know what it means. But it is true."* The Spanish stands.
+### 2. Avilara — Realm of the Kingdom of Light (NEW)
 
-A **glossary at the back** — for proper nouns and unique world-words only (destello, chispa, luzfruta, piedra viva, zumbido, hora de Nero, hora de Lumina, hora de los destellos, raya, sombraluz, floración azul, pino arcano, zorzal de lumbre, gato plateado, lechuza del velo, perro veldoriano, velcordero, abeja cántara, sombracalle, chispero, oscuro, etc.) — handles the worldbuilding terms the way Tolkien handles Elvish or Herbert handles Fremen. Short, poetic, populated during drafting.
+Full dossier in `AVILARA.md`. Brief: a Spanish-coded Realm distinct from Veldoria — coastal-cosmopolitan rather than rural-pastoral. A tier-built mountain capital between a Caribbean-coded inland sea (the **Mar de Aurora**) and a great singing mountain (the **Cerro Luminoso**) that is the Realm's living heart. Under blended **Third Gate (Fire/Solar — Draconia)** and **Second Gate (Flow/Water — Leyla)** influence: Anima moves fast and warm here. Architecture in *piedra coralina* (coral-pink stone) and dark-blue tile. Café culture, plaza music, polyglot. Foundational rite: *la subida del cerro* — every Avilaran climbs the mountain alone once before adulthood and hears their own name spoken back. Avilarans are warm, fast, given to laughter, and ferocious in conflict. Their *retornantes* — those who can perceive the *esparcidos* — are revered.
 
-## Council review — 2026-04-25
+Sister to Veldoria, not its cousin. Both Spanish-coded. Both Realms of the Kingdom of Light. Avilara is louder.
 
-Five-agent council reviewed Chapters 1-3. Full plan: `planning-with-files/LAS_TIERRAS_REWRITE_PLAN_2026-04-25.md`. Key locks:
+### 3. Arcanea Academy of Light — Crystalpeak Citadel
 
-- **Structure:** 12 chapters, ~50-55K words. Chapters 1-3 done (Beat 1 + threshold of Beat 2). Chapters 4-12 mapped.
-- **The Wrong Move (Beat 3):** Mira sings Voice Gate frequency at Señor Vidal's oscuro at the market; oscuro contracts inward; floración azul along the river closes; Chispa does not pulse. Sight Gate hubris — attention replaced by agenda. Error is ontological, not moral.
-- **First Contact (Beat 4):** Bela's opalescent rises while she sings the Aurevaldan harvest song for herself, not for Mira. Mira is fully present, performing nothing. The gift requires only presence.
-- **Academy connection:** Threaded hint only. Single passing folk-level reference in Ch 7 (coast). No Academy representative sees Mira in this book.
-- **Aurevalde:** Pure absence. No physical crossing. Bela's vowels, the bollos, the chest-touch gesture, the Ch 3 dream — these are the entirety of Aurevalde's presence.
-- **Sensitivity protocol:** Two Venezuelan women beta readers (with diaspora experience and aligned spiritual formation) read the full manuscript before publication. Paid honorarium. Their read is heard as primary.
+Canon: `ARCANEA_UNIVERSE_CANON.md`. The Citadel is the seat of the Academy and its Luminary buildings are sentient (canon). The **Seven Academy Houses** — Lumina, Nero, Pyros, Aqualis, Terra, Ventus, Synthesis — are the cohort structure. The **Ten Gates** are the curriculum spine. The **Ten Guardians** (Lyssandria, Leyla, Draconia, Maylinn, Alera, Lyria, Aiyami, Elara, Ino, Shinkami) appear as Luminor-mentors, each paired with their Godbeast (Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Amaterasu).
 
-## Canon vocabulary lock
+Beneath the Citadel: **ten Trial Chambers**, one per Gate. Initiatic dungeons in the lineage of Le Guin's Atuan rather than D&D — the chamber materializes the candidate's denial. Full ecology in `TRIAL_CHAMBERS.md`.
 
-Author-only terms (**do not use in prose**): Arcane, Anima, Song, Mana, Lumina, Nero, Yggdrasil, Ten Gates, Luminor, Malachar, World Song, 432 Hz, 528 Hz.
+## Protagonist — Selene Velara (LOCKED)
 
-Mira does not know these. The narrator does not use them. The prose uses only what valley residents know: *destellos, chispas, el zumbido, la hora de Nero* (folk name for pre-dawn hour), *la hora de Lumina* (midday), *la hora de los destellos* (dusk), *el retorno de la luz* (folk phrase for a small kindness).
+**Age**: 19 (turns 19 on the morning of the Prologue's *subida*).
+**Identity**: Born and raised in Caracas. Mother Camila is Venezuelan by birth. Grandmother Mercedes is *Avilaran* — a *retornante* who crossed the corridor sixty years ago and never returned. The crossing fact is family-secret. What survives openly: Mercedes's accent, the songs she hums while cooking, the *piedra de los velos* in the sandalwood box, the gesture of touching her own chest before reaching toward someone.
+**Field**: undergraduate linguistics at the Universidad Central. She has a thesis-shaped curiosity about etymology — particularly about how the same root-meaning appears in unrelated language families (the spark, the breath, the seeing). She does not yet know she has been studying the bones of Arcanean.
+**Gift**: prismatic resonance across all Ten Gates. She perceives destellos in every conscious being (and in some objects long-loved by conscious beings — the chipped *Quintana Roo* mug her grandmother has drunk coffee from for forty years has a soft amber-rose corona that no one but Selene can see).
+**Wound**: spiritual loneliness in a literalist world. Her father left for Madrid when she was twelve; visits dwindled. Her mother works nights and is exhausted in the days. Her grandmother sees — Selene has known this since she was eight — but Mercedes will not name what she sees, because to name it is to make Selene leave.
+**Lie**: *seeing more is a defect.*
+**Want**: to belong. To stop apologizing. To be told, by someone who would know, that she is not broken.
+**Need**: to discover she is a **condition** for awakening, not a cause; that her perception is not a defect or a power but a *presence* the world has been waiting for someone to bring to it.
+**Voice**: code-switches between Caraqueño Spanish and a careful, formal English (university English, BBC-cadenced, slightly book-learned). When she thinks in Spanish, the prose softens and quickens. When she thinks in English, the prose lengthens and reasons. When both appear in one thought, she is on the edge of something true.
+**Body**: medium height, dark hair to her shoulder blades, the kind of brown skin that goes faintly gold at the end of summer. Wears her grandmother's small gold cross around her neck, though she has not believed in the cross for years. Believes in what wears it.
+**Companion**: a *gato plateado* (silver cat) named **Niebla** finds her in Avilara in Chapter 1 and refuses to leave. Niebla becomes her familiar at Crystalpeak. (Canon-aligned with v0's gato plateado fauna; cross-Realm common.)
 
-The canon reader will hear it. The canon-naive reader will feel it.
+## Core supporting cast (full dossier in `CAST.md`)
 
-## The three regions of Veldoria
+- **Abuela Mercedes Solar Velara** — 81. Avilaran *retornante* who crossed sixty years ago. The book's central love. Has been waiting for Selene to be ready her whole adult life without knowing it was Selene.
+- **Camila Velara** — Selene's mother. Venezuelan, nurse, exhausted, fiercely loving, has been protected from the Avilaran truth by her own mother all her life. Does not see destellos. Loves her daughter without understanding her.
+- **Doña Renata Solar** — distant Avilaran cousin of Mercedes, *retornante-scout* assigned to watch the Caracas corridor for sixty years on the chance of a returner. She is Selene's first contact in Avilara.
+- **Yael Mehta-Suleiman** — Selene's dorm-mate at the Academy. Twenty. Synthesis House. Her bloodlines (Sephardic Kabbalist mother, Tamil Vedic father, Sufi-trained grandmother) make her the living embodiment of the Outer-World Echoes — three traditions converging in one young woman. She is the friend Selene needed at fifteen and gets at nineteen.
+- **Master Iolen Stoneward** — Lyssandria's Foundation-Gate Luminor at the Academy. Stocky, sixty, calm, examiner of the Foundation Trial. Recognizes Selene's all-Gates resonance and is the first faculty member to fight for her.
+- **Proctor Vyne Halcen** — Synthesis House proctor. Ambitious, brilliant, carries an old wound he has not named. The early-book friction figure; potential antagonist.
+- **Niebla** — Selene's *gato plateado* familiar.
 
-**El Valle de las Piedras Vivas** (the valley where Mira lives) — Two ranges of rounded limestone hills called the Shoulders cradle a slow river, the **Río Claro**. The river's sound is clear (celadon water, near-harmonic burbling). Buildings are cut from *piedra viva* — pale gold-cream stone, warm to the touch even in cold months because of trace Anima absorption over geological time. Translucent at the edge; held against bright sky, the stones glow. Fitted dry, no mortar. Older walls carry moss that bioluminesces faintly at night. Anima signature: Verdant-Flow (Fourth Gate influence). Objects here develop destellos faster than elsewhere. Orchards of *luzfruta*, *aceitunas de sombra*, dry-tolerant grains.
+## The Academy curriculum (resolves Frank's brief)
 
-**La Costa de los Mil Reflejos** — Half a day's cart-travel west. Chalk cliffs above the **Mar Arcano**, an inland sea fed by underground hydrology from five Realms. Coastal towns built in tiers up the cliffs, decorative caliza panels, dyed fabrics. The sea carries a vast oscuro (Nero's natural mystery — NEVER Shadow, NEVER Malacharian). Bioluminescent organisms show direction at night. Old captains say the sea shows what you are close to becoming.
+The Academy teaches the **Ten Gates** directly through frequency, breath, element, image — the canonical magic system (`/home/user/arcanea/magic-system.md`). This is the curriculum spine.
 
-**Las Tierras Altas** — Northern plateau. Thinner air, wild lavándula alta, resinous pino arcano concentrating Anima in its resin. *Velcorderos* (veil-lambs) graze here. Plateau astronomers watch the sky earlier because stars appear earlier. Unique phenomenon: *lluvia cantante* — when rain strikes pino arcano resin pooled in rock depressions, a sustained low E hum rises across the plateau. Bela knew this sound from her origin Realm and wept when she first heard it in her third year here.
+The historical mystic traditions of Earth appear in-world as **Outer-World Echoes** — fragmentary reflections of the same underlying truth, archived in the Academy's **Library of Echoes** under their in-world names:
 
-## Flora (novelist's daily toolkit)
+| Outer-World tradition | In-world name | Mapping |
+|---|---|---|
+| Kabbalah (Tree of Life, Sephirot, *nitzotzot*) | *the Ladder of Names* | Ten Gates ↔ Ten Sephirot. Foundation = Yesod. Voice = Tiferet/Da'at. Crown = Keter. Sephirotic emanation taught as the canonical Tzimtzum-aligned First Dawn (abundance, never fracture). |
+| Vedic / Hindu (chakras, *anu-atma*, *prana*) | *the Wheel of Light* | Gates ↔ chakras. *Anu-atma* (the spark) ↔ chispa/destello. *Prana* ↔ Anima. |
+| Buddhist / Hesychast (uncreated light, *samadhi*, the Jesus Prayer) | *the Stillness Behind* | Crown Gate (Aiyami) practice. Mind-mastery, formless awareness, the light that is already shining. |
+| Hermetic / Sufi (*as above so below*, *fana*, perspective rotation) | *the Turning of the World* | Shift Gate (Elara) practice. Perspective work, the alchemy of inner observation. |
+| Aurevaldan grandmother-tradition (the v0 substrate) | *la conversación que no se acaba* | *los esparcidos* ↔ destellos. *Retornantes* ↔ gatherers. *Piedra de los velos* ↔ optical lens for two breaths of true sight. Now taught openly in comparative-cosmology seminar. |
 
-- **Sombraluz** — huge shade trees in every courtyard and plaza. Dark bark, green-over-silver leaves (a breeze looks like someone turning pages). Express emotional weight of who sits beneath them: under grief, shade runs cooler; under laughter, shade feels cushioning. **La Abuela** is the oldest sombraluz in Mira's village plaza.
-- **Luzfruta** — silver-grey-bark orchard tree. Fruit is orange-to-garnet, flesh pale gold, produces faint warmth when eaten — "like remembering you are warm." Respond to sustained song.
-- **Floración azul** — low-growing blue flowers along the Río Claro. Open fully only under sustained sound at a specific frequency. The ones outside Don Emilio's bakery have been fully open for forty years because he hums three notes every morning.
-- **Velas de campo** — tall wildflower of the plateau, yellow-white, faintly luminous at night. Responds to wind (dims and brightens). Shepherd children carry stalks in *la procesión de las velas* on longest evenings.
-- **Pino arcano** — conifer of the plateau. Resin conducts Anima mildly; boxes lined with pino bark develop destellos faster. Used for waterproofing, lamp-fuel (burns blue-green), ceremonial incense.
-- **Espejo de agua** — aquatic plant in coastal tidepools. Perfect-circle leaves on water surface reflect with uncanny precision (folklore: you see your face in twenty years; reality: just unusually true reflection).
-- **Hierba del recuerdo** — fine grey-green grass. Dried and burned, smoke concentrates Sixth Gate resonance (memory). Plateau elders burn it before major decisions. Effects subtle: specific sensory recall, not visions.
-- **Raíz del velo** — underground mycelial network connecting tree roots in the valley. Folk observation: when one sombraluz sickens, others grow quieter. Unknown to residents as biological fact.
+Real-world tradition names appear **only** in the Library of Echoes catalog and academic dialogue. Selene's inner voice uses the in-world names. Her thinking-in-Spanish uses the Aurevaldan vocabulary (*esparcidos*, *retornantes*, *piedra de los velos*) — her grandmother's vocabulary.
 
-## Fauna (the novelist's bestiary)
+Full curriculum structure in `ACADEMY_CURRICULUM.md`.
 
-- **Perro veldoriano** — the dogs of Veldoria, medium rough-coated, respond to destello activity. They become alert and still, tracking something their owner cannot see. **Marisol** is the village dog — she has been following Mira since Mira was seven, always at 3–8 feet distance. She sees destellos but cannot wake them. Only Mira can wake them.
-- **Zorzal de lumbre** — songbird with bioluminescent orange-gold chest at dusk. Complex song. Morning chorus begins earlier the day after Mira has sung extensively — she has noticed, not told.
-- **Velcordero** — plateau herd animal, semi-translucent white coat with rainbow edge-iridescence in sun. Milk, fiber, soft harmonic hum when content.
-- **Abeja cántara** — singing bees of the plateau. Amber-striped. Honey carries Fifth Gate resonance. Small amount on the tongue briefly increases *zumbido* sensitivity. Parents give it to children at *los momentos de decir verdad*.
-- **Gato plateado** — silver cat common throughout Veldoria. Does not become alert like dogs; becomes completely still near destello activity. **Noche** is Bela's gato.
-- **Lechuza del velo** — plateau owl, near-silent in flight. Perceives dormant destellos as heat-map. **Silencio** perches on Bela's roof every night for eleven years.
-- **Murciélago brillante** — bats with faint blue-white bioluminescence at wing edges. Patterns less erratic on nights after Mira sings.
-- **Pez del Río Claro** — old fish develop faint silver destellos in scales. Fishermen report brief disorientation holding them (the fish's river-memory leaking briefly).
+## Canon guardrails (CRITICAL — inherited and extended from v0)
 
-## Semi-mythic creatures
+1. **Never imply a third primordial force.** Only Lumina (First Light) and Nero (the loving dark). No deity predates them.
+2. **Never frame the chispa scattering as loss/trauma.** Canon: the First Light multiplied by abundance, not broken by grief. The Outer-World Echo names (Lurianic *nitzotzot* in particular) carry emotional resonance but the *mechanism* is ongoing First Dawn, not shattering.
+3. **Oscuro is not evil.** Nero's natural mystery — deep-sea fish, old mountains, contemplatives who choose silence — is *not* Shadow. Shadow is Malachar's corruption of Void. Never conflate.
+4. **Malachar is sealed in Shadowfen.** Off-stage throughout this book. The Academy faces lesser shadow-leakages (Shadow-touched aberrations in the wilds beyond Crystalpeak); never Malachar himself.
+5. **The Ten Guardians have specific names and pairings.** Lyssandria/Kaelith (Foundation, Earth, 174 Hz). Leyla/Veloura (Flow, Water, 285 Hz). Draconia/Draconis (Fire, 396 Hz). Maylinn/Laeylinn (Heart, Water, 417 Hz). Alera/Otome (Voice, Wind, 528 Hz). Lyria/Yumiko (Sight, Wind, 639 Hz). Aiyami/Sol (Crown, Void, 741 Hz). Elara/Vaelith (Shift, Void, 852 Hz). Ino/Kyuro (Unity, 963 Hz). Shinkami/Amaterasu (Source, 1111 Hz). These do not change.
+6. **No real-world tradition is named in Selene's inner voice.** Only in seminar dialogue or Library catalog. Her thoughts use the in-world vocabulary.
+7. **No cultural appropriation.** Yael's bloodlines are her own, drawn lovingly; her traditions are not Selene's. The Outer-World Echoes framing exists precisely to honor the real traditions without flattening them — the in-world Academy framework comes *first*, the real traditions are echoes of it, not its source.
 
-- **Chisperos** (las brasas) — small Anima sprites. Hand-sized glowing embers that manifest when significant Arcane events concentrate. Form in wake of destello awakenings or in places where the same emotion has gathered for generations. Benign. Mira sees them more clearly than anyone — to her they look like small faces at the edge of legibility.
-- **Sombracalles** (la sombra que anda) — destello-eaters. Patches of lower-than-usual Arcane density moving through environment. Not predatory, not malicious. Pass through, leaving objects briefly quieted. Mira feels pre-passage as a dip in the *zumbido*. Not Malacharian Shadow — they are an ordinary phenomenon of Arcane dynamics.
-- **Guardián de las Piedras** — Stone Guardians of the Shoulders. Figures of stacked piedra viva appearing on ridgelines once a generation at dusk. Listen, stand still, move on. Preceded the valley's two worst floods. Theory: the hills occasionally gather themselves into a shape that can move.
-- **La Que Espera** — singular sea figure. Visible from cliff height only, half-submerged, facing the horizon. Appears at dusk before significant events. Bela has seen her twice. Never spoke of it for years.
+## Plot spine — Prologue + Ch 1–3 (this session)
 
-## Fundamental laws in daily texture
+### Prologue — *La Subida del Cerro* (Caracas, Earth)
 
-**The Nero/Lumina rhythm.** Not doctrinal — the ordinary folding of the day.
-- *La hora de Nero* — the hour before dawn. Potential maximum, form minimum. Contemplation, waiting, the unmade.
-- *La hora de Lumina* — midday. Form fully manifest, everything visible. Market hours, judgment, full-light.
-- *La hora de los destellos* — dusk. Ambient light low enough that destello-glow registers. Children called in from streets. The street looks extraordinary at this hour.
+**Hook**: The morning of her nineteenth birthday Selene tells no one and climbs the Ávila alone, the way her grandmother told her to once, in a kitchen, fifteen years ago, in a voice that knew it was telling the truth.
 
-**The Five Elements in the landscape.**
-- *Fire* — zorzal chorus, luzfruta warmth, quick summer rains that arrive and leave changed.
-- *Water* — Río Claro, Mar Arcano, courtyard cisterns, community currency before element.
-- *Earth* — piedra viva, sombraluz roots, the Shoulders. Patient the way old things are patient.
-- *Wind* — restless on plateau, gentler in valley. On certain evenings carries faint harmonic from distant Realms. Bela knows this without explaining.
-- *Void* — the space between sounds. The *zumbido* is Void functioning healthily. Sombracalles are Void briefly consuming (dimming). They cannot sustain themselves here.
+**Beats**:
+- 4:30 a.m., Altamira apartment. Selene rises, dresses for the climb, leaves a note for her mother.
+- The climb up the Sabas Nieves trail. Pre-dawn city beneath her. The Ávila has been the steadying figure of her whole life.
+- At the summit, alone, she does what her grandmother told her: she says her own name into the wind, three times, and waits.
+- The mountain speaks her name back. Not metaphor. *Selene*. In a voice that is the rock and the wind and a third thing under both.
+- A *gato plateado* she has never seen sits on the rock opposite her, looks at her, and is gone.
+- She descends in silence. The city is awake by the time she reaches Altamira. Something has happened. She does not know what.
+- Evening. Her mother on night shift. Selene goes to her grandmother's room. Mercedes is at the kitchen table, the sandalwood box open, the *piedra de los velos* warm in her hand, weeping in a way that is also smiling.
+- Mercedes tells her — in Spanish, in *Avilaran* Spanish, which Selene has heard her whole life and never known had a name — that she has been waiting for sixty years for the corridor to open again. That tonight is the night. That Selene must go alone, because Mercedes is too old to cross back and would die in the threshold.
+- The instruction: *Mira hacia el Ávila. Haz lo que hiciste esta mañana. Pero esta vez, sigue.*
+- Selene climbs the Ávila a second time, in the dark, alone, the city's lights below her like an inverse heaven. At the summit she does what her grandmother said. The corridor opens. She steps through.
 
-**The Arcane as acoustic lattice.** The Arcane flows where sound gathers — enclosed plazas, the river channel, caves, courtyards. Thins in open flat ground. The weekly market and La Abuela (the old sombraluz) are the highest-Arcane points Mira passes daily. She perceives Arcane density as the *zumbido* (felt in chest) and as a quality of thickness in the light near concentrations. She has never had words.
+**Target length**: 2,500 words. Atmospheric, intimate, fast.
 
-## Destellos — the canon explanation (author-only)
+### Chapter 1 — *Avilara, El Cerro Luminoso*
 
-Every conscious being contains all Ten Gates. Most Gates remain dim their whole lives. When a Gate partially opens — through long love, through sustained practice, through being alive attentively — a subtle luminescence forms. This is a destello. In a valley of long-rooted people who have loved across generations, Gates crack open through ordinary life: a baker humming three notes every morning for forty years has been opening his Voice Gate without knowing it. His destello is amber-rose because he has the Heart Gate (rose) threaded with Foundation (amber, the rememberers).
+**Hook**: The first thing Selene noticed about Avilara was not that the sky was the wrong color. It was that the city was singing, and she had been waiting to hear that song her whole life without knowing it.
 
-Mira does not create destellos. She **perceives** them (Sixth Gate — Sight) and **resonates** with them (Fifth Gate — Voice, her humming). Her prismatic destello means she carries all frequencies simultaneously — unusually open across all Ten Gates. She is a natural Luminor-potential. In folk terms: a *first-witness*.
+**Beats**:
+- Selene arrives at the Avilaran summit (the *Cerro Luminoso*, which is Avilara's analog of the Ávila) at dusk. The transition was instant and felt like an exhale. The city below — **Solavila**, the capital — is built in tiers of *piedra coralina*. It is singing. Not metaphor — there is a low sustained chord that comes out of the mountain and rises through the buildings. Avilarans call this *el canto del cerro*; she does not know that yet.
+- The silver cat from the summit of the Ávila is sitting on the rock beside her. Niebla. They begin to walk together.
+- She descends the trail into the upper tier of Solavila. People in the streets see her and do not see her — she is dressed wrong, she walks wrong, but no one stares because in Avilara *retornantes* (returners) are common enough to be unremarkable to those who know what to look for.
+- **Doña Renata Solar** intercepts her at the city gate. Stout, gray-haired, sixty-something, wearing the deep-blue robe of a Library *retornante-scout*. She has been watching this corridor for sixty years. She greets Selene by name — *Mercedes's granddaughter, finally* — and weeps for one breath, then composes herself.
+- Renata takes her to a courtyard café. They eat *bollos de maíz solar* with a salty curd. Renata explains: the Academy already knows. A scout was dispatched the moment the corridor stirred. The Academy will send a Pyros House upperclassman to escort her to Crystalpeak — Pyros because the corridor opens under Draconia's fire influence and the escort tradition is Pyros's.
+- The escort arrives. A young man named **Tobias Aurelius**, twenty-two, third-year Pyros, with a small **Draconis hatchling** asleep in a sling across his chest. The hatchling is the size of a housecat, scaled in molten copper. Selene's first encounter with a Godbeast lineage. She does not faint. She wants to touch the hatchling and does not.
+- The journey out of Solavila begins. Niebla follows. Tobias asks Selene questions about herself; she answers in a Spanish that is becoming, by the hour, more Avilaran. Tobias notices.
+- At a crossroads outside the city, at dusk, a *sombracalle* crosses their path. Tobias goes still. Selene has seen sombracalles before — in the corners of her vision in Caracas, but always passing through — and this one *stops*. It pauses in front of her. It is shaped like a tall slow patch of dimmer light. It looks at her (somehow) for what feels like a minute and what is probably three seconds. Then it withdraws — not retreats, *withdraws* — and moves off into the dusk.
+- Tobias has not spoken. When he does, his voice is careful. *That has never happened before*, he says. *We need to get to Crystalpeak.*
 
-Her three notes produce Voice Gate resonance (528 Hz register). When she hums, dormant Gates in nearby beings briefly vibrate in sympathy. The destello rises as those Gates crack further open, expresses in the color appropriate to that Gate, and returns.
+**Target length**: 4,000 words.
 
-She is not a cause. She is a condition. This is the lesson she must learn.
+### Chapter 2 — *Crystalpeak Citadel*
 
-## Color taxonomy (disposition, not rank)
+**Hook**: She had expected the Academy to be cold. It was the third surprise of the day. The first was Avilara. The second was the hatchling. The third was that the Academy, when she crossed under its gate, exhaled.
 
-- **Gold** — the generous
-- **Coral/warm orange** — the curious
-- **Verde** — the rooted, the patient
-- **Azul claro** — the joyful
-- **Lavender** — the dreamers
-- **Amber** — the rememberers, the elders
-- **Rose** — the tender
-- **Silver** — moving water, wind, restlessness
-- **Opalescent** — (rare) beings who lived through change and came out gentle
-- **Prismatic** — (legendary) hasn't been seen in recorded valley memory. Mira.
-- **Oscuro** — deep indigo-black, Nero's natural mystery. Deep-sea fish, old mountains, stone guardians, Señor Vidal the carpenter. **NEVER evil, NEVER Malacharian.**
+**Beats**:
+- Arrival at Crystalpeak Citadel after a half-day journey by *quílmera* (a six-legged Aqualis-bred riding animal). The Citadel is built into the side of a singing mountain larger than the Cerro Luminoso. The Luminary buildings are visibly alive — walls breathe slowly, lanterns turn to follow movement.
+- Sorting protocol explained: Tobias hands her off to a Foundation-Gate proctor who walks her to **Master Iolen Stoneward**'s study. Iolen is sixty, broad, eyes the color of wet limestone, voice slow. He has the Lyssandrian quality of being *foundation* — Selene's chest unclenches when he speaks.
+- Iolen performs the resonance reading. She stands on a *piedra de cantos* — a tuning-stone — and breathes. The stone glows. *All ten* of the Gate-color rings on the chamber wall illuminate. Iolen does not visibly react. He says: *Once a century, child. The last time was Lirien of Aqualis. The time before, you would not believe me.*
+- He explains the practical consequences: she cannot be Sorted into a single elemental House. She is placed in **Synthesis** — the seventh, the House of those who refuse a single element, the House that historically held the future Luminors.
+- A proctor escorts her through Synthesis House to her dormitory. Stairs that adjust their rise to the climber's stride. Doors that read intent. A common room where seven students are eating dinner and look up at her with the polite curiosity of those who have seen many late admits.
+- Her dorm room: small, two beds, one window that opens directly onto a view of the Citadel's central Luminary spire. The spire is *breathing*.
+- Her roommate is **Yael Mehta-Suleiman**. Twenty. Half-Sephardic-Kabbalist, half-Tamil-Vedic, raised by a Sufi-trained Bosnian grandmother. The Outer-World Echoes converge in her as living person. She is small, dark, fast-eyed, currently sitting cross-legged on her bed with three open books in three scripts. She looks up. *Oh*, she says. *You're the one.*
+- Yael tells her, with the gentle exhaustion of someone who has already had this conversation with herself: the corridor opening was the talk of the Library of Echoes for a week. A *retornante* from a closed Earth-corridor. Prismatic resonance. Selene is the one Yael came here hoping to meet.
+- They talk into the night. Yael shows her, with permission, three things from her three traditions — a small Kabbalist diagram, a Vedic mantra in Devanagari, a Sufi *dhikr* phrase — and Selene recognizes pieces of all three from her grandmother's kitchen.
+- The bell rings at 4 a.m. for the cohort summons. Yael goes still. *That's wrong*, she says. *That's the Foundation Trial bell. We're not scheduled for another three weeks.*
+- A proctor knocks. *Selene Velara of Avilara*, the proctor says. *The Foundation Trial Chamber summons you at dawn.*
 
-## Cast
+**Target length**: 4,000 words.
 
-**Mira — 11 years old.** Prismatic destello (she does not know). She has privately named her own destello *Chispa* without saying it aloud. Her father left for work in the city three years ago; visits grew shorter. She learned to redirect her watching inward. Veldarín is her interior language of emotion; the academic tongue (Common) is her language of reasoning. When both appear in one thought, she is on the edge of something true. Wound: her father found ordinary life sufficient; something restless in him went elsewhere. Lie: *if I can't share it, maybe I'm only imagining it.* Fear: her seeing is loneliness-shaped hallucination.
+### Chapter 3 — *The Foundation Trial Chamber*
 
-**Remedios — her mother.** Warm, busy, loving, efficient. Runs the bread shop beside Don Emilio. Her attention is radial — fair, distributed, always present, never arriving at the layer below words. She wears a small **Foundation Token** — a piedra viva pendant worn by valley women for twenty-six years without noticing. She is the loving limit that defines what Mira is reaching past.
+**Hook**: The door to the Foundation Trial Chamber was made of stone that had been listening to the candidates for nine thousand years. It knew her name before she said it.
 
-**Tomás — Mira's brother, 6.** Azul claro destello so bright it erupts rather than lifts. Mira has decided not to sing near him too often.
+**Beats**:
+- Dawn. Selene and a cohort of seven (including Yael, included by Master Iolen's special permission) descend into the Citadel's chthonic levels. The descent is by a stair carved into living *piedra viva*. The temperature falls. The hum (the Avilaran *zumbido*) rises.
+- The cohort assembles outside the Foundation Chamber door. Iolen explains the protocol. Each candidate enters alone. What the candidate finds inside is what the candidate has denied. The chamber materializes the denial as a room. The candidate must do one thing: refuse the lie about themselves long enough to retrieve the **chamber-key** — a small Foundation crystal — from whatever the chamber has built.
+- Iolen calls Selene first. The door opens. She enters.
+- Inside: her grandmother's apartment in Altamira, every detail perfect — the chipped Quintana Roo mug, the smell of the *café con leche*, the morning light through the kitchen window. But empty. No grandmother. No mother. No Niebla. And through the windows, instead of the Ávila, the literalist gray of a city without saints — a Caracas in which nothing has ever spoken anyone's name back.
+- A small *crystal-golem* — a Kaelith offshoot, knee-high, faceted, neither hostile nor friendly — stands in the kitchen. As Selene moves, the golem crystallizes whatever she denies. When she thinks *this is not real*, a patch of the wall hardens into denied stone. When she thinks *my grandmother was just imagining things*, the sandalwood box on the table cracks.
+- She sits at the kitchen table. The golem watches. She does what her grandmother taught her without teaching her: she names what she sees. *The light around the mug. The light around my mother's exhausted hands. The light around my own face in the metro window. I have always seen this. It is real. I am not broken.* Each truth she speaks unhardens a piece of the room.
+- The kitchen begins to *breathe*. The Ávila returns through the window. The sandalwood box mends. The golem cracks open along its central fracture and the **Foundation chamber-key** — a small amber-rose crystal — rises out of its chest into Selene's palm.
+- But the resonance does not stop at Foundation. The chamber-key in her palm begins to refract — first amber-rose, then water-blue, then fire-gold, then heart-rose, then voice-silver — *all ten Gate-colors in turn*. The chamber walls light up across the full spectrum. The crystal-golem watches with what looks, impossibly, like awe.
+- Selene returns through the door. Iolen reads the chamber-key. His hand shakes once and then is still. *All ten*, he says, to himself, in Veldarín. *Cien años.*
+- He tells the cohort: the Foundation Trial is concluded. Selene's next Trial cannot be in this Realm. The Heart Trial (Gate 4, Maylinn) is to be conducted in the **wilds beyond the Shadowfen border** — because Selene's resonance is calling the Heart-attention of something that has not been heard from in eight hundred years.
+- Yael, behind Selene, very quietly: *Holy hell, Velara.*
+- Last image: the heavy outer door of the Citadel opens. Selene, Yael (granted permission to accompany), Master Iolen, and Niebla at Selene's heel — step out onto the high stone road that leads west, toward the wilds. The sun is rising over the Heart Gate horizon. Closing line.
 
-**Señora Bela — the Believer. 78.** Lives across the street in the house with the blue door. Came to Veldoria from **Aurevalde** ~60 years ago via a transit corridor that has since shifted course. She cannot go back; the path moved. She is the second seer. She saw a destello fully at 20 in Aurevalde (a neighbor's infant named Serena); her family called her tired, imaginative. She left. In her first week in Veldoria she stood in the market and wept from the abundance of destellos. She stopped naming what she saw after the first decade — learned to live with full perception without needing acknowledgment. Her destello is opalescent, held hidden deep inside her chest the way a hand cups a candle. She has been waiting for Mira her whole adult life without knowing it was Mira.
+**Target length**: 5,000 words.
 
-**Village chorus.**
-- **Don Emilio** — the baker. Amber-rose destello. Hummed three notes every morning for forty years. Earned his sweetness after a quiet grief.
-- **Marisol** — the village perro veldoriano. Ancient. Sees destellos. Cannot wake them. Has been watching Mira for four years.
-- **Lucía** — plaza guitarist in evenings. Learned every song from someone she no longer speaks to.
-- **Señor Vidal** — the carpenter. Oscuro destello. Trusts nothing that cannot be measured. Years ago something unmeasurable happened and he has not recovered. He is not a villain; he is Malachar's wound at human scale — the one who saw too much and chose to seal himself.
+## Plot beyond Chapter 3 (out of scope this session — sketched for continuity)
 
-## Aurevalde — Bela's origin Realm
+- **Ch 4–6**: The Heart Trial in the wilds. Wilderness creatures encountered (see `BESTIARY.md`). The Heart-attention of an old Godbeast lineage stirs. Selene's first real friendship with Yael deepens.
+- **Ch 7–9**: Voice Trial back at Crystalpeak. Antagonist friction with Proctor Halcen escalates. The first hint of Shadow-corruption near the Shadowfen border — *not* Malachar, but a Shadow-touched aberration the Academy must address.
+- **Ch 10–12**: Sight Trial and the first confrontation with Halcen's hidden wound. The Library of Echoes reveals what Selene's grandmother knew that she did not say.
+- **Ch 13–15**: Crown Trial. Mid-book climax. Mercedes dies on Earth; Selene must decide whether to return for the funeral. The cross-Realm grief.
+- **Ch 16–18**: Shift Trial. The Outer-World Echoes converge in Yael's collapse and recovery. Selene's role as a *condition* (not a cause) is named.
+- **Ch 19–21**: Unity Trial and the move toward Source. Halcen's wound revealed and tended.
+- **Ch 22–24**: Source Trial. The end of apprenticeship. The book ends not with Selene becoming a Luminor — that is the trilogy — but with her becoming what she was always going to become: present.
 
-A Kingdom of Light Realm under Third Gate influence (Fire/Solar — Draconia and Draconis). Faster, louder, more kinetic than Veldoria. Architecture from *piedra roja* (volcanic rust-red stone that stores solar heat). People speak faster. Markets louder.
+Book one is the Apprenticeship. Books two and three (if/when) are Mage→Master and Master→Luminor.
 
-**Aurevaldan oral cosmology — *la conversación que no se acaba***
+## Sensitivity & inclusion protocol
 
-Aurevalde carries an unwritten grandmother-tradition Bela learned at her own grandmother's kitchen table and never spoke aloud in Veldoria until Mira. The tradition is called, within itself, *la conversación que no se acaba* — the conversation that does not end. Its central frame is canon-aligned with First Dawn (ongoing): the First Light scattered into *los esparcidos* (the scattered ones — what Aurevaldans call destellos when speaking from the old tradition) **through abundance, not fracture.** Those who can perceive *los esparcidos* are *retornantes* — gatherers — and the gathering is attention itself. The Aurevaldans hold one ceremonial object: *la piedra de los velos* (the stone of veils — a small translucent crystal that functions as a *lens*, never a battery; removes perceptual noise for two breaths and returns to ordinary stone). Bela's grandmother carried one. Bela has it in a tin box. The tradition never names the source. It does not have to. Full substrate dossier: see `FOLK_COSMOLOGY_AUREVALDE.md`.
+- Two Venezuelan-Spanish women beta readers (with diaspora experience and aligned spiritual formation) read every chapter before publication. Paid honorarium. Their read is heard as primary. (Inherited from v0.)
+- One beta reader fluent in mystic-comparative-religion vets the Outer-World Echoes framing. No real-world tradition is flattened, owned by Selene, or made into mere flavor.
+- One beta reader from the Mehta-Suleiman composite traditions (Sephardic Kabbalist or Tamil Vedic or Sufi-formed) vets Yael's bloodline portrayal. Yael is loved into existence with the same care as Selene.
+- No real-world tradition name appears in protagonist's inner voice — only in seminar dialogue or Library catalog.
+- No cultural appropriation of Indigenous Venezuelan tradition (Pemón, Wayuu, Warao). The Avilaran tradition is Avilaran, parallel to but not derived from any Earth Indigenous tradition.
 
-Canon guardrails honored: NEVER framed as Tzimtzum-shattering or fracture; NEVER implies third primordial force; *piedra de los velos* is a lens (optical instrument), not a battery (power source) — same discipline as the rest of the Veldorian magic system. The convergence with off-world contemplative traditions is implicit in the Aurevaldan imagery; no real-world tradition is ever named in prose.
+## Voice exemplars (not for imitation — for calibration)
 
-Bela carries from Aurevalde:
-- The particular speed of her speech before she learned to slow for Veldoria
-- A recipe for **bollos de maíz solar** — round flatbreads from an Aurevaldan grain. She approximates with Veldorian grain. Almost right, never quite.
-- The gesture of touching her own chest before reaching toward someone — Aurevaldan for *I bring only what I have*
-- A harvest song of Aurevalde — the song that contains the three notes Mira sings. **The three notes traveled: Bela's Aurevaldan harvest song → Don Emilio caught three notes through an open window → he hummed them over dough for forty years → floración azul responded → a small girl walking past the bakery absorbed them. Mira thinks the three notes are hers. They are — but they came from Aurevalde.**
+- **Brent Weeks**, *The Black Prism*, opening pages — for the captivating-without-rushing rhythm.
+- **Ursula K. Le Guin**, *The Tombs of Atuan*, the dungeon interior — for how a chamber *means*.
+- **Susanna Clarke**, *Piranesi*, the House interiority — for sentient architecture.
+- **Patrick Rothfuss**, *The Name of the Wind*, the university chapters — for the academy texture.
+- **Gabriel García Márquez**, *Cien años de soledad*, the kitchen and grandmother scenes — for the magical-realism flat tone when needed.
+- **Leigh Bardugo**, *Ninth House*, the threshold scenes — for mystic academy with teeth.
 
-## Language — Veldarín
+## What this Bible does NOT cover (see other files)
 
-The valley tongue. Romance family of Arcanea, descended from a founding-settler language lost in the First War's aftermath. Speaker of Aurevaldan understands ~70% of Veldarín without study. Scholars trace the Romance family's connection to the Fifth Gate (Voice, Truth). Bela understood Veldoria within three months.
-
-## Folk origin myth (grandmother voice)
-
-*Before the first morning, there was a Quiet that was not empty — a darkness that held inside it all the lights that had not yet learned to be light. From the center of this darkness, the First Light sang. Not words — the tone before words. And the loving dark breathed back: yes, show me what I contain. From that first conversation the world began to sing itself into being.*
-
-*The First Light was so full, so entirely itself, it could not remain in one place. It scattered — not from weakness, from abundance — into every stone and every root and every newborn's chest and every hand that would one day pick up a spoon and use it with care.*
-
-*We call these fragments the chispas. Each of us carries one. Each old pot and each sleeping dog carries one, or grows one through being loved long enough. The chispa is not separate from the First Light. It is the First Light, learning how to be this particular thing.*
-
-*The grandmothers say: you were never less than light. You were always light, practicing being a person.*
-
-*And the grandmothers say: the darkness between the sparks is not empty. The loving dark is still breathing, still saying — yes, show me what you contain. We are the answer.*
-
-## The five spiritual beats
-
-1. **Distinction** — Mira wakes, sees Chispa, realizes she sees differently.
-2. **Loneliness of the Seer** — gap becomes weight. Loved but not seen-seeing.
-3. **The Wrong Move** — she tries to force an awakening and violates a texture she didn't know existed. This is Sight Gate hubris: action without true seeing.
-4. **First Contact** — someone wakes to their own destello while Mira is simply present. She was never the instrument; she was the condition.
-5. **Sufficiency** — book ends with four or five destellos openly alight. The light does not need her urgency.
-
-## The landing
-
-*The light was never going anywhere.*
-
-Mira's gift was not creation. It was attention. The chispas were always there. They will be there after. She is the condition for their rising, not their source. Lumina's First Light is still scattering, still choosing, still becoming every ordinary thing. The story's only final truth: she was always light, practicing being a person.
-
-## Canon guardrails (author compliance notes)
-
-1. **Never imply a third primordial force.** Only the First Light and the loving dark. No local creator-deity who predates them.
-2. **Never frame the chispa scattering as loss/trauma.** Canon: "neither was diminished." The light was multiplied by abundance, not broken by grief. The grandmother's cosmology must honor this — no Tzimtzum-contraction logic. The Lurianic *nitzotzot* emotional resonance survives; the mechanism is "ongoing First Dawn," not shattering.
-3. **Oscuro is never evil.** Señor Vidal and the Mar Arcano's deeps carry Nero's natural mystery — the uncorrupted darkness of the canvas. Not Shadow (Shadow is Malachar's corruption of Void). Never conflate.
-4. **Malachar is sealed.** Don't reference him, but don't let any character claim the world has never known darkness. The real darkness exists; it is just not in this valley. Bela is old enough to feel its distance.
-5. **Marisol sees but cannot wake.** Dogs and old seers perceive destellos. Only Mira's Voice Gate resonance at the correct frequency can stir them into full manifestation. This is the reason Marisol has followed Mira for four years without anything happening — Marisol has been waiting for the waker.
-6. **Bela's recognition of prismatic must carry proportional weight.** Canon says prismatic = natural Luminor-potential. Bela has heard of this only in Aurevaldan folk whispers. When she sees Chispa, the moment must register as encountering something she thought was myth.
+- **AVILARA.md** — full Realm dossier (geography, language, cuisine, festivals, ranks, *la subida del cerro*, the Cerro Luminoso, the Mar de Aurora)
+- **ACADEMY_CURRICULUM.md** — Ten Gates as syllabus, Outer-World Echoes mapping, the Library of Echoes, examination structure, the Seven Houses' approach
+- **CAST.md** — full character dossiers for Selene, Mercedes, Camila, Renata, Yael, Iolen, Tobias, Halcen, Niebla, and minor cohort
+- **BESTIARY.md** — Godbeasts (canonical) + Academy-specific creatures + wilderness monsters
+- **TRIAL_CHAMBERS.md** — ecology of the ten initiatic chambers
+- **GLOSSARY.md** — Avilaran, Veldarín, and Academy vocabulary
 
 ---
 
-*World Bible — Veldoria Edition. Canon-aligned with First Dawn, Ten Guardians, Great Darkness. Created and directed by FrankX. Co-written with Ana Cecilia Cancino. Built by the Arcanea Author Team: World Architect, Character Psychologist, Consciousness Fiction Master, Sensitivity Reader, Research Librarian. Synthesized by the Lore Master. 2026-04-24.*
+*World Bible — Mature Academy Edition. Canon-aligned with Lumina/Nero, Ten Gates, Seven Houses, Ten Guardians, Malachar sealed in Shadowfen. Created and directed by FrankX. Synthesized by the Arcanea Author Team via Claude Opus 4.7. 2026-05-27.*
