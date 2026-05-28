@@ -114,15 +114,21 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Security Audit (warn only)
-        continue-on-error: true
+      - name: Security Audit (gate on high/critical)
         run: |
+          # Fail the job on high or critical advisories; moderate/low stay informational.
+          set -o pipefail
           pnpm audit --audit-level=moderate 2>&1 | tee /tmp/audit-output.txt || true
-          if grep -q "moderate\|high\|critical" /tmp/audit-output.txt; then
-            echo "::warning::Security vulnerabilities found — review pnpm audit output"
-          fi
           echo "## Security Audit" >> $GITHUB_STEP_SUMMARY
           tail -30 /tmp/audit-output.txt >> $GITHUB_STEP_SUMMARY
+          if grep -qiE "moderate|low" /tmp/audit-output.txt; then
+            echo "::warning::Moderate/low severity advisories found — review pnpm audit output"
+          fi
+          # Gate: non-zero exit only when high/critical advisories are present.
+          if ! pnpm audit --audit-level=high; then
+            echo "::error::High or critical severity advisories found — must be resolved before merge"
+            exit 1
+          fi
 
   # ============================================
   # RELEASE INTEGRITY — no per-package publish workflows
