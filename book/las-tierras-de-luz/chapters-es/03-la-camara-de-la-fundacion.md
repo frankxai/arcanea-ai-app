@@ -122,11 +122,35 @@ No abrió los ojos. Oyó, en el silencio, un sonido pequeño — un pequeño *de
 
 Otro sonido pequeño. Otro cambio de temperatura. La silla en la que su abuela siempre se sentaba — Selene la sintió sin ver — ya no estaba vacía de la misma manera en que había estado vacía treinta segundos atrás. Seguía vacía. Pero estaba vacía *con* algo en vez de vacía *contra* algo. No abrió los ojos para confirmar. Tenía miedo de perder el lugar al que había llegado si miraba.
 
-— La luz alrededor de mi papá — dijo —, en la última noche que estuvo en el apartamento, era un gris-verde agrio al que no le tenía palabra y al que no le habría puesto palabra aunque la hubiera tenido. Era el color de alguien yéndose. Él no sabía que se estaba yendo. La luz sí sabía. Yo sí sabía. Siempre he visto esto. No estoy rota.
+— La luz alrededor de mi papá — dijo —, en la última noche que estuvo en el apartamento, era un gris-verde agrio al que no le tenía palabra y al que no le habría puesto palabra aunque la hubiera tenido.
 
-El cuarto *se movió*.
+Se detuvo. El Guardián no había cristalizado nada. La cocina se sostenía. Sintió — sin abrir los ojos — el Ávila empezando a volver a la ventana.
 
-No el piso. Otra cosa. El aire mismo. Un cambio, el tipo de cambio barométrico pequeño que viene antes del mal tiempo. El Guardián en el piso de enfrente — abrió los ojos ahora, tenía que — el Guardián ya no estaba facetado por toda la superficie. Una zona en su columna central, del tamaño de su palma, se había puesto *suave*. Translúcida. Ya no era cristal. Brillaba tenuemente.
+Abrió los ojos.
+
+El Guardián la estaba mirando. Sin ojos, sin cara, pero *mirando* — de la forma en que el sombracalle la había mirado en el claro.
+
+— El gris-verde no era abandono — dijo. Las palabras le subían del pecho desde un lugar al que ella no les había pedido que llegaran —. Llevo siete años diciéndome que él se fue porque no podía soportarme. Que lo que yo cargaba al apartamento cuando volvía del colegio era demasiado para él. Que ver más era un defecto y el defecto fue lo que lo alejó. He estado mintiendo.
+
+Tomó aire.
+
+— El gris-verde en su cara la última noche era él muriéndose. En el aire de este mundo. Lo que fuera que él era y que yo no sabía que era, este aire lo estaba matando. Me besó la cabeza y se fue porque si se quedaba se moría aquí. Se fue a vivir. Se fue a vivir a algún lugar para que algún día yo tuviera dónde encontrarlo. No sé dónde está. Le estoy diciendo a la cámara que no sé. Pero está vivo. Está vivo en alguna parte y me ha amado todos los días. La que no estaba viendo era yo.
+
+La cocina *se movió*.
+
+No el piso. Algo mucho más profundo. La luz por la ventana cambió — por medio segundo, no más — de la luz del amanecer de Caracas a una luz que Selene nunca había visto, una luz de tarde coral-dorada que entraba por una ventana enmarcada en piedra coralina, y un cuarto en el que ella nunca había estado, y en la pared del fondo de ese cuarto un hombre sentado en una mesa de madera escribiendo en un libro, la cara la cara de su papá siete años más viejo, la mano sobre la página, la luz ámbar-rosa-prismática alrededor de él absolutamente la luz de alguien *vivo*.
+
+Levantó la mirada.
+
+La vio.
+
+El cuarto se fue.
+
+La cocina era la cocina. El Ávila estaba en la ventana. El Guardián en el piso de enfrente la estaba mirando sin ojos y la columna central del Guardián se había abierto por su largo entero.
+
+Selene estaba llorando.
+
+No se había dado cuenta de que había empezado. Las lágrimas le estaban en la cara de la forma en que el viento había estado en su cara en la cumbre. Se las limpió con el dorso de la mano y respiró y siguió. Porque la cámara no estaba terminada. Porque ella no estaba terminada. Porque su papá estaba vivo en alguna habitación a la que ella todavía no había llegado, en un Reino del que ella todavía no tenía el nombre, y no había ninguna versión de terminar esto en la que ella no dijera todo lo que faltaba decir.
 
 No paró.
 

@@ -45,6 +45,8 @@
 - **el quílmera** — six-legged riding animal, Aqualis-bred
 - **el retorno / el retornante / la retornante** — the return / the returner (one who can perceive the *esparcidos*, or, in the broader sense, one who has crossed between Realms and returned)
 - **el Salón del Canto** — the Hall of Song (Avilara's governance building)
+- **Solamar** — Selene's paternal surname; also the name of her father Dario Solamar, Luminor of Sol Mareo, currently in Arcanean exile
+- **Sol Mareo** — a small Realm of the Kingdom of Light at the Caribbean-coded southern coast, sister-Realm to Avilara, under blended Voice (Alera) and Crown (Aiyami) influence. Selene's paternal line.
 - **Solavila** — the capital of Avilara
 - **la subida del cerro** — the ascent of the mountain (the foundational Avilaran rite)
 - **el zumbido** — the hum (the perceived Arcane background frequency, in the chest; canonical from v0)

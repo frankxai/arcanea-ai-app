@@ -58,6 +58,8 @@ Cuando su papá se fue para Madrid ella tenía doce y los colores alrededor de �
 
 Y el gris-verde le había pasado por la cara como un mal tiempo, y ella había sabido que no iba a llamar. Había llamado por un tiempo. Después menos. Las visitas se acortaron. Hacía seis meses, por teléfono, ella le había preguntado por su tesis y él no había estado escuchando, y ella no había dicho *papá*, y él no había dicho *mi hija*, y la llamada había terminado y ella no había llorado porque ya había dejado de ser una persona que lloraba por eso. Se había vuelto una persona que caminaba.
 
+Su nombre era Selene Solamar Velara. El Solamar era el apellido de su papá; había dejado de usarlo a los quince. Escribía *Selene Velara* en los papeles de la universidad. El Solamar lo cargaba en el cuerpo como uno carga un nombre que todavía no ha decidido perdonar.
+
 Caminaba ahora. El Ávila bajo sus botas era el cuerpo firme que ella había estado subiendo en sueños desde hacía años.
 
 ---
@@ -161,6 +163,18 @@ Lo dijo como había dicho *Mira, los veo* — como si le estuviera entregando un
 Después se sentó al borde de la cama y empezó a contarle.
 
 Le contó de Avilara. Del Cerro Luminoso. De la subida del cerro. Del corredor que se había abierto debajo del Ávila en 1965 y que la había traído a ella, veintiún años, hasta Caracas, donde se había casado con Camilo Velara y donde no se había ido nunca. Del corredor que se había cerrado tres meses después de su cruce y que no se había vuelto a abrir, no por sesenta años, hasta la noche anterior — la noche anterior — cuando su abuela había sentido, en el pecho, el zumbido que no había vuelto a sentir desde los veinte.
+
+También le contó — suavecito, en el español avilarense que de pronto era su propio idioma y para nada el español de la mamá de Selene — que había cosas sobre el papá de Selene que Selene no sabía, y que a Mercedes no le habían permitido decir, y que Selene iba a aprender en el lugar al que iba.
+
+— Solamar — dijo Mercedes —. Tu segundo apellido. Acuérdate.
+
+Selene cerró los ojos. El cuarto estaba en silencio. La piedra de los velos estaba tibia en la palma de su abuela.
+
+— Abuela, ¿papá está vivo?
+
+Su abuela la miró con esa clase de amor que llevaba sosteniendo un secreto demasiados años para contarlos.
+
+— Sí, mi vida — dijo Mercedes —. Está vivo. Te explican allá.
 
 — Esta noche, mi vida — dijo su abuela —. Esta noche se abre otra vez. Y yo soy muy vieja. Yo me moriría en el umbral. Pero tú —
 

@@ -11,13 +11,32 @@
 **Build**: medium height (1.68m), dark hair past her shoulder blades, brown skin that goes faintly gold at the end of summer, brown eyes with a hazel ring near the pupil. Small gold cross from her grandmother; she has not believed in the cross for years but believes in what wears it.
 **Voice**: code-switches between Caraqueño Spanish and a careful, formal English. Spanish for emotion, family, prayer, kitchen, dream. English for university, reasoning, distance. When both appear in one thought, she is on the edge of something true.
 **Gift**: prismatic resonance across all Ten Gates. Sees destellos in every conscious being. Has been told her whole life this is imagination.
-**Wound**: her father left for Madrid when she was twelve; visits dwindled. He was a man who could not bear the *zumbido* she carried into the apartment when she came home from school. He didn't know what he was leaving. She did.
-**Lie**: *seeing more is a defect.*
+**Wound**: she has grown up believing her father could not bear ordinary life with her. The truth is the opposite: he was **Dario Solamar**, Luminor of the Realm of Sol Mareo, sent to Earth on a corridor-watch mission, who fell in love with Camila and stayed past his assignment to raise Selene. When the dormant Caracas corridor began to stir three years before this book opens, his Luminor-presence on Earth was amplifying the signal and would have drawn Shadow-attention to his family. He left for "Madrid" — actually returned to Arcanea — to protect them. He has not been able to safely return. The dwindling phone calls were the dwindling of his ability to reach back across worlds. The gray-green color around him on the last night was his Anima beginning to fail in Earth's air. Selene did not know any of this. Mercedes knew all of it and could not tell her.
+**Lie**: *seeing more is a defect. My father left because of me.*
 **Want**: to belong. To stop apologizing for what comes in through her eyes.
 **Need**: to discover she is a **condition** for awakening, not a cause. That her perception is not power. It is presence.
 **Loves**: her grandmother first, her mother second, the Ávila third. Coffee with sweetened condensed milk. Long walks at dusk. The smell of *café con leche* at 6 a.m. The way her grandmother says *mi vida*.
 **Fears**: that the *zumbido* will stop. That she will become a person who no longer sees. That her grandmother will die before Selene knows what her grandmother has been carrying. (Two of three come true in this book.)
 **Carries**: in her satchel — a notebook (linguistic etymologies, half in Spanish, half in English), a folded photograph of her father at the Plaza Francia, her grandmother's small gold cross around her neck, a sandalwood box (after Prologue) containing the *piedra de los velos*.
+
+## DARIO SOLAMAR — Selene's father (Luminor of Sol Mareo)
+
+**Age**: 47 (alive in Arcanea at the time this book opens; unable to safely return to Earth).
+**Identity**: Luminor of the Realm of **Sol Mareo** — a small Realm of the Kingdom of Light at the Caribbean-coded southern coast, sister-Realm to Avilara. Opened the Foundation, Flow, Fire, Heart, Voice, Sight, and Crown Gates by age twenty-four — early but not unprecedented. Recruited at twenty-five by the Academy's Library of Echoes for a long-watch assignment: Earth, Caracas, the dormant corridor under the Ávila that Mercedes had crossed sixty years before.
+
+**Cover**: Venezuelan businessman who occasionally traveled to Madrid. Met Camila Velara in 2006 at a coffee shop in Altamira. Fell in love with her over the course of one summer. Was warned by his Academy handler not to attach. Did anyway. Married her in 2006. Selene born 2007.
+
+**The watch**: For nineteen years he held the Earth-side watch on the corridor, his Luminor-presence subtle, his perception of the corridor's stir alert. He could see destellos around his wife and his daughter and his mother-in-law and he never named them — could not, without betraying his post — and the not-naming was the daily mass of his life. He saw Selene's prismatic gift the first time he held her. He never told her. He hummed Sol Marean lullabies over her crib and called them children's songs from his hometown.
+
+**Recognized by Mercedes**: She knew the first time Camila brought him to the apartment. Avilaran *retornantes* recognize Luminor-presence the way a fluent speaker recognizes a native accent. She said nothing to Camila. She said nothing to Selene. She and Dario had one conversation, in the kitchen, in 2007 — three days after Selene was born — in which Mercedes said, in Avilaran Spanish: *Te conozco. No te voy a delatar. Pero un día nos vas a tener que decir.* Dario had wept. He had said: *Si puedo, sí.*
+
+**The leaving**: Three years before this book opens — when Selene was sixteen and Mercedes was seventy-eight — the corridor began to stir. Dario felt it before any of them. His handler in Avilara sent word: *Withdraw. Your presence is amplifying the signal.* He withdrew. He told Camila and Selene he was going to Madrid for work. He told Mercedes the truth in Avilaran Spanish at the kitchen table at midnight before he left, and Mercedes had blessed him with her hand on his forehead and said *vete, mi hijo, vete*. He left through the small sub-corridor under Cerro Ávila that had stayed open for evacuation use only. The sub-corridor closed behind him.
+
+**Since**: Living in Sol Mareo, working as a Luminor-counselor in the Sol Marean capital, unable to safely return to Earth without re-triggering the very signal he protected them from. He sends letters through Doña Renata; Renata has been holding seven letters for Selene, sealed, addressed in his hand. Renata will give them to Selene in Chapter 5, when Selene returns briefly to Avilara before the Heart Trial.
+
+**Voice**: Sol Marean Spanish — a softer accent than Avilaran, with longer vowels and a habit of speaking just below the volume of the room. He has been silent in Selene's life since she was sixteen. He is the most important silence in the book.
+
+**In the book**: Off-stage in Ch 0-3. Letter revealed in Ch 5. He appears in person in Ch 14 (theoretical, mid-book), at the Sol Marean ambassadorial visit to Crystalpeak. The reunion is the book's emotional climax of the back half.
 
 ## ABUELA MERCEDES SOLAR VELARA — Selene's grandmother
 

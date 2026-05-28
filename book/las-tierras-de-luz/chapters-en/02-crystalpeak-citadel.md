@@ -158,9 +158,17 @@ He looked at her steadily.
 
 *Yes, Master*, she said. The *Master* came out of her mouth without effort. It was the right word.
 
-*Good*, he said. *Vethal will take you. Eat something. Sleep.*
+*Good*, he said. He paused. *One last question. Off the Foundation protocol — but I would like to ask. Your full given name, please. The one your mother put on the birth certificate.*
 
-He stood. She stood. He bowed his head to her — the small deliberate bow, not deeper than what he had given her at the start, but a beat slower in the rising. Then he turned and went back to his desk and sat down and did not look up as Vethal led her out.
+Selene blinked. The question was small enough that her body had begun to relax into it before her mind caught up.
+
+*Selene Solamar Velara*, she said. *Velara is my mother's. Solamar is my father's. I stopped using Solamar at fifteen.*
+
+Master Iolen did not move for one breath. Vethal, behind him at the desk, made a small sound — not a word — and then stopped. Iolen's wet-limestone face stayed steady. The eyes — Selene saw it, because she had been learning to watch faces — the eyes registered. The mouth set.
+
+*Thank you*, Iolen said.
+
+He said nothing else. He stood. She stood. He bowed his head to her — the small deliberate bow, not deeper than what he had given her at the start, but a beat slower in the rising. Then he turned and went back to his desk and sat down and did not look up as Vethal led her out.
 
 The door closed behind them.
 

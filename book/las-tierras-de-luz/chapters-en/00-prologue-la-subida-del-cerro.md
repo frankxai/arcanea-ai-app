@@ -40,6 +40,8 @@ After that Selene stopped naming the colors. They did not stop being there. She 
 
 When her father left for Madrid she was twelve and the colors around him on the last night had been a sour gray-green she did not have a word for and would not have used if she did. He had kissed the top of her head and said, *Te llamo el sábado*, and the gray-green had moved over his face like weather, and she had known he was not going to call. He had called for a while. Then less. The visits dwindled. Six months ago, on the phone, she had asked him a question about her thesis and he had not been listening, and she had not said *papá*, and he had not said *mi hija*, and the phone call had ended and she had not cried because she had stopped being a person who cried about that. She had become a person who walked.
 
+Her name was Selene Solamar Velara. The Solamar was her father's name; she had stopped using it at fifteen. She wrote *Selene Velara* on her university papers. The Solamar she carried around in her body the way one carries a name one has not yet decided to forgive.
+
 She walked now. The Ávila under her boots was the steadying body she had been climbing in her sleep for years.
 
 ---
@@ -133,6 +135,16 @@ She said it the way her grandmother had said *Mira, los veo* — as if she were 
 Then her grandmother sat down on the edge of the bed and began to tell her.
 
 She told her about Avilara. About the *Cerro Luminoso*. About *la subida del cerro*. About the corridor that had opened under the Ávila in 1965 and had carried her, twenty-one years old, into Caracas, where she had married Camilo Velara and never gone back. About the corridor that had closed three months after her crossing and had not opened again, not for sixty years, until the night before — the night before — when her grandmother had felt, in her chest, the *zumbido* she had not felt since she was twenty.
+
+She also told her — softly, in the Avilaran Spanish that was suddenly its own language and not Selene's mother's Spanish at all — that there were things about Selene's father that Selene did not know, and that Mercedes had not been allowed to say, and that Selene would learn in the place she was going. *Solamar*, Mercedes said. *Tu segundo apellido. Acuérdate.*
+
+Selene closed her eyes. The room was quiet. The *piedra de los velos* was warm in her grandmother's palm.
+
+— Abuela, ¿papá está vivo?
+
+Her grandmother looked at her with the kind of love that had been holding a secret for too many years to count.
+
+— Sí, mi vida — Mercedes said. — Está vivo. Te explican allá.
 
 *Esta noche, mi vida*, her grandmother said. *Esta noche se abre otra vez. Y yo soy muy vieja. Yo me moriría en el umbral. Pero tú —* her grandmother held the *piedra de los velos* out to her on her palm — *tú puedes ir.*
 

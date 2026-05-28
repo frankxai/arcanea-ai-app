@@ -186,9 +186,17 @@ La miró firme.
 
 El *Maestro* le salió de la boca sin esfuerzo. Era la palabra correcta.
 
-— Bien — dijo Iolen —. Vethal te lleva. Come algo. Duerme.
+— Bien — dijo Iolen. Pausó —. Una última pregunta. Fuera del protocolo de Fundación — pero me gustaría preguntarla. Tu nombre completo, por favor. El que tu mamá puso en la partida de nacimiento.
 
-Se paró. Ella se paró. Le inclinó la cabeza — la inclinación pequeña y deliberada, no más profunda que la que le había dado al inicio, pero un latido más lenta al subir. Después se volteó y fue de vuelta al escritorio y se sentó y no levantó la mirada cuando Vethal la llevó hacia afuera.
+Selene parpadeó. La pregunta era lo bastante chiquita como para que su cuerpo se hubiera empezado a relajar antes de que su mente la entendiera.
+
+— Selene Solamar Velara — dijo —. Velara es de mi mamá. Solamar es de mi papá. Dejé de usar Solamar a los quince.
+
+El Maestro Iolen no se movió por una respiración. Vethal, detrás de él en el escritorio, hizo un pequeño sonido — no una palabra — y se detuvo. La cara color piedra caliza mojada de Iolen se quedó firme. Los ojos — Selene lo vio, porque estaba aprendiendo a mirar caras — los ojos registraron. La boca se asentó.
+
+— Gracias — dijo Iolen.
+
+No dijo más. Se paró. Ella se paró. Le inclinó la cabeza — la inclinación pequeña y deliberada, no más profunda que la que le había dado al inicio, pero un latido más lenta al subir. Después se volteó y fue de vuelta al escritorio y se sentó y no levantó la mirada cuando Vethal la llevó hacia afuera.
 
 La puerta se cerró detrás de ellas.
 

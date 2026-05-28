@@ -118,11 +118,35 @@ She did not open her eyes. She heard, in the silence, a small sound — a small 
 
 Another small sound. Another temperature-shift. The chair her grandmother always sat in — Selene felt it without seeing — was no longer empty in the same way it had been empty thirty seconds ago. It was still empty. But it was empty *with* something rather than empty *against* something. She did not open her eyes to check. She was afraid she would lose the place she had gotten to if she looked.
 
-*The light around my father*, she said, *on the last night he was in the apartment, was a sour gray-green I did not have a word for and would not have used if I had. It was the color of someone going. He did not know he was going. The light knew. I knew. I have always seen this. I am not broken.*
+*The light around my father*, she said, *on the last night he was in the apartment, was a sour gray-green I did not have a word for and would not have used if I had.*
 
-The room *moved*.
+She stopped. The Guardian had not crystallized anything. The kitchen held. She felt — without opening her eyes — the Ávila beginning to come back into the window.
 
-Not the floor. Something else. The very air. A shift, the kind of small barometric shift that comes before weather. The Guardian on the floor opposite her — she opened her eyes now, she had to — the Guardian was no longer faceted across its whole surface. A patch on its central column, the size of her palm, had gone *soft*. Translucent. Not crystal anymore. Glowing faintly.
+She opened her eyes.
+
+The Guardian was looking at her. Without eyes, without face, but *looking* — the way the *sombracalle* had looked at her in the clearing.
+
+*The gray-green was not abandonment*, she said. The words were coming up through her chest from a place she had not asked them to come from. *I have been telling myself, for seven years, that he left because he could not bear me. That what I carried into the apartment when I came home from school was too much for him. That seeing more was a defect and the defect was what drove him away. I have been lying.*
+
+She drew breath.
+
+*The gray-green on his face on the last night was him dying. In the air of this world. Whatever he was that I did not know he was, this air was killing him. He kissed the top of my head and he left because if he had stayed he would have died here. He went to live. He went somewhere to live so that one day I would have somewhere to find him. I do not know where he is. I am telling the chamber I do not know. But he is alive. He is alive somewhere and he has loved me every day. I have been the one not seeing.*
+
+The kitchen *moved*.
+
+Not the floor. Something far deeper. The light through the window shifted — for one half-second, no more — from the dawn light of Caracas to a light Selene had never seen, a coral-gold afternoon light through a window framed in *piedra coralina*, and a room she had never been in, and on the far wall of that room a man at a wooden table writing in a book, his face the face of her father seven years older, his hand on the page, the amber-rose-prismatic light around him absolutely the light of someone *alive*.
+
+He looked up.
+
+He saw her.
+
+The room was gone.
+
+The kitchen was the kitchen. The Ávila was in the window. The Guardian on the floor opposite her was looking at her without eyes and the central column of the Guardian had broken open down its full length.
+
+Selene was crying.
+
+She had not noticed she had started. The tears were on her face the way the wind had been on her face at the summit. She wiped them with the back of her hand and breathed out and kept going. Because the chamber was not finished. Because she was not finished. Because her father was alive in some room she had not yet been to, in a Realm she did not yet have the name of, and there was no version of finishing this in which she did not say everything still owed.
 
 She did not stop.
 
