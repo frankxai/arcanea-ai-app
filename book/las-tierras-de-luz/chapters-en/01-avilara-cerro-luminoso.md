@@ -36,9 +36,9 @@ She came down off the trail into the upper tier of the city expecting — she di
 
 They could all see it. Every one of them. And not one of them thought it was worth more than a nod.
 
-Selene had to stop, once, with her hand against a coral-pink wall that was warm and very faintly humming, because her eyes had filled and she did not want to walk into Avilara crying.
+Selene had to stop, once, with her hand against a coral-pink wall that was warm and very faintly humming, because her eyes had filled and she did not want to walk into Avilara crying. It was not the strangeness that undid her. It was the ordinariness. Her whole life she had wanted exactly one thing and had never had a word small enough to ask for it: to be looked at, fully, the part of her that showed in the light included — and then to have the person stay. People on Earth did one or the other. They looked away, or they looked and went careful, went sorry, went *to a doctor.* No one had ever simply seen the whole of her and found it unremarkable enough to keep walking past, the way you walk past a neighbour. She had a thread in her, she would learn the name of it later, that had been reaching out of her chest her whole life for someone who would do that. Here a boy with a tray of blue cups had done it without breaking stride.
 
-Niebla waited.
+Niebla waited, and pressed her warm flank against Selene's ankle until the worst of it passed, which Selene would also learn, later, was a thing the silver cats did on purpose.
 
 When she could, they went on, down through tiers that grew busier as they fell toward the harbour — a plaza where four old men played a game with painted stones and a single light braided gold between them, an arcade of stalls closing for the evening, the smell of charred corn and salt and something citrus and resinous burning in a doorway shrine. Twice she saw a person stop and look, really look, at her light, with a flicker of something sharper than the others — recognition, maybe — and move on with a backward glance. She did not yet have the word *retornante.* She would have it before the moon was up.
 
@@ -70,7 +70,17 @@ Renata named the world for her while she ate, plainly, the way you hand tools to
 
 The world was Arcanea. This Realm was Avilara, and Avilara was old and small and warm and lay, as Realms went, near the heart of something called the Kingdom of Light. Those who could perceive the destello — the light on a living thing — were called *retornantes,* the returned, though almost none of them returned from anywhere; the name was older than its sense. On Earth, Renata said, Mercedes had told them before she crossed that almost no one could see it at all, a whole world walking blind through one another's light, and no one here had believed her. *It seemed to us,* Renata said, *like saying a world of people who could not hear music.*
 
-— They took me to a doctor when I was nine — Selene said, to the bollo in her hands. — He had a word for it. Then a kinder word. Then a word he said to my mother when he thought I wasn't listening. — She set it down, precisely, in the centre of the plate. — I learned to look only at people's hands. I got very good at hands.
+— In the plaza on the way down — Selene said slowly, because she had to know — there were four old men playing a game with painted stones. And between them, over the table, there was a — a rope of gold. Light, but not their light. It ran from one to the next to the next, all four, like they were strung on it. I've never seen that. People's light stays around the person. This was *between* them.
+
+Doña Renata set down her cup and looked at her for a long moment, and something moved in her banked gold that Selene could not read.
+
+— That is a *hilo*, mija — she said. — A thread. — She said the word the way Mercedes said *piedra de los velos*, the way you hand someone a thing you have been keeping. — When people love each other, the Heart of them reaches across and takes hold, and it leaves a line. A real line. Most who can see destellos cannot see the hilos — that is rarer, that is deeper, that is a Heart-sight, and you saw four of them braided over a domino table on your first afternoon in the world. — She shook her head, slowly. — Those four men have sat at that table every evening for fifty years. Of course there is a rope between them. The wonder is not the rope. The wonder is the eye that found it.
+
+She picked her cup back up. — Hold onto that you saw it. You will need it before this is over. A hilo does not break with distance, child. Remember I told you so.
+
+Selene's hand had gone, without her deciding it, to her satchel — to the folded photograph inside it, her father at the Plaza Francia, the one light she had never once been able to read clean.
+
+— They took me to a doctor when I was nine — she said, to the bollo in her hands. — He had a word for it. Then a kinder word. Then a word he said to my mother when he thought I wasn't listening. — She set it down, precisely, in the centre of the plate. — I learned to look only at people's hands. I got very good at hands.
 
 Doña Renata was quiet a moment. The water moved in its channel.
 

@@ -36,7 +36,7 @@
 
 **Voice**: Sol Marean Spanish — a softer accent than Avilaran, with longer vowels and a habit of speaking just below the volume of the room. He has been silent in Selene's life since she was sixteen. He is the most important silence in the book.
 
-**In the book**: Off-stage in Ch 0-3. Letter revealed in Ch 5. He appears in person in Ch 14 (theoretical, mid-book), at the Sol Marean ambassadorial visit to Crystalpeak. The reunion is the book's emotional climax of the back half.
+**In the book**: Off-stage in Ch 0-3. **Seven letters revealed in Ch 5** (delivered through Renata; written across three years, the first four left in advance "in case he could not send more"). **First contact along the hilo in Ch 5** — Selene reaches him through the heart-thread (piedra + the Sol Marean lullaby + the un-braced Heart) and perceives him beside her, speaks with him, for a few costly breaths. This is real resonant contact, NOT the body — it is the relationship the phone calls failed to be. He tells her: *the thread does not break; I never left you, I changed the distance.* He appears **in person in Ch 14** at the Sol Marean ambassadorial visit to Crystalpeak — the bodily reunion still devastates precisely because the hilo-contact was not a body. The reunion is the book's emotional climax of the back half.
 
 ## ABUELA MERCEDES SOLAR VELARA — Selene's grandmother
 

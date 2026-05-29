@@ -34,9 +34,9 @@ Bajó del sendero a la terraza alta de la ciudad esperando —no sabía qué. Se
 
 Todos podían verla. Cada uno. Y ni uno solo pensó que valiera más que un saludo de cabeza.
 
-Selene tuvo que pararse, una vez, con la mano contra una pared rosa-coral que estaba tibia y apenas zumbando, porque se le habían llenado los ojos y no quería entrar a Avilara llorando.
+Selene tuvo que pararse, una vez, con la mano contra una pared rosa-coral que estaba tibia y apenas zumbando, porque se le habían llenado los ojos y no quería entrar a Avilara llorando. No fue la rareza lo que la deshizo. Fue lo común. Toda la vida había querido exactamente una cosa y nunca había tenido una palabra lo bastante pequeña para pedirla: que la miraran, entera, incluida la parte que se le veía en la luz —y que después la persona se quedara. La gente en la Tierra hacía una cosa o la otra. Miraban para otro lado, o miraban y se ponían cuidadosos, apenados, *iban a un doctor.* Nadie la había visto entera nunca y la había encontrado lo bastante común como para seguir caminando, como uno pasa al lado de un vecino. Tenía un hilo adentro, iba a aprender su nombre más tarde, que le había estado saliendo del pecho toda la vida buscando a alguien que hiciera eso. Aquí un muchacho con una bandeja de tacitas azules lo había hecho sin romper el paso.
 
-Niebla esperó.
+Niebla esperó, y le apretó el costado tibio contra el tobillo hasta que pasó lo peor, lo cual Selene también iba a aprender, más tarde, que era una cosa que los gatos plateados hacían a propósito.
 
 Cuando pudo, siguieron, bajando por terrazas que se hacían más concurridas mientras caían hacia el puerto —una plaza donde cuatro viejos jugaban un juego de piedras pintadas con una sola luz trenzada de oro entre ellos, una arcada de puestos cerrando por la tarde, el olor a maíz tostado y a sal y a algo cítrico y resinoso quemándose en el umbral de un altarcito. Dos veces vio a alguien detenerse y mirar, mirar de verdad, su luz, con un destello de algo más filoso que los otros —reconocimiento, quizás— y seguir con una mirada para atrás. Todavía no tenía la palabra retornante. La iba a tener antes de que saliera la luna.
 
@@ -67,6 +67,16 @@ Comieron en una mesa de patio bajo un emparrado de la flor verde-dulce, donde el
 Renata le nombró el mundo mientras comía, sin rodeos, como se le entregan las herramientas a alguien que las va a necesitar.
 
 El mundo era Arcanea. Este Reino era Avilara, y Avilara era viejo y pequeño y tibio y quedaba, entre los Reinos, cerca del corazón de algo llamado el Reino de la Luz. A los que podían percibir el destello —la luz sobre una cosa viva— los llamaban retornantes, los retornados, aunque casi ninguno retornaba de ningún lado; el nombre era más viejo que su sentido. En la Tierra, dijo Renata, Mercedes les había contado antes de cruzar que casi nadie podía verla, un mundo entero caminando ciego a través de la luz de los demás, y nadie aquí le había creído. —Nos parecía —dijo Renata— como decir un mundo de gente que no puede oír la música.
+
+—En la plaza, bajando —dijo Selene, despacio, porque tenía que saber—, había cuatro viejos jugando con piedras pintadas. Y entre ellos, sobre la mesa, había una… una soga de oro. Luz, pero no la luz de ellos. Iba de uno al otro al otro, los cuatro, como si estuvieran ensartados en ella. Nunca había visto eso. La luz de la gente se queda alrededor de la persona. Esta estaba *entre* ellos.
+
+Doña Renata bajó la taza y la miró un rato largo, y algo se le movió en el oro guardado que Selene no logró leer.
+
+—Eso es un *hilo*, mija —dijo—. Un hilo. —Dijo la palabra como Mercedes decía *piedra de los velos*, como uno le entrega a alguien una cosa que ha estado guardando—. Cuando la gente se quiere, el Corazón de cada uno estira y se agarra, y deja una línea. Una línea de verdad. Casi todos los que ven destellos no pueden ver los hilos —eso es más raro, eso es más hondo, eso es una vista de Corazón, y tú viste cuatro trenzados sobre una mesa de dominó tu primera tarde en el mundo. —Sacudió la cabeza, despacio—. Esos cuatro hombres se han sentado en esa mesa todas las tardes por cincuenta años. Claro que hay una soga entre ellos. El milagro no es la soga. El milagro es el ojo que la encontró.
+
+Volvió a agarrar la taza. —Agárrate de que lo viste. Lo vas a necesitar antes de que esto termine. Un hilo no se rompe con la distancia, niña. Acuérdate de que te lo dije.
+
+La mano de Selene había ido, sin que ella lo decidiera, a su bolso —a la fotografía doblada de adentro, su papá en la Plaza Francia, la única luz que nunca había logrado leer limpia.
 
 —A mí me llevaron a un doctor a los nueve años —dijo Selene, al bollo en sus manos—. Tenía una palabra para eso. Después una palabra más amable. Después una palabra que le dijo a mi mamá cuando creyó que yo no oía. —Lo bajó, con cuidado, en el centro del plato—. Aprendí a mirar nada más las manos de la gente. Me volví muy buena con las manos.
 

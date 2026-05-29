@@ -83,9 +83,9 @@ Each Trial Chamber contains a Guardian — a creature shaped by the Gate's reson
 
 For the wilds beyond the Shadowfen border (Ch 4-6 Heart Trial territory):
 
-- **Acerro de luna** — moon-stags. Antler-crowned, the antlers shedding pale light at night. Hunted only ceremonially. Population stable.
-- **Tejedoras de niebla** — mist-weavers. Small spider-like creatures that build webs from condensed atmospheric Anima. Webs catch the early-morning Heart-resonance and glow rose at dawn.
-- **Gansos del crepúsculo** — dusk-geese. Migratory. Their cries shift Heart Gate resonance for any flock that crosses overhead.
+- **Venados de luna** — moon-stags. (Renamed from the earlier *acerro de luna* for smoother, Venezuelan-grounded naming — *venado* is the protagonist's own word for deer.) Antler-crowned, the antlers branched like winter trees and shedding a cool pale silver at night that falls on the grass without quite reaching the ground, so a herd moves in a low private dawn of its own making. Destello a clear green (Sight). Hunted only ceremonially; population stable. **In Ch 4 a herd crosses the ridge at dusk and the whole herd turns at the top to look at Selene** — the second time (after the sombracalle) the wilds notice her. As the Heart-attention of Laeylinn stirs (Ch 4–6), the venados begin moving toward the old border for the first time in living memory.
+- **Tejedoras de niebla** — mist-weavers. Small as a thumbnail; spin webs from the night's condensed Anima. At the Heart-dawn (the rose hour just before sunrise) every web catches the 417 Hz resonance and glows soft heart-rose — a thousand small wheels of light strung between the grass-stems, broken by passage, rebuilt by evening. On stage Ch 4. As Laeylinn stirs, they have begun spinning again on the eastern slopes where they had not spun in a century.
+- **Gansos del crepúsculo** — dusk-geese. Migratory. A skein crossing overhead carries the Heart frequency in its cries; the resonance moves through a Heart-perceiver's chest as a loosening, a leaning-toward (Selene weeps without knowing what she grieves, Ch 4).
 - **El Errante** — the Wanderer. A solitary mountain-creature rumored to walk the Heart Trial wilds. No definitive sighting in two centuries. (May or may not appear in Ch 6.)
 
 For the Shadowfen border itself (Ch 7-9):
