@@ -15,7 +15,7 @@
 | **Otome** | Alera | Wind-eagle (wingspan 12m, white-silver) | Roosts on Crystalpeak's central spire; visible from Synthesis dorm window Ch 2 |
 | **Yumiko** | Lyria | Mirror-falcon (smaller, plumage refracts) | Off-stage |
 | **Sol** | Aiyami | Dawn phoenix (constant rebirth) | Off-stage |
-| **Vaelith** | Elara | Void wolf (semi-corporeal) | Off-stage; rumored in Shift Trial |
+| **Vaelith** | Elara | Void wolf (semi-corporeal) | Off-stage; rumored in Starweave Trial |
 | **Kyuro** | Ino | Unity-chimera (composite form, four-limbed, shifts) | Off-stage |
 | **Amaterasu** | Shinkami | Source-dragon (only ever seen by Luminors at Source Trial) | Off-stage |
 
@@ -75,7 +75,7 @@ Each Trial Chamber contains a Guardian — a creature shaped by the Gate's reson
 | Voice (5) | **Otome-chick** | Wind-tower. The candidate sings; the chick repeats only what is true. |
 | Sight (6) | **Yumiko-falcon, juvenile** | Mirror-chamber. The candidate sees herself as the chick sees her. |
 | Crown (7) | **Sol-feather** (no creature; only a single feather in a dome chamber) | The candidate sits in silence under the dome of stars until the feather lifts. |
-| Shift (8) | **Vaelith-shadow** | A patch of Void-shape. Tests the candidate's capacity to remain in unresolved uncertainty. |
+| Starweave (8) | **Vaelith-shadow** | A patch of Void-shape. Tests the candidate's capacity to remain in unresolved uncertainty. |
 | Unity (9) | **Kyuro-foal** | Composite form, four-limbed, shifts during the candidate's encounter. |
 | Source (10) | **Amaterasu's reflection** (only ever seen by Luminor candidates) | Out of scope. |
 

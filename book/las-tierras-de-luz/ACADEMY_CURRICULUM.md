@@ -17,7 +17,7 @@ The Academy teaches the Ten Gates directly. Each Gate is approached through four
 | 5 — Voice | 528 Hz | Wind | Alera | Otome (eagle) | Wind-tower, north wing |
 | 6 — Sight | 639 Hz | Wind (clarity) | Lyria | Yumiko (falcon) | Mirror-chamber, east wing |
 | 7 — Crown | 741 Hz | Void (light) | Aiyami | Sol (phoenix) | Upper sanctum, dome of stars |
-| 8 — Shift | 852 Hz | Void (mystery) | Elara | Vaelith | Shifting chamber (no fixed location) |
+| 8 — Starweave | 852 Hz | Void (mystery) | Elara | Vaelith | Starweave Chamber (no fixed location; moves through the Citadel) |
 | 9 — Unity | 963 Hz | Integration | Ino | Kyuro | Central confluence, ground floor |
 | 10 — Source | 1111 Hz | Source | Shinkami | Amaterasu | The Sanctum (top of spire) |
 
@@ -49,8 +49,8 @@ The framing is: the Academy teaches the **direct** truth. Every conscious world 
 |---|---|---|---|
 | *La Escalera de los Nombres* — the Ladder of Names | Kabbalah (Tree of Life, Sephirot, *Ein Sof*, *nitzotzot*) | All Ten | LE-K-001 through LE-K-247 |
 | *La Rueda de la Luz* — the Wheel of Light | Vedic / Hindu (chakras, *anu-atma*, *prana*, *kundalini*) | All Ten (with chakras 1-7 mapped to Gates 1-7) | LE-V-001 through LE-V-188 |
-| *La Quietud Detrás* — the Stillness Behind | Buddhist (*samadhi*, *rigpa*) / Hesychast (uncreated light, Jesus Prayer) | Crown Gate (7) primarily; Shift Gate (8) secondarily | LE-B-001 through LE-B-156 |
-| *El Volteo del Mundo* — the Turning of the World | Hermetic (*as above, so below*; alchemy) / Sufi (*fana*, perspective rotation, *dhikr*) | Shift Gate (8) primarily; Voice Gate (5) secondarily | LE-H-001 through LE-H-94 |
+| *La Quietud Detrás* — the Stillness Behind | Buddhist (*samadhi*, *rigpa*) / Hesychast (uncreated light, Jesus Prayer) | Crown Gate (7) primarily; Starweave Gate (8) secondarily | LE-B-001 through LE-B-156 |
+| *El Volteo del Mundo* — the Turning of the World | Hermetic (*as above, so below*; alchemy) / Sufi (*fana*, perspective rotation, *dhikr*) | Starweave Gate (8) primarily; Voice Gate (5) secondarily | LE-H-001 through LE-H-94 |
 | *La Conversación Que No Se Acaba* — the Conversation That Does Not End | Aurevaldan grandmother-tradition (Earth-untranslated; survives via *retornante* lineages including Mercedes Solar Velara) | Foundation, Heart, Sight | LE-A-001 through LE-A-23 (small, oral) |
 
 ### How the seminar is taught
@@ -67,7 +67,7 @@ Selene takes Comparative Cosmology in Chapter (theoretical) 9-10, after her Voic
 
 - **Year One**: Foundation (Lyssandria), Flow (Leyla), Fire (Draconia), Heart (Maylinn). Four Trial Chambers in the first year. Most students fail one or two and retry.
 - **Year Two**: Voice (Alera), Sight (Lyria). Comparative Cosmology seminar.
-- **Year Three**: Crown (Aiyami), Shift (Elara). Begin field rotations.
+- **Year Three**: Crown (Aiyami), Starweave (Elara). Begin field rotations.
 - **Year Four**: Unity (Ino). Begin Luminor-track if Synthesis-placed.
 - **Year Five (Synthesis only)**: Source (Shinkami). The Luminor threshold.
 

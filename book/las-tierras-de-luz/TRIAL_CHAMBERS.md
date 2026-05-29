@@ -76,13 +76,13 @@ The chamber is not a test of magic. It is a test of capacity to bear what one al
 
 **Chamber-key**: the feather itself. Crown is the Trial of allowing.
 
-## Chamber 8 — Shift (Elara, Void/Mystery, 852 Hz)
+## Chamber 8 — Starweave (Elara, Void/Mystery, 852 Hz)
 
-**Location**: No fixed location. The Shift Chamber moves through the Citadel. To enter, the candidate is told the chamber will find her.
+**Location**: No fixed location. The Starweave Chamber moves through the Citadel. To enter, the candidate is told the chamber will find her.
 
 **Architecture**: whatever the candidate has refused to let *change* manifests as the chamber's interior. A *Vaelith-shadow* (Trial Guardian — a patch of Void-shape, not creature) accompanies the candidate. The Trial is the capacity to remain in unresolved uncertainty.
 
-**Chamber-key**: a shift-violet crystal, retrieved when the candidate has stopped resolving.
+**Chamber-key**: a starweave-violet crystal, retrieved when the candidate has stopped resolving.
 
 ## Chamber 9 — Unity (Ino, Integration, 963 Hz)
 
@@ -110,7 +110,7 @@ The frequencies listed (174, 285, 396, 417, 528, 639, 741, 852, 963, 1111) are t
 
 ## Trial protocol — practical
 
-1. Candidate is summoned at dawn (Foundation, Heart) or dusk (Voice, Sight) or midnight (Crown, Shift) depending on the Gate's temporal aspect.
+1. Candidate is summoned at dawn (Foundation, Heart) or dusk (Voice, Sight) or midnight (Crown, Starweave) depending on the Gate's temporal aspect.
 2. Candidate enters alone. The chamber door closes.
 3. The candidate's cohort and Master examiner wait outside.
 4. Time inside the chamber does not match outside time. A candidate inside for what feels like an hour may have been outside-time three minutes. The reverse is also possible.

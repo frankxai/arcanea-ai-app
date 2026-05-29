@@ -33,7 +33,7 @@ A destello is a chord. Most people sound two or three notes of it. Selene sounds
 | Voice | Alera · 528 | voice-silver | true speech, the song that is one's own |
 | Sight | Lyria · 639 | clear green | clarity, seeing-through, discernment |
 | Crown | Aiyami · 741 | violet | stillness, allowing, the light already shining |
-| Shift | Elara · 852 | deep indigo | change, the capacity to not-yet-know |
+| Starweave | Elara · 852 | deep indigo | change, the capacity to not-yet-know — the alchemy of perspective |
 | Unity | Ino · 963 | unity-gold | integration of plurality without flattening |
 | Source | Shinkami · 1111 | white | the sum and the silence of all of it |
 
