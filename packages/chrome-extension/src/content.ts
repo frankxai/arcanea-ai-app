@@ -388,7 +388,10 @@ function setupWritingAssistant(): void {
 async function initialize(): Promise<void> {
   try {
     const result = await chrome.storage.local.get('settings');
-    const settings = result?.settings ?? {};
+    const settings = (result?.settings ?? {}) as {
+      enableFloatingButton?: boolean;
+      keyboardShortcuts?: boolean;
+    };
     const enableFloating = settings.enableFloatingButton ?? true;
     const enableShortcuts = settings.keyboardShortcuts ?? true;
     floatingButtonEnabled = enableFloating;

@@ -487,6 +487,9 @@ importers:
         specifier: '>=6.0.0'
         version: 6.0.164(zod@3.25.76)
     devDependencies:
+      '@types/node':
+        specifier: ^20.19.41
+        version: 20.19.41
       tsup:
         specifier: ^8.0.0
         version: 8.5.1(postcss@8.5.15)(tsx@4.21.0)(typescript@5.9.3)
@@ -915,6 +918,9 @@ importers:
         specifier: workspace:*
         version: link:../agent-registry
     devDependencies:
+      '@types/node':
+        specifier: ^20.19.41
+        version: 20.19.41
       typescript:
         specifier: ^5.6.0
         version: 5.9.3

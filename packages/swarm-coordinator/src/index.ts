@@ -82,3 +82,13 @@ export {
   getGuardianByFrequency,
 } from './guardian-agents.js';
 export type { GuardianAgentProfile } from './guardian-agents.js';
+
+// Antigravity Native Integration
+export {
+  getAntigravitySystemPrompt,
+  getAntigravitySubagentDefinition,
+  generateAntigravitySwarmPayload,
+  type AntigravitySubagentDef,
+  type AntigravityInvokeDef,
+} from './antigravity-native.js';
+

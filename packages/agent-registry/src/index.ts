@@ -15,7 +15,7 @@ export type AgentCategory =
   | 'sparc';
 
 export type AgentStatus = 'active' | 'experimental' | 'planned';
-export type RuntimeId = 'codex' | 'opencode' | 'claude' | 'gemini' | 'arcanea-orchestrator';
+export type RuntimeId = 'codex' | 'opencode' | 'claude' | 'gemini' | 'arcanea-orchestrator' | 'antigravity';
 export type TaskPriority = 'low' | 'normal' | 'high' | 'critical';
 export type VerificationMode = 'none' | 'smoke' | 'standard' | 'strict';
 
@@ -218,6 +218,19 @@ export const ARCANEA_RUNTIMES: RuntimeDefinition[] = [
       command: 'arcanea-orchestrator',
       launcher: '.arcanea/scripts/arcanea-orchestrator.ps1',
       notes: 'Use as coordination layer after contract adoption, not as canonical memory owner.',
+    },
+  },
+  {
+    id: 'antigravity',
+    name: 'Antigravity / Swarm',
+    harness: 'Antigravity native agent runtime',
+    role: 'orchestrator',
+    strengths: ['subagent spawning', 'parallel swarms', 'autonomous task execution'],
+    memoryRead: 'mcp-starlight-sis',
+    memoryWrite: 'mcp-starlight-sis',
+    invocation: {
+      command: 'antigravity',
+      notes: 'Use Antigravity subagent tools for parallel execution and swarm orchestration.',
     },
   },
 ];

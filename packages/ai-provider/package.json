@@ -63,6 +63,7 @@
     "@ai-sdk/openai-compatible": "^2.0.47"
   },
   "devDependencies": {
+    "@types/node": "^20.19.41",
     "tsup": "^8.0.0",
     "typescript": "^5.5.0"
   }
