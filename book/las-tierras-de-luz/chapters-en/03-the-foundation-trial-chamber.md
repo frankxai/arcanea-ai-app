@@ -1,299 +1,157 @@
-# Chapter 3 — *The Foundation Trial Chamber*
+# Chapter Three — The Foundation Trial Chamber
 
-The door to the Foundation Trial Chamber was made of stone that had been listening to the candidates for nine thousand years. It knew her name before she said it.
-
-They had descended for the better part of an hour. The stair carved into living *piedra viva* — the Veldorian stone she was beginning to recognize without help — had four hundred and thirty-two steps, Yael told her in a whisper at the seventy-eighth, and Selene had said *thank you for telling me now and not at the start*, and Yael had said *you would have asked if I hadn't*, and Selene had not had a counter-argument.
-
-The stair had no railing. The walls glowed faintly with the soft amber-rose of Foundation. The deeper they went the warmer the stone got — not hot, *body-warm*, as if the mountain's deep skin were holding them. The air thickened. Sound traveled differently. Cael's lantern, three paces ahead, made a small clicking noise that was sharp at the top of the stair and round at the bottom, the way a stone in water sounds rounder.
-
-The *zumbido* had risen. It was no longer a chord. It was *the* chord — Foundation alone, 174 Hz, a sustained low hum that her body recognized in the place between her ankles and the base of her spine. She felt her feet at all times now. The Foundation Gate frequency had a way of making your feet known to you.
-
-Niebla padded beside her. Niebla had not been told to come. No one had told Niebla anything since Avilara. Niebla had decided.
-
-They arrived at the bottom of the stair.
-
-The chamber's vestibule was a round antechamber, twenty paces across, low-ceilinged, lit by a circle of soft Foundation-amber lanterns set into the walls. At the center of the antechamber, on a raised stone dais, was a single chamber-mouth — an arched stone door, the height of a tall man, set flush into the rock face on the antechamber's western wall. The door had no hinges. The door had no handle. The door had no lock. The door was a piece of carved gray stone the color of the Ávila at dawn.
-
-Master Iolen stepped up to the dais.
-
-The cohort gathered behind him. Selene, Yael, Cael, Mira Ardith-Kelos, Wren Talasen, Dorin Quillvane, the visibly terrified Iskar Vellan. Proctor Vethal stood a step behind Iolen, hands folded. Proctor Halcen stood three steps off, arms crossed, his face unreadable.
-
-Iolen turned to face them.
-
-*Foundation Trial*, he said. Quietly. The acoustics of the antechamber were such that quiet voices carried perfectly. *You are seven candidates today. Six of you have completed two weeks of preparation. One of you has completed eight hours of preparation and is here because the chamber called for her by name three weeks early.* He looked at Selene without softening. *That is rare. It has happened twice in my forty years at this gate. Both times the chamber knew what it was doing. I trust it. I am asking you to trust it as well.*
-
-He went on. The Trial protocol Selene had heard described in summary by Doña Renata twenty hours ago, by Yael in fragments over tea, was now real, given again in a voice that did not perform anything.
-
-*You will enter alone. The chamber will materialize around you what you have been denying about yourself. The denial will be physical — a place, a face, a thing. The Guardian — Lyssandria's Kaelith-offshoot — will be present. The Guardian is not your enemy. The Guardian's only function is to crystallize, in real time, anything further you deny. Watch the Guardian. Where it hardens is where you have lied. Where it softens is where you have told the truth. The chamber-key will release when the Guardian has enough truth to break itself.*
-
-He paused.
-
-*The chamber will not kill you. The chamber has never killed anyone. But the chamber can return you to this door without the key, and that is a year before you may attempt it again, and some candidates have not come back. I have lost one candidate in forty years. I remember her every day. I am telling you so that you know I do not lose them lightly. If you cannot refuse the lie inside, walk to the door. The door will open. Walk out. There is no shame in this. There is great shame in lying further than the lie.*
-
-He looked at each of them in turn. Iskar Vellan's face was a still pale mask. Wren was twitching with the small dance of a small body controlled tightly. Dorin was breathing slowly, deliberately. Mira's sharp face was steady. Cael, the prefect, had the eyes of someone who had been through three Trials already and was here as witness.
-
-Iolen looked at Selene last.
-
-*Selene Velara*, he said. *You first. The chamber is calling for you.*
-
-Yael's hand brushed Selene's, once, and was gone.
-
-Selene walked to the door.
+*La Cámara de la Fundación*
 
 ---
 
-The door did not open the way a door opens. The door *resolved* itself into an opening — the gray stone simply became an arched passage, no movement, no sound, the stone present a heartbeat ago and an opening present now. Selene stepped through.
+The stair into the deep of the mountain had four hundred and thirty-two steps, and Yael told her so at the seventy-eighth, and Selene said *thank you for telling me now and not at the start,* and Yael said *you'd have asked if I hadn't,* and neither of them laughed, because by then the hum had begun to come up through the stone and there was no laughing over it.
 
-The opening resolved itself into stone again behind her.
+They went down in single file by the light of a prefect's lantern, seven candidates and the proctors behind them, into a throat of pale stone that grew warmer the deeper it went — not hot, *body-warm,* as though the mountain had an inner skin and they were descending past it, into the part of the rock that was alive. The walls glowed faintly amber-rose, the colour of Foundation, the colour of the deep stone under everything. There was no railing. The hum rose as they fell. By the two hundredth step it was no longer something Selene heard; it was something her body stood inside, a single low sustained note — Foundation, she would learn, one hundred and seventy-four beats of the world's heart a second — that found the place between her ankles and the base of her spine and made her aware of her own feet in a way she had never been in nineteen years of walking on them.
 
-She was standing in her grandmother's apartment in Altamira.
+Niebla came down beside her. No one had invited the cat. No one had invited the cat to anything since Avilara; the cat invited herself, and the proctors had looked at her and chosen, each time, to say nothing, and Selene was beginning to suspect that a silver cat walking unbidden into the chthonic heart of the Academy was not a thing that happened to everyone and was not a thing anyone wished to be the first to forbid.
 
----
+The others descended around her in their separate fears. She had their names now — Yael had given them to her in a fast whisper on the upper stair, a gift of belonging disguised as gossip. Cael, the prefect with the lantern, third-year, already through three Trials, here as witness and not as candidate, with the watchful calm of someone who has seen what the chambers do. Mira Ardith-Kelos, sharp-faced and still. Wren Talasen, small, twitching with the contained dance of a body holding itself very tightly. Dorin Quillvane, breathing slow and deliberate, counting it. And Iskar Vellan, whose face had gone the colour and stillness of candle-wax, whose light — Selene could not help seeing it — had pulled in so close to his body it was almost not there, the light of someone already, privately, deciding he would fail.
 
-It was perfect.
-
-That was the first horror. It was not approximate. It was not symbolic. It was *every detail*, down to the small water-stain on the ceiling of the entry hall where the pipe had leaked in 2017 and her mother had patched it with white paint that did not quite match. The same paint, the same mismatch. The wooden floorboard near the front door that creaked. The framed photograph of her grandfather Camilo Velara on the wall — the one from his agronomist days, the one her grandmother had hung there in 1968 and never moved.
-
-Selene stood in the entry hall. She did not move. Niebla, she understood without looking down, was not with her. The door behind her was gone. There was only the apartment.
-
-She walked into the kitchen.
-
-The chipped Quintana Roo mug was on the kitchen counter. Empty. The chair that her grandmother always sat in was empty. The light through the window was the kitchen-light Selene had eaten countless breakfasts in.
-
-The light through the window was *wrong*.
-
-That was the second specific. The window framed the Ávila — except it did not. It framed a gray rectangle of sky above a gray rectangle of city. The Ávila was gone. The mountain that had been the steady body of her whole life was *not in the window*. The window opened onto a Caracas without mountains, a Caracas that had never had mountains, a Caracas in which no one had ever spoken anyone's name back.
-
-The Guardian was sitting on the kitchen floor.
-
-Knee-high. Faceted, the way Iolen had said. The little crystal-golem was a column of pale amber-rose facets set into a body that was vaguely person-shaped. It had no face. It was looking at her without eyes. It was waiting.
-
-Selene took a step into the kitchen. Her boot creaked on the wood. The Guardian did not move.
-
-She went to the chipped Quintana Roo mug. She picked it up. It was the right weight in her hand. The chip on the rim was the chip from 2008 when she had been six and dropped it. She had cried for an hour. Her grandmother had not been angry. Her grandmother had said *bien, mi amor, ahora es la taza que sabes que es tuya*. The mug had been her grandmother's ever since.
-
-The mug in her hand was empty.
-
-She set it down.
-
-*Abuela*, Selene said.
-
-The empty apartment did not answer. The light in the window did not change. The grayness of the no-Ávila Caracas continued. The Guardian on the floor did not move.
-
-Selene closed her eyes. She thought: *this is the chamber. None of this is real. The chamber is testing me. My grandmother is not gone. My grandmother is in Altamira, drinking coffee. My mother is at the Vargas. The Ávila is in the window. The window is real.*
-
-When she opened her eyes the wall behind the Guardian had hardened. A patch of the kitchen wall — about the size of a dinner plate, near the doorway — had crystallized into pale amber facets. The wall there was no longer a wall. It was crystal.
-
-She understood, in the slow-falling way bad news arrives, what had happened.
-
-She had denied. *None of this is real.* The Guardian had crystallized the denial. The chamber's logic was not what she had imagined — she had imagined that the chamber would test her against a *false* room she had to refuse. But the chamber was not building a false room. The chamber was building a *true* room. A room that contained things she had been denying. And every time she denied any of it — every time she said *this is the chamber, this is not real* — the Guardian hardened the truth she was denying into uncrossable crystal.
-
-The first thing she had denied was that the empty kitchen was real.
-
-The empty kitchen was real. It was real in the way she had always known it to be real — her grandmother would die, someday, possibly soon, and her mother would be at the Vargas working a night shift, and the kitchen would be empty of both of them, and the Ávila would be in the window only as long as Selene was the one looking out. The room was the room she had been refusing to know. The Guardian was the *not-refusing*, made small and faceted, sitting on the floor.
-
-Selene's chest went cold.
-
-She had taken one wrong step and she was already losing. The chamber had nine thousand years of experience.
-
-*Okay*, she said. Aloud. To the Guardian. *Okay. I understand.*
-
-She sat down on the kitchen floor.
-
-She had not planned to. Her legs had decided. She sat down with her back against the cabinet under the sink — the place she had hidden, when she was four, during a thunderstorm — and she breathed.
-
-The Guardian sat on the floor opposite her. It did not move. The crystallized patch on the wall by the doorway stayed crystallized. The mug on the counter was still empty.
-
-She closed her eyes.
-
-She did the thing her grandmother had not taught her and had taught her. She named.
+They reached the bottom.
 
 ---
 
-*The light around the chipped Quintana Roo mug*, she said. To the empty kitchen. *Is amber-rose. Soft. Old. It is the light of forty years of my grandmother holding the mug every morning. The mug has the light because she has been holding it. The light is real. I have been seeing it since I was four. I am not imagining it.*
+The antechamber was round and low and lit by a ring of soft amber lamps, and in its western wall stood a door of grey stone the exact colour of the Ávila at dawn.
 
-She did not open her eyes. She heard, in the silence, a small sound — a small *un-hardening* — and felt the temperature of the room shift by half a degree. The Guardian had softened something. She did not know what. She kept going.
+It had no hinges. It had no handle. It had no lock. It was a single slab of carved grey rock set flush into the living face of the mountain, and Selene understood, looking at it, in the unteachable place behind language, that it was older than the Academy that had grown up to guard it, and that it had been listening to the people who stood where she stood for longer than her world had kept records, and that it already knew her name.
 
-*The light around my mother's hands at the end of a double shift*, she said. *Is the color of exhausted gold. Like a wheat field at dusk. I have seen it since I was five. I did not know the word *gold* yet and I was already seeing it. It is real. My mother is exhausted because she works nights to feed me. The light tells me this. I have always known.*
+Master Iolen stepped onto the low dais before it. Proctor Vethal took her place a step behind him, hands folded, her cool blue light held level by visible effort. And a third proctor stood off to the side, arms crossed, whom Selene had not met: a lean man with a close grey beard and a light the brown-grey of old iron, banked not the way Iolen banked his — to spare others — but the way a man banks a thing he has decided no longer to spend. He watched the candidates the way a creditor watches a debtor. He watched Selene a half-second longer than the rest, and what was in his face was not awe. Halcen, Yael breathed, almost soundless. *Watch that one.*
 
-Another small sound. Another temperature-shift. The chair her grandmother always sat in — Selene felt it without seeing — was no longer empty in the same way it had been empty thirty seconds ago. It was still empty. But it was empty *with* something rather than empty *against* something. She did not open her eyes to check. She was afraid she would lose the place she had gotten to if she looked.
+— Foundation Trial — Iolen said. He did not raise his voice. The round room carried it to every corner without his help. — You are seven who came down these stairs. Six of you have prepared for a fortnight. One of you was called by the chamber three weeks early, by name, and is here because in forty years at this gate I have learned to trust what the chamber knows over what the calendar prefers. — His wet-limestone eyes found Selene without softening. — I am asking the rest of you to trust it too.
 
-*The light around my father*, she said, *on the last night he was in the apartment, was a sour gray-green I did not have a word for and would not have used if I had.*
+He let that settle. Then he gave them the shape of the thing, plainly, the way Renata had named the world and Vethal had named the stone: as a tool they would need and could not be spared.
 
-She stopped. The Guardian had not crystallized anything. The kitchen held. She felt — without opening her eyes — the Ávila beginning to come back into the window.
+— You will go in alone. The chamber will build around you the thing you have spent the most of your strength refusing to look at. It will not be a symbol. It will be a *place* — a room, a face, a thing you know. Inside it you will find the Guardian: an offshoot of Lyssandria's Kaelith, a creature of crystal, no higher than your knee. The Guardian is not your enemy. The Guardian has exactly one gift, and it spends it without mercy: it crystallises, where you can see it, anything you deny. Where the Guardian hardens, you have lied. Where it softens, you have told the truth. — He paused. — The chamber-key will rise when the Guardian has heard enough truth to break itself open. That is the whole of the Trial. There is no monster to defeat. There is only the lie, and whether you will stop telling it.
 
-She opened her eyes.
+His voice changed, then, lost the lecture, went somewhere quieter and more costly.
 
-The Guardian was looking at her. Without eyes, without face, but *looking* — the way the *sombracalle* had looked at her in the clearing.
+— The chamber has never killed a candidate. But it can send you back to this door without the key, and that is a year of your life before you may try again, and not everyone who is sent back comes back at all. I have lost one, in forty years. I think of her every day. I tell you so that you understand I do not say *there is no shame in leaving* as a kindness I do not mean. — He looked at each of them. — If you cannot refuse the lie, walk to the door. The door will open. Walk out. There is no shame in that. There is only shame in lying further down than the lie already took you.
 
-*The gray-green was not abandonment*, she said. The words were coming up through her chest from a place she had not asked them to come from. *I have been telling myself, for seven years, that he left because he could not bear me. That what I carried into the apartment when I came home from school was too much for him. That seeing more was a defect and the defect was what drove him away. I have been lying.*
+He looked at Iskar Vellan a moment longer than the others, gently. Then he looked at Selene, last, and for a moment the old man and the girl simply regarded one another across the warm humming room, two people who hid their own light, and something passed between them that was not quite permission and not quite apology.
 
-She drew breath.
+— Selene Velara — he said. — The chamber called you first. You need not be first. But it asked.
 
-*The gray-green on his face on the last night was him dying. In the air of this world. Whatever he was that I did not know he was, this air was killing him. He kissed the top of my head and he left because if he had stayed he would have died here. He went to live. He went somewhere to live so that one day I would have somewhere to find him. I do not know where he is. I am telling the chamber I do not know. But he is alive. He is alive somewhere and he has loved me every day. I have been the one not seeing.*
+— I'll go — Selene said.
 
-The kitchen *moved*.
+The grey stone door, which had no hinges and no handle and no lock, swung silently inward on a darkness that smelled, impossibly, of her grandmother's coffee.
 
-Not the floor. Something far deeper. The light through the window shifted — for one half-second, no more — from the dawn light of Caracas to a light Selene had never seen, a coral-gold afternoon light through a window framed in *piedra coralina*, and a room she had never been in, and on the far wall of that room a man at a wooden table writing in a book, his face the face of her father seven years older, his hand on the page, the amber-rose-prismatic light around him absolutely the light of someone *alive*.
+She walked into it, because she had spent nineteen years being a person who, handed the truth, looked at her own hands instead — and she had climbed two mountains and crossed a world to stop.
 
-He looked up.
+The door closed behind her without a sound.
 
-He saw her.
+---
+
+She was home.
+
+Not a dream of home. Not a near version. *It* — the apartment in Altamira, exact, entire, down to the small water-stain on the ceiling of the entry hall where the pipe had wept in 2017 and her mother had painted over it with a white that never quite matched, a pale ghost-continent in the corner that Selene had stared at through a thousand dinners. The floorboard by the door that creaked. The framed photograph of her grandfather Camilo Velara from his agronomist years, hung in 1968 and never once moved. The smell — coffee gone cold in the pot, the particular dust of those particular rooms, the after-ghost of the *palo santo* her grandmother burned in a dish by the window.
+
+And out the kitchen window, where the Ávila should have stood — the one beautiful thing those rooms had ever owned, the green mountain that had spoken her name — there was nothing. Not blackness. *Worse.* There was a city: a grey literal Caracas of concrete and wire and weather, a real city, an ordinary city, a city in which nothing had ever once said anyone's name back, in which the light around the living did not exist because it had never existed, in which a girl who said she saw it was a girl with a great deal of imagination who should, for her own sake, learn to stop.
+
+The apartment was empty. No mother. No grandmother. No Niebla. The home she had been given, with the soul taken out of it.
+
+In the centre of the living room, where the coffee table should have been, something the height of her knee turned to face her with a small dry sound of crystal on crystal.
+
+It had no face. It looked at her anyway. A squat faceted thing, clear and grey, throwing the false morning light from the false window in cold splinters across the too-real walls. The Guardian. As her eyes found it, a patch of its surface, low on its body, the size of her palm, went smooth — soft, translucent, faintly warm with an inner light — and she understood, in her body, before her mind could phrase it, that it had answered to something already true.
+
+— It isn't real — Selene said aloud, and her voice came out wrong, too high, in the room that was too real to bear.
+
+The soft patch spread by a thumb's width. True.
+
+She made herself walk into the kitchen of the dead apartment. She made herself name the things she had trained herself, at six, at nine, for eleven years, never to name.
+
+— I see the light around people — she said. The Guardian held, waiting; too large a truth to take in one piece. — I've seen it my whole life. The woman at the *panadería* is terracotta. My mother is a blue that goes grey at the edges when she's tired. The man with the newspaper in the Plaza Francia was a cool deep blue and the child who fell was a coral that didn't flicker even when she cried. — The Guardian softened, a hand's breadth, the inner light climbing. — A doctor told my mother I invented it. For attention. I was nine. I believed him for eleven years. I called my own eyes a sickness because a kind man with a cool office told me to.
+
+The crystal eased and eased.
+
+— I'm not sick — Selene said. — I was never sick. There was never one single light I invented. Not one.
+
+And the false morning over the false grey city brightened, just slightly, as though the room itself had leaned in to listen — and there was one thing left in the apartment she had not let herself look at, and the Guardian was waiting for it, patient and terrible and kind.
+
+It was the wall by the door, where the photographs hung. Her mother. Her grandmother. Her grandfather Camilo. And the gap — the faded rectangle where a frame had hung once and been taken down, the plaster behind it a half-shade brighter than the plaster around it, the ghost of a picture no one in that house had spoken of in seven years.
+
+Selene stood in front of the gap.
+
+— My father — she said, and her voice broke, and the Guardian did not harden, and the apartment held its breath.
+
+---
+
+— The light around my father — she said — on the last night he was in these rooms, was a sour grey-green I had no word for and would not have used if I had.
+
+The Guardian waited. The apartment did not crystallise. Out the window, at the far edge of sight, something pale was beginning — the faintest suggestion of a green shoulder where the grey city met the grey sky.
+
+— I have told myself one story about that grey-green for seven years — she said. — I told it so many times it stopped being a story and became a fact, and I built myself on top of the fact, the way you build a house on a stone. The fact was: he left because of me. Because of what I carried into these rooms when I came home from school — the seeing, the colours, the too-much of me. The fact was that I was the defect he finally could not live beside. That seeing more is a sickness, and the sickness drove my father across an ocean. — Her hands had closed into fists at her sides. — You want the truth. Here is the truth, and I have never said it, not once, not even alone in the dark —
+
+The crystal held, and glowed, and waited.
+
+— — the grey-green was not him ceasing to love me. The grey-green was him *dying.* In the air of this room. Whatever he was that I was too young to see and too well-trained to believe, this world was starving it out of him, slow, the way a flame goes out under a glass, and the colour around him on the last night was the colour of a light going out. — The tears were on her face now; she had not felt them start; they were simply there, the way the wind had been there at the summit. — He kissed the top of my head. He said *te llamo el sábado.* And he left — not because he could not bear me — he left because if he stayed he would have died in front of me. He went somewhere he could *live.* He went to live so that one day there would still be somewhere for me to find him. I don't know where. I'm telling you I don't know where he is. But he is *alive,* and he has loved me every single day of seven years, and the one in this family who could not see — was me.
+
+The chamber moved.
+
+Not the floor. Something far beneath the floor, in the root of the mountain, in the root of the world. And the light through the kitchen window changed — for one half-second, no longer — and it was not the grey Caracas and it was not the green Ávila. It was a light Selene had never seen and would spend years trying to find again: a coral-gold afternoon, slanting low through a window framed in pink coral stone, into a room she had never stood in. And at a wooden table in that room, his back half-turned, a man sat writing in a book. He was older than the last time — seven years older, grey now at the temple. And the light around him was not grey-green. It was amber, and rose, and something prismatic laid over the top of it, the whole impossible ordinary glory of the light that hangs around a person who is *alive.*
+
+He stopped writing.
+
+He lifted his head.
+
+He turned, across whatever the chamber was, across worlds, across seven years, and he looked — straight at her — and his mouth began to shape a word she had not heard in the voice that made it since she was twelve —
 
 The room was gone.
 
-The kitchen was the kitchen. The Ávila was in the window. The Guardian on the floor opposite her was looking at her without eyes and the central column of the Guardian had broken open down its full length.
+The apartment was gone. The dead grey city, the patched ceiling, the creaking board, the gap on the wall — gone. Selene stood on bare luminous stone in a chamber of pale crystal, and the Guardian at her feet had broken open along its full height, soft and glowing from within, no longer a thing of cold facets but a single clear vessel of held and given light. And rising out of the open heart of it, turning slowly in the warm air, was a small crystal the colour of the deep stone, amber-rose, the chamber-key.
 
-Selene was crying.
+It settled into her palm. It was warm, the warmth of a body, the warmth of the *piedra de los velos,* the warmth of a stone that does not reflect light but remembers it.
 
-She had not noticed she had started. The tears were on her face the way the wind had been on her face at the summit. She wiped them with the back of her hand and breathed out and kept going. Because the chamber was not finished. Because she was not finished. Because her father was alive in some room she had not yet been to, in a Realm she did not yet have the name of, and there was no version of finishing this in which she did not say everything still owed.
+And then it began to refract.
 
-She did not stop.
+Amber-rose first, the Foundation it had been. Then water-blue, climbing through the crystal as she watched. Then fire-gold. Then a heart-rose, a voice-silver, a green, a violet, a deep indigo, and last a white so clean it was the absence and the sum of all of them at once — every Gate, in turn, then all of them together, the small stone in her palm throwing the full spectrum up the walls of the chamber until the whole round room stood lit in every colour there was, exactly as the ten lamps had lit by her breathing, a second confirmation written in the deep rock for anyone who had still, after the first, preferred not to believe.
 
-She named her brother who had never been born, the brother her parents had tried for and had not had — the small soft coral-color that had hovered, when she was eight, around her mother's belly for one early autumn and then had gone, the color of a hope that would not arrive — and she said *I saw you, little brother. I am sorry I never said your name. Your name is Ariel. I have known your name my whole life. You were prismatic.*
+Selene was on her knees. She did not remember kneeling.
 
-The Guardian's central column softened further. The crystal patch on the kitchen wall by the doorway hummed and then was wall again, plain plaster, the chipped paint by the corner the same chipped paint that had always been there.
-
-She named her grandmother's destello — the one she had never spoken of, *not even to her grandmother*, because to speak it would have been to admit she had been watching her grandmother her whole life with the special attention reserved for the truly loved — and she said *Abuela, your destello is opalescent. It has always been opalescent. You held it cupped inside your chest like a hand cups a candle. I have known since I was three. You knew I knew. You waited until I was ready to come and find what you were carrying. You are the most loved person of my whole life.*
-
-The Guardian's facets came apart along three lines at once.
-
-The Ávila came back into the window.
-
-Selene saw it happen. The gray rectangle outside the kitchen window *rippled* — not visibly, the air itself rippled — and then the Ávila was there. The mountain she had been climbing in her sleep for nineteen years. Dawn light. The shape that had been the steady body of her whole life. The window framed it the way it had always framed it.
-
-She let out the breath she had been holding for what felt like a long time.
-
-She kept going.
-
-She named her mother's hands — the long fingers, the chipped nurse's nails, the *strength* in them. She named Niebla, *who I knew by name before I had been told*, and the cat in some adjacent place outside the chamber heard her name and the chamber felt it — Selene knew, in the unteachable place behind language, the chamber *felt* Niebla outside the door. She named Doña Renata. She named the small prismatic child Aurelio playing chase around the fountain in the third-tier plaza. She named Yael — *my friend whose three grandmothers are in conversation in her chest and who has been waiting for me to come because she needed someone who came in through a back door.* She named Master Iolen. *Wet-limestone eyes. Steadiness.* She named Tobias and the small thunder of Brasa waking up to look at her.
-
-She named the *sombracalle*.
-
-She had not known she was going to. The word came up out of her chest before she had decided to use it.
-
-*The sombracalle that stopped*, she said. *I saw you. I see you now. You are not Shadow. You are Nero's mystery. You are an absence of brightness moving through brightness. You have never been seen back before. I am sorry I looked away from you in Caracas for so many years. You were not hurting me. I was making you smaller than you were by pretending you were a migraine. I see you. I am the one who will see you. I am the condition for it.*
-
-The Guardian came apart entirely.
-
-The amber facets that had been the Guardian's body fell — not crashed, *fell*, the way a stack of cards falls — into a small pile on the kitchen floor. In the center of the pile, where the Guardian's heart had been, a single small crystal lay. The size of a *bollo*. The color of Foundation amber-rose, deep, steady. The chamber-key.
-
-The chamber was silent.
-
-Selene stood up. Her legs were not shaking.
-
-She walked across the kitchen floor to the pile of facets and bent down and picked up the chamber-key.
-
-It was warm.
-
-It was warm the way her grandmother's *piedra de los velos* had been warm. The way her grandmother's hand had been warm at the kitchen table in Altamira twelve hundred years ago this morning. She closed her fingers around it.
-
-The chamber-key in her palm began to refract.
-
-She watched it happen. The amber-rose of Foundation was the first color, and the strongest, and the color she had earned. But as she held it the crystal began to *turn through* the spectrum. Amber-rose. Then water-blue. Then fire-gold. Then heart-rose. Then voice-silver. Then sight-violet-blue. Then crown-white-gold. Then shift-deep-violet. Then unity-green-gold. Then — the rarest, the one that hardly ever shows itself outside the Sanctum — the soft luminous nothing-color of Source. The chamber-key cycled through all ten and then began again.
-
-Around her the kitchen — the empty-but-no-longer-empty kitchen, the kitchen that had become the kitchen again with the Ávila in the window — began to glow. Not from the lanterns. The walls. The walls were a pale Foundation amber. Then they were Flow blue. Then Fire gold. Then Heart rose. The kitchen *was* the resonance reading. All ten Gates, in sequence, lighting the apartment in Altamira.
-
-She heard, very distantly, the sound of stone moving.
-
-The kitchen began to dissolve. Not the way the chamber had built it — not in detail. It dissolved the way a dream dissolves on waking. The wood floor became the polished stone of the chamber antechamber. The Ávila in the window became the soft amber lanterns of the antechamber walls. The chipped Quintana Roo mug, in the last instant before the kitchen was gone, hung in the air for one half-second — and then was the chamber-key in her palm, which had not changed, which was the same warm chambered stone she had picked up off the kitchen floor.
-
-The door of the chamber resolved itself out of the wall in front of her.
-
-Selene stepped through.
+She knelt on the floor of the Foundation Trial Chamber with the chamber-key blazing every colour in her hand and her father's half-turned living face burning behind her eyes, and she wept — fully, finally, without managing it — for the girl of nine who had been told she was sick, and for the man who had kissed her head and crossed a world to keep from dying in front of her, and for the grandmother who had known all of it and carried the silence for sixty years, and the open Guardian glowed beside her like something that had waited a very long time to be told the truth and was, at last, grateful to have heard it.
 
 ---
 
-Master Iolen was three paces inside the antechamber. He had not moved. He had been waiting there the entire time. His face — the wet-limestone face — was steady.
+The grey door became an opening, and the opening filled with faces.
 
-The other cohort members were behind him, lanterns in hand, faces variously stunned and gentle. Yael was at the front. Yael's eyes were enormous. Yael had her hand on her own mouth, the way one does to keep oneself from interrupting something one has not yet processed.
+The cohort had crowded to the threshold — six candidates and a prefect and three proctors, every one of them looking past her at the chamber blazing with all ten colours and the Guardian broken open and the girl on her knees with the spectrum pouring out of her closed hand. No one spoke. Even Halcen, the iron-grey man who had watched her like a debt, had let his arms fall to his sides.
 
-Selene held out the chamber-key.
+Master Iolen came in alone. He looked for a long moment at the open Guardian, and at the colours on the walls, and then he crouched, slowly, his weathered bulk folding down to her level, and he held out one broad grey hand — not to take the key. To help her up.
 
-Iolen looked at it.
+She took it. She stood. Her legs had crossed two mountains and a world and a truth in two days and they held, because his hand was Foundation and Foundation is the thing you stand on.
 
-For one beat his face did not change. Then — because she was watching, and because his face was honest, and because he had been a Foundation Master for forty years and was not going to perform anything for her — his face did change. The eyes registered. The mouth set. The hand he raised to take the chamber-key from her shook, *one half-shake*, and then was steady.
+He turned to the cohort, and he did not raise his voice, and the round warm room carried it to all of them.
 
-He took the key.
+— The Foundation Trial is concluded for Selene Velara — he said. — You saw the chamber. You will hear the rumour by midday and the rumour will be wilder than the truth, so I will give you the truth. Her chamber-key holds Foundation. And beyond Foundation, it holds all ten Gate resonances at once. — He paused, and let it land, and in the silence his banked light pulsed once, helplessly, the way it had in the reading room. — This has been recorded twice in the history of this Academy. The first was Lirien of Aqualis, four hundred years ago. — His wet-limestone eyes came to rest on Selene, and he said the rest more quietly, almost to himself, in the old tongue, so that only those nearest caught it: — *Cien años.* The second is here.
 
-The chamber-key, in his palm, cycled through the ten colors once, and again, and a third time. The antechamber lit up around the cohort in a slow rolling sequence of resonance lights — the walls amber, blue, gold, rose, silver, violet-blue, white-gold, deep-violet, green-gold, source-luminous-nothing — and back to amber.
+Behind Selene, very quietly, into the ringing silence, Yael said:
 
-The cohort had stopped breathing.
+— *Holy hell,* Velara.
 
-Iolen closed his hand around the key for a moment. When he opened it the chamber-key had settled — *settled*, for him, the way it had not settled for her, because he was the one with forty years of Foundation reading and his hand could ask the key to settle. It was Foundation amber-rose. Steady. The key Selene had earned.
+A breath of something that was almost laughter went through the cohort, breaking the spell by a degree, and Selene felt the colours fade from the walls as the key cooled to its amber-rose in her hand, and for one moment it might have been over, it might have been the end of the strangest two days that had ever happened to anyone — and then Master Iolen turned to Proctor Vethal, and his face had changed, and he was not finished.
 
-He spoke, in the Veldarín he reserved for the moments when Common did not have enough room.
+— Her next Trial cannot be held in this Realm — he said.
 
-*Cien años.* A pause. *Cien años, mi vida.*
+Vethal went still. — Master —
 
-He turned to the cohort.
+— You felt the stone. You saw the chamber. — Iolen's voice was low and even and absolutely certain. — A resonance like this does not simply *sit* here, lighting lamps. It calls. It has already begun to call — — and here he looked at Selene, and something in his face told her he had heard, somehow, about the crossroads — to things that have not been heard from in a very long time. The Heart Trial is the fourth Gate, and it will not be taken in a chamber under this safe mountain. It will be taken in the wilds, beyond the western marches, near the old border. Because something out there turned its head two nights ago, on a road, toward a girl who had been in this world for half a day. — He let that sit in the warm humming dark. — And whatever it is, it has not turned its head in eight hundred years, and I would rather we go to it, awake and ready and together, than wait politely here for it to come to us.
 
-*The Foundation Trial is concluded for Selene Velara*, he said. He had switched back to Common. He spoke without raising his voice. *Her chamber-key holds Foundation, and beyond Foundation, all ten Gate resonances. This has been recorded twice in the Academy's history. The first was Lirien of Aqualis, four hundred years ago. The second is here.*
-
-He looked at her.
-
-*Selene*, he said. *Your next Trial cannot be in this Realm. The Heart Trial — Gate four, Maylinn — must be conducted in the open lands. The Heart Trial Chamber, the inner courtyard, is not large enough to hold what your resonance is calling. The Heart-attention of the older lineages is waking, in the wilds, in response to you. We must take you to it.*
-
-He paused.
-
-*You will leave tomorrow at dawn. Yael Mehta-Suleiman — you are granted permission to accompany. Cael Iverith, you will lead the cohort detail in my absence; I go with them. The Heart Trial is conducted by Master Maylinn-aspect, but Master Maylinn is on the southern frontier and we will meet her at the Heart-meadow inside the western wilds beyond the Shadowfen border.*
-
-There was a long silence.
-
-Then, behind Selene, very quietly, Yael said: *Holy hell, Velara.*
-
-Iolen turned to Yael. He did not smile. But the corner of his mouth moved one millimeter, the way it had moved the first time he had heard about the bread.
-
-*Yes*, he said. *Holy hell indeed.*
-
-Then he turned to the other candidates. *Mira Ardith-Kelos. The chamber calls.*
-
-Mira's sharp face — the freckled one, the Pyros-born — went pale and then composed itself. She nodded. She walked past Selene to the dais.
-
-Selene stepped out of the line. Yael came to her side. Neither of them spoke. They watched as the door resolved itself again into an opening, as Mira stepped through, as the opening resolved itself back into stone.
-
-Selene closed her hand around the chamber-key in her palm. It was warm. The amber-rose of Foundation. The color of her grandmother's destello. The color of the apartment in Altamira when the apartment had returned to being the apartment.
-
-She would keep the chamber-key for the next year, she would learn later, on a leather thong around her neck.
-
-But that was the next year, and what she had to do first was tomorrow.
+No one spoke. Far above them, through four hundred and thirty-two steps of living stone, the bells of Crystalpeak began to ring the dawn.
 
 ---
 
-They came up the four hundred and thirty-two steps slowly. The cohort was somber — Mira had come back, and Wren after her, and Iskar after Wren, and Dorin after Iskar, and each chamber-key had been single-Gate, the proper Foundation amber-rose alone, the appropriate result of weeks of preparation by candidates who had been studying for this their whole lives. Each of them embraced Selene without speaking on the climb up the stair. Mira squeezed Selene's hand once, hard, and let go. Iskar Vellan, who had been visibly terrified an hour ago, was now serene — Foundation passed, the gift of the chamber, his body still adjusting to having survived itself.
+The great outer door of the Citadel was tall enough to admit a Godbeast and old enough to remember when one had, and it opened for them onto a sky going gold in the east.
 
-At the top of the stair the sun was up.
+They went out into the morning — Selene with the chamber-key warm in her pocket against the *piedra de los velos,* her eyes still raw; Yael at her shoulder, granted leave to accompany by a Master who had decided, without being asked, that this one should not go into the wilds without the friend she had made in a single night; Master Iolen ahead of them, broad and unhurried, a travelling staff in his hand now and his banked light, for once, not entirely shuttered; and Niebla, who had not been invited, walking at Selene's heel as though she had chosen the whole of it from the start, which Selene was no longer sure she had not.
 
-The light through the eastern courtyard's windows was the gold of mid-morning. The Citadel was awake — students moving in the corridors, the small distant sound of practice singing from the Voice tower, the steady chord of the breathing buildings.
+The high stone road ran west from the gate, down off the singing mountain and out toward a country of pale grass and standing stones and, beyond it, the blue line of wilds where the world stopped being safe. The sun was coming up behind them and throwing their four long shadows out ahead, down the road, toward whatever had turned its head.
 
-In the courtyard, framed in the great gate of Crystalpeak, the high stone road that led west was visible. The road climbed out of the Citadel's sheltered valley and onto a long ridge, where it disappeared over a low pass. Past the pass the western wilds began. Past the western wilds, at the very edge of perception, the dark line of the Shadowfen border lay against the horizon.
+Selene Solamar Velara stood on the threshold of the Academy of the Ten Gates, nineteen years old, born in Altamira, daughter of a man she now knew was alive in a coral-pink room in a world she did not yet have the name of, granddaughter of the woman who had crossed first and waited sixty years — and for the first time in her life she did not look at her hands.
 
-Selene stood at the gate. Yael was beside her. Master Iolen was three paces back, speaking quietly to Vethal. Niebla — who had been waiting at the door of the Foundation Chamber the entire time, who had not moved for the four hundred and thirty-two steps in either direction — was at Selene's heel.
+She looked west, into the light, at the long road and the waiting wilds.
 
-Yael said: *I packed a bag while you were down there.*
-
-Selene looked at her.
-
-*I went up to the room while you were inside*, Yael said. *I packed for me. I packed for you. The dorm-brother said I shouldn't but the Master said I should, so —* she shrugged the small shrug of a person who had won the dorm-brother argument by appeal to a higher court. *I have a bag for each of us. I have two cardigans. Wear the blue one tomorrow morning, it's cold up there.*
-
-*Yael.*
-
-*Don't*, Yael said. *Don't say it. I know.*
-
-Selene took her hand.
-
-The sun rose another notch. The Heart Gate horizon — the western ridge over which the road went — caught the morning light. Somewhere out beyond the Shadowfen border, *the Heart-attention of the older lineages* was waking, Iolen had said. Selene did not know what that meant. She had a feeling that by the end of the next week she would.
-
-Niebla looked west.
-
-Master Iolen finished his conversation with Vethal and came to stand beside them.
-
-*Tomorrow*, he said.
-
-Selene nodded.
-
-*Tomorrow*, she said.
-
-The Foundation chamber-key, on its new leather thong around her neck, lay warm against her chest, beside her grandmother's small gold cross and the small canvas pouch in which the *piedra de los velos* rode. The amber-rose of forty years of *café con leche*. The amber-rose of a kitchen in Altamira where the Ávila was again in the window.
-
-She turned away from the gate and went, with Yael and Niebla and Master Iolen behind her, to find breakfast and an hour of sleep and a pair of boots that would carry her, tomorrow, into the wilds.
+And she took the first step down it.

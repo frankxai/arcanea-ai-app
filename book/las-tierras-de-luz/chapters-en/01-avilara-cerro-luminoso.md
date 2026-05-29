@@ -1,275 +1,137 @@
-# Chapter 1 — *Avilara, El Cerro Luminoso*
+# Chapter One — Avilara, el Cerro Luminoso
 
-The first thing Selene noticed about Avilara was not that the sky was the wrong color. It was that the city was singing, and she had been waiting to hear that song her whole life without knowing it.
-
-She stood on the rock at the summit and the rock was no longer the summit of the Ávila. The air had a different weight. The light was the dusk-light of a different mountain — pink-gold, slow, the light of a sun that had moved its angle by some unfathomable degree while she had taken the single step through the door. Below her — *below her, where Caracas had been an hour ago* — a different city poured itself in tiers down the southwestern flank of the mountain she was standing on, all the way to a sea she did not know.
-
-The city was coral. That was the first specific. The buildings were coral-pink, in some warm volcanic stone she had no name for, and their roofs were dark blue tile. The plazas between the tiers were carved into the mountain itself, and the stairs that connected the plazas — she could see, even from here, that the stairs were *singing*. A low underfoot hum she could feel through her boots though she was a kilometer above them.
-
-She did not know how she knew it was Avilara. She knew. The way she had known the name *gato plateado* on the summit at dawn.
-
-A wind crossed the rock. The wind carried the city's chord up the mountain: a sustained low note that her chest recognized as the *zumbido* and did not recognize as anything she had heard before. The *zumbido* she had carried her whole life had been one note. This was a chord.
-
-She breathed. The chord moved through her.
-
-A voice behind her, soft, said: *¿Te ayudo, mi cielo?*
-
-Selene turned.
-
-A *gato plateado* was sitting on the rock five paces away — Niebla, she knew her name was Niebla without having been told. Niebla blinked at her once, the slow blink of a cat acknowledging a person, and looked past her toward a path that led down the mountain.
-
-The voice had not come from the cat. There was no one else.
-
-Selene looked at Niebla. Niebla looked at the path.
-
-*Vale*, Selene said.
-
-She picked up her satchel and began to walk.
+*Avilara, the Luminous Hill*
 
 ---
 
-The path was older than any path she had walked on Earth. The stone treads were worn smooth in the center; the side of the trail dropped away into a slope of pale-blue lichen that flowered in tiny coral-colored stars. The air smelled — she did not have a word for the smell. Heat, water, something fruit-like that was not any fruit. The trail descended in switchbacks. Niebla walked at her heel.
+The first thing Selene noticed about the new world was not that the light was wrong. It was that the mountain was singing, and that some part of her had been waiting her whole life to hear it.
 
-Twice during the descent the chord from the city below her *changed*. Not louder; not different in pitch; *fuller* — as if a second voice had joined and then a third. She did not understand. She kept walking.
+She had stepped through a door in a rock and the door was gone and the rock was gone and she stood, instead, on a wide stone shelf near the top of a mountain that was not the Ávila, in the long pink-gold light of an evening that had been, a single step ago, the middle of a Caracas night. The air had a different weight in her lungs, warmer, faintly salt. And rising through the soles of her boots, through her shins, into the floor of her chest, came a sound she felt before she heard — a low sustained note, and under it another, and under that a third, a chord that did not end, coming up out of the rock of the mountain itself.
 
-She passed a small shrine carved into the rock face — a niche, a flat stone the size of a book, on it a single dried flower and a piece of *piedra coralina* the size of a peach. She did not stop. She bowed her head in passing because something in her bones told her to.
+Below her the mountain fell away in tiers toward a sea, and the tiers were a city.
 
-A bird crossed the trail. Orange-breasted, fast, gone. She thought *naranja del sol* without knowing where the word had come from.
+It was built of a stone she had no name for, coral-pink, warm as a held hand, roofed in tile the deep blue of the water beyond it, and it poured down the mountain's flank in shelves and stairs and plazas all the way to a harbour where the evening sun was breaking itself into pieces on the swells. The singing came up out of the city as much as out of the mountain — or the city was how the mountain sang, she could not yet tell which — a sound like a cathedral the size of a valley, patient, enormous, glad.
 
-By the time she reached the upper edge of the city the sky had moved one shade closer to dusk and the singing was no longer a chord but an entire weather. She paused at the city gate — a wide arch of coral-pink stone, two figures carved into its lintel that looked, from below, like a man and a woman walking toward each other.
+She did not know how she knew the city's name. She knew it the way she had known *gato plateado* at dawn. *Solavila.* And the mountain under her was the *Cerro Luminoso,* the luminous hill, and the chord coming up through it was *el canto del cerro,* the song of the hill, though those last names she would not be given for another hour.
 
-There was a woman in a deep-blue robe waiting under the arch.
+For nineteen years she had felt the world's lights as pressure, as noise she had to brace against. She stood now on the side of a singing mountain and felt, for the first time, that the noise had been a song the whole time, and that she had simply never before been somewhere quiet enough — or true enough — to hear the tune.
 
-She was old — sixty, maybe more — stout, gray-haired, holding a wooden walking stick that was covered in carved names. She was looking up the trail. She had been looking up the trail, Selene understood without being told, for an hour. Maybe a year. Maybe sixty.
+A weight settled against her ankle. She looked down.
 
-When she saw Selene the woman put one hand to her own chest and pressed it there. The gesture Selene had seen her grandmother make all her life and never understood.
+The silver cat sat against her boot, tail curled, looking up the slope toward a path worn into the rock.
 
-The woman walked forward and stopped two paces away. Up close, her eyes were a brown so dark they were almost the indigo of her robe. She had been crying. She was not crying now.
+— You — Selene said. Her voice came out rough. — You were on the Ávila.
 
-*La nieta de Mercedes*, the woman said. *Por fin.*
+The cat blinked at her once, slow, the blink that is a cat's word for *yes, and,* and looked again at the path. *Niebla,* Selene thought, and did not question how she knew, and the cat's ear turned toward her as though the name had landed somewhere.
 
-Selene had no voice for a long moment. She found it.
+— Vale — Selene said. — Lead, then.
 
-*¿Usted la conocía?*
-
-The woman laughed once — a short laugh that was also a small private grief — and shook her head. *Nunca la vi. Pero la esperé. La esperé sesenta años, mi cielo.* She looked at Selene as if she were inventorying her, gently — the boots, the satchel, the gold cross visible at the collar of her shirt, the *piedra de los velos* in the small canvas pouch at her hip that she had not realized was visible until the woman's eyes had paused there for a single half-second and moved on.
-
-*Soy Renata Solar*, the woman said. *Doña Renata, si prefieres. Soy la *retornante-scout* del corredor. Soy prima lejana de tu abuela.*
-
-She extended her hand. Selene took it. Renata's hand was warm and dry, the skin like old paper, the grip firm and not lingering.
-
-*Soy Selene Velara.*
-
-Renata smiled. The smile was the smile of a woman who had been waiting to say a sentence out loud for sixty years and could now say it.
-
-*Lo sé, mi cielo*, she said. *Bienvenida a Avilara.*
+And the two of them went down the singing mountain together, into Avilara, in the last of the coral light.
 
 ---
 
-They walked into the city.
+No one screamed at her. That was the second thing.
 
-Selene had not understood, until they were inside the gate, that *every street* in Solavila sang. The *escaleras de canto* hummed under her boots. The walls of the buildings — *piedra coralina*, warm to the touch, slightly translucent — carried the chord upward into the dusk. People were everywhere. Plaza music: a *cuatro* and a guitar and a small hand-drum and a singer Selene could not see. Children running. A woman selling oranges that Selene recognized as *naranja del sol* without recognizing them. The air smelled of bread.
+She came down off the trail into the upper tier of the city expecting — she did not know what. To be a wrongness. To be the thing the street stopped for. She was dressed wrong, walked wrong, carried a satchel from a world that did not exist here; and the people of the upper tier glanced at her, and read, in the half-second way she had spent her life dreading, the light around her — and then simply nodded, or didn't, and went on. A boy carrying a tray of little blue cups looked at her light, raised his chin in the universal greeting of the busy, and was gone down a stair. A woman watering a window-box of the green-sweet flower met her eyes, then her destello, and smiled the brief incurious smile you give a traveller who is clearly a traveller and clearly fine.
 
-The bread.
+They could all see it. Every one of them. And not one of them thought it was worth more than a nod.
 
-Renata had her by the elbow, gently, steering. *Hay una mesa esperándonos*, she said. *Ven, mi vida. Tienes que comer algo. Si no comes ahora ya no vas a tener hambre por las próximas seis horas y entonces, cuando finalmente comas, te vas a marear. Lo he visto muchas veces.*
+Selene had to stop, once, with her hand against a coral-pink wall that was warm and very faintly humming, because her eyes had filled and she did not want to walk into Avilara crying.
 
-She steered Selene into a café at the corner of a small plaza on the third tier. The plaza was tiled in coral-pink and dark-blue concentric circles. Three children were playing a chasing game around a stone fountain in the center, calling to each other in Avilaran Spanish that sounded — to Selene's Caraqueño ear — almost exactly like home and not at all like home.
+Niebla waited.
 
-The café had four tables. Three were occupied. The fourth — under an awning of dark blue cloth, by a wall over which an *acacia cantante* hung its pods — was set for two. The proprietress, a woman in her late forties with a face the color of milky coffee and the hands of someone who had been kneading dough since she was twelve, came out as they approached. She placed a flat woven plate on the table. On the plate were five small round breads.
+When she could, they went on, down through tiers that grew busier as they fell toward the harbour — a plaza where four old men played a game with painted stones and a single light braided gold between them, an arcade of stalls closing for the evening, the smell of charred corn and salt and something citrus and resinous burning in a doorway shrine. Twice she saw a person stop and look, really look, at her light, with a flicker of something sharper than the others — recognition, maybe — and move on with a backward glance. She did not yet have the word *retornante.* She would have it before the moon was up.
 
-*Bollos de maíz solar*, she said. To Selene. With the careful attention of someone who knew exactly what was about to happen.
+The woman was waiting for her at the gate of the third tier as though she had been waiting there for sixty years, which, in every way that mattered, she had.
 
-Selene sat down. Renata sat opposite her. The proprietress placed a small clay pot of soft white curd between them and went back inside.
+She was not young and not old in a way Selene could not resolve. Iron-grey hair bound back hard; a face like the prow of a boat; a deep-blue robe with a device at the collar Selene did not know to read as the mark of the Library. And her light was the stillest Selene had ever seen on a living person — a banked, even gold, the gold of a coal that has burned so long and so steadily it has forgotten how to flicker.
 
-*Come*, Renata said. *Antes de hablar.*
+The woman looked at Selene's face. Then she looked, frankly and without apology, at Selene's light. And whatever she saw there made her put one hand flat against the gatepost, as though the ground had shifted.
 
-Selene took one of the *bollos*. It was warm. It was the warmest bread she had ever held. She broke it open. A small cloud of steam rose. She dipped a piece into the curd. She put it in her mouth.
+— Dios — she said softly. — *Mercedes.* You have your grandmother's light. — Her voice was rough and did not break. — Sixty years, and I would know it on a moonless night.
 
-The taste was the *bollos* her grandmother had made for sixty years.
+— You knew my grandmother — Selene said.
 
-Exactly. Not similarly. *Exactly.* The note her grandmother had been chasing and almost finding, with Caracas cornmeal, every Sunday morning of Selene's childhood — was *this*. Was the original of which her grandmother's bread had been the careful imperfect translation.
+— I am your grandmother's cousin, child, twice removed and once heartbroken. — The woman pressed two fingers to her own sternum — *here, over the heart,* the same gesture, the gesture that had crossed a world in Mercedes's body and lived sixty years in a Caracas kitchen — and Selene understood that it was not a private habit at all but a thing her grandmother's whole people did. — I am Renata. Doña Renata, the young ones insist. I keep the gate, which is to say I am the one who waits. The Realm set a watcher on the corridor the year it closed, on the chance that it might one day open and send us back someone who could see. The watch passed down. It came to me forty years ago. — Her banked gold flared, just once, at the edges. — I had begun to believe I would die at this gate having waited for no one. — She stopped. Her jaw worked. — Tell me she is alive.
 
-Selene began to cry.
+— She's eighty-one — Selene said. — She sent me. She's the one who taught me to climb.
 
-She did not make a sound. The tears moved down her face the way the wind had moved across the rock at the summit. Renata did not look away. Renata did not reach. Renata sat with her hands folded around a small cup of coffee that the proprietress had set in front of her without Selene having seen it happen, and Renata waited. The proprietress, in the doorway, also waited.
+Doña Renata closed her eyes. When she opened them she had wept and finished weeping in the space of a single breath, which Selene would learn was simply how this woman did it.
 
-When Selene could speak again she said, *Es el pan de mi abuela.*
+— Sixty years we sang her gone — Renata said. — *Mercedes que se fue por el cerro.* And she lived, and she taught a granddaughter to see. — She shook her head once, hard, settling something, and her voice came back brisk and warm at once. — Come. You crossed in the night and your body has not caught up to your eyes. There is food, and there is a great deal you do not understand, which we will mend slowly, with something hot in you first.
 
-Renata nodded. *Es el pan de Avilara*, she said. *El pan de tu abuela siempre estuvo tratando de ser este pan. Y casi lo logró.* She smiled. *Casi. Tu abuela era una mujer terca.*
-
-Selene laughed — a short surprised laugh, half-tears, half-bread.
-
-*Sí*, she said. *Sí, lo era.*
-
-She ate the rest of the *bollo*. She ate two more. Renata ate one and drank her coffee and watched the children in the plaza, and from time to time looked at Selene with the patient attention of a woman who had spent her life watching corridors and could wait without strain through any amount of time another person needed.
-
-When the *bollos* were gone the proprietress brought a small fluted cup of coffee and a smaller cup of *aguardiente solar* clear as water. Renata pushed the aguardiente toward Selene.
-
-*Para el susto*, she said.
-
-Selene drank it. It was bright and sharp and dropped down through her chest like a single struck note.
-
-Then Renata set her own cup down and said: *Vamos a hablar de lo que va a pasar ahora.*
+Niebla was already walking toward the café in the plaza, tail up, as though she had chosen it.
 
 ---
 
-The Academy had known before Selene crossed.
+They ate at a courtyard table under a trellis of the green-sweet flower, where water ran in a carved stone channel and the city's chord came up softer through the floor. *Bollos de maíz solar,* Renata called the food — warm cornmeal, a salty white curd, a drizzle of something dark and bittersweet — and Selene held the first one and did not eat it, because her hands needed something to do, and then ate it and nearly wept again, because it was, exactly and impossibly, the bread her grandmother had begun to make the day after eight-year-old Selene whispered *abuela, los veo.* The bread that tasted like remembering you were warm. Her grandmother had been making Avilara, all those years, in a Caracas kitchen, with cornmeal from the back of the pantry, and had never once said its name.
 
-That was the first thing Renata told her. The *retornante-scouts* of Avilara had felt the corridor stir three nights ago. *Three nights*, Renata said — *which means your grandmother knew three nights ago. Maybe more. Mercedes was a *retornante* and she would have felt it in her chest before any of us did.*
+Renata named the world for her while she ate, plainly, the way you hand tools to someone who is going to need them.
 
-The Academy, when alerted, had dispatched an escort from Crystalpeak. The escort was already at the *casa de paso* on the fifth tier. He was waiting.
+The world was Arcanea. This Realm was Avilara, and Avilara was old and small and warm and lay, as Realms went, near the heart of something called the Kingdom of Light. Those who could perceive the destello — the light on a living thing — were called *retornantes,* the returned, though almost none of them returned from anywhere; the name was older than its sense. On Earth, Renata said, Mercedes had told them before she crossed that almost no one could see it at all, a whole world walking blind through one another's light, and no one here had believed her. *It seemed to us,* Renata said, *like saying a world of people who could not hear music.*
 
-*Crystalpeak*, Selene said.
+— They took me to a doctor when I was nine — Selene said, to the bollo in her hands. — He had a word for it. Then a kinder word. Then a word he said to my mother when he thought I wasn't listening. — She set it down, precisely, in the centre of the plate. — I learned to look only at people's hands. I got very good at hands.
 
-*La Academia Arcanea de la Luz*, Renata said. *El centro. La ciudadela.* She watched Selene's face. *No te asustes, mi cielo. No vas sola. Y no vas para siempre. Es una escuela. Lleva años. Pero es lo correcto. Para alguien como tú es lo único correcto.*
+Doña Renata was quiet a moment. The water moved in its channel.
 
-*¿Alguien como yo?*
+— Mija — she said, and the word was the same word the woman at the bread counter used a world away, and it landed in Selene's chest like the warm stone. — Here it is the rarest thing a person can be, and the most needed, and it has a name, and schools, and a history longer than your country has had its borders. You did not imagine one single light. Not one. You were not broken. You were only born in the wrong world to be believed.
 
-Renata held her eyes for a beat. Then said, simply: *Tú ves los esparcidos.*
+Selene put her hands over her face, at a café table on the third tier of a singing city, and cried about it at last in front of someone who did not think the tears were invented.
 
-Selene closed her hand around her coffee cup. *Sí.*
+When she surfaced, Renata had folded her hands and was watching the gate of the plaza with the patience of a woman who has spent her life watching for an arrival.
 
-*Tu abuela los veía también. Pero Mercedes — Mercedes los veía con esfuerzo. Tenía que mirar. Tú no.* Renata leaned across the small table. Her voice did not lower; the plaza around them was loud enough that lowering would have made her harder to hear. *Mi cielo. Mira a los niños jugando en la plaza.*
+— The Academy already knows you are here — she said. — I sent word up the mountain the moment the corridor stirred, two nights ago, before you had even climbed. They will want you at Crystalpeak — there is nowhere else in the world for someone like you to go, and you will not want to be anywhere else once you have seen it. They are sending an escort. Pyros House sends the escort, always, for a corridor-crossing — the corridor opens under the fire-influence, and the tradition is old, and the truth is that an eighteen-year-old with a temper and a small dragon makes any frightened crosser feel safer than a committee would.
 
-Selene looked.
+Selene lowered her hands. — A small —
 
-The three children — two boys and a girl, ages maybe seven and nine — were running around the fountain, screaming with the particular joy of children near sundown. Around each of them, plain as the dusk, was the soft color Selene had been seeing since she could remember.
-
-The girl was coral-orange — the curious one, Selene thought, without thinking. The taller boy was a steady green Selene had no word for. The smaller boy — the smaller boy was a *prismatic* — a shifting fan of color that moved with him as he ran. He was eight. He was laughing. He was prismatic.
-
-*¿Lo viste?* Renata said softly.
-
-*Sí*, Selene said.
-
-*El pequeño se llama Aurelio*, Renata said. *Es el nieto de la dueña.* She nodded toward the proprietress in the doorway, who had been watching the children with the half-attention of any grandmother in any plaza. *Es prismático, como tú. Va a entrar a la Academia el año que viene. Tiene ocho.* Renata smiled. *Aquí, mi cielo, los niños prismáticos son comunes. No tantos. Pero comunes. Aquí no son una rareza. Aquí son una bendición que se cuida.*
-
-Selene put both hands flat on the table the way her grandmother had done that morning.
-
-She did not cry this time. The crying had passed. What was left was a steadier thing — a relief so deep her body had not yet caught up with it. Eight years. He was eight years old. He had been told all his life that what he saw was real.
-
-After a while Renata reached across the table and put her hand on Selene's wrist. The hand was warm.
-
-*Estás en casa*, Renata said. *Bienvenida.*
+— Ah — Doña Renata said, looking past her at the plaza gate, and something in her stern face eased into something almost like mischief. — Here, I think, is your answer.
 
 ---
 
-Tobias Aurelius was waiting for them on the fifth tier.
+He came across the plaza in the blue beginning of dusk, a young man perhaps three years older than Selene, brown-skinned and loose-limbed and travel-dusty, with a quick easy light around him the colour of a struck match — fire-gold, restless, the kind of light Selene's eye wanted to keep checking the way you keep glancing at a flame. He was grinning before he reached them, the grin of someone to whom the world had so far been mostly kind.
 
-He was twenty-two, tall, the long bones of the Avilaran south, skin coppery in the dusk, hair shaved close. The small triple-spiral tattoo of Pyros House behind his left ear caught the lamplight as he turned to greet them. He wore the deep-rust robe of a third-year Pyros, open over a plain dark shirt and trousers. A leather sling crossed his chest.
+And asleep in a sling across his chest, no bigger than a house cat, scaled in something between copper and live coal, one wing folded like a closed fan over a flank that rose and fell with sleep, was a dragon.
 
-In the sling something was sleeping. Selene saw the curl of its small scaled tail and the rise and fall of its breathing before she understood what she was looking at.
+Selene stopped breathing.
 
-*Hatchling*, Tobias said, with the apologetic precision of someone who had been asked the question many times. *Pyros familiar. Brasa. Two months old. Sleeps eighteen hours a day. Don't touch — she's not ready.*
+— Doña Renata — the young man said, and bowed to the old woman with real respect under the ease. — They pulled me out of a Flow lecture I was failing anyway. — Then, to Selene, his hand already extended: — Tobias. Tobias Aurelius, third-year, Pyros. And this — he tipped his chin at the sleeping creature, lowering his voice as though not to wake an infant, which was exactly what he was doing — is Brasa. She is a Draconis hatchling, she is four months old, she will not bite you, and if she wakes she will absolutely try to climb into your hair, for which I apologise in advance.
 
-Selene had been about to reach. She lowered her hand.
+Selene took his hand. The handshake was a beat longer than a Caracas handshake, with a small press at the end, an acknowledgement. She could not stop looking at the hatchling.
 
-*Sorry*, she said. In English, by accident. She caught herself and switched. *Disculpa.*
-
-Tobias smiled — small, professional, gentle. *Bienvenida*, he said. *Soy Tobias Aurelius. Tercero de Pyros. Tu escolta al pico. Vamos a salir mañana al alba. Esta noche descansas en la casa.* He looked past her to Renata. *Doña.*
-
-*Mi cielo*, Renata said.
-
-Then Brasa woke up.
-
-The hatchling's eyes opened in the sling. Selene saw them open — fire on iron, the color of forge-bottom. Brasa looked at her. The hatchling had been opening its eyes for short intervals for three days, Tobias would tell her later, but had not fully opened them since the molting. It opened them now.
-
-It looked at Selene. It looked at her for what was probably four seconds. Then it made a small sound — not a roar, not a cry, a low ground-sound, like distant thunder rolled in cotton. Tobias went still.
-
-He did not say anything for a moment. Then he said, in a voice carefully kept casual: *Bueno.*
-
-*¿Bueno?* Selene said.
-
-*Bueno*, Tobias said again. *Vamos a la casa.*
+— You can look — Tobias said gently. — Everyone looks. You can't touch yet — she has to decide about you first, they're particular — but you can look all you want. Most people who cross over faint or weep or try to run back up the mountain. You're just standing here staring at my dragon. — He tilted his head, and for a moment the easy grin sharpened into something more attentive, and she saw him look — properly, the way the others had — at her light. Whatever he saw there wiped the grin off entirely. — Oh — he said, quietly, to himself. — They said. I didn't — — He stopped. Recovered. The grin came back, but with something careful behind it now. — Well. *Bienvenida,* Selene. Let's get you up the mountain.
 
 ---
 
-The *casa de paso* on the fifth tier was a low building of *piedra coralina* with three internal courtyards and a fountain in the middle one. Selene was given a room on the second floor with a single bed, a small wardrobe, a window that opened onto an orchard of *naranja del sol* trees in slow autumn fruit. She slept, eventually, after Renata had brought her broth and a small cup of *café del cerro* and had sat with her until she could see Selene's shoulders drop, and then had left without saying goodnight, because *retornantes*, Renata told her, do not say goodnight on the first night. *Mañana es otro día*, was all she said. *Mañana montamos.*
+They left the city by the western gate as the first stars came out over the Mar de Aurora, on horses Tobias had waiting — a patient grey for Selene named Solana, the hatchling shifting and murmuring in her sleep against Tobias's chest, and Niebla riding without complaint on the bedroll behind Selene's saddle, having apparently decided the matter without consulting anyone.
 
-Niebla slept on the foot of the bed. Selene had not invited her. Niebla had not asked.
+Tobias asked her questions as they rode, easy ones, the kind you ask to give a frightened person something to hold — where she'd grown up, what she'd studied, whether she'd ride often (never; she sat the grey like a sack of plantains and they both knew it) — and Selene answered, and somewhere in the answering she noticed that her own Spanish had changed. The vowels had opened. A word she did not know she knew — *destello,* *retornante,* the old current under the current — kept surfacing in her mouth as though it had always been there, waiting under the Caraqueño the way Avilara had been waiting under her grandmother's bread.
 
-Selene did not dream. Or — she did dream, but the dreams were the slow patient breathing of someone who had been carrying a weight for nineteen years and had set the weight down at a kitchen table in Solavila and was learning, in her sleep, what it felt like to be the body that had set it down.
+— You're speaking it already — Tobias said, with frank surprise, when she caught herself. — The old register. Crossers take weeks. You've had — what, an afternoon? — He shook his head. — Renata's right about you. You're going to be a problem for somebody.
 
----
+— A problem — Selene said.
 
-They left at dawn.
+— A good problem — he said. — Probably.
 
-Tobias rode a *quílmera* of deep-indigo coat — Brasa in her sling, the *quílmera* docile, Tobias's bearing as easy as if he had been doing this his whole life and had been, since he was eleven. Renata had given Selene a brown-gray *quílmera* called *Solana*, a long-distance steady walker, whose six legs moved in the slow rolling gait that, Renata promised, did not produce nausea after the first twenty minutes. It did not. By the time they were out of Solavila Selene had stopped clutching the saddle and was holding the reins the way Tobias had shown her, loosely, two fingers between the leather.
+The road climbed into a high country of pale grass and standing stones, and the dusk came down blue and then violet, and the song of the Cerro Luminoso faded behind them until it was only a memory in the chest. And at a crossroads where two old tracks met under a single leaning stone, in the last violet light, something stepped onto the road ahead of them and stopped.
 
-Niebla padded alongside *Solana*, sometimes ahead, sometimes a few paces behind. When Selene asked Tobias if cats traveled this way, Tobias glanced down at Niebla and said: *Los gatos plateados van donde quieren. Pero suelen ir donde el seer va.*
+Tobias's hand went still on his reins.
 
-*¿Seer?* Selene said.
+Selene had seen them before — she realised it even as she saw this one, a recognition arriving from the corners of nineteen years. In Caracas, at the edges of her sight, in the deep of a blackout or the dead hour of the night, a tall slow patch of *dimmer* — a place where the light of the world was not torn but gently, wrongly *lowered,* a person-shaped absence drifting through a crowd that never felt it pass. She had always looked away. They had always kept moving.
 
-*Vidente*, Tobias said. *La que ve.*
+This one did not keep moving.
 
-He did not look at her when he said it. He was watching the road.
+It stood in the centre of the road, taller than a tall man, a column of softened dark, and it had no light because it was the place light had been turned down, and it turned — slowly, without features, without eyes — and it faced her. Not Tobias. Not the horses. *Her.* And though it had nothing to look with, Selene felt herself looked at, weighed, the way you feel a stranger's stare on the back of your neck in an empty street, for a moment that felt like a minute and was probably three seconds.
 
-The road climbed for an hour, then leveled, then dropped into a long valley of pale-grass and low scrub. The Cerro Luminoso fell away behind them. The chord of the city diminished. Around midday they ate at a small stone shelter by the road — more *bollos*, dried *frutaluz*, a hard sharp cheese Selene loved on first taste. Tobias asked her three questions, all gently: where she had grown up; what she had studied; what she had thought she was going to do with her life.
+Then it withdrew.
 
-She answered. *Caracas. Linguistics. I thought I was going to write a thesis about cognates across unrelated language families — about how certain root-meanings show up in places they have no genealogical right to be.* In Spanish — in the Avilaran-tinted Spanish she could feel her own mouth learning by the hour — she said: *Estaba estudiando los cognados. Las palabras que aparecen en idiomas que no tienen por qué tener nada en común. La chispa. El aliento. La vista.*
+Not fled. Not retreated. *Withdrew* — the way a hand is taken back from a flame it has decided, on reflection, not yet to touch — and folded itself down the far track into the dark, and was gone, and the ordinary night closed over the place where it had been.
 
-Tobias looked at her then. The look held for a beat. He did not say anything. He looked back at the road.
+For a long moment no one spoke. Brasa had woken; the hatchling's small head was up, copper nostrils flared, a thread of real heat coming off her. Niebla had gone flat and silent on the bedroll.
 
-They mounted the *quílmeras* again. The road continued.
+— Tobias — Selene said. — What was that.
 
----
+Tobias was looking down the dark track where the thing had gone, and the easy grin was nowhere on his face, and when he spoke his voice was careful in the particular way of someone choosing not to frighten you with the whole of what he is feeling.
 
-At dusk they came to a crossroads.
+— A *sombracalle* — he said. — A shadow-of-the-road. They drift in the wilds. They don't — — He stopped. Started again. — They pass. That's what they do. They wander past and they don't notice you, the way weather doesn't notice you. — He gathered his reins, and the heat came back into his voice, low and hard. — That one looked at you. They don't look. In three years I have never seen one *look.* — He turned the horses west, toward the dark shape of a farther, greater mountain just beginning to show its lights against the night. — We're going to ride. We need to be inside the wards of Crystalpeak before that thing decides it's curious again.
 
-The crossroads was unmarked — two pale-dirt tracks meeting in a clearing of low coral-pink stone outcrops, the western sky going the color of a slow ember. Tobias had said they would stop here for the night and ride into the lower passes of the Crystalpeak range the next morning.
-
-They were dismounting when Niebla stopped.
-
-The cat had been padding at *Solana*'s right flank. She stopped. She did not lower into a stalk. She did not arch. She simply *stopped*, all four paws on the ground, ears forward, tail held low and slightly out.
-
-Selene felt the *zumbido* drop.
-
-Not the chord of the city — that was gone, an hour behind them. The other *zumbido*, the steady background hum of the air she had carried with her since the corridor. It *dipped* — a quick small pull, as if a finger had pressed on the surface of the world and let it go.
-
-Tobias went still. Brasa, in the sling, lifted her head.
-
-*Sombracalle*, Tobias said. Low. Calm. The way one says *thunder* when one has lived in lightning country.
-
-He pointed.
-
-The patch of dimmer light was crossing the clearing maybe twenty paces from them. Tall and slow. Vaguely human-shaped in the way a shadow on a wall is vaguely human-shaped — not because it is, but because the mind reaches. It was the absence of brightness moving through brightness. It was the *zumbido* pulled thin for the duration of its passage.
-
-Selene had seen them before. In Caracas, in the corners of her eye, in the long afternoons of the metro and the long evenings of the Plaza Francia. She had stopped naming them years ago, like the colors. She had assumed — when she had stopped not-naming them — that they were a kind of optical defect, a small recurrent migraine pattern her eyes did when she was tired.
-
-She had never seen one *stop*.
-
-This one stopped.
-
-It had been crossing the clearing. It paused. It paused for what was probably three seconds — *three seconds*, she would tell Yael two days later, *no more than that* — and her stomach told her it was a minute and her ribs told her it was a year. It paused. It did not turn — it had no shape that could turn — but it *attended*. There was no other word. It attended her.
-
-She felt — and this was the part she would not be able to say even to Yael, would only be able to say once, much later, to Master Iolen in the Foundation Chamber's antechamber — she felt that the *sombracalle* was *looking at her*. Not with eyes. With the part of itself that was the absence-of-brightness. It was *looking back*.
-
-She did not move. She did not breathe out.
-
-After three seconds — or a minute, or a year — the *sombracalle* withdrew. Not retreated. *Withdrew.* It moved off across the clearing in the direction it had been going, slowly, the way it had been moving, and was gone into the low scrub of the western side.
-
-The *zumbido* came back.
-
-Tobias did not move for another two breaths. Then he turned to her. His face — the careful Pyros face, the long bones of the Avilaran south — was paler under the copper than it had been a minute before.
-
-*Eso*, he said. *Eso no pasa.*
-
-*¿Qué no pasa?*
-
-*Los sombracalles no se detienen. No miran. No saben mirar. Atraviesan.* He looked at her. He looked at Brasa, who was wide awake now, fire-eyed, head up out of the sling, watching the place where the *sombracalle* had been. He looked back at Selene.
-
-*Tenemos que llegar a Crystalpeak*, Tobias said. *No mañana al alba. Esta noche.*
-
-He turned and tightened *Solana*'s girth. He tightened his own *quílmera*'s. He bent and said something to Niebla that Selene did not catch — *vamos*, maybe, or a word in a language she had not heard yet. Niebla bunched and was up onto the *quílmera*'s rump behind Selene's saddle, settled, tail across her flank.
-
-*Monta*, Tobias said.
-
-Selene mounted. Her hands were not shaking. The not-shaking was a new fact about herself. She did not yet know if she was glad of it.
-
-They rode west into the dusk. The Crystalpeak range was a dark silhouette ahead of them, its peaks catching the last red of the sunset and holding it for a heartbeat longer than the air could account for. *Solana*'s gait was the rolling six-legged walk that was, Renata had promised, the steady walker.
-
-Tobias did not look back at the clearing.
-
-Selene did, once, when they had gone a quarter-mile. The clearing was empty. The pale-dirt tracks crossed each other in the failing light. The coral-pink outcrops glowed faintly under the moonless sky.
-
-She turned her face toward the mountains and rode.
+And they rode, into the dark, toward the singing peak; and behind them, where the two old roads crossed under the leaning stone, the night stayed a half-shade too quiet, as though something had been there, and had decided to wait.

@@ -1,219 +1,137 @@
-# Prólogo — *La Subida del Cerro*
-
-## Caracas, la mañana de su decimonoveno cumpleaños
-
-La mañana en que cumplió diecinueve años Selene no se lo dijo a nadie, y a las cuatro y media se levantó en la oscuridad y se vistió para la subida.
-
-El apartamento de Altamira la rodeaba con su forma de noche. Su mamá estaba en el Vargas, dos horas más de turno, después el bus que su mamá iba a dormir entero y se iba a despertar con el cachete marcado por el asiento. Su abuela estaba en el cuarto del fondo del pasillo, la puerta que su abuela cerraba cuando dormía y dejaba abierta cuando estaba despierta. La puerta estaba cerrada.
-
-Selene se amarró las botas en la oscuridad. Había alistado todo la noche anterior — un bolso de tela pequeño, agua, un pedazo de pan, la cruz de oro al cuello, debajo de la camisa, donde había vivido siempre. Dejó la nota sobre el mesón de la cocina, sostenida por la taza despicada de Quintana Roo que su abuela había usado para tomar café con leche por cuarenta años.
-
-*Fui a caminar. Vuelvo a las nueve. Feliz cumpleaños a mí. Te quiero, mamá.*
-
-A su abuela no le escribió. Su abuela iba a saber.
-
-Salió al corredor y cerró la puerta sin hacer ruido. El ascensor estaba dañado otra vez. Bajó por las escaleras.
-
-Altamira a las cuatro y cuarenta y cinco era la ciudad que más le gustaba — las calles lo bastante vacías para ser honestas, las panaderías a pocos minutos de prender las luces, el Ávila en la rendija entre los edificios ya más oscuro que el cielo que tenía detrás, lo cual significaba que el cielo ya se estaba preparando para lo que venía después.
-
-Caminó hacia el este. La avenida subía. Pasaron carros y no la vieron. Un perro callejero atravesó frente a ella y no se detuvo. Cuando llegó al inicio del trayecto en Sabas Nieves la ciudad todavía dormía pero el cielo encima de ella era el azul profundo que anuncia que el amanecer ya viene.
-
-Se volteó y miró, una sola vez, hacia el edificio del apartamento. La ventana de la cocina, en el tercer piso, estaba oscura, lo cual significaba o que su abuela seguía en cama o que su abuela se había levantado y estaba sentada en la oscuridad, que era lo mismo.
-
-Se volteó y empezó a subir.
+# Prólogo — La Subida del Cerro
 
 ---
 
-Durante la primera media hora la trocha fue solo la trocha. La tierra prensada bajo sus botas. El olor a hojas húmedas y a hojas secas al mismo tiempo que el Ávila tenía en cualquier estación. La respiración de su propio cuerpo, que era la respiración que ella había estado esperando oír — la respiración que llegaba cuando estaba lo suficientemente sola para que el zumbido de la ciudad dejara de apretarle el pecho y ella pudiera oír, en cambio, el zumbido del cerro.
+La mañana en que cumplió diecinueve años, Selene subió el Ávila sola y a oscuras, porque su abuela le había dicho —quince años antes, con harina de maíz en las manos— que si llegaba hasta cierta piedra plana y decía su propio nombre tres veces al viento, algo le iba a contestar.
 
-No lo llamaba así. Había dejado de ponerle nombre a los nueve años.
+Había cargado la instrucción como se carga una piedra en el bolsillo: olvidándola por meses, y después cerrando la mano y encontrándola todavía ahí. Nunca había ido. Siempre había una razón. Y entonces cumplió diecinueve a la medianoche, sola, en una ciudad que no se enteró, y se quedó despierta hasta las cuatro y entendió que la razón por la que nunca había ido era que tenía miedo de que el cerro se quedara callado —y que un cerro callado sería una cosa más, la última, dándole la razón al doctor.
 
-Cuando tenía ocho su abuela la había llevado a la Plaza Francia al atardecer y le había enseñado, sin enseñarle, cómo se mira a la gente.
+Así que se vistió a oscuras para salir de la duda.
 
-— Mira, mi vida. Mira a esa señora con la bolsa de plátanos. Mira a ese señor con el periódico. Mira a esa niñita que se acaba de caer. Mira despacio.
+No le dijo a nadie. Su mamá estaba en el Vargas, le faltaban dos horas para el bus que iba a dormir entero y del que se iba a bajar con el asiento marcado en el cachete. Su abuela estaba detrás de la puerta cerrada del fondo del pasillo —cerrada, que quería decir dormida, porque Mercedes la dejaba abierta cuando estaba despierta. Selene se amarró las botas a tientas. Dejó una nota en el mesón, debajo de la taza despicada de Quintana Roo de la que su abuela tomaba café con leche desde hacía cuarenta años: *Fui a caminar. Vuelvo a las nueve. Te quiero, mamá.* A su abuela no le escribió nada. Su abuela iba a saber.
 
-Selene había mirado. Había visto, alrededor de cada uno, el color suave que estaba viendo desde que se acordaba — la señora con los plátanos era un ámbar-rosa viejo, el señor con el periódico un azul profundo fresco, la niñita que se había caído un coral brillante y riente que no titilaba ni cuando empezó a llorar.
+El ascensor estaba dañado otra vez. Bajó por las escaleras, y agarró la calle, y la avenida larga y vacía que subía hacia el este buscando la entrada del trayecto, y Altamira a las cinco menos cuarto era la única versión honesta de la ciudad —sin tráfico que le mintiera al silencio, las panaderías todavía apagadas, el bulto enorme del Ávila ya más negro que el cielo detrás, lo que quería decir que el cielo, en algún lado, había empezado a prepararse para la luz.
 
-Había dicho:
-
-— Abuela, los veo.
-
-Su abuela le había apretado la mano, una vez, fuerte, y había dicho:
-
-— Bien, mi amor.
-
-Y no había vuelto a hablar del tema. Al día siguiente su abuela había empezado a hacer un pan distinto. Redondo, aplanado, hecho con la harina de maíz que estaba en el fondo de la despensa y que Selene había pensado que era para emergencias. El pan sabía a recordar que uno tiene calor.
-
-Cuando tenía nueve se lo dijo a su mamá. Su mamá se sentó en la cama y le tomó la cara con las dos manos.
-
-— Mi cielo, tú eres una niña con muchísima imaginación. Eso es bueno. Pero no a todo el mundo le vas a poder explicar lo que ves. ¿Me entiendes?
-
-Selene había dicho que sí. Su mamá le había besado la frente. Desde el pasillo su abuela había mirado y no había dicho nada.
-
-Después de eso Selene dejó de nombrar los colores. No dejaron de estar. Dejó de nombrarlos.
-
-Cuando su papá se fue para Madrid ella tenía doce y los colores alrededor de él en la última noche habían sido un gris-verde agrio que ella no tenía palabra para nombrar y no habría usado aunque la hubiera tenido. Era el color de alguien que se va. Él no sabía que se estaba yendo. El color sabía. Ella sabía. Él la había besado en la cabeza y le había dicho:
-
-— Te llamo el sábado.
-
-Y el gris-verde le había pasado por la cara como un mal tiempo, y ella había sabido que no iba a llamar. Había llamado por un tiempo. Después menos. Las visitas se acortaron. Hacía seis meses, por teléfono, ella le había preguntado por su tesis y él no había estado escuchando, y ella no había dicho *papá*, y él no había dicho *mi hija*, y la llamada había terminado y ella no había llorado porque ya había dejado de ser una persona que lloraba por eso. Se había vuelto una persona que caminaba.
-
-Su nombre era Selene Solamar Velara. El Solamar era el apellido de su papá; había dejado de usarlo a los quince. Escribía *Selene Velara* en los papeles de la universidad. El Solamar lo cargaba en el cuerpo como uno carga un nombre que todavía no ha decidido perdonar.
-
-Caminaba ahora. El Ávila bajo sus botas era el cuerpo firme que ella había estado subiendo en sueños desde hacía años.
+Un señor pasó cerca de la entrada con un termo y un perro. El perro tenía un naranja suave y contento alrededor, el naranja de un animal que nunca en su vida ha dudado de que lo quieren. El señor tenía un azul flaco, preocupado. Selene les miró las manos, como se había enseñado a sí misma, y no los colores, y dijo buenos días, y subió.
 
 ---
 
-El amanecer llegó despacio. La trocha subió. Cuando atravesó la pradera alta el cielo había pasado de azul a gris a una especie de perla, y los primeros dedos largos de rosa estaban probando la cresta del este.
+Había visto la luz alrededor de los vivos desde que tenía memoria, y le habían dicho, por casi el mismo tiempo, que no.
 
-Se detuvo, una vez, a tomar agua. La vista se desplomaba a sus pies — Caracas en su cuenca, las autopistas ya zumbando, los edificios por los que había caminado y en los que había dormido y dentro de los cuales había crecido, los colegios a los que había ido y los cafés en los que había terminado con el muchacho del seminario de etimología en marzo. Desde ahí la ciudad era una cosita brillante, bordada en el fondo del valle como una puntada.
+La primera que lograba recordar era de una señora con una bolsa de plátanos en la Plaza Francia, cuando Selene tenía ocho años y su abuela la había sacado al atardecer a enseñarle a mirar a la gente sin que la gente se sintiera mirada. —Mira despacio —le había dicho su abuela. Y Selene miró despacio, y ahí estaba, como estaba alrededor de todos: un ámbar-rosa suave respirándole en los hombros a la señora, aclarándose cuando la señora le sonreía a un niño. —Abuela, los veo —había susurrado Selene, aterrada y segura a la vez, y su abuela le había apretado la mano, fuerte, una sola vez, y le había dicho —Bien, mi amor—, y había cambiado el tema para siempre.
 
-Subió.
+Al año siguiente cometió el error de decírselo a su mamá.
 
-En la cumbre estaba sola. El viento tenía otra forma allá arriba — plano, ancho, firme, como si el zumbido del cielo de más arriba y el zumbido del cerro se hubieran puesto de acuerdo y el viento estuviera bajando el acuerdo a las piedras.
+Su mamá la sentó en el borde de la cama y le agarró la cara con las dos manos tibias y cansadas y le explicó, con dulzura, como se explica una cosa que uno necesita que sea verdad, que Selene era una niña con muchísima imaginación, y que la imaginación era un don, pero que no todo el mundo iba a entender las cosas que ella creía ver, ¿la entendía? Selene dijo que sí. Después hubo un doctor, amable, de oficina fresca, que usó la palabra sinestesia y después la palabra imaginativa y después, a su mamá, cuando creyó que Selene ya no oía, la palabra atención —de esa que un niño se inventa cosas para conseguir.
 
-Caminó hasta el lugar al que había estado subiendo. Una piedra de superficie plana, del tamaño de un altar pequeño, gastada, gris. El Ávila estaba lleno de piedras y esta no era ni la más alta, ni la más dramática, ni la que los turistas se trepan para la foto. Era la que su abuela le había descrito hacía quince años, en la cocina, con harina de maíz en los dedos.
+Tenía nueve años. Le creyó once. No dejó de ver la luz; dejó de decir que la veía. A los doce era capaz de pasar un día entero mirando nada más las manos de la gente.
 
-— Cuando seas más grande — había dicho su abuela, y se había detenido.
+Cuando su papá se fue, ella tenía doce, y la luz alrededor de él la última noche fue un gris-verde agrio para el que no tenía palabra y que no habría usado aunque la hubiera tenido. Le besó la cabeza y le dijo —Te llamo el sábado—, y el gris-verde le pasó por la cara como un mal tiempo entrando, y ella supo, con la certeza que la luz siempre le daba y nunca le explicaba, que no iba a llamar. Llamó, un tiempo. Después menos. Hacía seis meses él no la había estado escuchando por teléfono y ella había dejado de decir papá y él había dejado de decir mi hija y ella no había llorado, porque ya había terminado, años atrás, de ser una persona que lloraba por eso. Se había vuelto, en cambio, una persona que caminaba.
 
-Selene, cuatro años, había esperado. Su abuela había dicho:
+Su nombre era Selene Solamar Velara. Solamar era de su papá; había dejado de escribirlo a los quince. Lo cargaba en el cuerpo como se carga un nombre que uno todavía no ha decidido si perdonar.
 
-— Cuando seas más grande, mi vida, vas a subir el Ávila tú sola. En la madrugada. Antes de que salga el sol pero no mucho antes. Y vas a ir a una piedra. Una piedra plana, así, como un altar pequeñito. Y vas a decir tu nombre. Tres veces. Y vas a esperar.
+Caminó ahora, cerro arriba, en la oscuridad que azuleaba, y mientras más subía más se le aquietaba en el pecho la presión de la ciudad —ese zumbido constante y bajo de diez mil casi-desconocidos y sus diez mil luces, que había sentido toda la vida como un ruido contra el que tenía que apoyarse y que nunca, ni una vez, había podido apagar. Se fue adelgazando con la altura. Para cuando llegó al pajonal alto ya casi no estaba, y en su lugar había algo que no tenía práctica en oír: una sola nota baja que parecía subirle por las suelas de las botas, desde el cerro mismo.
 
-— ¿Esperar qué, abuela?
+No la nombró. Había dejado de nombrar las cosas a los nueve. Pero el pecho la conocía, como conocía los colores, en el lugar que no se puede enseñar, detrás del lenguaje.
 
-Su abuela no le había contestado. Su abuela había estirado la mano por encima de la mesa y le había tocado el pecho con dos dedos — no un golpecito, una *colocación* — y le había dicho:
+---
 
-— Tú vas a saber, mi amor. Cuando llegue el día, tú vas a saber.
+El amanecer llegó gris, después perla, después con los primeros dedos largos de rosado tanteando la cresta del este, y en la cima estaba sola, y el viento tenía otra forma —ancho y plano y firme, como si durante la noche se hubiera llegado a algún acuerdo entre el cerro y el cielo y hubieran mandado al viento a bajar a entregarlo.
 
-Selene tenía diecinueve. Se había acordado de la instrucción todos los años de su vida.
+Encontró la piedra que su abuela le había descrito. No la más alta, no la que los turistas trepaban para la foto: una roca gris de tope plano, del tamaño de un altar pequeño, gastada lisa, exactamente como la habían descrito en una cocina quince años atrás, cuando una mujer con harina de maíz en los dedos se había detenido a mitad de frase para estirar la mano por encima de la mesa y tocarle el pecho a la Selene de cuatro años con dos dedos —no un toquecito, una colocación— y decirle: —Cuando llegue el día, mi vida, tú vas a saber.
 
-Apoyó las manos planas sobre la piedra. Estaba fría. Cerró los ojos.
+El día había llegado. Selene no sentía que supiera nada. Se sentía de diecinueve años y con frío y un poco ridícula y completamente sola en un cerro al amanecer.
 
-Dijo su nombre.
+Puso las manos planas sobre la piedra. Estaba fría. Cerró los ojos y dijo su nombre.
 
-— Selene Velara.
+—Selene Velara.
 
-El viento se movió por encima de la piedra y por encima de su cara y no cambió.
+El viento cruzó la roca y su cara y no cambió.
 
 Lo dijo otra vez.
 
-— Selene Velara.
+—Selene Velara.
 
-El viento se movió. El amanecer subió. Un pájaro al que no le sabía el nombre cantó, una vez, en algún lugar más abajo en la cresta.
+Un pájaro cantó una vez, allá abajo en la cresta. El rosado subió por el cielo. Nada.
 
-Lo dijo por tercera vez, suavecito, porque tenía diecinueve y estaba sola en un cerro al amanecer y su abuela le había dicho que lo hiciera.
+Lo dijo la tercera vez, bajito, casi con vergüenza, porque tenía diecinueve años y estaba sola y había subido un cerro a oscuras por la palabra de una vieja, y porque alguna parte de ella había necesitado, toda la vida, averiguarlo.
 
-— Selene Velara.
+—Selene Velara.
 
-El cerro le respondió.
+El cerro le devolvió el nombre.
 
-No fue metáfora. No fue el viento. No fue la piedra vibrando. Fue — y ella lo supo de la misma manera en que siempre había sabido lo de los colores, en el lugar inenseñable detrás del lenguaje — fue el Ávila, el cerro mismo, la piedra y el viento y una tercera cosa debajo de las dos, diciendo su nombre con una voz que llevaba esperando que ella preguntara.
+No fue el viento. No fue la roca bajo sus manos. No fue un pensamiento. Vino de la roca y del viento y de una tercera cosa por debajo de las dos, y dijo *Selene* —despacio, completo, como decía su abuela *mi vida,* como dice una persona el nombre de alguien que ha esperado mucho tiempo para ver— y fue la primera vez en toda su vida que algo dijo su nombre como si su nombre fuera verdad.
 
-*Selene.* Despacio. Paciente. Como decía su abuela *mi vida*.
+No se movió. No abrió los ojos. No respiró, por lo que pudo ser un momento o pudo ser mucho más.
 
-No se movió. No abrió los ojos. No respiró por lo que pudo haber sido un rato largo y pudo haber sido un instante.
+Cuando abrió los ojos había un gato en la piedra de enfrente.
 
-Cuando abrió los ojos el gato plateado estaba sentado en la piedra de enfrente.
-
-Nunca había visto uno. Sabía qué era. De la manera en que uno sabe la palabra para una cosa que estaba esperando nombrar. Mediano, gris plateado, con esa pelambre que se veía levemente luminosa con la luz del amanecer. Ojos color peltre pulido. El gato estaba sentado con la cola enrollada alrededor de las patas de adelante y la miraba como una persona mira a otra persona que se acaba de acordar de su propio nombre.
+Nunca había visto uno así y supo, en el instante, lo que era, como uno sabe la palabra de una cosa que ha esperado toda la vida para nombrar. Un gato plateado —gris plata, el pelaje apenas luminoso en la luz nueva, los ojos del color del peltre pulido. Estaba sentado con la cola enroscada en las patas y la miraba como una persona mira a otra que, por fin, después de tanto, se ha acordado de su propio nombre.
 
 Selene no estiró la mano. Había aprendido, con los colores, a no estirar la mano.
 
-El gato la miró por lo que pudo haber sido un rato largo. Después se paró, se estiró una vez con la lentitud deliberada de los gatos, y no estaba. No se desvaneció — *no estaba*. La luz del amanecer cayó sobre la piedra vacía donde había estado el gato.
+El gato le sostuvo la mirada un rato largo. Después se paró, se estiró una vez con la calma deliberada de los gatos, y no estaba —no se desvaneció, no se fue detrás de nada, sencillamente no estaba, y el amanecer rosado cayó sobre la piedra vacía donde había estado.
 
-Selene se sentó en su propia piedra. No sabía qué había pasado. Sabía exactamente qué había pasado. Las dos sabidurías no estaban peleadas. Eran dos versiones de ella, sentadas una al lado de la otra en la cumbre, mirando el amanecer.
-
-Después de un rato se paró y empezó a bajar.
+Se sentó en su propia roca. No entendía qué había pasado. Entendía exactamente qué había pasado. Los dos entendimientos se sentaron uno al lado del otro a mirar el amanecer y no discutieron, y al rato se paró y bajó el cerro a buscar a su abuela, porque no había sino una persona en la tierra que le pudiera decir qué hacer con una mañana así, y Selene, por fin, a los diecinueve, se había quedado del todo sin razones para seguir fingiendo que no veía.
 
 ---
 
-La ciudad estaba despierta cuando llegó a Altamira. El metro estaba andando. Su mamá ya estaba en el bus, su abuela estaba — cuando Selene se metió al apartamento, tomándose un café con leche en la mesa de la cocina con la radio bajita poniendo las noticias de la mañana. La taza despicada de Quintana Roo en sus manos. La nota que Selene había dejado ya no estaba.
+Su abuela estaba en la mesa de la cocina cuando entró, tomando de la taza de Quintana Roo, la radio bajita en el reporte del tráfico, la nota que Selene había dejado ya no estaba.
 
-— Buenos días, mi vida — dijo su abuela —. Felicidades.
+Mercedes la miró por encima del borde de la taza, y no le preguntó dónde había estado, y no le preguntó por qué tenía los ojos así. Bajó la taza. Tenía ochenta y un años. Sus manos amasaban desde antes de que este país tuviera el nombre que tenía ahora, y no temblaron.
 
-— Gracias, abuela.
-
-Su abuela la miró por encima del borde de la taza. La ventana de la cocina enmarcaba el Ávila, indiferente, con la luz tardía de la mañana. Selene se sirvió café. Se sentó frente a su abuela. La radio estaba murmurando sobre el tráfico en la Cota Mil. Su abuela apoyó la taza en la mesa.
-
-— ¿Subiste? — dijo su abuela.
+—¿Subiste? —dijo su abuela.
 
 Selene asintió.
 
-— ¿Y?
+—¿Y?
 
-Selene abrió la boca y la cerró. Después de un rato dijo:
+Selene abrió la boca, y la cerró, y se encontró con que había una sola palabra.
 
-— Habló.
+—Habló —dijo.
 
-Su abuela puso las dos manos planas sobre la mesa. Tenía ochenta y un años. Eran las manos de una mujer que llevaba amasando desde 1958. Las manos no temblaron. Llevaban sesenta años esperando este momento y no temblaron.
+Su abuela puso las dos manos planas sobre la mesa, y cerró los ojos, y por un momento no fue una vieja en una cocina sino una muchacha en otro cerro toda una vida atrás, oyendo la misma cosa imposible. Cuando abrió los ojos estaban húmedos y completamente firmes.
 
-— Bien — dijo su abuela —. Bien, mi amor. Ven conmigo.
+—Ven —dijo.
 
-Fueron hasta el cuarto de su abuela. Su abuela cerró la puerta. De la gaveta de la mesita de noche su abuela sacó la caja de sándalo. Selene conocía la caja de toda la vida — le habían dicho, a los cuatro años, que tenía adentro una piedra que la abuela de su abuela le había dado, y que ella no podía abrirla nunca. Nunca la había abierto.
+En el cuarto sacó de la gaveta de la mesita una caja de sándalo que Selene había conocido toda la vida y que a los cuatro años le habían prohibido para siempre abrir. Mercedes la abrió ahora. Adentro, sobre un cuadro de tela vieja, había una piedra del tamaño de una guayaba pequeña —pálida, translúcida, y tibia; Selene sintió la tibieza desde el otro lado de la cama, una tibieza que no tenía nada que hacer en una piedra dentro de una caja dentro de una gaveta. Su abuela la levantó hacia la ventana y la luz de la mañana entró en ella y salió por el otro lado convertida en un prisma suave y pequeño tirado contra la pared, todos los colores a la vez.
 
-Su abuela la abrió ahora.
+—La piedra de los velos —dijo Mercedes. Lo dijo como había dicho, una vez, *bien, mi amor* en el banco de la Plaza Francia: como si le estuviera entregando a Selene, por fin, una palabra que le había estado guardando.
 
-La piedra que había adentro era del tamaño de una guayaba pequeña. Translúcida. Tibiecita — Selene sintió la tibieza desde el otro lado de la cama. Su abuela la sacó y la sostuvo en la palma. La luz de la ventana atravesó la piedra y salió del otro lado en un pequeño prisma suave sobre la pared.
+Y entonces se sentó en el borde de la cama y le contó.
 
-— La piedra de los velos — dijo su abuela.
+Le contó de Avilara, y del Cerro Luminoso, y de la subida del cerro —la subida, lo más viejo que hacía su gente, el rito en el que cada avilarense sube el cerro solo, una vez, y dice su nombre, y es nombrado de vuelta. Le contó de un corredor que se había abierto en la roca honda debajo del Ávila en 1965 y la había cargado a ella —veintiún años, aterrada, segura de estar condenada o soñando— de un mundo a otro, hasta Caracas, donde se casó con un agrónomo bueno llamado Camilo Velara y de donde no se fue nunca, porque tres meses después de cruzar el corredor se cerró detrás de ella como una boca, y no se volvió a abrir. No por sesenta años.
 
-Lo dijo como había dicho *Mira, los veo* — como si le estuviera entregando una palabra que llevaba esperando entregarle.
+Lo contó en un español que de pronto no era para nada el español de la mamá de Selene, sino algo más viejo por debajo, una corriente bajo la corriente, saliendo a flote por primera vez en seis décadas.
 
-Después se sentó al borde de la cama y empezó a contarle.
+—Y anoche —dijo Mercedes, y se tocó el pecho, sobre el corazón, con dos dedos, el gesto que Selene le había visto hacer mil veces y nunca había entendido—, anoche, por primera vez desde que era muchacha, volví a sentir el zumbido. Aquí. Quiere decir que el corredor está abierto. Quiere decir que a alguien le toca subir.
 
-Le contó de Avilara. Del Cerro Luminoso. De la subida del cerro. Del corredor que se había abierto debajo del Ávila en 1965 y que la había traído a ella, veintiún años, hasta Caracas, donde se había casado con Camilo Velara y donde no se había ido nunca. Del corredor que se había cerrado tres meses después de su cruce y que no se había vuelto a abrir, no por sesenta años, hasta la noche anterior — la noche anterior — cuando su abuela había sentido, en el pecho, el zumbido que no había vuelto a sentir desde los veinte.
+Selene cerró la mano sobre nada. —Abuela. Los colores que veo. Los que Mamá dice que invento. —Nunca, en diecinueve años, le había dicho esa frase en voz alta a esta mujer—. Tú también los ves. ¿Verdad?
 
-También le contó — suavecito, en el español avilarense que de pronto era su propio idioma y para nada el español de la mamá de Selene — que había cosas sobre el papá de Selene que Selene no sabía, y que a Mercedes no le habían permitido decir, y que Selene iba a aprender en el lugar al que iba.
+Por un rato largo su abuela no contestó. Después: —Sí, mi vida. Yo también los veo. Nunca te lo dije, porque decírtelo era decirte que un día te ibas a tener que ir. Y yo no estaba lista para el día. —Le puso la piedra tibia en la palma y le cerró las dos manos viejas por encima—. Hay una cosa más. Tu papá.
 
-— Solamar — dijo Mercedes —. Tu segundo apellido. Acuérdate.
+El cuarto se quedó muy quieto. De su papá no hablaban.
 
-Selene cerró los ojos. El cuarto estaba en silencio. La piedra de los velos estaba tibia en la palma de su abuela.
+—Solamar —dijo su abuela—. Tu segundo apellido. El que dejaste de escribir a los quince. Lo que sea que te digan allá, consérvalo. Acuérdate.
 
-— Abuela, ¿papá está vivo?
+—Abuela. —La palabra costó—. ¿Está vivo?
 
-Su abuela la miró con esa clase de amor que llevaba sosteniendo un secreto demasiados años para contarlos.
+Su abuela la miró con ese cariño particular del que ha cargado una cosa demasiados años para pesarla.
 
-— Sí, mi vida — dijo Mercedes —. Está vivo. Te explican allá.
-
-— Esta noche, mi vida — dijo su abuela —. Esta noche se abre otra vez. Y yo soy muy vieja. Yo me moriría en el umbral. Pero tú —
-
-Su abuela le extendió la piedra de los velos en la palma.
-
-— Tú puedes ir.
-
-Selene tomó la piedra. Estaba tibia contra su mano. La tibieza era la tibieza de un cuerpo, no la de una ventana al sol. Su pecho se llenó de algo que más tarde entendería que era duelo y reconocimiento, trenzados tan apretados que no podía nombrar a ninguno por separado.
-
-— Abuela —
-
-— Mira hacia el Ávila — dijo su abuela —. Haz lo que hiciste esta mañana. Pero esta vez, sigue.
-
-— ¿Sigo a dónde?
-
-Su abuela sonrió. Era la sonrisa de una mujer que llevaba sesenta años cargando un secreto y a la que por fin le permitían apoyarlo sobre la mesa de la cocina con la taza despicada de Quintana Roo.
-
-— Sigue, mi vida. Tú vas a saber.
+—Sí, mi vida —dijo Mercedes—. Está vivo. Allá te lo explican, mejor de lo que yo puedo. Esta noche el corredor se abre otra vez, y yo ya estoy muy vieja; me moriría en el umbral. Pero tú —le apretó los dedos más fuerte alrededor de la piedra—, tú puedes ir.
 
 ---
 
-Esa noche Selene subió el Ávila por segunda vez.
+Esa noche Selene subió el Ávila por segunda vez, a oscuras, la ciudad debajo de ella brillando como un cielo al revés —las luces de Caracas eran las estrellas vistas del lado equivocado.
 
-No se lo dijo a su mamá. Dejó una segunda nota — *Voy a estar afuera unos días. No te preocupes. Mamá, te quiero. Cuida a la abuela.* — y su abuela, en la cocina, le sonrió desde la silla y le dijo *anda, mi vida*, y Selene cerró la puerta del apartamento detrás de ella por lo que pudo haber sido la última vez y pudo no.
+Le había dejado a su mamá una segunda nota. *Voy a estar fuera unos días. No te preocupes. Cuida a la abuela. Te quiero.* Su abuela la había bendecido en la puerta con una mano en la frente y le había dicho —Anda, mi vida—, y no había llorado donde Selene la viera, lo que Selene entendió que era su propia clase de subida.
 
-La trocha en la oscuridad era una trocha distinta. La ciudad debajo de ella brillaba como un cielo invertido — las luces de Caracas eran las estrellas vistas del lado equivocado. El Ávila bajo sus botas era el cuerpo paciente que la había estado cargando.
+En la cima fue hasta la piedra. No necesitó poner las manos encima. La piedra de los velos estaba tibia contra su pecho, debajo de la camisa. Cerró los ojos y dijo su nombre una vez —Selene Velara— y el cerro contestó, y abrió los ojos.
 
-En la cumbre fue hasta la piedra. No apoyó las manos. No le hizo falta. La piedra de los velos estaba tibia contra su pecho debajo de la camisa, donde la había guardado para no perderla. Cerró los ojos.
+La piedra de enfrente se había vuelto una puerta.
 
-Dijo su nombre.
+No un truco del amanecer, porque no había amanecer; no un truco de la luz, porque la luz estaba mal —una puerta alta y angosta de roca gris gastada, entreabierta, y por la rendija entraba una luz que no pertenecía a su mundo, rosa-dorada y lenta, la luz del atardecer de algún otro cerro.
 
-— Selene Velara.
+Selene Solamar Velara —diecinueve años, nacida en Altamira, hija de Camila, nieta de Mercedes, que había cruzado este mismo umbral desde el otro lado sesenta años antes— respiró una vez el aire de humo de leña y de noche del único mundo que había conocido.
 
-El cerro le respondió.
-
-No lo dijo por segunda vez. No le hizo falta. Abrió los ojos.
-
-La piedra que tenía enfrente se había vuelto una puerta.
-
-No era una metáfora. No era un juego de la luz. La piedra se había vuelto una puerta — una puerta alta y angosta, de piedra gris gastada, entreabierta, detrás de la cual entraba una luz distinta.
-
-Selene Velara, diecinueve años, nacida en Altamira, hija de Camila, nieta de Mercedes, atravesó.
+Y atravesó.
