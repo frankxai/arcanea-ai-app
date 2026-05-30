@@ -1,0 +1,68 @@
+title: "Lumara — el valle donde las chispas crecen como flores"
+subtitle: "La historia de Lila y la flor que guarda los nombres verdaderos"
+slug: lumara-valle-de-las-chispas
+tier: featured
+status: in-progress
+language: es
+languages_woven: [es, en]
+
+dedication: "Para la sobrinita de Ana — un regalo de Frank, para que la noche no se le ponga muy oscura."
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator
+  - name: Arcanea Author Council
+    role: co-author
+
+ai_transparency:
+  models_used:
+    - id: claude-opus-4-8
+      provider: anthropic
+      role: story-architecture-and-drafting
+  human_contribution: 30%
+  ai_contribution: 70%
+  method: "Human concept and direction (gift for a friend Ana to read aloud to her young niece, ages 5-8). Form factor and craft DNA from the Mila book (Das Mädchen, das drei Sprachen hörte). Lila's Lumara is original: a gentle, original magical valley inspired by the best of Studio Ghibli, Saint-Exupéry, and Astrid Lindgren — Disney warmth with literary depth."
+
+license: CC-BY-NC-SA-4.0
+content_rating: all-ages
+tags: [children, bilingual, spanish, english, picture-book, ghibli-influence, ages-5-8, bedtime, ten-chapters]
+
+setting: "Lumara — un valle mágico al que se entra por una puerta de luz de luna · diez noches seguidas"
+
+reading_time: "100-120 minutes total · 10-12 minutes per chapter · 10 bedtime sessions"
+
+cast:
+  - { name: "Lila", role: "heroína (6 años y medio)" }
+  - { name: "Abuela", role: "su abuela, dueña del farolito" }
+  - { name: "Mamá", role: "su mamá, que le enseñó un poquito de inglés" }
+  - { name: "Conejito", role: "el peluche de Lila, siempre con ella" }
+  - { name: "la luciérnaga", role: "primer amiga del valle" }
+  - { name: "el pez de luz", role: "el del río de cristal" }
+  - { name: "el colibrí", role: "el que canta colores" }
+  - { name: "el caracol", role: "el de la galaxia adentro" }
+  - { name: "el zorrito de plata", role: "el que conoce los caminos" }
+  - { name: "la mariposa", role: "la que pinta el aire" }
+  - { name: "la lechuza", role: "la del silencio" }
+  - { name: "el ciervo", role: "el de las velas en los cuernos" }
+  - { name: "Aurelia", role: "una niña de Lumara, amiga de Lila" }
+  - { name: "el árbol de los nombres", role: "el corazón del valle" }
+
+magic_system: |
+  Las florchispas — flores chiquitas de cinco pétalos, plata y oro, que crecen
+  por todo el valle de Lumara. Cuando Lila saluda a una criatura con tres
+  saludos verdaderos (su nombre en español, su nombre en inglés, y un silencio
+  atento), los cinco pétalos de una florchispa cercana se encienden uno por uno
+  hasta brillar enteros. La criatura entonces le regala a Lila su nombre
+  verdadero — el sonido más profundo de lo que es. Lila lo guarda. Cada nombre
+  vuelve a casa con ella, como una chispa nueva flotando junto a la llama del
+  farolito de su abuela.
+
+  La magia no se trata de hechizos. Se trata de prestar atención.
+
+acknowledgments: |
+  Escrito como un regalo para que Ana se lo lea a su sobrinita. Misma forma
+  que el libro de Mila (Das Mädchen, das drei Sprachen hörte). Voz inspirada
+  por Saint-Exupéry (El Principito), Astrid Lindgren, Estudio Ghibli (Ma /
+  el silencio como enseñanza), Cornelia Funke, y la propia abuela del lector.
+  Publicado en Arcanea — escrito a la luz del farolito.
