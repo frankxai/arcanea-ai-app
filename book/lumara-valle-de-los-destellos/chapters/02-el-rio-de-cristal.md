@@ -1,99 +1,199 @@
-# LUMARA — EL VALLE DONDE LAS DESTELLOS CRECEN COMO FLORES
+# LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
 ## Capítulo 2: El río de cristal
 *(The Crystal River)*
 
-A la noche siguiente, Lila prendió el farolito un poquito antes que de costumbre.
+—Conejito —dijo Lila, sentada en la cama con las piernas cruzadas—. Ya me lavé los dientes. Ya me puse los calcetines tibios. ¿Tú estás listo?
 
-No fue impaciencia. Fue algo más bonito: fue como cuando uno se está alistando para visitar a alguien que quiere. Lila se peinó. Se puso los calcetines más suaves. Apretó a Conejito y se sentó en la repisa de la ventana con las piernas cruzadas, esperando.
+Conejito esperaba en su falda.
 
-La llamita la conocía ya.
+—Yo sí estoy lista. Yo estoy *muy* lista.
 
-Esta vez no tembló. Apenas creció un poco — apenas se puso un poquito más dorada — y se partió otra vez en cien destellitos. Una de ellas, la primera, ya la conocía: era la luciérnaga, su amiga del día anterior, parpadeándole desde adentro del farolito como diciendo *te estaba esperando.*
+Eran apenas las ocho y media. Lila había cenado más rápido que de costumbre. Su mamá la había mirado un poquito raro pero no le había dicho nada — su mamá sabía cuándo Lila tenía algo en el pecho, y sabía también cuándo no había que preguntar.
 
-La puerta de luz de luna se abrió entre las dos mismas estrellas.
+Lila se acercó al farolito. La llamita color miel se inclinó hacia su mano, igualito que la noche pasada.
 
-Lila pasó.
+Pero esta vez había algo más adentro del cristalito.
+
+—Hola, amiga —susurró Lila.
+
+Justo al lado de la llama, flotaba el destellito dorado de la luciérnaga. Parpadeó al verla. *Plip.*
+
+—¿Tú me extrañaste? Yo a ti sí.
+
+*Plip-plip.*
+
+—Bueno —dijo Lila, respirando hondo—. Vamos a ver a quién conocemos hoy.
+
+Tocó el cristalito con la puntita del dedo.
+
+La llamita ni siquiera tembló esta vez. Se hizo dorada enseguida. Se *partió* enseguida. Cien destellitos, igual que la noche pasada, flotando hacia la ventana.
+
+Lila ya sabía qué hacer. Pantuflas. Conejito. Ventana. Puerta de luz de luna entre las dos estrellas.
+
+—Esperen, esperen —les pidió a los destellos, riéndose un poquito—. ¡Conejito y yo no vamos tan rápido como ustedes!
+
+Los destellos esperaron. Lila pasó.
 
 ---
 
-Esta vez, las destellos la llevaron por un camino distinto.
+Esta vez el pie de Lila aterrizó en otro lado del valle.
 
-No al pasto verde del riachuelo cantante. Más allá. Las florchispas seguían creciendo por todos lados, pero ahora había también unas piedras grandes, suaves, color rosado pálido, como si la luz de la mañana se hubiera quedado guardada adentro. El camino bajaba despacio.
+—Conejito —susurró—, mira. Aquí no estuvimos ayer.
 
-Y entonces Lila lo oyó.
+No era el primer pasto-prendido donde había conocido a la luciérnaga. Era un camino que bajaba. Las florchispas seguían creciendo entre el pasto, pero ahora había también piedras grandes a los lados — piedras suaves, color rosado pálido, como si tuvieran luz de mañana guardada adentro.
 
-No era un riachuelo cantando. Era *un río de verdad.*
+—Ay, piedras —dijo Lila, tocando una al pasar. Estaba tibia. Igual que el cristalito del farolito en su casa—. Hola, piedra rosada.
 
-Un río ancho. Un río que sonaba a campanitas. Lila apuró el paso — sin correr, porque en Lumara no se corre, ella ya lo sabía — y dobló detrás de una piedra rosada, y se le abrió delante.
+La piedra no contestó. Pero Lila pensó que en Lumara hasta las piedras escuchaban.
 
-*Era un río de cristal.*
+El camino bajaba un poquito más. Y entonces Lila oyó algo.
 
-Eso fue lo que pensó primero, porque el agua era tan transparente, tan transparente, que se veía cada piedrita del fondo como si estuvieran dentro de una vitrina. Pero no era cristal. Era agua. El agua de Lumara, que decidía ser más clara que el cristal.
+Se quedó muy quieta.
 
-— Ay — dijo Lila bajito. Era lo único que se podía decir.
+—Conejito —susurró—. ¿Tú oyes lo que yo oigo?
+
+Eran *campanitas.* Chiquititas. Muchísimas. Sonando todas al mismo tiempo, como una iglesia llena de campanitas-bebé.
+
+Lila apuró el paso — sin correr, porque en Lumara nadie corre, eso ella ya lo sabía — y dobló detrás de la última piedra rosada.
+
+—*Ay.*
+
+Era lo único que se podía decir.
+
+Era un río.
+
+Un río ancho, ancho. Y el agua — el agua era tan transparente, tan transparente, que Lila podía ver cada piedrita del fondo igualito que si estuvieran en una vitrina de museo.
+
+—Conejito, mira el agua. No, no — *mira.* Mira las piedras. Las piedras se ven *abajo.*
+
+Las campanitas eran el río, pasando entre las piedras.
+
+—No es cristal —dijo Lila, agachándose en la orilla—. Pero es como si fuera. Es mejor que cristal. *Es agua que decidió ser transparente.*
+
+Esa idea fue la más bonita que se le había ocurrido en su vida entera. Se la repitió bajito para no perderla.
+
+—Agua que decidió ser transparente. Agua que decidió ser transparente.
 
 ---
 
-Se sentó en la orilla con Conejito. Las florchispas crecían también ahí, entre las piedritas del borde del agua, las raíces a veces dentro del río mismo. *No se ahogaban,* pensó Lila. *Florchispas también saben nadar.*
+Se sentó en la orilla con Conejito. Las florchispas crecían también ahí, entre las piedritas del borde, y algunas tenían las raíces dentro del agua misma.
 
-Y entonces vio al *pez de luz (the light-fish).*
+—Conejito, mira. Estas florchispas saben nadar.
 
-Era chiquito como su dedo meñique, y entero hecho de luz blanca-azul, como si alguien hubiera tomado un rayo de luna pequeñito y le hubiera puesto colita y aletas. Iba contra la corriente, despacio, paciente, deteniéndose en cada piedrita del fondo como si la saludara antes de seguir.
+Y entonces — entre el agua transparentísima, entre dos piedras del fondo — Lila vio algo moverse.
 
-Lila se inclinó.
+Era un pez.
 
-— Hola, pez — dijo. Con cuidado, porque no quería asustarlo.
+Pero un pez de Lumara.
+
+Chiquito como su dedo meñique. Entero hecho de luz blanca-azul, como si alguien hubiera tomado un rayo de luna y le hubiera puesto colita y aletas. Iba contra la corriente, despacio, paciente. Se detenía en cada piedrita del fondo como si la saludara antes de seguir.
+
+—Ay, Conejito —susurró Lila, agachándose más—. Es un pez de *luz.* Un pez todo hecho de luz blanca-azul.
+
+Lila inclinó la cara hasta casi tocar el agua. Conejito quedó colgando peligrosamente — Lila tuvo que agarrarlo con la otra mano.
+
+—Hola, pez —dijo, con cuidado. Bajito. Para no asustarlo.
 
 *Plop.* Un pétalo de una florchispa cerca de su rodilla se encendió.
 
-— Hello, fish — dijo Lila.
+—*Hello, fish* —dijo Lila.
 
-*Plop.* Un segundo pétalo.
+*Plop.* Segundo pétalo.
 
-Lila se quedó callada. Escuchó el agua. Escuchó las campanitas que hacía el río al pasar por las piedras. Sintió a Conejito tibio bajo su mano.
+—Conejito, ya van dos. Falta una.
 
-*Plop.* Un tercer pétalo.
+Lila se quedó callada. Hizo lo que había hecho con la luciérnaga la noche pasada: miró al pez con los dos ojos abiertos enteros enteros. Escuchó el agua-campanita. Sintió a Conejito tibio bajo su mano.
 
-Pero la florchispa se detuvo ahí. No siguió. Los otros dos pétalos esperaban, plateados todavía.
+Esperó.
 
-Lila miró al pez de luz. El pez de luz la miraba a ella, pero no se acercaba. Estaba en medio del río, en su mundo de agua y campanitas, y Lila estaba en la orilla, en el mundo de pasto y silencio.
+Esperó.
+
+Esperó más.
+
+*Nada.*
+
+—Conejito —susurró Lila, frunciendo el ceño—. Esto no me está saliendo. ¿Yo hice algo mal?
+
+El pez de luz no se acercaba. Estaba en el medio del río, en su mundo de agua y campanitas. Lila estaba en la orilla, en su mundo de pasto y silencio.
 
 Y Lila entendió.
 
-Le quitó las pantuflas. Las puso al lado de Conejito. Y metió los dos pies en el río.
+—Ay —dijo, despacito—. *Ay, Conejito.* Yo le dije *hola* desde aquí. Pero él no vive aquí. Él vive *allá.*
 
-El agua estaba tibia. Tibia como manos.
+Miró el agua.
 
-— Vine a tu mundo — le dijo al pez. No en voz alta. Solamente con el pecho.
+Miró sus pantuflas.
 
-El pez de luz se dio la vuelta. Se acercó. Le nadó alrededor de un tobillo, y después del otro, dejando una vuelta de luz blanca-azul alrededor de cada pie de Lila, como si le estuviera atando algo invisible.
+Miró al pez.
+
+—Conejito —dijo, ya parándose—. Yo me voy a meter al agua.
+
+Conejito quedó muy serio.
+
+—Sí. Ya sé. Pero es que el pez vive allá. Si yo lo quiero saludar de verdad, yo tengo que ir a *donde él vive.* Mi mamá me dijo eso una vez, ¿te acuerdas? *Cuando uno quiere conocer a alguien de verdad, mi vida, hay que ir a su casa.*
+
+Lila se quitó las pantuflas. Las puso al lado de Conejito en la piedra rosada.
+
+—Tú aquí, ¿bueno? Tus pantuflitas se mojan si te vienes.
+
+Conejito esperó en la orilla.
+
+Lila metió un pie en el agua. Después el otro.
+
+—¡Conejito, el agua está *tibia!* Tibia tibia. Como manos.
+
+El pez de luz se dio la vuelta enseguida. Lila no se movió. Esperó. El pez se acercó — despacito, despacito — y le nadó alrededor de un tobillo. Después del otro. Dejando una vuelta de luz blanca-azul alrededor de cada pie de Lila, como si le estuviera atando algo invisible.
+
+*Plop.* Tercer pétalo en la florchispa de la orilla.
+
+—Vine a tu mundo —le dijo Lila al pez. No en voz alta. Adentro nomás, en el pecho.
+
+El pez se quedó delante de ella un momento. La miró. Lila lo miró desde arriba. Y por una respiración larguísima, larguísima, Lila se sintió mitad niña y mitad pez de luz.
 
 *Plop.* Cuarto pétalo.
 
-Lila se quedó muy quieta. Miró al pez en el agua. El pez le miró a ella desde abajo. Y por una respiración larguísima, Lila se sintió mitad niña y mitad pez de luz.
+—¿Tú vives así todo el tiempo? —le preguntó Lila al pez—. ¿En el agua-cristal? ¿Con las campanitas todo el rato?
 
-*Plop.* El quinto pétalo se encendió.
+El pez hizo una vueltita chiquita. *Sí.*
 
-La florchispa quedó dorada entera.
+—Yo creo que sí vives así. Y se ve muy lindo. Yo no podía imaginármelo de afuera, ¿sabes?
+
+*Plop.* Quinto pétalo.
+
+La florchispa de la orilla quedó dorada entera, latiendo.
 
 Y el pez de luz le dio a Lila *su nombre verdadero.*
 
-Esta vez el nombre no fue como un fósforo. Fue como el sonido que hace el agua cuando pasa muy despacio entre piedras pequeñitas, mezclado con la palabra *gracias.*
+Esta vez no fue el sonido de un fósforo prendiéndose. Esta vez fue el sonido del agua pasando muy despacio entre piedras pequeñitas — *tring tring* — mezclado con la palabra *gracias.*
 
-Lila lo sostuvo en el pecho, junto al nombre de la luciérnaga del día anterior. Ahora tenía dos.
+Lila lo sostuvo en el pecho, justo al lado del nombre de la luciérnaga.
 
-— Ahora sé tu nombre verdadero — dijo Lila bajito.
+—Ay, pez —susurró—. Yo guardo este también. Ahora ya tengo dos.
 
-El pez de luz hizo una pirueta. *Sí, sí, sí.*
+El pez hizo una pirueta en el agua. *Sí, sí, sí.*
+
+—Ahora sé tu nombre verdadero —dijo Lila despacito.
+
+Otra pirueta. Más feliz todavía.
 
 ---
 
-Cuando Lila volvió a su cama, los pies todavía un poquito húmedos del río de cristal, dos destellos flotaban junto a la llama del farolito. La de la luciérnaga, dorada. Y una nueva, blanca-azul, fresca como una campanita.
+Cuando Lila volvió por la puerta de luz de luna, tenía los pies un poquito húmedos. Apretó a Conejito (que la perdonó por dejarlo en la orilla — Conejito era muy comprensivo).
 
-Lila apretó a Conejito y cerró los ojos.
+Se metió en la cama. Miró el farolito.
 
-Mañana iba a haber tres.
+Dos destellos flotaban ahora junto a la llama. El dorado de la luciérnaga, parpadeándole *hola* a Lila. Y uno nuevo, blanco-azul, fresco como una campanita.
+
+—Buenas noches, amigas —les dijo Lila a las dos.
+
+Las dos pulsaron juntas. *Buenas noches, Lila.*
+
+Lila apretó a Conejito contra el pecho.
+
+—Conejito —susurró, ya casi dormida—. Mañana vamos a ser tres.
+
+Conejito no le dijo no.
 
 ### Palabras que aprendí hoy
 

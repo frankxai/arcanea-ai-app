@@ -1,57 +1,111 @@
-# LUMARA — EL VALLE DONDE LAS DESTELLOS CRECEN COMO FLORES
+# LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
 ## Capítulo 8: El ciervo con velas en los cuernos
 *(The Deer with Candles in Its Antlers)*
 
-A la octava noche, las destellitos del farolito eran siete, y juntas hacían tanta luz que el cuartito de Lila parecía un atardecer. Su abuela, que pasó a darle un beso de buenas noches, se quedó mirando un momento.
+Antes de prender el farolito, esa noche, su abuela pasó al cuarto.
 
-— Mi vida — dijo —, el farolito está distinto.
+—Mi vida —dijo la abuela, parada en la puerta—. Vine a darte un besito de buenas noches.
 
-— Es porque tengo amigos nuevos — dijo Lila, sin dejar de sonreír.
+—Hola, abuela.
 
-Su abuela la miró un ratito. Después le dio un beso en la frente, muy suavecito.
+La abuela se acercó a la cama. Le pasó la mano por el pelo a Lila. Y entonces — Lila lo vio, lo vio enseguida — la abuela giró la cabeza hacia el farolito de la repisa.
 
-— Cuídalos — le dijo.
+Se quedó mirándolo un momento.
+
+Siete destellos giraban suavemente alrededor de la llama.
+
+—Mi vida —dijo la abuela, despacio—. El farolito está distinto.
+
+A Lila se le hizo un nudito chiquito en el pecho. Pero no era un nudito malo. Era un nudito de *ay, me descubrieron.* Y también de *me alegra que me descubrieran.*
+
+—Sí, abuela.
+
+—¿Qué tiene?
+
+Lila pensó cómo decirlo. Pensó decir *nada* — pero era la abuela, y a la abuela no se le mentía. Pensó decir todo — pero no había tiempo para contar todo.
+
+Así que dijo lo más verdadero que se le ocurrió.
+
+—Es porque tengo amigos nuevos, abuela.
+
+La abuela la miró un ratito largo. No le preguntó *qué amigos.* No le preguntó *dónde.* No le preguntó *cómo.*
+
+Solamente le dio un beso en la frente, muy suavecito, y le susurró al oído:
+
+—Cuídalos, mi vida.
 
 Y se fue.
 
-Lila pensó, mientras prendía la llama, que su abuela quizás sabía más de lo que decía. Pero eso es una cosa que las abuelas siempre saben hacer: saber sin decir.
+—Conejito —susurró Lila cuando la puerta se cerró—. ¿Tú crees que abuela *sabe?*
+
+Conejito esperó.
+
+—Yo creo que sí. Yo creo que las abuelas siempre saben más de lo que dicen. Esa es su superpotencia.
+
+Tocó el cristalito.
 
 ---
 
-Las destellos la llevaron muy lejos esta vez.
+Esta vez los destellos la llevaron *muy* lejos.
 
-Subieron por encima del bosque viejo de la lechuza. Subieron por encima de las nubes — Lila nunca había estado por encima de las nubes —, y por debajo de las estrellas, hasta una pradera *altísima.* Más alta que el cielo de su casa. Más alta que nada.
+Subieron por encima del bosque viejo de la lechuza (la lechuza estaba en su rama, parpadeó una sola vez, *despacio*).
 
-Aquí las florchispas eran distintas. Eran más altas que Lila. Sus pétalos rozaban el aire como pequeños abanicos plateados, y entre las flores había una *niebla suavecita,* de plata también, que se quedaba en los tobillos como si tuviera ganas de jugar.
+Subieron por encima de las nubes.
 
-Y al fondo de la pradera, recortado contra el cielo entero, estaba parado *un ciervo (a deer).*
+—Conejito —dijo Lila al pasar — Yo nunca había estado *encima* de las nubes.
+
+Las nubes vistas desde arriba eran como almohadas blancas, suavecitas. Algunas eran chiquitas. Otras eran gigantes. Una tenía forma de elefante. Otra tenía forma de barco.
+
+—Mira la nube barco. Mira. ¡Conejito, hay nubes con forma!
+
+Y todavía subieron más, hasta una pradera *altísima.* Más alta que el cielo de su casa. Más alta que nada.
+
+Aquí las florchispas eran distintas. Eran más altas que Lila. Sus pétalos rozaban el aire como abanicos plateados, y entre las flores había una *niebla suavecita,* de plata también, que se quedaba en los tobillos como si tuviera ganas de jugar.
+
+—Conejito —susurró Lila—. La niebla me hace cosquillas en los tobillos. Mira. *Mira.*
+
+Y al fondo de la pradera, recortado contra el cielo entero, estaba parado *un ciervo.*
 
 Lila se detuvo.
 
-El ciervo era grande. Más grande que su abuela. Más grande que el papá de Rita, su amiga de la escuela. El pelaje le brillaba color avellana, y los cuernos — los *cuernos* — eran enormes, ramificados como un árbol al revés, y *cada punta del cuerno tenía una velita encendida.*
+---
 
-Velas chiquititas. Cera-color-miel. Llamas color farolito de la abuela.
+El ciervo era grande.
 
-Doce velitas. Lila las contó.
+Más grande que su abuela. Más grande que el papá de Rita, su amiga de la escuela. El pelaje le brillaba color avellana. Y los cuernos — los cuernos — eran enormes, ramificados como un árbol al revés.
+
+Y *cada punta del cuerno tenía una velita encendida.*
+
+Velitas chiquititas. Cera color miel. Llamitas color farolito de la abuela.
+
+Lila las contó.
+
+—Una, dos, tres... Conejito, ayúdame... cuatro, cinco, seis, siete, ocho, nueve, diez, once, doce. *Doce velitas, Conejito.*
 
 El ciervo no la había visto todavía. Estaba con la cabeza un poco baja, oliendo el pasto.
 
-Lila apretó a Conejito.
+Lila apretó a Conejito muy fuerte contra el pecho.
 
-— Conejito — susurró —. Este sí es grande.
+—Conejito —susurró—. Este sí es grande.
 
-Conejito le contestó, en la cabeza de Lila: *Tú también, ya.*
+Conejito le contestó, en la cabeza de Lila, despacito:
+
+*Tú también, ya.*
+
+Lila se quedó un momento con eso adentro. *Tú también, ya.* Era verdad. Lila no era la misma niña que había abierto la ventana la primera noche. Ya había hablado con un pez. Ya había cantado colores. Ya había pintado el aire con palabras.
+
+—Bueno —susurró Lila—. Vamos.
 
 ---
 
-Lila caminó despacito. La niebla plateada le jugaba en los tobillos. Las florchispas altas la miraban pasar.
+Caminó despacito. La niebla plateada le jugaba en los tobillos. Las florchispas altas la miraban pasar.
 
 A diez pasos del ciervo se detuvo. Diez le pareció una buena distancia.
 
 Y se arrodilló.
 
-No supo por qué se arrodilló. Sintió que era lo que había que hacer. Como su abuela, en la iglesia, se arrodillaba un instante antes de sentarse, no porque alguien la obligara, sino porque adentro algo le decía *aquí hay algo grande.*
+No supo por qué se arrodilló. Le salió. Como su abuela en la iglesia, que se arrodillaba un instante antes de sentarse, no porque alguien la obligara, sino porque adentro algo le decía *aquí hay algo grande.*
 
 Aquí había algo grande.
 
@@ -63,11 +117,11 @@ La miró.
 
 Sus ojos eran negros. No vacíos — *hondos.* Hondos como un pozo donde duerme el agua.
 
-— Hola, ciervo — dijo Lila. Lo dijo desde adentro, porque no le salía mucha voz.
+—Hola, ciervo —dijo Lila. Lo dijo desde adentro, porque no le salía mucha voz.
 
 *Plop.* Una florchispa alta encendió un pétalo.
 
-— Hello, deer.
+—*Hello, deer.*
 
 *Plop.* Segundo.
 
@@ -77,27 +131,33 @@ Lila se quedó muy quieta. Pero no fue una quietud asustada. Fue la quietud que 
 
 El ciervo se acercó.
 
-Diez pasos del ciervo eran diez pasos chiquitos para él. Llegó a la altura de Lila en tres. Lo grande que era Lila apenas lo entendió cuando estuvo cerca: su cabeza llegaba a la barbilla del ciervo. Sus cuernos se levantaban encima de ella como las ramas de un árbol viejo, con sus doce velitas latiendo bajito.
+Diez pasos del ciervo eran diez pasos chiquitos para él. Llegó a la altura de Lila en tres pasos. Lo grande que era Lila apenas lo entendió cuando estuvo cerca: su cabeza arrodillada llegaba a la barbilla del ciervo. Los cuernos se levantaban encima de ella como las ramas de un árbol viejo, con sus doce velitas latiendo bajito.
 
 El ciervo bajó la cabeza.
 
 Y entonces hizo algo que Lila no se esperaba.
 
-Sopló — muy suavito, muy con cuidado — sobre una velita de su cuerno. La velita parpadeó. Y de la velita, un instante después, *cayó una llamita.*
+Sopló.
 
-No cayó al suelo. Flotó. Como las destellos del farolito.
+Muy suavito, muy con cuidado, sobre una velita de su cuerno. La velita parpadeó. Y de la velita, un instante después, *cayó una llamita.*
+
+No cayó al suelo. Flotó. Como los destellos del farolito.
 
 La llamita flotó despacio, despacio, hasta detenerse delante de la cara de Lila.
 
-— Para ti — dijo el ciervo. Y su voz fue como la voz del viento cuando pasa por una catedral muy grande, lentita, llena de espacio.
+—Para ti —dijo el ciervo.
+
+Y su voz fue como la voz del viento cuando pasa por una catedral muy grande. Lentita. Llena de espacio.
 
 *Plop.* Cuarto pétalo.
 
-Lila levantó las dos manos. Tomó la llamita. No quemaba. Era tibia como un pan recién hecho.
+—Ay —susurró Lila. Levantó las dos manos. Tomó la llamita.
+
+—Conejito —susurró—. *No quema.* Es tibia. Tibia como pan recién hecho.
 
 La sostuvo cerca del pecho.
 
-— Gracias — dijo. Lo dijo con todo lo que tenía adentro.
+—Gracias, ciervo —dijo. Lo dijo con todo lo que tenía adentro.
 
 *Plop.* Quinto pétalo.
 
@@ -105,23 +165,43 @@ La florchispa alta brilló dorada entera, y el ciervo le dio a Lila *su nombre v
 
 Esta vez el nombre fue una palabra honda, dicha en dos respiraciones del ciervo, mezclada con la palabra *abuelo.*
 
-Lila se quedó sin habla un momento. Porque el ciervo, que no la había visto nunca antes, sentía como un abuelo. Como si la conociera de toda la vida. Como si la hubiera estado esperando.
+Lila se quedó sin habla un momento.
 
-— Ahora sé tu nombre verdadero — dijo Lila. La voz le tembló.
+Y se le pusieron lágrimas en los ojos. Sin pedirle permiso.
 
-El ciervo inclinó la cabeza enterita, con sus doce velitas (ahora once) bajando con él. Como una bendición.
+—Conejito —susurró sin moverse, sintiendo las lágrimas calentitas en las mejillas—. Este ciervo... este ciervo *me siente como un abuelo.* Y no lo conozco. No lo conozco de nada. Pero me siente como si me hubiera estado esperando.
 
-Y se dio la vuelta. Y caminó hacia el otro extremo de la pradera, despacio, despacio, hasta volverse parte del cielo.
+—Ahora sé tu nombre verdadero —dijo Lila al ciervo. La voz le tembló un poquito.
+
+El ciervo inclinó la cabeza enterita. Las once velitas (ahora once, porque una ya estaba en las manos de Lila) bajaron con él.
+
+Como una bendición.
+
+Y se dio la vuelta. Y caminó hacia el otro extremo de la pradera altísima, despacio, despacio, hasta volverse parte del cielo.
+
+—Hasta mañana, ciervo —susurró Lila.
 
 ---
 
-Cuando Lila volvió a la cama, la llamita-velita seguía en sus manos. No se le había caído. No se había apagado.
+Cuando Lila volvió a la cama, la llamita-velita seguía en sus manos. No se había caído. No se había apagado. No quemaba.
 
 La puso en el farolito, al lado de la llamita color miel.
 
-Ahora había *dos* llamas en el farolito. Las dos juntitas. Y alrededor, ocho destellos amigas dando vueltas suavecitas, como si bailaran.
+Ahora había *dos* llamas en el farolito. Las dos juntitas, como dos amigas.
 
-Lila se durmió pensando en abuelos. En su abuela. En el ciervo. En todos los abuelos que el mundo tiene y que cargan velitas en la cabeza, aunque uno no las vea.
+—Conejito —susurró Lila, asomándose con cuidado—. Las dos llamas. Mira. Como dos hermanitas.
+
+Y alrededor, *ocho* destellos amigos dando vueltas suavecitas. Como si bailaran.
+
+—Buenas noches a todos —les dijo Lila.
+
+Las ocho pulsaron sus respuestas. Las dos llamitas se inclinaron una hacia la otra.
+
+Lila se metió en la cama. Apretó a Conejito muy fuerte. Pensó en su abuelo, el que ella no había conocido nunca, el papá de su mamá. Pensó en todos los abuelos del mundo que cargan velitas en la cabeza aunque uno no las vea.
+
+—Conejito —susurró antes de dormirse—. Hoy aprendí que algunos abuelos viven en los ciervos.
+
+Conejito no le dijo no.
 
 ### Palabras que aprendí hoy
 

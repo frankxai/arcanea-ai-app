@@ -1,79 +1,147 @@
-# LUMARA — EL VALLE DONDE LAS DESTELLOS CRECEN COMO FLORES
+# LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
 ## Capítulo 3: El colibrí que canta colores
 *(The Hummingbird Who Sings Colors)*
 
-La tercera noche, el farolito ya tenía dos destellitos amigas flotando a su lado: una dorada y una blanca-azul. Lila las saludó con un dedo apenas antes de prender la llama nueva.
+—Conejito —dijo Lila, contando con los dedos—. La luciérnaga. El pez. Esos son dos.
 
-— Buenas noches, lucecitas — les dijo. *Sí, sí,* parpadearon ellas.
+Conejito esperaba.
 
-Y la llama se partió otra vez.
+—Si esta noche conocemos a alguien, vamos a ser tres. *Tres.* Es un número precioso. Tres como el triciclo de Ramoncito. Tres como las hojitas del trébol.
+
+Miró el farolito. Los dos destellos amigos — el dorado y el blanco-azul — flotaban juntitos al lado de la llama.
+
+—Buenas noches, lucecitas —les dijo Lila.
+
+*Plip-plop, plip-plop.* Las dos pulsaron al mismo tiempo. *Buenas noches, Lila.*
+
+Que los destellos LA saludaran ya, sin que ella los saludara primero — ay. Eso fue una de las cosas más bonitas que le habían pasado a Lila en su vida.
+
+Se quedó callada un momento. Porque a las cosas bonitas a veces no se les contesta enseguida. Hay que dejarlas asentarse.
+
+Después tocó el cristalito.
+
+—Vamos.
 
 ---
 
-Esta noche, las destellos la llevaron muy lejos.
+Esta noche, los destellos la llevaron hacia *arriba.*
 
-El camino subió esta vez. Lila pasó la piedra rosada. Pasó el río de cristal — el pez de luz le hizo una pirueta de saludo desde adentro del agua, como diciendo *te acuerdas, te acuerdas* — y siguió subiendo. Las florchispas a sus pies eran cada vez más densas, como si todo el camino fuera una alfombra de luz.
+—Conejito —susurró Lila al pasar por el río de cristal—. Mira. *Mira.* Es nuestro amigo.
 
-Cuando llegó arriba, Lila se detuvo.
+El pez de luz había salido a la superficie. Cuando vio a Lila pasar, hizo una pirueta entera. *Te acuerdas, te acuerdas, te acuerdas.*
 
-Delante de ella se abría una *pradera (a meadow).* Una pradera enterita de florchispas. Pero estas no eran chiquitas como las del primer día. Estas eran altas — del tamaño de una tulipán, del tamaño del puño de Lila — y se movían apenas con el aire, igual que se mueve un campo de trigo en una película.
+—Yo me acuerdo. Buenas noches, pez —le dijo Lila al pasar. Y siguió, porque los destellos no se detenían.
 
-La pradera respiraba.
+El camino subía. Y subía. Las florchispas a sus pies eran cada vez más densas, como si todo el suelo fuera una alfombra de luz.
 
-Lila respiró con ella, una vez, dos. Y entró.
+Cuando llegó arriba, Lila se paró seca.
+
+—Conejito.
+
+Conejito quedó atento.
+
+—Conejito, esta pradera... *respira.*
+
+Era verdad. Lila se quedó mirando. Delante de ella se abría una pradera entera de florchispas — pero estas no eran chiquitas como las del primer día. Estas eran altas. Del tamaño de un tulipán. Del tamaño del puño de Lila. Y se movían apenas, todas juntas, hacia adentro y hacia afuera, una vez cada respiración.
+
+—Mira, Conejito. Adentro... afuera... adentro... afuera. La pradera entera respira como nosotros.
+
+Lila respiró con la pradera. Una vez. Dos. Tres.
+
+Y entró.
 
 ---
 
-Estaba a la mitad de la pradera cuando lo vio.
+Estaba a la mitad de la pradera cuando lo oyó.
 
-No fue con los ojos primero. Fue con los oídos. Una nota. Una sola nota muy alta, muy chiquita, que duró menos de un latido. Y *de color rojo.*
+No fue con los ojos primero. Fue con los oídos. Una nota. Una sola nota muy alta, muy chiquita, que duró menos de un latido.
 
-Lila parpadeó. Las notas no tenían color en su mundo. Pero esta sí. Esta nota fue roja como una fresa madura, y la oyó al lado de la oreja, y después se fue.
+Y de *color rojo.*
+
+Lila parpadeó. Las notas no tenían color en su mundo, ella estaba segura.
+
+—Conejito —susurró sin moverse—. ¿Tú oíste eso?
 
 Otra nota. Esta amarilla, como mantequilla.
 
+—¡Conejito!
+
 Otra. Azul oscuro como ciruela.
 
-Y entonces lo vio: *un colibrí (a hummingbird).*
+—¡CONEJITO! ¿TÚ ESTÁS *VIENDO* LAS NOTAS?
 
-Era diminuto. Más chico que una mariposa grande. Tenía el plumaje verde y morado y dorado todo al mismo tiempo, y sus alitas se movían tan rápido que casi no se veían. Pero no era con las alas que cantaba colores. Era con la *garganta.* Cada vez que abría el piquito chiquitito, le salía una nota — y la nota era de un color.
+Lila no podía creer lo que le pasaba en las orejas. Las notas no eran como las notas de la radio. Estas notas tenían *color.* Lila las veía con los oídos. O las oía con los ojos. No sabía cómo decirlo.
 
-Lila se quedó parada en medio de la pradera con la boca un poquito abierta.
+—En Lumara las notas tienen color, Conejito. *¿Cómo es posible?*
 
-El colibrí no la veía todavía. Estaba ocupado bebiendo el néctar de una florchispa grande. Su piquito largo entraba en el corazón de la flor, y la flor brillaba un poquito más dorado cuando lo hacía, como si le diera las gracias.
+Y entonces lo vio.
+
+A unos pocos pasos de ella, en una florchispa grande, había *un colibrí.*
+
+—Ay, ay, ay —susurró Lila, agachándose—. Conejito, mira. Es más chiquito que una mariposa grande.
+
+El colibrí tenía el plumaje verde y morado y dorado todo al mismo tiempo. Sus alitas se movían tan rápido que casi no se veían. Tenía el piquito largo metido en el corazón de una florchispa, bebiendo. La florchispa brillaba un poquito más cada vez que el colibrí bebía, como si le diera las gracias.
+
+Pero no eran las alas las que cantaban colores.
+
+Era *la garganta.*
+
+Cada vez que el colibrí abría el piquito chiquitito, le salía una nota de color.
+
+—Ay, Conejito —susurró Lila—. *Canta colores.* Le salen colores de la boca.
 
 Lila estiró el dedo índice. Despacio. Despacio.
 
-— Hola, colibrí — susurró.
+—Hola, colibrí —susurró.
 
 *Plop.* Una florchispa cerca de su pie encendió un pétalo.
 
-— Hello, hummingbird — susurró todavía más bajito.
+—*Hello, hummingbird* —susurró todavía más bajito.
 
 *Plop.* Segundo pétalo.
 
-El colibrí terminó de beber. Subió un poquito en el aire. Y la vio.
+El colibrí terminó de beber. Subió un poquito en el aire. Y vio a Lila.
 
-Lila no se movió. Ni un milímetro. Sabía — del río, ya lo sabía — que con cada criatura hay que entrar en su mundo. El mundo de un colibrí es un mundo de aire y de ir muy rápido. Lila no podía ir rápido. Pero podía quedarse muy, muy quieta, que es la otra forma de moverse a la velocidad de un colibrí: estar tan quieta que el colibrí se sienta seguro.
+Lila no se movió.
+
+—Conejito —susurró sin mover los labios casi—. No te muevas. Yo no me voy a mover. Vamos a ser estatuas.
+
+Lila se acordó del pez de luz de la noche pasada. Con el pez había tenido que ir a *su mundo* — meterse al agua. ¿Y con el colibrí?
+
+—Conejito —susurró—. El colibrí vive en el aire. Vive en *ir rápido.* Yo no puedo ir rápido. Pero...
+
+Lila se quedó muy quieta. Más quieta que el caracol del jardín de su abuela. Más quieta que el limonero del patio.
+
+—Pero yo puedo ser *muy* quieta. Tan quieta que el colibrí se sienta seguro. Eso es la otra forma de ir a la velocidad de un colibrí. Quedarse tan quieta que él te alcance.
 
 *Plop.* Tercer pétalo.
 
-El colibrí flotó. Una nota verde le salió. Lila no respiró.
+El colibrí flotó. Hizo una nota verde. Lila no respiró.
 
-Y entonces — el colibrí *se acercó.* Hasta el dedo de Lila. Se quedó flotando ahí, frente a su uña, mirándola con dos ojitos negros chiquititos que también veían colores.
+Y entonces — el colibrí *se acercó.* Voló hasta el dedo de Lila. Se quedó flotando ahí, frente a la uña, mirándola con dos ojitos negros chiquititos que también veían colores.
 
-Lila hizo lo más valiente que había hecho en su vida.
+—Ay, Conejito —susurró Lila por dentro de los dientes, sin mover la boca casi—. Está aquí. Está *aquí.*
 
-Hizo, con la garganta, una sola nota. La más bonita que pudo. *Mmm-mmm.* Casi como un mmm de cuando uno come algo rico. Pero más alto, más alto. Como una pregunta para el colibrí.
+Y entonces Lila hizo lo más valiente que había hecho en su vida.
+
+Hizo, con la garganta, una sola nota. La más bonita que pudo. *Mmm-mmm.* Como un mmm de cuando uno come algo rico. Pero más alta. Más alta. Como una pregunta para el colibrí.
 
 Una nota *rosada* le salió de la boca.
 
-Rosada como un atardecer. Rosada como el helado de fresa que su abuela le hacía. *De su boca había salido un color.*
+—¡AY!
+
+Lila se tapó la boca con la mano libre. Una nota rosada — rosada como un atardecer, rosada como el helado de fresa de su abuela — *había salido de su boca.*
+
+—¡CONEJITO! ¡ME SALIÓ UN COLOR DE LA BOCA! ¡ME *SALIÓ!*
 
 *Plop.* Cuarto pétalo.
 
-El colibrí le contestó. Otra nota, esta vez dorada como el farolito. Cantaron juntos un instante chiquitito, una pregunta-rosada-respuesta-dorada-pregunta-azul, y la pradera entera de florchispas brilló con ellos.
+El colibrí le contestó. Otra nota — esta vez dorada como el farolito.
+
+—¡Y a él le sale dorado! ¡Conejito, los dos cantamos colores!
+
+Lila se rio sin querer. Hizo otra nota. *Rosado-fuerte* esta vez, casi rojo. El colibrí le contestó con una *verde-agua.* Cantaron juntos un instante chiquitito — pregunta-rosada-respuesta-dorada-pregunta-azul-respuesta-violeta — y la pradera entera de florchispas brilló con ellos.
 
 *Plop.* Quinto pétalo.
 
@@ -81,17 +149,31 @@ El colibrí le dio a Lila *su nombre verdadero.*
 
 Esta vez fue una nota sola, muy alta, que duró el tiempo de un latido y dejó un rastrito de todos los colores en el aire detrás de ella.
 
-Lila la guardó. Era la nota más linda que había oído nunca.
+Lila lo guardó. Era la nota más linda que había oído nunca.
 
-— Ahora sé tu nombre verdadero — dijo.
+—Ahora sé tu nombre verdadero —dijo, todavía con la mano sobre la boca por la sorpresa.
 
-El colibrí le hizo dos piruetas y subió y subió hasta que fue una estrellita más en el cielo violeta de Lumara.
+El colibrí le hizo dos piruetas. Subió. Subió. Subió. Hasta que fue una estrellita más en el cielo violeta de Lumara.
+
+—Hasta mañana, colibrí —susurró Lila.
 
 ---
 
-Lila volvió por la puerta de luz de luna con tres destellos adentro del pecho. Cuando se metió en la cama, tres destellitos flotaban en la repisa: la dorada de la luciérnaga, la blanca-azul del pez, y una nueva — rosada, dorada, verde y azul, todas al mismo tiempo, como si no se pudiera decidir.
+Cuando Lila volvió por la puerta de luz de luna, los tres destellos flotaban ya en el farolito esperándola.
 
-Lila se durmió oyendo todavía la nota del colibrí, muy bajita, en algún lugar del pecho.
+El dorado. El blanco-azul. Y uno nuevo — *que no se podía decidir.* Era rosado y dorado y verde y azul, todos al mismo tiempo, latiendo entre los colores como si no quisiera renunciar a ninguno.
+
+—Buenas noches, amigas —les dijo Lila a las tres.
+
+—*Plip-plop, ting, mmm.* —Las tres pulsaron juntas, cada una en su propio sonido.
+
+Lila apretó a Conejito.
+
+—Conejito —susurró—. Yo creo que mañana yo voy a poder hacer otra nota rosada. ¿Tú qué crees?
+
+Conejito no le dijo no.
+
+Y Lila se durmió oyendo todavía la nota rosada, muy bajita, en algún lugar del pecho.
 
 ### Palabras que aprendí hoy
 
@@ -99,7 +181,7 @@ Lila se durmió oyendo todavía la nota del colibrí, muy bajita, en algún luga
 |---|---|
 | **un colibrí** | a hummingbird |
 | **una pradera** | a meadow |
-| **una nota** | a note (a musical sound) |
+| **una nota** | a note (musical sound) |
 | **un color** | a color |
 | **una alita** | a little wing |
 | **el piquito** | the tiny beak |

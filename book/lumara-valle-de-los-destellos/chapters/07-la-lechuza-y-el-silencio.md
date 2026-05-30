@@ -1,45 +1,71 @@
-# LUMARA — EL VALLE DONDE LAS DESTELLOS CRECEN COMO FLORES
+# LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
 ## Capítulo 7: La lechuza y el silencio
 *(The Owl and the Silence)*
 
-A la séptima noche, Lila llegó a Lumara con prisa.
+—Conejito —dijo Lila, casi saltando hacia el farolito—. Seis amigos ya. Hoy van a ser siete. Mañana ocho. Y así hasta el último día.
 
-No fue mala prisa. Fue de esa prisa contenta, de cuando uno tiene muchas ganas de algo. Lila iba pensando: *seis criaturas ya. Hoy van a ser siete. Mañana ocho. Hasta el último día.*
+Conejito esperó.
 
-Las destellos la llevaron a un bosque.
+—Yo creo que Lumara me está enseñando cosas. ¿Tú no? Cada criatura una cosa distinta. Hoy seguro me enseña algo más.
 
-Un bosque viejo. Más viejo, le pareció a Lila, que su abuela, que el farolito, que la casa entera. Los árboles eran enormes, oscuros, con cortezas que tenían formas de caras dormidas. Las florchispas crecían escondiditas entre las raíces — apenas se las veía.
+Tocó el cristalito.
 
-Lila se detuvo en el medio.
+La llama se partió. Los seis destellos del farolito — *los seis* — esta vez se levantaron también, todos juntos, y formaron un círculo dorado-blanco-multicolor-frambuesa-plateado-arcoíris alrededor de la cabeza de Lila.
 
-— Hola — dijo. Con su voz normal.
+—¡Ay!
 
-Nadie le contestó.
+Los seis destellos pulsaron una vez. *Vamos contigo.*
+
+—Bueno —dijo Lila, riéndose—. Pero no me hagan cosquillas.
+
+Y pasó por la puerta de luz de luna con los seis amigos siguiéndola.
+
+---
+
+Esta vez los destellos la llevaron a un sitio que Lila no había visto.
+
+—Conejito —susurró—. Mira.
+
+Era un bosque. Pero no un bosque cualquiera. Un bosque *viejo.* Más viejo, le pareció a Lila, que su abuela. Más viejo que el farolito. Más viejo que su casa entera.
+
+Los árboles eran enormes. Oscuros. Tenían cortezas que parecían tener formas de caras dormidas. Las florchispas crecían escondiditas entre las raíces — chiquitas, apenas se las veía.
+
+—Conejito —susurró Lila, parándose en el medio—. Este bosque es muy callado.
 
 Esperó.
 
-Nadie.
+—Hola —dijo. Con su voz normal.
 
-— ¿Hay alguien? — dijo, un poquito más alto.
+Nadie le contestó.
 
-Y entonces *oyó algo.* Arriba, en la rama más alta de un árbol enorme, algo se movió. Lila miró.
+—¿Hay alguien? —dijo, un poquito más alto.
 
-Era *una lechuza (an owl).*
+Y entonces — *oyó algo.*
 
-Grande. Pero grande de verdad. Con plumas color luna llena y dos ojos enormes, color ámbar. La lechuza la miraba. No parpadeaba.
+Arriba. En la rama más alta del árbol más grande, algo se movió.
+
+Lila miró para arriba.
+
+Era *una lechuza.*
+
+Grande. Pero grande de verdad. Con plumas color luna llena y dos ojos enormes color ámbar. La lechuza la miraba.
+
+No parpadeaba.
 
 Lila tragó saliva.
 
-— Hola, lechuza — dijo. Suavecito esta vez. Casi le falló la voz.
+—Conejito —susurró sin mirar para abajo—. No mires con miedo. No mires con miedo. Es una lechuza.
 
-*Plop.* Un pétalo de florchispa entre las raíces se encendió. Era tan chiquito que Lila apenas lo vio.
+—Hola, lechuza —dijo Lila. Suavecito esta vez. Casi le falló la voz.
 
-— Hello, owl.
+*Plop.* Un pétalo de una florchispa entre las raíces se encendió. Era tan chiquito que Lila apenas lo vio.
+
+—*Hello, owl.*
 
 *Plop.* Segundo pétalo.
 
-Y entonces Lila se quedó callada. Esperaba que pasara lo de siempre: el tercer pétalo encendiéndose con el silencio.
+Lila se quedó callada. Esperaba que pasara lo de siempre: el tercer pétalo encendiéndose con el silencio.
 
 Pero no pasó.
 
@@ -53,31 +79,53 @@ Lila esperó más.
 
 Nada.
 
-A Lila se le empezó a meter algo raro en el pecho. Una incomodidad. Una ganas de hacer algo, lo que fuera. De decir otra cosa. De moverse. De aclararse la garganta.
+A Lila se le empezó a meter algo raro en el pecho. Una incomodidad. Unas ganas de hacer algo, lo que fuera. De decir otra cosa. De moverse. De aclararse la garganta. De llenar el silencio con cualquier cosa.
 
-*Quédate quieta,* pensó. *Quédate.*
+—Conejito —susurró tan bajito que casi no se oyó—. Esto es *largo.*
 
-Pero el silencio era *largo.* Era más largo que el silencio del caracol. Era más largo que cualquier silencio que Lila hubiera tenido en su vida.
+Conejito no contestó.
 
-Se le ocurrió que a lo mejor se había equivocado de criatura. Se le ocurrió que a lo mejor la lechuza no quería hablar con ella. Se le ocurrió rendirse y volver a la cama y probar mañana con alguien más fácil.
+—Conejito, ¿nos vamos?
+
+Conejito no contestó.
+
+Lila lo miró. Conejito tenía la misma cara de siempre. Pero por una vez — por la primera vez en seis noches en Lumara — Lila tuvo la sensación de que Conejito estaba *esperando que ella misma se diera cuenta de algo.*
+
+—¿Qué quieres que me dé cuenta? —le susurró Lila a Conejito.
+
+Conejito esperó.
+
+El silencio del bosque era *largo.* Más largo que el silencio del caracol. Más largo que cualquier silencio que Lila hubiera tenido en su vida entera.
+
+Lila tuvo ganas de irse. Se le ocurrió que a lo mejor se había equivocado de criatura. Se le ocurrió que a lo mejor la lechuza no quería hablar con ella. Se le ocurrió rendirse y volver a la cama y probar mañana con alguien más fácil.
 
 Y entonces — Lila se acordó.
 
 Se acordó de su abuela.
 
-Su abuela, en las tardes, cuando Lila se ponía triste y no sabía por qué, *no le hablaba.* Solamente se sentaba a su lado en el sofá. Le agarraba la mano. Y se quedaba ahí. Mucho rato. Sin decir nada.
+Su abuela, en las tardes, cuando Lila se ponía triste y no sabía por qué, *no le hablaba.*
 
-Y al rato, sin que nadie hubiera dicho una palabra, Lila se sentía mejor.
+Solamente se sentaba a su lado en el sofá. Le agarraba la mano. Y se quedaba ahí. Mucho rato. Sin decir nada. Sin preguntar nada. Sin tratar de arreglarlo.
 
-Su abuela le había enseñado, sin enseñarle, que a veces lo más hermoso que puedes darle a alguien es estar ahí callada.
+Y al rato — sin que nadie hubiera dicho una palabra — Lila se sentía mejor.
 
-*El silencio también es amor.*
+—Conejito —susurró Lila, ya despacio—. La abuela.
+
+Conejito esperó.
+
+—La abuela me enseñó esto. Sin enseñármelo. *El silencio también es amor.*
+
+Lila no había sabido que sabía esa frase hasta que se la oyó decir.
+
+—El silencio también es amor —se la repitió bajito, saboreándola, como quien aprende una palabra nueva.
 
 ---
 
 Lila se sentó en una raíz del árbol grande. Se cruzó las piernas. Puso a Conejito en la falda. Y se quedó.
 
-No esperando. *Acompañando.*
+No esperando.
+
+*Acompañando.*
 
 La lechuza no se movió. Lila tampoco.
 
@@ -85,7 +133,17 @@ Pasó un rato. Pasó otro rato. Pasó el más largo de todos.
 
 Y poco a poco, sin que Lila lo decidiera, su pecho se aflojó. Su respiración se hizo despacio. El bosque viejo dejó de darle un poquito de miedo. Empezó a parecerle, en cambio, una casa antigua donde uno había vivido sin acordarse.
 
-Empezó a oír cosas que antes no había oído. El crujido suave del árbol. Una hojita cayendo, muy despacio, despacio. Un grillo lejos. La respiración propia, dentro de ella.
+Empezó a oír cosas que antes no había oído.
+
+El crujido suave del árbol.
+
+Una hojita cayendo, muy despacio, despacio. *Tic.*
+
+Un grillo lejos.
+
+La respiración propia, dentro de ella.
+
+—Conejito —susurró Lila sin mover los labios—. Hay sonidos que solamente se oyen cuando uno no hace ninguno.
 
 *Plop.* Tercer pétalo.
 
@@ -93,9 +151,11 @@ Lila se quedó.
 
 *Plop.* Cuarto.
 
-La lechuza por fin parpadeó. Despacito. Una sola vez. Como las que hacía la Luna, la gata de la abuela, cuando la quería.
+La lechuza por fin parpadeó. Despacito. Una sola vez. Como las que hacía Luna, la gata de la abuela, cuando la quería.
 
 Lila parpadeó también. Igual de despacio.
+
+—Hola, lechuza —dijo Lila. Sin sonido. Solamente con los ojos.
 
 *Plop.* Quinto pétalo.
 
@@ -105,23 +165,35 @@ No fue un sonido alto. Fue un *zumbido bajo,* un *mmmmmm* muy hondo que Lila sin
 
 Lila lo guardó. Era un nombre que pesaba. Pero pesaba bien. Como pesa un cobertor en una noche fría.
 
-— Ahora sé tu nombre verdadero — dijo Lila, muy bajito.
+—Ahora sé tu nombre verdadero —dijo Lila. Tan bajito que solamente la lechuza la oyó.
 
-La lechuza inclinó la cabeza enterita, como una abuela hace cuando está orgullosa.
+La lechuza inclinó la cabeza enterita. Como una abuela hace cuando está orgullosa.
 
 Y dijo, por fin, una palabra. Una sola.
 
-— Quédate.
+—Quédate.
+
+Lila se quedó otro ratito. No mucho. Lo suficiente para que la lechuza supiera que Lila había entendido lo que tenía que entender.
+
+—Conejito —susurró antes de pararse—. Yo creo que esto es lo que más me ha gustado de Lumara hasta ahora. *No hacer nada.* Pero no nada-aburrido. Nada-juntos.
+
+Después se paró. Le hizo a la lechuza una reverencia chiquita — porque le pareció lo correcto, como su abuela en la iglesia — y volvió por el camino con los seis destellos amigos siguiéndola.
 
 ---
 
-Lila se quedó otro ratito. No mucho. Lo suficiente para que la lechuza supiera que Lila había entendido.
+En la cama, siete destellos flotaban junto al farolito. El séptimo era ámbar oscuro, como los ojos de la lechuza, y latía despacio, despacio, despacio.
 
-Después se paró, le hizo una reverencia chiquita — porque le pareció lo correcto — y volvió por el camino.
+—Buenas noches, amigas —les dijo Lila a las siete.
 
-En la cama, siete destellos flotaban junto al farolito. La séptima era ámbar oscuro, como los ojos de la lechuza, y latía despacio, despacio, despacio.
+Los seis primeros pulsaron sus respuestas alegres. El séptimo no. El séptimo nomás *latió.* Despacio. Como un cobertor en una noche fría.
 
-Lila se durmió respirando al mismo ritmo.
+Lila apretó a Conejito.
+
+—Conejito —susurró—. Hoy aprendí que mi abuela ya me había enseñado algo importante sin yo saberlo. ¿A ti tu abuela te enseñó cosas así?
+
+Conejito esperó.
+
+Y Lila se durmió respirando al mismo ritmo despacio-despacio de la lucecita ámbar.
 
 ### Palabras que aprendí hoy
 
