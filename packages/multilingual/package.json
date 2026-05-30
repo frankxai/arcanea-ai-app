@@ -48,8 +48,8 @@
     "test": "pnpm run build:test && node --test dist-test/test/"
   },
   "peerDependencies": {
-    "next": ">=14",
-    "next-intl": ">=4"
+    "next": ">=16.2.6",
+    "next-intl": ">=4.12.0"
   },
   "peerDependenciesMeta": {
     "next-intl": {
