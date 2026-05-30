@@ -1,0 +1,42 @@
+title: "Las Tierras de Luz"
+slug: las-tierras-de-luz
+tier: featured
+status: in-progress
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator
+  - name: Ana Cecilia Cancino
+    role: co-writer
+  - name: Arcanea Author Team
+    role: multi-agent-draft-team
+
+ai_transparency:
+  models_used:
+    - id: claude-opus-4-7
+      provider: anthropic
+      role: lore-master-orchestration-and-prose-drafting
+    - id: nano-banana-pro
+      provider: google
+      role: cover-art
+  human_contribution: substantial
+  ai_contribution: substantial
+  method: "Human creative direction by FrankX (world premise, target reader, canon alignment, structural decisions). Co-written with Ana Cecilia Cancino. Multi-agent drafting via the Arcanea Author Team (World Architect, Character Psychologist, Consciousness Fiction Master, Sensitivity Reader, Research Librarian). Lore Master synthesis. Human curation of all major decisions (setting, realm canon-placement, Believer identity, dialogue convention, hero's journey shape, cast wounds and lies, sensitivity protocol). Prose drafted by Claude Opus 4.7 under human direction. Council review of every chapter against the BIBLE before publication."
+
+license: CC-BY-NC-SA-4.0
+content_rating: general
+tags: [magical-realism, kingdom-of-light, first-witness, consciousness-fiction, bilingual, veldoria, destellos]
+
+acknowledgments: |
+  In the valley-Realm of Veldoria, an eleven-year-old named Mira wakes one morning to find a
+  small prismatic light hovering above her chest. Soon she discovers she can wake the sleeping
+  lights in every being she passes — and that no one else can see them. Across the narrow street,
+  behind a blue door, an old woman who has been waiting her whole adult life looks up from a
+  bowl of green beans and sees. A magical-realism novel of the Kingdom of Light — about the
+  loneliness of the first witness, the three notes that crossed a lost Realm-corridor to find
+  her, and the quiet joy that lives beneath every ordinary day.
+
+  World-building by the Arcanea Author Team multi-agent dispatch. Canon-aligned with the
+  Legends of Arcanea — Nero/Lumina duality, Ten Gates, Yggdrasil's World Song, Malachar sealed.
+  Voice engineered for the bilingual literary reader. Written in the open.

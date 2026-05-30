@@ -44,6 +44,7 @@ const ACCENT_MAP: Record<string, string> = {
   'song-of-van-linh': 'teal',
   'las-tierras-de-luz': 'amber',
   'das-maedchen-drei-sprachen': 'amber',
+  'lumara-valle-de-los-destellos': 'amber',
   'russian-from-tashkent': 'amber',
 };
 
