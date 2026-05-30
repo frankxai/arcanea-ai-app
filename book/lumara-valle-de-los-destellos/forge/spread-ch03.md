@@ -1,7 +1,7 @@
 # Spread Ch 3 — The Hummingbird Who Sings Colours
 
 **Aspect ratio:** 4:3 landscape
-**Output:** `lumara-valle-de-las-chispas-spread-ch03.png`
+**Output:** `lumara-valle-de-las-destellos-spread-ch03.png`
 **Book beat:** Lila and the colibrí trade notes — and the notes are
 visible in the air as small brushstrokes of colour.
 

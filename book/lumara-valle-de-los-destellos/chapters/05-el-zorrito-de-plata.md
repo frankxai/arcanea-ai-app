@@ -1,9 +1,9 @@
-# LUMARA — EL VALLE DONDE LAS CHISPAS CRECEN COMO FLORES
+# LUMARA — EL VALLE DONDE LAS DESTELLOS CRECEN COMO FLORES
 
 ## Capítulo 5: El zorrito de plata
 *(The Little Silver Fox)*
 
-A la quinta noche, Lila ya tenía cuatro chispas amigas viviendo en su farolito, y el farolito brillaba más cálido que antes, como si tuviera más corazón adentro.
+A la quinta noche, Lila ya tenía cuatro destellos amigas viviendo en su farolito, y el farolito brillaba más cálido que antes, como si tuviera más corazón adentro.
 
 Esa noche, Lila se asomó a la repisa antes de prender la llama.
 
@@ -13,7 +13,7 @@ Y por un instante chiquito le pareció que la noche entera, del otro lado de la 
 
 ---
 
-Las chispas la llevaron por un camino nuevo: entre árboles de hojas de plata.
+Las destellos la llevaron por un camino nuevo: entre árboles de hojas de plata.
 
 Lila no había visto árboles así nunca. Las hojas eran finitas como cuchillitos, color plata pulida, y cada vez que el viento las movía hacían un sonido suavecito que era casi una risa de niñas. Las florchispas brillaban entre las raíces, también de plata esta noche, y formaban como un caminito que Lila tenía que seguir.
 
@@ -93,7 +93,7 @@ Y Lila supo, por primera vez desde que llegó a Lumara, que el zorrito iba a ser
 
 ---
 
-Cinco chispas en el farolito. La quinta era plateada con un brillito dorado adentro.
+Cinco destellos en el farolito. La quinta era plateada con un brillito dorado adentro.
 
 Lila se metió en la cama y antes de dormir susurró, en voz bajita, como una canción que se está aprendiendo:
 

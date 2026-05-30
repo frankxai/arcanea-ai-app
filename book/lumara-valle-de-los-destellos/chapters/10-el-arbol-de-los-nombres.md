@@ -1,11 +1,11 @@
-# LUMARA — EL VALLE DONDE LAS CHISPAS CRECEN COMO FLORES
+# LUMARA — EL VALLE DONDE LAS DESTELLOS CRECEN COMO FLORES
 
 ## Capítulo 10: El árbol de los nombres
 *(The Tree of Names)*
 
 A la décima noche, Lila no prendió el farolito enseguida.
 
-Se quedó mirándolo un rato. Nueve chispas amigas, una llamita de miel, una llamita-velita del ciervo. Once luces, juntitas, en una repisa de madera vieja. Quien hubiera mirado por la ventana habría dicho que ahí adentro vivía una constelación pequeñita.
+Se quedó mirándolo un rato. Nueve destellos amigas, una llamita de miel, una llamita-velita del ciervo. Once luces, juntitas, en una repisa de madera vieja. Quien hubiera mirado por la ventana habría dicho que ahí adentro vivía una constelación pequeñita.
 
 — Hoy es la última noche — le dijo Lila al farolito.
 
@@ -145,7 +145,7 @@ Se metió en la cama. Apretó a Conejito muy fuerte. Y se durmió antes de poder
 
 Pero si hubiera mirado, habría visto:
 
-Once chispas bailando alrededor de la llamita. Más una pequeñita nueva, dorada con violeta en el corazón — su propio nombre verdadero, guardado al lado de los otros.
+Once destellos bailando alrededor de la llamita. Más una pequeñita nueva, dorada con violeta en el corazón — su propio nombre verdadero, guardado al lado de los otros.
 
 Y en el aire, encima del farolito, un brillito casi invisible. La forma chiquita, lejana, de un árbol enorme. *Lumara,* respirando.
 

@@ -1,9 +1,9 @@
-# LUMARA — EL VALLE DONDE LAS CHISPAS CRECEN COMO FLORES
+# LUMARA — EL VALLE DONDE LAS DESTELLOS CRECEN COMO FLORES
 
 ## Capítulo 6: La mariposa que pinta el aire
 *(The Butterfly That Paints the Air)*
 
-A la sexta noche, las chispitas del farolito ya eran cinco, y a Lila le parecía que el farolito ya no era un farolito normal. Parecía una estrella chiquita que vivía en su ventana.
+A la sexta noche, las destellitos del farolito ya eran cinco, y a Lila le parecía que el farolito ya no era un farolito normal. Parecía una estrella chiquita que vivía en su ventana.
 
 — Vamos — susurró Lila.
 
@@ -11,7 +11,7 @@ Y se fue.
 
 ---
 
-Esta vez las chispas la llevaron muy alto.
+Esta vez las destellos la llevaron muy alto.
 
 Pasó el río. Pasó la pradera del colibrí. Pasó el jardín de piedras del caracol, y por un momento Lila le dijo *hola* al caracol con los ojos, y el caracol — sí, todavía estaba ahí — le contestó con una antenita, despacísimo. Pasó los árboles de plata del zorrito. Y siguió subiendo.
 
@@ -103,13 +103,13 @@ La mariposa parpadeó con las alas dos veces. *Sí. Sí.*
 
 Lila cruzó el puente otra vez. Esta vez no le dio miedo.
 
-Cuando volvió a la cama, seis chispas vivían en el farolito. La sexta era multicolor — todos los trazos de la mariposa, juntos en una sola chispa pequeñita.
+Cuando volvió a la cama, seis destellos vivían en el farolito. La sexta era multicolor — todos los trazos de la mariposa, juntos en una sola destello pequeñita.
 
 Antes de dormirse, Lila probó algo. Susurró:
 
 — Hola, lucecitas.
 
-Y las seis chispas, juntitas, pulsaron una vez. *Hola, Lila.*
+Y las seis destellos, juntitas, pulsaron una vez. *Hola, Lila.*
 
 ### Palabras que aprendí hoy
 

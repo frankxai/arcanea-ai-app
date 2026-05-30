@@ -1,4 +1,4 @@
-# LUMARA — EL VALLE DONDE LAS CHISPAS CRECEN COMO FLORES
+# LUMARA — EL VALLE DONDE LAS DESTELLOS CRECEN COMO FLORES
 
 ## Capítulo 7: La lechuza y el silencio
 *(The Owl and the Silence)*
@@ -7,7 +7,7 @@ A la séptima noche, Lila llegó a Lumara con prisa.
 
 No fue mala prisa. Fue de esa prisa contenta, de cuando uno tiene muchas ganas de algo. Lila iba pensando: *seis criaturas ya. Hoy van a ser siete. Mañana ocho. Hasta el último día.*
 
-Las chispas la llevaron a un bosque.
+Las destellos la llevaron a un bosque.
 
 Un bosque viejo. Más viejo, le pareció a Lila, que su abuela, que el farolito, que la casa entera. Los árboles eran enormes, oscuros, con cortezas que tenían formas de caras dormidas. Las florchispas crecían escondiditas entre las raíces — apenas se las veía.
 
@@ -119,7 +119,7 @@ Lila se quedó otro ratito. No mucho. Lo suficiente para que la lechuza supiera 
 
 Después se paró, le hizo una reverencia chiquita — porque le pareció lo correcto — y volvió por el camino.
 
-En la cama, siete chispas flotaban junto al farolito. La séptima era ámbar oscuro, como los ojos de la lechuza, y latía despacio, despacio, despacio.
+En la cama, siete destellos flotaban junto al farolito. La séptima era ámbar oscuro, como los ojos de la lechuza, y latía despacio, despacio, despacio.
 
 Lila se durmió respirando al mismo ritmo.
 

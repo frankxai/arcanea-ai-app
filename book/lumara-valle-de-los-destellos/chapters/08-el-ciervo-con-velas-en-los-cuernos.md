@@ -1,9 +1,9 @@
-# LUMARA — EL VALLE DONDE LAS CHISPAS CRECEN COMO FLORES
+# LUMARA — EL VALLE DONDE LAS DESTELLOS CRECEN COMO FLORES
 
 ## Capítulo 8: El ciervo con velas en los cuernos
 *(The Deer with Candles in Its Antlers)*
 
-A la octava noche, las chispitas del farolito eran siete, y juntas hacían tanta luz que el cuartito de Lila parecía un atardecer. Su abuela, que pasó a darle un beso de buenas noches, se quedó mirando un momento.
+A la octava noche, las destellitos del farolito eran siete, y juntas hacían tanta luz que el cuartito de Lila parecía un atardecer. Su abuela, que pasó a darle un beso de buenas noches, se quedó mirando un momento.
 
 — Mi vida — dijo —, el farolito está distinto.
 
@@ -19,7 +19,7 @@ Lila pensó, mientras prendía la llama, que su abuela quizás sabía más de lo
 
 ---
 
-Las chispas la llevaron muy lejos esta vez.
+Las destellos la llevaron muy lejos esta vez.
 
 Subieron por encima del bosque viejo de la lechuza. Subieron por encima de las nubes — Lila nunca había estado por encima de las nubes —, y por debajo de las estrellas, hasta una pradera *altísima.* Más alta que el cielo de su casa. Más alta que nada.
 
@@ -85,7 +85,7 @@ Y entonces hizo algo que Lila no se esperaba.
 
 Sopló — muy suavito, muy con cuidado — sobre una velita de su cuerno. La velita parpadeó. Y de la velita, un instante después, *cayó una llamita.*
 
-No cayó al suelo. Flotó. Como las chispas del farolito.
+No cayó al suelo. Flotó. Como las destellos del farolito.
 
 La llamita flotó despacio, despacio, hasta detenerse delante de la cara de Lila.
 
@@ -119,7 +119,7 @@ Cuando Lila volvió a la cama, la llamita-velita seguía en sus manos. No se le 
 
 La puso en el farolito, al lado de la llamita color miel.
 
-Ahora había *dos* llamas en el farolito. Las dos juntitas. Y alrededor, ocho chispas amigas dando vueltas suavecitas, como si bailaran.
+Ahora había *dos* llamas en el farolito. Las dos juntitas. Y alrededor, ocho destellos amigas dando vueltas suavecitas, como si bailaran.
 
 Lila se durmió pensando en abuelos. En su abuela. En el ciervo. En todos los abuelos que el mundo tiene y que cargan velitas en la cabeza, aunque uno no las vea.
 

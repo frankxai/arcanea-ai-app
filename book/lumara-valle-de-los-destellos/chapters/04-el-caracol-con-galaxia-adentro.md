@@ -1,4 +1,4 @@
-# LUMARA — EL VALLE DONDE LAS CHISPAS CRECEN COMO FLORES
+# LUMARA — EL VALLE DONDE LAS DESTELLOS CRECEN COMO FLORES
 
 ## Capítulo 4: El caracol con galaxia adentro
 *(The Snail with a Galaxy Inside)*
@@ -9,7 +9,7 @@ Lo que no sabía, todavía, era que esta noche le iba a tocar aprender a *ser de
 
 ---
 
-Las chispas la llevaron a un jardín de piedras.
+Las destellos la llevaron a un jardín de piedras.
 
 No era una pradera, no era un río. Era un lugar callado, lleno de rocas grandes y planas, tibias, con musguito (*moss*) verde-oro creciendo en las grietas. Florchispas crecían también, pero estas eran enanitas, casi pegadas a la piedra, como si estuvieran cuidando algo.
 
@@ -113,7 +113,7 @@ El caracol se metió un poquito en la concha. Después salió otra vez. *Sí, am
 
 Lila volvió a su cama lentísima. No quería correr. No quería ir rápido.
 
-Cuatro chispas flotaban junto al farolito: la dorada, la blanca-azul, la de todos los colores, y una nueva — chiquitita, color frambuesa con polvo de planetas adentro.
+Cuatro destellos flotaban junto al farolito: la dorada, la blanca-azul, la de todos los colores, y una nueva — chiquitita, color frambuesa con polvo de planetas adentro.
 
 Lila se durmió sintiendo cómo daba vueltas, despacito.
 

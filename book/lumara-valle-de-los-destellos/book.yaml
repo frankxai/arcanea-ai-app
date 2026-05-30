@@ -1,6 +1,6 @@
-title: "Lumara — el valle donde las chispas crecen como flores"
+title: "Lumara — el valle donde los destellos crecen como flores"
 subtitle: "La historia de Lila y la flor que guarda los nombres verdaderos"
-slug: lumara-valle-de-las-chispas
+slug: lumara-valle-de-los-destellos
 tier: featured
 status: in-progress
 language: es
@@ -22,11 +22,11 @@ ai_transparency:
       role: story-architecture-and-drafting
   human_contribution: 30%
   ai_contribution: 70%
-  method: "Human concept and direction (gift for a friend Ana to read aloud to her young niece, ages 5-8). Form factor and craft DNA from the Mila book (Das Mädchen, das drei Sprachen hörte). Lila's Lumara is original: a gentle, original magical valley inspired by the best of Studio Ghibli, Saint-Exupéry, and Astrid Lindgren — Disney warmth with literary depth."
+  method: "Human concept and direction (gift for a friend Ana to read aloud to her young niece, ages 5-8). Form factor and craft DNA from the Mila book (Das Mädchen, das drei Sprachen hörte). Lila's Lumara is original: a gentle, original magical valley inspired by the best of Studio Ghibli, Saint-Exupéry, and Astrid Lindgren — Disney warmth with literary depth. Canon-aligned to Arcanea's destellos cosmology (book/las-tierras-de-luz/MAGIC_DESTELLOS.md)."
 
 license: CC-BY-NC-SA-4.0
 content_rating: all-ages
-tags: [children, bilingual, spanish, english, picture-book, ghibli-influence, ages-5-8, bedtime, ten-chapters]
+tags: [children, bilingual, spanish, english, picture-book, ghibli-influence, ages-5-8, bedtime, ten-chapters, destellos]
 
 setting: "Lumara — un valle mágico al que se entra por una puerta de luz de luna · diez noches seguidas"
 
@@ -49,14 +49,19 @@ cast:
   - { name: "el árbol de los nombres", role: "el corazón del valle" }
 
 magic_system: |
-  Las florchispas — flores chiquitas de cinco pétalos, plata y oro, que crecen
-  por todo el valle de Lumara. Cuando Lila saluda a una criatura con tres
-  saludos verdaderos (su nombre en español, su nombre en inglés, y un silencio
-  atento), los cinco pétalos de una florchispa cercana se encienden uno por uno
-  hasta brillar enteros. La criatura entonces le regala a Lila su nombre
-  verdadero — el sonido más profundo de lo que es. Lila lo guarda. Cada nombre
-  vuelve a casa con ella, como una chispa nueva flotando junto a la llama del
-  farolito de su abuela.
+  Los destellos — chispitas de luz, la unidad fundamental de la magia en Lumara,
+  alineadas con la cosmología canónica de Arcanea (destellos como abundancia,
+  no fractura). Cada noche el farolito de la abuela de Lila se parte en cien
+  destellitos que la guían a través de la puerta de luz de luna hacia el valle.
+
+  Las florchispas son flores chiquitas de cinco pétalos, plata y oro, que crecen
+  por todo Lumara. Cada florchispa guarda un destellito en su corazón dorado.
+  Cuando Lila saluda a una criatura con tres saludos verdaderos (su nombre en
+  español, su nombre en inglés, y un silencio atento), los cinco pétalos de
+  la florchispa más cercana se encienden uno por uno hasta brillar enteros.
+  La criatura entonces le regala a Lila su nombre verdadero — el sonido más
+  profundo de lo que es. Lila lo guarda como un destello nuevo flotando junto
+  a la llama del farolito de su abuela.
 
   La magia no se trata de hechizos. Se trata de prestar atención.
 
@@ -66,3 +71,12 @@ acknowledgments: |
   por Saint-Exupéry (El Principito), Astrid Lindgren, Estudio Ghibli (Ma /
   el silencio como enseñanza), Cornelia Funke, y la propia abuela del lector.
   Publicado en Arcanea — escrito a la luz del farolito.
+
+  Voz objetivo: mostrar, no contar. Lots of dialogue. Lila habla mucho —
+  consigo misma, con Conejito, con cada criatura. Cada capítulo es para que
+  Ana y su sobrinita se prendan al leerlo juntas.
+
+writing_status:
+  ch01_voice: "rewritten — gold standard for the new register (dialogue-heavy, show-don't-tell)"
+  ch02_to_ch10_voice: "pending rewrite to match Ch 1's register — currently they have the destellos rebrand but retain the earlier more-literary voice"
+  next_pass: "rewrite chs 2-10 chapter by chapter to match Ch 1's aliveness once Ch 1's voice is approved"

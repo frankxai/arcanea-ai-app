@@ -1,7 +1,7 @@
 # Spread Ch 6 — The Butterfly Paints the Air
 
 **Aspect ratio:** 4:3 landscape
-**Output:** `lumara-valle-de-las-chispas-spread-ch06.png`
+**Output:** `lumara-valle-de-las-destellos-spread-ch06.png`
 **Book beat:** The butterfly leaves trails of colour in the air with each
 wingbeat — and Lila, speaking softly, leaves her first colour-stroke too.
 

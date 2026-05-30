@@ -1,9 +1,9 @@
-# LUMARA — EL VALLE DONDE LAS CHISPAS CRECEN COMO FLORES
+# LUMARA — EL VALLE DONDE LAS DESTELLOS CRECEN COMO FLORES
 
 ## Capítulo 9: La niña con la flor en el pelo
 *(The Girl with the Flower in Her Hair)*
 
-A la novena noche, el farolito tenía dos llamitas y ocho chispitas, y todo el cuarto de Lila olía suavemente a miel y a noche de verano.
+A la novena noche, el farolito tenía dos llamitas y ocho destellitos, y todo el cuarto de Lila olía suavemente a miel y a noche de verano.
 
 Lila se sentó en la repisa con Conejito y miró hacia la puerta entre las dos estrellas. Sintió, esa noche, algo nuevo. Una vocecita en el pecho le dijo, no con palabras pero clarito: *hoy vas a conocer a alguien especial.*
 
@@ -13,7 +13,7 @@ La vocecita no contestó. Pero Lila supo, sin que le contestara, que iba a ser a
 
 ---
 
-Las chispas la llevaron a un claro.
+Las destellos la llevaron a un claro.
 
 Un claro chiquito, redondo, en medio de un bosquecito de árboles plateados — parecidos a los del zorrito, pero más jovencitos, como árboles niños. En el centro del claro había un árbol distinto: *un árbol con la corteza color leche,* con las ramas cayendo suavemente como el pelo de una mamá. Las hojas eran luminosas. Florchispas grandes crecían a sus pies, formando un círculo casi perfecto.
 
@@ -51,7 +51,7 @@ Lila se sentó. Las dos florchispas grandes — la que vivía en la trenza de Au
 
 Lila pensó eso un momento. Tener un valle como casa. Tener florchispas en lugar de macetas. Le pareció lindo y un poquito triste a la vez. Pero más lindo.
 
-— Yo vine porque las chispas de mi farolito me trajeron — dijo Lila.
+— Yo vine porque las destellos de mi farolito me trajeron — dijo Lila.
 
 — Ya sé — dijo Aurelia. — Te he visto todas las noches. Yo te seguí desde lejos. Pero hoy te toca a mí.
 
@@ -127,9 +127,9 @@ Lila apretó la mano de Aurelia.
 
 ---
 
-Cuando Lila volvió a su cama, nueve chispas vivían en el farolito.
+Cuando Lila volvió a su cama, nueve destellos vivían en el farolito.
 
-Pero esta vez había algo distinto. La novena chispa no estaba sola: estaba acompañada, muy cerca, de una pequeñita extra, plateada, latiendo al mismo ritmo. La de Aurelia. La amiga de la amiga. Las dos juntitas.
+Pero esta vez había algo distinto. La novena destello no estaba sola: estaba acompañada, muy cerca, de una pequeñita extra, plateada, latiendo al mismo ritmo. La de Aurelia. La amiga de la amiga. Las dos juntitas.
 
 Lila se durmió con una sonrisa que su abuela, al día siguiente, le iba a ver desde la puerta sin decirle nada.
 

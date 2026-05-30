@@ -1,7 +1,7 @@
 # Spread Ch 8 — The Deer with Candles in Its Antlers
 
 **Aspect ratio:** 4:3 landscape
-**Output:** `lumara-valle-de-las-chispas-spread-ch08.png`
+**Output:** `lumara-valle-de-las-destellos-spread-ch08.png`
 **Book beat:** The great deer lowers its head and breathes a small flame
 loose from one antler-candle — a gift, drifting toward Lila's cupped
 hands.

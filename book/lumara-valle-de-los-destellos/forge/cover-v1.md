@@ -1,7 +1,7 @@
 # Cover v1 — The Threshold
 
 **Aspect ratio:** 3:4 portrait
-**Output:** `lumara-valle-de-las-chispas-cover-v1.png`
+**Output:** `lumara-valle-de-las-destellos-cover-v1.png`
 **Book beat:** Chapter 1, the moment the farolito flame splits and the
 moonlight doorway opens.
 
@@ -20,14 +20,14 @@ night beyond the window on the right.
 
 In the lower-centre, on the wooden windowsill: a small worn-bronze oil lamp
 (the farolito). Its honey-coloured flame is in the act of softly dividing —
-a slow cloud of tiny gold-silver chispas (sparks the size of apple seeds)
+a slow cloud of tiny gold-silver destellos (destellos the size of apple seeds)
 drifting upward from the wick like a thinking thought.
 
 Lila stands at the sill in three-quarter profile facing the window, one
 bare foot still on the wooden floor, the other half-lifted as if she has
 just decided to climb up. Conejito hangs loosely from her left hand by one
 ear. Her right hand rests on the windowsill near the lamp. Her face is
-calm, turned toward the rising chispa-cloud, mouth softly closed. She is
+calm, turned toward the rising destello-cloud, mouth softly closed. She is
 not surprised — she is recognising.
 
 Through the window, two stars hold the upper-right corner of the frame.
@@ -47,7 +47,7 @@ a bedpost in pencil-line. This is where the title type will sit.
   warm pool on the windowsill, Lila's hand, and her cheek.
 - **Cream linen** on Lila's nightgown catching that pool plus a touch of
   cooler moon-wash from outside.
-- **Gold-silver metallic ink** for each tiny chispa as it lifts from the
+- **Gold-silver metallic ink** for each tiny destello as it lifts from the
   flame — these should read as small gold pencil-dots with a single
   metallic gleam.
 - Everything else: paper-grey.
@@ -66,7 +66,7 @@ Two sources, both gentle:
 Three-quarter profile, hair falling forward over her cheek. Her expression
 is **recognition** — not surprise, not delight. She has known, somehow,
 that something like this could happen, and now it is happening. Her mouth
-is closed. Her eyes are on the rising chispas, not on the moonlight
+is closed. Her eyes are on the rising destellos, not on the moonlight
 doorway behind them.
 
 ## Make-or-break detail

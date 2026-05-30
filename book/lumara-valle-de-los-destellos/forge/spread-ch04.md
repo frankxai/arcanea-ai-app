@@ -1,7 +1,7 @@
 # Spread Ch 4 — The Snail with a Galaxy Inside
 
 **Aspect ratio:** 4:3 landscape
-**Output:** `lumara-valle-de-las-chispas-spread-ch04.png`
+**Output:** `lumara-valle-de-las-destellos-spread-ch04.png`
 **Book beat:** Lila lies on the warm stone, slows down to snail-time,
 and sees the galaxy turning inside the shell.
 

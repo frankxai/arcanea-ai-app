@@ -1,7 +1,7 @@
 # Spread Ch 10 — El Árbol de los Nombres
 
 **Aspect ratio:** 4:3 landscape
-**Output:** `lumara-valle-de-las-chispas-spread-ch10.png`
+**Output:** `lumara-valle-de-las-destellos-spread-ch10.png`
 **Book beat:** Lila presses her hand to the warm bark of the great tree
 and gives back her name. A new florchispa blooms where her hand touches.
 

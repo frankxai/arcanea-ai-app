@@ -1,7 +1,7 @@
 # Spread Ch 1 — Lila crosses into Lumara
 
 **Aspect ratio:** 4:3 landscape
-**Output:** `lumara-valle-de-las-chispas-spread-ch01.png`
+**Output:** `lumara-valle-de-las-destellos-spread-ch01.png`
 **Book beat:** Lila steps through the moonlight doorway and Lumara opens
 beneath her for the first time.
 

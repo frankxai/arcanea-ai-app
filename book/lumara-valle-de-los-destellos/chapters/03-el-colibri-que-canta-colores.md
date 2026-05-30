@@ -1,9 +1,9 @@
-# LUMARA — EL VALLE DONDE LAS CHISPAS CRECEN COMO FLORES
+# LUMARA — EL VALLE DONDE LAS DESTELLOS CRECEN COMO FLORES
 
 ## Capítulo 3: El colibrí que canta colores
 *(The Hummingbird Who Sings Colors)*
 
-La tercera noche, el farolito ya tenía dos chispitas amigas flotando a su lado: una dorada y una blanca-azul. Lila las saludó con un dedo apenas antes de prender la llama nueva.
+La tercera noche, el farolito ya tenía dos destellitos amigas flotando a su lado: una dorada y una blanca-azul. Lila las saludó con un dedo apenas antes de prender la llama nueva.
 
 — Buenas noches, lucecitas — les dijo. *Sí, sí,* parpadearon ellas.
 
@@ -11,7 +11,7 @@ Y la llama se partió otra vez.
 
 ---
 
-Esta noche, las chispas la llevaron muy lejos.
+Esta noche, las destellos la llevaron muy lejos.
 
 El camino subió esta vez. Lila pasó la piedra rosada. Pasó el río de cristal — el pez de luz le hizo una pirueta de saludo desde adentro del agua, como diciendo *te acuerdas, te acuerdas* — y siguió subiendo. Las florchispas a sus pies eran cada vez más densas, como si todo el camino fuera una alfombra de luz.
 
@@ -89,7 +89,7 @@ El colibrí le hizo dos piruetas y subió y subió hasta que fue una estrellita 
 
 ---
 
-Lila volvió por la puerta de luz de luna con tres chispas adentro del pecho. Cuando se metió en la cama, tres chispitas flotaban en la repisa: la dorada de la luciérnaga, la blanca-azul del pez, y una nueva — rosada, dorada, verde y azul, todas al mismo tiempo, como si no se pudiera decidir.
+Lila volvió por la puerta de luz de luna con tres destellos adentro del pecho. Cuando se metió en la cama, tres destellitos flotaban en la repisa: la dorada de la luciérnaga, la blanca-azul del pez, y una nueva — rosada, dorada, verde y azul, todas al mismo tiempo, como si no se pudiera decidir.
 
 Lila se durmió oyendo todavía la nota del colibrí, muy bajita, en algún lugar del pecho.
 

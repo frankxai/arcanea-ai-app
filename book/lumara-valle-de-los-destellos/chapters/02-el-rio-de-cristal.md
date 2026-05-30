@@ -1,4 +1,4 @@
-# LUMARA — EL VALLE DONDE LAS CHISPAS CRECEN COMO FLORES
+# LUMARA — EL VALLE DONDE LAS DESTELLOS CRECEN COMO FLORES
 
 ## Capítulo 2: El río de cristal
 *(The Crystal River)*
@@ -9,7 +9,7 @@ No fue impaciencia. Fue algo más bonito: fue como cuando uno se está alistando
 
 La llamita la conocía ya.
 
-Esta vez no tembló. Apenas creció un poco — apenas se puso un poquito más dorada — y se partió otra vez en cien chispitas. Una de ellas, la primera, ya la conocía: era la luciérnaga, su amiga del día anterior, parpadeándole desde adentro del farolito como diciendo *te estaba esperando.*
+Esta vez no tembló. Apenas creció un poco — apenas se puso un poquito más dorada — y se partió otra vez en cien destellitos. Una de ellas, la primera, ya la conocía: era la luciérnaga, su amiga del día anterior, parpadeándole desde adentro del farolito como diciendo *te estaba esperando.*
 
 La puerta de luz de luna se abrió entre las dos mismas estrellas.
 
@@ -17,7 +17,7 @@ Lila pasó.
 
 ---
 
-Esta vez, las chispas la llevaron por un camino distinto.
+Esta vez, las destellos la llevaron por un camino distinto.
 
 No al pasto verde del riachuelo cantante. Más allá. Las florchispas seguían creciendo por todos lados, pero ahora había también unas piedras grandes, suaves, color rosado pálido, como si la luz de la mañana se hubiera quedado guardada adentro. El camino bajaba despacio.
 
@@ -89,7 +89,7 @@ El pez de luz hizo una pirueta. *Sí, sí, sí.*
 
 ---
 
-Cuando Lila volvió a su cama, los pies todavía un poquito húmedos del río de cristal, dos chispas flotaban junto a la llama del farolito. La de la luciérnaga, dorada. Y una nueva, blanca-azul, fresca como una campanita.
+Cuando Lila volvió a su cama, los pies todavía un poquito húmedos del río de cristal, dos destellos flotaban junto a la llama del farolito. La de la luciérnaga, dorada. Y una nueva, blanca-azul, fresca como una campanita.
 
 Lila apretó a Conejito y cerró los ojos.
 

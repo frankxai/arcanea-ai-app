@@ -1,7 +1,7 @@
 # Cover v3 — The Great Tree
 
 **Aspect ratio:** 3:4 portrait
-**Output:** `lumara-valle-de-las-chispas-cover-v3.png`
+**Output:** `lumara-valle-de-las-destellos-cover-v3.png`
 **Book beat:** Chapter 10 finale — Lila and Aurelia approach el árbol de
 los nombres together.
 

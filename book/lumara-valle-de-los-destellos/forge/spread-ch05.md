@@ -1,7 +1,7 @@
 # Spread Ch 5 — The Silver Fox Accepts the Gift
 
 **Aspect ratio:** 4:3 landscape
-**Output:** `lumara-valle-de-las-chispas-spread-ch05.png`
+**Output:** `lumara-valle-de-las-destellos-spread-ch05.png`
 **Book beat:** Lila offers a florchispa on her open palm; the silver
 fox, half-hidden behind a slender tree, decides to come closer.
 

@@ -1,7 +1,7 @@
 # Spread Ch 7 — The Owl and the Long Silence
 
 **Aspect ratio:** 4:3 landscape
-**Output:** `lumara-valle-de-las-chispas-spread-ch07.png`
+**Output:** `lumara-valle-de-las-destellos-spread-ch07.png`
 **Book beat:** Lila sits at the base of an enormous old tree and learns to
 share a long silence with the owl on the branch above.
 
