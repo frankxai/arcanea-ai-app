@@ -8,6 +8,37 @@
             "command": "node C:/Users/frank/Arcanea/scripts/hooks/sis-session-start.js 2>/dev/null || true",
             "timeout": 5000,
             "continueOnError": true
+          },
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/excellence-session-start.sh\" 2>/dev/null || true",
+            "timeout": 5000,
+            "continueOnError": true
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/excellence-prompt-submit.sh\" \"$CLAUDE_USER_PROMPT\" 2>/dev/null || true",
+            "timeout": 2000,
+            "continueOnError": true
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/excellence-pre-write.sh\" \"$CLAUDE_TOOL_INPUT\" 2>/dev/null || true",
+            "timeout": 2000,
+            "continueOnError": true
           }
         ]
       }
@@ -31,6 +62,12 @@
             "type": "command",
             "command": "node C:/Users/frank/Arcanea/scripts/hooks/sis-session-end.js 2>/dev/null || true",
             "timeout": 5000,
+            "continueOnError": true
+          },
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/excellence-stop.sh\" 2>/dev/null || true",
+            "timeout": 3000,
             "continueOnError": true
           }
         ]
