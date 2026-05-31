@@ -38,25 +38,25 @@ SKILL
 fi
 
 # Generic book / chapter work
-if [ "$ROUTED" -eq 0 ] && echo "$PROMPT_LOWER" | grep -qE '\bbook\b|chapter|chapters|drafting|prose|novel|narrative|bedtime'; then
+if [ "$ROUTED" -eq 0 ] && printf '%s\n' "$PROMPT_LOWER" | grep -qE '\bbook\b|chapter|chapters|drafting|prose|novel|narrative|bedtime'; then
   echo "[EXCELLENCE] Book/prose work detected. RECOMMENDED: /excellence-book-writing → /canon-check"
   ROUTED=1
 fi
 
 # Canon / lore work
-if [ "$ROUTED" -eq 0 ] && echo "$PROMPT_LOWER" | grep -qE '\bcanon\b|\blore\b|guardian|godbeast|gate [0-9]|primordial|lumina|nero|malachar|luminor'; then
+if [ "$ROUTED" -eq 0 ] && printf '%s\n' "$PROMPT_LOWER" | grep -qE '\bcanon\b|\blore\b|guardian|godbeast|gate [0-9]|primordial|lumina|nero|malachar|luminor'; then
   echo "[EXCELLENCE] Canon/lore work detected. MANDATORY: /canon-check against .arcanea/lore/CANON_LOCKED.md before any edit."
   ROUTED=1
 fi
 
 # Character work
-if [ "$ROUTED" -eq 0 ] && echo "$PROMPT_LOWER" | grep -qE 'new character|create.*character|character.*template|backstory|protagonist|antagonist'; then
+if [ "$ROUTED" -eq 0 ] && printf '%s\n' "$PROMPT_LOWER" | grep -qE 'new character|create.*character|character.*template|backstory|protagonist|antagonist'; then
   echo "[EXCELLENCE] Character work detected. RECOMMENDED: /character-forge (uses 12-field CHARACTER_TEMPLATE)."
   ROUTED=1
 fi
 
 # World/faction work
-if [ "$ROUTED" -eq 0 ] && echo "$PROMPT_LOWER" | grep -qE 'world.?build|new (world|realm|faction|order|league)|magic system|cosmology'; then
+if [ "$ROUTED" -eq 0 ] && printf '%s\n' "$PROMPT_LOWER" | grep -qE 'world.?build|new (world|realm|faction|order|league)|magic system|cosmology'; then
   echo "[EXCELLENCE] World-building detected. RECOMMENDED: /world-forge → /canon-check"
   ROUTED=1
 fi

@@ -28,7 +28,7 @@ fi
 # ── Lumara: enforce destellos, allow florchispa ─────────────────────────────
 if printf '%s\n' "$TOOL_INPUT" | grep -qE 'book/lumara'; then
   # Look for non-florchispa chispa references in content
-  CHISPA_LEAKS=$(printf '%s\n' "$TOOL_INPUT" | grep -oE '\bchispa[s]?\b|\bchispita[s]?\b' | grep -v florchispa | head -3)
+  CHISPA_LEAKS=$(printf '%s\n' "$TOOL_INPUT" | grep -oE '\bchispa[s]?\b|\bchispita[s]?\b' | head -3)
   if [ -n "$CHISPA_LEAKS" ]; then
     echo "[LUMARA CANON] 'chispa' references detected outside florchispa. Use 'destellos' for the magical sparks."
     echo "[LUMARA CANON] Allowed: 'florchispa' (the flower-vessel). Rejected: 'chispa', 'chispas', 'chispita'."
