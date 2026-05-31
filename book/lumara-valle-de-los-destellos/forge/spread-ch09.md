@@ -1,7 +1,7 @@
 # Spread Ch 9 — Lila and Aurelia, Two Florchispas as One
 
 **Aspect ratio:** 4:3 landscape
-**Output:** `lumara-valle-de-las-destellos-spread-ch09.png`
+**Output:** `lumara-valle-de-los-destellos-spread-ch09.png`
 **Book beat:** Lila and Aurelia kneel knee-to-knee, both florchispas
 glowing in synchrony — two children meeting as equals.
 

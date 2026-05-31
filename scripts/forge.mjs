@@ -104,7 +104,12 @@ for (const scene of scenes) {
   }
   const sceneText = readFileSync(scenePath, "utf8");
   const prompt = `${style}\n\n---\n\n${sceneText}`;
-  results[scene] = await generate(scene, prompt);
+  try {
+    results[scene] = await generate(scene, prompt);
+  } catch (err) {
+    console.error(`[${scene}] unexpected error during generation:`, err);
+    results[scene] = false;
+  }
 }
 
 console.log("\n=== summary ===");
