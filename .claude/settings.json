@@ -23,7 +23,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/excellence-prompt-submit.sh\" \"$CLAUDE_USER_PROMPT\" 2>/dev/null || true",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/excellence-prompt-submit.sh\" 2>/dev/null || true",
             "timeout": 2000,
             "continueOnError": true
           }
@@ -36,7 +36,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/excellence-pre-write.sh\" \"$CLAUDE_TOOL_INPUT\" 2>/dev/null || true",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/excellence-pre-write.sh\" 2>/dev/null || true",
             "timeout": 2000,
             "continueOnError": true
           }

@@ -1,7 +1,7 @@
 # Cover v2 — The Meadow (iconic single image)
 
 **Aspect ratio:** 3:4 portrait
-**Output:** `lumara-valle-de-las-destellos-cover-v2.png`
+**Output:** `lumara-valle-de-los-destellos-cover-v2.png`
 **Book beat:** Chapter 1 climax, Lila's first true greeting — the firefly,
 the first lit florchispa, the first nombre verdadero.
 

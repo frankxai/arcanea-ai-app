@@ -10,16 +10,20 @@
 # Failure mode: never blocks. Always exits 0.
 set +e
 
-PROMPT="${1:-}"
+# Read prompt from environment, not argv: avoids Windows 32KB command-line
+# length limit and shell-parsing/escaping bugs with arbitrary user input.
+# Fall back to $1 for older Claude Code versions that still pass via argv.
+PROMPT="${CLAUDE_USER_PROMPT:-${1:-}}"
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
 cd "$PROJECT_DIR" 2>/dev/null || exit 0
 
-PROMPT_LOWER="$(echo "$PROMPT" | tr '[:upper:]' '[:lower:]')"
+# printf '%s\n' is safe for arbitrary input (echo breaks on leading -n/-e).
+PROMPT_LOWER="$(printf '%s\n' "$PROMPT" | tr '[:upper:]' '[:lower:]')"
 
 ROUTED=0
 
 # Lumara / Las Tierras specific (highest specificity first)
-if echo "$PROMPT_LOWER" | grep -qE 'lumara|destellos?|florchispa|las tierras|selene|aurelia|lila|conejito|abuela|farolito|veldoria|mira[^a-z]'; then
+if printf '%s\n' "$PROMPT_LOWER" | grep -qE 'lumara|destellos?|florchispa|las tierras|selene|aurelia|lila|conejito|abuela|farolito|veldoria|mira[^a-z]'; then
   cat <<'SKILL'
 [EXCELLENCE] Book-content work detected.
   RECOMMENDED chain: /canon-check → /excellence-book-writing
@@ -58,17 +62,17 @@ if [ "$ROUTED" -eq 0 ] && echo "$PROMPT_LOWER" | grep -qE 'world.?build|new (wor
 fi
 
 # Image / cover work (additive — doesn't set ROUTED)
-if echo "$PROMPT_LOWER" | grep -qE 'book cover|cover.*book|generate.*image|create.*art|illustrate|forge image|character art|book.?art'; then
+if printf '%s\n' "$PROMPT_LOWER" | grep -qE 'book cover|cover.*book|generate.*image|create.*art|illustrate|forge image|character art|book.?art'; then
   echo "[EXCELLENCE] Image-gen detected. PREFERRED: /arcanea-book-cover skill (NB2 + cover-design thinking) OR Higgsfield MCP."
 fi
 
 # UI / design work (additive)
-if echo "$PROMPT_LOWER" | grep -qE '\bui\b|\bdesign\b|component|frontend|tailwind|react|next.?js.*page|theme|brand'; then
+if printf '%s\n' "$PROMPT_LOWER" | grep -qE '\bui\b|\bdesign\b|component|frontend|tailwind|react|next.?js.*page|theme|brand'; then
   echo "[EXCELLENCE] UI/design work detected. MANDATORY load: TASTE.md + DESIGN.md. RECOMMENDED: /design-ship for end-to-end revamps."
 fi
 
 # Cross-cutting kickoff
-if echo "$PROMPT_LOWER" | grep -qE 'what should i (work on|do)|next step|prioriti|status|where (am|are we)|kickoff'; then
+if printf '%s\n' "$PROMPT_LOWER" | grep -qE 'what should i (work on|do)|next step|prioriti|status|where (am|are we)|kickoff'; then
   echo "[EXCELLENCE] Cross-cutting kickoff. RECOMMENDED: /arcanea-orchestrator (/ao) — status, branch state, promotion queue, digest."
 fi
 
