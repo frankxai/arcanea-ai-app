@@ -549,6 +549,16 @@ export async function getAllSeries(): Promise<BookSeries[]> {
       contentType: 'novel',
       layout: 'flat',
     },
+    {
+      id: 'lumara-valle-de-los-destellos',
+      dir: join(BOOK_DIR, 'lumara-valle-de-los-destellos', 'chapters'),
+      title: 'Lumara — el valle de los destellos',
+      subtitle: 'A bedtime fairy tale for ages 5-8 (ES primary, EN woven)',
+      description: 'A ten-night bilingual bedtime book set in Lumara, a magical valley reached by a moonlight door, where destellos grow like flowers. Six-and-a-half-year-old Lila and her stuffed rabbit Conejito walk into ten gentle encounters with a glass river, a hummingbird that sings colors, a snail with a galaxy inside, a silver fox, a butterfly that paints the air, an owl of silences, a deer with candles on its antlers, the girl with the flower in her hair, and the tree of names. Written in the warmth of Studio Ghibli, the tenderness of Saint-Exupéry, and the voice of Astrid Lindgren. A gift, for a niece.',
+      status: 'in-progress',
+      contentType: 'novel',
+      layout: 'flat',
+    },
   ];
 
   const result: BookSeries[] = [];

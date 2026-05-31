@@ -1,7 +1,7 @@
 # Cover v1 — The Threshold
 
 **Aspect ratio:** 3:4 portrait
-**Output:** `lumara-valle-de-las-destellos-cover-v1.png`
+**Output:** `lumara-valle-de-los-destellos-cover-v1.png`
 **Book beat:** Chapter 1, the moment the farolito flame splits and the
 moonlight doorway opens.
 

@@ -16,25 +16,25 @@ here and run `forge.mjs` to regenerate.
 
 ```bash
 # all 13 images at finished-art quality (Imagen 4 Ultra)
-node scripts/forge.mjs lumara-valle-de-las-destellos all
+node scripts/forge.mjs lumara-valle-de-los-destellos all
 
 # one image, fast iteration mode (NB2, cheaper)
-node scripts/forge.mjs lumara-valle-de-las-destellos cover-v2 --fast
+node scripts/forge.mjs lumara-valle-de-los-destellos cover-v2 --fast
 
 # one image at finished-art quality
-node scripts/forge.mjs lumara-valle-de-las-destellos spread-ch07
+node scripts/forge.mjs lumara-valle-de-los-destellos spread-ch07
 
 # all spreads, fast iteration
-node scripts/forge.mjs lumara-valle-de-las-destellos all --fast
+node scripts/forge.mjs lumara-valle-de-los-destellos all --fast
 ```
 
-Output → `apps/web/public/images/books/lumara-valle-de-las-destellos-<scene>.png`
+Output → `apps/web/public/images/books/lumara-valle-de-los-destellos-<scene>.png`
 
 ## Iterating on a prompt
 
 The slowest part of great art is the rewriting. Workflow:
 
-1. `node scripts/forge.mjs lumara-valle-de-las-destellos cover-v2 --fast` →
+1. `node scripts/forge.mjs lumara-valle-de-los-destellos cover-v2 --fast` →
    look at the image
 2. Open `forge/cover-v2.md`. Adjust the **composition** or the
    **make-or-break detail** — those two have the most leverage. Don't

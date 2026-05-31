@@ -1,7 +1,7 @@
 # Spread Ch 2 — The Crystal River
 
 **Aspect ratio:** 4:3 landscape
-**Output:** `lumara-valle-de-las-destellos-spread-ch02.png`
+**Output:** `lumara-valle-de-los-destellos-spread-ch02.png`
 **Book beat:** Lila steps barefoot into the river, and the pez de luz
 draws a circle of light around her ankle.
 
