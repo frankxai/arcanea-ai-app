@@ -41,9 +41,9 @@ export async function build(options: BuildOptions): Promise<{ outPath: string; n
         if (!parsed) return;
         try {
           const result = await enrichWithGitHub({ owner: parsed.owner, repo: parsed.repo, branch: r.branch }, client);
-          enrichments.set(`${parsed.owner}/${parsed.repo}`, result);
+          enrichments.set(`${parsed.owner}/${parsed.repo}`.toLowerCase(), result);
         } catch {
-          enrichments.set(`${parsed.owner}/${parsed.repo}`, { lastCommitAt: null });
+          enrichments.set(`${parsed.owner}/${parsed.repo}`.toLowerCase(), { lastCommitAt: null });
         }
       }),
     );

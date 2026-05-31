@@ -37,6 +37,8 @@ const GATE_DESCRIPTIONS: Record<EcosystemNode['gate'], string> = {
 
 export function GatesView({ filter, onSelectNode }: Props) {
   const [selectedGate, setSelectedGate] = useState<EcosystemNode['gate'] | null>(null);
+  const activeGate: EcosystemNode['gate'] | null =
+    filter.gate !== 'all' ? (filter.gate as EcosystemNode['gate']) : selectedGate;
 
   const filtered = NODES.filter((n) => {
     if (filter.status !== 'all' && n.status !== filter.status) return false;
@@ -71,9 +73,22 @@ export function GatesView({ filter, onSelectNode }: Props) {
             const x = center + radius * Math.cos(angleRad);
             const y = center + radius * Math.sin(angleRad);
             const count = byGate.get(gate)?.length ?? 0;
-            const isSelected = selectedGate === gate;
+            const isSelected = activeGate === gate;
             return (
-              <g key={gate} onClick={() => setSelectedGate(gate)} className="cursor-pointer">
+              <g
+                key={gate}
+                onClick={() => setSelectedGate(gate)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedGate(gate);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                aria-label={`Gate ${gate}, ${count} nodes`}
+                className="cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+              >
                 <circle
                   cx={x}
                   cy={y}
@@ -124,14 +139,14 @@ export function GatesView({ filter, onSelectNode }: Props) {
       </div>
 
       <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 backdrop-blur-sm">
-        {selectedGate ? (
+        {activeGate ? (
           <>
             <header className="mb-4">
-              <h3 className="text-xl font-semibold text-white capitalize">{selectedGate}</h3>
-              <p className="text-sm text-zinc-400">{GATE_DESCRIPTIONS[selectedGate]}</p>
+              <h3 className="text-xl font-semibold text-white capitalize">{activeGate}</h3>
+              <p className="text-sm text-zinc-400">{GATE_DESCRIPTIONS[activeGate]}</p>
             </header>
             <div className="space-y-2">
-              {(byGate.get(selectedGate) ?? []).map((node) => (
+              {(byGate.get(activeGate) ?? []).map((node) => (
                 <button
                   key={node.id}
                   onClick={() => onSelectNode(node)}
@@ -144,7 +159,7 @@ export function GatesView({ filter, onSelectNode }: Props) {
                   <p className="text-xs text-zinc-400 line-clamp-1 mt-1">{node.description}</p>
                 </button>
               ))}
-              {(byGate.get(selectedGate) ?? []).length === 0 && (
+              {(byGate.get(activeGate) ?? []).length === 0 && (
                 <p className="text-sm text-zinc-500 italic">
                   No nodes in this gate match current filters.
                 </p>

@@ -107,7 +107,7 @@ export function mergeAll(input: MergeInput): EcosystemNode[] {
     const ghKey = n.github
       ? n.github.replace(/^https:\/\/github\.com\//, '').replace(/\.git$/, '')
       : null;
-    const enrichment = ghKey ? enrichments.get(ghKey) : null;
+    const enrichment = ghKey ? enrichments.get(ghKey.toLowerCase()) : null;
 
     result.push({
       id: n.id,

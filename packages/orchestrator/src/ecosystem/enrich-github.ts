@@ -46,7 +46,7 @@ export async function enrichWithGitHub(
 }
 
 export function parseGitHubUrl(url: string): { owner: string; repo: string } | null {
-  const match = url.match(/^https:\/\/github\.com\/([^/]+)\/([^/]+?)(?:\.git)?$/);
+  const match = url.match(/^https:\/\/github\.com\/([^/]+)\/([^/]+?)(?:\.git)?\/?$/);
   if (!match) return null;
   return { owner: match[1], repo: match[2] };
 }

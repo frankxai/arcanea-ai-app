@@ -62,7 +62,7 @@ export function NodeDrawer({ node, onClose, onFocus }: NodeDrawerProps) {
           <Row label="Hemisphere" value={node.hemisphere} />
           {node.packageVersion && <Row label="Version" value={node.packageVersion} />}
           {node.lastCommitAt && (
-            <Row label="Last commit" value={new Date(node.lastCommitAt).toLocaleDateString()} />
+            <Row label="Last commit" value={node.lastCommitAt.split('T')[0]} />
           )}
           {node.owner && <Row label="Owner" value={node.owner} />}
         </dl>
@@ -90,7 +90,7 @@ export function NodeDrawer({ node, onClose, onFocus }: NodeDrawerProps) {
         <div className="space-y-2 mt-6">
           {node.github && <ActionLink href={node.github} label="View on GitHub" />}
           {node.publicUrl && <ActionLink href={node.publicUrl} label="Open live URL" />}
-          {node.links.try_live && <ActionLink href={node.links.try_live} label="Try live" />}
+          {node.links?.try_live && <ActionLink href={node.links.try_live} label="Try live" />}
           {node.status === 'orphan' && (
             <p className="text-xs text-orange-300/80 mt-3">
               This node is orphaned — no detected consumers. See{' '}

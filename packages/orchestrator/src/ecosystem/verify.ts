@@ -37,7 +37,7 @@ export async function verify(repoRoot: string): Promise<VerifyResult> {
     };
   }
 
-  const { outPath } = await build({ repoRoot, skipGitHub: true });
+  const { outPath } = await build({ repoRoot, skipGitHub: !process.env.GITHUB_TOKEN });
   // build() overwrites derived.ts. Read the freshly-written version.
   const fresh = await fs.readFile(outPath, 'utf8');
 

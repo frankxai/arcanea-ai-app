@@ -53,22 +53,23 @@ async function main(): Promise<void> {
     return;
   }
 
-  const tick = async (): Promise<void> => {
+  let timer: NodeJS.Timeout | undefined;
+  const loop = async (): Promise<void> => {
     try {
       await emitSnapshot();
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.error(`[agent-surface] ${message}`);
     }
+    timer = setTimeout(() => {
+      void loop();
+    }, options.intervalMs);
   };
 
-  await tick();
-  const timer = setInterval(() => {
-    void tick();
-  }, options.intervalMs);
+  void loop();
 
   const shutdown = (): void => {
-    clearInterval(timer);
+    if (timer) clearTimeout(timer);
     process.exit(0);
   };
 

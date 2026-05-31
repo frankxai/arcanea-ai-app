@@ -200,6 +200,14 @@ async function statIso(path: string): Promise<string | null> {
   }
 }
 
+interface PsProcess {
+  Name?: string;
+  ProcessId?: number | string;
+  ParentProcessId?: number | string;
+  ExecutablePath?: string;
+  CommandLine?: string;
+}
+
 async function processList(): Promise<LiveProcess[]> {
   try {
     const script = `
@@ -214,17 +222,17 @@ Get-CimInstance Win32_Process |
       maxBuffer: 1024 * 1024 * 6,
     }).trim();
     if (!output) return [];
-    const raw = JSON.parse(output) as Array<Record<string, unknown>> | Record<string, unknown>;
+    const raw = JSON.parse(output) as PsProcess[] | PsProcess;
     const rows = Array.isArray(raw) ? raw : [raw];
     return rows.map((row) => {
-      const name = typeof row.Name === 'string' ? row.Name : 'unknown';
-      const executablePath = typeof row.ExecutablePath === 'string' ? row.ExecutablePath : null;
-      const commandLine = typeof row.CommandLine === 'string' ? row.CommandLine : null;
+      const name = row.Name ?? 'unknown';
+      const executablePath = row.ExecutablePath ?? null;
+      const commandLine = row.CommandLine ?? null;
       return {
         runtime: classifyRuntime(name, executablePath),
         name,
-        pid: typeof row.ProcessId === 'number' ? row.ProcessId : Number(row.ProcessId ?? 0),
-        parentPid: typeof row.ParentProcessId === 'number' ? row.ParentProcessId : Number(row.ParentProcessId ?? 0),
+        pid: Number(row.ProcessId ?? 0),
+        parentPid: Number(row.ParentProcessId ?? 0),
         executablePath,
         commandLine,
       } as LiveProcess;

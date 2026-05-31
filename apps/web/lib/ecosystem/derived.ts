@@ -33,7 +33,7 @@ export interface EcosystemEdge {
   kind: 'consumes' | 'bridges' | 'routes' | 'references';
 }
 
-export const GENERATED_AT = "2026-05-21T09:43:16.081Z";
+export const GENERATED_AT = "2026-05-31T10:07:23.762Z";
 
 export const NODES: EcosystemNode[] = [
   {
@@ -44,7 +44,7 @@ export const NODES: EcosystemNode[] = [
     "gate": "source",
     "hemisphere": "seam",
     "status": "external",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [
       "author-council",
@@ -64,13 +64,17 @@ export const NODES: EcosystemNode[] = [
     "gate": "source",
     "hemisphere": "seam",
     "status": "built",
-    "repo": "frankxai/arcanea",
+    "repo": "packages/arcanea-cli",
     "github": "https://github.com/frankxai/arcanea",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "publicUrl": "https://github.com/frankxai/arcanea",
+    "packageVersion": "0.1.0",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
-    "links": {}
+    "links": {
+      "live": "https://github.com/frankxai/arcanea"
+    }
   },
   {
     "id": "arcanea-ai-app",
@@ -82,23 +86,26 @@ export const NODES: EcosystemNode[] = [
     "status": "shipped",
     "repo": "frankxai/arcanea-ai-app",
     "github": "https://github.com/frankxai/arcanea-ai-app",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "publicUrl": "https://arcanea.ai",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
-    "links": {}
+    "links": {
+      "live": "https://arcanea.ai"
+    }
   },
   {
     "id": "arcanea-claw",
     "name": "arcanea-claw",
     "description": "AI media engine (NanoClaw fork)",
     "layer": "product",
-    "gate": "flow",
+    "gate": "pattern",
     "hemisphere": "arc",
     "status": "orphan",
     "repo": "frankxai/arcanea-claw",
     "github": "https://github.com/frankxai/arcanea-claw",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
@@ -112,25 +119,29 @@ export const NODES: EcosystemNode[] = [
     "gate": "form",
     "hemisphere": "seam",
     "status": "shipped",
-    "repo": "frankxai/arcanea-code",
+    "repo": "packages/vscode",
     "github": "https://github.com/frankxai/arcanea-code",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "publicUrl": "https://github.com/frankxai/arcanea-code",
+    "packageVersion": "0.3.0",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
-    "links": {}
+    "links": {
+      "live": "https://github.com/frankxai/arcanea-code"
+    }
   },
   {
     "id": "arcanea-flow",
     "name": "arcanea-flow",
     "description": "Multi-agent orchestration (claude-flow/ruflo fork)",
     "layer": "substrate",
-    "gate": "flow",
+    "gate": "pattern",
     "hemisphere": "seam",
     "status": "built",
     "repo": "frankxai/arcanea-flow",
     "github": "https://github.com/frankxai/arcanea-flow",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
@@ -141,12 +152,12 @@ export const NODES: EcosystemNode[] = [
     "name": "arcanea-infogenius",
     "description": "Knowledge-first visual intelligence MCP",
     "layer": "substrate",
-    "gate": "sight",
+    "gate": "vision",
     "hemisphere": "seam",
     "status": "built",
     "repo": "frankxai/arcanea-infogenius",
     "github": "https://github.com/frankxai/arcanea-infogenius",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
@@ -160,9 +171,10 @@ export const NODES: EcosystemNode[] = [
     "gate": "unity",
     "hemisphere": "seam",
     "status": "built",
-    "repo": "frankxai/arcanea-intelligence-os",
+    "repo": "packages/aios",
     "github": "https://github.com/frankxai/arcanea-intelligence-os",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "packageVersion": "0.2.2",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
@@ -176,9 +188,8 @@ export const NODES: EcosystemNode[] = [
     "gate": "form",
     "hemisphere": "arc",
     "status": "orphan",
-    "repo": "frankxai/arcanea-mcp",
     "github": "https://github.com/frankxai/arcanea-mcp",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
@@ -192,9 +203,8 @@ export const NODES: EcosystemNode[] = [
     "gate": "form",
     "hemisphere": "arc",
     "status": "orphan",
-    "repo": "frankxai/arcanea-memory",
     "github": "https://github.com/frankxai/arcanea-memory",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
@@ -210,7 +220,7 @@ export const NODES: EcosystemNode[] = [
     "status": "orphan",
     "repo": "frankxai/arcanea-mobile",
     "github": "https://github.com/frankxai/arcanea-mobile",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
@@ -221,12 +231,12 @@ export const NODES: EcosystemNode[] = [
     "name": "arcanea-onchain",
     "description": "Economic layer and Guardian assets",
     "layer": "substrate",
-    "gate": "foundation",
+    "gate": "source",
     "hemisphere": "seam",
     "status": "built",
     "repo": "frankxai/arcanea-onchain",
     "github": "https://github.com/frankxai/arcanea-onchain",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
@@ -242,11 +252,14 @@ export const NODES: EcosystemNode[] = [
     "status": "built",
     "repo": "frankxai/arcanea-orchestrator",
     "github": "https://github.com/frankxai/arcanea-orchestrator",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "publicUrl": "https://github.com/frankxai/arcanea-orchestrator",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
-    "links": {}
+    "links": {
+      "live": "https://github.com/frankxai/arcanea-orchestrator"
+    }
   },
   {
     "id": "arcanea-records",
@@ -258,11 +271,14 @@ export const NODES: EcosystemNode[] = [
     "status": "orphan",
     "repo": "frankxai/arcanea-records",
     "github": "https://github.com/frankxai/arcanea-records",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "publicUrl": "https://github.com/frankxai/arcanea-records",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
-    "links": {}
+    "links": {
+      "live": "https://github.com/frankxai/arcanea-records"
+    }
   },
   {
     "id": "arcanea-vault",
@@ -274,7 +290,7 @@ export const NODES: EcosystemNode[] = [
     "status": "orphan",
     "repo": "frankxai/arcanea-vault",
     "github": "https://github.com/frankxai/arcanea-vault",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
@@ -290,7 +306,7 @@ export const NODES: EcosystemNode[] = [
     "status": "orphan",
     "repo": "moltbot/moltbot",
     "github": "https://github.com/moltbot/moltbot",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
@@ -306,15 +322,15 @@ export const NODES: EcosystemNode[] = [
     "status": "built",
     "repo": "packages/author-council",
     "packageVersion": "0.1.0",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [
       "anthropic-sdk",
       "sis"
     ],
     "consumedBy": [
+      "book-forge",
       "book-mila",
       "book-tierras",
-      "book-forge",
       "surface-author"
     ],
     "isExternal": false,
@@ -333,7 +349,7 @@ export const NODES: EcosystemNode[] = [
     "hemisphere": "arc",
     "status": "built",
     "repo": "book/forge-of-ruin",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [
       "author-council",
       "design-system"
@@ -356,7 +372,7 @@ export const NODES: EcosystemNode[] = [
     "hemisphere": "arc",
     "status": "built",
     "repo": "book/das-maedchen-drei-sprachen",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [
       "author-council",
       "multilingual",
@@ -380,7 +396,7 @@ export const NODES: EcosystemNode[] = [
     "hemisphere": "arc",
     "status": "built",
     "repo": "book/las-tierras-de-luz",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [
       "author-council",
       "multilingual",
@@ -403,9 +419,8 @@ export const NODES: EcosystemNode[] = [
     "gate": "form",
     "hemisphere": "arc",
     "status": "orphan",
-    "repo": "ruvnet/claude-flow",
     "github": "https://github.com/ruvnet/claude-flow",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
@@ -421,12 +436,12 @@ export const NODES: EcosystemNode[] = [
     "status": "built",
     "repo": "packages/design-system",
     "packageVersion": "0.3.0",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [
+      "book-forge",
       "book-mila",
-      "book-tierras",
-      "book-forge"
+      "book-tierras"
     ],
     "isExternal": false,
     "owner": "frank",
@@ -444,7 +459,7 @@ export const NODES: EcosystemNode[] = [
     "status": "built",
     "repo": "packages/multilingual",
     "packageVersion": "0.1.0",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [
       "book-mila",
@@ -466,11 +481,14 @@ export const NODES: EcosystemNode[] = [
     "status": "shipped",
     "repo": "frankxai/oh-my-arcanea",
     "github": "https://github.com/frankxai/oh-my-arcanea",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "publicUrl": "https://github.com/frankxai/oh-my-arcanea",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
-    "links": {}
+    "links": {
+      "live": "https://github.com/frankxai/oh-my-arcanea"
+    }
   },
   {
     "id": "orchestrator",
@@ -482,7 +500,7 @@ export const NODES: EcosystemNode[] = [
     "status": "built",
     "repo": "packages/orchestrator",
     "packageVersion": "1.2.1",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [
       "sis",
       "anthropic-sdk"
@@ -505,7 +523,7 @@ export const NODES: EcosystemNode[] = [
     "hemisphere": "seam",
     "status": "built",
     "repo": "https://github.com/frankxai/Starlight-Intelligence-System",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [
       "author-council",
@@ -525,9 +543,8 @@ export const NODES: EcosystemNode[] = [
     "gate": "form",
     "hemisphere": "arc",
     "status": "orphan",
-    "repo": "frankxai/starlight",
     "github": "https://github.com/frankxai/starlight",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
@@ -543,11 +560,14 @@ export const NODES: EcosystemNode[] = [
     "status": "built",
     "repo": "frankxai/Starlight-Intelligence-System",
     "github": "https://github.com/frankxai/Starlight-Intelligence-System",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "publicUrl": "https://github.com/frankxai/Starlight-Intelligence-System",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
-    "links": {}
+    "links": {
+      "live": "https://github.com/frankxai/Starlight-Intelligence-System"
+    }
   },
   {
     "id": "supabase",
@@ -557,7 +577,7 @@ export const NODES: EcosystemNode[] = [
     "gate": "pattern",
     "hemisphere": "seam",
     "status": "external",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": true,
@@ -573,7 +593,7 @@ export const NODES: EcosystemNode[] = [
     "gate": "soul",
     "hemisphere": "arc",
     "status": "wip",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [
       "author-council",
       "anthropic-sdk"
@@ -590,7 +610,7 @@ export const NODES: EcosystemNode[] = [
     "gate": "unity",
     "hemisphere": "seam",
     "status": "shipped",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [
       "orchestrator"
     ],
@@ -608,7 +628,7 @@ export const NODES: EcosystemNode[] = [
     "gate": "vision",
     "hemisphere": "arc",
     "status": "shipped",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
@@ -624,7 +644,7 @@ export const NODES: EcosystemNode[] = [
     "gate": "story",
     "hemisphere": "arc",
     "status": "shipped",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [
       "book-mila",
       "book-tierras",
@@ -644,7 +664,7 @@ export const NODES: EcosystemNode[] = [
     "gate": "mastery",
     "hemisphere": "nea",
     "status": "external",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": true,
@@ -660,9 +680,8 @@ export const NODES: EcosystemNode[] = [
     "gate": "form",
     "hemisphere": "arc",
     "status": "orphan",
-    "repo": "frankxai/vibe-os-substrate",
     "github": "https://github.com/frankxai/vibe-os-substrate",
-    "lastVerifiedAt": "2026-05-21T09:43:16.081Z",
+    "lastVerifiedAt": "2026-05-31T10:07:23.762Z",
     "consumes": [],
     "consumedBy": [],
     "isExternal": false,
