@@ -45,7 +45,7 @@ export default defineConfig([
       'react-hooks/set-state-in-effect': 'warn',
       'react-hooks/static-components': 'warn',
       'react/no-unescaped-entities': 'warn',
-      'no-restricted-syntax': ['warn', noRawHex],
+      'no-restricted-syntax': ['error', noRawHex],
     },
   },
   globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),

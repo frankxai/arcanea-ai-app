@@ -1,0 +1,37 @@
+name: Ecosystem Verify
+
+on:
+  pull_request:
+    paths:
+      - '.arcanea/config/repos.json'
+      - '.arcanea/config/manifest.yaml'
+      - 'packages/*/package.json'
+      - 'apps/*/package.json'
+      - 'apps/web/lib/ecosystem/derived.ts'
+      - 'packages/orchestrator/src/ecosystem/**'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: pnpm
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Build orchestrator deps
+        run: |
+          pnpm --filter @arcanea/router-spec build
+          pnpm --filter @arcanea/orchestrator build
+      - name: Verify ecosystem derived.ts is in sync
+        run: |
+          if ! pnpm -F @arcanea/orchestrator ecosystem:verify; then
+            echo "::error::derived.ts is out of sync! Showing diff:"
+            git diff apps/web/lib/ecosystem/derived.ts
+            exit 1
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
