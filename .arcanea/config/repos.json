@@ -13,6 +13,9 @@
       "vercel": "arcanea-ai-appx",
       "branch": "main",
       "dependencies": ["@arcanea/core", "@arcanea/aios"],
+      "layer": "surface",
+      "gate": "unity",
+      "hemisphere": "seam",
       "active": true
     },
     {

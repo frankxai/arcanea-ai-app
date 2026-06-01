@@ -1,0 +1,443 @@
+# Arcanea ecosystem manifest — curated source of truth.
+#
+# This file overlays/extends the sibling-repos scan (.arcanea/config/repos.json)
+# and the monorepo package scan. It feeds the ecosystem build pipeline at
+# packages/orchestrator/src/ecosystem/build.ts and is consumed by the
+# ecosystem-verify CI workflow.
+#
+# Add a node here when it cannot be inferred from a sibling repo or workspace
+# package alone — e.g. external services (Anthropic SDK, Supabase, Vercel),
+# books, in-repo surfaces, or curated overrides on a sibling repo.
+
+nodes:
+  # --- External / substrate services ---
+  - id: anthropic-sdk
+    name: Anthropic SDK
+    description: Claude Sonnet/Opus/Haiku via @anthropic-ai/sdk
+    layer: substrate
+    gate: source
+    hemisphere: seam
+    consumes: []
+    isExternal: true
+    links:
+      docs: https://docs.anthropic.com
+
+  - id: supabase
+    name: Supabase
+    description: Postgres, Auth, Realtime, Storage, pgvector
+    layer: substrate
+    gate: pattern
+    hemisphere: seam
+    consumes: []
+    isExternal: true
+    links:
+      docs: https://supabase.com/docs
+
+  - id: vercel
+    name: Vercel
+    description: Hosting, Fluid Compute, AI Gateway, Functions, Blob, Queues
+    layer: substrate
+    gate: mastery
+    hemisphere: nea
+    consumes: []
+    isExternal: true
+    links:
+      docs: https://vercel.com/docs
+
+  # --- Curated sibling-repo overlays ---
+  - id: arcanea
+    name: arcanea
+    description: OSS monorepo - the open-source engine
+    layer: substrate
+    gate: source
+    hemisphere: seam
+    github: https://github.com/frankxai/arcanea
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcanea-ai-app
+    name: arcanea-ai-app
+    description: Main platform - arcanea.ai production
+    layer: surface
+    gate: unity
+    hemisphere: seam
+    github: https://github.com/frankxai/arcanea-ai-app
+    status_override: shipped
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcanea-claw
+    name: arcanea-claw
+    description: AI media engine (NanoClaw fork)
+    layer: product
+    gate: pattern
+    hemisphere: arc
+    github: https://github.com/frankxai/arcanea-claw
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcanea-code
+    name: arcanea-code
+    description: "Guardian-powered coding CLI fork; consumes harness/substrate but is not the universal harness"
+    layer: surface
+    gate: form
+    hemisphere: seam
+    github: https://github.com/frankxai/arcanea-code
+    status_override: shipped
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcanea-flow
+    name: arcanea-flow
+    description: Multi-agent orchestration (claude-flow/ruflo fork)
+    layer: substrate
+    gate: pattern
+    hemisphere: seam
+    github: https://github.com/frankxai/arcanea-flow
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcanea-infogenius
+    name: arcanea-infogenius
+    description: Knowledge-first visual intelligence MCP
+    layer: substrate
+    gate: vision
+    hemisphere: seam
+    github: https://github.com/frankxai/arcanea-infogenius
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcanea-intelligence-os
+    name: arcanea-intelligence-os
+    description: Mythology-infused agent orchestration
+    layer: substrate
+    gate: unity
+    hemisphere: seam
+    github: https://github.com/frankxai/arcanea-intelligence-os
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcanea-mcp
+    name: arcanea-mcp
+    description: Historical MCP infrastructure entry - verify URL/access/name before use
+    layer: product
+    gate: form
+    hemisphere: arc
+    github: https://github.com/frankxai/arcanea-mcp
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcanea-memory
+    name: arcanea-memory
+    description: Historical memory MCP entry - likely superseded or absorbed by Starlight Intelligence System
+    layer: product
+    gate: form
+    hemisphere: arc
+    github: https://github.com/frankxai/arcanea-memory
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcanea-mobile
+    name: arcanea-mobile
+    description: Mobile application (Flutter/Compose)
+    layer: product
+    gate: form
+    hemisphere: arc
+    github: https://github.com/frankxai/arcanea-mobile
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcanea-onchain
+    name: arcanea-onchain
+    description: Economic layer and Guardian assets
+    layer: substrate
+    gate: source
+    hemisphere: seam
+    github: https://github.com/frankxai/arcanea-onchain
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcanea-orchestrator
+    name: arcanea-orchestrator
+    description: Parallel AI coding agent orchestration runtime across repos and agent runtimes
+    layer: substrate
+    gate: unity
+    hemisphere: seam
+    github: https://github.com/frankxai/arcanea-orchestrator
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcanea-records
+    name: arcanea-records
+    description: Music studio - Suno integration, soundscapes
+    layer: product
+    gate: voice
+    hemisphere: arc
+    github: https://github.com/frankxai/arcanea-records
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcanea-vault
+    name: arcanea-vault
+    description: Browser extension and capture/export/provenance layer feeding Arcanea and SIS
+    layer: product
+    gate: form
+    hemisphere: arc
+    github: https://github.com/frankxai/arcanea-vault
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: arcaneabot
+    name: arcaneabot
+    description: Integration bot (moltbot fork)
+    layer: product
+    gate: form
+    hemisphere: arc
+    github: https://github.com/moltbot/moltbot
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: oh-my-arcanea
+    name: oh-my-arcanea
+    description: "Universal Arcanea agent harness target; current code remains OpenCode-derived until adapter cleanup"
+    layer: surface
+    gate: voice
+    hemisphere: arc
+    github: https://github.com/frankxai/oh-my-arcanea
+    status_override: shipped
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: starlight-intelligence-system
+    name: starlight-intelligence-system
+    description: Starlight Intelligence System - SIS/SIP substrate, memory/context layer, MCP servers, adapters
+    layer: substrate
+    gate: source
+    hemisphere: seam
+    github: https://github.com/frankxai/Starlight-Intelligence-System
+    consumes: []
+    isExternal: false
+    links: {}
+
+  # --- Monorepo packages (manifest provides taxonomy; scan supplies path/version) ---
+  - id: author-council
+    name: "@arcanea/author-council"
+    description: 10 author voices · 8 rosters · 4 deliberation modes · MCP server
+    layer: product
+    gate: soul
+    hemisphere: arc
+    repo: packages/author-council
+    consumes:
+      - anthropic-sdk
+      - sis
+    isExternal: false
+    owner: frank
+    links:
+      package: /packages/author-council
+      mcp: /packages/author-council/src/mcp/server.ts
+
+  - id: design-system
+    name: "@arcanea/design-system"
+    description: Tokens, brand kits, motion variants, primitives (AnimatedBeam, NumberTicker, Marquee)
+    layer: substrate
+    gate: form
+    hemisphere: seam
+    repo: packages/design-system
+    consumes: []
+    isExternal: false
+    owner: frank
+    links:
+      package: /packages/design-system
+
+  - id: multilingual
+    name: "@starlight/multilingual"
+    description: i18n foundation — locales, translated slugs, canon glossary
+    layer: substrate
+    gate: voice
+    hemisphere: seam
+    repo: packages/multilingual
+    consumes: []
+    isExternal: false
+    owner: frank
+    links:
+      package: /packages/multilingual
+
+  - id: orchestrator
+    name: "@arcanea/orchestrator"
+    description: Multi-agent runtime + ecosystem build pipeline
+    layer: substrate
+    gate: unity
+    hemisphere: seam
+    repo: packages/orchestrator
+    consumes:
+      - sis
+      - anthropic-sdk
+    isExternal: false
+    owner: frank
+    links:
+      package: /packages/orchestrator
+
+  # --- Books ---
+  - id: book-forge
+    name: Forge of Ruin
+    description: First Open Library book — 45K+ words, 4 chapters
+    layer: product
+    gate: story
+    hemisphere: arc
+    repo: book/forge-of-ruin
+    consumes:
+      - author-council
+      - design-system
+    isExternal: false
+    owner: frank
+    links:
+      repo: /book/forge-of-ruin
+
+  - id: book-mila
+    name: "Das Mädchen, das drei Sprachen hörte"
+    description: Trilingual children's book, Mila-bedtime test grade
+    layer: product
+    gate: story
+    hemisphere: arc
+    repo: book/das-maedchen-drei-sprachen
+    consumes:
+      - author-council
+      - multilingual
+      - design-system
+    isExternal: false
+    owner: frank
+    links:
+      live: https://arcanea.ai/books/das-maedchen-drei-sprachen
+
+  - id: book-tierras
+    name: Las Tierras de Luz
+    description: Co-authored with Ana Cecilia Cancino — Veldoria setting
+    layer: product
+    gate: story
+    hemisphere: arc
+    repo: book/las-tierras-de-luz
+    consumes:
+      - author-council
+      - multilingual
+      - design-system
+    isExternal: false
+    owner: frank
+    links:
+      live: https://arcanea.ai/books/las-tierras-de-luz
+
+  # --- In-repo surfaces (web app routes) ---
+  - id: surface-author
+    name: /author
+    description: Public Author Council — paste chapter, pick roster, see deliberation
+    layer: surface
+    gate: soul
+    hemisphere: arc
+    consumes:
+      - author-council
+      - anthropic-sdk
+    isExternal: false
+    status_override: wip
+    links: {}
+
+  - id: surface-ecosystem
+    name: /ecosystem
+    description: The connected experience map (this page)
+    layer: surface
+    gate: unity
+    hemisphere: seam
+    consumes:
+      - orchestrator
+    isExternal: false
+    status_override: shipped
+    links:
+      live: https://arcanea.ai/ecosystem
+
+  - id: surface-imagine
+    name: /imagine
+    description: Image generation — NB2, Fal, Replicate
+    layer: surface
+    gate: vision
+    hemisphere: arc
+    consumes: []
+    isExternal: false
+    status_override: shipped
+    links:
+      live: https://arcanea.ai/imagine
+
+  - id: surface-library
+    name: /library
+    description: Library OS — books, quotes, chapter summaries
+    layer: surface
+    gate: story
+    hemisphere: arc
+    consumes:
+      - book-mila
+      - book-tierras
+      - book-forge
+    isExternal: false
+    status_override: shipped
+    links:
+      live: https://arcanea.ai/library
+
+  # --- Other external / curated entries ---
+  - id: claude-flow
+    name: claude-flow
+    description: Upstream multi-agent orchestration framework; Arcanea fork is arcanea-flow
+    layer: product
+    gate: form
+    hemisphere: arc
+    github: https://github.com/ruvnet/claude-flow
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: sis
+    name: Starlight Intelligence System
+    description: Cross-session memory + horizon vaults + entry stream
+    layer: substrate
+    gate: source
+    hemisphere: seam
+    repo: https://github.com/frankxai/Starlight-Intelligence-System
+    consumes: []
+    isExternal: false
+    owner: frank
+    links:
+      github: https://github.com/frankxai/Starlight-Intelligence-System
+
+  - id: starlight
+    name: starlight
+    description: Minimal SIP adoption kit for Starlight Intelligence System
+    layer: product
+    gate: form
+    hemisphere: arc
+    github: https://github.com/frankxai/starlight
+    consumes: []
+    isExternal: false
+    links: {}
+
+  - id: vibe-os-substrate
+    name: vibe-os-substrate
+    description: SIP-conformant vertical scaffold for state engineering
+    layer: product
+    gate: form
+    hemisphere: arc
+    github: https://github.com/frankxai/vibe-os-substrate
+    consumes: []
+    isExternal: false
+    links: {}
