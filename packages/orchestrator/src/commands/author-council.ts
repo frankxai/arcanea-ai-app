@@ -34,9 +34,10 @@ export async function runCouncil(input: RunCouncilInput): Promise<{ auditPath: s
   const chapterContent = await fs.readFile(chapterAbsPath, 'utf8');
 
   // Spawn MCP server via stdio transport.
-  // The server binary location is resolved relative to the bookDir/../../packages/author-council/dist/mcp/bin.js
-  const serverPath = path.resolve(input.bookDir, '../../packages/author-council/dist/mcp/bin.js');
-  
+  // The server binary location is resolved from this file's location:
+  // packages/orchestrator/src/commands/ → up to packages/ → into author-council/dist/mcp/bin.js
+  const serverPath = path.resolve(import.meta.dirname, '../../../author-council/dist/mcp/bin.js');
+
   const transport = new StdioClientTransport({
     command: 'node',
     args: [serverPath],
@@ -47,9 +48,9 @@ export async function runCouncil(input: RunCouncilInput): Promise<{ auditPath: s
     { capabilities: {} }
   );
 
-  await client.connect(transport);
-
   try {
+    await client.connect(transport);
+
     const result = await client.callTool({
       name: 'deliberate',
       arguments: {
@@ -65,8 +66,14 @@ export async function runCouncil(input: RunCouncilInput): Promise<{ auditPath: s
     const auditPath = path.join(input.bookDir, 'council-audits', `${today}-${slug}.md`);
     await fs.mkdir(path.dirname(auditPath), { recursive: true });
 
+    const textContent = (result as any).content?.find((c: any) => c.type === 'text') as { text: string } | undefined;
+    if (!textContent) {
+      throw new Error('No text content returned from deliberate tool');
+    }
+    const session = JSON.parse(textContent.text);
+
     // Parse blockers
-    const contributions = (result as any)?.contributions || [];
+    const contributions = session?.contributions || [];
     const blockerCount = contributions.filter((c: any) => c.severity === 'blocker').length;
     const isBlocked = blockerCount >= config.blocker_threshold;
 
@@ -83,7 +90,7 @@ blocker: ${isBlocked}
 # Council Audit — ${slug}
 
 \`\`\`json
-${JSON.stringify(result, null, 2)}
+${JSON.stringify(session, null, 2)}
 \`\`\`
 `;
 

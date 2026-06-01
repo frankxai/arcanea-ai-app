@@ -188,18 +188,28 @@ export async function POST(
       .eq('author_user_id', user.id)
       .in('chapter_slug', publishedChapters);
 
-    // Trigger Author Council deliberation in the background for each published chapter
-    const bookDir = process.cwd().endsWith('apps/web')
-      ? path.resolve(process.cwd(), '../../book', bookSlug)
-      : path.resolve(process.cwd(), 'book', bookSlug);
+    // Council critique trigger.
+    // Serverless functions (Vercel) freeze/terminate after response; fire-and-forget
+    // background work is unreliable there. And resolving the orchestrator package
+    // via relative paths fails in standalone builds. So we only run inline in
+    // environments where we know it'll complete. This is a known limitation — a
+    // queue-backed runner is the proper fix; see follow-up note in PR #144 body.
+    const isServerless = !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME;
+    if (!isServerless) {
+      const bookDir = process.cwd().endsWith('apps/web')
+        ? path.resolve(process.cwd(), '../../book', bookSlug)
+        : path.resolve(process.cwd(), 'book', bookSlug);
 
-    for (const chapter of publishedChapters) {
-      runCouncil({
-        bookDir,
-        chapterPath: `chapters/${chapter}.md`,
-      }).catch((err) => {
-        console.error(`[publish] Author Council background deliberation failed for ${chapter}:`, err);
-      });
+      for (const chapter of publishedChapters) {
+        runCouncil({
+          bookDir,
+          chapterPath: `chapters/${chapter}.md`,
+        })
+          .then((r) => console.log(`[council] audit written: ${r.auditPath}`))
+          .catch((err) => console.error(`[council] failed for ${chapter}:`, err));
+      }
+    } else {
+      console.log(`[council] skipped in serverless env (${publishedChapters.length} chapters) — run \`arcanea-orchestrator author-council\` locally or wire a queue`);
     }
   }
 

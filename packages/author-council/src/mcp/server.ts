@@ -111,7 +111,7 @@ export async function createMcpServer(): Promise<Server> {
         const rosterId = requireString(a, "roster");
         const rawMode = requireString(a, "mode");
         const content = requireString(a, "text");
-        const voicesOverride = Array.isArray(a["voicesOverride"]) ? (a["voicesOverride"] as string[]) : [];
+        const voicesOverride = Array.isArray(a?.voicesOverride) ? (a.voicesOverride as string[]) : [];
 
         // Bridge book-config modes ('deliberation', 'critique', etc.) to protocol modes ('convergence', 'parallel', etc.)
         const mode = mapMode(rawMode);
@@ -134,13 +134,15 @@ export async function createMcpServer(): Promise<Server> {
                 try {
                   return await fetchAnthropicCritique(anthropicKey, systemPrompt, content);
                 } catch (err) {
-                  // Fallback to high-fidelity mock if network or key fails
+                  // Fallback to OpenAI or mock
                 }
-              } else if (openaiKey) {
+              }
+
+              if (openaiKey) {
                 try {
                   return await fetchOpenAICritique(openaiKey, systemPrompt, content);
                 } catch (err) {
-                  // Fallback to high-fidelity mock if network or key fails
+                  // Fallback to high-fidelity mock
                 }
               }
 
@@ -249,13 +251,15 @@ async function fetchOpenAICritique(apiKey: string, systemPrompt: string, content
 
 function parseJsonCritique(text: string): Critique {
   let cleanText = text.trim();
-  if (cleanText.startsWith("```json")) {
-    cleanText = cleanText.substring(7);
-  } else if (cleanText.startsWith("```")) {
-    cleanText = cleanText.substring(3);
-  }
-  if (cleanText.endsWith("```")) {
-    cleanText = cleanText.substring(0, cleanText.length - 3);
+  const match = cleanText.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+  if (match && match[1] !== undefined) {
+    cleanText = match[1];
+  } else {
+    const start = cleanText.indexOf('{');
+    const end = cleanText.lastIndexOf('}');
+    if (start !== -1 && end !== -1 && end > start) {
+      cleanText = cleanText.substring(start, end + 1);
+    }
   }
   return JSON.parse(cleanText.trim()) as Critique;
 }

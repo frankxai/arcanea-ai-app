@@ -13,9 +13,9 @@ REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 BOOK_DIR="${REPO_ROOT}/book/${BOOK_SLUG}"
 
 cd "${REPO_ROOT}"
-pnpm -F @arcanea/orchestrator exec tsx -e "
+BOOK_DIR="${BOOK_DIR}" CHAPTER_PATH="${CHAPTER_PATH}" pnpm -F @arcanea/orchestrator exec tsx -e "
   import { runCouncil } from './src/commands/author-council.ts';
-  runCouncil({ bookDir: '${BOOK_DIR}', chapterPath: '${CHAPTER_PATH}' })
+  runCouncil({ bookDir: process.env.BOOK_DIR!, chapterPath: process.env.CHAPTER_PATH! })
     .then((r) => console.log('✓ audit written:', r.auditPath))
     .catch((err) => { console.error(err); process.exit(1); });
 "
