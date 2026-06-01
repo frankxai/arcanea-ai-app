@@ -207,6 +207,9 @@ importers:
       '@arcanea/design-system':
         specifier: workspace:^
         version: link:../../packages/design-system
+      '@arcanea/orchestrator':
+        specifier: workspace:*
+        version: link:../../packages/orchestrator
       '@arcanea/publishing-house':
         specifier: workspace:^
         version: link:../../packages/publishing-house
@@ -1010,6 +1013,9 @@ importers:
       '@arcanea/router-spec':
         specifier: workspace:*
         version: link:../router-spec
+      '@modelcontextprotocol/sdk':
+        specifier: '>=1.24.0'
+        version: 1.29.0(zod@4.3.6)
       '@octokit/rest':
         specifier: ^22.0.1
         version: 22.0.1

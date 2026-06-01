@@ -1,0 +1,9 @@
+roster: fiction
+mode: deliberation
+trigger: on_chapter_commit
+voices_override: []
+blocker_threshold: 2
+notes: |
+  Co-authored with Ana Cecilia Cancino. Spanish-language fiction.
+  Roster prefers voices with strong Spanish-literature tradition.
+  Per project_las_tierras_book.md.
