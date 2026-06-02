@@ -17,6 +17,7 @@ import {
   workflowShowCommand,
   workflowRunCommand,
 } from './commands/workflow.js';
+import { authorCouncilCommand } from './commands/author-council.js';
 
 const program = new Command();
 
@@ -60,6 +61,13 @@ program
   .option('--tasks <n>', 'Number of workers to spawn', '3')
   .option('--dry-run', 'Show planned dispatch without spawning')
   .action(swarmCommand);
+
+program
+  .command('author-council')
+  .description('Run the Author Council deliberation over a chapter.')
+  .argument('<bookDir>', 'Directory of the book')
+  .argument('<chapterPath>', 'Relative path to the chapter markdown file')
+  .action(authorCouncilCommand);
 
 program
   .command('status')

@@ -1,0 +1,8 @@
+roster: arcanea
+mode: deliberation
+trigger: on_chapter_commit
+voices_override: []
+blocker_threshold: 2
+notes: |
+  First Open Library book. Full Council (all 10 voices).
+  Per project_forge_of_ruin_book.md.

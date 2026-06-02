@@ -1,0 +1,8 @@
+roster: mythic
+mode: critique
+trigger: on_chapter_commit
+voices_override: []
+blocker_threshold: 2
+notes: |
+  Children's book — voices should evaluate for Mila-bedtime test, Pippi-grade openings.
+  Per feedback_kidbook_readaloud_test.md.

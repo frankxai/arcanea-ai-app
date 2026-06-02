@@ -27,6 +27,7 @@
     "@ai-sdk/openai": "^3.0.64",
     "@ai-sdk/react": "^3.0.187",
     "@arcanea/design-system": "workspace:^",
+    "@arcanea/orchestrator": "workspace:*",
     "@arcanea/publishing-house": "workspace:^",
     "@arcanea/world-engine": "workspace:^",
     "@starlight/multilingual": "workspace:^",
