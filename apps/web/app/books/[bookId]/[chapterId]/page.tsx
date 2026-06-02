@@ -95,7 +95,7 @@ const BOOK_META: Record<string, { title: string; dir: string }> = {
   },
   'las-tierras-de-luz': {
     title: 'Las Tierras de Luz',
-    dir: join(process.cwd(), '..', '..', 'book', 'las-tierras-de-luz', 'chapters'),
+    dir: join(process.cwd(), '..', '..', 'book', 'las-tierras-de-luz', 'chapters-en'),
   },
   'das-maedchen-drei-sprachen': {
     title: 'Das Mädchen, das drei Sprachen hörte',
