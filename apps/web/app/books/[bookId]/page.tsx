@@ -186,7 +186,7 @@ const BOOKS: Record<string, BookDef> = {
     title: 'Las Tierras de Luz',
     subtitle: 'A Legend of the Kingdom of Light',
     description:
-      'In the valley-Realm of Veldoria, an eleven-year-old girl named Mira wakes one morning to find a small prismatic light hovering above her chest — her destello, visible for the first time. Soon she discovers she can wake the sleeping lights in every being she passes. No one else can see them. Across the narrow street, behind a blue door, an old woman who has been waiting her whole adult life looks up from a bowl of green beans and sees. A magical-realism novel about the loneliness of the first witness and the quiet joy that lives beneath every ordinary day. A Legend of the Kingdom of Light.',
+      'In Caracas, Venezuela, a nineteen-year-old named Selene Velara climbs the Ávila mountain alone at dawn on the eve of her birthday — and the mountain speaks her name back. By nightfall her grandmother has opened a corridor that closed sixty years ago, and Selene steps through into Avilara, a sister-Realm of the Kingdom of Light she has only ever heard about in recipes and songs. Bilingual EN/ES, in the register of Brent Weeks and Paolini with the inner-life depth of Le Guin, Hesse, and Susanna Clarke.',
     status: 'in-progress',
     dir: join(process.cwd(), '..', '..', 'book', 'las-tierras-de-luz', 'chapters-en'),
   },
@@ -248,7 +248,12 @@ async function getChapters(bookDir: string): Promise<ChapterInfo[]> {
   try {
     const files = await readdir(bookDir);
     const mdFiles = files
-      .filter((f) => f.endsWith('.md') && !f.startsWith('00-'))
+      // Exclude 00-prefixed non-chapter material (outlines, front-matter,
+      // READMEs) but keep `00-prologue*` / `00-prologo*` so real prologues
+      // surface in the chapter list. The chapter-route loader has always
+      // included these; this aligns the overview with what's actually
+      // reachable.
+      .filter((f) => f.endsWith('.md') && (!/^00-/.test(f) || /^00-prolog/i.test(f)))
       .sort();
 
     const chapters: ChapterInfo[] = [];
