@@ -51,25 +51,36 @@ function formatFileSize(bytes: number): string {
  * when the file is removed or the component unmounts. Prevents the blob-URL
  * leak from calling URL.createObjectURL on every render.
  */
+/* eslint-disable react-hooks/refs -- intentionally caches blob-URL lifecycle in a
+   ref across renders so unchanged previews keep their URL (no flicker on add/remove). */
 function useObjectUrls(files: File[]): Map<File, string> {
-  // Create blob URLs in a memo (recomputed only when the files array changes),
-  // and revoke the previous batch via the effect cleanup. Available on first paint.
+  const urlsRef = useRef<Map<File, string>>(new Map());
+
   const map = useMemo(() => {
-    const m = new Map<File, string>();
+    const current = urlsRef.current;
+    const next = new Map<File, string>();
     for (const file of files) {
-      if (file.type.startsWith('image/')) m.set(file, URL.createObjectURL(file));
+      if (!file.type.startsWith('image/')) continue;
+      // Reuse the existing URL for already-seen files; only create for new ones.
+      next.set(file, current.get(file) ?? URL.createObjectURL(file));
     }
-    return m;
+    // Revoke URLs for files that were removed.
+    for (const [file, url] of current) {
+      if (!next.has(file)) URL.revokeObjectURL(url);
+    }
+    urlsRef.current = next;
+    return next;
   }, [files]);
 
   useEffect(() => {
     return () => {
-      for (const url of map.values()) URL.revokeObjectURL(url);
+      for (const url of urlsRef.current.values()) URL.revokeObjectURL(url);
     };
-  }, [map]);
+  }, []);
 
   return map;
 }
+/* eslint-enable react-hooks/refs */
 
 // ---------------------------------------------------------------------------
 // Tools popover — replaces inline tool toggles

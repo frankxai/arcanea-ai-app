@@ -158,7 +158,11 @@ export default function ChatPage() {
   const handleDismissError = useCallback(() => {
     handleNewChat();
     conversation.setChatError(null);
-  }, [handleNewChat, conversation]);
+    // conversation.setChatError is a stable useState setter; depending on it
+    // (not the whole conversation object) keeps this callback from being
+    // recreated every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [handleNewChat, conversation.setChatError]);
 
   const lastSessionTitle =
     chatSessions.sessions.length > 0 && chatSessions.sessions[0].title !== 'New Chat'

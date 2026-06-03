@@ -701,13 +701,15 @@ export function useConversation(options?: UseConversationOptions): ConversationS
     const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user');
     if (!lastUserMsg) return;
     setChatError(null);
-    // Drop a failed/partial assistant message, then ask the SDK to regenerate.
+    // Regenerate via the SDK. If a failed/partial assistant message exists, target
+    // it directly so it's replaced — avoids a setMessages()+regenerate() race.
     const last = messages[messages.length - 1];
     if (last?.role === 'assistant') {
-      setMessages(messages.slice(0, -1));
+      void regenerate({ messageId: last.id, body: buildRequestBody() });
+    } else {
+      void regenerate({ body: buildRequestBody() });
     }
-    void regenerate({ body: buildRequestBody() });
-  }, [messages, setMessages, regenerate, buildRequestBody]);
+  }, [messages, regenerate, buildRequestBody]);
 
   // ---------------------------------------------------------------------------
   // Regenerate: ask the SDK for a fresh response to the last user turn.
