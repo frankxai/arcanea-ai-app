@@ -8,6 +8,17 @@ on:
       - 'packages/arcanea-design-preset.js'
   workflow_dispatch:
 
+# The default GITHUB_TOKEN for pull_request runs is read-only for many scopes,
+# which makes wait-for-vercel-preview (reads the PR + deployments) and the
+# sticky comment action fail with "Resource not accessible by integration".
+# Grant the minimum scopes those steps need.
+permissions:
+  contents: read
+  pull-requests: write
+  statuses: read
+  checks: read
+  deployments: read
+
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
