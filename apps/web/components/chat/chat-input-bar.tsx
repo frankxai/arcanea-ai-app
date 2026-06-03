@@ -426,20 +426,29 @@ export function ChatInputBar({
   const voiceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Live (on-device) speech preview — Whisper remains the authoritative final text.
-  const speech = useSpeechRecognition();
+  // Destructure the stable functions so recording callbacks don't churn as the
+  // live transcript state updates.
+  const {
+    supported: speechSupported,
+    finalText: speechFinalText,
+    interim: speechInterim,
+    start: startSpeech,
+    stop: stopSpeech,
+    reset: resetSpeech,
+  } = useSpeechRecognition();
   const voiceBaseRef = useRef('');   // message text typed before recording started
   const spokenRef = useRef('');      // latest Web Speech final, readable in async callbacks
   useEffect(() => {
-    spokenRef.current = speech.finalText;
-  }, [speech.finalText]);
+    spokenRef.current = speechFinalText;
+  }, [speechFinalText]);
 
   // While recording with Web Speech support, stream interim words into the textarea.
   useEffect(() => {
-    if (!isRecording || !speech.supported) return;
-    const live = `${speech.finalText} ${speech.interim}`.trim();
+    if (!isRecording || !speechSupported) return;
+    const live = `${speechFinalText} ${speechInterim}`.trim();
     const base = voiceBaseRef.current.trim();
     setMessage(base ? (live ? `${base} ${live}` : base) : live);
-  }, [isRecording, speech.finalText, speech.interim, speech.supported]);
+  }, [isRecording, speechFinalText, speechInterim, speechSupported]);
 
   // Cleanup voice recording on unmount to prevent timeout firing on unmounted component
   useEffect(() => {
@@ -658,10 +667,10 @@ export function ChatInputBar({
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
       mediaRecorderRef.current.stop();
     }
-    speech.stop();
+    stopSpeech();
     mediaStreamRef.current = null;
     setIsRecording(false);
-  }, [speech]);
+  }, [stopSpeech]);
 
   const startRecording = useCallback(async () => {
     if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
@@ -674,9 +683,9 @@ export function ChatInputBar({
       // Snapshot any already-typed text so live/Whisper transcript appends to it.
       voiceBaseRef.current = message;
       spokenRef.current = '';
-      if (speech.supported) {
-        speech.reset();
-        speech.start();
+      if (speechSupported) {
+        resetSpeech();
+        startSpeech();
       }
       const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4';
       const mediaRecorder = new MediaRecorder(stream, { mimeType });
@@ -713,7 +722,7 @@ export function ChatInputBar({
         // Clear voice scratch state now that we have an authoritative result.
         voiceBaseRef.current = '';
         spokenRef.current = '';
-        speech.reset();
+        resetSpeech();
 
         if (!combined) {
           // Nothing transcribed — restore the user's pre-recording text.
@@ -740,10 +749,10 @@ export function ChatInputBar({
       }, 60_000);
     } catch (e) {
       console.warn('Microphone access denied:', e);
-      speech.stop();
+      stopSpeech();
       showValidationToast('Microphone access denied. Check browser permissions.');
     }
-  }, [stopRecording, showValidationToast, voiceAutoSend, message, onSend, attachments, speech]);
+  }, [stopRecording, showValidationToast, voiceAutoSend, message, onSend, attachments, stopSpeech, resetSpeech, startSpeech, speechSupported]);
 
   // -------------------------------------------------------------------------
   // Derived state

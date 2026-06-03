@@ -15,7 +15,7 @@
  * Whisper be the source of truth for what actually gets sent.
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 // --- Minimal Web Speech typings (not present in the default TS DOM lib) ------
 
@@ -99,11 +99,19 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
 
   useEffect(() => {
     return () => {
-      // Abort any in-flight session on unmount; abort() does not fire onend handlers we care about.
-      try {
-        recognitionRef.current?.abort();
-      } catch {
-        /* no-op */
+      // On unmount, detach handlers BEFORE aborting: abort() asynchronously fires
+      // onend/onerror, which would otherwise call setState on an unmounted component.
+      const r = recognitionRef.current;
+      if (r) {
+        r.onstart = null;
+        r.onresult = null;
+        r.onerror = null;
+        r.onend = null;
+        try {
+          r.abort();
+        } catch {
+          /* no-op */
+        }
       }
       recognitionRef.current = null;
     };
@@ -128,10 +136,17 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
     const Ctor = getRecognitionCtor();
     if (!Ctor) return;
 
-    // Tear down any previous instance before starting a fresh one.
-    if (recognitionRef.current) {
+    // Tear down any previous instance before starting a fresh one. Detach its
+    // handlers first so the aborted instance's delayed onend cannot reset the
+    // `listening`/`interim` state of the new session (race condition).
+    const prev = recognitionRef.current;
+    if (prev) {
+      prev.onstart = null;
+      prev.onresult = null;
+      prev.onerror = null;
+      prev.onend = null;
       try {
-        recognitionRef.current.abort();
+        prev.abort();
       } catch {
         /* no-op */
       }
@@ -184,5 +199,8 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
     }
   }, []);
 
-  return { supported, listening, finalText, interim, error, start, stop, reset };
+  return useMemo(
+    () => ({ supported, listening, finalText, interim, error, start, stop, reset }),
+    [supported, listening, finalText, interim, error, start, stop, reset],
+  );
 }
