@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
@@ -21,7 +20,6 @@ import {
   generateFallbackSuggestions,
   type ContentType,
 } from '@/lib/chat/suggestion-engine';
-import { ArcaneanMarkSmall } from '@/components/brand/arcanea-mark';
 import Image from 'next/image';
 import { LuminaPresence } from '@/components/presence/lumina-presence';
 
@@ -48,6 +46,10 @@ export interface MessageBubbleProps {
     content?: string;
     createdAt?: Date | string | number;
   };
+  /** Client-stamped first-seen time (ms epoch). Preferred over message.createdAt. */
+  createdAtMs?: number;
+  /** Whether this message was produced by editing an earlier message */
+  isEdited?: boolean;
   isStreaming?: boolean;
   isLast?: boolean;
   /** Whether the AI is still loading (waiting for completion) */
@@ -183,7 +185,7 @@ function EditForm({
           onClick={() => {
             if (text.trim()) onSave(text.trim());
           }}
-          className="px-3 py-1.5 text-xs text-white bg-[var(--arc-brand-atlantean-teal)] rounded-lg hover:bg-[var(--arc-brand-atlantean-teal)] transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none"
+          className="px-3 py-1.5 text-xs text-[var(--arc-cosmic-void)] font-medium bg-[var(--arc-brand-atlantean-teal)] rounded-lg hover:brightness-110 transition-all focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none"
         >
           Save &amp; Resend
         </button>
@@ -198,6 +200,8 @@ function EditForm({
 
 export const MessageBubble = React.memo(function MessageBubble({
   message,
+  createdAtMs,
+  isEdited = false,
   isStreaming = false,
   isLast = false,
   isLoading = false,
@@ -447,7 +451,7 @@ export const MessageBubble = React.memo(function MessageBubble({
             />
           ) : (
             <div className="relative">
-              <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-gradient-to-br from-[var(--arc-cosmic-void)] to-[var(--arc-cosmic-void)] text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap shadow-sm">
+              <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-[var(--arc-brand-atlantean-teal)]/[0.07] border border-[var(--arc-brand-atlantean-teal)]/15 backdrop-blur-sm text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap shadow-[0_1px_0_rgba(255,255,255,0.03),0_2px_12px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_6%,transparent)]">
                 {searchQuery && text.toLowerCase().includes(searchQuery.toLowerCase())
                   ? highlightSearch(text, searchQuery)
                   : text}
@@ -462,9 +466,10 @@ export const MessageBubble = React.memo(function MessageBubble({
                   <PencilSimple className="w-3.5 h-3.5" />
                 </button>
               )}
-              {/* Timestamp — visible on hover */}
+              {/* Timestamp + edited tag — visible on hover */}
               <span className="block text-right text-[10px] text-white/20 opacity-0 group-hover/user:opacity-100 transition-opacity select-none mt-1">
-                {formatRelativeTime(message.createdAt)}
+                {isEdited && <span className="text-white/30">edited{' · '}</span>}
+                {formatRelativeTime(createdAtMs ?? message.createdAt)}
               </span>
             </div>
           )}
@@ -725,7 +730,7 @@ export const MessageBubble = React.memo(function MessageBubble({
               <button
                 type="button"
                 onClick={handleCopy}
-                className="flex items-center gap-1 px-2 py-1 min-h-[36px] min-w-[36px] rounded-md text-[11px] text-white/30 hover:text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/5 transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none"
+                className="flex items-center gap-1 px-2 py-1 min-h-[44px] min-w-[44px] rounded-md text-[11px] text-white/30 hover:text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/5 transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none"
                 aria-label="Copy response"
               >
                 {copied ? (
@@ -747,7 +752,7 @@ export const MessageBubble = React.memo(function MessageBubble({
                   <button
                     type="button"
                     onClick={handleSpeak}
-                    className="flex items-center gap-1 px-2 py-1 min-h-[36px] min-w-[36px] rounded-md text-[11px] text-white/30 hover:text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/5 transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none"
+                    className="flex items-center gap-1 px-2 py-1 min-h-[44px] min-w-[44px] rounded-md text-[11px] text-white/30 hover:text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/5 transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none"
                     aria-label={isPlaying ? 'Stop reading' : 'Read aloud'}
                   >
                     {isPlaying ? (
@@ -777,7 +782,7 @@ export const MessageBubble = React.memo(function MessageBubble({
                   <button
                     type="button"
                     onClick={() => setShowVoiceMenu(!showVoiceMenu)}
-                    className="w-5 h-5 min-h-[36px] rounded-md flex items-center justify-center text-[11px] text-white/20 hover:text-white/40 transition-colors"
+                    className="w-5 h-5 min-h-[44px] min-w-[44px] rounded-md flex items-center justify-center text-[11px] text-white/20 hover:text-white/40 transition-colors"
                     aria-label="Voice settings"
                   >
                     <svg width="8" height="5" viewBox="0 0 8 5" fill="currentColor"><path d="M0.5 0.5L4 4L7.5 0.5" stroke="currentColor" strokeWidth="1" fill="none"/></svg>
@@ -833,7 +838,7 @@ export const MessageBubble = React.memo(function MessageBubble({
                 <button
                   type="button"
                   onClick={onRegenerate}
-                  className="flex items-center gap-1 px-2 py-1 min-h-[36px] min-w-[36px] rounded-md text-[11px] text-white/30 hover:text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/5 transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none"
+                  className="flex items-center gap-1 px-2 py-1 min-h-[44px] min-w-[44px] rounded-md text-[11px] text-white/30 hover:text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/5 transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none"
                   aria-label="Regenerate response"
                 >
                   <ArrowsClockwise className="w-3.5 h-3.5" />
@@ -846,7 +851,7 @@ export const MessageBubble = React.memo(function MessageBubble({
               <button
                 type="button"
                 onClick={() => handleReaction('up')}
-                className={`min-w-[36px] min-h-[36px] rounded-md flex items-center justify-center transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none ${
+                className={`min-w-[44px] min-h-[44px] rounded-md flex items-center justify-center transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none ${
                   liked === 'up'
                     ? 'text-emerald-400 bg-emerald-400/10 shadow-[0_0_12px_rgba(52,211,153,0.2)] scale-110'
                     : 'text-white/30 hover:text-emerald-400 hover:bg-emerald-400/5 active:scale-125'
@@ -860,7 +865,7 @@ export const MessageBubble = React.memo(function MessageBubble({
               <button
                 type="button"
                 onClick={() => handleReaction('down')}
-                className={`min-w-[36px] min-h-[36px] rounded-md flex items-center justify-center transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none ${
+                className={`min-w-[44px] min-h-[44px] rounded-md flex items-center justify-center transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/30 focus-visible:outline-none ${
                   liked === 'down'
                     ? 'text-red-400 bg-red-400/10 shadow-[0_0_12px_rgba(248,113,113,0.2)]'
                     : 'text-white/30 hover:text-red-400 hover:bg-red-400/5 active:scale-125'
@@ -894,7 +899,7 @@ export const MessageBubble = React.memo(function MessageBubble({
           {/* Timestamp — visible on hover */}
           {isComplete && (
             <span className="text-[10px] text-white/20 opacity-0 group-hover:opacity-100 transition-opacity select-none mt-1 block">
-              {formatRelativeTime(message.createdAt)}
+              {formatRelativeTime(createdAtMs ?? message.createdAt)}
             </span>
           )}
         </div>

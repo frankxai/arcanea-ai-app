@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -83,6 +82,8 @@ export default function ChatPage() {
     const prompt = searchParams.get('prompt');
     if (prompt && prompt.trim()) {
       promptConsumed.current = true;
+      // One-shot hydration of the input from the ?prompt= URL param. Intentional.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPendingInput(prompt.trim());
       window.history.replaceState(null, '', '/chat');
     }
@@ -135,6 +136,8 @@ export default function ChatPage() {
       const lastAssistant = [...conversation.messages].reverse().find((m) => m.role === 'assistant');
       if (lastAssistant) {
         const artifact = detectArtifact(getMessageText(lastAssistant));
+        // Derive the artifact panel from the settled last assistant turn. Intentional.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         if (artifact) setActiveArtifact(artifact);
       }
     }
@@ -151,6 +154,11 @@ export default function ChatPage() {
     chatSessions.newSession();
     textareaRef.current?.focus();
   }, [conversation, chatSessions]);
+
+  const handleDismissError = useCallback(() => {
+    handleNewChat();
+    conversation.setChatError(null);
+  }, [handleNewChat, conversation]);
 
   const lastSessionTitle =
     chatSessions.sessions.length > 0 && chatSessions.sessions[0].title !== 'New Chat'
@@ -273,7 +281,7 @@ export default function ChatPage() {
                       Settings
                     </Link>
                     <button
-                      onClick={() => { handleNewChat(); conversation.setChatError(null); }}
+                      onClick={handleDismissError}
                       className="ml-auto p-1 text-white/20 hover:text-white/40 transition-colors"
                       aria-label="Dismiss error"
                     >
@@ -403,6 +411,8 @@ export default function ChatPage() {
           onRegenerateFrom={conversation.handleRegenerateFrom}
           branches={conversation.branches}
           onLoadBranch={conversation.loadBranch}
+          messageTimes={conversation.messageTimes}
+          editedMessageIds={conversation.editedMessageIds}
           lastMsg={conversation.lastMsg ?? null}
           autoSave={autoSave}
           searchQuery={search.inConvoSearchQuery}
@@ -445,10 +455,8 @@ export default function ChatPage() {
               <div className="px-4 pb-3">
               <ChatInputBar
                 onSend={handleSend}
-                onModelChange={conversation.setModelId}
-                currentModel={conversation.modelId ?? 'arcanea-auto'}
                 isStreaming={conversation.isStreaming}
-                onStop={conversation.handleRegenerate}
+                onStop={conversation.handleStop}
                 enabledTools={conversation.enabledTools}
                 onToggleTool={conversation.toggleTool}
                 externalMessage={pendingInput}

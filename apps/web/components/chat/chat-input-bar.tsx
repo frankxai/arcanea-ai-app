@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
-import Image from 'next/image';
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import {
   PhPaperPlane,
   PhMicrophone,
@@ -11,10 +9,8 @@ import {
   PhMagnifyingGlass,
   PhX,
   PhPaperclip,
-  PhCaretDown,
   PhImageSquare,
 } from '@/lib/phosphor-icons';
-import { CHAT_MODELS, getModelById, ProviderLogo } from '@/components/chat/model-selector';
 import { MentionPopup, type MentionItem } from './mention-popup';
 import { VoiceWaveform } from './voice-waveform';
 
@@ -24,8 +20,6 @@ import { VoiceWaveform } from './voice-waveform';
 
 interface ChatInputBarProps {
   onSend: (message: string, attachments?: File[]) => void;
-  onModelChange: (modelId: string) => void;
-  currentModel: string;
   isStreaming: boolean;
   onStop?: () => void;
   enabledTools: Set<string>;
@@ -52,233 +46,29 @@ function formatFileSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-// ---------------------------------------------------------------------------
-// Compact model picker (inline in toggles row)
-// ---------------------------------------------------------------------------
-
-const TIER_ORDER = ['frontier', 'performance', 'speed'] as const;
-const TIER_META: Record<string, { label: string; color: string }> = {
-  frontier: { label: 'Frontier', color: 'var(--arc-brand-atlantean-teal)' },
-  performance: { label: 'Performance', color: 'var(--arc-earth)' },
-  speed: { label: 'Speed', color: 'var(--arc-brand-arcanean-gold)' },
-};
-
-function CompactModelPicker({
-  value,
-  onChange,
-}: {
-  value: string;
-  onChange: (id: string) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState('');
-  const ref = useRef<HTMLDivElement>(null);
-  const searchRef = useRef<HTMLInputElement>(null);
-
-  // Close on outside click
-  useEffect(() => {
-    if (!open) return;
-    function handleClick(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-        setSearch('');
-      }
+/**
+ * Create object URLs for image files, keyed by File identity, and revoke them
+ * when the file is removed or the component unmounts. Prevents the blob-URL
+ * leak from calling URL.createObjectURL on every render.
+ */
+function useObjectUrls(files: File[]): Map<File, string> {
+  // Create blob URLs in a memo (recomputed only when the files array changes),
+  // and revoke the previous batch via the effect cleanup. Available on first paint.
+  const map = useMemo(() => {
+    const m = new Map<File, string>();
+    for (const file of files) {
+      if (file.type.startsWith('image/')) m.set(file, URL.createObjectURL(file));
     }
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  }, [open]);
+    return m;
+  }, [files]);
 
-  // Focus search on open
   useEffect(() => {
-    if (open) {
-      requestAnimationFrame(() => searchRef.current?.focus());
-    }
-  }, [open]);
+    return () => {
+      for (const url of map.values()) URL.revokeObjectURL(url);
+    };
+  }, [map]);
 
-  const selected = getModelById(value) || CHAT_MODELS[0];
-
-  const tierColor = (tier: string) => TIER_META[tier]?.color || 'var(--arc-brand-arcanean-gold)';
-
-  // Filter models by search
-  const filteredModels = search
-    ? CHAT_MODELS.filter((m) =>
-        m.shortName.toLowerCase().includes(search.toLowerCase()) ||
-        m.provider.toLowerCase().includes(search.toLowerCase()) ||
-        m.description.toLowerCase().includes(search.toLowerCase())
-      )
-    : CHAT_MODELS;
-
-  // Group by tier
-  const grouped = TIER_ORDER.map((tier) => ({
-    tier,
-    models: filteredModels.filter((m) => m.tier === tier),
-  })).filter((g) => g.models.length > 0);
-
-  return (
-    <div ref={ref} className="relative">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        aria-label={`Model: ${selected.shortName}`}
-        aria-expanded={open}
-        aria-haspopup="listbox"
-        className="flex items-center gap-1.5 px-2.5 py-1 min-h-[44px] rounded-lg text-[11px] font-medium transition-all duration-200
-          border border-white/[0.08] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-[var(--arc-brand-atlantean-teal)]/[0.04] text-white/50 hover:text-white/70
-          focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
-      >
-        <ProviderLogo provider={selected.provider} size={16} />
-        <span>{selected.shortName}</span>
-        <PhCaretDown
-          className={`w-3 h-3 text-white/30 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-        />
-      </button>
-
-      {open && (
-        <div
-          aria-label="Select model"
-          className="absolute bottom-full left-0 sm:left-0 mb-2 w-80 max-w-[min(360px,calc(100vw-2rem))] rounded-xl border border-white/[0.06] bg-[var(--arc-cosmic-void)]/98 backdrop-blur-2xl shadow-[0_12px_48px_rgba(0,0,0,0.6),0_0_1px_rgba(255,255,255,0.06)] z-50 animate-scale-in overflow-hidden"
-        >
-          {/* Search */}
-          <div className="p-2 border-b border-white/[0.05]">
-            <input
-              ref={searchRef}
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search models..."
-              className="w-full px-3 py-2 text-xs bg-white/[0.04] border border-white/[0.06] rounded-lg text-white/80 placeholder-white/25 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
-              onKeyDown={(e) => {
-                if (e.key === 'Escape') {
-                  setOpen(false);
-                  setSearch('');
-                }
-              }}
-            />
-          </div>
-
-          {/* Grouped model list */}
-          <div
-            role="listbox"
-            className="max-h-[50vh] sm:max-h-[350px] overflow-y-auto p-1"
-            style={{ scrollbarWidth: 'thin' }}
-          >
-            {grouped.map(({ tier, models }) => (
-              <div key={tier}>
-                {/* Tier header */}
-                <div className="flex items-center gap-2 px-3 py-1.5 mt-1 first:mt-0">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{ backgroundColor: tierColor(tier) }}
-                  />
-                  <span
-                    className="text-[10px] font-semibold uppercase tracking-wider"
-                    style={{ color: `${tierColor(tier)}90` }}
-                  >
-                    {TIER_META[tier]?.label}
-                  </span>
-                  <div className="flex-1 h-px bg-white/[0.04]" />
-                </div>
-
-                {models.map((model) => (
-                  <button
-                    key={model.id}
-                    type="button"
-                    role="option"
-                    aria-selected={model.id === value}
-                    onClick={() => {
-                      onChange(model.id);
-                      setOpen(false);
-                      setSearch('');
-                    }}
-                    className={`w-full text-left px-3 py-2 flex items-center gap-2.5 rounded-lg transition-all duration-150 ${
-                      model.id === value
-                        ? 'bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/10 to-transparent text-[var(--arc-brand-atlantean-teal)] shadow-[inset_0_0_0_1px_rgba(0,188,212,0.15)]'
-                        : 'text-white/60 hover:bg-white/[0.04] hover:text-white/80'
-                    }`}
-                  >
-                    <ProviderLogo provider={model.provider} size={20} />
-                    <span className="text-xs font-medium flex-1">{model.shortName}</span>
-                    {model.tokensPerSecond && (
-                      <span className="text-[9px] text-white/20 font-mono">{model.tokensPerSecond}t/s</span>
-                    )}
-                  </button>
-                ))}
-              </div>
-            ))}
-
-            {grouped.length === 0 && (
-              <div className="px-4 py-6 text-center text-xs text-white/25">
-                No models match &ldquo;{search}&rdquo;
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Toggle button
-// ---------------------------------------------------------------------------
-
-function ToolToggle({
-  icon: Icon,
-  label,
-  active,
-  disabled,
-  tooltip,
-  shortLabel,
-  activeColor,
-  onClick,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  active: boolean;
-  disabled?: boolean;
-  tooltip?: string;
-  shortLabel?: string;
-  activeColor?: string;
-  onClick: () => void;
-}) {
-  const color = activeColor ?? 'var(--arc-brand-atlantean-teal)';
-  return (
-    <div className="relative group/toggle">
-      <button
-        type="button"
-        onClick={onClick}
-        disabled={disabled}
-        title={tooltip ?? label}
-        aria-label={label}
-        aria-pressed={active}
-        className={`relative flex items-center justify-center gap-1.5 h-8 min-h-[44px] rounded-lg text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none ${
-          active ? 'px-3 min-w-[44px]' : 'w-8 min-w-[44px]'
-        } ${
-          disabled
-            ? 'opacity-30 cursor-not-allowed'
-            : active
-              ? `border text-white/90 shadow-[0_0_16px_${color}30,inset_0_1px_0_${color}20]`
-              : 'bg-white/[0.03] border border-white/[0.06] text-white/35 hover:text-white/60 hover:bg-white/[0.06] hover:border-white/[0.1]'
-        }`}
-        style={active ? {
-          background: `linear-gradient(135deg, ${color}20, ${color}08)`,
-          borderColor: `${color}50`,
-          color: color,
-          boxShadow: `0 0 16px ${color}25, inset 0 1px 0 ${color}15`,
-        } : undefined}
-      >
-        <Icon className="w-4 h-4" />
-        {active && shortLabel && (
-          <span className="text-[11px] font-medium">{shortLabel}</span>
-        )}
-      </button>
-      {tooltip && !active && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded-md bg-[var(--arc-cosmic-void)] text-white/70 text-[10px] whitespace-nowrap opacity-0 group-hover/toggle:opacity-100 transition-opacity pointer-events-none border border-white/[0.06] shadow-lg z-30">
-          {tooltip}
-        </div>
-      )}
-    </div>
-  );
+  return map;
 }
 
 // ---------------------------------------------------------------------------
@@ -382,8 +172,6 @@ function ToolsPopover({
 
 export function ChatInputBar({
   onSend,
-  onModelChange,
-  currentModel,
   isStreaming,
   onStop,
   enabledTools,
@@ -396,6 +184,9 @@ export function ChatInputBar({
   const [attachments, setAttachments] = useState<File[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  // Active mic stream in state (not just a ref) so the waveform can render from it
+  // without reading a ref during render.
+  const [recordingStream, setRecordingStream] = useState<MediaStream | null>(null);
   const [voiceAutoSend, setVoiceAutoSend] = useState(true);
   const [validationToast, setValidationToast] = useState<string | null>(null);
 
@@ -410,6 +201,8 @@ export function ChatInputBar({
   // Consume external message when it changes (e.g. from starter chip click)
   useEffect(() => {
     if (externalMessage !== undefined && externalMessage !== '') {
+      // Sync external input (starter chips / hero handoff) into local state. Intentional.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMessage(externalMessage);
       onExternalMessageConsumed?.();
       // Focus the textarea so the user can edit or press Enter
@@ -446,7 +239,7 @@ export function ChatInputBar({
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
     }
-  }, [message]);
+  }, [message, textareaRef]);
 
   // -------------------------------------------------------------------------
   // Send logic
@@ -454,16 +247,18 @@ export function ChatInputBar({
 
   const canSend = (message.trim().length > 0 || attachments.length > 0) && !isStreaming;
 
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization -- depends on `canSend` (derived) plus the raw inputs; the manual deps are intentional and correct.
   const handleSend = useCallback(() => {
     if (!canSend) return;
     onSend(message.trim(), attachments.length > 0 ? attachments : undefined);
     setMessage('');
     setAttachments([]);
-    // Reset textarea height
+    // Reset textarea height and keep focus so the user can keep typing
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
+      textareaRef.current.focus();
     }
-  }, [canSend, message, attachments, onSend]);
+  }, [canSend, message, attachments, onSend, textareaRef]);
 
   // -------------------------------------------------------------------------
   // Keyboard
@@ -517,6 +312,7 @@ export function ChatInputBar({
   }, []);
 
   const handleMentionSelect = useCallback(
+    // eslint-disable-next-line react-hooks/preserve-manual-memoization -- manual deps (message, mentionStart, textareaRef) are intentional; textareaRef is a stable ref.
     (item: MentionItem) => {
       if (mentionStart < 0) return;
       const before = message.slice(0, mentionStart);
@@ -538,7 +334,7 @@ export function ChatInputBar({
         }
       });
     },
-    [message, mentionStart],
+    [message, mentionStart, textareaRef],
   );
 
   const handleMentionDismiss = useCallback(() => {
@@ -642,6 +438,7 @@ export function ChatInputBar({
       mediaRecorderRef.current.stop();
     }
     mediaStreamRef.current = null;
+    setRecordingStream(null);
     setIsRecording(false);
   }, []);
 
@@ -653,6 +450,7 @@ export function ChatInputBar({
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaStreamRef.current = stream;
+      setRecordingStream(stream);
       const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4';
       const mediaRecorder = new MediaRecorder(stream, { mimeType });
       audioChunksRef.current = [];
@@ -710,6 +508,9 @@ export function ChatInputBar({
   const charCount = message.length;
   const showCharCount = charCount > CHAR_WARN_THRESHOLD;
   const isNearLimit = charCount > MAX_CHARS * 0.95;
+
+  // Lifecycle-managed blob preview URLs (created once per file, revoked on removal/unmount)
+  const previewUrls = useObjectUrls(attachments);
 
   // -------------------------------------------------------------------------
   // Render
@@ -775,12 +576,14 @@ export function ChatInputBar({
                 className="relative group/attach w-16 h-16 rounded-lg overflow-hidden border border-white/[0.08] bg-white/[0.04] backdrop-blur-sm"
               >
                 {file.type.startsWith('image/') ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <Image
-                    src={URL.createObjectURL(file)}
-                    alt=""
+                  // Plain <img>: next/image cannot optimize blob: URLs, and we
+                  // manage the object-URL lifecycle ourselves via useObjectUrls.
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={previewUrls.get(file)}
+                    alt={file.name}
                     className="w-full h-full object-cover"
-                   />
+                  />
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center gap-1">
                     <PhPaperclip className="w-4 h-4 text-white/30" />
@@ -808,8 +611,8 @@ export function ChatInputBar({
         )}
 
         {/* Voice waveform visualization */}
-        {isRecording && mediaStreamRef.current && (
-          <VoiceWaveform stream={mediaStreamRef.current} onStop={stopRecording} />
+        {isRecording && recordingStream && (
+          <VoiceWaveform stream={recordingStream} onStop={stopRecording} />
         )}
 
         {/* Active tools indicator */}

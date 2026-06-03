@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
 /**
@@ -195,10 +194,18 @@ export interface ConversationState {
   branches: Map<string, UIMessage[][]>;
   loadBranch: (messageId: string, branchIndex: number) => void;
 
+  // Per-message metadata (client-derived)
+  /** First-seen timestamp per message id (ms epoch) */
+  messageTimes: Map<string, number>;
+  /** Message ids produced by editing an earlier message */
+  editedMessageIds: Set<string>;
+
   // Actions
   handleSubmit: (e: React.FormEvent) => void;
   handleRetry: () => void;
   handleRegenerate: () => void;
+  /** Abort the in-flight stream without starting a new one */
+  handleStop: () => void;
   startNewChat: () => void;
 
   // Derived
@@ -234,6 +241,16 @@ export function useConversation(options?: UseConversationOptions): ConversationS
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const initialPromptSentRef = useRef(false);
   const [branches, setBranches] = useState<Map<string, UIMessage[][]>>(new Map());
+
+  // Per-message first-seen timestamps. AI SDK v6 UIMessage has no createdAt, so we
+  // stamp the time a message id first appears and expose it for relative-time display.
+  const messageTimesRef = useRef<Map<string, number>>(new Map());
+  const [messageTimes, setMessageTimes] = useState<Map<string, number>>(new Map());
+
+  // Message ids that were produced by editing a prior user message (for the "edited" tag).
+  const [editedMessageIds, setEditedMessageIds] = useState<Set<string>>(new Set());
+  // When an edit-resend is in flight, the next new user message id is marked edited.
+  const pendingEditRef = useRef(false);
 
   // Active Luminor from Sanctum ("Use in Chat")
   const [activeLuminor, setActiveLuminor] = useState<ActiveLuminor | null>(null);
@@ -321,7 +338,6 @@ export function useConversation(options?: UseConversationOptions): ConversationS
 
   const detectToolIntent = useCallback((message: string): string[] => {
     const detected: string[] = [];
-    const lower = message.toLowerCase();
     if (/\b(generate|draw|create|make|design)\b.*\b(image|picture|photo|illustration|art|logo|icon)\b/i.test(message)) {
       detected.push('image');
     }
@@ -357,6 +373,8 @@ export function useConversation(options?: UseConversationOptions): ConversationS
     error,
     sendMessage: sendSdkMessage,
     setMessages,
+    stop,
+    regenerate,
   } = useChat({
     transport,
     onError: (err) => {
@@ -378,6 +396,7 @@ export function useConversation(options?: UseConversationOptions): ConversationS
     },
   });
 
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization -- depend on options?.activeProject (not the whole `options` object, which the parent recreates each render) so the body is only rebuilt when the active project actually changes.
   const buildRequestBody = useCallback(() => {
     const currentEnabledTools = Array.from(enabledTools).sort();
 
@@ -482,6 +501,34 @@ export function useConversation(options?: UseConversationOptions): ConversationS
     if (!runtimeMetadata) return null;
     return formatArcaneaRuntimeSummary(runtimeMetadata);
   }, [runtimeMetadata]);
+
+  // ---------------------------------------------------------------------------
+  // Stamp first-seen time for new message ids (drives relative timestamps).
+  // Also tag the first user message that appears after an edit-resend.
+  // ---------------------------------------------------------------------------
+
+  useEffect(() => {
+    let changed = false;
+    for (const m of messages) {
+      if (!messageTimesRef.current.has(m.id)) {
+        messageTimesRef.current.set(m.id, Date.now());
+        changed = true;
+        if (pendingEditRef.current && m.role === 'user') {
+          pendingEditRef.current = false;
+          // eslint-disable-next-line react-hooks/set-state-in-effect
+          setEditedMessageIds((prev) => {
+            const next = new Set(prev);
+            next.add(m.id);
+            return next;
+          });
+        }
+      }
+    }
+    if (changed) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setMessageTimes(new Map(messageTimesRef.current));
+    }
+  }, [messages]);
 
   // ---------------------------------------------------------------------------
   // Client-side router for frequency indicator
@@ -640,34 +687,38 @@ export function useConversation(options?: UseConversationOptions): ConversationS
   // Retry last message on error
   // ---------------------------------------------------------------------------
 
+  // ---------------------------------------------------------------------------
+  // Stop: abort the in-flight stream (does NOT start a new generation).
+  // ---------------------------------------------------------------------------
+
+  const handleStop = useCallback(() => {
+    setChatError(null);
+    void stop();
+  }, [stop]);
+
   const handleRetry = useCallback(() => {
     if (messages.length === 0) return;
     const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user');
     if (!lastUserMsg) return;
-    const text = getMessageText(lastUserMsg);
-    if (!text) return;
-    // Remove the failed assistant message if present
+    setChatError(null);
+    // Drop a failed/partial assistant message, then ask the SDK to regenerate.
     const last = messages[messages.length - 1];
     if (last?.role === 'assistant') {
       setMessages(messages.slice(0, -1));
     }
-    sendMessage({ text });
-  }, [messages, setMessages, sendMessage]);
+    void regenerate({ body: buildRequestBody() });
+  }, [messages, setMessages, regenerate, buildRequestBody]);
 
   // ---------------------------------------------------------------------------
-  // Regenerate: re-send last user message for a fresh response
+  // Regenerate: ask the SDK for a fresh response to the last user turn.
+  // Uses the SDK's regenerate() so message identity/metadata is preserved
+  // (re-sending raw text would create a new user message and drop attachments).
   // ---------------------------------------------------------------------------
 
   const handleRegenerate = useCallback(() => {
     if (messages.length < 2) return;
-    const lastUserIdx = [...messages].reverse().findIndex((m) => m.role === 'user');
-    if (lastUserIdx < 0) return;
-    const actualIdx = messages.length - 1 - lastUserIdx;
-    const userText = getMessageText(messages[actualIdx]);
-    if (!userText) return;
-    setMessages(messages.slice(0, actualIdx + 1));
-    sendMessage({ text: userText });
-  }, [messages, setMessages, sendMessage]);
+    void regenerate({ body: buildRequestBody() });
+  }, [messages, regenerate, buildRequestBody]);
 
   // ---------------------------------------------------------------------------
   // Edit a user message: truncate history to that point, re-send with new text
@@ -678,6 +729,8 @@ export function useConversation(options?: UseConversationOptions): ConversationS
     if (idx < 0) return;
     setMessages(messages.slice(0, idx));
     setEditingMessageId(null);
+    // Mark the next user message (created by this resend) as edited.
+    pendingEditRef.current = true;
     sendMessage({ text: newText });
   }, [messages, setMessages, sendMessage]);
 
@@ -700,21 +753,13 @@ export function useConversation(options?: UseConversationOptions): ConversationS
       return next;
     });
 
-    // Find the user message immediately before this assistant message
-    let userIdx = -1;
-    for (let i = idx - 1; i >= 0; i--) {
-      if (messages[i].role === 'user') {
-        userIdx = i;
-        break;
-      }
-    }
-    if (userIdx < 0) return;
-    const userText = getMessageText(messages[userIdx]);
-    if (!userText) return;
-    // Truncate to include the user message, then re-send
-    setMessages(messages.slice(0, userIdx + 1));
-    sendMessage({ text: userText });
-  }, [messages, setMessages, sendMessage]);
+    // Regenerate the targeted assistant message via the SDK (preserves identity
+    // and lets the server re-run with the same request body). The branch snapshot
+    // above keeps the prior version available to load.
+    const target = messages[idx];
+    if (target.role !== 'assistant') return;
+    void regenerate({ messageId: target.id, body: buildRequestBody() });
+  }, [messages, regenerate, buildRequestBody]);
 
   // ---------------------------------------------------------------------------
   // Load a previously saved branch (conversation branching)
@@ -842,10 +887,15 @@ export function useConversation(options?: UseConversationOptions): ConversationS
     branches,
     loadBranch,
 
+    // Per-message metadata
+    messageTimes,
+    editedMessageIds,
+
     // Actions
     handleSubmit,
     handleRetry,
     handleRegenerate,
+    handleStop,
     startNewChat,
 
     // Derived

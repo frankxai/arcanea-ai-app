@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 import Image from 'next/image';
 
@@ -7,7 +6,7 @@ import Link from 'next/link';
 import { MessageBubble } from '@/components/chat/message-bubble';
 import type { ActiveLuminor } from '@/hooks/use-conversation';
 import type { SwarmResult } from '@/lib/ai/guardian-swarm';
-import { getLuminor, LUMINORS, type LuminorConfig } from '@/lib/luminors/config';
+import { getLuminor, LUMINORS } from '@/lib/luminors/config';
 import {
   PhArrowDown,
   PhArrowClockwise,
@@ -16,7 +15,7 @@ import {
   PhBrain,
   PhMicrophone,
 } from '@/lib/phosphor-icons';
-import { ArcaneanMarkGlow, ArcaneanMarkSmall } from '@/components/brand/arcanea-mark';
+import { ArcaneanMarkSmall } from '@/components/brand/arcanea-mark';
 
 // ---------------------------------------------------------------------------
 // Constants (ported from page.tsx)
@@ -34,9 +33,6 @@ const CREATIVE_STARTERS = [
   { icon: '\u2666', text: 'Build a world', hint: 'One sentence to a full universe' },
 ];
 
-/** Alias for backward compat — some parts of the file reference this name */
-const CAPABILITY_DOMAINS = CREATIVE_STARTERS;
-
 const SUBTITLES = [
   "Stories, code, worlds, music \u2014 type a prompt or pick a starter below.",
   "16 specialist minds. Pick one or let Auto route your message.",
@@ -50,10 +46,6 @@ function getSubtitle(): string {
   if (typeof window === 'undefined') return SUBTITLES[0];
   const idx = (new Date().getHours() * 7 + new Date().getDate()) % SUBTITLES.length;
   return SUBTITLES[idx];
-}
-
-function getTimeSuggestions(): string[] {
-  return CREATIVE_STARTERS.map((s) => s.text);
 }
 
 // ---------------------------------------------------------------------------
@@ -173,6 +165,10 @@ interface ChatAreaProps {
   /** Branch navigation */
   branches: Map<string, unknown[]>;
   onLoadBranch: (messageId: string, branchIndex: number) => void;
+  /** First-seen timestamp per message id (ms epoch) */
+  messageTimes: Map<string, number>;
+  /** Message ids produced by editing an earlier message */
+  editedMessageIds: Set<string>;
   /** Last message reference (for streaming indicator placement) */
   lastMsg: ChatMessage | null;
   /** Auto-save state for creation detection */
@@ -211,13 +207,13 @@ export function ChatArea({
   onFocusInput,
   onSelectLuminor,
   onCopy,
-  copiedId,
-  editingMessageId,
   onSetEditingMessageId,
   onEditMessage,
   onRegenerateFrom,
   branches,
   onLoadBranch,
+  messageTimes,
+  editedMessageIds,
   lastMsg,
   autoSave,
   searchQuery,
@@ -263,16 +259,45 @@ export function ChatArea({
   }, []);
 
   useEffect(() => {
+    // Mount-time hydration of time-dependent UI — deferred to the client to
+    // avoid an SSR/CSR mismatch on the greeting/subtitle. Intentional.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHasMounted(true);
     setEmptyGreeting(getTimeGreeting());
     setEmptySubtitle(getSubtitle());
   }, []);
 
-  // Auto-scroll on new content
+  // Auto-scroll on new content.
+  // During streaming, `messages` changes on every token — smooth-scrolling each
+  // time thrashes the viewport. So we only smooth-scroll when a NEW message
+  // boundary appears (message count increases) and otherwise snap instantly,
+  // batched into a single rAF per frame. Respects prefers-reduced-motion.
+  const prevCountRef = useRef(0);
+  const scrollRafRef = useRef<number | null>(null);
   useEffect(() => {
-    if (autoScroll && bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (!autoScroll || !bottomRef.current) {
+      prevCountRef.current = messages.length;
+      return;
     }
+    const isNewMessage = messages.length > prevCountRef.current;
+    prevCountRef.current = messages.length;
+
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const behavior: ScrollBehavior = isNewMessage && !prefersReduced ? 'smooth' : 'auto';
+
+    if (scrollRafRef.current !== null) cancelAnimationFrame(scrollRafRef.current);
+    scrollRafRef.current = requestAnimationFrame(() => {
+      bottomRef.current?.scrollIntoView({ behavior });
+      scrollRafRef.current = null;
+    });
+    return () => {
+      if (scrollRafRef.current !== null) {
+        cancelAnimationFrame(scrollRafRef.current);
+        scrollRafRef.current = null;
+      }
+    };
   }, [messages, autoScroll]);
 
   // Scroll detection
@@ -436,7 +461,18 @@ export function ChatArea({
           /* ============================================================= */
           /* Messages list                                                  */
           /* ============================================================= */
-          <div className="max-w-[720px] mx-auto w-full px-4 py-6" aria-live="polite">
+          <div className="max-w-[720px] mx-auto w-full px-4 py-6">
+            {/* Single polite live region — announces response lifecycle once,
+                instead of the whole list announcing every streamed token. */}
+            <p className="sr-only" role="status" aria-live="polite">
+              {isThinking
+                ? `${activeLuminor?.name || 'Arcanea'} is composing a response`
+                : isStreaming
+                  ? ''
+                  : messages.length > 0 && lastMsg?.role === 'assistant'
+                    ? 'Response complete'
+                    : ''}
+            </p>
             {messages.map((msg, idx) => {
               const isLastMsg = msg.id === lastMsg?.id;
               const msgIsLast = idx === messages.length - 1;
@@ -460,6 +496,8 @@ export function ChatArea({
                 >
                   <MessageBubble
                     message={msg}
+                    createdAtMs={messageTimes.get(msg.id)}
+                    isEdited={editedMessageIds.has(msg.id)}
                     isStreaming={isStreaming && isLastMsg}
                     isLast={msgIsLast}
                     isLoading={isLoading && isLastMsg}
@@ -493,9 +531,9 @@ export function ChatArea({
               );
             })}
 
-            {/* Thinking indicator */}
+            {/* Thinking indicator (decorative — announced by the sr-only status above) */}
             {isThinking && (
-              <div className="mb-6" role="status" aria-label="Arcanea is composing a response">
+              <div className="mb-6" aria-hidden="true">
                 <div className="flex gap-3">
                   {activeLuminor?.avatar ? (
                     <div
@@ -526,7 +564,7 @@ export function ChatArea({
                         {runtimeSummary}
                       </div>
                     )}
-                    <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/[0.04] via-white/[0.02] to-[var(--arc-brand-cosmic-blue)]/[0.03] border border-[var(--arc-brand-atlantean-teal)]/[0.08] shadow-[0_0_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_10%,transparent)]" aria-live="assertive">
+                    <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/[0.04] via-white/[0.02] to-[var(--arc-brand-cosmic-blue)]/[0.03] border border-[var(--arc-brand-atlantean-teal)]/[0.08] shadow-[0_0_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_10%,transparent)]">
                       <div className="relative w-5 h-5">
                         <div className="absolute inset-0 rounded-full border-2 border-[var(--arc-brand-atlantean-teal)]/20" />
                         <div
@@ -536,7 +574,7 @@ export function ChatArea({
                         <div className="absolute inset-[3px] rounded-full bg-[var(--arc-brand-atlantean-teal)]/10 animate-pulse" />
                       </div>
                       <span className="text-xs text-white/40 font-medium flex items-center gap-1">
-                        Composing
+                        Thinking
                         <span className="flex gap-0.5">
                           <span className="w-1 h-1 rounded-full bg-[var(--arc-brand-atlantean-teal)] animate-pulse" style={{ animationDelay: '0ms' }} />
                           <span className="w-1 h-1 rounded-full bg-[var(--arc-brand-atlantean-teal)] animate-pulse" style={{ animationDelay: '150ms' }} />
