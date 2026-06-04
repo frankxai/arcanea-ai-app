@@ -23,6 +23,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: design-fence-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
     name: Diff-only banned-token scan
