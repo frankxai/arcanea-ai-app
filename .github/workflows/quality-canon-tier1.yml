@@ -39,6 +39,10 @@ permissions:
   contents: read
   pull-requests: read
 
+concurrency:
+  group: quality-canon-tier1-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # ============================================
   # Rule 3 — SVG logo ban
