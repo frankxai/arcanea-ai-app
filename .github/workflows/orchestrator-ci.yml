@@ -16,6 +16,10 @@ on:
 # Scoped to the two orchestrator packages. Does NOT gate the whole monorepo.
 # Failure here only blocks orchestrator-touching PRs.
 
+concurrency:
+  group: orchestrator-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     name: Test + build
