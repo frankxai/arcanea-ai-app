@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { PhCheck, PhLink } from '@/lib/phosphor-icons';
 
-/** Copies the current page URL to the clipboard with brief feedback. */
+/** Copies the current page URL to the clipboard with brief icon feedback. */
 export function CopyLinkButton() {
   const [copied, setCopied] = useState(false);
 
@@ -20,10 +21,20 @@ export function CopyLinkButton() {
     <button
       type="button"
       onClick={copy}
-      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-white/[0.08] bg-white/[0.03] text-white/60 hover:text-white/90 hover:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
+      className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 text-[11px] font-medium text-white/55 backdrop-blur-sm transition-colors hover:border-white/[0.16] hover:text-white/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40"
       aria-label="Copy link to this page"
     >
-      {copied ? 'Link copied' : 'Copy link'}
+      {copied ? (
+        <>
+          <PhCheck className="h-3.5 w-3.5 text-[var(--arc-brand-atlantean-teal)]" weight="bold" />
+          Copied
+        </>
+      ) : (
+        <>
+          <PhLink className="h-3.5 w-3.5" weight="duotone" />
+          Copy link
+        </>
+      )}
     </button>
   );
 }
