@@ -50,10 +50,21 @@ const VISIBILITY_META: Record<PageVisibility, { icon: typeof PhGlobe; label: str
 
 function formatDate(iso: string): string {
   try {
-    return new Date(iso).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    // Pin to UTC so the server and client render identical strings (no hydration mismatch).
+    return new Date(iso).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+      timeZone: 'UTC',
+    });
   } catch {
     return '';
   }
+}
+
+/** Only http(s) URLs are safe to render as links — blocks javascript:/data: URIs. */
+function safeHref(url: string): string | undefined {
+  return /^https?:\/\//i.test(url) ? url : undefined;
 }
 
 export function PageReader({ page }: { page: PageView }) {
@@ -195,11 +206,13 @@ export function PageReader({ page }: { page: PageView }) {
                 Sources
               </h2>
               <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                {page.sources.map((source, i) => (
+                {page.sources.map((source, i) => {
+                  const href = safeHref(source.url);
+                  return (
                   <a
                     key={`${source.url}-${i}`}
-                    href={source.url}
-                    target="_blank"
+                    href={href}
+                    target={href ? '_blank' : undefined}
                     rel="noopener noreferrer"
                     className="group flex items-start gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--arc-brand-atlantean-teal)]/25 hover:bg-white/[0.04] hover:shadow-[0_8px_30px_-12px_rgba(0,188,212,0.25)]"
                   >
@@ -216,7 +229,8 @@ export function PageReader({ page }: { page: PageView }) {
                     </span>
                     <PhArrowSquareOut className="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/25 transition-colors group-hover:text-[var(--arc-brand-atlantean-teal)]" />
                   </a>
-                ))}
+                  );
+                })}
               </div>
             </section>
           )}
