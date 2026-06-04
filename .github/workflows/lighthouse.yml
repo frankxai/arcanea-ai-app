@@ -8,6 +8,10 @@ on:
       - 'packages/arcanea-design-preset.js'
   workflow_dispatch:
 
+concurrency:
+  group: lighthouse-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
