@@ -10,6 +10,10 @@ on:
       - 'apps/web/lib/ecosystem/derived.ts'
       - 'packages/orchestrator/src/ecosystem/**'
 
+concurrency:
+  group: ecosystem-verify-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify:
     runs-on: ubuntu-latest
