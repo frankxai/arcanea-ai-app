@@ -7,6 +7,10 @@ on:
       - 'world/**'
   workflow_dispatch:
 
+concurrency:
+  group: submission-swarm-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   aiyami-swarm:
     runs-on: ubuntu-latest
