@@ -17,6 +17,7 @@ import {
 import { CHAT_MODELS, getModelById, ProviderLogo } from '@/components/chat/model-selector';
 import { MentionPopup, type MentionItem } from './mention-popup';
 import { VoiceWaveform } from './voice-waveform';
+import { useSpeechRecognition } from '@/hooks/use-speech-recognition';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -424,6 +425,31 @@ export function ChatInputBar({
   const audioChunksRef = useRef<Blob[]>([]);
   const voiceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Live (on-device) speech preview — Whisper remains the authoritative final text.
+  // Destructure the stable functions so recording callbacks don't churn as the
+  // live transcript state updates.
+  const {
+    supported: speechSupported,
+    finalText: speechFinalText,
+    interim: speechInterim,
+    start: startSpeech,
+    stop: stopSpeech,
+    reset: resetSpeech,
+  } = useSpeechRecognition();
+  const voiceBaseRef = useRef('');   // message text typed before recording started
+  const spokenRef = useRef('');      // latest Web Speech final, readable in async callbacks
+  useEffect(() => {
+    spokenRef.current = speechFinalText;
+  }, [speechFinalText]);
+
+  // While recording with Web Speech support, stream interim words into the textarea.
+  useEffect(() => {
+    if (!isRecording || !speechSupported) return;
+    const live = `${speechFinalText} ${speechInterim}`.trim();
+    const base = voiceBaseRef.current.trim();
+    setMessage(base ? (live ? `${base} ${live}` : base) : live);
+  }, [isRecording, speechFinalText, speechInterim, speechSupported]);
+
   // Cleanup voice recording on unmount to prevent timeout firing on unmounted component
   useEffect(() => {
     return () => {
@@ -641,9 +667,10 @@ export function ChatInputBar({
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
       mediaRecorderRef.current.stop();
     }
+    stopSpeech();
     mediaStreamRef.current = null;
     setIsRecording(false);
-  }, []);
+  }, [stopSpeech]);
 
   const startRecording = useCallback(async () => {
     if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
@@ -653,6 +680,13 @@ export function ChatInputBar({
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaStreamRef.current = stream;
+      // Snapshot any already-typed text so live/Whisper transcript appends to it.
+      voiceBaseRef.current = message;
+      spokenRef.current = '';
+      if (speechSupported) {
+        resetSpeech();
+        startSpeech();
+      }
       const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4';
       const mediaRecorder = new MediaRecorder(stream, { mimeType });
       audioChunksRef.current = [];
@@ -665,6 +699,9 @@ export function ChatInputBar({
         stream.getTracks().forEach((t) => t.stop());
         const blob = new Blob(audioChunksRef.current, { type: mediaRecorder.mimeType });
 
+        // Resolve the spoken text: prefer accurate Whisper, fall back to the
+        // on-device Web Speech transcript (already shown live) if Whisper fails.
+        let spoken = '';
         try {
           const formData = new FormData();
           const ext = mediaRecorder.mimeType.includes('webm') ? 'webm' : 'mp4';
@@ -672,20 +709,33 @@ export function ChatInputBar({
           const res = await fetch('/api/ai/transcribe', { method: 'POST', body: formData });
           if (res.ok) {
             const { text } = await res.json();
-            if (text) {
-              if (voiceAutoSend) {
-                // One-step voice: transcribe → send immediately
-                const combined = message.trim() ? message + ' ' + text : text;
-                onSend(combined, attachments.length > 0 ? attachments : undefined);
-                setMessage('');
-                setAttachments([]);
-              } else {
-                setMessage((prev) => (prev ? prev + ' ' + text : text));
-              }
-            }
+            if (text) spoken = String(text).trim();
           }
         } catch (e) {
           console.warn('Transcription failed:', e);
+        }
+        if (!spoken) spoken = spokenRef.current.trim();
+
+        const base = voiceBaseRef.current.trim();
+        const combined = base ? (spoken ? `${base} ${spoken}` : base) : spoken;
+
+        // Clear voice scratch state now that we have an authoritative result.
+        voiceBaseRef.current = '';
+        spokenRef.current = '';
+        resetSpeech();
+
+        if (!combined) {
+          // Nothing transcribed — restore the user's pre-recording text.
+          setMessage(base);
+          return;
+        }
+        if (voiceAutoSend) {
+          // One-step voice: transcribe → send immediately
+          onSend(combined, attachments.length > 0 ? attachments : undefined);
+          setMessage('');
+          setAttachments([]);
+        } else {
+          setMessage(combined);
         }
       };
 
@@ -699,9 +749,10 @@ export function ChatInputBar({
       }, 60_000);
     } catch (e) {
       console.warn('Microphone access denied:', e);
+      stopSpeech();
       showValidationToast('Microphone access denied. Check browser permissions.');
     }
-  }, [stopRecording, showValidationToast, voiceAutoSend, message, onSend, attachments]);
+  }, [stopRecording, showValidationToast, voiceAutoSend, message, onSend, attachments, stopSpeech, resetSpeech, startSpeech, speechSupported]);
 
   // -------------------------------------------------------------------------
   // Derived state

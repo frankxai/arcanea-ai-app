@@ -210,6 +210,10 @@ labs/
 /lore/
 output/
 pages/
+# Source dirs legitimately named "pages" (not legacy Next pages-router output)
+!apps/web/lib/pages/
+!apps/web/app/api/pages/
+!apps/web/app/discover/pages/
 research/
 !docs/research/
 sync/

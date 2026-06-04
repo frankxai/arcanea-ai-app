@@ -2,6 +2,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { PhDownload, PhX, PhFileText, PhCode, PhTextAlignLeft, PhCopy, PhCheck } from '@/lib/phosphor-icons';
 
 interface ExportDialogProps {
@@ -51,9 +52,12 @@ function generateContent(messages: ExportDialogProps['messages'], format: Export
 }
 
 export function ExportDialog({ messages, luminorName, modelLabel, onClose }: ExportDialogProps) {
+  const router = useRouter();
   const [format, setFormat] = useState<ExportFormat>('markdown');
   const [copied, setCopied] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [publishing, setPublishing] = useState(false);
+  const [publishError, setPublishError] = useState<string | null>(null);
 
   const name = luminorName || 'Arcanea';
   const model = modelLabel || 'Auto';
@@ -92,6 +96,40 @@ export function ExportDialog({ messages, luminorName, modelLabel, onClose }: Exp
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handlePublishPage = async () => {
+    setPublishing(true);
+    setPublishError(null);
+    try {
+      const payload = messages
+        .map((msg) => ({ role: msg.role, content: getMessageText(msg) }))
+        .filter((m) => m.content.trim());
+      if (payload.length === 0) {
+        setPublishError('Nothing to publish yet.');
+        setPublishing(false);
+        return;
+      }
+      const res = await fetch('/api/pages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: payload,
+          title: luminorName ? `Conversation with ${luminorName}` : undefined,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.slug) {
+        onClose();
+        router.push(`/p/${data.slug}/edit`);
+      } else {
+        setPublishError(data.error || 'Could not publish. Try again.');
+      }
+    } catch {
+      setPublishError('Could not publish. Try again.');
+    } finally {
+      setPublishing(false);
+    }
+  };
+
   const formats = [
     { id: 'markdown' as const, label: 'Markdown', icon: PhFileText, desc: 'Rich formatting with headers' },
     { id: 'json' as const, label: 'JSON', icon: PhCode, desc: 'Structured data for APIs' },
@@ -126,6 +164,27 @@ export function ExportDialog({ messages, luminorName, modelLabel, onClose }: Exp
           >
             <PhX className="w-4 h-4" />
           </button>
+        </div>
+
+        {/* Publish as Page — turn the thread into a shareable article */}
+        <div className="px-5 mb-4">
+          <button
+            onClick={handlePublishPage}
+            disabled={publishing || messages.length === 0}
+            className="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl border border-[var(--arc-brand-atlantean-teal)]/30 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/10 to-transparent text-white/90 hover:from-[var(--arc-brand-atlantean-teal)]/15 transition-all disabled:opacity-50"
+          >
+            <PhFileText className="w-4 h-4 shrink-0 text-[var(--arc-brand-atlantean-teal)]" />
+            <div className="text-left flex-1">
+              <div className="text-xs font-semibold">{publishing ? 'Publishing…' : 'Publish as Page'}</div>
+              <div className="text-[10px] text-white/35">Turn this chat into a shareable, editable article</div>
+            </div>
+            {!publishing && <span className="text-[var(--arc-brand-atlantean-teal)] text-sm">→</span>}
+          </button>
+          {publishError && <p className="mt-1.5 text-[11px] text-red-400/80">{publishError}</p>}
+        </div>
+
+        <div className="px-5 mb-2">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-white/25">Or export</p>
         </div>
 
         {/* Format selector */}
