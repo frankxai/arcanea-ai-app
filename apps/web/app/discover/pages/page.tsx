@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { PhArrowRight } from '@/lib/phosphor-icons';
 import { pagesServiceClient, PAGES_TABLE } from '@/lib/pages/db';
 import { rowToSummary, type PageRow, type PageSummary } from '@/lib/pages/types';
+import { DiscoverGrid } from './discover-grid';
 
 export const runtime = 'nodejs';
 export const revalidate = 60;
@@ -10,7 +12,8 @@ const EDITORIAL = 'var(--font-editorial), var(--font-serif), serif';
 
 export const metadata: Metadata = {
   title: 'Discover Pages · Arcanea',
-  description: 'Explore Pages published by the Arcanea community — research, essays, and guides distilled from conversations.',
+  description:
+    'Research, essays, and guides the community has published from their conversations on Arcanea.',
 };
 
 async function getPublicPages(): Promise<PageSummary[]> {
@@ -32,67 +35,39 @@ export default async function DiscoverPagesPage() {
   const pages = await getPublicPages();
 
   return (
-    <main className="min-h-screen bg-[var(--arc-cosmic-void)] text-white/90">
-      <div className="mx-auto max-w-5xl px-5 sm:px-8 py-16">
-        <header className="mb-10">
-          <h1
-            className="text-4xl sm:text-5xl tracking-tight text-white mb-3"
-            style={{ fontFamily: EDITORIAL }}
-          >
-            Discover Pages
+    <main className="relative min-h-screen bg-[var(--arc-cosmic-void)] text-white/85">
+      {/* Atmospheric masthead glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-0 h-[360px] w-[900px] -translate-x-1/2 -translate-y-1/3 rounded-full bg-[radial-gradient(closest-side,rgba(0,188,212,0.12),transparent)] blur-2xl"
+      />
+
+      <div className="relative mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+        <header className="mb-12 max-w-2xl">
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--arc-brand-atlantean-teal)]/70">
+            Pages
+          </p>
+          <h1 className="text-balance text-4xl leading-[1.08] tracking-[-0.02em] text-white sm:text-5xl" style={{ fontFamily: EDITORIAL }}>
+            Conversations, distilled into things worth sharing.
           </h1>
-          <p className="text-white/45 max-w-2xl">
-            Research, essays, and guides the community has published from their conversations.
+          <p className="mt-4 max-w-xl text-white/45">
+            Research, essays, and guides published from chats across the community.
           </p>
         </header>
 
         {pages.length === 0 ? (
-          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] py-20 text-center">
-            <p className="text-white/40">No public Pages yet.</p>
+          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] py-24 text-center">
+            <p className="text-white/40">No public Pages yet — be the first.</p>
             <Link
               href="/chat"
-              className="inline-block mt-4 text-sm text-[var(--arc-brand-atlantean-teal)] hover:underline"
+              className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] transition-colors hover:text-white"
             >
-              Start a conversation →
+              Start a conversation
+              <PhArrowRight className="h-4 w-4" weight="bold" />
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {pages.map((page) => (
-              <Link
-                key={page.slug}
-                href={`/p/${page.slug}`}
-                className="group rounded-2xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm overflow-hidden hover:border-[var(--arc-brand-atlantean-teal)]/25 transition-colors"
-              >
-                {page.coverImageUrl ? (
-                  <div className="h-36 overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={page.coverImageUrl}
-                      alt={page.title}
-                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                    />
-                  </div>
-                ) : (
-                  <div className="h-36 bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/10 to-transparent" />
-                )}
-                <div className="p-4">
-                  <h2
-                    className="text-lg text-white/90 leading-snug mb-1 line-clamp-2"
-                    style={{ fontFamily: EDITORIAL }}
-                  >
-                    {page.title}
-                  </h2>
-                  {page.summary && (
-                    <p className="text-sm text-white/45 line-clamp-2">{page.summary}</p>
-                  )}
-                  <p className="mt-3 text-[11px] text-white/25">
-                    {page.viewCount} {page.viewCount === 1 ? 'view' : 'views'}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <DiscoverGrid pages={pages} />
         )}
       </div>
     </main>
