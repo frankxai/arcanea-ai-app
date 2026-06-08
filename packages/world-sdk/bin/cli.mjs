@@ -10,9 +10,23 @@ import { validateManifest } from "../src/validate.mjs";
 import { contentHash } from "../src/contenthash.mjs";
 import { buildIndex } from "../src/index-build.mjs";
 import { claimWorldProof, mockChain } from "../src/proof.mjs";
+import { renderBook } from "../src/render-book.mjs";
 import { slugify } from "../src/manifest.mjs";
 
-const [cmd, ...rest] = process.argv.slice(2);
+const argv = process.argv.slice(2);
+
+function takeFlag(name) {
+  const i = argv.indexOf(name);
+  if (i === -1) return undefined;
+  const val = argv[i + 1];
+  argv.splice(i, 2);
+  return val;
+}
+
+const renderTarget = takeFlag("--target");
+const renderFormat = takeFlag("--format");
+
+const [cmd, ...rest] = argv;
 
 function die(msg) {
   console.error(msg);
@@ -53,6 +67,15 @@ switch (cmd) {
     console.log(`   wallet ${res.wallet}  ref ${res.entry.ref.slice(0, 16)}…`);
     break;
   }
+  case "render": {
+    if (renderTarget !== "book") die('usage: arcanea-world render --target book <dir> [bookSlug] [--format md|html|pdf]');
+    const dir = rest[0] || ".";
+    const bookSlug = rest[1];
+    const format = renderFormat || "md";
+    const { outFile, target, bytes } = await renderBook({ dir, bookSlug, target: format });
+    console.log(`📖 rendered book (${target}) → ${outFile} (${bytes} bytes)`);
+    break;
+  }
   default:
-    die('commands: create "<sentence>" [dir] | validate <dir> | hash <dir> | index <dir> | claim <dir>');
+    die('commands: create "<sentence>" [dir] | validate <dir> | hash <dir> | index <dir> | claim <dir> | render --target book <dir> [bookSlug] [--format md|html|pdf]');
 }
