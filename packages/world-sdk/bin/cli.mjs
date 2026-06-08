@@ -4,7 +4,9 @@
 //   arcanea-world validate|hash|index|claim <dir>
 
 import path from "node:path";
+import { promises as fs } from "node:fs";
 import { createWorld } from "../src/scaffold.mjs";
+import { ingestCharacter } from "../src/ingest.mjs";
 import { readWorld } from "../src/fs-world.mjs";
 import { validateManifest } from "../src/validate.mjs";
 import { contentHash } from "../src/contenthash.mjs";
@@ -28,6 +30,20 @@ switch (cmd) {
     console.log(`✨ ${manifest.name}  (${manifest.id})`);
     console.log(`   ${manifest.tagline}`);
     console.log(`   → ${dir}`);
+    break;
+  }
+  case "ingest": {
+    const dir = rest[0];
+    const charPath = rest[1];
+    const imagePath = rest[2];
+    if (!dir || !charPath) die("usage: arcanea-world ingest <dir> <character.json> [imagePath]");
+    const input = JSON.parse(await fs.readFile(charPath, "utf8"));
+    const image = imagePath ? await fs.readFile(imagePath) : undefined;
+    const imageName = imagePath ? path.basename(imagePath) : undefined;
+    const res = await ingestCharacter({ dir, input, image, imageName });
+    console.log(`✨ ${res.character.name}  → ${res.characterFile}`);
+    if (res.assetFile) console.log(`   asset → ${res.assetFile}`);
+    for (const w of res.warnings) console.log(`   ⚠ ${w}`);
     break;
   }
   case "validate": {
@@ -54,5 +70,5 @@ switch (cmd) {
     break;
   }
   default:
-    die('commands: create "<sentence>" [dir] | validate <dir> | hash <dir> | index <dir> | claim <dir>');
+    die('commands: create "<sentence>" [dir] | ingest <dir> <character.json> [imagePath] | validate <dir> | hash <dir> | index <dir> | claim <dir>');
 }
