@@ -67,6 +67,11 @@ function toDomain(url: string): string {
   }
 }
 
+/** Only http(s) URLs are safe to store and render — blocks javascript:/data: URIs. */
+export function isHttpUrl(url: string): boolean {
+  return typeof url === 'string' && /^https?:\/\//i.test(url);
+}
+
 /** Harvest unique URLs cited anywhere in the transcript as fallback sources. */
 export function extractSources(messages: ThreadMessage[]): PageSource[] {
   const seen = new Set<string>();
@@ -158,7 +163,7 @@ ${transcript}`;
   // Merge model-cited sources with URLs harvested directly from the transcript.
   const modelSources: PageSource[] = Array.isArray(parsed.sources)
     ? parsed.sources
-        .filter((s: any) => s && typeof s.url === 'string')
+        .filter((s: any) => s && isHttpUrl(s.url))
         .map((s: any) => ({
           title: String(s.title || toDomain(s.url) || s.url).slice(0, 200),
           url: s.url,

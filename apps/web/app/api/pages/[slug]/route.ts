@@ -88,7 +88,13 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
   const patch: Record<string, unknown> = {};
   if (typeof body.title === 'string') patch.title = body.title.slice(0, 200);
   if (typeof body.summary === 'string') patch.summary = body.summary.slice(0, 600);
-  if (typeof body.coverImageUrl === 'string') patch.cover_image_url = body.coverImageUrl.slice(0, 2000);
+  if (typeof body.coverImageUrl === 'string') {
+    // Only http(s) cover URLs — blocks javascript:/data: and keeps next/image happy.
+    if (!/^https?:\/\//i.test(body.coverImageUrl)) {
+      return NextResponse.json({ error: 'Cover URL must be http(s).' }, { status: 400 });
+    }
+    patch.cover_image_url = body.coverImageUrl.slice(0, 2000);
+  }
   if (body.coverImageUrl === null) patch.cover_image_url = null;
   if (Array.isArray(body.sections)) patch.sections = sanitizeSections(body.sections);
   if (['public', 'unlisted', 'private'].includes(body.visibility)) patch.visibility = body.visibility;
