@@ -1,0 +1,54 @@
+{
+  "$schema": "https://arcanea.ai/schemas/world.arcanea.schema.json",
+  "schemaVersion": "1.0.0",
+  "id": "wld_0123456789ABCDEFGHJKMNPQRS",
+  "slug": "the-drowned-archive",
+  "name": "The Drowned Archive",
+  "tagline": "A sunken city where memory is the only currency that survived the Flood.",
+  "genesisPrompt": "a drowned city where memory is currency",
+  "premise": "Centuries after the Flood swallowed Vael, its survivors learned that gold dissolves but memory does not. Down in the pressure-dark, divers trade remembered moments — a first kiss, a mother's voice, the exact blue of a sky no one alive has seen. The richest are those who have lived the most and spent the least.",
+  "laws": [
+    "A memory spent is a memory lost — forever. No copy survives the telling.",
+    "The deeper you dive, the older the memories you can reach.",
+    "No one may sell a memory that is not their own."
+  ],
+  "mood": "cosmic",
+  "visualDna": {
+    "palette": ["#0a1a2f", "#0d47a1", "#00bcd4", "#7ce0d3", "#ffd700"],
+    "style": "bioluminescent ruin · refracted light · weathered brass and coral",
+    "motifs": ["drowned libraries", "memory-coins", "lantern-fish", "tide-glyphs"]
+  },
+  "theme": { "audio": "media/theme.mp3", "prompt": "submerged ambient, distant choral swell, slow tidal pulse, glassy sonar bells" },
+  "cover": "media/cover.png",
+  "creator": { "handle": "frankx" },
+  "license": { "spdx": "CC-BY-4.0", "pointer": "licenses/LICENSE.md", "commercial": true, "remix": "allow-attribution" },
+  "royalty": { "policy": "licenses/royalty.json", "splits": [{ "to": "creator", "bps": 9000 }, { "to": "arcanea", "bps": 1000 }] },
+  "content": {
+    "canon": "canon/",
+    "characters": "characters/",
+    "locations": "locations/",
+    "quests": "quests/",
+    "books": "books/",
+    "media": "media/",
+    "agents": "agents/"
+  },
+  "agents": [
+    { "id": "lore-keeper", "harness": "claude", "role": "Maintain canon consistency and deepen the Flood mythology.", "skill": "world-architect" },
+    { "id": "cartographer", "harness": "gemini", "role": "Map the sunken districts and their depths." },
+    { "id": "composer", "harness": "any", "role": "Compose the world's submerged theme.", "skill": "suno-prompt-architect" }
+  ],
+  "index": { "embeddingModel": "gemini-text-embedding-004", "dim": 768 },
+  "provenance": [
+    {
+      "contentHash": "sha256:fdef900a119a53caa5759290af096c64338291b5e3b64d654b24ea02f3deee6a",
+      "chain": "solana",
+      "standard": "metaplex-core",
+      "ref": "c27fa6bb378b4044a9e1f0b2c3d4e5f60718293a4b5c6d7e8f9a0b1c2d3e4f5a",
+      "schemaVersion": "1.0.0",
+      "timestamp": "2026-06-07T00:00:00.000Z"
+    }
+  ],
+  "visibility": "public",
+  "hosting": "repo",
+  "snapshot": {}
+}

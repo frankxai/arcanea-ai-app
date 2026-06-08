@@ -1,0 +1,7 @@
+{
+  "policy": "splits",
+  "splits": [
+    { "to": "creator", "bps": 9000 },
+    { "to": "arcanea", "bps": 1000 }
+  ]
+}
