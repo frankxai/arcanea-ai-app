@@ -10,7 +10,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { pagesServiceClient, PAGES_TABLE } from '@/lib/pages/db';
-import { rowToView, type PageRow, type PageSection } from '@/lib/pages/types';
+import { rowToView, isHttpUrl, type PageRow, type PageSection } from '@/lib/pages/types';
 
 export const runtime = 'nodejs';
 
@@ -90,7 +90,7 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
   if (typeof body.summary === 'string') patch.summary = body.summary.slice(0, 600);
   if (typeof body.coverImageUrl === 'string') {
     // Only http(s) cover URLs — blocks javascript:/data: and keeps next/image happy.
-    if (!/^https?:\/\//i.test(body.coverImageUrl)) {
+    if (!isHttpUrl(body.coverImageUrl)) {
       return NextResponse.json({ error: 'Cover URL must be http(s).' }, { status: 400 });
     }
     patch.cover_image_url = body.coverImageUrl.slice(0, 2000);

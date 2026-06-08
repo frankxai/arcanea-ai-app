@@ -63,6 +63,15 @@ export interface PageSummary {
   updatedAt: string;
 }
 
+/**
+ * Only http(s) URLs are safe to store and render — blocks javascript:/data:/ftp:
+ * URIs. Single source of truth, imported by both server (format, API routes) and
+ * client (page-reader) since this module has no server-only dependencies.
+ */
+export function isHttpUrl(url: unknown): boolean {
+  return typeof url === 'string' && /^https?:\/\//i.test(url);
+}
+
 export function rowToView(row: PageRow, isOwner: boolean): PageView {
   return {
     slug: row.slug,

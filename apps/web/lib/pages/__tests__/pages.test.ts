@@ -148,8 +148,7 @@ test('isHttpUrl rejects dangerous and non-web schemes', () => {
   assert.equal(isHttpUrl('//evil.com'), false);
   assert.equal(isHttpUrl('  https://example.com'), false); // no leading-space bypass
   assert.equal(isHttpUrl(''), false);
-  // @ts-expect-error — guards non-string input at runtime
-  assert.equal(isHttpUrl(null), false);
+  assert.equal(isHttpUrl(null), false); // non-string input guarded at runtime
 });
 
 // ---------------------------------------------------------------------------

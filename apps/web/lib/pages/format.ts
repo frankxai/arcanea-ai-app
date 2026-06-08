@@ -12,7 +12,10 @@ import { generateText, type LanguageModel } from 'ai';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { createOpenAI } from '@ai-sdk/openai';
-import type { PageSection, PageSource } from './types';
+import { isHttpUrl, type PageSection, type PageSource } from './types';
+
+// Re-exported for back-compat: callers (and tests) may import isHttpUrl from here.
+export { isHttpUrl };
 
 export interface ThreadMessage {
   role: string;
@@ -65,11 +68,6 @@ function toDomain(url: string): string {
   } catch {
     return '';
   }
-}
-
-/** Only http(s) URLs are safe to store and render — blocks javascript:/data: URIs. */
-export function isHttpUrl(url: string): boolean {
-  return typeof url === 'string' && /^https?:\/\//i.test(url);
 }
 
 /** Harvest unique URLs cited anywhere in the transcript as fallback sources. */

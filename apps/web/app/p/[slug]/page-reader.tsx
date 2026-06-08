@@ -23,7 +23,7 @@ import {
   PhLock,
   PhEye,
 } from '@/lib/phosphor-icons';
-import type { PageView, PageVisibility } from '@/lib/pages/types';
+import { isHttpUrl, type PageView, type PageVisibility } from '@/lib/pages/types';
 import { CopyLinkButton } from './copy-link-button';
 
 const EDITORIAL = 'var(--font-editorial), var(--font-serif), serif';
@@ -64,7 +64,7 @@ function formatDate(iso: string): string {
 
 /** Only http(s) URLs are safe to render as links — blocks javascript:/data: URIs. */
 function safeHref(url: string): string | undefined {
-  return /^https?:\/\//i.test(url) ? url : undefined;
+  return isHttpUrl(url) ? url : undefined;
 }
 
 export function PageReader({ page }: { page: PageView }) {
@@ -76,7 +76,7 @@ export function PageReader({ page }: { page: PageView }) {
   const reveal = reduce ? { initial: 'show' as const, animate: 'show' as const } : {};
 
   // Only treat http(s) covers as renderable; anything else falls back to the masthead.
-  const cover = page.coverImageUrl && /^https?:\/\//i.test(page.coverImageUrl) ? page.coverImageUrl : null;
+  const cover = page.coverImageUrl ? safeHref(page.coverImageUrl) ?? null : null;
 
   return (
     <LazyMotion features={domAnimation} strict>
