@@ -10,7 +10,7 @@
  */
 
 import { strict as assert } from 'node:assert';
-import { slugify, extractSources, hasPageModel, formatThreadToPage, type ThreadMessage } from '../format';
+import { slugify, extractSources, hasPageModel, formatThreadToPage, isHttpUrl, type ThreadMessage } from '../format';
 import { rowToView, rowToSummary, type PageRow } from '../types';
 
 let passed = 0;
@@ -129,6 +129,26 @@ test('extractSources returns [] when there are no URLs', () => {
 test('extractSources caps the result at 24', () => {
   const content = Array.from({ length: 40 }, (_, i) => `https://site${i}.com`).join(' ');
   assert.equal(extractSources([{ role: 'user', content }]).length, 24);
+});
+
+// ---------------------------------------------------------------------------
+// isHttpUrl — the source/cover safety gate
+// ---------------------------------------------------------------------------
+
+test('isHttpUrl accepts http and https only', () => {
+  assert.equal(isHttpUrl('https://example.com'), true);
+  assert.equal(isHttpUrl('http://example.com/x'), true);
+  assert.equal(isHttpUrl('HTTPS://EXAMPLE.COM'), true);
+});
+
+test('isHttpUrl rejects dangerous and non-web schemes', () => {
+  assert.equal(isHttpUrl('javascript:alert(1)'), false);
+  assert.equal(isHttpUrl('data:text/html,<script>'), false);
+  assert.equal(isHttpUrl('ftp://example.com'), false);
+  assert.equal(isHttpUrl('//evil.com'), false);
+  assert.equal(isHttpUrl('  https://example.com'), false); // no leading-space bypass
+  assert.equal(isHttpUrl(''), false);
+  assert.equal(isHttpUrl(null), false); // non-string input guarded at runtime
 });
 
 // ---------------------------------------------------------------------------

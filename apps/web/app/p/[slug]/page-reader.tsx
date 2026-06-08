@@ -23,7 +23,7 @@ import {
   PhLock,
   PhEye,
 } from '@/lib/phosphor-icons';
-import type { PageView, PageVisibility } from '@/lib/pages/types';
+import { isHttpUrl, type PageView, type PageVisibility } from '@/lib/pages/types';
 import { CopyLinkButton } from './copy-link-button';
 
 const EDITORIAL = 'var(--font-editorial), var(--font-serif), serif';
@@ -64,7 +64,7 @@ function formatDate(iso: string): string {
 
 /** Only http(s) URLs are safe to render as links — blocks javascript:/data: URIs. */
 function safeHref(url: string): string | undefined {
-  return /^https?:\/\//i.test(url) ? url : undefined;
+  return isHttpUrl(url) ? url : undefined;
 }
 
 export function PageReader({ page }: { page: PageView }) {
@@ -74,6 +74,9 @@ export function PageReader({ page }: { page: PageView }) {
 
   // When reduced motion is requested, reveal everything immediately.
   const reveal = reduce ? { initial: 'show' as const, animate: 'show' as const } : {};
+
+  // Only treat http(s) covers as renderable; anything else falls back to the masthead.
+  const cover = page.coverImageUrl ? safeHref(page.coverImageUrl) ?? null : null;
 
   return (
     <LazyMotion features={domAnimation} strict>
@@ -89,10 +92,10 @@ export function PageReader({ page }: { page: PageView }) {
 
         {/* ---- Hero ---- */}
         <header className="relative">
-          {page.coverImageUrl ? (
+          {cover ? (
             <div className="relative h-[46vh] min-h-[260px] max-h-[520px] w-full overflow-hidden">
               <Image
-                src={page.coverImageUrl}
+                src={cover}
                 alt=""
                 fill
                 priority
@@ -109,7 +112,7 @@ export function PageReader({ page }: { page: PageView }) {
             </div>
           )}
 
-          <div className={`relative mx-auto w-full max-w-[720px] px-5 sm:px-8 ${page.coverImageUrl ? '-mt-28' : '-mt-20'}`}>
+          <div className={`relative mx-auto w-full max-w-[720px] px-5 sm:px-8 ${cover ? '-mt-28' : '-mt-20'}`}>
             <m.div initial="hidden" animate="show" variants={STAND}>
               <div className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] text-white/40">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 backdrop-blur-sm">

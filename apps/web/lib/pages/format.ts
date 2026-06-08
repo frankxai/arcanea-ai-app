@@ -12,7 +12,10 @@ import { generateText, type LanguageModel } from 'ai';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { createOpenAI } from '@ai-sdk/openai';
-import type { PageSection, PageSource } from './types';
+import { isHttpUrl, type PageSection, type PageSource } from './types';
+
+// Re-exported for back-compat: callers (and tests) may import isHttpUrl from here.
+export { isHttpUrl };
 
 export interface ThreadMessage {
   role: string;
@@ -158,7 +161,7 @@ ${transcript}`;
   // Merge model-cited sources with URLs harvested directly from the transcript.
   const modelSources: PageSource[] = Array.isArray(parsed.sources)
     ? parsed.sources
-        .filter((s: any) => s && typeof s.url === 'string')
+        .filter((s: any) => s && isHttpUrl(s.url))
         .map((s: any) => ({
           title: String(s.title || toDomain(s.url) || s.url).slice(0, 200),
           url: s.url,
