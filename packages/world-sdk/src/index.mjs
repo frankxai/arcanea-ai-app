@@ -7,6 +7,7 @@ export * from "./contenthash.mjs";
 export * from "./fs-world.mjs";
 export * from "./genesis.mjs";
 export * from "./scaffold.mjs";
+export * from "./providers.mjs";
 export * from "./harness.mjs";
 export * from "./index-build.mjs";
 export * from "./webhook.mjs";
