@@ -15,6 +15,10 @@ import {
   PhMagnifyingGlass,
   PhBrain,
   PhMicrophone,
+  PhMagicWand,
+  PhUser,
+  PhFeather,
+  PhGlobe,
 } from '@/lib/phosphor-icons';
 import { ArcaneanMarkGlow, ArcaneanMarkSmall } from '@/components/brand/arcanea-mark';
 
@@ -28,14 +32,11 @@ const ACCENT = 'var(--arc-brand-atlantean-teal)';
 const FEATURED_LUMINOR_IDS = ['storyteller', 'composer', 'systems-architect'] as const;
 
 const CREATIVE_STARTERS = [
-  { icon: '\u2726', text: 'Design a magic system', hint: 'Elements, costs, limits, factions' },
-  { icon: '\u25C6', text: 'Create a character', hint: 'Name, backstory, portrait, motivation' },
-  { icon: '\u2756', text: 'Write an opening scene', hint: 'Hook, conflict, voice — page one' },
-  { icon: '\u2666', text: 'Build a world', hint: 'One sentence to a full universe' },
+  { icon: PhMagicWand, text: 'Design a magic system', hint: 'Elements, costs, limits, factions' },
+  { icon: PhUser, text: 'Create a character', hint: 'Name, backstory, portrait, motivation' },
+  { icon: PhFeather, text: 'Write an opening scene', hint: 'Hook, conflict, voice — page one' },
+  { icon: PhGlobe, text: 'Build a world', hint: 'One sentence to a full universe' },
 ];
-
-/** Alias for backward compat — some parts of the file reference this name */
-const CAPABILITY_DOMAINS = CREATIVE_STARTERS;
 
 const SUBTITLES = [
   "Stories, code, worlds, music \u2014 type a prompt or pick a starter below.",
@@ -365,9 +366,11 @@ export function ChatArea({
                     }}
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-sm text-white/25 group-hover:text-[var(--arc-brand-atlantean-teal)]/60 transition-colors duration-300" aria-hidden="true">
-                        {starter.icon}
-                      </span>
+                      <starter.icon
+                        className="w-4 h-4 text-white/25 group-hover:text-[var(--arc-brand-atlantean-teal)]/60 transition-colors duration-300"
+                        weight="duotone"
+                        aria-hidden="true"
+                      />
                       <span className="text-[13px] text-white/60 group-hover:text-white/85 transition-colors duration-300 font-medium">
                         {starter.text}
                       </span>
@@ -424,11 +427,27 @@ export function ChatArea({
                 </button>
               )}
 
-              {/* Subtle API key hint — only when no keys at all */}
+              {/* BYOK — the sovereignty surface, not a whisper (TASTE.md Gate 7) */}
               {hasMounted && !clientApiKey && !serverHasKeys && (
-                <p className="text-[11px] text-white/15 mt-4 animate-empty-fade-in" style={{ animationDelay: '500ms' }}>
-                  Tip: <Link href="/settings/providers" className="underline decoration-white/10 hover:text-white/30 transition-colors">Add your own AI keys</Link> in Settings for unlimited access
-                </p>
+                <div
+                  className="mt-6 w-full max-w-md rounded-2xl border border-[var(--arc-brand-atlantean-teal)]/20 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/[0.07] to-transparent px-5 py-4 text-left animate-empty-fade-in"
+                  style={{ animationDelay: '500ms' }}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="min-w-0">
+                      <p className="text-[13px] font-medium text-white/85">Bring your own key</p>
+                      <p className="mt-0.5 text-[11px] leading-relaxed text-white/40">
+                        Claude, Gemini, GPT, or 300+ models via OpenRouter. Your key stays in this browser.
+                      </p>
+                    </div>
+                    <Link
+                      href="/settings/providers"
+                      className="shrink-0 rounded-lg bg-[var(--arc-brand-atlantean-teal)] px-3.5 py-2 text-xs font-semibold text-black transition-shadow hover:shadow-[0_0_20px_-4px_rgba(0,188,212,0.5)] focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40 focus-visible:outline-none"
+                    >
+                      Add key
+                    </Link>
+                  </div>
+                </div>
               )}
             </div>
           </div>

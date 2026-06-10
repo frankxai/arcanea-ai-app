@@ -71,6 +71,7 @@ const navLinks: NavLink[] = [
         title: "Discover",
         items: [
           { href: "/gallery", label: "Gallery", desc: "Community creations" },
+          { href: "/discover/pages", label: "Pages", desc: "Published from conversations" },
           { href: "/worlds", label: "Worlds", desc: "Browse the multiverse" },
           { href: "/luminors", label: "Luminors", desc: "Meet the AI minds" },
           { href: "/models", label: "Model Arena", desc: "AI benchmarks" },
