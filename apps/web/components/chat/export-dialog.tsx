@@ -4,21 +4,13 @@
 import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { PhDownload, PhX, PhFileText, PhCode, PhTextAlignLeft, PhCopy, PhCheck } from '@/lib/phosphor-icons';
+import { getMessageText } from '@/hooks/use-conversation';
 
 interface ExportDialogProps {
   messages: Array<{ role: string; parts?: Array<{ type: string; text?: string }>; content?: string }>;
   luminorName?: string;
   modelLabel?: string;
   onClose: () => void;
-}
-
-function getMessageText(msg: { parts?: Array<{ type: string; text?: string }>; content?: string }): string {
-  if (msg.parts && msg.parts.length > 0) {
-    const text = msg.parts.filter((p) => p.type === 'text').map((p) => p.text ?? '').join('');
-    if (text) return text;
-  }
-  if (typeof msg.content === 'string') return msg.content;
-  return '';
 }
 
 type ExportFormat = 'markdown' | 'json' | 'text';

@@ -19,15 +19,7 @@ import {
   PhX,
 } from '@/lib/phosphor-icons';
 import { getLuminor } from '@/lib/luminors/config';
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-function getMessageText(msg: { parts?: Array<{ type: string; text?: string }> }): string {
-  if (!msg.parts) return '';
-  return msg.parts.filter((p) => p.type === 'text').map((p) => p.text ?? '').join('');
-}
+import { getMessageText } from '@/hooks/use-conversation';
 
 // ---------------------------------------------------------------------------
 // Companion-specific conversation starters

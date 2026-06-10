@@ -67,6 +67,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // ── Community ──────────────────────────────────────────
     { url: `${baseUrl}/community`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.85 },
     { url: `${baseUrl}/discover`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
+    { url: `${baseUrl}/discover/pages`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
     { url: `${baseUrl}/skills`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/challenges`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.75 },
 
@@ -183,6 +184,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Supabase not available at build
   }
 
+  // Dynamic: public Pages (published from conversations) — anon client respects
+  // RLS, which exposes public/unlisted; the filter narrows to public only.
+  let publishedPages: MetadataRoute.Sitemap = [];
+  try {
+    const { createClient } = await import('@supabase/supabase-js');
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (url && key) {
+      const sb = createClient(url, key);
+      const { data } = await sb
+        .from('pages')
+        .select('slug, updated_at')
+        .eq('visibility', 'public')
+        .order('view_count', { ascending: false })
+        .limit(100);
+      if (data) {
+        publishedPages = data.map((p) => ({
+          url: `${baseUrl}/p/${p.slug}`,
+          lastModified: p.updated_at ? new Date(p.updated_at) : new Date(),
+          changeFrequency: 'weekly' as const,
+          priority: 0.7,
+        }));
+      }
+    }
+  } catch {
+    // Supabase not available at build
+  }
+
   return [
     ...staticPages,
     ...guardianPages,
@@ -191,5 +220,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...gatePages,
     ...blogPages,
     ...worldPages,
+    ...publishedPages,
   ];
 }

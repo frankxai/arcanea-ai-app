@@ -764,6 +764,9 @@ export function useConversation(options?: UseConversationOptions): ConversationS
     setActiveGates([]);
     setSwarmResult(null);
     setRespondingLuminor(null);
+    // Clear per-conversation UI state so it can't leak into the fresh chat.
+    setEditingMessageId(null);
+    setChatError(null);
   }, [setMessages]);
 
   // ---------------------------------------------------------------------------

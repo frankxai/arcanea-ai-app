@@ -19,6 +19,7 @@ import {
   PhPalette,
   PhGear,
   PhUsers,
+  PhFileText,
 } from '@/lib/phosphor-icons';
 
 // ---------------------------------------------------------------------------
@@ -42,6 +43,8 @@ interface CommandPaletteProps {
   onSelectFocus: (modeId: string) => void;
   onNewChat: () => void;
   onBeamMode: () => void;
+  /** Open the publish flow for the current conversation (omitted = hidden). */
+  onPublishPage?: () => void;
 }
 
 // ---------------------------------------------------------------------------
@@ -78,6 +81,7 @@ export function CommandPalette({
   onSelectFocus,
   onNewChat,
   onBeamMode,
+  onPublishPage,
 }: CommandPaletteProps) {
   const router = useRouter();
   const [query, setQuery] = useState('');
@@ -107,6 +111,9 @@ export function CommandPalette({
 
     const actionItems: CommandItem[] = [
       { id: 'action-new', label: 'New Chat', category: 'action', shortcut: 'Ctrl+Shift+N', icon: PhPlus, action: () => { onNewChat(); onClose(); } },
+      ...(onPublishPage
+        ? [{ id: 'action-publish', label: 'Publish as Page', category: 'action' as const, icon: PhFileText, action: () => { onPublishPage(); onClose(); } }]
+        : []),
       { id: 'action-beam', label: 'Beam Mode — Compare Models', category: 'action', icon: PhLightning, action: () => { onBeamMode(); onClose(); } },
       { id: 'action-forge', label: 'Forge Luminor', category: 'action', icon: PhRocket, action: () => { router.push('/forge/luminor'); onClose(); } },
       { id: 'action-sanctum', label: 'Open Sanctum', category: 'action', icon: PhBrain, action: () => { router.push('/sanctum'); onClose(); } },
@@ -122,7 +129,7 @@ export function CommandPalette({
     ];
 
     return [...actionItems, ...modelItems, ...focusItems, ...navItems];
-  }, [onSelectModel, onSelectFocus, onNewChat, onBeamMode, onClose, router]);
+  }, [onSelectModel, onSelectFocus, onNewChat, onBeamMode, onPublishPage, onClose, router]);
 
   // Filter by query
   const filtered = useMemo(() => {
