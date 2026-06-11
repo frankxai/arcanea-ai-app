@@ -20,7 +20,8 @@ If any missing, tell user which `setx` to run and stop.
 | Need | Model | Why |
 |---|---|---|
 | Editorial hero, photoreal, premium | Fal FLUX Pro | Fastest FLUX hosting, best quality per dollar |
-| Quick iteration, brand exploration | Gemini NB2 (`gemini-3.1-flash-image-preview`) | Arcanea default per `feedback_nb2_default.md` |
+| Book covers, premium showcase assets | Gemini NBPro (`gemini-3-pro-image-preview`) | Default for covers, high-fidelity details |
+| Quick iteration, spreads, exploration | Gemini NB2 (`gemini-3.1-flash-image-preview`) | Arcanea default for illustrations |
 | Frank's custom-trained look | Replicate | Only place the fine-tuned model lives |
 | Video hero (Week 4+) | Replicate Wan | Long-form, stylized |
 | Iconography, diagrams | Gemini NB2 | Cheap, fast for non-photoreal |

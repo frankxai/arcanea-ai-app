@@ -1,0 +1,86 @@
+{
+  "bookSlug": "las-tierras-de-luz",
+  "bookTitle": "Las Tierras de Luz",
+  "niche": "fantasy",
+  "visualProfile": {
+    "name": "Mature Mythic Fantasy",
+    "modelDefaultCover": "nbpro",
+    "modelDefaultSpread": "nb2",
+    "artStyle": "high-fidelity digital concept art, visible painterly brushwork, dramatic depth, classical illustrations",
+    "palette": "cosmic black background (#09090b), Atlantean Teal (#00bcd4) accents, void purples, metallic gold foil highlights",
+    "lighting": "Chiaroscuro, dramatic light and shadow contrasts, glowing mystical runes, ambient backlighting",
+    "avoid": "flat cartoon style, generic RPG card borders, plastic AI renders, modern elements"
+  },
+  "concepts": [
+    {
+      "id": "concept-1",
+      "thesis": "A character-focused study reflecting vulnerability and inner discovery in the Mature Mythic Fantasy style.",
+      "dominantElement": "Protagonist surrounded by environment-relevant motifs.",
+      "colors": "cosmic black background (#09090b), Atlantean Teal (#00bcd4) accents, void purples, metallic gold foil highlights"
+    },
+    {
+      "id": "concept-2",
+      "thesis": "An atmospheric environment shot highlighting the massive scope of the world.",
+      "dominantElement": "Landscape silhouette with a glowing central point representing the goal.",
+      "colors": "cosmic black background (#09090b), Atlantean Teal (#00bcd4) accents, void purples, metallic gold foil highlights"
+    },
+    {
+      "id": "concept-3",
+      "thesis": "An abstract symbol/totem representation using sacred shapes.",
+      "dominantElement": "A single geometric artifact debossed in materials relevant to the lore.",
+      "colors": "cosmic black background (#09090b), Atlantean Teal (#00bcd4) accents, void purples, metallic gold foil highlights"
+    }
+  ],
+  "killedConcept": "concept-3",
+  "killedRationale": "Too abstract for the main narrative cover; we want an emotionally-anchored scene to hook readers.",
+  "generations": [
+    {
+      "id": "cover",
+      "targetFile": "las-tierras-de-luz-cover.png",
+      "model": "nbpro",
+      "size": "4K",
+      "aspectRatio": "2:3",
+      "prompt": "## CONCEPT\nCover artwork for the book 'Las Tierras de Luz'. A character-focused study reflecting vulnerability and inner discovery in the Mature Mythic Fantasy style.\n\n## ART DIRECTION & STYLE\nhigh-fidelity digital concept art, visible painterly brushwork, dramatic depth, classical illustrations. Premium physical book cover aesthetic, debossed paper texture, look of a collectible hardcover book.\n\n## COMPOSITION & FOCUS\nA close-up portrait of the central theme. High depth of field. Confident typography space reserved at bottom.\n\n## LIGHTING & ATMOSPHERE\nChiaroscuro, dramatic light and shadow contrasts, glowing mystical runes, ambient backlighting. Warm and evocative.\n\n## PALETTE\ncosmic black background (#09090b), Atlantean Teal (#00bcd4) accents, void purples, metallic gold foil highlights.\n\n## TYPOGRAPHY\nTitle: dominant, filling upper 30% of space in elegant modern serif. Author name: 'Frank Riemer' in small mixed-case letters at the bottom.\n\n## AVOID\nflat cartoon style, generic RPG card borders, plastic AI renders, modern elements, text watermarks, low-quality glows, pixelated borders."
+    },
+    {
+      "id": "ch01",
+      "targetFile": "las-tierras-de-luz-ch01.png",
+      "model": "nb2",
+      "size": "2K",
+      "aspectRatio": "16:9",
+      "prompt": "## CONCEPT\nChapter 1 scene: Mila or Selene encountering a key lore moment.\n\n## ART DIRECTION & STYLE\nhigh-fidelity digital concept art, visible painterly brushwork, dramatic depth, classical illustrations.\n\n## COMPOSITION & FOCUS\nCinematic wide establishing shot, Rule of thirds balance.\n\n## LIGHTING & ATMOSPHERE\nChiaroscuro, dramatic light and shadow contrasts, glowing mystical runes, ambient backlighting.\n\n## PALETTE\ncosmic black background (#09090b), Atlantean Teal (#00bcd4) accents, void purples, metallic gold foil highlights.\n\n## AVOID\nflat cartoon style, generic RPG card borders, plastic AI renders, modern elements, text overlays, borders, frames."
+    },
+    {
+      "id": "ch02",
+      "targetFile": "las-tierras-de-luz-ch02.png",
+      "model": "nb2",
+      "size": "2K",
+      "aspectRatio": "16:9",
+      "prompt": "## CONCEPT\nChapter 2 scene: Mila or Selene encountering a key lore moment.\n\n## ART DIRECTION & STYLE\nhigh-fidelity digital concept art, visible painterly brushwork, dramatic depth, classical illustrations.\n\n## COMPOSITION & FOCUS\nCinematic wide establishing shot, Rule of thirds balance.\n\n## LIGHTING & ATMOSPHERE\nChiaroscuro, dramatic light and shadow contrasts, glowing mystical runes, ambient backlighting.\n\n## PALETTE\ncosmic black background (#09090b), Atlantean Teal (#00bcd4) accents, void purples, metallic gold foil highlights.\n\n## AVOID\nflat cartoon style, generic RPG card borders, plastic AI renders, modern elements, text overlays, borders, frames."
+    },
+    {
+      "id": "ch03",
+      "targetFile": "las-tierras-de-luz-ch03.png",
+      "model": "nb2",
+      "size": "2K",
+      "aspectRatio": "16:9",
+      "prompt": "## CONCEPT\nChapter 3 scene: Mila or Selene encountering a key lore moment.\n\n## ART DIRECTION & STYLE\nhigh-fidelity digital concept art, visible painterly brushwork, dramatic depth, classical illustrations.\n\n## COMPOSITION & FOCUS\nCinematic wide establishing shot, Rule of thirds balance.\n\n## LIGHTING & ATMOSPHERE\nChiaroscuro, dramatic light and shadow contrasts, glowing mystical runes, ambient backlighting.\n\n## PALETTE\ncosmic black background (#09090b), Atlantean Teal (#00bcd4) accents, void purples, metallic gold foil highlights.\n\n## AVOID\nflat cartoon style, generic RPG card borders, plastic AI renders, modern elements, text overlays, borders, frames."
+    },
+    {
+      "id": "ch04",
+      "targetFile": "las-tierras-de-luz-ch04.png",
+      "model": "nb2",
+      "size": "2K",
+      "aspectRatio": "16:9",
+      "prompt": "## CONCEPT\nChapter 4 scene: Mila or Selene encountering a key lore moment.\n\n## ART DIRECTION & STYLE\nhigh-fidelity digital concept art, visible painterly brushwork, dramatic depth, classical illustrations.\n\n## COMPOSITION & FOCUS\nCinematic wide establishing shot, Rule of thirds balance.\n\n## LIGHTING & ATMOSPHERE\nChiaroscuro, dramatic light and shadow contrasts, glowing mystical runes, ambient backlighting.\n\n## PALETTE\ncosmic black background (#09090b), Atlantean Teal (#00bcd4) accents, void purples, metallic gold foil highlights.\n\n## AVOID\nflat cartoon style, generic RPG card borders, plastic AI renders, modern elements, text overlays, borders, frames."
+    },
+    {
+      "id": "ch05",
+      "targetFile": "las-tierras-de-luz-ch05.png",
+      "model": "nb2",
+      "size": "2K",
+      "aspectRatio": "16:9",
+      "prompt": "## CONCEPT\nChapter 5 scene: Mila or Selene encountering a key lore moment.\n\n## ART DIRECTION & STYLE\nhigh-fidelity digital concept art, visible painterly brushwork, dramatic depth, classical illustrations.\n\n## COMPOSITION & FOCUS\nCinematic wide establishing shot, Rule of thirds balance.\n\n## LIGHTING & ATMOSPHERE\nChiaroscuro, dramatic light and shadow contrasts, glowing mystical runes, ambient backlighting.\n\n## PALETTE\ncosmic black background (#09090b), Atlantean Teal (#00bcd4) accents, void purples, metallic gold foil highlights.\n\n## AVOID\nflat cartoon style, generic RPG card borders, plastic AI renders, modern elements, text overlays, borders, frames."
+    }
+  ]
+}

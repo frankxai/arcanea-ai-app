@@ -88,9 +88,9 @@ For bulk operations, server-side generation, or custom scripts, use the central 
 node scripts/nb-generate.mjs \
   --spec public/images/books/book-spec.md \
   --out public/images/books/book-cover.png \
-  --model nb2 \
+  --model nbpro \
   --aspect 2:3 \
-  --size 2K
+  --size 4K
 ```
 
 ---
@@ -99,9 +99,9 @@ node scripts/nb-generate.mjs \
 
 | Alias | Target API Model | Default Aspect Ratios | Max Resolution | Best Use Cases |
 | :--- | :--- | :--- | :--- | :--- |
-| **`nb2`** | `gemini-3.1-flash-image-preview` | 2:3, 16:9, 1:1, 4:3 | 2K (High-Definition) | **Default.** Book covers, chapter illustrations, web pages. |
-| **`nbpro`** | `gemini-3-pro-image-preview` | 2:3, 16:9, 1:1, 4:3 | 4K (Super-Resolution) | **Premium.** Hero banners, printable covers, promotional posters. |
-| **`nb1`** | `gemini-2.5-flash-image` | 1:1 | 1K | **Fallback only.** Quick sketches, rough prototypes. |
+| **`nbpro`** | `gemini-3-pro-image-preview` | 2:3, 16:9, 1:1, 4:3 | 4K (Super-Resolution) | **Default for Book Covers.** Printable covers, digital covers, and high-fidelity showcase assets. |
+| **`nb2`** | `gemini-3.1-flash-image-preview` | 2:3, 16:9, 1:1, 4:3 | 2K (High-Definition) | **Default for Chapter Spreads.** Section illustrations, web banners, and rapid iterative previews. |
+| **`nb1`** | `gemini-2.5-flash-image` | 1:1 | 1K | **Fallback only.** Quick design layout checks, rough conceptual prototypes. |
 
 ---
 
