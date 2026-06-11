@@ -1,0 +1,12 @@
+Timestamp,ModelUsed,BookSlug,ChapterNumber,ImagesGenerated,RateLimitWindow,LimitRemaining,Notes
+2026-06-08T22:26:24Z,gemini-3.1-flash-image-preview (nb2),lumara-valle-de-los-destellos,cover-v2,1,10 RPM / 1500 RPD,1499,Generated cover with Mila and Smilje flower (Ghibli watercolor)
+2026-06-08T22:26:36Z,gemini-3.1-flash-image-preview (nb2),lumara-valle-de-los-destellos,ch01,1,10 RPM / 1500 RPD,1498,Chapter 1 illustration: Mila looking out of car window at Adriatic Sea
+2026-06-08T22:26:47Z,gemini-3.1-flash-image-preview (nb2),lumara-valle-de-los-destellos,ch02,1,10 RPM / 1500 RPD,1497,Chapter 2 illustration: Cozy white stone house and black cat Luna
+2026-06-08T22:27:00Z,gemini-3.1-flash-image-preview (nb2),lumara-valle-de-los-destellos,ch03,1,10 RPM / 1500 RPD,1496,Chapter 3 illustration: Mila and Nona Marica in immortelle meadow
+2026-06-08T22:28:42Z,gemini-3.1-flash-image-preview (nb2),lumara-valle-de-los-destellos,ch04,1,10 RPM / 1500 RPD,1495,Chapter 4 illustration: Mila walking down narrow stone street at dusk
+2026-06-08T22:28:54Z,gemini-3.1-flash-image-preview (nb2),lumara-valle-de-los-destellos,ch05,1,10 RPM / 1500 RPD,1494,Chapter 5 illustration: Marko the young fisherman showing Mila an octopus
+2026-06-08T22:29:08Z,gemini-3.1-flash-image-preview (nb2),lumara-valle-de-los-destellos,ch06,1,10 RPM / 1500 RPD,1493,Chapter 6 illustration: Mila on wooden boat pointing at dolphin Val
+2026-06-08T22:29:19Z,gemini-3.1-flash-image-preview (nb2),lumara-valle-de-los-destellos,ch07,1,10 RPM / 1500 RPD,1492,Chapter 7 illustration: Mila and Oli building a stone toy house on beach
+2026-06-08T22:29:32Z,gemini-3.1-flash-image-preview (nb2),lumara-valle-de-los-destellos,ch08,1,10 RPM / 1500 RPD,1491,Chapter 8 illustration: Mila sleeping peacefully under starry night sky
+2026-06-08T22:29:45Z,gemini-3.1-flash-image-preview (nb2),lumara-valle-de-los-destellos,ch09,1,10 RPM / 1500 RPD,1490,Chapter 9 illustration: Mila holding glowing immortelle flower guiding Nona
+2026-06-08T22:29:57Z,gemini-3.1-flash-image-preview (nb2),lumara-valle-de-los-destellos,ch10,1,10 RPM / 1500 RPD,1489,Chapter 10 illustration: Mila on terrace overlooking Mali Losinj harbor
