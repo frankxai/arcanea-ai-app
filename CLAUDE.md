@@ -1,5 +1,8 @@
 # Arcanea — Claude Code Configuration
 
+## Visual Showcase Uplift (World-Class Mandate)
+For arcanea-ai-app (paired with frankx.ai-vercel-website): the creative visual showcase per plan. Read DESIGN.md + TASTE.md + SHARING.md + SIP.md first (deeper). gstack (qa/design-review/benchmark + plan-*) + santa/excellence/verification gates on all visual. Atomic + annotated health 99+ before/after. Interactive demos (harness catalog, SIP visualizer + attest, gstack viz, 3D subagent/Luminor swarm, ACOS dogfood, multi proofs — core only; Kenya .grok magical .grok/personal only, SIP encoded-self). Restraint per TASTE (Geist only, no banned, premium AI-lab chrome, mythology in content). SIP "Built on SIP". Subagents + premium-visual/einui + ui-ux-pro-max. Deploy + post gstack canary. See visual subagent report for before, fixes, roadmap. God 99 evidence.
+
 ## LLM + API key policy (machine-global)
 **Authoritative source: `~/.claude/CLAUDE.md` on this machine.** Default LLM route = OpenRouter (`OPENROUTER_API_KEY` + `OPENROUTER_BASE_URL`). Image gen for Arcanea book covers, character art, marketplace cards = Higgsfield MCP (preferred) or direct (NB2 = `gemini-3.1-flash-image`, GPT Image 2 = `gpt-image-1`/`gpt-image-2`). **Reason first** — don't auto-call external LLMs when you can think. Daily monitoring + secret scan via `StarlightAPIKeyMonitor` + `StarlightSecretScan` scheduled tasks. Arcanea-specific overrides: book covers → `/arcanea-book-cover` skill (NB2 with cover-design thinking).
 

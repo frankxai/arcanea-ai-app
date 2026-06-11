@@ -101,6 +101,10 @@ const BOOK_META: Record<string, { title: string; dir: string }> = {
     title: 'Das Mädchen, das drei Sprachen hörte',
     dir: join(process.cwd(), '..', '..', 'book', 'das-maedchen-drei-sprachen', 'chapters'),
   },
+  'lumara-valle-de-los-destellos': {
+    title: 'Lumara: Valle de los Destellos',
+    dir: join(process.cwd(), '..', '..', 'book', 'lumara-valle-de-los-destellos', 'chapters'),
+  },
   'russian-from-tashkent': {
     title: 'The Russian-Speaker',
     dir: join(process.cwd(), '..', '..', 'book', 'russian-from-tashkent', 'chapters'),

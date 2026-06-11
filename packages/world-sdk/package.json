@@ -1,0 +1,26 @@
+{
+  "name": "@arcanea/world-sdk",
+  "version": "0.1.0",
+  "description": "Runtime for the Arcanea World Repo Standard — manifest, validate, content hash, scaffold, index, proof. The repo is the source of truth; this turns it into something every layer can read.",
+  "type": "module",
+  "main": "src/index.mjs",
+  "types": "index.d.ts",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./genesis": "./src/genesis.mjs",
+    "./proof": "./src/proof.mjs"
+  },
+  "bin": {
+    "arcanea-world": "./bin/cli.mjs"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "keywords": ["arcanea", "world", "standard", "manifest", "provenance", "worldbuilding"],
+  "author": "FrankX",
+  "license": "MIT",
+  "engines": { "node": ">=18.0.0" },
+  "optionalDependencies": {
+    "@arcanea/world-engine": "workspace:*"
+  }
+}

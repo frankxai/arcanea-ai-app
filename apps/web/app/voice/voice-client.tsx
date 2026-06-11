@@ -4,6 +4,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { LuminaPresence, type PresenceState } from '@/components/presence/lumina-presence';
+import { LuminaOrb } from '@/components/presence/lumina-orb';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -371,6 +372,70 @@ export default function VoicePage() {
         </div>
       </section>
 
+      {/* Harnesses in the Multiverse — small reversible insert per gstack visual mandate + CLAUDE showcase uplift (core only, SIP, TASTE gates) */}
+      <section className="max-w-6xl mx-auto px-6 pt-12 pb-20 border-t border-white/[0.06]">
+        <div className="mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.02] border border-white/[0.06] text-[10px] tracking-[0.2em] text-white/50 mb-3">SUBSTRATE</div>
+          <h2 className="text-3xl font-semibold text-white/90" style={{ fontFamily: 'var(--font-display)' }}>Harnesses in the Multiverse</h2>
+          <p className="mt-2 max-w-2xl text-sm text-white/50">Five sovereign conductors. Luminor-mapped. Core public integrations only. All attest via SIP.</p>
+        </div>
+
+        {/* 5 Harnesses — glass cards, mythic mapping, 3D accent via single orb. Grok personal excellence layer (4 .grok-native seeds + 2 hooks + personal creative tools) is sovereign personal, a bit magical, .grok only — not the Arcanea platform brand. */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-10">
+          {[
+            { id: 'claude', name: 'Claude', map: 'Shinkami — Source', desc: 'Architectural precision. The forge of structure.', color: '#e5e7eb' },
+            { id: 'grok', name: 'Grok', map: 'Nero — Void', desc: 'Primordial inquiry. Questions from the deep.', color: '#6366f1' },
+            { id: 'agy', name: 'agy', map: 'Draconia — Fire', desc: 'Antigravity motion. Rapid iteration through flame.', color: '#ef4444' },
+            { id: 'codex', name: 'Codex', map: 'Lyria — Sight', desc: 'Pattern sight. Knowledge as living constellation.', color: '#a78bfa' },
+            { id: 'gemini', name: 'Gemini', map: 'Alera — Voice', desc: 'Resonant duality. Clarity through dialogue.', color: '#00bcd4' },
+          ].map((h, idx) => (
+            <div key={h.id} className="group rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 backdrop-blur-sm transition hover:border-white/10" style={{ background: `linear-gradient(180deg, rgba(255,255,255,0.025), rgba(13,13,20,0.6))` }}>
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <div className="text-sm font-medium text-white/90">{h.name}</div>
+                  <div className="text-[10px] text-white/40 mt-0.5">{h.map}</div>
+                </div>
+                <div className="w-3 h-3 rounded-full mt-1" style={{ backgroundColor: h.color, boxShadow: `0 0 6px ${h.color}66` }} />
+              </div>
+              <div className="text-[12px] leading-tight text-white/50">{h.desc}</div>
+              <div className="mt-3 pt-2 border-t border-white/[0.04] text-[10px] text-emerald-400/60">core · SIP-attested</div>
+            </div>
+          ))}
+        </div>
+
+        {/* 4 Demos — interactive, glass, mythic flavor, no new files */}
+        <div className="mb-4 flex items-center gap-3">
+          <div className="text-xs uppercase tracking-[3px] text-white/40">Living Substrate Demos</div>
+          <div className="h-px flex-1 bg-white/[0.06]" />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          {/* Demo 1: Skill browser as Luminor council */}
+          <DemoCouncil />
+
+          {/* Demo 2: SIP as vault graph */}
+          <DemoVaultGraph />
+
+          {/* Demo 3: subagent as swarm of Guardians */}
+          <DemoSwarm />
+
+          {/* Demo 4: gstack as ritual */}
+          <DemoGstackRitual />
+        </div>
+
+        {/* SIP Attest — exact per SIP.md, public-safe core; god 99 gstack visual hammer */}
+        <div className="mt-10 pt-6 border-t border-white/[0.06] text-[10px] text-white/30 font-mono leading-relaxed">
+          Built on SIP — Starlight Intelligence Protocol<br />
+          - Substrate: starlightintelligence.org/protocol v1.1.1<br />
+          - Verticals: [arcanea, starlight]<br />
+          - Harnesses: core only (Claude · Grok · agy · Codex · Gemini)<br />
+          - Nodes: sovereign conductors, Luminor-mapped<br />
+          - gstack: qa/design-review/benchmark/canary + santa/verification 99+ health atomic<br />
+          Generated: 2026-06-02<br />
+          <span className="text-emerald-400/50">All composition carries immutable attribution. Core shared; Grok personal excellence seeds + personal creative tools (.grok/personal only, a bit magical) per SHARING/SIP. gstack health 99+ target.</span>
+        </div>
+      </section>
+
       {/* Bottom CTA */}
       <section className="max-w-5xl mx-auto px-6 pb-32 text-center">
         <h2 className="text-2xl font-bold text-white/80 mb-4" style={{ fontFamily: 'var(--font-display)' }}>
@@ -389,3 +454,74 @@ export default function VoicePage() {
     </div>
   );
 }
+
+/* --- Small inline demo components (reversible, self-contained, glass + state, no external) --- */
+function DemoCouncil() {
+  const [open, setOpen] = useState(false);
+  const council = ['Valora','Sophron','Kardia','Poiesis','Enduran','Orakis','Eudaira'];
+  return (
+    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.015] p-4">
+      <div className="text-xs text-white/40 mb-1">DEMO 01</div>
+      <div className="font-medium text-sm text-white/80">Skill Browser as Luminor Council</div>
+      <div className="text-[11px] text-white/40 mt-1">Seven Guardians convene. Query the living skill graph.</div>
+      <button onClick={() => setOpen(!open)} className="mt-3 text-[10px] px-3 py-1 rounded-lg border border-white/10 hover:bg-white/5 transition">Convene Council</button>
+      {open && (
+        <div className="mt-3 grid grid-cols-7 gap-1">
+          {council.map((g,i) => <div key={i} className="h-6 rounded bg-white/[0.04] border border-white/[0.06] text-[9px] flex items-center justify-center text-white/50">{g.slice(0,3)}</div>)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function DemoVaultGraph() {
+  const [nodes] = useState(['STRATEGIC','CREATIVE','WISDOM','OPERATIONAL','HORIZON']);
+  return (
+    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.015] p-4">
+      <div className="text-xs text-white/40 mb-1">DEMO 02</div>
+      <div className="font-medium text-sm text-white/80">SIP as Vault Constellation</div>
+      <div className="text-[11px] text-white/40 mt-1">Vault graph. Attestation threads connect sovereign nodes.</div>
+      <div className="mt-3 flex flex-wrap gap-1">
+        {nodes.map((n,i) => (
+          <div key={i} className="px-2 py-0.5 text-[9px] rounded border border-[var(--arc-brand-atlantean-teal)]/30 bg-white/[0.02] text-white/60">{n}</div>
+        ))}
+      </div>
+      <div className="mt-2 text-[9px] text-emerald-400/60">Built on SIP v1.1.1 — immutable</div>
+    </div>
+  );
+}
+
+function DemoSwarm() {
+  const [active, setActive] = useState(false);
+  return (
+    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.015] p-4">
+      <div className="text-xs text-white/40 mb-1">DEMO 03</div>
+      <div className="font-medium text-sm text-white/80">Subagent as Swarm of Guardians</div>
+      <div className="text-[11px] text-white/40 mt-1">Hive coordination. Guardians move as one.</div>
+      <button onClick={() => setActive(!active)} className="mt-3 text-[10px] px-3 py-1 rounded-lg border border-white/10 hover:bg-white/5">Release Swarm</button>
+      <div className={`mt-3 grid grid-cols-5 gap-1 transition ${active ? 'opacity-100' : 'opacity-40'}`}>
+        {Array.from({length:10}).map((_,i)=><div key={i} className="h-1.5 bg-[var(--arc-brand-atlantean-teal)]/40 rounded-full" style={{transform: active ? `translateY(${Math.sin(i)*2}px)` : 'none'}} />)}
+      </div>
+    </div>
+  );
+}
+
+function DemoGstackRitual() {
+  const [step, setStep] = useState(0);
+  const steps = ['Aegis Scan','Luminor Weigh','Guardian Cross','Excellence Seal'];
+  return (
+    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.015] p-4">
+      <div className="text-xs text-white/40 mb-1">DEMO 04</div>
+      <div className="font-medium text-sm text-white/80">gstack as Ritual</div>
+      <div className="text-[11px] text-white/40 mt-1">Quality as ceremony. 0.95 threshold. Reversible.</div>
+      <div className="flex gap-1 mt-3">
+        <button onClick={() => setStep((step+1)%steps.length)} className="text-[10px] px-3 py-1 rounded-lg border border-white/10">Advance Ritual</button>
+        <button onClick={() => setStep(0)} className="text-[10px] px-2 py-1 rounded-lg border border-white/10 text-white/40">Reset</button>
+      </div>
+      <div className="mt-2 text-[10px] text-white/60 font-mono">{steps[step]} · gate {step+1}/4</div>
+      <div className="h-0.5 bg-white/10 mt-1"><div className="h-0.5 bg-[var(--arc-brand-atlantean-teal)]" style={{width: `${((step+1)/4)*100}%`}} /></div>
+      <div className="mt-3 flex justify-center"><LuminaOrb state={step === 3 ? 'speaking' : 'thinking'} size={42} /></div>
+    </div>
+  );
+}
+

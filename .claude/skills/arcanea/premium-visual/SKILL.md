@@ -126,3 +126,6 @@ Isometric-ish angle showing depth. Title "[TITLE]" at top.
 - [ ] Is there dramatic directional lighting?
 
 *"The difference between decoration and intelligence is information."*
+
+## Visual Showcase Uplift (frankx.ai-vercel-website + arcanea-ai-app per plan)
+For the two world-class showcases: read DESIGN.md/TASTE.md + SHARING.md + SIP.md first. gstack qa/design-review/benchmark + santa/excellence gates on all changes. Atomic + annotated health 99+. Interactive demos of harness ecosystem (catalog/SIP visualizer/gstack health/subagent graph; core only — Kenya .grok magical .grok/personal only, no leak). SIP "Built on SIP" attest. Restraint per TASTE/DESIGN, glass purposeful, no slop. God 99 evidence.

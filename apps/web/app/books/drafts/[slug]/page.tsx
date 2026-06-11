@@ -58,6 +58,7 @@ const COVER_MAP: Record<string, string> = {
   'heart-of-pyrathis': '/images/books/heart-of-pyrathis-cover-v2.png',
   'song-of-van-linh': '/images/books/song-of-van-linh-cover.png',
   'das-maedchen-drei-sprachen': '/images/books/das-maedchen-drei-sprachen-cover-v2.png',
+  'lumara-valle-de-los-destellos': '/images/books/lumara-valle-de-los-destellos-cover-v2.png',
   'las-tierras-de-luz': '/images/books/las-tierras-de-luz-cover-v2.png',
   'russian-from-tashkent': '/images/books/russian-from-tashkent-cover-nb2.png',
 };
@@ -88,6 +89,12 @@ const ACCENT_MAP: Record<string, { primary: string; bg: string; border: string; 
     glow: 'bg-teal-900/[0.08]',
   },
   'das-maedchen-drei-sprachen': {
+    primary: 'text-amber-300',
+    bg: 'bg-amber-400/10',
+    border: 'border-amber-400/20',
+    glow: 'bg-amber-900/[0.08]',
+  },
+  'lumara-valle-de-los-destellos': {
     primary: 'text-amber-300',
     bg: 'bg-amber-400/10',
     border: 'border-amber-400/20',
@@ -152,6 +159,14 @@ const BOOK_DESCRIPTIONS: Record<string, { tagline: string; paragraphs: string[] 
       'Geschrieben in Deutsch für ein echtes sechsjähriges Kind im Übergang. Kroatisch und Englisch sind eingewoben — du lernst sie nicht durch Vokabellisten, sondern weil die Personen sie sprechen. Mit der gentlen Lehrtechnik von Studio Ghibli (Stille als Lehre, Tier ohne Sprache, Natur als Person) und der Stimme von Janosch, Lindgren und Funke. Ein Buch über zwei Zuhause.',
     ],
   },
+  'lumara-valle-de-los-destellos': {
+    tagline: 'Una niña de seis años entra a un valle mágico guiada por el farolito de su abuela. Un conejito de peluche, una luciérnaga, un colibrí y un caracol con una galaxia adentro la enseñan que ver es el primer paso para amar.',
+    paragraphs: [
+      'Lila tiene seis años y medio. Cada noche, cuando su abuela enciende el farolito, el cuarto se llena de chispitas doradas —los destellos— que abren una puerta secreta de luz de luna. Al cruzarla, Lila y su inseparable Conejito de peluche entran en Lumara, un valle donde las flores brillan como estrellas y el río canta canciones de cuna.',
+      'En sus diez noches en Lumara, Lila aprende los nombres verdaderos de las criaturas que habitan el valle. Para hacerlo, debe llamarlas en español, en inglés, y luego escuchar el gran silencio atento del bosque. Así conoce a un colibrí que canta colores, a una mariposa que pinta el aire, a un zorrito de plata que cuida los senderos y a una lechuza que abraza la quietud.',
+      'Escrito como un cuento de buenas noches para niños de 5 a 8 años. Con un lenguaje poético y lleno de diálogo que sigue la tradición de El Principito de Saint-Exupéry y la calidez de las películas de Studio Ghibli. Una historia tierna e inolvidable sobre el poder de prestar atención a las pequeñas luces del mundo.',
+    ],
+  },
   'las-tierras-de-luz': {
     tagline: 'An eleven-year-old in a quiet Realm of the Kingdom of Light wakes to a small prismatic light hovering above her chest — and discovers no one else can see it. Across the narrow street, behind a blue door, an old woman who has been waiting her whole adult life looks up from a bowl of green beans and sees.',
     paragraphs: [
@@ -210,6 +225,14 @@ const BOOK_CHARACTERS: Record<string, { name: string; role: string; desc: string
     { name: 'Oli / Oliver', role: 'Der englische Junge (7)', desc: 'Zwei Häuser. Wie Mila jetzt auch. Kommt jeden Sommer.' },
     { name: 'Luna', role: 'Die Hafenkatze', desc: 'Schwarz wie eine kleine Nacht. Weißer Mond über dem Auge.' },
     { name: 'Val', role: 'Der junge Delfin', desc: 'Großer Tümmler. Riss in der Rückenflosse. Liebt Wellen.' },
+  ],
+  'lumara-valle-de-los-destellos': [
+    { name: 'Lila', role: 'La heroína (6 años y medio)', desc: 'Entra a Lumara por la puerta de luz de luna. Habla con Conejito y presta atención a cada destello.' },
+    { name: 'Conejito', role: 'El peluche fiel', desc: 'Siempre en los brazos de Lila. Su testigo silencioso y compañero de aventuras en el valle.' },
+    { name: 'Abuela', role: 'La dueña del farolito', desc: 'Le enseña a Lila a encender la luz y a no tener miedo de la oscuridad.' },
+    { name: 'Mamá', role: 'La madre cariñosa', desc: 'Le enseñó a Lila sus primeras palabras en inglés, que ahora son útiles en Lumara.' },
+    { name: 'La luciérnaga', role: 'La primera guía', desc: 'Brilla suavemente para mostrar que en el valle los pequeños destellos importan.' },
+    { name: 'Aurelia', role: 'La niña del valle', desc: 'Una nueva amiga en Lumara con una flor en el pelo. Le enseña a Lila a compartir destellos.' },
   ],
   'las-tierras-de-luz': [
     { name: 'Mira', role: 'The First Witness (11)', desc: 'Prismatic destello she has named Chispa. Hears the valley\'s zumbido no one else admits to.' },
@@ -329,7 +352,7 @@ export default async function DraftBookPage({ params }: PageProps) {
       ? 'fire'
       : slug === 'tides-of-silence' || slug === 'song-of-van-linh'
       ? 'crystal'
-      : slug === 'heart-of-pyrathis' || slug === 'las-tierras-de-luz' || slug === 'das-maedchen-drei-sprachen'
+      : slug === 'heart-of-pyrathis' || slug === 'las-tierras-de-luz' || slug === 'lumara-valle-de-los-destellos' || slug === 'das-maedchen-drei-sprachen'
       ? 'gold'
       : 'neutral';
 
