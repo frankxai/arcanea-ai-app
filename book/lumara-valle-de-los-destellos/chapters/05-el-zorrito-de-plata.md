@@ -1,5 +1,7 @@
 # LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
+![Capítulo 5: El zorrito de plata](/images/books/lumara-valle-de-los-destellos-ch05.png)
+
 ## Capítulo 5: El zorrito de plata
 *(The Little Silver Fox)*
 

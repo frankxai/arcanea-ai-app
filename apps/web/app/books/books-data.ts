@@ -409,6 +409,24 @@ export const SERIES_ACCENTS: Record<string, SeriesAccent> = {
     symbol: '🐢',
     topEdge: 'from-transparent via-teal-400/30 to-transparent',
   },
+  'las-tierras-de-luz': {
+    border: 'border-amber-500/15 hover:border-amber-400/30',
+    hover: 'hover:shadow-[0_0_40px_rgba(245,158,11,0.08)]',
+    badge: 'bg-amber-500/10 border-amber-500/25',
+    badgeText: 'text-amber-400',
+    glow: 'via-amber-900/[0.03]',
+    symbol: '✦',
+    topEdge: 'from-transparent via-amber-400/30 to-transparent',
+  },
+  'lumara-valle-de-los-destellos': {
+    border: 'border-yellow-500/15 hover:border-yellow-400/30',
+    hover: 'hover:shadow-[0_0_40px_rgba(234,179,8,0.08)]',
+    badge: 'bg-yellow-500/10 border-yellow-500/25',
+    badgeText: 'text-yellow-400',
+    glow: 'via-yellow-900/[0.03]',
+    symbol: '✨',
+    topEdge: 'from-transparent via-yellow-400/30 to-transparent',
+  },
 };
 
 export const DEFAULT_ACCENT: SeriesAccent = {

@@ -102,7 +102,7 @@ const BOOK_META: Record<string, { title: string; dir: string }> = {
     dir: join(process.cwd(), '..', '..', 'book', 'das-maedchen-drei-sprachen', 'chapters'),
   },
   'lumara-valle-de-los-destellos': {
-    title: 'Lumara — el valle donde los destellos crecen como flores',
+    title: 'Lumara: Valle de los Destellos',
     dir: join(process.cwd(), '..', '..', 'book', 'lumara-valle-de-los-destellos', 'chapters'),
   },
   'russian-from-tashkent': {

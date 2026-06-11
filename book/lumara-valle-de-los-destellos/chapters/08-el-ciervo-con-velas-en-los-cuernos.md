@@ -1,5 +1,7 @@
 # LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
+![Capítulo 8: El ciervo con velas en los cuernos](/images/books/lumara-valle-de-los-destellos-ch08.png)
+
 ## Capítulo 8: El ciervo con velas en los cuernos
 *(The Deer with Candles in Its Antlers)*
 

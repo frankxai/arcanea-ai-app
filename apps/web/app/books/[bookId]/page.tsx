@@ -198,14 +198,6 @@ const BOOKS: Record<string, BookDef> = {
     status: 'in-progress',
     dir: join(process.cwd(), '..', '..', 'book', 'das-maedchen-drei-sprachen', 'chapters'),
   },
-  'lumara-valle-de-los-destellos': {
-    title: 'Lumara — el valle donde los destellos crecen como flores',
-    subtitle: 'La historia de Lila y la flor que guarda los nombres verdaderos',
-    description:
-      'Un cuento de hadas bilingüe (español primario, inglés tejido suavemente) para niños de 5 a 8 años — diez capítulos para diez noches seguidas. Lila tiene seis años y medio. Su abuela le regaló un farolito para que la noche no se le ponga muy oscura. Una noche la llama del farolito se parte en cien destellitos chiquititos que la llevan a Lumara, un valle al que se entra por una puerta de luz de luna, donde los destellos crecen como flores y cada criatura que conoce le enseña algo que ya sabía. Escrito con la calidez de Studio Ghibli, la ternura de Saint-Exupéry, y la voz de Astrid Lindgren. Un regalo para una sobrinita.',
-    status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'lumara-valle-de-los-destellos', 'chapters'),
-  },
   'russian-from-tashkent': {
     title: 'The Russian-Speaker',
     subtitle: 'A novel of Tashkent, Petersburg, Moscow — 1985–2010',

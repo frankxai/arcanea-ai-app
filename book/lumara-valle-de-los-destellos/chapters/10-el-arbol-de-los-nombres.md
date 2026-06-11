@@ -1,5 +1,7 @@
 # LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
+![Capítulo 10: El árbol de los nombres](/images/books/lumara-valle-de-los-destellos-ch10.png)
+
 ## Capítulo 10: El árbol de los nombres
 *(The Tree of Names)*
 

@@ -55,6 +55,7 @@ const COVER_MAP: Record<string, string> = {
   'song-of-van-linh': '/images/books/song-of-van-linh-cover.png',
   'las-tierras-de-luz': '/images/books/las-tierras-de-luz-cover-v2.png',
   'das-maedchen-drei-sprachen': '/images/books/das-maedchen-drei-sprachen-cover-v2.png',
+  'lumara-valle-de-los-destellos': '/images/books/lumara-valle-de-los-destellos-cover-v2.png',
   'russian-from-tashkent': '/images/books/russian-from-tashkent-cover-nb2.png',
 };
 

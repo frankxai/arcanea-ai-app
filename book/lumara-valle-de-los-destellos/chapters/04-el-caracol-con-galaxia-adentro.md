@@ -1,5 +1,7 @@
 # LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
+![Capítulo 4: El caracol con galaxia adentro](/images/books/lumara-valle-de-los-destellos-ch04.png)
+
 ## Capítulo 4: El caracol con galaxia adentro
 *(The Snail with a Galaxy Inside)*
 

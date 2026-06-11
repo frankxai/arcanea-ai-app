@@ -113,15 +113,12 @@ export default function ChatPage() {
   const search = useChatSearch(conversation.messages);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Server key detection + persistence. A failed probe is non-fatal (the UI
-  // falls back to BYOK messaging) but is never swallowed silently.
+  // Server key detection + persistence
   useEffect(() => {
     fetch('/api/ai/chat')
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => { if (data?.status === 'ok') setServerHasKeys(true); })
-      .catch((e) => {
-        console.warn('[chat] server key probe failed; assuming BYOK mode:', e);
-      });
+      .catch(() => {});
   }, []);
   useEffect(() => {
     if (conversation.messages.length > 0 && !conversation.isLoading) {
@@ -489,11 +486,6 @@ export default function ChatPage() {
           conversation.setBeamPrompt(conversation.input.trim() || 'Compare models');
           conversation.setCommandPaletteOpen(false);
         }}
-        onPublishPage={
-          conversation.messages.length > 0
-            ? () => { setShowExport(true); conversation.setCommandPaletteOpen(false); }
-            : undefined
-        }
       />
 
       {conversation.beamPrompt && (

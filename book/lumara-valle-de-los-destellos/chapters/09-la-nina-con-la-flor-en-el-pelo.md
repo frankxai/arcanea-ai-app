@@ -1,5 +1,7 @@
 # LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
+![Capítulo 9: La niña con la flor en el pelo](/images/books/lumara-valle-de-los-destellos-ch09.png)
+
 ## Capítulo 9: La niña con la flor en el pelo
 *(The Girl with the Flower in Her Hair)*
 

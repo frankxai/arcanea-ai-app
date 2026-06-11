@@ -1,5 +1,7 @@
 # LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
+![Capítulo 6: La mariposa que pinta el aire](/images/books/lumara-valle-de-los-destellos-ch06.png)
+
 ## Capítulo 6: La mariposa que pinta el aire
 *(The Butterfly That Paints the Air)*
 

@@ -1,5 +1,7 @@
 # LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
+![Capítulo 3: El colibrí que canta colores](/images/books/lumara-valle-de-los-destellos-ch03.png)
+
 ## Capítulo 3: El colibrí que canta colores
 *(The Hummingbird Who Sings Colors)*
 

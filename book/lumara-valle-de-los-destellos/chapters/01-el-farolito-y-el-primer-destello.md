@@ -1,5 +1,7 @@
 # LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
+![Capítulo 1: El farolito y el primer destello](/images/books/lumara-valle-de-los-destellos-ch01.png)
+
 ## Capítulo 1: El farolito y el primer destello
 *(The Little Lamp and the First Spark of Light)*
 

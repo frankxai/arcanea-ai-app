@@ -1,5 +1,7 @@
 # LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
+![Capítulo 7: La lechuza y el silencio](/images/books/lumara-valle-de-los-destellos-ch07.png)
+
 ## Capítulo 7: La lechuza y el silencio
 *(The Owl and the Silence)*
 

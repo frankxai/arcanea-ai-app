@@ -1,5 +1,7 @@
 # LUMARA — EL VALLE DONDE LOS DESTELLOS CRECEN COMO FLORES
 
+![Capítulo 2: El río de cristal](/images/books/lumara-valle-de-los-destellos-ch02.png)
+
 ## Capítulo 2: El río de cristal
 *(The Crystal River)*
 
