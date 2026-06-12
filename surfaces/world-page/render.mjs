@@ -35,6 +35,7 @@ export function renderWorldPage(world, tokensCss) {
   const [p0, p1, p2 = p1, p3 = p0, accent = "#ffd700"] = palette;
   const characters = docs(world.files, "characters/");
   const locations = docs(world.files, "locations/");
+  const emergent = docs(world.files, "canon/").filter((d) => Number(d.data.canonLevel || 1) >= 2);
   const proof = (m.provenance || [])[0];
   const shortHash = proof ? proof.contentHash.replace("sha256:", "").slice(0, 12) : null;
 
@@ -51,10 +52,11 @@ export function renderWorldPage(world, tokensCss) {
     .map((c) => {
       const el = (c.data.element || "").toLowerCase();
       const v = ELEMENT_VAR[el] || "--arc-brand-atlantean-teal";
+      const evo = c.data.evolution ? `<span class="chip evo">🌱 ${esc(c.data.evolution)}</span>` : "";
       return `<article class="card char" style="--accent: var(${v})">
         <div class="char-orb"></div>
         <h3>${esc(c.data.name || "")}</h3>
-        <span class="chip">${esc(c.data.role || "inhabitant")}${el ? ` · ${esc(el)}` : ""}</span>
+        <span class="chip">${esc(c.data.role || "inhabitant")}${el ? ` · ${esc(el)}` : ""}</span>${evo}
         <p>${esc(c.lead)}</p>
       </article>`;
     })
@@ -173,6 +175,10 @@ section { padding: 92px 0; }
   padding: 4px 11px; border-radius: var(--arc-radius-full); border: 1px solid var(--arc-cosmic-border-bright); }
 .card p { color: var(--arc-text-secondary); }
 .loc h3 { margin-bottom: 12px; }
+.chip.evo { margin-left: 8px; color: var(--arc-wind); border-color: color-mix(in srgb, var(--arc-wind) 40%, transparent); }
+.live { border-color: color-mix(in srgb, var(--arc-wind) 28%, var(--arc-cosmic-border-bright)); }
+.live h3 { font-family: var(--arc-font-editorial); font-weight: 400; font-size: 1.5rem; margin: 12px 0 10px; }
+.living-note { font-family: var(--arc-font-editorial); font-style: italic; font-size: 1.15rem; color: var(--arc-text-secondary); margin: -18px 0 30px; }
 
 /* Soundtrack */
 .sound { display: flex; gap: 26px; align-items: center; }
@@ -222,6 +228,18 @@ ${proof ? `<div class="proof"><span class="gem">◆</span> PROVEN ON ${esc(proof
   ${locCards ? `<section><div class="shead"><h2>Places</h2><span class="rule"></span></div><div class="grid cols-2">${locCards}</div></section>` : ""}
 
   ${m.theme?.prompt ? `<section><div class="shead"><h2>The Soundtrack</h2><span class="rule"></span></div><div class="card sound"><div class="eq"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p class="prompt">${esc(m.theme.prompt)}</p></div></section>` : ""}
+
+  ${emergent.length ? `<section><div class="shead"><h2>The Living Canon</h2><span class="rule"></span></div>
+    <p class="living-note">This world is alive. What is lived in it becomes canon — written by no one, earned by everyone.</p>
+    <div class="grid cols-2">${emergent
+      .map(
+        (d) => `<article class="card live">
+        <span class="chip evo">🌱 emergent · level ${esc(String(d.data.canonLevel))}</span>
+        <h3>${esc((d.data.subject || "").toString() || d.path.split("/").pop().replace(/\\.mdx?$/, ""))}</h3>
+        <p>${esc(d.lead)}</p>
+      </article>`,
+      )
+      .join("")}</div></section>` : ""}
 </main>
 
 <footer class="wrap">

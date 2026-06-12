@@ -4,6 +4,8 @@ role: keeper
 element: water
 visibility: public
 canonLevel: 1
+evolution: transformed
+evolvedAt: 2026-06-12T00:39:35.081Z
 ---
 
 # Vael the Tidekeeper
@@ -12,3 +14,10 @@ The last person who remembers the city before it drowned — and refuses to spen
 
 ## Backstory
 Vael was a child when the Flood came, carried out on the shoulders of a mother whose voice she has guarded ever since. She became Tidekeeper not by appointment but by endurance — outlasting every rival who sold their oldest memories to survive a hard winter. Now her wealth is also her wound: she is the richest soul in the deep precisely because she has spent the least, and the loneliest for the same reason.
+
+## Evolution
+
+*transformed* — Shaped by 3 remembered moments, drawn toward vael and aloud.
+
+- Interactions: 3
+- Drawn toward: vael, aloud, century, first

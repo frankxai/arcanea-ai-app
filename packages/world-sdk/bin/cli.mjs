@@ -13,6 +13,7 @@ import { contentHash } from "../src/contenthash.mjs";
 import { buildIndex } from "../src/index-build.mjs";
 import { claimWorldProof, mockChain } from "../src/proof.mjs";
 import { renderBook } from "../src/render-book.mjs";
+import { recordMemory, evolveCharacter, evolveWorld } from "../src/evolve.mjs";
 import { slugify } from "../src/manifest.mjs";
 
 const argv = process.argv.slice(2);
@@ -94,6 +95,28 @@ switch (cmd) {
     console.log(`📖 rendered book (${target}) → ${outFile} (${bytes} bytes)`);
     break;
   }
+  case "remember": {
+    const [dir, character, content, salience] = rest;
+    if (!dir || !character || !content) die('usage: arcanea-world remember <dir> <character> "<moment>" [salience]');
+    const rec = await recordMemory(dir, { character, content, salience: salience ? Number(salience) : undefined });
+    console.log(`🫧 ${rec.character} will remember: "${rec.content}" (salience ${rec.salience})`);
+    break;
+  }
+  case "evolve": {
+    const dir = rest[0];
+    if (!dir) die("usage: arcanea-world evolve <dir> [character]");
+    if (rest[1]) {
+      const res = await evolveCharacter({ dir, character: rest[1] });
+      if (!res.evolved) die(`nothing to evolve: ${res.reason}`);
+      console.log(`🌱 ${rest[1]} is ${res.state.disposition} — ${res.state.summary}`);
+      console.log(`   canon grew → ${res.loreFile}`);
+    } else {
+      const { evolved } = await evolveWorld({ dir });
+      if (!evolved.length) die("nothing to evolve: no memories recorded");
+      for (const e of evolved) console.log(`🌱 ${e.character} is ${e.state.disposition} → ${e.loreFile}`);
+    }
+    break;
+  }
   default:
-    die('commands: create "<sentence>" [dir] | ingest <dir> <character.json> [imagePath] | render --target book <dir> [bookSlug] [--format md|html|pdf] | validate <dir> | hash <dir> | index <dir> | claim <dir>');
+    die('commands: create "<sentence>" [dir] | ingest <dir> <character.json> [imagePath] | render --target book <dir> [bookSlug] [--format md|html|pdf] | remember <dir> <character> "<moment>" [salience] | evolve <dir> [character] | validate <dir> | hash <dir> | index <dir> | claim <dir>');
 }
