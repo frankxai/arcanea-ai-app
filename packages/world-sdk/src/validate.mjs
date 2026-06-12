@@ -7,7 +7,7 @@ const SEMVER_RE = /^\d+\.\d+\.\d+$/;
 const MOODS = new Set(["fantasy", "sci-fi", "horror", "steampunk", "mythological", "cosmic", "other"]);
 const VIS = new Set(["public", "unlisted", "private"]);
 const HOSTING = new Set(["repo", "hosted_private", "hosted_public"]);
-const HARNESSES = new Set(["claude", "codex", "gemini", "antigravity", "any"]);
+const HARNESSES = new Set(["claude", "codex", "gemini", "antigravity", "grok", "any"]);
 
 /** @returns {{valid:boolean, errors:string[]}} */
 export function validateManifest(m) {

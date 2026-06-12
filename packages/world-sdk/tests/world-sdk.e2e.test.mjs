@@ -12,6 +12,7 @@ import { buildIndex } from "../src/index-build.mjs";
 import { handlePush, verifySignature } from "../src/webhook.mjs";
 import { assignmentsFor, addCharacter } from "../src/harness.mjs";
 import { claimWorldProof, mockChain } from "../src/proof.mjs";
+import { recordMemory, listMemories, distillOffline, evolve, evolveCharacter } from "../src/evolution.mjs";
 
 const SENTENCE = "a drowned city where memory is currency";
 const NOW = "2026-06-07T00:00:00.000Z";
@@ -116,4 +117,41 @@ test("claim proof appends provenance; content hash stable across claim", async (
   const hashAfter = contentHash(after.files, after.manifest);
   assert.equal(hashBefore, hashAfter, "provenance + wallet excluded from content hash");
   assert.ok(validateManifest(after.manifest).valid, "manifest valid after claim");
+});
+
+test("recordMemory writes to .arcanea/memories (never affects public content hash)", async () => {
+  const dir = await tmp();
+  await createWorld(dir, SENTENCE, opts);
+  const before = await readWorld(dir);
+  const h0 = contentHash(before.files, before.manifest);
+  await recordMemory(dir, { characterId: "sister-lethe", content: "She opened the tide-gate for a dying diver.", salience: 0.9 });
+  await recordMemory(dir, { content: "She spoke her mother's voice and did not sell it.", salience: 0.85, meaningImpact: "core" });
+  const mems = await listMemories(dir);
+  assert.equal(mems.length, 2);
+  const after = await readWorld(dir);
+  const h1 = contentHash(after.files, after.manifest);
+  assert.equal(h0, h1, "memories in .arcanea/ must not move the public hash");
+  const d = distillOffline(mems);
+  assert.ok(d.includes("tide-gate") || d.includes("mother"), "distill produces salient summary");
+});
+
+test("evolveCharacter updates char + appends public canonLevel-2 lore (hash moves; lived-in canon grows)", async () => {
+  const dir = await tmp();
+  await createWorld(dir, SENTENCE, opts);
+  // pick first actual char file created by genesis/scaffold
+  const w0 = await readWorld(dir);
+  const firstChar = w0.files.find((f) => f.path.startsWith("characters/"));
+  const slug = firstChar ? firstChar.path.split("/")[1].replace(/\.md$/, "") : "wanderer";
+  await recordMemory(dir, { characterId: slug, content: "She opened the tide-gate and the drowned answered.", salience: 0.95 });
+  await recordMemory(dir, { characterId: slug, content: "Memory became currency; she refused the sale.", salience: 0.9 });
+  const { character, lore } = await evolveCharacter(dir, slug, { summary: "The gate changed her. She carries the voices now." });
+  assert.ok(character.startsWith("characters/"));
+  assert.ok(lore.startsWith("canon/"));
+  const w1 = await readWorld(dir);
+  const charFile = w1.files.find((f) => f.path === character);
+  assert.ok(charFile && charFile.bytes.toString().includes("Evolution"), "char has Evolution section");
+  const loreFile = w1.files.find((f) => f.path === lore);
+  assert.ok(loreFile && loreFile.bytes.toString().includes("Earned by everyone"), "public lore level-2 added");
+  const { valid } = validateManifest(w1.manifest);
+  assert.ok(valid);
 });

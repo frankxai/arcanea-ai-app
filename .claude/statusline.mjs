@@ -12,7 +12,8 @@
  */
 
 import { spawnSync } from 'child_process';
-import { readFileSync, statSync, existsSync, writeFileSync, mkdirSync } from 'fs';
+import { readFileSync, statSync, existsSync, writeFileSync, mkdirSync, readdirSync } from 'fs';
+import * as path from 'path';
 
 // ─── Utils ───────────────────────────────────────────────────────────────────
 
@@ -165,6 +166,70 @@ function getUniverse() {
   return { lore, agents };
 }
 
+// ─── World Repo State (GitHub-central user worlds + Grok-powered canon) ────
+// Detects world.arcanea.json (per WORLD_REPO_STANDARD). Shows person's living world state.
+// Complementary to app visual UI: this is for the coding agent / terminal builder loop.
+// App/PWA = nice visual consume + character edit; GitHub repo = sovereign source + agent editable.
+
+function findWorldManifest(cwd) {
+  let dir = cwd || process.cwd();
+  for (let i = 0; i < 6; i++) {
+    const candidate = path.join(dir, 'world.arcanea.json');
+    if (existsSync(candidate)) return candidate;
+    const parent = path.dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
+  return null;
+}
+
+function getWorldState() {
+  const manifestPath = findWorldManifest();
+  if (!manifestPath) return null;
+  try {
+    const m = JSON.parse(readFileSync(manifestPath, 'utf8'));
+    const worldDir = path.dirname(manifestPath);
+    const charDir = path.join(worldDir, m.content?.characters || 'characters');
+    const bookDir = path.join(worldDir, m.content?.books || 'books');
+    const mediaDir = path.join(worldDir, m.content?.media || 'media');
+    const agentsList = m.agents || [];
+    const grokAgents = agentsList.filter(a => a.harness === 'grok' || (a.skill || '').includes('grok')).length;
+    let charCount = 0;
+    if (existsSync(charDir)) { try { charCount = readdirSync(charDir).filter(f => f.endsWith('.md')).length; } catch {} }
+    else if (m.characters?.length) charCount = m.characters.length;
+    let bookCount = 0;
+    if (existsSync(bookDir)) { try { bookCount = readdirSync(bookDir).filter(f => f.endsWith('.md') || f.endsWith('.json')).length; } catch {} }
+    let mediaCount = 0;
+    let hasVideo = false;
+    if (existsSync(mediaDir)) {
+      try {
+        const files = readdirSync(mediaDir);
+        mediaCount = files.length;
+        hasVideo = files.some(f => /\.(mp4|mov|webm)$/i.test(f));
+      } catch {}
+    }
+    let gh = '';
+    try {
+      const rem = cachedSh('world-remote', `git -C "${worldDir}" remote get-url origin 2>/dev/null`, 60_000, 400) || '';
+      gh = rem.match(/[:/]([^/]+\/[^/.]+)(\.git)?$/)?.[1] || '';
+    } catch {}
+    const palette = (m.visualDna?.palette || []).slice(0, 4).map(p => p.replace('#','')).join(' ');
+    return {
+      name: m.name || m.slug || 'World',
+      premise: (m.premise || m.genesisPrompt || '').slice(0, 60),
+      chars: charCount,
+      books: bookCount,
+      media: mediaCount,
+      hasVideo,
+      grok: grokAgents,
+      gh,
+      palette,
+      hosting: m.hosting || 'repo',
+      visibility: m.visibility || 'public'
+    };
+  } catch { return null; }
+}
+
 // ─── Arcanea Buddy (SIS Integration) ────────────────────────────────────
 
 const BUDDY_ICONS = {
@@ -303,6 +368,7 @@ function statusline(data) {
   const gateName   = Object.entries(GATES).find(([,v]) => v.guardian === guardian)?.[0] ?? 'Source';
   const arc        = getArcPhase(toolCount, dirtyN, elapsedMin, linesAdded, linesRemoved);
   const universe   = getUniverse();
+  const world      = getWorldState();
   const mcpCount   = getMcpCount();
   const commits    = getCommitsToday();
   const lastCommit = getLastCommit();
@@ -336,6 +402,15 @@ function statusline(data) {
   }
 
   parts2.push(`📖${universe.lore} 🤖${universe.agents} ⚙${mcpCount}`);
+
+  // World state (GitHub sovereign + visual canon; complementary to app UI)
+  if (world) {
+    const wvis = world.hasVideo ? '🎬' : (world.media > 0 ? '🖼' : '');
+    const wg = world.grok > 0 ? ` ${C.cyan}grok${world.grok > 1 ? '×'+world.grok : ''}${C.reset}` : '';
+    const wgh = world.gh ? ` ⎇${world.gh}` : '';
+    const wpal = world.palette ? ` [${world.palette}]` : '';
+    parts2.push(`${C.bold}🌍${C.reset} ${world.name} | ${world.chars}c ${world.books}b ${wvis}${wg}${wgh}${wpal}`);
+  }
 
   // ── Line 3: Momentum + Rate Limits ───────────────────────────────────────
   const parts3 = [];
