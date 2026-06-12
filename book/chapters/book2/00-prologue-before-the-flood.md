@@ -1,6 +1,6 @@
 # PROLOGUE: BEFORE THE FLOOD
 
-*Thalassara — The Atlantean Depths*
+*Thal'Maris — The Abyssal Athenaeum*
 *The First Year of the Fourth Age*
 *Two Thousand Years Before*
 
@@ -34,7 +34,7 @@ Veradis knew every volume. She had read the Collection in its entirety three tim
 
 She understood it now. She had understood it then, too. She disagreed.
 
-The first volume, opening with the slight resistance of a book that had been opened many times and resisted gently because it had learned to expect handling: the founding documents of the Veltherys research tradition, which predated the Atlantean Depths by several hundred years and had been moved here for safekeeping in the second century of the Third Age, when the Depths became the world's primary repository of historical scholarship. The original archivist who had brought the collection here had noted in his transfer documentation: *these are the most complete records of multi-element channeling in existence. They should be protected rather than hidden, which is why I am bringing them here rather than elsewhere.*
+The first volume, opening with the slight resistance of a book that had been opened many times and resisted gently because it had learned to expect handling: the founding documents of the Veltherys research tradition, which predated the Abyssal Athenaeum by several hundred years and had been moved here for safekeeping in the second century of the Third Age, when the Depths became the world's primary repository of historical scholarship. The original archivist who had brought the collection here had noted in his transfer documentation: *these are the most complete records of multi-element channeling in existence. They should be protected rather than hidden, which is why I am bringing them here rather than elsewhere.*
 
 Veradis stood in the amber light and held the first volume and thought about the difference between protection and hiding, and whether what she was about to do could be called either.
 
@@ -104,7 +104,7 @@ The question was where to put it.
 
 The problem with hiding something in the Archive was the Archive. It remembered. Everything in the Tide Archives was cross-referenced, catalogued, indexed, and tied into the living memory network that the Academy's Water-mages maintained. Concealment in the Archive was, eventually, discovery in the Archive. Something could be moved to restricted access. Something could be given a misleading title. But the Archive itself knew what it contained, and the Archive told, given the right question asked by the right practitioner.
 
-She could take the collection out of the Archive entirely. Hide it somewhere in Thalassara, or above the surface in a location she controlled. But then she was creating a single point of failure: if she died, the collection was lost to anyone who didn't know where she had put it.
+She could take the collection out of the Archive entirely. Hide it somewhere in Thal'Maris, or above the surface in a location she controlled. But then she was creating a single point of failure: if she died, the collection was lost to anyone who didn't know where she had put it.
 
 What she needed was a hiding place that would persist past her death, that the Archive itself would not reveal to casual search, but that the right person could find given the right key.
 
@@ -178,7 +178,7 @@ She hoped they would be patient. She hoped they would know that still water ran 
 
 She hoped, in the way she had always hoped, in the specific and particular way of a person who does small careful things in the dark against the larger carelessness of the world: that it would be enough.
 
-*Outside, in the waters above Thalassara, the Great Turning continued. The seasonal current shifted direction. Something in the deep substrate, far below where even the Dreaming Pools could perceive, began — in the way of all deep things — to wait.*
+*Outside, in the waters above Thal'Maris, the Great Turning continued. The seasonal current shifted direction. Something in the deep substrate, far below where even the Dreaming Pools could perceive, began — in the way of all deep things — to wait.*
 
 ---
 

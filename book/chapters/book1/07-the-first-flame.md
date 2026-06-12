@@ -6,7 +6,7 @@
 
 # Chapter Seven: The First Flame
 
-The Draconian Forge was the loudest place Kael had ever been in his life.
+The Draconis Forge was the loudest place Kael had ever been in his life.
 
 Not loud the way storms were loud — not the undifferentiated roar that overwhelmed thought. This was organized noise. The percussion of a place where things were being made: hammer on metal, metal on stone, the sustained rush of channeled Fire held at precise temperatures, the back-and-forth shout of people working together at close quarters on problems that required immediate communication. Layered over all of it, from somewhere deeper in the mountain — the Forge was also a mountain, the Caldera of Ignis dormant and enormous around the campus's inner-ring structure — the low, continuous, bone-felt vibration of magma.
 
@@ -36,7 +36,7 @@ He looked at Kael the way he had looked at Kael in the Convocation — not with 
 
 "Warden."
 
-"How was your time at Luminari?"
+"How was your time at the Luminary?"
 
 "Educational."
 
@@ -48,7 +48,7 @@ Something in Ashcroft's expression acknowledged that this was an accurate and al
 
 "He's harder to break than he looks."
 
-"Most things are." Ashcroft looked at Kael again. "The first lesson starts at the second bell tomorrow morning. Tonight, Taelis will introduce you to the common rooms and the rules. There are three rules." He turned back toward the deep forge. "Don't start fires you can't finish. Don't finish fights that haven't started. And don't tell anyone you were at the Luminari campus before you came here. The Kindlings have feelings about the order of things."
+"Most things are." Ashcroft looked at Kael again. "The first lesson starts at the second bell tomorrow morning. Tonight, Taelis will introduce you to the common rooms and the rules. There are three rules." He turned back toward the deep forge. "Don't start fires you can't finish. Don't finish fights that haven't started. And don't tell anyone you were at the Luminary campus before you came here. The Kindlings have feelings about the order of things."
 
 "Should I lie?" Kael asked.
 
@@ -62,11 +62,11 @@ Taelis looked at Kael. His expression had the quality of someone watching a thin
 
 ---
 
-The Kindlings' common room was carved out of the Forge's second ring and ran in a long arc around the southern curve of the building. It felt like the inside of a forge — warm even when no channeling was happening, the walls dark basalt holding heat, the furniture scarred by use in ways that suggested the use had been enthusiastic and not always intentional. There were weapons mounted on the walls, which the Luminari campus did not have, and burn marks on the ceiling, which the Luminari campus also did not have, and a quality of organized chaos that felt, to Kael, unexpectedly comfortable after the measured precision of the upper campus.
+The Kindlings' common room was carved out of the Forge's second ring and ran in a long arc around the southern curve of the building. It felt like the inside of a forge — warm even when no channeling was happening, the walls dark basalt holding heat, the furniture scarred by use in ways that suggested the use had been enthusiastic and not always intentional. There were weapons mounted on the walls, which the Luminary campus did not have, and burn marks on the ceiling, which the Luminary campus also did not have, and a quality of organized chaos that felt, to Kael, unexpectedly comfortable after the measured precision of the upper campus.
 
 He was looked at when he entered. He was used to being looked at.
 
-The attention here was different from the Luminari attention. Less wary, more direct — the kind that assessed rather than managed. A few students went back to what they were doing. Several did not.
+The attention here was different from the Luminary attention. Less wary, more direct — the kind that assessed rather than managed. A few students went back to what they were doing. Several did not.
 
 "That's him," said a voice from across the room. Not particularly quiet. Not intended to be.
 
@@ -84,13 +84,13 @@ A woman — perhaps twenty-two, with the height and scarred hands of someone who
 
 ---
 
-The others were four students who had, apparently, been assigned to Kael's cohort for the Triennium rotation. Two were from the Forge's regular third-year cohort — Daven Ashkell, quiet and precise in the way that sometimes meant shyness and sometimes meant patience, with Earth-and-Water affinity that showed as a faint blue-green in the calluses on their hands; and Mara Tisk, who was energetically charming in the manner of someone who had discovered early that charm was useful and had developed it into genuine warmth. The other two were Luminari students who had, apparently, been dispatched to the Forge as part of the Triennium's cross-training element.
+The others were four students who had, apparently, been assigned to Kael's cohort for the Triennium rotation. Two were from the Forge's regular third-year cohort — Daven Ashkell, quiet and precise in the way that sometimes meant shyness and sometimes meant patience, with Earth-and-Water affinity that showed as a faint blue-green in the calluses on their hands; and Mara Tisk, who was energetically charming in the manner of someone who had discovered early that charm was useful and had developed it into genuine warmth. The other two were Luminary students who had, apparently, been dispatched to the Forge as part of the Triennium's cross-training element.
 
 Riven Ashkara was one of them.
 
 "You're here," Kael said.
 
-"The Convocation decided that the Luminari contingent in the Triennium should include someone who has been working with you on Foundation technique." Riven was in Luminari white, which stood out in the Forge's ember-dark common room like a lit lamp in a cave. He appeared not to find this uncomfortable. "Additionally, I requested the placement."
+"The Convocation decided that the Luminary contingent in the Triennium should include someone who has been working with you on Foundation technique." Riven was in Luminary white, which stood out in the Forge's ember-dark common room like a lit lamp in a cave. He appeared not to find this uncomfortable. "Additionally, I requested the placement."
 
 This was said in a tone that indicated no further elaboration would be forthcoming on the subject of why he had requested it. Kael filed it.
 
@@ -110,7 +110,7 @@ The instructor was not Ashcroft and was not Taelis. She was a compact woman name
 
 "Fire," she said, standing at the arena's center. "What is it?"
 
-Responses from the students: transformation, energy, will. The answers from the Luminari contingent were more theory-adjacent. The Draconian students' answers were shorter and more physical.
+Responses from the students: transformation, energy, will. The answers from the Luminary contingent were more theory-adjacent. The Forge students' answers were shorter and more physical.
 
 Hael listened to all of them. "Wrong," she said. "Not wrong-incorrect. Wrong-insufficient." She looked around the arena. "Fire is what you're willing to burn."
 
@@ -120,7 +120,7 @@ She paused to let this settle.
 
 She began the lesson.
 
-Fire instruction at the Draconian Forge was physical in a way that Luminari's Earth instruction had been architectural. Where Cors had started from the mind — awareness, structure, conceptual contact — Hael started from the body. The basic form was not a stance but a movement: a sustained rotation of the torso that created a heat-differential in the core, a specific combination of muscle engagement and held breath that, in people with Fire affinity, stimulated the element into activity. Not channeled Fire — the body's own Fire, the metabolic heat at the source. Most people never noticed it. Here, the instruction was about noticing it.
+Fire instruction at the Draconis Forge was physical in a way that the Luminary's Earth instruction had been architectural. Where Cors had started from the mind — awareness, structure, conceptual contact — Hael started from the body. The basic form was not a stance but a movement: a sustained rotation of the torso that created a heat-differential in the core, a specific combination of muscle engagement and held breath that, in people with Fire affinity, stimulated the element into activity. Not channeled Fire — the body's own Fire, the metabolic heat at the source. Most people never noticed it. Here, the instruction was about noticing it.
 
 Then: feeding it.
 
@@ -184,7 +184,7 @@ He didn't, but he said: "Tell me."
 
 "Why Earth?"
 
-She looked at him. The question was not rhetorical and she appeared to understand that. "Because your Earth work is new and you've been developing it in the Luminari style, which I have five years on you in, and because the Foundation Gate is mine. I built mine through work. I want to know if what you have holds up against what I've done." She paused. "Not because I think I'll win. Because I need to know if the work means anything."
+She looked at him. The question was not rhetorical and she appeared to understand that. "Because your Earth work is new and you've been developing it in the Luminary style, which I have five years on you in, and because the Foundation Gate is mine. I built mine through work. I want to know if what you have holds up against what I've done." She paused. "Not because I think I'll win. Because I need to know if the work means anything."
 
 This was the most honest thing anyone at the Forge had said to him. It had the quality of Riven's honesty on the lighthouse steps — not warmth, but precision; the truth as a form of respect.
 
@@ -198,7 +198,7 @@ This was the most honest thing anyone at the Forge had said to him. It had the q
 
 "Then I agree."
 
-She looked at him one more moment. Something in her expression was calibrating — not adjusting, exactly, but moving into a new position. "You're not what I thought you'd be," she said. "The stories that came down from the Luminari campus—"
+She looked at him one more moment. Something in her expression was calibrating — not adjusting, exactly, but moving into a new position. "You're not what I thought you'd be," she said. "The stories that came down from the Luminary campus—"
 
 "What stories?"
 
@@ -244,13 +244,13 @@ Not at him. At his contact. Earth channeling in combat context was not elemental
 
 He deepened.
 
-The mountain received it without complaint. The Void-node above the deep-sealed chamber was here too, diffusely — the ley-energy of the Forge campus ran through the same network as the Luminari campus. He was not in the Luminari's Void-depth but the stone was familiar. He had been in stone like this for four days. He had sat on the floor of the chamber beneath the Luminari campus and felt the geological patience of rock that had been waiting since before time had names.
+The mountain received it without complaint. The Void-node above the deep-sealed chamber was here too, diffusely — the ley-energy of the Forge campus ran through the same network as the Luminary campus. He was not in the Luminary's Void-depth but the stone was familiar. He had been in stone like this for four days. He had sat on the floor of the chamber beneath the Luminary campus and felt the geological patience of rock that had been waiting since before time had names.
 
 He let the mountain be the mountain.
 
 Sera increased pressure again. Her technique was precise, professional, elegant — she was not wasting energy, she was spending it with a craftsman's economy. Under his feet the floor felt like it was increasing in weight, gravity pulling down harder on the specific point of his contact.
 
-His knees were shaking. Not from the channeling — from the physical effort of standing against the increasing floor-pressure. This was what she had meant about his technique: the Luminari method was built for awareness and contact, not for physical resistance. Cors had said this. His architecture was wrong for the load.
+His knees were shaking. Not from the channeling — from the physical effort of standing against the increasing floor-pressure. This was what she had meant about his technique: the Luminary method was built for awareness and contact, not for physical resistance. Cors had said this. His architecture was wrong for the load.
 
 But.
 
@@ -274,7 +274,7 @@ She was right that his technique was newer. She was right that she was better at
 
 But the mountain was enormous.
 
-He had not been connecting to the surface layer of the basalt. He had been connecting, since the second day at the Luminari campus, to the deep ley-core — the same network that ran under the sealed chamber, under the Void-node, under every campus they had visited. When Sera's contact tried to go beneath his, it met the mountain's deep root and the mountain's deep root, patient and geological and uninterested in human contests about who owned the surface, simply continued being the mountain.
+He had not been connecting to the surface layer of the basalt. He had been connecting, since the second day at the Luminary campus, to the deep ley-core — the same network that ran under the sealed chamber, under the Void-node, under every campus they had visited. When Sera's contact tried to go beneath his, it met the mountain's deep root and the mountain's deep root, patient and geological and uninterested in human contests about who owned the surface, simply continued being the mountain.
 
 The floor held him.
 
@@ -314,7 +314,7 @@ He looked up.
 
 Thirty people looking at him.
 
-Some expressions were recognizable: alarm, recalibration, people revising a model. Most were new — not the wary assessment of the Luminari campus, not the cautious management of the Convocation. The Draconian expressions were more direct.
+Some expressions were recognizable: alarm, recalibration, people revising a model. Most were new — not the wary assessment of the Luminary campus, not the cautious management of the Convocation. The Draconian expressions were more direct.
 
 They were looking at him the way you look at something that has shown you a truth. That has scared you. That you cannot look away from.
 
@@ -390,7 +390,7 @@ Riven sat down across from him without ceremony. He had a book, which he did not
 
 "Yes."
 
-"The Luminari theory on Five-Fold channeling predicts that the Void element will always attempt to integrate with the others. That this is the fundamental instability of the configuration." He paused. "I think the Luminari theory is treating the integration as the problem."
+"The Luminary theory on Five-Fold channeling predicts that the Void element will always attempt to integrate with the others. That this is the fundamental instability of the configuration." He paused. "I think the Luminary theory is treating the integration as the problem."
 
 "Instead of?"
 
@@ -430,7 +430,7 @@ Kael looked at the page. The author's language was old, formal, the Second Age a
 
 Kael read it twice.
 
-Outside the common room, deep in the Forge, magma moved in its channels. Above the arena, the sky was the particular dark of a mountain night without the Luminari's permanent dawn. His hands were on the table, unscarred by the duel, the scar-lines from eleven years ago still exactly what they had always been.
+Outside the common room, deep in the Forge, magma moved in its channels. Above the arena, the sky was the particular dark of a mountain night without the Luminary's permanent dawn. His hands were on the table, unscarred by the duel, the scar-lines from eleven years ago still exactly what they had always been.
 
 He thought: *I was right.* In Malachar's hand, in the deep chamber, carved alone.
 

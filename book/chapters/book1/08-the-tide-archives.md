@@ -34,7 +34,7 @@ She looked at his hands. At the absence of gloves. Something moved in her expres
 
 The descent happened in stages.
 
-The first stage was the Entry Dome — a chamber the size of the Luminari atrium, air-filled and lit by the bioluminescence of the coral walls, where new students received the Atlantean breathing modification: a gentle Water-channeling technique that Sela administered with the same precision she brought to everything, a pattern drawn in the air just above Kael's sternum that settled into the body like a key into a lock and made the lungs able to process the deep-water air. Not underwater breathing — nothing so dramatic. Simply the capacity to function at pressures that would otherwise produce the symptoms of surfacing-too-fast in reverse.
+The first stage was the Entry Dome — a chamber the size of the Luminary atrium, air-filled and lit by the bioluminescence of the coral walls, where new students received the Atlantean breathing modification: a gentle Water-channeling technique that Sela administered with the same precision she brought to everything, a pattern drawn in the air just above Kael's sternum that settled into the body like a key into a lock and made the lungs able to process the deep-water air. Not underwater breathing — nothing so dramatic. Simply the capacity to function at pressures that would otherwise produce the symptoms of surfacing-too-fast in reverse.
 
 "This will last a week," she said. "After that you will need to reapply it or ascend to the upper levels before sleep."
 
@@ -54,7 +54,7 @@ Below the ocean floor, the world changed.
 
 ---
 
-The Atlantean Depths were a city the way the ocean was water — technically accurate, inadequate in every important way.
+The Abyssal Athenaeum were a city the way the ocean was water — technically accurate, inadequate in every important way.
 
 The Depths occupied a section of the Meridian Trench that nature had, over geological time, produced as a series of enormous interconnected caverns in the seafloor limestone. The Atlanteans had been living there for twelve hundred years, and the twelve hundred years of habitation showed not as construction but as growth: the coral architecture that made up the building stock was alive, continually growing, shaped by generations of Water-mages into forms that served human needs while remaining functionally oceanic. The walls breathed. The floors grew. The light — cold blue and silver and the deep teal that Kael would later understand was bioluminescence from a species of coral cultivated for nothing else — moved with the slow pulsation of living things.
 
@@ -86,9 +86,9 @@ Corenne guided them to the third level, which was where the Archives began.
 
 The Tide Archives were the Depths' primary reason for existing, which was its own kind of institutional logic: the city had grown around the library rather than the other way. The third level was devoted entirely to storage and scholarship. The coral walls here were dry — or as dry as anything got at this depth, maintained by a continuous low-level channeling that pulled moisture from the air and directed it into the floor drainage. The effect was a dryness that felt unnatural in context, like finding a warm room inside a glacier.
 
-The Archives themselves were not arranged by subject, which had struck every outside scholar who had ever visited as a significant organizational failure, and which the Atlanteans had been defending as a deliberate philosophical position for six hundred years. "Knowledge is not a tree," Tidecaller Pelagius had written, in the official response to the last Luminari request for a categorical index. "It is a current. You cannot separate a current into labeled segments without killing it. You can only learn to navigate."
+The Archives themselves were not arranged by subject, which had struck every outside scholar who had ever visited as a significant organizational failure, and which the Atlanteans had been defending as a deliberate philosophical position for six hundred years. "Knowledge is not a tree," Tidecaller Pelagius had written, in the official response to the last the Luminary request for a categorical index. "It is a current. You cannot separate a current into labeled segments without killing it. You can only learn to navigate."
 
-Navigation, Sela explained as she led them through corridors that branched and merged without obvious pattern, was a skill taught to Atlantean students in their second year. In their first year, they got lost. The getting-lost was part of the curriculum.
+Navigation, Sela explained as she led them through corridors that branched and merged without obvious pattern, was a skill taught to Athenaeum students in their second year. In their first year, they got lost. The getting-lost was part of the curriculum.
 
 "So are we meant to get lost?" Ryn asked.
 
@@ -224,7 +224,7 @@ Not carved. Channeled. Someone with Water-affinity had moved the coral itself, i
 
 Kael could read Atlantean shorthand. He had been reading it for three weeks with Sela's instruction. He could not read this. The script was not Atlantean.
 
-It was the old Arcanean. The same script as the inscription in the sealed chamber beneath the Luminari campus.
+It was the old Arcanean. The same script as the inscription in the sealed chamber beneath the Luminary campus.
 
 He read it.
 

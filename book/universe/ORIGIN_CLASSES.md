@@ -140,7 +140,7 @@ The Academies teach intervention protocols. The Underground teaches intervention
 
 ### Famous Gate-Touched
 
-**Aelith Voss** — Five-Fold channeler. See Series Bible. The living proof that the Terminal Classification exists.
+**Kael Thornfield** — Five-Fold channeler. See Series Bible. The living proof that the Terminal Classification exists.
 
 **Vael Karath** (Master, Forge faculty) — Underground-trained to Mage rank before the Forge recruited her. Held a defensive perimeter alone for six hours at the Shadowfen Breach using primarily tactical improvisation. The Forge's chair of tactical training.
 
@@ -330,7 +330,7 @@ The Void Ascendants are the only faction in Arcanea whose stated goal is the dis
 
 ### Famous Voidtouched
 
-**Sable Maren** (see Series Bible) — Void-affinity, concealed, trained in Water primary. Her Void is not Shadow-contaminated. She is Voidtouched in the sense of being Void-aligned, not in the sense of Shadow corruption. This distinction is exactly the distinction that the Atlantean Athenaeum's institutional framework erases, which is why she has been hiding.
+**Sable Luminaire** (see Series Bible) — Void-affinity, concealed, trained in Water primary. Her Void is not Shadow-contaminated. She is Voidtouched in the sense of being Void-aligned, not in the sense of Shadow corruption. This distinction is exactly the distinction that the Abyssal Athenaeum's institutional framework erases, which is why she has been hiding.
 
 **The Penitent of Cinderwall** — A Voidtouched practitioner who was Consumed to advanced stage thirty years ago, was subjected to a high-risk intervention by three Archmage practitioners, and survived with partial Shadow corruption reversed. The partial reversal is considered medically extraordinary. The Penitent now works with the Athenaeum's memory-healing track as a research subject and a practitioner, contributing to the only comprehensive study of Shadow corruption reversal that exists. The study has not yet produced replicable results.
 

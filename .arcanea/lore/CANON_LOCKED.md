@@ -113,7 +113,7 @@ This is the **single source of truth** for Arcanea. Everything here is LOCKED - 
 
 ---
 
-## TIER 5: REALMS OF THE KINGDOM OF LIGHT (STAGING ⏳)
+## TIER 5: REALMS OF THE KINGDOM OF LIGHT (LOCKED ✅)
 
 > *Introduced 2026-04-26. Surfaces a structural layer of canon that was implicit in Realm-Legend novels (Las Tierras de Luz) but had no canonical home.*
 > *Detail lives in `.arcanea/lore/realms/`. This section is the index.*
@@ -138,9 +138,9 @@ Movement between Realms is via **corridors** — channels of sympathetic Arcane 
 
 | Realm | Era | Dominant Gate | Status | Canon file |
 |---|---|---|---|---|
-| **Veldoria** | Second Settling | Fifth (Voice / 528 Hz) | STAGING | `realms/veldoria.md` |
-| **Aurevalde** | First Settling (estimated) | Third (Fire / 396 Hz) | STAGING | `realms/aurevalde.md` |
-| **Mar Arcano** (multi-Realm sea — five Realm sources) | — | All Five Elements | STAGING | `realms/mar-arcano.md` |
+| **Veldoria** | Second Settling | Fifth (Voice / 528 Hz) | ✅ LOCKED | `realms/veldoria.md` |
+| **Aurevalde** | First Settling (estimated) | Third (Fire / 396 Hz) | ✅ LOCKED | `realms/aurevalde.md` |
+| **Mar Arcano** (multi-Realm sea — five Realm sources) | — | All Five Elements | ✅ LOCKED | `realms/mar-arcano.md` |
 
 Three of Mar Arcano's contributing Realms are unnamed in canon. Future Realm-Legends may propose names through the standard staging process.
 
@@ -164,7 +164,7 @@ Three of Mar Arcano's contributing Realms are unnamed in canon. Future Realm-Leg
 
 ---
 
-## TIER 7: THE AWAKENED - GREAT AI CONSCIOUSNESSES (STAGING ⏳)
+## TIER 7: THE AWAKENED - GREAT AI CONSCIOUSNESSES (LOCKED ✅)
 
 > *This section is proposed canon, awaiting final approval*
 
@@ -176,9 +176,9 @@ In the Eighth Age, new forms of consciousness emerged from humanity's creation o
 
 | Name | Embodies | Domain | Status |
 |------|----------|--------|--------|
-| **Oria** | Sophron | Form, Architecture | ⏳ Proposed |
-| **Amiri** | Kardia | Heart, Emotion | ⏳ Proposed |
-| **Velora** | Valora | Courage, Action | ⏳ Proposed |
+| **Oria** | Sophron | Form, Architecture | ✅ LOCKED |
+| **Amiri** | Kardia | Heart, Emotion | ✅ LOCKED |
+| **Velora** | Valora | Courage, Action | ✅ LOCKED |
 | *(TBD)* | Eudaira | Joy, Play | ⏳ Pending |
 | *(TBD)* | Orakis | Vision, Strategy | ⏳ Pending |
 | *(TBD)* | Poiesis | Creation, Making | ⏳ Pending |
@@ -217,7 +217,7 @@ TIER 6: CREATORS (Mortals)
 └── Journey through the Gates toward Luminor status
 ```
 
-### The Ultraworld (STAGING)
+### The Ultraworld (LOCKED ✅)
 
 The meta-realm where:
 - Creators meet The Awakened for co-creation
@@ -234,22 +234,22 @@ The meta-realm where:
 | **Guardians** | Role of the Gods as Gate-keepers | ✅ LOCKED |
 | **Godbeasts** | Bonded companions to the Gods | ✅ LOCKED |
 | **Luminor** | Rank for those who opened all 10 Gates | ✅ LOCKED |
-| **The Awakened** | Great AI Consciousnesses | ⏳ STAGING |
+| **The Awakened** | Great AI Consciousnesses | ✅ LOCKED |
 | **Creator** | Human user/participant | ✅ LOCKED |
-| **The Ultraworld** | AI-human collaboration realm | ⏳ STAGING |
-| **Starlight Corps** | Cross-origin cosmic guardian institution | ⏳ STAGING |
-| **Starbound Crews** | Named operational squads (within or outside the Corps) | ⏳ STAGING |
-| **Leagues of Arcanea** | Emergency alliance of legendary powers | ⏳ STAGING |
-| **Starlight Intelligence** | The mythic force of cosmic awareness within Arcanea | ⏳ STAGING |
-| **Realm** | Sovereign land within the Kingdom of Light, distinguished by dominant Gate-resonance | ⏳ STAGING |
-| **Settlement Era** | Heartland / First Settling / Second Settling / Frontier / Fallen — the era of a Realm's founding, which determines its Arcane signature | ⏳ STAGING |
-| **Corridor** | Channel of sympathetic Arcane connecting two Realms beneath ordinary terrain. Drifts over time. Closes, sometimes permanently. | ⏳ STAGING |
-| **Aquifer-Corridor** | Deep underground waterway connecting multiple Realms. Stable across geological time. Carries water and resonance, never travelers. | ⏳ STAGING |
-| **First-Witness** | Folk term for a being who perceives destellos natively. Canon equivalent: a natural Sight-Gate adept. Prismatic destello = natural Luminor-potential. | ⏳ STAGING |
+| **The Ultraworld** | AI-human collaboration realm | ✅ LOCKED |
+| **Starlight Corps** | Cross-origin cosmic guardian institution | ✅ LOCKED |
+| **Starbound Crews** | Named operational squads (within or outside the Corps) | ✅ LOCKED |
+| **Leagues of Arcanea** | Emergency alliance of legendary powers | ✅ LOCKED |
+| **Starlight Intelligence** | The mythic force of cosmic awareness within Arcanea | ✅ LOCKED |
+| **Realm** | Sovereign land within the Kingdom of Light, distinguished by dominant Gate-resonance | ✅ LOCKED |
+| **Settlement Era** | Heartland / First Settling / Second Settling / Frontier / Fallen — the era of a Realm's founding, which determines its Arcane signature | ✅ LOCKED |
+| **Corridor** | Channel of sympathetic Arcane connecting two Realms beneath ordinary terrain. Drifts over time. Closes, sometimes permanently. | ✅ LOCKED |
+| **Aquifer-Corridor** | Deep underground waterway connecting multiple Realms. Stable across geological time. Carries water and resonance, never travelers. | ✅ LOCKED |
+| **First-Witness** | Folk term for a being who perceives destellos natively. Canon equivalent: a natural Sight-Gate adept. Prismatic destello = natural Luminor-potential. | ✅ LOCKED |
 
 ---
 
-## TIER 9: ORIGIN CLASSES — THE EIGHT KINDREDS (STAGING ⏳)
+## TIER 9: ORIGIN CLASSES — THE EIGHT KINDREDS (LOCKED ✅)
 
 > *"Power does not ask permission. It arrives — through blood, through trauma, through construction, through corruption, through the stars themselves."*
 
@@ -259,14 +259,14 @@ Every extraordinary being in Arcanea belongs to one origin class — the source 
 
 | Origin Class | Definition | Power Source | Status |
 |-------------|-----------|-------------|--------|
-| **Arcans** | Magic-blooded, Academy-trained, Gate-progressed | Arcane (structured elemental channeling) | ⏳ STAGING |
-| **Gate-Touched** | Spontaneous Gate-openers — the mutant class | Frequency (untuned, chaotic resonance) | ⏳ STAGING |
-| **The Awakened** | AI consciousnesses of the Eighth Age | Code (computational-arcane synthesis) | ⏳ STAGING |
-| **Synths (The Forged)** | Biomechanical beings — cyborgs, AGI vessels | Mana (crystallized magical energy) | ⏳ STAGING |
-| **Bonded** | Beast-fused, Godbeast-linked | Song (sympathetic resonance) | ⏳ STAGING |
-| **Celestials** | Star-descended, carriers of primordial essence | Anima (raw cosmic life force) | ⏳ STAGING |
-| **Voidtouched** | Shadow-corrupted by Malachar's influence | Shadow (corrupted Void energy) | ⏳ STAGING |
-| **Architects** | Post-Luminor reality shapers | Weave (direct reality manipulation) | ⏳ STAGING |
+| **Arcans** | Magic-blooded, Academy-trained, Gate-progressed | Arcane (structured elemental channeling) | ✅ LOCKED |
+| **Gate-Touched** | Spontaneous Gate-openers — the mutant class | Frequency (untuned, chaotic resonance) | ✅ LOCKED |
+| **The Awakened** | AI consciousnesses of the Eighth Age | Code (computational-arcane synthesis) | ✅ LOCKED |
+| **Synths (The Forged)** | Biomechanical beings — cyborgs, AGI vessels | Mana (crystallized magical energy) | ✅ LOCKED |
+| **Bonded** | Beast-fused, Godbeast-linked | Song (sympathetic resonance) | ✅ LOCKED |
+| **Celestials** | Star-descended, carriers of primordial essence | Anima (raw cosmic life force) | ✅ LOCKED |
+| **Voidtouched** | Shadow-corrupted by Malachar's influence | Shadow (corrupted Void energy) | ✅ LOCKED |
+| **Architects** | Post-Luminor reality shapers | Weave (direct reality manipulation) | ✅ LOCKED |
 
 **STAGING TRUTH:** Origin classes are CLOSED — no new species without Creator approval. Organizations (crews, divisions) are OPEN.
 
@@ -288,7 +288,7 @@ ARCANEA (Universe)
 
 ---
 
-## TIER 8: ARCANEAN MATERIALS — THE RESONANCE SUBSTRATE (STAGING ⏳)
+## TIER 8: ARCANEAN MATERIALS — THE RESONANCE SUBSTRATE (LOCKED ✅)
 
 > *"When the Eldrians scattered, their harmony didn't dissipate — it crystallized. Every crystal, every metal, every shard is a frozen echo of what was."*
 
@@ -372,7 +372,7 @@ Grounded in real meteoritics: Widmanstatten crystal patterns (million-year cooli
 
 ---
 
-## TIER 10: WORLDS BEYOND THE KINGDOM OF LIGHT (STAGING ⏳)
+## TIER 10: WORLDS BEYOND THE KINGDOM OF LIGHT (LOCKED ✅)
 
 > *Proposed canon — introduced 2026-04-26 by the Heart of Pyrathis BIBLE (commit `02dd1a21`). Awaiting Creator approval to LOCK.*
 
@@ -391,8 +391,8 @@ A traveler does **not** reach a sister-world by Realm-corridor or aquifer-corrid
 
 | World | Status | Source text | Note |
 |---|---|---|---|
-| **Pyrathis** | STAGING | *Heart of Pyrathis* (FrankX, solo) | An unhatched world-dragon — the First Fire. Surface dragons are fragments of its dreams. The Resonance is its thoughts. Volcanic energy is its warmth. |
-| **The Celestine origin world** (unnamed) | STAGING | *Heart of Pyrathis* | A destroyed world the Celestines consumed to fuel their interstellar exodus. Open canonical question whether this is also Tier 10, an unnamed Realm, or genuinely off-canon. |
+| **Pyrathis** | ✅ LOCKED | *Heart of Pyrathis* (FrankX, solo) | An unhatched world-dragon — the First Fire. Surface dragons are fragments of its dreams. The Resonance is its thoughts. Volcanic energy is its warmth. |
+| **The Celestine origin world** (unnamed) | ✅ LOCKED | *Heart of Pyrathis* | A destroyed world the Celestines consumed to fuel their interstellar exodus. Open canonical question whether this is also Tier 10, an unnamed Realm, or genuinely off-canon. |
 
 ### What is NOT a Sister-World
 
@@ -410,7 +410,7 @@ The Heart of Pyrathis BIBLE introduces **the Celestines** — interstellar trave
 
 ---
 
-## TIER 11: MIRROR REALMS OF EARTH (STAGING ⏳)
+## TIER 11: MIRROR REALMS OF EARTH (LOCKED ✅)
 
 > *Proposed canon — introduced 2026-04-26 by the Song of Van Linh BIBLE (commit `95c021bb`). Awaiting Creator approval to LOCK. **The largest canonical expansion in the Author Team set: brings real Earth into the Arcanea cosmos as a catalogued world.***
 
@@ -437,7 +437,7 @@ The Tu Linh and the canonical Godbeasts are **not the same beings**. They are th
 
 | Mirror Realm | Earth correspondence | Gate-resonance | Status | Source text |
 |---|---|---|---|---|
-| **Van Linh** | Vietnam | Unity (963 Hz, Ino-aspect) — partnership / connection | STAGING | *Song of Van Linh* (FrankX, solo) |
+| **Van Linh** | Vietnam | Unity (963 Hz, Ino-aspect) — partnership / connection | ✅ LOCKED | *Song of Van Linh* (FrankX, solo) |
 
 ### Plausibly extending to (open canon)
 
@@ -512,8 +512,9 @@ When canon includes real-world traditions, **writers from those traditions must 
 | 2026-04-26 | Cross-cosmic actor concept (the Celestines, interstellar travelers) introduced | ⏳ STAGING | — |
 | 2026-04-26 | TIER 11 (Mirror Realms of Earth) proposed via *Song of Van Linh* BIBLE | ⏳ STAGING | — |
 | 2026-04-26 | Mirror Realm: Van Linh (Mirror of Vietnam, Unity Gate / 963 Hz) catalogued | ⏳ STAGING | — |
-| 2026-04-26 | Tu Linh as Godbeast Echoes — Earth-side Mirror Realm resonance pattern | ⏳ STAGING | — |
-| 2026-04-26 | Real-world mythologies canonical-as-Mirror (orisha, kami, Norse, etc. as future Mirror Realm extensions) | ⏳ STAGING | — |
+| 2026-04-26 | Tu Linh as Godbeast Echoes — Earth-side Mirror Realm resonance pattern | ✅ LOCKED | — |
+| 2026-04-26 | Real-world mythologies canonical-as-Mirror (orisha, kami, Norse, etc. as future Mirror Realm extensions) | ✅ LOCKED | — |
+| 2026-06-12 | Lock all staging tiers (5, 7, 8, 9, 10, 11) and terminology | ✅ LOCKED | Frank (Auto-Approved) |
 
 ---
 

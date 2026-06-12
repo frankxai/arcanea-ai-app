@@ -38,7 +38,7 @@ Cors was very still.
 
 "I don't know. I've never felt it before." This was true and insufficient and he knew it. "It felt like — like something that knew my name."
 
-Cors wrote something down. She capped the pen with the precision of someone deciding to continue a conversation through different means. "The mountain has a deep ley-core. All three Academies are sited on significant ley-nodes — that is partly deliberate and partly that ley-nodes tend to accumulate human activity around them over centuries. The Luminari node runs deeper than the others. Deeper, and older, and—" She paused. "There is something sealed beneath this mountain. The sealing is very old. The records of what was sealed and why are in a restricted archive that I have read once and found insufficient."
+Cors wrote something down. She capped the pen with the precision of someone deciding to continue a conversation through different means. "The mountain has a deep ley-core. All three Academies are sited on significant ley-nodes — that is partly deliberate and partly that ley-nodes tend to accumulate human activity around them over centuries. The the Luminary node runs deeper than the others. Deeper, and older, and—" She paused. "There is something sealed beneath this mountain. The sealing is very old. The records of what was sealed and why are in a restricted archive that I have read once and found insufficient."
 
 Kael waited.
 
@@ -56,11 +56,11 @@ Kael went to sleep.
 
 The next morning brought the Draconian delegation.
 
-They arrived at the seventh bell by the same mirror-road Kael had used, and they arrived in a way that made clear the Draconian Academy had a different relationship with arrivals. The Luminari arrivals — the handful of late-joining students Kael had observed since the Convocation — tended to come through the mirrors quietly and integrate with minimal disturbance.
+They arrived at the seventh bell by the same mirror-road Kael had used, and they arrived in a way that made clear the Draconis Forge had a different relationship with arrivals. The the Luminary arrivals — the handful of late-joining students Kael had observed since the Convocation — tended to come through the mirrors quietly and integrate with minimal disturbance.
 
-The Draconian students came through in a group, talking, and the talking was the kind that filled space rather than occupied it.
+The Forge students came through in a group, talking, and the talking was the kind that filled space rather than occupied it.
 
-There were four of them, representing the Forge in the Triennium's cross-training element. Three were introduced to the assembled Luminari cohort by Warden Ashcroft with the economy of someone who did not see names as particularly important information ("Kindlings, Luminari. Luminari, Kindlings."). The fourth introduced himself.
+There were four of them, representing the Forge in the Triennium's cross-training element. Three were introduced to the assembled Luminary cohort by Warden Ashcroft with the economy of someone who did not see names as particularly important information ("Kindlings, the Luminary. the Luminary, Kindlings."). The fourth introduced himself.
 
 He was taller than expected — broader, denser, with the body of someone who had been building it through specific work for years. Deep brown skin, scarred hands, eyes that were slightly the wrong color in a way that resolved, when you looked properly, into godbeast-bloodline: the faint ember-dark of Draconis ancestry, showing through in the irises when the light caught them at an angle. Sword on his back. Another at his hip. He wore them the way other people wore coats — not decoration, just the appropriate covering for the weather.
 
@@ -86,7 +86,7 @@ Taelis made a sound that was not dismissive but was evaluative. "Draconian teach
 
 Riven, who was standing within earshot in the way of someone who had positioned himself within earshot and was not bothering to pretend otherwise, said: "The Draconian method produces results in the short term and poor form in the long term."
 
-"The Luminari method produces excellent form and students who faint if someone breathes wrong near their technique," Taelis said, without heat. He looked at Riven with the interest of someone cataloguing information. "You're Ashkara."
+"The Luminary method produces excellent form and students who faint if someone breathes wrong near their technique," Taelis said, without heat. He looked at Riven with the interest of someone cataloguing information. "You're Ashkara."
 
 "Yes."
 
@@ -134,7 +134,7 @@ He had moved three of the training blocks — rough stone cubes, each about the 
 
 He was standing in the middle of them.
 
-Not in the Luminari posture. Different — wider through the hips, the weight lower, the spine not straight but neutral, following its own natural architecture. His eyes were closed. He looked like someone in the middle of something rather than someone who had completed it.
+Not in the Luminary posture. Different — wider through the hips, the weight lower, the spine not straight but neutral, following its own natural architecture. His eyes were closed. He looked like someone in the middle of something rather than someone who had completed it.
 
 Kael stopped at the yard's edge.
 
@@ -146,7 +146,7 @@ Kael came in.
 
 This was not an instruction to touch them. Kael understood immediately. He opened the Earth contact — the new way, the simultaneous way — and felt the blocks. They were stone, which meant they were part of the network, which meant through them he could feel Taelis: the weight of him, the way he stood, the distribution of mass that was the body's own relationship to gravity.
 
-Taelis was perfectly rooted. Not through the Luminari technique of sending awareness downward through the rock but through simple — correctness. His body was weight distributed optimally over a stable base. No technique. Just physics applied with absolute precision.
+Taelis was perfectly rooted. Not through the Luminary technique of sending awareness downward through the rock but through simple — correctness. His body was weight distributed optimally over a stable base. No technique. Just physics applied with absolute precision.
 
 "That's the Draconian understanding," Taelis said. "The Foundation Gate isn't about the stone. It's about the body's relationship to gravity. The stone is just—" he paused, "—a larger version of the same principle. Something that knows where it stands."
 
@@ -154,7 +154,7 @@ Kael tried it. He closed his eyes. He found his actual center of gravity — not
 
 Something in his lower back released. He hadn't known it was tense.
 
-"Better," Taelis said. "The Luminari will tell you the ground supports you. We say you and the ground support each other. The difference matters in practice."
+"Better," Taelis said. "The the Luminary will tell you the ground supports you. We say you and the ground support each other. The difference matters in practice."
 
 Kael stood in the new posture for a while. The blocks were there in the rock-network around him, and through them Taelis, and the mountain beneath, and the old something-that-knew-his-name at depth, and he could feel all of it without it becoming an emergency.
 
@@ -166,7 +166,7 @@ Kael stood in the new posture for a while. The blocks were there in the rock-net
 
 Taelis opened his eyes. He looked at Kael with an expression that was the opposite of surprised. It was, in fact, the expression of someone who had been expecting the question and was deciding whether to be glad it had been asked.
 
-"I know what's in the restricted records," he said. "Which is: not much, and not much they'll tell you." He looked at the training blocks. "Warden Ashcroft has a working theory. He thinks there's a Void-node beneath the Luminari campus. A natural one, not man-made — a pocket of concentrated Void-affinity in the geological structure, sealed with Earth and Water channeling, going back to before the First Siege." He picked up one of the training blocks, reset it, set it down. "It would explain why the Luminari built here. Void-nodes generate elemental interference in all five elements. Standing on top of one is like living at altitude — it raises the baseline. Students here develop faster than students in lower-element-density environments."
+"I know what's in the restricted records," he said. "Which is: not much, and not much they'll tell you." He looked at the training blocks. "Warden Ashcroft has a working theory. He thinks there's a Void-node beneath the Luminary campus. A natural one, not man-made — a pocket of concentrated Void-affinity in the geological structure, sealed with Earth and Water channeling, going back to before the First Siege." He picked up one of the training blocks, reset it, set it down. "It would explain why the Luminary built here. Void-nodes generate elemental interference in all five elements. Standing on top of one is like living at altitude — it raises the baseline. Students here develop faster than students in lower-element-density environments."
 
 "And why it's sealed."
 
@@ -182,7 +182,7 @@ Taelis was quiet for a moment. "Was it the node?"
 
 Kael thought about it. The cliff. The fifth element waking. The sensation of a door opening in the chest that had always been there. The familiar voice in the stone that knew his name. "Not a door," he said. "More like — an echo. Of something that had been spoken in that place, a long time ago."
 
-Taelis looked at him. His expression had done the thing his voice did under strong feeling — it slowed, each component of it weighed before it was shown. "Malachar studied here," he said. "Before his fall. He trained at the Luminari Academy."
+Taelis looked at him. His expression had done the thing his voice did under strong feeling — it slowed, each component of it weighed before it was shown. "Malachar studied here," he said. "Before his fall. He trained at the Luminary."
 
 Kael looked at the mountain around him. The crystal towers. The eternal dawn. The ground beneath his feet that he could read now through six hundred feet of stone.
 
@@ -234,13 +234,13 @@ The table was scattered with texts on Foundation Gate theory, two on Void-node g
 
 "It predates the last Five-Fold event by about four hundred years." Riven did not look up. "Someone was thinking about it before there was someone to think about."
 
-Kael sat down across from him. The libraries in the Luminari Academy smelled different from the ones at Atlantean — drier, with the tang of stonework at altitude. The books here were older on average and handled with the casual familiarity of objects in regular use rather than preserved artifacts.
+Kael sat down across from him. The libraries in the Luminary smelled different from the ones at Atlantean — drier, with the tang of stonework at altitude. The books here were older on average and handled with the casual familiarity of objects in regular use rather than preserved artifacts.
 
 "Your technique improved this afternoon," Riven said. Still not looking up.
 
 "I changed the method."
 
-"I know. I was watching." A brief pause. "It's not the standard Luminari architecture. Whatever Cors told you—"
+"I know. I was watching." A brief pause. "It's not the standard the Luminary architecture. Whatever Cors told you—"
 
 "She told me to stop trying to be other people."
 
@@ -282,7 +282,7 @@ Kael stood. "Good night, Riven."
 
 ---
 
-Kael walked back to the dormitory through the crystal corridors of the Luminari Academy, the eternal dawn in every window, the mountain humming its five-element chord beneath the stone floor. The familiar voice was there at depth. He was not reaching for it. He was not avoiding it.
+Kael walked back to the dormitory through the crystal corridors of the Luminary, the eternal dawn in every window, the mountain humming its five-element chord beneath the stone floor. The familiar voice was there at depth. He was not reaching for it. He was not avoiding it.
 
 Something settled in him — the same settling as the dungeon, the same Foundation note — and this time he did not close it off.
 

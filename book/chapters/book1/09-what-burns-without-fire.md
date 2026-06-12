@@ -14,7 +14,7 @@ He went alone.
 
 The seventh level was not the same place the Archives were. The seventh level was below everything else the Depths offered to ordinary students: below the dormitories, below the deep lecture halls, below the tier where Water-mages practiced open-ocean channeling in large chambers flooded to the waist. To reach the seventh level, you descended a passage that the Depths did not officially list on any map available to students, through a set of locks that Nerissa's message had included the opening sequence for, into air that tasted of geological time.
 
-He had been in Malachar's sealed chamber beneath the Luminari mountain. He had been in the Draconian Forge's deep arena. He had walked down into the Foundation dungeon with no light and the sense of something ancient paying attention.
+He had been in Malachar's sealed chamber beneath the Luminary mountain. He had been in the Draconis Forge's deep arena. He had walked down into the Foundation dungeon with no light and the sense of something ancient paying attention.
 
 The seventh level was different from all of those. It was not oppressive. It was not dramatic. It was very, very still — the stillness of a place where nothing had moved in a long time, by design. The walls were raw limestone rather than shaped coral, which meant this predated the Atlantean habitation — this chamber had been here before the city was built around it. The floor was flat because water had made it flat, water older than the ocean overhead, water that had been gone for geological ages but had left its level imprint in the stone.
 
@@ -72,7 +72,7 @@ Kael looked at it. He did not pick it up.
 
 "He gave it to you."
 
-"He left it where I would find it. There is a distinction." She met his eyes across the table. "Malachar and I were contemporaries. Not friends — we did not think the same way and we knew it and we were honest about it. But we were contemporaries. He was Luminari-trained, I was Atlantean. We disagreed about almost everything. We agreed about the thinness in the Luminari mountain." She paused. "He came to me, the year before the fall, and told me what he intended to do at the Source Gate. I told him it was wrong. He told me I was right that it was wrong and he was going to do it anyway."
+"He left it where I would find it. There is a distinction." She met his eyes across the table. "Malachar and I were contemporaries. Not friends — we did not think the same way and we knew it and we were honest about it. But we were contemporaries. He was the Luminary-trained, I was Atlantean. We disagreed about almost everything. We agreed about the thinness in the Luminary mountain." She paused. "He came to me, the year before the fall, and told me what he intended to do at the Source Gate. I told him it was wrong. He told me I was right that it was wrong and he was going to do it anyway."
 
 The lamp light pulsed. In the water far above, something moved.
 
@@ -82,7 +82,7 @@ The lamp light pulsed. In the water far above, something moved.
 
 Kael looked at the journal. "What does it say?"
 
-"Many things." She stood, moved around the table, and sat beside him — not across from him, beside. This was deliberate. A different kind of conversation. "The relevant passages are the ones about the thinness. He spent forty years thinking about the Gate of Meeting beneath the Luminari mountain, and in the last decade before the fall, he came to an understanding that I believe is correct and which I have not shared with anyone in twelve hundred years."
+"Many things." She stood, moved around the table, and sat beside him — not across from him, beside. This was deliberate. A different kind of conversation. "The relevant passages are the ones about the thinness. He spent forty years thinking about the Gate of Meeting beneath the Luminary mountain, and in the last decade before the fall, he came to an understanding that I believe is correct and which I have not shared with anyone in twelve hundred years."
 
 She turned the journal to a specific page.
 
@@ -146,9 +146,9 @@ Kael looked at the journal on the table. The evidence of twelve hundred years of
 
 He went to find Solvane Dresh.
 
-He had known, from the moment Sela mentioned the instructor's name three weeks into the Luminari rotation, that a conversation was coming. She had said it neutrally — "Instructor Dresh teaches the advanced theory seminars, you won't need them until next year" — but the neutrality was the kind of someone choosing not to inflect a name. The name had weight. Kael had filed it.
+He had known, from the moment Sela mentioned the instructor's name three weeks into the Luminary rotation, that a conversation was coming. She had said it neutrally — "Instructor Dresh teaches the advanced theory seminars, you won't need them until next year" — but the neutrality was the kind of someone choosing not to inflect a name. The name had weight. Kael had filed it.
 
-He found Solvane Dresh the way you found most things in the Depths: by following the connection until it led somewhere. Solvane was a Luminari instructor on sabbatical to the Atlantean Depths, which was unusual enough that the dormitory attendant had given Kael a room number and a warning: "He doesn't enjoy being interrupted. He'll see you anyway, but he won't enjoy it."
+He found Solvane Dresh the way you found most things in the Depths: by following the connection until it led somewhere. Solvane was a the Luminary instructor on sabbatical to the Abyssal Athenaeum, which was unusual enough that the dormitory attendant had given Kael a room number and a warning: "He doesn't enjoy being interrupted. He'll see you anyway, but he won't enjoy it."
 
 He knocked.
 
@@ -186,7 +186,7 @@ Solvane looked at him. "Corenne told me," he said. "She tells me most things abo
 
 "What are you?"
 
-"I was his friend." The words came out flat, the way true things come out flat when they have been stated many times in the mind and rarely aloud. "For forty years. The forty years before the fall. I was at the Luminari Academy for all of them, and he was there for most of them, and we were — the word is complicated and I will use it anyway. Friends. He talked to me. I talked to him. We argued about almost everything and agreed about the fundamental things and it was, while it lasted, the kind of—" He stopped.
+"I was his friend." The words came out flat, the way true things come out flat when they have been stated many times in the mind and rarely aloud. "For forty years. The forty years before the fall. I was at the Luminary for all of them, and he was there for most of them, and we were — the word is complicated and I will use it anyway. Friends. He talked to me. I talked to him. We argued about almost everything and agreed about the fundamental things and it was, while it lasted, the kind of—" He stopped.
 
 Kael waited.
 
@@ -326,7 +326,7 @@ A pause.
 
 He went through his door. Kael stood in the corridor a moment longer, listening to the whale-call, the Foundation note at depth. Then he went to sleep.
 
-In the morning, they were going back to the Luminari campus.
+In the morning, they were going back to the Luminary campus.
 
 In the morning, the Dungeon would be waiting.
 

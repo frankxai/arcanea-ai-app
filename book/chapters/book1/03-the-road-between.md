@@ -28,7 +28,7 @@ The road followed the spine of the Ashmore uplands for two days before descendin
 
 "Has anyone ever won one of those arguments?"
 
-"Not in three hundred years. Before that, Draconian held most of it for about sixty years before Luminari and Atlantean presented a joint counter-claim backed by a treaty they claimed predated the annexation." She paused. "Atlantean actually wrote the treaty sixty-two years before they presented it, but the dates are — the archival scholarship is contested."
+"Not in three hundred years. Before that, Draconian held most of it for about sixty years before the Luminary and Atlantean presented a joint counter-claim backed by a treaty they claimed predated the annexation." She paused. "Atlantean actually wrote the treaty sixty-two years before they presented it, but the dates are — the archival scholarship is contested."
 
 "They forged a treaty to take back land from a sixty-year annexation."
 

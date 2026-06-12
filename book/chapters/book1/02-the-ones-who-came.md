@@ -10,11 +10,11 @@ The first arrived at dawn. The second at midday. The third was already there whe
 
 ---
 
-The woman from Luminari wore white — not the white of plain cloth but something that held light differently, crystal-treated silk that caught even the thin morning sun and gave it back transformed. Her armor was shaped like living geometry, interlocking curves designed by someone who had studied how water moves around stone. She rode a horse so pale it looked composed of early morning itself. She had the face of someone who had memorized several hundred years of protocol and then forgotten all of it in favor of something older and cleaner.
+The woman from the Luminary wore white — not the white of plain cloth but something that held light differently, crystal-treated silk that caught even the thin morning sun and gave it back transformed. Her armor was shaped like living geometry, interlocking curves designed by someone who had studied how water moves around stone. She rode a horse so pale it looked composed of early morning itself. She had the face of someone who had memorized several hundred years of protocol and then forgotten all of it in favor of something older and cleaner.
 
 She dismounted at the base of the lighthouse path without haste. The unhurriedness was deliberate — Kael would come to understand this later, that everything she did was deliberate, that speed was a tool she chose to leave in the case on this particular morning.
 
-Her name, she said, was Sirvaine Delloch. Second Emissary of the Luminari Academy, Master of the Heart and Voice Gates, holder of six open Gates in total, which placed her firmly in the Master rank.
+Her name, she said, was Sirvaine Delloch. Second Emissary of the Luminary, Master of the Heart and Voice Gates, holder of six open Gates in total, which placed her firmly in the Master rank.
 
 She said all of this the way a person states their address before entering someone's property. Facts offered cleanly, as courtesy, as the honest shape of who she is.
 
@@ -34,15 +34,15 @@ Sirvaine sat at Torven's kitchen table with her crystal armor making small sound
 
 There were three, she explained. Not the Lost Academy of legend — that was something else, something beyond ordinary study — but three working Academies that had rebuilt themselves in the eight hundred years since the First Siege, three schools of thought and practice that had grown from the same root and grown in genuinely different directions.
 
-Luminari taught the inner path. Consciousness first. The Gates as stages of self-knowledge, the elements as expressions of refined awareness. Their graduates tended toward healers, teachers, mediators — people who worked with the architecture of other people's inner worlds. Their strongest students became Mages of remarkable subtlety. Their very strongest became something her tone suggested she was building toward but had not arrived at yet.
+the Luminary taught the inner path. Consciousness first. The Gates as stages of self-knowledge, the elements as expressions of refined awareness. Their graduates tended toward healers, teachers, mediators — people who worked with the architecture of other people's inner worlds. Their strongest students became Mages of remarkable subtlety. Their very strongest became something her tone suggested she was building toward but had not arrived at yet.
 
-"The Draconian Academy," she said, "teaches the outer path. Force, will, transformation. Their students are extraordinary combatants and engineers. They tend to attract people of great ambition." A considered pause. "Which is not itself a flaw. Ambition and integrity can coexist. It is simply that at Draconian, the one is cultivated more vigorously than the other."
+"The Draconis Forge," she said, "teaches the outer path. Force, will, transformation. Their students are extraordinary combatants and engineers. They tend to attract people of great ambition." A considered pause. "Which is not itself a flaw. Ambition and integrity can coexist. It is simply that at Draconian, the one is cultivated more vigorously than the other."
 
 "And the third?"
 
 "Atlantean. The path of knowledge. Understanding the world as a system, the elements as a language, magic as a form of fluency rather than force or consciousness. Their graduates are scholars, researchers, artificers. They are responsible for most of the working theory behind how elementalism actually functions." She wrapped both hands around her mug. "They also tend to know more about any given person than that person has told them. I find this, personally, somewhat alarming."
 
-"You want me to come to Luminari."
+"You want me to come to the Luminary."
 
 "I want you to understand what you are before you choose anything." She met Kael's eyes without flinching, which not everyone managed — the colors there were still strange, still more colors than eyes should hold. "What you did on that cliff was not a controlled working. It was an eruption. Something woke in you that has been sleeping since you were born, and it woke all at once, which means you have approximately the power and approximately the control of a person standing next to a fire they accidentally started in a field. The field is very large. The wind is picking up. You need someone to teach you to breathe without setting things alight." She set down the mug. "We have better teachers for that than the others."
 
@@ -78,7 +78,7 @@ Kael blinked.
 
 "I'm afraid I'll destroy the lighthouse."
 
-He grinned. It transformed the face entirely — not charming, exactly, but alive in a way that the jaw alone had not suggested. "That's honest. I like that." He dropped into a loose stance, weight on the back foot, completely at ease. "My name is Bren Caulder. Master of the Fire and Foundation Gates. Instructor of Combat Arts at Draconian Academy. I've been breaking and fixing things for eleven years and I am, genuinely, extremely hard to accidentally destroy." He looked at the lighthouse. "That thing, however, I cannot promise."
+He grinned. It transformed the face entirely — not charming, exactly, but alive in a way that the jaw alone had not suggested. "That's honest. I like that." He dropped into a loose stance, weight on the back foot, completely at ease. "My name is Bren Caulder. Master of the Fire and Foundation Gates. Instructor of Combat Arts at Draconis Forge. I've been breaking and fixing things for eleven years and I am, genuinely, extremely hard to accidentally destroy." He looked at the lighthouse. "That thing, however, I cannot promise."
 
 "Then why—"
 
@@ -94,7 +94,7 @@ The intensity of it was genuine. Kael could feel that — not with any elemental
 
 "I think you're going to become something. I'd like to have some input into which something." Bren dropped the fighting stance. "Come to Draconian. We'll teach you to hold fire without burning yourself. After that — you can decide the rest for yourself."
 
-"What do you think of Luminari's offer?"
+"What do you think of the Luminary's offer?"
 
 A beat. "Sirvaine Delloch is one of the finest people I have ever met, and her Academy will teach you to feel everything and act on none of it, and you will be gentle and well-spoken and completely unprepared for what is coming." He said this without malice. "That is my honest assessment."
 

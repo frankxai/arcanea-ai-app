@@ -64,9 +64,9 @@ Kael processed this.
 
 "The Atlantean understanding is incomplete." She was not dismissive — she said it as a fact, the way Ryn would correct a calculation error: without heat, without implication that the person who held the incomplete understanding was deficient. "What I carry is not precisely memories from previous people. It is — the archive of what has happened in the places I have been. When I enter a location, I can access what that location has witnessed." She paused on a landing. The staircase went deeper. "This is not the same as hearing ghosts. Events leave—" She considered the word. "Residue. Particularly events of high elemental intensity. Particularly in locations with concentrated ley-energy."
 
-"Like the Luminari campus."
+"Like the Luminary campus."
 
-"Like the Luminari campus."
+"Like the Luminary campus."
 
 "What happened here?"
 
@@ -96,7 +96,7 @@ Something had been done here. Careful, old, and not quite finished.
 
 "The sealing," Kael said. Not a question.
 
-"Yes." Corenne was moving along the eastern wall, her fingertips not quite touching the stone. She had a quality in this place that she did not have upstairs — a stillness that was absolute, that made her look less like a person and more like a presence. "Four hundred and thirty years ago. A team of seven. Luminari primary, with Atlantean consultants. It was performed over eleven days." She looked at a section of wall. "There."
+"Yes." Corenne was moving along the eastern wall, her fingertips not quite touching the stone. She had a quality in this place that she did not have upstairs — a stillness that was absolute, that made her look less like a person and more like a presence. "Four hundred and thirty years ago. A team of seven. the Luminary primary, with Atlantean consultants. It was performed over eleven days." She looked at a section of wall. "There."
 
 The wall, here, showed the thermal marks Kael had seen in the passage above — the marks of fire held against stone for a long time. But here they were not faint with age. They were clear. Deliberate. Seven sets of them, at head-height, the distance between them suggesting that seven people had stood at intervals around this chamber and pressed fire or light or channeled energy into the rock in a specific, coordinated pattern.
 
@@ -156,7 +156,7 @@ Kael stood very still.
 
 "What was he right about?" Kael asked.
 
-Corenne sat down on the chamber floor. This was not elegant. She simply sat, cross-legged, in the center of the space, as though the conversation required a different posture. "The thinness was already here before the first Luminari Academy was built. The ancient records — the ones that survive in Atlantean water-memory — say it was visible to any sufficiently sensitive channeler. A place where the elements met at angle. They named it." A pause. "The Gate of Meeting. Not one of the Ten Gates. A pre-institutional name. A description."
+Corenne sat down on the chamber floor. This was not elegant. She simply sat, cross-legged, in the center of the space, as though the conversation required a different posture. "The thinness was already here before the first The Luminary was built. The ancient records — the ones that survive in Athenaeum water-memory — say it was visible to any sufficiently sensitive channeler. A place where the elements met at angle. They named it." A pause. "The Gate of Meeting. Not one of the Ten Gates. A pre-institutional name. A description."
 
 "He thought—"
 

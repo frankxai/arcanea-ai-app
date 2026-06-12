@@ -8,7 +8,7 @@
 
 The Dungeon did not announce itself the second time either.
 
-It was there when they came down from the Luminari mirror at dawn — the Atlantean passage had taken two hours, the mirror-shift adding its usual quality of being briefly unlocated, and the world was still in the gold-rose of the campus's permanent morning when they walked through the main gate and Kael felt it. Not underfoot. Not as a sound. As an attention. The same quality as the limestone crack on the road from Ashenmere — invitation rather than demand, the dungeon knowing they were coming and making room.
+It was there when they came down from the Luminary mirror at dawn — the Atlantean passage had taken two hours, the mirror-shift adding its usual quality of being briefly unlocated, and the world was still in the gold-rose of the campus's permanent morning when they walked through the main gate and Kael felt it. Not underfoot. Not as a sound. As an attention. The same quality as the limestone crack on the road from Ashenmere — invitation rather than demand, the dungeon knowing they were coming and making room.
 
 He stopped at the gate.
 
@@ -146,7 +146,7 @@ They stood at the two doors for a while.
 
 "Which one?" Ryn asked. Not rhetorical — he was already writing.
 
-Kael stood at the junction. He did not reach with any element. He stood with the weight of the mountain under his feet, the Foundation note still humming in the stone, and he asked the question the stone had been teaching him to ask since the first practice yard at Luminari: *What remains?*
+Kael stood at the junction. He did not reach with any element. He stood with the weight of the mountain under his feet, the Foundation note still humming in the stone, and he asked the question the stone had been teaching him to ask since the first practice yard at the Luminary: *What remains?*
 
 Left door: the ley-signature of the five elements at balanced density. Equal. Controlled. The signature of a path that was safe.
 
@@ -416,7 +416,7 @@ Cors wrote it down. Capped the pen. Looked at the sky. "That's going to make the
 
 "And after?"
 
-Kael looked east. Toward the Draconian Forge. Toward the Atlantean Depths. Toward the road north, which he had not been on, which ended somewhere in the world's deep geography at the root of a Worldtree where twelve hundred years of waiting had just been interrupted by a three-second line of sight.
+Kael looked east. Toward the Draconis Forge. Toward the Abyssal Athenaeum. Toward the road north, which he had not been on, which ended somewhere in the world's deep geography at the root of a Worldtree where twelve hundred years of waiting had just been interrupted by a three-second line of sight.
 
 "After," he said, "we keep going."
 

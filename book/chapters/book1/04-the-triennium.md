@@ -10,7 +10,7 @@ The message came at dawn on the third day.
 
 Not a letter — a summoning. The Atlantean kind: a disc of compressed water-vellum that arrived at Kael's dormitory door already dissolving, the words written in ink that tasted like salt when you touched it and left nothing on the fingers. By the time Kael finished reading it the paper was gone, absorbed back into the air, as though the Depths preferred their communications to be unverifiable.
 
-*Report to the Grand Atrium of the Luminari Academy at the seventh bell of the morning. Your presence has been requested by the Convocation of Masters. This is not optional. This is also not a punishment. We understand how this reads. We apologize for the ambiguity.*
+*Report to the Grand Atrium of the Luminary at the seventh bell of the morning. Your presence has been requested by the Convocation of Masters. This is not optional. This is also not a punishment. We understand how this reads. We apologize for the ambiguity.*
 
 That last sentence had the unmistakable quality of committee language reluctantly softened by one person who remembered what it was like to be nineteen.
 
@@ -40,13 +40,13 @@ They went to pack.
 
 ---
 
-The journey to the Luminari Academy took two days by the Academy's mirror-road — a form of transit that Kael had not encountered before and found immediately disorienting. The Atlantean Depths maintained a network of water-mirrors, each one a passage to a corresponding surface somewhere on the continent. You stepped through one and emerged from another with a sensation like passing through the moment between sleep and waking — not painful, just briefly unlocated, as though the world had forgotten where it had put you.
+The journey to the Luminary took two days by the Academy's mirror-road — a form of transit that Kael had not encountered before and found immediately disorienting. The Abyssal Athenaeum maintained a network of water-mirrors, each one a passage to a corresponding surface somewhere on the continent. You stepped through one and emerged from another with a sensation like passing through the moment between sleep and waking — not painful, just briefly unlocated, as though the world had forgotten where it had put you.
 
 Sela came to see them off at the departure mirror. She did not come through with them.
 
 "You're not invited?" Kael asked.
 
-"I'm invited," she said. "I declined." She had three notebooks open on the table behind her and the expression of someone who had weighed competing priorities and reached a conclusion. "My analysis is more useful here than my presence is there. The Convocation will have researchers for the political dimensions. What they won't have is anyone collecting observational baseline data on how you respond to the Luminari environment on your first extended visit." She capped her pen. "Which means I need you to note everything you feel in the leyline structure from the moment you step through. Particularly the upper-register frequencies. Particularly anything above the Foundation note."
+"I'm invited," she said. "I declined." She had three notebooks open on the table behind her and the expression of someone who had weighed competing priorities and reached a conclusion. "My analysis is more useful here than my presence is there. The Convocation will have researchers for the political dimensions. What they won't have is anyone collecting observational baseline data on how you respond to the Luminary environment on your first extended visit." She capped her pen. "Which means I need you to note everything you feel in the leyline structure from the moment you step through. Particularly the upper-register frequencies. Particularly anything above the Foundation note."
 
 "You're sending me into the Convocation of Masters as your instrument array," Kael said.
 
@@ -60,7 +60,7 @@ Kael stepped through.
 
 ---
 
-The Luminari Academy sat in perpetual dawn.
+The The Luminary sat in perpetual dawn.
 
 This was not a metaphor. This was a technical fact with theological implications the Academy's sixteen hundred years of scholars had argued about in print and in person and showed no signs of resolving: the wards that held the mountain campus aloft — Mount Solaris, a peak that cleared the cloudline and kept going, an aberration of elevation the surrounding range had apparently decided to have — also refracted the sun in its rising angle and held it there. Not frozen. Turning. The campus existed in the first forty minutes of morning, endlessly, the sky always in that gold-rose register that belonged to the moment before full light committed.
 
@@ -74,13 +74,13 @@ Kael heard it before seeing it. Felt it, specifically: a chord struck in the bod
 
 Kael closed it.
 
-The speaker was leaning against a crystal column with the ease of someone who had been standing in this specific spot for long enough that it had become their column. He was perhaps twenty, with Wind-mage coloration — the faint luminescence in the scar along his jaw that the morning light caught and turned faintly silver. His coat was Luminari white but he wore it with the unconscious precision of someone who had not had to think about dressing correctly since childhood, which was its own kind of information. He had his arms folded and was regarding Kael with an expression that was not unwelcoming but was not warm either. More like an assessment. The kind that comes before a decision has been reached.
+The speaker was leaning against a crystal column with the ease of someone who had been standing in this specific spot for long enough that it had become their column. He was perhaps twenty, with Wind-mage coloration — the faint luminescence in the scar along his jaw that the morning light caught and turned faintly silver. His coat was Luminary white but he wore it with the unconscious precision of someone who had not had to think about dressing correctly since childhood, which was its own kind of information. He had his arms folded and was regarding Kael with an expression that was not unwelcoming but was not warm either. More like an assessment. The kind that comes before a decision has been reached.
 
 "Riven Ashkara," he said. Not an introduction. A fact, offered as courtesy to someone not yet informed.
 
 "Kael." It came out the way it had started coming out in the last week — short, adjusted for the context of being in places where something was expected from it. "Of — previously. Ashenmere."
 
-Something moved in Riven's expression. Quick, controlled. "I know where you're from." He pushed off the column. He moved precisely, which was different from moving efficiently — efficiency with awareness of form, a Luminari training quality. "I've known since the instrument arrays measured the resonance event eleven days ago." He studied Kael's eyes — the colors there, the five-fold depth — with no more reaction than a person confirming something they had already verified through secondary sources. "You're shorter than I expected."
+Something moved in Riven's expression. Quick, controlled. "I know where you're from." He pushed off the column. He moved precisely, which was different from moving efficiently — efficiency with awareness of form, a Luminary training quality. "I've known since the instrument arrays measured the resonance event eleven days ago." He studied Kael's eyes — the colors there, the five-fold depth — with no more reaction than a person confirming something they had already verified through secondary sources. "You're shorter than I expected."
 
 "Is that relevant?"
 
@@ -110,9 +110,9 @@ They went through the archway.
 
 The Convocation met in a smaller room — smaller being relative, given the scale of the rest of the campus — with windows that looked east over clouds into the flat expanse of the sky above the cloudline. Six people in the room. Kael counted them out of habit: Sela's instinct was contagious.
 
-Two were in Luminari white. One in Draconian ember-dark. Two in Atlantean gray, but older than any Atlantean Kael had met yet — the kind of age that had earned itself past pretense into something patient and considered. The sixth stood at the window with their back to the room.
+Two were in Luminary white. One in Draconian ember-dark. Two in Athenaeum gray, but older than any Atlantean Kael had met yet — the kind of age that had earned itself past pretense into something patient and considered. The sixth stood at the window with their back to the room.
 
-"Kael," said the Luminari woman at the center of the table. She was old in the way that very powerful people were old — time had shaped her face but had not folded it; the bones underneath were still precise. Her eyes were a pale gold that might have been natural or might have been Spirit-affinity showing at the surface. "Please sit. We have quite a lot to discuss."
+"Kael," said the Luminary woman at the center of the table. She was old in the way that very powerful people were old — time had shaped her face but had not folded it; the bones underneath were still precise. Her eyes were a pale gold that might have been natural or might have been Spirit-affinity showing at the surface. "Please sit. We have quite a lot to discuss."
 
 She was the Rector.
 
@@ -126,7 +126,7 @@ The Rector's expression shifted — fractionally, upward, as though she had just
 
 A silence. The person at the window did not turn.
 
-The Draconian man — Warden Ashcroft, broad and scarred, the kind of face that had decided against softness early and stuck with it — made a sound that was not quite a laugh. "Honest," he said. "That's going to be a problem for some of them." This seemed directed at the Luminari man beside the Rector, who had the expression of someone being diplomatically patient with a colleague they found difficult.
+The Forge man — Warden Ashcroft, broad and scarred, the kind of face that had decided against softness early and stuck with it — made a sound that was not quite a laugh. "Honest," he said. "That's going to be a problem for some of them." This seemed directed at the Luminary man beside the Rector, who had the expression of someone being diplomatically patient with a colleague they found difficult.
 
 The Rector folded her hands on the table. "The honest answer," she said, "is both. In different proportions depending on which of us you ask."
 
@@ -142,9 +142,9 @@ Kael said nothing. Filed it in the place where useful things went.
 
 The Triennium had existed for three hundred years as a diplomatic mechanism and an educational stress-test. Every three years, students from all three Academies converged at a neutral site to demonstrate their skills, challenge each other's assumptions, and remind themselves that there were other ways of understanding the same elements. It produced, regularly, excellent mages and, occasionally, actual friendships that crossed the institutional lines.
 
-What the Rector was proposing was different in structure and identical in name. Kael would train at all three Academies, rotating between them on a schedule the Convocation would set. Not as a student in the ordinary sense — as a subject, she said this without embarrassment, of the most intensive supervised education any of them had ever designed. The Luminari would handle theory, Spirit work, and Gate-opening practice. The Draconian would handle combat channeling, Fire and Earth application, controlled destructive exercises. The Atlantean would handle the Void work, the memory techniques, and the investigative research into what Kael actually was.
+What the Rector was proposing was different in structure and identical in name. Kael would train at all three Academies, rotating between them on a schedule the Convocation would set. Not as a student in the ordinary sense — as a subject, she said this without embarrassment, of the most intensive supervised education any of them had ever designed. The the Luminary would handle theory, Spirit work, and Gate-opening practice. The Draconian would handle combat channeling, Fire and Earth application, controlled destructive exercises. The Atlantean would handle the Void work, the memory techniques, and the investigative research into what Kael actually was.
 
-"No one has done this before," the Atlantean woman said. She was very still in her chair, the way Sela was still — not absence of movement but quality of attention. Her name was Tidecaller Nerissa Pelagius, and she had held the Atlantean Depths for four hundred years, which Sela had told Kael once and which Kael had filed away as a fact to think about when he had time. "Not because the curriculum didn't occur to anyone, but because there has never before been a student for whom all three streams of training were simultaneously necessary."
+"No one has done this before," the Atlantean woman said. She was very still in her chair, the way Sela was still — not absence of movement but quality of attention. Her name was Tidecaller Nerissa Pelagius, and she had held the Abyssal Athenaeum for four hundred years, which Sela had told Kael once and which Kael had filed away as a fact to think about when he had time. "Not because the curriculum didn't occur to anyone, but because there has never before been a student for whom all three streams of training were simultaneously necessary."
 
 "Or," Ashcroft said, "because it would give all three Academies concurrent access to the most valuable asset any of us has encountered in a thousand years, and none of us trusted the others enough to share."
 
@@ -190,7 +190,7 @@ Riven said, after a measured pause: "I don't know. Which is, for me, an unusual 
 
 ---
 
-The orientation session happened the next morning in the Atrium, in front of two hundred Luminari students who had arranged themselves in the precise, slightly theatrical way of people pretending they had not been waiting to see the person they had been told not to ask about.
+The orientation session happened the next morning in the Atrium, in front of two hundred Luminary students who had arranged themselves in the precise, slightly theatrical way of people pretending they had not been waiting to see the person they had been told not to ask about.
 
 The Rector introduced Kael briefly — special circumstances, Triennium program, unprecedented situation — and there was the loaded silence of a group of people deciding what expression to adopt.
 
@@ -220,7 +220,7 @@ They used the lower practice yards — three tiers of them, cut into the mountai
 
 Twenty students. Foundation work: Earth channeling, specifically the structural technique of *rooting*, which Cors described as establishing a channel of awareness down through the rock beneath the feet and into the mountain's ley-core. Not drawing power from it — just contact. "Before you move anything," she said, "you know what is there. You feel the weight of the world through the soles of your feet. This is the Foundation Gate's first lesson and its permanent one."
 
-Kael watched the others. They took their stances — feet shoulder-width, spine straight, weight slightly forward, the specific posture of Luminari Earth practice — and settled into it. One by one, their expressions changed. Not dramatic change. A settling. The quality of someone who had just put down something heavy they had been carrying.
+Kael watched the others. They took their stances — feet shoulder-width, spine straight, weight slightly forward, the specific posture of Luminary Earth practice — and settled into it. One by one, their expressions changed. Not dramatic change. A settling. The quality of someone who had just put down something heavy they had been carrying.
 
 He recognized the feeling from the dungeon. From the stone in the limestone passage that had said *REMAIN* in the old script. That settling was the Foundation note.
 
