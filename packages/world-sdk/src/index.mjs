@@ -8,6 +8,7 @@ export * from "./fs-world.mjs";
 export * from "./genesis.mjs";
 export * from "./scaffold.mjs";
 export * from "./harness.mjs";
+export * from "./ingest.mjs";
 export * from "./index-build.mjs";
 export * from "./webhook.mjs";
 export * from "./proof.mjs";
