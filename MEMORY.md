@@ -9,6 +9,7 @@ Established: May 2026
 - **2026-05-20**: Unified Audit & Substrate Pruning. Cleaned monorepo by surgically pruning 43 nested `.git` folders. Added SQL database backing migration for retreat applicant intake under `supabase/migrations/20260520000001_arcanea_applications.sql` with a write-only RLS policy. Packaged and generated ACOS Setup Blueprint in `content/ACOS_Implementation_Guide.md` to unblock Gate 0. Verified type-safety and builds successfully across `apps/web` and `arcanea.ai`.
 - **2026-05-20**: Swarm Moniker Activation. Officially saved `AG` (Antigravity) moniker, coordinating with Claude Code, Codex, and OpenCode to execute the end-to-end Four-Substrate and World Weaving ecosystem.
 - **2026-06-12**: Solved the `/ecosystem` page view switcher and resolved the `cta-section` Orbiting Guardians image hydration crash on `/`. Cleared stale worktrees (`multi-pr` and `feat-author-council-wiring`). Ran the entire monorepo verification pass (TSC, unit tests, next build, 73 Playwright E2E tests, SIS check, SIS contracts, agents bridge, test:media) and successfully pushed to the `integrate/agent-native-main-2026-06-12` branch.
+- **2026-06-12**: Performed a comprehensive review of the core foundations, naming practices, and book outlines under `/goal` for June 2026 standards. Created the strategic blueprint `arcanea_core_foundations_and_sagas_analysis.md` outlining the 7-Book Core Saga, Realms, Sister-Worlds, and Mirror Realms systems.
 
 ## System State
 - **Status**: Integration Pass Complete / Staged / Green Build / All Tests Passing
