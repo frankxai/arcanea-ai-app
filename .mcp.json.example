@@ -37,11 +37,20 @@
     },
     "arcanea-memory": {
       "command": "node",
-      "args": ["/mnt/c/Users/frank/Arcanea/packages/memory-mcp/dist/server.js"],
+      "args": ["C:/Users/frank/Arcanea/scripts/arcanea-memory-compat-mcp.mjs"],
       "env": {
-        "STARLIGHT_PATH": "/mnt/c/Users/frank/Arcanea/.arcanea/memory"
+        "STARLIGHT_HOME": "C:/Users/frank/.starlight",
+        "LEGACY_MEMORY_OUT": "C:/Users/frank/Arcanea/.arcanea/memory"
       },
-      "description": "Arcanea memory MCP (vault_remember, vault_recall, horizon)"
+      "description": "Arcanea memory compatibility MCP (vault_remember, vault_recall, horizon)"
+    },
+    "starlight-sis": {
+      "command": "node",
+      "args": ["C:/Users/frank/Arcanea/scripts/sis-mcp-server.mjs"],
+      "env": {
+        "STARLIGHT_HOME": "C:/Users/frank/.starlight"
+      },
+      "description": "Starlight SIS canonical MCP server (append entries, stats, continuity substrate)"
     },
     "playwright": {
       "command": "npx",
@@ -51,7 +60,9 @@
     },
     "arcanea-claw": {
       "command": "node",
-      "args": ["/mnt/c/Users/frank/Arcanea/arcanea-claw/mcp-server/dist/index.js"],
+      "args": [
+        "/mnt/c/Users/frank/Arcanea/arcanea-claw/mcp-server/dist/index.js"
+      ],
       "env": {
         "CLAW_DIR": "/mnt/c/Users/frank/Arcanea/arcanea-claw",
         "MANIFEST_PATH": "/mnt/c/Users/frank/Arcanea/arcanea-claw/manifest.json"

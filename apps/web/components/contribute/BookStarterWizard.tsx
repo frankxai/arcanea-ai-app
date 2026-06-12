@@ -1,89 +1,109 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import * as React from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { z } from 'zod';
-import { toast } from 'sonner';
-import { Download, FileCode, Sparkles, Copy, Check } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import * as React from "react";
+import { useForm, Controller, useWatch } from "react-hook-form";
+import { z } from "zod";
+import { toast } from "sonner";
+import { Download, FileCode, Sparkles, Copy, Check } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 /* -------------------------------------------------------------------------- */
 /*  Schema                                                                    */
 /* -------------------------------------------------------------------------- */
 
 const GENRES = [
-  { value: 'dark-fantasy', label: 'Dark Fantasy' },
-  { value: 'literary-fantasy', label: 'Literary Fantasy' },
-  { value: 'epic-fantasy', label: 'Epic Fantasy' },
-  { value: 'sci-fi', label: 'Science Fiction' },
-  { value: 'literary-fiction', label: 'Literary Fiction' },
-  { value: 'other', label: 'Other' },
+  { value: "dark-fantasy", label: "Dark Fantasy" },
+  { value: "literary-fantasy", label: "Literary Fantasy" },
+  { value: "epic-fantasy", label: "Epic Fantasy" },
+  { value: "sci-fi", label: "Science Fiction" },
+  { value: "literary-fiction", label: "Literary Fiction" },
+  { value: "other", label: "Other" },
 ] as const;
 
 const TIERS = [
   {
-    value: 'community',
-    label: 'Community',
-    helper: 'Auto-publish. Free forever. Start here.',
+    value: "community",
+    label: "Community",
+    helper: "Auto-publish. Free forever. Start here.",
   },
   {
-    value: 'featured',
-    label: 'Featured',
-    helper: 'Editor curation. Revenue share. By promotion.',
+    value: "featured",
+    label: "Featured",
+    helper: "Editor curation. Revenue share. By promotion.",
   },
   {
-    value: 'canon',
-    label: 'Canon',
-    helper: 'Arcanea universe. By invitation only.',
+    value: "canon",
+    label: "Canon",
+    helper: "Arcanea universe. By invitation only.",
   },
 ] as const;
 
 const MODELS = [
-  { id: 'claude-opus-4-6', label: 'Claude Opus 4.6', provider: 'anthropic' },
-  { id: 'claude-sonnet-4-5', label: 'Claude Sonnet 4.5', provider: 'anthropic' },
-  { id: 'gpt-5', label: 'GPT-5', provider: 'openai' },
-  { id: 'gpt-4-1', label: 'GPT-4.1', provider: 'openai' },
-  { id: 'gemini-2-5-pro', label: 'Gemini 2.5 Pro', provider: 'google' },
-  { id: 'grok-4', label: 'Grok 4', provider: 'xai' },
-  { id: 'deepseek-r1', label: 'DeepSeek R1', provider: 'deepseek' },
-  { id: 'llama-4', label: 'Llama 4', provider: 'meta' },
+  { id: "claude-opus-4-6", label: "Claude Opus 4.6", provider: "anthropic" },
+  {
+    id: "claude-sonnet-4-5",
+    label: "Claude Sonnet 4.5",
+    provider: "anthropic",
+  },
+  { id: "gpt-5", label: "GPT-5", provider: "openai" },
+  { id: "gpt-4-1", label: "GPT-4.1", provider: "openai" },
+  { id: "gemini-2-5-pro", label: "Gemini 2.5 Pro", provider: "google" },
+  { id: "grok-4", label: "Grok 4", provider: "xai" },
+  { id: "deepseek-r1", label: "DeepSeek R1", provider: "deepseek" },
+  { id: "llama-4", label: "Llama 4", provider: "meta" },
 ] as const;
 
 const LICENSES = [
-  { value: 'CC-BY-NC-SA-4.0', label: 'CC BY-NC-SA 4.0 (share, no commercial, share-alike)' },
-  { value: 'CC-BY-4.0', label: 'CC BY 4.0 (share with attribution)' },
-  { value: 'CC0-1.0', label: 'CC0 1.0 (public domain)' },
-  { value: 'MIT', label: 'MIT' },
-  { value: 'All Rights Reserved', label: 'All Rights Reserved' },
+  {
+    value: "CC-BY-NC-SA-4.0",
+    label: "CC BY-NC-SA 4.0 (share, no commercial, share-alike)",
+  },
+  { value: "CC-BY-4.0", label: "CC BY 4.0 (share with attribution)" },
+  { value: "CC0-1.0", label: "CC0 1.0 (public domain)" },
+  { value: "MIT", label: "MIT" },
+  { value: "All Rights Reserved", label: "All Rights Reserved" },
 ] as const;
 
 const WizardSchema = z
   .object({
-    title: z.string().min(3, 'Title must be at least 3 characters').max(120),
+    title: z.string().min(3, "Title must be at least 3 characters").max(120),
     slug: z
       .string()
-      .min(3, 'Slug must be at least 3 characters')
+      .min(3, "Slug must be at least 3 characters")
       .max(80)
-      .regex(/^[a-z0-9-]+$/, 'Slug must be lowercase letters, numbers, and hyphens only'),
-    genre: z.enum(['dark-fantasy', 'literary-fantasy', 'epic-fantasy', 'sci-fi', 'literary-fiction', 'other']),
-    tier: z.enum(['community', 'featured', 'canon']),
-    authorName: z.string().min(1, 'Your name is required').max(120),
+      .regex(
+        /^[a-z0-9-]+$/,
+        "Slug must be lowercase letters, numbers, and hyphens only",
+      ),
+    genre: z.enum([
+      "dark-fantasy",
+      "literary-fantasy",
+      "epic-fantasy",
+      "sci-fi",
+      "literary-fiction",
+      "other",
+    ]),
+    tier: z.enum(["community", "featured", "canon"]),
+    authorName: z.string().min(1, "Your name is required").max(120),
     authorGithub: z
       .string()
       .max(60)
-      .regex(/^[a-zA-Z0-9-]*$/, 'GitHub handle can only contain letters, numbers, and hyphens')
+      .regex(
+        /^[a-zA-Z0-9-]*$/,
+        "GitHub handle can only contain letters, numbers, and hyphens",
+      )
       .optional()
-      .or(z.literal('')),
-    coAuthor: z.string().max(120).optional().or(z.literal('')),
+      .or(z.literal("")),
+    coAuthor: z.string().max(120).optional().or(z.literal("")),
     humanPercent: z.number().min(0).max(100),
     models: z.array(z.string()).default([]),
     license: z.string().min(1),
-    logline: z.string().max(240).optional().or(z.literal('')),
+    logline: z.string().max(240).optional().or(z.literal("")),
   })
   .refine((data) => data.humanPercent >= 0 && data.humanPercent <= 100, {
-    message: 'Human contribution must be between 0 and 100',
-    path: ['humanPercent'],
+    message: "Human contribution must be between 0 and 100",
+    path: ["humanPercent"],
   });
 
 type WizardInput = z.input<typeof WizardSchema>;
@@ -96,7 +116,7 @@ type WizardValues = z.output<typeof WizardSchema>;
 function escapeYamlString(value: string): string {
   // Quote anything containing chars that would confuse a YAML parser.
   if (/[:#&*!|>'"%@`{}\[\],]/.test(value) || /^\s|\s$/.test(value)) {
-    return `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+    return `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
   }
   return `"${value}"`;
 }
@@ -105,9 +125,9 @@ function slugify(input: string): string {
   return input
     .toLowerCase()
     .trim()
-    .replace(/['".,!?]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
+    .replace(/['".,!?]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
     .slice(0, 80);
 }
 
@@ -130,20 +150,20 @@ function buildBundle(values: WizardValues): GeneratedBundle {
             (m) =>
               `    - id: ${m.id}\n      provider: ${m.provider}\n      role: prose-drafting`,
           )
-          .join('\n')
-      : '    - id: claude-opus-4-6\n      provider: anthropic\n      role: prose-drafting';
+          .join("\n")
+      : "    - id: claude-opus-4-6\n      provider: anthropic\n      role: prose-drafting";
 
   const coAuthorBlock = values.coAuthor?.trim()
     ? `\n  - name: ${escapeYamlString(values.coAuthor.trim())}\n    role: co_author`
-    : '';
+    : "";
 
   const githubBlock = values.authorGithub?.trim()
     ? `\n    github: ${values.authorGithub.trim()}`
-    : '';
+    : "";
 
   const loglineBlock = values.logline?.trim()
     ? `\n\nlogline: ${escapeYamlString(values.logline.trim())}`
-    : '';
+    : "";
 
   const yaml = `title: ${escapeYamlString(values.title)}
 slug: ${values.slug}
@@ -290,12 +310,15 @@ Generated by the Arcanea Book Starter Wizard.
 /* -------------------------------------------------------------------------- */
 
 const FIELD_BASE =
-  'w-full rounded-lg border border-white/[0.08] bg-white/[0.02] px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-[var(--arc-brand-atlantean-teal)]/40 focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/20';
+  "w-full rounded-lg border border-white/[0.08] bg-white/[0.02] px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-[var(--arc-brand-atlantean-teal)]/40 focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/20";
 
-const LABEL_BASE = 'block text-[11px] uppercase tracking-[0.18em] text-white/50';
+const LABEL_BASE =
+  "block text-[11px] uppercase tracking-[0.18em] text-white/50";
 
 export function BookStarterWizard() {
-  const [generated, setGenerated] = React.useState<GeneratedBundle | null>(null);
+  const [generated, setGenerated] = React.useState<GeneratedBundle | null>(
+    null,
+  );
   const [copied, setCopied] = React.useState(false);
   const [downloading, setDownloading] = React.useState(false);
   const resultRef = React.useRef<HTMLDivElement>(null);
@@ -303,37 +326,36 @@ export function BookStarterWizard() {
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
     control,
     formState: { errors, isSubmitting },
   } = useForm<WizardInput>({
     defaultValues: {
-      title: '',
-      slug: '',
-      genre: 'literary-fantasy',
-      tier: 'community',
-      authorName: '',
-      authorGithub: '',
-      coAuthor: '',
+      title: "",
+      slug: "",
+      genre: "literary-fantasy",
+      tier: "community",
+      authorName: "",
+      authorGithub: "",
+      coAuthor: "",
       humanPercent: 40,
-      models: ['claude-opus-4-6'],
-      license: 'CC-BY-NC-SA-4.0',
-      logline: '',
+      models: ["claude-opus-4-6"],
+      license: "CC-BY-NC-SA-4.0",
+      logline: "",
     },
-    mode: 'onBlur',
+    mode: "onBlur",
   });
 
-  const title = watch('title');
-  const humanPercent = watch('humanPercent');
-  const slugValue = watch('slug');
-  const selectedModels = watch('models') ?? [];
+  const title = useWatch({ control, name: "title" });
+  const humanPercent = useWatch({ control, name: "humanPercent" });
+  const slugValue = useWatch({ control, name: "slug" });
+  const selectedModels = useWatch({ control, name: "models" }) ?? [];
 
   // Auto-derive slug from title while user has not manually edited it.
   const slugTouched = React.useRef(false);
   React.useEffect(() => {
     if (!slugTouched.current && title) {
-      setValue('slug', slugify(title), { shouldValidate: false });
+      setValue("slug", slugify(title), { shouldValidate: false });
     }
   }, [title, setValue]);
 
@@ -341,15 +363,15 @@ export function BookStarterWizard() {
     const parsed = WizardSchema.safeParse(raw);
     if (!parsed.success) {
       const first = parsed.error.issues[0];
-      toast.error(first?.message ?? 'Please check the form');
+      toast.error(first?.message ?? "Please check the form");
       return;
     }
     const bundle = buildBundle(parsed.data);
     setGenerated(bundle);
-    toast.success('Book starter generated');
+    toast.success("Book starter generated");
     // Smooth scroll to result after render.
     window.requestAnimationFrame(() => {
-      resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
 
@@ -358,10 +380,10 @@ export function BookStarterWizard() {
     try {
       await navigator.clipboard.writeText(generated.yaml);
       setCopied(true);
-      toast.success('book.yaml copied to clipboard');
+      toast.success("book.yaml copied to clipboard");
       window.setTimeout(() => setCopied(false), 1800);
     } catch {
-      toast.error('Copy failed — select the text manually');
+      toast.error("Copy failed — select the text manually");
     }
   }, [generated]);
 
@@ -369,30 +391,34 @@ export function BookStarterWizard() {
     if (!generated) return;
     setDownloading(true);
     try {
-      const { default: JSZip } = await import('jszip');
+      const { default: JSZip } = await import("jszip");
       const zip = new JSZip();
-      const slug = slugValue || 'my-book';
+      const slug = slugValue || "my-book";
       const folder = zip.folder(slug);
-      if (!folder) throw new Error('Failed to create zip folder');
-      folder.file('book.yaml', generated.yaml);
-      folder.file('README.md', generated.readme);
-      folder.folder('chapters')?.file('01-first-chapter.md', generated.firstChapter);
-      folder.folder('outline')?.file('story-architecture.md', generated.outline);
-      folder.folder('characters')?.file('profiles.md', generated.characters);
+      if (!folder) throw new Error("Failed to create zip folder");
+      folder.file("book.yaml", generated.yaml);
+      folder.file("README.md", generated.readme);
+      folder
+        .folder("chapters")
+        ?.file("01-first-chapter.md", generated.firstChapter);
+      folder
+        .folder("outline")
+        ?.file("story-architecture.md", generated.outline);
+      folder.folder("characters")?.file("profiles.md", generated.characters);
 
-      const blob = await zip.generateAsync({ type: 'blob' });
+      const blob = await zip.generateAsync({ type: "blob" });
       const url = URL.createObjectURL(blob);
-      const anchor = document.createElement('a');
+      const anchor = document.createElement("a");
       anchor.href = url;
       anchor.download = `${slug}-starter.zip`;
       document.body.appendChild(anchor);
       anchor.click();
       document.body.removeChild(anchor);
       URL.revokeObjectURL(url);
-      toast.success('Starter bundle downloaded');
+      toast.success("Starter bundle downloaded");
     } catch (error) {
       console.error(error);
-      toast.error('ZIP generation failed');
+      toast.error("ZIP generation failed");
     } finally {
       setDownloading(false);
     }
@@ -407,23 +433,30 @@ export function BookStarterWizard() {
       <div className="relative">
         <div className="mb-6 flex items-start gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10">
-            <Sparkles className="h-4 w-4 text-[var(--arc-brand-atlantean-teal)]" aria-hidden="true" />
+            <Sparkles
+              className="h-4 w-4 text-[var(--arc-brand-atlantean-teal)]"
+              aria-hidden="true"
+            />
           </div>
           <div>
             <h3 className="font-display text-2xl font-semibold text-white/95">
               Book Starter Wizard
             </h3>
             <p className="mt-1 text-sm text-white/55">
-              Fill in the essentials and we will generate a valid{' '}
+              Fill in the essentials and we will generate a valid{" "}
               <code className="rounded bg-white/[0.06] px-1.5 py-0.5 text-[12px] text-[var(--arc-text-primary)]">
                 book.yaml
-              </code>{' '}
+              </code>{" "}
               plus a ready-to-commit folder structure.
             </p>
           </div>
         </div>
 
-        <form onSubmit={onSubmit} className="grid gap-6 md:grid-cols-2" noValidate>
+        <form
+          onSubmit={onSubmit}
+          className="grid gap-6 md:grid-cols-2"
+          noValidate
+        >
           {/* Title */}
           <div className="md:col-span-2">
             <label htmlFor="wizard-title" className={LABEL_BASE}>
@@ -433,13 +466,16 @@ export function BookStarterWizard() {
               id="wizard-title"
               type="text"
               placeholder="The Tides of Silence"
-              className={cn(FIELD_BASE, 'mt-1.5')}
+              className={cn(FIELD_BASE, "mt-1.5")}
               aria-invalid={Boolean(errors.title)}
-              aria-describedby={errors.title ? 'wizard-title-error' : undefined}
-              {...register('title')}
+              aria-describedby={errors.title ? "wizard-title-error" : undefined}
+              {...register("title")}
             />
             {errors.title ? (
-              <p id="wizard-title-error" className="mt-1 text-xs text-red-400/90">
+              <p
+                id="wizard-title-error"
+                className="mt-1 text-xs text-red-400/90"
+              >
                 {errors.title.message}
               </p>
             ) : null}
@@ -454,19 +490,21 @@ export function BookStarterWizard() {
               id="wizard-slug"
               type="text"
               placeholder="tides-of-silence"
-              className={cn(FIELD_BASE, 'mt-1.5 font-mono text-[13px]')}
+              className={cn(FIELD_BASE, "mt-1.5 font-mono text-[13px]")}
               aria-invalid={Boolean(errors.slug)}
-              {...register('slug', {
+              {...register("slug", {
                 onChange: () => {
                   slugTouched.current = true;
                 },
               })}
             />
             {errors.slug ? (
-              <p className="mt-1 text-xs text-red-400/90">{errors.slug.message}</p>
+              <p className="mt-1 text-xs text-red-400/90">
+                {errors.slug.message}
+              </p>
             ) : (
               <p className="mt-1 text-[11px] text-white/35">
-                Lives at /books/drafts/{slugValue || 'your-slug'}
+                Lives at /books/drafts/{slugValue || "your-slug"}
               </p>
             )}
           </div>
@@ -478,11 +516,15 @@ export function BookStarterWizard() {
             </label>
             <select
               id="wizard-genre"
-              className={cn(FIELD_BASE, 'mt-1.5')}
-              {...register('genre')}
+              className={cn(FIELD_BASE, "mt-1.5")}
+              {...register("genre")}
             >
               {GENRES.map((g) => (
-                <option key={g.value} value={g.value} className="bg-[var(--arc-cosmic-void)]">
+                <option
+                  key={g.value}
+                  value={g.value}
+                  className="bg-[var(--arc-cosmic-void)]"
+                >
                   {g.label}
                 </option>
               ))}
@@ -492,15 +534,16 @@ export function BookStarterWizard() {
           {/* Logline */}
           <div className="md:col-span-2">
             <label htmlFor="wizard-logline" className={LABEL_BASE}>
-              Logline <span className="text-white/25">(optional, 1 sentence)</span>
+              Logline{" "}
+              <span className="text-white/25">(optional, 1 sentence)</span>
             </label>
             <input
               id="wizard-logline"
               type="text"
               maxLength={240}
               placeholder="A coastal archivist hunts a drowned saint's confession before the tide takes it back."
-              className={cn(FIELD_BASE, 'mt-1.5')}
-              {...register('logline')}
+              className={cn(FIELD_BASE, "mt-1.5")}
+              {...register("logline")}
             />
           </div>
 
@@ -526,13 +569,15 @@ export function BookStarterWizard() {
                         aria-checked={selected}
                         onClick={() => field.onChange(tier.value)}
                         className={cn(
-                          'rounded-xl border px-4 py-3 text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40',
+                          "rounded-xl border px-4 py-3 text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40",
                           selected
-                            ? 'border-[var(--arc-brand-atlantean-teal)]/50 bg-[var(--arc-brand-atlantean-teal)]/[0.08] shadow-[0_0_24px_rgba(0,188,212,0.14)]'
-                            : 'border-white/[0.08] bg-white/[0.02] hover:border-white/[0.15]',
+                            ? "border-[var(--arc-brand-atlantean-teal)]/50 bg-[var(--arc-brand-atlantean-teal)]/[0.08] shadow-[0_0_24px_rgba(0,188,212,0.14)]"
+                            : "border-white/[0.08] bg-white/[0.02] hover:border-white/[0.15]",
                         )}
                       >
-                        <div className="text-sm font-semibold text-white/90">{tier.label}</div>
+                        <div className="text-sm font-semibold text-white/90">
+                          {tier.label}
+                        </div>
                         <div className="mt-1 text-[11px] leading-relaxed text-white/50">
                           {tier.helper}
                         </div>
@@ -552,12 +597,14 @@ export function BookStarterWizard() {
             <input
               id="wizard-author"
               type="text"
-              className={cn(FIELD_BASE, 'mt-1.5')}
+              className={cn(FIELD_BASE, "mt-1.5")}
               aria-invalid={Boolean(errors.authorName)}
-              {...register('authorName')}
+              {...register("authorName")}
             />
             {errors.authorName ? (
-              <p className="mt-1 text-xs text-red-400/90">{errors.authorName.message}</p>
+              <p className="mt-1 text-xs text-red-400/90">
+                {errors.authorName.message}
+              </p>
             ) : null}
           </div>
 
@@ -570,11 +617,13 @@ export function BookStarterWizard() {
               id="wizard-github"
               type="text"
               placeholder="your-handle"
-              className={cn(FIELD_BASE, 'mt-1.5 font-mono text-[13px]')}
-              {...register('authorGithub')}
+              className={cn(FIELD_BASE, "mt-1.5 font-mono text-[13px]")}
+              {...register("authorGithub")}
             />
             {errors.authorGithub ? (
-              <p className="mt-1 text-xs text-red-400/90">{errors.authorGithub.message}</p>
+              <p className="mt-1 text-xs text-red-400/90">
+                {errors.authorGithub.message}
+              </p>
             ) : null}
           </div>
 
@@ -587,8 +636,8 @@ export function BookStarterWizard() {
               id="wizard-coauthor"
               type="text"
               placeholder="Collaborator name"
-              className={cn(FIELD_BASE, 'mt-1.5')}
-              {...register('coAuthor')}
+              className={cn(FIELD_BASE, "mt-1.5")}
+              {...register("coAuthor")}
             />
           </div>
 
@@ -598,7 +647,9 @@ export function BookStarterWizard() {
               AI Transparency
             </label>
             <div className="mt-2 flex items-center gap-4">
-              <span className="w-16 text-xs text-white/50">Human {humanPercent}%</span>
+              <span className="w-16 text-xs text-white/50">
+                Human {humanPercent}%
+              </span>
               <Controller
                 control={control}
                 name="humanPercent"
@@ -641,10 +692,10 @@ export function BookStarterWizard() {
                       <label
                         key={model.id}
                         className={cn(
-                          'flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-[12px] transition-all',
+                          "flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-[12px] transition-all",
                           checked
-                            ? 'border-[var(--arc-brand-atlantean-teal)]/40 bg-[var(--arc-brand-atlantean-teal)]/[0.06] text-white/90'
-                            : 'border-white/[0.08] bg-white/[0.02] text-white/60 hover:border-white/[0.15]',
+                            ? "border-[var(--arc-brand-atlantean-teal)]/40 bg-[var(--arc-brand-atlantean-teal)]/[0.06] text-white/90"
+                            : "border-white/[0.08] bg-white/[0.02] text-white/60 hover:border-white/[0.15]",
                         )}
                       >
                         <input
@@ -654,7 +705,9 @@ export function BookStarterWizard() {
                           onChange={(e) => {
                             const next = e.target.checked
                               ? [...(field.value ?? []), model.id]
-                              : (field.value ?? []).filter((id) => id !== model.id);
+                              : (field.value ?? []).filter(
+                                  (id) => id !== model.id,
+                                );
                             field.onChange(next);
                           }}
                         />
@@ -677,11 +730,15 @@ export function BookStarterWizard() {
             </label>
             <select
               id="wizard-license"
-              className={cn(FIELD_BASE, 'mt-1.5')}
-              {...register('license')}
+              className={cn(FIELD_BASE, "mt-1.5")}
+              {...register("license")}
             >
               {LICENSES.map((l) => (
-                <option key={l.value} value={l.value} className="bg-[var(--arc-cosmic-void)]">
+                <option
+                  key={l.value}
+                  value={l.value}
+                  className="bg-[var(--arc-cosmic-void)]"
+                >
                   {l.label}
                 </option>
               ))}
@@ -693,10 +750,10 @@ export function BookStarterWizard() {
               type="submit"
               disabled={isSubmitting}
               className={cn(
-                'inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] px-5 py-2.5 text-sm font-semibold text-white',
-                'shadow-[0_0_32px_rgba(0,188,212,0.25)] transition-transform hover:-translate-y-0.5',
-                'focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/50',
-                'disabled:cursor-not-allowed disabled:opacity-60',
+                "inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] px-5 py-2.5 text-sm font-semibold text-white",
+                "shadow-[0_0_32px_rgba(0,188,212,0.25)] transition-transform hover:-translate-y-0.5",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/50",
+                "disabled:cursor-not-allowed disabled:opacity-60",
               )}
             >
               <Sparkles className="h-4 w-4" aria-hidden="true" />
@@ -713,7 +770,10 @@ export function BookStarterWizard() {
           <div ref={resultRef} className="mt-8 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm text-white/75">
-                <FileCode className="h-4 w-4 text-[var(--arc-brand-atlantean-teal)]" aria-hidden="true" />
+                <FileCode
+                  className="h-4 w-4 text-[var(--arc-brand-atlantean-teal)]"
+                  aria-hidden="true"
+                />
                 <span className="font-semibold">Generated book.yaml</span>
               </div>
               <div className="flex items-center gap-2">
@@ -727,7 +787,7 @@ export function BookStarterWizard() {
                   ) : (
                     <Copy className="h-3.5 w-3.5" />
                   )}
-                  {copied ? 'Copied' : 'Copy YAML'}
+                  {copied ? "Copied" : "Copy YAML"}
                 </button>
                 <button
                   type="button"
@@ -736,7 +796,7 @@ export function BookStarterWizard() {
                   className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/[0.08] px-3 py-1.5 text-[12px] font-semibold text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/[0.15] disabled:opacity-60"
                 >
                   <Download className="h-3.5 w-3.5" />
-                  {downloading ? 'Zipping…' : 'Download ZIP'}
+                  {downloading ? "Zipping…" : "Download ZIP"}
                 </button>
               </div>
             </div>
@@ -744,8 +804,8 @@ export function BookStarterWizard() {
               <code>{generated.yaml}</code>
             </pre>
             <p className="text-[11px] text-white/40">
-              The ZIP contains <code className="text-white/60">book.yaml</code>, a
-              starter chapter, outline, character template, and a README with
+              The ZIP contains <code className="text-white/60">book.yaml</code>,
+              a starter chapter, outline, character template, and a README with
               publishing instructions.
             </p>
           </div>

@@ -2,84 +2,110 @@
 
 # Arcanea
 
-**The imagination layer for AI.**
-Superintelligent prompts that make every model feel like magic.
+**A BYOK-first creative intelligence workspace.**
+
+Arcanea gives creators a persistent workspace for projects, docs, memory, creations, provenance, project graph context, and workflow orchestration. The public app is the product; the repo is also the operating system, agent substrate, and reference world behind it.
 
 [![arcanea.ai](https://img.shields.io/badge/arcanea.ai-live-00bcd4?style=flat-square)](https://arcanea.ai)
 [![npm](https://img.shields.io/badge/npm-@arcanea-00bcd4?style=flat-square&logo=npm)](https://www.npmjs.com/org/arcanea)
-[![License](https://img.shields.io/badge/License-Proprietary-gray?style=flat-square)](./LICENSE)
+[![Agent Native](https://img.shields.io/badge/agent--native-AGENTS.md-111827?style=flat-square)](./AGENTS.md)
+[![License](https://img.shields.io/badge/license-proprietary--source--viewable-6b7280?style=flat-square)](./LICENSE)
 
 </div>
 
----
+## What Arcanea Is
 
-## Use Arcanea now
+Arcanea is a creative intelligence system with four connected layers:
 
-| How | What you get |
-|:----|:-------------|
-| **[arcanea.ai](https://arcanea.ai)** | Chat, create images, write stories, compose music — free |
-| **Claude Code** | `claude mcp add arcanea -- npx -y @arcanea/mcp-server` |
-| **Any AI** | Copy a prompt from [arcanea.ai/sanctum](https://arcanea.ai/sanctum) |
-| **Authors** | `npx author-os-cli init` — AI-native book production |
+| Layer                 | Purpose                                                                                 |
+| :-------------------- | :-------------------------------------------------------------------------------------- |
+| **Workspace**         | Projects, docs, chat, creations, memory, provenance, and reusable workflows             |
+| **SIS substrate**     | Vendor-agnostic continuity for agents, sessions, context, memory, voice, and handoffs   |
+| **Palace / world OS** | A spatial mental model for navigating projects, canon, creations, agents, and verticals |
+| **Verticals**         | Books, media, research, academy, marketplace, voice, community, and creator tools       |
 
-## What's inside
+The mythology is not decoration. Arcanea's world, guardians, books, gates, and palace vocabulary are the product's reference implementation for creative systems that compound over time.
 
+## Use Arcanea
+
+| Path                             | What you get                                                                         |
+| :------------------------------- | :----------------------------------------------------------------------------------- |
+| [arcanea.ai](https://arcanea.ai) | Public web app for chat, creation, library, pages, and product surfaces              |
+| `npx @arcanea/mcp-server`        | MCP tools for agent clients that support Model Context Protocol                      |
+| `pnpm dev`                       | Local monorepo development for the web app and packages                              |
+| [AGENTS.md](./AGENTS.md)         | Runtime instructions for Codex, Claude, Cursor, Gemini, opencode, and Arcanea agents |
+| [llms.txt](./llms.txt)           | Agent-readable map of the repo and public docs                                       |
+
+## Capabilities
+
+- **Creative workspace**: project-centered docs, conversations, creations, and continuity.
+- **Memory and provenance**: SIS-backed context, durable decisions, session handoff, and source-aware creation history.
+- **Agent orchestration**: Luminor Engineering Kernel, task contracts, model routing discipline, and specialist agents.
+- **MCP and tools**: MCP packages, workflow tools, research agents, voice bridges, and app integrations.
+- **Project graph**: project context activation, Supabase-backed graph plans, and workspace verification.
+- **Vertical OS**: books, visual media, marketplace, academy, research, voice, and community layers.
+- **Design system**: `@arcanea/design-system` tokens, brand kits, motion variants, and UI rules.
+
+## Repository Map
+
+```text
+apps/web/              Next.js app and public product surfaces
+packages/              Shared packages: MCP, agents, memory, voice, design, OS, CLI
+.arcanea/              Shared intelligence substrate and canonical planning context
+planning-with-files/   Execution control plane: state, backlog, changelog, branch audits
+book/                  Original books, lore, and creator philosophy
+docs/                  Architecture, strategy, research, product, and operations docs
+oss/                   Public/open-source packaging surfaces and skill registry work
+scripts/               Verification, SIS, project graph, ops, and release automation
 ```
-apps/web/          The platform — Next.js 16, Supabase, Vercel
-packages/          42 shared libraries, VS Code extension, MCP server
-book/              200K+ words of original creative philosophy
-.arcanea/lore/     The canon — mythology that doubles as architecture
-prompts/           Arcanean Prompt Language spec + templates
-```
 
-## The philosophy
+## For Agents
 
-Arcanea is a creative multiverse where mythology *is* methodology. Every character, location, and progression system in the world is also an architectural pattern you can use to build your own.
+Read these in order before making substantial changes:
 
-Think **Unreal Engine** (not a game — the engine for making games), **D&D** (not a story — the system for infinite stories). Arcanea's world is both real content people engage with *and* templates anyone can fork for their own universe.
+1. [AGENTS.md](./AGENTS.md)
+2. newest files in [planning-with-files/](./planning-with-files/)
+3. [.arcanea/CLAUDE.md](./.arcanea/CLAUDE.md)
+4. [.arcanea/MASTER_PLAN.md](./.arcanea/MASTER_PLAN.md)
+5. [TASTE.md](./TASTE.md) and [DESIGN.md](./DESIGN.md) for visual work
 
-**The creator journey:** Imagine a world → Build AI agents that live in it → Create consistent content → Publish → Earn → Expand as your fans become creators too.
+Agents must use Node 20.x, pnpm, narrow branches, task contracts, and the verification commands attached to the work.
 
-## Build with Arcanea
-
-| Package | What it does |
-|:--------|:-------------|
-| [`@arcanea/mcp-server`](https://www.npmjs.com/package/@arcanea/mcp-server) | MCP server — add Arcanea to Claude Code, Cursor, or any MCP client |
-| [`author-os-cli`](https://www.npmjs.com/package/author-os-cli) | AI-native book production pipeline |
-| [`arcanea-claw`](./arcanea-claw/) | 24/7 media processing daemon |
-| [`@arcanea/vscode`](./packages/vscode/) | VS Code extension with Guardian-powered AI modes |
-
-## For developers
+## Develop Locally
 
 ```bash
 git clone https://github.com/frankxai/arcanea.git
-cd arcanea && pnpm install
-cp .env.example .env.local
+cd arcanea
+pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-**Stack:** Next.js 16 · React 19 · TypeScript (strict) · Supabase · Vercel AI SDK · Gemini + Claude
+Core verification:
 
-## The Library
+```bash
+pnpm run type-check
+pnpm run lint
+pnpm run build
+pnpm run verify:project-workspaces
+pnpm run sis:check
+```
 
-> *"These books are not entertainment. They are equipment for living."*
+App/media verification:
 
-17 collections of creative philosophy in [`book/`](./book/) — Laws, Legends, Meditations, an Academy Handbook, and more. Not content to consume, but frameworks to practice.
+```bash
+pnpm --dir apps/web test:media
+```
 
-## Contributing
+## Public Status
 
-We welcome contributions from creators and developers. See [CONTRIBUTING.md](./CONTRIBUTING.md).
+This repository is source-viewable but not open-licensed. Some packages may have separate publication or licensing terms. See [LICENSE](./LICENSE), [CONTRIBUTING.md](./CONTRIBUTING.md), and [SECURITY.md](./SECURITY.md) before reusing code or submitting changes.
 
-## License
+## Maintainer
 
-Proprietary. See [LICENSE](./LICENSE). Source is viewable for transparency; viewing does not grant usage rights.
-
----
+Arcanea is built and maintained by [FrankX](https://github.com/frankxai).
 
 <div align="center">
 
-*"Enter seeking, leave transformed, return whenever needed."*
-
-**[arcanea.ai](https://arcanea.ai)** · Built by [FrankX](https://github.com/frankxai)
+**[arcanea.ai](https://arcanea.ai)** | **[AGENTS.md](./AGENTS.md)** | **[llms.txt](./llms.txt)**
 
 </div>

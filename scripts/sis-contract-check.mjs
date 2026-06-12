@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const repoRoot = process.cwd();
@@ -11,9 +11,7 @@ function readText(path) {
 }
 
 function stripJsonComments(raw) {
-  return raw
-    .replace(/^\s*\/\/.*$/gm, "")
-    .replace(/\/\*[\s\S]*?\*\//g, "");
+  return raw.replace(/^\s*\/\/.*$/gm, "").replace(/\/\*[\s\S]*?\*\//g, "");
 }
 
 function parseJsonFile(path, allowComments = false) {
@@ -34,29 +32,48 @@ function includesAll(text, required, label) {
 }
 
 function checkMcpConfig() {
-  const path = join(repoRoot, ".mcp.json");
+  const path = existsSync(join(repoRoot, ".mcp.json"))
+    ? join(repoRoot, ".mcp.json")
+    : join(repoRoot, ".mcp.json.example");
   const data = parseJsonFile(path);
   const compatServer = data.mcpServers?.["arcanea-memory"];
   assert(compatServer, ".mcp.json missing mcpServers.arcanea-memory");
-  assert(compatServer.command === "node", ".mcp.json arcanea-memory command must be node");
   assert(
-    Array.isArray(compatServer.args) && compatServer.args.includes("C:/Users/frank/Arcanea/scripts/arcanea-memory-compat-mcp.mjs"),
+    compatServer.command === "node",
+    ".mcp.json arcanea-memory command must be node",
+  );
+  assert(
+    Array.isArray(compatServer.args) &&
+      compatServer.args.includes(
+        "C:/Users/frank/Arcanea/scripts/arcanea-memory-compat-mcp.mjs",
+      ),
     ".mcp.json arcanea-memory args missing compatibility MCP server",
   );
-  assert(compatServer.env?.STARLIGHT_HOME === expectedSisHome, ".mcp.json arcanea-memory STARLIGHT_HOME mismatch");
   assert(
-    compatServer.env?.LEGACY_MEMORY_OUT === "C:/Users/frank/Arcanea/.arcanea/memory",
+    compatServer.env?.STARLIGHT_HOME === expectedSisHome,
+    ".mcp.json arcanea-memory STARLIGHT_HOME mismatch",
+  );
+  assert(
+    compatServer.env?.LEGACY_MEMORY_OUT ===
+      "C:/Users/frank/Arcanea/.arcanea/memory",
     ".mcp.json arcanea-memory LEGACY_MEMORY_OUT mismatch",
   );
 
   const server = data.mcpServers?.["starlight-sis"];
   assert(server, ".mcp.json missing mcpServers.starlight-sis");
-  assert(server.command === "node", ".mcp.json starlight-sis command must be node");
   assert(
-    Array.isArray(server.args) && server.args.includes("C:/Users/frank/Arcanea/scripts/sis-mcp-server.mjs"),
+    server.command === "node",
+    ".mcp.json starlight-sis command must be node",
+  );
+  assert(
+    Array.isArray(server.args) &&
+      server.args.includes("C:/Users/frank/Arcanea/scripts/sis-mcp-server.mjs"),
     ".mcp.json starlight-sis args missing sis-mcp-server.mjs",
   );
-  assert(server.env?.STARLIGHT_HOME === expectedSisHome, ".mcp.json STARLIGHT_HOME mismatch");
+  assert(
+    server.env?.STARLIGHT_HOME === expectedSisHome,
+    ".mcp.json STARLIGHT_HOME mismatch",
+  );
 }
 
 function checkOpencodeConfig() {
@@ -64,25 +81,42 @@ function checkOpencodeConfig() {
   const data = parseJsonFile(path);
   const server = data.mcp?.starlight_sis;
   assert(server, ".opencode/opencode.json missing mcp.starlight_sis");
-  assert(server.enabled === true, ".opencode/opencode.json starlight_sis must be enabled");
   assert(
-    Array.isArray(server.command) && server.command[1] === "C:/Users/frank/Arcanea/scripts/sis-mcp-server.mjs",
+    server.enabled === true,
+    ".opencode/opencode.json starlight_sis must be enabled",
+  );
+  assert(
+    Array.isArray(server.command) &&
+      server.command[1] === "C:/Users/frank/Arcanea/scripts/sis-mcp-server.mjs",
     ".opencode/opencode.json starlight_sis command mismatch",
   );
-  assert(server.environment?.STARLIGHT_HOME === expectedSisHome, ".opencode/opencode.json STARLIGHT_HOME mismatch");
+  assert(
+    server.environment?.STARLIGHT_HOME === expectedSisHome,
+    ".opencode/opencode.json STARLIGHT_HOME mismatch",
+  );
 }
 
 function checkArcaneaCodeConfig() {
   const path = join(repoRoot, "arcanea-code", ".arcanea", "arcanea.jsonc");
   const data = parseJsonFile(path, true);
   const server = data.mcp?.starlight_sis;
-  assert(server, "arcanea-code/.arcanea/arcanea.jsonc missing mcp.starlight_sis");
-  assert(server.enabled === true, "arcanea-code/.arcanea/arcanea.jsonc starlight_sis must be enabled");
   assert(
-    Array.isArray(server.command) && server.command[1] === "C:/Users/frank/Arcanea/scripts/sis-mcp-server.mjs",
+    server,
+    "arcanea-code/.arcanea/arcanea.jsonc missing mcp.starlight_sis",
+  );
+  assert(
+    server.enabled === true,
+    "arcanea-code/.arcanea/arcanea.jsonc starlight_sis must be enabled",
+  );
+  assert(
+    Array.isArray(server.command) &&
+      server.command[1] === "C:/Users/frank/Arcanea/scripts/sis-mcp-server.mjs",
     "arcanea-code/.arcanea/arcanea.jsonc starlight_sis command mismatch",
   );
-  assert(server.environment?.STARLIGHT_HOME === expectedSisHome, "arcanea-code/.arcanea/arcanea.jsonc STARLIGHT_HOME mismatch");
+  assert(
+    server.environment?.STARLIGHT_HOME === expectedSisHome,
+    "arcanea-code/.arcanea/arcanea.jsonc STARLIGHT_HOME mismatch",
+  );
 }
 
 function checkLaunchers() {
@@ -95,7 +129,11 @@ function checkLaunchers() {
 
   for (const path of launcherPaths) {
     const raw = readText(path);
-    includesAll(raw, ["STARLIGHT_HOME", "C:\\Users\\frank\\.starlight", "sis-bootstrap.ps1"], path);
+    includesAll(
+      raw,
+      ["STARLIGHT_HOME", "C:\\Users\\frank\\.starlight", "sis-bootstrap.ps1"],
+      path,
+    );
   }
 }
 

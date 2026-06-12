@@ -1,0 +1,17 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "starlight_sis": {
+      "type": "local",
+      "command": ["node", "C:/Users/frank/Arcanea/scripts/sis-mcp-server.mjs"],
+      "enabled": true,
+      "environment": {
+        "STARLIGHT_HOME": "C:/Users/frank/.starlight"
+      }
+    }
+  },
+  "instructions": [
+    "Canonical SIS memory lives at C:/Users/frank/.starlight.",
+    "Use starlight_sis resources and tools before assuming there is no prior context."
+  ]
+}

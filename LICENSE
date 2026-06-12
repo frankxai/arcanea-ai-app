@@ -1,0 +1,21 @@
+Proprietary Source-Viewable License
+
+Copyright (c) Frank Riemer and Arcanea.
+
+This repository is made available for transparency, review, and collaboration. Viewing,
+forking, or cloning this repository does not grant permission to copy, modify,
+redistribute, sublicense, sell, host, or use the software, content, brand assets,
+lore, prompts, designs, or documentation in another product or service.
+
+All rights are reserved unless a file or package explicitly states a different
+license. Public npm packages, generated artifacts, examples, or third-party
+dependencies may carry their own licenses; those licenses apply only to the
+specific files or packages where they are declared.
+
+You may submit issues and pull requests under the contribution terms in
+CONTRIBUTING.md. By submitting a contribution, you grant the maintainer a
+perpetual, worldwide, royalty-free right to use, modify, publish, and distribute
+that contribution as part of Arcanea.
+
+For commercial licensing, partnership, or reuse permission, contact the
+maintainer through the channels listed in SUPPORT.md.

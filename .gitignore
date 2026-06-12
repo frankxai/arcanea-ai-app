@@ -154,6 +154,8 @@ arcanea-opencode-fork/
 .editorconfig
 .gemini/
 .opencode/
+!.opencode/
+!.opencode/opencode.json
 .nano-banana-config.json
 .arcanea-learning.json
 .arcanea-library-cache.json
@@ -249,10 +251,6 @@ tailwind.config.js
 /tests/
 book-de/
 /CHANGELOG.md
-/CONTRIBUTING.md
-/CODE_OF_CONDUCT.md
-/LICENSE
-/SECURITY.md
 SECURITY_FIXES/
 .changeset/
 .github/instructions/

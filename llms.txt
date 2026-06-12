@@ -1,0 +1,62 @@
+# Arcanea
+
+Arcanea is a BYOK-first creative intelligence workspace and agent-native
+monorepo. It combines a public web app, SIS continuity substrate, MCP tools,
+memory, provenance, project graph context, workflows, palace/world OS concepts,
+and creator verticals.
+
+## Start Here
+
+- Human overview: README.md
+- Agent instructions: AGENTS.md
+- Shared intelligence: .arcanea/CLAUDE.md
+- Master plan: .arcanea/MASTER_PLAN.md
+- Current execution state: planning-with-files/
+- Design/taste authority: DESIGN.md, TASTE.md
+
+## Important Architecture Docs
+
+- docs/architecture/arcanea-os.md
+- docs/architecture/sis-memory.md
+- docs/architecture/palace.md
+- docs/architecture/verticals.md
+
+## Important Packages
+
+- packages/orchestrator/
+- packages/arcanea-mcp/
+- packages/memory-mcp/
+- packages/hybrid-memory/
+- packages/guardian-memory/
+- packages/design-system/
+- packages/ai-provider/
+- packages/agent-registry/
+- packages/flow-engine/
+- packages/os/
+
+## App
+
+- apps/web/
+- apps/web/public/llms.txt
+- apps/web/README.md
+
+## Rules For Agents
+
+- Use Node 20.x and pnpm.
+- Read AGENTS.md before changing code.
+- Do not introduce raw visual constants in app code.
+- Use task contracts for substantial work.
+- Prefer audited cherry-picks over wholesale merges of stale branches.
+- Run scoped verification before reporting success.
+
+## Verification
+
+```bash
+pnpm install --frozen-lockfile
+pnpm run type-check
+pnpm run lint
+pnpm run build
+pnpm run verify:project-workspaces
+pnpm run sis:check
+pnpm --dir apps/web test:media
+```

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 import ReactFlow, {
   Background,
   BackgroundVariant,
@@ -12,15 +12,15 @@ import ReactFlow, {
   type NodeProps,
   type Node as ReactFlowNode,
   type Edge as ReactFlowEdge,
-} from '@xyflow/react';
+} from "@xyflow/react";
 // @xyflow/react v12 default export has ambiguous JSX signature under our
 // bundler moduleResolution — alias it to bypass the 'not a JSX component'
 // complaint without affecting runtime.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ReactFlowComponent = ReactFlow as any;
-import '@xyflow/react/dist/style.css';
-import { m } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import "@xyflow/react/dist/style.css";
+import { m } from "framer-motion";
+import { cn } from "@/lib/utils";
 import {
   type ElementType,
   type NodeType,
@@ -28,8 +28,8 @@ import {
   type WorldGraphEdge,
   ELEMENT_COLORS,
   mcpGraphToReactFlow,
-} from './graph-utils';
-import { WorldGraphPanel, type PanelNode } from './WorldGraphPanel';
+} from "./graph-utils";
+import { WorldGraphPanel, type PanelNode } from "./WorldGraphPanel";
 
 // ─── Custom node shapes ───────────────────────────────────────────────────────
 
@@ -68,21 +68,21 @@ function NodeShape({
     style: { filter: `drop-shadow(0 0 6px ${glow})` },
   };
 
-  if (type === 'character') {
+  if (type === "character") {
     return <circle cx={h} cy={h} r={h - 1} {...sharedProps} />;
   }
 
-  if (type === 'location') {
+  if (type === "location") {
     // Regular hexagon
     const r = h - 2;
     const pts = Array.from({ length: 6 }, (_, i) => {
       const angle = (Math.PI / 3) * i - Math.PI / 6;
       return `${h + r * Math.cos(angle)},${h + r * Math.sin(angle)}`;
-    }).join(' ');
+    }).join(" ");
     return <polygon points={pts} {...sharedProps} />;
   }
 
-  if (type === 'creature') {
+  if (type === "creature") {
     // Diamond
     return (
       <polygon
@@ -99,7 +99,7 @@ function NodeShape({
     const angle = (Math.PI / 5) * i - Math.PI / 2;
     const r = i % 2 === 0 ? outer : inner;
     return `${h + r * Math.cos(angle)},${h + r * Math.sin(angle)}`;
-  }).join(' ');
+  }).join(" ");
   return <polygon points={starPts} {...sharedProps} />;
 }
 
@@ -116,31 +116,31 @@ function WorldNodeRenderer({ data, selected }: NodeProps<any>) {
   const size = selected ? NODE_SIZE + 6 : NODE_SIZE;
 
   return (
-    <div className="flex flex-col items-center" style={{ userSelect: 'none' }}>
+    <div className="flex flex-col items-center" style={{ userSelect: "none" }}>
       <svg
         width={size}
         height={size}
         viewBox={`0 0 ${size} ${size}`}
         className="transition-all duration-200"
         style={{
-          overflow: 'visible',
-          filter: selected ? `drop-shadow(0 0 10px ${colors.glow})` : 'none',
+          overflow: "visible",
+          filter: selected ? `drop-shadow(0 0 10px ${colors.glow})` : "none",
         }}
       >
         <NodeShape
           type={nodeType}
           size={size}
           bg={colors.bg}
-          border={selected ? colors.border : colors.border + 'cc'}
+          border={selected ? colors.border : colors.border + "cc"}
           glow={colors.glow}
         />
       </svg>
       <span
         className="mt-1.5 max-w-[90px] text-center text-[10px] leading-tight font-sans"
         style={{
-          color: selected ? colors.border : 'rgba(226,232,240,0.75)',
-          textShadow: '0 1px 4px rgba(0,0,0,0.8)',
-          wordBreak: 'break-word',
+          color: selected ? colors.border : "rgba(226,232,240,0.75)",
+          textShadow: "0 1px 4px rgba(0,0,0,0.8)",
+          wordBreak: "break-word",
         }}
       >
         {label}
@@ -161,17 +161,22 @@ export interface WorldGraphProps {
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
-export function WorldGraph({ nodes: rawNodes, edges: rawEdges, className }: WorldGraphProps) {
+export function WorldGraph({
+  nodes: rawNodes,
+  edges: rawEdges,
+  className,
+}: WorldGraphProps) {
   // Convert once, then hand off to React Flow state
   const { nodes: initialNodes, edges: initialEdges } = React.useMemo(
     () => mcpGraphToReactFlow({ nodes: rawNodes, edges: rawEdges }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [JSON.stringify(rawNodes), JSON.stringify(rawEdges)],
+    [rawNodes, rawEdges],
   );
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [selectedPanel, setSelectedPanel] = React.useState<PanelNode | null>(null);
+  const [selectedPanel, setSelectedPanel] = React.useState<PanelNode | null>(
+    null,
+  );
 
   // Keep RF state in sync when props change
   React.useEffect(() => {
@@ -214,13 +219,13 @@ export function WorldGraph({ nodes: rawNodes, edges: rawEdges, className }: Worl
     <m.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className={cn(
-        'relative w-full h-full min-h-[480px] rounded-xl overflow-hidden',
-        'border border-white/[0.06]',
+        "relative w-full h-full min-h-[480px] rounded-xl overflow-hidden",
+        "border border-white/[0.06]",
         className,
       )}
-      style={{ background: 'var(--arc-cosmic-void)' }}
+      style={{ background: "var(--arc-cosmic-void)" }}
     >
       <ReactFlowComponent
         nodes={nodes}
@@ -235,7 +240,7 @@ export function WorldGraph({ nodes: rawNodes, edges: rawEdges, className }: Worl
         minZoom={0.2}
         maxZoom={2.5}
         proOptions={{ hideAttribution: true }}
-        style={{ background: 'transparent' }}
+        style={{ background: "transparent" }}
       >
         {/* Subtle dot grid */}
         <Background
@@ -250,11 +255,11 @@ export function WorldGraph({ nodes: rawNodes, edges: rawEdges, className }: Worl
           position="bottom-left"
           showInteractive={false}
           style={{
-            background: 'rgba(14,14,20,0.85)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: '10px',
-            backdropFilter: 'blur(16px)',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
+            background: "rgba(14,14,20,0.85)",
+            border: "1px solid rgba(255,255,255,0.06)",
+            borderRadius: "10px",
+            backdropFilter: "blur(16px)",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
           }}
         />
 
@@ -265,14 +270,14 @@ export function WorldGraph({ nodes: rawNodes, edges: rawEdges, className }: Worl
             nodeStrokeWidth={2}
             nodeColor={(n) => {
               const d = n.data as unknown as WorldNodeData;
-              return d?.colors?.border ?? 'var(--arc-brand-atlantean-teal)';
+              return d?.colors?.border ?? "var(--arc-brand-atlantean-teal)";
             }}
             maskColor="rgba(9,9,11,0.75)"
             style={{
-              background: 'rgba(14,14,20,0.85)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              borderRadius: '10px',
-              backdropFilter: 'blur(16px)',
+              background: "rgba(14,14,20,0.85)",
+              border: "1px solid rgba(255,255,255,0.06)",
+              borderRadius: "10px",
+              backdropFilter: "blur(16px)",
             }}
           />
         )}
@@ -287,7 +292,9 @@ export function WorldGraph({ nodes: rawNodes, edges: rawEdges, className }: Worl
       {/* Empty state */}
       {nodes.length === 0 && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <p className="text-slate-500 text-sm font-sans">No creations in this world yet.</p>
+          <p className="text-slate-500 text-sm font-sans">
+            No creations in this world yet.
+          </p>
         </div>
       )}
     </m.div>

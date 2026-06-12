@@ -1,4 +1,8 @@
-import { extractPageContent, formatPageContextForAI } from './utils/readability.js';
+import {
+  extractPageContent,
+  formatPageContextForAI,
+} from "./utils/readability.js";
+import { getSettings } from "./utils/storage.js";
 
 // ─── Shadow DOM Setup ─────────────────────────────────────────────────────────
 
@@ -6,13 +10,13 @@ let shadowHost: HTMLElement | null = null;
 let shadowRoot: ShadowRoot | null = null;
 let floatingButton: HTMLElement | null = null;
 let selectionTimeout: ReturnType<typeof setTimeout> | null = null;
-let lastSelectedText = '';
+let lastSelectedText = "";
 
 function createShadowContainer(): ShadowRoot {
   if (shadowRoot) return shadowRoot;
 
-  shadowHost = document.createElement('div');
-  shadowHost.id = 'arcanea-extension-root';
+  shadowHost = document.createElement("div");
+  shadowHost.id = "arcanea-extension-root";
   shadowHost.style.cssText = `
     position: fixed;
     z-index: 2147483647;
@@ -24,10 +28,10 @@ function createShadowContainer(): ShadowRoot {
   `;
   document.documentElement.appendChild(shadowHost);
 
-  shadowRoot = shadowHost.attachShadow({ mode: 'closed' });
+  shadowRoot = shadowHost.attachShadow({ mode: "closed" });
 
   // Inject scoped styles into shadow DOM
-  const style = document.createElement('style');
+  const style = document.createElement("style");
   style.textContent = `
     :host { all: initial; }
 
@@ -139,8 +143,8 @@ function showFloatingButton(x: number, y: number, selectedText: string): void {
   const root = createShadowContainer();
   removeFloatingButton();
 
-  const btn = document.createElement('div');
-  btn.className = 'arcanea-btn';
+  const btn = document.createElement("div");
+  btn.className = "arcanea-btn";
 
   // Position near selection
   const vpWidth = window.innerWidth;
@@ -156,7 +160,7 @@ function showFloatingButton(x: number, y: number, selectedText: string): void {
     <span class="arcanea-guardian-name">Guardian</span>
   `;
 
-  btn.addEventListener('click', e => {
+  btn.addEventListener("click", (e) => {
     e.stopPropagation();
     e.preventDefault();
     showActionsMenu(btnLeft, btnTop + 44, selectedText);
@@ -173,9 +177,9 @@ function showActionsMenu(x: number, y: number, selectedText: string): void {
   if (floatingButton) floatingButton.remove();
   floatingButton = null;
 
-  const menu = document.createElement('div');
-  menu.className = 'arcanea-actions-menu';
-  menu.id = 'arcanea-actions-menu';
+  const menu = document.createElement("div");
+  menu.className = "arcanea-actions-menu";
+  menu.id = "arcanea-actions-menu";
 
   const vpWidth = window.innerWidth;
   const vpHeight = window.innerHeight;
@@ -183,19 +187,19 @@ function showActionsMenu(x: number, y: number, selectedText: string): void {
   menu.style.top = `${Math.min(y, vpHeight - 200)}px`;
 
   const actions = [
-    { icon: '✦', label: 'Ask Guardian', action: 'ask' },
-    { icon: '📖', label: 'Explain this', action: 'explain' },
-    { icon: '✏️', label: 'Improve text', action: 'improve' },
-    { icon: '🌐', label: 'Translate', action: 'translate' },
-    { icon: '💡', label: 'Summarize page', action: 'summarize' },
+    { icon: "✦", label: "Ask Guardian", action: "ask" },
+    { icon: "📖", label: "Explain this", action: "explain" },
+    { icon: "✏️", label: "Improve text", action: "improve" },
+    { icon: "🌐", label: "Translate", action: "translate" },
+    { icon: "💡", label: "Summarize page", action: "summarize" },
   ];
 
   for (const item of actions) {
-    const el = document.createElement('div');
-    el.className = 'arcanea-action-item';
+    const el = document.createElement("div");
+    el.className = "arcanea-action-item";
     el.innerHTML = `<span class="arcanea-action-icon">${item.icon}</span>${item.label}`;
 
-    el.addEventListener('click', e => {
+    el.addEventListener("click", (e) => {
       e.stopPropagation();
       e.preventDefault();
       removeActionsMenu();
@@ -211,10 +215,10 @@ function showActionsMenu(x: number, y: number, selectedText: string): void {
   const closeHandler = (e: Event) => {
     if (!menu.contains(e.target as Node)) {
       removeActionsMenu();
-      document.removeEventListener('click', closeHandler);
+      document.removeEventListener("click", closeHandler);
     }
   };
-  setTimeout(() => document.addEventListener('click', closeHandler), 100);
+  setTimeout(() => document.addEventListener("click", closeHandler), 100);
 }
 
 function removeFloatingButton(): void {
@@ -226,7 +230,7 @@ function removeFloatingButton(): void {
 
 function removeActionsMenu(): void {
   if (!shadowRoot) return;
-  const menu = shadowRoot.getElementById('arcanea-actions-menu');
+  const menu = shadowRoot.getElementById("arcanea-actions-menu");
   if (menu) menu.remove();
 }
 
@@ -234,7 +238,7 @@ function removeActionsMenu(): void {
 
 let floatingButtonEnabled = true; // Updated by initialize()
 
-document.addEventListener('mouseup', _e => {
+document.addEventListener("mouseup", (_e) => {
   if (!floatingButtonEnabled) return;
   if (selectionTimeout) {
     clearTimeout(selectionTimeout);
@@ -243,7 +247,7 @@ document.addEventListener('mouseup', _e => {
 
   selectionTimeout = setTimeout(() => {
     const selection = window.getSelection();
-    const text = selection?.toString().trim() ?? '';
+    const text = selection?.toString().trim() ?? "";
 
     if (text.length > 10 && text !== lastSelectedText) {
       lastSelectedText = text;
@@ -253,19 +257,19 @@ document.addEventListener('mouseup', _e => {
         showFloatingButton(
           rect.right + window.scrollX,
           rect.bottom + window.scrollY,
-          text
+          text,
         );
       }
     } else if (text.length === 0) {
       removeFloatingButton();
       removeActionsMenu();
-      lastSelectedText = '';
+      lastSelectedText = "";
     }
   }, 300);
 });
 
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
     removeFloatingButton();
     removeActionsMenu();
   }
@@ -274,36 +278,43 @@ document.addEventListener('keydown', e => {
 // ─── Communication with Side Panel ───────────────────────────────────────────
 
 function sendToSidePanel(action: string, selectedText: string): void {
-  chrome.runtime.sendMessage({
-    type: 'content-action',
-    action,
-    selectedText,
-    pageUrl: window.location.href,
-    pageTitle: document.title,
-  }).catch(err => {
-    console.debug('Arcanea: Could not send to side panel:', err);
-    // Open side panel if not already open
-    chrome.runtime.sendMessage({ type: 'open-sidepanel' }).then(() => {
-      setTimeout(() => {
-        chrome.runtime.sendMessage({
-          type: 'content-action',
-          action,
-          selectedText,
-          pageUrl: window.location.href,
-          pageTitle: document.title,
-        }).catch(() => {
-          // Last resort: store in pending queue
-        });
-      }, 600);
-    }).catch(() => {});
-  });
+  chrome.runtime
+    .sendMessage({
+      type: "content-action",
+      action,
+      selectedText,
+      pageUrl: window.location.href,
+      pageTitle: document.title,
+    })
+    .catch((err) => {
+      console.debug("Arcanea: Could not send to side panel:", err);
+      // Open side panel if not already open
+      chrome.runtime
+        .sendMessage({ type: "open-sidepanel" })
+        .then(() => {
+          setTimeout(() => {
+            chrome.runtime
+              .sendMessage({
+                type: "content-action",
+                action,
+                selectedText,
+                pageUrl: window.location.href,
+                pageTitle: document.title,
+              })
+              .catch(() => {
+                // Last resort: store in pending queue
+              });
+          }, 600);
+        })
+        .catch(() => {});
+    });
 }
 
 // ─── Message Listener ─────────────────────────────────────────────────────────
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   switch (message.type) {
-    case 'get-page-content': {
+    case "get-page-content": {
       try {
         const content = extractPageContent();
         const formatted = formatPageContextForAI(content);
@@ -315,13 +326,14 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       } catch (err) {
         sendResponse({
           success: false,
-          error: err instanceof Error ? err.message : 'Failed to extract content',
+          error:
+            err instanceof Error ? err.message : "Failed to extract content",
         });
       }
       break;
     }
 
-    case 'highlight-text': {
+    case "highlight-text": {
       const text = message.text as string;
       if (text) {
         highlightTextOnPage(text);
@@ -330,8 +342,8 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       break;
     }
 
-    case 'scroll-to-top': {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    case "scroll-to-top": {
+      window.scrollTo({ top: 0, behavior: "smooth" });
       sendResponse({ success: true });
       break;
     }
@@ -347,7 +359,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 
 function highlightTextOnPage(text: string): void {
   // Simple implementation: use find API if available
-  if ('find' in window) {
+  if ("find" in window) {
     (window as Window & { find: (text: string) => boolean }).find(text);
   }
 }
@@ -357,27 +369,27 @@ function highlightTextOnPage(text: string): void {
 function setupWritingAssistant(): void {
   let activeInput: HTMLTextAreaElement | HTMLInputElement | null = null;
 
-  document.addEventListener('focusin', e => {
+  document.addEventListener("focusin", (e) => {
     const target = e.target as HTMLElement;
     if (
       target instanceof HTMLTextAreaElement ||
-      (target instanceof HTMLInputElement && target.type === 'text')
+      (target instanceof HTMLInputElement && target.type === "text")
     ) {
       activeInput = target;
     }
   });
 
-  document.addEventListener('focusout', () => {
+  document.addEventListener("focusout", () => {
     activeInput = null;
   });
 
   // Listen for keyboard shortcut Ctrl+Shift+Space to activate writing assistant
-  document.addEventListener('keydown', e => {
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.code === 'Space') {
+  document.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.code === "Space") {
       if (activeInput) {
         const text = activeInput.value;
         if (text.trim().length > 0) {
-          sendToSidePanel('improve', text);
+          sendToSidePanel("improve", text);
         }
       }
     }
@@ -387,8 +399,7 @@ function setupWritingAssistant(): void {
 // Initialize with settings check
 async function initialize(): Promise<void> {
   try {
-    const result = await chrome.storage.local.get('settings');
-    const settings = result?.settings ?? {};
+    const settings = await getSettings();
     const enableFloating = settings.enableFloatingButton ?? true;
     const enableShortcuts = settings.keyboardShortcuts ?? true;
     floatingButtonEnabled = enableFloating;
