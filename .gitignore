@@ -152,6 +152,7 @@ arcanea-opencode-fork/
 .cursor/
 .cursorrules
 .editorconfig
+.antigravitycli/
 .gemini/
 .opencode/
 !.opencode/

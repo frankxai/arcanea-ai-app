@@ -5,6 +5,7 @@ import { LiquidGlass } from "@/components/motion/liquid-glass";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal } from "@/components/motion/reveal";
 import { LayerCards } from "./layer-cards";
+import { EcosystemViews } from "./ecosystem-views";
 import {
   FloatingOrbs,
   GridTexture,
@@ -218,6 +219,22 @@ export default function EcosystemHubPage() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* ── Divider ──────────────────────────────────────────────────── */}
+        <div className="mb-16 h-px bg-gradient-to-r from-transparent via-[var(--arc-brand-atlantean-teal)]/20 to-transparent" />
+
+        {/* ── Connected Map (interactive views) ────────────────────────── */}
+        <section className="mb-20" aria-labelledby="explorer-heading">
+          <div className="mb-8">
+            <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-2">The Connected Map</p>
+            <h2 id="explorer-heading" className="text-2xl sm:text-3xl font-display font-bold text-white">Ecosystem Explorer</h2>
+            <p className="text-white/40 text-sm mt-1 max-w-2xl">
+              Three views into the same 35-node graph: <span className="text-white/60">Layered</span> (substrate → product → surface), <span className="text-white/60">Ten Gates</span> (canonical mythology arrangement), and <span className="text-white/60">Arc ⊕ Nea</span> (sovereign / specialization hemispheres). Filter by status, hemisphere, or gate. Click any node to see what it consumes, who consumes it, and where to reach it.
+            </p>
+          </div>
+
+          <EcosystemViews />
         </section>
 
         {/* ── Divider ──────────────────────────────────────────────────── */}
