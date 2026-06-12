@@ -5,8 +5,8 @@
 
 import path from "node:path";
 import { promises as fs } from "node:fs";
-import { createWorld } from "../src/scaffold.mjs";
 import { ingestCharacter } from "../src/ingest.mjs";
+import { createWorldWithProviders } from "../src/providers.mjs";
 import { readWorld } from "../src/fs-world.mjs";
 import { validateManifest } from "../src/validate.mjs";
 import { contentHash } from "../src/contenthash.mjs";
@@ -40,10 +40,12 @@ switch (cmd) {
     const sentence = rest[0];
     if (!sentence) die('usage: arcanea-world create "<sentence>" [dir]');
     const dir = rest[1] || path.resolve(slugify(sentence));
-    const { manifest } = await createWorld(dir, sentence, {});
+    const { manifest, usedLLM, usedCover, usedTheme } = await createWorldWithProviders(dir, sentence, process.env, {});
     console.log(`✨ ${manifest.name}  (${manifest.id})`);
     console.log(`   ${manifest.tagline}`);
     console.log(`   → ${dir}`);
+    const used = [usedLLM && "llm", usedCover && "cover", usedTheme && "theme"].filter(Boolean);
+    console.log(`   providers: ${used.length ? used.join(", ") : "offline (no keys)"}`);
     break;
   }
   case "ingest": {
