@@ -12,3 +12,4 @@ export * from "./ingest.mjs";
 export * from "./index-build.mjs";
 export * from "./webhook.mjs";
 export * from "./proof.mjs";
+export * from "./render-book.mjs";
