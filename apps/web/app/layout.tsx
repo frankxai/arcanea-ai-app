@@ -204,7 +204,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </Suspense>
             <GlobalGlowTrackerLazy />
             <Navbar />
-            <main id="main-content" className="relative pt-16">
+            <main id="main-content" className="relative pt-[var(--nav-h)]">
               {children}
             </main>
             <Footer />
