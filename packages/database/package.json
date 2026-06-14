@@ -11,7 +11,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.106.1",
+    "@supabase/supabase-js": "^2.108.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
