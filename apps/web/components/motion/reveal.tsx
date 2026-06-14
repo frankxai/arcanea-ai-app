@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
-import { LazyMotion, domAnimation, m, type Variants } from 'framer-motion';
+import { LazyMotion, domAnimation, m, useReducedMotion, type Variants } from 'framer-motion';
 import { EASE, VIEWPORT } from '@/lib/motion';
 
 interface Props {
@@ -18,6 +18,7 @@ interface Props {
  * Fires once when entering viewport with -80px margin.
  */
 export function Reveal({ children, className = '', delay = 0, y = 24, blur = true, as = 'div' }: Props) {
+  const prefersReduced = useReducedMotion();
   const variants: Variants = {
     hidden: {
       opacity: 0,
@@ -33,6 +34,15 @@ export function Reveal({ children, className = '', delay = 0, y = 24, blur = tru
   };
 
   const Component = as === 'section' ? m.section : as === 'article' ? m.article : as === 'span' ? m.span : m.div;
+
+  // Reduced motion: render in final state, skip the transform/blur reveal entirely.
+  if (prefersReduced) {
+    return (
+      <LazyMotion features={domAnimation}>
+        <Component className={className}>{children}</Component>
+      </LazyMotion>
+    );
+  }
 
   return (
     <LazyMotion features={domAnimation}>

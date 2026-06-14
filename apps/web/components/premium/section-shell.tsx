@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
-import { m, useInView } from "framer-motion";
+import { m, useInView, useReducedMotion } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 
 // ---------------------------------------------------------------------------
@@ -58,6 +58,7 @@ export function SectionShell({
 }: SectionShellProps) {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const prefersReduced = useReducedMotion();
 
   return (
     <section
@@ -87,11 +88,11 @@ export function SectionShell({
         />
       )}
 
-      {/* Content with stagger reveal */}
+      {/* Content with stagger reveal (snappier 0.5s; instant under reduced-motion) */}
       <m.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={prefersReduced ? false : { opacity: 0, y: 24 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: prefersReduced ? 0 : 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="relative z-10"
       >
         {children}

@@ -193,6 +193,23 @@ export function Navbar() {
   // Close mega on route change
   useEffect(() => { setOpenMega(null); setMobileMenuOpen(false); }, [pathname]);
 
+  // Lock body scroll while the mobile menu is open so the page behind doesn't
+  // scroll under the sheet (a common "feels broken" report on mobile).
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [mobileMenuOpen]);
+
+  // Close the mobile menu on Escape for keyboard users.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMobileMenuOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [mobileMenuOpen]);
+
   const handleEnter = (label: string) => {
     if (megaTimeoutRef.current) clearTimeout(megaTimeoutRef.current);
     setOpenMega(label);
@@ -307,12 +324,26 @@ export function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <m.div
+            key="mobile-nav-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden={true}
+            className="fixed inset-0 z-[45] md:hidden bg-black/60 backdrop-blur-sm"
+          />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <m.div
             id="mobile-nav-menu"
             initial={{ opacity: 0, y: -20, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.98 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-x-0 top-[64px] z-40 md:hidden max-h-[80vh] overflow-y-auto"
+            className="fixed inset-x-0 top-[var(--nav-h,4rem)] z-[55] md:hidden max-h-[calc(100dvh-var(--nav-h,4rem))] overflow-y-auto pb-[env(safe-area-inset-bottom)]"
           >
             <nav
               aria-label="Mobile navigation"
