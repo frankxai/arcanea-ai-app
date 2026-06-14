@@ -62,16 +62,16 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
-    "@tailwindcss/typography": "^0.5.13",
-    "@turbo/gen": "^2.9.16",
+    "@tailwindcss/typography": "^0.5.20",
+    "@turbo/gen": "^2.9.18",
     "autoprefixer": "^10.4.19",
     "eslint": "^9.39.4",
     "postcss": "^8.5.15",
-    "prettier": "^3.8.2",
+    "prettier": "^3.8.4",
     "tailwindcss": "^3.4.9",
     "tailwindcss-animate": "^1.0.7",
-    "tsx": "^4.22.3",
-    "turbo": "^2.9.16",
+    "tsx": "^4.22.4",
+    "turbo": "^2.9.18",
     "typescript": "^5.9.3"
   },
   "engines": {
