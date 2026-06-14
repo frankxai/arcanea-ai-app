@@ -194,12 +194,20 @@ export function Navbar() {
   useEffect(() => { setOpenMega(null); setMobileMenuOpen(false); }, [pathname]);
 
   // Lock body scroll while the mobile menu is open so the page behind doesn't
-  // scroll under the sheet (a common "feels broken" report on mobile).
+  // scroll under the sheet (a common "feels broken" report on mobile). Also
+  // auto-close at the md breakpoint so the lock is released if the viewport
+  // grows past mobile while the menu is open.
   useEffect(() => {
     if (!mobileMenuOpen) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
+    const mql = window.matchMedia("(min-width: 768px)");
+    const onChange = (e: MediaQueryListEvent) => { if (e.matches) setMobileMenuOpen(false); };
+    mql.addEventListener("change", onChange);
+    return () => {
+      document.body.style.overflow = prev;
+      mql.removeEventListener("change", onChange);
+    };
   }, [mobileMenuOpen]);
 
   // Close the mobile menu on Escape for keyboard users.
@@ -343,7 +351,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.98 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-x-0 top-[var(--nav-h,4rem)] z-[55] md:hidden max-h-[calc(100dvh-var(--nav-h,4rem))] overflow-y-auto pb-[env(safe-area-inset-bottom)]"
+            className="fixed inset-x-0 top-[var(--nav-h,4rem)] z-[55] md:hidden max-h-[calc(100dvh_-_var(--nav-h,4rem))] overflow-y-auto pb-[env(safe-area-inset-bottom)]"
           >
             <nav
               aria-label="Mobile navigation"

@@ -2,6 +2,7 @@
 'use client';
 
 import { LazyMotion, domAnimation, m, useReducedMotion, type Variants } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { EASE, VIEWPORT } from '@/lib/motion';
 
 interface Props {
@@ -18,7 +19,11 @@ interface Props {
  * Fires once when entering viewport with -80px margin.
  */
 export function Reveal({ children, className = '', delay = 0, y = 24, blur = true, as = 'div' }: Props) {
-  const prefersReduced = useReducedMotion();
+  // Gate the reduced-motion branch behind a mount flag so SSR and the first
+  // client render agree (avoids a hydration mismatch for reduced-motion users).
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  const prefersReduced = useReducedMotion() && mounted;
   const variants: Variants = {
     hidden: {
       opacity: 0,

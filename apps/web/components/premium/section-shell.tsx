@@ -2,7 +2,7 @@
 "use client";
 
 import { m, useInView, useReducedMotion } from "framer-motion";
-import { useRef, type ReactNode } from "react";
+import { useRef, useState, useEffect, type ReactNode } from "react";
 
 // ---------------------------------------------------------------------------
 // SectionShell — Premium section wrapper with ambient orbs, grid texture,
@@ -58,7 +58,10 @@ export function SectionShell({
 }: SectionShellProps) {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const prefersReduced = useReducedMotion();
+  // Gate reduced-motion behind a mount flag so SSR and first client render agree.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  const prefersReduced = useReducedMotion() && mounted;
 
   return (
     <section
