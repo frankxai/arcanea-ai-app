@@ -32,6 +32,10 @@
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
 
+    /* Fixed navbar height — consumed by main padding + the mobile menu offset.
+       Single source of truth so the menu never overlaps or gaps the navbar. */
+    --nav-h: 4rem;
+
     /* === COSMIC PALETTE (6 depth levels — near-black foundation) === */
     --cosmic-void: 240 6% 4%;
     --cosmic-deep: 240 5% 6%;
@@ -288,6 +292,25 @@
    ============================================================ */
 
 @layer utilities {
+
+  /* --- Shared page rhythm (mobile-first; applied across core marketing pages) --- */
+  /* Consistent vertical section spacing — replaces ad-hoc py-16/py-24 per page. */
+  .section-pad { padding-top: 4rem; padding-bottom: 4rem; }
+  @media (min-width: 640px) { .section-pad { padding-top: 6rem; padding-bottom: 6rem; } }
+  @media (min-width: 1024px) { .section-pad { padding-top: 8rem; padding-bottom: 8rem; } }
+
+  /* Mobile-safe content container — px-5 floor avoids the cramped 375px gutter. */
+  .container-page {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 64rem; /* 1024px */
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) { .container-page { padding-inline: 1.5rem; } }
+
+  /* Notch / home-indicator safe-area helpers (pair with viewportFit: cover). */
+  .safe-px { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+  .safe-pb { padding-bottom: env(safe-area-inset-bottom); }
 
   /* --- Tier 1: Glass Subtle (hover overlays, secondary) --- */
   .glass-subtle {

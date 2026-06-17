@@ -12,6 +12,17 @@ concurrency:
   group: lighthouse-${{ github.ref }}
   cancel-in-progress: true
 
+# Without an explicit block the workflow inherits the repo's read-only default
+# token, so the sticky-comment step (if: always()) fails with "Resource not
+# accessible by integration" and fails the whole job. Grant the minimal scopes:
+# pull-requests:write to post the score comment, statuses/deployments:read for
+# the Vercel-preview wait.
+permissions:
+  contents: read
+  pull-requests: write
+  statuses: read
+  deployments: read
+
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
@@ -44,6 +55,7 @@ jobs:
 
       - name: Comment scores on PR
         if: always()
+        continue-on-error: true # a cosmetic PR comment must never fail the gate
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: lighthouse
