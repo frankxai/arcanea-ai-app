@@ -26,16 +26,18 @@ permissions:
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v5
 
       - name: Wait for Vercel Preview
         id: vercel
+        timeout-minutes: 4
         continue-on-error: true
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 600
+          max_timeout: 180
           check_interval: 15
           environment: Preview
 
@@ -90,11 +92,11 @@ jobs:
         with:
           urls: |
             ${{ steps.preview.outputs.url }}
-            ${{ steps.preview.outputs.url }}/pricing
-            ${{ steps.preview.outputs.url }}/chat
+            ${{ steps.preview.outputs.url }}/create
             ${{ steps.preview.outputs.url }}/worlds
-            ${{ steps.preview.outputs.url }}/library
-            ${{ steps.preview.outputs.url }}/imagine
+            ${{ steps.preview.outputs.url }}/apps
+            ${{ steps.preview.outputs.url }}/canvas
+            ${{ steps.preview.outputs.url }}/mcp
           configPath: ./.github/lighthouse/lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
@@ -115,5 +117,5 @@ jobs:
 
             ${{ steps.lighthouse.outputs.manifest }}
 
-            **Hard gates (fail PR):** accessibility ≥ 95, SEO ≥ 95, CLS ≤ 0.1
-            _Soft gates (warn): performance ≥ 90, best-practices ≥ 95, TBT ≤ 300ms, LCP ≤ 2.5s_
+            **Advisory release signal:** accessibility, SEO, CLS, performance, best-practices, TBT, and LCP.
+            _Hard gates live in CI, Quality Gate, Security Audit, E2E Smoke, and Vercel Preview._
