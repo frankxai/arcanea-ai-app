@@ -13,7 +13,7 @@ import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/
 import { randomUUID } from "node:crypto";
 
 const SERVER_VERSION = "0.3.0";
-const TOOL_COUNT = 31;
+const TOOL_COUNT = 54;
 
 // -------------------------------------------------------------------------
 // Stdio transport — default, backward compatible

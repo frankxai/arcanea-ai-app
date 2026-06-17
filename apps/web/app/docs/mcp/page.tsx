@@ -5,21 +5,21 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Arcanea MCP — Developer Docs",
   description:
-    "Connect any MCP-compatible AI coding tool to Arcanea's world intelligence: 34 tools, 5 resources, 6 prompts. Works with Claude Code, Cursor, Windsurf, and Cline.",
+    "Connect any MCP-compatible AI coding tool to Arcanea's creative production layer: 43 tools, 5 resources, 6 prompts. Works with Claude Code, Codex, Cursor, Windsurf, and Cline.",
   openGraph: {
     title: "Arcanea MCP — Model Context Protocol Server",
     description:
-      "34 tools, 5 resources, 6 prompts. Connect Claude Code, Cursor, or Windsurf to Arcanea world intelligence.",
+      "43 tools, 5 resources, 6 prompts. Connect Claude Code, Codex, Cursor, or Windsurf to Arcanea world intelligence and production workflows.",
   },
   alternates: { canonical: "/docs/mcp" },
 };
 
 const FEATURES = [
   {
-    count: "34",
+    count: "43",
     label: "Tools",
     description:
-      "Worldbuilding generators, creative coaching, agent orchestration, memory, canon validation, and APL prompt optimization.",
+      "Worldbuilding, books, games, music, cinema, asset briefs, agent handoffs, creative coaching, memory, canon validation, and APL.",
     href: "/docs/mcp/tools",
   },
   {
@@ -46,6 +46,21 @@ const FEATURES = [
 ];
 
 const TOOL_CATEGORIES = [
+  {
+    name: "Production Studios",
+    count: 9,
+    tools: [
+      "plan_world",
+      "plan_book",
+      "plan_game",
+      "plan_music_project",
+      "plan_cinematic_scene",
+      "generate_asset_brief",
+      "export_project_context",
+      "list_arcanea_studios",
+      "get_workflow_recipe",
+    ],
+  },
   {
     name: "Worldbuilding Generators",
     count: 7,
@@ -311,7 +326,7 @@ export default function McpOverviewPage() {
                 Tool Reference
               </p>
               <p className="mt-1.5 text-sm text-zinc-400">
-                All 34 tools with parameters and usage examples.
+                All 43 tools with parameters and usage examples.
               </p>
             </Link>
             <Link

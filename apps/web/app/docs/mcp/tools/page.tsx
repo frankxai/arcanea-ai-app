@@ -5,7 +5,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "MCP Tool Reference — Arcanea Docs",
   description:
-    "Complete reference for all 34 Arcanea MCP tools: worldbuilding generators, creative coaching, world intelligence, creation graph, agent orchestration, memory, canon, and APL.",
+    "Complete reference for all 43 Arcanea MCP tools: production studios, worldbuilding generators, creative coaching, world intelligence, creation graph, agent orchestration, memory, canon, and APL.",
   alternates: { canonical: "/docs/mcp/tools" },
 };
 
@@ -39,6 +39,107 @@ interface Category {
 /* ------------------------------------------------------------------ */
 
 const CATEGORIES: Category[] = [
+  {
+    id: "production-studios",
+    name: "Production Studios",
+    description:
+      "Plan connected creative artifacts for writers, founders, game studios, music/video teams, and agent-native production workflows.",
+    tools: [
+      {
+        name: "plan_world",
+        description: "Turn an idea into a world production packet with canon, factions, locations, visuals, audio palette, and agent next actions.",
+        params: [
+          { name: "idea", type: "string", required: true, description: "Seed idea or world premise" },
+          { name: "audience", type: "string", required: false, description: "Who the world is for" },
+          { name: "tone", type: "string", required: false, description: "Visual and narrative tone" },
+          { name: "scope", type: "string", required: false, description: "Project scale or bible depth" },
+        ],
+        example: `plan_world({ idea: "a drowned moon academy where music changes gravity" })`,
+      },
+      {
+        name: "plan_book",
+        description: "Create a book packet with reader promise, bible, chapter spine, sample direction, cover brief, and publishing checklist.",
+        params: [
+          { name: "idea", type: "string", required: true, description: "Book idea or nonfiction thesis" },
+          { name: "audience", type: "string", required: false, description: "Target reader" },
+          { name: "format", type: "string", required: false, description: "Novel, serial, guide, memoir, or other format" },
+          { name: "voice", type: "string", required: false, description: "Desired narrative voice" },
+        ],
+        example: `plan_book({ idea: "a 12-chapter romantasy about a cartographer of forbidden stars" })`,
+      },
+      {
+        name: "plan_game",
+        description: "Create a game design packet with player promise, core loop, mechanics, levels, asset kit, and prototype handoff.",
+        params: [
+          { name: "idea", type: "string", required: true, description: "Game or world premise" },
+          { name: "audience", type: "string", required: false, description: "Player segment" },
+          { name: "engine", type: "string", required: false, description: "Browser, Godot, Unity, Roblox, Unreal, or custom target" },
+          { name: "playStyle", type: "string", required: false, description: "Genre, core loop, or desired feel" },
+        ],
+        example: `plan_game({ idea: "a cozy multiplayer relic-hunting game set inside a living library", engine: "Godot" })`,
+      },
+      {
+        name: "plan_music_project",
+        description: "Create an artist or release packet with lore, sonic motifs, cover brief, visualizer plan, and release copy.",
+        params: [
+          { name: "idea", type: "string", required: true, description: "Artist, song, album, or label idea" },
+          { name: "audience", type: "string", required: false, description: "Listeners or community" },
+          { name: "genre", type: "string", required: false, description: "Genre or hybrid sound" },
+          { name: "releaseType", type: "string", required: false, description: "Single, EP, album, video, or AI artist launch" },
+        ],
+        example: `plan_music_project({ idea: "an AI artist whose songs are field recordings from other timelines" })`,
+      },
+      {
+        name: "plan_cinematic_scene",
+        description: "Create a cinematic packet with hook frame, shot list, camera language, references, audio direction, and render prompts.",
+        params: [
+          { name: "idea", type: "string", required: true, description: "Scene, trailer, or video concept" },
+          { name: "audience", type: "string", required: false, description: "Viewer or use case" },
+          { name: "duration", type: "string", required: false, description: "Target duration" },
+          { name: "format", type: "string", required: false, description: "Trailer, scene, animatic, or social format" },
+        ],
+        example: `plan_cinematic_scene({ idea: "a 20-second trailer where dreams are traded as currency" })`,
+      },
+      {
+        name: "generate_asset_brief",
+        description: "Create a portable visual or media asset brief with style, references, aspect ratio, prompt, and production notes.",
+        params: [
+          { name: "kind", type: "string", required: true, description: "character, location, cover, poster, trailer, sprite, album_art, brand_pack, or ui" },
+          { name: "subject", type: "string", required: true, description: "Asset subject" },
+          { name: "style", type: "string", required: false, description: "Visual or production style" },
+          { name: "references", type: "string[]", required: false, description: "Reference asset ids or URLs" },
+          { name: "aspectRatio", type: "string", required: false, description: "Target aspect ratio" },
+        ],
+        example: `generate_asset_brief({ kind: "cover", subject: "moon academy novel" })`,
+      },
+      {
+        name: "export_project_context",
+        description: "Package an Arcanea project into a Claude, Codex, Cursor, or generic agent handoff with assets, constraints, and acceptance criteria.",
+        params: [
+          { name: "projectName", type: "string", required: true, description: "Project name" },
+          { name: "goal", type: "string", required: true, description: "What the receiving agent should accomplish" },
+          { name: "targetAgent", type: "string", required: false, description: "claude, codex, cursor, or generic" },
+          { name: "assets", type: "string[]", required: false, description: "Relevant assets or files" },
+          { name: "constraints", type: "string[]", required: false, description: "Rules the receiving agent must honor" },
+        ],
+        example: `export_project_context({ projectName: "Relic Library", goal: "build the first playable slice", targetAgent: "codex" })`,
+      },
+      {
+        name: "list_arcanea_studios",
+        description: "List Arcanea studio surfaces, routes, outcomes, and recommended MCP tools.",
+        params: [],
+        example: `list_arcanea_studios({})`,
+      },
+      {
+        name: "get_workflow_recipe",
+        description: "Return reusable workflows such as book-to-publish, world-to-game, artist-release, cinematic-trailer, and campaign-pack.",
+        params: [
+          { name: "recipe", type: "string", required: true, description: "book_to_publish, world_to_game, artist_release, cinematic_trailer, or campaign_pack" },
+        ],
+        example: `get_workflow_recipe({ recipe: "world_to_game" })`,
+      },
+    ],
+  },
   {
     id: "worldbuilding",
     name: "Worldbuilding Generators",
@@ -500,7 +601,7 @@ export default function McpToolsPage() {
             </span>
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-400">
-            All 34 tools across 8 categories. Each tool is available via any
+            All 43 tools across 9 categories. Each tool is available via any
             MCP-compatible client once the server is configured.
           </p>
 
