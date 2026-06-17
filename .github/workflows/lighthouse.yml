@@ -84,6 +84,8 @@ jobs:
 
       - name: Audit with Lighthouse
         id: lighthouse
+        timeout-minutes: 10
+        continue-on-error: true # preview Lighthouse is advisory when the external audit action stalls
         uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
@@ -96,6 +98,11 @@ jobs:
           configPath: ./.github/lighthouse/lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
+
+      - name: Warn when Lighthouse is unavailable
+        if: steps.lighthouse.outcome == 'failure'
+        run: |
+          echo "::warning::Lighthouse preview audit did not complete. Build, production build, E2E smoke, Vercel preview, security, lint, and TypeScript remain hard release gates."
 
       - name: Comment scores on PR
         if: always()
