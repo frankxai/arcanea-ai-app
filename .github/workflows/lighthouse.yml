@@ -26,11 +26,16 @@ permissions:
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v5
 
+      - name: Advisory on pull requests
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "::notice::Skipping external Lighthouse audit on PRs. Release gates are CI, Quality Gate, Security Audit, E2E Smoke, and Vercel Preview. Run this workflow manually when a non-blocking Lighthouse report is needed."
+
       - name: Wait for Vercel Preview
+        if: github.event_name == 'workflow_dispatch'
         id: vercel
         timeout-minutes: 4
         continue-on-error: true
@@ -42,6 +47,7 @@ jobs:
           environment: Preview
 
       - name: Resolve Vercel Preview URL
+        if: github.event_name == 'workflow_dispatch'
         id: preview
         uses: actions/github-script@v8
         env:
@@ -85,6 +91,7 @@ jobs:
             core.setFailed(`No successful Vercel preview status found for ${ref}`);
 
       - name: Audit with Lighthouse
+        if: github.event_name == 'workflow_dispatch'
         id: lighthouse
         timeout-minutes: 10
         continue-on-error: true # preview Lighthouse is advisory when the external audit action stalls
@@ -102,12 +109,12 @@ jobs:
           temporaryPublicStorage: true
 
       - name: Warn when Lighthouse is unavailable
-        if: steps.lighthouse.outcome == 'failure'
+        if: github.event_name == 'workflow_dispatch' && steps.lighthouse.outcome == 'failure'
         run: |
           echo "::warning::Lighthouse preview audit did not complete. Build, production build, E2E smoke, Vercel preview, security, lint, and TypeScript remain hard release gates."
 
       - name: Comment scores on PR
-        if: always()
+        if: github.event_name == 'workflow_dispatch'
         continue-on-error: true # a cosmetic PR comment must never fail the gate
         uses: marocchino/sticky-pull-request-comment@v2
         with:
