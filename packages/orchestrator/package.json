@@ -60,7 +60,7 @@
   "devDependencies": {
     "tsx": "^4.22.3",
     "typescript": "^5.9.3",
-    "@types/node": "^20.19.41"
+    "@types/node": "^20.19.43"
   },
   "publishConfig": {
     "access": "public"
