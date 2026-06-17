@@ -29,7 +29,7 @@ const sh    = (cmd, timeout = 1500) => {
 
 // ─── NTFS-safe shared cache ──────────────────────────────────────────────────
 const CACHE_DIR = '/tmp/arcanea-statusline';
-try { mkdirSync(CACHE_DIR, { recursive: true }); } catch {}
+try { mkdirSync(CACHE_DIR, { recursive: true }); } catch { /* intentional: cache directory may be unavailable */ }
 
 function cachedSh(key, cmd, ttlMs = 30_000, timeout = 1500) {
   const cacheFile = `${CACHE_DIR}/${key}`;
@@ -40,9 +40,9 @@ function cachedSh(key, cmd, ttlMs = 30_000, timeout = 1500) {
         return readFileSync(cacheFile, 'utf-8').trim();
       }
     }
-  } catch {}
+  } catch { /* intentional: stale or unreadable cache falls through to command execution */ }
   const result = sh(cmd, timeout);
-  try { writeFileSync(cacheFile, result); } catch {}
+  try { writeFileSync(cacheFile, result); } catch { /* intentional: statusline still works without cache writes */ }
   return result;
 }
 
@@ -195,10 +195,10 @@ function getWorldState() {
     const agentsList = m.agents || [];
     const grokAgents = agentsList.filter(a => a.harness === 'grok' || (a.skill || '').includes('grok')).length;
     let charCount = 0;
-    if (existsSync(charDir)) { try { charCount = readdirSync(charDir).filter(f => f.endsWith('.md')).length; } catch {} }
+    if (existsSync(charDir)) { try { charCount = readdirSync(charDir).filter(f => f.endsWith('.md')).length; } catch { /* intentional: malformed world folders fall back to manifest counts */ } }
     else if (m.characters?.length) charCount = m.characters.length;
     let bookCount = 0;
-    if (existsSync(bookDir)) { try { bookCount = readdirSync(bookDir).filter(f => f.endsWith('.md') || f.endsWith('.json')).length; } catch {} }
+    if (existsSync(bookDir)) { try { bookCount = readdirSync(bookDir).filter(f => f.endsWith('.md') || f.endsWith('.json')).length; } catch { /* intentional: unreadable book folders report zero */ } }
     let mediaCount = 0;
     let hasVideo = false;
     if (existsSync(mediaDir)) {
@@ -206,13 +206,13 @@ function getWorldState() {
         const files = readdirSync(mediaDir);
         mediaCount = files.length;
         hasVideo = files.some(f => /\.(mp4|mov|webm)$/i.test(f));
-      } catch {}
+      } catch { /* intentional: unreadable media folders report zero */ }
     }
     let gh = '';
     try {
       const rem = cachedSh('world-remote', `git -C "${worldDir}" remote get-url origin 2>/dev/null`, 60_000, 400) || '';
       gh = rem.match(/[:/]([^/]+\/[^/.]+)(\.git)?$/)?.[1] || '';
-    } catch {}
+    } catch { /* intentional: worlds without remotes omit GitHub context */ }
     const palette = (m.visualDna?.palette || []).slice(0, 4).map(p => p.replace('#','')).join(' ');
     return {
       name: m.name || m.slug || 'World',

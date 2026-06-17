@@ -38,8 +38,10 @@ This release is not a Higgsfield clone. It absorbs the strongest product archite
 - Production build passed for `@arcanea/web` with placeholder public Supabase envs.
 - MCP package build passed after adding production tools.
 - MCP tests passed: 354 tests, 0 failures.
-- Playwright smoke suite contains 13 smoke tests, but local execution is blocked because the expected Chromium headless-shell executable is missing from the Windows Playwright cache. `playwright install chromium` was attempted once and timed out locally; CI installs browsers in `.github/workflows/deploy-web.yml`.
+- Playwright smoke suite contains 13 smoke tests. Local execution was blocked because the Windows Playwright cache was missing the Chromium headless-shell executable and `playwright install chromium` timed out locally, but the GitHub `E2E Smoke` job passed on PR #164.
 - Browser verification passed for `/`, `/create`, `/studio`, `/worlds`, `/games`, `/music-studio`, `/cinema-studio`, `/canvas`, `/apps`, and `/mcp`, including expected text, no error boundary, and no failed loaded images.
+- Vercel preview deployment completed on PR #164.
+- Security audit high/critical gate was fixed by moving pnpm override settings into `pnpm-workspace.yaml`, updating the existing package override block, and refreshing `pnpm-lock.yaml`; remaining low/moderate advisories are informational under the current CI gate.
 
 ## Production Path
 
@@ -54,10 +56,9 @@ Known production constraints:
 
 ## Remaining Work
 
-- Run Playwright smoke tests where browser binaries are available, or rely on CI's browser install step for the PR gate.
-- Push `codex/arcanea-higgsfield-production` and open a draft PR to `main`.
-- Verify Vercel preview deployment URL once CI/GitHub integration produces it.
-- Merge only after preview checks and production readiness are clear.
+- PR #164 is open against `main` and marked ready for review.
+- CodeQL currently fails because repository code scanning is not enabled or lacks the required GitHub `security-events` permission; this is a repo configuration blocker, not an application failure from this release.
+- Wait for rerun CI after the security/empty-catch fix commit, then merge only after required checks and production readiness are clear.
 - After merge, verify `https://arcanea.ai`, `/create`, `/apps`, `/canvas`, `/mcp`, and `/api/health`.
 
 ## Second-Wave Repo Reconciliation
