@@ -29,7 +29,7 @@ const CARDS = [
     badge: "Living Universe",
     badgeColor: brand.atlanteanTeal,
     href: "/worlds",
-    image: "/images/forge/sea/006-storm-galleon.png",
+    image: "/brand/arcanea-dashboard-hero-premium.png",
   },
   {
     type: "Book",
@@ -57,7 +57,7 @@ const CARDS = [
     badge: "Playable",
     badgeColor: brand.aquamarine,
     href: "/games",
-    image: "/images/forge/space/005-interceptor-canyon.png",
+    image: "/brand/arcanea-collectible-reliquary-premium.png",
   },
   {
     type: "Music",
@@ -85,7 +85,7 @@ const CARDS = [
     badge: "Cinematic",
     badgeColor: brand.arcaneanGold,
     href: "/cinema-studio",
-    image: "/brand/arcanea-hero.jpg",
+    image: "/brand/arcanea-dashboard-hero-premium.png",
   },
   {
     type: "MCP",

@@ -11,7 +11,6 @@ import { HeroChangingWords } from "./hero-changing-words";
 import { HeroShowcase } from "./hero-showcase";
 import { SplitText } from "@/components/motion/split-text";
 import { Magnetic } from "@/components/motion/magnetic";
-import { FloatingOrbs } from "@/components/premium/animated-background";
 import { SovereigntyBadge } from "@/components/premium/sovereignty-pillars";
 import { NumberTicker } from "@/components/motion/number-ticker";
 import { Sparkle, Diamond, Code, ShieldStar } from "@/lib/phosphor-icons";
@@ -113,46 +112,39 @@ function HeroPortal() {
       ref={containerRef}
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
-      {/* Background: pure dark with FloatingOrbs aurora */}
-      <div className="absolute inset-0 -z-20 bg-[var(--arc-cosmic-void)]">
-        <FloatingOrbs preset="aurora" />
-        {/* Subtle bottom warmth */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_30%_at_50%_100%,color-mix(in_srgb,var(--arc-brand-atlantean-teal)_3%,transparent),transparent_60%)]" />
-
-        {/* Guardian portrait accents — visible only on xl screens, low opacity */}
-        <div
-          className="hidden xl:block absolute left-0 top-0 bottom-0 w-[340px] pointer-events-none"
-          style={{ maskImage: "linear-gradient(to right, transparent 0%, color-mix(in srgb, var(--arc-cosmic-void) 55%, transparent) 35%, color-mix(in srgb, var(--arc-cosmic-void) 55%, transparent) 70%, transparent 100%)" }}
+      {/* Background: premium Arcanea production chamber media */}
+      <div className="absolute inset-0 z-0 bg-[var(--arc-cosmic-void)]">
+        <Image
+          src="/brand/arcanea-dashboard-hero-premium.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[50%_42%] opacity-95"
+        />
+        <video
+          aria-hidden="true"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          poster="/brand/arcanea-dashboard-hero-premium.png"
+          className="absolute inset-0 hidden h-full w-full object-cover object-[50%_42%] opacity-95 motion-safe:block"
         >
-          <Image
-            src="/guardians/v3/lyria-hero-v3.webp"
-            alt="Lyria — Sight Gate Guardian"
-            width={340}
-            height={1024}
-            sizes="340px"
-            className="h-full w-full object-cover object-top opacity-[0.18] mix-blend-luminosity"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[var(--arc-cosmic-void)] via-transparent to-[var(--arc-cosmic-void)]" />
-        </div>
-        <div
-          className="hidden xl:block absolute right-0 top-0 bottom-0 w-[340px] pointer-events-none"
-          style={{ maskImage: "linear-gradient(to left, transparent 0%, color-mix(in srgb, var(--arc-cosmic-void) 55%, transparent) 35%, color-mix(in srgb, var(--arc-cosmic-void) 55%, transparent) 70%, transparent 100%)" }}
-        >
-          <Image
-            src="/guardians/v3/shinkami-hero-v3.webp"
-            alt="Shinkami — Source Gate Guardian"
-            width={340}
-            height={1024}
-            sizes="340px"
-            className="h-full w-full object-cover object-top opacity-[0.18] mix-blend-luminosity"
-          />
-          <div className="absolute inset-0 bg-gradient-to-l from-[var(--arc-cosmic-void)] via-transparent to-[var(--arc-cosmic-void)]" />
-        </div>
+          <source src="/brand/arcanea-dashboard-hero-premium.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_82%_52%_at_50%_42%,transparent_0%,color-mix(in_srgb,var(--arc-cosmic-void)_24%,transparent)_58%,var(--arc-cosmic-void)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--arc-cosmic-void)]/28 via-[var(--arc-cosmic-void)]/38 to-[var(--arc-cosmic-void)]/92" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--arc-cosmic-void)]/82 via-transparent to-[var(--arc-cosmic-void)]/82" />
+        <div className="absolute inset-0 hidden bg-[radial-gradient(ellipse_46%_44%_at_50%_53%,color-mix(in_srgb,var(--arc-cosmic-void)_78%,transparent)_0%,color-mix(in_srgb,var(--arc-cosmic-void)_52%,transparent)_48%,transparent_74%)] md:block" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_82%_70%_at_50%_52%,color-mix(in_srgb,var(--arc-cosmic-void)_82%,transparent)_0%,color-mix(in_srgb,var(--arc-cosmic-void)_58%,transparent)_52%,transparent_82%)] md:hidden" />
+        <div className="absolute left-1/2 top-[12%] h-px w-[min(720px,80vw)] -translate-x-1/2 bg-gradient-to-r from-transparent via-[var(--arc-brand-arcanean-gold)]/35 to-transparent" />
       </div>
 
       {/* Fine grid — barely visible texture */}
       <div
-        className="absolute inset-0 -z-10 opacity-[0.015]"
+        className="absolute inset-0 z-[1] opacity-[0.015]"
         style={{
           backgroundImage:
             "linear-gradient(color-mix(in srgb, var(--arc-text-primary) 30%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--arc-text-primary) 30%, transparent) 1px, transparent 1px)",
@@ -162,7 +154,7 @@ function HeroPortal() {
 
       {/* Content */}
       <m.div
-        className="relative w-full max-w-3xl mx-auto px-6"
+        className="relative z-10 w-full max-w-3xl mx-auto px-6"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         <div className="flex flex-col items-center text-center">
@@ -216,7 +208,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Type one sentence. Get a world — characters, locations, lore, music — all connected, all yours.
+            Type one sentence. Get a world, book, game, song, cinematic brief, or agent workflow with connected context.
           </m.p>
 
           {/* Secondary clarifier — who it&apos;s for */}
@@ -226,7 +218,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.28 }}
           >
-            16 specialist AI partners &middot; the Living Worlds engine &middot; open source
+            16 specialist AI partners &middot; connected media systems &middot; open source
           </m.p>
 
           {/* Trust signals — glass pill badges with animated numbers */}
@@ -311,7 +303,7 @@ export function V3Content({
   totalWords,
 }: V3BelowFoldProps) {
   return (
-    <>
+    <div className="overflow-x-clip">
       <HeroPortal />
 
       {/* Gradient line separator — teal center glow */}
@@ -328,6 +320,6 @@ export function V3Content({
         textsCount={textsCount}
         totalWords={totalWords}
       />
-    </>
+    </div>
   );
 }
