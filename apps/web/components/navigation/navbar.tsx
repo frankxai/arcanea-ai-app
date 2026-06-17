@@ -34,7 +34,7 @@ const navLinks: NavLink[] = [
   {
     href: "/chat",
     label: "Create",
-    also: ["/imagine", "/studio", "/forge", "/agents", "/worlds", "/voice", "/integrations", "/distribute"],
+    also: ["/imagine", "/studio", "/forge", "/agents", "/worlds", "/games", "/music-studio", "/cinema-studio", "/canvas", "/voice", "/integrations", "/distribute"],
     mega: [
       {
         title: "Create",
@@ -43,6 +43,10 @@ const navLinks: NavLink[] = [
           { href: "/imagine", label: "Imagine", desc: "Generate images" },
           { href: "/studio", label: "Studio", desc: "Write & compose" },
           { href: "/worlds", label: "Worlds", desc: "Build universes" },
+          { href: "/games", label: "Games", desc: "Prompt to playable" },
+          { href: "/music-studio", label: "Music", desc: "Artist worlds" },
+          { href: "/cinema-studio", label: "Cinema", desc: "Trailers & scenes" },
+          { href: "/canvas", label: "Canvas", desc: "Node workflows" },
         ],
       },
       {
@@ -111,6 +115,7 @@ const navLinks: NavLink[] = [
       {
         title: "Build",
         items: [
+          { href: "/mcp", label: "MCP & CLI", desc: "Claude, Codex, Cursor" },
           { href: "/docs/mcp", label: "MCP Docs", desc: "Developer toolkit" },
           { href: "/ecosystem", label: "Ecosystem", desc: "Open source repos" },
           { href: "/protocol", label: "Protocol", desc: "Open standards spec" },

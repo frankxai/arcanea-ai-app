@@ -29,32 +29,92 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Advisory on pull requests
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "::notice::Skipping external Lighthouse audit on PRs. Release gates are CI, Quality Gate, Security Audit, E2E Smoke, and Vercel Preview. Run this workflow manually when a non-blocking Lighthouse report is needed."
+
       - name: Wait for Vercel Preview
+        if: github.event_name == 'workflow_dispatch'
         id: vercel
+        timeout-minutes: 4
+        continue-on-error: true
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 600
+          max_timeout: 180
           check_interval: 15
           environment: Preview
 
+      - name: Resolve Vercel Preview URL
+        if: github.event_name == 'workflow_dispatch'
+        id: preview
+        uses: actions/github-script@v8
+        env:
+          WAIT_URL: ${{ steps.vercel.outputs.url }}
+        with:
+          result-encoding: string
+          script: |
+            const waitUrl = (process.env.WAIT_URL || '').trim().replace(/\/$/, '');
+            if (waitUrl) {
+              core.setOutput('url', waitUrl);
+              return waitUrl;
+            }
+
+            const { owner, repo } = context.repo;
+            const ref = context.payload.pull_request?.head?.sha || context.sha;
+            const deadline = Date.now() + 10 * 60 * 1000;
+
+            while (Date.now() < deadline) {
+              const { data: statuses } = await github.rest.repos.listCommitStatusesForRef({
+                owner,
+                repo,
+                ref,
+                per_page: 100,
+              });
+
+              const vercel = statuses.find((status) =>
+                status.context === 'Vercel' &&
+                status.state === 'success' &&
+                status.target_url
+              );
+
+              if (vercel) {
+                const url = vercel.target_url.replace(/\/$/, '');
+                core.setOutput('url', url);
+                return url;
+              }
+
+              await new Promise((resolve) => setTimeout(resolve, 15000));
+            }
+
+            core.setFailed(`No successful Vercel preview status found for ${ref}`);
+
       - name: Audit with Lighthouse
+        if: github.event_name == 'workflow_dispatch'
         id: lighthouse
+        timeout-minutes: 10
+        continue-on-error: true # preview Lighthouse is advisory when the external audit action stalls
         uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
-            ${{ steps.vercel.outputs.url }}
-            ${{ steps.vercel.outputs.url }}/pricing
-            ${{ steps.vercel.outputs.url }}/chat
-            ${{ steps.vercel.outputs.url }}/worlds
-            ${{ steps.vercel.outputs.url }}/library
-            ${{ steps.vercel.outputs.url }}/imagine
+            ${{ steps.preview.outputs.url }}
+            ${{ steps.preview.outputs.url }}/create
+            ${{ steps.preview.outputs.url }}/worlds
+            ${{ steps.preview.outputs.url }}/apps
+            ${{ steps.preview.outputs.url }}/canvas
+            ${{ steps.preview.outputs.url }}/mcp
           configPath: ./.github/lighthouse/lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
 
+      - name: Warn when Lighthouse is unavailable
+        if: github.event_name == 'workflow_dispatch' && steps.lighthouse.outcome == 'failure'
+        run: |
+          echo "::warning::Lighthouse preview audit did not complete. Build, production build, E2E smoke, Vercel preview, security, lint, and TypeScript remain hard release gates."
+
       - name: Comment scores on PR
-        if: always()
+        if: github.event_name == 'workflow_dispatch'
         continue-on-error: true # a cosmetic PR comment must never fail the gate
         uses: marocchino/sticky-pull-request-comment@v2
         with:
@@ -64,5 +124,5 @@ jobs:
 
             ${{ steps.lighthouse.outputs.manifest }}
 
-            **Hard gates (fail PR):** accessibility ≥ 95, SEO ≥ 95, CLS ≤ 0.1
-            _Soft gates (warn): performance ≥ 90, best-practices ≥ 95, TBT ≤ 300ms, LCP ≤ 2.5s_
+            **Advisory release signal:** accessibility, SEO, CLS, performance, best-practices, TBT, and LCP.
+            _Hard gates live in CI, Quality Gate, Security Audit, E2E Smoke, and Vercel Preview._

@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { m } from "framer-motion";
 import { Star } from "@/lib/phosphor-icons";
 import { brand, guardianAccents } from "@arcanea/design-system";
@@ -28,24 +29,54 @@ const CARDS = [
     badge: "Living Universe",
     badgeColor: brand.atlanteanTeal,
     href: "/worlds",
+    image: "/images/forge/sea/006-storm-galleon.png",
   },
   {
-    type: "Character",
-    title: "Kael Duskwalker",
-    subtitle: "Wind · Rogue · Restless",
-    elements: [WIND_NEUTRAL],
-    gradient: "from-[var(--arc-brand-cosmic-blue)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-cosmic-void)]/40",
-    gradientAlt: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-earth)]/40",
-    borderGlow: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 20%, transparent)",
+    type: "Book",
+    title: "Star Cartographer",
+    subtitle: "12 chapters · cover brief",
+    elements: [brand.arcaneanGold, guardianAccents.lyria],
+    gradient: "from-[var(--arc-brand-arcanean-gold)]/45 via-[var(--arc-fire)]/20 to-[var(--arc-cosmic-void)]/45",
+    gradientAlt: "from-[var(--arc-brand-arcanean-gold)]/45 via-[var(--arc-brand-cosmic-blue)]/35 to-[var(--arc-cosmic-void)]/50",
+    borderGlow: "color-mix(in srgb, var(--arc-brand-arcanean-gold) 22%, transparent)",
     stars: 4,
-    badge: "Wind",
-    badgeColor: brand.aquamarine,
-    href: "/chat",
+    badge: "Author",
+    badgeColor: brand.arcaneanGold,
+    href: "/books/drafts",
+    image: "/images/books/forge-of-ruin-cover.png",
   },
   {
-    type: "Image",
-    title: "Crystalline Citadel",
-    subtitle: "Fantasy · Cinematic Lighting",
+    type: "Game",
+    title: "Relic Library",
+    subtitle: "Core loop · asset kit",
+    elements: [guardianAccents.draconia, brand.aquamarine],
+    gradient: "from-[var(--arc-fire)]/45 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-atlantean-teal)]/25",
+    gradientAlt: "from-[var(--arc-fire)]/45 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-brand-cosmic-blue)]/45",
+    borderGlow: "color-mix(in srgb, var(--arc-fire) 22%, transparent)",
+    stars: 5,
+    badge: "Playable",
+    badgeColor: brand.aquamarine,
+    href: "/games",
+    image: "/images/forge/space/005-interceptor-canyon.png",
+  },
+  {
+    type: "Music",
+    title: "Timeline Fieldnotes",
+    subtitle: "Artist lore · visualizer",
+    elements: [brand.aquamarine, WIND_NEUTRAL],
+    gradient: "from-[var(--arc-void)]/45 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-arcanean-gold)]/25",
+    gradientAlt: "from-[var(--arc-void)]/45 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-cosmic-blue)]/45",
+    borderGlow: "color-mix(in srgb, var(--arc-void) 22%, transparent)",
+    stars: 4,
+    badge: "Studio",
+    badgeColor: brand.aquamarine,
+    href: "/music-studio",
+    image: "/images/luminors/11-aletheia-truth-singer.webp",
+  },
+  {
+    type: "Cinema",
+    title: "Dream Market Trailer",
+    subtitle: "Shot list · render prompts",
     elements: [brand.arcaneanGold, brand.atlanteanTeal],
     gradient: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/30 to-[var(--arc-fire)]/40",
     gradientAlt: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/35 to-[var(--arc-fire)]/40",
@@ -53,7 +84,22 @@ const CARDS = [
     stars: 5,
     badge: "Cinematic",
     badgeColor: brand.arcaneanGold,
-    href: "/imagine",
+    href: "/cinema-studio",
+    image: "/brand/arcanea-hero.jpg",
+  },
+  {
+    type: "MCP",
+    title: "Claude Build Handoff",
+    subtitle: "Tools · recipes · context",
+    elements: [brand.arcaneanGold, brand.aquamarine],
+    gradient: "from-[var(--arc-brand-arcanean-gold)]/38 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-atlantean-teal)]/28",
+    gradientAlt: "from-[var(--arc-brand-atlantean-teal)]/35 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-arcanean-gold)]/35",
+    borderGlow: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 24%, transparent)",
+    stars: 5,
+    badge: "Agent OS",
+    badgeColor: brand.atlanteanTeal,
+    href: "/mcp",
+    image: "/guardians/v3/draconia-hero-v3.webp",
   },
 ] as const;
 
@@ -85,7 +131,7 @@ function ShowcaseCard({
   return (
     <Link href={card.href} className="block">
       <m.div
-        className="relative w-full sm:w-[280px] rounded-2xl overflow-hidden cursor-pointer"
+        className="group relative w-full sm:w-[280px] rounded-2xl overflow-hidden cursor-pointer"
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
@@ -119,6 +165,13 @@ function ShowcaseCard({
 
         {/* Gradient art area */}
         <div className={`relative h-[130px] bg-gradient-to-br ${card.gradient} overflow-hidden`}>
+          <Image
+            src={card.image}
+            alt={`${card.title} preview`}
+            fill
+            sizes="280px"
+            className="object-cover opacity-72 transition-transform duration-700 group-hover:scale-110"
+          />
           {/* Animated gradient shift */}
           <m.div
             className={`absolute inset-0 bg-gradient-to-br ${card.gradientAlt}`}
@@ -192,11 +245,11 @@ export function HeroShowcase() {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        Created in 30 seconds
+        Choose a studio, create a connected artifact
       </m.p>
 
       {/* Card strip */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-5 max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-5 max-w-5xl mx-auto">
         {CARDS.map((card, i) => (
           <ShowcaseCard
             key={card.title}
@@ -214,7 +267,7 @@ export function HeroShowcase() {
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.8 }}
       >
-        One sentence &rarr; a living universe. Free to start.
+        Worlds, books, games, music, cinema, canvas, and MCP workflows share one creation layer.
       </m.p>
     </section>
   );

@@ -14,6 +14,10 @@ const footerLinks = {
       { href: "/imagine", label: "Imagine" },
       { href: "/studio", label: "Studio" },
       { href: "/worlds", label: "Worlds" },
+      { href: "/games", label: "Game Studio" },
+      { href: "/music-studio", label: "Music Studio" },
+      { href: "/cinema-studio", label: "Cinema Studio" },
+      { href: "/canvas", label: "Canvas" },
       { href: "/forge", label: "Forge" },
       { href: "/agents", label: "Agents" },
     ],
@@ -35,6 +39,7 @@ const footerLinks = {
     links: [
       { href: "/protocol", label: "Protocol" },
       { href: "/ecosystem", label: "Repo Registry" },
+      { href: "/mcp", label: "MCP & CLI" },
       { href: "/apps", label: "Apps" },
       { href: "/integrations", label: "Integrations" },
       { href: "/storage", label: "Storage" },

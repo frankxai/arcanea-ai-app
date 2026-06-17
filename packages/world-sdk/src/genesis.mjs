@@ -87,6 +87,7 @@ export function genesisOffline(sentence, { idSeed } = {}) {
     agents: [
       { id: "lore-keeper", harness: "claude", role: "Maintain canon consistency and deepen lore." },
       { id: "cartographer", harness: "gemini", role: "Generate locations and the world map." },
+      { id: "visual-canon", harness: "grok", role: "Seed portraits, covers, short lore scenes with native Imagine (visualDna + refs for coherence)." },
       { id: "composer", harness: "any", role: "Produce the world's soundtrack.", skill: "suno-prompt-architect" },
     ],
   };

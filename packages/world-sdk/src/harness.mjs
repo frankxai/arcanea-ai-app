@@ -1,6 +1,7 @@
-// Harness adapter — how coding agents (claude/codex/gemini/antigravity-arcanea) build a world.
-// An agent reads its assignment from the world's own manifest, writes into canonical folders,
-// and commits. Each harness wraps this with its own runtime.
+// Harness adapter — how coding agents (claude/codex/gemini/antigravity/grok-arcanea) build a world.
+// Agents read assignments from manifest.agents (harness or "any"), write canonical folders (frontmatter + md),
+// commit. Grok harness additionally seeds media/ via native Imagine (refs for visualDna coherence, image-to-video).
+// Each harness runtime binds harnessContext for its tools.
 
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";

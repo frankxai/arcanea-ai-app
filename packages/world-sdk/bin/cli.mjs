@@ -11,6 +11,7 @@ import { contentHash } from "../src/contenthash.mjs";
 import { buildIndex } from "../src/index-build.mjs";
 import { claimWorldProof, mockChain } from "../src/proof.mjs";
 import { slugify } from "../src/manifest.mjs";
+import { remember, evolve, listMemories, distillOffline } from "../src/evolution.mjs";
 
 const [cmd, ...rest] = process.argv.slice(2);
 
@@ -53,6 +54,33 @@ switch (cmd) {
     console.log(`   wallet ${res.wallet}  ref ${res.entry.ref.slice(0, 16)}…`);
     break;
   }
+  case "remember": {
+    const [who, ...msgParts] = rest;
+    const content = msgParts.join(" ") || who;
+    const charId = msgParts.length ? who : null;
+    const { record, distilled } = await remember(rest[0] || ".", content, { characterId: charId });
+    console.log(`📝 memory recorded → ${record.path}`);
+    if (distilled) console.log(`   distilled: ${distilled.slice(0, 120)}…`);
+    break;
+  }
+  case "evolve": {
+    const slug = rest[0];
+    if (!slug) die("usage: arcanea-world evolve <character-slug> [dir]");
+    const dir = rest[1] || ".";
+    const { character, lore, summary, world } = await evolve(dir, slug);
+    console.log(`🌱 ${world.name} evolved`);
+    console.log(`   ${character} updated`);
+    console.log(`   new canon: ${lore}`);
+    console.log(`   ${summary.slice(0, 140)}…`);
+    break;
+  }
+  case "memories": {
+    const dir = rest[0] || ".";
+    const mems = await listMemories(dir);
+    console.log(`${mems.length} memories`);
+    mems.slice(-3).forEach((m) => console.log(`  ${m.ts.slice(0,16)} ${m.characterId || ""} ${m.content.slice(0,60)}`));
+    break;
+  }
   default:
-    die('commands: create "<sentence>" [dir] | validate <dir> | hash <dir> | index <dir> | claim <dir>');
+    die('commands: create "<sentence>" [dir] | validate <dir> | hash <dir> | index <dir> | claim <dir> | remember [char] "moment..." [dir] | evolve <char-slug> [dir] | memories [dir]');
 }

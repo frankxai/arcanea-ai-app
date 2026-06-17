@@ -18,6 +18,7 @@ Spec: `arcanea-ecosystem/docs/WORLD_REPO_STANDARD.md` · Schema: `arcanea-ecosys
 | `index-build` | world → world-graph nodes + embed-ready chunks (repo → index, one way) |
 | `webhook` | framework-agnostic push handler with HMAC verify |
 | `proof` | invisible wallet + mint adapters; `claimWorldProof` appends `provenance[]` |
+| `evolution` | recordMemory (to .arcanea/memories, hash-safe) → distillOffline → evolveCharacter (char + canonLevel-2 lore); lived-in worlds grow canon visibly |
 
 ## CLI
 ```bash
@@ -36,6 +37,8 @@ import { claimWorldProof, mockChain } from "@arcanea/world-sdk/proof";
 const { manifest } = await createWorld("./my-world", "a drowned city where memory is currency");
 const index = buildIndex(await readWorld("./my-world"));   // repo → index
 await claimWorldProof({ dir: "./my-world", adapter: mockChain("solana") }); // sovereignty button
+await remember("./my-world", "She opened the tide-gate for a dying diver.", { characterId: "sister-lethe", salience: 0.9 });
+await evolve("./my-world", "sister-lethe"); // char evolves + public level-2 lore added; hash moves
 ```
 
 Swap `mockChain()` for a real Solana (Metaplex/Helius) or EVM (thirdweb) adapter — same interface.

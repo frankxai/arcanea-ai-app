@@ -47,6 +47,33 @@ function CategoryPill({
   );
 }
 
+const PRODUCTION_STACKS = [
+  {
+    name: "Game studio sprint",
+    promise: "World bible to playable prototype without losing canon.",
+    apps: ["Claude Code", "Codex", "Godot", "Vercel", "GitHub"],
+    route: "/games",
+  },
+  {
+    name: "Music release room",
+    promise: "Artist lore, song brief, cover art, visualizer, and launch posts.",
+    apps: ["Suno", "Nano Banana 2", "Runway", "Blotato", "Postiz"],
+    route: "/music-studio",
+  },
+  {
+    name: "Cinema trailer bench",
+    promise: "Shot list, references, render prompts, edit notes, and handoff.",
+    apps: ["Runway", "Hedra", "ElevenLabs", "Nano Banana 2", "Vercel"],
+    route: "/cinema-studio",
+  },
+  {
+    name: "Agent build system",
+    promise: "Local MCP tools, repo context, recipes, and portable exports.",
+    apps: ["Claude Code", "Cursor", "GitHub", "Supabase", "Vercel"],
+    route: "/mcp",
+  },
+];
+
 // ---------------------------------------------------------------------------
 // Main content component
 // ---------------------------------------------------------------------------
@@ -184,6 +211,64 @@ export function AppsContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {featuredApps.map((app, i) => (
                 <AppTile key={app.name} {...app} index={i} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Production stacks ─────────────────────────────────────────── */}
+        <section className="relative pb-16">
+          <div className="max-w-6xl mx-auto px-6">
+            <m.div
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5 }}
+              className="mb-8 flex flex-col justify-between gap-3 md:flex-row md:items-end"
+            >
+              <div>
+                <p className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/25 mb-1">
+                  Production stacks
+                </p>
+                <h2 className="text-xl font-display font-semibold text-white/70">
+                  Install workflows, not random tools
+                </h2>
+              </div>
+              <Link href="/canvas" className="text-xs font-mono uppercase tracking-[0.16em] text-white/35 hover:text-white/70">
+                Open Canvas
+              </Link>
+            </m.div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              {PRODUCTION_STACKS.map((stack, index) => (
+                <m.article
+                  key={stack.name}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.45, delay: index * 0.06 }}
+                  className="rounded-3xl border border-white/[0.08] bg-white/[0.025] p-5"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="text-lg font-display font-semibold text-white/86">{stack.name}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-white/42">{stack.promise}</p>
+                    </div>
+                    <Link
+                      href={stack.route}
+                      className="shrink-0 rounded-full border border-white/[0.08] bg-white/[0.035] px-3 py-1.5 text-[10px] font-mono uppercase tracking-[0.14em] text-white/42 hover:text-white/75"
+                    >
+                      Run
+                    </Link>
+                  </div>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {stack.apps.map((app) => (
+                      <span key={`${stack.name}-${app}`} className="rounded-full border border-white/[0.07] bg-black/24 px-3 py-1.5 text-xs text-white/48">
+                        {app}
+                      </span>
+                    ))}
+                  </div>
+                </m.article>
               ))}
             </div>
           </div>

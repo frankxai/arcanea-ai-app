@@ -118,6 +118,9 @@ export function CTASection() {
                           <Image
                             src={g.image}
                             alt={g.name}
+                            width={48}
+                            height={48}
+                            sizes="48px"
                             className="w-full h-full object-cover object-top"
                            />
                         </div>

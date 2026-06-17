@@ -20,6 +20,10 @@ const NAV_ITEMS = [
   { name: 'Voice', href: '/voice', group: 'Create' },
   { name: 'Studio', href: '/studio', group: 'Create' },
   { name: 'Worlds', href: '/worlds', shortcut: 'W', group: 'Create' },
+  { name: 'Game Studio', href: '/games', group: 'Create' },
+  { name: 'Music Studio', href: '/music-studio', group: 'Create' },
+  { name: 'Cinema Studio', href: '/cinema-studio', group: 'Create' },
+  { name: 'Canvas', href: '/canvas', group: 'Create' },
   { name: 'Forge', href: '/forge', group: 'Create' },
   { name: 'Gallery', href: '/gallery', group: 'Explore' },
   { name: 'Library', href: '/library', shortcut: 'L', group: 'Explore' },
@@ -32,6 +36,7 @@ const NAV_ITEMS = [
   { name: 'Model Arena', href: '/models', group: 'Learn' },
   { name: 'Developers', href: '/developers', group: 'Learn' },
   { name: 'Ecosystem', href: '/ecosystem', group: 'Open Core' },
+  { name: 'MCP & CLI', href: '/mcp', group: 'Open Core' },
   { name: 'Blueprints', href: '/templates', shortcut: 'B', group: 'Open Core' },
   { name: 'Pricing', href: '/pricing', group: 'Open Core' },
   { name: 'Settings', href: '/settings', group: 'Account' },
@@ -40,7 +45,10 @@ const NAV_ITEMS = [
 
 const ACTION_ITEMS = [
   { name: 'New Chat', href: '/chat', group: 'Actions' },
+  { name: 'Universal Create', href: '/create', group: 'Actions' },
   { name: 'Create World', href: '/worlds/create', group: 'Actions' },
+  { name: 'Plan Game', href: '/games', group: 'Actions' },
+  { name: 'Plan Music Project', href: '/music-studio', group: 'Actions' },
   { name: 'Forge Luminor', href: '/forge/luminor', group: 'Actions' },
   { name: 'Take Origin Quiz', href: '/quiz', group: 'Actions' },
 ];

@@ -1,17 +1,25 @@
 # Arcanea MCP Server
 
-> **A worldbuilding toolkit for the age of AI-human co-creation**
+> **A creative production layer for the age of AI-human co-creation**
 
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)](https://www.typescriptlang.org/)
 [![oh-my-opencode Inspired](https://img.shields.io/badge/Inspired%20by-oh--my--opencode-purple)](https://github.com/code-yeongyu/oh-my-opencode)
 
-Transform your creative process with AI-powered worldbuilding tools, wisdom companions, and a living creative ecosystem. Generate characters, locations, magical artifacts, and entire worlds within the Arcanea universe - or use the framework for your own creative projects.
+Transform your creative process with AI-powered production tools, worldbuilding systems, wisdom companions, and a living creative ecosystem. Plan books, games, music releases, cinematic scenes, asset briefs, and agent handoffs, then generate characters, locations, magical artifacts, and entire worlds within the Arcanea universe - or use the framework for your own creative projects.
 
 **v0.3.0**: Now featuring multi-agent orchestration inspired by [oh-my-opencode](https://github.com/code-yeongyu/oh-my-opencode)!
 
 ## Features
+
+### Production Studio Tools
+- **World Planning** - Turn a premise into canon, factions, locations, timelines, visual language, and export context
+- **Book Planning** - Build reader promise, book bible, chapter spine, sample direction, cover brief, and publishing checklist
+- **Game Planning** - Generate player promise, core loop, mechanics, levels, asset kit, and prototype handoff
+- **Music Planning** - Shape artist lore, song briefs, sonic motifs, cover art, visualizers, and release packs
+- **Cinema Planning** - Create trailer or scene packets with hook frame, shot list, camera language, audio direction, and render prompts
+- **Agent Handoffs** - Export structured project context for Claude, Codex, Cursor, and generic MCP hosts
 
 ### Worldbuilding Generators
 - **Characters** - Generate rich characters with elemental affinities, magical ranks, and backstories
@@ -135,6 +143,20 @@ then link them together."
 
 ## Tool Reference
 
+### Production Studio Tools (9)
+
+| Tool | Description |
+|------|-------------|
+| `plan_world` | Create a world production packet with canon, factions, locations, visuals, audio palette, and next actions |
+| `plan_book` | Create a book packet with reader promise, bible, chapter spine, cover brief, and publish checklist |
+| `plan_game` | Create a game design packet with player promise, core loop, mechanics, levels, asset kit, and prototype handoff |
+| `plan_music_project` | Create artist lore, song brief, sonic motifs, cover art direction, visualizer plan, and release copy |
+| `plan_cinematic_scene` | Create scene intent, shot list, camera language, references, audio direction, and render prompts |
+| `generate_asset_brief` | Create portable image/video/music asset briefs for production tools |
+| `export_project_context` | Package a project for Claude, Codex, Cursor, or another agent |
+| `list_arcanea_studios` | List studio surfaces, routes, outcomes, and recommended tools |
+| `get_workflow_recipe` | Return reusable recipes such as book-to-publish, world-to-game, artist-release, cinematic-trailer, and campaign-pack |
+
 ### Worldbuilding Tools (7)
 
 | Tool | Description |
@@ -193,7 +215,7 @@ then link them together."
 | `validate_canon` | Check content for Arcanea canon compliance |
 | `identify_gate` | Get information about a specific Gate |
 
-**Total: 28 tools across 6 categories**
+**Total: 43 documented tools across production, worldbuilding, coaching, memory, graph, orchestration, canon, and prompt optimization categories**
 
 ## Resources
 

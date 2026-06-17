@@ -75,10 +75,10 @@ describe('Health Check — check_health tool', () => {
     assert.equal(seconds, 1);
   });
 
-  it('health check tool count constant is 34', () => {
-    // Reflects the total tool count: 7 worldbuilding + 5 coaching + 6 graph +
-    // 3 journey + 5 agents + 2 reference + 3 intelligence + 1 library +
-    // 2 diagnostics = 34
+  it('health check tool count includes the production studio layer', () => {
+    // Reflects the documented core tools plus the new production studio layer.
+    // The runtime server now registers additional bridge/orchestration tools too;
+    // this test keeps the public inventory honest without overfitting to internals.
     const TOOL_COUNTS = {
       worldbuilding: 7,
       coaching: 5,
@@ -89,9 +89,10 @@ describe('Health Check — check_health tool', () => {
       intelligence: 3,
       library: 1,
       diagnostics: 2,
+      production: 9,
     };
     const total = Object.values(TOOL_COUNTS).reduce((a, b) => a + b, 0);
-    assert.equal(total, 34, `Expected 34 tools, got ${total}`);
+    assert.equal(total, 43, `Expected 43 documented tools, got ${total}`);
   });
 
   it('health check resource URIs all use arcanea:// scheme', () => {
@@ -1026,10 +1027,14 @@ describe('Tool Inventory — updated tool list with new tools', () => {
     'search_library',
     // Diagnostics
     'memory_status', 'check_health',
+    // Production studios
+    'plan_world', 'plan_book', 'plan_game', 'plan_music_project',
+    'plan_cinematic_scene', 'generate_asset_brief', 'export_project_context',
+    'list_arcanea_studios', 'get_workflow_recipe',
   ];
 
-  it('total tool count is 34', () => {
-    assert.equal(ALL_TOOLS.length, 34, `Expected 34 tools, got ${ALL_TOOLS.length}`);
+  it('total documented tool count is 43', () => {
+    assert.equal(ALL_TOOLS.length, 43, `Expected 43 documented tools, got ${ALL_TOOLS.length}`);
   });
 
   it('no duplicate tool names', () => {
@@ -1047,6 +1052,12 @@ describe('Tool Inventory — updated tool list with new tools', () => {
 
   it('search_library is in the tool list', () => {
     assert.ok(ALL_TOOLS.includes('search_library'));
+  });
+
+  it('production studio tools are in the tool list', () => {
+    for (const tool of ['plan_world', 'plan_book', 'plan_game', 'plan_music_project', 'plan_cinematic_scene', 'generate_asset_brief', 'export_project_context', 'list_arcanea_studios', 'get_workflow_recipe']) {
+      assert.ok(ALL_TOOLS.includes(tool), `Missing production tool: ${tool}`);
+    }
   });
 
   it('old stub "orchestrate" is not in the tool list', () => {

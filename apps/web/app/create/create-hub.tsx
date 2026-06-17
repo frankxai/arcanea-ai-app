@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import {
   SectionShell,
   SectionHeader,
@@ -24,6 +25,7 @@ import {
   RECENT_MOCK,
   type CategoryFilterId,
 } from "./create-templates";
+import { STUDIO_MODES, StudioDirectory } from "@/components/studio";
 
 // ---------------------------------------------------------------------------
 // QuickStartCard — large colorful tile, Canva "start a design" style
@@ -167,9 +169,9 @@ function BrandKitPreview() {
               Palette
             </p>
             <div className="flex gap-2">
-              {swatches.map((c) => (
+              {swatches.map((c, swatchIndex) => (
                 <div
-                  key={c}
+                  key={`brand-swatch-${swatchIndex}-${c}`}
                   className="w-8 h-8 rounded-lg border border-white/[0.08] shadow-sm"
                   style={{ background: c }}
                   title={c}
@@ -203,6 +205,166 @@ function BrandKitPreview() {
         </div>
       </div>
     </FeatureCard>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// UniversalCreatePanel -- dense mode router inspired by generation surfaces
+// ---------------------------------------------------------------------------
+
+function UniversalCreatePanel() {
+  const featured = STUDIO_MODES.slice(0, 8);
+  const active = featured[0];
+
+  return (
+    <SectionShell ambient="teal" grid size="compact" id="universal-create">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <SectionHeader
+            label="Universal Create"
+            title="Choose a studio. Create a connected artifact."
+            subtitle="Worlds, books, games, music, video, campaigns, canvases, and MCP workflows share one creation grammar."
+            align="left"
+            accent="teal"
+          />
+          <Link
+            href="/mcp"
+            className="inline-flex items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.04] px-5 py-2.5 text-xs font-mono uppercase tracking-[0.16em] text-white/45 hover:border-white/[0.16] hover:text-white/75"
+          >
+            Arcanea for any AI
+          </Link>
+        </div>
+
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_380px]">
+          <div className="rounded-3xl border border-white/[0.08] bg-white/[0.025] p-4">
+            <div className="mb-4 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+              {featured.map((mode) => (
+                <Link
+                  key={mode.id}
+                  href={mode.href}
+                  className={`shrink-0 rounded-full border px-4 py-2 text-xs font-mono uppercase tracking-[0.14em] transition-all ${
+                    mode.id === active.id
+                      ? "border-white/[0.18] bg-white/[0.10] text-white/85"
+                      : "border-white/[0.07] bg-white/[0.03] text-white/35 hover:border-white/[0.14] hover:text-white/65"
+                  }`}
+                >
+                  {mode.name}
+                </Link>
+              ))}
+            </div>
+
+            <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${active.gradient} p-5`}>
+              <Image
+                src={active.media.poster}
+                alt={`${active.name} preview`}
+                fill
+                sizes="(min-width: 1024px) 700px, 100vw"
+                className="object-cover opacity-42 mix-blend-screen"
+                priority
+              />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_18%,rgba(255,255,255,0.16),transparent_32%),linear-gradient(to_top,rgba(0,0,0,0.52),transparent)]" />
+              <div className="relative grid min-h-[340px] gap-5 lg:grid-cols-[1fr_260px]">
+                <div className="flex flex-col justify-between">
+                  <div>
+                    <p className="text-[10px] font-mono uppercase tracking-[0.28em] text-white/45">
+                      {active.eyebrow}
+                    </p>
+                    <h3 className="mt-5 max-w-xl text-3xl font-display font-bold tracking-[-0.035em] text-white md:text-5xl">
+                      What are you making?
+                    </h3>
+                    <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/62">
+                      Start with one sentence, attach references with <span className="font-mono text-white/90">@asset</span>,
+                      then route the output into a studio, a vault, or an MCP handoff.
+                    </p>
+                  </div>
+                  <div className="mt-8 rounded-2xl border border-white/[0.12] bg-black/25 p-3 backdrop-blur-sm">
+                    <p className="mb-2 text-[10px] font-mono uppercase tracking-[0.18em] text-white/35">
+                      Prompt
+                    </p>
+                    <div className="rounded-xl border border-white/[0.10] bg-black/25 p-4 text-sm text-white/75">
+                      {active.prompt}
+                    </div>
+                    <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+                      <span className="text-xs font-mono text-white/45">{active.assetHint}</span>
+                      <Link
+                        href={active.href}
+                        className="rounded-full px-5 py-2 text-sm font-semibold text-[var(--arc-cosmic-void)]"
+                        style={{ background: active.accent }}
+                      >
+                        Generate * {active.cost}
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid content-end gap-3">
+                  {active.media.frames.map((step, index) => (
+                    <m.div
+                      key={step}
+                      className="rounded-xl border border-white/[0.10] bg-black/20 p-3 backdrop-blur-sm"
+                      initial={{ opacity: 0.55, x: 10 }}
+                      animate={{ opacity: [0.55, 1, 0.55], x: [10, 0, 10] }}
+                      transition={{ duration: 3.2, repeat: Infinity, delay: index * 0.25, ease: "easeInOut" }}
+                    >
+                      <span className="text-[10px] font-mono text-white/30">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <p className="mt-1 text-sm font-display font-semibold text-white/80">
+                        {step}
+                      </p>
+                    </m.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-white/[0.08] bg-[var(--arc-cosmic-void)]/70 p-5">
+            <p className="text-[10px] font-mono uppercase tracking-[0.26em] text-white/25">
+              Studio outputs
+            </p>
+            <div className="mt-4 space-y-3">
+              {featured.slice(1, 6).map((mode) => (
+                <Link
+                  key={mode.id}
+                  href={mode.href}
+                  className="group block rounded-2xl border border-white/[0.06] bg-white/[0.025] p-4 hover:border-white/[0.14] hover:bg-white/[0.045]"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex min-w-0 items-center gap-3">
+                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-black/30">
+                        <Image
+                          src={mode.media.secondary}
+                          alt=""
+                          fill
+                          sizes="48px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="min-w-0">
+                      <p className="text-sm font-display font-semibold text-white/80">
+                        {mode.name}
+                      </p>
+                      <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/36">
+                        {mode.output}
+                      </p>
+                      </div>
+                    </div>
+                    <span className="shrink-0 text-xs font-mono" style={{ color: mode.accent }}>
+                      * {mode.cost}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8">
+          <StudioDirectory />
+        </div>
+      </div>
+    </SectionShell>
   );
 }
 
@@ -281,12 +443,15 @@ export function CreateHub() {
 
           <Reveal delay={0.6}>
             <p className="text-base md:text-lg text-white/40 leading-relaxed text-center max-w-xl mx-auto font-body">
-              Start from a template or a blank canvas. Worlds, stories, agents,
-              music — all connected, all yours.
+              Start from a studio, a template, or a blank canvas. Worlds,
+              books, games, music, scenes, campaigns, and agents -- all
+              connected, all yours.
             </p>
           </Reveal>
         </div>
       </section>
+
+      <UniversalCreatePanel />
 
       {/* ------------------------------------------------------------------ */}
       {/* QUICK START GRID                                                    */}
