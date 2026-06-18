@@ -285,3 +285,14 @@ packages/peak-performance/
 infra/
 forks/
 .git-hygiene/
+
+# Starlight/ACOS temporary files
+.agent/
+.system_generated/
+.next-backup/
+temp-*.json
+link-checker-report.json
+link-checker-report.txt
+
+# Starlight/ACOS temporary files
+.starlight/
