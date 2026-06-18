@@ -136,7 +136,7 @@ test.describe('skills marketplace', () => {
   test('search input filters the grid', async ({ page }) => {
     await page.goto('/skills');
 
-    const searchInput = page.getByPlaceholder(/Search skills/i);
+    const searchInput = page.getByPlaceholder(/Search skills/i).first();
     await expect(searchInput).toBeVisible();
 
     // Count cards before filtering — use a stricter locator that only

@@ -1,4 +1,5 @@
 export { AgentBus } from './agent-bus.js';
+export { HermesRouter } from './hermes-router.js';
 export type {
   Message,
   MessageId,

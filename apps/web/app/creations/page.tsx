@@ -6,8 +6,10 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth/context';
 import { createClient } from '@/lib/supabase/client';
-import { getCreations, getUserCreations, deleteCreation } from '@/lib/database/services/creation-service';
+import { getCreations, getUserCreations, deleteCreation, updateCreation } from '@/lib/database/services/creation-service';
 import type { Creation, CreationType } from '@/lib/database/types/api-responses';
+import { AccountAbstractionService } from '@/lib/web3/account-abstraction';
+import { StoryProtocolService } from '@/lib/web3/story-protocol';
 import {
   PhPlus,
   PhFunnel,
@@ -20,7 +22,12 @@ import {
   PhHeart,
   PhGridFour,
   PhArrowRight,
+  PhShieldStar,
+  PhSpinner,
+  PhArrowSquareOut
 } from '@/lib/phosphor-icons';
+// @ts-ignore
+import { Wallet as PhWallet } from '@phosphor-icons/react';
 
 const TYPE_FILTERS: { key: CreationType | 'all'; label: string; icon: typeof PhGridFour }[] = [
   { key: 'all', label: 'All', icon: PhGridFour },
@@ -50,6 +57,61 @@ export default function CreationsPage() {
   const [creations, setCreations] = useState<Creation[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<CreationType | 'all'>('all');
+  const [registeringId, setRegisteringId] = useState<string | null>(null);
+
+  const aaService = new AccountAbstractionService();
+  const storyService = new StoryProtocolService();
+
+  const handleRegisterIP = async (creation: Creation) => {
+    if (!user) {
+      alert('Please log in to register creations.');
+      return;
+    }
+    setRegisteringId(creation.id);
+    try {
+      // 1. Get/derive Smart account TBA address
+      const wallet = await aaService.getOrCreateSmartAccount(user.id);
+      
+      // 2. Derive mock IPFS metadata hash
+      const ipfsHash = `ipfs://bafybeih${Math.random().toString(36).substring(2, 15)}hash`;
+      
+      // 3. Register IP Asset on Base Sepolia Story Protocol
+      const ipAsset = await storyService.registerIPAsset(
+        wallet,
+        '0x89793139C247B2E3f3F8C56c32168393Fcf92168', // Mock NFT Contract Address
+        Math.floor(Math.random() * 100000), // Mock Token ID
+        ipfsHash
+      );
+
+      // 4. Persist registration info inside Creation metadata
+      const updatedMeta = {
+        ...(creation.metadata || {}),
+        ipfsHash,
+        ipaAddress: ipAsset.ipaAddress,
+        licenseTermsId: ipAsset.licenseTermsId,
+        registeredAt: new Date().toISOString()
+      };
+
+      const supabase = createClient();
+      await updateCreation(supabase, creation.id, user.id, {
+        metadata: updatedMeta
+      });
+
+      // Update state
+      setCreations((prev) =>
+        prev.map((c) =>
+          c.id === creation.id ? { ...c, metadata: updatedMeta } : c
+        )
+      );
+
+      alert(`Successfully registered ${creation.title} on Story Protocol!\nIP Address: ${ipAsset.ipaAddress}`);
+    } catch (err) {
+      console.error(err);
+      alert('Story Protocol IP Asset registration failed.');
+    } finally {
+      setRegisteringId(null);
+    }
+  };
 
   const loadCreations = useCallback(async () => {
     setLoading(true);
@@ -157,13 +219,13 @@ export default function CreationsPage() {
               >
                 {/* Preview */}
                 {creation.thumbnailUrl ? (
-                  <div className="aspect-video bg-white/[0.02]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <div className="aspect-video bg-white/[0.02] relative">
                     <Image
                       src={creation.thumbnailUrl}
                       alt={creation.title}
-                      className="w-full h-full object-cover"
-                     />
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                 ) : (
                   <div className="aspect-video bg-gradient-to-br from-white/[0.03] to-white/[0.01] flex items-center justify-center">
@@ -194,6 +256,56 @@ export default function CreationsPage() {
                     <span className="text-[10px] text-white/65 px-1.5 py-0.5 rounded bg-white/[0.06]">
                       {creation.type}
                     </span>
+                  </div>
+
+                  {/* Web3 Provenance Section */}
+                  <div className="mt-4 pt-3.5 border-t border-white/[0.04] flex items-center justify-between gap-2">
+                    {creation.metadata?.ipaAddress ? (
+                      <div className="flex flex-col gap-0.5">
+                        <div className="flex items-center gap-1 text-[10px] text-green-400 font-semibold">
+                          <PhShieldStar className="w-3.5 h-3.5" />
+                          Story IP Registered
+                        </div>
+                        <span className="text-[9px] font-mono text-white/45 truncate max-w-[120px]">
+                          {creation.metadata.ipaAddress as string}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="text-[10px] text-white/40 font-medium">Unregistered IP</div>
+                    )}
+
+                    {creation.metadata?.ipaAddress ? (
+                      <a
+                        href={`https://explorer.story.foundation/ipa/${creation.metadata.ipaAddress}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-1 text-[10px] font-semibold text-[var(--arc-brand-atlantean-teal)] hover:underline"
+                      >
+                        Explorer
+                        <PhArrowSquareOut className="w-3 h-3" />
+                      </a>
+                    ) : (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleRegisterIP(creation);
+                        }}
+                        disabled={registeringId !== null}
+                        className="px-2.5 py-1 rounded bg-[var(--arc-brand-atlantean-teal)]/10 hover:bg-[var(--arc-brand-atlantean-teal)]/15 border border-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] text-[10px] font-bold transition-all flex items-center gap-1 disabled:opacity-50"
+                      >
+                        {registeringId === creation.id ? (
+                          <>
+                            <PhSpinner className="w-3 h-3 animate-spin" />
+                            Registering...
+                          </>
+                        ) : (
+                          <>
+                            <PhWallet className="w-3 h-3" />
+                            Register PIL
+                          </>
+                        )}
+                      </button>
+                    )}
                   </div>
                 </div>
 

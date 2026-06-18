@@ -11,13 +11,16 @@ const env = {
     process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://example.supabase.co',
   NEXT_PUBLIC_SUPABASE_ANON_KEY:
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'dummy-anon-key',
+  PLAYWRIGHT_WEB_SERVER_COMMAND:
+    process.env.PLAYWRIGHT_WEB_SERVER_COMMAND ||
+    (process.platform === 'win32' ? 'cmd.exe /c pnpm run start' : 'pnpm run start'),
 };
 
 const steps = [
   ['pnpm --dir apps/web type-check'],
   ['pnpm --dir apps/web test:projects'],
   ['pnpm --dir apps/web build'],
-  ['pnpm --dir apps/web exec playwright test'],
+  ['pnpm --dir apps/web test:e2e'],
 ] as const;
 
 for (const [stepLabel] of steps) {

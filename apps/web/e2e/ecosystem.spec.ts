@@ -26,12 +26,12 @@ test.describe('/ecosystem page', () => {
   test('clicking a node opens the drawer', async ({ page }) => {
     await page.goto('/ecosystem');
     // Wait for live explorer section to render
-    await expect(page.getByRole('heading', { name: /Ecosystem Explorer/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Explore the ecosystem/i })).toBeVisible();
 
     // Click the first node card in the Layered view (each card has an h3
     // containing the node name).
     const firstCard = page
-      .locator('section[aria-labelledby="explorer-heading"] button:has(h3)')
+      .locator('section[aria-labelledby="map-heading"] button:has(h3)')
       .first();
     await firstCard.click();
 

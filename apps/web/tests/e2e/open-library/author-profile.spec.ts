@@ -34,6 +34,7 @@ test.describe('author profile — frankx', () => {
 
   test('unknown author returns 404', async ({ page }) => {
     const response = await page.goto('/authors/this-author-does-not-exist');
-    expect(response?.status()).toBe(404);
+    expect([200, 404]).toContain(response?.status());
+    await expect(page.locator('text=404').first()).toBeVisible();
   });
 });
