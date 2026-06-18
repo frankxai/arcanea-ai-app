@@ -36,6 +36,7 @@ jobs:
 
       - name: Wait for Vercel preview deployment
         id: wait-vercel
+        if: inputs.preview_url == ''
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
