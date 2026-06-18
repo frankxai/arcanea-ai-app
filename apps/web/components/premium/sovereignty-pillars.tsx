@@ -22,26 +22,26 @@ interface Pillar {
 const PILLARS: Pillar[] = [
   {
     icon: Keyboard,
-    title: "Your keys, always",
-    body: "BYOK by default. Your OpenAI, Anthropic, or Google key lives in your browser. We never see it, store it, or mark it up.",
+    title: "BYOK Architecture",
+    body: "Resides fully inside your browser's local sandbox. Route API calls directly to model endpoints (Anthropic, OpenAI, Groq) at pure developer cost, with zero platform markup.",
     accent: brand.aquamarine,
   },
   {
     icon: Shield,
-    title: "Your IP, always",
-    body: "Everything you create is yours. No claims on output. No training on your data. Export as markdown, JSON, or fork the whole stack.",
+    title: "Sovereign IP Ownership",
+    body: "Everything you generate belongs to you. No downstream licensing claims, no training on user creations, and raw data export in standard markdown or JSON.",
     accent: brand.atlanteanTeal,
   },
   {
     icon: Code,
-    title: "Open source core",
-    body: "Public repos are MIT licensed and forkable. Private production and unresolved historical repos are labeled instead of marketed as open.",
+    title: "Forkable Stack",
+    body: "Core packages and adapters are MIT-licensed. Modify the visual chrome, run the MCP servers locally, and adapt the codebase to your own hardware.",
     accent: brand.arcaneanGold,
   },
   {
     icon: ArrowSquareOut,
-    title: "No lock-in",
-    body: "Your worlds, characters, and chats export as portable files. Works with Claude Code, Cursor, GPT, Gemini — anywhere you want to go next.",
+    title: "Zero Platform Lock-in",
+    body: "Interoperable schemas export natively as flat text files. Sync with local CLI clients, Claude Code workflows, or Cursor instances seamlessly.",
     accent: ambient.lavender,
   },
 ];

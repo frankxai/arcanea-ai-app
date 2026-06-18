@@ -18,64 +18,64 @@ const WIND_NEUTRAL = "var(--arc-text-primary)";
 
 const CARDS = [
   {
-    type: "World",
-    title: "Sonorium",
-    subtitle: "12 characters · 3 locations",
-    elements: [guardianAccents.draconia, guardianAccents.leyla, guardianAccents.lyria],
+    type: "Portal",
+    title: "Realm Gate",
+    subtitle: "world graph · canon seed",
+    elements: [brand.atlanteanTeal, brand.arcaneanGold, guardianAccents.lyria],
     gradient: "from-[var(--arc-brand-cosmic-blue)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-cosmic-blue)]/40",
     gradientAlt: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-cosmic-blue)]/50",
     borderGlow: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 25%, transparent)",
     stars: 5,
-    badge: "Living Universe",
+    badge: "World OS",
     badgeColor: brand.atlanteanTeal,
     href: "/worlds",
     image: "/brand/arcanea-dashboard-hero-premium.png",
   },
   {
-    type: "Book",
-    title: "Star Cartographer",
-    subtitle: "12 chapters · cover brief",
-    elements: [brand.arcaneanGold, guardianAccents.lyria],
-    gradient: "from-[var(--arc-brand-arcanean-gold)]/45 via-[var(--arc-fire)]/20 to-[var(--arc-cosmic-void)]/45",
-    gradientAlt: "from-[var(--arc-brand-arcanean-gold)]/45 via-[var(--arc-brand-cosmic-blue)]/35 to-[var(--arc-cosmic-void)]/50",
-    borderGlow: "color-mix(in srgb, var(--arc-brand-arcanean-gold) 22%, transparent)",
-    stars: 4,
-    badge: "Author",
-    badgeColor: brand.arcaneanGold,
-    href: "/books/drafts",
-    image: "/images/books/forge-of-ruin-cover.png",
-  },
-  {
-    type: "Game",
-    title: "Relic Library",
-    subtitle: "Core loop · asset kit",
-    elements: [guardianAccents.draconia, brand.aquamarine],
-    gradient: "from-[var(--arc-fire)]/45 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-atlantean-teal)]/25",
-    gradientAlt: "from-[var(--arc-fire)]/45 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-brand-cosmic-blue)]/45",
-    borderGlow: "color-mix(in srgb, var(--arc-fire) 22%, transparent)",
+    type: "Godbeast",
+    title: "Draconis Bond",
+    subtitle: "fire gate · scale system",
+    elements: [guardianAccents.draconia, brand.arcaneanGold],
+    gradient: "from-[var(--arc-fire)]/45 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-cosmic-void)]/45",
+    gradientAlt: "from-[var(--arc-fire)]/45 via-[var(--arc-brand-cosmic-blue)]/25 to-[var(--arc-brand-arcanean-gold)]/35",
+    borderGlow: "color-mix(in srgb, var(--arc-fire) 24%, transparent)",
     stars: 5,
-    badge: "Playable",
-    badgeColor: brand.aquamarine,
-    href: "/games",
-    image: "/brand/arcanea-collectible-reliquary-premium.png",
+    badge: "Canon",
+    badgeColor: brand.arcaneanGold,
+    href: "/lore/godbeasts",
+    image: "/guardians/v4/draconia-hero-v4.webp",
   },
   {
-    type: "Music",
-    title: "Timeline Fieldnotes",
-    subtitle: "Artist lore · visualizer",
-    elements: [brand.aquamarine, WIND_NEUTRAL],
-    gradient: "from-[var(--arc-void)]/45 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-arcanean-gold)]/25",
-    gradientAlt: "from-[var(--arc-void)]/45 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-cosmic-blue)]/45",
-    borderGlow: "color-mix(in srgb, var(--arc-void) 22%, transparent)",
-    stars: 4,
-    badge: "Studio",
+    type: "Saga",
+    title: "Dragon Rider",
+    subtitle: "episodes · game loop",
+    elements: [guardianAccents.draconia, brand.aquamarine, brand.arcaneanGold],
+    gradient: "from-[var(--arc-fire)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-atlantean-teal)]/25",
+    gradientAlt: "from-[var(--arc-fire)]/35 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-brand-cosmic-blue)]/45",
+    borderGlow: "color-mix(in srgb, var(--arc-brand-arcanean-gold) 20%, transparent)",
+    stars: 5,
+    badge: "Rider",
     badgeColor: brand.aquamarine,
-    href: "/music-studio",
-    image: "/images/luminors/11-aletheia-truth-singer.webp",
+    href: "/cinema-studio",
+    image: "/images/books/heart-of-pyrathis-cover-v2.png",
+  },
+  {
+    type: "Canon",
+    title: "Living Lore",
+    subtitle: "rules · factions · memory",
+    elements: [guardianAccents.lyria, WIND_NEUTRAL, brand.arcaneanGold],
+    gradient: "from-[var(--arc-void)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-arcanean-gold)]/20",
+    gradientAlt: "from-[var(--arc-void)]/35 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-cosmic-blue)]/45",
+    borderGlow: "color-mix(in srgb, var(--arc-void) 20%, transparent)",
+    stars: 4,
+    badge: "Memory",
+    badgeColor: brand.aquamarine,
+    href: "/living-lore",
+    image: "/guardians/v4/lyria-hero-v4.webp",
   },
   {
     type: "Cinema",
-    title: "Dream Market Trailer",
+    title: "Portal Trailer",
     subtitle: "Shot list · render prompts",
     elements: [brand.arcaneanGold, brand.atlanteanTeal],
     gradient: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/30 to-[var(--arc-fire)]/40",
@@ -85,12 +85,12 @@ const CARDS = [
     badge: "Cinematic",
     badgeColor: brand.arcaneanGold,
     href: "/cinema-studio",
-    image: "/brand/arcanea-dashboard-hero-premium.png",
+    image: "/images/forge/sky/007-ironclad-airship.png",
   },
   {
-    type: "MCP",
-    title: "Claude Build Handoff",
-    subtitle: "Tools · recipes · context",
+    type: "Agent OS",
+    title: "Lab Handoff",
+    subtitle: "tools · agents · context",
     elements: [brand.arcaneanGold, brand.aquamarine],
     gradient: "from-[var(--arc-brand-arcanean-gold)]/38 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-atlantean-teal)]/28",
     gradientAlt: "from-[var(--arc-brand-atlantean-teal)]/35 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-arcanean-gold)]/35",
@@ -99,7 +99,7 @@ const CARDS = [
     badge: "Agent OS",
     badgeColor: brand.atlanteanTeal,
     href: "/mcp",
-    image: "/guardians/v3/draconia-hero-v3.webp",
+    image: "/images/forge/space/004-dreadnought-nebula.png",
   },
 ] as const;
 
@@ -164,14 +164,15 @@ function ShowcaseCard({
         <div className="absolute inset-0 bg-white/[0.025] backdrop-blur-xl rounded-2xl" />
 
         {/* Gradient art area */}
-        <div className={`relative h-[130px] bg-gradient-to-br ${card.gradient} overflow-hidden`}>
+        <div className={`relative h-[150px] bg-gradient-to-br ${card.gradient} overflow-hidden`}>
           <Image
             src={card.image}
             alt={`${card.title} preview`}
             fill
             sizes="280px"
-            className="object-cover opacity-72 transition-transform duration-700 group-hover:scale-110"
+            className="object-cover opacity-78 transition-transform duration-700 group-hover:scale-110"
           />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--arc-cosmic-void)]/55 via-transparent to-transparent" />
           {/* Animated gradient shift */}
           <m.div
             className={`absolute inset-0 bg-gradient-to-br ${card.gradientAlt}`}
@@ -245,7 +246,7 @@ export function HeroShowcase() {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        Choose a studio, create a connected artifact
+        Every prompt becomes a connected artifact
       </m.p>
 
       {/* Card strip */}
@@ -267,7 +268,7 @@ export function HeroShowcase() {
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.8 }}
       >
-        Worlds, books, games, music, cinema, canvas, and MCP workflows share one creation layer.
+        Portals, godbeasts, dragon-rider sagas, cinema, and agent workflows share one creation layer.
       </m.p>
     </section>
   );

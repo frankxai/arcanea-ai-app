@@ -19,24 +19,24 @@ import {
 const STARTER_CARDS = [
   {
     icon: PhPencil,
-    label: "Write a story",
-    prompt: "Write a short story about a young mage discovering their first Gate",
+    label: "Open a portal",
+    prompt: "Design a portal into Arcanea with a realm, gate logic, first conflict, and three artifacts a creator can build from it.",
   },
   {
     icon: PhMusicNote,
-    label: "Compose music",
-    prompt: "Compose a cinematic orchestral piece for a fantasy battle scene",
+    label: "Score a godbeast",
+    prompt: "Compose a cinematic theme brief for Draconis, Godbeast of Fire, with instrumentation, emotional arc, and visualizer direction.",
   },
   {
     icon: PhPaintBrush,
-    label: "Design a world",
-    prompt: "Design a floating island civilization with crystal-based technology",
+    label: "Build a world",
+    prompt: "Build a living world graph for a dragon-rider anime saga with factions, gates, godbeast bonds, rules, and exportable canon.",
     href: "/worlds/create",
   },
   {
     icon: PhCode,
-    label: "Build with code",
-    prompt: "Build a React component that displays a character card with stats and abilities",
+    label: "Ship an agent OS",
+    prompt: "Draft an AI lab operating system for world-building: agents, memory, artifacts, review gates, and a public launch sequence.",
   },
 ];
 
@@ -107,7 +107,7 @@ export function HeroChatBox() {
             onKeyDown={handleKeyDown}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            placeholder="What do you want to create?"
+            placeholder="What world do you want to build?"
             aria-label="Describe what you want to create"
             rows={1}
             className="flex-1 px-5 py-4 bg-transparent text-white/90 placeholder-white/20 resize-none focus:outline-none font-body text-[15px] leading-relaxed"

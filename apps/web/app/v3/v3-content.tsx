@@ -193,7 +193,7 @@ function HeroPortal() {
           <h1 className="text-[clamp(2.2rem,5.5vw,4.5rem)] font-display font-bold tracking-[-0.035em] leading-[1.08] mb-4 md:mb-5">
             <SplitText
               as="span"
-              text="What will you "
+              text="What world will you "
               className="text-white"
               delay={0.1}
               stagger={0.025}
@@ -208,7 +208,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Type one sentence. Get a world, book, game, song, cinematic brief, or agent workflow with connected context.
+            Type one sentence. Arcanea turns it into a world graph, cinematic canon, media briefs, and agent workflows that remember the logic.
           </m.p>
 
           {/* Secondary clarifier — who it&apos;s for */}
@@ -218,7 +218,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.28 }}
           >
-            16 specialist AI partners &middot; connected media systems &middot; open source
+            16 specialist AI partners &middot; portals, gods, godbeasts &middot; open source
           </m.p>
 
           {/* Trust signals — glass pill badges with animated numbers */}
