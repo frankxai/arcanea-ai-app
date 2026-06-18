@@ -42,7 +42,7 @@ import { SovereigntyPillars } from "@/components/premium/sovereignty-pillars";
 import { PersonasShowcase } from "@/components/premium/personas-showcase";
 import { LuminorTeamPreview } from "@/components/premium/luminor-team-preview";
 import { IntegrationGrid } from "@/components/premium/integration-grid";
-import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
+import { PUBLIC_REPOS, PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
 import { luminorAccents, tierAccents, streamAccents, pillarAccents, brand } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
@@ -160,7 +160,7 @@ function ProductPillarsGrid() {
         <SectionHeader
           label="What Arcanea Does"
           title="Six ways to create"
-          subtitle="A complete creative ecosystem — not a thin AI wrapper. Each pillar is a full product."
+          subtitle="Modular components for lore synthesis, orchestration, media compilation, and distribution. Zero locked APIs."
           accent="teal"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -203,7 +203,7 @@ function LivingWorldSection() {
         <SectionHeader
           label="The Living Worlds Engine"
           title="One sentence becomes a universe"
-          subtitle="Type a world idea. Characters, locations, magic, and lore spawn — all linked in a persistent graph. Consistent across sessions. Yours forever."
+          subtitle="Compile character profiles, spatial mappings, and logical rules into a persistent, relational graph. Query with natural language. Export to markdown."
           accent="teal"
         />
         <Reveal y={20}>
@@ -248,7 +248,7 @@ function WhyArcaneaSection() {
         <SectionHeader
           label="Why Arcanea"
           title="The moat is the world graph"
-          subtitle="Chat tools forget. Arcanea remembers. One platform for text, image, and music — tied together by a graph that stays consistent."
+          subtitle="Standard chatbots operate on stateless contexts. Arcanea persists connections between entities—characters, events, parameters—across all sessions."
           accent="purple"
         />
         <Reveal y={20}>
@@ -273,9 +273,9 @@ function LuminorTeamSection() {
     <SectionShell ambient="teal" size="compact" id="luminor-team">
       <div className="max-w-5xl mx-auto px-6">
         <SectionHeader
-          label="The 13 Chosen"
-          title="Meet the specialists"
-          subtitle="Not one generic chatbot — 13 specialist AI partners, each tuned for a specific craft. Hover any to see what they do. Click to chat."
+          label="Luminor Specialists"
+          title="13 dedicated craft runtimes"
+          subtitle="Each specialist implements a scoped role—system architecture, narrative prose, spatial design, sound composition—with distinct system instructions, memory stores, and local toolkits."
           accent="teal"
         />
         <Reveal y={16}>
@@ -328,9 +328,9 @@ function SovereigntySection() {
     <SectionShell ambient="gold" size="default" id="sovereignty">
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
-          label="Sovereign by default"
-          title="Keep your keys. Keep your IP."
-          subtitle="Arcanea is built on a simple idea: the things you make should belong to you, and the tools should belong to nobody."
+          label="Sovereign Posture"
+          title="Data ownership by design"
+          subtitle="Local-first localStorage keys, exportable schema graphs, and MIT-licensed client adapters. Your IP stays yours; no centralized model training on creator data."
           accent="gold"
         />
         <SovereigntyPillars />
@@ -401,9 +401,9 @@ function VoicePresenceSection() {
     <SectionShell ambient="purple" size="default" id="voice-presence">
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
-          label="Voice & Presence"
-          title="Talk to the Luminors"
-          subtitle="Seven specialist presences with their own voice, persona, and toolset. Audio-reactive orb. Bring your own keys. Local CLI optional."
+          label="Voice & Telemetry"
+          title="Real-time voice stream"
+          subtitle="Low-latency speech pipelines using Whisper STT and ElevenLabs TTS. Features WebGL audio-reactive particle shell, custom browser key bindings, and native CLI support."
           accent="purple"
         />
         <Reveal y={20}>
@@ -562,9 +562,9 @@ function EarnTeaserSection() {
           </span>
         </div>
         <SectionHeader
-          label="Creator Economy"
-          title="Build a universe. Make a living."
-          subtitle="Seven revenue streams planned. You keep 90%+, always. Smart-contract royalties. Your audience, your rules. None shipped yet — tracking on Linear."
+          label="Creator Posture"
+          title="Monetize sovereign IP"
+          subtitle="Distribute creations via integrated storefronts. Smart-contract royalties on remixes, template sales at 90% creator share, and memberships at 97% share. Shipped states tracked on public roadmap."
           accent="gold"
         />
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -856,6 +856,68 @@ export function V3BelowFold({
                     <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">{label}</p>
                   </div>
                 ))}
+              </div>
+            </Reveal>
+
+            {/* Featured GitHub Repositories Grid */}
+            <Reveal y={16} delay={0.75}>
+              <div className="text-left mt-12 mb-16 max-w-4xl mx-auto">
+                <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-white/20 text-center mb-6">
+                  Featured Open Source Repositories
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {PUBLIC_REPOS.filter((r) =>
+                    [
+                      "arcanea",
+                      "starlight-intelligence-system",
+                      "arcanea-orchestrator",
+                      "arcanea-vault",
+                      "arcanea-flow",
+                      "arcanea-mobile",
+                    ].includes(r.name),
+                  ).map((repo, idx) => (
+                    <div
+                      key={repo.name}
+                      className="group relative p-5 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.14] hover:bg-white/[0.035] transition-all duration-300 backdrop-blur-sm"
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <span className="font-mono text-xs font-semibold text-white/85 group-hover:text-[var(--arc-brand-atlantean-teal)] transition-colors truncate">
+                          {repo.name}
+                        </span>
+                        <svg
+                          className="w-3.5 h-3.5 text-white/20 shrink-0 group-hover:text-white/40 transition-colors"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                          <polyline points="15 3 21 3 21 9" />
+                          <line x1="10" y1="14" x2="21" y2="3" />
+                        </svg>
+                      </div>
+                      <p className="text-[11px] text-white/40 leading-relaxed mb-4 min-h-[32px] line-clamp-2 font-body">
+                        {repo.description}
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="flex items-center gap-1.5 text-[10px] text-white/25">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[var(--arc-brand-atlantean-teal)]/60" />
+                          {repo.language}
+                        </span>
+                        <a
+                          href={repo.url || `https://github.com/${repo.github}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[10px] font-semibold text-[var(--arc-brand-atlantean-teal)] hover:underline font-mono"
+                        >
+                          view source &rarr;
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </Reveal>
 
