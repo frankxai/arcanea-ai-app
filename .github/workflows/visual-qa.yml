@@ -1,0 +1,365 @@
+name: Visual QA — Screenshot + AI Analysis
+
+# Runs after a Vercel preview is deployed on a PR.
+# 1. Waits for Vercel preview URL
+# 2. Takes full-page screenshots of key routes using Playwright
+# 3. Sends screenshots to Claude Sonnet (vision) for visual QA analysis
+# 4. Posts a structured report as a PR comment with pass/fail verdict
+# 5. Uploads screenshots as workflow artifacts for human review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'apps/web/**'
+      - 'packages/design-system/**'
+      - 'packages/arcanea-design-preset.js'
+  workflow_dispatch:
+    inputs:
+      preview_url:
+        description: 'Vercel preview URL to audit (optional override)'
+        required: false
+
+concurrency:
+  group: visual-qa-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  statuses: read
+  deployments: read
+
+jobs:
+  visual-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # ── 1. Get the code for context ──────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Need parent commit to detect what changed
+
+      # ── 2. Wait for Vercel preview to be ready ────────────────────────────────
+      - name: Wait for Vercel preview deployment
+        id: wait-vercel
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 240
+        continue-on-error: true
+
+      # ── 3. Resolve preview URL (fallback to commit status if action fails) ───
+      - name: Resolve preview URL
+        id: resolve-url
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Priority: workflow_dispatch input > wait-for-vercel output > commit statuses
+            let previewUrl = '${{ inputs.preview_url }}';
+
+            if (!previewUrl) {
+              previewUrl = '${{ steps.wait-vercel.outputs.url }}';
+            }
+
+            if (!previewUrl) {
+              // Fallback: scan commit statuses for Vercel deployment URL
+              const statuses = await github.rest.repos.listCommitStatusesForRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: context.sha,
+              });
+              const vercelStatus = statuses.data.find(
+                s => s.context.includes('vercel') && s.state === 'success' && s.target_url
+              );
+              previewUrl = vercelStatus?.target_url || '';
+            }
+
+            if (!previewUrl) {
+              core.setFailed('Could not resolve Vercel preview URL. Ensure deploy-web.yml runs before this workflow.');
+              return;
+            }
+
+            core.info(`Preview URL resolved: ${previewUrl}`);
+            core.setOutput('url', previewUrl);
+
+      # ── 4. Install Playwright ─────────────────────────────────────────────────
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Playwright + Chromium
+        run: |
+          npm install -g playwright@latest
+          npx playwright install chromium --with-deps
+
+      # ── 5. Take screenshots of key pages ─────────────────────────────────────
+      - name: Screenshot key routes
+        id: screenshots
+        env:
+          PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
+        run: |
+          mkdir -p screenshots
+
+          node - <<'EOF'
+          const { chromium } = require('playwright');
+
+          const BASE = process.env.PREVIEW_URL.replace(/\/$/, '');
+
+          // Key routes to screenshot — covers main user flows for Arcanea
+          const routes = [
+            { path: '/',          name: 'home',        waitFor: 'networkidle' },
+            { path: '/worlds',    name: 'worlds',      waitFor: 'networkidle' },
+            { path: '/create',    name: 'create',      waitFor: 'networkidle' },
+            { path: '/dashboard', name: 'dashboard',   waitFor: 'networkidle' },
+          ];
+
+          (async () => {
+            const browser = await chromium.launch();
+
+            for (const route of routes) {
+              const page = await browser.newPage();
+
+              // Desktop viewport (1440x900)
+              await page.setViewportSize({ width: 1440, height: 900 });
+
+              try {
+                await page.goto(BASE + route.path, {
+                  waitUntil: route.waitFor,
+                  timeout: 30000,
+                });
+
+                // Wait a beat for animations/fonts
+                await page.waitForTimeout(1500);
+
+                // Full-page screenshot
+                await page.screenshot({
+                  path: `screenshots/${route.name}-desktop.png`,
+                  fullPage: true,
+                });
+
+                // Mobile viewport (390x844 — iPhone 14)
+                await page.setViewportSize({ width: 390, height: 844 });
+                await page.waitForTimeout(500);
+                await page.screenshot({
+                  path: `screenshots/${route.name}-mobile.png`,
+                  fullPage: true,
+                });
+
+                console.log(`Captured: ${route.name}`);
+              } catch (err) {
+                console.error(`Failed to capture ${route.name}: ${err.message}`);
+                // Write a blank marker so we know this page failed
+                require('fs').writeFileSync(`screenshots/${route.name}-FAILED.txt`, err.message);
+              } finally {
+                await page.close();
+              }
+            }
+
+            await browser.close();
+          })();
+          EOF
+
+      # ── 6. Convert screenshots to base64 for Claude vision API ───────────────
+      - name: Prepare images for AI analysis
+        id: prepare-images
+        run: |
+          # Build a JSON array of { name, base64 } objects for each desktop screenshot
+          python3 - <<'EOF'
+          import os, base64, json
+
+          screenshots_dir = 'screenshots'
+          images = []
+
+          for fname in sorted(os.listdir(screenshots_dir)):
+            if fname.endswith('-desktop.png'):
+              path = os.path.join(screenshots_dir, fname)
+              with open(path, 'rb') as f:
+                b64 = base64.b64encode(f.read()).decode('utf-8')
+              images.append({
+                'name': fname.replace('-desktop.png', ''),
+                'base64': b64,
+                'path': path
+              })
+
+          with open('screenshots/manifest.json', 'w') as f:
+            json.dump(images, f)
+
+          print(f"Prepared {len(images)} screenshots for analysis")
+          EOF
+
+      # ── 7. Claude Sonnet vision analysis ─────────────────────────────────────
+      - name: AI Visual QA Analysis (Claude Sonnet)
+        id: claude-analysis
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          python3 - <<'PYEOF'
+          import os, json, base64, urllib.request, urllib.error
+
+          api_key = os.environ['ANTHROPIC_API_KEY']
+          preview_url = os.environ.get('PREVIEW_URL', 'unknown')
+          pr_title = os.environ.get('PR_TITLE', 'unknown')
+
+          with open('screenshots/manifest.json') as f:
+            images = json.load(f)
+
+          if not images:
+            print('No screenshots available for analysis')
+            with open('screenshots/ai-report.md', 'w') as f:
+              f.write('**Visual QA**: No screenshots could be captured.')
+            exit(0)
+
+          # Build the vision message for Claude
+          content = []
+
+          content.append({
+            'type': 'text',
+            'text': f"""You are a senior UX engineer and visual QA reviewer for Arcanea — an AI agent platform with a dark, futuristic design aesthetic.
+
+You are reviewing a Vercel preview deployment for PR: "{pr_title}"
+Preview URL: {preview_url}
+
+I am providing you with {len(images)} full-page desktop screenshots of the following routes: {', '.join(i['name'] for i in images)}.
+
+For EACH screenshot, analyze and report:
+
+1. **Visual Integrity** — Does the page render without broken layouts, overlapping elements, invisible text, or white flashes?
+2. **Design Consistency** — Does it match the dark/futuristic Arcanea aesthetic? Check font rendering, color palette, spacing, and component alignment.
+3. **Functional Signals** — Are buttons, nav, CTAs, and interactive elements clearly visible and properly positioned?
+4. **Responsiveness Signals** — Any obvious clipping, overflow, or layout collapse visible in the screenshot?
+5. **Regression Risk** — Does anything look clearly worse than what a production-quality page should look like?
+
+After reviewing all pages, provide:
+- An overall verdict: PASS, WARN, or FAIL
+- A confidence score (0-100)
+- A bulleted list of specific issues found (with page name)
+- A bulleted list of things that look good
+- One concrete recommendation if FAIL or WARN
+
+Format your response as clean markdown suitable for a GitHub PR comment."""
+          })
+
+          # Add each screenshot as a vision block
+          for img in images:
+            content.append({
+              'type': 'text',
+              'text': f"--- Screenshot: {img['name']} ---"
+            })
+            content.append({
+              'type': 'image',
+              'source': {
+                'type': 'base64',
+                'media_type': 'image/png',
+                'data': img['base64']
+              }
+            })
+
+          payload = json.dumps({
+            'model': 'claude-sonnet-4-5',
+            'max_tokens': 2048,
+            'messages': [{'role': 'user', 'content': content}]
+          }).encode('utf-8')
+
+          req = urllib.request.Request(
+            'https://api.anthropic.com/v1/messages',
+            data=payload,
+            headers={
+              'x-api-key': api_key,
+              'anthropic-version': '2023-06-01',
+              'content-type': 'application/json'
+            }
+          )
+
+          try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+              result = json.loads(resp.read())
+            analysis = result['content'][0]['text']
+          except Exception as e:
+            analysis = f'**Visual QA Error**: Claude analysis failed — {str(e)}'
+
+          # Save full report
+          with open('screenshots/ai-report.md', 'w') as f:
+            f.write(analysis)
+
+          print('AI analysis complete')
+          print(analysis[:500])
+          PYEOF
+
+      # ── 8. Post report as PR comment ──────────────────────────────────────────
+      - name: Post Visual QA report on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            let report = '';
+            try {
+              report = fs.readFileSync('screenshots/ai-report.md', 'utf8');
+            } catch {
+              report = 'Visual QA report could not be generated.';
+            }
+
+            const header = [
+              '## Visual QA Report',
+              '',
+              `**Preview**: ${{ steps.resolve-url.outputs.url }}`,
+              `**Routes audited**: home, worlds, create, dashboard`,
+              `**Viewport**: Desktop 1440px + Mobile 390px`,
+              '',
+              '---',
+              '',
+            ].join('\n');
+
+            const footer = [
+              '',
+              '---',
+              '*Generated by Claude Sonnet vision analysis + Playwright screenshots*',
+              '*Screenshots attached as workflow artifacts*',
+            ].join('\n');
+
+            const body = header + report + footer;
+
+            // Use sticky comment so it updates in-place on each push
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const existing = comments.find(
+              c => c.body.includes('## Visual QA Report') && c.user.type === 'Bot'
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
+      # ── 9. Upload screenshots as artifacts ───────────────────────────────────
+      - name: Upload screenshots as artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-qa-screenshots-pr${{ github.event.pull_request.number }}-${{ github.run_number }}
+          path: screenshots/
+          retention-days: 14
+          if-no-files-found: warn
