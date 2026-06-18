@@ -1,0 +1,16 @@
+{
+  "name": "arcanea-mythology-shinto",
+  "version": "1.0.0",
+  "description": "Shinto Yamato Kami plugin for Arcanea. Installs animist Kami attunement, Yamato CV sound palettes, and Kegare/Harae purification magic systems.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://arcanea.ai"
+  },
+  "rules": [
+    ".arcanea/lore/mythology/shinto_japanese.md"
+  ],
+  "config": {
+    "loreSource": ".arcanea/lore/mythology/shinto_japanese.md",
+    "worldDna": "shinto"
+  }
+}

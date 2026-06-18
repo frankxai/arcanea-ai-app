@@ -63,7 +63,7 @@ export function CreatorEconomyContent() {
                 <StatusNotice
                   level="roadmap"
                   title="Revenue streams are a public roadmap"
-                  body="None of the 7 streams below are live yet. Arcanea is BYOK-free today; monetization rails (x402 micropayments preferred over Stripe) are a 2026 workstream tracked on Linear. This page is the intent — not a storefront."
+                  body="None of the 8 streams below are fully live. This page serves as a technical & engineering guide blueprint for the Arcanea agentic economy: combining the Agentic Payments Protocol (AP2) and Agentic Commerce Protocol (ACP) for autonomous AI commerce."
                   linkHref="/roadmap"
                   linkLabel="See the roadmap"
                 />
@@ -81,7 +81,7 @@ export function CreatorEconomyContent() {
 
             <Reveal delay={0.2}>
               <p className="mx-auto mt-7 max-w-2xl text-lg md:text-xl text-white/40 leading-relaxed font-body">
-                Seven revenue streams. You keep 90%+, always. Smart contract royalties on every fork. Export your customer list whenever you want. Your IP, your rules.
+                Eight revenue streams. You keep 90%+, always. Enforced via cryptographic mandates, Byzantine consensus, and autonomous AI affiliate referrals.
               </p>
             </Reveal>
 
@@ -90,7 +90,7 @@ export function CreatorEconomyContent() {
                 {[
                   { value: 90, suffix: "%+", label: "Creator take" },
                   { value: 0, suffix: "", label: "Fixed fees" },
-                  { value: 7, suffix: "", label: "Revenue streams" },
+                  { value: 8, suffix: "", label: "Revenue streams" },
                   { value: 100, suffix: "%", label: "Data portable" },
                 ].map((stat, i) => (
                   <div key={stat.label} className="flex items-center gap-8 md:gap-14">
@@ -199,9 +199,9 @@ export function CreatorEconomyContent() {
         <SectionShell ambient="teal" id="revenue-streams">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <SectionHeader
-              label="Seven ways to earn"
+              label="Eight ways to earn"
               title="Revenue streams built for creators"
-              subtitle="Each pathway is independent — run one or all seven. Payouts through Stripe and on-chain. No minimum thresholds."
+              subtitle="Each pathway is independent — run one or all eight. Payouts through Stripe, on-chain, and cryptographic mandates. Click any pathway to read its technical engineering guide."
               accent="teal"
             />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">

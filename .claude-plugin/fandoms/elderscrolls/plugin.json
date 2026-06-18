@@ -1,0 +1,16 @@
+{
+  "name": "arcanea-fandom-elderscrolls",
+  "version": "1.0.0",
+  "description": "Elder Scrolls plugin for Arcanea. Installs Tamriel element towers, magicka schools, soul gem economics, and compound description naming rules.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://arcanea.ai"
+  },
+  "rules": [
+    ".arcanea/lore/fandoms/elder_scrolls.md"
+  ],
+  "config": {
+    "loreSource": ".arcanea/lore/fandoms/elder_scrolls.md",
+    "worldDna": "elderscrolls"
+  }
+}

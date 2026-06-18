@@ -1,0 +1,16 @@
+{
+  "name": "arcanea-fandom-wizarding",
+  "version": "1.0.0",
+  "description": "Wizarding World plugin for Arcanea. Installs Hogwarts academic progression, focus wands, and value-based house sorting templates.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://arcanea.ai"
+  },
+  "rules": [
+    ".arcanea/lore/fandoms/wizarding_world.md"
+  ],
+  "config": {
+    "loreSource": ".arcanea/lore/fandoms/wizarding_world.md",
+    "worldDna": "wizarding"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "arcanea-mythology-norse",
+  "version": "1.0.0",
+  "description": "Norse Boreal Eddas plugin for Arcanea. Installs Nine Realms cosmology, runic phonetic palettes, Seiðr magic, and Ragnarok fate tracking rules.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://arcanea.ai"
+  },
+  "rules": [
+    ".arcanea/lore/mythology/norse.md"
+  ],
+  "config": {
+    "loreSource": ".arcanea/lore/mythology/norse.md",
+    "worldDna": "norse"
+  }
+}

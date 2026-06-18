@@ -1,0 +1,16 @@
+{
+  "name": "arcanea-mythology-hindu",
+  "version": "1.0.0",
+  "description": "Hindu Vedic Cosmos plugin for Arcanea. Installs cyclical Yugas, Devic aspirated sound palettes, Tapas accumulation, and Astra mantra incantations.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://arcanea.ai"
+  },
+  "rules": [
+    ".arcanea/lore/mythology/hindu.md"
+  ],
+  "config": {
+    "loreSource": ".arcanea/lore/mythology/hindu.md",
+    "worldDna": "hindu"
+  }
+}

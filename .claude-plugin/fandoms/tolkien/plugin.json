@@ -1,0 +1,16 @@
+{
+  "name": "arcanea-fandom-tolkien",
+  "version": "1.0.0",
+  "description": "Tolkien Legendarium plugin for Arcanea. Installs Middle-earth cosmology, Elvish/Dwarvish phonetactic sound palettes, and native spiritual craft rules.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://arcanea.ai"
+  },
+  "rules": [
+    ".arcanea/lore/fandoms/tolkien_legendarium.md"
+  ],
+  "config": {
+    "loreSource": ".arcanea/lore/fandoms/tolkien_legendarium.md",
+    "worldDna": "tolkien"
+  }
+}

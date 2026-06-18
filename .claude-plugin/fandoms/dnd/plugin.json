@@ -1,0 +1,16 @@
+{
+  "name": "arcanea-fandom-dnd",
+  "version": "1.0.0",
+  "description": "D&D Multiverse plugin for Arcanea. Installs Great Wheel planar cosmology, prepared spell slot mechanics, and the nine-point alignment grid.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://arcanea.ai"
+  },
+  "rules": [
+    ".arcanea/lore/fandoms/dnd_multiverse.md"
+  ],
+  "config": {
+    "loreSource": ".arcanea/lore/fandoms/dnd_multiverse.md",
+    "worldDna": "dnd"
+  }
+}

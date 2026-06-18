@@ -1,0 +1,16 @@
+{
+  "name": "arcanea-mythology-mesopotamian-celtic",
+  "version": "1.0.0",
+  "description": "Mesopotamian & Celtic Mythos plugin for Arcanea. Installs primeval/Otherworld cosmology, Awen inspiration flow, Geas taboos, and Me civilizational laws.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://arcanea.ai"
+  },
+  "rules": [
+    ".arcanea/lore/mythology/mesopotamian_celtic.md"
+  ],
+  "config": {
+    "loreSource": ".arcanea/lore/mythology/mesopotamian_celtic.md",
+    "worldDna": "mesopotamian_celtic"
+  }
+}

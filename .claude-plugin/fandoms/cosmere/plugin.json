@@ -1,0 +1,16 @@
+{
+  "name": "arcanea-fandom-cosmere",
+  "version": "1.0.0",
+  "description": "Cosmere plugin for Arcanea. Installs Realmatic Theory, Shardic intents, and Investiture conservation laws.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://arcanea.ai"
+  },
+  "rules": [
+    ".arcanea/lore/fandoms/cosmere.md"
+  ],
+  "config": {
+    "loreSource": ".arcanea/lore/fandoms/cosmere.md",
+    "worldDna": "cosmere"
+  }
+}

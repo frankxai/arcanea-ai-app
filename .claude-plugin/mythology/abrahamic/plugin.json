@@ -1,0 +1,16 @@
+{
+  "name": "arcanea-mythology-abrahamic",
+  "version": "1.0.0",
+  "description": "Abrahamic Celestial Court plugin for Arcanea. Installs Seven Heavens cosmology, Enochian sound palettes, Logos speech-creation, and Solomon binding magic.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://arcanea.ai"
+  },
+  "rules": [
+    ".arcanea/lore/mythology/abrahamic_angelology.md"
+  ],
+  "config": {
+    "loreSource": ".arcanea/lore/mythology/abrahamic_angelology.md",
+    "worldDna": "abrahamic"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "arcanea-fandom-marvel",
+  "version": "1.0.0",
+  "description": "Marvel Multiverse plugin for Arcanea. Installs timeline branching models, the Infinity Stones framework, and Eldritch/Chaos magic.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://arcanea.ai"
+  },
+  "rules": [
+    ".arcanea/lore/fandoms/marvel_multiverse.md"
+  ],
+  "config": {
+    "loreSource": ".arcanea/lore/fandoms/marvel_multiverse.md",
+    "worldDna": "marvel"
+  }
+}

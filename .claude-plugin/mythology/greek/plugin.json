@@ -1,0 +1,16 @@
+{
+  "name": "arcanea-mythology-greek",
+  "version": "1.0.0",
+  "description": "Greek & Roman Olympian Mythos plugin for Arcanea. Installs classical cosmology, Aegean sound palettes, Oracle mechanics, and tragic Hubris rules.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://arcanea.ai"
+  },
+  "rules": [
+    ".arcanea/lore/mythology/greek_roman.md"
+  ],
+  "config": {
+    "loreSource": ".arcanea/lore/mythology/greek_roman.md",
+    "worldDna": "greek"
+  }
+}

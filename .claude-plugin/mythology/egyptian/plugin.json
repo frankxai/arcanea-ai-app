@@ -1,0 +1,16 @@
+{
+  "name": "arcanea-mythology-egyptian",
+  "version": "1.0.0",
+  "description": "Egyptian Kemetian Duat plugin for Arcanea. Installs Duat pathing, Nilotic sound palettes, Heka incantation magic, and modular soul-tending rules.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://arcanea.ai"
+  },
+  "rules": [
+    ".arcanea/lore/mythology/egyptian.md"
+  ],
+  "config": {
+    "loreSource": ".arcanea/lore/mythology/egyptian.md",
+    "worldDna": "egyptian"
+  }
+}
