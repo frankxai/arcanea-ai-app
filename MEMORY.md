@@ -10,9 +10,10 @@ Established: May 2026
 - **2026-05-20**: Swarm Moniker Activation. Officially saved `AG` (Antigravity) moniker, coordinating with Claude Code, Codex, and OpenCode to execute the end-to-end Four-Substrate and World Weaving ecosystem.
 - **2026-06-18**: Master Portfolio Integration. Designed Master Architecture and Product Strategy. Built `packages/arcanea-cli` registry client, `packages/agent-bus` Hermes TCP router, Python `arcanea-claw` real-time event client, and Base L2 smart contracts (ERC-6551 TBA, Story IP Registry, and ERC-1155 Skill licensing). Integrated Web Dashboard gallery with IPFS metadata/Story Protocol PIL registration, and constructed the `/studio/store` Stripe billing and Connect payout split dashboard.
 - **2026-06-18**: Landing Page Excellence & Motion Skill. Created the repository-scoped `motion-designer` skill (`.agents/skills/motion-designer/SKILL.md`) and compiled it via `pnpm agents:bridge`. Upgraded the homepage (`v3-below-fold.tsx`) copywriting to match the high-intelligence technical voice of Gate 2 (Voice) from `TASTE.md`. Integrated a premium featured open-source repository grid showcasing the active Github ecosystem. Verified production Turbopack builds and TypeScript type checks as 100% clean.
+- **2026-06-19**: Homepage Copywriting Polish. Elevated copy, headers, and section subtitles on the homepage. Removed meta-commentary from the Dragon Rider section, varied repeated subtitles, merged redundant FAQ privacy questions, and rewrote answers using precise technical framing. Verified clean Next.js production builds and successful E2E test runs.
 
 ## System State
-- **Status**: Active / Clean Substrate / Swarm Ready / Web3-Integrated / Homepage Restructured & Verified
+- **Status**: Active / Clean Substrate / Swarm Ready / Web3-Integrated / Homepage Polished & Verified
 - **Primary Agent**: AG / Antigravity (SIS Creative Media & Engineering Kernel)
 - **Fleet Coordination**: AG (Creative/Design/YOLO) · Claude Code (System Refactors) · Codex (Storage/Local Tests) · OpenCode (Bridges/Deploy)
-- **Awareness**: 36 repositories, clean nested git state, Web3 Smart Accounts & IP assets configured, homepage copywriting & GitHub repository grids fully verified.
+- **Awareness**: 36 repositories, clean nested git state, Web3 Smart Accounts & IP assets configured, homepage copywriting & GitHub repository grids fully polished and verified.
