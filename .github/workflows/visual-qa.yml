@@ -1,11 +1,12 @@
-name: Visual QA — Screenshot + AI Analysis
+name: Visual QA — Screenshot + Gemini Vision Analysis
 
 # Runs after a Vercel preview is deployed on a PR.
 # 1. Waits for Vercel preview URL
 # 2. Takes full-page screenshots of key routes using Playwright
-# 3. Sends screenshots to Claude Sonnet (vision) for visual QA analysis
+# 3. Sends screenshots to Gemini Flash (vision) for visual QA analysis
 # 4. Posts a structured report as a PR comment with pass/fail verdict
 # 5. Uploads screenshots as workflow artifacts for human review
+# Cost: $0 - uses Gemini free tier (already integrated via Gemini Code Assist)
 
 on:
   pull_request:
@@ -36,13 +37,11 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      # ── 1. Get the code for context ──────────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # Need parent commit to detect what changed
+          fetch-depth: 2
 
-      # ── 2. Wait for Vercel preview to be ready ────────────────────────────────
       - name: Wait for Vercel preview deployment
         id: wait-vercel
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.3
@@ -51,13 +50,11 @@ jobs:
           max_timeout: 240
         continue-on-error: true
 
-      # ── 3. Resolve preview URL (fallback to commit status if action fails) ───
       - name: Resolve preview URL
         id: resolve-url
         uses: actions/github-script@v7
         with:
           script: |
-            // Priority: workflow_dispatch input > wait-for-vercel output > commit statuses
             let previewUrl = '${{ inputs.preview_url }}';
 
             if (!previewUrl) {
@@ -65,7 +62,6 @@ jobs:
             }
 
             if (!previewUrl) {
-              // Fallback: scan commit statuses for Vercel deployment URL
               const statuses = await github.rest.repos.listCommitStatusesForRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -78,14 +74,13 @@ jobs:
             }
 
             if (!previewUrl) {
-              core.setFailed('Could not resolve Vercel preview URL. Ensure deploy-web.yml runs before this workflow.');
+              core.setFailed('Could not resolve Vercel preview URL.');
               return;
             }
 
-            core.info(`Preview URL resolved: ${previewUrl}`);
+            core.info(`Preview URL: ${previewUrl}`);
             core.setOutput('url', previewUrl);
 
-      # ── 4. Install Playwright ─────────────────────────────────────────────────
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -96,9 +91,7 @@ jobs:
           npm install -g playwright@latest
           npx playwright install chromium --with-deps
 
-      # ── 5. Take screenshots of key pages ─────────────────────────────────────
       - name: Screenshot key routes
-        id: screenshots
         env:
           PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
         run: |
@@ -109,12 +102,11 @@ jobs:
 
           const BASE = process.env.PREVIEW_URL.replace(/\/$/, '');
 
-          // Key routes to screenshot — covers main user flows for Arcanea
           const routes = [
-            { path: '/',          name: 'home',        waitFor: 'networkidle' },
-            { path: '/worlds',    name: 'worlds',      waitFor: 'networkidle' },
-            { path: '/create',    name: 'create',      waitFor: 'networkidle' },
-            { path: '/dashboard', name: 'dashboard',   waitFor: 'networkidle' },
+            { path: '/',          name: 'home' },
+            { path: '/worlds',    name: 'worlds' },
+            { path: '/create',    name: 'create' },
+            { path: '/dashboard', name: 'dashboard' },
           ];
 
           (async () => {
@@ -122,37 +114,21 @@ jobs:
 
             for (const route of routes) {
               const page = await browser.newPage();
-
-              // Desktop viewport (1440x900)
               await page.setViewportSize({ width: 1440, height: 900 });
 
               try {
-                await page.goto(BASE + route.path, {
-                  waitUntil: route.waitFor,
-                  timeout: 30000,
-                });
-
-                // Wait a beat for animations/fonts
+                await page.goto(BASE + route.path, { waitUntil: 'networkidle', timeout: 30000 });
                 await page.waitForTimeout(1500);
 
-                // Full-page screenshot
-                await page.screenshot({
-                  path: `screenshots/${route.name}-desktop.png`,
-                  fullPage: true,
-                });
+                await page.screenshot({ path: `screenshots/${route.name}-desktop.png`, fullPage: true });
 
-                // Mobile viewport (390x844 — iPhone 14)
                 await page.setViewportSize({ width: 390, height: 844 });
                 await page.waitForTimeout(500);
-                await page.screenshot({
-                  path: `screenshots/${route.name}-mobile.png`,
-                  fullPage: true,
-                });
+                await page.screenshot({ path: `screenshots/${route.name}-mobile.png`, fullPage: true });
 
                 console.log(`Captured: ${route.name}`);
               } catch (err) {
-                console.error(`Failed to capture ${route.name}: ${err.message}`);
-                // Write a blank marker so we know this page failed
+                console.error(`Failed ${route.name}: ${err.message}`);
                 require('fs').writeFileSync(`screenshots/${route.name}-FAILED.txt`, err.message);
               } finally {
                 await page.close();
@@ -163,136 +139,106 @@ jobs:
           })();
           EOF
 
-      # ── 6. Convert screenshots to base64 for Claude vision API ───────────────
-      - name: Prepare images for AI analysis
-        id: prepare-images
+      - name: Gemini Vision Analysis
+        id: gemini-analysis
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
-          # Build a JSON array of { name, base64 } objects for each desktop screenshot
-          python3 - <<'EOF'
-          import os, base64, json
+          python3 - <<'PYEOF'
+          import os, json, base64, urllib.request
 
+          api_key = os.environ.get('GEMINI_API_KEY', '')
+          preview_url = os.environ.get('PREVIEW_URL', 'unknown')
+          pr_title = os.environ.get('PR_TITLE', 'unknown')
+
+          # Load desktop screenshots
           screenshots_dir = 'screenshots'
           images = []
-
           for fname in sorted(os.listdir(screenshots_dir)):
             if fname.endswith('-desktop.png'):
               path = os.path.join(screenshots_dir, fname)
               with open(path, 'rb') as f:
                 b64 = base64.b64encode(f.read()).decode('utf-8')
-              images.append({
-                'name': fname.replace('-desktop.png', ''),
-                'base64': b64,
-                'path': path
-              })
-
-          with open('screenshots/manifest.json', 'w') as f:
-            json.dump(images, f)
-
-          print(f"Prepared {len(images)} screenshots for analysis")
-          EOF
-
-      # ── 7. Claude Sonnet vision analysis ─────────────────────────────────────
-      - name: AI Visual QA Analysis (Claude Sonnet)
-        id: claude-analysis
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          PR_TITLE: ${{ github.event.pull_request.title }}
-        run: |
-          python3 - <<'PYEOF'
-          import os, json, base64, urllib.request, urllib.error
-
-          api_key = os.environ['ANTHROPIC_API_KEY']
-          preview_url = os.environ.get('PREVIEW_URL', 'unknown')
-          pr_title = os.environ.get('PR_TITLE', 'unknown')
-
-          with open('screenshots/manifest.json') as f:
-            images = json.load(f)
+              images.append({'name': fname.replace('-desktop.png', ''), 'base64': b64})
 
           if not images:
-            print('No screenshots available for analysis')
             with open('screenshots/ai-report.md', 'w') as f:
               f.write('**Visual QA**: No screenshots could be captured.')
             exit(0)
 
-          # Build the vision message for Claude
-          content = []
+          if not api_key:
+            with open('screenshots/ai-report.md', 'w') as f:
+              f.write('**Visual QA**: `GEMINI_API_KEY` secret not set. Add it under repo Settings → Secrets → Actions.')
+            exit(0)
 
-          content.append({
-            'type': 'text',
+          # Build Gemini multimodal request
+          parts = []
+          parts.append({
             'text': f"""You are a senior UX engineer and visual QA reviewer for Arcanea — an AI agent platform with a dark, futuristic design aesthetic.
 
-You are reviewing a Vercel preview deployment for PR: "{pr_title}"
+You are reviewing a Vercel preview deployment for PR: \"{pr_title}\"
 Preview URL: {preview_url}
 
-I am providing you with {len(images)} full-page desktop screenshots of the following routes: {', '.join(i['name'] for i in images)}.
+I am providing {len(images)} full-page desktop screenshots: {', '.join(i['name'] for i in images)}.
 
-For EACH screenshot, analyze and report:
+For EACH screenshot analyze:
+1. **Visual Integrity** — Broken layouts, overlapping elements, invisible text, white flashes?
+2. **Design Consistency** — Matches dark/futuristic Arcanea aesthetic? Font, color palette, spacing, alignment?
+3. **Functional Signals** — Buttons, nav, CTAs clearly visible and correctly positioned?
+4. **Responsiveness Signals** — Any clipping or overflow visible?
+5. **Regression Risk** — Anything clearly worse than production quality?
 
-1. **Visual Integrity** — Does the page render without broken layouts, overlapping elements, invisible text, or white flashes?
-2. **Design Consistency** — Does it match the dark/futuristic Arcanea aesthetic? Check font rendering, color palette, spacing, and component alignment.
-3. **Functional Signals** — Are buttons, nav, CTAs, and interactive elements clearly visible and properly positioned?
-4. **Responsiveness Signals** — Any obvious clipping, overflow, or layout collapse visible in the screenshot?
-5. **Regression Risk** — Does anything look clearly worse than what a production-quality page should look like?
+Then provide:
+- Overall verdict: **PASS**, **WARN**, or **FAIL**
+- Confidence score (0–100)
+- Bulleted list of specific issues found (with page name)
+- Bulleted list of things that look good
+- One concrete recommendation if WARN or FAIL
 
-After reviewing all pages, provide:
-- An overall verdict: PASS, WARN, or FAIL
-- A confidence score (0-100)
-- A bulleted list of specific issues found (with page name)
-- A bulleted list of things that look good
-- One concrete recommendation if FAIL or WARN
-
-Format your response as clean markdown suitable for a GitHub PR comment."""
+Format as clean markdown for a GitHub PR comment."""
           })
 
-          # Add each screenshot as a vision block
           for img in images:
-            content.append({
-              'type': 'text',
-              'text': f"--- Screenshot: {img['name']} ---"
-            })
-            content.append({
-              'type': 'image',
-              'source': {
-                'type': 'base64',
-                'media_type': 'image/png',
+            parts.append({'text': f'--- Screenshot: {img["name"]} ---'})
+            parts.append({
+              'inline_data': {
+                'mime_type': 'image/png',
                 'data': img['base64']
               }
             })
 
           payload = json.dumps({
-            'model': 'claude-sonnet-4-5',
-            'max_tokens': 2048,
-            'messages': [{'role': 'user', 'content': content}]
+            'contents': [{'parts': parts}],
+            'generationConfig': {
+              'maxOutputTokens': 2048,
+              'temperature': 0.2
+            }
           }).encode('utf-8')
 
+          url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}'
+
           req = urllib.request.Request(
-            'https://api.anthropic.com/v1/messages',
+            url,
             data=payload,
-            headers={
-              'x-api-key': api_key,
-              'anthropic-version': '2023-06-01',
-              'content-type': 'application/json'
-            }
+            headers={'Content-Type': 'application/json'}
           )
 
           try:
             with urllib.request.urlopen(req, timeout=120) as resp:
               result = json.loads(resp.read())
-            analysis = result['content'][0]['text']
+            analysis = result['candidates'][0]['content']['parts'][0]['text']
           except Exception as e:
-            analysis = f'**Visual QA Error**: Claude analysis failed — {str(e)}'
+            analysis = f'**Visual QA Error**: Gemini analysis failed — {str(e)}'
 
-          # Save full report
           with open('screenshots/ai-report.md', 'w') as f:
             f.write(analysis)
 
-          print('AI analysis complete')
+          print('Gemini analysis complete')
           print(analysis[:500])
           PYEOF
 
-      # ── 8. Post report as PR comment ──────────────────────────────────────────
       - name: Post Visual QA report on PR
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
@@ -308,10 +254,10 @@ Format your response as clean markdown suitable for a GitHub PR comment."""
             }
 
             const header = [
-              '## Visual QA Report',
+              '## 📦 Visual QA Report — Gemini Vision',
               '',
               `**Preview**: ${{ steps.resolve-url.outputs.url }}`,
-              `**Routes audited**: home, worlds, create, dashboard`,
+              `**Routes**: home, worlds, create, dashboard`,
               `**Viewport**: Desktop 1440px + Mobile 390px`,
               '',
               '---',
@@ -321,13 +267,12 @@ Format your response as clean markdown suitable for a GitHub PR comment."""
             const footer = [
               '',
               '---',
-              '*Generated by Claude Sonnet vision analysis + Playwright screenshots*',
-              '*Screenshots attached as workflow artifacts*',
+              '*Generated by Gemini Flash vision analysis + Playwright screenshots*',
+              '*Full screenshots attached as workflow artifacts*',
             ].join('\n');
 
             const body = header + report + footer;
 
-            // Use sticky comment so it updates in-place on each push
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -335,7 +280,7 @@ Format your response as clean markdown suitable for a GitHub PR comment."""
             });
 
             const existing = comments.find(
-              c => c.body.includes('## Visual QA Report') && c.user.type === 'Bot'
+              c => c.body.includes('Visual QA Report') && c.user.type === 'Bot'
             );
 
             if (existing) {
@@ -354,7 +299,6 @@ Format your response as clean markdown suitable for a GitHub PR comment."""
               });
             }
 
-      # ── 9. Upload screenshots as artifacts ───────────────────────────────────
       - name: Upload screenshots as artifacts
         if: always()
         uses: actions/upload-artifact@v4
