@@ -1,0 +1,55 @@
+name: Claude Sonnet Fix (Manual Fallback)
+
+# Triggered only when a PR comment contains @claude fix
+# This keeps Claude dormant by default - zero cost until explicitly invoked
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  claude-fix:
+    # Only run on PR comments (not issue comments) containing the trigger phrase
+    if: |
+      github.event.issue.pull_request != null &&
+      contains(github.event.comment.body, '@claude fix')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Claude Sonnet via claude-code-action
+        uses: anthropics/claude-code-action@beta
+        with:
+          model: claude-sonnet-4-5
+          # Uses ANTHROPIC_API_KEY secret — set this in repo Settings > Secrets
+          # To avoid API charges, use OAuth token from Max plan if supported
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Limit scope: only fix what is mentioned in the triggering comment
+          direct_prompt: |
+            A developer has requested a fix on this pull request with the following message:
+            "${{ github.event.comment.body }}"
+
+            Please analyze the pull request diff and apply targeted fixes based on the request above.
+            Focus only on the specific issue mentioned. Do not refactor unrelated code.
+            Use TypeScript strict mode, Next.js App Router patterns, and Supabase best practices.
+            Prefer minimal, surgical changes over large rewrites.
+          max_turns: 5
+          allowed_tools: "Bash,Edit,Write"
+
+      - name: Post acknowledgement comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '> **Claude Sonnet** has processed your fix request. Please review the changes in the latest commits above.'
+            })
