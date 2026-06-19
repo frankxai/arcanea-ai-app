@@ -48,7 +48,7 @@ const keyPages = [
   { href: "/studio", title: "Studio", description: "Image, music, and world asset generation workflows.", icon: PhPaintBrush },
   { href: "/library", title: "Library", description: "Canonical texts, search, and connected knowledge.", icon: PhBooks },
   { href: "/academy", title: "Academy", description: "Ten Gates progression and creator mastery paths.", icon: PhGraduationCap },
-  { href: "/lore", title: "Lore", description: "Mythic foundations and entity-level canon.", icon: PhScroll },
+  { href: "/lore", title: "Lore", description: "Structured world-graphs and entity-level magic rules.", icon: PhScroll },
   { href: "/gallery", title: "Gallery", description: "Visual output showcase and remix pathways.", icon: PhDiamond },
   { href: "/community", title: "Community", description: "Challenges, rituals, and collaborative loops.", icon: PhUsers },
   { href: "/developers", title: "Developers", description: "APIs, SDKs, architecture, and integration docs.", icon: PhCode },
@@ -91,7 +91,7 @@ export function V4Content({
           </h1>
           <p className="mt-6 max-w-3xl text-base md:text-lg text-white/70 leading-relaxed">
             Orchestrate coding swarms, shape worlds, compose music, and write books through Arcanea&apos;s
-            living canon: Primordials, Gods, Guardians, and Luminors.
+            magical runtimes: specialized agents, active guardians, and custom engines.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Link href="/chat" className="px-6 py-3 rounded-xl bg-cyan-300/20 border border-cyan-300/40 text-cyan-50 font-semibold hover:bg-cyan-300/30 transition">
@@ -107,7 +107,7 @@ export function V4Content({
       <section className="mx-auto max-w-7xl px-6 py-16 md:py-20">
         <div className="text-center mb-10">
           <p className="text-xs uppercase tracking-[0.24em] text-cyan-100/80">The System</p>
-          <h2 className="mt-3 text-3xl md:text-4xl font-semibold">A mythology. A library. An academy.</h2>
+          <h2 className="mt-3 text-3xl md:text-4xl font-semibold">A magic system. A library. An academy.</h2>
           <p className="mt-4 text-white/70 max-w-2xl mx-auto">Three foundations of a creative philosophy.</p>
         </div>
 

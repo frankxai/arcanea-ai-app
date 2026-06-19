@@ -208,7 +208,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Scaffold worlds. Summon agent councils. Run your entire mythology as code. Arcanea compiles persistent world graphs, cinematic lanes, and autonomous swarms that share a single relational memory. Stop prompting stateless chatbots; boot your own universe.
+            Scaffold worlds. Summon agent councils. Run your magic as code. Arcanea compiles persistent world graphs, cinematic lanes, and autonomous swarms that share a single relational memory. Stop prompting stateless chatbots; boot your own universe.
           </m.p>
 
           {/* Secondary clarifier — who it&apos;s for */}
@@ -218,7 +218,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.28 }}
           >
-            16 agent runtimes &middot; portal matrix, gates, gods &middot; open source
+            16 agent runtimes &middot; magic systems, local memory &middot; open source
           </m.p>
 
           {/* Trust signals — glass pill badges with animated numbers */}

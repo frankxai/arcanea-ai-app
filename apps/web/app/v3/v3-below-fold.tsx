@@ -123,7 +123,7 @@ const PRODUCT_PILLARS: ProductPillar[] = [
   {
     Icon: Books,
     title: "Canon",
-    description: "Books, lore, gates, gods, and godbeasts become source.",
+    description: "Books, lore, and magical systems compile into a single source.",
     href: "/living-lore",
     glowColor: pillarAccents.library,
   },
@@ -137,7 +137,7 @@ const PRODUCT_PILLARS: ProductPillar[] = [
   {
     Icon: GraduationCap,
     title: "Progress",
-    description: "The Ten Gates turn creation into earned mastery.",
+    description: "Advanced progression pathways guide you to creative mastery.",
     href: "/academy",
     glowColor: pillarAccents.forge,
   },
@@ -199,7 +199,7 @@ function LivingWorldSection() {
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
           label="The Living Worlds Engine"
-          title="Mythology is code. Compile your universe."
+          title="Magic is code. Compile your universe."
           subtitle="A persistent relational graph engine that structures your canon, locales, and systems. Stop running stateless chats; compile a stateful universe where agents remember the lore, and magic obeys the schema."
           accent="teal"
         />
@@ -283,7 +283,7 @@ function PortalAtlasSection() {
         <SectionHeader
           label="The Portal Matrix"
           title="An operating system for new realms"
-          subtitle="We treat creative IP like software. Scaffold your world graph, direct cinematic lanes, spawn agent councils, and fork your entire mythology as raw code."
+          subtitle="We treat creative IP like software. Scaffold your world graph, direct cinematic lanes, spawn agent councils, and fork your entire universe as raw code."
           accent="teal"
         />
         <div className="grid grid-cols-1 gap-4 md:gap-5 lg:auto-rows-fr lg:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.75fr)]">
@@ -342,10 +342,11 @@ function PortalAtlasSection() {
 }
 
 // ---------------------------------------------------------------------------
-// Gods and Godbeasts — canon as premium media architecture
+// ---------------------------------------------------------------------------
+// Guardians and runtimes — canon as premium media architecture
 // ---------------------------------------------------------------------------
 
-const GODBEAST_PREVIEW = [
+const GUARDIAN_PREVIEW = [
   {
     name: "Draconia + Draconis",
     gate: "Fire Gate",
@@ -372,26 +373,26 @@ const GODBEAST_PREVIEW = [
   },
 ];
 
-function GodbeastCouncilSection() {
+function GuardianCouncilSection() {
   return (
     <SectionShell ambient="gold" size="default" id="gods-godbeasts">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-14 items-center">
           <div>
             <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--arc-brand-arcanean-gold)]/55 mb-5">
-              The Pantheon Protocol
+              Magical Runtimes
             </p>
             <h2 className="text-3xl md:text-5xl font-display font-bold tracking-[-0.03em] leading-[1.08] text-white">
-              Mythology compiled at the speed of thought.
+              Magical intelligence compiled at the speed of thought.
             </h2>
             <p className="mt-6 text-base md:text-lg leading-relaxed text-white/45">
-              The Gods are active runtimes. In Arcanea, each gate guardian acts as a specialized model router, enforcing narrative consistency, component layouts, and agent swarms. Summon their logic; rule the generation.
+              Your system guardians are active runtimes. In Arcanea, each specialist model acts as a validation node, enforcing creative consistency, custom styling, and agent actions. Spawn their logic; execute the generation.
             </p>
             <div className="mt-8 grid grid-cols-3 gap-3">
               {[
-                { value: "10", label: "gates" },
-                { value: "10", label: "gods" },
-                { value: "10", label: "godbeasts" },
+                { value: "10", label: "modules" },
+                { value: "10", label: "guardians" },
+                { value: "16", label: "runtimes" },
               ].map((stat) => (
                 <div key={stat.label} className="rounded-xl border border-white/[0.06] bg-white/[0.025] p-4 text-center">
                   <p className="text-2xl font-display font-semibold text-[var(--arc-brand-arcanean-gold)]">
@@ -406,10 +407,10 @@ function GodbeastCouncilSection() {
             <div className="mt-8">
               <Magnetic>
                 <Link
-                  href="/lore/godbeasts"
+                  href="/agents"
                   className="inline-flex items-center gap-2 rounded-xl border border-[var(--arc-brand-arcanean-gold)]/25 bg-[var(--arc-brand-arcanean-gold)]/10 px-6 py-3 text-sm font-medium text-[var(--arc-brand-arcanean-gold)] transition-colors hover:bg-[var(--arc-brand-arcanean-gold)]/16"
                 >
-                  Enter the bestiary
+                  Meet the guardians
                   <span className="text-xs">&rarr;</span>
                 </Link>
               </Magnetic>
@@ -417,7 +418,7 @@ function GodbeastCouncilSection() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4">
-            {GODBEAST_PREVIEW.map((item, i) => (
+            {GUARDIAN_PREVIEW.map((item, i) => (
               <m.div
                 key={item.name}
                 initial={{ opacity: 0, x: 18 }}
@@ -428,11 +429,11 @@ function GodbeastCouncilSection() {
                 <Link href={item.href} className="group grid min-h-[190px] grid-cols-[112px_1fr] overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.025] backdrop-blur-sm transition-colors hover:border-white/[0.16] sm:block lg:grid lg:grid-cols-[180px_1fr]">
                   <div className="relative min-h-[190px] overflow-hidden">
                     <Image
-                      src={item.image}
-                      alt=""
-                      fill
-                      sizes="(max-width: 1024px) 33vw, 180px"
-                      className="object-cover object-center opacity-82 transition-transform duration-700 group-hover:scale-[1.06]"
+                       src={item.image}
+                       alt=""
+                       fill
+                       sizes="(max-width: 1024px) 33vw, 180px"
+                       className="object-cover object-center opacity-82 transition-transform duration-700 group-hover:scale-[1.06]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[var(--arc-cosmic-void)]/35 lg:bg-gradient-to-r" />
                   </div>
@@ -1068,8 +1069,8 @@ export function V3BelowFold({
 
         <AtmosphericDivider variant="gold" />
 
-        {/* 1b. Gods and godbeasts — canon as runtime */}
-        <GodbeastCouncilSection />
+        {/* 1b. Active guardians — canon as runtime */}
+        <GuardianCouncilSection />
 
         <AtmosphericDivider variant="gold" />
 

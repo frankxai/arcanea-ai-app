@@ -39,35 +39,95 @@ export default async function LocaleHome({
   const t = await getTranslations('home');
   const tCommon = await getTranslations('common');
   const tNav = await getTranslations('nav');
+  const worldArtifacts = [
+    { k: 'World Engine', v: 'connected universes, world-graphs, and creator databases' },
+    { k: 'Studio Workflows', v: 'image, video, audio, books, prompts, agents' },
+    { k: 'Luminor Companions', v: 'guided creation with persistent agent memory' },
+  ];
+  const workflowPath = [
+    'Initialize project',
+    'Define rules',
+    'Generate assets',
+    'Compile universe',
+  ];
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-24">
-      <div className="rounded-3xl border border-white/[0.06] bg-white/[0.03] p-12 backdrop-blur-sm">
-        <p className="mb-4 text-sm uppercase tracking-[0.18em] text-atlantean-aqua/80">
-          {tCommon('siteName')}
-        </p>
-        <h1 className="font-editorial text-5xl leading-tight text-text-primary md:text-6xl">
-          {t('hero')}
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-text-secondary">
-          {t('subhero')}
-        </p>
-        <div className="mt-10 flex flex-wrap items-center gap-4">
-          <Link
-            href="/books"
-            className="rounded-full bg-atlantean-aqua px-6 py-3 text-sm font-semibold text-cosmic-deep transition hover:bg-atlantean-aqua/90"
-          >
-            {t('cta')}
-          </Link>
-          <Link
-            href="/books"
-            className="rounded-full border border-white/[0.1] px-6 py-3 text-sm font-semibold text-text-primary transition hover:border-white/[0.25]"
-          >
-            {t('secondaryCta')}
-          </Link>
+    <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
+      <section className="relative overflow-hidden rounded-[2rem] border border-white/[0.08] bg-cosmic-deep/75 p-6 shadow-[0_50px_140px_rgba(0,0,0,0.42)] backdrop-blur-xl md:p-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_18%,rgba(0,220,210,0.20),transparent_32%),radial-gradient(circle_at_18%_16%,rgba(112,84,255,0.16),transparent_30%)]" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-atlantean-aqua/70 to-transparent" />
+        <div className="relative grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <div>
+            <p className="mb-4 inline-flex rounded-full border border-atlantean-aqua/30 bg-atlantean-aqua/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-atlantean-aqua">
+              {tCommon('siteName')} · creator worlds
+            </p>
+            <h1 className="font-editorial text-5xl leading-[0.98] text-text-primary md:text-7xl">
+              {t('hero')}
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-text-secondary md:text-xl">
+              {t('subhero')}
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <Link
+                href="/books"
+                className="rounded-full bg-atlantean-aqua px-6 py-3 text-sm font-semibold text-cosmic-deep shadow-[0_18px_70px_rgba(0,220,210,0.22)] transition hover:bg-atlantean-aqua/90"
+              >
+                {t('cta')}
+              </Link>
+              <Link
+                href="/worlds"
+                className="rounded-full border border-white/[0.14] bg-white/[0.035] px-6 py-3 text-sm font-semibold text-text-primary backdrop-blur-xl transition hover:border-atlantean-aqua/50"
+              >
+                Enter worlds
+              </Link>
+              <Link
+                href="/studio"
+                className="rounded-full border border-white/[0.1] px-6 py-3 text-sm font-semibold text-text-primary transition hover:border-white/[0.25]"
+              >
+                Open studio
+              </Link>
+            </div>
+            <p className="mt-8 max-w-xl text-sm text-text-muted">{t('tagline')}</p>
+          </div>
+
+          <div className="relative">
+            <div className="rounded-[1.7rem] border border-white/[0.10] bg-black/30 p-4 backdrop-blur-2xl">
+              <div className="relative aspect-[16/11] overflow-hidden rounded-[1.25rem] border border-atlantean-aqua/20 bg-cosmic-deep">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(0,220,210,0.26),transparent_26%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_30%,rgba(112,84,255,0.12))]" />
+                <div className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full border border-atlantean-aqua/50 bg-atlantean-aqua/10 shadow-[0_0_100px_rgba(0,220,210,0.34)]" />
+                {workflowPath.map((step, idx) => (
+                  <div
+                    key={step}
+                    className="absolute rounded-full border border-white/15 bg-cosmic-deep/75 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-text-primary backdrop-blur"
+                    style={{
+                      left: `${49 + Math.cos((idx / workflowPath.length) * Math.PI * 2 - Math.PI / 2) * 33}%`,
+                      top: `${49 + Math.sin((idx / workflowPath.length) * Math.PI * 2 - Math.PI / 2) * 30}%`,
+                    }}
+                  >
+                    {step}
+                  </div>
+                ))}
+                <div className="absolute inset-x-4 bottom-4 rounded-2xl border border-white/10 bg-black/45 p-4 backdrop-blur-xl">
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.24em] text-atlantean-aqua">
+                    Magical interface blueprint
+                  </div>
+                  <p className="mt-1 text-sm text-text-secondary">
+                    World engine, creation studio, agent councils, memory.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-4 grid gap-3 md:grid-cols-3">
+                {worldArtifacts.map((artifact) => (
+                  <div key={artifact.k} className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-4">
+                    <div className="text-xs font-semibold text-text-primary">{artifact.k}</div>
+                    <p className="mt-2 text-xs leading-relaxed text-text-muted">{artifact.v}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-        <p className="mt-12 text-sm text-text-muted">{t('tagline')}</p>
-      </div>
+      </section>
 
       {/* 5-Harness Fleet + Grok Personal Excellence Layer — Arcanea Visual Showcase (state-of-the-art). The 4 .grok-native excellence seeds (repo-mastery, multi-harness-orchestrator, excellence-review, harness-integration) + 2 json hooks are sovereign personal to Frank's Grok TUI usage and daily creative practice ("a bit magical, .grok only, not for everything"). They sit on ACOS (shared productivity) + SIS (SIP substrate for personal parts) and resonate with creative ethos but are not part of the Arcanea platform/academy/canon. Confirmed parity + SHARING descriptive cleanup (no opaque codename). */}
       <section className="border-t border-white/[0.08] bg-cosmic-deep/60 py-16">
