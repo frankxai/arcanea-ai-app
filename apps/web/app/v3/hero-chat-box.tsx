@@ -19,24 +19,24 @@ import {
 const STARTER_CARDS = [
   {
     icon: PhPencil,
-    label: "Open a portal",
-    prompt: "Design a portal into Arcanea with a realm, gate logic, first conflict, and three artifacts a creator can build from it.",
+    label: "Initialize realm",
+    prompt: "Scaffold a neo-noir cyber-magic realm. Bind the gate protocols, configure the core narrative pressure, and compile three stateful relics.",
   },
   {
     icon: PhMusicNote,
-    label: "Score a godbeast",
-    prompt: "Compose a cinematic theme brief for Draconis, Godbeast of Fire, with instrumentation, emotional arc, and visualizer direction.",
+    label: "Summon Godbeast",
+    prompt: "Summon Draconis, Godbeast of Fire. Generate a high-tempo cinematic dark-synth score brief and map the action choreography.",
   },
   {
     icon: PhPaintBrush,
-    label: "Build a world",
-    prompt: "Build a living world graph for a dragon-rider anime saga with factions, gates, godbeast bonds, rules, and exportable canon.",
+    label: "Forge world graph",
+    prompt: "Forge a stateful world graph for a space-opera saga: map characters, write orbital magic laws, and compile exportable SQLite schemas.",
     href: "/worlds/create",
   },
   {
     icon: PhCode,
-    label: "Ship an agent OS",
-    prompt: "Draft an AI lab operating system for world-building: agents, memory, artifacts, review gates, and a public launch sequence.",
+    label: "Spawn agent council",
+    prompt: "Spawn a council of 5 specialized agents to write, review, and direct a cinematic lore trailer. Sync their local memory contexts.",
   },
 ];
 
@@ -107,7 +107,7 @@ export function HeroChatBox() {
             onKeyDown={handleKeyDown}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            placeholder="What world do you want to build?"
+            placeholder="Summon your world. Specify the magic rules..."
             aria-label="Describe what you want to create"
             rows={1}
             className="flex-1 px-5 py-4 bg-transparent text-white/90 placeholder-white/20 resize-none focus:outline-none font-body text-[15px] leading-relaxed"

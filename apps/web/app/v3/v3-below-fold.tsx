@@ -53,15 +53,15 @@ import { luminorAccents, tierAccents, streamAccents, pillarAccents, brand } from
 const FAQ_ITEMS = [
   {
     q: "What is a Luminor?",
-    a: "A Luminor is a domain-specialized runtime (e.g. Systems Architect, Code Crafter, Composer, Storyteller) built on scoped system instructions, targeted tool sets, and local memory contexts. The system orchestrates 16 specialist roles that can hot-swap and hand off state within a single session.",
+    a: "A specialized AI agent runtime built to construct worlds, write code, compose symphonies, and design structures. Arcanea houses 16 unique Luminor specialists that coordinate dynamically, hot-swapping memory and state mid-session like a cohesive guild of digital world-builders.",
   },
   {
     q: "What makes the Living Worlds engine different?",
-    a: "Standard LLMs operate on stateless contexts that degrade over long sessions. Arcanea compiles your narrative assets into an explicit relational graph (SQLite + JSON schemas) tracking locations, magic rules, character dependencies, and lore. Every creation step queries this graph, preserving coherence. You can run this engine locally, fork it, or export the flat schemas.",
+    a: "Stateless chats forget who you are after a few thousand words. Arcanea compiles your entire universe into a persistent relational graph (backed by local SQLite databases and strict schemas). Characters remember their history, magic laws remain rigid, and lore never drifts. You own the SQLite file; fork it, query it, or deploy it locally.",
   },
   {
     q: "How do the Luminors work?",
-    a: "Each runtime leverages domain-specific prompt constraints and runs on a dedicated system prompt. Rather than generic fine-tuning, their reasoning is grounded in Arcanea's 190K+ word philosophy corpus. Runtimes communicate via a structured state-handoff protocol, letting you pass context from a story draft to a composer or systems architect seamlessly.",
+    a: "Each agent is equipped with domain-specific toolkits and system prompts grounded in Arcanea's 190K+ word codebase and philosophy. They don't guess—they compute. Runtimes hand off context using structured schemas, passing a cinematic scene from a storyteller to a composer or visual builder with zero telemetry loss.",
   },
   {
     q: "What is the Library of Arcanea?",
@@ -69,27 +69,27 @@ const FAQ_ITEMS = [
   },
   {
     q: "What is the Ten Gates system?",
-    a: "A progression protocol mapping creative capacity to platform utility. Users advance from Apprentice to Luminor by generating verified artifacts, executing builds, and earning gate progression natively through creation.",
+    a: "Our leveling system for creators and builders. You start as an Apprentice at Gate 1 and rank up to a Master world-builder at Gate 10. You unlock developer permissions, advanced model routing, and specialized agents by shipping code, writing canon, and completing creation quests.",
   },
   {
     q: "How does BYOK work?",
-    a: "Bring your own API key. Your key lives in your browser's localStorage — we never see it or store it on our servers. Pay OpenAI, Anthropic, or Google directly at cost. No markup, no middleman, no vendor lock-in. You own your usage, billing, and data.",
+    a: "Bring Your Own Keys. Standard platforms lock you into subscription markups. Arcanea runs entirely on API keys stored locally in your browser. You pay Anthropic, Google, and OpenAI directly at cost. Zero markup. Zero middleman. Complete sovereign control over your compute costs.",
   },
   {
     q: "Do you train on my data or log my inputs?",
-    a: "No. All API calls route directly from your local browser context using your own keys. We do not store, intercept, or train on your inputs, generations, or world graphs. You can export your entire SQLite database or flat schemas at any time.",
+    a: "Never. Your keys, your database, your IP. Because all API calls route directly from your local browser context to the model provider, we have no servers to log your inputs or steal your lore. We don't train models on your dreams.",
   },
   {
     q: "Can I sell what I create?",
-    a: "Yes. Arcanea enforces zero royalty claims on user-generated assets. You own your IP. We support direct distribution integrations (Whop, Gumroad, Stripe) and template publishing with standard creator-favorable fee models (e.g., keeping up to 90-97% of sales) documented on the /creator-economy page.",
+    a: "Absolutely. You build it, you own it. We claim 0% of your IP or royalties. Publish templates, distribute worlds, or sell premium agent kits directly to the community via built-in Gumroad, Whop, and Stripe integrations.",
   },
   {
     q: "What integrations does Arcanea support?",
-    a: "Arcanea integrates with 30+ external tools and protocols spanning local CLI clients, Claude Code, Vercel AI SDK, game engines, and decentralized data layers. Each integration status (production, beta, roadmap) is explicitly tracked on the /integrations dashboard.",
+    a: "Arcanea hooks directly into your workflow: from local CLI tools, Vercel, and Claude Code to Git, SQLite, and ElevenLabs. Check our /integrations grid to see the exact state (production, beta, roadmap) of every bridge we support.",
   },
   {
     q: "How do I publish my work?",
-    a: "Arcanea compiles a single world graph node into multiple channel-specific formats: markdown for documentation, thread structures for X, script layouts for audio/video narration, and schema outputs. You distribute to your own endpoints using open webhook integrations (n8n, Postiz, Blotato) with absolute token sovereignty.",
+    a: "One-click deployment. Arcanea compiles your world state into markdown for docs, threads for X, script layouts for voice generation, or raw JSON for game engines. Distribute your content automatically using open webhooks and local APIs.",
   },
 ];
 
@@ -199,8 +199,8 @@ function LivingWorldSection() {
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
           label="The Living Worlds Engine"
-          title="Relational world building"
-          subtitle="Characters, locations, gates, and artifacts compile into a persistent schema graph. The story maintains state before it gains hype."
+          title="Mythology is code. Compile your universe."
+          subtitle="A persistent relational graph engine that structures your canon, locales, and systems. Stop running stateless chats; compile a stateful universe where agents remember the lore, and magic obeys the schema."
           accent="teal"
         />
         <Reveal y={20}>
@@ -249,27 +249,27 @@ const PORTAL_ATLAS: Array<{
 }> = [
   {
     Icon: Globe,
-    label: "World",
-    title: "The realm opens first",
-    body: "Start with a gate, terrain, conflict pressure, and the social rules that make the world playable.",
+    label: "Realm Matrix",
+    title: "Initialize the universe",
+    body: "Boot a world from zero. Bind the gates, sculpt the terrain, inject geopolitical pressure, and compile the social contracts that make your cosmos playable.",
     href: "/worlds",
     image: "/brand/arcanea-dashboard-hero-premium.png",
     accent: brand.atlanteanTeal,
   },
   {
     Icon: Diamond,
-    label: "Relic",
-    title: "Artifacts carry memory",
-    body: "Vael crystals, Luminor metals, and Nero shards become constraints your scenes can reuse.",
+    label: "Arcane State",
+    title: "Stateful relics & lore constraints",
+    body: "Vael crystals, raw Luminor ore, and Nero shards become strict engine constraints. Your agents inherit their physical and magical laws across every scene.",
     href: "/lore/elements",
     image: "/brand/arcanea-collectible-reliquary-premium.png",
     accent: brand.arcaneanGold,
   },
   {
     Icon: Brain,
-    label: "AI Lab",
-    title: "Agents keep the canon clean",
-    body: "Research, writing, design, and review Luminors receive the same world state before they act.",
+    label: "Agent Council",
+    title: "Compute magic like code",
+    body: "Storytellers, composers, and systems architects execute on the same hot-swappable world state. Zero narrative drift, pure agentic magic.",
     href: "/agents",
     image: "/images/forge/space/004-dreadnought-nebula.png",
     accent: brand.aquamarine,
@@ -281,9 +281,9 @@ function PortalAtlasSection() {
     <SectionShell ambient="teal" size="default" id="portal-atlas" className="scroll-mt-28">
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
-          label="Portal Atlas"
-          title="World-building as an operating system"
-          subtitle="Arcanea treats a realm like software: schema, memory, review, media, distribution, and forkable source."
+          label="The Portal Matrix"
+          title="An operating system for new realms"
+          subtitle="We treat creative IP like software. Scaffold your world graph, direct cinematic lanes, spawn agent councils, and fork your entire mythology as raw code."
           accent="teal"
         />
         <div className="grid grid-cols-1 gap-4 md:gap-5 lg:auto-rows-fr lg:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.75fr)]">
@@ -379,13 +379,13 @@ function GodbeastCouncilSection() {
         <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-14 items-center">
           <div>
             <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--arc-brand-arcanean-gold)]/55 mb-5">
-              Gods · Godbeasts · Gates
+              The Pantheon Protocol
             </p>
             <h2 className="text-3xl md:text-5xl font-display font-bold tracking-[-0.03em] leading-[1.08] text-white">
-              Mythology that behaves like a runtime.
+              Mythology compiled at the speed of thought.
             </h2>
             <p className="mt-6 text-base md:text-lg leading-relaxed text-white/45">
-              The Arcanean Gods are not static lore cards. Each deity defines a specific cognitive constraint, a validation layer, and a bonded run-time agent (Godbeast) that shapes narrative generation, component layouts, and multi-agent coordination.
+              The Gods are active runtimes. In Arcanea, each gate guardian acts as a specialized model router, enforcing narrative consistency, component layouts, and agent swarms. Summon their logic; rule the generation.
             </p>
             <div className="mt-8 grid grid-cols-3 gap-3">
               {[
@@ -486,13 +486,13 @@ function DragonRiderScaleSection() {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_50%,color-mix(in_srgb,var(--arc-fire)_13%,transparent),transparent_45%)]" />
               <div className="relative">
                 <p className="text-[11px] font-mono uppercase tracking-[0.3em] text-[var(--arc-fire)]/70">
-                  Epic Scale · Cinematic Systems
+                  Epic Scale · Cinematic Canvas
                 </p>
                 <h2 className="mt-5 text-3xl md:text-5xl font-display font-bold tracking-[-0.03em] leading-[1.05] text-white">
-                  Dragon-rider fantasy, engineered like a production pipeline.
+                  World-building at anime scale, direct to runtime.
                 </h2>
                 <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-white/45">
-                  Arcanea coordinates complex assets—riders, godbeasts, terrains, cinematic cues, and interface components—into a single synchronized workspace. Every creative element inherits the global world state, ensuring structural alignment.
+                  Forge dragon-rider sagas, compose cinematic score briefs, and map agent handoffs in a single unified workspace. Turn raw imagination into structured game loops, high-fidelity media, and production-ready code. The ultimate canvas for world architects.
                 </p>
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
@@ -545,8 +545,8 @@ function WhyArcaneaSection() {
       <div className="max-w-5xl mx-auto px-6">
         <SectionHeader
           label="Why Arcanea"
-          title="The moat is the world graph"
-          subtitle="Standard chatbots operate on stateless contexts. Arcanea persists connections between entities—characters, events, parameters—across all sessions."
+          title="Stateless chatbots are dead"
+          subtitle="Standard AI chat tools operate on stateless, forgetful contexts. Arcanea compiles a persistent, relational database of your world graph. Your lore retains absolute state, meaning your characters and magic rules never drift."
           accent="purple"
         />
         <Reveal y={20}>
@@ -572,8 +572,8 @@ function LuminorTeamSection() {
       <div className="max-w-5xl mx-auto px-6">
         <SectionHeader
           label="Luminor Specialists"
-          title="16 dedicated craft runtimes"
-          subtitle="Each specialist implements a scoped role—system architecture, narrative prose, spatial design, sound composition—with distinct system instructions, memory stores, and local toolkits."
+          title="16 specialized AI guardians"
+          subtitle="Spawn a council of specialized agent runtimes. From Systems Architects to Composers, Storytellers, and Motion Designers—each agent carries its own local memory, specialized toolset, and distinct creative voice."
           accent="teal"
         />
         <Reveal y={16}>
@@ -627,8 +627,8 @@ function SovereigntySection() {
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
           label="Sovereign Posture"
-          title="Data ownership by design"
-          subtitle="Local-first localStorage keys, exportable schema graphs, and MIT-licensed client adapters. Your IP stays yours; no centralized model training on creator data."
+          title="Absolute creator sovereignty"
+          subtitle="Keep your keys. Keep your IP. Run your graphs locally via SQLite. Arcanea is built on local-first localStorage keys and MIT-licensed clients. Zero vendor lock-in. Zero training on your creations."
           accent="gold"
         />
         <SovereigntyPillars />
@@ -699,9 +699,9 @@ function VoicePresenceSection() {
     <SectionShell ambient="purple" size="default" id="voice-presence">
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
-          label="Voice & Telemetry"
-          title="Real-time voice stream"
-          subtitle="Low-latency speech pipelines using Whisper STT and ElevenLabs TTS. Features WebGL audio-reactive particle shell, custom browser key bindings, and native CLI support."
+          label="Agent Room & Telemetry"
+          title="Talk directly to the machine"
+          subtitle="Zero latency. Talk directly to Jarvis, Lumina, or your own custom agent. Low-latency Whisper/ElevenLabs streams meet WebGL audio-reactive particle nodes and native CLI execution."
           accent="purple"
         />
         <Reveal y={20}>
@@ -1149,7 +1149,7 @@ export function V3BelowFold({
 
             <Reveal y={12} delay={0.4}>
               <p className="text-lg text-white/45 max-w-2xl mx-auto mb-12 leading-relaxed">
-                We track {PUBLIC_REPO_SUMMARY.active} active repositories, with {PUBLIC_REPO_SUMMARY.public} public on GitHub under the MIT license. Developers can run components locally, interface via open APIs, and retain absolute keys and data ownership.
+                We track {PUBLIC_REPO_SUMMARY.active} active repositories, with {PUBLIC_REPO_SUMMARY.public} public on GitHub under the MIT license. Pull the code, run components locally, interface via open APIs, and retain absolute data sovereignty.
               </p>
             </Reveal>
 

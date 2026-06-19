@@ -22,26 +22,26 @@ interface Pillar {
 const PILLARS: Pillar[] = [
   {
     icon: Keyboard,
-    title: "BYOK Architecture",
-    body: "Resides fully inside your browser's local sandbox. Route API calls directly to model endpoints (Anthropic, OpenAI, Groq) at pure developer cost, with zero platform markup.",
+    title: "BYOK Compute",
+    body: "Bring Your Own Keys. Standard platforms tax your intelligence with subscription markups. Arcanea hooks directly into Anthropic, OpenAI, and Google at raw cost. Complete compute sovereignty.",
     accent: brand.aquamarine,
   },
   {
     icon: Shield,
-    title: "Sovereign IP Ownership",
-    body: "Everything you generate belongs to you. No downstream licensing claims, no training on user creations, and raw data export in standard markdown or JSON.",
+    title: "Sovereign Lore",
+    body: "Your dreams are your property. Every world graph, scene, and character schema is compiled locally to SQLite. We claim 0% royalties. No vendor lock-in, no data harvesting, no model training on your IP.",
     accent: brand.atlanteanTeal,
   },
   {
     icon: Code,
-    title: "Forkable Stack",
-    body: "Core packages and adapters are MIT-licensed. Modify the visual chrome, run the MCP servers locally, and adapt the codebase to your own hardware.",
+    title: "MIT-Licensed Stack",
+    body: "Clone the runtime, spin up local MCP servers, and refactor the agent logic. Arcanea's core clients are completely open-source under the MIT license. Build without boundaries.",
     accent: brand.arcaneanGold,
   },
   {
     icon: ArrowSquareOut,
-    title: "Zero Platform Lock-in",
-    body: "Interoperable schemas export natively as flat text files. Sync with local CLI clients, Claude Code workflows, or Cursor instances seamlessly.",
+    title: "Stateless to Stateful",
+    body: "World schemas map directly to Cursor, Claude Code, or local CLI terminals. Seamlessly bridge your stateful universe with any developer workspace. Portable, compiler-ready, and stateless-free.",
     accent: ambient.lavender,
   },
 ];
@@ -121,7 +121,7 @@ export function SovereigntyBadge() {
         <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--arc-brand-atlantean-teal)]" />
       </span>
       <span className="text-[11px] font-mono tracking-[0.15em] uppercase text-[var(--arc-brand-atlantean-teal)]/80">
-        Sovereign Creative AI
+        Sovereign World Engine
       </span>
     </div>
   );

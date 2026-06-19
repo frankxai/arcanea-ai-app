@@ -5,12 +5,12 @@ import { useState, useEffect } from "react";
 import { m, AnimatePresence } from "framer-motion";
 
 const words = [
+  "summon?",
   "compile?",
-  "map?",
-  "direct?",
+  "command?",
   "forge?",
   "orchestrate?",
-  "publish?",
+  "awaken?",
 ];
 
 export function HeroChangingWords() {
