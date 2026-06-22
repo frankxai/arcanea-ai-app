@@ -45,7 +45,7 @@ export type GodbeastName =
 /**
  * Leviathans — Tier 3 Wild Godbeasts (STAGING canon). Unbonded titans that
  * roam outside the Ten Gates. Nethyssa is the flagship. See
- * `.arcanea/lore/leviathans/` and CANON_LOCKED.md Tier 9.
+ * `.arcanea/lore/leviathans/` (in the arcanea OSS canon repo).
  */
 export type LeviathanName = 'nethyssa';
 
