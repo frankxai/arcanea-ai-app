@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { LazyMotion, domAnimation, m } from "framer-motion";
+import { LazyMotion, domAnimation, m, useReducedMotion } from "framer-motion";
 import { CosmicParticles } from "@/components/magic/particles";
 import { MagnifyingGlass, Star, GitBranch, Users, ArrowRight, Plus } from "@/lib/phosphor-icons";
 import { WorldsOnboarding } from "@/components/worlds/WorldsOnboarding";
@@ -194,7 +194,7 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
           </span>
           <div className="flex items-center gap-2">
             <button
-              className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium border border-white/[0.08] text-white/50 hover:text-[var(--arc-brand-arcanean-gold)] hover:border-[var(--arc-brand-arcanean-gold)]/30 hover:bg-[var(--arc-brand-arcanean-gold)]/5 transition-all"
+              className="flex items-center gap-1 px-3 min-h-[44px] rounded-lg text-xs font-medium border border-white/[0.08] text-white/50 hover:text-[var(--arc-brand-arcanean-gold)] hover:border-[var(--arc-brand-arcanean-gold)]/30 hover:bg-[var(--arc-brand-arcanean-gold)]/5 transition-all"
               aria-label={`Star ${world.name}`}
             >
               <Star className="w-3.5 h-3.5" weight="fill" />
@@ -202,7 +202,7 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
             </button>
             <Link
               href={href}
-              className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-all"
+              className="flex items-center gap-1 px-3 min-h-[44px] rounded-lg text-xs font-medium bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-all"
             >
               Explore
               <ArrowRight className="w-3 h-3" />
@@ -247,6 +247,9 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
   const [activeMood, setActiveMood] = useState<WorldMood>("all");
   const [sortBy, setSortBy] = useState<SortOption>("stars");
   const [searchQuery, setSearchQuery] = useState("");
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  const prefersReduced = useReducedMotion() && mounted;
 
   const filteredWorlds = useMemo(() => {
     let results = [...worlds];
@@ -286,7 +289,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
 
           {/* Background orbs */}
           <div
-            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[var(--arc-brand-atlantean-teal)]/5 rounded-full blur-3xl animate-pulse pointer-events-none"
+            className={`absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[var(--arc-brand-atlantean-teal)]/5 rounded-full blur-3xl pointer-events-none ${prefersReduced ? "" : "animate-pulse"}`}
             aria-hidden="true"
           />
           <div
@@ -349,9 +352,9 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
-              {/* Mood pills */}
+              {/* Mood pills — scroll-snap on mobile */}
               <div
-                className="flex flex-wrap justify-center gap-2"
+                className="flex gap-2 overflow-x-auto pb-1 snap-x snap-mandatory sm:flex-wrap sm:justify-center sm:overflow-x-visible sm:pb-0"
                 role="tablist"
                 aria-label="Filter by mood"
               >
@@ -363,7 +366,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                       role="tab"
                       aria-selected={isActive}
                       onClick={() => setActiveMood(pill.key)}
-                      className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60 ${
+                      className={`px-4 min-h-[44px] shrink-0 snap-start rounded-xl text-sm font-medium transition-all duration-200 border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60 ${
                         isActive
                           ? "bg-[var(--arc-brand-atlantean-teal)]/15 border-[var(--arc-brand-atlantean-teal)]/40 text-[var(--arc-brand-atlantean-teal)] shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/10"
                           : "border-white/[0.08] text-white/50 hover:text-white/80 hover:border-white/[0.15] hover:bg-white/[0.03]"
@@ -482,19 +485,19 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                   and lore. Then share it for others to explore and fork.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <m.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+                  <m.div whileHover={{ scale: prefersReduced ? 1 : 1.04 }} whileTap={{ scale: prefersReduced ? 1 : 0.97 }}>
                     <Link
                       href="/worlds/create"
-                      className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
+                      className="inline-flex items-center gap-2 px-8 min-h-[44px] bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
                     >
                       Create a World
                       <Plus className="w-4 h-4" />
                     </Link>
                   </m.div>
-                  <m.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+                  <m.div whileHover={{ scale: prefersReduced ? 1 : 1.04 }} whileTap={{ scale: prefersReduced ? 1 : 0.97 }}>
                     <Link
                       href="/lore"
-                      className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/70 font-bold rounded-xl hover:bg-white/[0.04] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
+                      className="inline-flex items-center gap-2 px-8 min-h-[44px] border border-white/[0.1] text-white/70 font-bold rounded-xl hover:bg-white/[0.04] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
                     >
                       Explore Arcanea Lore
                       <ArrowRight className="w-4 h-4" />

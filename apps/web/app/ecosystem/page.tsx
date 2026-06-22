@@ -79,7 +79,7 @@ const LAYERS = [
     title: "arcanea.ai",
     subtitle: "The Product",
     accent: "var(--arc-brand-atlantean-teal)",
-    description: "Next.js 16, React 19, Vercel. The creative surface where users chat, imagine, build worlds, and publish.",
+    description: "Next.js 16 + React 19 on Vercel — where creators chat, build worlds, and publish.",
     stats: ["181 pages", "12 AI models", "16 Luminor personalities", "6 product layers"],
     features: ["Chat & Imagine", "Studio & Worlds", "Gallery & Feed", "Academy & Library"],
   },
@@ -87,7 +87,7 @@ const LAYERS = [
     title: "Intelligence Layer",
     subtitle: "The Brain",
     accent: "var(--arc-brand-cosmic-blue)",
-    description: "Multi-model orchestration, persistent memory, agent coordination, and repo-level context.",
+    description: "Multi-model orchestration, persistent memory, and agent coordination.",
     stats: ["SIS substrate", "MCP adapters", "release-triggered sync", "manual harness sync"],
     features: ["starlight-intelligence-system", "starlight", "oh-my-arcanea", "arcanea-orchestrator"],
   },
@@ -95,7 +95,7 @@ const LAYERS = [
     title: "Open Source",
     subtitle: "The Ecosystem",
     accent: "var(--arc-brand-arcanean-gold)",
-    description: "The public repos are forkable. Private production and unresolved historical entries are labeled instead of linked.",
+    description: "Forkable public repos, MIT-licensed — private and unresolved entries are labeled.",
     stats: [`${PUBLIC_REPO_SUMMARY.public} public repos`, `${PUBLIC_REPO_SUMMARY.private} private repo`, `${PUBLIC_REPO_SUMMARY.unresolved} unresolved`, `${PUBLIC_REPO_SUMMARY.upstream} upstream dependency`],
     features: ["arcanea", "oh-my-arcanea", "arcanea-code", "arcanea-vault"],
   },
@@ -163,7 +163,7 @@ export default function EcosystemHubPage() {
         <GridTexture variant="dots" opacity={0.018} />
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20">
+      <main className="container-page max-w-7xl pt-8 pb-20 safe-px">
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <section className="mb-20">
           <div className="relative rounded-3xl overflow-hidden bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] px-8 py-16 sm:px-14 sm:py-20">
@@ -207,12 +207,12 @@ export default function EcosystemHubPage() {
 
               <div className="flex flex-wrap gap-4">
                 <Magnetic>
-                  <a href="https://github.com/frankxai/arcanea" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--arc-brand-atlantean-teal)] text-black font-semibold hover:brightness-110 transition-all">
+                  <a href="https://github.com/frankxai/arcanea" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 min-h-[44px] rounded-xl bg-[var(--arc-brand-atlantean-teal)] text-black font-semibold hover:brightness-110 transition-all">
                     <IconGitBranch className="w-4 h-4" /> View on GitHub
                   </a>
                 </Magnetic>
                 <Magnetic>
-                  <Link href="/developers" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all">
+                  <Link href="/developers" className="inline-flex items-center gap-2 px-6 min-h-[44px] rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all">
                     Developer Docs <IconArrow className="w-4 h-4" />
                   </Link>
                 </Magnetic>
@@ -391,13 +391,13 @@ export default function EcosystemHubPage() {
               </div>
 
               <div className="flex flex-wrap justify-center gap-4">
-                <Link href="/developers" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--arc-brand-atlantean-teal)] text-black font-semibold hover:brightness-110 transition-all">
+                <Link href="/developers" className="inline-flex items-center gap-2 px-6 min-h-[44px] rounded-xl bg-[var(--arc-brand-atlantean-teal)] text-black font-semibold hover:brightness-110 transition-all">
                   API Documentation <IconArrow className="w-4 h-4" />
                 </Link>
-                <a href="https://github.com/frankxai/arcanea" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all">
+                <a href="https://github.com/frankxai/arcanea" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 min-h-[44px] rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all">
                   <IconGitBranch className="w-4 h-4" /> Contribute on GitHub
                 </a>
-                <Link href="/developers" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all">
+                <Link href="/developers" className="inline-flex items-center gap-2 px-6 min-h-[44px] rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all">
                   Developer Docs <IconArrow className="w-4 h-4" />
                 </Link>
               </div>

@@ -2,7 +2,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { LazyMotion, domAnimation, m, useScroll, useTransform } from "framer-motion";
+import { LazyMotion, domAnimation, m, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
@@ -106,6 +106,8 @@ function HeroPortal() {
     setIsLoaded(true);
   }, []);
 
+  const prefersReduced = useReducedMotion() && isLoaded;
+
   return (
     <LazyMotion features={domAnimation}>
     <section
@@ -155,7 +157,7 @@ function HeroPortal() {
       {/* Content */}
       <m.div
         className="relative z-10 w-full max-w-3xl mx-auto px-6"
-        style={{ y: contentY, opacity: contentOpacity }}
+        style={prefersReduced ? { y: 0, opacity: 1 } : { y: contentY, opacity: contentOpacity }}
       >
         <div className="flex flex-col items-center text-center">
           {/* Brand mark — small, elegant, no glow rings */}

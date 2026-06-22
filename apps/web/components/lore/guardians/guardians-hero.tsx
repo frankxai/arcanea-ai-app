@@ -1,16 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
-import { m } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { m, useReducedMotion } from 'framer-motion';
 import { PhShield } from '@/lib/phosphor-icons';
 
 export function GuardiansHero() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  const prefersReduced = useReducedMotion() && mounted;
+
   return (
     <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-24">
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-radial from-atlantean-teal-aqua/10 via-transparent to-transparent" />
 
-        {[...Array(10)].map((_, i) => {
+        {!prefersReduced && [...Array(10)].map((_, i) => {
           const angle = (i / 10) * Math.PI * 2;
           const radius = 300;
           const x = (Math.cos(angle) * radius).toFixed(3);
@@ -41,8 +46,8 @@ export function GuardiansHero() {
         })}
       </div>
 
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20 mb-6">
+      <div className="relative z-10 text-center px-6 safe-px max-w-4xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-4 min-h-[44px] rounded-full bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20 mb-6">
           <PhShield className="w-4 h-4 text-atlantean-teal-aqua" />
           <span className="text-sm font-medium text-atlantean-teal-aqua">
             Keepers of the Gates

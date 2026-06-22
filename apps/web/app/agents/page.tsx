@@ -474,7 +474,7 @@ export default function AgentsMarketplacePage() {
               <span
                 className="bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent"
               >
-                Meet the Luminors
+                Specialist agents,<br className="hidden sm:block" /> summoned on demand
               </span>
             </m.h1>
 
@@ -485,8 +485,8 @@ export default function AgentsMarketplacePage() {
               transition={{ duration: 0.6, delay: 0.18 }}
               className="text-center text-base md:text-xl text-white/50 max-w-2xl mx-auto mb-14 leading-relaxed font-body"
             >
-              16 specialized AI minds trained on 190K words of original philosophy.
-              Not generic chatbots — creative specialists.
+              Summon a Luminor for any creative domain. Each one carries 190K+ words of craft,
+              a distinct voice, and deep domain knowledge — not a generic chatbot, a specialist.
             </m.p>
 
             {/* Stats row */}
@@ -599,8 +599,12 @@ export default function AgentsMarketplacePage() {
               </p>
             </m.div>
 
-            {/* Category tabs — glass pills */}
-            <div className="flex flex-wrap justify-center gap-2 mb-8" role="tablist" aria-label="Agent categories">
+            {/* Category tabs — glass pills, scroll-snap on mobile */}
+            <div
+              className="flex gap-2 mb-8 overflow-x-auto pb-1 snap-x snap-mandatory scroll-px-6 sm:flex-wrap sm:justify-center sm:overflow-x-visible sm:pb-0"
+              role="tablist"
+              aria-label="Agent categories"
+            >
               {CATEGORY_TABS.map((tab) => {
                 const isActive = activeCategory === tab.key;
                 const count = tab.key === "all"
@@ -613,7 +617,7 @@ export default function AgentsMarketplacePage() {
                     aria-selected={isActive}
                     onClick={() => setActiveCategory(tab.key)}
                     className={`
-                      inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium
+                      inline-flex items-center gap-1.5 px-4 min-h-[44px] rounded-full text-xs font-medium shrink-0 snap-start
                       border backdrop-blur-sm transition-all duration-200
                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/50
                       ${isActive
@@ -778,7 +782,7 @@ export default function AgentsMarketplacePage() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" })}
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-semibold text-sm rounded-xl shadow-[0_0_24px_rgba(0,188,212,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60 transition-shadow hover:shadow-[0_0_32px_rgba(0,188,212,0.3)]"
+                  className="inline-flex items-center justify-center gap-2 px-8 min-h-[44px] bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-semibold text-sm rounded-xl shadow-[0_0_24px_rgba(0,188,212,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60 transition-shadow hover:shadow-[0_0_32px_rgba(0,188,212,0.3)]"
                 >
                   Browse All Agents
                 </m.button>
@@ -786,7 +790,7 @@ export default function AgentsMarketplacePage() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   href="/pricing"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-[var(--arc-brand-atlantean-teal)]/25 text-[var(--arc-brand-atlantean-teal)] font-semibold text-sm rounded-xl hover:bg-[var(--arc-brand-atlantean-teal)]/[0.06] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
+                  className="inline-flex items-center justify-center gap-2 px-8 min-h-[44px] border border-[var(--arc-brand-atlantean-teal)]/25 text-[var(--arc-brand-atlantean-teal)] font-semibold text-sm rounded-xl hover:bg-[var(--arc-brand-atlantean-teal)]/[0.06] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
                 >
                   Get Credits
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
