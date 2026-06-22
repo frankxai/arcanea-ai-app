@@ -467,6 +467,26 @@ When canon includes real-world traditions, **writers from those traditions must 
 
 ---
 
+## THE LEVIATHAN TIER — WILD GODBEASTS (STAGING ⏳)
+
+> *"Not every great beast knelt to a Gate. Some were already old when the Gates were young."*
+
+The Ten Gate Godbeasts are **bonded** — each sworn beside an Arcanean God. But beasts of **Nero's Unformed** existed before the bonding, titan-scale and sovereign to no Gate. These are the **Leviathans**, or **Wild Godbeasts**: unbonded, region-roaming, keeping their own sub-Gate frequencies — the wilderness to the Gates' civilization.
+
+This tier is the apex of the **Monster System** (`.arcanea/lore/creatures/MONSTER_SYSTEM.md`): **T0 Motes → T1 Beasts → T2 Shades → T3 Leviathans → T4 Gate Godbeasts**, with a Shadow corruption track at every tier.
+
+| Leviathan | Element | Resonance | Domain | Material | Status |
+|-----------|---------|-----------|--------|----------|--------|
+| **Nethyssa, the Abyss That Dreams** | Water + Void | Abyssal Hum (sub-Gate) | The Drowned Deep / the Sunless Fathom | Nethyss Pearl | ⏳ STAGING |
+
+**STAGING TRUTHS:**
+- Leviathans are **unbonded** — no God, no Guardian, no Gate. The locked Ten are **untouched**.
+- They are **Nero's Unformed**, not evil. Each has a Shadow-corruption counterpart (Nethyssa's is **the Drowned Shadow**, extinction-tier — parallel to the corrupted Gate dungeons).
+- The tier is **OPEN** for future Leviathans, each requiring Creator approval (same rule as Origin Classes).
+- **Nethyssa** is the first and flagship — kept *dreaming*, not slain, via the canon ritual **the Tidesong**. Profile: `.arcanea/lore/leviathans/nethyssa.md`.
+
+---
+
 ## EXTENSIBILITY PRINCIPLES (LOCKED ✅)
 
 1. **New entities must have Arcanean-quality names** (Lyssandria-tier)
@@ -514,6 +534,9 @@ When canon includes real-world traditions, **writers from those traditions must 
 | 2026-04-26 | Mirror Realm: Van Linh (Mirror of Vietnam, Unity Gate / 963 Hz) catalogued | ⏳ STAGING | — |
 | 2026-04-26 | Tu Linh as Godbeast Echoes — Earth-side Mirror Realm resonance pattern | ⏳ STAGING | — |
 | 2026-04-26 | Real-world mythologies canonical-as-Mirror (orisha, kami, Norse, etc. as future Mirror Realm extensions) | ⏳ STAGING | — |
+| 2026-06-22 | Monster System taxonomy (T0 Motes → T4 Gate Godbeasts + Shadow corruption track) | ⏳ STAGING | — |
+| 2026-06-22 | Leviathan tier: Wild Godbeasts (unbonded, outside the Ten Gates) | ⏳ STAGING | — |
+| 2026-06-22 | Nethyssa, the Abyss That Dreams (flagship Leviathan; Nethyss Pearl; the Drowned Shadow; the Tidesong) | ⏳ STAGING | — |
 
 ---
 

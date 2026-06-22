@@ -42,9 +42,16 @@ export type GodbeastName =
   | 'kyuro'
   | 'source';
 
+/**
+ * Leviathans — Tier 3 Wild Godbeasts (STAGING canon). Unbonded titans that
+ * roam outside the Ten Gates. Nethyssa is the flagship. See
+ * `.arcanea/lore/leviathans/` and CANON_LOCKED.md Tier 9.
+ */
+export type LeviathanName = 'nethyssa';
+
 export type ElementName = 'Earth' | 'Water' | 'Fire' | 'Air' | 'Wind' | 'Arcane' | 'Void' | 'Spirit';
 
-export type ImageCategory = 'guardians' | 'godbeasts' | 'gallery' | 'luminors';
+export type ImageCategory = 'guardians' | 'godbeasts' | 'gallery' | 'luminors' | 'leviathans';
 export type ImageVersion = 'v1' | 'v2' | 'v3';
 
 export interface ImageRecord {
@@ -56,6 +63,8 @@ export interface ImageRecord {
   guardian: GuardianName | null;
   /** Associated Godbeast (if applicable) */
   godbeast: GodbeastName | null;
+  /** Associated Leviathan / Wild Godbeast (Tier 3, if applicable) */
+  leviathan?: LeviathanName | null;
   /** Ten-Gate frequency */
   gate: string | null;
   /** Gate frequency in Hz */
@@ -224,6 +233,48 @@ function makeLuminor(entry: typeof LUMINOR_FILES[0]): ImageRecord {
   };
 }
 
+// ── Leviathan canon metadata (Tier 3 Wild Godbeasts — STAGING) ───────────────
+
+interface LeviathanMeta {
+  title: string;
+  domain: string;
+  element: ElementName;
+  /** Leviathan-tier material (analogue of a Guardian's Vael Crystal). */
+  material: string;
+  /** Asset variants present under /public/leviathans/. */
+  variants: string[];
+}
+
+const LEVIATHAN_META: Record<LeviathanName, LeviathanMeta> = {
+  nethyssa: {
+    title: 'the Abyss That Dreams',
+    domain: 'The Drowned Deep',
+    element: 'Water',
+    material: 'Nethyss Pearl',
+    variants: ['hero', 'full-body', 'world-boss', 'nft', 'pearl'],
+  },
+};
+
+function makeLeviathan(leviathan: LeviathanName, variant: string): ImageRecord {
+  const meta = LEVIATHAN_META[leviathan];
+  return {
+    url: `/leviathans/${leviathan}-${variant}.webp`,
+    name: `${capitalize(leviathan)} — ${variant}`,
+    guardian: null,
+    godbeast: null,
+    leviathan,
+    gate: null,
+    frequencyHz: null,
+    element: meta.element,
+    version: 'v1',
+    category: 'leviathans',
+    width: null,
+    height: null,
+  };
+}
+
+const LEVIATHAN_NAMES: LeviathanName[] = ['nethyssa'];
+
 function capitalize(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
@@ -254,6 +305,8 @@ export const MEDIA_REGISTRY: ImageRecord[] = [
   ),
   // luminors
   ...LUMINOR_FILES.map(makeLuminor),
+  // leviathans (Tier 3 Wild Godbeasts — STAGING; assets generated via harness packs)
+  ...LEVIATHAN_NAMES.flatMap((l) => LEVIATHAN_META[l].variants.map((v) => makeLeviathan(l, v))),
 ];
 
 // ── Helper functions ─────────────────────────────────────────────────────────
@@ -303,6 +356,25 @@ export function getGalleryImages(name: string): ImageRecord[] {
  */
 export function getLuminorImages(): ImageRecord[] {
   return MEDIA_REGISTRY.filter((r) => r.category === 'luminors');
+}
+
+/**
+ * Returns all image records for a given Leviathan (Tier 3 Wild Godbeast).
+ */
+export function getLeviathanImages(name: string): ImageRecord[] {
+  const key = name.toLowerCase() as LeviathanName;
+  return MEDIA_REGISTRY.filter((r) => r.leviathan === key);
+}
+
+/**
+ * Returns the hero image record for a Leviathan, falling back to its first variant.
+ */
+export function getLeviathanHero(name: string): ImageRecord | undefined {
+  const key = name.toLowerCase() as LeviathanName;
+  return (
+    MEDIA_REGISTRY.find((r) => r.leviathan === key && r.url.endsWith('-hero.webp')) ??
+    MEDIA_REGISTRY.find((r) => r.leviathan === key)
+  );
 }
 
 /**
