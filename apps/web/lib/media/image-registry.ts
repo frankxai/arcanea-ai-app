@@ -51,7 +51,7 @@ export type LeviathanName = 'nethyssa';
 
 export type ElementName = 'Earth' | 'Water' | 'Fire' | 'Air' | 'Wind' | 'Arcane' | 'Void' | 'Spirit';
 
-export type ImageCategory = 'guardians' | 'godbeasts' | 'gallery' | 'luminors' | 'leviathans';
+export type ImageCategory = 'guardians' | 'godbeasts' | 'gallery' | 'luminors' | 'leviathans' | 'nft';
 export type ImageVersion = 'v1' | 'v2' | 'v3';
 
 export interface ImageRecord {

@@ -481,7 +481,7 @@ This tier is the apex of the **Monster System** (`.arcanea/lore/creatures/MONSTE
 
 **STAGING TRUTHS:**
 - Leviathans are **unbonded** — no God, no Guardian, no Gate. The locked Ten are **untouched**.
-- They are **Nero's Unformed**, not evil. Each has a Shadow-corruption counterpart (Nethyssa's is **the Drowned Shadow**, extinction-tier — parallel to the corrupted Gate dungeons).
+- They are **Nero's Unformed** — unshaped, not corrupt. Each has a Shadow-corruption counterpart (Nethyssa's is **the Drowned Shadow**, extinction-tier — parallel to the corrupted Gate dungeons).
 - The tier is **OPEN** for future Leviathans, each requiring Creator approval (same rule as Origin Classes).
 - **Nethyssa** is the first and flagship — kept *dreaming*, not slain, via the canon ritual **the Tidesong**. Profile: `.arcanea/lore/leviathans/nethyssa.md`.
 

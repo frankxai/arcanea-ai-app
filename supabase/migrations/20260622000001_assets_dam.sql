@@ -14,6 +14,11 @@ CREATE TABLE IF NOT EXISTS public.assets (
   guardian TEXT,
   godbeast TEXT,
   leviathan TEXT,
+  CONSTRAINT check_single_subject CHECK (
+    (CASE WHEN guardian  IS NOT NULL THEN 1 ELSE 0 END +
+     CASE WHEN godbeast  IS NOT NULL THEN 1 ELSE 0 END +
+     CASE WHEN leviathan IS NOT NULL THEN 1 ELSE 0 END) <= 1
+  ),
   version TEXT NOT NULL DEFAULT 'v1',
   url TEXT NOT NULL,
   storage_path TEXT,
@@ -64,11 +69,21 @@ CREATE INDEX IF NOT EXISTS idx_asset_generations_action ON public.asset_generati
 
 ALTER TABLE public.asset_generations ENABLE ROW LEVEL SECURITY;
 
+-- The asset owner can read the full audit trail (incl. entries written by a
+-- council/system actor with a different creator_id); the actor can read theirs.
 CREATE POLICY "owners_read_own_generations" ON public.asset_generations
-  FOR SELECT USING (auth.uid() = creator_id);
+  FOR SELECT USING (
+    auth.uid() = creator_id
+    OR EXISTS (SELECT 1 FROM public.assets a WHERE a.id = asset_id AND a.creator_id = auth.uid())
+  );
 
+-- Must be the acting user AND own the referenced asset — prevents forging audit
+-- rows (fake approvals/mints) against another user's asset.
 CREATE POLICY "owners_insert_own_generations" ON public.asset_generations
-  FOR INSERT WITH CHECK (auth.uid() = creator_id);
+  FOR INSERT WITH CHECK (
+    auth.uid() = creator_id
+    AND EXISTS (SELECT 1 FROM public.assets a WHERE a.id = asset_id AND a.creator_id = auth.uid())
+  );
 
 -- ── updated_at trigger for assets ────────────────────────────────────────────
 CREATE OR REPLACE FUNCTION update_assets_updated_at()
