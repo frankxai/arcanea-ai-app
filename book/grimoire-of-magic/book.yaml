@@ -1,0 +1,27 @@
+title: "The Grimoire of Magic"
+subtitle: "The spell taxonomy of Arcanea — disciplines, tiers, and the grammar of casting"
+slug: grimoire-of-magic
+tier: featured
+status: in-progress
+language: en
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator
+  - name: Magic Intelligence System
+    role: co-author
+
+ai_transparency:
+  models_used:
+    - provider: anthropic
+      role: taxonomy-design-and-reference-drafting
+  human_contribution: 25%
+  ai_contribution: 75%
+  method: "Human direction (Frank): the magic system — three disciplines (Attack/Defense/Summoning) and a seven-tier scale (Light→Divine, from the German leichte→göttliche). AI: the schema, spell corpus, and reference prose, classified on four canon axes and aligned to Arcanea's locked cosmology (Five Elements, Ten Gates, Magic Ranks). Canon entered as STAGING, not LOCKED."
+
+license: CC-BY-NC-SA-4.0
+content_rating: all-ages
+tags: [reference, magic, spells, disciplines, tiers, taxonomy, canon-aligned]
+
+setting: "The Academy of Arcanea — the study of how magic is classified and cast"
