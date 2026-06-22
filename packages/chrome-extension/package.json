@@ -15,7 +15,7 @@
     "@arcanea/extension-core": "^0.3.0"
   },
   "devDependencies": {
-    "@types/chrome": "^0.1.42",
+    "@types/chrome": "^0.2.0",
     "esbuild": "^0.24.0",
     "pngjs": "^7.0.0",
     "typescript": "^5.9.3"
