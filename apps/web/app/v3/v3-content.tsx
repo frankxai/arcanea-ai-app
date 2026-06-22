@@ -106,7 +106,8 @@ function HeroPortal() {
     setIsLoaded(true);
   }, []);
 
-  const prefersReduced = useReducedMotion() && isLoaded;
+  const reducedMotion = useReducedMotion();
+  const prefersReduced = !isLoaded || !!reducedMotion;
 
   return (
     <LazyMotion features={domAnimation}>

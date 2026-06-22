@@ -249,7 +249,8 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
-  const prefersReduced = useReducedMotion() && mounted;
+  const reducedMotion = useReducedMotion();
+  const prefersReduced = !mounted || !!reducedMotion;
 
   const filteredWorlds = useMemo(() => {
     let results = [...worlds];

@@ -163,7 +163,7 @@ export default function EcosystemHubPage() {
         <GridTexture variant="dots" opacity={0.018} />
       </div>
 
-      <main className="container-page max-w-7xl pt-8 pb-20 safe-px">
+      <main className="container-page max-w-7xl pt-8 pb-20">
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <section className="mb-20">
           <div className="relative rounded-3xl overflow-hidden bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] px-8 py-16 sm:px-14 sm:py-20">

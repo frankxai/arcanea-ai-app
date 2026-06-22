@@ -63,7 +63,7 @@ export default async function SkillsMarketplacePage() {
       </SectionShell>
 
       {/* Contribute CTA */}
-      <section className="container-page max-w-4xl pb-24 safe-px">
+      <section className="container-page max-w-4xl pb-24">
         <FeatureCard glowColor="var(--arc-brand-atlantean-teal)" className="text-center">
           <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-[var(--arc-brand-atlantean-teal)]/70 mb-4">
             Open by design
@@ -81,7 +81,7 @@ export default async function SkillsMarketplacePage() {
               <Link
                 href="https://github.com/frankxai/arcanea/tree/main/skills/arcanea"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 min-h-[44px] rounded-xl bg-[var(--arc-brand-atlantean-teal)]/15 border border-[var(--arc-brand-atlantean-teal)]/30 text-[var(--arc-brand-atlantean-teal)] text-sm font-medium hover:bg-[var(--arc-brand-atlantean-teal)]/25 transition-colors"
               >
                 View on GitHub →

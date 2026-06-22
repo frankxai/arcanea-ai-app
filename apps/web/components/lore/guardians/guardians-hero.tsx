@@ -8,7 +8,8 @@ import { PhShield } from '@/lib/phosphor-icons';
 export function GuardiansHero() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
-  const prefersReduced = useReducedMotion() && mounted;
+  const reducedMotion = useReducedMotion();
+  const prefersReduced = !mounted || !!reducedMotion;
 
   return (
     <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-24">
@@ -46,7 +47,7 @@ export function GuardiansHero() {
         })}
       </div>
 
-      <div className="relative z-10 text-center px-6 safe-px max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <div className="inline-flex items-center gap-2 px-4 min-h-[44px] rounded-full bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20 mb-6">
           <PhShield className="w-4 h-4 text-atlantean-teal-aqua" />
           <span className="text-sm font-medium text-atlantean-teal-aqua">
