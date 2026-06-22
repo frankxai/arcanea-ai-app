@@ -12,7 +12,12 @@ export type Element = 'fire' | 'water' | 'earth' | 'wind' | 'void' | 'spirit';
 
 export type MagicRank = 'apprentice' | 'mage' | 'master' | 'archmage' | 'luminor';
 
-export type SpellTier = 'cantrip' | 'invocation' | 'ritual' | 'arcanum' | 'genesis';
+// Seven-tier power/sanctity scale (replaces legacy cantrip→genesis).
+// Mapping + gating: magic-intelligence-system/docs/MAGIC-PROTOCOLS.md
+export type SpellTier = 'light' | 'advanced' | 'greater' | 'sacred' | 'royal' | 'imperial' | 'divine';
+
+// The three disciplines of magic. Healing folds into defense; utility is a tag, not a discipline.
+export type Discipline = 'attack' | 'defense' | 'summoning';
 
 /* ----------------------------------------------------------------
  *  SPELLBOOK SYSTEM
@@ -23,6 +28,7 @@ export interface Spell {
   name: string;
   incantation: string; // e.g. "Lumina Forgia!", "Nero Revelum!"
   tier: SpellTier;
+  discipline?: Discipline; // attack | defense | summoning
   element: Element;
   description: string;
   effect: string; // What the spell does in challenge context
