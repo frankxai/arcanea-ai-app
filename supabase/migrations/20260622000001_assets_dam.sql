@@ -43,9 +43,23 @@ CREATE INDEX IF NOT EXISTS idx_assets_tags ON public.assets USING GIN (tags);
 
 ALTER TABLE public.assets ENABLE ROW LEVEL SECURITY;
 
--- Owners manage their own assets; approved/published assets are publicly readable.
-CREATE POLICY "owners_full_access" ON public.assets
-  FOR ALL USING (auth.uid() = creator_id);
+-- Owners can view, create, and delete their own assets.
+-- Status promotion to approved/published is reserved for a council/admin actor
+-- with an elevated role — the owner UPDATE policy intentionally excludes those
+-- values so no creator can self-approve under RLS.
+CREATE POLICY "owners_select" ON public.assets
+  FOR SELECT USING (auth.uid() = creator_id);
+
+CREATE POLICY "owners_insert" ON public.assets
+  FOR INSERT WITH CHECK (auth.uid() = creator_id);
+
+CREATE POLICY "owners_delete" ON public.assets
+  FOR DELETE USING (auth.uid() = creator_id);
+
+-- Owners may update only while status is still in the draft stage.
+CREATE POLICY "owners_update_drafts" ON public.assets
+  FOR UPDATE USING (auth.uid() = creator_id)
+  WITH CHECK (auth.uid() = creator_id AND status IN ('pending', 'review'));
 
 CREATE POLICY "public_assets_readable" ON public.assets
   FOR SELECT USING (status IN ('approved', 'published'));
@@ -86,15 +100,9 @@ CREATE POLICY "owners_insert_own_generations" ON public.asset_generations
   );
 
 -- ── updated_at trigger for assets ────────────────────────────────────────────
-CREATE OR REPLACE FUNCTION update_assets_updated_at()
-RETURNS TRIGGER AS $$
-BEGIN
-  NEW.updated_at = now();
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
+-- Reuse the shared update_updated_at_column() function (defined in the base
+-- schema migration) rather than a near-identical private function.
 DROP TRIGGER IF EXISTS trg_assets_updated_at ON public.assets;
 CREATE TRIGGER trg_assets_updated_at
   BEFORE UPDATE ON public.assets
-  FOR EACH ROW EXECUTE FUNCTION update_assets_updated_at();
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

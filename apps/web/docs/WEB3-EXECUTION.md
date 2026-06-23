@@ -30,7 +30,7 @@ These two files define the **shape** of the real integration. The plan below is:
 
 ## NFT collection spec
 
-Reuses the `/nft-creation` framework (Concept → Art System → Metadata → Narrative → Utility). The Arcanean collections already defined there:
+Reuses the `/nft-strategy` framework (Concept → Art System → Metadata → Narrative → Utility). The Arcanean collections already defined there:
 
 | Collection | Supply | Notes |
 |---|---|---|
@@ -63,7 +63,7 @@ Leviathan metadata template (Nethyssa worked example):
 }
 ```
 
-`Gate: None` is deliberate — it encodes, on-chain, that Leviathans sit outside the ten-Gate system. (Canon for Nethyssa is STAGING; do not mint on mainnet until locked — see WORKFLOWS.md.)
+`Gate: None` is deliberate — it encodes, on-chain, that Leviathans sit outside the ten-Gate system. (Canon for Nethyssa is STAGING; do not mint on mainnet until Frank runs `/lock-decision` on the Nethyssa STAGING block.)
 
 ---
 
@@ -135,7 +135,7 @@ Legend: ✅ works (as mock) · ⚠️ partial / intent only · ❌ not implement
 
 Step 5 is the join point with the DAM layer: the `asset_generations` audit table (see DAM.md) records not just the *image* generation but the *on-chain* lineage — which CID, which token, which IPA, which (testnet) tx. One asset's full life — generated → reviewed → published → minted → IP-registered — is reconstructable from its `asset_id`.
 
-**Nethyssa is the worked example.** She threads the lore loop (STAGING canon), the asset loop (`/leviathans/nethyssa-v1.webp` → council → published), and this web3 loop (first Leviathan 1/1 → IPFS → testnet mint → Story IP-register). She does not mint on mainnet until her canon is locked.
+**Nethyssa is the worked example.** She threads the lore loop (STAGING canon), the asset loop (`/leviathans/nethyssa-hero.webp` → council → published), and this web3 loop (first Leviathan 1/1 → IPFS → testnet mint → Story IP-register). She does not mint on mainnet until her canon is locked.
 
 ---
 
@@ -143,8 +143,8 @@ Step 5 is the join point with the DAM layer: the `asset_generations` audit table
 
 - Mock AA service: `apps/web/lib/web3/account-abstraction.ts`
 - Mock Story Protocol service: `apps/web/lib/web3/story-protocol.ts`
-- NFT framework + Arcanean collections: `.claude/commands/nft-creation.md`
+- NFT framework + Arcanean collections: invoke `/nft-strategy` from the ACOS command set
 - DAM pipeline + `assets` / `asset_generations` schema: `apps/web/docs/DAM.md`
-- The three recurring loops: `.arcanea/WORKFLOWS.md`
+- Lore loop (STAGING → LOCKED): `.arcanea/lore/CANON_LOCKED.md` (run `/lock-decision` to promote)
 
 Built on SIP.

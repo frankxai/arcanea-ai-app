@@ -136,9 +136,9 @@ The contract is the type, not the literal. As long as `ImageRecord` and the help
 
 Nethyssa is the first **Leviathan** — a new flagship tier of Wild Godbeast, distinct from the ten Gate Godbeasts. Leviathans are **not** Gate-bound: they have no guardian, no frequency, no gate. This is why the existing guardian-keyed registry builders don't fit them and why `leviathans` is its own category.
 
-**Canon status: STAGING.** Nethyssa is not yet LOCKED in `CANON_LOCKED.md`. Treat her as provisional until `/lock-decision` lands (see WORKFLOWS.md, Lore loop).
+**Canon status: STAGING.** Nethyssa is not yet LOCKED in `CANON_LOCKED.md`. Treat her as provisional until Frank runs `/lock-decision` on the Nethyssa STAGING block.
 
-Asset path: `/leviathans/{name}-{version}.webp` → bucket `arcanea-gallery/leviathans/...`. First asset: `/leviathans/nethyssa-v1.webp`.
+Asset path: `/leviathans/{name}-{variant}.webp` → bucket `arcanea-gallery/leviathans/...`. First asset: `/leviathans/nethyssa-hero.webp`.
 
 `assets` row shape for Nethyssa:
 
@@ -148,7 +148,7 @@ guardian:     null
 godbeast:     null
 leviathan:    'nethyssa'
 version:      'v1'
-storage_path: 'leviathans/nethyssa-v1.webp'
+storage_path: 'leviathans/nethyssa-hero.webp'
 status:       'pending'   → council → 'published'
 harness:      e.g. 'nano-banana-pro'
 ```
@@ -174,6 +174,6 @@ The Leviathan tier carries its own signature material, used for NFT trait metada
 - Registry + types + helpers: `apps/web/lib/media/image-registry.ts`
 - Upload service + buckets: `apps/web/lib/media/supabase-upload.ts`
 - Web3 mint / IP-register loop: `apps/web/docs/WEB3-EXECUTION.md`
-- The three recurring loops (lore / asset / web3): `.arcanea/WORKFLOWS.md`
+- The three recurring loops (lore / asset / web3): documented in `WEB3-EXECUTION.md` and the lore canon files under `.arcanea/lore/`
 
 Built on SIP.
