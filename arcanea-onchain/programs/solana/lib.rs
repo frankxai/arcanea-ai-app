@@ -23,6 +23,8 @@ pub mod arcanea_swarm {
     /// Register a swarm's revenue split. `bps` must sum to exactly 10000.
     pub fn set_recipients(ctx: Context<SetRecipients>, recipients: Vec<Recipient>) -> Result<()> {
         require!(!recipients.is_empty(), SwarmError::NoRecipients);
+        // Account space is allocated for at most 8 recipients (see SetRecipients).
+        require!(recipients.len() <= 8, SwarmError::TooManyRecipients);
         let sum: u32 = recipients.iter().map(|r| r.bps as u32).sum();
         require!(sum as u16 == BPS_TOTAL, SwarmError::BadSplit);
 
@@ -105,6 +107,8 @@ pub enum SwarmError {
     NoRecipients,
     #[msg("recipient bps must sum to exactly 10000")]
     BadSplit,
+    #[msg("at most 8 recipients are supported")]
+    TooManyRecipients,
     #[msg("amount must be greater than zero")]
     ZeroAmount,
 }

@@ -35,6 +35,7 @@ contract RoyaltyRouter is Ownable, ReentrancyGuard {
     error NoRecipients();
     error BadSplit(uint256 sum);
     error ZeroAmount();
+    error ZeroAddress();
     error NativeTransferFailed(address to);
 
     constructor(address initialOwner) Ownable(initialOwner) {}
@@ -44,6 +45,7 @@ contract RoyaltyRouter is Ownable, ReentrancyGuard {
         if (recips.length == 0) revert NoRecipients();
         uint256 sum;
         for (uint256 i; i < recips.length; ++i) {
+            if (recips[i].account == address(0)) revert ZeroAddress();
             sum += recips[i].bps;
         }
         if (sum != BPS_TOTAL) revert BadSplit(sum);
@@ -67,9 +69,11 @@ contract RoyaltyRouter is Ownable, ReentrancyGuard {
                 ? msg.value - distributed // last recipient absorbs rounding dust
                 : (msg.value * recips[i].bps) / BPS_TOTAL;
             distributed += share;
-            (bool ok,) = recips[i].account.call{value: share}("");
-            if (!ok) revert NativeTransferFailed(recips[i].account);
-            emit Paid(swarmId, recips[i].account, share);
+            if (share > 0) {
+                (bool ok,) = recips[i].account.call{value: share}("");
+                if (!ok) revert NativeTransferFailed(recips[i].account);
+                emit Paid(swarmId, recips[i].account, share);
+            }
         }
         emit RoutedNative(swarmId, msg.sender, msg.value);
     }
@@ -88,8 +92,10 @@ contract RoyaltyRouter is Ownable, ReentrancyGuard {
                 ? amount - distributed
                 : (amount * recips[i].bps) / BPS_TOTAL;
             distributed += share;
-            IERC20(token).safeTransfer(recips[i].account, share);
-            emit Paid(swarmId, recips[i].account, share);
+            if (share > 0) {
+                IERC20(token).safeTransfer(recips[i].account, share);
+                emit Paid(swarmId, recips[i].account, share);
+            }
         }
         emit RoutedERC20(swarmId, token, msg.sender, amount);
     }

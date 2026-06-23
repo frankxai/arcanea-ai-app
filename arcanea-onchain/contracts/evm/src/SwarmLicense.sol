@@ -54,7 +54,10 @@ contract SwarmLicense is ERC721, ERC2981, Ownable, ReentrancyGuard {
         if (msg.value != s.licensePrice) revert WrongPayment(s.licensePrice, msg.value);
 
         tokenId = _issue(swarmId, to, s.creator, s.licensePrice);
-        router.routeNative{value: msg.value}(swarmId);
+        // Free swarms (price 0) skip routing — the router rejects zero-value sends.
+        if (msg.value > 0) {
+            router.routeNative{value: msg.value}(swarmId);
+        }
     }
 
     /// @notice Mint a license paying in the ERC-20 settlement token (USDC).
@@ -63,11 +66,16 @@ contract SwarmLicense is ERC721, ERC2981, Ownable, ReentrancyGuard {
         SwarmRegistry.Swarm memory s = registry.getSwarm(swarmId);
         if (!s.active) revert NotActive();
 
-        // Pull funds in, approve the router, and let it split.
-        IERC20(settlementToken).safeTransferFrom(msg.sender, address(this), s.licensePrice);
-        IERC20(settlementToken).forceApprove(address(router), s.licensePrice);
         tokenId = _issue(swarmId, to, s.creator, s.licensePrice);
-        router.routeERC20(swarmId, settlementToken, s.licensePrice);
+        // Free swarms (price 0) mint without settlement. A priced swarm requires a
+        // configured ERC-20 settlement token.
+        if (s.licensePrice > 0) {
+            if (settlementToken == address(0)) revert WrongPayment(s.licensePrice, 0);
+            // Pull funds in, approve the router, and let it split.
+            IERC20(settlementToken).safeTransferFrom(msg.sender, address(this), s.licensePrice);
+            IERC20(settlementToken).forceApprove(address(router), s.licensePrice);
+            router.routeERC20(swarmId, settlementToken, s.licensePrice);
+        }
     }
 
     function _issue(bytes32 swarmId, address to, address creator, uint256 price)
