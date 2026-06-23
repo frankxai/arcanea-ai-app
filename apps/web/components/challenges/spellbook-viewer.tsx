@@ -9,11 +9,13 @@ import {
 import type { Spellbook, Spell, SpellTier } from '@/lib/types/challenge';
 
 const TIER_LABELS: Record<SpellTier, { label: string; color: string; glow: string }> = {
-  cantrip: { label: 'Cantrip', color: 'var(--arc-earth)', glow: 'rgba(107,114,128,0.3)' },
-  invocation: { label: 'Invocation', color: 'var(--arc-brand-cosmic-blue)', glow: 'rgba(96,165,250,0.3)' },
-  ritual: { label: 'Ritual', color: 'var(--arc-void)', glow: 'rgba(167,139,250,0.3)' },
-  arcanum: { label: 'Arcanum', color: 'var(--arc-brand-arcanean-gold)', glow: 'rgba(245,158,11,0.3)' },
-  genesis: { label: 'Genesis', color: 'var(--arc-brand-arcanean-gold)', glow: 'rgba(255,215,0,0.4)' },
+  light: { label: 'Light', color: 'var(--arc-earth)', glow: 'rgba(107,114,128,0.3)' },
+  advanced: { label: 'Advanced', color: 'var(--arc-brand-cosmic-blue)', glow: 'rgba(96,165,250,0.3)' },
+  greater: { label: 'Greater', color: 'var(--arc-void)', glow: 'rgba(167,139,250,0.3)' },
+  sacred: { label: 'Sacred', color: 'var(--arc-brand-arcanean-gold)', glow: 'rgba(245,158,11,0.3)' },
+  royal: { label: 'Royal', color: 'var(--arc-brand-arcanean-gold)', glow: 'rgba(245,158,11,0.4)' },
+  imperial: { label: 'Imperial', color: 'var(--arc-brand-atlantean-teal)', glow: 'rgba(0,188,212,0.4)' },
+  divine: { label: 'Divine', color: 'var(--arc-brand-arcanean-gold)', glow: 'rgba(255,215,0,0.45)' },
 };
 
 const ICON_MAP: Record<string, React.ComponentType<Record<string, unknown>>> = {
