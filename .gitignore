@@ -171,7 +171,7 @@ arcanea-infogenius/
 arcanea-library-superintelligence/
 arcanea-luminor/
 arcanea-mobile/
-arcanea-onchain/
+# arcanea-onchain/ is now an in-repo workspace (web3 swarm marketplace) — tracked
 arcanea-opencode/
 arcanea-orchestrator/
 arcanea-records/
