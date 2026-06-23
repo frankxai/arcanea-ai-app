@@ -74,7 +74,7 @@ jobs:
 
       - name: Install Playwright + Chromium
         run: |
-          npm install -g playwright@latest
+          npm install playwright@latest
           npx playwright install chromium --with-deps
 
       - name: Screenshot key routes
@@ -83,13 +83,13 @@ jobs:
         run: |
           mkdir -p screenshots
           node - <<'JSEOF'
-          const { chromium } = require('playwright');
           const BASE = (process.env.PREVIEW_URL || '').replace(/\/$/, '');
           if (!BASE) {
             console.error('No PREVIEW_URL set — skipping screenshots.');
             require('fs').writeFileSync('screenshots/SKIPPED.txt', 'No preview URL available.');
             process.exit(0);
           }
+          const { chromium } = require('playwright');
           const routes = [
             { path: '/', name: 'home' },
             { path: '/worlds', name: 'worlds' },
