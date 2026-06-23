@@ -74,7 +74,7 @@ jobs:
 
       - name: Install Playwright + Chromium
         run: |
-          npm install playwright@latest
+          npm install -g playwright@latest
           npx playwright install chromium --with-deps
 
       - name: Screenshot key routes
@@ -82,7 +82,7 @@ jobs:
           PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
         run: |
           mkdir -p screenshots
-          node - <<'JSEOF'
+          NODE_PATH=$(npm root -g) node - <<'JSEOF'
           const BASE = (process.env.PREVIEW_URL || '').replace(/\/$/, '');
           if (!BASE) {
             console.error('No PREVIEW_URL set — skipping screenshots.');
