@@ -11,7 +11,7 @@ const STEPS = [
     number: "01",
     title: "Imagine",
     description:
-      "Type one sentence. Sixteen specialized Luminors help you write, paint, compose, and build — each trained on 190K words of creative philosophy.",
+      "Type one sentence. Thirteen configured Luminors help you write, paint, compose, and build - each grounded in 190K words of creative philosophy.",
     accent: stepAccents.imagine,
     href: "/chat",
   },

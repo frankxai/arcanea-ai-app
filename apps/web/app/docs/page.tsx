@@ -66,7 +66,7 @@ const API_SECTIONS = [
   },
   {
     title: 'Luminor Intelligence',
-    description: 'Access the 16 Luminor companions for domain-specific creative guidance.',
+    description: 'Access the 13 configured Luminor specialists for domain-specific creative guidance.',
     href: '/luminors',
     icon: PhCompass,
     color: 'var(--arc-brand-arcanean-gold)',

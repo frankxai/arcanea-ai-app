@@ -67,7 +67,7 @@ const CREATOR = {
   username: "frankxai",
   displayName: "Frank",
   tagline: "Building sovereign creative intelligence",
-  bio: "Creator of Arcanea. 16 Luminors. 27 open-source repos. Believer in BYOK, open protocols, and world-building as a craft.",
+  bio: "Creator of Arcanea. 13 configured Luminors. 6 public open-source repos. Believer in BYOK, open protocols, and world-building as a craft.",
   gate: "Source",
   rank: "Luminor",
   worldsBuilt: 12,
