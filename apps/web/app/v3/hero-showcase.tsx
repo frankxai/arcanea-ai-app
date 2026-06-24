@@ -132,10 +132,6 @@ function ShowcaseCard({
     <Link href={card.href} className="block">
       <m.div
         className="group relative w-full sm:w-[280px] rounded-2xl overflow-hidden cursor-pointer"
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
         whileHover={{
           scale: 1.04,
           y: -4,
@@ -241,10 +237,6 @@ export function HeroShowcase() {
       {/* Section heading */}
       <m.p
         className="text-center text-[10px] font-mono uppercase tracking-[0.25em] text-white/20 mb-10"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
       >
         Every prompt becomes a connected artifact
       </m.p>
@@ -263,10 +255,6 @@ export function HeroShowcase() {
       {/* Caption */}
       <m.p
         className="text-center mt-10 text-sm text-white/20 font-body"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.8 }}
       >
         Portals, godbeasts, dragon-rider sagas, cinema, and agent workflows share one creation layer.
       </m.p>

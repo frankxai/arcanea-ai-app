@@ -6,6 +6,8 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import matter from 'gray-matter';
 import ChatMarkdown from '@/components/chat/chat-markdown';
+import { getBookRoot } from '@/lib/content/book-path';
+const BOOK_ROOT = getBookRoot();
 
 export const dynamic = 'force-dynamic';
 
@@ -16,23 +18,23 @@ export const dynamic = 'force-dynamic';
 const BOOK_ROOTS: Record<string, { title: string; root: string }> = {
   'forge-of-ruin': {
     title: 'The Forge of Ruin',
-    root: join(process.cwd(), '..', '..', 'book', 'forge-of-ruin'),
+    root: join(BOOK_ROOT, 'forge-of-ruin'),
   },
   'tides-of-silence': {
     title: 'The Tides of Silence',
-    root: join(process.cwd(), '..', '..', 'book', 'tides-of-silence'),
+    root: join(BOOK_ROOT, 'tides-of-silence'),
   },
   'heart-of-pyrathis': {
     title: 'The Heart of Pyrathis',
-    root: join(process.cwd(), '..', '..', 'book', 'heart-of-pyrathis'),
+    root: join(BOOK_ROOT, 'heart-of-pyrathis'),
   },
   'song-of-van-linh': {
     title: 'The Girl Who Heard the River',
-    root: join(process.cwd(), '..', '..', 'book', 'song-of-van-linh'),
+    root: join(BOOK_ROOT, 'song-of-van-linh'),
   },
   'las-tierras-de-luz': {
     title: 'Las Tierras de Luz',
-    root: join(process.cwd(), '..', '..', 'book', 'las-tierras-de-luz'),
+    root: join(BOOK_ROOT, 'las-tierras-de-luz'),
   },
 };
 

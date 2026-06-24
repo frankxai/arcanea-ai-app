@@ -74,7 +74,13 @@ export default function ChatPage() {
   const resolvedAgent = activeAgent?.type === 'luminor' ? (() => {
     const l = getLuminor(activeAgent.id);
     return l ? { type: 'luminor' as const, id: l.id, name: l.name, avatar: l.avatar, specialty: l.specialty } : null;
-  })() : null;
+  })() : conversation.activeLuminor ? {
+    type: 'luminor' as const,
+    id: conversation.activeLuminor.id,
+    name: conversation.activeLuminor.name,
+    avatar: conversation.activeLuminor.avatar ?? conversation.activeLuminor.name.slice(0, 1),
+    specialty: conversation.activeLuminor.tagline ?? conversation.activeLuminor.title,
+  } : null;
 
   // Hero prompt handoff — read ?prompt= from URL and auto-populate input
   const promptConsumed = useRef(false);
@@ -83,8 +89,14 @@ export default function ChatPage() {
     const prompt = searchParams.get('prompt');
     if (prompt && prompt.trim()) {
       promptConsumed.current = true;
-      setPendingInput(prompt.trim());
-      window.history.replaceState(null, '', '/chat');
+      if (searchParams.get('auto') !== '1') {
+        setPendingInput(prompt.trim());
+      }
+      const params = new URLSearchParams(window.location.search);
+      params.delete('prompt');
+      params.delete('auto');
+      const nextUrl = params.toString() ? `/chat?${params.toString()}` : '/chat';
+      window.history.replaceState(null, '', nextUrl);
     }
   }, [searchParams]);
 
@@ -468,8 +480,16 @@ export default function ChatPage() {
       <AgentPicker
         open={showAgentPicker}
         onClose={() => setShowAgentPicker(false)}
-        onSelect={(agent) => setActiveAgent(agent)}
-        currentAgentId={activeAgent?.id}
+        onSelect={(agent) => {
+          setActiveAgent(agent);
+          if (agent.type === 'luminor') {
+            const luminor = getLuminor(agent.id);
+            if (luminor) conversation.handleSelectLuminor(luminor);
+          } else {
+            conversation.clearActiveLuminor();
+          }
+        }}
+        currentAgentId={activeAgent?.id ?? conversation.activeLuminor?.id}
       />
 
       {activeArtifact && (

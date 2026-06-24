@@ -39,7 +39,7 @@ export function ReviewForm({ bookSlug, existingRating, onSubmit }: ReviewFormPro
   useEffect(() => {
     let cancelled = false;
     const supabase = createClient();
-    supabase.auth.getUser().then(({ data }) => {
+    supabase.auth.getUser().then(({ data }: any) => {
       if (cancelled) return;
       setAuthed(!!data.user);
       setAuthChecked(true);

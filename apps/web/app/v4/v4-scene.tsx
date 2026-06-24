@@ -6,6 +6,13 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Points, PointMaterial } from "@react-three/drei";
 import { type ComponentRef, useMemo, useRef } from "react";
 
+const THREE_COLORS = {
+  atlanteanTeal: "#00bcd4",
+  cosmicVoid: "#060b17",
+  textPrimary: "#f8fafc",
+  void: "#a78bfa",
+} as const;
+
 type RotatingObject = {
   rotation: { x: number; y: number; z: number };
 };
@@ -32,7 +39,7 @@ function Stars({ count = 1100 }: { count?: number }) {
     <Points ref={ref} positions={positions} stride={3}>
       <PointMaterial
         transparent
-        color="var(--arc-text-primary)"
+        color={THREE_COLORS.textPrimary}
         size={0.03}
         sizeAttenuation
         depthWrite={false}
@@ -62,21 +69,21 @@ function CoreCrystal() {
         <mesh ref={ref}>
           <icosahedronGeometry args={[1.1, 1]} />
           <meshPhysicalMaterial
-            color="var(--arc-text-primary)"
+            color={THREE_COLORS.textPrimary}
             transmission={0.9}
             roughness={0.08}
             thickness={1.2}
             ior={1.45}
             clearcoat={1}
             clearcoatRoughness={0.08}
-            emissive="var(--arc-brand-atlantean-teal)"
+            emissive={THREE_COLORS.atlanteanTeal}
             emissiveIntensity={0.18}
           />
         </mesh>
       </Float>
       <mesh ref={ringRef} scale={2.1} rotation={[Math.PI / 2.4, 0, 0.4]}>
         <torusGeometry args={[1.2, 0.022, 20, 180]} />
-        <meshStandardMaterial color="var(--arc-text-primary)" emissive="var(--arc-void)" emissiveIntensity={0.35} />
+        <meshStandardMaterial color={THREE_COLORS.textPrimary} emissive={THREE_COLORS.void} emissiveIntensity={0.35} />
       </mesh>
     </group>
   );
@@ -90,11 +97,11 @@ export function V4Scene() {
         gl={{ antialias: true, alpha: true }}
         camera={{ position: [0, 0, 6.2], fov: 48 }}
       >
-        <color attach="background" args={["var(--arc-cosmic-void)"]} />
-        <fog attach="fog" args={["var(--arc-cosmic-void)", 5.5, 19]} />
+        <color attach="background" args={[THREE_COLORS.cosmicVoid]} />
+        <fog attach="fog" args={[THREE_COLORS.cosmicVoid, 5.5, 19]} />
         <ambientLight intensity={0.62} />
-        <directionalLight position={[3, 2.5, 4]} intensity={1.2} color="var(--arc-text-primary)" />
-        <directionalLight position={[-3, -2, -3]} intensity={0.5} color="var(--arc-void)" />
+        <directionalLight position={[3, 2.5, 4]} intensity={1.2} color={THREE_COLORS.textPrimary} />
+        <directionalLight position={[-3, -2, -3]} intensity={0.5} color={THREE_COLORS.void} />
         <Stars />
         <CoreCrystal />
       </Canvas>

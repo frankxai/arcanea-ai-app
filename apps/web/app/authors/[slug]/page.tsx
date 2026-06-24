@@ -6,11 +6,12 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import matter from 'gray-matter';
+import { getBookRoot } from '@/lib/content/book-path';
 
 export const dynamic = 'force-dynamic';
 export const dynamicParams = false;
 
-const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
+const BOOK_ROOT = getBookRoot();
 
 const COVER_MAP: Record<string, string> = {
   'forge-of-ruin': '/images/books/forge-of-ruin-cover-nb2.png',

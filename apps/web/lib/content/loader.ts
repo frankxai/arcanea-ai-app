@@ -12,6 +12,7 @@
 
 import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
+import { getBookRoot } from './book-path';
 
 import grayMatter from 'gray-matter';
 import {
@@ -38,7 +39,7 @@ function parseFrontmatter(source: string) {
 // CONFIGURATION
 // ============================================
 
-const CONTENT_DIR = join(process.cwd(), '..', '..', 'book');
+const CONTENT_DIR = getBookRoot();
 
 // Collection metadata (matches README.md structure)
 export const COLLECTIONS: Collection[] = [

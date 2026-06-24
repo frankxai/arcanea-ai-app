@@ -24,7 +24,7 @@ import { roleAccents, teamAccents } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
 // LuminorTeamPreview — Compact grid of the 13 Chosen with hover reveal.
-// Homepage section that makes "16 specialists" concrete, not abstract.
+// Homepage section that makes the configured specialist agents concrete.
 // ---------------------------------------------------------------------------
 
 interface Luminor {
@@ -74,7 +74,7 @@ export function LuminorTeamPreview() {
 
   return (
     <div>
-      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-13 gap-2 md:gap-3">
+      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 lg:[grid-template-columns:repeat(13,minmax(0,1fr))] gap-2 md:gap-3">
         {LUMINORS.map((l, i) => {
           const isHovered = hovered === l.id;
           const Icon = l.Icon;

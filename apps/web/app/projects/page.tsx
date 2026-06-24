@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   description: 'Browse Arcanea workspaces that connect chats, creations, memories, and graph context.',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProjectsIndexPage() {
   const supabase = await createClient();
   const {

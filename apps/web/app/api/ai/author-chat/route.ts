@@ -16,8 +16,9 @@ import { join } from 'path';
 import yaml from 'js-yaml';
 import { scoreTASTE } from '@arcanea/publishing-house/quality/taste-gate';
 import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
+import { getBookRoot } from '@/lib/content/book-path';
 
-const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
+const BOOK_ROOT = getBookRoot();
 
 const AUTHOR_RATE_LIMIT = { maxRequests: 20, windowMs: 60_000 }; // 20 req/min
 

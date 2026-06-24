@@ -16,6 +16,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/worlds" },
 };
 
+export const dynamic = "force-dynamic";
+
 // ---------------------------------------------------------------------------
 // Template worlds — always available as fallback
 // ---------------------------------------------------------------------------
@@ -147,7 +149,7 @@ export default async function WorldsPage() {
       .limit(20);
 
     if (data && data.length > 0) {
-      dbWorlds = data.map((row) => mapRowToCard(row as unknown as WorldRow));
+      dbWorlds = data.map((row: any) => mapRowToCard(row as unknown as WorldRow));
     }
   } catch {
     // Supabase not available or table doesn't exist yet — use templates only

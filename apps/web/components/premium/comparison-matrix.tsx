@@ -117,8 +117,8 @@ export function ComparisonMatrix() {
     <div className="relative rounded-2xl overflow-hidden bg-white/[0.02] border border-white/[0.06] backdrop-blur-sm">
       {/* Highlight column background for Arcanea */}
       <div
-        className="pointer-events-none absolute top-0 bottom-0 bg-gradient-to-b from-[var(--arc-brand-atlantean-teal)]/[0.04] via-[var(--arc-brand-atlantean-teal)]/[0.02] to-transparent"
-        style={{ left: "calc(40% + 0px)", width: "calc(15% - 4px)" }}
+        className="pointer-events-none absolute top-0 bottom-0 bg-gradient-to-b from-[var(--arc-brand-atlantean-teal)]/[0.04] via-[var(--arc-brand-atlantean-teal)]/[0.02] to-transparent border-x border-[var(--arc-brand-atlantean-teal)]/[0.05]"
+        style={{ left: "33.333%", width: "16.667%" }}
       />
 
       {/* Desktop table */}

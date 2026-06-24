@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import { getMultiverseStats } from '@/lib/worlds/world-stats';
 
-export const revalidate = 120; // ISR: revalidate every 2 minutes
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {

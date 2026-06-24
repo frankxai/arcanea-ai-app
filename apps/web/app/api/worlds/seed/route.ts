@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       .select('slug')
       .in('slug', SEED_WORLDS.map((w) => w.slug));
 
-    const existingSlugs = new Set((existing ?? []).map((r) => r.slug));
+    const existingSlugs = new Set((existing ?? []).map((r: any) => r.slug));
 
     const toInsert = SEED_WORLDS.filter((w) => !existingSlugs.has(w.slug));
 
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       inserted: data?.length ?? 0,
       skipped: existingSlugs.size,
-      slugs: data?.map((r) => r.slug) ?? [],
+      slugs: data?.map((r: any) => r.slug) ?? [],
     });
   } catch (error) {
     console.error('[worlds seed POST] Error:', error);

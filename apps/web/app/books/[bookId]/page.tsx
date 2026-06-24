@@ -4,6 +4,8 @@ import { join } from 'path';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import { getBookRoot } from '@/lib/content/book-path';
+const BOOK_ROOT = getBookRoot();
 
 export const dynamic = 'force-dynamic';
 
@@ -28,7 +30,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'In the coastal town of Ashenmere, a lighthouse keeper named Kael discovers they can channel all five elements — something no one has done since Malachar, the Dark Lord who fell ten thousand years ago. Recruited to an unprecedented joint session at all three Academies, Kael must navigate rivalries, ancient secrets, and the whisper of a sealed darkness that recognizes them.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'chapters', 'book1'),
+    dir: join(BOOK_ROOT, 'chapters', 'book1'),
   },
   book2: {
     title: 'The Gate-Touched',
@@ -36,7 +38,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'The Registry tracks every channeler in the realm — but not everyone wants to be found. As Gate-Touched manifest across Arcanea, Sable uncovers an Eldrian memory-vial that rewrites everything, and Orin runs an underground railroad while someone erases the evidence that Five-Fold channelers have existed before.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
+    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
   },
   book3: {
     title: 'The Dragon War',
@@ -44,7 +46,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'A Dragon egg sings for the first time in a thousand years. Nations scramble to claim the hatching. Kael journeys to the Draconis Forge as Malachar\'s voice grows louder in the deep. What emerges from the egg is something no one predicted.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-03-the-dragon-war'),
+    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'book-03-the-dragon-war'),
   },
   'chronicles-book1': {
     title: 'The Three Academies',
@@ -52,7 +54,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'A stonemason\'s apprentice discovers they can channel all five elements — something unseen since the Dark Lord\'s fall ten thousand years ago. The polished edition of Book One, with complete chapter set.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-01-the-three-academies'),
+    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'book-01-the-three-academies'),
   },
   'chronicles-book2': {
     title: 'The Gate-Touched',
@@ -60,7 +62,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'The Registry tracks every channeler in the realm — but not everyone wants to be found. Stories of those who manifested outside the Academies and the people who want them erased.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
+    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
   },
   starbound: {
     title: 'Starbound: Crew Velathos',
@@ -68,7 +70,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'A specialist crew takes on missions across the Arcanean world — monster hunts, Dungeon dives, diplomatic escorts, and the strange cases that fall between Academy jurisdiction and everything else.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'starbound', 'book-01-crew-velathos'),
+    dir: join(BOOK_ROOT, 'starbound', 'book-01-crew-velathos'),
   },
   dragonborne: {
     title: 'Dragonborne: The Last Clutch',
@@ -76,7 +78,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'Stories from inside the bond between a dragon and the person who earned their trust. The first novella follows a rider navigating loyalty, instinct, and the weight of being chosen by fire.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'dragonborne', 'book-01-the-last-clutch'),
+    dir: join(BOOK_ROOT, 'dragonborne', 'book-01-the-last-clutch'),
   },
   'gate-touched': {
     title: 'Gate-Touched Files',
@@ -84,7 +86,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'A serial following Gate-Touched people — those whose channels manifested wrong, too early, or outside any Academy — as they navigate a world that does not have a category for what they are.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'gate-touched-files'),
+    dir: join(BOOK_ROOT, 'gate-touched-files'),
   },
   'void-ascending': {
     title: 'Void Ascending: The Other Side',
@@ -92,7 +94,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'Told entirely from the perspective of those who serve the Hungry Void — not as villains, but as believers. A literary counterpoint to the Chronicles that complicates every easy answer.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'void-ascending', 'book-01-the-other-side'),
+    dir: join(BOOK_ROOT, 'void-ascending', 'book-01-the-other-side'),
   },
   'dungeon-scrolls': {
     title: 'The Dungeon Scrolls: The Hollow Root',
@@ -100,7 +102,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'An anthology of stories set inside the Dungeons — ancient Gate temples warped by millennia of corrupted magic. Each story is a descent into a different ruin, a different kind of broken.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'dungeon-scrolls', '01-the-hollow-root'),
+    dir: join(BOOK_ROOT, 'dungeon-scrolls', '01-the-hollow-root'),
   },
   companions: {
     title: 'Companions of Arcanea',
@@ -108,7 +110,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'Short stories told from the perspective of the bonded creatures — familiars, mounts, companions — who share the journey but rarely get to tell their side of it.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'companions'),
+    dir: join(BOOK_ROOT, 'companions'),
   },
   'luminor-falling': {
     title: 'Luminor Falling',
@@ -116,7 +118,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'A standalone novella set in the Chronicles universe — complete in itself, illuminating a corner of Arcanea that the main series glimpses but never fully enters.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'sagas', 'luminor-falling'),
+    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'sagas', 'luminor-falling'),
   },
   'luminor-rising-thalmaris': {
     title: 'The Sinking of Thal\'Maris',
@@ -124,7 +126,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'Before the Academies stood, before the Gates were mapped — the world that was lost. What went under the water and why it had to.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-sinking-of-thalmaris'),
+    dir: join(BOOK_ROOT, 'luminor-rising', 'the-sinking-of-thalmaris'),
   },
   'luminor-rising-bonding': {
     title: 'The First Bonding',
@@ -132,7 +134,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'The original accord between Luminors and Godbeasts. What it cost. What it created. What it broke.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-first-bonding'),
+    dir: join(BOOK_ROOT, 'luminor-rising', 'the-first-bonding'),
   },
   'luminor-rising-aiyami': {
     title: 'Aiyami Ascending',
@@ -140,7 +142,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'The Crown Gate opens for the first time. A Luminor who never wanted power stands at the threshold of the highest consecration in the world.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'aiyami-ascending'),
+    dir: join(BOOK_ROOT, 'luminor-rising', 'aiyami-ascending'),
   },
   'luminor-rising-nero': {
     title: 'The Night Nero Wept',
@@ -148,7 +150,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'The night the Primordial Darkness grieved. Told from the inside. Not the mythology — the memory.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-night-nero-wept'),
+    dir: join(BOOK_ROOT, 'luminor-rising', 'the-night-nero-wept'),
   },
   'forge-of-ruin': {
     title: 'The Forge of Ruin',
@@ -156,7 +158,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'A berserker named Erivar Skaldson whose rage is a parasitic entity bonded to his bloodline. Each time he surrenders to the Fury, he loses a piece of who he was. The story asks whether destruction can be a path to salvation — or only annihilation.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'forge-of-ruin', 'chapters'),
+    dir: join(BOOK_ROOT, 'forge-of-ruin', 'chapters'),
   },
   'tides-of-silence': {
     title: 'The Tides of Silence',
@@ -164,7 +166,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'A world with no land. Sentient oceans going silent. A Tide-Speaker named Sael must descend into the deep to discover why someone is deliberately deafening the world — and whether the silence is death or metamorphosis.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'tides-of-silence', 'chapters'),
+    dir: join(BOOK_ROOT, 'tides-of-silence', 'chapters'),
   },
   'heart-of-pyrathis': {
     title: 'The Heart of Pyrathis',
@@ -172,7 +174,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'A Cinderfang who can\'t shift. A three-foot sage with a lightsaber. An exiled space elf. A dying dragon. They must descend to the planet\'s core to reignite a grieving world — but someone must become the fire.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'heart-of-pyrathis', 'chapters'),
+    dir: join(BOOK_ROOT, 'heart-of-pyrathis', 'chapters'),
   },
   'song-of-van-linh': {
     title: 'The Girl Who Heard the River',
@@ -180,7 +182,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'In modern Hanoi, a wildlife biologist named An discovers she can hear the voice of every living creature — a gift tied to an ancient Gate between Earth and the realm of Arcanea. As ecological destruction poisons Vietnam\'s rivers and silences its sacred animals, An must journey from the neon streets of Hanoi to the flooded temples of the Mekong Delta, guided by an ancient crystalline creature who chose her and drawn toward a man whose own gift is as dangerous as it is magnetic. Vietnamese mythology meets Ghibli warmth meets Arcanea canon.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'song-of-van-linh', 'chapters'),
+    dir: join(BOOK_ROOT, 'song-of-van-linh', 'chapters'),
   },
   'las-tierras-de-luz': {
     title: 'Las Tierras de Luz',
@@ -188,7 +190,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'In the valley-Realm of Veldoria, an eleven-year-old girl named Mira wakes one morning to find a small prismatic light hovering above her chest — her destello, visible for the first time. Soon she discovers she can wake the sleeping lights in every being she passes. No one else can see them. Across the narrow street, behind a blue door, an old woman who has been waiting her whole adult life looks up from a bowl of green beans and sees. A magical-realism novel about the loneliness of the first witness and the quiet joy that lives beneath every ordinary day. A Legend of the Kingdom of Light.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'las-tierras-de-luz', 'chapters'),
+    dir: join(BOOK_ROOT, 'las-tierras-de-luz', 'chapters'),
   },
   'das-maedchen-drei-sprachen': {
     title: 'Das Mädchen, das drei Sprachen hörte',
@@ -196,7 +198,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'Ein zauberhaftes dreisprachiges Vorlesebuch (Deutsch primär, Kroatisch und Englisch eingewoben) für ein sechsjähriges Kind im Übergang von Deutschland nach Kroatien. Mila kommt mit ihrem dreijährigen Bruder Theo auf der Insel Mali Lošinj an. In zehn Kapiteln lernt sie, dass jede Pflanze, jedes Tier und jeder Ort drei geheime Namen hat — und dass Zuhause nicht ein Ort ist, sondern das, was man kennt. Mit einer schwarzen Hafenkatze namens Luna, einem jungen Delfin namens Val, einer kroatischen Nachbarin Nona Marica, einem kroatisch-britischen Freund Oli und einer Blume namens Smilje, die niemals ihre goldene Farbe verliert. Geschrieben in der Stimme von Janosch, Astrid Lindgren und Cornelia Funke, mit Studio-Ghibli-Wärme.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'das-maedchen-drei-sprachen', 'chapters'),
+    dir: join(BOOK_ROOT, 'das-maedchen-drei-sprachen', 'chapters'),
   },
   'russian-from-tashkent': {
     title: 'The Russian-Speaker',
@@ -204,7 +206,7 @@ const BOOKS: Record<string, BookDef> = {
     description:
       'Biographical memoir-fiction based on the life of Ruslan — a friend of the writer (FrankX) — born 1985 in Yunusabad, Tashkent, who grew up through Perestroika and the collapse, was exiled to St. Petersburg and Moscow as a teenager after the 1999 Tashkent bombings, and returned to Uzbekistan to work a hotel lobby, then the Chirchiq Transformer Plant, then the US Embassy of a country that watched him from the day he was born. A novel of categorical homelessness — not Russian enough for Russia, not Uzbek enough for Uzbekistan, fluent in both and at home in neither. Comp shelf: Bezmozgis, Krasikov, Hemon, Ismailov, Matar, Alexievich.',
     status: 'in-progress',
-    dir: join(process.cwd(), '..', '..', 'book', 'russian-from-tashkent', 'chapters'),
+    dir: join(BOOK_ROOT, 'russian-from-tashkent', 'chapters'),
   },
 };
 

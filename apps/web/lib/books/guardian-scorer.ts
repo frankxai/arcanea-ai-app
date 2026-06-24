@@ -21,6 +21,7 @@
 import { readFile, readdir } from 'fs/promises';
 import { access } from 'fs/promises';
 import { join } from 'path';
+import { getBookRoot } from '../content/book-path';
 import { generateText } from 'ai';
 import matter from 'gray-matter';
 import { createAdminClient } from '@/lib/supabase/server';
@@ -83,7 +84,7 @@ export class GuardianScorerError extends Error {
 // ---------------------------------------------------------------------------
 
 const DEFAULT_MODEL = 'claude-opus-4-6';
-const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
+const BOOK_ROOT = getBookRoot();
 const MAX_OUTPUT_TOKENS = 1024;
 
 function getModelId(): string {

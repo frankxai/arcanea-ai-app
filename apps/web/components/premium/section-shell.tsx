@@ -111,7 +111,7 @@ export function SectionShell({
 interface SectionHeaderProps {
   label?: string;
   title: string;
-  subtitle?: string;
+  subtitle?: ReactNode;
   align?: "center" | "left";
   /** Gradient color for the title accent */
   accent?: "teal" | "purple" | "gold" | "white";

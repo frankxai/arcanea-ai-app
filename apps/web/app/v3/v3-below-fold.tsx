@@ -24,6 +24,7 @@ import {
   Microphone,
   Brain,
   Waveform,
+  ArrowRight,
 } from "@/lib/phosphor-icons";
 import type { PhosphorIcon as IconComponent } from "@/lib/phosphor-icons";
 import { HowItWorks } from "@/components/landing/how-it-works";
@@ -53,7 +54,7 @@ import { luminorAccents, tierAccents, streamAccents, pillarAccents, brand } from
 const FAQ_ITEMS = [
   {
     q: "What is a Luminor?",
-    a: "A specialized AI agent runtime built to construct worlds, write code, compose symphonies, and design structures. Arcanea houses 16 unique Luminor specialists that coordinate dynamically, hot-swapping memory and state mid-session like a cohesive guild of digital world-builders.",
+    a: "A specialized AI agent runtime built to construct worlds, write code, compose music, and design structures. Arcanea currently ships 13 configured Luminor specialists that coordinate through shared context and creator-owned project memory.",
   },
   {
     q: "What makes the Living Worlds engine different?",
@@ -61,7 +62,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "How do the Luminors work?",
-    a: "Each agent is equipped with domain-specific toolkits and system prompts grounded in Arcanea's 190K+ word codebase and philosophy. They don't guess—they compute. Runtimes hand off context using structured schemas, passing a cinematic scene from a storyteller to a composer or visual builder with zero telemetry loss.",
+    a: "Each agent is equipped with domain-specific toolkits and system prompts grounded in Arcanea's 190K+ word codebase and philosophy. Runtimes hand off context using structured schemas, passing a cinematic scene from a storyteller to a composer or visual builder without forcing the creator to restart from a blank chat.",
   },
   {
     q: "What is the Library of Arcanea?",
@@ -157,7 +158,7 @@ function ProductPillarsGrid() {
         <SectionHeader
           label="Creation Logic"
           title="A unified creation cycle"
-          subtitle="Prompt, graph, canon, and runtime execute in a closed feedback loop instead of scattering across tabs and forgotten sessions."
+          subtitle={<>Prompt, graph, canon, and runtime execute in a <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">closed feedback loop</span> instead of scattering across tabs and forgotten sessions.</>}
           accent="teal"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -200,7 +201,7 @@ function LivingWorldSection() {
         <SectionHeader
           label="The Living Worlds Engine"
           title="Magic is code. Compile your universe."
-          subtitle="A persistent relational graph engine that structures your canon, locales, and systems. Stop running stateless chats; compile a stateful universe where agents remember the lore, and magic obeys the schema."
+          subtitle={<>A persistent relational graph engine that structures your canon, locales, and systems. Stop running stateless chats; compile a <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">stateful universe</span> where agents remember the lore, and magic obeys the schema.</>}
           accent="teal"
         />
         <Reveal y={20}>
@@ -283,7 +284,7 @@ function PortalAtlasSection() {
         <SectionHeader
           label="The Portal Matrix"
           title="An operating system for new realms"
-          subtitle="We treat creative IP like software. Scaffold your world graph, direct cinematic lanes, spawn agent councils, and fork your entire universe as raw code."
+          subtitle={<>We treat creative IP like software. Scaffold your world graph, direct cinematic lanes, spawn agent councils, and <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">fork your entire universe</span> as raw code.</>}
           accent="teal"
         />
         <div className="grid grid-cols-1 gap-4 md:gap-5 lg:auto-rows-fr lg:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.75fr)]">
@@ -546,8 +547,8 @@ function WhyArcaneaSection() {
       <div className="max-w-5xl mx-auto px-6">
         <SectionHeader
           label="Why Arcanea"
-          title="Stateless chatbots are dead"
-          subtitle="Standard AI chat tools operate on stateless, forgetful contexts. Arcanea compiles a persistent, relational database of your world graph. Your lore retains absolute state, meaning your characters and magic rules never drift."
+          title="When chat forgets, worlds drift"
+          subtitle={<>Standard AI chat tools are useful, but they are not built as a long-term canon engine. Arcanea compiles a persistent, <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">relational database</span> of your world graph so characters, places, rules, and release tasks can stay connected.</>}
           accent="purple"
         />
         <Reveal y={20}>
@@ -573,8 +574,8 @@ function LuminorTeamSection() {
       <div className="max-w-5xl mx-auto px-6">
         <SectionHeader
           label="Luminor Specialists"
-          title="16 specialized AI guardians"
-          subtitle="Spawn a council of specialized agent runtimes. From Systems Architects to Composers, Storytellers, and Motion Designers—each agent carries its own local memory, specialized toolset, and distinct creative voice."
+          title="13 specialized AI agents"
+          subtitle={<>Start with one specialist or route work across the council. From Systems Architects to Composers, Storytellers, and Motion Designers, each agent carries its own <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">project context, toolset</span>, and distinct creative voice.</>}
           accent="teal"
         />
         <Reveal y={16}>
@@ -587,8 +588,8 @@ function LuminorTeamSection() {
                 href="/luminors"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-white/70 hover:bg-white/[0.08] hover:text-white transition-colors"
               >
-                Meet all 16 Luminors
-                <span className="text-xs">&rarr;</span>
+                Meet the agent team
+                <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </Magnetic>
           </div>
@@ -609,7 +610,7 @@ function PersonasSection() {
         <SectionHeader
           label="Who it's for"
           title="Built for makers"
-          subtitle="Novelists, game designers, filmmakers, developers, solo creators — Arcanea meets you where you work."
+          subtitle={<>Novelists, game designers, filmmakers, developers, solo creators — Arcanea meets you <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">exactly where you work</span>.</>}
           accent="purple"
         />
         <PersonasShowcase />
@@ -629,7 +630,7 @@ function SovereigntySection() {
         <SectionHeader
           label="Sovereign Posture"
           title="Absolute creator sovereignty"
-          subtitle="Keep your keys. Keep your IP. Run your graphs locally via SQLite. Arcanea is built on local-first localStorage keys and MIT-licensed clients. Zero vendor lock-in. Zero training on your creations."
+          subtitle={<>Keep your keys. Keep your IP. Run your graphs locally via SQLite. Arcanea is built on local-first localStorage keys and MIT-licensed clients. <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">Zero vendor lock-in</span>. Zero training on your creations.</>}
           accent="gold"
         />
         <SovereigntyPillars />
@@ -702,7 +703,7 @@ function VoicePresenceSection() {
         <SectionHeader
           label="Agent Room & Telemetry"
           title="Talk directly to the machine"
-          subtitle="Zero latency. Talk directly to Jarvis, Lumina, or your own custom agent. Low-latency Whisper/ElevenLabs streams meet WebGL audio-reactive particle nodes and native CLI execution."
+          subtitle={<>Zero latency. Talk directly to Jarvis, Lumina, or your own custom agent. Low-latency Whisper/ElevenLabs streams meet <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">WebGL audio-reactive particle nodes</span> and native CLI execution.</>}
           accent="purple"
         />
         <Reveal y={20}>
@@ -814,7 +815,7 @@ function StackTeaserSection() {
         <SectionHeader
           label="The Creator Stack"
           title="Built to connect everywhere"
-          subtitle="Claude Code, Nano Banana 2, Supabase, Vercel AI SDK, and GitHub are wired today. Other tiles are marked beta or soon when the app sync is partial or planned."
+          subtitle={<>Claude Code, Nano Banana 2, Supabase, Vercel AI SDK, and GitHub are <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">wired today</span>. Other tiles are marked beta or soon when the app sync is partial or planned.</>}
           accent="teal"
         />
         <Reveal y={16}>
@@ -863,7 +864,7 @@ function EarnTeaserSection() {
         <SectionHeader
           label="Creator Posture"
           title="Monetize sovereign IP"
-          subtitle="Distribute creations via integrated storefronts. Smart-contract royalties on remixes, template sales at 90% creator share, and memberships at 97% share. Shipped states tracked on public roadmap."
+          subtitle={<>Distribute creations via integrated storefronts. <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">Smart-contract royalties</span> on remixes, template sales at 90% creator share, and memberships at 97% share.</>}
           accent="gold"
         />
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">

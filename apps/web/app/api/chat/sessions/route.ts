@@ -165,7 +165,7 @@ export async function GET(req: NextRequest) {
       }
 
       // Get message counts for each session
-      const sessionIds = (sessions ?? []).map((s) => s.id);
+      const sessionIds = (sessions ?? []).map((s: any) => s.id);
       const countMap = new Map<string, number>();
 
       if (sessionIds.length > 0) {
@@ -181,7 +181,7 @@ export async function GET(req: NextRequest) {
         }
       }
 
-      const data: SessionResponse[] = (sessions ?? []).map((row) => ({
+      const data: SessionResponse[] = (sessions ?? []).map((row: any) => ({
         id: row.id,
         title: row.title ?? 'New conversation',
         luminorId: row.luminor_id,

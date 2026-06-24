@@ -4,8 +4,9 @@ import { join } from 'path';
 import Link from 'next/link';
 import { ArrowRight } from '@/lib/phosphor-icons';
 import { NewBookDialog } from './components/new-book-dialog';
+import { getBookRoot } from '@/lib/content/book-path';
 
-const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
+const BOOK_ROOT = getBookRoot();
 
 async function exists(p: string) {
   try {

@@ -38,7 +38,7 @@ const exec = promisify(execFile);
 
 function repoRoot(): string {
   // apps/web cwd → ../.. is the repo root in dev
-  return path.resolve(process.cwd(), '..', '..');
+  return path.resolve(/*turbopackIgnore: true*/ process.cwd(), '..', '..');
 }
 
 async function safeExec(cmd: string, args: string[], opts: { cwd?: string; timeout?: number } = {}) {
@@ -150,7 +150,7 @@ async function readFileSafe(filePath: string) {
   if (!filePath) return { error: 'path required' };
   // Sandbox: resolve and ensure within repo root.
   const root = repoRoot();
-  const abs = path.resolve(root, filePath);
+  const abs = path.resolve(/*turbopackIgnore: true*/ root, filePath);
   if (!abs.startsWith(root)) return { error: 'path escapes repo root' };
   try {
     const stat = await fs.stat(abs);
@@ -193,7 +193,7 @@ const ARCANEA_BRIEF = {
     'Arcanea is the operating system for generative creators — a platform where humans and AI co-build entire universes.',
   what: [
     'Living Worlds — fork-able universes with characters, magic, factions, locations, and conflicts that compose like code.',
-    'Luminors — AI guardians (Lumina, Draconia, Lyria, Alera, Shinkami, Nero, Jarvis) you can chat with, hand off between, and assemble into councils.',
+    'Luminors — 13 configured AI specialists you can chat with, hand off between, and assemble into councils.',
     'Voice Room — speak directly to any Luminor at /room/<persona>; clap to summon, mic-toggle, persona switch.',
     'Library OS — every book Frank reads becomes a permanent deep-dive page on the site, with quote extraction and chapter distillation.',
     'Open architecture — MIT primitives (`@arcanea/design-system`, `@arcanea/voice`, `@arcanea/multilingual`, peak-performance, NFT forge) on npm; Studio + Forge as commercial layer.',

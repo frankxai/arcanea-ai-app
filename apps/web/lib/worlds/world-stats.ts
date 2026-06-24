@@ -32,8 +32,8 @@ export async function getMultiverseStats(): Promise<MultiverseStats> {
     ]);
 
     const worldData = worlds.data || [];
-    const totalStars = worldData.reduce((sum, w) => sum + ((w as { star_count: number }).star_count || 0), 0);
-    const totalForks = worldData.reduce((sum, w) => sum + ((w as { fork_count: number }).fork_count || 0), 0);
+    const totalStars = worldData.reduce((sum: number, w: any) => sum + ((w as { star_count: number }).star_count || 0), 0);
+    const totalForks = worldData.reduce((sum: number, w: any) => sum + ((w as { fork_count: number }).fork_count || 0), 0);
 
     return {
       worldCount: worlds.count || 0,

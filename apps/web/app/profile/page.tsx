@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/profile" },
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function ProfilePage() {
   let user = null;
   try {

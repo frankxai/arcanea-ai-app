@@ -4,6 +4,7 @@ import { join } from 'path';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import matter from 'gray-matter';
+import { getBookRoot } from '@/lib/content/book-path';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
 /*  Data loading                                                       */
 /* ------------------------------------------------------------------ */
 
-const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
+const BOOK_ROOT = getBookRoot();
 
 interface ManifestAuthor {
   name: string;

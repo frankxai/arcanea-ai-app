@@ -4,6 +4,7 @@ import { join } from 'path';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { SagaDocReader, type TocHeading } from '@/components/saga/doc-reader';
+import { getBookRoot } from '@/lib/content/book-path';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,7 +18,7 @@ interface DocDef {
   file: string;
 }
 
-const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
+const BOOK_ROOT = getBookRoot();
 
 const DOCS: Record<string, DocDef> = {
   'world-atlas': {

@@ -10,6 +10,7 @@
 
 import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
+import { getBookRoot } from '../content/book-path';
 
 // ============================================
 // TYPES
@@ -51,7 +52,7 @@ export interface SagaDocument {
 // CONFIGURATION
 // ============================================
 
-const BOOK_DIR = join(process.cwd(), '..', '..', 'book');
+const BOOK_DIR = getBookRoot();
 
 const BOOK_META: Record<string, {
   title: string;

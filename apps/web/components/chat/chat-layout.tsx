@@ -68,7 +68,7 @@ export function ChatLayout({ sidebar, children, sidebarExpanded, onToggleSidebar
 
   return (
     <SidebarContext.Provider value={{ expanded: sidebarExpanded, toggle: onToggleSidebar }}>
-      <div className="flex h-dvh bg-cosmic-void overflow-hidden">
+      <div className="flex h-[calc(100dvh-var(--nav-h,64px))] bg-cosmic-void overflow-hidden">
         {/* ----------------------------------------------------------------- */}
         {/* Sidebar — desktop: inline column, mobile: fixed overlay           */}
         {/* ----------------------------------------------------------------- */}

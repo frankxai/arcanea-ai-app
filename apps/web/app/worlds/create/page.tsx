@@ -281,7 +281,7 @@ export default function CreateWorldPage() {
 
   useEffect(() => {
     const supabase = createClient();
-    supabase.auth.getUser().then(({ data }) => {
+    supabase.auth.getUser().then(({ data }: any) => {
       setIsAuthenticated(!!data?.user);
     });
 

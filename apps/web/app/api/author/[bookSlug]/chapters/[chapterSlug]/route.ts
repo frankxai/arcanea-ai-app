@@ -15,6 +15,7 @@ import { readFile, readdir, access, stat } from 'fs/promises';
 import { join } from 'path';
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { getBookRoot } from '@/lib/content/book-path';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -22,7 +23,7 @@ export const dynamic = 'force-dynamic';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type DB = any;
 
-const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
+const BOOK_ROOT = getBookRoot();
 
 async function exists(p: string) {
   try { await access(p); return true; } catch { return false; }

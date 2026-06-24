@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import matter from 'gray-matter';
 import { ChapterReader } from '@/components/saga/chapter-reader';
+import { getBookRoot } from '@/lib/content/book-path';
+const BOOK_ROOT = getBookRoot();
 
 export const dynamic = 'force-dynamic';
 
@@ -15,99 +17,99 @@ export const dynamic = 'force-dynamic';
 const BOOK_META: Record<string, { title: string; dir: string }> = {
   book1: {
     title: 'The Three Academies',
-    dir: join(process.cwd(), '..', '..', 'book', 'chapters', 'book1'),
+    dir: join(BOOK_ROOT, 'chapters', 'book1'),
   },
   book2: {
     title: 'The Gate-Touched',
-    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
+    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
   },
   book3: {
     title: 'The Dragon War',
-    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-03-the-dragon-war'),
+    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'book-03-the-dragon-war'),
   },
   'chronicles-book1': {
     title: 'The Three Academies',
-    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-01-the-three-academies'),
+    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'book-01-the-three-academies'),
   },
   'chronicles-book2': {
     title: 'The Gate-Touched',
-    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
+    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
   },
   starbound: {
     title: 'Starbound: Crew Velathos',
-    dir: join(process.cwd(), '..', '..', 'book', 'starbound', 'book-01-crew-velathos'),
+    dir: join(BOOK_ROOT, 'starbound', 'book-01-crew-velathos'),
   },
   dragonborne: {
     title: 'Dragonborne: The Last Clutch',
-    dir: join(process.cwd(), '..', '..', 'book', 'dragonborne', 'book-01-the-last-clutch'),
+    dir: join(BOOK_ROOT, 'dragonborne', 'book-01-the-last-clutch'),
   },
   'gate-touched': {
     title: 'Gate-Touched Files',
-    dir: join(process.cwd(), '..', '..', 'book', 'gate-touched-files'),
+    dir: join(BOOK_ROOT, 'gate-touched-files'),
   },
   'void-ascending': {
     title: 'Void Ascending: The Other Side',
-    dir: join(process.cwd(), '..', '..', 'book', 'void-ascending', 'book-01-the-other-side'),
+    dir: join(BOOK_ROOT, 'void-ascending', 'book-01-the-other-side'),
   },
   'dungeon-scrolls': {
     title: 'The Dungeon Scrolls: The Hollow Root',
-    dir: join(process.cwd(), '..', '..', 'book', 'dungeon-scrolls', '01-the-hollow-root'),
+    dir: join(BOOK_ROOT, 'dungeon-scrolls', '01-the-hollow-root'),
   },
   companions: {
     title: 'Companions of Arcanea',
-    dir: join(process.cwd(), '..', '..', 'book', 'companions'),
+    dir: join(BOOK_ROOT, 'companions'),
   },
   'luminor-falling': {
     title: 'Luminor Falling',
-    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'sagas', 'luminor-falling'),
+    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'sagas', 'luminor-falling'),
   },
   'luminor-rising-thalmaris': {
     title: "The Sinking of Thal'Maris",
-    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-sinking-of-thalmaris'),
+    dir: join(BOOK_ROOT, 'luminor-rising', 'the-sinking-of-thalmaris'),
   },
   'luminor-rising-bonding': {
     title: 'The First Bonding',
-    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-first-bonding'),
+    dir: join(BOOK_ROOT, 'luminor-rising', 'the-first-bonding'),
   },
   'luminor-rising-aiyami': {
     title: 'Aiyami Ascending',
-    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'aiyami-ascending'),
+    dir: join(BOOK_ROOT, 'luminor-rising', 'aiyami-ascending'),
   },
   'luminor-rising-nero': {
     title: 'The Night Nero Wept',
-    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-night-nero-wept'),
+    dir: join(BOOK_ROOT, 'luminor-rising', 'the-night-nero-wept'),
   },
   'forge-of-ruin': {
     title: 'The Forge of Ruin',
-    dir: join(process.cwd(), '..', '..', 'book', 'forge-of-ruin', 'chapters'),
+    dir: join(BOOK_ROOT, 'forge-of-ruin', 'chapters'),
   },
   'tides-of-silence': {
     title: 'The Tides of Silence',
-    dir: join(process.cwd(), '..', '..', 'book', 'tides-of-silence', 'chapters'),
+    dir: join(BOOK_ROOT, 'tides-of-silence', 'chapters'),
   },
   'heart-of-pyrathis': {
     title: 'The Heart of Pyrathis',
-    dir: join(process.cwd(), '..', '..', 'book', 'heart-of-pyrathis', 'chapters'),
+    dir: join(BOOK_ROOT, 'heart-of-pyrathis', 'chapters'),
   },
   'song-of-van-linh': {
     title: 'The Girl Who Heard the River',
-    dir: join(process.cwd(), '..', '..', 'book', 'song-of-van-linh', 'chapters'),
+    dir: join(BOOK_ROOT, 'song-of-van-linh', 'chapters'),
   },
   'las-tierras-de-luz': {
     title: 'Las Tierras de Luz',
-    dir: join(process.cwd(), '..', '..', 'book', 'las-tierras-de-luz', 'chapters'),
+    dir: join(BOOK_ROOT, 'las-tierras-de-luz', 'chapters'),
   },
   'das-maedchen-drei-sprachen': {
     title: 'Das Mädchen, das drei Sprachen hörte',
-    dir: join(process.cwd(), '..', '..', 'book', 'das-maedchen-drei-sprachen', 'chapters'),
+    dir: join(BOOK_ROOT, 'das-maedchen-drei-sprachen', 'chapters'),
   },
   'lumara-valle-de-los-destellos': {
     title: 'Lumara: Valle de los Destellos',
-    dir: join(process.cwd(), '..', '..', 'book', 'lumara-valle-de-los-destellos', 'chapters'),
+    dir: join(BOOK_ROOT, 'lumara-valle-de-los-destellos', 'chapters'),
   },
   'russian-from-tashkent': {
     title: 'The Russian-Speaker',
-    dir: join(process.cwd(), '..', '..', 'book', 'russian-from-tashkent', 'chapters'),
+    dir: join(BOOK_ROOT, 'russian-from-tashkent', 'chapters'),
   },
 };
 

@@ -8,11 +8,12 @@
 
 import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
+import { getBookRoot } from '../content/book-path';
 import type { Episode, Encounter, ActInfo, EpisodeMeta } from './types';
 
 import grayMatter from 'gray-matter';
 
-const LIVING_LORE_DIR = join(process.cwd(), '..', '..', 'book', 'living-lore');
+const LIVING_LORE_DIR = join(getBookRoot(), 'living-lore');
 
 // ---------------------------------------------------------------------------
 // Act metadata — maps act numbers to canonical Gate/Guardian info

@@ -12,10 +12,11 @@ import { AuthorAIPanel } from '../../components/author-ai-panel';
 import { BookHeader } from '../../components/book-header';
 import { CharacterTracker } from '../../components/character-tracker';
 import { AuthorEditor } from '../../components/author-editor';
+import { getBookRoot } from '@/lib/content/book-path';
 
 export const dynamic = 'force-dynamic';
 
-const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
+const BOOK_ROOT = getBookRoot();
 
 async function exists(p: string) {
   try {

@@ -77,7 +77,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
       console.error('[collection GET items] Supabase error:', itemsError);
     }
 
-    const mappedItems = (items || []).map((item) => {
+    const mappedItems = (items || []).map((item: any) => {
       const creation = item.creations as Record<string, unknown> | null;
       return {
         id: item.id,

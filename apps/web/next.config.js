@@ -8,6 +8,7 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
 const nextConfig = {
   poweredByHeader: false,
   serverExternalPackages: ['@opentelemetry/api'],
+  outputFileTracingRoot: path.resolve(__dirname, '../..'),
   // Workspace packages with subpath exports — let Next.js/Turbopack compile from
   // source rather than relying on prebuilt dist/. Avoids `Module not found` in
   // CI when the workspace dep hasn't been built before `next build` runs.
