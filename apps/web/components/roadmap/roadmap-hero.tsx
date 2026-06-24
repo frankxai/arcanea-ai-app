@@ -7,6 +7,12 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Stars, Float } from '@react-three/drei';
 import * as THREE from 'three';
 
+const THREE_COLORS = {
+  atlanteanTeal: '#00bcd4',
+  cosmicBlue: '#0d47a1',
+  void: '#a78bfa',
+} as const;
+
 // ─── Floating orb geometry ───────────────────────────────────────────────────
 
 function FloatingOrb({
@@ -70,7 +76,7 @@ function ParticleField() {
     <points ref={pointsRef} geometry={geoRef.current}>
       <pointsMaterial
         size={0.045}
-        color="var(--arc-brand-atlantean-teal)"
+        color={THREE_COLORS.atlanteanTeal}
         transparent
         opacity={0.55}
         sizeAttenuation
@@ -85,8 +91,8 @@ function HeroScene() {
   return (
     <>
       <ambientLight intensity={0.3} />
-      <pointLight position={[6, 6, 4]} color="var(--arc-brand-atlantean-teal)" intensity={1.2} />
-      <pointLight position={[-6, -4, 2]} color="var(--arc-brand-cosmic-blue)" intensity={0.8} />
+      <pointLight position={[6, 6, 4]} color={THREE_COLORS.atlanteanTeal} intensity={1.2} />
+      <pointLight position={[-6, -4, 2]} color={THREE_COLORS.cosmicBlue} intensity={0.8} />
 
       <Stars
         radius={80}
@@ -100,9 +106,9 @@ function HeroScene() {
 
       <ParticleField />
 
-      <FloatingOrb position={[4.5, 1.5, -4]} color="var(--arc-brand-atlantean-teal)" scale={1.8} />
-      <FloatingOrb position={[-5, -2, -6]} color="var(--arc-brand-cosmic-blue)" scale={2.4} />
-      <FloatingOrb position={[0, 3, -8]} color="var(--arc-void)" scale={1.2} />
+      <FloatingOrb position={[4.5, 1.5, -4]} color={THREE_COLORS.atlanteanTeal} scale={1.8} />
+      <FloatingOrb position={[-5, -2, -6]} color={THREE_COLORS.cosmicBlue} scale={2.4} />
+      <FloatingOrb position={[0, 3, -8]} color={THREE_COLORS.void} scale={1.2} />
     </>
   );
 }

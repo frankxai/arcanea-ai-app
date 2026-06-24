@@ -7,6 +7,16 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, MeshDistortMaterial, Sphere, Stars } from '@react-three/drei';
 import * as THREE from 'three';
 
+const THREE_COLORS = {
+  atlanteanTeal: '#00bcd4',
+  arcaneanGold: '#ffd700',
+  cosmicBlue: '#0d47a1',
+  fire: '#ff6b4a',
+  textPrimary: '#f8fafc',
+  void: '#a78bfa',
+  wind: '#4ade80',
+} as const;
+
 /* ----------------------------------------------------------------
  *  Floating elemental orb that pulses and distorts
  * ---------------------------------------------------------------- */
@@ -106,23 +116,23 @@ export function ArenaScene() {
         style={{ background: 'transparent' }}
       >
         <ambientLight intensity={0.15} />
-        <pointLight position={[10, 10, 10]} intensity={0.5} color="var(--arc-brand-arcanean-gold)" />
-        <pointLight position={[-10, -5, -10]} intensity={0.3} color="var(--arc-void)" />
-        <pointLight position={[0, -8, 5]} intensity={0.2} color="var(--arc-brand-atlantean-teal)" />
+        <pointLight position={[10, 10, 10]} intensity={0.5} color={THREE_COLORS.arcaneanGold} />
+        <pointLight position={[-10, -5, -10]} intensity={0.3} color={THREE_COLORS.void} />
+        <pointLight position={[0, -8, 5]} intensity={0.2} color={THREE_COLORS.atlanteanTeal} />
 
         {/* Five Elemental Orbs */}
-        <ElementalOrb position={[-3, 1.5, -2]} color="var(--arc-fire)" speed={0.8} distort={0.4} size={0.6} />
-        <ElementalOrb position={[3, 0.5, -1]} color="var(--arc-brand-cosmic-blue)" speed={1.2} distort={0.25} size={0.5} />
-        <ElementalOrb position={[0, -1, -3]} color="var(--arc-wind)" speed={0.6} distort={0.35} size={0.55} />
-        <ElementalOrb position={[-2, -0.5, 1]} color="var(--arc-text-primary)" speed={1.5} distort={0.2} size={0.45} />
-        <ElementalOrb position={[2, 2, 0]} color="var(--arc-void)" speed={1} distort={0.5} size={0.7} />
+        <ElementalOrb position={[-3, 1.5, -2]} color={THREE_COLORS.fire} speed={0.8} distort={0.4} size={0.6} />
+        <ElementalOrb position={[3, 0.5, -1]} color={THREE_COLORS.cosmicBlue} speed={1.2} distort={0.25} size={0.5} />
+        <ElementalOrb position={[0, -1, -3]} color={THREE_COLORS.wind} speed={0.6} distort={0.35} size={0.55} />
+        <ElementalOrb position={[-2, -0.5, 1]} color={THREE_COLORS.textPrimary} speed={1.5} distort={0.2} size={0.45} />
+        <ElementalOrb position={[2, 2, 0]} color={THREE_COLORS.void} speed={1} distort={0.5} size={0.7} />
 
         {/* Central golden nexus */}
         <Float speed={0.5} rotationIntensity={0.2} floatIntensity={0.4}>
           <Sphere args={[0.3, 32, 32]} position={[0, 0.5, 0]}>
             <MeshDistortMaterial
-              color="var(--arc-brand-arcanean-gold)"
-              emissive="var(--arc-brand-arcanean-gold)"
+              color={THREE_COLORS.arcaneanGold}
+              emissive={THREE_COLORS.arcaneanGold}
               emissiveIntensity={1}
               roughness={0}
               metalness={1}
@@ -135,9 +145,9 @@ export function ArenaScene() {
         </Float>
 
         {/* Mana rings */}
-        <ManaRing color="var(--arc-brand-arcanean-gold)" radius={3} count={60} />
-        <ManaRing color="var(--arc-void)" radius={5} count={100} />
-        <ManaRing color="var(--arc-brand-atlantean-teal)" radius={4} count={80} />
+        <ManaRing color={THREE_COLORS.arcaneanGold} radius={3} count={60} />
+        <ManaRing color={THREE_COLORS.void} radius={5} count={100} />
+        <ManaRing color={THREE_COLORS.atlanteanTeal} radius={4} count={80} />
 
         {/* Starfield backdrop */}
         <Stars radius={50} depth={50} count={2000} factor={3} saturation={0.5} fade speed={0.5} />

@@ -18,8 +18,9 @@
 import { useState, useEffect, useRef, useCallback, KeyboardEvent } from 'react';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { ArcaneMascotAvatar } from '@/components/brand/arcanea-mascot';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { PhPaperPlane, PhX } from '@/lib/phosphor-icons';
 
 interface Message {
   id: string;
@@ -42,6 +43,7 @@ const PROMPT_EXAMPLES = [
 ];
 
 export function LuminaBubble() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -51,9 +53,12 @@ export function LuminaBubble() {
   );
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const normalizedPath = pathname.replace(/\/$/, '') || '/';
+  const isHomeRoute = normalizedPath === '/' || /^\/[a-z]{2}$/.test(normalizedPath);
 
   // Keyboard shortcut: Cmd+K / Ctrl+K to toggle
   useEffect(() => {
+    if (isHomeRoute) return;
     const handler = (e: globalThis.KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
@@ -65,7 +70,7 @@ export function LuminaBubble() {
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [open]);
+  }, [open, isHomeRoute]);
 
   // Focus input when panel opens
   useEffect(() => {
@@ -168,6 +173,8 @@ export function LuminaBubble() {
     }
   };
 
+  if (isHomeRoute) return null;
+
   return (
     <LazyMotion features={domAnimation}>
       {/* Floating bubble (collapsed state) */}
@@ -180,8 +187,8 @@ export function LuminaBubble() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-[var(--arc-cosmic-void)]/80 shadow-[0_0_40px_rgba(127,255,212,0.15)] backdrop-blur-xl transition-all hover:scale-110 hover:border-[var(--arc-brand-atlantean-teal)]/30 hover:shadow-[0_0_60px_rgba(127,255,212,0.25)] overflow-hidden"
-            aria-label="Open Arcanea (Cmd+K)"
+            className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-[calc(1rem+env(safe-area-inset-right))] z-50 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-[var(--arc-cosmic-void)]/80 shadow-[0_0_40px_rgba(127,255,212,0.15)] backdrop-blur-xl transition-all hover:scale-105 hover:border-[var(--arc-brand-atlantean-teal)]/30 hover:shadow-[0_0_60px_rgba(127,255,212,0.25)] sm:bottom-6 sm:right-6 sm:h-16 sm:w-16"
+            aria-label="Open Arcanea assistant"
           >
             <Image src="/images/mascot/arcanea-primary.png" alt="Arcanea" width={56} height={56} className="object-contain drop-shadow-[0_0_12px_rgba(127,255,212,0.3)]" />
           </m.button>
@@ -196,8 +203,8 @@ export function LuminaBubble() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-50 flex h-[560px] w-[380px] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--arc-cosmic-void)]/90 shadow-[0_20px_80px_rgba(0,188,212,0.12)] backdrop-blur-2xl"
-            style={{ maxHeight: 'calc(100vh - 3rem)' }}
+            className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-[calc(1rem+env(safe-area-inset-right))] z-50 flex h-[560px] w-[380px] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[var(--arc-cosmic-void)]/90 shadow-[0_20px_80px_rgba(0,188,212,0.12)] backdrop-blur-2xl sm:bottom-6 sm:right-6"
+            style={{ maxHeight: 'calc(100vh - 2rem)' }}
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
@@ -227,9 +234,7 @@ export function LuminaBubble() {
                   className="rounded-lg p-1.5 text-white/40 transition hover:bg-white/[0.05] hover:text-white/80"
                   aria-label="Close Arcanea (Esc)"
                 >
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
+                  <PhX className="h-3.5 w-3.5" />
                 </button>
               </div>
             </div>
@@ -273,9 +278,9 @@ export function LuminaBubble() {
                   >
                     {msg.content || (
                       <span className="inline-flex gap-1 text-white/30">
-                        <span className="animate-pulse">·</span>
-                        <span className="animate-pulse" style={{ animationDelay: '150ms' }}>·</span>
-                        <span className="animate-pulse" style={{ animationDelay: '300ms' }}>·</span>
+                        <span className="animate-pulse">.</span>
+                        <span className="animate-pulse" style={{ animationDelay: '150ms' }}>.</span>
+                        <span className="animate-pulse" style={{ animationDelay: '300ms' }}>.</span>
                       </span>
                     )}
                   </div>
@@ -303,19 +308,17 @@ export function LuminaBubble() {
                   disabled={!input.trim() || streaming}
                   className="rounded-lg bg-[var(--arc-brand-atlantean-teal)]/15 px-3 py-1.5 text-xs font-medium text-[var(--arc-brand-atlantean-teal)] transition hover:bg-[var(--arc-brand-atlantean-teal)]/25 disabled:opacity-30"
                 >
-                  {streaming ? '...' : '↑'}
+                  {streaming ? '...' : <PhPaperPlane className="h-3.5 w-3.5" />}
                 </button>
               </div>
               <div className="mt-1.5 flex items-center justify-between px-1">
-                <span className="text-[10px] text-white/25">
-                  <kbd className="rounded border border-white/10 bg-white/[0.04] px-1 text-[9px]">⌘K</kbd>
-                </span>
+                <span aria-hidden="true" />
                 <Link
                   href="/chat"
                   onClick={() => setOpen(false)}
                   className="text-[10px] text-white/25 hover:text-[var(--arc-brand-atlantean-teal)] transition-colors"
                 >
-                  Open full experience →
+                  Open full chat
                 </Link>
               </div>
             </div>

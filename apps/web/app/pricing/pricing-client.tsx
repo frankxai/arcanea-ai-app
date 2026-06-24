@@ -40,7 +40,7 @@ const TIERS = [
     features: [
       "Bring Your Own Key (BYOK)",
       "Local Markdown / JSONML storage",
-      "Core AI chat with 16 Luminors",
+      "Core AI chat with 13 Luminors",
       "Standard local zip exports",
       "54 open-source CLI tools & skills",
     ],
@@ -82,7 +82,7 @@ const FREE_CAPABILITIES = [
   {
     Icon: Chat,
     name: "AI Chat with Lumina",
-    desc: "Unlimited conversations with 16 specialist Luminors",
+    desc: "Unlimited conversations with 13 specialist Luminors",
     accent: "var(--arc-brand-atlantean-teal)",
   },
   {

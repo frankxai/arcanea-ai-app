@@ -13,6 +13,64 @@ import { cookies } from 'next/headers';
 import type { Database } from '@/lib/database/types/supabase';
 import { getSupabaseEnv, getSupabaseServiceRoleKey } from '@/lib/supabase/env';
 
+function getMockClient() {
+  const handler: ProxyHandler<any> = {
+    get(target, prop) {
+      if (prop === 'auth') {
+        return {
+          getUser: async () => ({ data: { user: null }, error: null }),
+          getSession: async () => ({ data: { session: null }, error: null }),
+          onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
+        };
+      }
+      if (prop === 'storage') {
+        return {
+          from: () => ({
+            upload: async () => ({ data: null, error: null }),
+            getPublicUrl: () => ({ data: { publicUrl: '' } }),
+          }),
+        };
+      }
+
+      if (
+        prop === 'toJSON' ||
+        prop === 'toString' ||
+        prop === 'inspect' ||
+        typeof prop === 'symbol'
+      ) {
+        return undefined;
+      }
+
+      const chain = () => {};
+      const proxyChain: any = new Proxy(chain, {
+        apply(target, thisArg, argumentsList) {
+          return proxyChain;
+        },
+        get(target, key) {
+          if (key === 'then') {
+            return (resolve: any) => resolve({ data: null, error: null });
+          }
+          if (key === 'catch') {
+            return (reject: any) => {};
+          }
+          if (
+            key === 'toJSON' ||
+            key === 'toString' ||
+            key === 'inspect' ||
+            typeof key === 'symbol'
+          ) {
+            return undefined;
+          }
+          return proxyChain;
+        }
+      });
+
+      return proxyChain;
+    }
+  };
+  return new Proxy({}, handler);
+}
+
 /**
  * Create Supabase client for server-side usage
  * Respects RLS policies and user sessions via cookies
@@ -20,8 +78,12 @@ import { getSupabaseEnv, getSupabaseServiceRoleKey } from '@/lib/supabase/env';
  * Note: This is async because cookies() returns a Promise in Next.js 15+
  */
 export async function createClient() {
-  const cookieStore = await cookies();
   const { url, anonKey } = getSupabaseEnv();
+  if (url.includes('example.supabase.co')) {
+    return getMockClient();
+  }
+
+  const cookieStore = await cookies();
 
   return createServerClient<Database>(
     url,
@@ -62,6 +124,10 @@ export async function createClient() {
  */
 export function createAdminClient() {
   const { url } = getSupabaseEnv();
+  if (url.includes('example.supabase.co')) {
+    return getMockClient();
+  }
+
   const serviceRoleKey = getSupabaseServiceRoleKey();
 
   return createServerClient<Database>(

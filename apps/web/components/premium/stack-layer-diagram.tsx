@@ -65,7 +65,7 @@ const LAYERS: Layer[] = [
   },
   {
     label: "Arcanea Core",
-    tagline: "The world graph + 16 specialists",
+    tagline: "The world graph + 13 specialists",
     accent: brand.aquamarine,
     items: [
       { name: "Luminors", accent: brand.aquamarine },

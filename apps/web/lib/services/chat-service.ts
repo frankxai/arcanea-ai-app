@@ -131,7 +131,7 @@ export async function getUserSessions(
 
   if (error) throw new Error(`Failed to fetch sessions: ${error.message}`);
 
-  return (data ?? []).map((row) => ({
+  return (data ?? []).map((row: any) => ({
     id: row.id,
     userId: row.user_id,
     luminorId: row.luminor_id,
@@ -241,7 +241,7 @@ export async function getMessages(
 
   const rows = data ?? [];
   const hasMore = rows.length > limit;
-  const messages = (hasMore ? rows.slice(0, limit) : rows).map((row) => ({
+  const messages = (hasMore ? rows.slice(0, limit) : rows).map((row: any) => ({
     id: row.id,
     sessionId: row.session_id,
     role: row.role as 'user' | 'assistant' | 'system',
@@ -284,7 +284,7 @@ export async function addMessages(
     .update({ updated_at: new Date().toISOString() })
     .eq('id', sessionId);
 
-  return (data ?? []).map((row) => ({
+  return (data ?? []).map((row: any) => ({
     id: row.id,
     sessionId: row.session_id,
     role: row.role as 'user' | 'assistant' | 'system',

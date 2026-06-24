@@ -42,7 +42,7 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "How many companions are there?",
-        a: "There are 16 companions organized into 4 teams: Development, Creative, Writing, and Research. Each has a distinct philosophy, expertise, and conversational style. You can explore them all on the Companions page.",
+        a: "There are 13 configured companions organized across five teams: Orchestrator, Development, Creative, Writing, and Research. Each has a distinct philosophy, expertise, and conversational style. You can explore them all on the Companions page.",
       },
       {
         q: "Which companion should I use?",
@@ -259,7 +259,7 @@ export default function FAQPage() {
             {[
               {
                 title: "Companions",
-                desc: "Meet the 16 companions across 4 teams",
+                desc: "Meet the 13 companions across 5 teams",
                 href: "/companions",
               },
               {

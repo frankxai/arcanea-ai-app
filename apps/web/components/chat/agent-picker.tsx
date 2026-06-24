@@ -96,7 +96,7 @@ export function AgentPicker({ open, onClose, onSelect, currentAgentId }: AgentPi
             </div>
             <div>
               <p className="text-sm font-medium text-white/80">Arcanea Auto</p>
-              <p className="text-[10px] text-white/30">Smart routing — all 16 specialists available</p>
+              <p className="text-[10px] text-white/30">Smart routing — all 13 specialists available</p>
             </div>
           </button>
 

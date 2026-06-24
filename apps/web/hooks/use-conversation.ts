@@ -152,6 +152,7 @@ export interface ConversationState {
   // Luminor
   activeLuminor: ActiveLuminor | null;
   handleSelectLuminor: (luminor: LuminorConfig) => void;
+  clearActiveLuminor: () => void;
   /** Which Luminor(s) responded, read from x-arcanea-luminors response header */
   respondingLuminor: string | null;
 
@@ -216,6 +217,7 @@ interface UseConversationOptions {
 export function useConversation(options?: UseConversationOptions): ConversationState {
   const searchParams = useSearchParams();
   const initialPrompt = searchParams.get('prompt');
+  const autoSendInitialPrompt = searchParams.get('auto') === '1';
   const luminorId = searchParams.get('luminor');
   const { provider, clientApiKey, label: providerLabel, modelId, setModelId } = useModelSelection();
 
@@ -448,6 +450,14 @@ export function useConversation(options?: UseConversationOptions): ConversationS
     setRespondingLuminor(null);
   }, [setMessages, activateLuminor]);
 
+  const clearActiveLuminor = useCallback(() => {
+    setActiveLuminor(null);
+    setMessages([]);
+    setActiveGates([]);
+    setSwarmResult(null);
+    setRespondingLuminor(null);
+  }, [setMessages]);
+
   // ---------------------------------------------------------------------------
   // Sync SDK error state into our local error state
   // ---------------------------------------------------------------------------
@@ -504,15 +514,19 @@ export function useConversation(options?: UseConversationOptions): ConversationS
   }, [messages, isLoading]);
 
   // ---------------------------------------------------------------------------
-  // Auto-send initial prompt from URL
+  // Prefill initial prompt from URL. Auto-send is opt-in via ?auto=1.
   // ---------------------------------------------------------------------------
 
   useEffect(() => {
     if (initialPrompt && !initialPromptSentRef.current && messages.length === 0) {
-      sendMessage({ text: initialPrompt });
       initialPromptSentRef.current = true;
+      if (autoSendInitialPrompt) {
+        sendMessage({ text: initialPrompt });
+      } else {
+        setInput((current) => current || initialPrompt);
+      }
     }
-  }, [initialPrompt, messages.length, sendMessage]);
+  }, [initialPrompt, autoSendInitialPrompt, messages.length, sendMessage]);
 
   // ---------------------------------------------------------------------------
   // Cmd+K command palette
@@ -803,6 +817,7 @@ export function useConversation(options?: UseConversationOptions): ConversationS
     // Luminor
     activeLuminor,
     handleSelectLuminor,
+    clearActiveLuminor,
     respondingLuminor,
 
     // Tools

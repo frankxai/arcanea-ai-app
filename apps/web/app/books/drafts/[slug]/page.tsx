@@ -12,6 +12,7 @@ import { ReviewList } from '@/components/books/ReviewList';
 import { ReviewForm } from '@/components/books/ReviewForm';
 import GuardianReport from '@/components/books/GuardianReport';
 import { LiquidGlass } from '@/components/ui/liquid-glass';
+import { getBookRoot } from '@/lib/content/book-path';
 
 export const dynamic = 'force-dynamic';
 
@@ -50,7 +51,7 @@ interface DraftChapter {
 /*  Config                                                             */
 /* ------------------------------------------------------------------ */
 
-const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
+const BOOK_ROOT = getBookRoot();
 
 const COVER_MAP: Record<string, string> = {
   'forge-of-ruin': '/images/books/forge-of-ruin-cover-nb2.png',

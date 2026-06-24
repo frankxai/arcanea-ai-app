@@ -66,8 +66,8 @@ export default function CompanionsPage() {
                 Who will you create with?
               </h1>
               <p className="text-xl text-white/55 max-w-2xl mx-auto mb-8">
-                16 companions, each with a distinct personality and expertise.
-                Development, design, writing, and research — pick the one that fits your work.
+                13 companions, each with a distinct personality and expertise.
+                Orchestration, development, design, writing, and research - pick the one that fits your work.
               </p>
 
               {/* Search */}

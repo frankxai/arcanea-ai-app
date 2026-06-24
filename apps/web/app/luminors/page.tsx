@@ -3,30 +3,30 @@ import { Metadata } from "next";
 import { LuminorsExperience } from "@/components/luminors/luminors-experience";
 
 export const metadata: Metadata = {
-  title: "Luminors | 16 Creative Intelligences",
+  title: "Luminors | 13 Creative Agents",
   description:
-    "Meet the 12 Luminors — creative intelligences across development, design, writing, and research. Each one thinks differently about your work.",
+    "Meet the 13 configured Luminor agents across development, design, writing, and research. Each one thinks differently about your work.",
   openGraph: {
-    title: "Meet the 12 Luminors",
+    title: "Meet the 13 Luminors",
     description:
-      "16 creative intelligences. Four teams. Seven wisdoms. AI partners who see what you're creating and help you build it better.",
+      "13 creative agents. Five teams. AI partners who see what you're creating and help you build it better.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Meet the 12 Luminors",
+    title: "Meet the 13 Luminors",
     description:
-      "16 creative intelligences. Four teams. Seven wisdoms. Partners in creation.",
+      "13 creative agents across development, design, writing, and research.",
   },
 };
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: '16 Luminor Creative Intelligences',
+  name: '13 Luminor Creative Agents',
   description:
     'Luminors in development, creative design, writing, and research.',
   url: 'https://arcanea.ai/luminors',
-  numberOfItems: 16,
+  numberOfItems: 13,
 };
 
 export default function LuminorsPage() {

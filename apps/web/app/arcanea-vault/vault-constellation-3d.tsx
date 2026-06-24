@@ -17,6 +17,14 @@ const REGION_POSITIONS: Record<VaultCategory, [number, number, number]> = {
   horizon:     [5, -2, 0],
 };
 
+const THREE_COLOR_TOKENS: Record<string, string> = {
+  'var(--arc-brand-arcanean-gold)': '#ffd700',
+  'var(--arc-brand-cosmic-blue)': '#0d47a1',
+  'var(--arc-fire)': '#ff6b4a',
+  'var(--arc-void)': '#a78bfa',
+  'var(--arc-wind)': '#4ade80',
+};
+
 interface StarData {
   position: [number, number, number];
   color: THREE.Color;
@@ -52,7 +60,7 @@ function buildStars(entries: VaultEntry[]): StarData[] {
 
     stars.push({
       position: [x, y, z],
-      color: new THREE.Color(config.color),
+      color: new THREE.Color(THREE_COLOR_TOKENS[config.color] ?? config.color),
       scale: 0.04 + confidence * 0.06,
       entry,
       region: cat,

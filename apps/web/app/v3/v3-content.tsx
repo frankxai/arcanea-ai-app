@@ -7,10 +7,7 @@ import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 import type { V3BelowFoldProps } from "./v3-below-fold";
-import { HeroChangingWords } from "./hero-changing-words";
 import { HeroShowcase } from "./hero-showcase";
-import { SplitText } from "@/components/motion/split-text";
-import { Magnetic } from "@/components/motion/magnetic";
 import { SovereigntyBadge } from "@/components/premium/sovereignty-pillars";
 import { NumberTicker } from "@/components/motion/number-ticker";
 import { Sparkle, Diamond, Code, ShieldStar } from "@/lib/phosphor-icons";
@@ -99,7 +96,7 @@ function HeroPortal() {
     offset: ["start start", "end start"],
   });
 
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 56]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   useEffect(() => {
@@ -110,7 +107,8 @@ function HeroPortal() {
     <LazyMotion features={domAnimation}>
     <section
       ref={containerRef}
-      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
+      className="relative flex items-center justify-center overflow-hidden py-14 md:py-20"
+      style={{ minHeight: "calc(92svh - var(--nav-h, 64px))" }}
     >
       {/* Background: premium Arcanea production chamber media */}
       <div className="absolute inset-0 z-0 bg-[var(--arc-cosmic-void)]">
@@ -154,134 +152,113 @@ function HeroPortal() {
 
       {/* Content */}
       <m.div
-        className="relative z-10 w-full max-w-3xl mx-auto px-6"
+        className="relative z-10 w-full max-w-3xl mx-auto px-5 sm:px-6"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         <div className="flex flex-col items-center text-center">
-          {/* Brand mark — small, elegant, no glow rings */}
+          {/* Canonical brand mark */}
           <m.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-7 md:mb-9"
+            className="mb-5 md:mb-8"
           >
-            <div className="relative">
-              <div className="absolute inset-[-12px] rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--arc-brand-atlantean-teal)_12%,transparent)_0%,color-mix(in_srgb,var(--arc-brand-arcanean-gold)_4%,transparent)_50%,transparent_70%)] blur-md animate-[breathe_3s_ease-in-out_infinite]" />
+            <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.04] shadow-[0_14px_60px_color-mix(in_srgb,var(--arc-cosmic-void)_70%,transparent)] backdrop-blur-xl md:h-16 md:w-16">
               <Image
-                src="/images/mascot/arcanea-primary.png"
+                src={navLogo}
                 alt="Arcanea"
-                width={88}
-                height={88}
-                sizes="88px"
-                className="relative drop-shadow-[0_4px_24px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_20%,transparent)] animate-[mascot-float_3s_ease-in-out_infinite]"
+                width={44}
+                height={44}
+                sizes="44px"
+                className="rounded-xl object-cover"
                 priority
               />
             </div>
           </m.div>
 
-          {/* Sovereignty badge — positioning pill */}
-          <m.div
-            initial={{ opacity: 0, y: 8 }}
+          {/* Headline — direct value before mythology */}
+          <m.h1
+            className="text-[clamp(2.25rem,5.1vw,4.45rem)] font-display font-bold tracking-[-0.025em] leading-[1.04] mb-4 md:mb-5 text-white"
+            initial={{ opacity: 0, y: 18 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.05 }}
-            className="mb-6"
+            transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
-            <SovereigntyBadge />
-          </m.div>
+            <span className="block">Build living worlds</span>
+            <span className="block">with AI agents.</span>
+          </m.h1>
 
-          {/* Headline — clean, large, confident */}
-          <h1 className="text-[clamp(2.2rem,5.5vw,4.5rem)] font-display font-bold tracking-[-0.035em] leading-[1.08] mb-4 md:mb-5">
-            <SplitText
-              as="span"
-              text="What will you "
-              className="text-white"
-              delay={0.1}
-              stagger={0.025}
-            />
-            <HeroChangingWords />
-          </h1>
-
-          {/* Subtitle — concrete value, leads with what you get */}
+          {/* One-line value prop */}
           <m.p
-            className="max-w-xl mx-auto text-base md:text-lg text-white/50 leading-relaxed mb-3 font-body"
+            className="max-w-2xl mx-auto text-base md:text-lg text-white/55 leading-relaxed mb-5 md:mb-9 font-body"
             initial={{ opacity: 0, y: 16 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.16 }}
           >
-            Type one sentence. Get a world, book, game, song, cinematic brief, or agent workflow with connected context.
+            Turn one idea into a persistent world graph: lore, characters, rules, media briefs, and agent tasks stay connected across sessions.
           </m.p>
 
-          {/* Secondary clarifier — who it&apos;s for */}
-          <m.p
-            className="max-w-md mx-auto text-sm text-white/30 leading-relaxed mb-10 md:mb-12 font-body"
-            initial={{ opacity: 0 }}
-            animate={isLoaded ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.28 }}
-          >
-            16 specialist AI partners &middot; connected media systems &middot; open source
-          </m.p>
-
-          {/* Trust signals — glass pill badges with animated numbers */}
+          {/* Chat box — the hero element */}
           <m.div
-            className="flex flex-wrap items-center justify-center gap-2 md:gap-3 mb-12 md:mb-14"
+            className="w-full mb-5 md:mb-9"
+            initial={{ opacity: 0, y: 16 }}
+            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.22 }}
+          >
+            <HeroChatBox />
+          </m.div>
+
+          {/* Trust signals after the primary action */}
+          <m.div
+            className="flex w-full max-w-full flex-nowrap items-center justify-start gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] sm:flex-wrap sm:justify-center sm:overflow-visible md:gap-3 [&::-webkit-scrollbar]:hidden"
             initial={{ opacity: 0 }}
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             {[
-              { Icon: Sparkle, num: 16, suffix: "", label: "specialist AI partners", color: "var(--arc-brand-atlantean-teal)" },
-              { Icon: Diamond, num: 190, suffix: "K+", label: "words of craft", color: "var(--arc-brand-atlantean-teal)" },
+              { Icon: Sparkle, num: 13, suffix: "", label: "specialist agents", color: "var(--arc-brand-atlantean-teal)", fixed: true },
+              { Icon: Diamond, num: 190, suffix: "K+", label: "words of canon", color: "var(--arc-brand-atlantean-teal)" },
               { Icon: Code, num: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", color: "var(--arc-brand-arcanean-gold)" },
-              { Icon: ShieldStar, num: 0, suffix: "MIT", label: "forkable", color: "var(--arc-void)", fixed: true },
+              { Icon: ShieldStar, num: 0, suffix: "MIT", label: "open source", color: "var(--arc-void)", fixed: true },
             ].map(({ Icon, num, suffix, label, color, fixed }, i) => (
               <div
                 key={label}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.07] backdrop-blur-sm hover:border-white/[0.15] transition-colors"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/[0.07] bg-white/[0.04] px-3 py-1.5 backdrop-blur-sm transition-colors hover:border-white/[0.15]"
               >
                 <Icon size={11} weight="duotone" color={color} className="opacity-70" />
                 <span className="text-[11px] font-display font-semibold text-white/55">
-                  {fixed ? suffix : <NumberTicker value={num} suffix={suffix} delay={0.4 + i * 0.1} />}
+                  {fixed ? (suffix || num) : <NumberTicker value={num} suffix={suffix} delay={0.36 + i * 0.08} />}
                 </span>
                 <span className="text-[10px] text-white/30 font-mono">{label}</span>
               </div>
             ))}
           </m.div>
 
-          {/* Chat box — THE hero element */}
           <m.div
-            className="w-full"
-            initial={{ opacity: 0, y: 16 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.35 }}
-          >
-            <HeroChatBox />
-          </m.div>
-
-          {/* Trust line — sovereignty promise */}
-          <m.div
-            className="mt-10 md:mt-14 flex flex-wrap items-center justify-center gap-x-4 gap-y-2"
+            className="mt-4 flex flex-col items-center justify-center gap-2 text-[11px] text-white/35 sm:flex-row md:mt-5 md:gap-3"
             initial={{ opacity: 0 }}
             animate={isLoaded ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.7 }}
+            transition={{ duration: 0.5, delay: 0.42 }}
           >
-            {[
-              { label: "Keep your keys", color: "var(--arc-brand-atlantean-teal)" },
-              { label: "Keep your IP", color: "var(--arc-brand-atlantean-teal)" },
-              { label: "Open source (MIT)", color: "var(--arc-brand-arcanean-gold)" },
-              { label: "No vendor lock-in", color: "var(--arc-void)" },
-            ].map(({ label, color }, i) => (
-              <span
-                key={label}
-                className="inline-flex items-center gap-1.5 text-[11px] font-mono tracking-wider"
-              >
-                {i > 0 && <span className="text-white/10">/</span>}
-                <span
-                  className="w-1 h-1 rounded-full"
-                  style={{ background: `${color}80` }}
-                />
-                <span className="text-white/35">{label}</span>
-              </span>
-            ))}
+            <SovereigntyBadge />
+            <span className="hidden h-1 w-1 rounded-full bg-white/20 sm:block" />
+            <span className="font-mono">BYOK / your IP / no lock-in</span>
+          </m.div>
+
+          <m.div
+            className="mt-6 hidden items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.025] px-3 py-2 backdrop-blur-md md:inline-flex"
+            initial={{ opacity: 0, y: 8 }}
+            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.48 }}
+          >
+            <Image
+              src="/images/mascot/arcanea-welcoming.png"
+              alt=""
+              width={28}
+              height={28}
+              sizes="28px"
+              className="object-contain"
+            />
+            <span className="text-[11px] text-white/35">Lumina routes the first brief to the right creation agents.</span>
           </m.div>
         </div>
       </m.div>

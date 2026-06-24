@@ -3,7 +3,7 @@
  * Feature Gates — Controls what's available per pricing tier
  *
  * Spark (free):   3 companions, auto model, basic Library/Academy, 100 msg/month
- * Creator ($19):  16 companions, 5 models, full Studio + Library + Academy, 5K msg/month
+ * Creator ($19):  13 companions, 5 models, full Studio + Library + Academy, 5K msg/month
  * Studio ($49):   All models, API, custom training, team seats, exports, 5K msg/seat
  * Pro ($99):      Everything + versioning, analytics, royalties, priority support
  */
@@ -49,7 +49,7 @@ const TIER_GATES: Record<PricingTier, FeatureGates> = {
     royalties: false,
   },
   creator: {
-    maxCompanions: 16,
+    maxCompanions: 13,
     maxModels: 5,
     maxMonthlyMessages: 5000,
     studioAccess: true,
@@ -67,7 +67,7 @@ const TIER_GATES: Record<PricingTier, FeatureGates> = {
     royalties: false,
   },
   studio: {
-    maxCompanions: 16,
+    maxCompanions: 13,
     maxModels: 17,
     maxMonthlyMessages: 5000,
     studioAccess: true,
@@ -85,7 +85,7 @@ const TIER_GATES: Record<PricingTier, FeatureGates> = {
     royalties: false,
   },
   pro: {
-    maxCompanions: 16,
+    maxCompanions: 13,
     maxModels: 17,
     maxMonthlyMessages: Infinity,
     studioAccess: true,
@@ -129,7 +129,7 @@ export function getUpgradeMessage(
   if (!requiredTier) return null;
 
   const labels: Record<keyof FeatureGates, string> = {
-    maxCompanions: 'All 16 companions',
+    maxCompanions: 'All 13 companions',
     maxModels: 'Additional AI models',
     maxMonthlyMessages: 'More messages',
     studioAccess: 'The Studio',

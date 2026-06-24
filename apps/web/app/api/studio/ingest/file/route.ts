@@ -29,11 +29,6 @@ import { linkToWorldGraph } from '@/lib/studio/world-link';
 export const runtime = 'nodejs';
 export const maxDuration = 60;
 
-// 15 MB request body cap
-export const config = {
-  api: { bodyParser: false },
-};
-
 function err(message: string, status = 400) {
   return NextResponse.json({ error: message }, { status });
 }

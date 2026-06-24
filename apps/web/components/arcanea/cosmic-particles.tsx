@@ -63,7 +63,7 @@ export default function CosmicParticles({ count = 60 }: { count?: number }) {
     const isMobile = window.innerWidth < 768;
     const effectiveCount = isMobile ? Math.min(count, 20) : count;
 
-    const colors = ['var(--arc-brand-cosmic-blue)', 'var(--arc-void)', 'var(--arc-brand-atlantean-teal)', 'var(--arc-brand-arcanean-gold)', 'var(--arc-text-primary)', 'var(--arc-text-primary)'];
+    const colors = ['#0d47a1', '#a78bfa', '#00bcd4', '#ffd700', '#f8fafc', '#e2e8f0'];
 
     const resize = () => {
       canvas.width = canvas.offsetWidth;

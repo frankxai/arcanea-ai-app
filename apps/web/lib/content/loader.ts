@@ -12,6 +12,7 @@
 
 import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
+import { getBookRoot } from './book-path';
 
 import grayMatter from 'gray-matter';
 import {
@@ -38,7 +39,7 @@ function parseFrontmatter(source: string) {
 // CONFIGURATION
 // ============================================
 
-const CONTENT_DIR = join(process.cwd(), '..', '..', 'book');
+const CONTENT_DIR = getBookRoot();
 
 // Collection metadata (matches README.md structure)
 export const COLLECTIONS: Collection[] = [
@@ -245,7 +246,7 @@ export const COLLECTIONS: Collection[] = [
   {
     slug: 'grimoire-of-magic',
     name: 'The Grimoire of Magic',
-    description: 'The spell taxonomy — disciplines, tiers, and the grammar of casting',
+    description: 'The spell taxonomy - disciplines, tiers, and the grammar of casting',
     order: 21,
     format: 'reference',
     readWhen: 'you study how Arcanean magic is classified and cast',

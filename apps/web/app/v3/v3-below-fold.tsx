@@ -5,6 +5,7 @@ import { m, useInView, AnimatePresence } from "framer-motion";
 import { MotionProvider } from "@/lib/motion";
 import { useRef, useState, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Plus,
   Minus,
@@ -23,6 +24,7 @@ import {
   Microphone,
   Brain,
   Waveform,
+  ArrowRight,
 } from "@/lib/phosphor-icons";
 import type { PhosphorIcon as IconComponent } from "@/lib/phosphor-icons";
 import { HowItWorks } from "@/components/landing/how-it-works";
@@ -52,47 +54,43 @@ import { luminorAccents, tierAccents, streamAccents, pillarAccents, brand } from
 const FAQ_ITEMS = [
   {
     q: "What is a Luminor?",
-    a: "A Luminor is a specialist AI partner — think \"GPT tuned for one craft.\" We have 16 of them: Story Writer, Character Designer, World Builder, Composer, Debugger, Strategist, and more. Each carries its own voice, memory, and toolset. You pick the Luminor for the job.",
+    a: "A specialized AI agent runtime built to construct worlds, write code, compose music, and design structures. Arcanea currently ships 13 configured Luminor specialists that coordinate through shared context and creator-owned project memory.",
   },
   {
     q: "What makes the Living Worlds engine different?",
-    a: "Most AI tools forget. Arcanea builds a persistent graph of your world — characters, locations, magic, lore — all linked. Reference a character next session and the AI still knows them. Export as markdown, fork the world, run it locally. This is the moat.",
+    a: "Stateless chats forget who you are after a few thousand words. Arcanea compiles your entire universe into a persistent relational graph (backed by local SQLite databases and strict schemas). Characters remember their history, magic laws remain rigid, and lore never drifts. You own the SQLite file; fork it, query it, or deploy it locally.",
   },
   {
     q: "How do the Luminors work?",
-    a: "Each Luminor is specialized for a creative domain — writing, research, design, music, strategy. Trained on Arcanea's 190K-word philosophy corpus, not generic datasets. Pick one, describe your project, and build together. Each can hand off to another mid-conversation.",
+    a: "Each agent is equipped with domain-specific toolkits and system prompts grounded in Arcanea's 190K+ word codebase and philosophy. Runtimes hand off context using structured schemas, passing a cinematic scene from a storyteller to a composer or visual builder without forcing the creator to restart from a blank chat.",
   },
   {
     q: "What is the Library of Arcanea?",
-    a: "190K+ words of original creative philosophy across 17 collections. Laws, meditations, parables, and dialogues — the knowledge foundation that shapes every Luminor in the system.",
+    a: "190K+ words of original creative theory, laws, meditations, and dialogues across 17 collections. This serves as the grounding database for all agent personas, providing a consistent structural and thematic foundation across the platform.",
   },
   {
     q: "What is the Ten Gates system?",
-    a: "A progression framework from Apprentice to Luminor. Each Gate maps to a creative capacity. Progress is earned through creation, not purchases.",
+    a: "Our leveling system for creators and builders. You start as an Apprentice at Gate 1 and rank up to a Master world-builder at Gate 10. You unlock developer permissions, advanced model routing, and specialized agents by shipping code, writing canon, and completing creation quests.",
   },
   {
     q: "How does BYOK work?",
-    a: "Bring your own API key. Your key lives in your browser's localStorage — we never see it or store it on our servers. Pay OpenAI, Anthropic, or Google directly at cost. No markup, no middleman, no vendor lock-in. You own your usage, billing, and data.",
+    a: "Bring Your Own Keys. Standard platforms lock you into subscription markups. Arcanea runs entirely on API keys stored locally in your browser. You pay Anthropic, Google, and OpenAI directly at cost. Zero markup. Zero middleman. Complete sovereign control over your compute costs.",
   },
   {
-    q: "Do you train on my data?",
-    a: "No. Never. Your creations, conversations, and worlds are yours. Export anytime as markdown, JSON, or your preferred format. The database is yours to run locally too if you want full sovereignty.",
-  },
-  {
-    q: "Is my work private?",
-    a: "Yes. We do not train on your data. What you build stays yours — keep it in Arcanea or export it.",
+    q: "Do you train on my data or log my inputs?",
+    a: "Never. Your keys, your database, your IP. Because all API calls route directly from your local browser context to the model provider, we have no servers to log your inputs or steal your lore. We don't train models on your dreams.",
   },
   {
     q: "Can I sell what I create?",
-    a: "Yes. Seven revenue streams — template marketplace (keep 90%), Whop memberships (97%), NFT collections (92.5% + smart-contract royalties), commissions, token-gated drops, direct Gumroad/Stripe storefronts, and companion licensing. See /creator-economy.",
+    a: "Absolutely. You build it, you own it. We claim 0% of your IP or royalties. Publish templates, distribute worlds, or sell premium agent kits directly to the community via built-in Gumroad, Whop, and Stripe integrations.",
   },
   {
     q: "What integrations does Arcanea support?",
-    a: "Arcanea tracks 30+ integrations across coding, creative AI, distribution, communities, game engines, infra, and chain. The integrations page labels each one as live, beta, or planned.",
+    a: "Arcanea hooks directly into your workflow: from local CLI tools, Vercel, and Claude Code to Git, SQLite, and ElevenLabs. Check our /integrations grid to see the exact state (production, beta, roadmap) of every bridge we support.",
   },
   {
     q: "How do I publish my work?",
-    a: "One world → many channels. Arcanea prepares native formats for Discord posts, X threads, Instagram carousels, YouTube narrations, TikTok reels — all from the same source. You publish via your own accounts (tokens stay yours). Distribution flows are built on Blotato/n8n/Postiz.",
+    a: "One-click deployment. Arcanea compiles your world state into markdown for docs, threads for X, script layouts for voice generation, or raw JSON for game engines. Distribute your content automatically using open webhooks and local APIs.",
   },
 ];
 
@@ -111,43 +109,43 @@ interface ProductPillar {
 const PRODUCT_PILLARS: ProductPillar[] = [
   {
     Icon: Chat,
-    title: "Chat",
-    description: "16 specialist AI partners — one for every craft",
+    title: "Prompt",
+    description: "Start from one sentence, scene, mechanic, or character.",
     href: "/chat",
     glowColor: pillarAccents.chat,
   },
   {
     Icon: Globe,
-    title: "Worlds",
-    description: "A graph of characters, locations, magic — all connected",
+    title: "World Graph",
+    description: "Characters, places, rules, and factions stay connected.",
     href: "/worlds",
     glowColor: pillarAccents.worlds,
   },
   {
     Icon: Books,
-    title: "Library",
-    description: "190K+ words of original creative philosophy",
-    href: "/library",
+    title: "Canon",
+    description: "Books, lore, and magical systems compile into a single source.",
+    href: "/living-lore",
     glowColor: pillarAccents.library,
-  },
-  {
-    Icon: GraduationCap,
-    title: "Academy",
-    description: "A structured path from beginner to Luminor",
-    href: "/academy",
-    glowColor: pillarAccents.academy,
   },
   {
     Icon: MagicWand,
     title: "Forge",
-    description: "Forge your own Luminor, companion, or character",
+    description: "Create Luminors, companions, artifacts, and systems.",
     href: "/forge",
+    glowColor: pillarAccents.academy,
+  },
+  {
+    Icon: GraduationCap,
+    title: "Progress",
+    description: "Advanced progression pathways guide you to creative mastery.",
+    href: "/academy",
     glowColor: pillarAccents.forge,
   },
   {
     Icon: Code,
-    title: "Code",
-    description: `${PUBLIC_REPO_SUMMARY.public} public repos. Fork the open pieces.`,
+    title: "Runtime",
+    description: `${PUBLIC_REPO_SUMMARY.public} public repos and exportable context.`,
     href: "/ecosystem",
     glowColor: pillarAccents.code,
   },
@@ -158,9 +156,9 @@ function ProductPillarsGrid() {
     <SectionShell ambient="teal" size="compact" id="what-arcanea-does">
       <div className="max-w-5xl mx-auto px-6">
         <SectionHeader
-          label="What Arcanea Does"
-          title="Six ways to create"
-          subtitle="Modular components for lore synthesis, orchestration, media compilation, and distribution. Zero locked APIs."
+          label="Creation Logic"
+          title="A unified creation cycle"
+          subtitle={<>Prompt, graph, canon, and runtime execute in a <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">closed feedback loop</span> instead of scattering across tabs and forgotten sessions.</>}
           accent="teal"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -202,8 +200,8 @@ function LivingWorldSection() {
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
           label="The Living Worlds Engine"
-          title="One sentence becomes a universe"
-          subtitle="Compile character profiles, spatial mappings, and logical rules into a persistent, relational graph. Query with natural language. Export to markdown."
+          title="Magic is code. Compile your universe."
+          subtitle={<>A persistent relational graph engine that structures your canon, locales, and systems. Stop running stateless chats; compile a <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">stateful universe</span> where agents remember the lore, and magic obeys the schema.</>}
           accent="teal"
         />
         <Reveal y={20}>
@@ -212,9 +210,9 @@ function LivingWorldSection() {
         <Reveal y={12} delay={0.3}>
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {[
-              { label: "Connected", body: "Characters reference the same locations, magic follows consistent rules, lore propagates.", color: brand.aquamarine },
-              { label: "Persistent", body: "Your world survives every session. Come back in a year — it still remembers everything.", color: brand.atlanteanTeal },
-              { label: "Forkable", body: "Export to markdown/JSON. Fork a world. Run the engine locally. Nothing locked.", color: brand.arcaneanGold },
+              { label: "Relational Schema", body: "Entities maintain explicit graph links. Characters reference shared locations, magic follows consistent rules, and updates propagate across the graph.", color: brand.aquamarine },
+              { label: "Stateful Continuity", body: "World states persist beyond individual session contexts. The relational database maintains narrative history without context window decay.", color: brand.atlanteanTeal },
+              { label: "Decentralized Runtimes", body: "Export whole worlds as portable JSON or SQLite schemas. Run the graph engine locally via CLI, completely free of cloud APIs.", color: brand.arcaneanGold },
             ].map(({ label, body, color }, i) => (
               <m.div
                 key={label}
@@ -238,6 +236,308 @@ function LivingWorldSection() {
 }
 
 // ---------------------------------------------------------------------------
+// Portal Atlas — premium story cards for the world-building surface
+// ---------------------------------------------------------------------------
+
+const PORTAL_ATLAS: Array<{
+  Icon: IconComponent;
+  label: string;
+  title: string;
+  body: string;
+  href: string;
+  image: string;
+  accent: string;
+}> = [
+  {
+    Icon: Globe,
+    label: "Realm Matrix",
+    title: "Initialize the universe",
+    body: "Boot a world from zero. Bind the gates, sculpt the terrain, inject geopolitical pressure, and compile the social contracts that make your cosmos playable.",
+    href: "/worlds",
+    image: "/brand/arcanea-dashboard-hero-premium.png",
+    accent: brand.atlanteanTeal,
+  },
+  {
+    Icon: Diamond,
+    label: "Arcane State",
+    title: "Stateful relics & lore constraints",
+    body: "Vael crystals, raw Luminor ore, and Nero shards become strict engine constraints. Your agents inherit their physical and magical laws across every scene.",
+    href: "/lore/elements",
+    image: "/brand/arcanea-collectible-reliquary-premium.png",
+    accent: brand.arcaneanGold,
+  },
+  {
+    Icon: Brain,
+    label: "Agent Council",
+    title: "Compute magic like code",
+    body: "Storytellers, composers, and systems architects execute on the same hot-swappable world state. Zero narrative drift, pure agentic magic.",
+    href: "/agents",
+    image: "/images/forge/space/004-dreadnought-nebula.png",
+    accent: brand.aquamarine,
+  },
+];
+
+function PortalAtlasSection() {
+  return (
+    <SectionShell ambient="teal" size="default" id="portal-atlas" className="scroll-mt-28">
+      <div className="max-w-6xl mx-auto px-6">
+        <SectionHeader
+          label="The Portal Matrix"
+          title="An operating system for new realms"
+          subtitle={<>We treat creative IP like software. Scaffold your world graph, direct cinematic lanes, spawn agent councils, and <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">fork your entire universe</span> as raw code.</>}
+          accent="teal"
+        />
+        <div className="grid grid-cols-1 gap-4 md:gap-5 lg:auto-rows-fr lg:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.75fr)]">
+          {PORTAL_ATLAS.map((portal, i) => {
+            const Icon = portal.Icon;
+            const cardSize =
+              i === 0
+                ? "min-h-[360px] lg:min-h-[560px]"
+                : "min-h-[320px] lg:min-h-[270px]";
+            return (
+              <m.div
+                key={portal.title}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className={i === 0 ? "lg:row-span-2" : ""}
+              >
+                <Link href={portal.href} className="group block h-full focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/30 rounded-2xl">
+                  <div className={`relative h-full ${cardSize} overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.025] backdrop-blur-sm`}>
+                    <Image
+                      src={portal.image}
+                      alt=""
+                      fill
+                      sizes={i === 0 ? "(max-width: 1024px) 100vw, 58vw" : "(max-width: 1024px) 100vw, 30vw"}
+                      className="object-cover opacity-70 transition-transform duration-700 group-hover:scale-[1.04]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] via-[var(--arc-cosmic-void)]/56 to-[var(--arc-cosmic-void)]/12" />
+                    <div
+                      className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      style={{ background: `radial-gradient(620px circle at 30% 18%, ${portal.accent}22, transparent 62%)` }}
+                    />
+                    <div className="absolute inset-x-5 bottom-5 md:inset-x-6 md:bottom-6">
+                      <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/35 px-3 py-1.5 backdrop-blur-md">
+                        <Icon size={14} weight="duotone" color={portal.accent} />
+                        <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-white/45">
+                          {portal.label}
+                        </span>
+                      </div>
+                      <h3 className="max-w-xl text-2xl md:text-3xl font-display font-semibold tracking-tight text-white">
+                        {portal.title}
+                      </h3>
+                      <p className="mt-3 max-w-xl text-sm md:text-base leading-relaxed text-white/48">
+                        {portal.body}
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              </m.div>
+            );
+          })}
+        </div>
+      </div>
+    </SectionShell>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// Guardians and runtimes — canon as premium media architecture
+// ---------------------------------------------------------------------------
+
+const GUARDIAN_PREVIEW = [
+  {
+    name: "Draconia + Draconis",
+    gate: "Fire Gate",
+    body: "Willpower, forge logic, battle tempo, and rider-scale transformation.",
+    image: "/guardians/v4/draconia-hero-v4.webp",
+    href: "/lore/guardians/draconia",
+    accent: "var(--arc-fire)",
+  },
+  {
+    name: "Lyria + Yumiko",
+    gate: "Sight Gate",
+    body: "Pattern recognition, prophecy pressure, visual inference, and hidden intent.",
+    image: "/guardians/v4/lyria-hero-v4.webp",
+    href: "/lore/guardians/lyria",
+    accent: "var(--arc-void)",
+  },
+  {
+    name: "Shinkami + Source",
+    gate: "Source Gate",
+    body: "Meta-consciousness, system review, deep synthesis, and final coherence.",
+    image: "/guardians/v4/shinkami-hero-v4.webp",
+    href: "/lore/guardians/shinkami",
+    accent: brand.arcaneanGold,
+  },
+];
+
+function GuardianCouncilSection() {
+  return (
+    <SectionShell ambient="gold" size="default" id="gods-godbeasts">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-14 items-center">
+          <div>
+            <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--arc-brand-arcanean-gold)]/55 mb-5">
+              Magical Runtimes
+            </p>
+            <h2 className="text-3xl md:text-5xl font-display font-bold tracking-[-0.03em] leading-[1.08] text-white">
+              Magical intelligence compiled at the speed of thought.
+            </h2>
+            <p className="mt-6 text-base md:text-lg leading-relaxed text-white/45">
+              Your system guardians are active runtimes. In Arcanea, each specialist model acts as a validation node, enforcing creative consistency, custom styling, and agent actions. Spawn their logic; execute the generation.
+            </p>
+            <div className="mt-8 grid grid-cols-3 gap-3">
+              {[
+                { value: "10", label: "modules" },
+                { value: "10", label: "guardians" },
+                { value: "16", label: "runtimes" },
+              ].map((stat) => (
+                <div key={stat.label} className="rounded-xl border border-white/[0.06] bg-white/[0.025] p-4 text-center">
+                  <p className="text-2xl font-display font-semibold text-[var(--arc-brand-arcanean-gold)]">
+                    {stat.value}
+                  </p>
+                  <p className="mt-1 text-[10px] font-mono uppercase tracking-[0.18em] text-white/28">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8">
+              <Magnetic>
+                <Link
+                  href="/agents"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--arc-brand-arcanean-gold)]/25 bg-[var(--arc-brand-arcanean-gold)]/10 px-6 py-3 text-sm font-medium text-[var(--arc-brand-arcanean-gold)] transition-colors hover:bg-[var(--arc-brand-arcanean-gold)]/16"
+                >
+                  Meet the guardians
+                  <span className="text-xs">&rarr;</span>
+                </Link>
+              </Magnetic>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4">
+            {GUARDIAN_PREVIEW.map((item, i) => (
+              <m.div
+                key={item.name}
+                initial={{ opacity: 0, x: 18 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <Link href={item.href} className="group grid min-h-[190px] grid-cols-[112px_1fr] overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.025] backdrop-blur-sm transition-colors hover:border-white/[0.16] sm:block lg:grid lg:grid-cols-[180px_1fr]">
+                  <div className="relative min-h-[190px] overflow-hidden">
+                    <Image
+                       src={item.image}
+                       alt=""
+                       fill
+                       sizes="(max-width: 1024px) 33vw, 180px"
+                       className="object-cover object-center opacity-82 transition-transform duration-700 group-hover:scale-[1.06]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[var(--arc-cosmic-void)]/35 lg:bg-gradient-to-r" />
+                  </div>
+                  <div className="relative flex flex-col justify-center p-5 md:p-6">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.22em]" style={{ color: item.accent }}>
+                      {item.gate}
+                    </span>
+                    <h3 className="mt-2 text-lg md:text-xl font-display font-semibold text-white">
+                      {item.name}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-white/45">
+                      {item.body}
+                    </p>
+                  </div>
+                </Link>
+              </m.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </SectionShell>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Dragon rider scale — cinematic positioning for the gamer/anime audience
+// ---------------------------------------------------------------------------
+
+function DragonRiderScaleSection() {
+  return (
+    <SectionShell ambient="fire" size="default" id="dragon-rider">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="relative overflow-hidden rounded-[1.75rem] border border-white/[0.08] bg-white/[0.025]">
+          <div className="grid min-h-[620px] grid-cols-1 lg:grid-cols-[0.92fr_1.08fr]">
+            <div className="relative order-2 min-h-[360px] lg:order-1 lg:min-h-full">
+              <Image
+                src="/images/books/heart-of-pyrathis-cover-v2.png"
+                alt=""
+                fill
+                sizes="(max-width: 1024px) 100vw, 46vw"
+                className="object-cover object-[50%_58%] opacity-82"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] via-transparent to-[var(--arc-cosmic-void)]/20" />
+              <m.div
+                className="absolute left-[14%] top-[18%] h-px w-[72%] bg-gradient-to-r from-transparent via-[var(--arc-brand-arcanean-gold)]/45 to-transparent"
+                animate={{ opacity: [0.25, 0.7, 0.25], scaleX: [0.9, 1, 0.9] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
+            <div className="relative order-1 flex flex-col justify-center p-7 md:p-10 lg:order-2 lg:p-14">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_50%,color-mix(in_srgb,var(--arc-fire)_13%,transparent),transparent_45%)]" />
+              <div className="relative">
+                <p className="text-[11px] font-mono uppercase tracking-[0.3em] text-[var(--arc-fire)]/70">
+                  Epic Scale · Cinematic Canvas
+                </p>
+                <h2 className="mt-5 text-3xl md:text-5xl font-display font-bold tracking-[-0.03em] leading-[1.05] text-white">
+                  World-building at anime scale, direct to runtime.
+                </h2>
+                <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-white/45">
+                  Forge dragon-rider sagas, compose cinematic score briefs, and map agent handoffs in a single unified workspace. Turn raw imagination into structured game loops, high-fidelity media, and production-ready code. The ultimate canvas for world architects.
+                </p>
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {[
+                    { Icon: Sparkle, label: "Canon", body: "source rules" },
+                    { Icon: Waveform, label: "Motion", body: "shot rhythm" },
+                    { Icon: Lightning, label: "Runtime", body: "agent handoff" },
+                  ].map(({ Icon, label, body }) => (
+                    <div key={label} className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-4">
+                      <Icon size={18} weight="duotone" color="var(--arc-brand-arcanean-gold)" />
+                      <p className="mt-3 text-sm font-display font-semibold text-white/82">{label}</p>
+                      <p className="mt-1 text-[11px] font-mono uppercase tracking-[0.16em] text-white/28">{body}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-9 flex flex-wrap gap-3">
+                  <Magnetic>
+                    <Link
+                      href="/cinema-studio"
+                      className="inline-flex items-center gap-2 rounded-xl border border-[var(--arc-fire)]/25 bg-[var(--arc-fire)]/10 px-6 py-3 text-sm font-medium text-[var(--arc-fire)] transition-colors hover:bg-[var(--arc-fire)]/16"
+                    >
+                      Direct a trailer
+                      <span className="text-xs">&rarr;</span>
+                    </Link>
+                  </Magnetic>
+                  <Magnetic>
+                    <Link
+                      href="/books"
+                      className="inline-flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.04] px-6 py-3 text-sm font-medium text-white/68 transition-colors hover:bg-white/[0.075] hover:text-white"
+                    >
+                      Browse the books
+                    </Link>
+                  </Magnetic>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </SectionShell>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Why Arcanea — Comparison matrix
 // ---------------------------------------------------------------------------
 
@@ -247,8 +547,8 @@ function WhyArcaneaSection() {
       <div className="max-w-5xl mx-auto px-6">
         <SectionHeader
           label="Why Arcanea"
-          title="The moat is the world graph"
-          subtitle="Standard chatbots operate on stateless contexts. Arcanea persists connections between entities—characters, events, parameters—across all sessions."
+          title="When chat forgets, worlds drift"
+          subtitle={<>Standard AI chat tools are useful, but they are not built as a long-term canon engine. Arcanea compiles a persistent, <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">relational database</span> of your world graph so characters, places, rules, and release tasks can stay connected.</>}
           accent="purple"
         />
         <Reveal y={20}>
@@ -274,8 +574,8 @@ function LuminorTeamSection() {
       <div className="max-w-5xl mx-auto px-6">
         <SectionHeader
           label="Luminor Specialists"
-          title="13 dedicated craft runtimes"
-          subtitle="Each specialist implements a scoped role—system architecture, narrative prose, spatial design, sound composition—with distinct system instructions, memory stores, and local toolkits."
+          title="13 specialized AI agents"
+          subtitle={<>Start with one specialist or route work across the council. From Systems Architects to Composers, Storytellers, and Motion Designers, each agent carries its own <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">project context, toolset</span>, and distinct creative voice.</>}
           accent="teal"
         />
         <Reveal y={16}>
@@ -288,8 +588,8 @@ function LuminorTeamSection() {
                 href="/luminors"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-white/70 hover:bg-white/[0.08] hover:text-white transition-colors"
               >
-                Meet all 16 Luminors
-                <span className="text-xs">&rarr;</span>
+                Meet the agent team
+                <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </Magnetic>
           </div>
@@ -310,7 +610,7 @@ function PersonasSection() {
         <SectionHeader
           label="Who it's for"
           title="Built for makers"
-          subtitle="Novelists, game designers, filmmakers, developers, solo creators — Arcanea meets you where you work."
+          subtitle={<>Novelists, game designers, filmmakers, developers, solo creators — Arcanea meets you <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">exactly where you work</span>.</>}
           accent="purple"
         />
         <PersonasShowcase />
@@ -329,8 +629,8 @@ function SovereigntySection() {
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
           label="Sovereign Posture"
-          title="Data ownership by design"
-          subtitle="Local-first localStorage keys, exportable schema graphs, and MIT-licensed client adapters. Your IP stays yours; no centralized model training on creator data."
+          title="Absolute creator sovereignty"
+          subtitle={<>Keep your keys. Keep your IP. Run your graphs locally via SQLite. Arcanea is built on local-first localStorage keys and MIT-licensed clients. <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">Zero vendor lock-in</span>. Zero training on your creations.</>}
           accent="gold"
         />
         <SovereigntyPillars />
@@ -401,9 +701,9 @@ function VoicePresenceSection() {
     <SectionShell ambient="purple" size="default" id="voice-presence">
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
-          label="Voice & Telemetry"
-          title="Real-time voice stream"
-          subtitle="Low-latency speech pipelines using Whisper STT and ElevenLabs TTS. Features WebGL audio-reactive particle shell, custom browser key bindings, and native CLI support."
+          label="Agent Room & Telemetry"
+          title="Talk directly to the machine"
+          subtitle={<>Zero latency. Talk directly to Jarvis, Lumina, or your own custom agent. Low-latency Whisper/ElevenLabs streams meet <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">WebGL audio-reactive particle nodes</span> and native CLI execution.</>}
           accent="purple"
         />
         <Reveal y={20}>
@@ -515,7 +815,7 @@ function StackTeaserSection() {
         <SectionHeader
           label="The Creator Stack"
           title="Built to connect everywhere"
-          subtitle="Claude Code, Nano Banana 2, Supabase, Vercel AI SDK, and GitHub are wired today. Other tiles are marked beta or soon when the app sync is partial or planned."
+          subtitle={<>Claude Code, Nano Banana 2, Supabase, Vercel AI SDK, and GitHub are <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">wired today</span>. Other tiles are marked beta or soon when the app sync is partial or planned.</>}
           accent="teal"
         />
         <Reveal y={16}>
@@ -564,7 +864,7 @@ function EarnTeaserSection() {
         <SectionHeader
           label="Creator Posture"
           title="Monetize sovereign IP"
-          subtitle="Distribute creations via integrated storefronts. Smart-contract royalties on remixes, template sales at 90% creator share, and memberships at 97% share. Shipped states tracked on public roadmap."
+          subtitle={<>Distribute creations via integrated storefronts. <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">Smart-contract royalties</span> on remixes, template sales at 90% creator share, and memberships at 97% share.</>}
           accent="gold"
         />
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -765,17 +1065,32 @@ export function V3BelowFold({
 
         <AtmosphericDivider variant="teal" />
 
-        {/* 1. Product pillars — "What Arcanea Does" */}
+        {/* 1. Portal atlas — the world-building story surface */}
+        <PortalAtlasSection />
+
+        <AtmosphericDivider variant="gold" />
+
+        {/* 1b. Active guardians — canon as runtime */}
+        <GuardianCouncilSection />
+
+        <AtmosphericDivider variant="gold" />
+
+        {/* 1c. Dragon rider scale — cinematic proof of ambition */}
+        <DragonRiderScaleSection />
+
+        <AtmosphericDivider variant="teal" />
+
+        {/* 2. Product pillars — the loop behind every artifact */}
         <ProductPillarsGrid />
 
         <AtmosphericDivider variant="teal" />
 
-        {/* 1b. Luminor team preview — 13 specialists made visible */}
+        {/* 2b. Luminor team preview — 13 specialists made visible */}
         <LuminorTeamSection />
 
         <AtmosphericDivider variant="purple" />
 
-        {/* 1c. Voice & Presence — Apr 2026 ship: shipped voice room + audio-reactive orb */}
+        {/* 2c. Voice & Presence — Apr 2026 ship: shipped voice room + audio-reactive orb */}
         <VoicePresenceSection />
 
         <AtmosphericDivider variant="purple" />
@@ -836,8 +1151,7 @@ export function V3BelowFold({
 
             <Reveal y={12} delay={0.4}>
               <p className="text-lg text-white/45 max-w-2xl mx-auto mb-12 leading-relaxed">
-                {PUBLIC_REPO_SUMMARY.active} active Arcanea repos tracked. {PUBLIC_REPO_SUMMARY.public} public on GitHub today.
-                MIT licensed where public. Run the open pieces locally. Keep your keys. Own your data.
+                We track {PUBLIC_REPO_SUMMARY.active} active repositories, with {PUBLIC_REPO_SUMMARY.public} public on GitHub under the MIT license. Pull the code, run components locally, interface via open APIs, and retain absolute data sovereignty.
               </p>
             </Reveal>
 
@@ -846,7 +1160,7 @@ export function V3BelowFold({
                 {[
                   { value: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", fixed: false },
                   { value: PUBLIC_REPO_SUMMARY.packages, suffix: "", label: "published refs", fixed: false },
-                  { value: 80, suffix: "+", label: "skills", fixed: false },
+                  { value: 160, suffix: "+", label: "skills", fixed: false },
                   { value: 0, suffix: "", label: "license", fixed: true },
                 ].map(({ value, suffix, label, fixed }, i) => (
                   <div key={label} className="text-center px-3 py-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">

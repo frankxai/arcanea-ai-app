@@ -171,7 +171,7 @@ export async function getConversation(
 
   if (msgErr) throw new Error(`Failed to fetch messages: ${msgErr.message}`);
 
-  const messages: ConversationMessage[] = (msgs ?? []).map((m) => ({
+  const messages: ConversationMessage[] = (msgs ?? []).map((m: any) => ({
     id: m.id,
     role: m.role as ConversationMessage['role'],
     content: m.content,

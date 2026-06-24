@@ -40,7 +40,7 @@ const CREATIVE_STARTERS = [
 
 const SUBTITLES = [
   "Stories, code, worlds, music \u2014 type a prompt or pick a starter below.",
-  "16 specialist minds. Pick one or let Auto route your message.",
+  "13 specialist agents. Pick one or let Auto route your message.",
   "Better at the second draft. Paste what you\u2019ve got so far.",
   "Images take ~10s. Stories are instant. Worlds take a conversation.",
   "Attach images, use @mentions for agents, or just type.",

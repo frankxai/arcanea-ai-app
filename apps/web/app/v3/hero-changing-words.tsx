@@ -2,26 +2,36 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { m, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence, useReducedMotion } from "framer-motion";
 
 const words = [
-  "create?",
-  "write?",
-  "build?",
-  "compose?",
-  "design?",
-  "imagine?",
+  "build.",
+  "map.",
+  "write.",
+  "score.",
+  "ship.",
+  "publish.",
 ];
 
 export function HeroChangingWords() {
   const [index, setIndex] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
+    if (shouldReduceMotion) return;
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % words.length);
     }, 2800);
     return () => clearInterval(timer);
-  }, []);
+  }, [shouldReduceMotion]);
+
+  if (shouldReduceMotion) {
+    return (
+      <span className="inline-block font-editorial italic font-normal bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-arcanean-gold)] bg-clip-text text-transparent pb-1">
+        {words[0]}
+      </span>
+    );
+  }
 
   return (
     <span className="relative inline-flex justify-start min-w-[4.5em] overflow-hidden align-baseline">
@@ -32,7 +42,7 @@ export function HeroChangingWords() {
           animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
           exit={{ y: "-110%", opacity: 0, filter: "blur(4px)" }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-block bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent"
+          className="inline-block font-editorial italic font-normal bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-arcanean-gold)] bg-clip-text text-transparent pb-1"
         >
           {words[index]}
         </m.span>

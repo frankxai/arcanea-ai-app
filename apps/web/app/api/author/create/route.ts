@@ -2,8 +2,9 @@
 import { mkdir, writeFile, access } from 'fs/promises';
 import { join } from 'path';
 import { NextResponse } from 'next/server';
+import { getBookRoot } from '@/lib/content/book-path';
 
-const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
+const BOOK_ROOT = getBookRoot();
 
 async function exists(p: string) {
   try {

@@ -22,26 +22,26 @@ interface Pillar {
 const PILLARS: Pillar[] = [
   {
     icon: Keyboard,
-    title: "Your keys, always",
-    body: "BYOK by default. Your OpenAI, Anthropic, or Google key lives in your browser. We never see it, store it, or mark it up.",
+    title: "BYOK Compute",
+    body: "Bring Your Own Keys. Standard platforms tax your intelligence with subscription markups. Arcanea hooks directly into Anthropic, OpenAI, and Google at raw cost. Complete compute sovereignty.",
     accent: brand.aquamarine,
   },
   {
     icon: Shield,
-    title: "Your IP, always",
-    body: "Everything you create is yours. No claims on output. No training on your data. Export as markdown, JSON, or fork the whole stack.",
+    title: "Sovereign Lore",
+    body: "Your dreams are your property. Every world graph, scene, and character schema is compiled locally to SQLite. We claim 0% royalties. No vendor lock-in, no data harvesting, no model training on your IP.",
     accent: brand.atlanteanTeal,
   },
   {
     icon: Code,
-    title: "Open source core",
-    body: "Public repos are MIT licensed and forkable. Private production and unresolved historical repos are labeled instead of marketed as open.",
+    title: "MIT-Licensed Stack",
+    body: "Clone the runtime, spin up local MCP servers, and refactor the agent logic. Arcanea's core clients are completely open-source under the MIT license. Build without boundaries.",
     accent: brand.arcaneanGold,
   },
   {
     icon: ArrowSquareOut,
-    title: "No lock-in",
-    body: "Your worlds, characters, and chats export as portable files. Works with Claude Code, Cursor, GPT, Gemini — anywhere you want to go next.",
+    title: "Stateless to Stateful",
+    body: "World schemas map directly to Cursor, Claude Code, or local CLI terminals. Seamlessly bridge your stateful universe with any developer workspace. Portable, compiler-ready, and stateless-free.",
     accent: ambient.lavender,
   },
 ];
@@ -121,7 +121,7 @@ export function SovereigntyBadge() {
         <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--arc-brand-atlantean-teal)]" />
       </span>
       <span className="text-[11px] font-mono tracking-[0.15em] uppercase text-[var(--arc-brand-atlantean-teal)]/80">
-        Sovereign Creative AI
+        Sovereign World Engine
       </span>
     </div>
   );
