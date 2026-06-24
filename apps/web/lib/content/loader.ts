@@ -41,6 +41,15 @@ function parseFrontmatter(source: string) {
 
 const CONTENT_DIR = getBookRoot();
 
+function isMissingPathError(error: unknown): boolean {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'code' in error &&
+    (error as { code?: string }).code === 'ENOENT'
+  );
+}
+
 // Collection metadata (matches README.md structure)
 export const COLLECTIONS: Collection[] = [
   {
@@ -488,6 +497,7 @@ export async function getTextsInCollection(collectionSlug: string): Promise<Text
 
     return texts.sort((a, b) => a.frontmatter.order - b.frontmatter.order);
   } catch (error) {
+    if (isMissingPathError(error)) return [];
     console.error(`Error loading collection ${collectionSlug}:`, error);
     return [];
   }
@@ -563,6 +573,7 @@ export async function getText(slug: string): Promise<Text | null> {
 
     return loadText(join(collectionPath, filename), collectionSlug, filename);
   } catch (error) {
+    if (isMissingPathError(error)) return null;
     console.error(`Error loading text ${slug}:`, error);
     return null;
   }
