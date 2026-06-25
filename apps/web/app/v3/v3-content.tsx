@@ -137,7 +137,7 @@ function HeroPortal() {
         <div className="absolute inset-0 bg-gradient-to-r from-[var(--arc-cosmic-void)]/82 via-transparent to-[var(--arc-cosmic-void)]/82" />
         <div className="absolute inset-0 hidden bg-[radial-gradient(ellipse_46%_44%_at_50%_53%,color-mix(in_srgb,var(--arc-cosmic-void)_78%,transparent)_0%,color-mix(in_srgb,var(--arc-cosmic-void)_52%,transparent)_48%,transparent_74%)] md:block" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_82%_70%_at_50%_52%,color-mix(in_srgb,var(--arc-cosmic-void)_82%,transparent)_0%,color-mix(in_srgb,var(--arc-cosmic-void)_58%,transparent)_52%,transparent_82%)] md:hidden" />
-        <div className="absolute left-1/2 top-[12%] h-px w-[min(720px,80vw)] -translate-x-1/2 bg-gradient-to-r from-transparent via-[var(--arc-brand-arcanean-gold)]/35 to-transparent" />
+        <div className="absolute left-1/2 top-[12%] h-px w-[min(720px,80vw)] -translate-x-1/2 bg-gradient-to-r from-transparent via-[var(--arc-brand-atlantean-teal)]/38 to-transparent" />
       </div>
 
       {/* Fine grid — barely visible texture */}
@@ -217,7 +217,7 @@ function HeroPortal() {
             {[
               { Icon: Sparkle, num: 13, suffix: "", label: "specialist agents", color: "var(--arc-brand-atlantean-teal)", fixed: true },
               { Icon: Diamond, num: 190, suffix: "K+", label: "words of canon", color: "var(--arc-brand-atlantean-teal)" },
-              { Icon: Code, num: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", color: "var(--arc-brand-arcanean-gold)" },
+              { Icon: Code, num: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", color: "var(--arc-brand-cosmic-blue)" },
               { Icon: ShieldStar, num: 0, suffix: "MIT", label: "open source", color: "var(--arc-void)", fixed: true },
             ].map(({ Icon, num, suffix, label, color, fixed }, i) => (
               <div
@@ -228,7 +228,7 @@ function HeroPortal() {
                 <span className="text-[11px] font-display font-semibold text-white/55">
                   {fixed ? (suffix || num) : <NumberTicker value={num} suffix={suffix} delay={0.36 + i * 0.08} />}
                 </span>
-                <span className="text-[10px] text-white/30 font-mono">{label}</span>
+                <span className="text-[10px] text-white/34 font-body">{label}</span>
               </div>
             ))}
           </m.div>
@@ -241,7 +241,7 @@ function HeroPortal() {
           >
             <SovereigntyBadge />
             <span className="hidden h-1 w-1 rounded-full bg-white/20 sm:block" />
-            <span className="font-mono">BYOK / your IP / no lock-in</span>
+            <span className="font-body">BYOK / your IP / no lock-in</span>
           </m.div>
 
           <m.div

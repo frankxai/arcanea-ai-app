@@ -21,7 +21,7 @@ const STEPS = [
     description:
       "Create entire worlds with characters, factions, locations, and magic systems. Every element auto-links into a living universe you own.",
     accent: stepAccents.build,
-    href: "/worlds",
+    href: "/worlds/create",
   },
   {
     number: "03",
@@ -35,7 +35,7 @@ const STEPS = [
     number: "04",
     title: "Grow",
     description:
-      "Progress through the Ten Gates. Earn recognition through creation, not consumption. From Apprentice to Luminor — the path is the product.",
+      "Progress through the Ten Gates. Earn recognition through creation, not consumption. From Apprentice to Luminor, the path is the product.",
     accent: stepAccents.grow,
     href: "/academy",
   },
@@ -59,7 +59,7 @@ export function HowItWorks() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/30 mb-4">
+          <p className="mb-4 font-editorial text-lg italic leading-none text-[var(--arc-brand-atlantean-teal)]/70">
             How It Works
           </p>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
@@ -101,7 +101,7 @@ export function HowItWorks() {
                 />
 
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 font-mono text-sm transition-colors duration-300"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 font-display text-sm font-semibold transition-colors duration-300"
                   style={{
                     backgroundColor: isActive
                       ? `${step.accent}22`

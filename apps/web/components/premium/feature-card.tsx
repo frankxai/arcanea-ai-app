@@ -154,7 +154,7 @@ export function StatCard({
       >
         {value}
       </p>
-      <p className="text-[10px] font-mono tracking-[0.2em] uppercase text-white/25 mt-2">
+      <p className="mt-2 text-xs font-body leading-snug text-white/35">
         {label}
       </p>
     </m.div>

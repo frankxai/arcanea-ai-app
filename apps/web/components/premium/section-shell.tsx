@@ -124,6 +124,13 @@ const ACCENT_GRADIENTS = {
   white: "from-white via-white/80 to-white/60",
 };
 
+const LABEL_ACCENTS = {
+  teal: "text-[var(--arc-brand-atlantean-teal)]/70",
+  purple: "text-[var(--arc-void)]/72",
+  gold: "text-[var(--arc-brand-arcanean-gold)]/62",
+  white: "text-white/45",
+};
+
 export function SectionHeader({
   label,
   title,
@@ -136,7 +143,7 @@ export function SectionHeader({
   return (
     <div className={`max-w-3xl mb-16 md:mb-20 ${alignCls}`}>
       {label && (
-        <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-white/30 mb-4">
+        <p className={`mb-4 font-editorial text-base font-normal italic leading-tight tracking-normal md:text-lg ${LABEL_ACCENTS[accent]}`}>
           {label}
         </p>
       )}

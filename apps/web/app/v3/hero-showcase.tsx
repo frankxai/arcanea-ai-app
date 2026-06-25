@@ -4,7 +4,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { m } from "framer-motion";
-import { Star } from "@/lib/phosphor-icons";
 import { brand, guardianAccents } from "@arcanea/design-system";
 
 // ---------------------------------------------------------------------------
@@ -25,10 +24,10 @@ const CARDS = [
     gradient: "from-[var(--arc-brand-cosmic-blue)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-cosmic-blue)]/40",
     gradientAlt: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-cosmic-blue)]/50",
     borderGlow: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 25%, transparent)",
-    stars: 5,
+    status: "Ready now",
     badge: "World OS",
     badgeColor: brand.atlanteanTeal,
-    href: "/worlds",
+    href: "/worlds/create",
     image: "/brand/arcanea-dashboard-hero-premium.png",
   },
   {
@@ -39,7 +38,7 @@ const CARDS = [
     gradient: "from-[var(--arc-fire)]/45 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-cosmic-void)]/45",
     gradientAlt: "from-[var(--arc-fire)]/45 via-[var(--arc-brand-cosmic-blue)]/25 to-[var(--arc-brand-arcanean-gold)]/35",
     borderGlow: "color-mix(in srgb, var(--arc-fire) 24%, transparent)",
-    stars: 5,
+    status: "Canon guide",
     badge: "Canon",
     badgeColor: brand.arcaneanGold,
     href: "/lore/godbeasts",
@@ -53,7 +52,7 @@ const CARDS = [
     gradient: "from-[var(--arc-fire)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-atlantean-teal)]/25",
     gradientAlt: "from-[var(--arc-fire)]/35 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-brand-cosmic-blue)]/45",
     borderGlow: "color-mix(in srgb, var(--arc-brand-arcanean-gold) 20%, transparent)",
-    stars: 5,
+    status: "Preview",
     badge: "Rider",
     badgeColor: brand.aquamarine,
     href: "/cinema-studio",
@@ -67,7 +66,7 @@ const CARDS = [
     gradient: "from-[var(--arc-void)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-arcanean-gold)]/20",
     gradientAlt: "from-[var(--arc-void)]/35 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-cosmic-blue)]/45",
     borderGlow: "color-mix(in srgb, var(--arc-void) 20%, transparent)",
-    stars: 4,
+    status: "Canon guide",
     badge: "Memory",
     badgeColor: brand.aquamarine,
     href: "/living-lore",
@@ -81,7 +80,7 @@ const CARDS = [
     gradient: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/30 to-[var(--arc-fire)]/40",
     gradientAlt: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/35 to-[var(--arc-fire)]/40",
     borderGlow: "color-mix(in srgb, var(--arc-brand-arcanean-gold) 20%, transparent)",
-    stars: 5,
+    status: "Preview",
     badge: "Cinematic",
     badgeColor: brand.arcaneanGold,
     href: "/cinema-studio",
@@ -95,31 +94,13 @@ const CARDS = [
     gradient: "from-[var(--arc-brand-arcanean-gold)]/38 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-atlantean-teal)]/28",
     gradientAlt: "from-[var(--arc-brand-atlantean-teal)]/35 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-arcanean-gold)]/35",
     borderGlow: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 24%, transparent)",
-    stars: 5,
+    status: "Dev preview",
     badge: "Agent OS",
     badgeColor: brand.atlanteanTeal,
     href: "/mcp",
     image: "/images/forge/space/004-dreadnought-nebula.png",
   },
 ] as const;
-
-function StarRating({ count }: { count: number }) {
-  return (
-    <div className="flex items-center gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => {
-        const filled = i < count;
-        return (
-          <Star
-            key={i}
-            size={10}
-            weight={filled ? "fill" : "regular"}
-            color={filled ? brand.arcaneanGold : "color-mix(in srgb, var(--arc-text-primary) 18%, transparent)"}
-          />
-        );
-      })}
-    </div>
-  );
-}
 
 function ShowcaseCard({
   card,
@@ -185,13 +166,19 @@ function ShowcaseCard({
           {/* Vignette overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)]/50 via-transparent to-transparent" />
           {/* Type label */}
-          <span className="absolute top-3 left-3 text-[9px] font-mono uppercase tracking-wider text-white/50 bg-[var(--arc-cosmic-void)]/40 px-2 py-0.5 rounded-full border border-white/[0.08]">
+          <span className="absolute top-3 left-3 rounded-full border border-white/[0.08] bg-[var(--arc-cosmic-void)]/40 px-2.5 py-1 font-editorial text-sm italic leading-none text-white/58">
             {card.type}
           </span>
-          {/* Star rating */}
-          <div className="absolute top-3 right-3">
-            <StarRating count={card.stars} />
-          </div>
+          <span
+            className="absolute right-3 top-3 rounded-full border px-2.5 py-1 text-[11px] font-body leading-none"
+            style={{
+              color: card.badgeColor,
+              borderColor: `${card.badgeColor}32`,
+              backgroundColor: `${card.badgeColor}0f`,
+            }}
+          >
+            {card.status}
+          </span>
         </div>
 
         {/* Card info */}
@@ -215,7 +202,7 @@ function ShowcaseCard({
               <span className="text-[10px] text-white/30 font-body">{card.subtitle}</span>
             </div>
             <span
-              className="inline-block text-[9px] px-2 py-0.5 rounded-full border font-mono"
+              className="inline-block rounded-full border px-2 py-0.5 text-[11px] font-body"
               style={{
                 color: card.badgeColor,
                 borderColor: `${card.badgeColor}30`,
@@ -236,7 +223,7 @@ export function HeroShowcase() {
     <section className="relative py-16 md:py-20 px-6">
       {/* Section heading */}
       <m.p
-        className="text-center text-[10px] font-mono uppercase tracking-[0.25em] text-white/20 mb-10"
+        className="mb-10 text-center font-editorial text-xl italic leading-none text-white/30"
       >
         Every prompt becomes a connected artifact
       </m.p>

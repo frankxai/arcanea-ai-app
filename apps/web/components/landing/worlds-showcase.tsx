@@ -58,7 +58,7 @@ export function WorldsShowcase() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--arc-void)]/50 mb-4">
+          <p className="mb-4 font-editorial text-lg italic leading-none text-[var(--arc-void)]/62">
             The Multiverse
           </p>
           <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight mb-5">
@@ -139,7 +139,7 @@ export function WorldsShowcase() {
           </Link>
           <span className="hidden sm:inline text-white/10">|</span>
           <Link
-            href="/chat?mode=world"
+            href="/worlds/create"
             className="inline-flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-xl bg-gradient-to-r from-[var(--arc-void)]/10 to-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-void)]/20 text-[var(--arc-void)] hover:bg-[var(--arc-void)]/15 transition-all"
           >
             Create Your World
