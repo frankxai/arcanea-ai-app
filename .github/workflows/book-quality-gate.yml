@@ -29,10 +29,11 @@ jobs:
       - name: Get changed book directories
         id: changed
         run: |
-          BOOKS=$(git diff --name-only HEAD~1 HEAD | grep -oE '^book/[^/]+' | sort -u || true)
-          echo "books<<EOF" >> $GITHUB_OUTPUT
-          echo "$BOOKS" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          # Space-separated single line so downstream `for book in ${{ ... }}`
+          # loops stay valid when a PR changes 2+ book collections.
+          # (book/<dir> paths never contain spaces.)
+          BOOKS=$(git diff --name-only HEAD~1 HEAD | grep -oE '^book/[^/]+' | sort -u | tr '\n' ' ' || true)
+          echo "books=$BOOKS" >> $GITHUB_OUTPUT
           echo "Changed books: $BOOKS"
 
       - name: Set up Python
@@ -185,7 +186,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const books = `${{ steps.changed.outputs.books }}`.trim().split('\n').filter(Boolean);
+            const books = `${{ steps.changed.outputs.books }}`.trim().split(/\s+/).filter(Boolean);
             const body = `## Book Quality Gate: PASS\n\n` +
               `Books validated:\n` +
               books.map(b => `- \`${b}\``).join('\n') +
