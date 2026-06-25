@@ -114,7 +114,7 @@ export function Footer() {
               <ArcaneanMark size={28} glow />
               Arcanea™
             </Link>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-white/28 mt-1.5">
+            <p className="mt-1.5 font-editorial text-sm italic leading-none text-white/36">
               Creative Intelligence
             </p>
             <p className="text-sm text-white/50 mt-4 leading-relaxed">
@@ -124,7 +124,7 @@ export function Footer() {
           </div>
 
           <div className="w-full md:w-auto md:min-w-[320px]">
-            <h3 className="text-xs uppercase tracking-[0.22em] font-semibold text-white/36 mb-3">
+            <h3 className="mb-3 font-editorial text-lg italic font-normal leading-none text-white/50">
               Stay in the loop
             </h3>
             {subscribed ? (
@@ -158,7 +158,7 @@ export function Footer() {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10 mb-14">
           {Object.values(footerLinks).map((section) => (
             <div key={section.label}>
-              <h3 className="text-xs uppercase tracking-[0.22em] font-semibold text-white/36 mb-5">
+              <h3 className="mb-5 font-editorial text-lg italic font-normal leading-none text-white/50">
                 {section.label}
               </h3>
               <ul className="space-y-3">
