@@ -11,6 +11,8 @@
  *
  * Options:
  *   --collection <name>  Process only a specific collection
+ *   --lore               ALSO ingest canon docs under .arcanea/lore/** (category 'lore')
+ *   --lore-only          Ingest ONLY the canon docs, skip book/
  *   --dry-run            Preview what would be processed without making changes
  *   --clear              Clear existing library_text entries before processing
  *   --verbose            Show detailed progress
@@ -19,11 +21,14 @@
  *   GEMINI_API_KEY - Required for embedding generation
  *   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY - Required for database access
  *
+ * NOTE: the 'lore' category requires migration 20260625000001_lore_fragments_categories.sql
+ * to be applied (it widens the category CHECK constraint).
+ *
  * @module scripts/embed-library
  */
 
 import { readdir, readFile } from 'fs/promises';
-import { join, basename, extname } from 'path';
+import { join, basename, extname, relative } from 'path';
 import { createClient } from '@supabase/supabase-js';
 import { GoogleGenerativeAI, TaskType } from '@google/generative-ai';
 
@@ -32,6 +37,7 @@ import { GoogleGenerativeAI, TaskType } from '@google/generative-ai';
 // ============================================
 
 const BOOK_DIR = join(process.cwd(), 'book');
+const LORE_DIR = join(process.cwd(), '.arcanea', 'lore'); // canon docs
 const CHUNK_SIZE = 500; // Target tokens per chunk
 const CHUNK_OVERLAP = 50; // Token overlap between chunks
 const EMBEDDING_MODEL = 'text-embedding-004';
@@ -45,6 +51,8 @@ const targetCollection = getArgValue('--collection');
 const isDryRun = args.includes('--dry-run');
 const shouldClear = args.includes('--clear');
 const isVerbose = args.includes('--verbose');
+const loreOnly = args.includes('--lore-only');
+const includeLore = loreOnly || args.includes('--lore');
 
 // ============================================
 // TYPES
@@ -341,6 +349,48 @@ async function discoverMarkdownFiles(
   return files;
 }
 
+/**
+ * Recursively find all markdown files under .arcanea/lore/**.
+ * Skips audit/report scaffolding that isn't canon prose.
+ */
+async function discoverLoreFiles(): Promise<Array<{ path: string; collection: string }>> {
+  const files: Array<{ path: string; collection: string }> = [];
+  const SKIP = new Set(['CONTINUITY_AUDIT.md', 'COUNCIL_NARRATIVE_REPORT.md', 'COUNCIL_QUALITY_REPORT.md', 'LIGHTBRINGER_NAMING_LEDGER.md']);
+
+  async function walk(dir: string): Promise<void> {
+    let entries: string[];
+    try {
+      entries = await readdir(dir);
+    } catch {
+      return;
+    }
+
+    for (const entry of entries) {
+      if (entry.startsWith('.')) continue;
+      const full = join(dir, entry);
+      let isDir = false;
+      try {
+        const sub = await readdir(full);
+        isDir = Array.isArray(sub);
+      } catch {
+        isDir = false;
+      }
+
+      if (isDir) {
+        if (entry === 'canon-drift') continue; // dated audit snapshots, not canon
+        await walk(full);
+      } else if (entry.endsWith('.md') && entry !== 'README.md' && entry !== 'CLAUDE.md' && !SKIP.has(entry)) {
+        // collection = the lore subdirectory (e.g. 'convergent', 'realms') or 'lore' at root
+        const rel = relative(LORE_DIR, dir);
+        files.push({ path: full, collection: rel === '' ? 'lore' : `lore/${rel.split(/[\\/]/)[0]}` });
+      }
+    }
+  }
+
+  await walk(LORE_DIR);
+  return files;
+}
+
 // ============================================
 // EMBEDDING GENERATION
 // ============================================
@@ -460,7 +510,8 @@ async function processFile(
   file: { path: string; collection: string },
   embedder: EmbeddingGenerator,
   db: DatabaseClient,
-  stats: ProcessingStats
+  stats: ProcessingStats,
+  category: string = 'library_text'
 ): Promise<void> {
   verbose(`Processing: ${file.path}`);
 
@@ -503,7 +554,7 @@ async function processFile(
               : title;
 
           await db.upsertFragment({
-            category: 'library_text',
+            category,
             title: fragmentTitle,
             content: batch[j],
             embedding: result.embedding,
@@ -585,14 +636,26 @@ async function main() {
     log(`  Deleted ${deleted} existing entries`);
   }
 
-  // Discover files
+  // Discover files. Each entry carries the category to upsert under.
   log('Discovering markdown files...');
-  const files = await discoverMarkdownFiles(targetCollection);
-  stats.filesFound = files.length;
-  log(`  Found ${files.length} files to process`);
+  const work: Array<{ file: { path: string; collection: string }; category: string }> = [];
+
+  if (!loreOnly) {
+    const bookFiles = await discoverMarkdownFiles(targetCollection);
+    for (const file of bookFiles) work.push({ file, category: 'library_text' });
+    log(`  Found ${bookFiles.length} book files`);
+  }
+  if (includeLore) {
+    const loreFiles = await discoverLoreFiles();
+    for (const file of loreFiles) work.push({ file, category: 'lore' });
+    log(`  Found ${loreFiles.length} canon (.arcanea/lore) files`);
+  }
+
+  stats.filesFound = work.length;
+  log(`  Total ${work.length} files to process`);
   log('');
 
-  if (files.length === 0) {
+  if (work.length === 0) {
     log('No files found. Exiting.');
     return;
   }
@@ -601,8 +664,8 @@ async function main() {
   log('Processing files...');
   log('-'.repeat(40));
 
-  for (const file of files) {
-    await processFile(file, embedder, db, stats);
+  for (const { file, category } of work) {
+    await processFile(file, embedder, db, stats, category);
   }
 
   // Report results
