@@ -358,28 +358,21 @@ async function discoverLoreFiles(): Promise<Array<{ path: string; collection: st
   const SKIP = new Set(['CONTINUITY_AUDIT.md', 'COUNCIL_NARRATIVE_REPORT.md', 'COUNCIL_QUALITY_REPORT.md', 'LIGHTBRINGER_NAMING_LEDGER.md']);
 
   async function walk(dir: string): Promise<void> {
-    let entries: string[];
+    let entries;
     try {
-      entries = await readdir(dir);
+      entries = await readdir(dir, { withFileTypes: true });
     } catch {
       return;
     }
 
     for (const entry of entries) {
-      if (entry.startsWith('.')) continue;
-      const full = join(dir, entry);
-      let isDir = false;
-      try {
-        const sub = await readdir(full);
-        isDir = Array.isArray(sub);
-      } catch {
-        isDir = false;
-      }
+      if (entry.name.startsWith('.')) continue;
+      const full = join(dir, entry.name);
 
-      if (isDir) {
-        if (entry === 'canon-drift') continue; // dated audit snapshots, not canon
+      if (entry.isDirectory()) {
+        if (entry.name === 'canon-drift') continue; // dated audit snapshots, not canon
         await walk(full);
-      } else if (entry.endsWith('.md') && entry !== 'README.md' && entry !== 'CLAUDE.md' && !SKIP.has(entry)) {
+      } else if (entry.name.endsWith('.md') && entry.name !== 'README.md' && entry.name !== 'CLAUDE.md' && !SKIP.has(entry.name)) {
         // collection = the lore subdirectory (e.g. 'convergent', 'realms') or 'lore' at root
         const rel = relative(LORE_DIR, dir);
         files.push({ path: full, collection: rel === '' ? 'lore' : `lore/${rel.split(/[\\/]/)[0]}` });
@@ -646,7 +639,12 @@ async function main() {
     log(`  Found ${bookFiles.length} book files`);
   }
   if (includeLore) {
-    const loreFiles = await discoverLoreFiles();
+    let loreFiles = await discoverLoreFiles();
+    if (targetCollection) {
+      loreFiles = loreFiles.filter(
+        file => file.collection === targetCollection || file.collection === `lore/${targetCollection}`
+      );
+    }
     for (const file of loreFiles) work.push({ file, category: 'lore' });
     log(`  Found ${loreFiles.length} canon (.arcanea/lore) files`);
   }
