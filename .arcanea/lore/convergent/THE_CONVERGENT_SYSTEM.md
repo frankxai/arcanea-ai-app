@@ -17,7 +17,7 @@ This leaves a structural absence. Malachar's Shadow leaks through the Sealing. T
 
 The answer is the rarest pattern in Arcanea: the Architect-tier being who **does not withdraw.** Who reaches the capacity to hold the whole spectrum — and chooses to stay inside the world and hold it. This being is the **Convergent.**
 
-The Convergent is Arcanea's evolution of the Avatar idea, absorbed and made native: not a chosen one, not a prophesied saviour, not a reincarnated soul cycling through elements — but an **emergent keystone**, the one conscious will in an Age willing to carry the whole light without grasping it.
+The Convergent is Arcanea's evolution of the Avatar idea, absorbed and made native: not a chosen one named in advance, not a reincarnated soul cycling through elements — but an **emergent keystone** foretold only as a pattern (the Three-Architects prophecy speaks of role and number, never of a name), the one conscious will in an Age willing to carry the whole light without grasping it.
 
 ---
 
@@ -37,7 +37,7 @@ A being can be Architect-tier and not a Convergent (the four withdrawn ones). A 
 ### What the Convergent is NOT
 
 - **Not an origin class.** Origins are closed. A Convergent emerges from any origin — most often Arcan or Celestial, but canon permits a Gate-Touched Convergent (the most destabilizing possibility) or even, in the deep legends, a Bonded one.
-- **Not a chosen one.** Per `CHARACTER_TEMPLATE.md` anti-patterns and `FACTIONS.md` I.8: Arcanea has no prophecies with names in them. The Convergent is **never foretold by name.** They emerge, are sometimes noticed by the Athenaeum's Witnesses through developmental pattern, and must **earn** the role by surviving it.
+- **Not a chosen one named in advance.** Per `CHARACTER_TEMPLATE.md` anti-patterns and `PRISM_LUXIN_SYSTEM.md` (Architects are not prophesied *by name*): Arcanea has no prophecies with names in them — but it does have **role-and-number prophecy.** The **Three-Architects prophecy** (the Athenaeum's oldest, kept by Headmaster Akamoto) foretells that three will rise to the threshold in an Age and that the balance turns on them — *"three to seal the darkness, or three to break the world"* — without ever naming who. The Convergent is **never foretold by name;** they emerge, are read as the pattern by those with the sight to see it (the Witnesses, Akamoto's Pattern Sight), and must **earn** the role by surviving it. Prophecy in Arcanea is a path, not a chain.
 - **Not a reincarnation.** The Convergent capacity does not pass as a transmigrating soul (this is the deliberate divergence from the Avatar-franchise mechanic). It passes as a **re-seeding of the Weave** — see *The Convergence and the Re-Seeding* below.
 - **Not a ruler.** The Convergent commands no nation. Realms are resonance, not states (`realms/INDEX.md`); the Convergent has no throne to sit on. Their authority is the authority of a keystone — invisible until removed.
 
@@ -155,7 +155,7 @@ The throughline of the central Saga: **every power needs the Convergent for bala
 1. **How many Convergents have there been?** Disputed by design. The Athenaeum names a few; legend names more. Future works may discover one in deep history — but never by a prophecy that named them in advance.
 2. **Can there be two Convergents at once?** Canon currently says no — the Weave carries one Convergence at a time. A story that needs two would be a major canon decision for the Creator.
 3. **What exactly happened to the unknown fourth Architect?** Could a future work reveal them to have been a Convergent who withdrew rather than Dimmed?
-4. **Is the Eighth Age's long Unconverged stretch ending?** The central Saga's engine. To be answered in story, never in prophecy.
+4. **Is the Eighth Age's long Unconverged stretch ending?** The central Saga's engine. The Three-Architects prophecy *frames* the question — it does not answer it. Prophecy is pattern, not verdict; the answer is earned in story.
 
 ---
 

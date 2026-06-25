@@ -50,7 +50,7 @@ The Convergent's two failure modes have their own names, so a writer never confu
 1. **Default to "the Convergent"** in canon and chronicler voice. Reach for the others by speaker.
 2. **Folk and students say "the Avatar."** It is the common word. Do not treat it as wrong — treat it as the view from the ground. (This is how the Avatar concept lives in Arcanea without importing the franchise's mechanics: it is what the *people* call the Convergent, not what the Convergent *is*.)
 3. **The Order says "Starweaver."** When writing Order of Refracted Light or House Synthesis scenes, prefer it.
-4. **Never coin a name that names a specific Convergent in advance of their emergence.** No prophecy with a name in it (`CHARACTER_TEMPLATE.md` anti-patterns). Titles describe the role; they never foretell the person.
+4. **Never coin a name that names a specific Convergent in advance of their emergence.** No prophecy with a *name* in it (`CHARACTER_TEMPLATE.md` anti-patterns). Role-and-number prophecy *is* canon — the Three-Architects prophecy foretells a *pattern* (three rise; one stays), never a person. Titles and prophecy describe the role; they never foretell who fills it.
 5. **No real-world religious or linguistic borrowings.** "Avatar" is permitted *only* as an in-world folk word whose in-world etymology is Arcanean (from *aevar*, an old Heartland word for "the one who carries across" — proposed, open for Creator ruling); it does not reference the Sanskrit term or any external mythology. If this stretches the naming rule too far for the Creator, fall back to "the Carrier" or retire "Avatar" to dialogue only.
 
 ---
