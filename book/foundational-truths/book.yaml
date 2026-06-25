@@ -1,0 +1,49 @@
+title: "The Foundational Truths of Arcanea"
+subtitle: "The Metaphysics Beneath the Magic"
+slug: foundational-truths
+tier: canon
+status: staging
+language: en
+languages_woven: [en]
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator
+  - name: Arcanea Author Council
+    role: co-author
+
+ai_transparency:
+  models_used:
+    - provider: anthropic
+      role: lore-authoring-and-drafting
+  human_contribution: 25%
+  ai_contribution: 75%
+  method: "Human concept and direction (Frank's 'God mode' worldbuilding mandate: encode Arcanea's metaphysical bedrock as the Convergent's non-grasping discipline at human scale). AI (Lorekeeper agent) authored the five truths against CANON_LOCKED.md and the Convergent canon, in the Library voice. Human curation and canon-gate review."
+
+license: CC-BY-NC-SA-4.0
+content_rating: all-ages
+tags: [foundational-truths, wisdom, philosophy, metaphysics, the-convergent, canon, lumina-nero, ten-gates, the-arc]
+
+setting: "The metaphysical bedrock of the Kingdom of Light — beneath the Laws, the Wisdom Scrolls, and the Academy Handbook."
+
+reading_time: "60-75 minutes total · 12-15 minutes per truth · 5 readings"
+
+cast: []
+
+magic_system: |
+  These texts are not a magic system but the principles every magic system in
+  Arcanea rests on: love as the openness that opens the Ten Gates; fear as the
+  contraction that closes them; the ego's grasp as the road to the Dimming
+  (Malachar's fall at human scale); the Arc (Potential → Manifestation →
+  Experience → Dissolution → Evolved Potential) as the practice of building a
+  life; the ten Guardians as inner capacities; and creation as the antidote to
+  Shadow's separation. The Convergent holds the whole light by not grasping it;
+  these five truths teach the same discipline to anyone.
+
+acknowledgments: |
+  Authored 2026-06-25 under Frank's God-mode autonomous-expansion mandate, as
+  the human-scale companion to the Convergent canon (.arcanea/lore/convergent/).
+  Composed by the Lorekeeper against the Library voice (book/CLAUDE.md) and the
+  canon alignment checklist. Arcanea-only spiritual register. Published on
+  Arcanea — written in the open. STAGING until Creator promotes to LOCKED.
