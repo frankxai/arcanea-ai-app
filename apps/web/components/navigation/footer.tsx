@@ -176,9 +176,6 @@ export function Footer() {
                       className="text-sm text-white/55 hover:text-[var(--arc-brand-atlantean-teal)] transition-colors duration-300 link-underline"
                     >
                       {link.label}
-                      {"external" in link && link.external && (
-                        <span className="inline-block ml-1 text-[10px] text-white/25" aria-hidden="true">&nearr;</span>
-                      )}
                     </Link>
                   </li>
                 ))}
