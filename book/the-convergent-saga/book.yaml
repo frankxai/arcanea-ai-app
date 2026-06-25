@@ -1,0 +1,53 @@
+title: "The Convergent Saga"
+subtitle: "Arion, Mera, and Emilia at the threshold of the Architect Who Stays"
+slug: the-convergent-saga
+tier: canon
+status: in-progress
+language: en
+languages_woven: [en]
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator
+  - name: Arcanea Author Council
+    role: co-author
+
+ai_transparency:
+  models_used:
+    - provider: anthropic
+      role: story-bible-and-character-authoring
+  human_contribution: 25%
+  ai_contribution: 75%
+  method: "Human concept and direction (Frank's 'God mode' worldbuilding mandate: a dedicated story centering Arion, Mera, Emilia under Headmaster Akamoto, built on the new Convergent canon). AI (Character Psychologist agent) authored the story bible + four 12-field character files against CHARACTER_TEMPLATE.md and the Convergent keystone, placed as a parallel chronicle to the Malachar Cycle. Human curation and canon-gate review."
+
+license: CC-BY-NC-SA-4.0
+content_rating: teen
+tags: [the-convergent, saga, arion, mera, emilia, akamoto, dragon-riders, atlantis, kingdom-of-light, starlight-academies, character-bible, canon]
+
+setting: "The Eighth Age — the Starlight Academies, the Arcanea Academy of dragon riders, Atlantis, and the Kingdom of Light. A parallel chronicle to the Malachar Cycle."
+
+reading_time: "Story bible + four character files. Opening chapters forthcoming."
+
+cast:
+  - { name: "Arion", role: "The emerging Convergent (Gate-Touched Ascendant)" }
+  - { name: "Mera", role: "Athenaeum observer; Atlantis / Kingdom of Light axis" }
+  - { name: "Emilia", role: "Prism drafter and dragon rider; bonded to Vael" }
+  - { name: "Headmaster Akamoto", role: "Mentor; Eldrian Luminor who witnessed a prior Withdrawal" }
+
+magic_system: |
+  Built on the Convergent canon (.arcanea/lore/convergent/). Arion is the Eighth
+  Age's emerging Convergent — the Architect who might choose to stay — and his arc
+  is the discipline of non-grasping (hold the whole light without clenching it;
+  the alternative is the Dimming, Malachar's fall). Mera works the Frequency/
+  observation register; Emilia integrates Prism-Luxin drafting with dragon-bond
+  flight. No named prophecy: Arion is never foretold by name; he earns it.
+
+acknowledgments: |
+  Authored 2026-06-25 under Frank's God-mode autonomous-expansion mandate as the
+  dedicated story for the Convergent canon. Composed by the Character Psychologist
+  against CHARACTER_TEMPLATE.md (12-field stack + Character Diamond) and the
+  arcanea-voice guide. Placed as a parallel chronicle to the Malachar Cycle (no
+  shared protagonists; the Fracture Prophecy remains thematic, not name-bearing).
+  STAGING until the Creator promotes to LOCKED. One Creator-ruling item is flagged
+  in akamoto.md (whether to restore prior prophecy-reveal framing).
