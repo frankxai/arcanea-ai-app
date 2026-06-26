@@ -220,7 +220,9 @@ export function GuardiansGrid() {
                   <Image
                     src={guardian.heroImage}
                     alt={getGuardianAlt(guardian.heroImage)}
-                    className="w-full h-full object-cover object-top opacity-15 group-hover:opacity-25 transition-opacity duration-500 scale-105 group-hover:scale-110 transition-transform duration-700"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover object-top opacity-15 group-hover:opacity-25 transition-opacity duration-500 scale-105 group-hover:scale-110 transition-transform duration-700"
                    />
                   <div className="absolute inset-0 bg-gradient-to-r from-cosmic-deep/80 via-cosmic-deep/40 to-transparent" />
                 </div>
