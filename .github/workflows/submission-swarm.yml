@@ -7,6 +7,14 @@ on:
       - 'world/**'
   workflow_dispatch:
 
+# The "Post Compliance Report" step uses the GitHub API (listComments /
+# createComment) to post the Aiyami report on the PR. Without write scope the
+# default token is read-only on PRs and that step 403s, failing the whole job.
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 concurrency:
   group: submission-swarm-${{ github.ref }}
   cancel-in-progress: true
