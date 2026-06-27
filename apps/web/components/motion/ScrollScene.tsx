@@ -1,10 +1,12 @@
 'use client';
 
 import { useRef } from 'react';
-import type { ReactNode } from 'react';
+import type { ReactNode, ReactElement } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+
+let pluginRegistered = false;
 
 export interface ScrollSceneProps {
   children: ReactNode;
@@ -41,8 +43,11 @@ export function ScrollScene({
   end = '+=100%',
   className,
   timeline,
-}: ScrollSceneProps) {
+}: ScrollSceneProps): ReactElement {
   const ref = useRef<HTMLDivElement>(null);
+  // Keep the latest timeline callback without re-running the scene when only it changes.
+  const timelineRef = useRef(timeline);
+  timelineRef.current = timeline;
 
   useGSAP(
     () => {
@@ -50,7 +55,10 @@ export function ScrollScene({
       if (!root) return;
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-      gsap.registerPlugin(ScrollTrigger);
+      if (!pluginRegistered) {
+        gsap.registerPlugin(ScrollTrigger);
+        pluginRegistered = true;
+      }
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -62,7 +70,7 @@ export function ScrollScene({
         },
       });
 
-      timeline?.(tl, root);
+      timelineRef.current?.(tl, root);
     },
     { scope: ref, dependencies: [pin, scrub, start, end] },
   );

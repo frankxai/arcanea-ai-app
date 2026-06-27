@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import type { ReactNode } from 'react';
+import type { ReactNode, ReactElement } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -23,9 +23,8 @@ export interface SmoothScrollProps {
  *
  * See the `motion-system` skill for the full two-track model and patterns.
  */
-export function SmoothScroll({ children, lerp = 0.1 }: SmoothScrollProps) {
+export function SmoothScroll({ children, lerp = 0.1 }: SmoothScrollProps): ReactElement {
   useEffect(() => {
-    if (typeof window === 'undefined') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     if (!pluginRegistered) {
