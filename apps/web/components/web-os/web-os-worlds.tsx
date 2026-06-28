@@ -2,6 +2,8 @@
 // system, bound to three brand token sources. Color/border hover only
 // (no scale-spam). Server-rendered.
 
+import type { JSX } from 'react';
+
 const WORLDS = [
   {
     name: 'Starlight',
@@ -20,7 +22,7 @@ const WORLDS = [
   },
 ];
 
-export function WebOsWorlds() {
+export function WebOsWorlds(): JSX.Element {
   return (
     <section className="relative w-full py-32 px-6">
       <div className="max-w-5xl mx-auto">

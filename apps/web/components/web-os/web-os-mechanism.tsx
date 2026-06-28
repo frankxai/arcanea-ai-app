@@ -4,6 +4,7 @@
 // (NOT three equal icon cards). Wave reveal via staggerContainer + revealUp,
 // whileInView once. Quiet scene, generous negative space.
 
+import type { JSX } from 'react';
 import { motion } from 'framer-motion';
 import { staggerContainer, revealUp } from '@arcanea/design-system';
 
@@ -25,7 +26,7 @@ const STEPS = [
   },
 ];
 
-export function WebOsMechanism() {
+export function WebOsMechanism(): JSX.Element {
   return (
     <section id="mechanism" className="relative w-full py-32 sm:py-40 px-6">
       <div className="max-w-5xl mx-auto">

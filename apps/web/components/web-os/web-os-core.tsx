@@ -19,7 +19,7 @@ const C = {
   gold: '#ffd700',
 } as const;
 
-function CoreOrb() {
+function CoreOrb(): JSX.Element {
   const ref = useRef<THREE.Mesh>(null);
   useFrame((state) => {
     if (!ref.current) return;
@@ -36,7 +36,7 @@ function CoreOrb() {
   );
 }
 
-function Satellite({ position, color, scale }: { position: [number, number, number]; color: string; scale: number }) {
+function Satellite({ position, color, scale }: { position: [number, number, number]; color: string; scale: number }): JSX.Element {
   const ref = useRef<THREE.Mesh>(null);
   useFrame((state) => {
     if (!ref.current) return;
@@ -66,22 +66,25 @@ function buildParticles(): THREE.BufferGeometry {
   return geo;
 }
 
-function SignalField() {
+// Built once at module scope — pure, no props/state, so it never needs to
+// reallocate on render (and is shared if the scene ever mounts twice).
+const signalGeometry = buildParticles();
+
+function SignalField(): JSX.Element {
   const ref = useRef<THREE.Points>(null);
-  const geo = useRef<THREE.BufferGeometry>(buildParticles());
   useFrame((state) => {
     if (!ref.current) return;
     ref.current.rotation.y = state.clock.elapsedTime * 0.02;
     ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.005) * 0.05;
   });
   return (
-    <points ref={ref} geometry={geo.current}>
+    <points ref={ref} geometry={signalGeometry}>
       <pointsMaterial size={0.04} color={C.teal} transparent opacity={0.5} sizeAttenuation />
     </points>
   );
 }
 
-function Scene() {
+function Scene(): JSX.Element {
   return (
     <>
       <ambientLight intensity={0.3} />
@@ -97,7 +100,7 @@ function Scene() {
   );
 }
 
-export default function WebOsCore() {
+export default function WebOsCore(): JSX.Element {
   return (
     <Canvas
       camera={{ position: [0, 0, 8], fov: 60 }}

@@ -1,8 +1,9 @@
 // Scene 5 — conversion. One calm CTA. Honest status. No CTA farm.
 
+import type { JSX } from 'react';
 import Link from 'next/link';
 
-export function WebOsCta() {
+export function WebOsCta(): JSX.Element {
   return (
     <section className="relative w-full py-40 px-6">
       <div className="max-w-3xl mx-auto text-center">

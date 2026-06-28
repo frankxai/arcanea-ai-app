@@ -8,6 +8,7 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import type { JSX } from 'react';
 import { motion } from 'framer-motion';
 import { heroReveal, staggerContainer } from '@arcanea/design-system';
 import { WebOsPoster } from './web-os-poster';
@@ -17,7 +18,7 @@ const WebOsCore = dynamic(() => import('./web-os-core'), {
   loading: () => <WebOsPoster />,
 });
 
-export function WebOsHero() {
+export function WebOsHero(): JSX.Element {
   // Reduced motion / coarse-pointer (mobile) → render the static poster, not WebGL.
   const [allow3D, setAllow3D] = useState(false);
   useEffect(() => {

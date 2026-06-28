@@ -15,13 +15,15 @@ const AXES = [
   'Performance',
 ];
 
+import type { JSX } from 'react';
+
 const GATES = [
   { k: 'Plan', v: 'design review · AI-slop check' },
   { k: 'Build', v: 'taste rubric ≥ target' },
   { k: 'Ship', v: 'screens · Lighthouse · grep' },
 ];
 
-export function WebOsRubricPanel() {
+export function WebOsRubricPanel(): JSX.Element {
   return (
     <section className="relative w-full py-24 px-6">
       <div className="max-w-5xl mx-auto rounded-3xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm p-8 sm:p-12">

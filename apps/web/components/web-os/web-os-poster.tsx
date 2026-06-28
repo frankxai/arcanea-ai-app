@@ -1,7 +1,9 @@
 // Static poster for the Web OS hero — doubles as the LCP image and the
 // reduced-motion / mobile / 3D-loading fallback. Pure CSS, no JS, server-safe.
 
-export function WebOsPoster({ className = '' }: { className?: string }) {
+import type { JSX } from 'react';
+
+export function WebOsPoster({ className = '' }: { className?: string }): JSX.Element {
   return (
     <div
       className={`absolute inset-0 ${className}`}

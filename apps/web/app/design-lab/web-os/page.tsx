@@ -4,6 +4,7 @@
 // Spec: /_intelligence/arcanea-flagship-page-spec.md
 
 import type { Metadata } from 'next';
+import type { JSX } from 'react';
 import { WebOsHero } from '@/components/web-os/web-os-hero';
 import { WebOsMechanism } from '@/components/web-os/web-os-mechanism';
 import { WebOsRubricPanel } from '@/components/web-os/web-os-rubric-panel';
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function WebOsLabPage() {
+export default function WebOsLabPage(): JSX.Element {
   return (
     <main className="relative bg-[#09090b] text-text-primary">
       <WebOsHero />
