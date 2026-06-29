@@ -1,7 +1,7 @@
 # `_intelligence/` — Premium Web OS (Arcanea binding)
 
 This repo consumes the **Premium Intelligence Web OS**. The canonical, full OS (taste / design / motion / 3D / copy / workflows / prompts / templates / checklists) lives in
-[`claude-skills-library/premium-web-os/`](https://github.com/frankxai/claude-skills-library/tree/main/premium-web-os) and is installable as the `premium-web-os` skill (`/web-os`, aliases `/wos`, `/wde`).
+[`claude-skills-library/premium-web-os/`](https://github.com/frankxai/claude-skills-library/tree/main/free-skills/premium-web-os) and is installable as the `premium-web-os` skill (`/web-os`, aliases `/wos`, `/wde`).
 
 This folder is the **Arcanea-bound operative subset**: it does not duplicate the canon — it binds it to Arcanea's existing design law.
 

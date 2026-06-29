@@ -23,7 +23,7 @@ export function WebOsCta(): JSX.Element {
         </p>
 
         <Link
-          href="https://github.com/frankxai/claude-skills-library/tree/main/premium-web-os"
+          href="https://github.com/frankxai/claude-skills-library/tree/main/free-skills/premium-web-os"
           className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-body text-sm font-medium text-[#09090b] bg-aquamarine hover:bg-aquamarine-soft transition-colors"
         >
           See the operating model
