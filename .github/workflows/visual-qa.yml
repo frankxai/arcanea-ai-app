@@ -47,9 +47,12 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            let previewUrl = '${{ inputs.preview_url }}';
-            if (!previewUrl) previewUrl = '${{ steps.wait-vercel.outputs.url }}';
-            if (!previewUrl) {
+            let previewUrl = '${{ inputs.preview_url }}' || '${{ steps.wait-vercel.outputs.url }}';
+            // Poll commit statuses until a SUCCESSFUL vercel deployment appears.
+            // A successful status skips the failed appx project automatically, and
+            // polling absorbs the race where this job starts before the build finishes.
+            const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+            for (let attempt = 0; !previewUrl && attempt < 20; attempt++) {
               const statuses = await github.rest.repos.listCommitStatusesForRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -58,10 +61,12 @@ jobs:
               const s = statuses.data.find(
                 s => s.context.includes('vercel') && s.state === 'success' && s.target_url
               );
-              previewUrl = s ? s.target_url : '';
+              if (s) { previewUrl = s.target_url; break; }
+              core.info(`Waiting for a successful Vercel deployment… (attempt ${attempt + 1}/20)`);
+              await sleep(15000);
             }
             if (!previewUrl) {
-              core.warning('No Vercel preview URL found. Screenshots will be skipped.');
+              core.warning('No successful Vercel preview URL found after polling. Screenshots will be skipped.');
             } else {
               core.info('Preview URL: ' + previewUrl);
             }
