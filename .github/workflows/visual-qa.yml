@@ -82,6 +82,8 @@ jobs:
           PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
         run: |
           mkdir -p screenshots
+          # playwright is installed globally above; expose it to require() in the inline script
+          export NODE_PATH="$(npm root -g)"
           node - <<'JSEOF'
           const { chromium } = require('playwright');
           const BASE = (process.env.PREVIEW_URL || '').replace(/\/$/, '');
