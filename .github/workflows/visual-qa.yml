@@ -48,21 +48,28 @@ jobs:
         with:
           script: |
             let previewUrl = '${{ inputs.preview_url }}' || '${{ steps.wait-vercel.outputs.url }}';
-            // Poll commit statuses until a SUCCESSFUL vercel deployment appears.
-            // A successful status skips the failed appx project automatically, and
-            // polling absorbs the race where this job starts before the build finishes.
+            // context.sha on a pull_request event is the synthetic PR-merge commit, NOT the
+            // PR branch's actual head commit — Vercel posts its status against the real head
+            // commit, so querying context.sha here silently finds nothing. Use the real head SHA.
+            const headSha = context.payload.pull_request ? context.payload.pull_request.head.sha : context.sha;
+            core.info(`Resolving preview URL for head SHA ${headSha} (context.sha was ${context.sha})`);
+            // Poll commit statuses until a SUCCESSFUL, non-appx vercel deployment appears.
+            // arcanea-ai-appx is a separate (currently broken) Vercel project on this repo —
+            // exclude it by hostname so a stray success there never gets picked up.
             const sleep = (ms) => new Promise(r => setTimeout(r, ms));
             for (let attempt = 0; !previewUrl && attempt < 20; attempt++) {
               const statuses = await github.rest.repos.listCommitStatusesForRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: context.sha,
+                ref: headSha,
               });
-              const s = statuses.data.find(
-                s => s.context.includes('vercel') && s.state === 'success' && s.target_url
+              const vercelStatuses = statuses.data.filter(s => s.context.toLowerCase().includes('vercel'));
+              core.info(`Attempt ${attempt + 1}/20: ${vercelStatuses.length} vercel status(es) — ` +
+                vercelStatuses.map(s => `${s.context}=${s.state}`).join(', '));
+              const s = vercelStatuses.find(
+                s => s.state === 'success' && s.target_url && !s.target_url.includes('appx')
               );
               if (s) { previewUrl = s.target_url; break; }
-              core.info(`Waiting for a successful Vercel deployment… (attempt ${attempt + 1}/20)`);
               await sleep(15000);
             }
             if (!previewUrl) {
