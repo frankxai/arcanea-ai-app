@@ -9,7 +9,9 @@ export const metadata: Metadata = {
     "A multiverse encyclopedia of creatures, Leviathans, and Arcanea-original variants — fully open for community contribution.",
 };
 
-export const revalidate = 3600;
+// Fully dynamic — Supabase is called at runtime only, never at build time.
+// Avoids static-generation hangs when the atlas tables are not yet seeded.
+export const dynamic = "force-dynamic";
 
 function UniverseCard({ universe }: { universe: AtlasUniverse }) {
   return (
