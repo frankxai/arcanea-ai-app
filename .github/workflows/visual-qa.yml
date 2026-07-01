@@ -159,18 +159,31 @@ jobs:
             # gemini-2.0-flash was hardcoded here and started 404ing — Gemini model IDs
             # get retired over time. Ask the API what's actually available instead of
             # guessing a version string that will go stale again.
+            #
+            # A naive "contains flash" + alphabetical-descending sort previously picked
+            # 'gemini-omni-flash-preview' (an experimental variant that 400'd on this
+            # plain text+image request) — 'omni' sorts after numbered versions. Match
+            # only the standard `gemini-<version>-flash` shape (no -preview/-exp/-image/
+            # -audio/-tts/-live/-lite suffix) and pick the highest version numerically.
+            import re
             fallback = 'models/gemini-2.0-flash'
             try:
               list_url = 'https://generativelanguage.googleapis.com/v1beta/models?key=' + key
               with urllib.request.urlopen(list_url, timeout=30) as resp:
                 models = json.loads(resp.read()).get('models', [])
-              candidates = sorted(
-                (m['name'] for m in models
-                 if 'generateContent' in m.get('supportedGenerationMethods', [])
-                 and 'flash' in m['name']),
-                reverse=True,
-              )
-              return candidates[0] if candidates else fallback
+              pattern = re.compile(r'^models/gemini-(\d+(?:\.\d+)?)-flash$')
+              candidates = []
+              for m in models:
+                if 'generateContent' not in m.get('supportedGenerationMethods', []):
+                  continue
+                match = pattern.match(m['name'])
+                if match:
+                  candidates.append((float(match.group(1)), m['name']))
+              if candidates:
+                candidates.sort(key=lambda c: c[0], reverse=True)
+                return candidates[0][1]
+              print('No standard gemini-<version>-flash model found, falling back to ' + fallback)
+              return fallback
             except Exception as e:
               print('Model list lookup failed, falling back to ' + fallback + ': ' + str(e))
               return fallback
