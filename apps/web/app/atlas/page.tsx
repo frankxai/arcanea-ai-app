@@ -88,10 +88,16 @@ function VariantCard({ variant }: { variant: AtlasArcaneaVariant }) {
 }
 
 async function AtlasContent() {
-  const [universes, variants] = await Promise.all([
-    getAtlasUniverses(),
-    getAtlasArcaneaVariants("staging"),
-  ]);
+  let universes: AtlasUniverse[] = [];
+  let variants: AtlasArcaneaVariant[] = [];
+  try {
+    [universes, variants] = await Promise.all([
+      getAtlasUniverses(),
+      getAtlasArcaneaVariants("staging"),
+    ]);
+  } catch {
+    // Tables not yet seeded / migration pending — render empty state
+  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">

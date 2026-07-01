@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/server";
 import type {
   AtlasUniverse,
   AtlasCreature,
@@ -7,13 +7,10 @@ import type {
   CanonStatus,
 } from "./types";
 
-function supabase() {
-  return createClient();
-}
-
 /** All universes ordered by active_since ascending */
 export async function getAtlasUniverses(): Promise<AtlasUniverse[]> {
-  const { data, error } = await supabase()
+  const supabase = await createClient();
+  const { data, error } = await supabase
     .from("atlas_universes")
     .select("*")
     .order("active_since", { ascending: true });
@@ -23,7 +20,8 @@ export async function getAtlasUniverses(): Promise<AtlasUniverse[]> {
 
 /** Single universe by slug */
 export async function getAtlasUniverse(id: string): Promise<AtlasUniverse | null> {
-  const { data, error } = await supabase()
+  const supabase = await createClient();
+  const { data, error } = await supabase
     .from("atlas_universes")
     .select("*")
     .eq("id", id)
@@ -36,7 +34,8 @@ export async function getAtlasUniverse(id: string): Promise<AtlasUniverse | null
 export async function getAtlasCreaturesByUniverse(
   universeId: string
 ): Promise<AtlasCreature[]> {
-  const { data, error } = await supabase()
+  const supabase = await createClient();
+  const { data, error } = await supabase
     .from("atlas_creatures")
     .select("*")
     .eq("universe_id", universeId)
@@ -49,19 +48,19 @@ export async function getAtlasCreaturesByUniverse(
 export async function getAtlasCreatureWithContext(
   id: string
 ): Promise<AtlasCreatureWithContext | null> {
-  const db = supabase();
+  const supabase = await createClient();
 
   const [creatureResult, relsResult, variantsResult] = await Promise.all([
-    db
+    supabase
       .from("atlas_creatures")
       .select("*, universe:atlas_universes(*)")
       .eq("id", id)
       .maybeSingle(),
-    db
+    supabase
       .from("atlas_creature_relationships")
       .select("*, target:atlas_creatures!atlas_creature_relationships_target_id_fkey(*)")
       .eq("source_id", id),
-    db
+    supabase
       .from("atlas_arcanea_variants")
       .select("*")
       .eq("source_creature_id", id)
@@ -82,7 +81,8 @@ export async function getAtlasCreatureWithContext(
 export async function getAtlasArcaneaVariants(
   status: CanonStatus | "all" = "all"
 ): Promise<AtlasArcaneaVariant[]> {
-  let q = supabase()
+  const supabase = await createClient();
+  let q = supabase
     .from("atlas_arcanea_variants")
     .select("*")
     .order("arcanea_tier", { ascending: true });
