@@ -31,7 +31,7 @@ function UniverseCard({ universe }: { universe: AtlasUniverse }) {
           {universe.arcanea_elements.map((el) => (
             <span
               key={el}
-              className="rounded-full bg-[#0d47a1]/20 border border-[#0d47a1]/30 px-2 py-0.5 text-xs text-[#78a6ff]"
+              className="rounded-full bg-[#0d47a1]/20 border border-[#0d47a1]/30 px-2 py-0.5 text-xs text-[#00bcd4]/80"
             >
               {el}
             </span>
