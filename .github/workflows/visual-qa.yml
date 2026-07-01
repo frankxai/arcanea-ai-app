@@ -48,32 +48,40 @@ jobs:
         with:
           script: |
             let previewUrl = '${{ inputs.preview_url }}' || '${{ steps.wait-vercel.outputs.url }}';
-            // context.sha on a pull_request event is the synthetic PR-merge commit, NOT the
-            // PR branch's actual head commit — Vercel posts its status against the real head
-            // commit, so querying context.sha here silently finds nothing. Use the real head SHA.
-            const headSha = context.payload.pull_request ? context.payload.pull_request.head.sha : context.sha;
-            core.info(`Resolving preview URL for head SHA ${headSha} (context.sha was ${context.sha})`);
-            // Poll commit statuses until a SUCCESSFUL, non-appx vercel deployment appears.
-            // arcanea-ai-appx is a separate (currently broken) Vercel project on this repo —
-            // exclude it by hostname so a stray success there never gets picked up.
+            // Commit-status target_url points at the Vercel deployment INSPECTOR page (needs
+            // Vercel auth), not the live *.vercel.app site — confirmed by an actual failed run
+            // (Playwright/Gemini got a 404/auth wall). The reliable source for the real live
+            // URL is vercel[bot]'s own PR comment table, which we've observed to always render
+            // as: | [arcanea-ai-app](...) | ![Ready](...) [Ready](...) | [Preview](LIVE_URL), ...
+            // Match the exact project row (excluding the sibling arcanea-ai-appx row) and only
+            // accept it once that row shows the Ready icon.
             const sleep = (ms) => new Promise(r => setTimeout(r, ms));
             for (let attempt = 0; !previewUrl && attempt < 20; attempt++) {
-              const statuses = await github.rest.repos.listCommitStatusesForRef({
+              const { data: comments } = await github.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: headSha,
+                issue_number: context.issue.number,
               });
-              const vercelStatuses = statuses.data.filter(s => s.context.toLowerCase().includes('vercel'));
-              core.info(`Attempt ${attempt + 1}/20: ${vercelStatuses.length} vercel status(es) — ` +
-                vercelStatuses.map(s => `${s.context}=${s.state}`).join(', '));
-              const s = vercelStatuses.find(
-                s => s.state === 'success' && s.target_url && !s.target_url.includes('appx')
-              );
-              if (s) { previewUrl = s.target_url; break; }
+              const vercelComment = comments.find(c => c.body.startsWith('[vc]:'));
+              if (vercelComment) {
+                const row = vercelComment.body
+                  .split('\n')
+                  .find(l => l.includes('| [arcanea-ai-app](') && !l.includes('arcanea-ai-appx'));
+                if (row) {
+                  const isReady = /!\[Ready\]/.test(row);
+                  const previewMatch = row.match(/\[Preview\]\((https:\/\/[^)]+)\)/);
+                  core.info(`Attempt ${attempt + 1}/20: arcanea-ai-app row ready=${isReady} preview=${previewMatch ? previewMatch[1] : 'none'}`);
+                  if (isReady && previewMatch) { previewUrl = previewMatch[1]; break; }
+                } else {
+                  core.info(`Attempt ${attempt + 1}/20: no arcanea-ai-app row in vercel[bot] comment yet`);
+                }
+              } else {
+                core.info(`Attempt ${attempt + 1}/20: no vercel[bot] comment yet`);
+              }
               await sleep(15000);
             }
             if (!previewUrl) {
-              core.warning('No successful Vercel preview URL found after polling. Screenshots will be skipped.');
+              core.warning('No live Vercel preview URL found after polling. Screenshots will be skipped.');
             } else {
               core.info('Preview URL: ' + previewUrl);
             }
