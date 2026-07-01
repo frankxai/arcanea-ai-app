@@ -154,6 +154,27 @@ jobs:
           api_key = os.environ.get('GEMINI_API_KEY', '')
           preview_url = os.environ.get('PREVIEW_URL', 'unknown')
           pr_title = os.environ.get('PR_TITLE', 'unknown')
+
+          def resolve_model(key):
+            # gemini-2.0-flash was hardcoded here and started 404ing — Gemini model IDs
+            # get retired over time. Ask the API what's actually available instead of
+            # guessing a version string that will go stale again.
+            fallback = 'models/gemini-2.0-flash'
+            try:
+              list_url = 'https://generativelanguage.googleapis.com/v1beta/models?key=' + key
+              with urllib.request.urlopen(list_url, timeout=30) as resp:
+                models = json.loads(resp.read()).get('models', [])
+              candidates = sorted(
+                (m['name'] for m in models
+                 if 'generateContent' in m.get('supportedGenerationMethods', [])
+                 and 'flash' in m['name']),
+                reverse=True,
+              )
+              return candidates[0] if candidates else fallback
+            except Exception as e:
+              print('Model list lookup failed, falling back to ' + fallback + ': ' + str(e))
+              return fallback
+
           images = []
           for fname in sorted(os.listdir('screenshots')):
             if fname.endswith('-desktop.png'):
@@ -195,7 +216,9 @@ jobs:
             'contents': [{'parts': parts}],
             'generationConfig': {'maxOutputTokens': 2048, 'temperature': 0.2}
           }).encode('utf-8')
-          url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + api_key
+          model_name = resolve_model(api_key)
+          print('Using model: ' + model_name)
+          url = 'https://generativelanguage.googleapis.com/v1beta/' + model_name + ':generateContent?key=' + api_key
           req = urllib.request.Request(url, data=payload, headers={'Content-Type': 'application/json'})
           try:
             with urllib.request.urlopen(req, timeout=120) as resp:
