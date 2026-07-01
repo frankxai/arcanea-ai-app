@@ -100,6 +100,7 @@ jobs:
       - name: Screenshot key routes
         env:
           PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: |
           mkdir -p screenshots
           # playwright is installed globally above; expose it to require() in the inline script
@@ -118,10 +119,19 @@ jobs:
             { path: '/create', name: 'create' },
             { path: '/dashboard', name: 'dashboard' },
           ];
+          // Vercel's preview deployments sit behind Deployment Protection (an auth wall) by
+          // default — without this, Playwright only ever captures the login page. If a
+          // Protection Bypass for Automation secret is configured (Vercel Project Settings ->
+          // Deployment Protection), send it as a header on every request; this is a no-op
+          // (and the screenshots stay blocked, same as before) when the secret isn't set.
+          const bypassSecret = process.env.VERCEL_AUTOMATION_BYPASS_SECRET || '';
           (async () => {
             const browser = await chromium.launch();
+            const context = await browser.newContext(
+              bypassSecret ? { extraHTTPHeaders: { 'x-vercel-protection-bypass': bypassSecret } } : {}
+            );
             for (const route of routes) {
-              const page = await browser.newPage();
+              const page = await context.newPage();
               await page.setViewportSize({ width: 1440, height: 900 });
               try {
                 await page.goto(BASE + route.path, { waitUntil: 'networkidle', timeout: 30000 });
