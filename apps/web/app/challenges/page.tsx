@@ -1,16 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
-import { useState, Suspense, lazy } from 'react';
+import { Suspense, lazy } from 'react';
 import Link from 'next/link';
 import {
-  ArrowRight, Sparkle, Crown, Star, Lightning, Users,
-  Trophy, Flame, Drop, Leaf, Wind, Eye, Sun,
-  Globe, Shield, Scroll, Book, Sword, MusicNote,
+  ArrowRight, Sparkle, Crown, Lightning, Users,
+  Trophy, Globe, Scroll, Book, Sword,
 } from '@/lib/phosphor-icons';
-import { FEATURED_CHALLENGES, DIFFICULTY_CONFIG, ELEMENT_CONFIG, SPELLBOOKS } from '@/lib/challenges';
-import { ChallengeCard, SpellbookViewer, TeamComposer } from '@/components/challenges';
-import type { ChallengeCategory, ChallengeStatus, Element } from '@/lib/types/challenge';
+import {
+  seasonZero,
+  getArenaStats,
+  getEntryById,
+  getPrizeLabel,
+  getSeasonStatusLabel,
+} from '@/lib/challenges/season-zero';
 
 // Lazy load the 3D scene (heavy)
 const ArenaScene = lazy(() =>
@@ -18,54 +20,19 @@ const ArenaScene = lazy(() =>
 );
 
 /* ----------------------------------------------------------------
- *  ARENA STATS
- * ---------------------------------------------------------------- */
-
-const ARENA_STATS = [
-  { label: 'Active Challenges', value: '6', icon: Lightning, color: 'var(--arc-fire)' },
-  { label: 'Creators Competing', value: '1,434', icon: Users, color: 'var(--arc-brand-cosmic-blue)' },
-  { label: 'Total Prize Pool', value: '$12,200', icon: Trophy, color: 'var(--arc-brand-arcanean-gold)' },
-  { label: 'Spells Cast', value: '8,291', icon: Sparkle, color: 'var(--arc-void)' },
-  { label: 'Submissions', value: '526', icon: Scroll, color: 'var(--arc-wind)' },
-  { label: 'Legendary Entries', value: '12', icon: Crown, color: 'var(--arc-brand-arcanean-gold)' },
-];
-
-const FILTER_CATEGORIES: { label: string; value: ChallengeCategory | 'all'; icon: React.ComponentType<Record<string, unknown>> }[] = [
-  { label: 'All', value: 'all', icon: Globe },
-  { label: 'Web Design', value: 'web-design', icon: Globe },
-  { label: 'Visual Art', value: 'visual-art', icon: Sparkle },
-  { label: 'Music', value: 'music-composition', icon: MusicNote },
-  { label: 'Agent Forge', value: 'agent-forge', icon: Shield },
-  { label: 'Lore', value: 'lore-weaving', icon: Book },
-  { label: 'Prompt Craft', value: 'prompt-craft', icon: Scroll },
-];
-
-const LEADERBOARD = [
-  { rank: 1, name: 'Vaelith Storm', house: 'Pyros', mana: 42800, wins: 7, element: 'fire' as Element },
-  { rank: 2, name: 'Luna Deepwell', house: 'Aqualis', mana: 38200, wins: 6, element: 'water' as Element },
-  { rank: 3, name: 'Kaiden Roothold', house: 'Terra', mana: 35100, wins: 5, element: 'earth' as Element },
-  { rank: 4, name: 'Zephyr Windcaller', house: 'Ventus', mana: 31500, wins: 5, element: 'wind' as Element },
-  { rank: 5, name: 'Nyxara Voidtouched', house: 'Nero', mana: 28900, wins: 4, element: 'void' as Element },
-];
-
-/* ----------------------------------------------------------------
- *  PAGE
+ *  PAGE — every number below derives from the Season 0 ledger
+ *  (data/challenges/season-0.json). No hand-written stats.
  * ---------------------------------------------------------------- */
 
 export default function ChallengesPage() {
-  const [activeSection, setActiveSection] = useState<'challenges' | 'spellbooks' | 'teams'>('challenges');
-  const [filterCategory, setFilterCategory] = useState<ChallengeCategory | 'all'>('all');
-  const [filterStatus, setFilterStatus] = useState<ChallengeStatus | 'all'>('all');
+  const stats = getArenaStats();
 
-  const filteredChallenges = FEATURED_CHALLENGES.filter((c) => {
-    if (filterCategory !== 'all' && c.category !== filterCategory) return false;
-    if (filterStatus !== 'all' && c.status !== filterStatus) return false;
-    return true;
-  });
-
-  const ELEMENT_ICONS: Record<string, React.ComponentType<Record<string, unknown>>> = {
-    fire: Flame, water: Drop, earth: Leaf, wind: Wind, void: Eye, spirit: Sun,
-  };
+  const ARENA_STATS = [
+    { label: 'Active Challenges', value: String(stats.activeChallenges), icon: Lightning, color: 'var(--arc-fire)' },
+    { label: 'Entrants', value: String(stats.entrants), icon: Users, color: 'var(--arc-brand-cosmic-blue)' },
+    { label: 'Entries', value: String(stats.entries), icon: Scroll, color: 'var(--arc-wind)' },
+    { label: 'Judged', value: String(stats.judgedEntries), icon: Trophy, color: 'var(--arc-brand-arcanean-gold)' },
+  ];
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[var(--arc-cosmic-void)]">
@@ -102,15 +69,15 @@ export default function ChallengesPage() {
               Arcanea
             </span>
             <br />
-            <span className="text-white">Challenge Arena</span>
+            <span className="text-white">Arena</span>
           </h1>
 
           {/* Subtitle */}
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/50 md:text-xl">
-            Compete. Cast Spells. Create Legends.
+            Compete on the workflow, not the artifact.
             <br />
             <span className="text-white/30">
-              Where GenAI meets world-building, and creators forge their destiny.
+              Build an agentic world-creation workflow. The winning skills ship in the Arcanea plugin.
             </span>
           </p>
 
@@ -118,25 +85,27 @@ export default function ChallengesPage() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <button
               onClick={() => {
-                document.getElementById('challenges')?.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('season-0')?.scrollIntoView({ behavior: 'smooth' });
               }}
               className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[var(--arc-fire)] to-[var(--arc-brand-arcanean-gold)] px-8 py-4 font-display text-sm font-bold text-[var(--arc-cosmic-void)] shadow-[0_0_40px_rgba(255,107,53,0.3)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(255,107,53,0.5)] hover:scale-[1.02]"
             >
               <Lightning className="h-5 w-5" weight="fill" />
-              Enter the Arena
+              Season 0
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </button>
-            <button
-              onClick={() => setActiveSection('spellbooks')}
+            <a
+              href={seasonZero.rulesUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-2xl border border-white/[0.1] bg-white/[0.03] px-8 py-4 font-display text-sm font-semibold text-white/80 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.2] hover:bg-white/[0.06]"
             >
               <Book className="h-4 w-4" />
-              Open Spellbooks
-            </button>
+              Read the Rules
+            </a>
           </div>
 
-          {/* Stats bar */}
-          <div className="mx-auto mt-16 grid max-w-4xl grid-cols-3 gap-6 sm:grid-cols-6">
+          {/* Stats bar — derived from the ledger */}
+          <div className="mx-auto mt-16 grid max-w-3xl grid-cols-2 gap-6 sm:grid-cols-4">
             {ARENA_STATS.map((stat) => {
               const StatIcon = stat.icon;
               return (
@@ -151,162 +120,116 @@ export default function ChallengesPage() {
         </div>
       </section>
 
-      {/* ============ SECTION SWITCHER ============ */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 py-8">
-        <div className="flex justify-center gap-2">
-          {[
-            { key: 'challenges' as const, label: 'Challenges', icon: Sword },
-            { key: 'spellbooks' as const, label: 'Spellbooks', icon: Book },
-            { key: 'teams' as const, label: 'Team Forge', icon: Users },
-          ].map(({ key, label, icon: Icon }) => (
-            <button
-              key={key}
-              onClick={() => setActiveSection(key)}
-              className={`flex items-center gap-2.5 rounded-2xl border px-6 py-3 font-display text-sm font-semibold transition-all duration-300 ${
-                activeSection === key
-                  ? 'border-[var(--arc-brand-arcanean-gold)]/30 bg-[var(--arc-brand-arcanean-gold)]/10 text-[var(--arc-brand-arcanean-gold)] shadow-[0_0_20px_rgba(255,215,0,0.15)]'
-                  : 'border-white/[0.06] bg-white/[0.02] text-white/50 hover:border-white/[0.12] hover:text-white/80'
-              }`}
-            >
-              <Icon className="h-4 w-4" weight={activeSection === key ? 'fill' : 'regular'} />
-              {label}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      {/* ============ CHALLENGES SECTION ============ */}
-      {activeSection === 'challenges' && (
-        <section id="challenges" className="relative z-10 mx-auto max-w-7xl px-6 pb-20">
-          {/* Filters */}
-          <div className="mb-10 space-y-4">
-            {/* Category filter */}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="mr-2 font-mono text-[10px] uppercase tracking-widest text-white/30">Category</span>
-              {FILTER_CATEGORIES.map(({ label, value, icon: Icon }) => (
-                <button
-                  key={value}
-                  onClick={() => setFilterCategory(value)}
-                  className={`flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 font-mono text-[10px] transition-all ${
-                    filterCategory === value
-                      ? 'border-white/[0.15] bg-white/[0.08] text-white'
-                      : 'border-white/[0.06] text-white/40 hover:border-white/[0.1] hover:text-white/60'
-                  }`}
-                >
-                  <Icon className="h-3 w-3" />
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            {/* Status filter */}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="mr-2 font-mono text-[10px] uppercase tracking-widest text-white/30">Status</span>
-              {(['all', 'active', 'upcoming', 'judging', 'completed'] as const).map((status) => (
-                <button
-                  key={status}
-                  onClick={() => setFilterStatus(status)}
-                  className={`rounded-full border px-3.5 py-1.5 font-mono text-[10px] capitalize transition-all ${
-                    filterStatus === status
-                      ? 'border-white/[0.15] bg-white/[0.08] text-white'
-                      : 'border-white/[0.06] text-white/40 hover:border-white/[0.1] hover:text-white/60'
-                  }`}
-                >
-                  {status}
-                </button>
-              ))}
-            </div>
+      {/* ============ SEASON 0 ============ */}
+      <section id="season-0" className="relative z-10 mx-auto max-w-4xl px-6 pb-20 pt-8">
+        <div className="rounded-3xl border border-white/[0.08] bg-white/[0.03] p-8 backdrop-blur-sm md:p-10">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--arc-brand-arcanean-gold)]/30 bg-[var(--arc-brand-arcanean-gold)]/10 px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--arc-brand-arcanean-gold)]">
+              <Crown className="h-3.5 w-3.5" weight="fill" />
+              Season {seasonZero.season}
+            </span>
+            <span className="inline-flex items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
+              {getSeasonStatusLabel()}
+            </span>
           </div>
 
-          {/* Challenge Grid */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredChallenges.map((challenge) => (
-              <ChallengeCard key={challenge.id} challenge={challenge} />
-            ))}
-          </div>
+          <h2 className="mt-6 font-display text-3xl font-bold text-white md:text-4xl">
+            {seasonZero.title}
+          </h2>
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-white/50">
+            {seasonZero.tagline} Your entry is a Claude Code skill that generates a world within
+            Arcanea canon. At judging time it runs against a seed you&apos;ve never seen — the
+            workflow is what competes.
+          </p>
 
-          {filteredChallenges.length === 0 && (
-            <div className="py-20 text-center">
-              <Eye className="mx-auto mb-4 h-12 w-12 text-white/10" weight="duotone" />
-              <p className="text-sm text-white/30">No challenges match your filters. Try adjusting them.</p>
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4">
+              <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Prize</div>
+              <div className="mt-1.5 font-display text-sm font-semibold text-white">{getPrizeLabel()}</div>
             </div>
-          )}
-
-          {/* ============ LEADERBOARD ============ */}
-          <div className="mt-20">
-            <div className="mb-8 text-center">
-              <div className="mb-4 inline-flex items-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-5 py-2 backdrop-blur-md">
-                <Trophy className="h-4 w-4 text-[var(--arc-brand-arcanean-gold)]" weight="fill" />
-                <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[var(--arc-brand-arcanean-gold)]/90">
-                  Arena Leaderboard
-                </span>
+            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4">
+              <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Entry Window</div>
+              <div className="mt-1.5 font-display text-sm font-semibold text-white">
+                {seasonZero.opensAt ?? 'To be announced'}
               </div>
-              <h2 className="font-display text-3xl font-bold text-white md:text-4xl">
-                Top <span className="bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-arcanean-gold)] bg-clip-text text-transparent">Creators</span>
-              </h2>
             </div>
+            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4">
+              <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">Format</div>
+              <div className="mt-1.5 font-display text-sm font-semibold text-white">Pull request, judged by panel</div>
+            </div>
+          </div>
 
+          <div className="mt-8">
+            <a
+              href={seasonZero.rulesUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 font-display text-sm font-semibold text-[var(--arc-brand-atlantean-teal)] transition-colors hover:text-white"
+            >
+              Rules, seeds, and entry template on GitHub
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </a>
+          </div>
+        </div>
+
+        {/* ============ LEADERBOARD ============ */}
+        <div className="mt-20">
+          <div className="mb-8 text-center">
+            <div className="mb-4 inline-flex items-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-5 py-2 backdrop-blur-md">
+              <Trophy className="h-4 w-4 text-[var(--arc-brand-arcanean-gold)]" weight="fill" />
+              <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[var(--arc-brand-arcanean-gold)]/90">
+                Season {seasonZero.season} Leaderboard
+              </span>
+            </div>
+            <h2 className="font-display text-3xl font-bold text-white md:text-4xl">
+              The <span className="bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-fire)] bg-clip-text text-transparent">Worldsmiths</span>
+            </h2>
+          </div>
+
+          {seasonZero.leaderboard.length === 0 ? (
+            <div className="mx-auto max-w-2xl rounded-2xl border border-white/[0.06] bg-white/[0.02] py-16 text-center">
+              <Sparkle className="mx-auto mb-4 h-10 w-10 text-white/10" weight="duotone" />
+              <p className="font-display text-sm font-semibold text-white/60">No entries judged yet.</p>
+              <p className="mx-auto mt-2 max-w-md text-sm text-white/30">
+                The leaderboard fills when Season 0 judging completes. Every score is committed to
+                the public season ledger — every number here traces to a commit.
+              </p>
+            </div>
+          ) : (
             <div className="mx-auto max-w-2xl space-y-3">
-              {LEADERBOARD.map((entry) => {
-                const ElIcon = ELEMENT_ICONS[entry.element] || Sparkle;
-                const elConfig = ELEMENT_CONFIG[entry.element];
+              {seasonZero.leaderboard.map((row) => {
+                const entry = getEntryById(row.entryId);
                 return (
                   <div
-                    key={entry.rank}
+                    key={row.rank}
                     className="group flex items-center gap-4 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 transition-all hover:border-white/[0.12] hover:bg-white/[0.04]"
                   >
                     <div className={`flex h-10 w-10 items-center justify-center rounded-xl font-display text-lg font-bold ${
-                      entry.rank === 1 ? 'bg-[var(--arc-brand-arcanean-gold)]/15 text-[var(--arc-brand-arcanean-gold)]'
-                      : entry.rank === 2 ? 'bg-white/10 text-white/60'
-                      : entry.rank === 3 ? 'bg-[var(--arc-fire)]/15 text-[var(--arc-fire)]'
+                      row.rank === 1 ? 'bg-[var(--arc-brand-arcanean-gold)]/15 text-[var(--arc-brand-arcanean-gold)]'
+                      : row.rank === 2 ? 'bg-white/10 text-white/60'
+                      : row.rank === 3 ? 'bg-[var(--arc-fire)]/15 text-[var(--arc-fire)]'
                       : 'bg-white/[0.04] text-white/30'
                     }`}>
-                      {entry.rank === 1 ? <Crown className="h-5 w-5" weight="fill" /> : `#${entry.rank}`}
+                      {row.rank === 1 ? <Crown className="h-5 w-5" weight="fill" /> : `#${row.rank}`}
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-display text-sm font-semibold text-white">{entry.name}</span>
-                        <ElIcon className="h-3.5 w-3.5" style={{ color: elConfig?.color }} weight="fill" />
-                      </div>
-                      <span className="font-mono text-[10px] text-white/30">House {entry.house}</span>
+                      <span className="font-display text-sm font-semibold text-white">{entry?.entrant ?? row.entryId}</span>
+                      <div className="font-mono text-[10px] text-white/30">{entry?.skill}</div>
                     </div>
                     <div className="text-right">
                       <div className="flex items-center gap-1.5">
                         <Sparkle className="h-3 w-3 text-[var(--arc-brand-arcanean-gold)]" weight="fill" />
-                        <span className="font-mono text-xs font-bold text-[var(--arc-brand-arcanean-gold)]">{entry.mana.toLocaleString()}</span>
+                        <span className="font-mono text-xs font-bold text-[var(--arc-brand-arcanean-gold)]">{row.finalScore.toFixed(1)}</span>
                       </div>
-                      <span className="font-mono text-[9px] text-white/30">{entry.wins} wins</span>
+                      <span className="font-mono text-[9px] text-white/30">final score</span>
                     </div>
                   </div>
                 );
               })}
             </div>
-          </div>
-        </section>
-      )}
-
-      {/* ============ SPELLBOOKS SECTION ============ */}
-      {activeSection === 'spellbooks' && (
-        <section className="relative z-10 mx-auto max-w-5xl px-6 pb-20">
-          <div className="mb-10 text-center">
-            <h2 className="font-display text-3xl font-bold text-white md:text-4xl">
-              The Five <span className="bg-gradient-to-r from-[var(--arc-fire)] via-[var(--arc-brand-arcanean-gold)] to-[var(--arc-void)] bg-clip-text text-transparent">Spellbooks</span>
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm text-white/50">
-              Master the elemental grimoires. Each spell enhances your submissions with magical power.
-              Speak the incantation, pay the Mana cost, and watch your creation transform.
-            </p>
-          </div>
-          <SpellbookViewer spellbooks={SPELLBOOKS} userGates={3} />
-        </section>
-      )}
-
-      {/* ============ TEAMS SECTION ============ */}
-      {activeSection === 'teams' && (
-        <section className="relative z-10 mx-auto max-w-5xl px-6 pb-20">
-          <TeamComposer />
-        </section>
-      )}
+          )}
+        </div>
+      </section>
 
       {/* ============ HOW IT WORKS ============ */}
       <section className="relative z-10 border-t border-white/[0.04] bg-[var(--arc-cosmic-void)]/80 py-20">
@@ -321,29 +244,29 @@ export default function ChallengesPage() {
             {[
               {
                 step: '01',
-                title: 'Choose Your Challenge',
-                description: 'Browse active challenges across categories — web design, AI agents, music, visual art, lore, and more.',
+                title: 'Read the Challenge',
+                description: 'Each season sets a creative brief inside Arcanea canon, with public seeds to build against and a published judging rubric.',
                 icon: Lightning,
                 color: 'var(--arc-fire)',
               },
               {
                 step: '02',
-                title: 'Forge Your Team',
-                description: 'Assemble a team with your chosen Formation. Each role and combination grants unique synergy bonuses.',
-                icon: Users,
-                color: 'var(--arc-brand-cosmic-blue)',
-              },
-              {
-                step: '03',
-                title: 'Cast & Create',
-                description: 'Use Spellbooks to enhance your work. Cast incantations, burn Mana, and channel elemental power into your creation.',
+                title: 'Build Your Workflow',
+                description: 'Craft a Claude Code skill that generates a world — cosmology, systems, geography, factions, timeline. The workflow is your entry.',
                 icon: Sparkle,
                 color: 'var(--arc-void)',
               },
               {
+                step: '03',
+                title: 'Submit by Pull Request',
+                description: 'Open a PR on the open-source repo with your skill, manifest, and a sample world. Automated validation checks your entry.',
+                icon: Globe,
+                color: 'var(--arc-brand-cosmic-blue)',
+              },
+              {
                 step: '04',
-                title: 'Submit & Earn',
-                description: 'Submit your creation on-chain. Smart contracts verify authorship, team composition, and timestamps. Winners earn Mana, titles, and real rewards.',
+                title: 'Judged & Published',
+                description: 'Your workflow re-runs against a held-out seed. An anonymized judge panel scores it; results are committed to the public ledger. Winners ship in the Arcanea plugin, credited to you.',
                 icon: Trophy,
                 color: 'var(--arc-brand-arcanean-gold)',
               },
@@ -381,13 +304,22 @@ export default function ChallengesPage() {
             Yours begins now.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/onboarding"
+            <a
+              href={seasonZero.rulesUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-[var(--arc-fire)] to-[var(--arc-brand-arcanean-gold)] px-8 py-4 font-display text-sm font-bold text-[var(--arc-cosmic-void)] shadow-[0_0_40px_rgba(255,107,53,0.3)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(255,107,53,0.5)] hover:scale-[1.02]"
             >
               <Sparkle className="h-5 w-5" weight="fill" />
-              Join the Arena
+              Enter Season 0
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </a>
+            <Link
+              href="/worlds"
+              className="inline-flex items-center gap-2 rounded-2xl border border-white/[0.1] bg-white/[0.03] px-8 py-4 font-display text-sm font-semibold text-white/80 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.2] hover:bg-white/[0.06]"
+            >
+              <Globe className="h-4 w-4" />
+              Explore Worlds
             </Link>
           </div>
         </div>

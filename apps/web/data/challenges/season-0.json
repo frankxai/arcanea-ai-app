@@ -1,0 +1,16 @@
+{
+  "schema": "arena-ledger-v1",
+  "program": "Arcanea Arena",
+  "season": 0,
+  "title": "The Worldsmith Trials",
+  "tagline": "Build the best world-creation workflow. The winners ship in the Arcanea plugin.",
+  "status": "draft",
+  "opensAt": null,
+  "closesAt": null,
+  "rulesUrl": "https://github.com/frankxai/arcanea/tree/main/challenges/season-0",
+  "seeds": [],
+  "prize": null,
+  "entries": [],
+  "scores": [],
+  "leaderboard": []
+}
