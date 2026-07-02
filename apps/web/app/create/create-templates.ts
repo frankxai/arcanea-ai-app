@@ -21,7 +21,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     stats: [{ label: "used", value: "3.4K" }, { label: "chars", value: "42" }],
     accentColor: "var(--arc-brand-atlantean-teal)",
     badge: "Popular",
-    href: "/worlds/templates/shardlands",
+    href: "/worlds/create",
     isPremium: false,
     isNew: false,
   },
@@ -33,7 +33,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-brand-cosmic-blue)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-atlantean-teal)]/20",
     stats: [{ label: "used", value: "1.8K" }, { label: "chars", value: "29" }],
     accentColor: "var(--arc-brand-atlantean-teal)",
-    href: "/worlds/templates/tidesong-archipelago",
+    href: "/worlds/create",
     isNew: true,
   },
   {
@@ -45,7 +45,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     stats: [{ label: "used", value: "2.1K" }, { label: "chars", value: "35" }],
     accentColor: "var(--arc-fire)",
     badge: "Trending",
-    href: "/worlds/templates/ash-ember",
+    href: "/worlds/create",
   },
   {
     category: "world",
@@ -55,7 +55,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-cosmic-void)]/40 via-[var(--arc-cosmic-void)]/30 to-[var(--arc-cosmic-void)]/50",
     stats: [{ label: "used", value: "980" }, { label: "chars", value: "21" }],
     accentColor: "var(--arc-wind)",
-    href: "/worlds/templates/verdant-dominion",
+    href: "/worlds/create",
     isPremium: true,
   },
   // --- Sci-fi worlds ---
@@ -68,7 +68,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     stats: [{ label: "used", value: "4.2K" }, { label: "chars", value: "55" }],
     accentColor: "var(--arc-void)",
     badge: "Popular",
-    href: "/worlds/templates/orbital-nine",
+    href: "/worlds/create",
   },
   {
     category: "world",
@@ -78,7 +78,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-cosmic-void)]/60 via-[var(--arc-cosmic-void)]/50 to-[var(--arc-brand-arcanean-gold)]/10",
     stats: [{ label: "used", value: "670" }, { label: "chars", value: "18" }],
     accentColor: "var(--arc-brand-arcanean-gold)",
-    href: "/worlds/templates/belt-sovereign",
+    href: "/worlds/create",
     isNew: true,
   },
   // --- Mystery worlds ---
@@ -90,7 +90,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-brand-cosmic-blue)]/40 via-[var(--arc-cosmic-void)]/50 to-[var(--arc-earth)]/30",
     stats: [{ label: "used", value: "1.5K" }, { label: "chars", value: "33" }],
     accentColor: "var(--arc-void)",
-    href: "/worlds/templates/velvet-unknown",
+    href: "/worlds/create",
     isPremium: true,
   },
   {
@@ -102,7 +102,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     stats: [{ label: "used", value: "2.9K" }, { label: "chars", value: "47" }],
     accentColor: "var(--arc-brand-atlantean-teal)",
     badge: "Trending",
-    href: "/worlds/templates/solvent-protocol",
+    href: "/worlds/create",
   },
   // --- Characters ---
   {
@@ -114,7 +114,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     stats: [{ label: "used", value: "6.1K" }, { label: "scenes", value: "12" }],
     accentColor: "var(--arc-fire)",
     badge: "Popular",
-    href: "/worlds/templates/char-grey-villain",
+    href: "/worlds/create?tab=character",
   },
   {
     category: "character",
@@ -124,7 +124,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-brand-cosmic-blue)]/30 via-[var(--arc-brand-cosmic-blue)]/40 to-[var(--arc-brand-atlantean-teal)]/10",
     stats: [{ label: "used", value: "4.8K" }, { label: "scenes", value: "10" }],
     accentColor: "var(--arc-brand-atlantean-teal)",
-    href: "/worlds/templates/char-reluctant-hero",
+    href: "/worlds/create?tab=character",
     isNew: false,
   },
   {
@@ -135,7 +135,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-brand-arcanean-gold)]/15 via-[var(--arc-earth)]/30 to-[var(--arc-brand-cosmic-blue)]/40",
     stats: [{ label: "used", value: "2.3K" }, { label: "scenes", value: "8" }],
     accentColor: "var(--arc-brand-arcanean-gold)",
-    href: "/worlds/templates/char-cosmic-trickster",
+    href: "/worlds/create?tab=character",
     isPremium: true,
   },
   {
@@ -146,7 +146,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-cosmic-blue)]/20",
     stats: [{ label: "used", value: "1.1K" }, { label: "scenes", value: "9" }],
     accentColor: "var(--arc-brand-atlantean-teal)",
-    href: "/worlds/templates/char-exiled-scholar",
+    href: "/worlds/create?tab=character",
     isNew: true,
   },
   // --- Stories ---
@@ -158,7 +158,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-cosmic-void)]/60 via-[var(--arc-cosmic-void)]/50 to-[var(--arc-brand-atlantean-teal)]/10",
     stats: [{ label: "used", value: "780" }, { label: "acts", value: "3" }],
     accentColor: "var(--arc-brand-atlantean-teal)",
-    href: "/worlds/templates/story-hollow-oath",
+    href: "/chat?mode=story",
     isNew: true,
   },
   {
@@ -170,7 +170,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     stats: [{ label: "used", value: "3.2K" }, { label: "acts", value: "5" }],
     accentColor: "var(--arc-fire)",
     badge: "Popular",
-    href: "/worlds/templates/story-neon-detective",
+    href: "/chat?mode=story",
   },
   {
     category: "story",
@@ -180,7 +180,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-void)]/30 via-[var(--arc-brand-cosmic-blue)]/40 to-[var(--arc-brand-arcanean-gold)]/10",
     stats: [{ label: "used", value: "5.6K" }, { label: "acts", value: "3" }],
     accentColor: "var(--arc-void)",
-    href: "/worlds/templates/story-three-act-fantasy",
+    href: "/chat?mode=story",
     isPremium: false,
   },
   {
@@ -191,7 +191,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-atlantean-teal)]/10",
     stats: [{ label: "used", value: "2.0K" }, { label: "acts", value: "4" }],
     accentColor: "var(--arc-brand-atlantean-teal)",
-    href: "/worlds/templates/story-scifi-thriller",
+    href: "/chat?mode=story",
     isNew: true,
   },
   // --- Agents ---
@@ -203,7 +203,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-brand-cosmic-blue)]/40 via-[var(--arc-brand-cosmic-blue)]/50 to-[var(--arc-brand-cosmic-blue)]/20",
     stats: [{ label: "used", value: "890" }, { label: "tools", value: "7" }],
     accentColor: "var(--arc-void)",
-    href: "/agents/templates/world-lore-keeper",
+    href: "/agents/create",
     isNew: true,
   },
   {
@@ -214,7 +214,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-atlantean-teal)]/10",
     stats: [{ label: "used", value: "1.4K" }, { label: "tools", value: "5" }],
     accentColor: "var(--arc-brand-atlantean-teal)",
-    href: "/agents/templates/story-editor",
+    href: "/agents/create",
   },
   // --- Music ---
   {
@@ -226,7 +226,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     stats: [{ label: "used", value: "2.7K" }, { label: "mins", value: "4" }],
     accentColor: "var(--arc-brand-arcanean-gold)",
     badge: "Popular",
-    href: "/music/templates/epic-orchestral",
+    href: "/music",
   },
   {
     category: "music",
@@ -236,7 +236,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-brand-cosmic-blue)]/30 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-atlantean-teal)]/10",
     stats: [{ label: "used", value: "1.2K" }, { label: "mins", value: "6" }],
     accentColor: "var(--arc-brand-atlantean-teal)",
-    href: "/music/templates/ambient-world-score",
+    href: "/music",
     isNew: true,
   },
   // --- Images ---
@@ -249,7 +249,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     stats: [{ label: "used", value: "8.3K" }, { label: "styles", value: "6" }],
     accentColor: "var(--arc-void)",
     badge: "Popular",
-    href: "/imagine/templates/fantasy-portrait",
+    href: "/imagine",
   },
   {
     category: "image",
@@ -259,7 +259,7 @@ export const TEMPLATE_DATA: TemplateEntry[] = [
     previewGradient: "from-[var(--arc-cosmic-void)]/40 via-[var(--arc-cosmic-void)]/50 to-[var(--arc-brand-arcanean-gold)]/10",
     stats: [{ label: "used", value: "3.9K" }, { label: "styles", value: "4" }],
     accentColor: "var(--arc-wind)",
-    href: "/imagine/templates/world-map-art",
+    href: "/imagine",
     isPremium: true,
   },
 ];
@@ -349,7 +349,7 @@ export const RECENT_MOCK = [
     previewGradient: "from-[var(--arc-brand-atlantean-teal)]/15 via-[var(--arc-brand-cosmic-blue)]/25 to-[var(--arc-brand-cosmic-blue)]/25",
     stats: [{ label: "chars", value: "7" }, { label: "lore", value: "12" }],
     accentColor: "var(--arc-brand-atlantean-teal)",
-    href: "/worlds/shattered-meridian",
+    href: "/worlds/create",
     badge: "Draft",
   },
   {
@@ -359,7 +359,7 @@ export const RECENT_MOCK = [
     previewGradient: "from-[var(--arc-brand-arcanean-gold)]/15 via-[var(--arc-earth)]/20 to-[var(--arc-cosmic-void)]/30",
     stats: [{ label: "scenes", value: "4" }],
     accentColor: "var(--arc-brand-arcanean-gold)",
-    href: "/worlds/shattered-meridian/characters/veyra",
+    href: "/worlds/create?tab=character",
     badge: "Draft",
   },
   {
