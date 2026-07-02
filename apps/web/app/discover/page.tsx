@@ -213,8 +213,9 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
       whileHover={{ y: -6 }}
       className="group relative rounded-2xl overflow-hidden bg-white/[0.025] backdrop-blur-sm border border-white/[0.06] hover:border-[var(--arc-brand-atlantean-teal)]/30 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-[var(--arc-brand-atlantean-teal)]/15"
     >
-      {/* Visual area — real image or gradient fallback */}
-      <Link href={`/gallery/${creation.id}`} className={`block relative aspect-square bg-gradient-to-br ${bg} overflow-hidden`}>
+      {/* Visual area — real image or gradient fallback. Not linked: there is
+          no standalone creation detail route yet. */}
+      <div className={`block relative aspect-square bg-gradient-to-br ${bg} overflow-hidden`}>
         {/* Real image layer */}
         {hasImage && (
           <Image
@@ -270,10 +271,10 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
             </div>
           </div>
         </div>
-      </Link>
+      </div>
 
       {/* Bottom info (always visible on mobile) */}
-      <Link href={`/gallery/${creation.id}`} className="block p-3 bg-[var(--arc-cosmic-void)]/80 backdrop-blur-sm hover:bg-white/[0.04] transition-colors border-t border-white/[0.06]">
+      <div className="p-3 bg-[var(--arc-cosmic-void)]/80 backdrop-blur-sm border-t border-white/[0.06]">
         <h3 className="text-white font-semibold text-sm line-clamp-1 mb-1">{creation.title}</h3>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 text-slate-400 text-xs">
@@ -284,7 +285,7 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
             <span className="text-[var(--arc-brand-atlantean-teal)]/60 text-xs">With {creation.luminor_id}</span>
           )}
         </div>
-      </Link>
+      </div>
     </m.div>
   );
 }

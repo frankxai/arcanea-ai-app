@@ -285,10 +285,9 @@ function TrendingSection({ trending }: { trending: CardItem[] }) {
         </div>
         <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide -mx-2 px-2">
           {trending.map(item => (
-            <Link
+            <div
               key={item.id}
-              href={`/gallery/${item.id}`}
-              className="flex-shrink-0 w-56 bg-white/[0.04] border border-white/[0.08] rounded-xl p-4 hover:bg-gradient-to-br hover:from-[var(--arc-brand-atlantean-teal)]/[0.06] hover:to-transparent hover:border-[var(--arc-brand-atlantean-teal)]/25 transition-all duration-300 group hover:-translate-y-0.5"
+              className="flex-shrink-0 w-56 bg-white/[0.04] border border-white/[0.08] rounded-xl p-4"
             >
               <div className="flex items-center gap-2 mb-2">
                 <span className="px-2 py-0.5 rounded text-[10px] font-medium uppercase bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)]">
@@ -298,13 +297,13 @@ function TrendingSection({ trending }: { trending: CardItem[] }) {
                   <span className="text-[10px] text-white/40">{item.element}</span>
                 )}
               </div>
-              <p className="text-sm font-medium text-white/90 truncate group-hover:text-white">{item.title}</p>
+              <p className="text-sm font-medium text-white/90 truncate">{item.title}</p>
               <div className="flex items-center gap-3 mt-2 text-[11px] text-white/40">
                 <span className="flex items-center gap-1"><PhHeart className="w-3 h-3" /> {item.likeCount}</span>
                 <span className="flex items-center gap-1"><PhEye className="w-3 h-3" /> {item.viewCount}</span>
               </div>
               <p className="text-[11px] text-white/30 mt-1.5">{item.creatorName}</p>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
