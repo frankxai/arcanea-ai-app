@@ -32,7 +32,7 @@
     },
     {
       "source": "/discord",
-      "destination": "https://discord.gg/arcanea",
+      "destination": "https://github.com/frankxai/arcanea/discussions",
       "permanent": false
     }
   ]
