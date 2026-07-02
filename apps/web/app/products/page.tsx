@@ -50,7 +50,7 @@ const PRODUCTS: Product[] = [
     ),
     features: ["Cross-session recall", "HNSW vector search", "Namespaced storage"],
     pricing: "Free (100/day) | Pro $5/mo | Unlimited $49/mo",
-    cta: { label: "Try Free", href: "/docs/agentdb" },
+    cta: { label: "Try Free", href: "/docs" },
     accent: "from-teal-500/20 to-cyan-500/20",
   },
   {
@@ -66,7 +66,7 @@ const PRODUCTS: Product[] = [
     ),
     features: ["Multi-modal output", "Guardian-themed styles", "Commercial rights"],
     pricing: "$0.01 text | $0.10 image | $0.25 music",
-    cta: { label: "View API", href: "/docs/creative-api" },
+    cta: { label: "View API", href: "/docs" },
     accent: "from-amber-500/20 to-yellow-500/20",
   },
   {
@@ -118,7 +118,7 @@ const PRODUCTS: Product[] = [
     ),
     features: ["Hierarchical mesh", "Fault tolerance", "Shared memory"],
     pricing: "$0.10/agent-min | $99/mo flat",
-    cta: { label: "Learn More", href: "/docs/orchestration" },
+    cta: { label: "Learn More", href: "/docs" },
     accent: "from-emerald-500/20 to-teal-500/20",
   },
   {
@@ -144,10 +144,10 @@ const PRODUCTS: Product[] = [
 ];
 
 const STATS: Stat[] = [
-  { value: "43", label: "npm packages" },
-  { value: "80", label: "Skills" },
-  { value: "70", label: "Agents" },
-  { value: "37", label: "APIs" },
+  { value: "MIT", label: "npm packages" },
+  { value: "Open", label: "Skills" },
+  { value: "Multi", label: "Agents" },
+  { value: "REST", label: "APIs" },
 ];
 
 // ─── Copy Button (client island) ───────────────────────────────────────────

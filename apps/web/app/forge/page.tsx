@@ -46,7 +46,7 @@ const PATHS = [
   },
   {
     id: 'materials',
-    href: '/codex/materials',
+    href: '/library/codex',
     icon: Diamond,
     accentIcon: Fire,
     label: 'Discover Materials',

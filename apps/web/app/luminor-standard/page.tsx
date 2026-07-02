@@ -32,7 +32,7 @@ export default function LuminorStandardPage() {
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
-            href="/docs/specs/luminor-kernel-spec-v1"
+            href="/docs"
             className="rounded-lg border border-[var(--arc-brand-arcanean-gold)]/30 bg-[var(--arc-brand-arcanean-gold)]/[0.08] px-5 py-2.5 text-sm font-medium text-[var(--arc-brand-arcanean-gold)] transition hover:border-[var(--arc-brand-arcanean-gold)]/50 hover:bg-[var(--arc-brand-arcanean-gold)]/[0.15]"
           >
             Read the Specification →

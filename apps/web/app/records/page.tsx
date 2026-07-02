@@ -272,7 +272,7 @@ export default function RecordsPage() {
                     Listen on Spotify
                   </a>
                   <Link
-                    href="/studio/music"
+                    href="/music-studio"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 text-white font-semibold hover:bg-white/10 transition-all"
                   >
                     <Sparkle className="w-4 h-4 text-[var(--arc-brand-arcanean-gold)]" weight="fill" />
@@ -298,7 +298,7 @@ export default function RecordsPage() {
                 <p className="text-white/40 text-sm mt-1">Original compositions from the Arcanea universe</p>
               </div>
               <Link
-                href="/records/all"
+                href="/records"
                 className="hidden sm:inline-flex items-center gap-2 text-sm text-white/40 hover:text-[var(--arc-brand-atlantean-teal)] transition-colors"
               >
                 View all releases <ArrowRight className="w-4 h-4" />
@@ -427,7 +427,7 @@ export default function RecordsPage() {
                     Listen on Spotify
                   </a>
                   <Link
-                    href="/studio/music"
+                    href="/music-studio"
                     className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 text-white font-semibold hover:bg-white/10 transition-all"
                   >
                     <Sparkle className="w-4 h-4 text-[var(--arc-brand-arcanean-gold)]" weight="fill" />

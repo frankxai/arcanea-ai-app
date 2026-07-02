@@ -638,7 +638,7 @@ export function CreateHub() {
             </div>
             <Magnetic strength={10}>
               <Link
-                href="/templates/submit"
+                href="/contribute"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[var(--arc-void)]/10 border border-[var(--arc-void)]/30 text-[var(--arc-void)] text-sm font-medium hover:bg-[var(--arc-void)]/15 hover:border-[var(--arc-void)]/50 transition-all duration-200 whitespace-nowrap"
               >
                 Submit a template

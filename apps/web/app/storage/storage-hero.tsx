@@ -117,7 +117,7 @@ export function StorageHero() {
                 </svg>
               </Link>
               <Link
-                href="/docs/storage"
+                href="/docs"
                 className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-7 py-3.5 text-sm font-medium text-white/70 backdrop-blur-sm transition hover:border-white/20 hover:text-white"
               >
                 See storage docs

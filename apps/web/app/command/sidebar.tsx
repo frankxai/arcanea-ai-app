@@ -4,15 +4,14 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+// Publish, Worlds, and Stats are API-only for now (see app/api/command/*)
+// — no standalone page exists yet, so they're left off the nav until built.
 const NAV_ITEMS = [
   { href: '/command', label: 'Dashboard', icon: DashboardIcon },
   { href: '/dashboard', label: 'Ops', icon: OpsIcon },
   { href: '/command/inbox', label: 'Inbox', icon: InboxIcon },
   { href: '/command/agents', label: 'Agents', icon: AgentsIcon },
   { href: '/command/social', label: 'Social', icon: SocialIcon },
-  { href: '/command/publish', label: 'Publish', icon: PublishIcon },
-  { href: '/command/worlds', label: 'Worlds', icon: WorldsIcon },
-  { href: '/command/stats', label: 'Stats', icon: StatsIcon },
 ] as const;
 
 export function CommandSidebar() {
