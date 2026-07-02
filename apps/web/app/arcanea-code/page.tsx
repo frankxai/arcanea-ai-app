@@ -94,7 +94,7 @@ const QUICK_START = [
 ];
 
 const VSCODE_FEATURES = [
-  "AI assistant panel — invoke any of the 16 companions inline",
+  "AI assistant panel — invoke any of the 13 companions inline",
   "`.arcanea` project config support — per-workspace AI presets",
   "Inline lore lookups — hover a Gate name to see its frequency and domain",
   "AI-powered code explanations — right-click any function",

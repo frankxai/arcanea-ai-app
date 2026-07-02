@@ -2,9 +2,13 @@
 /**
  * Feature Gates — Controls what's available per pricing tier
  *
+ * These internal tier ids (spark/creator/studio/pro) predate the public
+ * plan names on /pricing (Sovereign Engine / Cloud Sync / Studio Bench).
+ * Prices below are kept in sync with app/pricing/pricing-client.tsx.
+ *
  * Spark (free):   3 companions, auto model, basic Library/Academy, 100 msg/month
- * Creator ($19):  13 companions, 5 models, full Studio + Library + Academy, 5K msg/month
- * Studio ($49):   All models, API, custom training, team seats, exports, 5K msg/seat
+ * Creator ($12):  13 companions, 5 models, full Studio + Library + Academy, 5K msg/month
+ * Studio ($39):   All models, API, custom training, team seats, exports, 5K msg/seat
  * Pro ($99):      Everything + versioning, analytics, royalties, priority support
  */
 
