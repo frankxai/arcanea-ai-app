@@ -50,6 +50,7 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
     const forkSlug = `${slug}-fork-${(count ?? 0) + 1}`;
 
     // Build the forked world payload — omit server-managed fields
+    // (counters, sync state, and the parent's repo binding stay behind)
     const {
       id: _id,
       created_at: _ca,
@@ -57,8 +58,12 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
       star_count: _sc,
       fork_count: _fc,
       character_count: _cc,
-      creation_count: _crc,
-      marketplace_downloads: _md,
+      visit_count: _vc,
+      genesis_status: _gs,
+      repo_url: _ru,
+      repo_managed: _rm,
+      last_synced_at: _lsa,
+      last_indexed_sha: _lis,
       ...inheritedFields
     } = source;
 
@@ -69,7 +74,7 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
         slug: forkSlug,
         name: `${source.name} (Fork)`,
         creator_id: user.id,
-        forked_from_id: source.id,
+        forked_from: source.id,
         star_count: 0,
         fork_count: 0,
         character_count: 0,
@@ -82,11 +87,12 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
 
     const forkedId = forkedWorld.id;
 
-    // Copy characters, factions, locations in parallel
-    const [chars, factions, locations] = await Promise.all([
+    // Copy characters, lore, assets in parallel
+    // (world_memories are per-character evolution state and stay with the parent)
+    const [chars, lore, assets] = await Promise.all([
       supabase.from('world_characters').select('*').eq('world_id', source.id),
-      supabase.from('world_factions').select('*').eq('world_id', source.id),
-      supabase.from('world_locations').select('*').eq('world_id', source.id),
+      supabase.from('world_lore').select('*').eq('world_id', source.id),
+      supabase.from('world_assets').select('*').eq('world_id', source.id),
     ]);
 
     type OmitMeta<T> = Omit<T, 'id' | 'world_id' | 'created_at' | 'updated_at'>;
@@ -102,18 +108,11 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
 
     await Promise.all([
       chars.data?.length ? supabase.from('world_characters').insert(copyRows(chars.data)) : null,
-      factions.data?.length ? supabase.from('world_factions').insert(copyRows(factions.data)) : null,
-      locations.data?.length ? supabase.from('world_locations').insert(copyRows(locations.data)) : null,
+      lore.data?.length ? supabase.from('world_lore').insert(copyRows(lore.data)) : null,
+      assets.data?.length ? supabase.from('world_assets').insert(copyRows(assets.data)) : null,
     ]);
 
-    // Record the fork relationship
-    await supabase.from('world_forks').insert({
-      parent_world_id: source.id,
-      forked_world_id: forkedId,
-      forked_by: user.id,
-    });
-
-    // Increment parent fork_count
+    // Fork lineage lives on worlds.forked_from; increment parent fork_count
     await supabase
       .from('worlds')
       .update({ fork_count: (source.fork_count ?? 0) + 1 })
