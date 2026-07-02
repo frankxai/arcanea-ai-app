@@ -27,6 +27,7 @@ import {
   QUICK_LINKS,
   OSS_STATS,
 } from './community-data';
+import { DISCORD_URL } from '@/lib/constants/links';
 
 export const metadata: Metadata = {
   title: "Community — Arcanea",
@@ -84,7 +85,7 @@ export default function CommunityPage() {
 
               <div className="flex flex-wrap gap-4">
                 <a
-                  href="https://discord.gg/arcanea"
+                  href={DISCORD_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
@@ -318,7 +319,7 @@ export default function CommunityPage() {
           </div>
 
           <div className="mt-8 text-center">
-            <a href="https://discord.gg/arcanea" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-brand-gold/20 text-brand-gold text-sm font-semibold hover:bg-brand-gold/5 hover:border-brand-gold/40 transition-all">
+            <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-brand-gold/20 text-brand-gold text-sm font-semibold hover:bg-brand-gold/5 hover:border-brand-gold/40 transition-all">
               <PhCalendar className="w-4 h-4" />
               Stay informed — join Discord for event announcements
               <PhArrowRight className="w-3.5 h-3.5" />
@@ -363,7 +364,7 @@ export default function CommunityPage() {
 
           <p className="mt-6 text-center text-sm text-text-muted font-sans">
             Creator spotlights are community-nominated. Share your work in{" "}
-            <a href="https://discord.gg/arcanea" target="_blank" rel="noopener noreferrer" className="text-crystal underline underline-offset-2 hover:text-crystal-bright transition-colors">
+            <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="text-crystal underline underline-offset-2 hover:text-crystal-bright transition-colors">
               Discord #create
             </a>{" "}
             to be considered.
@@ -449,7 +450,7 @@ export default function CommunityPage() {
               </blockquote>
 
               <div className="mt-12 flex flex-wrap justify-center gap-4">
-                <a href="https://discord.gg/arcanea" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200">
+                <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200">
                   <PhChatCircle className="w-4 h-4" />
                   Join the community
                 </a>

@@ -37,6 +37,7 @@ import {
   CODE_OF_CREATION,
   type LeaderboardEntry,
 } from "./community-hub-data";
+import { DISCORD_URL } from "@/lib/constants/links";
 
 // ---------------------------------------------------------------------------
 // Sub-components
@@ -139,7 +140,7 @@ export function CommunityHubContent() {
                   level="beta"
                   title="Discord and Reddit are live. Everything else is a preview."
                   body="Channel links work — the hub, leaderboards, contests, and spotlight cards below are representative design, not live data. Real dashboards arrive after ARC-community workstream ships."
-                  linkHref="https://discord.gg/arcanea"
+                  linkHref={DISCORD_URL}
                   linkLabel="Join Discord"
                 />
               </div>
@@ -172,7 +173,7 @@ export function CommunityHubContent() {
               <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
                 <Magnetic>
                   <a
-                    href="https://discord.gg/arcanea"
+                    href={DISCORD_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] px-8 py-4 font-semibold text-[var(--arc-cosmic-void)] shadow-[0_0_50px_rgba(127,255,212,0.2)] transition-all duration-300 hover:shadow-[0_0_80px_rgba(0,188,212,0.35)]"
@@ -546,7 +547,7 @@ export function CommunityHubContent() {
 
               <StaggerReveal className="flex flex-wrap justify-center gap-3" stagger={0.07}>
                 {[
-                  { label: "Discord", href: "https://discord.gg/arcanea", color: "var(--arc-void)", icon: Chat },
+                  { label: "Discord", href: DISCORD_URL, color: "var(--arc-void)", icon: Chat },
                   { label: "Reddit", href: "https://reddit.com/r/arcanea", color: "var(--arc-fire)", icon: Globe },
                   { label: "Whop", href: "https://whop.com/arcanea", color: "var(--arc-brand-arcanean-gold)", icon: Crown },
                   { label: "YouTube", href: "https://youtube.com/@arcanea", color: "var(--arc-fire)", icon: YoutubeLogo },

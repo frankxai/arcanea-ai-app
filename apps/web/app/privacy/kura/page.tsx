@@ -195,10 +195,10 @@ export default function KuraPrivacyPage() {
             The extension is MIT-licensed and fully open source. You can read
             every line of code that runs on your machine:{' '}
             <Link
-              href="https://github.com/frankxai/arcanea-vault"
+              href="https://github.com/frankxai/kura"
               className="text-[#00bcd4] underline-offset-4 hover:underline"
             >
-              github.com/frankxai/arcanea-vault
+              github.com/frankxai/kura
             </Link>
             .
           </p>
@@ -208,10 +208,10 @@ export default function KuraPrivacyPage() {
           <p>
             Questions, audits, or security disclosures: open an issue at{' '}
             <Link
-              href="https://github.com/frankxai/arcanea-vault/issues"
+              href="https://github.com/frankxai/kura/issues"
               className="text-[#00bcd4] underline-offset-4 hover:underline"
             >
-              github.com/frankxai/arcanea-vault/issues
+              github.com/frankxai/kura/issues
             </Link>{' '}
             or email{' '}
             <a

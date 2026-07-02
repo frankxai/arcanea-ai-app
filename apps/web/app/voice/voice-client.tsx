@@ -219,12 +219,12 @@ export default function VoicePage() {
               Voice Dashboard &rarr;
             </Link>
             <a
-              href="https://www.npmjs.com/package/@arcanea/voice"
+              href="https://www.npmjs.com/org/arcanea"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 rounded-xl font-medium text-sm border border-white/[0.08] text-white/60 hover:text-white/80 hover:border-white/[0.15] hover:bg-white/[0.02] transition-all"
             >
-              npx @arcanea/voice
+              Browse @arcanea packages
             </a>
           </div>
 

@@ -196,7 +196,7 @@ nodes:
     layer: product
     gate: form
     hemisphere: arc
-    github: https://github.com/frankxai/arcanea-vault
+    github: https://github.com/frankxai/kura
     consumes: []
     isExternal: false
     links: {}

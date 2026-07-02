@@ -120,7 +120,7 @@ const REPO_GROUPS: RepoGroup[] = [
     repos: [
       { name: 'arcanea', description: 'Open-source framework and canonical lore. The foundation of the multiverse.', href: 'https://github.com/frankxai/arcanea', language: 'TypeScript', stars: '2.8K' },
       { name: 'arcanea-ai-app', description: 'The main Arcanea platform — Next.js 16, Supabase, Vercel AI SDK.', href: 'https://github.com/frankxai/arcanea-ai-app', language: 'TypeScript', stars: '1.4K' },
-      { name: 'arcanea-soul', description: 'Core AI personality engine. The soul layer beneath every companion.', href: 'https://github.com/frankxai/arcanea-soul', language: 'TypeScript', stars: '980' },
+      { name: 'arcanea-soul', description: 'Core AI personality engine. The soul layer beneath every companion.', href: 'https://github.com/frankxai/arcanea/tree/main/arcanea-soul', language: 'TypeScript', stars: '980' },
     ],
   },
   {
@@ -128,7 +128,7 @@ const REPO_GROUPS: RepoGroup[] = [
     accent: 'var(--arc-brand-cosmic-blue)',
     repos: [
       { name: 'starlight-intelligence-system', description: 'Multi-model orchestration with memory, routing, and persona management.', href: 'https://github.com/frankxai/starlight-intelligence-system', language: 'TypeScript', stars: '1.6K' },
-      { name: 'arcanea-companion', description: 'AI companion framework. Personality, context, and relationship tracking.', href: 'https://github.com/frankxai/arcanea-companion', language: 'TypeScript', stars: '1.2K' },
+      { name: 'arcanea-companion', description: 'AI companion framework. Personality, context, and relationship tracking.', href: 'https://github.com/frankxai/arcanea', language: 'TypeScript', stars: '1.2K' },
       { name: 'arcanea-infogenius', description: 'Research and knowledge synthesis agent. Web search, analysis, reporting.', href: 'https://github.com/frankxai/arcanea-infogenius', language: 'Python', stars: '890' },
     ],
   },

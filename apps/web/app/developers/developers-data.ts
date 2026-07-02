@@ -193,22 +193,22 @@ export const OPEN_SOURCE_REPOS = [
   {
     name: "frankxai/arcanea-skills-opensource",
     description:
-      "103 open-source skills for Claude Code, Cursor, Windsurf, and any MCP-compatible agent. Fork and extend.",
-    href: "https://github.com/frankxai/arcanea-skills-opensource",
+      "Open-source skills for Claude Code, Cursor, Windsurf, and any MCP-compatible agent. Fork and extend.",
+    href: "https://github.com/frankxai/arcanea/tree/main/arcanea-skills-opensource",
     color: "var(--arc-void)",
   },
   {
     name: "frankxai/arcanea-soul",
     description:
       "The Arcanea Soul engine. Canon-aware personality system, world config generation, and identity framework.",
-    href: "https://github.com/frankxai/arcanea-soul",
+    href: "https://github.com/frankxai/arcanea/tree/main/arcanea-soul",
     color: "var(--arc-brand-arcanean-gold)",
   },
   {
     name: "frankxai/arcanea-companion",
     description:
       "Standalone companion app with Luminor chat, creative tools, Docker deployment, and Railway support.",
-    href: "https://github.com/frankxai/arcanea-companion",
+    href: "https://github.com/frankxai/arcanea",
     color: "var(--arc-fire)",
   },
 ];

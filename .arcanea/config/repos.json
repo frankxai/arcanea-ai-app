@@ -154,7 +154,7 @@
     {
       "name": "arcanea-vault",
       "description": "Cross-AI capture and provenance layer",
-      "github": "frankxai/arcanea-vault",
+      "github": "frankxai/kura",
       "visibility": "public",
       "role": "capture",
       "stack": ["typescript", "vite", "extension"],

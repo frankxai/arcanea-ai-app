@@ -16,6 +16,7 @@ import {
   type FlowStep,
 } from "@/components/premium";
 import { INTEGRATIONS } from "@/components/premium/integration-grid";
+import { DISCORD_URL } from "@/lib/constants/links";
 
 const LIVE_INTEGRATIONS = INTEGRATIONS.filter((integration) => integration.status === "live").length;
 const BETA_INTEGRATIONS = INTEGRATIONS.filter((integration) => integration.status === "beta").length;
@@ -405,7 +406,7 @@ export function IntegrationsContent() {
 
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Link
-                      href="https://discord.gg/arcanea"
+                      href={DISCORD_URL}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] px-6 py-3 text-sm font-semibold text-[var(--arc-cosmic-void)] transition hover:shadow-[0_0_30px_rgba(127,255,212,0.2)] hover:scale-[1.02] active:scale-[0.98]"

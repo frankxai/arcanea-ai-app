@@ -12,6 +12,7 @@ import {
   Sparkle,
   MusicNote,
 } from "@/lib/phosphor-icons";
+import { DISCORD_URL } from "@/lib/constants/links";
 
 type IconComponent = ComponentType<IconProps>;
 
@@ -55,7 +56,7 @@ export const PRIMARY_CHANNELS: PrimaryChannel[] = [
     ],
     color: "var(--arc-void)",
     cta: "Join Discord",
-    href: "https://discord.gg/arcanea",
+    href: DISCORD_URL,
     icon: Chat,
     badge: "Primary",
   },

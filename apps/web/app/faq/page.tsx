@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { Metadata } from "next";
 import Link from "next/link";
+import { DISCORD_URL } from "@/lib/constants/links";
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -64,11 +65,11 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What's included in the free plan?",
-        a: "The Spark (free) plan includes 3 creative companions, 100 messages per month, full Library access, and Gallery browsing. It's everything you need to explore the platform and see if Arcanea fits your creative workflow.",
+        a: "The Sovereign Engine (free) plan includes core AI chat with 13 Luminors, local Markdown/JSONML storage, standard exports, and the open-source CLI tools and skills. It's everything you need to explore the platform fully offline, BYOK.",
       },
       {
         q: "What do the paid plans include?",
-        a: "The Creator plan ($19/month) unlocks all creative partners with 5,000 messages per month, full Studio creation tools, complete Academy access, and custom prompt templates. The Studio plan ($49/month) adds API access, priority support, custom partner training, and team collaboration features.",
+        a: "Cloud Sync / Creator ($12/month) adds encrypted cloud sync and backups, pgvector semantic search, multiplayer Canvas collaboration, and monthly Cloud Bench credits. Studio Bench ($39/month) adds shared team workspaces, custom companion model tuning, more Cloud Bench credits, and dedicated API key access.",
       },
       {
         q: "Can I switch plans later?",
@@ -76,7 +77,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "Do you offer team or enterprise plans?",
-        a: "Yes. The enterprise plan ($99/month) includes team collaboration, custom companion deployment, dedicated support, SLA guarantees, custom integrations, and white-label options. Contact us for custom solutions.",
+        a: "Studio Bench includes shared team workspaces and roles. For dedicated support, custom integrations, or white-label needs beyond Studio Bench, contact us for custom solutions.",
       },
     ],
   },
@@ -239,7 +240,7 @@ export default function FAQPage() {
                 Contact Support
               </Link>
               <a
-                href="https://discord.gg/arcanea"
+                href={DISCORD_URL}
                 className="px-6 py-3 rounded-xl border border-white/[0.12] text-white font-semibold hover:bg-white/[0.04] transition-all"
               >
                 Join Discord

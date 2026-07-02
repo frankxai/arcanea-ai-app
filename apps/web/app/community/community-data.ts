@@ -19,6 +19,7 @@ import {
   PhRocket,
   PhHeart,
 } from '@/lib/phosphor-icons';
+import { DISCORD_URL } from '@/lib/constants/links';
 
 // ─── Community Spaces ─────────────────────────────────────────────────────────
 
@@ -35,7 +36,7 @@ export const COMMUNITY_SPACES = [
       "Voice creation rooms — Build live together",
       "Companion channels — Creative domain spaces",
     ],
-    href: "https://discord.gg/arcanea",
+    href: DISCORD_URL,
     cta: "Join Discord",
     badge: "Primary",
     badgeColor: "brand-primary",
@@ -89,28 +90,6 @@ export const COMMUNITY_SPACES = [
     glowColor: "rgba(120,166,255,0.12)",
     iconColor: "text-water",
     badgeBg: "bg-water/20 text-water border-water/30",
-  },
-  {
-    id: "youtube",
-    name: "YouTube",
-    tagline: "Tutorials, lore, and creation walkthroughs",
-    description:
-      "Deep-dive tutorials on the Arcanea platform, lore explorations of the mythology, live creation walkthroughs, and recorded Gate Ceremonies.",
-    highlights: [
-      "Platform tutorials and walkthroughs",
-      "Lore deep dives — mythology explored",
-      "Creation sessions — watch and learn",
-      "Recorded Gate Ceremonies",
-    ],
-    href: "https://youtube.com/@arcanea_ai",
-    cta: "Subscribe",
-    badge: "Watch & Learn",
-    icon: PhYoutubeLogo,
-    accentClass: "from-fire/20 to-fire/5",
-    borderHoverClass: "hover:border-fire/40",
-    glowColor: "rgba(255,107,53,0.12)",
-    iconColor: "text-fire",
-    badgeBg: "bg-fire/20 text-fire border-fire/30",
   },
 ];
 
@@ -172,8 +151,8 @@ export const FEATURED_REPOS = [
     name: "@arcanea/skills",
     fullName: "frankxai/arcanea-skills-opensource",
     description:
-      "54 open-source Claude Code skills — world-building, agent design, creative workflows, and development tools.",
-    href: "https://github.com/frankxai/arcanea-skills-opensource",
+      "Open-source Claude Code skills — world-building, agent design, creative workflows, and development tools.",
+    href: "https://github.com/frankxai/arcanea/tree/main/arcanea-skills-opensource",
     tags: ["skills", "claude", "agents"],
     color: "var(--arc-void)",
     icon: PhSparkle,
@@ -301,9 +280,9 @@ export const QUICK_LINKS = [
   },
   {
     label: "Discord",
-    href: "https://discord.gg/arcanea",
+    href: DISCORD_URL,
     icon: PhChatCircle,
-    detail: "discord.gg/arcanea",
+    detail: "GitHub Discussions",
     color: "var(--arc-brand-cosmic-blue)",
   },
   {
@@ -313,21 +292,14 @@ export const QUICK_LINKS = [
     detail: "@frankxai",
     color: "var(--arc-brand-cosmic-blue)",
   },
-  {
-    label: "YouTube",
-    href: "https://youtube.com/@arcanea_ai",
-    icon: PhYoutubeLogo,
-    detail: "@arcanea_ai",
-    color: "var(--arc-fire)",
-  },
 ];
 
 // ─── OSS Stats ────────────────────────────────────────────────────────────────
 
 export const OSS_STATS = [
-  { value: "27", label: "Repositories", color: "var(--arc-brand-atlantean-teal)" },
-  { value: "35", label: "npm Packages", color: "var(--arc-brand-arcanean-gold)" },
-  { value: "54", label: "Skills", color: "var(--arc-void)" },
-  { value: "791", label: "Tests Passing", color: "var(--arc-earth)" },
+  { value: "Open", label: "Repositories", color: "var(--arc-brand-atlantean-teal)" },
+  { value: "MIT", label: "npm Packages", color: "var(--arc-brand-arcanean-gold)" },
+  { value: "Dozens", label: "Skills", color: "var(--arc-void)" },
+  { value: "CI", label: "Tests Passing", color: "var(--arc-earth)" },
   { value: "200K+", label: "Words of Lore", color: "var(--arc-fire)" },
 ];

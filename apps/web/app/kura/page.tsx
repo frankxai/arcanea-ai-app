@@ -43,7 +43,7 @@ const JSON_LD = {
   description:
     'Local-first Chrome extension that exports AI conversations from ChatGPT, Claude, Grok, Gemini, DeepSeek and Perplexity into an Obsidian-compatible vault on disk.',
   url: 'https://arcanea.ai/kura',
-  downloadUrl: 'https://github.com/frankxai/arcanea-vault',
+  downloadUrl: 'https://github.com/frankxai/kura',
   softwareVersion: '0.2.0',
   license: 'https://opensource.org/licenses/MIT',
   author: {
@@ -147,10 +147,10 @@ export default function KuraPage() {
           Open source. MIT. <span className="text-[#ffd700]">Yours.</span>
         </h2>
         <Link
-          href="https://github.com/frankxai/arcanea-vault"
+          href="https://github.com/frankxai/kura"
           className="inline-flex items-center gap-2 rounded-xl border border-[#00bcd4]/30 bg-gradient-to-br from-[#00bcd4] to-[#0d47a1] px-6 py-3 text-sm font-semibold text-white shadow-[0_8px_28px_-12px_rgba(0,188,212,0.6)] transition hover:-translate-y-0.5"
         >
-          github.com/frankxai/arcanea-vault →
+          github.com/frankxai/kura →
         </Link>
         <p className="mt-8 font-mono text-xs uppercase tracking-[0.2em] text-zinc-600">
           part of the Arcanea creative OS

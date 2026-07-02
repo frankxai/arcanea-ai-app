@@ -21,6 +21,7 @@ import {
   PhChatCircleDots,
 } from '@/lib/phosphor-icons';
 import { MotionProvider, m } from '@/lib/motion';
+import { DISCORD_URL } from '@/lib/constants/links';
 
 const QUICK_START_STEPS = [
   {
@@ -89,7 +90,7 @@ const SDK_PACKAGES = [
 
 const COMMUNITY_LINKS = [
   { name: 'GitHub', description: '27 repositories, open-source ecosystem', href: 'https://github.com/arcanea-ai', icon: PhGithubLogo, color: 'var(--arc-text-primary)' },
-  { name: 'Discord', description: 'Join the creator community', href: 'https://discord.gg/arcanea', icon: PhUsers, color: 'var(--arc-void)' },
+  { name: 'Discord', description: 'Join the creator community', href: DISCORD_URL, icon: PhUsers, color: 'var(--arc-void)' },
   { name: 'Documentation', description: 'Full API reference and guides', href: '/developers/api', icon: PhBook, color: 'var(--arc-brand-atlantean-teal)' },
   { name: 'npm Packages', description: '35 packages in the ecosystem', href: 'https://www.npmjs.com/org/arcanea', icon: PhPackage, color: 'var(--arc-fire)' },
 ];
@@ -157,7 +158,7 @@ const DOC_CATEGORIES = [
     accent: 'var(--arc-fire)',
     links: [
       { label: 'GitHub Repos', href: 'https://github.com/arcanea-ai' },
-      { label: 'Discord Server', href: 'https://discord.gg/arcanea' },
+      { label: 'Discord Server', href: DISCORD_URL },
       { label: 'Contributing Guide', href: 'https://github.com/arcanea-ai/arcanea' },
     ],
   },

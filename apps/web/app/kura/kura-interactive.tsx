@@ -126,7 +126,7 @@ export function KuraHero() {
             className="mt-12 flex flex-wrap items-center gap-3"
           >
             <a
-              href="https://github.com/frankxai/arcanea-vault"
+              href="https://github.com/frankxai/kura"
               className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl border border-[#00bcd4]/30 bg-gradient-to-br from-[#00bcd4] to-[#0d47a1] px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_28px_-12px_rgba(0,188,212,0.6)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-12px_rgba(0,188,212,0.7)]"
             >
               <BorderBeam size={180} duration={6} colorFrom="#00bcd4" colorTo="#ffd700" />
@@ -136,7 +136,7 @@ export function KuraHero() {
               </span>
             </a>
             <a
-              href="https://github.com/frankxai/arcanea-vault/blob/main/FORMAT_SPEC.md"
+              href="https://github.com/frankxai/kura/blob/main/FORMAT_SPEC.md"
               className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-zinc-200 backdrop-blur-sm transition hover:border-white/20 hover:bg-white/[0.06]"
             >
               Read the format spec

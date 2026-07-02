@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { DISCORD_URL } from "@/lib/constants/links";
 
 // ─── Icons ─────────────────────────────────────────────────────────────────────
 const Icons = {
@@ -159,7 +160,7 @@ const CONTACT_METHODS: ContactMethod[] = [
     description:
       "Connect with fellow creators in our Discord server for real-time discussion and support.",
     icon: "Discord",
-    link: "https://discord.gg/arcanea",
+    link: DISCORD_URL,
     color: "var(--arc-void)",
   },
   {
@@ -192,12 +193,12 @@ const FAQS: FaqItem[] = [
   {
     question: "How do I get started with Arcanea?",
     answer:
-      "Create an account and start with the free Spark plan. As you create, you unlock new tools and deeper capabilities through the Ten Gates.",
+      "Create an account and start with the free Sovereign Engine plan. As you create, you unlock new tools and deeper capabilities through the Ten Gates.",
   },
   {
     question: "Is Arcanea free to use?",
     answer:
-      "Yes. The Spark plan is free and includes 3 companions, Library browsing, and Academy access. Creator ($19/mo) and Studio ($49/mo) plans unlock all 16 companions and full creation tools.",
+      "Yes. The Sovereign Engine plan is free and includes core AI chat with 13 Luminors, local storage, and standard exports. Cloud Sync ($12/mo) adds encrypted sync, semantic search, and collaboration; Studio Bench ($39/mo) adds team workspaces and custom model tuning.",
   },
   {
     question: "Can I build on Arcanea?",

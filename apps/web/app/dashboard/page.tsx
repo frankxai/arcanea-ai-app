@@ -29,6 +29,7 @@ import { StatCard } from '@/components/dashboard/StatCard';
 import { BookRow } from '@/components/dashboard/BookRow';
 import { ActivityFeed } from '@/components/dashboard/ActivityFeed';
 import { EmptyState } from '@/components/dashboard/EmptyState';
+import { DISCORD_URL } from '@/lib/constants/links';
 
 export const dynamic = 'force-dynamic';
 
@@ -55,7 +56,7 @@ const QUICK_LINKS = [
     external: true,
   },
   {
-    href: 'https://discord.gg/arcanea',
+    href: DISCORD_URL,
     label: 'Discord community',
     icon: Users,
     external: true,
