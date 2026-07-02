@@ -95,6 +95,10 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
       supabase.from('world_assets').select('*').eq('world_id', source.id),
     ]);
 
+    if (chars.error) throw chars.error;
+    if (lore.error) throw lore.error;
+    if (assets.error) throw assets.error;
+
     type OmitMeta<T> = Omit<T, 'id' | 'world_id' | 'created_at' | 'updated_at'>;
 
     function copyRows<T extends { id: string; world_id: string; created_at: string | null; updated_at?: string | null }>(
@@ -106,11 +110,15 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
       }));
     }
 
-    await Promise.all([
+    const insertResults = await Promise.all([
       chars.data?.length ? supabase.from('world_characters').insert(copyRows(chars.data)) : null,
       lore.data?.length ? supabase.from('world_lore').insert(copyRows(lore.data)) : null,
       assets.data?.length ? supabase.from('world_assets').insert(copyRows(assets.data)) : null,
     ]);
+
+    for (const res of insertResults) {
+      if (res?.error) throw res.error;
+    }
 
     // Fork lineage lives on worlds.forked_from; increment parent fork_count
     await supabase

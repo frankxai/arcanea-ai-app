@@ -61,8 +61,10 @@ export function finalScore(judgeTotal, communitySignal) {
 }
 
 function parseStrictJson(text) {
-  const cleaned = text.trim().replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/, '');
-  const parsed = JSON.parse(cleaned);
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}');
+  if (start === -1 || end < start) throw new Error('No JSON object found in judge response');
+  const parsed = JSON.parse(text.slice(start, end + 1));
   if (!parsed.scores || DIMENSIONS.some((d) => typeof parsed.scores[d] !== 'number')) {
     throw new Error('Judge response missing required dimension scores');
   }
