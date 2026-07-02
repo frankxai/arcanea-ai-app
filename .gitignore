@@ -147,6 +147,7 @@ arcanea-opencode-fork/
 .claude/skills/*/
 !.claude/skills/arco/
 !.claude/skills/arcanea-orchestra/
+!.claude/skills/challenge-judge/
 .codex/
 .codacy/
 .cursor/
