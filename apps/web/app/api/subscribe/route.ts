@@ -36,9 +36,12 @@ export async function POST(req: NextRequest) {
       );
 
     if (error) {
-      // If the table doesn't exist yet, still respond success
-      // (the email was acknowledged — table can be created later)
-      console.warn('[subscribe] Supabase error (non-fatal):', error.message);
+      // Respond success to the user regardless (don't block signup UX on
+      // infra issues), but log loudly — this means the email was dropped.
+      console.error('[subscribe] LOST EMAIL — Supabase upsert failed:', error.message, {
+        email: sanitizedEmail,
+        source: sanitizedSource,
+      });
     }
 
     return NextResponse.json({ success: true });
