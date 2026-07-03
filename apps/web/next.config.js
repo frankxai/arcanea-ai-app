@@ -9,6 +9,24 @@ const nextConfig = {
   poweredByHeader: false,
   serverExternalPackages: ['@opentelemetry/api'],
   outputFileTracingRoot: path.resolve(__dirname, '../..'),
+  outputFileTracingIncludes: {
+    '/books': ['../../book/**/*'],
+    '/books/**': ['../../book/**/*'],
+    '/authors': ['../../book/**/*'],
+    '/authors/**': ['../../book/**/*'],
+    '/library': ['../../book/**/*'],
+    '/library/**': ['../../book/**/*'],
+    '/living-lore': ['../../book/**/*'],
+    '/living-lore/**': ['../../book/**/*'],
+    '/studio/author': ['../../book/**/*'],
+    '/studio/author/**': ['../../book/**/*'],
+    '/api/ai/author-chat': ['../../book/**/*'],
+    '/api/author/**': ['../../book/**/*'],
+    '/api/books/**': ['../../book/**/*'],
+    '/api/content/**': ['../../book/**/*'],
+    '/api/living-lore/**': ['../../book/**/*'],
+    '/api/saga/**': ['../../book/**/*'],
+  },
   // Workspace packages with subpath exports — let Next.js/Turbopack compile from
   // source rather than relying on prebuilt dist/. Avoids `Module not found` in
   // CI when the workspace dep hasn't been built before `next build` runs.
