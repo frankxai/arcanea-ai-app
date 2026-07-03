@@ -12,3 +12,9 @@ export type { BorderBeamProps } from './border-beam';
 
 export { Spotlight } from './spotlight';
 export type { SpotlightProps } from './spotlight';
+
+export { ShaderGradientBackground } from './shader-gradient-background';
+export type { ShaderGradientBackgroundProps } from './shader-gradient-background';
+
+export { LiquidGlassButton } from './liquid-glass/liquid-glass-button';
+export type { LiquidGlassButtonProps } from './liquid-glass/liquid-glass-button';

@@ -20,6 +20,7 @@
 | **frontend-design** (Anthropic) | One-off artifacts, unique demos, NOT Arcanea-branded | Global `~/.claude/skills/frontend-design/` |
 | **ui-ux-pro-max** | Design review on existing code — "make this better", audits | Global |
 | **skill-creator** | Creating new skills, not building UI | Global |
+| **design-asset-intake** | Someone shares an external GitHub design/UI/motion/shader library — triage as npm-dependency / vendor-copy / reference-study before wiring in | `.arcanea/skills/design-asset-intake/` (committed) |
 
 ## Canonical slash commands
 
