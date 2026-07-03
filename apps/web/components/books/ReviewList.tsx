@@ -38,6 +38,23 @@ function emptySummary(): Summary {
   return { average: 0, count: 0, distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } };
 }
 
+async function withTimeout<T>(promise: Promise<T>, fallback: T, timeoutMs: number, label: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<T>((resolve) => {
+        timer = setTimeout(() => {
+          console.warn(label);
+          resolve(fallback);
+        }, timeoutMs);
+      }),
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
 async function fetchRatings(bookSlug: string): Promise<FetchResult> {
   try {
     const supabase = (await createClient()) as DB;
@@ -151,7 +168,12 @@ function DistributionBar({
 }
 
 export async function ReviewList({ bookSlug, limit = 10 }: ReviewListProps) {
-  const { summary, ratings, unavailable } = await fetchRatings(bookSlug);
+  const { summary, ratings, unavailable } = await withTimeout(
+    fetchRatings(bookSlug),
+    { summary: emptySummary(), ratings: [], unavailable: true },
+    2500,
+    `[ReviewList] fetch timed out for ${bookSlug}`,
+  );
 
   if (unavailable) {
     return (
