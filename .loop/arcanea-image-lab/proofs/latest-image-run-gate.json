@@ -1,0 +1,13 @@
+﻿{
+    "checked_at":  "2026-06-26T21:54:59",
+    "run_root":  "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\night-run-2026-06-26",
+    "prompts":  34,
+    "ledger_rows":  34,
+    "generated":  34,
+    "approved_with_notes":  12,
+    "iterate":  20,
+    "restart":  2,
+    "failures":  [
+
+                 ]
+}

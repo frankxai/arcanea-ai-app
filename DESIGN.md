@@ -7,7 +7,17 @@
 ## 1 · Brand & Audience
 - **Brand Identity:** Arcanea (Creative-platform SaaS).
 - **Target Audience:** Digital world-builders, AI creators, game directors, musicians, lore authors.
-- **Key Emotions:** Wonder, sovereignty, magic, luxury.
+- **Key Emotions:** Wonder, sovereignty, responsibility, useful magic, luxury.
+
+### Chosen Responsibility Layer
+
+Arcanea can make the user feel called, but never superior. The identity frame is "chosen by responsibility": creators answer The Drift by building source-grounded, rights-aware, memory-preserving artifacts. For public UI, The Drift means passivity, synthetic confusion, creative amnesia, isolation, rights fog, and dependency on rented tools.
+
+Design implications:
+- First-session surfaces should make the Call, Gift, Trial, Proof, and Stewardship visible.
+- Crisis language must be concrete and source-grounded.
+- The UI must return agency: clear consent, clear data use, clear pricing, exportable artifacts, and no shame loops.
+- Mythic visuals belong in artifacts, worlds, and ceremonial moments; product chrome remains AI-lab premium.
 
 ---
 
@@ -30,7 +40,7 @@ Existing candidate assets:
 
 ## 3 · Visual Rules & Forbidden Aesthetics
 - **Rules:** Layered depth, parallax planes, deep shadows. Apply the Arcanea Color Spectrum (bg `#05070f` / gold `#c5a26f` / indigo `#3f2a6b` / crimson `#6b2a2a` / teal `#2a5c5c`).
-- **Forbidden:** No flat vectors, no saturated primary colors (pure red, green, blue), and no standard modern flat UI frames.
+- **Forbidden:** No flat vectors, no saturated primary colors (pure red, green, blue), no standard modern flat UI frames, no cultic in-group language, and no dehumanized enemies.
 
 ---
 

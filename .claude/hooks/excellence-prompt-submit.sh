@@ -8,13 +8,23 @@
 #
 # Performance budget: <500ms.
 # Failure mode: never blocks. Always exits 0.
+#
+# Portable: sources hook-env for HARNESS (grok, claude, ...) + PROJECT detection.
 set +e
+
+# Source portable env
+HOOK_DIR="$(cd "$(dirname "$0")" && pwd)"
+if [ -f "$HOOK_DIR/lib/hook-env.sh" ]; then
+  source "$HOOK_DIR/lib/hook-env.sh" 2>/dev/null || true
+elif [ -f "C:/Users/frank/starlight/repos/claude-code-config/hooks/lib/hook-env.sh" ]; then
+  source "C:/Users/frank/starlight/repos/claude-code-config/hooks/lib/hook-env.sh" 2>/dev/null || true
+fi
 
 # Read prompt from environment, not argv: avoids Windows 32KB command-line
 # length limit and shell-parsing/escaping bugs with arbitrary user input.
 # Fall back to $1 for older Claude Code versions that still pass via argv.
 PROMPT="${CLAUDE_USER_PROMPT:-${1:-}}"
-PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+PROJECT_DIR="${CLAUDE_PROJECT_DIR:-${PROJECT_ROOT:-$(pwd)}}"
 cd "$PROJECT_DIR" 2>/dev/null || exit 0
 
 # printf '%s\n' is safe for arbitrary input (echo breaks on leading -n/-e).

@@ -1,0 +1,294 @@
+{
+  "version": "1.0",
+  "task": "Upgrade /arcanea into a modern Arcanea activation console with a WebGL material proof core, richer content foundations, reduced-motion fallback, and visual QA evidence.",
+  "surface": "/arcanea",
+  "audience": "Arcanea creators, operators, and Frank's internal product/design workflow reviewing Genesis proof, canon, visual QA, plugin forge, and rights readiness.",
+  "standards": [
+    "Frank/Starlight L99 Agentic Design System",
+    "Arcanea TASTE.md and DESIGN.md",
+    "Premium Web OS three-webgl and quality gates",
+    "WEB_EXPERIENCE_STANDARD.md",
+    "VISUAL_QA_GATE.md",
+    "Motion Taste Rubric with reduced-motion route"
+  ],
+  "references": [
+    "C:/Users/frank/starlight/repos/DESIGN_TASTE.md",
+    "C:/Users/frank/starlight/repos/WEB_EXPERIENCE_STANDARD.md",
+    "C:/Users/frank/starlight/repos/VISUAL_QA_GATE.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/TASTE.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/DESIGN.md",
+    "https://r3f.docs.pmnd.rs/api/canvas",
+    "https://threejs.org/docs/api/en/materials/MeshPhysicalMaterial.html",
+    "https://drei.docs.pmnd.rs/shaders/mesh-transmission-material"
+  ],
+  "direction": {
+    "keep": [
+      "Operational activation route instead of a marketing landing page",
+      "Arcanea mythic weight expressed through product state and proof boundaries",
+      "Rights gate closed until source, canon, license, and cultural review are complete"
+    ],
+    "avoid": [
+      "Unknown-rights 3D models or texture downloads",
+      "Generic fantasy page styling detached from app workflows",
+      "Motion that continues when the user requests reduced motion"
+    ],
+    "signature": "A faceted glass Genesis proof core with gold provenance orbit bands, codex leaves, lane nodes, and DOM status overlays.",
+    "system": "Code-generated R3F/Three geometry in an isolated client component, backed by activation data for proof metrics and material foundations."
+  },
+  "artifacts": [
+    {
+      "kind": "code",
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/components/visuals/arcanea-proof-core.tsx",
+      "inspected": true,
+      "notes": "New isolated WebGL proof-core component with static poster and reduced-motion fallback."
+    },
+    {
+      "kind": "code",
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/arcanea/page.tsx",
+      "inspected": true,
+      "notes": "Hero, proof metrics, material foundation section, and route composition updated."
+    },
+    {
+      "kind": "code",
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/lib/arcanea/activation.ts",
+      "inspected": true,
+      "notes": "Added proof-core metrics and material foundation data."
+    },
+    {
+      "kind": "screenshot",
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-material-core-desktop-2026-06-28.png",
+      "inspected": true,
+      "viewport": "1440x1000 desktop"
+    },
+    {
+      "kind": "screenshot",
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-material-core-mobile-2026-06-28.png",
+      "inspected": true,
+      "viewport": "390x900 mobile"
+    },
+    {
+      "kind": "screenshot",
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-material-core-reduced-2026-06-28.png",
+      "inspected": true,
+      "viewport": "1280x900 reduced motion"
+    }
+  ],
+  "checks": [
+    {
+      "name": "type-check",
+      "status": "pass",
+      "command": "corepack pnpm --dir apps/web type-check"
+    },
+    {
+      "name": "production-build",
+      "status": "pass",
+      "command": "corepack pnpm --dir apps/web build",
+      "notes": "Build passed. Existing repo warnings remain: deprecated middleware convention, Turbopack NFT trace warning in saga loader, and edge runtime static-generation notice."
+    },
+    {
+      "name": "desktop-route-and-overflow",
+      "status": "pass",
+      "details": {
+        "status": 200,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "canvasState": "webgl"
+      }
+    },
+    {
+      "name": "desktop-canvas-pixel-check",
+      "status": "pass",
+      "details": {
+        "crop": {
+          "left": 536,
+          "top": 225,
+          "width": 705,
+          "height": 700
+        },
+        "sampledPixels": 29030,
+        "nonDarkRatio": 0.3251,
+        "luminanceRange": 248.93
+      }
+    },
+    {
+      "name": "mobile-route-and-overflow",
+      "status": "pass",
+      "details": {
+        "status": 200,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "canvasState": "webgl"
+      }
+    },
+    {
+      "name": "mobile-canvas-pixel-check",
+      "status": "pass",
+      "details": {
+        "crop": {
+          "left": 20,
+          "top": 1126,
+          "width": 350,
+          "height": 561
+        },
+        "sampledPixels": 11550,
+        "nonDarkRatio": 0.5272,
+        "luminanceRange": 248.86
+      }
+    },
+    {
+      "name": "reduced-motion-fallback",
+      "status": "pass",
+      "details": {
+        "coreState": "reduced-motion",
+        "canvasCount": 0
+      }
+    },
+    {
+      "name": "browser-errors",
+      "status": "pass",
+      "details": [
+        {
+          "name": "desktop",
+          "pageErrors": [],
+          "consoleErrors": []
+        },
+        {
+          "name": "mobile",
+          "pageErrors": [],
+          "consoleErrors": []
+        },
+        {
+          "name": "reduced",
+          "pageErrors": [],
+          "consoleErrors": []
+        }
+      ]
+    },
+    {
+      "name": "local-vercel-analytics-warning",
+      "status": "not_applicable",
+      "details": "Local production server emits ignored Vercel Analytics/Speed Insights MIME warnings because those scripts are not served on localhost."
+    },
+    {
+      "name": "server-cleanup",
+      "status": "pass",
+      "details": "No listener left on port 3001 after QA; only TCP TIME_WAIT entries remained."
+    }
+  ],
+  "score": {
+    "total": 27,
+    "max": 30,
+    "notes": "Ship: strong material foundation and verified WebGL/reduced-motion behavior. Further gain would come from deeper canonical media content and a deploy-preview visual review."
+  },
+  "decision": "ship",
+  "diagnostics": {
+    "captures": [
+      {
+        "name": "desktop",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "url": "http://127.0.0.1:3001/arcanea",
+        "status": 200,
+        "screenshotPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.visual-qa\\arcanea-material-core-desktop-2026-06-28.png",
+        "metrics": {
+          "title": "Arcanea Activation Console | Arcanea | Arcanea",
+          "heading": "Arcanea, operating as a living proof engine.",
+          "coreState": "webgl",
+          "canvasCount": 1,
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "bodyHeight": 6447,
+          "materialCards": 37
+        },
+        "canvasBox": {
+          "x": 536.734375,
+          "y": 225,
+          "width": 703.28125,
+          "height": 700
+        },
+        "canvasStats": {
+          "crop": {
+            "left": 536,
+            "top": 225,
+            "width": 705,
+            "height": 700
+          },
+          "sampledPixels": 29030,
+          "nonDarkRatio": 0.3251,
+          "luminanceRange": 248.93
+        },
+        "pageErrors": [],
+        "consoleErrors": [],
+        "ignoredConsoleCount": 4
+      },
+      {
+        "name": "mobile",
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "url": "http://127.0.0.1:3001/arcanea",
+        "status": 200,
+        "screenshotPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.visual-qa\\arcanea-material-core-mobile-2026-06-28.png",
+        "metrics": {
+          "title": "Arcanea Activation Console | Arcanea | Arcanea",
+          "heading": "Arcanea, operating as a living proof engine.",
+          "coreState": "webgl",
+          "canvasCount": 1,
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "bodyHeight": 14041,
+          "materialCards": 37
+        },
+        "canvasBox": {
+          "x": 20,
+          "y": 1126.15625,
+          "width": 350,
+          "height": 560
+        },
+        "canvasStats": {
+          "crop": {
+            "left": 20,
+            "top": 1126,
+            "width": 350,
+            "height": 561
+          },
+          "sampledPixels": 11550,
+          "nonDarkRatio": 0.5272,
+          "luminanceRange": 248.86
+        },
+        "pageErrors": [],
+        "consoleErrors": [],
+        "ignoredConsoleCount": 4
+      },
+      {
+        "name": "reduced",
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "url": "http://127.0.0.1:3001/arcanea",
+        "status": 200,
+        "screenshotPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.visual-qa\\arcanea-material-core-reduced-2026-06-28.png",
+        "metrics": {
+          "title": "Arcanea Activation Console | Arcanea | Arcanea",
+          "heading": "Arcanea, operating as a living proof engine.",
+          "coreState": "reduced-motion",
+          "canvasCount": 0,
+          "scrollWidth": 1280,
+          "clientWidth": 1280,
+          "bodyHeight": 6307,
+          "materialCards": 37
+        },
+        "canvasBox": null,
+        "canvasStats": null,
+        "pageErrors": [],
+        "consoleErrors": [],
+        "ignoredConsoleCount": 4
+      }
+    ],
+    "knownLocalWarnings": "Ignored Vercel Analytics and Speed Insights script MIME warnings on localhost only."
+  }
+}

@@ -139,6 +139,66 @@ export interface Quest {
     involvedCreations: string[];
     estimatedDifficulty: "apprentice" | "mage" | "master" | "archmage" | "luminor";
 }
+export type DriftFace = "attention_collapse" | "synthetic_confusion" | "creative_amnesia" | "isolation" | "rights_fog" | "tool_dependency";
+export type MissionLane = "media_literacy" | "local_resilience" | "regenerative_worlds" | "creator_sovereignty" | "social_connection" | "agent_stewardship";
+export type GiftType = "key" | "mirror" | "compass" | "seed" | "oath" | "instrument" | "map" | "ember" | "lens" | "thread";
+export type CanonStatus = "private_draft" | "staged_lore" | "public_canon" | "licensed_derivative" | "locked_canon";
+export type ReviewVerdict = "pass" | "revise" | "block";
+export interface GiftObject {
+    id: string;
+    name: string;
+    type: GiftType;
+    missionLane: MissionLane;
+    driftFace: DriftFace;
+    gateAlignment?: number;
+    power: string;
+    cost: string;
+    rightUse: string;
+    firstTrial: string;
+    sourcePermissions: string;
+    canonStatus: CanonStatus;
+    commercialPermissions: string;
+    sisMemoryKey?: string;
+    createdAt: string;
+}
+export interface RightUseReview {
+    giftId?: string;
+    consent: string;
+    cost: string;
+    consequence: string;
+    continuity: string;
+    credit: string;
+    commercialPermission: string;
+    culturalSafety: string;
+    canonBoundary: string;
+    verdict: ReviewVerdict;
+    notes?: string;
+    reviewedAt: string;
+}
+export interface ProgressionEvent {
+    id: string;
+    actorId: string;
+    gate?: number;
+    missionLane: MissionLane;
+    action: string;
+    artifactId?: string;
+    xp: number;
+    proofUrl?: string;
+    sourceSurface: string;
+    createdAt: string;
+}
+export interface SISMemoryRecord {
+    id: string;
+    creatorIntent: string;
+    giftIssued?: GiftObject;
+    constraint: string;
+    trialResult: string;
+    sourceAndAttribution: string[];
+    licenseState: string;
+    canonEffect: string;
+    evalNotes: string[];
+    createdAt: string;
+}
 export interface FactionReport {
     factions: Array<{
         name: string;
@@ -199,6 +259,244 @@ export interface CreatureBlueprint {
     size: string;
     temperament: string;
     species?: string;
+}
+export type CreatureRightsTier = "original_arcanea" | "public_domain" | "licensed" | "factual_reference_only" | "blocked";
+export type CreatureReferenceMode = "original" | "public_domain_adaptation" | "factual_reference";
+export type CreatureAtlasStatus = "seed" | "draft" | "review" | "approved" | "blocked";
+export type CreatureImageGenerationPolicy = "allowed_original_variant" | "prompt_only" | "licensed_only" | "blocked";
+export type CreatureRelationshipType = "source_archetype" | "same_source_world" | "ecological_neighbor" | "rival" | "symbiotic_with" | "guardian_of" | "mount_of" | "variant_of";
+export interface CreatureCitation {
+    label: string;
+    url?: string;
+    note?: string;
+    accessedAt?: string;
+}
+export interface CreatureSourceReference {
+    sourceWorld: string;
+    sourceWork: string;
+    creatureName?: string;
+    franchiseOwner?: string;
+    referenceMode: CreatureReferenceMode;
+}
+export interface CreatureRelationship {
+    targetSlug: string;
+    type: CreatureRelationshipType;
+    label: string;
+    strength: number;
+    citationLabel?: string;
+}
+export interface CreaturePromptPack {
+    prompt: string;
+    negativePrompt: string;
+    aspectRatio: "1:1" | "16:9" | "9:16" | "4:3" | "3:4";
+    suggestedModels: string[];
+    safetyNotes: string[];
+    tags: string[];
+}
+export interface ReferenceCreatureSpec {
+    id: string;
+    slug: string;
+    name: string;
+    shortDescription: string;
+    source: CreatureSourceReference;
+    rightsTier: CreatureRightsTier;
+    taxonomy: string[];
+    habitats: string[];
+    abilities: string[];
+    temperament: string;
+    scale: string;
+    citations: CreatureCitation[];
+    relationships: CreatureRelationship[];
+}
+export interface ArcaneaCreatureVariantSpec {
+    name: string;
+    arcaneaWorld: string;
+    archetype: string;
+    element: Element;
+    visualDna: string[];
+    behavior: string[];
+    canonBoundary: string;
+    generationPolicy: CreatureImageGenerationPolicy;
+    promptFocus: string;
+    negativeConstraints: string[];
+}
+export interface CreatureAtlasMedia {
+    id: string;
+    status: "prompt_ready" | "generated" | "approved" | "rejected";
+    provider?: string;
+    model?: string;
+    url?: string;
+    prompt?: string;
+    qaScore?: number;
+    evidencePath?: string;
+}
+export interface CreatureAtlasEntry extends ReferenceCreatureSpec {
+    arcaneaVariant: ArcaneaCreatureVariantSpec;
+    promptPack?: CreaturePromptPack;
+    media: CreatureAtlasMedia[];
+    status: CreatureAtlasStatus;
+    steward: string;
+    updatedAt: string;
+}
+export type DungeonRightsTier = "original_arcanea" | "public_domain" | "open_rules" | "licensed" | "factual_reference_only" | "blocked";
+export type DungeonReferenceMode = "original" | "public_domain_adaptation" | "open_rules_reference" | "factual_reference";
+export type DungeonAtlasStatus = "seed" | "draft" | "review" | "approved" | "blocked";
+export type DungeonGenerationPolicy = "allowed_original_variant" | "prompt_only" | "licensed_only" | "blocked";
+export type DungeonRankBand = "apprentice" | "mage" | "master" | "archmage" | "luminor";
+export type DungeonFormatTarget = "game" | "anime" | "fantasy_book" | "author_toolkit" | "agentic_mission";
+export type DungeonObjectiveType = "scout" | "solve" | "survive" | "gather" | "rescue" | "purify" | "negotiate" | "defeat" | "create";
+export type DungeonMaterialClass = "vael_crystal" | "luminor_metal" | "nero_shard" | "memory_relic" | "story_seed" | "agentic_artifact";
+export type DungeonRunVerdict = "in_progress" | "boss_locked" | "victory" | "partial_extract" | "collapse_failure";
+export interface DungeonCitation {
+    label: string;
+    url?: string;
+    note?: string;
+    accessedAt?: string;
+}
+export interface DungeonSourceReference {
+    sourceWorld: string;
+    sourceWork: string;
+    dungeonName?: string;
+    franchiseOwner?: string;
+    referenceMode: DungeonReferenceMode;
+}
+export interface DungeonBenchmarkPattern {
+    label: string;
+    pattern: "timer_pressure" | "hidden_depth" | "rank_mismatch" | "ecology" | "boss_phase" | "loot_crafting" | "social_spectacle" | "class_progression" | "nonlinear_map" | "agentic_workflow";
+    whyItWorks: string;
+    arcaneaUse: string;
+}
+export interface DungeonObjective {
+    id: string;
+    label: string;
+    type: DungeonObjectiveType;
+    required: boolean;
+    estimatedMinutes: number;
+    proofArtifact?: string;
+    gate?: number;
+}
+export interface DungeonCollapseStage {
+    id: string;
+    startsAtMinute: number;
+    name: string;
+    pressure: string;
+    hazard: string;
+    consequence: string;
+}
+export interface DungeonTimerSpec {
+    resonanceWindowMinutes: number;
+    warningAtMinutesRemaining: number[];
+    collapseStages: DungeonCollapseStage[];
+    bossDeadlineBehavior: string;
+}
+export interface DungeonBossPhase {
+    id: string;
+    name: string;
+    trigger: string;
+    mechanic: string;
+    counterplay: string;
+    failureRisk: string;
+}
+export interface DungeonBossSpec {
+    name: string;
+    archetype: string;
+    unlockCondition: string;
+    phases: DungeonBossPhase[];
+    victoryCondition: string;
+    proofArtifact: string;
+}
+export interface DungeonMaterialReward {
+    name: string;
+    materialClass: DungeonMaterialClass;
+    gateAffinity?: number;
+    useCases: string[];
+    rightsNotes: string;
+}
+export interface DungeonPromptPack {
+    keyArtPrompt: string;
+    bossPrompt: string;
+    roomPrompt: string;
+    materialPrompt: string;
+    negativePrompt: string;
+    aspectRatio: "1:1" | "16:9" | "9:16" | "4:3" | "3:4";
+    suggestedModels: string[];
+    safetyNotes: string[];
+    tags: string[];
+}
+export interface DungeonRelationship {
+    targetSlug: string;
+    type: "same_source_world" | "same_gate" | "same_rank_band" | "boss_echo" | "material_lineage" | "story_parallel" | "variant_of";
+    label: string;
+    strength: number;
+    citationLabel?: string;
+}
+export interface ReferenceDungeonSpec {
+    id: string;
+    slug: string;
+    name: string;
+    shortDescription: string;
+    source: DungeonSourceReference;
+    rightsTier: DungeonRightsTier;
+    taxonomy: string[];
+    mechanics: DungeonBenchmarkPattern[];
+    progressionPattern: string;
+    communitySignal: string;
+    citations: DungeonCitation[];
+    relationships: DungeonRelationship[];
+}
+export interface ArcaneaDungeonVariantSpec {
+    name: string;
+    publicName: string;
+    arcaneaWorld: string;
+    vaultType: string;
+    gateAlignment: number[];
+    godbeastResonance?: string;
+    rankBand: DungeonRankBand;
+    partySize: {
+        min: number;
+        max: number;
+    };
+    storyFunction: string;
+    gameLoop: string;
+    animeBeats: string[];
+    bookBeats: string[];
+    authorUse: string;
+    agenticMission: string;
+    laws: string[];
+    costs: string[];
+    rooms: DungeonObjective[];
+    hazards: string[];
+    creatures: string[];
+    materials: DungeonMaterialReward[];
+    boss: DungeonBossSpec;
+    timer: DungeonTimerSpec;
+    canonBoundary: string;
+    generationPolicy: DungeonGenerationPolicy;
+    promptFocus: string;
+    negativeConstraints: string[];
+}
+export interface DungeonAtlasEntry extends ReferenceDungeonSpec {
+    arcaneaVariant: ArcaneaDungeonVariantSpec;
+    promptPack?: DungeonPromptPack;
+    status: DungeonAtlasStatus;
+    steward: string;
+    updatedAt: string;
+}
+export interface DungeonRunState {
+    elapsedMinutes: number;
+    completedObjectiveIds: string[];
+    bossAttempted?: boolean;
+    bossDefeated?: boolean;
+    partyIntegrity?: number;
+}
+export interface DungeonRunResult {
+    verdict: DungeonRunVerdict;
+    minutesRemaining: number;
+    bossUnlocked: boolean;
+    activeCollapseStage?: DungeonCollapseStage;
+    rewardsUnlocked: DungeonMaterialReward[];
+    xp: number;
+    notes: string[];
 }
 export interface ImagePromptResult {
     prompt: string;

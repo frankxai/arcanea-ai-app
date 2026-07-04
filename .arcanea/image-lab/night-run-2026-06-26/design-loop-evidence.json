@@ -1,0 +1,134 @@
+{
+  "version": "2026-06-23",
+  "task": "Recalibrate Arcanea generated image quality and future prompt loop after user critique.",
+  "surface": "Arcanea image lab gallery, prompt queue, lore/site/social/book image production system.",
+  "audience": "Arcanea readers, creator community, future art and site production agents.",
+  "first_read": "The current images are concept passes; future images must pass an inspected 30 point quality gate.",
+  "standards": [
+    "C:\\Users\\frank\\starlight\\repos\\DESIGN_TASTE.md",
+    "C:\\Users\\frank\\starlight\\repos\\WEB_EXPERIENCE_STANDARD.md",
+    "C:\\Users\\frank\\starlight\\repos\\MOTION_TASTE_RUBRIC.md",
+    "C:\\Users\\frank\\starlight\\repos\\MULTI_AGENT_DESIGN_COUNCIL.md",
+    "C:\\Users\\frank\\starlight\\repos\\VISUAL_QA_GATE.md",
+    "C:\\Users\\frank\\starlight\\repos\\design-agent-standards\\DESIGN.md",
+    "C:\\Users\\frank\\starlight\\repos\\design-agent-standards\\OUTCOMES.md",
+    "C:\\Users\\frank\\starlight\\repos\\design-agent-standards\\AGENTIC_DESIGN_LOOP.md",
+    "C:\\Users\\frank\\starlight\\repos\\design-agent-standards\\ULTIMATE_AGENTIC_LOOPS.md",
+    "C:\\Users\\frank\\starlight\\repos\\design-agent-standards\\RED_TEAM_CHECKLIST.md",
+    "C:\\Users\\frank\\starlight\\repos\\design-agent-standards\\best-practices\\image-logo-visual-generation.md",
+    "C:\\Users\\frank\\starlight\\repos\\starlight-design-intelligence\\brand-packs\\arcanea\\BRAND.md",
+    "C:\\Users\\frank\\starlight\\repos\\starlight-design-intelligence\\brand-packs\\arcanea\\DESIGN.md",
+    "C:\\Users\\frank\\starlight\\repos\\starlight-design-intelligence\\evals\\generated-asset-quality-gate.md"
+  ],
+  "references": [
+    {
+      "label": "Codex pricing",
+      "source": "https://developers.openai.com/codex/pricing",
+      "reason": "Verified Codex Pro limits and image-generation usage multiplier."
+    },
+    {
+      "label": "ChatGPT Pro plans",
+      "source": "https://help.openai.com/en/articles/9793128-about-chatgpt-pro-plans",
+      "reason": "Verified Pro tier framing and usage dashboard expectation."
+    },
+    {
+      "label": "OpenAI image generation API guide",
+      "source": "https://developers.openai.com/api/docs/guides/image-generation",
+      "reason": "Verified API fallback is a separate controllable surface."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Arcanea mythic creative intelligence",
+      "Body-led elemental bending",
+      "Dark cinematic premium palette",
+      "Inspectable world and character concepts"
+    ],
+    "avoid": [
+      "AI-maximalist ornament",
+      "Glow spaghetti",
+      "Generic fantasy splash art",
+      "Unreadable micro-detail",
+      "Inflated scoring",
+      "Unpublished quota assumptions"
+    ],
+    "signature": "Crisp, modelable Arcanean magic: one strong visual idea, one readable bending mechanic, one inspected surface.",
+    "system": [
+      "30 point generated asset gate",
+      "4-image batches with critique before next batch",
+      "L99 prompt skeleton with camera, material, magic, and artifact constraints",
+      "CSV/gallery columns for gate score, verdict, ship status, failure modes, and next improvement"
+    ]
+  },
+  "artifacts": [
+    {
+      "path_or_url": "images/batch-003/batch-003-01.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "Thal'Maris concept is strong, but the skyline is too dense and too generically luminous for final use."
+    },
+    {
+      "path_or_url": "images/batch-004/batch-004-01.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "Arion has strong role clarity, but costume ornament and effect density reduce studio-final credibility."
+    },
+    {
+      "path_or_url": "images/batch-004/batch-004-02.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "Mera is emotionally clear, but the gown-like silhouette and many memory bubbles weaken practical character design."
+    },
+    {
+      "path_or_url": "images/batch-004/batch-004-03.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "Emilia is the strongest character-system bridge, but still needs a simpler engineered prop-forward version."
+    },
+    {
+      "path_or_url": "ledger.csv",
+      "kind": "image-ledger",
+      "inspected": true,
+      "notes": "All 22 generated rows now include gate_30_score, gate_verdict, ship_status, failure_modes, and next_improvement."
+    },
+    {
+      "path_or_url": "gallery.html",
+      "kind": "web",
+      "inspected": true,
+      "notes": "Gallery rebuilt with visible gate score, verdict, ship status, and failure modes on cards."
+    }
+  ],
+  "checks": [
+    {
+      "name": "actual-export-inspection",
+      "status": "pass",
+      "evidence": "Inspected Thal'Maris, Arion, Mera, and Emilia exports with view_image."
+    },
+    {
+      "name": "csv-recalibration",
+      "status": "pass",
+      "evidence": "22 rows rescored: 2 approved with notes, 18 iterate, 2 restart."
+    },
+    {
+      "name": "gallery-refresh",
+      "status": "pass",
+      "evidence": "gallery.html contains Ship status and Failure modes fields."
+    },
+    {
+      "name": "limits-documentation",
+      "status": "pass",
+      "evidence": "OPENAI_CODEX_IMAGE_LIMITS.md documents official sources, local throughput, and quota uncertainty."
+    }
+  ],
+  "score": {
+    "total": 27,
+    "max": 30,
+    "notes": "Process correction and evidence pass. Existing image set remains mostly iterate, not ship."
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "The existing assets remain concept plates unless regenerated or edited.",
+    "Official docs do not expose a stable per-hour image quota through the CLI.",
+    "The current thread did not expose an automation_update tool, so background scheduling is not actually installed."
+  ]
+}

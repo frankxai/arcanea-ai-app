@@ -183,8 +183,8 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="block">Build living worlds</span>
-            <span className="block">with AI agents.</span>
+            <span className="block">Build what the</span>
+            <span className="block">drifting world needs.</span>
           </m.h1>
 
           {/* One-line value prop */}
@@ -194,7 +194,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.16 }}
           >
-            Turn one idea into a persistent world graph: lore, characters, rules, media briefs, and agent tasks stay connected across sessions.
+            Arcanea trains sovereign creators to turn crisis into proof: living worlds, source-grounded artifacts, rights-aware media, and agent workflows that remember.
           </m.p>
 
           {/* Chat box — the hero element */}
@@ -216,7 +216,7 @@ function HeroPortal() {
           >
             {[
               { Icon: Sparkle, num: 13, suffix: "", label: "specialist agents", color: "var(--arc-brand-atlantean-teal)", fixed: true },
-              { Icon: Diamond, num: 190, suffix: "K+", label: "words of canon", color: "var(--arc-brand-atlantean-teal)" },
+              { Icon: Diamond, num: 190, suffix: "K+", label: "words of memory", color: "var(--arc-brand-atlantean-teal)" },
               { Icon: Code, num: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", color: "var(--arc-brand-arcanean-gold)" },
               { Icon: ShieldStar, num: 0, suffix: "MIT", label: "open source", color: "var(--arc-void)", fixed: true },
             ].map(({ Icon, num, suffix, label, color, fixed }, i) => (
@@ -241,7 +241,7 @@ function HeroPortal() {
           >
             <SovereigntyBadge />
             <span className="hidden h-1 w-1 rounded-full bg-white/20 sm:block" />
-            <span className="font-mono">BYOK / your IP / no lock-in</span>
+            <span className="font-mono">chosen by responsibility / BYOK / your IP</span>
           </m.div>
 
           <m.div
@@ -258,7 +258,7 @@ function HeroPortal() {
               sizes="28px"
               className="object-contain"
             />
-            <span className="text-[11px] text-white/35">Lumina routes the first brief to the right creation agents.</span>
+            <span className="text-[11px] text-white/35">Lumina turns the first call into a Gift, Trial, and proof ledger.</span>
           </m.div>
         </div>
       </m.div>

@@ -56,3 +56,32 @@ We have successfully completed the core codebase integration linking local agent
 *   **Next.js Production Build:** Configured `.env` variables to bypass Supabase static prerendering requirements. Cleared stale Next.js build caches and stopped orphan processes. Verified `pnpm --dir apps/web build` completes successfully with **exit code 0**.
 *   **Branding & Copywriting Upgrades:** Upgraded homepage versions (`v1`, `v3`, `v4`, and localized root pages) to prioritize "magic-as-code" and "magical/creative intelligence" terminology, systematically dropping heavy mystical/mythological vocabulary. Verified layout stability and navigation via E2E Playwright suites.
 
+---
+
+## 3. Genesis / Chosen Responsibility Activation Slice (2026-06-26)
+
+*   **First Session doctrine:** Added operating docs for `Call -> Gift -> World Seed -> Proof Artifact -> SIS Memory -> Forge Offer`, including growth metrics, swarm runbook, visual direction, Creator Forge packages, and first-session PRD.
+*   **Genesis route:** Added `/genesis` as a deterministic activation prototype. It renders Call intake, Drift face, mission lane, Gift Object, World Seed, First Trial, character pair, and stewardship record stub.
+*   **Homepage routing:** Updated the V3 "Answer the call" starter card to route to `/genesis` with the starter prompt, and `/genesis` now reads the prompt query on first load.
+*   **E2E coverage:** Added `apps/web/e2e/genesis.spec.ts` to verify the homepage-to-Genesis path and direct Genesis generation flow.
+*   **Verification:** Direct `next typegen`, `tsc --noEmit`, and `next build` passed locally after the initial Genesis implementation. Playwright verification for the new spec is the next gate.
+
+---
+
+## 4. Creature Atlas Foundation Slice (2026-06-26)
+
+*   **Atlas route:** Added `/atlas/creatures` as a rights-aware creature encyclopedia and prompt library. `/bestiary` now redirects to the atlas.
+*   **World Engine contracts:** Added creature atlas rights tiers, source references, relationships, media records, prompt packs, and safe Arcanea variant prompt generation to `@arcanea/world-engine`.
+*   **API layer:** Added `/api/atlas/creatures`, detail lookup, prompt generation, opt-in image generation preview/execution, and contribution intake contract routes.
+*   **Derived index schema:** Added a Supabase migration for creature entries, source worlds, graph relationships, media provenance, and contribution review.
+*   **IP posture:** Seed entries keep protected creature names in factual metadata only; image prompts generate original Arcanea variants and explicitly avoid franchise likenesses.
+
+---
+
+## 5. Dungeon / Resonance Vault Foundation Slice (2026-07-01)
+
+*   **Research packet:** Added a rights-clean dungeon benchmark source packet and synthesis covering Solo Leveling-style gates, D&D open rules, LitRPG timed floors, dungeon ecology, compact dungeon design, and nonlinear map structure.
+*   **System spec:** Added `docs/ARCANEA_DUNGEON_SYSTEM_SPEC.md` defining Resonance Vaults as the Arcanea canon term, with public "Dungeon" language reserved for accessibility.
+*   **World Engine contracts:** Added dungeon rights tiers, source references, benchmark mechanics, timer specs, collapse stages, boss phases, material rewards, transmedia render fields, prompt packs, and run evaluation types.
+*   **Runtime helpers:** Added dungeon helper functions for rights-safe art gating, prompt pack creation, remaining time, collapse stage lookup, boss unlock checks, and run verdict scoring.
+*   **Verification:** Added `packages/world-engine/tests/dungeons.test.mjs` covering timer/collapse behavior, required-objective boss locks, victory/collapse verdicts, and protected-source prompt safety.

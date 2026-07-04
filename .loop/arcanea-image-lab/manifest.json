@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "name": "arcanea-image-lab",
+  "slug": "arcanea-image-lab",
+  "goal": "Continuously produce, inspect, score, and document premium Arcanea lore images in bounded batches without approving unreviewed generated assets.",
+  "createdAt": "2026-06-26T15:17:21Z",
+  "owner": "Frank + Codex image operator",
+  "cadence": "manual on-demand batches; optional scheduled wakeups after 2-3 clean cycles",
+  "verdict": "MANUAL_FIRST",
+  "stateMode": "global",
+  "ci": "none",
+  "packageManager": "unknown",
+  "maxIterations": 3,
+  "stopAfterSameFailure": 2,
+  "verificationCommands": [
+    "powershell -NoProfile -ExecutionPolicy Bypass -File .arcanea/image-lab/night-run-2026-06-26/tools/Test-ArcaneaImageRun.ps1",
+    "powershell -NoProfile -ExecutionPolicy Bypass -File .arcanea/image-lab/night-run-2026-06-26/tools/Measure-ArcaneaImageRun.ps1",
+    "python C:\\Users\\frank\\.codex\\plugins\\cache\\plugins-cli\\loop-system\\0.1.0+codex.20260623105400\\scripts\\loop_cli.py doctor --loop-dir .loop/arcanea-image-lab"
+  ],
+  "forbiddenScope": [
+    "credentials",
+    "billing",
+    "production mutation",
+    "destructive file operations",
+    "external sends",
+    "gate weakening",
+    "force pushes",
+    "unapproved dependency upgrades"
+  ],
+  "files": {
+    "loop": "LOOP.md",
+    "gate": "GATE.md",
+    "worker": "WORKER.md",
+    "verifier": "VERIFIER.md",
+    "state": "STATE.md",
+    "runs": "RUNS.md",
+    "machineRuns": "runs.jsonl",
+    "proofs": "proofs/",
+    "lock": "loop.lock",
+    "abort": "ABORT"
+  }
+}

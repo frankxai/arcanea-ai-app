@@ -238,7 +238,7 @@ export function HeroShowcase() {
       <m.p
         className="text-center text-[10px] font-mono uppercase tracking-[0.25em] text-white/20 mb-10"
       >
-        Every prompt becomes a connected artifact
+        Every call becomes a proof artifact
       </m.p>
 
       {/* Card strip */}
@@ -256,7 +256,7 @@ export function HeroShowcase() {
       <m.p
         className="text-center mt-10 text-sm text-white/20 font-body"
       >
-        Portals, godbeasts, dragon-rider sagas, cinema, and agent workflows share one creation layer.
+        Missions, worlds, rights, cinema, and agent workflows share one memory layer.
       </m.p>
     </section>
   );

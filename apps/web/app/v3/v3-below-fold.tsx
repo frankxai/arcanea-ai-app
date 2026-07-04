@@ -151,6 +151,127 @@ const PRODUCT_PILLARS: ProductPillar[] = [
   },
 ];
 
+const DRIFT_FORCES: Array<{
+  Icon: IconComponent;
+  title: string;
+  body: string;
+  response: string;
+  accent: string;
+}> = [
+  {
+    Icon: Brain,
+    title: "Synthetic confusion",
+    body: "AI slop, hallucinated claims, and weak sources make reality harder to read.",
+    response: "Source-grounded media literacy and council critique.",
+    accent: brand.atlanteanTeal,
+  },
+  {
+    Icon: Waveform,
+    title: "Creative amnesia",
+    body: "Stateless tools forget taste, rights, canon, and why decisions were made.",
+    response: "SIS memory, world graphs, provenance, and proof ledgers.",
+    accent: brand.arcaneanGold,
+  },
+  {
+    Icon: Globe,
+    title: "Tool dependency",
+    body: "Creators rent power from opaque systems that can erase context or change terms.",
+    response: "BYOK, exportable worlds, open clients, and local-first workflows.",
+    accent: brand.aquamarine,
+  },
+];
+
+const CHOSEN_PATH = [
+  { step: "Call", copy: "Name the part of The Drift you feel responsible to answer." },
+  { step: "Gift", copy: "Receive one artifact with power, cost, right use, and a first trial." },
+  { step: "Proof", copy: "Ship a source-grounded creation that can be saved, cited, or published." },
+  { step: "Steward", copy: "Record rights, continuity, and learning so the work can compound." },
+];
+
+function ChosenResponsibilitySection() {
+  return (
+    <SectionShell ambient="gold" size="default" id="chosen-responsibility">
+      <div className="max-w-6xl mx-auto px-6">
+        <SectionHeader
+          label="Chosen Responsibility"
+          title="You are chosen when you choose the work."
+          subtitle={<>Arcanea does not train followers. It trains creators who can answer <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">The Drift</span>: passive consumption, synthetic confusion, forgotten context, unclear rights, and tool dependency.</>}
+          accent="gold"
+        />
+
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+          <Reveal y={16}>
+            <div className="relative h-full rounded-2xl border border-[var(--arc-brand-arcanean-gold)]/16 bg-white/[0.025] p-5 md:p-6">
+              <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_18%_0%,color-mix(in_srgb,var(--arc-brand-arcanean-gold)_12%,transparent),transparent_48%)]" />
+              <div className="relative">
+                <p className="text-[10px] font-mono uppercase tracking-[0.28em] text-[var(--arc-brand-arcanean-gold)]/55">
+                  The first session
+                </p>
+                <h3 className="mt-4 text-2xl font-display font-semibold tracking-tight text-white md:text-3xl">
+                  The Call becomes a Gift, a Trial, and a proof ledger.
+                </h3>
+                <p className="mt-4 text-sm leading-relaxed text-white/45">
+                  The chosen-one fantasy becomes ethical when the system gives the user agency, boundaries, useful work, and memory. The first output is not a dopamine hit. It is a proof-sized artifact with source, rights, continuity, and a next action.
+                </p>
+                <div className="mt-6 grid grid-cols-1 gap-2">
+                  {CHOSEN_PATH.map((item, i) => (
+                    <m.div
+                      key={item.step}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: i * 0.06 }}
+                      className="flex gap-3 rounded-xl border border-white/[0.06] bg-white/[0.025] p-3"
+                    >
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[var(--arc-brand-arcanean-gold)]/18 bg-[var(--arc-brand-arcanean-gold)]/8 text-xs font-mono text-[var(--arc-brand-arcanean-gold)]">
+                        {i + 1}
+                      </span>
+                      <div>
+                        <p className="text-sm font-display font-semibold text-white/82">{item.step}</p>
+                        <p className="mt-0.5 text-xs leading-relaxed text-white/36">{item.copy}</p>
+                      </div>
+                    </m.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          <div className="grid grid-cols-1 gap-3">
+            {DRIFT_FORCES.map(({ Icon, title, body, response, accent }, i) => (
+              <m.div
+                key={title}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.45, delay: 0.12 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className="grid gap-4 rounded-2xl border border-white/[0.06] bg-white/[0.025] p-5 md:grid-cols-[44px_minmax(0,1fr)]"
+              >
+                <div
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border"
+                  style={{
+                    borderColor: `${accent}28`,
+                    background: `${accent}10`,
+                  }}
+                >
+                  <Icon size={20} weight="duotone" color={accent} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-display font-semibold text-white/88">{title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-white/42">{body}</p>
+                  <p className="mt-3 text-xs font-mono uppercase tracking-[0.18em]" style={{ color: accent }}>
+                    {response}
+                  </p>
+                </div>
+              </m.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </SectionShell>
+  );
+}
+
 function ProductPillarsGrid() {
   return (
     <SectionShell ambient="teal" size="compact" id="what-arcanea-does">
@@ -158,7 +279,7 @@ function ProductPillarsGrid() {
         <SectionHeader
           label="Creation Logic"
           title="A unified creation cycle"
-          subtitle={<>Prompt, graph, canon, and runtime execute in a <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">closed feedback loop</span> instead of scattering across tabs and forgotten sessions.</>}
+          subtitle={<>Call, Gift, Trial, Proof, and Stewardship execute in a <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">closed feedback loop</span> instead of scattering across tabs and forgotten sessions.</>}
           accent="teal"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -1060,6 +1181,11 @@ export function V3BelowFold({
   return (
     <MotionProvider>
       <>
+        {/* 0. Chosen responsibility — the ethical mission frame */}
+        <ChosenResponsibilitySection />
+
+        <AtmosphericDivider variant="gold" />
+
         {/* 0. Living World Engine demo — the differentiator visualized */}
         <LivingWorldSection />
 

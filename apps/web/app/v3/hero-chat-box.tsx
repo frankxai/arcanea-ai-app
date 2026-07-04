@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { m } from "framer-motion";
@@ -20,24 +21,24 @@ import {
 const STARTER_CARDS = [
   {
     icon: PhPencil,
-    label: "Map a world",
-    prompt: "Create a world bible for a near-future mythic city: premise, factions, rules of magic, three conflicts, and the first scene.",
-    href: "/worlds/create",
+    label: "Answer the call",
+    prompt: "Help me name the part of The Drift I want to answer, then create one Gift Object with power, cost, right use, and a proof-sized first trial.",
+    href: "/genesis",
   },
   {
     icon: PhMusicNote,
-    label: "Write a scene",
-    prompt: "Write an opening scene for a creator-owned fantasy series with a strong hook, sensory detail, and a clear character choice.",
+    label: "Create proof",
+    prompt: "Turn my concern about misinformation, isolation, ecology, or creator rights into one useful artifact I can publish this week.",
   },
   {
     icon: PhPaintBrush,
-    label: "Design visuals",
-    prompt: "Create a visual direction for a new world: palette, locations, character silhouettes, mood-board prompts, and a hero image brief.",
+    label: "Design a mission",
+    prompt: "Create a visual and product direction for a mission pack that helps creators fight The Drift without fear, shame, or dark patterns.",
   },
   {
     icon: PhCode,
     label: "Plan agents",
-    prompt: "Plan an agent workflow for a world creator: research, story editing, art direction, release planning, and weekly publishing tasks.",
+    prompt: "Plan an accountable agent workflow: source scout, world builder, right-use reviewer, editor, publisher, and SIS proof ledger.",
   },
 ];
 
@@ -120,7 +121,7 @@ export function HeroChatBox() {
             onKeyDown={handleKeyDown}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            placeholder="Describe the world, story, or creator system you want to build..."
+            placeholder="Name the crisis, world, or creator mission you want to answer..."
             aria-label="Describe what you want to create"
             rows={1}
             className="flex-1 px-5 py-4 bg-transparent text-white/90 placeholder-white/20 resize-none focus:outline-none font-body text-[15px] leading-relaxed"
@@ -156,19 +157,34 @@ export function HeroChatBox() {
       >
         {STARTER_CARDS.map((card) => {
           const Icon = card.icon;
+          const className =
+            "group flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-[12px] sm:text-[13px] text-white/35 hover:text-white/70 bg-white/[0.025] hover:bg-gradient-to-r hover:from-[var(--arc-brand-atlantean-teal)]/[0.06] hover:to-transparent border border-white/[0.05] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[0_0_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_6%,transparent)] hover:scale-[1.01] active:scale-[0.98] transition-all duration-300";
+          if ("href" in card && card.href) {
+            const sep = card.href.includes('?') ? '&' : '?';
+            const href = `${card.href}${sep}prompt=${encodeURIComponent(card.prompt)}`;
+
+            return (
+              <Link
+                key={card.label}
+                href={href}
+                className={className}
+                aria-label={`${card.label}: ${card.prompt}`}
+              >
+                <Icon className="w-3.5 h-3.5 text-white/20 group-hover:text-[var(--arc-brand-atlantean-teal)]/70 transition-colors" />
+                {card.label}
+              </Link>
+            );
+          }
+
           const handleClick = () => {
-            if ("href" in card && card.href) {
-              const sep = card.href.includes('?') ? '&' : '?';
-              router.push(`${card.href}${sep}prompt=${encodeURIComponent(card.prompt)}`);
-            } else {
-              goToChat(card.prompt);
-            }
+            goToChat(card.prompt);
           };
+
           return (
             <button
               key={card.label}
               onClick={handleClick}
-              className="group flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-[12px] sm:text-[13px] text-white/35 hover:text-white/70 bg-white/[0.025] hover:bg-gradient-to-r hover:from-[var(--arc-brand-atlantean-teal)]/[0.06] hover:to-transparent border border-white/[0.05] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[0_0_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_6%,transparent)] hover:scale-[1.01] active:scale-[0.98] transition-all duration-300"
+              className={className}
               aria-label={`${card.label}: ${card.prompt}`}
             >
               <Icon className="w-3.5 h-3.5 text-white/20 group-hover:text-[var(--arc-brand-atlantean-teal)]/70 transition-colors" />

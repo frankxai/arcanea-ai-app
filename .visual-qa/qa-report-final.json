@@ -1,0 +1,27 @@
+{
+  "home": {
+    "hasOverflow": false,
+    "h1": "Build living worlds\nwith AI agents.",
+    "hasBrokenWith": false,
+    "hasValueCopy": true,
+    "hasThirteenAgents": true,
+    "hasMIT": true,
+    "textareaVisible": true,
+    "heroBottom": 920,
+    "nextSectionHintVisible": true,
+    "showcaseCardOpacity": "1"
+  },
+  "mobile": {
+    "hasOverflow": false,
+    "heroBottom": 776,
+    "nextSectionHintVisible": true
+  },
+  "chat": {
+    "prefilled": true,
+    "promptStillInUrl": false,
+    "echoedInTranscript": false,
+    "composerVisible": true,
+    "apiChatPostCount": 0
+  },
+  "apiChatPostCountOnHome": 0
+}

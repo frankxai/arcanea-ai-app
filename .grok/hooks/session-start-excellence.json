@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.grok/hooks/session-start-excellence.sh",
+            "timeout": 3000
+          }
+        ]
+      }
+    ]
+  }
+}
