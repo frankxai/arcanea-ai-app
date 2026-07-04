@@ -168,6 +168,8 @@ jobs:
                   ':(exclude)**/node_modules/**' \
                   ':(exclude)**/.next/**' \
                   ':(exclude)**/dist/**' \
+                  ':(exclude)**/vendor/**' \
+                  ':(exclude)**/*.min.js' \
                   | grep -E '^\+[^+]' || true)
 
           if [ -z "$ADDED" ]; then
