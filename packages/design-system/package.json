@@ -3,28 +3,29 @@
   "version": "0.3.0",
   "license": "SEE LICENSE IN LICENSE",
   "private": true,
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "import": "./dist/index.js"
     },
     "./tokens": {
       "types": "./dist/tokens.d.ts",
-      "default": "./dist/tokens.js"
+      "import": "./dist/tokens.js"
     },
     "./brand-kits": {
       "types": "./dist/brand-kits.d.ts",
-      "default": "./dist/brand-kits.js"
+      "import": "./dist/brand-kits.js"
     },
     "./motion": {
       "types": "./dist/motion.d.ts",
-      "default": "./dist/motion.js"
+      "import": "./dist/motion.js"
     },
     "./primitives": {
       "types": "./dist/primitives/index.d.ts",
-      "default": "./dist/primitives/index.js"
+      "import": "./dist/primitives/index.js"
     },
     "./tokens.css": "./src/tokens.css"
   },
@@ -35,14 +36,16 @@
   },
   "peerDependencies": {
     "framer-motion": ">=11",
-    "react": ">=18",
-    "@shadergradient/react": ">=2.4"
+    "react": ">=18"
   },
   "devDependencies": {
-    "typescript": "^5.9.3",
-    "framer-motion": "^11.15.0",
     "@types/react": "^19.2.15",
+    "framer-motion": "^11.15.0",
+    "html2canvas": "1.4.1",
     "react": "^19.2.6",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
     "@shadergradient/react": "^2.4.20"
   }
 }

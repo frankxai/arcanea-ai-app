@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import type { RefObject } from 'react';
 import { useEffect, useId, useState } from 'react';
-import { brand } from '../tokens';
+import { brand } from '../tokens.js';
 
 export interface AnimatedBeamProps {
   containerRef: RefObject<HTMLElement>;

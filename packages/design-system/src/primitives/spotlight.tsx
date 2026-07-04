@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { brand } from '../tokens';
+import { brand } from '../tokens.js';
 
 export interface SpotlightProps {
   color?: string;

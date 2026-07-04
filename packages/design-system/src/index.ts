@@ -1,3 +1,3 @@
-export * from './tokens';
-export * from './brand-kits';
-export * from './motion';
+export * from './tokens.js';
+export * from './brand-kits.js';
+export * from './motion.js';

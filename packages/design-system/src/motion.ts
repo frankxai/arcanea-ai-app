@@ -1,5 +1,5 @@
 import type { Variants, Transition } from 'framer-motion';
-import { easings, durations } from './tokens';
+import { easings, durations } from './tokens.js';
 
 export const transitions = {
   base: { duration: durations.base, ease: easings.expoOut } satisfies Transition,

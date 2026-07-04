@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "module": "commonjs",
+    "target": "ES2022",
+    "module": "NodeNext",
     "jsx": "react-jsx",
     "lib": ["es2020", "dom", "dom.iterable"],
     "declaration": true,
@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node"
+    "moduleResolution": "NodeNext"
   },
   "include": ["src/**/*"]
 }

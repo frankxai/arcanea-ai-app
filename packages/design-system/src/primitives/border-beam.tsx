@@ -1,6 +1,6 @@
 'use client';
 
-import { brand } from '../tokens';
+import { brand } from '../tokens.js';
 
 export interface BorderBeamProps {
   size?: number;

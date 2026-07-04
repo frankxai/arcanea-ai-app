@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactElement } from 'react';
 
 export interface LiquidGlassButtonProps {
   text?: string;
@@ -9,18 +9,28 @@ export interface LiquidGlassButtonProps {
   warp?: boolean;
   tintOpacity?: number;
   onClick?: () => void;
-  /** Where vendor/container.js, vendor/button.js, bridge.js, vendor/glass.css are served from. */
+  /** Where vendor/container.js, vendor/button.js, bridge.js, vendor/glass.css, vendor/html2canvas.min.js are served from. */
   basePath?: string;
   className?: string;
 }
 
-type LiquidGlassLib = {
+interface LiquidGlassLib {
   Button: new (options: Record<string, unknown>) => { element: HTMLElement };
-};
+}
 
 declare global {
   interface Window {
     __LiquidGlassJS?: LiquidGlassLib;
+  }
+}
+
+function supportsWebGL(): boolean {
+  if (typeof window === 'undefined') return false;
+  try {
+    const canvas = document.createElement('canvas');
+    return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
+  } catch {
+    return false;
   }
 }
 
@@ -32,7 +42,7 @@ function loadLiquidGlass(basePath: string): Promise<LiquidGlassLib> {
   if (loadPromise) return loadPromise;
 
   loadPromise = new Promise<LiquidGlassLib>((resolve, reject) => {
-    const loadScript = (src: string) =>
+    const loadScript = (src: string): Promise<void> =>
       new Promise<void>((res, rej) => {
         const el = document.createElement('script');
         el.src = src;
@@ -41,7 +51,7 @@ function loadLiquidGlass(basePath: string): Promise<LiquidGlassLib> {
         document.head.appendChild(el);
       });
 
-    const loadCss = (href: string) => {
+    const loadCss = (href: string): void => {
       if (document.querySelector(`link[href="${href}"]`)) return;
       const link = document.createElement('link');
       link.rel = 'stylesheet';
@@ -54,14 +64,16 @@ function loadLiquidGlass(basePath: string): Promise<LiquidGlassLib> {
         loadCss(`${basePath}/glass.css`);
         // container.js's capturePageSnapshot() calls the global `html2canvas`
         // unconditionally -- it is a hard runtime dependency, not optional.
-        await loadScript('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js');
+        // Vendored locally (not a public CDN) to avoid an unpinned third-party
+        // script origin without Subresource Integrity.
+        await loadScript(`${basePath}/html2canvas.min.js`);
         await loadScript(`${basePath}/container.js`);
         await loadScript(`${basePath}/button.js`);
         await loadScript(`${basePath}/bridge.js`);
         if (!window.__LiquidGlassJS) throw new Error('bridge.js did not expose __LiquidGlassJS');
         resolve(window.__LiquidGlassJS);
       } catch (err) {
-        reject(err);
+        reject(err as Error);
       }
     })();
   });
@@ -76,6 +88,10 @@ function loadLiquidGlass(basePath: string): Promise<LiquidGlassLib> {
  * recipe (bg-white/[0.03] border-white/[0.06] backdrop-blur-sm), which stays
  * the default everywhere per TASTE.md — use this for one deliberate hero
  * moment per page, not as a general replacement.
+ *
+ * Falls back to a plain CSS glass button (same visual recipe as the rest of
+ * the site) when WebGL is unsupported or the vendored assets fail to load —
+ * the CTA never silently disappears.
  *
  * Known upstream limitation: the vendored Container/Button classes register a
  * permanent `window` scroll listener and expose no teardown/destroy method.
@@ -95,17 +111,31 @@ export function LiquidGlassButton({
   onClick,
   basePath = '/vendor/liquid-glass-js',
   className,
-}: LiquidGlassButtonProps) {
+}: LiquidGlassButtonProps): ReactElement {
   const containerRef = useRef<HTMLDivElement>(null);
+  const onClickRef = useRef(onClick);
   const [error, setError] = useState<string | null>(null);
+  const [webGLSupported] = useState(supportsWebGL);
 
   useEffect(() => {
+    onClickRef.current = onClick;
+  }, [onClick]);
+
+  useEffect(() => {
+    if (!webGLSupported) return;
     let cancelled = false;
 
     loadLiquidGlass(basePath)
       .then((lib) => {
         if (cancelled || !containerRef.current) return;
-        const button = new lib.Button({ text, size, type, warp, tintOpacity, onClick });
+        const button = new lib.Button({
+          text,
+          size,
+          type,
+          warp,
+          tintOpacity,
+          onClick: () => onClickRef.current?.(),
+        });
         containerRef.current.appendChild(button.element);
       })
       .catch((err: Error) => {
@@ -116,10 +146,24 @@ export function LiquidGlassButton({
       cancelled = true;
       // No upstream destroy()/teardown API — see docstring above.
     };
+    // onClick intentionally excluded — routed through onClickRef so it never
+    // re-triggers this effect (each run mounts a new WebGL button + listener).
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [basePath, text, size, type, warp, tintOpacity]);
+  }, [basePath, text, size, type, warp, tintOpacity, webGLSupported]);
 
-  if (error) return null;
+  if (!webGLSupported || error) {
+    return (
+      <button
+        onClick={onClick}
+        className={['rounded-xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm text-white font-medium transition-colors hover:bg-white/[0.08]', className || '']
+          .filter(Boolean)
+          .join(' ')}
+        style={{ fontSize: `${size / 2}px`, padding: `${size / 4}px ${size / 2}px` }}
+      >
+        {text}
+      </button>
+    );
+  }
 
   return <div ref={containerRef} className={className} />;
 }
