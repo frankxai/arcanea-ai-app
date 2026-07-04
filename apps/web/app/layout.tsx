@@ -168,7 +168,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               },
               "featureList": [
                 "42 MCP tools for world-building",
-                "16 AI personalities (Luminors)",
+                "13 configured AI specialists (Luminors)",
                 "Image generation with 5+ models",
                 "190K+ words of creative philosophy",
                 "10-gate progression system",

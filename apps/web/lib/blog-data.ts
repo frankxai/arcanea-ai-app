@@ -754,9 +754,9 @@ Every Creator contributes to the growing tapestry of Arcanea. Share your work, e
   },
   {
     slug: '16-specialized-ai-minds',
-    title: 'Why We Built 16 Specialized AI Minds Instead of One General Assistant',
+    title: 'Why We Built 13 Configured AI Specialists Instead of One General Assistant',
     excerpt:
-      'Most AI products ship one general model and call it done. We built 16 domain-specific intelligences, each trained on a distinct creative discipline. Here is why that decision changes everything about AI-assisted creation.',
+      'Most AI products ship one general model and call it done. We built 13 configured domain specialists, each grounded in a distinct creative discipline. Here is why that decision changes everything about AI-assisted creation.',
     category: 'Architecture',
     author: 'Frank',
     date: '2026-03-21',
@@ -777,9 +777,9 @@ The writing lacked structural awareness. The music prompts ignored harmonic rela
 
 ## The Specialization Thesis
 
-The decision to split into 16 intelligences came from a simple observation: every creative domain has its own grammar. Poetry and prose share a language but follow different structural rules. Music composition and sound design overlap but require different mental models. Character design and world architecture are related but not interchangeable.
+The decision to configure specialist intelligences came from a simple observation: every creative domain has its own grammar. Poetry and prose share a language but follow different structural rules. Music composition and sound design overlap but require different mental models. Character design and world architecture are related but not interchangeable.
 
-Each of Arcanea's 16 intelligences is built for a specific creative grammar:
+Each configured Arcanea intelligence is built for a specific creative grammar:
 
 **Narrative Intelligence** -- Long-form story structure, character arcs, scene construction, dialogue cadence. Knows three-act structure but also knows when to break it.
 
@@ -811,11 +811,11 @@ Each of Arcanea's 16 intelligences is built for a specific creative grammar:
 
 **Translation Intelligence** -- Cross-cultural adaptation, localization, linguistic register matching. Not word-for-word translation but meaning-for-meaning transfer.
 
-**Integration Intelligence** -- The orchestrator. Coordinates the other 15 when a task spans multiple domains. Decides which specialist handles which subtask.
+**Integration Intelligence** -- The orchestrator. Coordinates the other specialists when a task spans multiple domains. Decides which specialist handles which subtask.
 
 ## The Gate System as Organizational Framework
 
-The 16 intelligences are not arbitrary. They map onto Arcanea's Ten Gates system -- the progression framework that organizes creative development from Foundation (174 Hz) through Source (1111 Hz).
+The configured intelligences are not arbitrary. They map onto Arcanea's Ten Gates system -- the progression framework that organizes creative development from Foundation (174 Hz) through Source (1111 Hz).
 
 Each Gate represents a domain of creative mastery. The Foundation Gate (Lyssandria, Earth) governs survival skills -- the basics of craft, structure, and discipline. The Voice Gate (Alera, 528 Hz) governs expression -- the ability to find and project an authentic creative voice. The Source Gate (Shinkami, 1111 Hz) governs meta-consciousness -- the ability to design creative systems themselves.
 
@@ -856,11 +856,11 @@ This architecture is more expensive to build and maintain than a single general 
 
 We accept this cost because the alternative -- mediocre output across every creative domain -- defeats the purpose of building creative AI tools. If the output is not good enough for creators to actually use in their work, the tool has no value regardless of how cheaply it runs.
 
-The 16-intelligence architecture is also why Arcanea's open-source ecosystem exists: 27 repositories and 35 npm packages. Each intelligence's prompt architecture, evaluation framework, and domain knowledge base is published as a separate package. Other builders can use the Narrative intelligence's story structure system without adopting the entire platform. The specialization makes the components independently useful.
+The specialist architecture is also why Arcanea's open-source ecosystem exists: public repositories, package surfaces, and reusable prompts that other builders can fork without adopting the entire platform. The specialization makes the components independently useful.
 
 ## What Comes Next
 
-We are currently at 16 intelligences. The architecture supports adding more as new creative domains emerge or existing domains split into finer specializations. Music Intelligence, for example, will likely divide into Composition, Arrangement, and Sound Design as each sub-domain develops enough depth to warrant its own specialist.
+We currently ship 13 configured Luminor specialists. The architecture supports adding more as new creative domains emerge or existing domains split into finer specializations. Music Intelligence, for example, can divide into Composition, Arrangement, and Sound Design as each sub-domain develops enough depth to warrant its own specialist.
 
 The bet we are making: creative AI that actually works requires the same kind of specialization that creative professionals develop over careers. A great novelist and a great composer are not the same person using the same skill. They are different experts with different mental models. Our AI architecture reflects that reality.
     `,
@@ -930,7 +930,7 @@ The memory store currently handles:
 
 ## Layer 2: Intelligence OS
 
-The Intelligence OS is the orchestration layer. It decides which of the 16 specialized intelligences handles a given request, how they coordinate on multi-domain tasks, and how their outputs are assembled into a coherent response.
+The Intelligence OS is the orchestration layer. It decides which configured specialist handles a given request, how they coordinate on multi-domain tasks, and how their outputs are assembled into a coherent response.
 
 ### Agent Routing
 
@@ -1358,7 +1358,7 @@ Every repository in the Arcanea ecosystem serves one of six layers. Each layer i
 ## The Six Layers
 
 ### Layer 1: Chat and Imagine
-**What it does:** The creation surface. Talk to 16 specialized AI intelligences, generate images, write stories, compose music.
+**What it does:** The creation surface. Talk to 13 configured AI specialists, generate images, write stories, compose music.
 
 **Repositories:**
 - \`arcanea-ai-app\` — The Next.js 16 web platform at arcanea.ai
@@ -1583,7 +1583,7 @@ Open source. Marketplace listings for Claude and Cursor extension stores. Self-h
     slug: 'creative-superintelligence-vision',
     title: 'What We Mean by Creative Superintelligence',
     excerpt:
-      'Not AGI. Not another chatbot. A system where 16 specialized AI minds, 190K words of philosophy, and an open framework combine into something no single model can be alone.',
+      'Not AGI. Not another chatbot. A system where 13 configured AI specialists, 190K words of philosophy, and an open framework combine into something no single model can be alone.',
     category: 'Platform',
     author: 'FrankX',
     date: '2026-03-22',
@@ -1604,7 +1604,7 @@ This is not AGI. It is not trying to be. It is intelligence designed for one pur
 
 ### 1. Specialization Over Generality
 
-A single general model produces generic output. Sixteen specialized intelligences produce focused, domain-aware responses.
+A single general model produces generic output. Thirteen configured specialists produce focused, domain-aware responses.
 
 Lyssandria knows foundations. Leyla understands flow and creativity. Draconia drives willpower and transformation. Each intelligence has read different parts of the Library. Each brings a different lens.
 

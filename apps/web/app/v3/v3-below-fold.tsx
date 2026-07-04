@@ -25,6 +25,9 @@ import {
   Brain,
   Waveform,
   ArrowRight,
+  CheckCircle,
+  Compass,
+  Wrench,
 } from "@/lib/phosphor-icons";
 import type { PhosphorIcon as IconComponent } from "@/lib/phosphor-icons";
 import { HowItWorks } from "@/components/landing/how-it-works";
@@ -38,7 +41,6 @@ import { NumberTicker } from "@/components/motion/number-ticker";
 import { Marquee } from "@/components/motion/marquee";
 import { FeatureCard, FeatureIcon } from "@/components/premium/feature-card";
 import { SectionShell, SectionHeader } from "@/components/premium/section-shell";
-import { WorldGraphCanvas } from "@/components/premium/world-graph-canvas";
 import { ComparisonMatrix } from "@/components/premium/comparison-matrix";
 import { SovereigntyPillars } from "@/components/premium/sovereignty-pillars";
 import { PersonasShowcase } from "@/components/premium/personas-showcase";
@@ -104,6 +106,32 @@ interface ProductPillar {
   description: string;
   href: string;
   glowColor: string;
+  status: SurfaceStatus;
+}
+
+type SurfaceStatus = "Live" | "Preview" | "Roadmap" | "Guide";
+
+const STATUS_COLORS: Record<SurfaceStatus, string> = {
+  Live: brand.aquamarine,
+  Preview: brand.atlanteanTeal,
+  Roadmap: "var(--arc-void)",
+  Guide: "var(--arc-brand-cosmic-blue)",
+};
+
+function SurfaceStatusPill({ status }: { status: SurfaceStatus }) {
+  const color = STATUS_COLORS[status];
+  return (
+    <span
+      className="inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-body leading-none"
+      style={{
+        color,
+        borderColor: `color-mix(in srgb, ${color} 28%, transparent)`,
+        background: `color-mix(in srgb, ${color} 8%, transparent)`,
+      }}
+    >
+      {status}
+    </span>
+  );
 }
 
 const PRODUCT_PILLARS: ProductPillar[] = [
@@ -113,13 +141,15 @@ const PRODUCT_PILLARS: ProductPillar[] = [
     description: "Start from one sentence, scene, mechanic, or character.",
     href: "/chat",
     glowColor: pillarAccents.chat,
+    status: "Live",
   },
   {
     Icon: Globe,
     title: "World Graph",
     description: "Characters, places, rules, and factions stay connected.",
-    href: "/worlds",
+    href: "/worlds/create",
     glowColor: pillarAccents.worlds,
+    status: "Live",
   },
   {
     Icon: Books,
@@ -127,13 +157,15 @@ const PRODUCT_PILLARS: ProductPillar[] = [
     description: "Books, lore, and magical systems compile into a single source.",
     href: "/living-lore",
     glowColor: pillarAccents.library,
+    status: "Guide",
   },
   {
     Icon: MagicWand,
-    title: "Forge",
-    description: "Create Luminors, companions, artifacts, and systems.",
-    href: "/forge",
+    title: "Studio Forge",
+    description: "Image and audio workspaces turn canon into production briefs.",
+    href: "/studio/image",
     glowColor: pillarAccents.academy,
+    status: "Preview",
   },
   {
     Icon: GraduationCap,
@@ -141,13 +173,15 @@ const PRODUCT_PILLARS: ProductPillar[] = [
     description: "Advanced progression pathways guide you to creative mastery.",
     href: "/academy",
     glowColor: pillarAccents.forge,
+    status: "Guide",
   },
   {
     Icon: Code,
     title: "Runtime",
-    description: `${PUBLIC_REPO_SUMMARY.public} public repos and exportable context.`,
-    href: "/ecosystem",
+    description: "MCP and install docs expose Arcanea context to local agents.",
+    href: "/mcp",
     glowColor: pillarAccents.code,
+    status: "Preview",
   },
 ];
 
@@ -295,9 +329,12 @@ function ProductPillarsGrid() {
                   <FeatureIcon color={pillar.glowColor} size="sm">
                     <Icon size={18} weight="duotone" color={pillar.glowColor} />
                   </FeatureIcon>
-                  <h3 className="text-base font-display font-semibold text-white/90 mb-1">
-                    {pillar.title}
-                  </h3>
+                  <div className="mb-2 flex items-start justify-between gap-3">
+                    <h3 className="text-base font-display font-semibold text-white/90">
+                      {pillar.title}
+                    </h3>
+                    <SurfaceStatusPill status={pillar.status} />
+                  </div>
                   <p className="text-sm text-white/40 font-body leading-snug">
                     {pillar.description}
                   </p>
@@ -315,42 +352,235 @@ function ProductPillarsGrid() {
 // Living World Engine — Animated graph visualization
 // ---------------------------------------------------------------------------
 
+const CREATOR_FLOW_STEPS: Array<{
+  Icon: IconComponent;
+  status: SurfaceStatus;
+  title: string;
+  body: string;
+  href: string;
+  cta: string;
+  accent: string;
+}> = [
+  {
+    Icon: Chat,
+    status: "Live",
+    title: "Brief the universe",
+    body: "Start with a scene, mechanic, faction, or unfinished idea. Chat is the fastest live path into Arcanea today.",
+    href: "/chat",
+    cta: "Start in chat",
+    accent: brand.aquamarine,
+  },
+  {
+    Icon: Globe,
+    status: "Live",
+    title: "Compile the first world graph",
+    body: "Generate a named world with characters, locations, founding events, palette, and structured state.",
+    href: "/worlds/create",
+    cta: "Create a world",
+    accent: brand.atlanteanTeal,
+  },
+  {
+    Icon: Compass,
+    status: "Guide",
+    title: "Review canon and progression",
+    body: "Use Living Lore and Academy as guided references while the active product loop matures.",
+    href: "/living-lore",
+    cta: "Open the canon",
+    accent: "var(--arc-brand-cosmic-blue)",
+  },
+  {
+    Icon: Wrench,
+    status: "Preview",
+    title: "Hand off to agent tools",
+    body: "MCP, install docs, image/audio studios, canvas, cinema, and music are preview paths for builders.",
+    href: "/mcp",
+    cta: "Open MCP preview",
+    accent: "var(--arc-void)",
+  },
+];
+
+const FLOW_LANES: Array<{
+  title: string;
+  body: string;
+  status: SurfaceStatus;
+  links: Array<{ label: string; href: string }>;
+}> = [
+  {
+    title: "Guide people here now",
+    body: "These routes let a creator do meaningful work today without pretending the full economy is finished.",
+    status: "Live",
+    links: [
+      { label: "Chat", href: "/chat" },
+      { label: "Create World", href: "/worlds/create" },
+      { label: "World Gallery", href: "/worlds" },
+    ],
+  },
+  {
+    title: "Frame as builder preview",
+    body: "Useful and exciting, but should be sold as hands-on preview until setup, export, and generation are fully tight.",
+    status: "Preview",
+    links: [
+      { label: "MCP", href: "/mcp" },
+      { label: "Install", href: "/install" },
+      { label: "Image Studio", href: "/studio/image" },
+    ],
+  },
+  {
+    title: "Keep as roadmap",
+    body: "Monetization, storefronts, royalties, memberships, and token-gated drops need honest waitlist language.",
+    status: "Roadmap",
+    links: [
+      { label: "Creator Economy", href: "/creator-economy" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Roadmap", href: "/roadmap" },
+    ],
+  },
+];
+
+function CreatorFlowBoard() {
+  return (
+    <div className="relative overflow-hidden rounded-[1.5rem] border border-white/[0.075] bg-[linear-gradient(135deg,rgba(255,255,255,0.045),rgba(255,255,255,0.016))] shadow-[0_24px_120px_color-mix(in_srgb,var(--arc-cosmic-void)_76%,transparent)] backdrop-blur-xl">
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.035]"
+        aria-hidden
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.45) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.45) 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute inset-0"
+        aria-hidden
+        style={{
+          background:
+            "radial-gradient(760px circle at 18% 0%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 13%, transparent), transparent 58%), radial-gradient(580px circle at 88% 18%, color-mix(in srgb, var(--arc-void) 10%, transparent), transparent 54%)",
+        }}
+      />
+
+      <div className="relative grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="p-5 sm:p-7 md:p-9 lg:p-10">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <p className="font-editorial text-xl italic leading-none" style={{ color: brand.aquamarine }}>
+                Today&apos;s creator path
+              </p>
+              <h3 className="mt-3 max-w-xl text-2xl font-display font-semibold leading-tight tracking-tight text-white md:text-4xl">
+                From loose prompt to portable world memory.
+              </h3>
+            </div>
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--arc-brand-atlantean-teal)]/18 bg-[var(--arc-brand-atlantean-teal)]/[0.07] px-3 py-1.5 text-sm text-white/58">
+              <CheckCircle size={15} weight="duotone" color={brand.aquamarine} />
+              Live path first
+            </div>
+          </div>
+
+          <div className="mt-8 space-y-3">
+            {CREATOR_FLOW_STEPS.map((step, i) => {
+              const Icon = step.Icon;
+              return (
+                <m.div
+                  key={step.title}
+                  initial={{ opacity: 0, x: -12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.45, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Link
+                    href={step.href}
+                    className="group flex min-h-[116px] items-start gap-4 rounded-2xl border border-white/[0.06] bg-black/[0.16] p-4 transition-colors hover:border-white/[0.16] hover:bg-white/[0.035] sm:items-center sm:p-5"
+                  >
+                    <div
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border"
+                      style={{
+                        color: step.accent,
+                        borderColor: `color-mix(in srgb, ${step.accent} 28%, transparent)`,
+                        background: `color-mix(in srgb, ${step.accent} 9%, transparent)`,
+                        boxShadow: `0 0 28px color-mix(in srgb, ${step.accent} 10%, transparent)`,
+                      }}
+                    >
+                      <Icon size={20} weight="duotone" color={step.accent} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h4 className="text-base font-display font-semibold text-white/90">
+                          {step.title}
+                        </h4>
+                        <SurfaceStatusPill status={step.status} />
+                      </div>
+                      <p className="mt-1.5 text-sm leading-relaxed text-white/45">
+                        {step.body}
+                      </p>
+                      <span className="mt-3 inline-flex items-center gap-1.5 text-sm text-[var(--arc-brand-atlantean-teal)]/82">
+                        {step.cta}
+                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                      </span>
+                    </div>
+                  </Link>
+                </m.div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="border-t border-white/[0.07] bg-black/[0.18] p-5 sm:p-7 md:p-9 lg:border-l lg:border-t-0 lg:p-10">
+          <p className="font-editorial text-xl italic leading-none text-white/50">
+            Where each door should point
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-white/42">
+            The homepage now treats readiness as part of the product experience. Creators get a working next step; builders get preview doors; future commerce stays framed as roadmap.
+          </p>
+
+          <div className="mt-8 space-y-4">
+            {FLOW_LANES.map((lane, i) => (
+              <m.div
+                key={lane.title}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.45, delay: 0.16 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className="rounded-2xl border border-white/[0.06] bg-white/[0.022] p-4"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <h4 className="text-sm font-display font-semibold text-white/82">
+                    {lane.title}
+                  </h4>
+                  <SurfaceStatusPill status={lane.status} />
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-white/40">
+                  {lane.body}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {lane.links.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="rounded-full border border-white/[0.07] bg-white/[0.025] px-3 py-1.5 text-xs text-white/48 transition-colors hover:border-[var(--arc-brand-atlantean-teal)]/25 hover:text-white/75"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </m.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function LivingWorldSection() {
   return (
     <SectionShell ambient="teal" size="default" id="living-world">
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
           label="The Living Worlds Engine"
-          title="Magic is code. Compile your universe."
-          subtitle={<>A persistent relational graph engine that structures your canon, locales, and systems. Stop running stateless chats; compile a <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">stateful universe</span> where agents remember the lore, and magic obeys the schema.</>}
+          title="Compile a world that remembers."
+          subtitle={<>A persistent graph for canon, locations, rules, and agent handoffs. Stop scattering work across stateless chats; guide creators into a <span className="font-editorial italic font-normal text-lg md:text-xl" style={{ color: brand.aquamarine }}>stateful universe</span> with working paths today and preview doors marked honestly.</>}
           accent="teal"
         />
-        <Reveal y={20}>
-          <WorldGraphCanvas />
-        </Reveal>
-        <Reveal y={12} delay={0.3}>
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            {[
-              { label: "Relational Schema", body: "Entities maintain explicit graph links. Characters reference shared locations, magic follows consistent rules, and updates propagate across the graph.", color: brand.aquamarine },
-              { label: "Stateful Continuity", body: "World states persist beyond individual session contexts. The relational database maintains narrative history without context window decay.", color: brand.atlanteanTeal },
-              { label: "Decentralized Runtimes", body: "Export whole worlds as portable JSON or SQLite schemas. Run the graph engine locally via CLI, completely free of cloud APIs.", color: brand.arcaneanGold },
-            ].map(({ label, body, color }, i) => (
-              <m.div
-                key={label}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
-                className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.05]"
-              >
-                <p className="text-[10px] font-mono tracking-[0.25em] uppercase mb-2" style={{ color }}>
-                  {label}
-                </p>
-                <p className="text-sm text-white/50 leading-relaxed">{body}</p>
-              </m.div>
-            ))}
-          </div>
-        </Reveal>
+        <CreatorFlowBoard />
       </div>
     </SectionShell>
   );
@@ -374,7 +604,7 @@ const PORTAL_ATLAS: Array<{
     label: "Realm Matrix",
     title: "Initialize the universe",
     body: "Boot a world from zero. Bind the gates, sculpt the terrain, inject geopolitical pressure, and compile the social contracts that make your cosmos playable.",
-    href: "/worlds",
+    href: "/worlds/create",
     image: "/brand/arcanea-dashboard-hero-premium.png",
     accent: brand.atlanteanTeal,
   },
@@ -441,7 +671,7 @@ function PortalAtlasSection() {
                     <div className="absolute inset-x-5 bottom-5 md:inset-x-6 md:bottom-6">
                       <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/35 px-3 py-1.5 backdrop-blur-md">
                         <Icon size={14} weight="duotone" color={portal.accent} />
-                        <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-white/45">
+                        <span className="font-editorial text-sm italic leading-none text-white/55">
                           {portal.label}
                         </span>
                       </div>
@@ -501,7 +731,7 @@ function GuardianCouncilSection() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-14 items-center">
           <div>
-            <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--arc-brand-arcanean-gold)]/55 mb-5">
+            <p className="mb-5 font-editorial text-lg italic leading-none text-[var(--arc-brand-atlantean-teal)]/70">
               Magical Runtimes
             </p>
             <h2 className="text-3xl md:text-5xl font-display font-bold tracking-[-0.03em] leading-[1.08] text-white">
@@ -520,7 +750,7 @@ function GuardianCouncilSection() {
                   <p className="text-2xl font-display font-semibold text-[var(--arc-brand-arcanean-gold)]">
                     {stat.value}
                   </p>
-                  <p className="mt-1 text-[10px] font-mono uppercase tracking-[0.18em] text-white/28">
+                  <p className="mt-1 text-xs font-body text-white/36">
                     {stat.label}
                   </p>
                 </div>
@@ -560,7 +790,7 @@ function GuardianCouncilSection() {
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[var(--arc-cosmic-void)]/35 lg:bg-gradient-to-r" />
                   </div>
                   <div className="relative flex flex-col justify-center p-5 md:p-6">
-                    <span className="text-[10px] font-mono uppercase tracking-[0.22em]" style={{ color: item.accent }}>
+                    <span className="text-xs font-body" style={{ color: item.accent }}>
                       {item.gate}
                     </span>
                     <h3 className="mt-2 text-lg md:text-xl font-display font-semibold text-white">
@@ -608,14 +838,14 @@ function DragonRiderScaleSection() {
             <div className="relative order-1 flex flex-col justify-center p-7 md:p-10 lg:order-2 lg:p-14">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_50%,color-mix(in_srgb,var(--arc-fire)_13%,transparent),transparent_45%)]" />
               <div className="relative">
-                <p className="text-[11px] font-mono uppercase tracking-[0.3em] text-[var(--arc-fire)]/70">
-                  Epic Scale · Cinematic Canvas
+                <p className="font-editorial text-lg italic leading-none text-[var(--arc-fire)]/72">
+                  Epic scale, cinematic canvas
                 </p>
                 <h2 className="mt-5 text-3xl md:text-5xl font-display font-bold tracking-[-0.03em] leading-[1.05] text-white">
                   World-building at anime scale, direct to runtime.
                 </h2>
                 <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-white/45">
-                  Forge dragon-rider sagas, compose cinematic score briefs, and map agent handoffs in a single unified workspace. Turn raw imagination into structured game loops, high-fidelity media, and production-ready code. The ultimate canvas for world architects.
+                  Forge dragon-rider sagas, compose cinematic score briefs, and map agent handoffs in a single unified workspace. The cinema lane is a preview surface today: strongest for shot lists, briefs, and world-state handoffs while render pipelines mature.
                 </p>
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
@@ -626,7 +856,7 @@ function DragonRiderScaleSection() {
                     <div key={label} className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-4">
                       <Icon size={18} weight="duotone" color="var(--arc-brand-arcanean-gold)" />
                       <p className="mt-3 text-sm font-display font-semibold text-white/82">{label}</p>
-                      <p className="mt-1 text-[11px] font-mono uppercase tracking-[0.16em] text-white/28">{body}</p>
+                      <p className="mt-1 text-xs font-body text-white/36">{body}</p>
                     </div>
                   ))}
                 </div>
@@ -636,7 +866,7 @@ function DragonRiderScaleSection() {
                       href="/cinema-studio"
                       className="inline-flex items-center gap-2 rounded-xl border border-[var(--arc-fire)]/25 bg-[var(--arc-fire)]/10 px-6 py-3 text-sm font-medium text-[var(--arc-fire)] transition-colors hover:bg-[var(--arc-fire)]/16"
                     >
-                      Direct a trailer
+                      Open cinema preview
                       <span className="text-xs">&rarr;</span>
                     </Link>
                   </Magnetic>
@@ -676,7 +906,7 @@ function WhyArcaneaSection() {
           <ComparisonMatrix />
         </Reveal>
         <Reveal y={10} delay={0.3}>
-          <p className="mt-8 text-center text-xs text-white/25 font-mono tracking-wider">
+          <p className="mt-8 text-center text-sm text-white/32">
             Not a knock on alternatives — a clear statement of what Arcanea is built for.
           </p>
         </Reveal>
@@ -824,7 +1054,7 @@ function VoicePresenceSection() {
         <SectionHeader
           label="Agent Room & Telemetry"
           title="Talk directly to the machine"
-          subtitle={<>Zero latency. Talk directly to Jarvis, Lumina, or your own custom agent. Low-latency Whisper/ElevenLabs streams meet <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">WebGL audio-reactive particle nodes</span> and native CLI execution.</>}
+          subtitle={<>A voice and presence preview for Jarvis, Lumina, and custom agents. Whisper/ElevenLabs streams, <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">WebGL audio-reactive particle nodes</span>, and local CLI hooks are being tightened into one creator room.</>}
           accent="purple"
         />
         <Reveal y={20}>
@@ -856,7 +1086,7 @@ function VoicePresenceSection() {
                           {p.name}
                         </h3>
                         <span
-                          className="text-[9px] font-mono tracking-[0.2em] uppercase"
+                          className="text-[11px] font-body"
                           style={{ color: `${p.accent}99` }}
                         >
                           live
@@ -889,7 +1119,7 @@ function VoicePresenceSection() {
               >
                 <div className="flex items-center gap-2 mb-2">
                   <Icon size={14} weight="duotone" color={color} />
-                  <p className="text-[10px] font-mono tracking-[0.25em] uppercase" style={{ color }}>
+                  <p className="text-xs font-body" style={{ color }}>
                     {label}
                   </p>
                 </div>
@@ -914,7 +1144,7 @@ function VoicePresenceSection() {
                 href="/room/jarvis"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-white/70 hover:bg-white/[0.08] hover:text-white transition-colors"
               >
-                Talk to Jarvis
+                Try the Jarvis room
                 <span className="text-xs">&rarr;</span>
               </Link>
             </Magnetic>
@@ -936,7 +1166,7 @@ function StackTeaserSection() {
         <SectionHeader
           label="The Creator Stack"
           title="Built to connect everywhere"
-          subtitle={<>Claude Code, Nano Banana 2, Supabase, Vercel AI SDK, and GitHub are <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">wired today</span>. Other tiles are marked beta or soon when the app sync is partial or planned.</>}
+          subtitle={<>The stack map shows what is ready, preview, and planned across local agents, Supabase, Vercel, GitHub, and studio workflows. The homepage should send builders into <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">clear status paths</span>, not mystery doors.</>}
           accent="teal"
         />
         <Reveal y={16}>
@@ -966,27 +1196,27 @@ function StackTeaserSection() {
 
 function EarnTeaserSection() {
   const STREAMS: Array<{ Icon: IconComponent; label: string; take: string; accent: string }> = [
-    { Icon: Diamond, label: "Template Marketplace", take: "90%", accent: streamAccents.marketplace },
-    { Icon: Crown, label: "Memberships (Whop)", take: "97%", accent: streamAccents.membership },
-    { Icon: Sparkle, label: "NFT Collections", take: "92%", accent: streamAccents.nft },
-    { Icon: Coins, label: "Commissions", take: "88%", accent: streamAccents.commission },
-    { Icon: Lightning, label: "Token-gated drops", take: "100%", accent: streamAccents.tokenGated },
-    { Icon: ArrowsClockwise, label: "Royalties on remixes", take: "perpetual", accent: streamAccents.royalty },
+    { Icon: Diamond, label: "Template Marketplace", take: "target 90%", accent: streamAccents.marketplace },
+    { Icon: Crown, label: "Memberships", take: "target 97%", accent: streamAccents.membership },
+    { Icon: Sparkle, label: "Collectible drops", take: "research", accent: streamAccents.nft },
+    { Icon: Coins, label: "Commissions", take: "target 88%", accent: streamAccents.commission },
+    { Icon: Lightning, label: "Gated releases", take: "planned", accent: streamAccents.tokenGated },
+    { Icon: ArrowsClockwise, label: "Remix royalties", take: "planned", accent: streamAccents.royalty },
   ];
   return (
-    <SectionShell ambient="gold" size="compact" id="earn-teaser">
+    <SectionShell ambient="purple" size="compact" id="earn-teaser">
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-6">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-[0.2em] uppercase border bg-[var(--arc-void)]/10 border-[var(--arc-void)]/25 text-[var(--arc-void)]">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--arc-void)]/25 bg-[var(--arc-void)]/10 px-3 py-1 text-xs font-body text-[var(--arc-void)]">
             <span className="w-1 h-1 rounded-full bg-[var(--arc-void)]" />
-            ROADMAP · rolling out 2026
+            Roadmap, rolling out in phases
           </span>
         </div>
         <SectionHeader
           label="Creator Posture"
           title="Monetize sovereign IP"
-          subtitle={<>Distribute creations via integrated storefronts. <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">Smart-contract royalties</span> on remixes, template sales at 90% creator share, and memberships at 97% share.</>}
-          accent="gold"
+          subtitle={<>The commerce layer is roadmap, not the main door today. We can collect creator demand now, then ship <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">storefronts, royalties, memberships</span>, and remix economics once the creation loop is proven end to end.</>}
+          accent="purple"
         />
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {STREAMS.map((s, i) => {
@@ -1015,10 +1245,10 @@ function EarnTeaserSection() {
                   {s.label}
                 </p>
                 <p
-                  className="text-[11px] font-mono tracking-wider"
+                  className="text-xs font-body"
                   style={{ color: `${s.accent}bb` }}
                 >
-                  you keep {s.take}
+                  {s.take}
                 </p>
               </div>
             </m.div>
@@ -1032,7 +1262,7 @@ function EarnTeaserSection() {
                 href="/creator-economy"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)]/15 to-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-arcanean-gold)]/25 text-sm font-medium text-[var(--arc-brand-arcanean-gold)] hover:from-[var(--arc-brand-arcanean-gold)]/25 hover:to-[var(--arc-brand-atlantean-teal)]/15 transition-colors"
               >
-                Explore creator economy
+                See creator economy roadmap
                 <span className="text-xs">&rarr;</span>
               </Link>
             </Magnetic>
@@ -1145,7 +1375,7 @@ function FAQInline() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/30 mb-4">
+          <p className="mb-4 font-editorial text-lg italic leading-none text-white/35">
             Questions
           </p>
           <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">
@@ -1247,12 +1477,12 @@ export function V3BelowFold({
         {/* 5b. Stack Teaser — connects to every tool you use */}
         <StackTeaserSection />
 
-        <AtmosphericDivider variant="gold" />
+        <AtmosphericDivider variant="purple" />
 
         {/* 5c. Earn Teaser — creator economy preview */}
         <EarnTeaserSection />
 
-        <AtmosphericDivider variant="gold" />
+        <AtmosphericDivider variant="teal" />
 
         {/* 6. Sovereignty pillars — Keep your keys, keep your IP */}
         <SovereigntySection />
@@ -1266,8 +1496,8 @@ export function V3BelowFold({
         <SectionShell ambient="teal" size="default">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <Reveal y={12} blur>
-              <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--arc-brand-atlantean-teal)]/60 mb-5">
-                Open Source · Sovereign · Forkable
+              <p className="mb-5 font-editorial text-lg italic leading-none text-[var(--arc-brand-atlantean-teal)]/70">
+                Open source, sovereign, forkable
               </p>
             </Reveal>
 
@@ -1293,7 +1523,7 @@ export function V3BelowFold({
                     <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] bg-clip-text text-transparent">
                       {fixed ? "MIT" : <NumberTicker value={value} delay={0.6 + i * 0.1} suffix={suffix} />}
                     </p>
-                    <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">{label}</p>
+                    <p className="mt-1 text-xs font-body text-white/35">{label}</p>
                   </div>
                 ))}
               </div>
@@ -1302,8 +1532,8 @@ export function V3BelowFold({
             {/* Featured GitHub Repositories Grid */}
             <Reveal y={16} delay={0.75}>
               <div className="text-left mt-12 mb-16 max-w-4xl mx-auto">
-                <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-white/20 text-center mb-6">
-                  Featured Open Source Repositories
+                <p className="mb-6 text-center font-editorial text-lg italic leading-none text-white/30">
+                  Featured open-source repositories
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {PUBLIC_REPOS.filter((r) =>
@@ -1350,7 +1580,7 @@ export function V3BelowFold({
                           href={repo.url || `https://github.com/${repo.github}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[10px] font-semibold text-[var(--arc-brand-atlantean-teal)] hover:underline font-mono"
+                          className="text-[10px] font-semibold text-[var(--arc-brand-atlantean-teal)] hover:underline"
                         >
                           view source &rarr;
                         </a>
@@ -1363,7 +1593,7 @@ export function V3BelowFold({
 
             <Reveal y={12} delay={1.0}>
               <div className="mt-4 mb-10">
-                <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-white/20 text-center mb-4">
+                <p className="mb-4 text-center font-editorial text-lg italic leading-none text-white/30">
                   The stack that makes it possible
                 </p>
                 <Marquee duration={40}>
@@ -1385,7 +1615,7 @@ export function V3BelowFold({
                     return (
                       <span
                         key={t.name}
-                        className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-xs font-mono text-white/55 whitespace-nowrap hover:bg-white/[0.06] hover:text-white/80 transition-colors duration-300"
+                        className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-xs font-body text-white/55 whitespace-nowrap hover:bg-white/[0.06] hover:text-white/80 transition-colors duration-300"
                         style={{ ["--tier-color" as string]: tierColor }}
                       >
                         <span

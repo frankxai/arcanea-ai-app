@@ -166,10 +166,31 @@ function EmptyState() {
   );
 }
 
+async function withTimeout<T>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T | null> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<null>((resolve) => {
+        timer = setTimeout(() => {
+          console.warn(label);
+          resolve(null);
+        }, timeoutMs);
+      }),
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
 export default async function GuardianReport({ bookSlug }: GuardianReportProps) {
   let report: Awaited<ReturnType<typeof loadLatestReport>> = null;
   try {
-    report = await loadLatestReport(bookSlug);
+    report = await withTimeout(
+      loadLatestReport(bookSlug),
+      2500,
+      `[GuardianReport] load timed out for ${bookSlug}`,
+    );
   } catch (err) {
     // DB unavailable — render empty state, do not crash the page
     console.error('[GuardianReport] load failed:', err);

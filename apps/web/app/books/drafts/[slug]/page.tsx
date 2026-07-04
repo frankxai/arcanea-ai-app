@@ -310,6 +310,94 @@ async function loadBook(slug: string) {
   return { manifest, chapters };
 }
 
+interface HeroRatingContext {
+  heroRating: { average: number; count: number };
+  currentUserId: string | null;
+  isAuthor: boolean;
+  existingRating: { stars: number; review: string | null } | null;
+}
+
+function emptyHeroRatingContext(): HeroRatingContext {
+  return {
+    heroRating: { average: 0, count: 0 },
+    currentUserId: null,
+    isAuthor: false,
+    existingRating: null,
+  };
+}
+
+async function withTimeout<T>(promise: Promise<T>, fallback: T, timeoutMs: number, label: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<T>((resolve) => {
+        timer = setTimeout(() => {
+          console.warn(label);
+          resolve(fallback);
+        }, timeoutMs);
+      }),
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
+async function loadHeroRatingContext(slug: string): Promise<HeroRatingContext> {
+  const context = emptyHeroRatingContext();
+
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createClient()) as any;
+
+    const { data: bookRow } = await supabase
+      .from('books')
+      .select('id, star_average, rating_count')
+      .eq('slug', slug)
+      .maybeSingle();
+
+    if (!bookRow) return context;
+
+    const row = bookRow as { id: string; star_average: number | null; rating_count: number | null };
+    context.heroRating = {
+      average: Number(row.star_average ?? 0),
+      count: Number(row.rating_count ?? 0),
+    };
+
+    const { data: userResp } = await supabase.auth.getUser();
+    const user = userResp?.user ?? null;
+    if (!user) return context;
+
+    context.currentUserId = user.id;
+
+    const { data: authorRow } = await supabase
+      .from('book_authors')
+      .select('role')
+      .eq('book_id', row.id)
+      .eq('user_id', user.id)
+      .maybeSingle();
+    context.isAuthor = !!authorRow;
+
+    if (context.isAuthor) return context;
+
+    const { data: myRatingRow } = await supabase
+      .from('book_ratings')
+      .select('stars, review')
+      .eq('book_id', row.id)
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (myRatingRow) {
+      const rating = myRatingRow as { stars: number; review: string | null };
+      context.existingRating = { stars: rating.stars, review: rating.review };
+    }
+  } catch (err) {
+    console.error('[DraftBookPage] ratings context unavailable:', err);
+  }
+
+  return context;
+}
+
 /* ------------------------------------------------------------------ */
 /*  Metadata                                                           */
 /* ------------------------------------------------------------------ */
@@ -358,58 +446,12 @@ export default async function DraftBookPage({ params }: PageProps) {
       : 'neutral';
 
   // ---------- Ratings context (server-side, RLS-respecting) ----------
-  let heroRating: { average: number; count: number } = { average: 0, count: 0 };
-  let currentUserId: string | null = null;
-  let isAuthor = false;
-  let existingRating: { stars: number; review: string | null } | null = null;
-
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const supabase = (await createClient()) as any;
-
-    const { data: bookRow } = await supabase
-      .from('books')
-      .select('id, star_average, rating_count')
-      .eq('slug', slug)
-      .maybeSingle();
-
-    if (bookRow) {
-      const row = bookRow as { id: string; star_average: number | null; rating_count: number | null };
-      heroRating = {
-        average: Number(row.star_average ?? 0),
-        count: Number(row.rating_count ?? 0),
-      };
-
-      const { data: userResp } = await supabase.auth.getUser();
-      const user = userResp?.user ?? null;
-      if (user) {
-        currentUserId = user.id;
-
-        const { data: authorRow } = await supabase
-          .from('book_authors')
-          .select('role')
-          .eq('book_id', row.id)
-          .eq('user_id', user.id)
-          .maybeSingle();
-        isAuthor = !!authorRow;
-
-        if (!isAuthor) {
-          const { data: myRatingRow } = await supabase
-            .from('book_ratings')
-            .select('stars, review')
-            .eq('book_id', row.id)
-            .eq('user_id', user.id)
-            .maybeSingle();
-          if (myRatingRow) {
-            const r = myRatingRow as { stars: number; review: string | null };
-            existingRating = { stars: r.stars, review: r.review };
-          }
-        }
-      }
-    }
-  } catch (err) {
-    console.error('[DraftBookPage] ratings context unavailable:', err);
-  }
+  const { heroRating, currentUserId, isAuthor, existingRating } = await withTimeout(
+    loadHeroRatingContext(slug),
+    emptyHeroRatingContext(),
+    2500,
+    `[DraftBookPage] ratings context timed out for ${slug}`,
+  );
 
   return (
     <div className="min-h-screen bg-[var(--arc-cosmic-void)]">

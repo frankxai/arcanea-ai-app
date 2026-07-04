@@ -261,7 +261,7 @@ export default function ShowcasePage() {
               },
               {
                 title: "Creative Intelligence",
-                items: ["16 Luminor AI personas", "Multi-provider routing", "Image generation (5 models)", "Voice synthesis", "Research agent", "Canon validation", "Prompt engineering tools", "Story generation"],
+                items: ["13 configured Luminor specialists", "Multi-provider routing", "Image generation (5 models)", "Voice synthesis", "Research agent", "Canon validation", "Prompt engineering tools", "Story generation"],
                 accent: "var(--arc-brand-arcanean-gold)",
               },
               {

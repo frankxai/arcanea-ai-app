@@ -37,7 +37,7 @@ const FEATURES: Feature[] = [
     chatgpt: "partial",
     claude: false,
     character: "partial",
-    note: "16 purpose-built agents, not one generic chatbot",
+    note: "13 configured specialist agents, not one generic chatbot",
   },
   {
     label: "Text + image + music integrated",

@@ -41,7 +41,7 @@ const ENDPOINTS = [
   {
     method: 'GET',
     path: '/v1/luminors',
-    description: 'Retrieve the 16 Luminor companion configurations for domain-specific AI chat.',
+    description: 'Retrieve the 13 configured Luminor specialists for domain-specific AI chat.',
     icon: PhSparkle,
     color: 'var(--arc-brand-arcanean-gold)',
   },

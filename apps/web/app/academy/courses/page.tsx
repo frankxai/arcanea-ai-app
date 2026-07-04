@@ -82,7 +82,7 @@ const COURSES = [
     slug: 'luminor-training',
     title: 'Luminor Training',
     subtitle: 'Walk with the Companions',
-    description: 'Train with the 16 Luminor companions. Learn their domains, unlock their wisdom, and develop the skills to channel divine intelligence.',
+    description: 'Train with the 13 configured Luminor specialists. Learn their domains, unlock their wisdom, and develop the skills to channel creative intelligence.',
     gate: 5,
     gateName: 'Voice',
     element: 'Spirit',

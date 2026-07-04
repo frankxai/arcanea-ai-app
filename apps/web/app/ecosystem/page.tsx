@@ -80,7 +80,7 @@ const LAYERS = [
     subtitle: "The Product",
     accent: "var(--arc-brand-atlantean-teal)",
     description: "Next.js 16, React 19, Vercel. The creative surface where users chat, imagine, build worlds, and publish.",
-    stats: ["181 pages", "12 AI models", "16 Luminor personalities", "6 product layers"],
+    stats: ["181 pages", "12 AI models", "13 configured Luminors", "6 product layers"],
     features: ["Chat & Imagine", "Studio & Worlds", "Gallery & Feed", "Academy & Library"],
   },
   {

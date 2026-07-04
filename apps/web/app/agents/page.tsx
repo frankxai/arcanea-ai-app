@@ -485,7 +485,7 @@ export default function AgentsMarketplacePage() {
               transition={{ duration: 0.6, delay: 0.18 }}
               className="text-center text-base md:text-xl text-white/50 max-w-2xl mx-auto mb-14 leading-relaxed font-body"
             >
-              16 specialized AI minds trained on 190K words of original philosophy.
+              13 configured AI specialists grounded in 190K words of original philosophy.
               Not generic chatbots — creative specialists.
             </m.p>
 

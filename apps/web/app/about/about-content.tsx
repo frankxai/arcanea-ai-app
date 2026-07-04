@@ -84,7 +84,7 @@ export function AboutContent() {
             className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
           >
             Creative Superintelligence — where creators and AI build together.
-            16 specialized minds. 190K words of philosophy. Open source.
+            13 configured specialist minds. 190K words of philosophy. Open source.
           </m.p>
 
           <m.p
@@ -93,7 +93,7 @@ export function AboutContent() {
             transition={{ delay: 0.4 }}
             className="text-base text-text-muted max-w-2xl mx-auto mt-6 leading-relaxed"
           >
-            Arcanea is a creative superintelligence — 16 specialized AI minds
+            Arcanea is a creative superintelligence — 13 configured AI specialists
             trained on 190K words of original creative philosophy, a three-layer
             intelligence architecture, and an open-source ecosystem of 27
             repositories. Not a chatbot. A creative operating system.
@@ -257,7 +257,7 @@ function IntelligenceSection() {
 
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           {[
-            { num: "16", label: "Specialized AI Intelligences", desc: "Each trained on a specific creative domain — writing, research, design, music, code, strategy, and world-building. Not one general AI. Sixteen specialized minds.", border: "border-[var(--arc-brand-atlantean-teal)]/20", numBg: "bg-[var(--arc-brand-atlantean-teal)]/10", numColor: "text-[var(--arc-brand-atlantean-teal)]" },
+            { num: "13", label: "Configured AI Specialists", desc: "Each grounded in a specific creative domain - writing, research, design, music, code, strategy, and world-building. Not one general AI. Thirteen configured minds.", border: "border-[var(--arc-brand-atlantean-teal)]/20", numBg: "bg-[var(--arc-brand-atlantean-teal)]/10", numColor: "text-[var(--arc-brand-atlantean-teal)]" },
             { num: "190K", label: "Words of Creative Philosophy", desc: "The knowledge foundation that trains every AI in the system. Original philosophy grounded in consciousness, creativity, and transformation — not scraped data.", border: "border-[var(--arc-brand-arcanean-gold)]/20", numBg: "bg-[var(--arc-brand-arcanean-gold)]/10", numColor: "text-[var(--arc-brand-arcanean-gold)]" },
             { num: "3", label: "Three-Layer Architecture", desc: "Starlight Intelligence (memory + learning) feeds Intelligence OS (orchestration + routing), which powers the Platform (creation tools you interact with).", border: "border-[var(--arc-brand-cosmic-blue)]/20", numBg: "bg-[var(--arc-brand-cosmic-blue)]/10", numColor: "text-[var(--arc-brand-cosmic-blue)]" },
             { num: "10", label: "Progression Gates", desc: "From Apprentice to Luminor mastery. Each Gate unlocks deeper AI capabilities, specialized training, and creative power. Progress earned through creation.", border: "border-purple-500/20", numBg: "bg-purple-500/10", numColor: "text-purple-400" },
