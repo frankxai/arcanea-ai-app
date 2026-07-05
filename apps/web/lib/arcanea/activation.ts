@@ -84,8 +84,8 @@ export const ACTIVATION_LANES: ArcaneaActivationLane[] = [
     id: "world-graph",
     title: "World Graph",
     status: "staged",
-    route: "/worlds",
-    action: "Open worlds",
+    route: "/worlds/create",
+    action: "Create world",
     description:
       "Route approved seeds into the existing Living Worlds system with clear laws, characters, visual DNA, and public/private boundaries.",
     outputs: ["Arcanea Prime anchor", "world template", "character graph", "realm routing"],
@@ -106,8 +106,8 @@ export const ACTIVATION_LANES: ArcaneaActivationLane[] = [
     id: "visual-forge",
     title: "Visual Forge",
     status: "staged",
-    route: "/design-lab",
-    action: "Open design lab",
+    route: "/studio/image",
+    action: "Open image studio",
     description:
       "Carry the proof relic and future Arion/Mamoru assets through art direction, visual QA, and export inspection.",
     outputs: ["visual brief", "asset ledger", "desktop QA", "mobile QA"],
@@ -169,7 +169,7 @@ export const MATERIAL_FOUNDATIONS: ArcaneaMaterialFoundation[] = [
     material: "Brushed gold, thin orbit bands, ledger accents",
     state: "staged",
     role: "Marks where human edits, source references, prompts, and model contribution need durable evidence.",
-    route: "/design-lab",
+    route: "/studio/image",
     signal: "Visual QA and source ledger",
   },
   {
@@ -185,7 +185,7 @@ export const MATERIAL_FOUNDATIONS: ArcaneaMaterialFoundation[] = [
     material: "Dimensional nodes, calm blue depth, non-decorative motion",
     state: "staged",
     role: "Routes approved seeds into worlds, characters, laws, and author-team queues without losing ownership state.",
-    route: "/worlds",
+    route: "/worlds/create",
     signal: "World manifest and author queue",
   },
   {

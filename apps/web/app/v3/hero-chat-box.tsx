@@ -13,6 +13,7 @@ import {
   PhCode,
   PhPaintBrush,
 } from "@/lib/phosphor-icons";
+import { analytics } from "@/lib/analytics/events";
 
 // ---------------------------------------------------------------------------
 // Starter cards — the 4 creation modes
@@ -34,16 +35,21 @@ const STARTER_CARDS = [
     icon: PhPaintBrush,
     label: "Design a mission",
     prompt: "Create a visual and product direction for a mission pack that helps creators fight The Drift without fear, shame, or dark patterns.",
+    href: "/studio/image",
   },
   {
     icon: PhCode,
     label: "Plan agents",
     prompt: "Plan an accountable agent workflow: source scout, world builder, right-use reviewer, editor, publisher, and SIS proof ledger.",
+    href: "/chat",
   },
 ];
 
+const GENESIS_PROMPT_KEY = "arcanea:genesis-prompt";
+const STUDIO_IMAGE_PROMPT_KEY = "arcanea:studio-image-prompt";
+
 // ---------------------------------------------------------------------------
-// Component — Direct-to-chat, no preview intermediary
+// Component - prompt handoff into the first proof loop, no preview intermediary
 // ---------------------------------------------------------------------------
 
 export function HeroChatBox() {
@@ -59,17 +65,35 @@ export function HeroChatBox() {
     }
   }, [message]);
 
-  const goToChat = (text: string) => {
+  const storePromptHandoff = (key: string, text: string) => {
+    if (typeof window === "undefined") return;
     const trimmed = text.trim();
     if (!trimmed) return;
-    // Next.js router for instant SPA navigation (no full page reload)
-    router.push(`/chat?prompt=${encodeURIComponent(trimmed)}`);
+
+    window.sessionStorage.setItem(key, trimmed);
+  };
+
+  const genesisHref = (source: string) => {
+    const params = new URLSearchParams({ source });
+    return `/genesis?${params.toString()}`;
+  };
+
+  const goToGenesis = (text: string, source: "hero_enter" | "hero_send" | "starter_card") => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+
+    analytics.homepageGenesisCtaClick(source, {
+      promptLength: trimmed.length,
+      destination: "/genesis",
+    });
+    storePromptHandoff(GENESIS_PROMPT_KEY, trimmed);
+    router.push(genesisHref(source));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      goToChat(message);
+      goToGenesis(message, "hero_enter");
     }
   };
 
@@ -131,14 +155,14 @@ export function HeroChatBox() {
           {/* Send */}
           <div className="p-2.5 pr-3">
             <button
-              onClick={() => goToChat(message)}
+              onClick={() => goToGenesis(message, "hero_send")}
               disabled={!hasText}
               className={`p-2.5 rounded-xl transition-all duration-200 ${
                 hasText
                   ? "bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] shadow-[0_2px_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_35%,transparent)] hover:shadow-[0_4px_24px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_50%,transparent)] hover:scale-105 active:scale-95"
                   : "bg-white/[0.04] cursor-default"
               }`}
-              aria-label={hasText ? "Start creating in chat" : "Enter a prompt to start creating"}
+              aria-label={hasText ? "Start a Genesis proof" : "Enter a prompt to start creating"}
             >
               <PhPaperPlane
                 className={`w-4 h-4 transition-colors ${hasText ? "text-white" : "text-white/15"}`}
@@ -161,12 +185,30 @@ export function HeroChatBox() {
             "group flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-[12px] sm:text-[13px] text-white/35 hover:text-white/70 bg-white/[0.025] hover:bg-gradient-to-r hover:from-[var(--arc-brand-atlantean-teal)]/[0.06] hover:to-transparent border border-white/[0.05] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[0_0_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_6%,transparent)] hover:scale-[1.01] active:scale-[0.98] transition-all duration-300";
           if ("href" in card && card.href) {
             const sep = card.href.includes('?') ? '&' : '?';
-            const href = `${card.href}${sep}prompt=${encodeURIComponent(card.prompt)}`;
+            const source = "starter_card";
+            const href =
+              card.href === "/genesis"
+                ? genesisHref(source)
+                : card.href === "/studio/image"
+                  ? `${card.href}${sep}source=${source}`
+                  : `${card.href}${sep}prompt=${encodeURIComponent(card.prompt)}&source=${source}`;
 
             return (
               <Link
                 key={card.label}
                 href={href}
+                onClick={() => {
+                  if (card.href === "/studio/image") {
+                    storePromptHandoff(STUDIO_IMAGE_PROMPT_KEY, card.prompt);
+                  }
+                  if (card.href !== "/genesis") return;
+                  storePromptHandoff(GENESIS_PROMPT_KEY, card.prompt);
+                  analytics.homepageGenesisCtaClick("starter_card", {
+                    promptLength: card.prompt.length,
+                    starterLabel: card.label,
+                    destination: card.href,
+                  });
+                }}
                 className={className}
                 aria-label={`${card.label}: ${card.prompt}`}
               >
@@ -177,7 +219,13 @@ export function HeroChatBox() {
           }
 
           const handleClick = () => {
-            goToChat(card.prompt);
+            analytics.homepageGenesisCtaClick("starter_card", {
+              promptLength: card.prompt.length,
+              starterLabel: card.label,
+              destination: "/genesis",
+            });
+            storePromptHandoff(GENESIS_PROMPT_KEY, card.prompt);
+            router.push(genesisHref("starter_card"));
           };
 
           return (

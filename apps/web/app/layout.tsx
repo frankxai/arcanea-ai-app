@@ -62,19 +62,21 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_APP_URL || "https://arcanea.ai",
   ),
   title: {
-    default: "Arcanea™ — Creative Intelligence Platform",
+    default: "Arcanea™ - Sovereign Creative Intelligence",
     template: "%s | Arcanea",
   },
   description:
-    "A creative multiverse: chat with AI, build fantasy worlds, share what you make, and turn imagination into products. 190K+ words of creative philosophy. Free to start.",
+    "Arcanea is a sovereign creative intelligence workspace for turning crisis into proof: Genesis activation, living worlds, rights-aware media, memory, provenance, and agent workflows.",
   keywords: [
     "AI",
     "creativity",
     "creative intelligence",
-    "mythology",
-    "philosophy",
+    "creator-owned AI",
+    "AI provenance",
+    "AI agents",
     "creation platform",
     "world building",
+    "creator workflow",
     "AI writing",
     "AI art",
   ],
@@ -84,24 +86,24 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea - Sovereign Creative Intelligence",
     description:
-      "Creative AI partners, a philosophy library, and creation studio in one platform.",
+      "Genesis proof, living worlds, rights-aware media, memory, provenance, and accountable agent workflows in one creator-owned workspace.",
     siteName: "Arcanea",
     images: [
       {
         url: "/brand/arcanea-og.jpg",
         width: 1200,
         height: 630,
-        alt: "Arcanea — Creative Intelligence Platform",
+        alt: "Arcanea - Sovereign Creative Intelligence",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea - Sovereign Creative Intelligence",
     description:
-      "Creative AI partners, a philosophy library, and creation studio in one platform.",
+      "Turn a creator mission into proof, memory, provenance, and an accountable agent workflow.",
     images: ["/brand/arcanea-og.jpg"],
   },
   alternates: {
@@ -152,14 +154,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               "@type": "WebApplication",
               "name": "Arcanea",
               "url": "https://arcanea.ai",
-              "description": "Creative Intelligence Platform — chat with AI, build fantasy worlds, share what you make, and turn imagination into products.",
-              "applicationCategory": "CreativeWork",
+              "description": "Sovereign creative intelligence workspace for Genesis activation, living worlds, rights-aware media, memory, provenance, and accountable agent workflows.",
+              "applicationCategory": "DesignApplication",
               "operatingSystem": "Web",
               "offers": {
                 "@type": "Offer",
                 "price": "0",
                 "priceCurrency": "USD",
-                "description": "Free to start"
+                "description": "Free activation path available"
               },
               "creator": {
                 "@type": "Organization",
@@ -167,14 +169,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 "url": "https://arcanea.ai"
               },
               "featureList": [
-                "42 MCP tools for world-building",
-                "13 configured AI specialists (Luminors)",
-                "Image generation with 5+ models",
-                "190K+ words of creative philosophy",
-                "10-gate progression system",
-                "49 open-source npm packages",
-                "Living world builder with auto-linking",
-                "Quest and faction generation"
+                "Genesis proof activation flow",
+                "Rights-aware Creature Atlas",
+                "Creator-owned project memory",
+                "Living world builder",
+                "Agent workflow planning",
+                "MCP and CLI integrations",
+                "Creator economy and Store surfaces",
+                "Provenance-aware creative exports"
               ]
             })
           }}

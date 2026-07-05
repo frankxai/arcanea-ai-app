@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { analytics } from "@/lib/analytics/events";
 import {
   ArrowRight,
   BookOpen,
@@ -41,6 +42,7 @@ import {
 } from "@/lib/genesis/proof";
 
 type ProofStatus = "idle" | "saving" | "saved" | "error";
+const GENESIS_PROMPT_KEY = "arcanea:genesis-prompt";
 
 interface GenesisProofResponse {
   success: boolean;
@@ -77,11 +79,25 @@ export function GenesisSession() {
   }
 
   useEffect(() => {
-    const prompt = new URLSearchParams(window.location.search).get("prompt");
+    const params = new URLSearchParams(window.location.search);
+    const prompt = params.get("prompt") ?? window.sessionStorage.getItem(GENESIS_PROMPT_KEY);
     if (!prompt?.trim()) return;
 
-    setIntent(prompt);
-    setGift(generateGift(prompt, driftFace, missionLane));
+    const trimmedPrompt = prompt.trim();
+    analytics.genesisPromptPrefillUsed({
+      source: params.get("source"),
+      promptLength: trimmedPrompt.length,
+    });
+    setIntent(trimmedPrompt);
+    setGift(generateGift(trimmedPrompt, driftFace, missionLane));
+    window.sessionStorage.removeItem(GENESIS_PROMPT_KEY);
+    if (params.has("prompt")) {
+      const scrubbedParams = new URLSearchParams();
+      const source = params.get("source");
+      if (source) scrubbedParams.set("source", source);
+      const scrubbedUrl = scrubbedParams.size > 0 ? `/genesis?${scrubbedParams.toString()}` : "/genesis";
+      window.history.replaceState(null, "", scrubbedUrl);
+    }
     // Run only on mount so later user edits do not get overwritten.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -112,10 +128,20 @@ export function GenesisSession() {
       setSavedProof(payload.data.record);
       setProofStatus("saved");
       setProofMessage(`Saved ${payload.data.record.proofId}. Repo export contains ${payload.data.record.repoExport.files.length} files.`);
+      analytics.genesisProofExport("proof_id_created", {
+        driftFace,
+        missionLane,
+        repoFileCount: payload.data.record.repoExport.files.length,
+      });
       return payload.data.record;
     } catch (error) {
       setProofStatus("error");
       setProofMessage(error instanceof Error ? error.message : "Genesis proof could not be saved.");
+      analytics.genesisProofExport("proof_id_created", {
+        driftFace,
+        missionLane,
+        status: "error",
+      });
       return null;
     }
   }
@@ -140,6 +166,11 @@ export function GenesisSession() {
     const record = savedProof ?? (await saveProofRecord());
     if (!record) return;
     downloadBrief(record);
+    analytics.genesisProofExport("brief_downloaded", {
+      driftFace,
+      missionLane,
+      repoFileCount: record.repoExport.files.length,
+    });
   }
 
   return (
@@ -243,7 +274,7 @@ export function GenesisSession() {
               iconRight={<ArrowRight size={16} weight="bold" />}
               className="w-full md:w-auto"
             >
-              Generate Gift
+              Generate proof packet
             </Button>
           </div>
         </div>
@@ -414,7 +445,7 @@ export function GenesisSession() {
                   value={
                     savedProof
                       ? `Saved as ${savedProof.proofId}; world repo export contains ${savedProof.repoExport.files.map((file) => file.path).join(", ")}.`
-                      : "Gift, Drift face, trial, laws, and proof are ready to persist."
+                      : "Gift, Drift face, trial, laws, and proof are ready for export or persistence."
                   }
                 />
               </dl>
@@ -427,7 +458,7 @@ export function GenesisSession() {
                   onClick={() => void handleSaveProof()}
                   iconLeft={<FloppyDisk size={14} weight="duotone" />}
                 >
-                  {proofStatus === "saved" ? "Proof saved" : "Save proof stub"}
+                  {proofStatus === "saved" ? "Proof ID created" : "Create proof ID"}
                 </Button>
                 <Button
                   type="button"

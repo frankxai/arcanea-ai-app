@@ -8,6 +8,7 @@ import { useRef, useState, useEffect } from "react";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 import type { V3BelowFoldProps } from "./v3-below-fold";
 import { HeroShowcase } from "./hero-showcase";
+import { ArtifactPipelinePanel } from "./artifact-pipeline-panel";
 import { SovereigntyBadge } from "@/components/premium/sovereignty-pillars";
 import { NumberTicker } from "@/components/motion/number-ticker";
 import { Sparkle, Diamond, Code, ShieldStar } from "@/lib/phosphor-icons";
@@ -199,12 +200,13 @@ function HeroPortal() {
 
           {/* Chat box — the hero element */}
           <m.div
-            className="w-full mb-5 md:mb-9"
+            className="w-full mb-5 md:mb-7"
             initial={{ opacity: 0, y: 16 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.22 }}
           >
             <HeroChatBox />
+            <ArtifactPipelinePanel variant="hero" />
           </m.div>
 
           {/* Trust signals after the primary action */}

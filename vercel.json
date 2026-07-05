@@ -3,7 +3,7 @@
   "version": 2,
   "framework": "nextjs",
   "buildCommand": "pnpm --filter @arcanea/web... --workspace-concurrency=1 build",
-  "installCommand": "corepack enable && pnpm install --prod=false --no-frozen-lockfile",
+  "installCommand": "corepack enable && pnpm install --prod=false --frozen-lockfile",
   "outputDirectory": "apps/web/.next",
   "devCommand": "pnpm dev:web",
 

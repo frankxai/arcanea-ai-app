@@ -150,6 +150,23 @@ Avoid:
 | `export_clicked` | format | Ownership demand. |
 | `next_mission_selected` | mission_lane | Retention path. |
 
+## 2026-07-05 Activation Bridge
+
+The current public app now ships a narrow activation bridge for the God Mode sprint. It does not replace the full first-session event model above; it measures the live route path that exists today.
+
+| Event | Properties | Privacy rule |
+|---|---|---|
+| `homepage_genesis_cta_click` | source, hasPrompt, promptLengthBucket, starterLabel, destination | Never send prompt text. |
+| `genesis_prompt_prefill_used` | source, promptLengthBucket | Never send prompt text. |
+| `genesis_proof_export` | action, driftFace, missionLane, repoFileCount, status | Never send generated proof body or proof content. |
+| `atlas_creature_prompt_copy` | slug, promptKind, rightsTier, generationPolicy | Send source-safe atlas IDs only. |
+| `studio_store_package_click` | action, packageId, packageType, priceCredits, priceUsd, tab | Never send wallet address, API key, or transaction hash. |
+
+Implementation anchors:
+
+- `apps/web/lib/analytics/events.ts` emits to Vercel Analytics and any initialized PostHog-like sink.
+- Homepage prompt handoff uses `sessionStorage` for Genesis/Image Studio seeds. Raw user prompts should not be placed in URLs; legacy `?prompt=` links are accepted only as a fallback and scrubbed from history.
+
 ## Implementation Tickets
 
 1. Create `/genesis` or promote the existing V3 route into a focused Genesis entry.

@@ -9,11 +9,14 @@ const footerLinks = {
   create: {
     label: "Create",
     links: [
+      { href: "/genesis", label: "Genesis" },
       { href: "/create", label: "Create Hub" },
       { href: "/chat", label: "Chat" },
-      { href: "/imagine", label: "Imagine" },
       { href: "/studio", label: "Studio" },
-      { href: "/worlds", label: "Worlds" },
+      { href: "/worlds/create", label: "World Builder" },
+      { href: "/atlas/creatures", label: "Creature Atlas" },
+      { href: "/studio/store", label: "Claw Store" },
+      { href: "/imagine", label: "Imagine" },
       { href: "/games", label: "Game Studio" },
       { href: "/music-studio", label: "Music Studio" },
       { href: "/cinema-studio", label: "Cinema Studio" },
@@ -26,6 +29,7 @@ const footerLinks = {
     label: "Explore",
     links: [
       { href: "/gallery", label: "Gallery" },
+      { href: "/atlas/creatures", label: "Creature Atlas" },
       { href: "/library", label: "Library" },
       { href: "/lore", label: "Lore" },
       { href: "/factions", label: "Factions" },
@@ -54,6 +58,7 @@ const footerLinks = {
     links: [
       { href: "/academy", label: "Academy" },
       { href: "/academy/courses", label: "Courses" },
+      { href: "/method", label: "Method" },
       { href: "/models", label: "Model Arena" },
       { href: "/starlight-intelligence", label: "Starlight Intelligence" },
       { href: "/blog", label: "Blog" },
@@ -65,6 +70,7 @@ const footerLinks = {
       { href: "/about", label: "About" },
       { href: "/pricing", label: "Pricing" },
       { href: "/roadmap", label: "Roadmap" },
+      { href: "/status", label: "Status" },
       { href: "/contact", label: "Contact" },
     ],
   },
@@ -118,8 +124,8 @@ export function Footer() {
               Creative Intelligence
             </p>
             <p className="text-sm text-white/50 mt-4 leading-relaxed">
-              Chat with AI. Build fantasy worlds. Create art, stories, music.
-              An open creative multiverse for world-builders.
+              Sovereign creative intelligence for turning missions into proof,
+              memory, rights-aware media, and accountable agent workflows.
             </p>
           </div>
 
@@ -129,7 +135,7 @@ export function Footer() {
             </h3>
             {subscribed ? (
               <p className="text-sm text-[var(--arc-brand-atlantean-teal)]">
-                Welcome to the multiverse.
+                You're on the list.
               </p>
             ) : (
               <form onSubmit={handleSubscribe} className="flex gap-2">

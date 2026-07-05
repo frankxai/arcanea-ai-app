@@ -19,6 +19,7 @@ import {
   getCreatureBySlug,
   type CreatureAtlasElement,
 } from "@/lib/atlas/creatures";
+import { PromptActions } from "./prompt-actions";
 import type { CreatureAtlasEntry } from "@arcanea/world-engine";
 
 interface CreatureDetailPageProps {
@@ -149,7 +150,7 @@ export default async function CreatureDetailPage({ params }: CreatureDetailPageP
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-6 px-6 py-8 lg:grid-cols-[minmax(0,1fr)_360px]">
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <Panel title="Reference Layer" icon={<BookOpen className="h-4 w-4" />}>
             <p className="text-sm leading-7 text-white/60">{entry.shortDescription}</p>
             <div className="mt-5 grid gap-4 md:grid-cols-2">
@@ -179,22 +180,20 @@ export default async function CreatureDetailPage({ params }: CreatureDetailPageP
             </div>
             <PromptBlock label="Prompt" value={entry.promptPack?.prompt ?? ""} />
             <PromptBlock label="Negative prompt" value={entry.promptPack?.negativePrompt ?? ""} />
-            <div className="mt-4 flex flex-wrap gap-3">
-              <Link
-                href={`/api/atlas/creatures/${entry.slug}/generate-prompt`}
-                className="inline-flex items-center gap-2 rounded-lg bg-atlantean-teal px-4 py-2 text-sm font-semibold text-cosmic-void transition hover:bg-atlantean-aqua"
-              >
-                <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                Prompt JSON
-              </Link>
-              <span className="inline-flex items-center rounded-lg border border-white/[0.06] px-4 py-2 text-sm text-white/45">
-                Image policy: {entry.arcaneaVariant.generationPolicy.replaceAll("_", " ")}
-              </span>
-            </div>
+            <PromptActions
+              slug={entry.slug}
+              prompt={entry.promptPack?.prompt ?? ""}
+              negativePrompt={entry.promptPack?.negativePrompt ?? ""}
+              rightsTier={entry.rightsTier}
+              generationPolicy={entry.arcaneaVariant.generationPolicy}
+            />
+            <span className="mt-3 inline-flex items-center rounded-lg border border-white/[0.06] px-4 py-2 text-sm text-white/45">
+              Image policy: {entry.arcaneaVariant.generationPolicy.replaceAll("_", " ")}
+            </span>
           </Panel>
         </div>
 
-        <aside className="space-y-6">
+        <aside className="min-w-0 space-y-6">
           <Panel title="World Graph" icon={<Network className="h-4 w-4" />}>
             {related.length === 0 ? (
               <p className="text-sm text-white/45">No linked entries yet.</p>
@@ -262,6 +261,9 @@ function CreatureVisualPlate({ entry }: { entry: CreatureAtlasEntry }) {
   return (
     <div className={`relative overflow-hidden rounded-xl border ${style.border} bg-gradient-to-br ${style.bg} p-5`}>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_25%,rgba(255,255,255,0.12),transparent_36%)]" aria-hidden="true" />
+      <span className="absolute left-5 top-5 rounded-full border border-white/[0.08] bg-black/30 px-2 py-1 text-[10px] uppercase tracking-[0.16em] text-white/35">
+        Provenance schematic
+      </span>
       <div className="relative aspect-[5/4]">
         <div className={`absolute left-4 top-4 h-28 w-28 rounded-full ${style.line} opacity-20 blur-2xl`} aria-hidden="true" />
         <div className="absolute bottom-16 left-4 flex items-end gap-3">
@@ -271,7 +273,7 @@ function CreatureVisualPlate({ entry }: { entry: CreatureAtlasEntry }) {
           <div className={`h-14 w-1 ${style.line} opacity-35`} aria-hidden="true" />
         </div>
         <div className="absolute bottom-0 left-0 right-0">
-          <p className="font-mono text-xs uppercase tracking-widest text-white/35">Visual DNA</p>
+          <p className="font-mono text-xs uppercase tracking-widest text-white/35">Prompt visual DNA</p>
           <div className="mt-3 grid gap-2">
             {entry.arcaneaVariant.visualDna.map((trait) => (
               <div key={trait} className="flex items-center gap-2 text-sm text-white/60">
@@ -296,7 +298,7 @@ function Panel({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-5 backdrop-blur-sm">
+    <section className="min-w-0 rounded-xl border border-white/[0.06] bg-white/[0.03] p-5 backdrop-blur-sm">
       <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-white/60">
         {icon}
         {title}
@@ -325,8 +327,8 @@ function PromptBlock({ label, value }: { label: string; value: string }) {
   return (
     <div className="mt-4">
       <p className="mb-2 font-mono text-xs uppercase tracking-widest text-white/35">{label}</p>
-      <pre className="max-h-64 overflow-auto rounded-lg border border-white/[0.06] bg-black/30 p-4 text-xs leading-6 text-white/65">
-        <code>{value}</code>
+      <pre className="max-h-64 w-full max-w-full overflow-y-auto whitespace-pre-wrap break-words rounded-lg border border-white/[0.06] bg-black/30 p-4 text-xs leading-6 text-white/65">
+        <code className="break-words">{value}</code>
       </pre>
     </div>
   );

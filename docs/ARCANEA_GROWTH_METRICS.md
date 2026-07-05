@@ -64,6 +64,41 @@ Use stable, human-readable event names.
 | `share_clicked` | artifact_type, visibility |
 | `return_mission_started` | mission_lane, days_since_last_proof |
 
+## God Mode Activation Bridge
+
+These events are live in `apps/web/lib/analytics/events.ts` for the 2026-07-05 Arcanea.ai proof-loop sprint. They are intentionally privacy-light and exist to answer whether the public experience moves a user from first viewport to proof, reuse, and revenue intent.
+
+| Event | Owner | Decision | Safe properties |
+|---|---|---|---|
+| `homepage_genesis_cta_click` | UX Growth | Does the homepage route qualified intent into Genesis instead of a generic empty chat? | source, hasPrompt, promptLengthBucket, starterLabel, destination |
+| `genesis_prompt_prefill_used` | Product | Does private prompt handoff survive the route transition into Genesis? | source, promptLengthBucket |
+| `genesis_proof_export` | Product/Trust | Are users creating proof and taking an ownership/export action? | action, driftFace, missionLane, repoFileCount, status |
+| `atlas_creature_prompt_copy` | World Engine | Are users reusing Atlas material in creative workflows? | slug, promptKind, rightsTier, generationPolicy |
+| `studio_store_package_click` | Growth/Revenue | Which package, credit, checkout, or payout actions show commercial intent? | action, packageId, packageType, priceCredits, priceUsd, tab |
+
+Acceptance:
+
+- No raw prompt text.
+- No API keys.
+- No wallet addresses.
+- No transaction hashes.
+- No generated proof body content.
+- Tested by `apps/web/lib/analytics/__tests__/events-projects.test.ts`.
+- Audited by `node scripts/arcanea-success-metrics-audit.mjs --strict`.
+
+## Competitive Measurement Lens
+
+Current external pressure is tracked in `planning-with-files/ARCANEA_COMPETITIVE_SCORECARD_2026-07-05.json`.
+
+| Pressure | What users now expect | Arcanea proof metric |
+|---|---|---|
+| Editable workspace | Generated work should become editable and revisable. | `homepage_genesis_cta_click`, `genesis_prompt_prefill_used`, `genesis_proof_export` |
+| Project memory | Long-running work should keep files, context, and instructions. | `genesis_proof_export` |
+| Shareable artifact | Outputs should be shareable, reusable, exportable, or remixable. | `genesis_proof_export`, `atlas_creature_prompt_copy` |
+| Cinematic media control | Visual workflows need fidelity, prompt adherence, and continuity. | `atlas_creature_prompt_copy` |
+| World record depth | Worldbuilders need structured records, maps, timelines, and continuity. | `atlas_creature_prompt_copy`, `genesis_proof_export` |
+| Production confidence | Serious users need clear status, privacy posture, and release proof. | `studio_store_package_click` plus release-readiness gates |
+
 ## Privacy And Consent
 
 - Prefer aggregate funnel metrics.

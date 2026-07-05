@@ -1,0 +1,229 @@
+{
+  "url": "http://127.0.0.1:3001/",
+  "capturedAt": "2026-07-05T06:04:47.999Z",
+  "pass": true,
+  "results": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "reducedMotion": "no-preference",
+      "pass": true,
+      "metrics": {
+        "title": "Arcanea™ - Sovereign Creative Intelligence",
+        "scrollY": 0,
+        "viewportWidth": 1440,
+        "viewportHeight": 1000,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "heroPanelRect": {
+          "top": 648.09375,
+          "bottom": 824.09375,
+          "width": 720,
+          "height": 176
+        },
+        "heroPanelVisibleInFirstViewport": true,
+        "requiredHeroLabels": {
+          "proof pipeline": true,
+          "Call to artifact": true,
+          "Call": true,
+          "Trial": true,
+          "Agent Route": true,
+          "Artifact Packet": true
+        },
+        "requiredShowcaseLabels": {
+          "call intake": true,
+          "artifact pipeline": true,
+          "Canon Memory": true,
+          "Atlas": true,
+          "Studio": true,
+          "Worlds": true,
+          "Store": true
+        },
+        "bodyHasFirstSessionCopy": true
+      },
+      "missingHero": [],
+      "missingShowcase": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Refused to execute script from 'http://127.0.0.1:3001/_vercel/insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled.",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Refused to execute script from 'http://127.0.0.1:3001/_vercel/speed-insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled."
+      ],
+      "pageErrors": [],
+      "failedResponses": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:3001/_vercel/insights/script.js"
+        },
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:3001/_vercel/speed-insights/script.js"
+        }
+      ],
+      "blockingResponses": [],
+      "blockingConsole": [],
+      "screenshots": [
+        "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-top.png",
+        "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-hero-panel.png",
+        "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-showcase-panel.png"
+      ]
+    },
+    {
+      "name": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "reducedMotion": "no-preference",
+      "pass": true,
+      "metrics": {
+        "title": "Arcanea™ - Sovereign Creative Intelligence",
+        "scrollY": 0,
+        "viewportWidth": 390,
+        "viewportHeight": 844,
+        "scrollWidth": 390,
+        "bodyWidth": 390,
+        "hasHorizontalOverflow": false,
+        "heroPanelRect": {
+          "top": 619.875,
+          "bottom": 819.375,
+          "width": 350,
+          "height": 199.5
+        },
+        "heroPanelVisibleInFirstViewport": true,
+        "requiredHeroLabels": {
+          "proof pipeline": true,
+          "Call to artifact": true,
+          "Call": true,
+          "Trial": true,
+          "Agent Route": true,
+          "Artifact Packet": true
+        },
+        "requiredShowcaseLabels": {
+          "call intake": true,
+          "artifact pipeline": true,
+          "Canon Memory": true,
+          "Atlas": true,
+          "Studio": true,
+          "Worlds": true,
+          "Store": true
+        },
+        "bodyHasFirstSessionCopy": true
+      },
+      "missingHero": [],
+      "missingShowcase": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Refused to execute script from 'http://127.0.0.1:3001/_vercel/speed-insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled.",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Refused to execute script from 'http://127.0.0.1:3001/_vercel/insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled."
+      ],
+      "pageErrors": [],
+      "failedResponses": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:3001/_vercel/speed-insights/script.js"
+        },
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:3001/_vercel/insights/script.js"
+        }
+      ],
+      "blockingResponses": [],
+      "blockingConsole": [],
+      "screenshots": [
+        "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-top.png",
+        "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-hero-panel.png",
+        "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-showcase-panel.png"
+      ]
+    },
+    {
+      "name": "reduced-motion",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "reducedMotion": "reduce",
+      "pass": true,
+      "metrics": {
+        "title": "Arcanea™ - Sovereign Creative Intelligence",
+        "scrollY": 0,
+        "viewportWidth": 1440,
+        "viewportHeight": 1000,
+        "scrollWidth": 1440,
+        "bodyWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "heroPanelRect": {
+          "top": 648.3765869140625,
+          "bottom": 824.3765869140625,
+          "width": 720,
+          "height": 176
+        },
+        "heroPanelVisibleInFirstViewport": true,
+        "requiredHeroLabels": {
+          "proof pipeline": true,
+          "Call to artifact": true,
+          "Call": true,
+          "Trial": true,
+          "Agent Route": true,
+          "Artifact Packet": true
+        },
+        "requiredShowcaseLabels": {
+          "call intake": true,
+          "artifact pipeline": true,
+          "Canon Memory": true,
+          "Atlas": true,
+          "Studio": true,
+          "Worlds": true,
+          "Store": true
+        },
+        "bodyHasFirstSessionCopy": true
+      },
+      "missingHero": [],
+      "missingShowcase": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Refused to execute script from 'http://127.0.0.1:3001/_vercel/speed-insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled.",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Refused to execute script from 'http://127.0.0.1:3001/_vercel/insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled."
+      ],
+      "pageErrors": [],
+      "failedResponses": [
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:3001/_vercel/speed-insights/script.js"
+        },
+        {
+          "status": 404,
+          "url": "http://127.0.0.1:3001/_vercel/insights/script.js"
+        }
+      ],
+      "blockingResponses": [],
+      "blockingConsole": [],
+      "screenshots": [
+        "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-top.png",
+        "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-hero-panel.png",
+        "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-showcase-panel.png"
+      ]
+    }
+  ],
+  "screenshots": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-top.png",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-hero-panel.png",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-showcase-panel.png",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-top.png",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-hero-panel.png",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-showcase-panel.png",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-top.png",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-hero-panel.png",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-showcase-panel.png"
+  ],
+  "knownLocalNoise": [
+    "/_vercel/speed-insights/script.js",
+    "/_vercel/insights/script.js"
+  ]
+}

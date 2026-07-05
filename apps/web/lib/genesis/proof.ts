@@ -332,7 +332,7 @@ export function buildGenesisProofDraft(input: {
         "No automated dependency on any single model provider.",
       ],
       checkoutPath: "/pricing",
-      supportPath: "/learn",
+      supportPath: "/academy",
     },
   };
 }

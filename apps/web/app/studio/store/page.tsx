@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth/context';
+import { analytics } from '@/lib/analytics/events';
 import { AccountAbstractionService } from '@/lib/web3/account-abstraction';
 import { StoryProtocolService } from '@/lib/web3/story-protocol';
 import {
@@ -145,6 +146,12 @@ export default function ClawStorePage() {
   };
 
   const handleBuyWithCredits = async (skill: SkillItem) => {
+    analytics.studioStorePackageClick('buy_with_credits', {
+      packageId: skill.id,
+      packageType: skill.type,
+      priceCredits: skill.priceCredits,
+      tab: 'marketplace',
+    });
     if (credits < skill.priceCredits) {
       alert('Insufficient credits. Please top up in the Subscription tab.');
       return;
@@ -164,6 +171,11 @@ export default function ClawStorePage() {
   };
 
   const handleDeployOnchain = async (skill: SkillItem) => {
+    analytics.studioStorePackageClick('mint_onchain', {
+      packageId: skill.id,
+      packageType: skill.type,
+      tab: 'marketplace',
+    });
     if (!smartAccount) {
       alert('Please connect your account to generate your smart contract wallet.');
       return;
@@ -204,6 +216,11 @@ export default function ClawStorePage() {
   };
 
   const handleStripePurchase = async (pkgId: string, cost: number, creditAmt: number) => {
+    analytics.studioStorePackageClick('stripe_checkout', {
+      packageId: pkgId,
+      priceUsd: cost,
+      tab: 'credits',
+    });
     setStripeLoading(pkgId);
     // Simulate Stripe Checkout Redirect and Webhook settlement
     await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -213,6 +230,10 @@ export default function ClawStorePage() {
   };
 
   const handleConnectStripe = async () => {
+    analytics.studioStorePackageClick('stripe_connect', {
+      packageId: 'creator-payouts',
+      tab: 'developer',
+    });
     setPayoutLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 1200));
     setStripeConnected(true);
@@ -221,6 +242,10 @@ export default function ClawStorePage() {
 
   const handleWithdrawEarnings = async () => {
     if (developerEarnings.pending <= 0) return;
+    analytics.studioStorePackageClick('withdraw_payout', {
+      packageId: 'creator-payouts',
+      tab: 'developer',
+    });
     setPayoutLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setDeveloperEarnings((prev) => ({

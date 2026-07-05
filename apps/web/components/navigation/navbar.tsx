@@ -34,32 +34,35 @@ const navLinks: NavLink[] = [
   {
     href: "/chat",
     label: "Create",
-    also: ["/imagine", "/studio", "/forge", "/agents", "/worlds", "/games", "/music-studio", "/cinema-studio", "/canvas", "/voice", "/integrations", "/distribute"],
+    also: ["/genesis", "/imagine", "/studio", "/studio/store", "/forge", "/agents", "/worlds", "/games", "/music-studio", "/cinema-studio", "/canvas", "/voice", "/integrations", "/distribute", "/atlas"],
     mega: [
       {
-        title: "Create",
+        title: "Start",
         items: [
+          { href: "/genesis", label: "Genesis", desc: "Call to proof" },
           { href: "/chat", label: "Chat", desc: "Talk with Luminors" },
+          { href: "/studio", label: "Studio", desc: "Write and compose" },
+          { href: "/worlds/create", label: "World Builder", desc: "Seed a living world" },
+          { href: "/atlas/creatures", label: "Creature Atlas", desc: "Rights-aware prompts" },
           { href: "/imagine", label: "Imagine", desc: "Generate images" },
-          { href: "/studio", label: "Studio", desc: "Write & compose" },
-          { href: "/worlds", label: "Worlds", desc: "Build universes" },
           { href: "/games", label: "Games", desc: "Prompt to playable" },
-          { href: "/music-studio", label: "Music", desc: "Artist worlds" },
-          { href: "/cinema-studio", label: "Cinema", desc: "Trailers & scenes" },
-          { href: "/canvas", label: "Canvas", desc: "Node workflows" },
         ],
       },
       {
         title: "Agents",
         items: [
           { href: "/agents", label: "Marketplace", desc: "Specialist agents" },
-          { href: "/forge/companion", label: "Forge", desc: "Create your own" },
+          { href: "/companions/forge", label: "Companion Forge", desc: "Create your own" },
+          { href: "/mcp", label: "MCP & CLI", desc: "Local tool bridge" },
+          { href: "/canvas", label: "Canvas", desc: "Node workflows" },
         ],
       },
       {
         title: "Ecosystem",
         items: [
           { href: "/create", label: "Create Hub", desc: "Start from a template" },
+          { href: "/studio/store", label: "Claw Store", desc: "Creator packages" },
+          { href: "/creator-economy", label: "Creator Economy", desc: "Earn with proof" },
           { href: "/integrations", label: "Integrations", desc: "Connect your stack" },
           { href: "/distribute", label: "Distribute", desc: "Publish everywhere" },
         ],
@@ -69,12 +72,13 @@ const navLinks: NavLink[] = [
   {
     href: "/gallery",
     label: "Explore",
-    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/showcase", "/models", "/community-hub", "/creator-economy"],
+    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/showcase", "/models", "/community-hub", "/creator-economy", "/atlas"],
     mega: [
       {
         title: "Discover",
         items: [
           { href: "/gallery", label: "Gallery", desc: "Community creations" },
+          { href: "/atlas/creatures", label: "Creature Atlas", desc: "Prompt material library" },
           { href: "/discover/pages", label: "Pages", desc: "Published from conversations" },
           { href: "/worlds", label: "Worlds", desc: "Browse the multiverse" },
           { href: "/luminors", label: "Luminors", desc: "Meet the AI minds" },
@@ -102,13 +106,14 @@ const navLinks: NavLink[] = [
   {
     href: "/academy",
     label: "Learn",
-    also: ["/academy/courses", "/academy/gates", "/academy/houses", "/quiz", "/skills", "/docs/mcp", "/ecosystem", "/protocol", "/apps", "/teams", "/storage"],
+    also: ["/academy/courses", "/academy/gates", "/academy/houses", "/quiz", "/skills", "/method", "/docs/mcp", "/ecosystem", "/protocol", "/apps", "/teams", "/storage"],
     mega: [
       {
         title: "Academy",
         items: [
           { href: "/academy", label: "Ten Gates", desc: "Creative progression" },
           { href: "/academy/courses", label: "Courses", desc: "Structured paths" },
+          { href: "/method", label: "Method", desc: "Proof workflow" },
           { href: "/quiz", label: "Origin Quiz", desc: "Discover your class" },
         ],
       },
@@ -128,6 +133,7 @@ const navLinks: NavLink[] = [
   },
   { href: "/blog", label: "Blog", also: [] },
   { href: "/pricing", label: "Pricing", also: [] },
+  { href: "/status", label: "Status", also: [] },
 ];
 
 // ─── Mega Dropdown Component ─────────────────────────────────────────────────

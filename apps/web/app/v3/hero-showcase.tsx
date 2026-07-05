@@ -5,10 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { m } from "framer-motion";
 import { brand, guardianAccents } from "@arcanea/design-system";
+import { ArtifactPipelinePanel } from "./artifact-pipeline-panel";
 
 // ---------------------------------------------------------------------------
-// HeroShowcase — "Created in 30 seconds" visual proof strip
-// Renders 3 example creation cards between the hero and below-fold content.
+// HeroShowcase - shipped proof strip between the hero and below-fold content.
 // ---------------------------------------------------------------------------
 
 // Light slate used for character "Wind" element — a near-white neutral
@@ -17,87 +17,87 @@ const WIND_NEUTRAL = "var(--arc-text-primary)";
 
 const CARDS = [
   {
-    type: "Portal",
-    title: "Realm Gate",
-    subtitle: "world graph · canon seed",
+    type: "Activation",
+    title: "Genesis Proof",
+    subtitle: "call -> gift -> trial",
     elements: [brand.atlanteanTeal, brand.arcaneanGold, guardianAccents.lyria],
     gradient: "from-[var(--arc-brand-cosmic-blue)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-cosmic-blue)]/40",
     gradientAlt: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-cosmic-blue)]/50",
     borderGlow: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 25%, transparent)",
-    status: "Ready now",
-    badge: "World OS",
+    status: "Live",
+    badge: "Proof",
     badgeColor: brand.atlanteanTeal,
-    href: "/worlds/create",
-    image: "/brand/arcanea-dashboard-hero-premium.png",
+    href: "/genesis",
+    image: "/brand/arcanea-genesis-proof-relic.png",
   },
   {
-    type: "Godbeast",
-    title: "Draconis Bond",
-    subtitle: "fire gate · scale system",
-    elements: [guardianAccents.draconia, brand.arcaneanGold],
+    type: "Atlas",
+    title: "Creature Atlas",
+    subtitle: "rights · prompts · canon",
+    elements: [brand.atlanteanTeal, WIND_NEUTRAL, brand.arcaneanGold],
     gradient: "from-[var(--arc-fire)]/45 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-cosmic-void)]/45",
     gradientAlt: "from-[var(--arc-fire)]/45 via-[var(--arc-brand-cosmic-blue)]/25 to-[var(--arc-brand-arcanean-gold)]/35",
     borderGlow: "color-mix(in srgb, var(--arc-fire) 24%, transparent)",
-    status: "Canon guide",
-    badge: "Canon",
+    status: "Live",
+    badge: "Rights",
     badgeColor: brand.arcaneanGold,
-    href: "/lore/godbeasts",
-    image: "/guardians/v4/draconia-hero-v4.webp",
+    href: "/atlas/creatures",
+    image: "/brand/arcanea-collectible-reliquary-premium.png",
   },
   {
-    type: "Saga",
-    title: "Dragon Rider",
-    subtitle: "episodes · game loop",
+    type: "World OS",
+    title: "Living World",
+    subtitle: "rules · memory · export",
     elements: [guardianAccents.draconia, brand.aquamarine, brand.arcaneanGold],
     gradient: "from-[var(--arc-fire)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-atlantean-teal)]/25",
     gradientAlt: "from-[var(--arc-fire)]/35 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-brand-cosmic-blue)]/45",
     borderGlow: "color-mix(in srgb, var(--arc-brand-arcanean-gold) 20%, transparent)",
-    status: "Preview",
-    badge: "Rider",
+    status: "Live",
+    badge: "Memory",
     badgeColor: brand.aquamarine,
-    href: "/cinema-studio",
-    image: "/images/books/heart-of-pyrathis-cover-v2.png",
+    href: "/worlds/create",
+    image: "/brand/arcanea-dashboard-hero-premium.png",
   },
   {
-    type: "Canon",
-    title: "Living Lore",
-    subtitle: "rules · factions · memory",
-    elements: [guardianAccents.lyria, WIND_NEUTRAL, brand.arcaneanGold],
+    type: "Store",
+    title: "Claw Store",
+    subtitle: "packages · credits · intent",
+    elements: [brand.arcaneanGold, brand.atlanteanTeal],
     gradient: "from-[var(--arc-void)]/40 via-[var(--arc-brand-cosmic-blue)]/30 to-[var(--arc-brand-arcanean-gold)]/20",
     gradientAlt: "from-[var(--arc-void)]/35 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-cosmic-blue)]/45",
     borderGlow: "color-mix(in srgb, var(--arc-void) 20%, transparent)",
-    status: "Canon guide",
-    badge: "Memory",
+    status: "Private beta",
+    badge: "Revenue",
     badgeColor: brand.aquamarine,
-    href: "/living-lore",
-    image: "/guardians/v4/lyria-hero-v4.webp",
+    href: "/studio/store",
+    image: "/brand/arcanea-collectible-reliquary-premium.png",
   },
   {
-    type: "Cinema",
-    title: "Portal Trailer",
-    subtitle: "Shot list · render prompts",
+    type: "Agent OS",
+    title: "MCP Bridge",
+    subtitle: "tools · recipes · local",
     elements: [brand.arcaneanGold, brand.atlanteanTeal],
     gradient: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/30 to-[var(--arc-fire)]/40",
     gradientAlt: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-brand-atlantean-teal)]/35 to-[var(--arc-fire)]/40",
     borderGlow: "color-mix(in srgb, var(--arc-brand-arcanean-gold) 20%, transparent)",
-    status: "Preview",
-    badge: "Cinematic",
+    status: "Live",
+    badge: "Workflow",
     badgeColor: brand.arcaneanGold,
-    href: "/cinema-studio",
+    href: "/mcp",
     image: "/images/forge/sky/007-ironclad-airship.png",
   },
   {
-    type: "Agent OS",
-    title: "Lab Handoff",
-    subtitle: "tools · agents · context",
+    type: "Economy",
+    title: "Creator Economy",
+    subtitle: "offers · proof · publishing",
     elements: [brand.arcaneanGold, brand.aquamarine],
     gradient: "from-[var(--arc-brand-arcanean-gold)]/38 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-atlantean-teal)]/28",
     gradientAlt: "from-[var(--arc-brand-atlantean-teal)]/35 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-arcanean-gold)]/35",
     borderGlow: "color-mix(in srgb, var(--arc-brand-atlantean-teal) 24%, transparent)",
-    status: "Dev preview",
-    badge: "Agent OS",
+    status: "Roadmap",
+    badge: "Market",
     badgeColor: brand.atlanteanTeal,
-    href: "/mcp",
+    href: "/creator-economy",
     image: "/images/forge/space/004-dreadnought-nebula.png",
   },
 ] as const;
@@ -225,8 +225,10 @@ export function HeroShowcase() {
       <m.p
         className="mb-10 text-center font-editorial text-xl italic leading-none text-white/30"
       >
-        Every call becomes a proof artifact
+        Start with proof, then route it into memory, media, agents, and market
       </m.p>
+
+      <ArtifactPipelinePanel variant="showcase" />
 
       {/* Card strip */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-5 max-w-5xl mx-auto">
@@ -243,7 +245,7 @@ export function HeroShowcase() {
       <m.p
         className="text-center mt-10 text-sm text-white/20 font-body"
       >
-        Missions, worlds, rights, cinema, and agent workflows share one memory layer.
+        Genesis, Atlas, Worlds, Store, MCP, and Creator Economy are separate doors into one proof layer.
       </m.p>
     </section>
   );

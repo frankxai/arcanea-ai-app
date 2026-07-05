@@ -1,0 +1,56 @@
+{
+  "generatedAt": "2026-07-05T01:38:10.337Z",
+  "results": [
+    {
+      "page": "home",
+      "viewport": "desktop",
+      "status": "ok",
+      "missing": []
+    },
+    {
+      "page": "genesis",
+      "viewport": "desktop",
+      "status": "ok",
+      "missing": []
+    },
+    {
+      "page": "atlas",
+      "viewport": "desktop",
+      "status": "ok",
+      "missing": []
+    },
+    {
+      "page": "atlas-detail",
+      "viewport": "desktop",
+      "status": "ok",
+      "missing": []
+    },
+    {
+      "page": "home",
+      "viewport": "mobile",
+      "status": "ok",
+      "missing": []
+    },
+    {
+      "page": "genesis",
+      "viewport": "mobile",
+      "status": "ok",
+      "missing": []
+    },
+    {
+      "page": "atlas",
+      "viewport": "mobile",
+      "status": "ok",
+      "missing": []
+    },
+    {
+      "page": "atlas-detail",
+      "viewport": "mobile",
+      "status": "ok",
+      "missing": []
+    }
+  ],
+  "errors": [],
+  "ignoredConsoleCount": 33,
+  "note": "Atlas schematic labels are verified from rendered HTML because Next streamed content can race body.innerText during automation."
+}

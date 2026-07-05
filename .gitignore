@@ -33,6 +33,7 @@ Thumbs.db
 # Logs
 *.log
 logs/
+*.pid
 
 # Runtime
 .pnpm-debug.log*
@@ -225,6 +226,8 @@ generated/
 # planning-with-files/ is un-ignored; see tracked contents. Unanchored rule removed 2026-04-17.
 tasks/
 status/
+!apps/web/app/status/
+!apps/web/app/status/**
 findings.md
 progress.md
 task_plan.md

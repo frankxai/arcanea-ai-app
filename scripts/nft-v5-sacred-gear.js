@@ -11,7 +11,11 @@
  */
 
 const fs = require('fs');
-const API_KEY = 'AIzaSyC9-kKPkeHh9dZ831O9M3gTp6mjAi-EWdc';
+const API_KEY = process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GEMINI_API_KEY;
+if (!API_KEY) {
+  console.error('Missing GOOGLE_GENERATIVE_AI_API_KEY or GEMINI_API_KEY.');
+  process.exit(1);
+}
 const OUT = 'C:/Users/frank/Arcanea/output/nft-v5';
 fs.mkdirSync(OUT, { recursive: true });
 

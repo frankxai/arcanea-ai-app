@@ -117,7 +117,8 @@ export default async function CreatureAtlasPage({ searchParams }: CreatureAtlasP
               Creature Atlas
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-7 text-white/60 md:text-lg">
-              Search creature archetypes, source worlds, relationships, and Arcanea-original visual variants.
+              Search creature archetypes, source worlds, relationships, and Arcanea-original prompt variants.
+              Every entry keeps source context visible before you copy prompts, generate media, or promote a visual.
             </p>
 
             <form action="/atlas/creatures" className="mt-8 rounded-xl border border-white/[0.06] bg-white/[0.03] p-3 backdrop-blur-sm">
@@ -311,6 +312,9 @@ function CreatureVisualPlate({
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_25%,rgba(255,255,255,0.12),transparent_36%)]" aria-hidden="true" />
       <div className="absolute inset-x-6 top-1/2 h-px bg-white/[0.08]" aria-hidden="true" />
       <div className={`absolute left-8 top-8 h-20 w-20 rounded-full ${style.line} opacity-20 blur-2xl`} aria-hidden="true" />
+      <span className="absolute left-4 top-4 rounded-full border border-white/[0.08] bg-black/30 px-2 py-1 text-[10px] uppercase tracking-[0.16em] text-white/35">
+        Schematic
+      </span>
       <div className="absolute bottom-5 left-5 right-5">
         <div className="mb-4 flex items-end gap-2">
           <div className={`h-20 w-28 rounded-[45%] border ${style.border} bg-black/20`} aria-hidden="true" />
