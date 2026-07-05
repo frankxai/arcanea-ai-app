@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: quality-${{ github.ref }}
@@ -16,82 +17,15 @@ env:
 
 jobs:
   # ============================================
-  # TYPECHECK — allow failure, report error count
+  # INSTALL — shared dependency install + cache
+  # (mirrors ci.yml's install job so every downstream
+  # job restores instead of re-running a full install)
   # ============================================
-  typecheck:
-    name: TypeScript Check
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: TypeScript Check (report only — via turbo for workspace-deps build)
-        continue-on-error: true
-        run: |
-          pnpm turbo run type-check --filter=@arcanea/web 2>&1 | tee /tmp/tsc-output.txt || true
-          ERROR_COUNT=$(grep -c "error TS" /tmp/tsc-output.txt || echo "0")
-          echo "## TypeScript Report" >> $GITHUB_STEP_SUMMARY
-          echo "- **Errors found:** ${ERROR_COUNT}" >> $GITHUB_STEP_SUMMARY
-          if [ "$ERROR_COUNT" -gt 0 ]; then
-            echo "::warning::TypeScript has ${ERROR_COUNT} pre-existing errors"
-            tail -20 /tmp/tsc-output.txt >> $GITHUB_STEP_SUMMARY
-          else
-            echo "- Zero errors — typecheck is clean" >> $GITHUB_STEP_SUMMARY
-          fi
-
-  # ============================================
-  # LINT
-  # ============================================
-  lint:
-    name: ESLint
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Lint
-        run: pnpm --dir apps/web run lint
-        continue-on-error: true
-
-  # ============================================
-  # SECURITY — warn only
-  # ============================================
-  security:
-    name: Security Audit
+  install:
+    name: Install
+    # Cost gate: skip on draft PRs — agents iterate free; gate runs on
+    # ready_for_review and on every push to main.
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -113,6 +47,129 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Cache node_modules
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: quality-modules-${{ hashFiles('pnpm-lock.yaml') }}
+
+  # ============================================
+  # TYPECHECK — allow failure, report error count
+  # ============================================
+  typecheck:
+    name: TypeScript Check
+    runs-on: ubuntu-latest
+    needs: install
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Restore node_modules
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: quality-modules-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: TypeScript Check (report only — via turbo for workspace-deps build)
+        continue-on-error: true
+        run: |
+          pnpm turbo run type-check --filter=@arcanea/web 2>&1 | tee /tmp/tsc-output.txt || true
+          ERROR_COUNT=$(grep -c "error TS" /tmp/tsc-output.txt || echo "0")
+          echo "## TypeScript Report" >> $GITHUB_STEP_SUMMARY
+          echo "- **Errors found:** ${ERROR_COUNT}" >> $GITHUB_STEP_SUMMARY
+          if [ "$ERROR_COUNT" -gt 0 ]; then
+            echo "::warning::TypeScript has ${ERROR_COUNT} pre-existing errors"
+            tail -20 /tmp/tsc-output.txt >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- Zero errors — typecheck is clean" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # ============================================
+  # LINT
+  # ============================================
+  lint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    needs: install
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Restore node_modules
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: quality-modules-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Lint
+        run: pnpm --dir apps/web run lint
+        continue-on-error: true
+
+  # ============================================
+  # SECURITY — warn only
+  # ============================================
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    needs: install
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Restore node_modules
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: quality-modules-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Security Audit (gate on high/critical)
         run: |
@@ -136,6 +193,7 @@ jobs:
 
   # ============================================
   # RELEASE INTEGRITY — no per-package publish workflows
+  # (no install needed — pure filesystem check)
   # ============================================
   release-integrity:
     name: No Split-Brain Publish
@@ -165,7 +223,7 @@ jobs:
   build:
     name: Production Build
     runs-on: ubuntu-latest
-    needs: [lint]
+    needs: [install, lint]
     timeout-minutes: 15
 
     steps:
@@ -181,11 +239,15 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Restore node_modules
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: quality-modules-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Build
         # Use turbo so workspace deps (@arcanea/design-system, @arcanea/publishing-house,
@@ -215,7 +277,7 @@ jobs:
   e2e-smoke:
     name: E2E Smoke
     runs-on: ubuntu-latest
-    needs: build
+    needs: [install, build]
     timeout-minutes: 15
 
     steps:
@@ -231,11 +293,15 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Restore node_modules
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            node_modules
+            apps/*/node_modules
+            packages/*/node_modules
+          key: quality-modules-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Install Playwright browsers
         run: pnpm --filter @arcanea/web exec playwright install --with-deps chromium
@@ -260,7 +326,10 @@ jobs:
     name: Quality Status
     runs-on: ubuntu-latest
     needs: [typecheck, lint, build, security, e2e-smoke, release-integrity]
-    if: always()
+    # always() so a real failure still reports, but skip entirely when the
+    # suite itself was skipped (draft PR) — otherwise this shows a false
+    # "Build failed" red X on every draft iteration.
+    if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
 
     steps:
       - name: Check Results
