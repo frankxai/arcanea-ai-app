@@ -1,20 +1,20 @@
 {
   "version": "1.0.0",
   "id": "arcanea-god-mode-release-package-plan-2026-07-05",
-  "generatedAt": "2026-07-05T07:07:00.318Z",
+  "generatedAt": "2026-07-05T13:49:36.125Z",
   "repo": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app",
-  "currentGitHead": "97093bf51ee9944ad9ea68d1fa81492d1b35e08f",
+  "currentGitHead": "97d3379b89848bf6b1996b96342f96d215f7a3fe",
   "decision": "stage-plan-ready",
   "nonMutating": true,
   "summary": {
-    "pass": 5,
-    "warn": 2,
+    "pass": 4,
+    "warn": 3,
     "blockers": 0,
-    "dirtyCount": 61,
-    "includedDirtyCount": 56,
+    "dirtyCount": 5,
+    "includedDirtyCount": 0,
     "excludedDirtyCount": 5,
     "unknownDirtyCount": 0,
-    "stageTargetCount": 56,
+    "stageTargetCount": 0,
     "readyForStaging": true,
     "readyForPreview": false,
     "readyForProduction": false
@@ -24,65 +24,8 @@
     "releaseReadinessReport": ".visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json"
   },
   "dirty": {
-    "count": 61,
-    "included": [
-      ".gitignore",
-      "apps/web/app/atlas/creatures/[slug]/page.tsx",
-      "apps/web/app/atlas/creatures/page.tsx",
-      "apps/web/app/genesis/genesis-session.tsx",
-      "apps/web/app/layout.tsx",
-      "apps/web/app/studio/image/page.tsx",
-      "apps/web/app/studio/store/page.tsx",
-      "apps/web/app/v3/hero-chat-box.tsx",
-      "apps/web/app/v3/hero-showcase.tsx",
-      "apps/web/app/v3/v3-content.tsx",
-      "apps/web/components/landing/cta-section.tsx",
-      "apps/web/components/navigation/footer.tsx",
-      "apps/web/components/navigation/navbar.tsx",
-      "apps/web/lib/analytics/__tests__/events-projects.test.ts",
-      "apps/web/lib/analytics/events.ts",
-      "apps/web/lib/arcanea/activation.ts",
-      "apps/web/lib/genesis/proof.ts",
-      "apps/web/vercel.json",
-      "docs/ARCANEA_FIRST_SESSION_PRD.md",
-      "docs/ARCANEA_GROWTH_METRICS.md",
-      "scripts/nft-scale-test.js",
-      "scripts/nft-v5-sacred-gear.js",
-      "vercel.json",
-      ".visual-qa/arcanea-god-mode-2026-07-05/",
-      ".visual-qa/design-loop-evidence-arcanea-god-mode-2026-07-05.json",
-      "apps/web/app/atlas/creatures/[slug]/prompt-actions.tsx",
-      "apps/web/app/method/",
-      "apps/web/app/status/",
-      "apps/web/app/v3/artifact-pipeline-panel.tsx",
-      "apps/web/lib/genesis/__tests__/",
-      "apps/web/lib/genesis/workflow-contract.ts",
-      "planning-with-files/ARCANEA_AI_GOD_MODE_SPRINT_2026-07-05.md",
-      "planning-with-files/ARCANEA_ARTIFACT_PIPELINE_SCENE_BRIEF_2026-07-05.md",
-      "planning-with-files/ARCANEA_COMPETITIVE_SCORECARD_2026-07-05.json",
-      "planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.json",
-      "planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.md",
-      "planning-with-files/ARCANEA_DURABLE_WORKFLOW_RELEASE_BRIEF_2026-07-05.md",
-      "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.json",
-      "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.md",
-      "planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
-      "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json",
-      "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.md",
-      "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.json",
-      "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.md",
-      "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json",
-      "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.md",
-      "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.json",
-      "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.md",
-      "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
-      "scripts/arcanea-durable-workflow-readiness.mjs",
-      "scripts/arcanea-release-package-plan.mjs",
-      "scripts/arcanea-release-readiness.mjs",
-      "scripts/arcanea-success-metrics-audit.mjs",
-      "scripts/arcanea-vercel-project-selection.mjs",
-      "scripts/arcanea-vercel-remediation-runner.mjs",
-      "scripts/arcanea-vercel-remediation.mjs"
-    ],
+    "count": 5,
+    "included": [],
     "excluded": [
       "data/campaign-loop-state.json",
       "package.json",
@@ -93,172 +36,12 @@
     "unknown": [],
     "entries": [
       {
-        "raw": " M .gitignore",
-        "status": "M",
-        "file": ".gitignore",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/app/atlas/creatures/[slug]/page.tsx",
-        "status": "M",
-        "file": "apps/web/app/atlas/creatures/[slug]/page.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/app/atlas/creatures/page.tsx",
-        "status": "M",
-        "file": "apps/web/app/atlas/creatures/page.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/app/genesis/genesis-session.tsx",
-        "status": "M",
-        "file": "apps/web/app/genesis/genesis-session.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/app/layout.tsx",
-        "status": "M",
-        "file": "apps/web/app/layout.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/app/studio/image/page.tsx",
-        "status": "M",
-        "file": "apps/web/app/studio/image/page.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/app/studio/store/page.tsx",
-        "status": "M",
-        "file": "apps/web/app/studio/store/page.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/app/v3/hero-chat-box.tsx",
-        "status": "M",
-        "file": "apps/web/app/v3/hero-chat-box.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/app/v3/hero-showcase.tsx",
-        "status": "M",
-        "file": "apps/web/app/v3/hero-showcase.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/app/v3/v3-content.tsx",
-        "status": "M",
-        "file": "apps/web/app/v3/v3-content.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/components/landing/cta-section.tsx",
-        "status": "M",
-        "file": "apps/web/components/landing/cta-section.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/components/navigation/footer.tsx",
-        "status": "M",
-        "file": "apps/web/components/navigation/footer.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/components/navigation/navbar.tsx",
-        "status": "M",
-        "file": "apps/web/components/navigation/navbar.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/lib/analytics/__tests__/events-projects.test.ts",
-        "status": "M",
-        "file": "apps/web/lib/analytics/__tests__/events-projects.test.ts",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/lib/analytics/events.ts",
-        "status": "M",
-        "file": "apps/web/lib/analytics/events.ts",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/lib/arcanea/activation.ts",
-        "status": "M",
-        "file": "apps/web/lib/arcanea/activation.ts",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/lib/genesis/proof.ts",
-        "status": "M",
-        "file": "apps/web/lib/genesis/proof.ts",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M apps/web/vercel.json",
-        "status": "M",
-        "file": "apps/web/vercel.json",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
         "raw": " M data/campaign-loop-state.json",
         "status": "M",
         "file": "data/campaign-loop-state.json",
         "included": false,
         "excluded": true,
         "classification": "excluded"
-      },
-      {
-        "raw": " M docs/ARCANEA_FIRST_SESSION_PRD.md",
-        "status": "M",
-        "file": "docs/ARCANEA_FIRST_SESSION_PRD.md",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M docs/ARCANEA_GROWTH_METRICS.md",
-        "status": "M",
-        "file": "docs/ARCANEA_GROWTH_METRICS.md",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
       },
       {
         "raw": " M package.json",
@@ -285,361 +68,16 @@
         "classification": "excluded"
       },
       {
-        "raw": " M scripts/nft-scale-test.js",
-        "status": "M",
-        "file": "scripts/nft-scale-test.js",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M scripts/nft-v5-sacred-gear.js",
-        "status": "M",
-        "file": "scripts/nft-v5-sacred-gear.js",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": " M vercel.json",
-        "status": "M",
-        "file": "vercel.json",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? .visual-qa/arcanea-god-mode-2026-07-05/",
-        "status": "??",
-        "file": ".visual-qa/arcanea-god-mode-2026-07-05/",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? .visual-qa/design-loop-evidence-arcanea-god-mode-2026-07-05.json",
-        "status": "??",
-        "file": ".visual-qa/design-loop-evidence-arcanea-god-mode-2026-07-05.json",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? apps/web/app/atlas/creatures/[slug]/prompt-actions.tsx",
-        "status": "??",
-        "file": "apps/web/app/atlas/creatures/[slug]/prompt-actions.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? apps/web/app/method/",
-        "status": "??",
-        "file": "apps/web/app/method/",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? apps/web/app/status/",
-        "status": "??",
-        "file": "apps/web/app/status/",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? apps/web/app/v3/artifact-pipeline-panel.tsx",
-        "status": "??",
-        "file": "apps/web/app/v3/artifact-pipeline-panel.tsx",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? apps/web/lib/genesis/__tests__/",
-        "status": "??",
-        "file": "apps/web/lib/genesis/__tests__/",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? apps/web/lib/genesis/workflow-contract.ts",
-        "status": "??",
-        "file": "apps/web/lib/genesis/workflow-contract.ts",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
         "raw": "?? docs/strategy/ARCANEA_BUSINESS_STRATEGY.md",
         "status": "??",
         "file": "docs/strategy/ARCANEA_BUSINESS_STRATEGY.md",
         "included": false,
         "excluded": true,
         "classification": "excluded"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_AI_GOD_MODE_SPRINT_2026-07-05.md",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_AI_GOD_MODE_SPRINT_2026-07-05.md",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_ARTIFACT_PIPELINE_SCENE_BRIEF_2026-07-05.md",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_ARTIFACT_PIPELINE_SCENE_BRIEF_2026-07-05.md",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_COMPETITIVE_SCORECARD_2026-07-05.json",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_COMPETITIVE_SCORECARD_2026-07-05.json",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.json",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.json",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.md",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.md",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_DURABLE_WORKFLOW_RELEASE_BRIEF_2026-07-05.md",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_DURABLE_WORKFLOW_RELEASE_BRIEF_2026-07-05.md",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.json",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.json",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.md",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.md",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.md",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.md",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.json",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.json",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.md",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.md",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.md",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.md",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.json",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.json",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.md",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.md",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
-        "status": "??",
-        "file": "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? scripts/arcanea-durable-workflow-readiness.mjs",
-        "status": "??",
-        "file": "scripts/arcanea-durable-workflow-readiness.mjs",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? scripts/arcanea-release-package-plan.mjs",
-        "status": "??",
-        "file": "scripts/arcanea-release-package-plan.mjs",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? scripts/arcanea-release-readiness.mjs",
-        "status": "??",
-        "file": "scripts/arcanea-release-readiness.mjs",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? scripts/arcanea-success-metrics-audit.mjs",
-        "status": "??",
-        "file": "scripts/arcanea-success-metrics-audit.mjs",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? scripts/arcanea-vercel-project-selection.mjs",
-        "status": "??",
-        "file": "scripts/arcanea-vercel-project-selection.mjs",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? scripts/arcanea-vercel-remediation-runner.mjs",
-        "status": "??",
-        "file": "scripts/arcanea-vercel-remediation-runner.mjs",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
-      },
-      {
-        "raw": "?? scripts/arcanea-vercel-remediation.mjs",
-        "status": "??",
-        "file": "scripts/arcanea-vercel-remediation.mjs",
-        "included": true,
-        "excluded": false,
-        "classification": "included"
       }
     ]
   },
-  "safeStagePaths": [
-    ".gitignore",
-    ".visual-qa/arcanea-god-mode-2026-07-05/",
-    ".visual-qa/design-loop-evidence-arcanea-god-mode-2026-07-05.json",
-    "apps/web/app/atlas/creatures/[slug]/page.tsx",
-    "apps/web/app/atlas/creatures/[slug]/prompt-actions.tsx",
-    "apps/web/app/atlas/creatures/page.tsx",
-    "apps/web/app/genesis/genesis-session.tsx",
-    "apps/web/app/layout.tsx",
-    "apps/web/app/method/",
-    "apps/web/app/status/",
-    "apps/web/app/studio/image/page.tsx",
-    "apps/web/app/studio/store/page.tsx",
-    "apps/web/app/v3/hero-chat-box.tsx",
-    "apps/web/app/v3/hero-showcase.tsx",
-    "apps/web/app/v3/artifact-pipeline-panel.tsx",
-    "apps/web/app/v3/v3-content.tsx",
-    "apps/web/components/landing/cta-section.tsx",
-    "apps/web/components/navigation/footer.tsx",
-    "apps/web/components/navigation/navbar.tsx",
-    "apps/web/lib/analytics/__tests__/events-projects.test.ts",
-    "apps/web/lib/analytics/events.ts",
-    "apps/web/lib/arcanea/activation.ts",
-    "apps/web/lib/genesis/__tests__/",
-    "apps/web/lib/genesis/proof.ts",
-    "apps/web/lib/genesis/workflow-contract.ts",
-    "apps/web/vercel.json",
-    "docs/ARCANEA_GROWTH_METRICS.md",
-    "docs/ARCANEA_FIRST_SESSION_PRD.md",
-    "planning-with-files/ARCANEA_AI_GOD_MODE_SPRINT_2026-07-05.md",
-    "planning-with-files/ARCANEA_ARTIFACT_PIPELINE_SCENE_BRIEF_2026-07-05.md",
-    "planning-with-files/ARCANEA_COMPETITIVE_SCORECARD_2026-07-05.json",
-    "planning-with-files/ARCANEA_DURABLE_WORKFLOW_RELEASE_BRIEF_2026-07-05.md",
-    "planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.json",
-    "planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.md",
-    "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json",
-    "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.md",
-    "planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
-    "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.json",
-    "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.md",
-    "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
-    "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.json",
-    "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.md",
-    "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json",
-    "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.md",
-    "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.json",
-    "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.md",
-    "scripts/arcanea-durable-workflow-readiness.mjs",
-    "scripts/arcanea-release-package-plan.mjs",
-    "scripts/arcanea-release-readiness.mjs",
-    "scripts/arcanea-success-metrics-audit.mjs",
-    "scripts/arcanea-vercel-project-selection.mjs",
-    "scripts/arcanea-vercel-remediation.mjs",
-    "scripts/arcanea-vercel-remediation-runner.mjs",
-    "scripts/nft-scale-test.js",
-    "scripts/nft-v5-sacred-gear.js",
-    "vercel.json"
-  ],
+  "safeStagePaths": [],
   "excludedCoveredByStage": [],
   "includedMissingFromStage": [],
   "commands": {
@@ -647,14 +85,7 @@
       "node scripts/arcanea-release-package-plan.mjs --strict",
       "node scripts/arcanea-release-readiness.mjs --strict"
     ],
-    "stage": [
-      "git add -- '.gitignore' '.visual-qa/arcanea-god-mode-2026-07-05/' '.visual-qa/design-loop-evidence-arcanea-god-mode-2026-07-05.json' 'apps/web/app/atlas/creatures/[slug]/page.tsx' 'apps/web/app/atlas/creatures/[slug]/prompt-actions.tsx' 'apps/web/app/atlas/creatures/page.tsx' 'apps/web/app/genesis/genesis-session.tsx' 'apps/web/app/layout.tsx' 'apps/web/app/method/' 'apps/web/app/status/'",
-      "git add -- 'apps/web/app/studio/image/page.tsx' 'apps/web/app/studio/store/page.tsx' 'apps/web/app/v3/hero-chat-box.tsx' 'apps/web/app/v3/hero-showcase.tsx' 'apps/web/app/v3/artifact-pipeline-panel.tsx' 'apps/web/app/v3/v3-content.tsx' 'apps/web/components/landing/cta-section.tsx' 'apps/web/components/navigation/footer.tsx' 'apps/web/components/navigation/navbar.tsx' 'apps/web/lib/analytics/__tests__/events-projects.test.ts'",
-      "git add -- 'apps/web/lib/analytics/events.ts' 'apps/web/lib/arcanea/activation.ts' 'apps/web/lib/genesis/__tests__/' 'apps/web/lib/genesis/proof.ts' 'apps/web/lib/genesis/workflow-contract.ts' 'apps/web/vercel.json' 'docs/ARCANEA_GROWTH_METRICS.md' 'docs/ARCANEA_FIRST_SESSION_PRD.md' 'planning-with-files/ARCANEA_AI_GOD_MODE_SPRINT_2026-07-05.md' 'planning-with-files/ARCANEA_ARTIFACT_PIPELINE_SCENE_BRIEF_2026-07-05.md'",
-      "git add -- 'planning-with-files/ARCANEA_COMPETITIVE_SCORECARD_2026-07-05.json' 'planning-with-files/ARCANEA_DURABLE_WORKFLOW_RELEASE_BRIEF_2026-07-05.md' 'planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.json' 'planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.md' 'planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json' 'planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.md' 'planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json' 'planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.json' 'planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.md' 'planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json'",
-      "git add -- 'planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.json' 'planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.md' 'planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json' 'planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.md' 'planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.json' 'planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.md' 'scripts/arcanea-durable-workflow-readiness.mjs' 'scripts/arcanea-release-package-plan.mjs' 'scripts/arcanea-release-readiness.mjs' 'scripts/arcanea-success-metrics-audit.mjs'",
-      "git add -- 'scripts/arcanea-vercel-project-selection.mjs' 'scripts/arcanea-vercel-remediation.mjs' 'scripts/arcanea-vercel-remediation-runner.mjs' 'scripts/nft-scale-test.js' 'scripts/nft-v5-sacred-gear.js' 'vercel.json'"
-    ],
+    "stage": [],
     "verifyAfterStage": [
       "git diff --cached --name-only",
       "git status --short",
@@ -718,10 +149,10 @@
       ]
     },
     {
-      "status": "pass",
+      "status": "warn",
       "lane": "release",
       "id": "stage-command-ready",
-      "summary": "56 scoped git add targets are ready for a release operator."
+      "summary": "No scoped git add targets are currently needed."
     },
     {
       "status": "warn",
