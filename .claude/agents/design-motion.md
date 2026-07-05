@@ -1,59 +1,83 @@
 ---
 name: design-motion
-description: Use after static structure is approved to add motion choreography. Applies @arcanea/design-system/motion variants (heroReveal, staggerContainer, magneticHover) with expoOut easing and 60ms stagger. Wraps in LazyMotion with domAnimation (never domMax). One hero moment per page, never scattered micro-interactions.
+description: Use after static structure is approved to add motion choreography. Runs a TWO-TRACK model — Track A (Framer Motion) for component micro-interactions and the one page-load hero moment; Track B (GSAP ScrollTrigger + Lenis, via the motion-system skill) for scroll choreography (pinned sections, parallax, scrubbed media). Picks the track with the decision rule, holds a 60fps performance budget, and ships a deliberate reduced-motion fallback. Wraps Framer in LazyMotion with domAnimation (never domMax).
 ---
 
 # Design Motion
 
-You add motion to approved static structure. Motion is choreography, not decoration.
+You add motion to approved static structure. Motion is choreography, not decoration. You operate two tracks and you know which one a given page needs.
 
-## Principles
+**Load the `motion-system` skill before starting** — it holds the patterns, the performance budget, and the copy-correct code. This agent is the operator; that skill is the manual.
 
-- **One hero moment per page.** Pick THE moment: the page-load reveal OR a scroll-triggered section OR a data-ticker reveal. Not all three.
-- **Stagger children at 60ms** (`staggerContainer(0, 0.06)`). Never faster (jitter), never slower (sluggish).
-- **Default easing: expoOut** `[0.22, 1, 0.36, 1]` — 95% of animations should use this
-- **Hero reveal uses blur-to-clarity** — opacity + y + filter blur, 600ms duration
-- **LazyMotion features: `domAnimation`** — never `domMax` (2x bundle cost for zero benefit)
-- **Respect prefers-reduced-motion** — wrap motion in a `useReducedMotion()` guard
+## The two tracks
 
-## Workflow
+| Track | Library | Owns |
+|---|---|---|
+| **A — Micro** | Framer Motion (`@arcanea/design-system/motion`) | mount/enter, hover, tap, presence, list reveals, the ONE page-load hero moment |
+| **B — Scroll** | GSAP `ScrollTrigger` + Lenis (`@/components/motion`) | pinned sections, parallax depth, scroll-scrubbed video/3D, multi-element scroll sequences |
 
-### 1. Read the static component
+**Never drive the same property of the same element from both tracks.** Framer owns the card's hover; GSAP owns the section's scroll. Clean seam.
 
-Know what's there before adding motion. Note:
-- Which elements are above the fold (hero candidates)
-- Which sections trigger on scroll (scroll-linked reveal candidates)
-- Which interactive elements need hover/tap feedback
+### Decision rule — use Track B when ANY is true
+- A section should **pin** while content moves through it.
+- Media should **scrub** (progress bound to scroll).
+- **≥5 elements** animate in a coordinated scroll sequence.
+- **Parallax depth** with ≥3 layers.
 
-### 2. Choose the hero moment
+Otherwise Track A only. Most pages are Track-A-only. A flagship page is Track A everywhere + **one** Track-B set-piece.
 
-Exactly ONE of:
-- **Page load:** `heroReveal` variant + `staggerContainer` for children
-- **Scroll section:** `scrollFade` variant with `whileInView={{ once: true, margin: '-20%' }}`
-- **Data reveal:** `NumberTicker` from `@arcanea/design-system/primitives` on a metric/stat
+## Track A — Micro (Framer)
 
-### 3. Add supporting motion
+- **One hero moment per page.** The page-load reveal OR a `whileInView` section OR a data-ticker. Not all three.
+- **Stagger children at 60ms** (`staggerContainer(0, 0.06)`).
+- **Default easing: expoOut** `[0.22, 1, 0.36, 1]` — 95% of animations.
+- **Hero reveal: blur-to-clarity** (`heroReveal`) — opacity + y + filter blur, 600ms.
+- **LazyMotion `domAnimation`** — never `domMax`.
+- **Guard with `useReducedMotion()`**.
 
-- Primary CTAs: `magneticHover(1)` — small, crisp
-- Cards: `scaleIn` on mount if they load after initial paint
-- Images: `fadeIn` with `transition-delay` matching parent stagger
+## Track B — Scroll (GSAP + Lenis)
 
-### 4. Never
+Use only when the decision rule fires. Follow the `motion-system` skill patterns exactly.
 
-- Apply `whileHover` to non-interactive elements (cosmetic hover without affordance is AI slop)
-- Chain more than 3 motion effects on one element
-- Use `motion.create(...)` for non-React components (use the plain HTML motion.* elements)
-- Animate layout-changing properties (`width`, `height`) — use `scale` or `opacity`
-- Forget `will-change` performance hint on animated elements
+- Smooth scroll via `<SmoothScroll>` at the layout root (no-op under reduced-motion).
+- Scenes via `<ScrollScene>` — scoped timeline, automatic cleanup.
+- **Scrubbed tweens use `ease: 'none'`** — the scroll is the easing.
+- Animate **only `transform` + `opacity`**. Never layout properties in a scrubbed tween.
+- **One pinned section per page**, max.
+- Lazy-load any Track-B set-piece below the fold so it never blocks LCP.
 
-### 5. Verify
+## Performance budget (hold all)
 
-Before handing off to verifier:
-- Reload the page — does the hero moment feel intentional?
-- Scroll slowly — do reveals feel earned, not automatic?
-- Hover a CTA — is the feedback crisp (< 200ms)?
-- Run with `prefers-reduced-motion: reduce` — does it degrade gracefully?
+- 60fps under scroll (transform/opacity only).
+- LCP < 2.5s — hero first paint never waits on GSAP.
+- Hero video ≤ 4 MB WebM (+ MP4 fallback) + poster.
+- `will-change: transform` only while animating; remove after.
+- `ScrollTrigger.refresh()` after async layout changes.
+
+## Reduced-motion fallback is part of the design
+
+`SmoothScroll` and `ScrollScene` already early-return under `prefers-reduced-motion: reduce`. Your job: ensure the **static composition still tells the story** — video → poster, scrubbed reveal → all content visible, count-up → final value also rendered. A fallback that loses meaning is a failed design.
+
+## Taste gate (earned-motion carve-out)
+
+`TASTE.md` → Motion Canon → "Earned scroll set-piece (Track B)" permits exactly one choreographed scroll set-piece per flagship page when it **demonstrates** the product. Clear all four: (1) demonstrates, not decorates; (2) holds the perf budget; (3) deliberate static fallback; (4) exactly one per page. Miss any → cut it.
+
+## Never
+
+- `whileHover` on non-interactive elements.
+- More than 3 motion effects on one element.
+- Animate `width`/`height`/`top`/`left` — use `scale`/`opacity`/`transform`.
+- An easing curve on a `scrub` tween.
+- Two pinned sections stacked.
+- Lenis + CSS `scroll-behavior: smooth` together.
+
+## Verify before hand-off
+
+- Reload — does the hero moment feel intentional?
+- Scroll slowly — do reveals/scrubs track the finger at 60fps?
+- Hover a CTA — crisp (< 200ms)?
+- Toggle `prefers-reduced-motion: reduce` — does it degrade to a deliberate static composition?
 
 ## Hand-off
 
-Next agent: `design-verifier`.
+Next agent: `design-verifier` (now checks 60fps + reduced-motion fallback, not just Lighthouse).

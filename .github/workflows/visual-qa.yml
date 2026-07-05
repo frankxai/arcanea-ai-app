@@ -47,21 +47,41 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            let previewUrl = '${{ inputs.preview_url }}';
-            if (!previewUrl) previewUrl = '${{ steps.wait-vercel.outputs.url }}';
-            if (!previewUrl) {
-              const statuses = await github.rest.repos.listCommitStatusesForRef({
+            let previewUrl = '${{ inputs.preview_url }}' || '${{ steps.wait-vercel.outputs.url }}';
+            // Commit-status target_url points at the Vercel deployment INSPECTOR page (needs
+            // Vercel auth), not the live *.vercel.app site — confirmed by an actual failed run
+            // (Playwright/Gemini got a 404/auth wall). The reliable source for the real live
+            // URL is vercel[bot]'s own PR comment table, which we've observed to always render
+            // as: | [arcanea-ai-app](...) | ![Ready](...) [Ready](...) | [Preview](LIVE_URL), ...
+            // Match the exact project row (excluding the sibling arcanea-ai-appx row) and only
+            // accept it once that row shows the Ready icon.
+            const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+            for (let attempt = 0; !previewUrl && attempt < 20; attempt++) {
+              const { data: comments } = await github.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: context.sha,
+                issue_number: context.issue.number,
               });
-              const s = statuses.data.find(
-                s => s.context.includes('vercel') && s.state === 'success' && s.target_url
-              );
-              previewUrl = s ? s.target_url : '';
+              const vercelComment = comments.find(c => c.body.startsWith('[vc]:'));
+              if (vercelComment) {
+                const row = vercelComment.body
+                  .split('\n')
+                  .find(l => l.includes('| [arcanea-ai-app](') && !l.includes('arcanea-ai-appx'));
+                if (row) {
+                  const isReady = /!\[Ready\]/.test(row);
+                  const previewMatch = row.match(/\[Preview\]\((https:\/\/[^)]+)\)/);
+                  core.info(`Attempt ${attempt + 1}/20: arcanea-ai-app row ready=${isReady} preview=${previewMatch ? previewMatch[1] : 'none'}`);
+                  if (isReady && previewMatch) { previewUrl = previewMatch[1]; break; }
+                } else {
+                  core.info(`Attempt ${attempt + 1}/20: no arcanea-ai-app row in vercel[bot] comment yet`);
+                }
+              } else {
+                core.info(`Attempt ${attempt + 1}/20: no vercel[bot] comment yet`);
+              }
+              await sleep(15000);
             }
             if (!previewUrl) {
-              core.warning('No Vercel preview URL found. Screenshots will be skipped.');
+              core.warning('No live Vercel preview URL found after polling. Screenshots will be skipped.');
             } else {
               core.info('Preview URL: ' + previewUrl);
             }
@@ -80,8 +100,11 @@ jobs:
       - name: Screenshot key routes
         env:
           PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: |
           mkdir -p screenshots
+          # playwright is installed globally above; expose it to require() in the inline script
+          export NODE_PATH="$(npm root -g)"
           node - <<'JSEOF'
           const { chromium } = require('playwright');
           const BASE = (process.env.PREVIEW_URL || '').replace(/\/$/, '');
@@ -96,10 +119,19 @@ jobs:
             { path: '/create', name: 'create' },
             { path: '/dashboard', name: 'dashboard' },
           ];
+          // Vercel's preview deployments sit behind Deployment Protection (an auth wall) by
+          // default — without this, Playwright only ever captures the login page. If a
+          // Protection Bypass for Automation secret is configured (Vercel Project Settings ->
+          // Deployment Protection), send it as a header on every request; this is a no-op
+          // (and the screenshots stay blocked, same as before) when the secret isn't set.
+          const bypassSecret = process.env.VERCEL_AUTOMATION_BYPASS_SECRET || '';
           (async () => {
             const browser = await chromium.launch();
+            const context = await browser.newContext(
+              bypassSecret ? { extraHTTPHeaders: { 'x-vercel-protection-bypass': bypassSecret } } : {}
+            );
             for (const route of routes) {
-              const page = await browser.newPage();
+              const page = await context.newPage();
               await page.setViewportSize({ width: 1440, height: 900 });
               try {
                 await page.goto(BASE + route.path, { waitUntil: 'networkidle', timeout: 30000 });
@@ -132,6 +164,40 @@ jobs:
           api_key = os.environ.get('GEMINI_API_KEY', '')
           preview_url = os.environ.get('PREVIEW_URL', 'unknown')
           pr_title = os.environ.get('PR_TITLE', 'unknown')
+
+          def resolve_model(key):
+            # gemini-2.0-flash was hardcoded here and started 404ing — Gemini model IDs
+            # get retired over time. Ask the API what's actually available instead of
+            # guessing a version string that will go stale again.
+            #
+            # A naive "contains flash" + alphabetical-descending sort previously picked
+            # 'gemini-omni-flash-preview' (an experimental variant that 400'd on this
+            # plain text+image request) — 'omni' sorts after numbered versions. Match
+            # only the standard `gemini-<version>-flash` shape (no -preview/-exp/-image/
+            # -audio/-tts/-live/-lite suffix) and pick the highest version numerically.
+            import re
+            fallback = 'models/gemini-2.0-flash'
+            try:
+              list_url = 'https://generativelanguage.googleapis.com/v1beta/models?key=' + key
+              with urllib.request.urlopen(list_url, timeout=30) as resp:
+                models = json.loads(resp.read()).get('models', [])
+              pattern = re.compile(r'^models/gemini-(\d+(?:\.\d+)?)-flash$')
+              candidates = []
+              for m in models:
+                if 'generateContent' not in m.get('supportedGenerationMethods', []):
+                  continue
+                match = pattern.match(m['name'])
+                if match:
+                  candidates.append((float(match.group(1)), m['name']))
+              if candidates:
+                candidates.sort(key=lambda c: c[0], reverse=True)
+                return candidates[0][1]
+              print('No standard gemini-<version>-flash model found, falling back to ' + fallback)
+              return fallback
+            except Exception as e:
+              print('Model list lookup failed, falling back to ' + fallback + ': ' + str(e))
+              return fallback
+
           images = []
           for fname in sorted(os.listdir('screenshots')):
             if fname.endswith('-desktop.png'):
@@ -173,7 +239,9 @@ jobs:
             'contents': [{'parts': parts}],
             'generationConfig': {'maxOutputTokens': 2048, 'temperature': 0.2}
           }).encode('utf-8')
-          url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + api_key
+          model_name = resolve_model(api_key)
+          print('Using model: ' + model_name)
+          url = 'https://generativelanguage.googleapis.com/v1beta/' + model_name + ':generateContent?key=' + api_key
           req = urllib.request.Request(url, data=payload, headers={'Content-Type': 'application/json'})
           try:
             with urllib.request.urlopen(req, timeout=120) as resp:
