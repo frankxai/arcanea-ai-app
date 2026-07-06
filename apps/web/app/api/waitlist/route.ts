@@ -19,14 +19,20 @@ export async function POST(req: NextRequest) {
         .insert([{ email, source: "pricing_founding_circle", created_at: new Date() }]);
 
       if (error) {
-        console.warn("Supabase waitlist insert error:", error);
-        // Fall back gracefully to mock success if table doesn't exist yet
+        console.error("Supabase waitlist insert error:", error);
+        return NextResponse.json(
+          { success: false, error: "Failed to join waitlist. Please try again later." },
+          { status: 500 }
+        );
       }
     } catch (dbErr) {
-      console.warn("Supabase connection failed. Falling back to mock success.", dbErr);
+      console.error("Supabase connection failed.", dbErr);
+      return NextResponse.json(
+        { success: false, error: "Failed to connect to database. Please try again later." },
+        { status: 500 }
+      );
     }
 
-    // Always succeed in client UI to avoid blockages
     return NextResponse.json({ success: true, message: "Welcome to the Founding Circle!" });
   } catch (err) {
     console.error("Waitlist API error:", err);
