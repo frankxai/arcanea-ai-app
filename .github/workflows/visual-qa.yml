@@ -80,6 +80,7 @@ jobs:
       - name: Screenshot key routes
         env:
           PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: |
           mkdir -p screenshots
           node - <<'JSEOF'
@@ -90,6 +91,16 @@ jobs:
             require('fs').writeFileSync('screenshots/SKIPPED.txt', 'No preview URL available.');
             process.exit(0);
           }
+          // Vercel Deployment Protection returns its own auth-wall page to any
+          // request without this header/cookie -- without it, every screenshot
+          // is of the login page, not the app (see PR #186's visual-qa run).
+          // No-op until the VERCEL_AUTOMATION_BYPASS_SECRET repo secret exists
+          // (Project Settings -> Deployment Protection -> Protection Bypass for
+          // Automation on vercel.com); harmless extra header if protection is off.
+          const bypassSecret = process.env.VERCEL_AUTOMATION_BYPASS_SECRET || '';
+          const extraHTTPHeaders = bypassSecret
+            ? { 'x-vercel-protection-bypass': bypassSecret, 'x-vercel-set-bypass-cookie': 'true' }
+            : {};
           const routes = [
             { path: '/', name: 'home' },
             { path: '/worlds', name: 'worlds' },
@@ -99,7 +110,7 @@ jobs:
           (async () => {
             const browser = await chromium.launch();
             for (const route of routes) {
-              const page = await browser.newPage();
+              const page = await browser.newPage({ extraHTTPHeaders });
               await page.setViewportSize({ width: 1440, height: 900 });
               try {
                 await page.goto(BASE + route.path, { waitUntil: 'networkidle', timeout: 30000 });
