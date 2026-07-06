@@ -58,9 +58,14 @@ export function ShaderGradientBackground({
   className,
 }: ShaderGradientBackgroundProps): ReactElement {
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [webGLSupported] = useState(supportsWebGL);
+  // Starts false to match SSR output; flipped in an effect so the client's
+  // first render (the one React hydrates against) doesn't diverge from the
+  // server's. Computing this via a useState lazy initializer instead would
+  // read `window` during the client's first render and mismatch the SSR tree.
+  const [webGLSupported, setWebGLSupported] = useState(false);
 
   useEffect(() => {
+    setWebGLSupported(supportsWebGL());
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     setReducedMotion(mq.matches);
     const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);

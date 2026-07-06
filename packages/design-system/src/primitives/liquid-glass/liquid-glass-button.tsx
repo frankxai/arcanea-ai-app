@@ -73,6 +73,9 @@ function loadLiquidGlass(basePath: string): Promise<LiquidGlassLib> {
         if (!window.__LiquidGlassJS) throw new Error('bridge.js did not expose __LiquidGlassJS');
         resolve(window.__LiquidGlassJS);
       } catch (err) {
+        // Reset the singleton so a later mount (SPA nav back, a second
+        // button instance) retries instead of reusing a dead promise.
+        loadPromise = null;
         reject(err as Error);
       }
     })();
@@ -115,11 +118,18 @@ export function LiquidGlassButton({
   const containerRef = useRef<HTMLDivElement>(null);
   const onClickRef = useRef(onClick);
   const [error, setError] = useState<string | null>(null);
-  const [webGLSupported] = useState(supportsWebGL);
+  // Starts false to match SSR output; flipped in an effect so the client's
+  // first hydration render doesn't diverge from the server (see the same
+  // pattern in ShaderGradientBackground).
+  const [webGLSupported, setWebGLSupported] = useState(false);
 
   useEffect(() => {
     onClickRef.current = onClick;
   }, [onClick]);
+
+  useEffect(() => {
+    setWebGLSupported(supportsWebGL());
+  }, []);
 
   useEffect(() => {
     if (!webGLSupported) return;
@@ -165,5 +175,23 @@ export function LiquidGlassButton({
     );
   }
 
-  return <div ref={containerRef} className={className} />;
+  // vendor/button.js's canvas element only binds a mouse 'click' listener --
+  // no tabIndex, role, or keyboard handling. These props make the wrapper
+  // itself the focusable/labeled/keyboard-operable control so the WebGL
+  // path isn't inert for keyboard and screen-reader users.
+  return (
+    <div
+      ref={containerRef}
+      className={className}
+      role="button"
+      tabIndex={0}
+      aria-label={text}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClickRef.current?.();
+        }
+      }}
+    />
+  );
 }
