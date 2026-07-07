@@ -1,0 +1,282 @@
+{
+  "version": "2026-07-06",
+  "brand": "Arcanea Product and IP",
+  "run": "run-2026-07-06-god-mode",
+  "assetTier": "B",
+  "sourceMethod": "generated-media",
+  "rightsStatus": "generated-owned",
+  "globalConstraints": [
+    "No text, captions, logos, subtitles, UI, fake letters, or watermark inside the image.",
+    "Arcanea aesthetic: luxury cosmic myth-tech, sacred obsidian, starlight metal, gold thread, living crystal, ancient paper, dark glass, moonlight, portal light.",
+    "AI-lab premium, not fantasy-game chrome.",
+    "Cinematic composition with one dominant subject and clean crop-safe negative space.",
+    "Avoid generic fantasy cosplay, superhero spandex, medieval mud-grit, neon hacker grids, purple cliche, stock fantasy, overdecorated ornaments, malformed hands, malformed faces, broken geometry."
+  ],
+  "items": [
+    {
+      "id": "arc-visual-001",
+      "slug": "genesis-proof-forge-first-call",
+      "category": "main-storyline",
+      "surface": "website-hero-social-16x9",
+      "aspectRatio": "16:9",
+      "canonRefs": ["CANON_LOCKED.md", "Arcanea brand pack", "The Drift", "Genesis proof loop"],
+      "gate": "Source",
+      "guardian": "Shinkami",
+      "prompt": "Use case: illustration-story. Asset type: Arcanea website hero and social source frame. Primary request: a creator stands before the Genesis Proof Forge as a small idea becomes a luminous proof artifact. Scene/backdrop: dark AI-lab temple-studio, obsidian floor, ancient paper codex stations, portal light behind a clean central forge. Subject: one modern creator seen from behind, not a chosen-one pose, facing a floating artifact made of gold thread and starlight glass. Style/medium: cinematic high-end concept art, luxury cosmic myth-tech, Arcanea brand, museum-grade production value. Composition/framing: wide 16:9, creator small in foreground, artifact large and centered, clean negative space for later overlay, first read is proof artifact. Lighting/mood: warm gold and teal signal light on deep void indigo, hopeful, precise, alive. Materials/textures: sacred obsidian, dark glass, gold foil, living crystal, parchment, starlight metal. Constraints: no text, no logos, no UI, no watermark; mythic but usable; premium AI-lab, not game menu art."
+    },
+    {
+      "id": "arc-visual-002",
+      "slug": "the-drift-vs-proof-ledger",
+      "category": "main-storyline",
+      "surface": "tiktok-reels-shorts-hook-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["Arcanea brand pack", "The Drift", "Chosen responsibility"],
+      "gate": "Voice",
+      "guardian": "Alera",
+      "prompt": "Use case: illustration-story. Asset type: vertical social hook frame. Primary request: visualize The Drift as passive consumption, creative amnesia, rights fog, and tool dependency being answered by a proof ledger. Scene/backdrop: a tall vertical portal corridor with foggy broken media fragments dissolving below and a clean luminous proof ledger opening above. Subject: one creator hand placing a small finished artifact into the ledger, no superiority, no enemy group. Style/medium: cinematic Arcanea poster art, high contrast, tactile, precise. Composition/framing: 9:16, ledger and hand readable in first second, strong top-bottom contrast, room for deterministic caption overlay later. Lighting/mood: shadow-to-gold transition, serious but hopeful. Materials/textures: ancient paper, dark glass, gold foil, teal memory lines. Constraints: no text, no logos, no UI, no faces required, no horror, no demonization of people."
+    },
+    {
+      "id": "arc-visual-003",
+      "slug": "gift-trial-stewardship-codex",
+      "category": "main-storyline",
+      "surface": "instagram-carousel-cover-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["Arcanea brand pack", "Call Gift Trial Proof Stewardship"],
+      "gate": "Foundation",
+      "guardian": "Lyssandria",
+      "prompt": "Use case: illustration-story. Asset type: Instagram carousel cover. Primary request: a five-stage Arcanea codex opens from Call to Gift to Trial to Proof to Stewardship without any readable text. Scene/backdrop: close-up of a handcrafted codex table in an AI-lab studio, five distinct luminous artifact slots arranged in a graceful arc. Subject: five symbolic objects only: a signal spark, a small gift relic, a trial key, a proof crystal, and a stewardship seal. Style/medium: high-end product-style fantasy artifact photography rendered as cinematic illustration, Arcanea luxury cosmic myth-tech. Composition/framing: 4:5 vertical cover, objects large and inspectable, clean center, no tiny details. Lighting/mood: warm gold highlights, teal memory glows, quiet premium stillness. Materials/textures: parchment, gold foil, dark glass, crystal, starlight metal. Constraints: no text, no logo, no watermark, no UI."
+    },
+    {
+      "id": "arc-visual-004",
+      "slug": "lyssandria-kaelith-foundation-gate",
+      "category": "guardian-godbeast",
+      "surface": "character-portal-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Lyssandria", "Kaelith", "Foundation Gate"],
+      "gate": "Foundation",
+      "guardian": "Lyssandria",
+      "prompt": "Use case: illustration-story. Asset type: Guardian portal portrait. Primary request: Lyssandria, Arcanean God of the Foundation Gate, with bonded Godbeast Kaelith as an earth-scale presence. Scene/backdrop: living stone observatory rooted into a mountain, gravity-dense crystal veins and stable geometric terraces. Subject: Lyssandria stands calmly in star-forged armor with grounded noble silhouette; Kaelith appears as a colossal living-stone Godbeast behind the observatory, protective rather than hostile. Style/medium: cinematic luxury cosmic myth-tech, high-fashion heroic, museum-grade. Composition/framing: 4:5, Lyssandria foreground, Kaelith immense but readable, strong scale anchor, no clutter. Lighting/mood: earth green, stone gray, gold foundation glow, calm authority. Materials/textures: living stone, Kaelith Stone, starlight metal, root-wood, moss light. Constraints: no text, no logos, no fantasy robes, no mud-grit."
+    },
+    {
+      "id": "arc-visual-005",
+      "slug": "leyla-veloura-flow-gate",
+      "category": "guardian-godbeast",
+      "surface": "vertical-social-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Leyla", "Veloura", "Flow Gate"],
+      "gate": "Flow",
+      "guardian": "Leyla",
+      "prompt": "Use case: illustration-story. Asset type: vertical social portrait. Primary request: Leyla, Arcanean Goddess of the Flow Gate, with bonded Godbeast Veloura. Scene/backdrop: moonlit water-glass amphitheater where memories flow like silver-blue ribbons. Subject: Leyla in fluid nacre and gold-threaded attire, poised like a dancer; Veloura as a phoenix-serpent of liquid light and prismatic water curling protectively around the scene. Style/medium: cinematic Arcanea myth-tech, premium webtoon/anime-influenced composition without generic anime style. Composition/framing: 9:16, Leyla and Veloura create an S-curve, strong face and creature silhouette, top safe space for overlay. Lighting/mood: blue, silver, crystal, warm gold, emotional and alive. Materials/textures: Veloura Glass, water-glass jewelry, liquid light, moonlit mist. Constraints: no text, no logos, no oversaturation."
+    },
+    {
+      "id": "arc-visual-006",
+      "slug": "draconia-draconis-fire-gate",
+      "category": "guardian-godbeast",
+      "surface": "vertical-social-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Draconia", "Draconis", "Fire Gate"],
+      "gate": "Fire",
+      "guardian": "Draconia",
+      "prompt": "Use case: illustration-story. Asset type: vertical social poster. Primary request: Draconia, Arcanean Goddess of the Fire Gate, with bonded Godbeast Draconis. Scene/backdrop: volcanic glass forge-temple suspended above an Ember Fall crater, not grimdark. Subject: Draconia in embersteel armor, controlled willpower, not rage; Draconis coils as a massive radiant dragon-shaped fire intelligence behind the forge. Style/medium: cinematic high-end fantasy-science poster, luxury cosmic myth-tech. Composition/framing: 9:16, powerful vertical silhouette, dragon scale reads instantly, clean bottom for future caption. Lighting/mood: crimson, volcanic orange, ember gold, awe and transformation. Materials/textures: Draconis Ember, volcanic glass, heat shimmer, star-forged metal. Constraints: no text, no logos, no superhero spandex, no chaotic flames blocking subject."
+    },
+    {
+      "id": "arc-visual-007",
+      "slug": "maylinn-laeylinn-heart-gate",
+      "category": "guardian-godbeast",
+      "surface": "character-portal-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Maylinn", "Laeylinn", "Heart Gate"],
+      "gate": "Heart",
+      "guardian": "Maylinn",
+      "prompt": "Use case: illustration-story. Asset type: Guardian portal portrait. Primary request: Maylinn, Arcanean Goddess of the Heart Gate, with bonded Godbeast Laeylinn. Scene/backdrop: living crystal garden inside an AI-lab conservatory, healing cracks through luminous root systems. Subject: Maylinn in refined jade and gold, calm healer strength; Laeylinn as a vast worldtree deer made of living jade and moonlit branches. Style/medium: cinematic Arcanea myth-tech, gentle but premium. Composition/framing: 4:5, intimate foreground plus enormous protective presence, strong central silhouette. Lighting/mood: green, jade, warm gold, soft rose undertone, restorative. Materials/textures: Laeylinn Jade, living crystal, organic tissue-compatible crystal, ancient paper prayer ribbons with no readable text. Constraints: no text, no logos, no sentimental stock look."
+    },
+    {
+      "id": "arc-visual-008",
+      "slug": "alera-otome-voice-gate",
+      "category": "guardian-godbeast",
+      "surface": "square-gallery-1x1",
+      "aspectRatio": "1:1",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Alera", "Otome", "Voice Gate"],
+      "gate": "Voice",
+      "guardian": "Alera",
+      "prompt": "Use case: illustration-story. Asset type: square gallery hero. Primary request: Alera, Arcanean Goddess of the Voice Gate, with bonded Godbeast Otome. Scene/backdrop: resonant archive chamber where sound becomes visible geometry. Subject: Alera holds a silent creation-frequency crystal; Otome appears as an elegant sacred Godbeast made of harmonic rings and warm light, not a generic pet. Style/medium: premium cinematic concept art, Arcanea AI-lab mythology. Composition/framing: square, circular harmonic composition, strong clean emblem shape, no readable glyphs. Lighting/mood: gold, cream, teal resonance, truthful and expressive. Materials/textures: Otome Resonite, gold foil, parchment, dark glass, starlight metal. Constraints: no text, no logos, no music notes as cheesy decoration."
+    },
+    {
+      "id": "arc-visual-009",
+      "slug": "lyria-yumiko-sight-gate",
+      "category": "guardian-godbeast",
+      "surface": "vertical-social-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Lyria", "Yumiko", "Sight Gate"],
+      "gate": "Sight",
+      "guardian": "Lyria",
+      "prompt": "Use case: illustration-story. Asset type: vertical social poster. Primary request: Lyria, Arcanean Goddess of the Sight Gate, with bonded Godbeast Yumiko. Scene/backdrop: prismatic observatory at the edge of a folded cerebrum-like terrain used only as metaphor, not medical claim. Subject: Lyria looks through a Yumiko Prism that reveals hidden intentions as clean light planes; Yumiko appears as a vast prismatic guardian silhouette woven into the observatory lens. Style/medium: cinematic Arcanea concept art, neural-cosmos inspired but not scientific diagram. Composition/framing: 9:16, eye and prism readable immediately, vertical depth. Lighting/mood: silver, prismatic teal, controlled gold, visionary. Materials/textures: Yumiko Prism, smoked glass, starlight metal, spectral microscopy grain. Constraints: no text, no logos, no rainbow clutter, no medical stock imagery."
+    },
+    {
+      "id": "arc-visual-010",
+      "slug": "aiyami-sol-crown-gate",
+      "category": "guardian-godbeast",
+      "surface": "square-gallery-1x1",
+      "aspectRatio": "1:1",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Aiyami", "Sol", "Crown Gate"],
+      "gate": "Crown",
+      "guardian": "Aiyami",
+      "prompt": "Use case: illustration-story. Asset type: square gallery hero. Primary request: Aiyami, Arcanean Goddess of the Crown Gate, with bonded Godbeast Sol. Scene/backdrop: high white-gold energy sanctum above a dark void sea. Subject: Aiyami in restrained luminous regalia, enlightened but human-readable; Sol appears as a vast white-gold solar Godbeast made of contained energy, stable and dangerous. Style/medium: premium cinematic Arcanea portrait, clean AI-lab divinity. Composition/framing: 1:1, centered but not static, strong halo geometry, high contrast. Lighting/mood: white light, gold, deep indigo, calm transcendence. Materials/textures: Sol Quartz, starlight metal, translucent energy glass. Constraints: no text, no logos, no angel cliche, no overexposed whiteout."
+    },
+    {
+      "id": "arc-visual-011",
+      "slug": "elara-vaelith-starweave-gate",
+      "category": "guardian-godbeast",
+      "surface": "website-wide-16x9",
+      "aspectRatio": "16:9",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Elara", "Vaelith", "Starweave Gate"],
+      "gate": "Starweave",
+      "guardian": "Elara",
+      "prompt": "Use case: illustration-story. Asset type: wide website portal frame. Primary request: Elara, Arcanean Goddess of the Starweave Gate, with bonded Godbeast Vaelith. Scene/backdrop: spacetime observatory where corridors between Realms drift like luminous threads. Subject: Elara gestures across a woven star map; Vaelith appears partially outside spacetime as a graceful obsidian-cosmic Godbeast whose edges phase through matter. Style/medium: cinematic luxury cosmic myth-tech, premium. Composition/framing: 16:9, starweave threads guide the eye, clean left/right negative space. Lighting/mood: black-gold, violet-white, teal corridor signals, transformational. Materials/textures: Vaelith Obsidian, ghost steel, dark glass, gold plasma. Constraints: no text, no logos, no random node explosion."
+    },
+    {
+      "id": "arc-visual-012",
+      "slug": "ino-kyuro-unity-gate",
+      "category": "guardian-godbeast",
+      "surface": "character-portal-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Ino", "Kyuro", "Unity Gate"],
+      "gate": "Unity",
+      "guardian": "Ino",
+      "prompt": "Use case: illustration-story. Asset type: Guardian portal portrait. Primary request: Ino, Arcanean God or Goddess of the Unity Gate, with bonded Godbeast Kyuro. Scene/backdrop: perfectly quiet black-gold bridge where two separate worlds meet without merging. Subject: Ino holds a luminous treaty-like artifact with no text; Kyuro appears as a silent void-crystal Godbeast, watchful and still, absorbing noise rather than threatening. Style/medium: refined cinematic Arcanea image, premium stillness. Composition/framing: 4:5, balanced dual-world composition, strong negative space. Lighting/mood: black, gold, pearl, deep silence, partnership. Materials/textures: Kyuro Void Crystal, Aethervane ghost steel, dark glass. Constraints: no text, no logos, no horror, no villain framing."
+    },
+    {
+      "id": "arc-visual-013",
+      "slug": "shinkami-source-gate",
+      "category": "guardian-godbeast",
+      "surface": "website-wide-16x9",
+      "aspectRatio": "16:9",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Shinkami", "Source", "Source Gate"],
+      "gate": "Source",
+      "guardian": "Shinkami",
+      "prompt": "Use case: illustration-story. Asset type: wide website hero. Primary request: Shinkami, Arcanean God or Goddess of the Source Gate, with bonded Godbeast Source. Scene/backdrop: meta-consciousness observatory where proof artifacts, memory routes, and creator choices form a calm luminous architecture. Subject: Shinkami stands before the Source Gate, not as final boss, but as metacognitive guide; Source appears as an immense non-anthropomorphic presence of light, void, and structured memory. Style/medium: cinematic Arcanea AI-lab divinity, restrained, clean, awe. Composition/framing: 16:9, one central gate, strong quiet space, scalable for homepage. Lighting/mood: black-gold, white source light, teal memory routes, sovereign calm. Materials/textures: starlight metal, living crystal, dark glass, gold foil. Constraints: no text, no logos, no cultic pose, no overcluttered halos."
+    },
+    {
+      "id": "arc-visual-014",
+      "slug": "vael-crystal-reliquary",
+      "category": "artifact-material",
+      "surface": "store-asset-1x1",
+      "aspectRatio": "1:1",
+      "canonRefs": ["CANON_LOCKED.md Arcanean Materials", "Vael Crystals"],
+      "gate": "Foundation",
+      "guardian": "Lyssandria",
+      "prompt": "Use case: product-mockup. Asset type: square artifact product visual. Primary request: a Vael Crystal reliquary holding nine harmony-locked crystals, each with distinct material behavior but no labels. Scene/backdrop: dark glass museum plinth in an Arcanea studio. Subject: premium reliquary case with living crystal, gold foil, starlight metal, soft teal memory lines. Style/medium: cinematic product photography rendered as high-fidelity illustration, luxury object, collectible proof artifact. Composition/framing: 1:1, object centered, inspectable, clean dark background. Lighting/mood: controlled gold highlights, deep indigo shadows, quiet premium. Materials/textures: Kaelith Stone, Veloura Glass, Draconis Ember, Laeylinn Jade, Otome Resonite, Yumiko Prism, Sol Quartz, Vaelith Obsidian, Kyuro Void Crystal. Constraints: no text, no logos, no fake inscriptions, no generic gem pile."
+    },
+    {
+      "id": "arc-visual-015",
+      "slug": "luminor-metal-forge",
+      "category": "artifact-material",
+      "surface": "website-social-16x9",
+      "aspectRatio": "16:9",
+      "canonRefs": ["CANON_LOCKED.md Luminor Metals", "Luminor is rank"],
+      "gate": "Fire",
+      "guardian": "Draconia",
+      "prompt": "Use case: illustration-story. Asset type: wide forge scene and social source. Primary request: the forging of Luminor Metals as a metaphor for highest-rank integration; do not depict Luminors as a species. Scene/backdrop: sacred forge where Shael, Veloryn, Draconite, Aethervane, and theoretical Luminarch are represented as distinct alloy samples. Subject: a ranked creator's hands, not a deity, carefully stabilizing a small all-frequency alloy under expert supervision. Style/medium: cinematic Arcanea craft scene, product-proof energy. Composition/framing: 16:9, hands and alloy central, forge scale behind, no readable text. Lighting/mood: ember gold, teal, deep obsidian, focused craft. Materials/textures: self-repairing metal, memory silver, dragon-breath alloy, ghost steel, living crystal. Constraints: no text, no logos, no fantasy blacksmith cliche, no overclaiming stable Luminarch."
+    },
+    {
+      "id": "arc-visual-016",
+      "slug": "nero-shard-quarantine",
+      "category": "artifact-material",
+      "surface": "story-portal-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["CANON_LOCKED.md Nero not evil", "Shadow is corrupted Void", "Nero Shards"],
+      "gate": "Void-Spirit",
+      "guardian": "Shinkami",
+      "prompt": "Use case: illustration-story. Asset type: story portal poster. Primary request: a Nero Shard quarantine chamber showing the difference between fertile Void and corrupted Shadow. Scene/backdrop: quiet black-gold research sanctum with two contained fields: one fertile unknown, one unstable corrupted Shadow. Subject: a sealed transparent black Hollow Glass shard watched by a careful creator-scientist; the chamber is respectful, not demonizing Nero. Style/medium: premium cinematic Arcanea, AI-lab mythology, serious provenance tone. Composition/framing: 4:5, shard readable, dual light fields clear, safe space for later caption. Lighting/mood: black-gold, purple-white, restrained crimson warning glints. Materials/textures: Hollow Glass, Dissonance Ore, Kurusei Iron, dark glass, gold containment threads. Constraints: no text, no logos, no evil Void framing, no horror gore."
+    },
+    {
+      "id": "arc-visual-017",
+      "slug": "pyrathis-world-dragon-dream",
+      "category": "sister-world",
+      "surface": "youtube-thumb-16x9",
+      "aspectRatio": "16:9",
+      "canonRefs": ["CANON_LOCKED.md Sister-Worlds STAGING", "Pyrathis", "Heart of Pyrathis"],
+      "gate": "Fire",
+      "guardian": "Draconia",
+      "prompt": "Use case: illustration-story. Asset type: YouTube thumbnail source frame. Primary request: Pyrathis as an unhatched world-dragon whose dreams shape a volcanic sister-world. Scene/backdrop: planetary cross-section with a vast sleeping dragon silhouette beneath continents, volcanic warmth and dream-resonance rising to surface cities. Subject: the scale of a world-body, surface dragons as tiny dream-fragments in the atmosphere. Style/medium: cinematic fantasy-science world poster, premium, alive and healthy despite magnitude. Composition/framing: 16:9, immediate scale, dragon silhouette readable, clean space for later title overlay. Lighting/mood: ember warmth, cosmic dark, gold fire, awe not apocalypse. Materials/textures: volcanic glass, starlight metal, living mountain, warm magma light. Constraints: no text, no logos, no destruction-porn, staging-canon caution."
+    },
+    {
+      "id": "arc-visual-018",
+      "slug": "world-tower-dragon-habitat",
+      "category": "mega-scale-world",
+      "surface": "tiktok-reels-shorts-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["Arcanea visual doctrine", "Scale worlds", "Living habitats"],
+      "gate": "Earth-Wind",
+      "guardian": "Lyssandria",
+      "prompt": "Use case: illustration-story. Asset type: vertical social hook frame. Primary request: a kilometer-high living world tower where gigantic dragons can live inside terraced ecosystems. Scene/backdrop: vibrant healthy tower grown from living stone, crystal, forest, waterfall, and woven fabric bridges, rising through clouds. Subject: one enormous dragon partially visible inside the tower habitat, with tiny creator figures on a bridge for scale. Style/medium: Arcanea luxury cosmic myth-tech, cinematic, bright alive worldbuilding. Composition/framing: 9:16, tower reads instantly, dragon scale is mind-bending but elegant, strong vertical lines. Lighting/mood: sunrise gold, teal waterfalls, green life, clean atmosphere. Materials/textures: living stone, sacred obsidian, vibrant fabrics, crystal terraces, moss light. Constraints: no text, no logos, no grimdark, no generic medieval tower."
+    },
+    {
+      "id": "arc-visual-019",
+      "slug": "mar-arcano-living-sea-gate",
+      "category": "realm-world",
+      "surface": "website-wide-16x9",
+      "aspectRatio": "16:9",
+      "canonRefs": ["CANON_LOCKED.md Mar Arcano STAGING", "Five elements", "Aquifer-corridors"],
+      "gate": "All Five Elements",
+      "guardian": "Ino",
+      "prompt": "Use case: illustration-story. Asset type: wide world portal. Primary request: Mar Arcano as a multi-Realm sea where five source currents meet and aquifer-corridors carry water and resonance, not travelers. Scene/backdrop: oceanic starlight map seen from a cliffside observatory, five luminous currents converging under the sea. Subject: a living sea-gate visible beneath transparent water, with tiny ships and floating archive markers for scale. Style/medium: cinematic Arcanea worldbuilding, premium, precise. Composition/framing: 16:9, horizon and underwater gate readable, clean negative space. Lighting/mood: ocean blue, silver, seafoam, crystal, warm gold. Materials/textures: water-glass, nacre, starlight metal, living coral, crystal clear sea. Constraints: no text, no logos, no fantasy pirate cliche."
+    },
+    {
+      "id": "arc-visual-020",
+      "slug": "webtoon-first-trial-panel",
+      "category": "webtoon",
+      "surface": "webtoon-vertical-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["Arcanea chosen responsibility", "Genesis proof loop"],
+      "gate": "Foundation",
+      "guardian": "Alera",
+      "prompt": "Use case: illustration-story. Asset type: webtoon vertical source panel. Primary request: first trial moment, a creator deciding to answer The Drift by making a proof artifact. Scene/backdrop: tall vertical panel in an Arcanea studio corridor, rain-lit dark glass outside, luminous codex table inside. Subject: a human creator in modern clothing pauses with one hand near a small glowing gift relic, expression honest and uncertain, not heroic posing. Style/medium: premium webtoon/anime-adjacent cinematic panel, refined linework feel, not generic anime. Composition/framing: 9:16, strong emotional face, relic first-read, clean upper safe zone. Lighting/mood: intimate gold, teal signal, quiet responsibility. Materials/textures: ancient paper, dark glass, gold foil, starlight metal. Constraints: no speech bubbles, no text, no logos, no melodrama."
+    },
+    {
+      "id": "arc-visual-021",
+      "slug": "storybook-gift-and-trial-cover-art",
+      "category": "storybook-book",
+      "surface": "book-cover-art-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["Arcanea chosen responsibility", "Call Gift Trial Proof Stewardship"],
+      "gate": "Heart",
+      "guardian": "Maylinn",
+      "prompt": "Use case: illustration-story. Asset type: storybook cover art without title text. Primary request: warm cover image for an Arcanea storybook about the Gift and the Trial. Scene/backdrop: a luminous forest-library where ancient books grow from living branches and a small artifact glows on a stone table. Subject: a young creator and a mentor-like luminous presence looking at the artifact together, responsibility and wonder, no superiority. Style/medium: premium illustrated storybook art, sophisticated not childish, Arcanea materials. Composition/framing: 4:5 cover-safe, central artifact, characters on either side, clean top space for later typography. Lighting/mood: warm gold, moonlight, jade, gentle courage. Materials/textures: living crystal, ancient paper, root-wood, gold thread, moonlit dust. Constraints: no text, no logos, no cartoonish style."
+    },
+    {
+      "id": "arc-visual-022",
+      "slug": "music-portal-bloom-album-source",
+      "category": "music",
+      "surface": "album-social-1x1",
+      "aspectRatio": "1:1",
+      "canonRefs": ["Arcanea music lane", "portal bloom", "Alera Voice Gate"],
+      "gate": "Voice",
+      "guardian": "Alera",
+      "prompt": "Use case: stylized-concept. Asset type: square music cover source image. Primary request: Arcanea music portal bloom, an album-cover-like visual for a harmonic ritual swell without text. Scene/backdrop: dark circular chamber where a portal opens from sound as gold foil shimmer, inked sigil trace, and soft teal resonance waves. Subject: one luminous portal flower made of sound, crystal, and starlight thread, floating above a black glass floor. Style/medium: cinematic abstract-object poster, premium, tactile, no generic audio visualizer. Composition/framing: 1:1, centered strong object, album-cover readable, no text. Lighting/mood: gold, teal, deep black, harmonic and alive. Materials/textures: Otome Resonite, gold foil, dark glass, ink, portal light. Constraints: no text, no logos, no waveform cliche."
+    },
+    {
+      "id": "arc-visual-023",
+      "slug": "tiny-creator-colossal-guardian-hook",
+      "category": "social-hook",
+      "surface": "tiktok-reels-shorts-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["Arcanea scale", "Guardians roles", "Godbeasts companions"],
+      "gate": "Sight",
+      "guardian": "Lyria",
+      "prompt": "Use case: illustration-story. Asset type: vertical hook frame for TikTok, Reels, and Shorts. Primary request: a tiny creator faces a kilometer-scale sacred Godbeast companion, communicating awe, responsibility, and usable creative power. Scene/backdrop: living valley with a world-sized sacred creature whose body forms cliffs, waterfalls, and luminous fabric-like ecosystems. Subject: one tiny creator on a bridge holding a proof artifact, the colossal Godbeast bends close with calm intelligence, not attacking. Style/medium: cinematic Arcanea world art, premium, emotionally immediate. Composition/framing: 9:16, giant face and tiny creator both readable, strong scale, clean caption-safe bottom. Lighting/mood: sunrise gold, teal water, living green, awe and tenderness. Materials/textures: living stone, crystal, vibrant fabrics, starlight metal. Constraints: no text, no logos, no monster attack, no horror."
+    },
+    {
+      "id": "arc-visual-024",
+      "slug": "one-proof-artifact-against-the-drift",
+      "category": "social-og",
+      "surface": "x-youtube-og-16x9",
+      "aspectRatio": "16:9",
+      "canonRefs": ["The Drift", "Proof artifact", "Arcanea Method"],
+      "gate": "Source",
+      "guardian": "Shinkami",
+      "prompt": "Use case: ads-marketing. Asset type: X, YouTube thumbnail, and website OG source frame. Primary request: one finished proof artifact glowing on a dark table while the background shows blurred passive feed-noise dissolving into calm memory routes. Scene/backdrop: premium Arcanea AI-lab tabletop, no visible app UI, no readable feeds. Subject: one proof artifact, a small handcrafted crystal-codex object, must be the clear hero. Style/medium: cinematic product-poster hybrid, Arcanea mythic creative intelligence, precise. Composition/framing: 16:9, artifact centered left, quiet right side for deterministic text overlay later, high contrast. Lighting/mood: black-gold, teal memory signal, serious and high-agency. Materials/textures: dark glass, gold foil, living crystal, ancient paper, starlight metal. Constraints: no text, no logos, no UI, no screenshots, no fear-mongering."
+    }
+  ]
+}
+

@@ -1,0 +1,40 @@
+{
+  "asset_uid": "arc-overlay-b4-033-fire-builder-4x5",
+  "source_asset": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-033-fire-gate-draconis-healthy-forge-titan.png",
+  "output_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\overlay-proofs\\b4-2026-07-06T0549\\arc-overlay-b4-033-fire-builder-4x5.png",
+  "mirror_path": "C:\\Users\\frank\\brands\\image-system\\arcanea\\2026-07-06-conductor\\overlay-proofs\\b4-2026-07-06T0549\\arc-overlay-b4-033-fire-builder-4x5.png",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "workflow": "deterministic-social-overlay-proof",
+  "asset_tier": "C-over-B",
+  "surface": "instagram-tiktok-4x5",
+  "crop": "instagram-4x5",
+  "text_overlay": {
+    "method": "PIL deterministic code overlay",
+    "title": "FIRE IS A BUILDER",
+    "subtitle": "Draconis sleeps beneath the forge. Courage becomes a place people can live.",
+    "chip": "FIRE GATE / DRACONIA"
+  },
+  "governance": {
+    "rights_status": "generated-owned-source-plus-owned-code-overlay",
+    "approval_status": "staging-candidate",
+    "score30": 28,
+    "decision": "overlay-proof-pass",
+    "risk": "Intense fire palette needs contrast-safe copy placement; canon allows Draconis dragon coding, but balance feed with non-dragon assets.",
+    "mamoru_status": "not-applicable; no Mamoru asset promoted"
+  },
+  "provenance": {
+    "created_at": "2026-07-06T03:56:17.848750+00:00",
+    "coding_agent": "codex",
+    "source_model": "codex built-in image_gen via source sidecar",
+    "overlay_model": "none; deterministic code",
+    "prompt_ref": "iteration-prompts-b4.json plus source .vis.provenance.json"
+  },
+  "file": {
+    "sha256": "2016017f08c05ae814ff76bc2369f5363a606732038613e1e52a168d775987f0",
+    "width": 1080,
+    "height": 1350,
+    "mime_type": "image/png"
+  }
+}

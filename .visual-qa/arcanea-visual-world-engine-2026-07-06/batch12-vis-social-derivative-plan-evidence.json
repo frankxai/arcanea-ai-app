@@ -1,0 +1,168 @@
+{
+  "version": "1.0",
+  "task": "Arcanea Visual World Conductor Batch 12 VIS social derivative dry-run",
+  "surface": "VIS manifest-only social derivative plan for the Batch 12 Witness Bridge 9:16 proof",
+  "audience": "Frank as human canon and launch approver, Arcanea visual-world operators, internal social review",
+  "first_read": "VIS can describe the social derivative targets for the selected Batch 12 proof, but all public-use variants remain blocked until rights and approval gates are resolved.",
+  "standards": [
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/best-practices/image-logo-visual-generation.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/visual-intelligence/README.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/VISUAL_DOCTRINE.md"
+  ],
+  "references": [
+    {
+      "label": "VIS social derivative dry-run",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-visual-world-engine-2026-07-06/batch12-vis-social-derivative-plan.json",
+      "reason": "Manifest-only VIS plan showing selected asset, target derivative paths, and blocked public-use gates."
+    },
+    {
+      "label": "Primary Batch 12 VIS URI",
+      "source": "visual://asset/asset_70c54fb51619e220e2d9f2c9",
+      "reason": "The local VIS identity for the 9:16 Witness Bridge overlay proof."
+    },
+    {
+      "label": "Primary Batch 12 overlay proof",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/arc-overlay-b12-005-witness-bridge-9x16.png",
+      "reason": "Source asset used for derivative planning."
+    },
+    {
+      "label": "Conductor planning log",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/planning-with-files/ARCANEA_VISUAL_WORLD_CONDUCTOR_2026-07-06.md",
+      "reason": "Shared loop ledger for ship, iterate, restart decisions."
+    },
+    {
+      "label": "Conductor mirror",
+      "source": "C:/Users/frank/brands/image-system/arcanea/2026-07-06-conductor",
+      "reason": "Local mirror for generated-asset loop evidence and handoff files."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Keep derivative planning manifest-only until rights and approval are resolved.",
+      "Preserve the exact target derivative paths for future gated execution.",
+      "Keep Batch 12 as an internal-review candidate only.",
+      "Keep Mamoru marked STAGING and absent from this Batch 12 proof.",
+      "Avoid dirty gallery, public image, campaign, canon, and social launch writes from this lap."
+    ],
+    "avoid": [
+      "Do not create derivative files while VIS public-use gates are blocked.",
+      "Do not upload, publish, mint, or schedule any social variant.",
+      "Do not set rights or approval status without Frank approval.",
+      "Do not promote staging assets into canon or public gallery."
+    ],
+    "signature": "The Witness Bridge proof now has a precise blocked social derivative manifest without crossing any publication gate.",
+    "system": [
+      "VIS derivative plan id: derivative_plan_e6ff213931f0654abfe5df6d.",
+      "Preset: social.",
+      "Selected assets: 1.",
+      "Planned variants: 0.",
+      "Blocked variants: 3.",
+      "Blocked variants are social-square-1080, social-story-1080x1920, and social-wide-1920x1080.",
+      "Write model: manifest-only; no files transformed, uploaded, published, minted, or deleted."
+    ]
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "generated-media",
+    "provenance": "generated",
+    "why_premium": "The source proof remains an inspected internal candidate; this lap improves operational readiness by defining social derivative targets while preserving public-use blockers.",
+    "shortcut_risk": "low",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-visual-world-engine-2026-07-06/batch12-vis-social-derivative-plan.json",
+      "kind": "VIS social derivative dry-run manifest",
+      "inspected": true,
+      "notes": "Dry-run only. Selected 1 asset, planned 0 variants, blocked 3 variants."
+    },
+    {
+      "path_or_url": "visual://asset/asset_70c54fb51619e220e2d9f2c9",
+      "kind": "VIS asset URI",
+      "inspected": true,
+      "notes": "Source asset for social derivative planning."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/derivatives/social/arc-overlay-b12-005-witness-bridge-9x16-social-square-1080.jpg",
+      "kind": "planned social derivative target",
+      "inspected": true,
+      "notes": "Not created. Blocked by VIS public-use gate."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/derivatives/social/arc-overlay-b12-005-witness-bridge-9x16-social-story-1080x1920.jpg",
+      "kind": "planned social derivative target",
+      "inspected": true,
+      "notes": "Not created. Blocked by VIS public-use gate."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/derivatives/social/arc-overlay-b12-005-witness-bridge-9x16-social-wide-1920x1080.jpg",
+      "kind": "planned social derivative target",
+      "inspected": true,
+      "notes": "Not created. Blocked by VIS public-use gate."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Tier C remains appropriate for an internal overlay proof and manifest-only derivative plan; public release remains blocked."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "evidence": "The source 9:16 proof was previously inspected and remains the selected Batch 12 primary asset."
+    },
+    {
+      "name": "vis-derivative-plan",
+      "status": "pass",
+      "evidence": "node bin/vis.mjs derivative-plan --preset social visual://asset/asset_70c54fb51619e220e2d9f2c9 --json completed and wrote a manifest."
+    },
+    {
+      "name": "public-use-gate",
+      "status": "blocked",
+      "evidence": "Derivative plan blocks all three variants because rights status requires human review and approval status is candidate."
+    },
+    {
+      "name": "no-transform",
+      "status": "pass",
+      "evidence": "VIS plan write_model is manifest-only; no files were transformed, uploaded, published, minted, or deleted."
+    },
+    {
+      "name": "mamoru-staging",
+      "status": "pass",
+      "evidence": "Mamoru remains STAGING and absent from Batch 12 proof assets."
+    },
+    {
+      "name": "dirty-gallery-collision",
+      "status": "pass",
+      "evidence": "No app gallery, public image, campaign, package, or canon files were modified in this lap."
+    },
+    {
+      "name": "external-actions",
+      "status": "pass",
+      "evidence": "No deploy, push, external publish, spend, external message, web3 action, or canon promotion was performed."
+    }
+  ],
+  "score": {
+    "total": 25,
+    "max": 30,
+    "breakdown": {
+      "operational_readiness": 9,
+      "governance_safety": 9,
+      "release_readiness": 7
+    },
+    "notes": "The derivative plan improves operational readiness, but release readiness remains blocked by unresolved VIS public-use gates."
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "No derivative files were created; target paths are planned only.",
+    "Public-use gate remains blocked until rights and approval are resolved.",
+    "Quality evaluation metadata remains missing in VIS.",
+    "No gallery, social queue, or launch wiring happened."
+  ]
+}

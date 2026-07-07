@@ -1,0 +1,53 @@
+{
+  "asset_id": "arc-conductor-005",
+  "title": "Witness Bridge Dungeon Divers",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-conductor-2026-07-06",
+  "workflow": "built-in-image-gen",
+  "created_at": "2026-07-06T13:03:41+02:00",
+  "source_method": "generated-media",
+  "asset_tier": "B",
+  "provenance": "generated",
+  "rights_status": "generated-owned-source",
+  "approval_status": "internal-review-candidate",
+  "decision": "ship-internal-review",
+  "score30": 27,
+  "surface": "vertical-social-source-frame",
+  "dimensions": {
+    "width": 941,
+    "height": 1672
+  },
+  "file": {
+    "path": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-005-witness-bridge-dungeon-divers.png",
+    "mime_type": "image/png",
+    "sha256": "7f7ef873c5c4cea2a9effd4280088b24a3ce96db441467d0b001246cd2f1b901",
+    "source_path": "C:/Users/frank/.codex/generated_images/019f3498-d4e0-7351-8464-c2ab293192a5/ig_0260ea61f230d997016a4b8ae7fbe48191b99cce7bf2c9498d.png"
+  },
+  "characters": [
+    "Arion",
+    "Mera",
+    "Emilia"
+  ],
+  "canon_status": {
+    "mamoru": "not-present",
+    "staging_promotion": "none",
+    "luminor_usage": "not-used-as-species"
+  },
+  "prompt_summary": "Revised Mamoru-free Witness Bridge key visual with practical Academy Dungeon Diver wardrobe, clear trio roles, living tower infrastructure, and colossal benevolent Guardian architecture.",
+  "inspection": {
+    "strengths": [
+      "solves Mamoru staging blocker by using exactly Arion, Mera, and Emilia",
+      "stronger practical academy wardrobe than v1",
+      "high-impact Guardian/world-tower scale with tiny students and bridge depth",
+      "clear role props: proof artifact, water-memory lens, prism gauntlet"
+    ],
+    "risks": [
+      "still leans toward polished anime key-art idealization",
+      "needs mobile crop/text-overlay proof before social use",
+      "not wired into gallery or VIS rescan yet"
+    ],
+    "next_action": "Prepare deterministic 9:16 and 4:5 overlay/crop proofs before any public use."
+  },
+  "notes": "Best Mamoru-free conductor candidate from the 12:54 heartbeat lap. Internal review only; no gallery wiring or public promotion performed."
+}

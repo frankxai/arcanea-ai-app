@@ -1,0 +1,111 @@
+{
+  "version": "1.0",
+  "task": "Arcanea visual world conductor loop for Academy Gate-Descent campaign",
+  "surface": "Story portal, gallery, social static, Genesis proof seed",
+  "audience": "AI-native creators, Arcanea fantasy/anime audiences, worldbuilding fans, and creative learners",
+  "standards": [
+    "C:/Users/frank/starlight/repos/DESIGN_TASTE.md",
+    "C:/Users/frank/starlight/repos/WEB_EXPERIENCE_STANDARD.md",
+    "C:/Users/frank/starlight/repos/MOTION_TASTE_RUBRIC.md",
+    "C:/Users/frank/starlight/repos/VISUAL_QA_GATE.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md"
+  ],
+  "references": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/STAGING_MAMORU.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/god-run-2026-07-06/ledger.csv",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/prompt-bank.json",
+    "https://creators.instagram.com/create-engaging-content",
+    "https://ads.tiktok.com/help/article/creative-best-practices",
+    "https://support.google.com/youtube/answer/10059070",
+    "https://business.x.com/en/advertising/creative-best-practices"
+  ],
+  "direction": {
+    "keep": [
+      "found-family party dynamics",
+      "proof artifact as visible story mechanism",
+      "colossal Academy scale",
+      "warmth after danger",
+      "named Arcanea materials and witness/consent ethics"
+    ],
+    "avoid": [
+      "generic dungeon hunting",
+      "loot-table fantasy",
+      "celebrity likeness",
+      "random magic circles",
+      "blue-cyan dominance",
+      "generated text"
+    ],
+    "signature": "The Gate That Must Stay Open: distributed burden, proof, consent, memory, and friendship inside a kilometer-scale Arcanea Academy.",
+    "system": "Candidate assets live in a non-colliding conductor run with CSV ledger, prompt log, metadata JSONL, VIS sidecars, and mirrored image-system copies."
+  },
+  "asset_quality": {
+    "tier": "B",
+    "source_method": "generated-media",
+    "provenance": "generated",
+    "why_premium": "The best candidates combine social hook, Arcanea-specific proof/story mechanics, high-scale Academy architecture, and emotional intimacy rather than generic fantasy spectacle.",
+    "shortcut_risk": "medium",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-001-academy-gate-descent-ensemble.png",
+      "kind": "16:9 story key art candidate",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-002-gate-must-stay-open.png",
+      "kind": "9:16 social hook candidate",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-003-aftermath-garden-proof.png",
+      "kind": "4:5 storybook warmth candidate",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-visual-world-engine-2026-07-06/god-run-contact-sheet.jpg",
+      "kind": "contact sheet review",
+      "inspected": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "notes": "Tier B generated media, not decorative filler."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "notes": "Images and contact sheet inspected visually."
+    },
+    {
+      "name": "canon-status",
+      "status": "blocked",
+      "notes": "Mamoru remains staging, so Mamoru-containing assets are not public-ship."
+    },
+    {
+      "name": "vis-provenance",
+      "status": "pass",
+      "notes": "Per-asset provenance sidecars were created for conductor assets."
+    },
+    {
+      "name": "site-integration",
+      "status": "blocked",
+      "notes": "Gallery files are dirty and should wait for manifest-adapter patch."
+    }
+  ],
+  "score": {
+    "total": 26,
+    "max": 30,
+    "breakdown": {
+      "hook": 9,
+      "canon": 8,
+      "craft": 9
+    }
+  },
+  "decision": "iterate"
+}

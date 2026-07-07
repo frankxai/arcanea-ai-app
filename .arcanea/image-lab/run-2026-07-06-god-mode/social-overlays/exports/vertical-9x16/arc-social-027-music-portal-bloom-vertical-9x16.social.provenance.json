@@ -1,0 +1,30 @@
+{
+  "id": "arc-social-027-music-portal-bloom-vertical-9x16",
+  "campaignId": "arc-social-027-music-portal-bloom",
+  "sourceAssetId": "arc-visual-027",
+  "channelKey": "vertical-9x16",
+  "platforms": [
+    "TikTok",
+    "Instagram Reels",
+    "Instagram Stories",
+    "YouTube Shorts"
+  ],
+  "ratio": "9:16",
+  "width": 1080,
+  "height": 1920,
+  "sizeBytes": 2331663,
+  "sha256": "5742f7baf01076630576df94a73bb111b2ad18d158a8a8c7537bd563e1140379",
+  "headline": "Make The Song Visible",
+  "subhead": "Sound becomes a proof artifact.",
+  "cta": "Compose something you can keep.",
+  "proof": "Music portal / Voice Gate",
+  "gate": "Voice",
+  "guardian": "Alera",
+  "score30": 29,
+  "sourceImage": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-027-music-portal-bloom-clean.png",
+  "outputPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\social-overlays\\exports\\vertical-9x16\\arc-social-027-music-portal-bloom-vertical-9x16.png",
+  "sourceMethod": "code-rendered deterministic overlays on inspected generated media",
+  "rightsStatus": "generated-owned-derived",
+  "approvalGate": "social-approvals",
+  "createdAt": "2026-07-06T07:49:20+02:00"
+}

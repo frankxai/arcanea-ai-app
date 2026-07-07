@@ -1,0 +1,39 @@
+{
+  "images": [
+    {
+      "name": "arion-academy-courtyard",
+      "filename": "arion-academy.png",
+      "category": "Characters",
+      "aspectRatio": "9:16",
+      "prompt": "SUBJECT: Arion, a young Mage Warrior student at the Academy of Arcanea. ORGANIZING METAPHOR: A crystalline training courtyard. STYLE: Premium Anime/Webtoon concept art, highly detailed, vibrant colors. VIEWPOINT: Low angle, heroic shot. COMPONENTS: 1. ARION: center, wearing advanced magetech armor blending knightly steel with glowing teal circuits, striking a dynamic pose. 2. MAGETECH BLADE: Held in right hand, a sword forged of pure golden light and dark matter. 3. ACADEMY SPIRES: Background, towering crystal structures touching the clouds. 4. MAGIC CIRCLE: Below his feet, complex sacred geometry glowing in azure. ORGANIC ANCHOR: White doves flying through the courtyard, bringing life to the magical tech. ATMOSPHERE: Sunny, hopeful, lens flares, magical dust particles. EMOTIONAL TONE: Hopeful, epic, determined. NEGATIVE: Flat, low quality, cartoonish, generic."
+    },
+    {
+      "name": "mamoru-dungeon-dive",
+      "filename": "mamoru-dungeon.png",
+      "category": "Characters",
+      "aspectRatio": "16:9",
+      "prompt": "SUBJECT: Mamoru, the steadfast Defender/Paladin Dungeon Diver. ORGANIZING METAPHOR: Deep crystalline dungeon cavern. STYLE: Premium cinematic fantasy illustration, Da Vinci Dark variant. VIEWPOINT: Isometric high angle, showing the scale of the dungeon. COMPONENTS: 1. MAMORU: Center-left, massive towering shield of obsidian and gold light, taking a defensive stance. 2. THE SHIELD: Emitting a massive dome of golden protective energy (741 Hz Crown Gate resonance). 3. DUNGEON BOSS: A massive shadowy chimera with glowing red eyes lunging from the darkness on the right. 4. DUNGEON ENVIRONMENT: Glowing purple crystals, ancient ruins, dark abyssal drop. ORGANIC ANCHOR: Luminescent cave moss and glowing spores floating in the air. ATMOSPHERE: Tense, dark, high contrast lighting, glowing magical effects. EMOTIONAL TONE: Courage, unyielding protection, epic danger. NEGATIVE: Flat lighting, boring composition, blurry."
+    },
+    {
+      "name": "mera-elemental-burst",
+      "filename": "mera-elements.png",
+      "category": "Characters",
+      "aspectRatio": "1:1",
+      "prompt": "SUBJECT: Mera, the brilliant Elemental Wizard prodigy. ORGANIZING METAPHOR: An ancient library of floating books. STYLE: Dark Premium Glass with vibrant elemental colors. VIEWPOINT: Eye-level, close-up dynamic portrait. COMPONENTS: 1. MERA: Center, fierce concentration, eyes glowing with cosmic purple light. 2. FIRE MANIFESTATION: Her left hand conjuring a swirling crimson phoenix. 3. WATER MANIFESTATION: Her right hand directing a stream of silver-blue liquid starlight. 4. THE GRIMOIRES: Background, ancient floating books with glowing pages, glass-morphism data overlays. ORGANIC ANCHOR: Her flowing hair defying gravity like underwater kelp, incredibly detailed and lifelike. ATMOSPHERE: Overwhelming magical power, intense glowing lights, data and magic fusing. EMOTIONAL TONE: Brilliance, intense focus, overwhelming power. NEGATIVE: Muted colors, static pose, simple background."
+    },
+    {
+      "name": "emilia-assassin-strike",
+      "filename": "emilia-assassin.png",
+      "category": "Characters",
+      "aspectRatio": "9:16",
+      "prompt": "SUBJECT: Emilia, the Temporal Assassin, bending time for the perfect strike. ORGANIZING METAPHOR: A shattered clockwork dimension. STYLE: Cyberpunk Neon mixed with high fantasy. VIEWPOINT: Dynamic Dutch angle, extreme action shot. COMPONENTS: 1. EMILIA: Mid-air, sleek black and neon green tactical gear, trailing afterimages as time slows down. 2. DUAL DAGGERS: Weapons forged from captured starlight and quantum tech. 3. SHATTERED TIME: Glass-like shards of frozen moments floating in the air around her. 4. NEON TRAIL: The path of her movement leaving a glowing emerald green ribbon in the air. ORGANIC ANCHOR: Her intense, focused green eyes showing raw human determination amidst the quantum chaos. ATMOSPHERE: Matrix-like bullet time, neon glows, sharp contrast, hyper-kinetic. EMOTIONAL TONE: Lethal precision, breathtaking speed. NEGATIVE: Clunky armor, slow feeling, boring lighting."
+    },
+    {
+      "name": "academy-grand-hall",
+      "filename": "academy-hall.png",
+      "category": "Environments",
+      "aspectRatio": "16:9",
+      "prompt": "SUBJECT: The Grand Hall of the Starlight Academy of Arcanea. ORGANIZING METAPHOR: A futuristic cathedral of learning. STYLE: Dark Premium Glass, architectural visualization. VIEWPOINT: Grand wide shot from the entrance. COMPONENTS: 1. THE CENTRAL ORRERY: A massive floating holographic map of the interstellar empire and magic laylines. 2. THE PILLARS: Towering columns of white marble fused with glowing blue quantum circuits. 3. THE STUDENTS: Tiny figures of mages, warriors, and scholars walking below, showing the massive scale. 4. THE DOME: A transparent ceiling showing the cosmos and nebulas above. ORGANIC ANCHOR: Ancient, massive glowing oak trees growing directly out of the marble floor, their roots intertwining with the data streams. ATMOSPHERE: Awe-inspiring, serene, scholarly, bright cosmic light streaming down. EMOTIONAL TONE: Wonder, infinite possibility, institutional grandeur. NEGATIVE: Small scale, claustrophobic, dirty."
+    }
+  ]
+}

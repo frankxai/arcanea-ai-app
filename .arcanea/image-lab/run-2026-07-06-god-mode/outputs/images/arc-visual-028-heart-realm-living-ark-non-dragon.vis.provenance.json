@@ -1,0 +1,90 @@
+{
+  "asset_uid": "arcanea-2026-07-heart-realm-living-ark-non-dragon",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b3",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "heart realm living ark non dragon",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "instagram-tiktok-4x5",
+  "aspect_ratio": "4:5",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-028-heart-realm-living-ark-non-dragon.png",
+    "sha256": "f8f2076ea4f326b09d5492dde157c2b5ef39d4a6bf65a5fa7b6449e0f23c35df",
+    "mime_type": "image/png",
+    "width": 1122,
+    "height": 1402,
+    "size_bytes": 2989425
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b3.json#arc-visual-028",
+    "prompt": "Use case: illustration-story. Asset type: 4:5 social source frame. Primary request: a non-dragon Arcanea megastructure world so vast it competes with the strongest fantasy/social scale images without using a dragon. Scene/backdrop: a living ark-city grown from an ancient worldtree and cliffside crystal ribs, kilometers tall, carrying gardens, waterfalls, woven fabric markets, and tiny creator bridges through bright clouds. Subject: an immense peaceful Godbeast-scale presence shaped like a moss-lit stone manta or floating root-whale shelters the city as habitat infrastructure; tiny human creators cross a gold-and-teal fabric bridge for scale. Style/medium: Arcanea luxury cosmic myth-tech, healthy living worldbuilding, cinematic bright social hook. Composition/framing: 4:5, massive ark silhouette first, tiny creators second, open upper-left caption-safe sky, clear depth. Lighting/mood: sunrise gold, jade life, teal water, alive and hopeful. Materials/textures: living stone, root-wood, sacred obsidian, vibrant fabric, crystal terraces, moss light. Constraints: no dragon, no wings like a dragon, no destruction, no grimdark, no generic medieval castle, no text, no logos, no cluttered city noise.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "4:5"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 29,
+    "decision": "approve",
+    "failure_modes": [
+      "Tiny human scale figures are present but need thumbnail crop check",
+      "Very high fantasy scale requires deterministic captioning to connect it back to Arcanea creator proof flows"
+    ],
+    "next_improvement": "Promote to gallery and test 4:5 social overlay/crop with proof-world hook copy outside the image."
+  },
+  "canon": {
+    "refs": [
+      "Arcanea visual doctrine",
+      "Heart Gate",
+      "non-dragon scale world"
+    ],
+    "gate": "Heart",
+    "guardian": "Maylinn"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "mega-scale-world"
+      },
+      {
+        "trait_type": "surface",
+        "value": "instagram-tiktok-4x5"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Heart"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Maylinn"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-028-heart-realm-living-ark-non-dragon.vis.provenance.json"
+  },
+  "used_in": [
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\app\\gallery\\gallery-data.ts",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T04:43:20+02:00"
+}

@@ -1,0 +1,76 @@
+{
+  "version": "2026-07-06",
+  "run": "run-2026-07-06-god-mode",
+  "batch": "b2",
+  "assetTier": "B",
+  "sourceMethod": "generated-media",
+  "globalNegative": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+  "items": [
+    {
+      "id": "arc-visual-004c",
+      "slug": "lyssandria-kaelith-gravity-foundation",
+      "category": "guardian-godbeast",
+      "surface": "character-portal-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Lyssandria", "Kaelith", "Foundation Gate"],
+      "gate": "Foundation",
+      "guardian": "Lyssandria",
+      "prompt": "Use case: illustration-story. Asset type: revised Guardian portal portrait. Primary request: Lyssandria, Arcanean God of the Foundation Gate, with bonded Godbeast Kaelith redesigned as a Foundation-specific mountain-root gravity beast, not a dragon. Scene/backdrop: sacred engineering observatory grown into a mountain root system, gravity terraces bending around a living-stone sanctuary. Subject: Lyssandria stands calmly in a simple architect mantle and light starlight armor; behind and below the observatory, Kaelith is an immense mountain-tortoise/root-stone/gravity Godbeast with moss-lit shell plates, crystal root limbs, and a quiet protective presence. Style/medium: cinematic luxury cosmic myth-tech, Arcanea AI-lab mythology, museum-grade. Composition/framing: 4:5, Lyssandria foreground, Kaelith as enormous terrain-presence, clear scale anchor, quiet uncluttered geometry. Lighting/mood: earth green, stone gray, warm gold foundation glow, calm authority. Materials/textures: living stone, Kaelith Stone, starlight metal, root-wood, moss light, clean glass instruments. Constraints: no text, no letters, no logos, no fantasy gown, no crown, no medieval armor, no dragon wings, no horns, no reptile-dragon silhouette, no aggressive monster pose."
+    },
+    {
+      "id": "arc-visual-008b",
+      "slug": "alera-otome-clean-resonance",
+      "category": "guardian-godbeast",
+      "surface": "square-gallery-1x1",
+      "aspectRatio": "1:1",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Alera", "Otome", "Voice Gate"],
+      "gate": "Voice",
+      "guardian": "Alera",
+      "prompt": "Use case: illustration-story. Asset type: square gallery hero. Primary request: Alera, Arcanean Goddess of the Voice Gate, with bonded Godbeast Otome, rendered as clean truth-resonance without music-note cliches. Scene/backdrop: silent resonant archive chamber made of dark glass, gold foil, and warm teal sound geometry. Subject: Alera holds a blank creation-frequency crystal near her heart; Otome appears as an elegant sacred Godbeast made of harmonic rings, feather-light glass, and warm light, protective and intelligent, not a pet. Style/medium: premium cinematic concept art, Arcanea AI-lab mythology, precise and social-ready. Composition/framing: 1:1, circular harmonic composition, Alera and Otome form a strong emblem shape, no clutter. Lighting/mood: gold, cream, teal resonance, truthful and expressive. Materials/textures: Otome Resonite, blank gold foil, parchment texture with no writing, dark glass, starlight metal. Constraints: no text, no glyphs, no fake script, no logos, no visible music notes, no waveform decoration, no fantasy robe cosplay."
+    },
+    {
+      "id": "arc-visual-009b",
+      "slug": "lyria-yumiko-prism-observatory",
+      "category": "guardian-godbeast",
+      "surface": "vertical-social-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Lyria", "Yumiko", "Sight Gate"],
+      "gate": "Sight",
+      "guardian": "Lyria",
+      "prompt": "Use case: illustration-story. Asset type: vertical social poster. Primary request: Lyria, Arcanean Goddess of the Sight Gate, with bonded Godbeast Yumiko as a clean prismatic guardian. Scene/backdrop: prismatic observatory above folded neural-cosmos terrain used only as metaphor, with smoked glass platforms and clean light planes. Subject: Lyria studies a blank prism relic that reveals hidden structure as pure light, while Yumiko appears as a vast guardian silhouette woven into the lens architecture, not an animal mount. Style/medium: cinematic Arcanea concept art, neural-cosmos inspired, premium, not scientific diagram. Composition/framing: 9:16, face, prism, and guardian silhouette readable in one second; clean upper caption-safe zone. Lighting/mood: silver, prismatic teal, restrained gold, visionary and composed. Materials/textures: Yumiko Prism, smoked glass, starlight metal, spectral microscopy grain. Constraints: no text, no logos, no rainbow clutter, no medical stock imagery, no fake diagrams, no tiny marks."
+    },
+    {
+      "id": "arc-visual-020c",
+      "slug": "webtoon-first-trial-three-beats",
+      "category": "webtoon",
+      "surface": "webtoon-vertical-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["Arcanea chosen responsibility", "Genesis proof loop", "The Drift"],
+      "gate": "Voice",
+      "guardian": "Alera",
+      "prompt": "Use case: illustration-story. Asset type: vertical webtoon sequence source. Primary request: a clean three-beat webtoon-style vertical frame continuing the first trial: notice The Drift, choose a proof artifact, place it into the blank ledger. Scene/backdrop: Arcanea studio corridor at night, dark glass, rain reflections, warm forge light, no papers or books. Subject: one modern creator shown in three stacked cinematic beats without speech bubbles: top beat uncertain face beside passive fog, middle beat hand choosing a small glowing artifact, bottom beat artifact placed on a blank proof ledger surface. Style/medium: premium webtoon/anime-adjacent cinematic panel, refined linework feel, Arcanea AI-lab premium, not generic anime. Composition/framing: 9:16, three clear visual beats, each has clean negative space, no tiny details. Lighting/mood: intimate gold, teal signal, quiet responsibility. Materials/textures: dark glass, smooth gold foil with no engravings, starlight metal, rain reflections, blank obsidian table. Constraints: no speech bubbles, no text, no letters, no symbols, no books, no papers, no diagrams, no melodrama."
+    },
+    {
+      "id": "arc-visual-025",
+      "slug": "world-tower-social-crop",
+      "category": "mega-scale-world",
+      "surface": "instagram-tiktok-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["Arcanea visual doctrine", "Scale worlds", "Living habitats"],
+      "gate": "Heart",
+      "guardian": "Maylinn",
+      "prompt": "Use case: illustration-story. Asset type: 4:5 social crop source for Instagram and TikTok. Primary request: a living world tower so vast that entire dragon-scale habitats, forests, waterfalls, and cloth bridge cities exist inside it, but with cleaner crop-safe composition than the first vertical. Scene/backdrop: kilometer-high tower grown from living stone, crystal terraces, root-wood, waterfalls, and vibrant woven fabric bridges rising through bright clouds. Subject: one immense but peaceful dragon-scale resident partially visible inside a terrace, tiny creator silhouettes on a bridge for scale, healthy ecology everywhere. Style/medium: Arcanea luxury cosmic myth-tech, cinematic bright worldbuilding, premium social hook. Composition/framing: 4:5, tower first-read, huge scale, open top-left space for deterministic overlay later. Lighting/mood: sunrise gold, teal water, jade life, clean atmosphere. Materials/textures: living stone, sacred obsidian, vibrant fabric, moss light, crystal terraces. Constraints: no text, no logos, no grimdark, no generic medieval tower, no destruction, no cluttered tiny city noise."
+    },
+    {
+      "id": "arc-visual-027",
+      "slug": "music-portal-bloom-clean",
+      "category": "music",
+      "surface": "album-social-1x1",
+      "aspectRatio": "1:1",
+      "canonRefs": ["Arcanea music lane", "portal bloom", "Alera Voice Gate"],
+      "gate": "Voice",
+      "guardian": "Alera",
+      "prompt": "Use case: stylized-concept. Asset type: square music cover source image. Primary request: Arcanea music portal bloom, a text-free album-cover-grade object showing sound becoming a living portal. Scene/backdrop: dark circular chamber with clean black glass floor, no inscriptions, no sigils, no writing. Subject: one luminous portal flower made of resonance, living crystal, gold foil shimmer, and soft teal waves, floating as a premium object. Style/medium: cinematic abstract-object poster, tactile, luxury, not an audio visualizer. Composition/framing: 1:1, centered strong object, clean border, album-cover readable at thumbnail size. Lighting/mood: gold, teal, deep black, harmonic and alive. Materials/textures: Otome Resonite, smooth gold foil, dark glass, living crystal, portal light. Constraints: no text, no logos, no glyphs, no sigils, no fake writing, no waveform cliche."
+    }
+  ]
+}

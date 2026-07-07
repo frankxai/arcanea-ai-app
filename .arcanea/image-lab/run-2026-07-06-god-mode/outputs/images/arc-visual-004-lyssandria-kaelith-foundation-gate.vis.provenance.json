@@ -1,0 +1,88 @@
+{
+  "asset_uid": "arcanea-2026-07-lyssandria-kaelith-foundation-gate",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b1",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "lyssandria kaelith foundation gate",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "character-portal-4x5",
+  "aspect_ratio": "4:5",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-004-lyssandria-kaelith-foundation-gate.png",
+    "sha256": "072eee35b1ca2eca2d387c1d23aeb17d6f9833d335a44cc601bb3feb4ccba89d",
+    "mime_type": "image/png",
+    "width": 1122,
+    "height": 1402,
+    "size_bytes": 3206467
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "prompt-bank.json#arc-visual-004",
+    "prompt": "Use case: illustration-story. Asset type: Guardian portal portrait. Primary request: Lyssandria, Arcanean God of the Foundation Gate, with bonded Godbeast Kaelith as an earth-scale presence. Scene/backdrop: living stone observatory rooted into a mountain, gravity-dense crystal veins and stable geometric terraces. Subject: Lyssandria stands calmly in star-forged armor with grounded noble silhouette; Kaelith appears as a colossal living-stone Godbeast behind the observatory, protective rather than hostile. Style/medium: cinematic luxury cosmic myth-tech, high-fashion heroic, museum-grade. Composition/framing: 4:5, Lyssandria foreground, Kaelith immense but readable, strong scale anchor, no clutter. Lighting/mood: earth green, stone gray, gold foundation glow, calm authority. Materials/textures: living stone, Kaelith Stone, starlight metal, root-wood, moss light. Constraints: no text, no logos, no fantasy robes, no mud-grit.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, or watermark inside the image. Arcanea aesthetic: luxury cosmic myth-tech, sacred obsidian, starlight metal, gold thread, living crystal, ancient paper, dark glass, moonlight, portal light. AI-lab premium, not fantasy-game chrome. Cinematic composition with one dominant subject and clean crop-safe negative space. Avoid generic fantasy cosplay, superhero spandex, medieval mud-grit, neon hacker grids, purple cliche, stock fantasy, overdecorated ornaments, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "4:5"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate-needs-art-direction",
+    "score30": 24,
+    "decision": "iterate",
+    "failure_modes": [
+      "Lyssandria reads as polished fantasy armor/cosplay",
+      "needs stronger AI-lab myth-tech posture"
+    ],
+    "next_improvement": "Use 004b as improved candidate; next pass should de-dragon Kaelith."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md Ten Gates",
+      "Lyssandria",
+      "Kaelith",
+      "Foundation Gate"
+    ],
+    "gate": "Foundation",
+    "guardian": "Lyssandria"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "guardian-godbeast"
+      },
+      {
+        "trait_type": "surface",
+        "value": "character-portal-4x5"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Foundation"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Lyssandria"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-004-lyssandria-kaelith-foundation-gate.vis.provenance.json"
+  },
+  "used_in": [],
+  "created_at": "2026-07-06T02:32:00+02:00"
+}

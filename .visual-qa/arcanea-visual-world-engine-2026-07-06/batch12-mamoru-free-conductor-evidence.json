@@ -1,0 +1,178 @@
+{
+  "version": "1.0",
+  "task": "Arcanea Visual World Conductor Batch 12 Mamoru-free control candidate",
+  "surface": "Two generated 9:16 source frames for the Witness Bridge / Academy Gate-Descent story lane",
+  "audience": "Frank as human canon and launch approver, Arcanea creators, anime/webtoon social audiences, internal visual-world reviewers",
+  "first_read": "A Mamoru-free Witness Bridge candidate can carry the Academy Gate-Descent story without staging promotion risk, but it still needs crop and overlay proof before public use.",
+  "standards": [
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/VISUAL_DOCTRINE.md"
+  ],
+  "references": [
+    {
+      "label": "Batch 12 v1 source image",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-004-witness-bridge-v1-fashion-drift.png",
+      "reason": "Documents the rejected first pass: good world scale but weak practical Academy read."
+    },
+    {
+      "label": "Batch 12 v2 source image",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-005-witness-bridge-dungeon-divers.png",
+      "reason": "Selected Mamoru-free internal-review candidate with stronger practical Dungeon Diver styling."
+    },
+    {
+      "label": "Batch 12 v1 VIS sidecar",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-004-witness-bridge-v1-fashion-drift.vis.provenance.json",
+      "reason": "Records provenance, hash, dimensions, score, and rejection rationale."
+    },
+    {
+      "label": "Batch 12 v2 VIS sidecar",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-005-witness-bridge-dungeon-divers.vis.provenance.json",
+      "reason": "Records provenance, hash, dimensions, score, and internal-review decision."
+    },
+    {
+      "label": "Conductor mirror",
+      "source": "C:/Users/frank/brands/image-system/arcanea/2026-07-06-conductor",
+      "reason": "Canonical local mirror for generated-asset loop evidence and handoff files."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Mamoru is absent from Batch 12 and remains STAGING elsewhere.",
+      "The strongest visual system is colossal benevolent Guardian architecture integrated into a living world tower.",
+      "Arion, Mera, and Emilia should be shown as role-bearing Academy Dungeon Divers, not beauty/fashion archetypes.",
+      "Use generated-image outputs as source frames only after sidecar, score, and crop proof.",
+      "Keep all external, DB, web3, deploy, push, and canon-promotion gates closed."
+    ],
+    "avoid": [
+      "Fashion-pose drift, exposed-leg styling, high heels, or glamour posture for Academy quest visuals.",
+      "Treating a 27/30 source frame as public-ready before overlay/crop proof.",
+      "Wiring new generated images into gallery while the gallery/app files are already dirty from other lanes.",
+      "Claiming VIS ingestion until a fresh VIS rescan includes the new sidecars."
+    ],
+    "signature": "The Witness Bridge turns scale into responsibility: three creators keep a proof artifact truthful under the gaze of a living tower Guardian.",
+    "system": [
+      "Batch 12 is generated-media Tier B with generated provenance.",
+      "004 is retained as an iterate/reference-only sample for scale and lighting.",
+      "005 is selected for internal review and future overlay/crop proof.",
+      "No public gallery wiring or canonical promotion happened in this lap."
+    ]
+  },
+  "asset_quality": {
+    "tier": "B",
+    "source_method": "generated-media",
+    "provenance": "generated",
+    "why_premium": "The selected 005 candidate has strong Arcanea-specific scale, material language, role props, and a Mamoru-free story frame that avoids the main staging blocker. It still needs crop and overlay proof before public use.",
+    "shortcut_risk": "medium",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-004-witness-bridge-v1-fashion-drift.png",
+      "kind": "generated source frame",
+      "inspected": true,
+      "notes": "Score 23/30. Good world scale, but rejected for fashion/editorial drift in the characters."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-004-witness-bridge-v1-fashion-drift.vis.provenance.json",
+      "kind": "VIS provenance sidecar",
+      "inspected": true,
+      "notes": "Sidecar records dimensions, SHA-256, source path, score, and rejection rationale."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-005-witness-bridge-dungeon-divers.png",
+      "kind": "generated source frame",
+      "inspected": true,
+      "notes": "Score 27/30. Selected as Mamoru-free internal-review source frame; not public-ready until crop/overlay proof."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-005-witness-bridge-dungeon-divers.vis.provenance.json",
+      "kind": "VIS provenance sidecar",
+      "inspected": true,
+      "notes": "Sidecar records dimensions, SHA-256, source path, score, and internal-review decision."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Batch 12 assets are Tier B generated source frames with known generated provenance."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "evidence": "Both generated PNGs were inspected directly after generation and after copy into the conductor folder."
+    },
+    {
+      "name": "mamoru-staging",
+      "status": "pass",
+      "evidence": "Both sidecars mark Mamoru not-present; no staging character material was promoted."
+    },
+    {
+      "name": "batch12-v1-quality",
+      "status": "fail",
+      "evidence": "004 scored 23/30 because exposed-leg/fashion styling undercuts the practical Academy Dungeon Diver premise."
+    },
+    {
+      "name": "batch12-v2-quality",
+      "status": "pass",
+      "evidence": "005 scored 27/30 and corrects the major wardrobe/pose issue while preserving scale and role clarity."
+    },
+    {
+      "name": "vis-provenance-sidecars",
+      "status": "pass",
+      "evidence": "Both new conductor images have .vis.provenance.json sidecars with hashes, dimensions, source path, and governance status."
+    },
+    {
+      "name": "gallery-file-collision",
+      "status": "pass",
+      "evidence": "No gallery, public image, app, route, package, or campaign data file was modified; new files are isolated to conductor/evidence paths."
+    },
+    {
+      "name": "crop-overlay-proof",
+      "status": "blocked",
+      "evidence": "005 needs deterministic 9:16 and 4:5 overlay/crop proof before social or public gallery use."
+    },
+    {
+      "name": "fresh-vis-rescan",
+      "status": "blocked",
+      "evidence": "New sidecars exist but have not been included in a fresh VIS rescan."
+    },
+    {
+      "name": "design-evidence-validation",
+      "status": "pass",
+      "evidence": "This manifest is validated after write; previous conductor, route, and main design evidence manifests were valid before the Batch 12 write."
+    },
+    {
+      "name": "image-engine-verifier",
+      "status": "pass",
+      "evidence": "node .loop/arcanea-image-engines/verify.mjs returned GATE PASS before Batch 12 evidence write."
+    },
+    {
+      "name": "external-actions",
+      "status": "pass",
+      "evidence": "No deploy, push, external publish, spend, external message, DB registry write, web3 action, or canon promotion was performed."
+    }
+  ],
+  "score": {
+    "total": 25,
+    "max": 30,
+    "breakdown": {
+      "source_quality": 8,
+      "canon_safety": 9,
+      "release_readiness": 8
+    },
+    "notes": "005 itself scores 27/30 for internal review, but the batch decision remains 25/30 iterate because crop proof, VIS rescan, and route/gallery wiring are incomplete."
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "004 should not be used except as a reference for scale and lighting.",
+    "005 is stronger and Mamoru-free, but still needs social crop/overlay proof.",
+    "No route/gallery integration was attempted to avoid dirty file collisions.",
+    "VIS sidecars are present but not yet included in a fresh VIS rescan.",
+    "Mamoru remains STAGING and no staging material was promoted."
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "asset_uid": "arcanea-2026-07-storybook-first-proof-living-library",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b3",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "storybook first proof living library",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "storybook-cover-source-4x5",
+  "aspect_ratio": "4:5",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-030-storybook-first-proof-living-library.png",
+    "sha256": "523969661af83de3289a72eebd08c6b75f921346d024f48d26d129e52b042ee8",
+    "mime_type": "image/png",
+    "width": 1122,
+    "height": 1402,
+    "size_bytes": 3002348
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b3.json#arc-visual-030",
+    "prompt": "Use case: illustration-story. Asset type: storybook/book cover source without text. Primary request: Arcanea storybook source art for The First Proof, showing a creator child and mentor entering a living lore library where proof artifacts become gentle worlds. Scene/backdrop: luminous living library carved into a worldtree interior, shelves are blank crystal slabs and warm dark glass, no written pages, no labels. Subject: a young creator and an elder mentor stand at the threshold; a small blank proof artifact floats between them, opening a tiny healthy world of water, roots, and gold light. Style/medium: premium storybook illustration with cinematic Arcanea myth-tech, warm, alive, not childish clipart. Composition/framing: 4:5, cover-like central doorway, safe top space for later deterministic title overlay outside the image. Lighting/mood: wonder, safety, responsibility, warm gold and teal. Materials/textures: ancient wood, living crystal, dark glass, soft starlight metal, moss glow. Constraints: no text, no letters, no book pages with writing, no symbols, no logos, no scary darkness, no generic fairy tale castle.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "4:5"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 28,
+    "decision": "approve",
+    "failure_modes": [
+      "Mentor clothing leans high fantasy, but the living-library/proof-artifact read is strong",
+      "Needs deterministic title treatment outside the image before book-cover use"
+    ],
+    "next_improvement": "Promote to gallery/book lane and create a cover overlay proof with exact typography in code or design tooling."
+  },
+  "canon": {
+    "refs": [
+      "Arcanea books",
+      "Genesis proof loop",
+      "living lore"
+    ],
+    "gate": "Source",
+    "guardian": "Shinkami"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "storybook-book"
+      },
+      {
+        "trait_type": "surface",
+        "value": "storybook-cover-source-4x5"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Source"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Shinkami"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-030-storybook-first-proof-living-library.vis.provenance.json"
+  },
+  "used_in": [
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\app\\gallery\\gallery-data.ts",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T04:43:20+02:00"
+}

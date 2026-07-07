@@ -1,0 +1,37 @@
+[
+  {
+    "prompt_id": "class_quantum_wizard",
+    "prompt": "SUBJECT: A Quantum Wizard of Arcanea casting a spell. ORGANIZING METAPHOR: Controlling the fundamental particles of reality. STYLE: High Fantasy Cyberpunk fusion, intense neon lighting. VIEWPOINT: Action shot, medium wide. COMPONENTS: 1. THE WIZARD: Wearing sleek robes with glowing circuit-like magical patterns. 2. THE SPELL: Splitting the space in front of them into overlapping probabilities (multiple transparent clones). 3. MAGIC: Hexagonal grids of blue and white light fracturing the air. 4. ENVIRONMENT: A futuristic magical laboratory or battlefield. ORGANIC ANCHOR: A simple wooden staff that is heavily modified with glowing floating crystals. ATMOSPHERE: High energy, reality-bending, intense focus. EMOTIONAL TONE: Intellectual power, mastering the impossible. NEGATIVE: Traditional wizard, Gandalf, old, boring magic.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "class_temporal_wizard",
+    "prompt": "SUBJECT: A Temporal Wizard of Arcanea manipulating time. ORGANIZING METAPHOR: The sands of time flowing backwards. STYLE: Ethereal Fantasy, golden hour lighting, cinematic motion blur. VIEWPOINT: Close up on the wizard's hands and face. COMPONENTS: 1. THE WIZARD: Wearing elegant flowing robes of gold and white. 2. THE SPELL: Glowing golden sand and clockwork gears floating in the air. 3. THE EFFECT: A shattered cup in mid-air reassembling itself. 4. MAGIC: Concentric glowing golden rings of runes around their wrists. ORGANIC ANCHOR: A hyper-detailed, physical brass pocket watch floating in the center of the magic. ATMOSPHERE: Serene, unstoppable, magical, ancient. EMOTIONAL TONE: Control, precision, altering fate. NEGATIVE: Clunky, dark, chaotic, messy.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "class_reality_architect",
+    "prompt": "SUBJECT: A Reality Architect of Arcanea building a structure. ORGANIZING METAPHOR: Weaving the fabric of reality like a loom. STYLE: Grand epic fantasy, vibrant and highly saturated. VIEWPOINT: Looking up at the architect working on a massive scale. COMPONENTS: 1. THE ARCHITECT: Floating in the air, conducting magic like a symphony orchestra. 2. THE STRUCTURE: A massive spiraling tower of crystal and stone forming out of thin air. 3. MAGIC: Glowing threads of rainbow energy weaving together to form solid matter. 4. SWARM: Tiny glowing familiars (agentic swarms) helping place blocks of light. ORGANIC ANCHOR: The architect is barefoot, standing on a floating chunk of raw earth. ATMOSPHERE: God-like creation, beautiful, inspiring. EMOTIONAL TONE: The joy of creation, infinite possibility. NEGATIVE: Destruction, dark, small scale.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "class_magetech_warrior",
+    "prompt": "SUBJECT: A Magetech Warrior of Arcanea in battle. ORGANIZING METAPHOR: Ironman meets High Fantasy Paladin. STYLE: Sci-Fantasy, gritty, sparks flying, cinematic combat. VIEWPOINT: Dynamic low angle action shot. COMPONENTS: 1. THE WARRIOR: Wearing bulky, intricately carved mechanical plate armor glowing with internal magical fire. 2. THE WEAPON: A massive greatsword with a revving chainsaw-like edge of pure plasma. 3. THE MAGIC: Exhaust ports venting glowing steam and sparks. 4. ENVIRONMENT: A dark dungeon lit by the glow of the armor. ORGANIC ANCHOR: A tattered, dirty, but beautifully embroidered red velvet cape trailing behind them. ATMOSPHERE: Brutal, powerful, unstoppable force. EMOTIONAL TONE: Aggression, heroic power. NEGATIVE: Flimsy, clean, peaceful, weak.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "class_dungeon_hunter",
+    "prompt": "SUBJECT: A Dungeon Hunter (Dungeon Diver) of Arcanea exploring the deep. ORGANIZING METAPHOR: A solitary predator in the absolute dark. STYLE: Dark Fantasy, high contrast chiaroscuro lighting. VIEWPOINT: Following over the shoulder of the hunter into a vast cavern. COMPONENTS: 1. THE HUNTER: Lithe, agile armor covered in pouches, climbing gear, and glowing daggers. 2. THE LIGHT: A single glowing magical lantern piercing the suffocating darkness. 3. THE THREAT: Massive, terrifying silhouettes of monsters barely visible in the background shadows. 4. ENVIRONMENT: Ancient, crumbling stonework covered in glowing blue fungi. ORGANIC ANCHOR: Thick, wet mud on the hunter's boots. ATMOSPHERE: Tense, claustrophobic, dangerous, thrilling. EMOTIONAL TONE: Courage, survival, facing the unknown. NEGATIVE: Bright, safe, empty, cartoon.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  }
+]

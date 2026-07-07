@@ -208,7 +208,8 @@
       "fileName": "lore-panel-design.png",
       "targetFolder": "assets/arcanea-visuals/social",
       "prompt": "## CONCEPT\nLore Panel Design template showing character stats and mythology cards.\n\n## ART DIRECTION\nIlluminated grimoire page. A premium layout showing a card frame on the left with a character portrait (Melodia), and a text panel on the right with custom font lines, runes, and gold foil markings.\n\n## COMPOSITION\nDual-column composition. Right-hand page has an elegant border frame. Left-hand page holds the glowing character card.\n\n## LIGHTING\nWarm gold and soft white-blue glow, casting subtle shadows on vellum-like textures.\n\n## PALETTE\nArcanean gold (#ffd700), Atlantean teal (#00bcd4), warm ivory (#fafaf6) on black void.\n\n## EXCLUDE\nchildish, cartoon, generic tech icons, plain white background.",
-      "status": "pending"
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/social/lore-panel-design.png"
     }
   ]
 }

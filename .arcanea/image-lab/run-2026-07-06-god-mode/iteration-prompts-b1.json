@@ -1,0 +1,61 @@
+{
+  "version": "2026-07-06",
+  "run": "run-2026-07-06-god-mode",
+  "batch": "b1-revisions",
+  "purpose": "Targeted revisions from Batch 1 visual QA: remove pseudo-text, clean surfaces, strengthen AI-lab myth-tech, preserve emotional hook.",
+  "items": [
+    {
+      "id": "arc-visual-002b",
+      "sourceId": "arc-visual-002",
+      "slug": "the-drift-vs-proof-ledger-blank",
+      "category": "main-storyline",
+      "surface": "tiktok-reels-shorts-hook-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["Arcanea brand pack", "The Drift", "Chosen responsibility"],
+      "gate": "Voice",
+      "guardian": "Alera",
+      "failureAddressed": "Pseudo-writing on ledger pages and paper fragments.",
+      "prompt": "Use case: illustration-story. Asset type: revised vertical social hook frame. Primary request: visualize The Drift being answered by a proof ledger, but with absolutely no readable or fake writing anywhere. Scene/backdrop: a tall vertical portal corridor; below, abstract blurred passive media fragments dissolve into mist; above, a clean luminous blank proof ledger opens as a symbolic object. Subject: one creator hand places a small finished crystal artifact onto a blank glowing ledger surface; no face needed, no enemy group, no superiority. Style/medium: cinematic Arcanea poster art, high contrast, tactile, precise, AI-lab premium. Composition/framing: 9:16, hand, artifact, and blank ledger readable in first second, strong top-bottom contrast, clean caption-safe space at top and bottom. Lighting/mood: shadow-to-gold transition, serious but hopeful. Materials/textures: blank ancient paper, dark glass, gold foil, teal memory lines, clean geometric light. Constraints: no text, no letters, no symbols that resemble writing, no logos, no UI, no manuscript pages, no newspaper scraps, no horror, no demonization of people."
+    },
+    {
+      "id": "arc-visual-024b",
+      "sourceId": "arc-visual-024",
+      "slug": "clean-proof-artifact-og",
+      "category": "social-og",
+      "surface": "x-youtube-og-16x9",
+      "aspectRatio": "16:9",
+      "canonRefs": ["The Drift", "Proof artifact", "Arcanea Method"],
+      "gate": "Source",
+      "guardian": "Shinkami",
+      "failureAddressed": "Tiny pseudo-runes on the proof artifact and weak right-side copy space.",
+      "prompt": "Use case: ads-marketing. Asset type: revised X, YouTube thumbnail, and website OG source frame. Primary request: one finished proof artifact glowing on a dark table, with completely blank metalwork and no inscriptions, while passive feed-noise dissolves into calm memory routes in the far background. Scene/backdrop: premium Arcanea AI-lab tabletop, no app UI, no cards with imagery, no readable feeds. Subject: one proof artifact, a small handcrafted crystal-codex object, the clear hero, positioned on the left third; right side is quiet dark negative space for deterministic text overlay later. Style/medium: cinematic product-poster hybrid, Arcanea mythic creative intelligence, precise, luxury object photography as illustration. Composition/framing: 16:9, artifact centered left, quiet right side, high contrast, clean silhouette. Lighting/mood: black-gold, teal memory signal, serious and high-agency. Materials/textures: blank dark glass, smooth gold foil with no engraved marks, living crystal, ancient paper texture with no writing, starlight metal. Constraints: no text, no letters, no symbols that resemble writing, no logos, no UI, no screenshots, no inscriptions, no runes, no fake glyphs, no fear-mongering."
+    },
+    {
+      "id": "arc-visual-020b",
+      "sourceId": "arc-visual-020",
+      "slug": "webtoon-first-trial-clean",
+      "category": "webtoon",
+      "surface": "webtoon-vertical-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["Arcanea chosen responsibility", "Genesis proof loop"],
+      "gate": "Foundation",
+      "guardian": "Alera",
+      "failureAddressed": "Foreground pages and diagrams introduced pseudo-symbols and clutter.",
+      "prompt": "Use case: illustration-story. Asset type: revised webtoon vertical source panel. Primary request: first trial moment, a creator deciding to answer The Drift by making a proof artifact, with no books, no papers, no diagrams, and no text-like marks. Scene/backdrop: tall vertical panel in an Arcanea studio corridor, rain-lit dark glass outside, clean black-glass table inside. Subject: a human creator in modern clothing pauses with one hand near a small glowing gift relic on a blank table, expression honest and uncertain, not heroic posing. Style/medium: premium webtoon/anime-adjacent cinematic panel, refined linework feel, Arcanea AI-lab premium, not generic anime. Composition/framing: 9:16, strong emotional face, relic first-read, clean upper safe zone, uncluttered foreground. Lighting/mood: intimate gold, teal signal, quiet responsibility. Materials/textures: dark glass, gold foil, starlight metal, rain reflections, clean obsidian table. Constraints: no speech bubbles, no text, no letters, no symbols that resemble writing, no logos, no books, no papers, no diagrams, no melodrama."
+    },
+    {
+      "id": "arc-visual-004b",
+      "sourceId": "arc-visual-004",
+      "slug": "lyssandria-kaelith-mythtech",
+      "category": "guardian-godbeast",
+      "surface": "character-portal-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Lyssandria", "Kaelith", "Foundation Gate"],
+      "gate": "Foundation",
+      "guardian": "Lyssandria",
+      "failureAddressed": "Lyssandria read as fantasy armor/cosplay instead of sacred engineering.",
+      "prompt": "Use case: illustration-story. Asset type: revised Guardian portal portrait. Primary request: Lyssandria, Arcanean God of the Foundation Gate, with bonded Godbeast Kaelith, redesigned away from fantasy cosplay into sacred engineering and AI-lab myth-tech. Scene/backdrop: living stone observatory rooted into a mountain, gravity-dense crystal veins, precise geometric terraces, subtle lab instrumentation built from stone and starlight metal. Subject: Lyssandria stands calmly in a simple architect-like mantle and star-forged light armor, noble angular silhouette, no ornate fantasy gown; Kaelith appears as a colossal living-stone Godbeast behind the observatory, protective rather than hostile, distinct from a generic dragon. Style/medium: cinematic luxury cosmic myth-tech, museum-grade, AI-lab premium. Composition/framing: 4:5, Lyssandria foreground, Kaelith immense but readable, strong scale anchor, quiet uncluttered composition. Lighting/mood: earth green, stone gray, gold foundation glow, calm authority. Materials/textures: living stone, Kaelith Stone, starlight metal, root-wood, moss light, clean glass instruments. Constraints: no text, no letters, no logos, no fantasy robes, no crown, no medieval armor cosplay, no mud-grit, no superhero suit."
+    }
+  ]
+}
+

@@ -1,0 +1,88 @@
+{
+  "asset_uid": "arcanea-2026-07-lyria-yumiko-lens-field",
+  "source_asset_uid": "arcanea-2026-07-lyria-yumiko-prism-observatory",
+  "batch_id": "2026-07-arcanea-visual-world-engine-b3",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 3,
+  "title": "lyria yumiko lens field",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "vertical-social-9x16",
+  "aspect_ratio": "9:16",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-009c-lyria-yumiko-lens-field.png",
+    "sha256": "3684c0b4879315ca6a0cef153dd619499575e9a9edef00c721bd156a7c252e0b",
+    "mime_type": "image/png",
+    "width": 941,
+    "height": 1672,
+    "size_bytes": 2794801
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b3.json#arc-visual-009c",
+    "prompt": "Use case: illustration-story. Asset type: vertical Guardian/Godbeast correction frame. Primary request: Lyria, Arcanean Goddess of the Sight Gate, with Yumiko as lens-field perception infrastructure, not a fox, not a wolf, not a mount, not an animal portrait. Scene/backdrop: a high prismatic observatory above folded cloud terrain, built from smoked glass platforms, clean lens arrays, and silver-gold perception mirrors. Subject: Lyria is a focused operator in restrained myth-tech clothing, holding a blank prism relic; Yumiko appears as a kilometer-scale guardian woven through the observatory optics: overlapping lens wings, transparent field arcs, intelligent light-pressure silhouette, more sacred instrument than animal. Style/medium: cinematic Arcanea concept art, neural-cosmos inspired only as metaphor, premium and original. Composition/framing: 9:16, one-second read of face, blank prism, and vast lens-field guardian; generous upper safe zone for later deterministic text overlay. Lighting/mood: clear vision, silver, restrained prismatic teal, pale gold, calm awe. Materials/textures: Yumiko Prism, smoked glass, starlight metal, spectral dust, clean crystal. Constraints: no text, no fake diagrams, no medical imagery, no rainbow clutter, no fox face, no wolf silhouette, no animal mount, no fantasy robe, no symbols.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "9:16"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 24,
+    "decision": "iterate",
+    "failure_modes": [
+      "Yumiko became a giant ethereal humanoid figure instead of lens-field perception infrastructure",
+      "The image is beautiful but too close to generic prestige goddess/anime portrait language for canon-forward promotion"
+    ],
+    "next_improvement": "Force Yumiko to be non-humanoid optics infrastructure: lens reefs, mirror weather, perception field, and no face/body silhouette."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md Ten Gates",
+      "Lyria",
+      "Yumiko",
+      "Sight Gate"
+    ],
+    "gate": "Sight",
+    "guardian": "Lyria"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 3,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "guardian-godbeast"
+      },
+      {
+        "trait_type": "surface",
+        "value": "vertical-social-9x16"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Sight"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Lyria"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-009c-lyria-yumiko-lens-field.vis.provenance.json"
+  },
+  "used_in": [],
+  "created_at": "2026-07-06T04:43:20+02:00"
+}

@@ -1,0 +1,189 @@
+{
+  "version": "1.0",
+  "task": "Arcanea Visual World Conductor Batch 11 route verification review",
+  "surface": "Local /gallery and /visual-world-engine route smoke evidence for Batch 11 source-frame candidates",
+  "audience": "Frank as human canon and launch approver, Arcanea creators, internal gallery and portal reviewers",
+  "first_read": "Batch 11 route wiring works for internal review, but promotion remains blocked until mobile, VIS, rights, and human approval gates close.",
+  "standards": [
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/VISUAL_DOCTRINE.md"
+  ],
+  "references": [
+    {
+      "label": "Batch 11 gallery and portal route smoke report",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-gallery-portal-http-report.json",
+      "reason": "Confirms route HTTP 200 status, Batch 11 title presence, screenshot paths, and server cleanup."
+    },
+    {
+      "label": "Gallery desktop route capture",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-gallery-desktop.png",
+      "reason": "Desktop context inspection for Gallery of Creation with Batch 11 cards visible."
+    },
+    {
+      "label": "Visual World Engine desktop route capture",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-portal-desktop.png",
+      "reason": "Desktop context inspection for portal metrics and Batch 11 route wiring."
+    },
+    {
+      "label": "Portal planning log",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/planning-with-files/ARCANEA_VISUAL_WORLD_ENGINE_PORTAL_2026-07-06.md",
+      "reason": "Records the owning agent's route acceptance notes."
+    },
+    {
+      "label": "Run review log",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/review.md",
+      "reason": "Records Batch 11 source-frame decisions and route verification append."
+    },
+    {
+      "label": "Conductor mirror",
+      "source": "C:/Users/frank/brands/image-system/arcanea/2026-07-06-conductor",
+      "reason": "Canonical local mirror for generated-asset loop evidence and handoff files."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Treat route smoke as internal evidence only: /gallery and /visual-world-engine returned 200 and included the three Batch 11 titles.",
+      "Use arc-visual-043 and arc-visual-044 as the current strongest internal-review image candidates.",
+      "Keep arc-visual-045 as gallery/worldbuilding with crop caution because the blank panel still weakens social first-read.",
+      "Keep Mamoru and any staging character material marked STAGING unless Frank explicitly approves promotion.",
+      "Keep Social Launch Room read-only: no publish, schedule, DB, web3, or external-message affordances."
+    ],
+    "avoid": [
+      "Promoting route smoke into public launch approval.",
+      "Claiming mobile route proof from this latest route pass; latest new route screenshots are desktop only.",
+      "Claiming Batch 11 is in the VIS asset count before a fresh VIS rescan.",
+      "Staging or committing the generated chrome-profile-batch11 browser cache.",
+      "Mutating dirty gallery/app/package files from this conductor lane."
+    ],
+    "signature": "Batch 11 is now visible in the live internal route surfaces; the worldbuilding loop is coherent, but release governance remains intentionally closed.",
+    "system": [
+      "Route evidence is browser-captured from owned local app surfaces.",
+      "Desktop screenshots were inspected for presence, framing, and obvious overlap/clipping.",
+      "Decision remains iterate because release gates are not complete even though local route smoke passes.",
+      "Verification cache is explicitly called out as a hygiene risk rather than promoted as an artifact."
+    ]
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "browser-capture",
+    "provenance": "owned",
+    "why_premium": "The route captures prove the owned Arcanea gallery and portal can render Batch 11 internally with clear desktop composition and no obvious route-level failure, but they are evidence artifacts rather than final public media.",
+    "shortcut_risk": "medium",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-gallery-portal-http-report.json",
+      "kind": "route-smoke report",
+      "inspected": true,
+      "notes": "/gallery and /visual-world-engine returned HTTP 200, included all three Batch 11 titles, wrote screenshots, and reported serverStopped true."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-gallery-desktop.png",
+      "kind": "desktop route screenshot",
+      "inspected": true,
+      "notes": "Gallery of Creation shows Batch 11 cards in context; no obvious desktop overlap or missing image state observed."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-portal-desktop.png",
+      "kind": "desktop route screenshot",
+      "inspected": true,
+      "notes": "Visual World Engine portal shows current counts and CTA; no obvious desktop overlap or missing hero state observed."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/chrome-profile-batch11",
+      "kind": "verification cache directory",
+      "inspected": true,
+      "notes": "Exists with 994 files and about 119098184 bytes; should remain excluded from staging or be cleaned in a dedicated hygiene pass."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Tier C browser-capture evidence is appropriate for route verification; it is not a final public hero/social asset."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "evidence": "Desktop gallery and portal screenshots were inspected from the verification directory."
+    },
+    {
+      "name": "route-smoke",
+      "status": "pass",
+      "evidence": "batch11-gallery-portal-http-report.json reports success true, serverStopped true, and HTTP 200 for /gallery and /visual-world-engine."
+    },
+    {
+      "name": "desktop-gallery-inspection",
+      "status": "pass",
+      "evidence": "Gallery desktop screenshot shows the Batch 11 route cards in context without obvious route-level visual failure."
+    },
+    {
+      "name": "desktop-portal-inspection",
+      "status": "pass",
+      "evidence": "Portal desktop screenshot shows the Visual World Engine surface and metrics without obvious route-level visual failure."
+    },
+    {
+      "name": "design-evidence-validation",
+      "status": "pass",
+      "evidence": "Existing design-loop, conductor, batch7, and batch11 evidence manifests validated before this manifest was written; this manifest is validated after write."
+    },
+    {
+      "name": "image-engine-verifier",
+      "status": "pass",
+      "evidence": "node .loop/arcanea-image-engines/verify.mjs returned GATE PASS."
+    },
+    {
+      "name": "social-snapshot-verifier",
+      "status": "pass",
+      "evidence": "node scripts/verify-social-launch-data.cjs reports 9 campaigns, 3 P0, 36 exports, 5 contact sheets, and rightsStatus unknown_until_vis_rights_ingestion."
+    },
+    {
+      "name": "mobile-route-smoke",
+      "status": "blocked",
+      "evidence": "The newest Batch 11 route smoke produced desktop route screenshots only; no fresh mobile gallery/portal route capture was found in this lap."
+    },
+    {
+      "name": "fresh-vis-rescan",
+      "status": "blocked",
+      "evidence": "Portal evidence still references the last completed VIS scan count of 76; Batch 11 sidecars exist but need a fresh VIS rescan before count claims."
+    },
+    {
+      "name": "verification-cache-hygiene",
+      "status": "fail",
+      "evidence": "chrome-profile-batch11 exists with 994 files and about 119 MB; do not stage or ship this cache."
+    },
+    {
+      "name": "dev-server-state",
+      "status": "pass",
+      "evidence": "No matching Next/dev server process was found after verification checks."
+    },
+    {
+      "name": "external-actions",
+      "status": "pass",
+      "evidence": "No deploy, push, external publish, spend, external message, DB registry write, web3 action, or canon promotion was performed."
+    }
+  ],
+  "score": {
+    "total": 25,
+    "max": 30,
+    "breakdown": {
+      "route_integrity": 9,
+      "visual_context": 7,
+      "governance_hygiene": 9
+    },
+    "notes": "Internal route verification is strong enough to keep iterating, but mobile proof, VIS rescan, rights ingestion, and cache hygiene prevent ship."
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "This route proof is not a publishing approval.",
+    "No fresh mobile /gallery or /visual-world-engine route screenshot was found for this newest route pass.",
+    "Batch 11 VIS provenance sidecars exist, but the latest VIS count is stale until rescan.",
+    "The chrome-profile-batch11 cache should not be staged or mirrored as a deliverable.",
+    "Mamoru remains STAGING and no staging material was promoted into canon."
+  ]
+}

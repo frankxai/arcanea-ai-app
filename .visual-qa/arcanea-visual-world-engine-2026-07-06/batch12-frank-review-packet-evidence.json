@@ -1,0 +1,154 @@
+{
+  "version": "1.0",
+  "task": "Arcanea Visual World Conductor Batch 12 Frank review packet",
+  "surface": "Internal review packet for the Batch 12 Witness Bridge proof and its blocked VIS state",
+  "audience": "Frank as human canon, rights, and launch approver",
+  "first_read": "Batch 12 has a clear internal review candidate, but it stays blocked for public/gallery/social use until Frank resolves rights and approval.",
+  "standards": [
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/best-practices/image-logo-visual-generation.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/visual-intelligence/README.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/VISUAL_DOCTRINE.md"
+  ],
+  "references": [
+    {
+      "label": "Frank review packet",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/batch12-frank-review-packet.md",
+      "reason": "Human-readable packet with approve, iterate, and reject options without mutating VIS rights or approval."
+    },
+    {
+      "label": "Primary Batch 12 proof",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/arc-overlay-b12-005-witness-bridge-9x16.png",
+      "reason": "Actual export inspected for final-crop readability before packet creation."
+    },
+    {
+      "label": "VIS score capture",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-visual-world-engine-2026-07-06/batch12-vis-primary-score.txt",
+      "reason": "Records current VIS score 57 and needs-curation verdict."
+    },
+    {
+      "label": "VIS social derivative plan",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-visual-world-engine-2026-07-06/batch12-vis-social-derivative-plan.json",
+      "reason": "Records planned-but-blocked social derivative target paths."
+    },
+    {
+      "label": "Conductor mirror",
+      "source": "C:/Users/frank/brands/image-system/arcanea/2026-07-06-conductor",
+      "reason": "Local mirror for generated-asset loop evidence and handoff files."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Keep the Batch 12 proof internal-review only.",
+      "Preserve Frank as the required approver for rights, approval, public use, and canon promotion.",
+      "Keep the exact VIS URI, proof path, source path, score, blockers, and planned social target paths in one review packet.",
+      "Keep Mamoru marked STAGING and absent from the Batch 12 proof.",
+      "Avoid all gallery, social launch, route, web3, rights, approval, and canon mutations."
+    ],
+    "avoid": [
+      "Do not imply Frank approved the asset.",
+      "Do not set VIS rights or approval status.",
+      "Do not create derivative files or queue social posts.",
+      "Do not promote any staging material into canon."
+    ],
+    "signature": "The review packet turns a blocked but promising proof into a precise human decision surface.",
+    "system": [
+      "Primary VIS URI: visual://asset/asset_70c54fb51619e220e2d9f2c9.",
+      "VIS score remains 57 with needs-curation verdict.",
+      "Public use remains blocked by rights unknown and approval candidate.",
+      "Derivative targets remain planned only and uncreated.",
+      "No new generated image output appeared after the previous lap."
+    ]
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "generated-media",
+    "provenance": "generated",
+    "why_premium": "The 9:16 proof was re-inspected and remains a strong internal review candidate; the packet adds human decision clarity without bypassing public-use gates.",
+    "shortcut_risk": "low",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/batch12-frank-review-packet.md",
+      "kind": "human review packet",
+      "inspected": true,
+      "notes": "Lists candidate, strengths, blockers, Frank choices, planned targets, and governance."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/arc-overlay-b12-005-witness-bridge-9x16.png",
+      "kind": "internal social proof image",
+      "inspected": true,
+      "notes": "Re-inspected in 9:16 crop; title readable, trio unobstructed, scale intact."
+    },
+    {
+      "path_or_url": "visual://asset/asset_70c54fb51619e220e2d9f2c9",
+      "kind": "VIS asset URI",
+      "inspected": true,
+      "notes": "Current VIS identity for the selected proof."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Tier C remains appropriate for an internal overlay proof and human review packet."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "evidence": "Primary 9:16 proof was re-inspected before packet creation."
+    },
+    {
+      "name": "review-packet",
+      "status": "pass",
+      "evidence": "Frank review packet created with explicit approve, iterate, and reject options."
+    },
+    {
+      "name": "public-use-gate",
+      "status": "blocked",
+      "evidence": "Rights remain unknown, approval remains candidate, VIS quality eval metadata remains missing."
+    },
+    {
+      "name": "no-status-mutation",
+      "status": "pass",
+      "evidence": "No VIS rights, approval, publication, derivative, or usage mutation was performed."
+    },
+    {
+      "name": "mamoru-staging",
+      "status": "pass",
+      "evidence": "Mamoru remains STAGING and absent from Batch 12 proof assets."
+    },
+    {
+      "name": "dirty-gallery-collision",
+      "status": "pass",
+      "evidence": "No gallery, app, public image, campaign, package, or canon files were modified in this lap."
+    },
+    {
+      "name": "external-actions",
+      "status": "pass",
+      "evidence": "No deploy, push, external publish, spend, external message, web3 action, or canon promotion was performed."
+    }
+  ],
+  "score": {
+    "total": 25,
+    "max": 30,
+    "breakdown": {
+      "decision_clarity": 9,
+      "governance_safety": 9,
+      "release_readiness": 7
+    },
+    "notes": "The packet improves human review readiness, but public release remains blocked by VIS rights, approval, and eval gaps."
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "Frank has not approved rights or public use.",
+    "The packet is not canon approval.",
+    "VIS quality eval metadata remains missing.",
+    "No derivative files or social launch assets were created."
+  ]
+}

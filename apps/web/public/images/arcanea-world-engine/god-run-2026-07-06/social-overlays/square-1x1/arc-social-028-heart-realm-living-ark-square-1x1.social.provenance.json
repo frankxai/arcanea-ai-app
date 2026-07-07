@@ -1,0 +1,30 @@
+{
+  "id": "arc-social-028-heart-realm-living-ark-square-1x1",
+  "campaignId": "arc-social-028-heart-realm-living-ark",
+  "sourceAssetId": "arc-visual-028",
+  "channelKey": "square-1x1",
+  "platforms": [
+    "X",
+    "Instagram Feed",
+    "Threads",
+    "Bluesky"
+  ],
+  "ratio": "1:1",
+  "width": 1200,
+  "height": 1200,
+  "sizeBytes": 1964578,
+  "sha256": "1f6f6edbf10c9b8b3331fcb22dd6e24401f1229ddd1aa3a8a632915c543cc0c9",
+  "headline": "Scale Is A Responsibility",
+  "subhead": "A living ark carries creators through the Heart Gate.",
+  "cta": "Build worlds that hold people.",
+  "proof": "Non-dragon world scale",
+  "gate": "Heart",
+  "guardian": "Maylinn",
+  "score30": 29,
+  "sourceImage": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-028-heart-realm-living-ark-non-dragon.png",
+  "outputPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\social-overlays\\exports\\square-1x1\\arc-social-028-heart-realm-living-ark-square-1x1.png",
+  "sourceMethod": "code-rendered deterministic overlays on inspected generated media",
+  "rightsStatus": "generated-owned-derived",
+  "approvalGate": "social-approvals",
+  "createdAt": "2026-07-06T07:49:20+02:00"
+}

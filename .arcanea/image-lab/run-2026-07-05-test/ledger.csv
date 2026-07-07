@@ -1,0 +1,2 @@
+id,ts,run,batch,engine,harness,model,request_id,prompt_file,asset_path,use_case,world,characters,canon_refs,gate_30_score,gate_verdict,ship_status,failure_modes,next_improvement
+"brief-thalmaris-archive-dusk","2026-07-05T21:42:47.750Z","run-2026-07-05-test","b0","higgsfield","claude","","","","","Wonders of Arcanea social hero","Thal'Maris","Mera","CANON_LOCKED.md|BENDING_CANON.md","","","queued","",""

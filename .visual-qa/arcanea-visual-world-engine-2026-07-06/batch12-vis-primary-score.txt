@@ -1,0 +1,12 @@
+{
+  "assetId": "asset_70c54fb51619e220e2d9f2c9",
+  "score": 57,
+  "verdict": "needs-curation",
+  "flags": [
+    "rights status needs review",
+    "approval is candidate",
+    "no route/social/collection usage recorded",
+    "no visual quality eval recorded"
+  ],
+  "nextAction": "Set rights status before public use."
+}

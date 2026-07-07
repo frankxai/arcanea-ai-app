@@ -1,0 +1,87 @@
+{
+  "asset_uid": "arcanea-2026-07-webtoon-first-trial-three-beats",
+  "source_asset_uid": "arcanea-2026-07-webtoon-first-trial-clean",
+  "batch_id": "2026-07-arcanea-visual-world-engine-b2",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 3,
+  "title": "webtoon first trial three beats",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "webtoon-vertical-9x16",
+  "aspect_ratio": "9:16",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-020c-webtoon-first-trial-three-beats.png",
+    "sha256": "d17159e588d4b370cb41054c8281eac1e7e5db413e029b3194c311420ce31fb0",
+    "mime_type": "image/png",
+    "width": 941,
+    "height": 1672,
+    "size_bytes": 1820806
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b2.json#arc-visual-020c",
+    "prompt": "Use case: illustration-story. Asset type: vertical webtoon sequence source. Primary request: a clean three-beat webtoon-style vertical frame continuing the first trial: notice The Drift, choose a proof artifact, place it into the blank ledger. Scene/backdrop: Arcanea studio corridor at night, dark glass, rain reflections, warm forge light, no papers or books. Subject: one modern creator shown in three stacked cinematic beats without speech bubbles: top beat uncertain face beside passive fog, middle beat hand choosing a small glowing artifact, bottom beat artifact placed on a blank proof ledger surface. Style/medium: premium webtoon/anime-adjacent cinematic panel, refined linework feel, Arcanea AI-lab premium, not generic anime. Composition/framing: 9:16, three clear visual beats, each has clean negative space, no tiny details. Lighting/mood: intimate gold, teal signal, quiet responsibility. Materials/textures: dark glass, smooth gold foil with no engravings, starlight metal, rain reflections, blank obsidian table. Constraints: no speech bubbles, no text, no letters, no symbols, no books, no papers, no diagrams, no melodrama.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "9:16"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 28,
+    "decision": "approve",
+    "failure_modes": [
+      "Single character variant; needs diversity and continuity expansion",
+      "Panel separators need crop/layout proof before publishing"
+    ],
+    "next_improvement": "Create four continuation beats and deterministic captions outside the image in code/design tooling."
+  },
+  "canon": {
+    "refs": [
+      "Arcanea chosen responsibility",
+      "Genesis proof loop",
+      "The Drift"
+    ],
+    "gate": "Voice",
+    "guardian": "Alera"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 3,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "webtoon"
+      },
+      {
+        "trait_type": "surface",
+        "value": "webtoon-vertical-9x16"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Voice"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Alera"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-020c-webtoon-first-trial-three-beats.vis.provenance.json"
+  },
+  "used_in": [],
+  "created_at": "2026-07-06T03:18:30+02:00"
+}

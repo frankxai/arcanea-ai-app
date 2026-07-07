@@ -1,0 +1,87 @@
+{
+  "asset_uid": "arcanea-2026-07-the-drift-vs-proof-ledger",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b1",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "the drift vs proof ledger",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "tiktok-reels-shorts-hook-9x16",
+  "aspect_ratio": "9:16",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-002-the-drift-vs-proof-ledger.png",
+    "sha256": "2a283a05bd01ed27b32d7a1c0ce1cda17c17fc3c6f48afc3515c649a32c78032",
+    "mime_type": "image/png",
+    "width": 941,
+    "height": 1672,
+    "size_bytes": 2599867
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "prompt-bank.json#arc-visual-002",
+    "prompt": "Use case: illustration-story. Asset type: vertical social hook frame. Primary request: visualize The Drift as passive consumption, creative amnesia, rights fog, and tool dependency being answered by a proof ledger. Scene/backdrop: a tall vertical portal corridor with foggy broken media fragments dissolving below and a clean luminous proof ledger opening above. Subject: one creator hand placing a small finished artifact into the ledger, no superiority, no enemy group. Style/medium: cinematic Arcanea poster art, high contrast, tactile, precise. Composition/framing: 9:16, ledger and hand readable in first second, strong top-bottom contrast, room for deterministic caption overlay later. Lighting/mood: shadow-to-gold transition, serious but hopeful. Materials/textures: ancient paper, dark glass, gold foil, teal memory lines. Constraints: no text, no logos, no UI, no faces required, no horror, no demonization of people.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, or watermark inside the image. Arcanea aesthetic: luxury cosmic myth-tech, sacred obsidian, starlight metal, gold thread, living crystal, ancient paper, dark glass, moonlight, portal light. AI-lab premium, not fantasy-game chrome. Cinematic composition with one dominant subject and clean crop-safe negative space. Avoid generic fantasy cosplay, superhero spandex, medieval mud-grit, neon hacker grids, purple cliche, stock fantasy, overdecorated ornaments, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "9:16"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "reference-only",
+    "score30": 23,
+    "decision": "iterate",
+    "failure_modes": [
+      "pseudo-writing on ledger pages and paper fragments",
+      "too many small debris details for clean overlay"
+    ],
+    "next_improvement": "Use 002b instead for candidate treatment."
+  },
+  "canon": {
+    "refs": [
+      "Arcanea brand pack",
+      "The Drift",
+      "Chosen responsibility"
+    ],
+    "gate": "Voice",
+    "guardian": "Alera"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "main-storyline"
+      },
+      {
+        "trait_type": "surface",
+        "value": "tiktok-reels-shorts-hook-9x16"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Voice"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Alera"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-002-the-drift-vs-proof-ledger.vis.provenance.json"
+  },
+  "used_in": [],
+  "created_at": "2026-07-06T02:32:00+02:00"
+}

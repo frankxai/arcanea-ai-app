@@ -27,6 +27,7 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
+    "@types/node": "^20.19.41",
     "typescript": "^5.9.3"
   },
   "engines": {
@@ -42,8 +43,15 @@
   },
   "homepage": "https://arcanea.ai",
   "keywords": [
-    "arc-protocol", "creation-genome", "ai-human-cocreation",
-    "creative-lifecycle", "provenance", "arcanea", "agentic",
-    "ai-agent", "creative-ai", "world-building"
+    "arc-protocol",
+    "creation-genome",
+    "ai-human-cocreation",
+    "creative-lifecycle",
+    "provenance",
+    "arcanea",
+    "agentic",
+    "ai-agent",
+    "creative-ai",
+    "world-building"
   ]
 }

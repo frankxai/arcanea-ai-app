@@ -14,12 +14,11 @@ import {
   PhStack,
   PhCrown,
   PhTrendUp,
+  PhCompass,
 } from "@/lib/phosphor-icons";
 import type { CreationType, ElementName } from "@/lib/database/types/api-responses";
 import { ELEMENT_COLORS, ELEMENT_ICONS, TYPE_ICONS, TYPE_LABELS } from "./gallery-data";
 import { SplitText } from "@/components/motion/split-text";
-import { TiltCard } from "@/components/motion/tilt-card";
-import { LiquidGlass } from "@/components/motion/liquid-glass";
 
 // ---------------------------------------------------------------------------
 // Shared types
@@ -37,6 +36,9 @@ export interface CardItem {
   likeCount: number;
   viewCount: number;
   tags: string[];
+  thumbnailUrl?: string;
+  featuredRank?: number;
+  visualQaScore?: number;
 }
 
 export type FilterType = "all" | CreationType;
@@ -132,6 +134,13 @@ export function HeroSection({
               >
                 Companions
                 <PhArrowRight size={14} />
+              </Link>
+              <Link
+                href="/visual-world-engine"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)] text-sm font-medium border border-[var(--arc-brand-atlantean-teal)]/20 hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors"
+              >
+                World Engine
+                <PhCompass size={14} weight="fill" />
               </Link>
               <Link
                 href="/gallery/forge"
@@ -376,47 +385,60 @@ export function CreationCard({ item, index = 0, mounted = true }: { item: CardIt
   const elementStyle = ELEMENT_COLORS[item.element];
   const ElementIcon = ELEMENT_ICONS[item.element];
   const TypeIcon = TYPE_ICONS[item.type];
-
-  // Stagger delay: cap at 0.6s so cards further down don't wait forever
-  const staggerDelay = Math.min(index * 0.05, 0.6);
+  const isCuratedVisual =
+    item.thumbnailUrl?.includes("/images/arcanea-world-engine/") ?? false;
 
   return (
-    <TiltCard intensity={4}>
-    <LiquidGlass
-      intensity="subtle"
-      tint={(elementStyle as { accent?: string }).accent ?? 'var(--arc-brand-atlantean-teal)'}
-      className="group relative rounded-2xl overflow-hidden border border-white/[0.06] hover:border-white/[0.14] transition-colors duration-300"
-      noise={false}
-    ><div
-      style={{
-        opacity: mounted ? 1 : 0,
-        transform: mounted ? "translateY(0)" : "translateY(20px)",
-        transition: `opacity 0.5s ease ${staggerDelay}s, transform 0.5s ease ${staggerDelay}s`,
-      }}
+    <div
+      className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.025] shadow-[0_16px_48px_rgba(0,0,0,0.22)] transition-colors duration-300 hover:border-white/[0.14]"
     >
+    <div>
       {/* Gradient thumbnail area */}
       <div
-        className={`relative h-44 bg-gradient-to-br ${elementStyle.gradient} flex items-center justify-center overflow-hidden`}
+        className={`relative bg-gradient-to-br ${elementStyle.gradient} flex items-center justify-center overflow-hidden ${
+          isCuratedVisual ? "aspect-[4/5] min-h-[280px]" : "h-44"
+        }`}
       >
+        {item.thumbnailUrl && isCuratedVisual ? (
+          <div
+            role="img"
+            aria-label={item.title}
+            data-vwe-thumbnail={item.thumbnailUrl}
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.03] z-0"
+            style={{ backgroundImage: `url(${item.thumbnailUrl})` }}
+          />
+        ) : item.thumbnailUrl ? (
+          <Image
+            src={item.thumbnailUrl}
+            alt={item.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover group-hover:scale-[1.03] transition-transform duration-500 z-0"
+          />
+        ) : null}
         {/* Gradient hover shimmer */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/8 via-transparent to-[var(--arc-brand-arcanean-gold)]/5 pointer-events-none" />
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/8 via-transparent to-[var(--arc-brand-arcanean-gold)]/5 pointer-events-none z-10" />
 
         {/* Decorative pattern overlay */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-4 right-4 w-32 h-32 rounded-full border border-white/[0.12]" />
-          <div className="absolute bottom-4 left-4 w-20 h-20 rounded-full border border-white/[0.06]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full border border-white/[0.10]" />
-        </div>
+        {!item.thumbnailUrl && (
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-4 right-4 w-32 h-32 rounded-full border border-white/[0.12]" />
+            <div className="absolute bottom-4 left-4 w-20 h-20 rounded-full border border-white/[0.06]" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full border border-white/[0.10]" />
+          </div>
+        )}
 
         {/* Center icon */}
-        <div className="relative z-10 flex flex-col items-center gap-2">
-          <div className="w-14 h-14 rounded-2xl bg-white/[0.06] backdrop-blur-sm border border-white/[0.06] flex items-center justify-center group-hover:border-white/[0.12] group-hover:bg-white/[0.10] transition-all duration-300">
-            <TypeIcon size={28} weight="duotone" className="text-white/[0.50] group-hover:text-white/[0.70] transition-colors duration-300" />
+        {!item.thumbnailUrl && (
+          <div className="relative z-10 flex flex-col items-center gap-2">
+            <div className="w-14 h-14 rounded-2xl bg-white/[0.06] backdrop-blur-sm border border-white/[0.06] flex items-center justify-center group-hover:border-white/[0.12] group-hover:bg-white/[0.10] transition-all duration-300">
+              <TypeIcon size={28} weight="duotone" className="text-white/[0.50] group-hover:text-white/[0.70] transition-colors duration-300" />
+            </div>
+            <span className="text-[10px] uppercase tracking-widest text-white/[0.20] font-sans">
+              {TYPE_LABELS[item.type]}
+            </span>
           </div>
-          <span className="text-[10px] uppercase tracking-widest text-white/[0.20] font-sans">
-            {TYPE_LABELS[item.type]}
-          </span>
-        </div>
+        )}
 
         {/* Top-right element badge */}
         <div
@@ -456,20 +478,33 @@ export function CreationCard({ item, index = 0, mounted = true }: { item: CardIt
             {item.creatorName}
           </span>
           <div className="flex items-center gap-3 text-white/[0.15]">
-            <span className="flex items-center gap-1 text-xs font-sans group-hover:text-red-400/80 transition-colors">
-              <PhHeart size={13} weight="fill" className="text-red-400/60 group-hover:text-red-400 transition-colors" />
-              {formatCount(item.likeCount)}
-            </span>
-            <span className="flex items-center gap-1 text-xs font-sans">
-              <PhEye size={13} className="text-white/[0.20]" />
-              {formatCount(item.viewCount)}
-            </span>
+            {typeof item.visualQaScore === "number" ? (
+              <>
+                <span className="flex items-center gap-1 text-xs font-sans text-[var(--arc-brand-arcanean-gold)]/80">
+                  <PhSparkle size={13} weight="fill" />
+                  QA {item.visualQaScore}/30
+                </span>
+                <span className="text-xs font-sans text-white/[0.18]">
+                  VWE
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="flex items-center gap-1 text-xs font-sans group-hover:text-red-400/80 transition-colors">
+                  <PhHeart size={13} weight="fill" className="text-red-400/60 group-hover:text-red-400 transition-colors" />
+                  {formatCount(item.likeCount)}
+                </span>
+                <span className="flex items-center gap-1 text-xs font-sans">
+                  <PhEye size={13} className="text-white/[0.20]" />
+                  {formatCount(item.viewCount)}
+                </span>
+              </>
+            )}
           </div>
+        </div>
         </div>
       </div>
     </div>
-    </LiquidGlass>
-    </TiltCard>
   );
 }
 

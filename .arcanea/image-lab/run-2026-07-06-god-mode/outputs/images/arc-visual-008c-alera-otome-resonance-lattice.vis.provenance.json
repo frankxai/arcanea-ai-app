@@ -1,0 +1,88 @@
+{
+  "asset_uid": "arcanea-2026-07-alera-otome-resonance-lattice",
+  "source_asset_uid": "arcanea-2026-07-alera-otome-clean-resonance",
+  "batch_id": "2026-07-arcanea-visual-world-engine-b3",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 3,
+  "title": "alera otome resonance lattice",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "square-gallery-1x1",
+  "aspect_ratio": "1:1",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-008c-alera-otome-resonance-lattice.png",
+    "sha256": "92fc4ded9fb6f1d5ed5702fc20faee7ad751ee29665c29fce30c6cb90acf1e23",
+    "mime_type": "image/png",
+    "width": 1254,
+    "height": 1254,
+    "size_bytes": 2993011
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b3.json#arc-visual-008c",
+    "prompt": "Use case: illustration-story. Asset type: square Guardian/Godbeast correction frame. Primary request: Alera, Arcanean Goddess of the Voice Gate, with Otome redesigned as resonance infrastructure, not a dragon, not a pet, not an animal portrait. Scene/backdrop: a silent Voice Gate chamber built from dark glass, smooth gold foil, suspended crystal tuning ribs, and warm teal air-pressure light. Subject: Alera is an operator in restrained myth-tech clothing, standing at a blank resonance console with one hand over a smooth creation-frequency crystal; Otome manifests around the room as a vast protective vocal-lattice presence made of translucent harmonic ribs, pearl glass, and warm living light, like an architectural creature woven through the chamber. Style/medium: cinematic luxury cosmic myth-tech, Arcanea AI-lab mythology, premium social-ready concept art. Composition/framing: 1:1, strong circular emblem read, Alera small but clear, Otome as environment-scale intelligence, no clutter. Lighting/mood: truthful, calm, gold and teal, clean black glass depth. Materials/textures: Otome Resonite, polished starlight metal, blank gold foil, dark glass, pearl crystal. Constraints: no text, no glyphs, no visible music notes, no waveforms, no dragon wings, no horns, no reptile body, no fantasy gown, no ornate crown, no fake script.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "1:1"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 26,
+    "decision": "approve-with-style-caution",
+    "failure_modes": [
+      "Alera still reads as ornate fantasy gown more than Arcanea operator",
+      "Strong Otome-as-resonance-infrastructure solution, but needs simpler lab/product wardrobe before public hero use"
+    ],
+    "next_improvement": "Regenerate with Alera as restrained Voice Gate operator in contemporary myth-tech studio clothing while keeping Otome as architectural vocal lattice."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md Ten Gates",
+      "Alera",
+      "Otome",
+      "Voice Gate"
+    ],
+    "gate": "Voice",
+    "guardian": "Alera"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 3,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "guardian-godbeast"
+      },
+      {
+        "trait_type": "surface",
+        "value": "square-gallery-1x1"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Voice"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Alera"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-008c-alera-otome-resonance-lattice.vis.provenance.json"
+  },
+  "used_in": [],
+  "created_at": "2026-07-06T04:43:20+02:00"
+}

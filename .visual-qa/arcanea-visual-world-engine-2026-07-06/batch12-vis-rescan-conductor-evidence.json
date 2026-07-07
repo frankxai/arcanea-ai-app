@@ -1,0 +1,169 @@
+{
+  "version": "1.0",
+  "task": "Arcanea Visual World Conductor Batch 12 local VIS rescan",
+  "surface": "Local VIS graph scan and review packet for conductor Batch 12 source and overlay assets",
+  "audience": "Frank as human canon and launch approver, Arcanea visual-world operators, internal social review",
+  "first_read": "Batch 12 conductor assets are now visible in the local VIS graph, but public use remains blocked by rights and approval gates.",
+  "standards": [
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/visual-intelligence/README.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/VISUAL_DOCTRINE.md"
+  ],
+  "references": [
+    {
+      "label": "VIS scan report",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-visual-world-engine-2026-07-06/batch12-vis-conductor-scan-report.json",
+      "reason": "Records the local VIS scan run id, media root, scanned files, assets, versions, locations, registry path, and atlas path."
+    },
+    {
+      "label": "Primary Batch 12 overlay proof",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/arc-overlay-b12-005-witness-bridge-9x16.png",
+      "reason": "Primary internal social proof indexed into VIS as visual://asset/asset_70c54fb51619e220e2d9f2c9."
+    },
+    {
+      "label": "VIS SQLite index",
+      "source": "C:/Users/frank/starlight/repos/visual-intelligence/data/vis.sqlite",
+      "reason": "Local-first VIS asset graph updated by the conductor-only scan."
+    },
+    {
+      "label": "VIS registry JSON",
+      "source": "C:/Users/frank/starlight/repos/visual-intelligence/data/visual-registry.json",
+      "reason": "Local VIS registry output updated by the conductor-only scan."
+    },
+    {
+      "label": "VIS atlas JSON",
+      "source": "C:/Users/frank/starlight/repos/visual-intelligence/data/vis-atlas.json",
+      "reason": "Local VIS atlas output updated by the conductor-only scan."
+    },
+    {
+      "label": "Conductor mirror",
+      "source": "C:/Users/frank/brands/image-system/arcanea/2026-07-06-conductor",
+      "reason": "Canonical local mirror for generated-asset loop evidence and handoff files."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Keep the VIS scan narrowly scoped to the conductor image-lab folder.",
+      "Treat the VIS URI as internal review evidence, not public clearance.",
+      "Preserve VIS public-use blockers: rights unknown, approval candidate, quality evaluation missing.",
+      "Keep Mamoru marked STAGING and absent from Batch 12 proof assets.",
+      "Continue avoiding gallery/app/package/campaign collisions."
+    ],
+    "avoid": [
+      "Running a broad estate scan from this conductor lane.",
+      "Overriding VIS rights or approval states without Frank approval.",
+      "Treating local SQLite indexing as external publication.",
+      "Wiring assets into gallery or social launch queues before rights and approval are resolved."
+    ],
+    "signature": "The Witness Bridge now has a traceable VIS identity while remaining safely blocked from public use.",
+    "system": [
+      "VIS CLI doctor passed on Node v24.16.0.",
+      "VIS scan indexed conductor folder only: 20 files, 20 logical assets, 20 versions, 20 locations.",
+      "Primary 9:16 proof packet URI: visual://asset/asset_70c54fb51619e220e2d9f2c9.",
+      "VIS gate status: public-use blocked until rights review and approval."
+    ]
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "generated-media",
+    "provenance": "generated",
+    "why_premium": "The indexed proof assets already carry inspected generated-media and deterministic-overlay provenance; the new value is traceability in the local VIS graph with explicit public-use blockers preserved.",
+    "shortcut_risk": "low",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "visual://asset/asset_70c54fb51619e220e2d9f2c9",
+      "kind": "VIS asset URI",
+      "inspected": true,
+      "notes": "Primary 9:16 Witness Bridge overlay proof. VIS packet blocks public use until rights and approval review."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-visual-world-engine-2026-07-06/batch12-vis-conductor-scan-report.json",
+      "kind": "VIS scan report",
+      "inspected": true,
+      "notes": "run_a2e905de7af52bd20609c4d8 scanned 20 files into 20 logical assets, 20 versions, and 20 locations."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/visual-intelligence/data/vis.sqlite",
+      "kind": "local VIS SQLite graph",
+      "inspected": true,
+      "notes": "Doctor reports 20 assets, 20 versions, 20 locations, and 17 prompts after the conductor-only scan."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/visual-intelligence/data/visual-registry.json",
+      "kind": "local VIS registry output",
+      "inspected": true,
+      "notes": "Generated by VIS scan. Local-only; not an external publish surface."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/visual-intelligence/data/vis-atlas.json",
+      "kind": "local VIS atlas output",
+      "inspected": true,
+      "notes": "Generated by VIS scan. Local-only; not an external publish surface."
+    }
+  ],
+  "checks": [
+    {
+      "name": "vis-doctor",
+      "status": "pass",
+      "evidence": "VIS doctor passed; Node v24.16.0, SQLite index and dashboard present."
+    },
+    {
+      "name": "fresh-vis-rescan",
+      "status": "pass",
+      "evidence": "VIS scan was run against C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06 and indexed 20 files."
+    },
+    {
+      "name": "vis-packet",
+      "status": "pass",
+      "evidence": "Primary 9:16 proof resolved to visual://asset/asset_70c54fb51619e220e2d9f2c9."
+    },
+    {
+      "name": "public-use-gate",
+      "status": "blocked",
+      "evidence": "VIS packet reports Rights: unknown, Approval: candidate, Public-use gate: blocked, and quality evaluation missing."
+    },
+    {
+      "name": "mamoru-staging",
+      "status": "pass",
+      "evidence": "Batch 12 indexed proof is Mamoru-free; Mamoru remains STAGING elsewhere."
+    },
+    {
+      "name": "gallery-file-collision",
+      "status": "pass",
+      "evidence": "No gallery, app, public image, package, or campaign data files were modified."
+    },
+    {
+      "name": "external-actions",
+      "status": "pass",
+      "evidence": "No deploy, push, external publish, spend, external message, web3 action, or canon promotion was performed."
+    },
+    {
+      "name": "local-db-scope",
+      "status": "pass",
+      "evidence": "Only local VIS SQLite/registry/atlas files under visual-intelligence/data were updated by the scan."
+    }
+  ],
+  "score": {
+    "total": 26,
+    "max": 30,
+    "breakdown": {
+      "traceability": 10,
+      "governance_safety": 9,
+      "release_readiness": 7
+    },
+    "notes": "The VIS rescan closes the traceability gap, but rights, approval, and quality evaluation remain blocked before public use."
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "VIS scan updated local data/vis.sqlite, visual-registry.json, and vis-atlas.json; these are local generated VIS state, not external publication.",
+    "Public-use gate remains blocked until rights status, approval status, and quality evaluation are resolved.",
+    "No gallery or social queue wiring happened.",
+    "Mamoru remains STAGING and absent from Batch 12 proof."
+  ]
+}

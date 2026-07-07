@@ -1,0 +1,92 @@
+{
+  "asset_uid": "arcanea-2026-07-world-tower-dragon-habitat-bridge",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b11",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "World Tower Dragon Habitat Bridge",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "mega-scale-world-16x9-gallery",
+  "aspect_ratio": "16:9",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-045-world-tower-dragon-habitat-bridge.png",
+    "sha256": "29e85011d1c07eaf4824bfcd5f40a693239340e282cd9a9fbf18203134e6d0b9",
+    "mime_type": "image/png",
+    "width": 1672,
+    "height": 941,
+    "size_bytes": 2834296
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b11.json#arc-visual-045",
+    "prompt": "Use case: stylized-concept\nAsset type: Arcanea Visual World Engine source frame for Instagram 4:5, YouTube thumbnail crop, and gallery hero\nPrimary request: create a mind-bending colossal Arcanea living tower habitat where even gigantic dragons can live, but the focus is healthy worldbuilding and creator scale.\nScene/backdrop: a vast sunlit vertical city inside a kilometer-wide world tower, with terraced forest bridges, hanging gardens, vibrant fabric causeways, water curtains, dark glass observation decks, and starlight metal ribs. A gentle habitat-scale dragon rests far in the mid-distance as part of the ecosystem, not a threat.\nSubject: tiny Arcanea creators crossing woven fabric bridges toward a blank proof artifact observatory. The dragon is enormous but calm, partially integrated with the living architecture. Human figures and bright fabric bridges provide scale and warmth.\nStyle/medium: premium cinematic concept art, awe-scale environmental design, realistic myth-tech, not fantasy game splash art.\nComposition/framing: wide 16:9-friendly with a strong central depth corridor and a clear first-read bridge crossing; keep upper-left area clean for future deterministic overlay. Not symmetrical.\nLighting/mood: alive, healthy, vibrant, inviting, morning gold through mist, living teal crystal glows.\nColor palette: deep obsidian shadows, sun gold, living teal, forest greens, vivid but restrained textiles in red, saffron, cyan.\nMaterials/textures: living bark, woven silk-fabric spans, glass, water, metal ribs, smooth blank proof artifact surfaces.\nText: none.\nConstraints: no letters, no runes, no fake writing, no logos, no UI, no watermark. Dragon must be peaceful habitat creature, not boss monster. No battle, no destruction, no generic castle, no purple nebula.\nAvoid: symmetrical mandala, orbit/node graphics, fake map labels, unreadable clutter, medieval armor, stock fantasy poster.",
+    "negative_prompt": "No letters, runes, fake writing, logos, UI, watermark, boss monster dragon, battle, destruction, generic castle, purple nebula, symmetrical mandala, orbit/node graphics, fake map labels, unreadable clutter, medieval armor, stock fantasy poster.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "16:9"
+    },
+    "original_generated_path": "C:\\Users\\frank\\.codex\\generated_images\\019f3498-30f9-77a0-b2a3-b54acd0c8e66\\ig_0552f761db081f81016a4b5b8aecb8819198652124b830df11.png"
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 27,
+    "decision": "approve-with-crop-check",
+    "failure_modes": [
+      "Excellent healthy world-tower scale, vibrant fabric bridge, and peaceful dragon habitat read.",
+      "Blank observatory panel can read like a UI screen or billboard; avoid using that crop as a first-read social proof until reworked."
+    ],
+    "next_improvement": "Use as world-scale habitat reference/gallery candidate; regenerate or crop away the blank panel for social-first exports."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md",
+      "VISUAL_DOCTRINE.md",
+      "World Tower Dragon Habitat Bridge"
+    ],
+    "gate": "Foundation",
+    "guardian": "Lyssandria",
+    "godbeast": "Draconis habitat dragon"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "mega-scale-world"
+      },
+      {
+        "trait_type": "surface",
+        "value": "mega-scale-world-16x9-gallery"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Foundation"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Lyssandria"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-045-world-tower-dragon-habitat-bridge.vis.provenance.json"
+  },
+  "used_in": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/gallery/gallery-data.ts",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T09:45:00+02:00"
+}

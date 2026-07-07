@@ -1,0 +1,1280 @@
+{
+  "version": "2026-07-06",
+  "task": "Arcanea visual world engine loop for canon-safe generated assets, social crops, gallery routing, and VIS-ready metadata.",
+  "surface": "Arcanea image gallery, Atlas/Genesis/Studio seeds, social source frames, story/webtoon/book/music portals.",
+  "audience": "AI-native creators, worldbuilders, webtoon/anime creators, musicians, storytellers, founders, and Arcanea operators.",
+  "first_read": "Arcanea turns mythic creative intelligence into concrete proof artifacts, canon worlds, and reusable creator assets.",
+  "standards": [
+    "C:/Users/frank/starlight/repos/DESIGN_TASTE.md",
+    "C:/Users/frank/starlight/repos/WEB_EXPERIENCE_STANDARD.md",
+    "C:/Users/frank/starlight/repos/MOTION_TASTE_RUBRIC.md",
+    "C:/Users/frank/starlight/repos/MULTI_AGENT_DESIGN_COUNCIL.md",
+    "C:/Users/frank/starlight/repos/VISUAL_QA_GATE.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/DESIGN.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-image-system/agent-governance.md"
+  ],
+  "references": [
+    {
+      "label": "Arcanea canon locked truths",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md",
+      "reason": "Prevents incorrect lore, Guardian, Godbeast, Luminor, Nero, Shadow, and Realm usage."
+    },
+    {
+      "label": "Arcanea visual doctrine",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/VISUAL_DOCTRINE.md",
+      "reason": "Defines luxury cosmic myth-tech, faction materials, silhouettes, lighting, and anti-patterns."
+    },
+    {
+      "label": "Arcanea TASTE.md",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/TASTE.md",
+      "reason": "Keeps product chrome AI-lab premium and avoids fantasy-game execution."
+    },
+    {
+      "label": "Instagram original content and creator practices",
+      "source": "https://help.instagram.com/1800814370401535/",
+      "reason": "Requires original, recommendation-safe content and informs vertical creator publishing."
+    },
+    {
+      "label": "TikTok creative best practices",
+      "source": "https://ads.tiktok.com/help/article/creative-best-practices",
+      "reason": "Supports hook-first structure and early proposition clarity."
+    },
+    {
+      "label": "YouTube Shorts official docs",
+      "source": "https://support.google.com/youtube/answer/15424877",
+      "reason": "Confirms current Shorts duration capability and vertical/square planning context."
+    },
+    {
+      "label": "X creative best practices",
+      "source": "https://business.x.com/en/advertising/creative-best-practices",
+      "reason": "Informs concise copy, clear message, and sound-off creative strategy."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Mind-bending scale with clear human or artifact anchor.",
+      "Arcanea luxury cosmic myth-tech materials: obsidian, starlight metal, gold thread, living crystal, ancient paper, dark glass.",
+      "Awe, responsibility, and usable creative power.",
+      "Prompt and metadata structure that can feed VIS, DB, galleries, and future web3 review."
+    ],
+    "avoid": [
+      "Generic anime prompt style.",
+      "Fantasy-game UI chrome.",
+      "Generated in-image text, logos, fake UI, and microtype.",
+      "Canon errors, especially treating Luminor as a species or Nero as evil.",
+      "Purple cliche, neon hacker grid, node/orbit filler, stock fantasy, and overdecorated clutter."
+    ],
+    "signature": "Proof becomes myth; myth becomes usable creative infrastructure.",
+    "system": [
+      "Asset tier B generated media for first visual batch.",
+      "Deterministic overlays later for exact social/site text.",
+      "VIS-style ledger with canon refs, prompt file, asset path, score, verdict, failure modes, and next improvement.",
+      "Channel-aware crops: 9:16, 4:5, 1:1, 16:9.",
+      "Arcanea brand operating unit: arcanea-product-ip."
+    ]
+  },
+  "asset_quality": {
+    "tier": "B",
+    "source_method": "generated-media",
+    "provenance": "generated",
+    "why_premium": "The loop produced inspected, canon-aware source frames with strong first-read objects for Arcanea social, gallery, story, and product portals. Deterministic overlays remain reserved for exact copy.",
+    "shortcut_risk": "low",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/planning-with-files/ARCANEA_VISUAL_WORLD_ENGINE_SPRINT_2026-07-06.md",
+      "kind": "planning",
+      "inspected": true,
+      "notes": "Sprint contract, success metrics, user flows, social constraints, loop schedule, and integration backlog."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/prompt-bank.json",
+      "kind": "prompt-bank",
+      "inspected": true,
+      "notes": "24 canon-safe prompt briefs across storyline, Guardians, Godbeasts, artifacts, megascale worlds, webtoon, storybook, music, and social."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/ledger.csv",
+      "kind": "metadata",
+      "inspected": true,
+      "notes": "VIS-style ledger for 28 inspected generated assets across Batch 1 through Batch 4, including scores, verdicts, failure modes, and next improvements."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/metadata.jsonl",
+      "kind": "metadata",
+      "inspected": true,
+      "notes": "DB/web3/VIS-ready JSONL records for 28 generated assets with hashes, dimensions, prompt refs, governance, gallery used_in pointers for promoted Batch 3 and Batch 4 assets, and not-minted web3 placeholders."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/review.md",
+      "kind": "review",
+      "inspected": true,
+      "notes": "Run review now includes Batch 9 Social Launch Room app integration, visual QA notes, verification artifacts, and the decision to keep publishing/DB/web3 gated."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/iteration-prompts-b2.json",
+      "kind": "prompt-bank",
+      "inspected": true,
+      "notes": "Six Batch 2 revision prompts targeting Kaelith de-dragoning, clean Guardian candidates, a webtoon three-beat, a 4:5 world-tower social crop, and a music portal bloom."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-018-world-tower-dragon-habitat.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 approved candidate for vertical social hook; needs crop/overlay testing."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-024b-clean-proof-artifact-og.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 approved candidate for OG, YouTube thumbnail, and X source frame."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-002b-the-drift-vs-proof-ledger-blank.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "27/30 approved candidate for vertical proof-ledger hook; needs overlay and small-size check."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-020b-webtoon-first-trial-clean.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "27/30 approved candidate for webtoon/social source panel; needs sequence expansion."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-001-genesis-proof-forge-first-call.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "26/30 approved with crop-check; strong hero candidate with minor pseudo-diagram risk on side codex pages."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-004b-lyssandria-kaelith-mythtech.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "26/30 approved with canon caution; next pass should make Kaelith less dragon-coded."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-025-world-tower-social-crop.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "29/30 approved Batch 2 candidate for 4:5 social hooks; promoted to gallery fallback."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-027-music-portal-bloom-clean.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "29/30 approved Batch 2 candidate for album/social music lane; promoted to gallery fallback."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-020c-webtoon-first-trial-three-beats.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 approved Batch 2 webtoon sequence source; promoted to gallery fallback."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-004c-lyssandria-kaelith-gravity-foundation.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "27/30 Batch 2 Foundation candidate; Kaelith is de-dragoned, Lyssandria still needs less ornate regalia."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06",
+      "kind": "public-assets",
+      "inspected": true,
+      "notes": "Twenty-four approved/candidate PNG masters plus twenty-four 900x1125 JPEG thumbnail derivatives are available in the stable Next public image path for gallery rendering."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/gallery/gallery-data.ts",
+      "kind": "app-integration",
+      "inspected": true,
+      "notes": "Gallery fallback now prepends Batch 11 VWE cards, bringing curated gallery candidates to 30."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/gallery/gallery-components.tsx",
+      "kind": "app-integration",
+      "inspected": true,
+      "notes": "Gallery hero now includes a World Engine CTA linking to /visual-world-engine."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/gallery/page.tsx",
+      "kind": "app-integration",
+      "inspected": true,
+      "notes": "Live gallery creations now normalize thumbnailUrl null to undefined before CardItem rendering, allowing the app TypeScript project check to pass."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-devserver.out.log",
+      "kind": "verification",
+      "inspected": true,
+      "notes": "Temporary local dev server served /gallery with 200 responses and arcanea-world-engine public image paths present; server was stopped after verification."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/*-thumb.jpg",
+      "kind": "public-thumbnail-derivatives",
+      "inspected": true,
+      "notes": "JPEG web thumbnails generated from the approved PNG masters for faster gallery paint and screenshot-stable card previews."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-visual-check.cjs",
+      "kind": "verification-script",
+      "inspected": true,
+      "notes": "Playwright verifier for /gallery desktop/mobile route status, configurable expected VWE lead title/slug, VWE thumbnail count, QA signal, first thumbnail metadata, and screenshots."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b2-grid-focus.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Desktop focused gallery screenshot after Batch 2 promotion; first row shows World Tower Social Crop, Music Portal Bloom, First Trial Three Beats, and Kaelith Gravity Foundation."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b2-mobile.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Mobile gallery screenshot after Batch 2 promotion; curated VWE thumbnails stack visibly before the older generated showcase assets."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-visual-b2.out.log",
+      "kind": "verification-log",
+      "inspected": true,
+      "notes": "Temporary Next dev server log for final /gallery visual smoke; /gallery returned 200 and the server was stopped afterward."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/iteration-prompts-b3.json",
+      "kind": "prompt-bank",
+      "inspected": true,
+      "notes": "Six Batch 3 prompts targeting resonance/lens infrastructure corrections, non-dragon megascale worldbuilding, diverse Webtoon beats, storybook/book source art, and Luminor rank proof atlas."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-028-heart-realm-living-ark-non-dragon.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "29/30 approved Batch 3 candidate and new lead gallery surface: non-dragon Heart realm living ark with creator scale, fabric bridges, waterfalls, and healthy worldbuilding."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-029-webtoon-trial-four-beats-diverse.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 approved Batch 3 Webtoon/storyboard source with four diverse creator proof beats and no speech bubbles or baked-in text."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-030-storybook-first-proof-living-library.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 approved Batch 3 book/storybook source for The First Proof living library lane; exact title typography remains deterministic overlay work."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-031-luminor-rank-proof-atlas.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 approved Batch 3 Luminor rank proof-atlas source; keeps Luminor as attained mastery rather than species or entity type."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-008c-alera-otome-resonance-lattice.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "26/30 Batch 3 archive/candidate: Otome succeeds as resonance architecture, but Alera wardrobe still needs less fantasy regalia before lead public use."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-009c-lyria-yumiko-lens-field.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "24/30 Batch 3 reference-only: beautiful prismatic image, but Yumiko becomes an ethereal humanoid rather than non-humanoid perception infrastructure."
+    },
+    {
+      "path_or_url": "C:/Users/frank/brands/image-system/arcanea/generated/run-2026-07-06-god-mode",
+      "kind": "brand-image-system-mirror",
+      "inspected": true,
+      "notes": "Canonical brand image system mirror for the Arcanea run, now including 35 source images, 36 social masters, 5 contact sheets, sidecars, prompt banks, ledgers, metadata, and review."
+    },
+    {
+      "path_or_url": "C:/Users/frank/brands/image-system/jobs/2026/07/arcanea-visual-world-engine-2026-07-06/social-overlays",
+      "kind": "brand-image-system-job-mirror",
+      "inspected": true,
+      "notes": "Dated job mirror for the social overlay package; mirror check found 24 PNG masters and 5 contact sheets."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/visual-intelligence/data/vis-dashboard.html",
+      "kind": "vis-dashboard",
+      "inspected": true,
+      "notes": "VIS dashboard regenerated after Batch 6 scan; report shows 64 assets, 64 versions, 80 locations, 51 prompts, and 51 generation events."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/visual-intelligence/data/visual-registry.json",
+      "kind": "vis-registry",
+      "inspected": true,
+      "notes": "VIS registry regenerated after Batch 5 mirror scan: 61 assets, 61 versions, 77 locations, 48 prompts, and 48 generation events."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b3-grid-focus.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Desktop focused gallery screenshot after Batch 3 promotion; first curated row shows Heart Realm Living Ark, World Tower Social Crop, Music Portal Bloom, and Proof Trial Four Beats."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b3-mobile.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Mobile full-page gallery screenshot after Batch 3 promotion; fourteen curated VWE thumbnail surfaces render before the older generated showcase assets."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b3-first-image.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Direct screenshot crop of the new Heart Realm Living Ark thumbnail layer loaded from the Next public image path."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-visual-b3-direct-next.out.log",
+      "kind": "verification-log",
+      "inspected": true,
+      "notes": "Temporary direct Next dev server log for Batch 3 /gallery visual smoke; pnpm was avoided because the current lockfile prompted for reinstall."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/iteration-prompts-b4.json",
+      "kind": "prompt-bank",
+      "inspected": true,
+      "notes": "Six Batch 4 prompts covering Alera/Otome and Lyria/Yumiko corrections plus Flow, Fire, Crown, and music/social expansion lanes."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-033-fire-gate-draconis-healthy-forge-titan.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "29/30 approved Batch 4 lead: constructive Fire Gate social hook with Draconis as sleeping habitat-scale forge titan."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-008d-alera-otome-operator-resonance-console.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 approved Batch 4 Voice Gate correction; Alera moves toward operator posture and Otome reads as resonance infrastructure."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-032-flow-gate-veloura-aquifer-corridor.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 approved with canon caution: excellent Flow Gate world image, but Veloura still has a creature-head silhouette."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-034-crown-gate-sol-solar-canopy-library.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 approved Crown Gate editorial/story source; Sol reads as living canopy architecture, not a humanoid face."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-009d-lyria-yumiko-nonhumanoid-perception-field.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "27/30 approved with style caution; Yumiko becomes non-humanoid lens/weather infrastructure, though the frame is bright and elegant-fantasy adjacent."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-035-arcanea-music-proof-stage-no-text.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "27/30 approved music/social source; vertical proof-stage frame with dark overlay-safe space and no baked-in text."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/iteration-prompts-b5.json",
+      "kind": "prompt-bank",
+      "inspected": true,
+      "notes": "Six Batch 5 prompts covering the Veloura membrane correction, Starweave/Vaelith, Unity/Kyuro, Source/Shinkami, Webtoon, and music expansion lanes."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-036-flow-gate-veloura-membrane-corridor.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "29/30 approved Batch 5 lead: best Veloura correction so far, reading as aquifer membrane/corridor weather rather than a creature head."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-037-starweave-vaelith-perspective-loom.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 approved Batch 5 Starweave expansion; Vaelith becomes perspective loom architecture with clear observatory scale."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-038-unity-kyuro-partnership-sanctuary.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "27/30 Batch 5 Unity candidate; beautiful and readable, but next pass needs less mirror symmetry and stronger human cooperation action."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-039-source-gate-shinkami-meta-consciousness-atlas.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 approved Batch 5 Source Gate proof chamber; keeps Source as meta-consciousness infrastructure and Shinkami as guide."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b4-grid-focus.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Desktop focused gallery screenshot after Batch 4 promotion; first curated row shows Fire Gate Forge Titan, Alera Resonance Console, Flow Gate Aquifer Corridor, and Crown Gate Solar Library. Dev indicator shows one existing shared-shell hydration warning unrelated to VWE gallery data."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b4-mobile.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Mobile full-page gallery screenshot after Batch 4 promotion; twenty curated VWE thumbnail surfaces render before older generated showcase assets."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b4-first-image.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Direct screenshot crop of the new Fire Gate Forge Titan thumbnail layer loaded from the Next public image path."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-visual-b4-direct-next.out.log",
+      "kind": "verification-log",
+      "inspected": true,
+      "notes": "Temporary direct Next dev server log for Batch 4 /gallery visual smoke; /gallery returned 200, API trending returned 200, and the server was stopped afterward."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b5-card-focus.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Desktop focused gallery screenshot after Batch 5 promotion; first curated row shows Veloura Membrane Corridor, Starweave Perspective Loom, Source Meta-Consciousness Atlas, and Unity Partnership Sanctuary."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b5-grid-focus.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Desktop gallery screenshot from the Batch 5 smoke; page served successfully and new VWE image cards load below the companion band."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b5-mobile.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Mobile full-page gallery screenshot after Batch 5 promotion; used as responsive visual evidence after /gallery status 200."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-visual-b5-direct-next.out.log",
+      "kind": "verification-log",
+      "inspected": true,
+      "notes": "Temporary direct Next dev server log for Batch 5 /gallery smoke; /gallery returned 200 and the server was stopped afterward. Existing Next/Tailwind warnings remain unrelated to the new VWE gallery data."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/social-overlay-spec.json",
+      "kind": "social-overlay-spec",
+      "inspected": true,
+      "notes": "Deterministic campaign spec now expanded to nine social campaigns rendered into 4:5, 9:16, 1:1, and 16:9 channel formats with exact copy and platform notes."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/render-social-overlays.cjs",
+      "kind": "renderer",
+      "inspected": true,
+      "notes": "Playwright renderer for deterministic social overlays; embeds source images and contact-sheet images as data URIs to avoid broken local file URL backgrounds."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/social-overlay-manifest.json",
+      "kind": "metadata",
+      "inspected": true,
+      "notes": "Manifest for 24 social PNG exports and 5 contact sheets, including dimensions, hashes, source asset IDs, channel formats, copy, and proof tags."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/social-overlay-ledger.csv",
+      "kind": "metadata",
+      "inspected": true,
+      "notes": "CSV ledger for 24 deterministic social exports across Instagram 4:5, vertical 9:16, square 1:1, and wide 16:9."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/social-overlay-metadata.jsonl",
+      "kind": "metadata",
+      "inspected": true,
+      "notes": "JSONL metadata records for 24 social exports with hashes, dimensions, source assets, campaign copy, and provenance notes."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/exports",
+      "kind": "social-export-folder",
+      "inspected": true,
+      "notes": "Contains 24 inspected deterministic social PNG masters and 24 matching .social.provenance.json sidecars."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/contact-sheets",
+      "kind": "contact-sheets",
+      "inspected": true,
+      "notes": "Five rendered contact sheets for all exports plus each channel family; Instagram 4:5 contact sheet was visually inspected."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/exports/vertical-9x16/arc-social-033-fire-gate-forge-titan-vertical-9x16.png",
+      "kind": "social-export",
+      "inspected": true,
+      "notes": "Inspected vertical Fire Gate master; art loads correctly after data URI fix and copy is readable in 9:16."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/exports/instagram-feed-4x5/arc-social-028-heart-realm-living-ark-instagram-feed-4x5.png",
+      "kind": "social-export",
+      "inspected": true,
+      "notes": "Inspected Instagram 4:5 Heart Realm master; non-dragon megascale composition and headline remain clear in feed crop."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/exports/wide-16x9/arc-social-031-luminor-rank-proof-wide-16x9.png",
+      "kind": "social-export",
+      "inspected": true,
+      "notes": "Inspected 16:9 Luminor master for YouTube/X/editorial use; keeps Luminor as proof-led mastery rather than species."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/planning-with-files/ARCANEA_VISUAL_WORLD_ENGINE_PORTAL_2026-07-06.md",
+      "kind": "planning",
+      "inspected": true,
+      "notes": "Updated portal spec to include /visual-world-engine/social as a read-only approval console sourced from queue/spec/manifest data, with acceptance and rollback notes."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/visual-world-engine/page.tsx",
+      "kind": "app-integration",
+      "inspected": true,
+      "notes": "Visual World Engine portal now reports 38 source frames, 30 gallery candidates, 76 VIS assets as last completed scan, and includes Batch 11 featured assets."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/social-overlays",
+      "kind": "public-assets",
+      "inspected": true,
+      "notes": "Public app copies of all 24 deterministic social PNG masters across 4:5, 9:16, 1:1, and 16:9 channel groups."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-qa-report.json",
+      "kind": "verification",
+      "inspected": true,
+      "notes": "Playwright smoke report for /visual-world-engine and /gallery: status 200 desktop/mobile, 13 loaded Arcanea images, 6 social masters, no horizontal overflow, and Gallery portal link confirmed."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-desktop.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Desktop full-page screenshot of the Visual World Engine portal after loading all public VWE and social images."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-mobile.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Mobile full-page screenshot of the Visual World Engine portal with no horizontal overflow."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-gallery-entry.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Gallery screenshot confirming the World Engine CTA is visible and links to the new portal route."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/_intelligence/decision-log.md",
+      "kind": "decision-log",
+      "inspected": true,
+      "notes": "Premium Web OS decision entry records why /visual-world-engine exists and what remains blocked before production/social/registry promotion."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-final-smoke.out.log",
+      "kind": "verification-log",
+      "inspected": true,
+      "notes": "Final post-polish direct Next dev server smoke served /visual-world-engine with status 200 and route/campaign text present; server was stopped afterward."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/iteration-prompts-b6.json",
+      "kind": "prompt-bank",
+      "inspected": true,
+      "notes": "Three Batch 6 prompts for Unity cooperation, webtoon Gate choice, and music resonance proof cover."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-040-unity-kyuro-cooperation-lattice.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "29/30 Unity/Kyuro cooperation correction; preferred Unity source."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-040-unity-kyuro-cooperation-lattice.vis.provenance.json",
+      "kind": "metadata",
+      "inspected": true,
+      "notes": "VIS provenance sidecar for arc-visual-040-unity-kyuro-cooperation-lattice."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/arc-visual-040-unity-kyuro-cooperation-lattice.png",
+      "kind": "public-assets",
+      "inspected": true,
+      "notes": "Public PNG master for arc-visual-040-unity-kyuro-cooperation-lattice."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/arc-visual-040-unity-kyuro-cooperation-lattice-thumb.jpg",
+      "kind": "public-thumbnail-derivatives",
+      "inspected": true,
+      "notes": "900x1125 gallery thumbnail for arc-visual-040-unity-kyuro-cooperation-lattice."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-041-webtoon-gate-choice-blank-ledger.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 Webtoon story-portal source with blank ledger and consent exit."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-041-webtoon-gate-choice-blank-ledger.vis.provenance.json",
+      "kind": "metadata",
+      "inspected": true,
+      "notes": "VIS provenance sidecar for arc-visual-041-webtoon-gate-choice-blank-ledger."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/arc-visual-041-webtoon-gate-choice-blank-ledger.png",
+      "kind": "public-assets",
+      "inspected": true,
+      "notes": "Public PNG master for arc-visual-041-webtoon-gate-choice-blank-ledger."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/arc-visual-041-webtoon-gate-choice-blank-ledger-thumb.jpg",
+      "kind": "public-thumbnail-derivatives",
+      "inspected": true,
+      "notes": "900x1125 gallery thumbnail for arc-visual-041-webtoon-gate-choice-blank-ledger."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-042-music-resonance-proof-cover.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 square music proof-cover source with central resonance artifact."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-042-music-resonance-proof-cover.vis.provenance.json",
+      "kind": "metadata",
+      "inspected": true,
+      "notes": "VIS provenance sidecar for arc-visual-042-music-resonance-proof-cover."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/arc-visual-042-music-resonance-proof-cover.png",
+      "kind": "public-assets",
+      "inspected": true,
+      "notes": "Public PNG master for arc-visual-042-music-resonance-proof-cover."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/arc-visual-042-music-resonance-proof-cover-thumb.jpg",
+      "kind": "public-thumbnail-derivatives",
+      "inspected": true,
+      "notes": "900x1125 gallery thumbnail for arc-visual-042-music-resonance-proof-cover."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b6-qa-report.json",
+      "kind": "verification",
+      "inspected": true,
+      "notes": "Playwright report for Batch 6 /gallery and /visual-world-engine smoke: status 200, 27 VWE thumbnails, current portal stats, no overflow."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b6-desktop.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Desktop gallery screenshot showing Batch 6 cards leading the curated VWE grid."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-b6-desktop.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Desktop portal screenshot after Batch 6 stats and featured assets update."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-b6-mobile.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Mobile full-page portal screenshot after Batch 6."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-b6-mobile-source-focus.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Focused mobile source-frame screenshot showing Batch 6 images painting after scroll."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-b6-mobile-social-focus.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Focused mobile social queue screenshot showing campaign masters painting after scroll."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-b6-mobile-focus-report.json",
+      "kind": "verification",
+      "inspected": true,
+      "notes": "Focused mobile report for source and social image sections: status 200 and no overflow."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-b6-mobile-refresh-report.json",
+      "kind": "verification",
+      "inspected": true,
+      "notes": "Mobile image-load report confirming 16 portal images loaded with no overflow."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/social-overlay-spec.json",
+      "kind": "social-overlay-spec",
+      "inspected": true,
+      "notes": "Batch 7 adds Unity, Webtoon Gate, and Music Resonance campaigns for deterministic platform exports."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/social-overlay-manifest.json",
+      "kind": "metadata",
+      "inspected": true,
+      "notes": "Expanded deterministic social manifest with 36 platform exports across 9 campaigns and 4 formats."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/social-overlays",
+      "kind": "public-assets",
+      "inspected": true,
+      "notes": "Route-compatible public social package: 36 export PNGs, 36 provenance sidecars, 5 contact sheets, and no nested exports folder."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/visual-intelligence/data/vis-dashboard.html",
+      "kind": "VIS-dashboard",
+      "inspected": true,
+      "notes": "VIS dashboard regenerated after Batch 7 social expansion; report shows 76 assets, 76 versions, and 87 locations."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/visual-world-engine/page.tsx",
+      "kind": "app-integration",
+      "inspected": true,
+      "notes": "Portal now reports 36 social masters and 76 VIS assets, prepends the three new campaigns, and includes mobile hero layout fixes."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-social-b7-report.json",
+      "kind": "verification",
+      "inspected": true,
+      "notes": "Batch 7 verification report with route status, source assertions, screenshot evidence, public asset dimensions, and listener cleanup."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-social-b7-desktop-chrome.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Desktop portal screenshot inspected after social count update."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-social-b7-mobile-edge.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "390px mobile first-viewport screenshot inspected after hero text and CTA width fixes."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/publishing-approval-queue.md",
+      "kind": "publishing-approval",
+      "inspected": true,
+      "notes": "Human-readable platform approval brief for all nine deterministic social campaigns."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/publishing-approval-queue.json",
+      "kind": "publishing-approval-data",
+      "inspected": true,
+      "notes": "DB/scheduler-ready queue with platform hooks, captions, scripts, blockers, approval status, and asset paths for nine campaigns."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/publishing-approval-queue.csv",
+      "kind": "publishing-approval-table",
+      "inspected": true,
+      "notes": "Operator-friendly CSV with nine rows, priorities, platform sets, hooks, captions, and blockers."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/visual-world-engine/social/page.tsx",
+      "kind": "app-integration",
+      "inspected": true,
+      "notes": "Social Launch Room now imports bundled JSON snapshots from ./data instead of reading .arcanea with node:fs/process.cwd at server render time."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/social-launch-room-http-report.json",
+      "kind": "verification",
+      "inspected": true,
+      "notes": "Direct Next HTTP smoke report for /visual-world-engine/social, /visual-world-engine, and /gallery; route copy, P0 campaign text, format/provenance text, contact sheets, portal link, and gallery entry assertions passed."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/social-launch-room-playwright-report.json",
+      "kind": "verification",
+      "inspected": true,
+      "notes": "Fresh Playwright report after Batch 9 patch: desktop and mobile scrollWidth equals viewport, all three P0 images loaded at 1080x1920, and screenshots were saved."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/social-launch-room-desktop.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "1440px desktop screenshot inspected; Social Launch Room hero, platform guidance, and all three P0 cards render with loaded preview images."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/social-launch-room-mobile.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "390px mobile screenshot inspected after wrapping patch; hero copy, CTA stack, and stat cards fit without horizontal clipping."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/visual-world-engine/social/data/publishing-approval-queue.json",
+      "kind": "app-data-snapshot",
+      "inspected": true,
+      "notes": "Bundled Social Launch Room approval queue snapshot copied from the canonical run folder; verified byte-identical by scripts/verify-social-launch-data.cjs."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/visual-world-engine/social/data/social-overlay-spec.json",
+      "kind": "app-data-snapshot",
+      "inspected": true,
+      "notes": "Bundled social overlay spec snapshot for campaign proof lines, CTAs, gates, guardians, and scores; verified byte-identical to the run source."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/visual-world-engine/social/data/social-overlay-manifest.json",
+      "kind": "app-data-snapshot",
+      "inspected": true,
+      "notes": "Bundled social overlay manifest snapshot with 36 exports and 5 contact sheets; route imports this data without filesystem reads at render time."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/scripts/verify-social-launch-data.cjs",
+      "kind": "verification-script",
+      "inspected": true,
+      "notes": "Verifier compares bundled Social Launch Room JSON snapshots against the canonical run files and checks campaign/export/contact-sheet/review-gate invariants."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/social-launch-room-data-snapshot-report.json",
+      "kind": "verification",
+      "inspected": true,
+      "notes": "Snapshot parity report: 3 files, 9 campaigns, 3 P0 campaigns, 36 exports, 5 contact sheets, and rights gated until VIS ingestion."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/social-launch-room-snapshot-http-report.json",
+      "kind": "verification",
+      "inspected": true,
+      "notes": "Direct Next HTTP smoke report for bundled JSON route: /visual-world-engine/social returned 200 and all route text assertions passed."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/social-launch-room-snapshot-typecheck-report.json",
+      "kind": "verification",
+      "inspected": true,
+      "notes": "App TypeScript project check passed after bundled Social Launch Room snapshot work and gallery thumbnailUrl null normalization."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-043-unity-kyuro-bridge-action.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "29/30 Unity/Kyuro action hook. Strongest asymmetric cooperation frame so far; approved candidate with crop/brightness caution."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-043-unity-kyuro-bridge-action.vis.provenance.json",
+      "kind": "provenance-sidecar",
+      "inspected": true,
+      "notes": "VIS provenance sidecar for arc-visual-043-unity-kyuro-bridge-action.png, including original Codex generated path, prompt ref, governance, canon, and not-minted web3 placeholder."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/arc-visual-043-unity-kyuro-bridge-action.png",
+      "kind": "public-assets",
+      "inspected": true,
+      "notes": "Public PNG master for arc-visual-043-unity-kyuro-bridge-action.png."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/arc-visual-043-unity-kyuro-bridge-action-thumb.jpg",
+      "kind": "public-thumbnail-derivatives",
+      "inspected": true,
+      "notes": "900x1125 gallery thumbnail derivative for arc-visual-043-unity-kyuro-bridge-action.png."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-044-gate-stays-open-consent-exit.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "28/30 Gate-Descent consent-exit story source. Approved candidate with wardrobe variation caution."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-044-gate-stays-open-consent-exit.vis.provenance.json",
+      "kind": "provenance-sidecar",
+      "inspected": true,
+      "notes": "VIS provenance sidecar for arc-visual-044-gate-stays-open-consent-exit.png, including original Codex generated path, prompt ref, governance, canon, and not-minted web3 placeholder."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/arc-visual-044-gate-stays-open-consent-exit.png",
+      "kind": "public-assets",
+      "inspected": true,
+      "notes": "Public PNG master for arc-visual-044-gate-stays-open-consent-exit.png."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/arc-visual-044-gate-stays-open-consent-exit-thumb.jpg",
+      "kind": "public-thumbnail-derivatives",
+      "inspected": true,
+      "notes": "900x1125 gallery thumbnail derivative for arc-visual-044-gate-stays-open-consent-exit.png."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-045-world-tower-dragon-habitat-bridge.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "27/30 healthy world-tower dragon habitat source. Approved with crop caution because blank observatory panel can read as a screen."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-045-world-tower-dragon-habitat-bridge.vis.provenance.json",
+      "kind": "provenance-sidecar",
+      "inspected": true,
+      "notes": "VIS provenance sidecar for arc-visual-045-world-tower-dragon-habitat-bridge.png, including original Codex generated path, prompt ref, governance, canon, and not-minted web3 placeholder."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/arc-visual-045-world-tower-dragon-habitat-bridge.png",
+      "kind": "public-assets",
+      "inspected": true,
+      "notes": "Public PNG master for arc-visual-045-world-tower-dragon-habitat-bridge.png."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/arc-visual-045-world-tower-dragon-habitat-bridge-thumb.jpg",
+      "kind": "public-thumbnail-derivatives",
+      "inspected": true,
+      "notes": "900x1125 gallery thumbnail derivative for arc-visual-045-world-tower-dragon-habitat-bridge.png."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/iteration-prompts-b11.json",
+      "kind": "prompt-bank",
+      "inspected": true,
+      "notes": "Batch 11 prompt records for Unity/Kyuro bridge action, Gate consent-exit story source, and world-tower dragon habitat source."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-ingestion-report.json",
+      "kind": "verification",
+      "inspected": true,
+      "notes": "Batch 11 ingestion report: 3 assets, public PNGs, thumbnails, 38 ledger rows, and 38 metadata rows."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-contact-sheet.jpg",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Visual QA contact sheet inspected for Batch 11, confirming 043/044/045 scores and crop cautions."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-gallery-portal-http-report.json",
+      "kind": "verification",
+      "inspected": true,
+      "notes": "Playwright-managed direct Next route smoke: /gallery and /visual-world-engine returned 200, included all three Batch 11 titles, saved screenshots, and stopped port 3013."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-gallery-desktop.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Desktop Gallery screenshot inspected after Batch 11 wiring; new candidates appear in the World Engine card grid and no connection-refused capture remains."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-portal-desktop.png",
+      "kind": "screenshot",
+      "inspected": true,
+      "notes": "Desktop Visual World Engine portal screenshot inspected; hero stats show 38 source frames, 30 gallery candidates, 36 social masters, 76 VIS assets from the last completed scan, and 29/30 peak score."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-next-playwright.out.log",
+      "kind": "verification-log",
+      "inspected": true,
+      "notes": "Direct Next server log for the Batch 11 Playwright route smoke, showing successful local route requests before cleanup."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Tier B generated-media source frames declared for this visual-world batch; no Tier D primary assets accepted."
+    },
+    {
+      "name": "canon-grounding",
+      "status": "pass",
+      "evidence": "Prompts reference CANON_LOCKED.md and avoid known canon errors."
+    },
+    {
+      "name": "social-grounding",
+      "status": "pass",
+      "evidence": "Channel constraints were checked against official Instagram, TikTok, YouTube, and X sources plus the local channel matrix."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "evidence": "32 generated PNG exports were copied into the dated workspace run folder and visually inspected; Batch 5 added four inspected assets."
+    },
+    {
+      "name": "visual-qa",
+      "status": "pass",
+      "evidence": "32 source assets scored with the 30-point gate; 24 are promoted to gallery, with remaining assets kept as archive, candidate, iterate, reference-only, or style-frame material."
+    },
+    {
+      "name": "metadata-sidecars",
+      "status": "pass",
+      "evidence": "Each of the 32 generated source images has a matching .vis.provenance.json sidecar plus run-level metadata.jsonl; promoted Batch 3, Batch 4, and Batch 5 records include public-gallery used_in pointers."
+    },
+    {
+      "name": "vis-scan",
+      "status": "pass",
+      "evidence": "visual-intelligence bin/vis.mjs scan registered 61 image assets, 61 versions, 77 locations, 48 prompts, and 48 generation events after scanning the Batch 5 brand image system mirror; dashboard/report were regenerated."
+    },
+    {
+      "name": "public-gallery-routing",
+      "status": "pass",
+      "evidence": "Twenty-four approved/candidate PNG masters and twenty-four JPEG thumbnail derivatives are now in apps/web/public/images/arcanea-world-engine/god-run-2026-07-06 and wired into the gallery showcase fallback."
+    },
+    {
+      "name": "focused-tsx-parse",
+      "status": "pass",
+      "evidence": "TypeScript transpileModule parse check passed for gallery-data.ts, gallery-components.tsx, and page.tsx."
+    },
+    {
+      "name": "temporary-local-smoke",
+      "status": "pass",
+      "evidence": "Temporary Next dev server launched via the local Next binary served /gallery with status 200 for Batch 3 visual verification; server and port 3007 were stopped afterward."
+    },
+    {
+      "name": "web-thumbnail-derivatives",
+      "status": "pass",
+      "evidence": "Generated four additional 900x1125 JPEG thumbnails from Batch 5 approved/candidate PNG masters, bringing the thumbnail set to twenty-four."
+    },
+    {
+      "name": "gallery-visual-smoke",
+      "status": "pass",
+      "evidence": "Playwright route smoke on http://127.0.0.1:3007/gallery returned desktop/mobile status 200, detected 20 VWE thumbnail layers, confirmed Fire Gate Forge Titan and QA signal, saved desktop/mobile/focus/first-image screenshots, and confirmed port 3007 cleanup afterward."
+    },
+    {
+      "name": "batch3-gallery-data",
+      "status": "pass",
+      "evidence": "gallery-data.ts now leads with Heart Realm Living Ark and includes Batch 3 Webtoon, storybook/book, and Luminor rank proof-atlas records."
+    },
+    {
+      "name": "batch4-gallery-data",
+      "status": "pass",
+      "evidence": "gallery-data.ts now leads with Fire Gate Forge Titan and includes Alera, Yumiko, Flow, Crown, and music proof-stage Batch 4 records."
+    },
+    {
+      "name": "batch5-gallery-data",
+      "status": "pass",
+      "evidence": "gallery-data.ts now prepends Veloura Membrane Corridor, Starweave Perspective Loom, Source Meta-Consciousness Atlas, and Unity Partnership Sanctuary, bringing curated VWE cards to 24."
+    },
+    {
+      "name": "batch5-gallery-visual-smoke",
+      "status": "pass",
+      "evidence": "Temporary direct Next dev server served /gallery with status 200, confirmed all four Batch 5 titles in rendered body text, saved desktop/mobile/card-focus screenshots, visually confirmed the four new cards render first, and stopped port 3007 afterward."
+    },
+    {
+      "name": "social-overlay-render",
+      "status": "pass",
+      "evidence": "Rendered 24 deterministic social PNG masters across 4:5, 9:16, 1:1, and 16:9 using Playwright; first file URL background pass was rejected, then source art was embedded as data URIs and re-rendered."
+    },
+    {
+      "name": "social-overlay-metadata",
+      "status": "pass",
+      "evidence": "social-overlay-manifest.json, social-overlay-ledger.csv, social-overlay-metadata.jsonl, and 24 .social.provenance.json sidecars are present for the 24 PNG masters."
+    },
+    {
+      "name": "social-overlay-dimensions",
+      "status": "pass",
+      "evidence": "Corrected local gate confirmed 24 exports, 24 sidecars, 5 contact sheets, 24 JSONL rows, 24 ledger rows, four channel groups of six each, and zero dimension mismatches."
+    },
+    {
+      "name": "social-overlay-visual-inspection",
+      "status": "pass",
+      "evidence": "Visually inspected Fire Gate 9:16, Heart Realm 4:5, Luminor 16:9, and the Instagram 4:5 contact sheet after the data URI renderer fix."
+    },
+    {
+      "name": "brand-image-system-mirror",
+      "status": "pass",
+      "evidence": "Batch 5 source assets and the social overlay package were mirrored into C:/Users/frank/brands/image-system/arcanea/generated/run-2026-07-06-god-mode and the dated jobs mirror; mirror checks found 32 source PNGs, 32 source sidecars, 24 social PNGs, 24 social sidecars, and 5 contact sheets."
+    },
+    {
+      "name": "visual-world-engine-planning",
+      "status": "pass",
+      "evidence": "Created ARCANEA_VISUAL_WORLD_ENGINE_PORTAL_2026-07-06.md with page spec, scene brief, acceptance criteria, and rollback."
+    },
+    {
+      "name": "visual-world-engine-public-social-assets",
+      "status": "pass",
+      "evidence": "Copied 24 deterministic social PNG masters into the app public image tree for the portal campaign queue."
+    },
+    {
+      "name": "visual-world-engine-tsx-parse",
+      "status": "pass",
+      "evidence": "TypeScript transpileModule parse check passed for apps/web/app/visual-world-engine/page.tsx and apps/web/app/gallery/gallery-components.tsx."
+    },
+    {
+      "name": "visual-world-engine-local-smoke",
+      "status": "pass",
+      "evidence": "Temporary direct Next dev server served /visual-world-engine and /gallery with status 200; Playwright confirmed 13 loaded Arcanea images, 6 social masters, no desktop/mobile horizontal overflow, and Gallery link to /visual-world-engine; server was stopped afterward."
+    },
+    {
+      "name": "visual-world-engine-screenshot-inspection",
+      "status": "pass",
+      "evidence": "Desktop and mobile screenshots were visually inspected after switching portal media to direct public-file rendering via next/image unoptimized; source frames and social masters paint correctly."
+    },
+    {
+      "name": "visual-world-engine-final-http-smoke",
+      "status": "pass",
+      "evidence": "After type-shape cleanup, a temporary direct Next dev server served /visual-world-engine with status 200, route text and Power That Builds present, and zero listeners left on port 3008 after shutdown."
+    },
+    {
+      "name": "batch6-image-generation",
+      "status": "pass",
+      "evidence": "Generated three Batch 6 candidates with Codex built-in image_gen: Unity/Kyuro cooperation, Webtoon Gate choice, and Music Resonance Proof Cover."
+    },
+    {
+      "name": "batch6-visual-qa",
+      "status": "pass",
+      "evidence": "Visually inspected all three generated exports; scored 29/30, 28/30, and 28/30 with failure modes and next improvements recorded."
+    },
+    {
+      "name": "batch6-metadata-sidecars",
+      "status": "pass",
+      "evidence": "Run now has 35 source PNGs, 35 VIS sidecars, 35 metadata.jsonl rows, and 35 ledger rows."
+    },
+    {
+      "name": "batch6-public-gallery-assets",
+      "status": "pass",
+      "evidence": "Public gallery set now has 27 PNG masters and 27 900x1125 JPEG thumbnails; gallery-data.ts prepends the three Batch 6 cards."
+    },
+    {
+      "name": "batch6-vis-scan",
+      "status": "pass",
+      "evidence": "VIS scan of the brand mirror registered 64 assets, 64 versions, 80 locations, 51 prompts, and 51 generation events after Batch 6."
+    },
+    {
+      "name": "batch6-gallery-portal-smoke",
+      "status": "pass",
+      "evidence": "Temporary direct Next dev server served /gallery and /visual-world-engine with status 200; confirmed 27 gallery thumbnails, Batch 6 cards, portal stats 35/27/64, no desktop/mobile overflow, and stopped port 3008 afterward."
+    },
+    {
+      "name": "batch6-mobile-focus-screenshots",
+      "status": "pass",
+      "evidence": "Focused mobile screenshots after scroll confirmed the source-frame and social-frame images paint correctly; full-page mobile capture below-fold black wells are a Playwright artifact, not an image-load failure."
+    },
+    {
+      "name": "batch7-social-export-counts",
+      "status": "pass",
+      "evidence": "Renderer produced 36 social PNG exports, 36 provenance sidecars, 36 ledger rows, 36 JSONL metadata rows, and 5 contact sheets."
+    },
+    {
+      "name": "batch7-public-social-route-shape",
+      "status": "pass",
+      "evidence": "Public social-overlays directory has 36 export PNGs, 36 sidecars, 5 contact sheets, expected channel folders, and no nested exports directory."
+    },
+    {
+      "name": "batch7-vis-scan",
+      "status": "pass",
+      "evidence": "VIS scan against the Arcanea brand generated mirror reports 76 assets, 76 versions, 87 locations, 51 prompts, and 51 generation events."
+    },
+    {
+      "name": "batch7-portal-source-assertions",
+      "status": "pass",
+      "evidence": "TSX parse passed; source includes 36 social masters, 76 VIS assets, nine campaign copy, and the three new campaign hooks."
+    },
+    {
+      "name": "batch7-mobile-hero-qa",
+      "status": "pass",
+      "evidence": "Mobile visual QA found clipped hero text/CTA width; portal was patched and a 390x1000 Edge capture was inspected after fixes."
+    },
+    {
+      "name": "batch7-localhost-cleanup",
+      "status": "pass",
+      "evidence": "Temporary Next servers and headless browser processes were stopped; verification report records no live listeners on ports 3008, 3009, or 3010."
+    },
+    {
+      "name": "batch8-publishing-queue-shape",
+      "status": "pass",
+      "evidence": "Publishing approval queue validates with 9 JSON campaigns, 9 CSV rows, 3 P0 campaigns, all campaigns set to needs_human_review, and all vertical asset paths attached."
+    },
+    {
+      "name": "batch8-platform-gates",
+      "status": "pass",
+      "evidence": "Queue references current official TikTok, Instagram, YouTube Shorts, and X guidance while keeping publishing, rights, audio, DB, and web3 steps gated."
+    },
+    {
+      "name": "batch9-social-launch-room-source-of-truth",
+      "status": "pass",
+      "evidence": "apps/web/app/visual-world-engine/social/page.tsx reads publishing-approval-queue.json, social-overlay-spec.json, and social-overlay-manifest.json; no static duplicate campaign array is used for the route."
+    },
+    {
+      "name": "batch9-social-launch-room-app-routing",
+      "status": "pass",
+      "evidence": "/visual-world-engine links to /visual-world-engine/social from the hero CTA, portal lane, route map, and social campaign section."
+    },
+    {
+      "name": "batch9-social-launch-room-no-publish-affordance",
+      "status": "pass",
+      "evidence": "The route explicitly says not approved, not scheduled, not published, and not minted; UI exposes review metadata and next human actions only, with no publish/schedule/DB/export/mint controls."
+    },
+    {
+      "name": "batch9-social-launch-room-tsx-parse",
+      "status": "pass",
+      "evidence": "Focused TypeScript transpileModule diagnostics passed for apps/web/app/visual-world-engine/page.tsx and apps/web/app/visual-world-engine/social/page.tsx after the Batch 9 patch."
+    },
+    {
+      "name": "batch9-social-launch-room-http-smoke",
+      "status": "pass",
+      "evidence": "Direct Next local smoke returned status 200 for /visual-world-engine/social, /visual-world-engine, and /gallery and confirmed route copy, P0 campaign text, format/provenance sections, contact sheets, portal link, and Gallery World Engine entry."
+    },
+    {
+      "name": "batch9-social-launch-room-visual-qa",
+      "status": "pass",
+      "evidence": "Playwright desktop/mobile capture after visual patch confirmed no document overflow and all three P0 images loaded at natural 1080x1920; desktop and mobile screenshots were visually inspected."
+    },
+    {
+      "name": "batch9-localhost-cleanup",
+      "status": "pass",
+      "evidence": "Temporary direct Next server was stopped after Playwright verification; port 3011 reported clear."
+    },
+    {
+      "name": "batch10-social-launch-data-snapshot-parity",
+      "status": "pass",
+      "evidence": "node scripts/verify-social-launch-data.cjs passed, proving the three bundled route JSON snapshots byte-match the canonical .arcanea run files."
+    },
+    {
+      "name": "batch10-social-launch-data-shape",
+      "status": "pass",
+      "evidence": "Verifier confirmed 9 campaigns, 3 P0 campaigns, all campaigns needs_human_review, 36 manifest exports, 5 contact sheets, matching campaign ids across queue/spec/manifest, and rights unknown until VIS ingestion."
+    },
+    {
+      "name": "batch10-social-launch-no-runtime-fs-read",
+      "status": "pass",
+      "evidence": "Source scan and verifier confirmed apps/web/app/visual-world-engine/social/page.tsx no longer imports node:fs or calls readFileSync and imports ./data/publishing-approval-queue.json."
+    },
+    {
+      "name": "batch10-social-launch-snapshot-http-smoke",
+      "status": "pass",
+      "evidence": "Temporary direct Next server served /visual-world-engine/social with status 200 from bundled JSON imports and confirmed title, review gate, P0 campaign copy, format/provenance text, and contact sheets; port 3012 was stopped afterward."
+    },
+    {
+      "name": "batch10-app-typecheck",
+      "status": "pass",
+      "evidence": ".\\apps\\web\\node_modules\\.bin\\tsc.cmd --noEmit --pretty false --project .\\apps\\web\\tsconfig.json passed after clearing stale generated .next/dev/types and normalizing Gallery thumbnailUrl."
+    },
+    {
+      "name": "batch11-image-generation",
+      "status": "pass",
+      "evidence": "Generated three Batch 11 candidates with Codex built-in image_gen: Unity/Kyuro bridge action, Gate consent-exit story source, and world-tower dragon habitat bridge."
+    },
+    {
+      "name": "batch11-visual-qa",
+      "status": "pass",
+      "evidence": "Visually inspected all three Batch 11 workspace exports and contact sheet; scored 29/30, 28/30, and 27/30 with failure modes and next improvements recorded."
+    },
+    {
+      "name": "batch11-metadata-sidecars",
+      "status": "pass",
+      "evidence": "Run now has 38 source PNGs, 38 metadata.jsonl rows, 38 ledger rows, and Batch 11 .vis.provenance.json sidecars with not-minted web3 placeholders."
+    },
+    {
+      "name": "batch11-public-gallery-assets",
+      "status": "pass",
+      "evidence": "Three Batch 11 PNG masters and three 900x1125 JPEG thumbnails were added to the public arcanea-world-engine image directory and wired into gallery-data.ts."
+    },
+    {
+      "name": "batch11-brand-mirror",
+      "status": "pass",
+      "evidence": "Three Batch 11 PNGs, sidecars, prompt file, ledger, and metadata were mirrored into the Arcanea brand generated mirror and dated job mirror."
+    },
+    {
+      "name": "batch11-portal-source-assertions",
+      "status": "pass",
+      "evidence": "/visual-world-engine source now contains 38 source frames, 30 gallery candidates, the three Batch 11 featured assets, and keeps VIS assets labeled as last completed scan."
+    },
+    {
+      "name": "batch11-gallery-portal-http-smoke",
+      "status": "pass",
+      "evidence": "Playwright-managed direct Next smoke returned status 200 for /gallery and /visual-world-engine, confirmed all three Batch 11 titles in both route bodies, and stopped the temporary server on port 3013."
+    },
+    {
+      "name": "batch11-gallery-portal-visual-smoke",
+      "status": "pass",
+      "evidence": "Desktop screenshots for /gallery and /visual-world-engine were captured and visually inspected; Gallery shows the Batch 11 cards in the World Engine grid and the portal shows the updated 38/30/36/76/29 run stats."
+    }
+  ],
+  "score": {
+    "total": 29,
+    "max": 30,
+    "notes": "Current score reflects Batch 1 through Batch 11, the deterministic social overlay expansion, the dedicated /visual-world-engine portal, the platform approval queue, the read-only /visual-world-engine/social launch room, deployable bundled JSON snapshots, passing app TypeScript project check, and the Batch 11 cooperation-action image pass: 38 source images, 30 public gallery assets, 36 public social masters, 36 social sidecars, 5 contact sheets, 76 VIS-registered image assets in the last completed scan, 9 approval-queued campaigns, and local desktop/mobile gallery, portal, launch-room, snapshot-route, typecheck, and Batch 11 visual QA verification. The full run remains iterate-oriented because production deployment, social scheduling, DB write, web3 review, shared-shell hydration cleanup, rights ingestion, fresh VIS rescan, and human publishing approval are not complete."
+  },
+  "decision": "ship",
+  "known_risks": [
+    "Existing dirty package/lock/campaign/business-strategy files are unrelated and must not be staged accidentally.",
+    "Social masters are ready for approval review, but platform captions, scheduling, and publishing are not complete.",
+    "A shared-shell hydration warning appears in Next dev screenshots for nav/footer input caret-color mismatch; it is not introduced by VWE gallery data but should be fixed before pristine visual QA capture.",
+    "pnpm exec prompted to reinstall because the current lockfile is incompatible with the active pnpm; visual smoke used the already-installed local Next binary directly to avoid touching dependencies.",
+    "No production deploy, DB write, web3 mint, or public social publishing was performed; those still require review/approval.",
+    "The social overlay pass is still-image only; motion cards, audio-reactive variants, and Shorts/Reels sequencing remain future work.",
+    "The Visual World Engine portal is locally verified and not yet Vercel-preview or production verified; batch with the next coherent Arcanea app change before deployment to avoid CI/build churn.",
+    "Mobile full-page Playwright screenshots can show black below-fold portal image wells even after loaded-image assertions pass; focused mobile scroll screenshots confirm actual painted source/social sections.",
+    "Bundled Social Launch Room JSON snapshots must be refreshed and verified after any future social package render, otherwise the app route can lag behind the canonical run files.",
+    "Full repo security scan was not rerun for this visual/app slice; app TypeScript project check, focused TSX parse, evidence validation, snapshot verifier, HTTP smoke, and visual QA are the completed gates.",
+    "Batch 11 solved the Unity/Kyuro symmetry gap with a stronger action hook, but the 043 dark foreground and cable complexity still need phone crop/brightness testing before first-wave social use.",
+    "VIS last completed scan remains 76 assets; Batch 11 is mirrored with sidecars but not yet included in a fresh VIS rescan, and VIS rights reporting still needs generated-owned sidecar ingestion."
+  ]
+}

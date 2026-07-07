@@ -1,0 +1,31 @@
+{
+  "base": "http://127.0.0.1:3011",
+  "checkedAt": "2026-07-06T08:58:48.9441669+02:00",
+  "pages": [
+    {
+      "path": "/visual-world-engine/social",
+      "status": 200
+    },
+    {
+      "path": "/visual-world-engine",
+      "status": 200
+    },
+    {
+      "path": "/gallery",
+      "status": 200
+    }
+  ],
+  "assertions": {
+    "socialStatus200": true,
+    "portalStatus200": true,
+    "galleryStatus200": true,
+    "socialHasTitle": true,
+    "socialHasReviewState": true,
+    "socialHasP0Campaigns": true,
+    "socialHasFormatEvidence": true,
+    "socialHasContactSheets": true,
+    "portalLinksSocial": true,
+    "galleryHasWorldEngine": true
+  },
+  "failed": []
+}

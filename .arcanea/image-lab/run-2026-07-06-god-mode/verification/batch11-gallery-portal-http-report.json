@@ -1,0 +1,45 @@
+{
+  "generatedAt": "2026-07-06T08:14:25.641Z",
+  "port": 3013,
+  "routes": [
+    {
+      "path": "/gallery",
+      "statusCode": 200,
+      "contentLength": 465919,
+      "hasBatch11Unity": true,
+      "hasBatch11Gate": true,
+      "hasBatch11Tower": true,
+      "hasVisualWorldEngine": true
+    },
+    {
+      "path": "/visual-world-engine",
+      "statusCode": 200,
+      "contentLength": 222896,
+      "hasBatch11Unity": true,
+      "hasBatch11Gate": true,
+      "hasBatch11Tower": true,
+      "hasVisualWorldEngine": true
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "/gallery",
+      "statusCode": 200,
+      "file": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\verification\\batch11-gallery-desktop.png",
+      "bytes": 1323957,
+      "title": "Gallery of Creation | Arcanea",
+      "waitedFor": "Unity Kyuro Bridge Action"
+    },
+    {
+      "path": "/visual-world-engine",
+      "statusCode": 200,
+      "file": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\verification\\batch11-portal-desktop.png",
+      "bytes": 1639892,
+      "title": "Visual World Engine - Arcanea | Arcanea",
+      "waitedFor": "Visual World Engine"
+    }
+  ],
+  "serverStopped": true,
+  "success": true,
+  "method": "node_repl_playwright_domcontentloaded"
+}

@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "batch": "b11",
+  "assets": 3,
+  "ids": [
+    "arc-visual-043",
+    "arc-visual-044",
+    "arc-visual-045"
+  ],
+  "publicPngs": [
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06\\arc-visual-043-unity-kyuro-bridge-action.png",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06\\arc-visual-044-gate-stays-open-consent-exit.png",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06\\arc-visual-045-world-tower-dragon-habitat-bridge.png"
+  ],
+  "thumbs": [
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06\\arc-visual-043-unity-kyuro-bridge-action-thumb.jpg",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06\\arc-visual-044-gate-stays-open-consent-exit-thumb.jpg",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06\\arc-visual-045-world-tower-dragon-habitat-bridge-thumb.jpg"
+  ],
+  "ledgerRows": 38,
+  "metadataRows": 38
+}

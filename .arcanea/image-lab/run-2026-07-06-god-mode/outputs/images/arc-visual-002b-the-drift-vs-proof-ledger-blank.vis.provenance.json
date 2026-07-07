@@ -1,0 +1,90 @@
+{
+  "asset_uid": "arcanea-2026-07-the-drift-vs-proof-ledger-blank",
+  "source_asset_uid": "arcanea-2026-07-the-drift-vs-proof-ledger",
+  "batch_id": "2026-07-arcanea-visual-world-engine-b1-revisions",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 2,
+  "title": "the drift vs proof ledger blank",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "tiktok-reels-shorts-hook-9x16",
+  "aspect_ratio": "9:16",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-002b-the-drift-vs-proof-ledger-blank.png",
+    "sha256": "296b7cc501fb80a0d503817c96a7d9c76daacd7b6e086d00ba219bac20ead14e",
+    "mime_type": "image/png",
+    "width": 941,
+    "height": 1672,
+    "size_bytes": 2570474
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b1.json#arc-visual-002b",
+    "prompt": "Use case: illustration-story. Asset type: revised vertical social hook frame. Primary request: visualize The Drift being answered by a proof ledger, but with absolutely no readable or fake writing anywhere. Scene/backdrop: a tall vertical portal corridor; below, abstract blurred passive media fragments dissolve into mist; above, a clean luminous blank proof ledger opens as a symbolic object. Subject: one creator hand places a small finished crystal artifact onto a blank glowing ledger surface; no face needed, no enemy group, no superiority. Style/medium: cinematic Arcanea poster art, high contrast, tactile, precise, AI-lab premium. Composition/framing: 9:16, hand, artifact, and blank ledger readable in first second, strong top-bottom contrast, clean caption-safe space at top and bottom. Lighting/mood: shadow-to-gold transition, serious but hopeful. Materials/textures: blank ancient paper, dark glass, gold foil, teal memory lines, clean geometric light. Constraints: no text, no letters, no symbols that resemble writing, no logos, no UI, no manuscript pages, no newspaper scraps, no horror, no demonization of people.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, or watermark inside the image. Arcanea aesthetic: luxury cosmic myth-tech, sacred obsidian, starlight metal, gold thread, living crystal, ancient paper, dark glass, moonlight, portal light. AI-lab premium, not fantasy-game chrome. Cinematic composition with one dominant subject and clean crop-safe negative space. Avoid generic fantasy cosplay, superhero spandex, medieval mud-grit, neon hacker grids, purple cliche, stock fantasy, overdecorated ornaments, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "9:16"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 27,
+    "decision": "approve",
+    "failure_modes": [
+      "bottom fragments still need small-size check"
+    ],
+    "next_improvement": "Test caption overlay and crop bottom if fragments read as fake UI."
+  },
+  "canon": {
+    "refs": [
+      "Arcanea brand pack",
+      "The Drift",
+      "Chosen responsibility"
+    ],
+    "gate": "Voice",
+    "guardian": "Alera"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 2,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "main-storyline"
+      },
+      {
+        "trait_type": "surface",
+        "value": "tiktok-reels-shorts-hook-9x16"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Voice"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Alera"
+      },
+      {
+        "trait_type": "revision_of",
+        "value": "arc-visual-002"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-002b-the-drift-vs-proof-ledger-blank.vis.provenance.json"
+  },
+  "used_in": [],
+  "created_at": "2026-07-06T02:32:00+02:00"
+}

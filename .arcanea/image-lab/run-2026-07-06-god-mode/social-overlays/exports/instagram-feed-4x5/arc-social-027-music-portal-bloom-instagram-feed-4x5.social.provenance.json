@@ -1,0 +1,28 @@
+{
+  "id": "arc-social-027-music-portal-bloom-instagram-feed-4x5",
+  "campaignId": "arc-social-027-music-portal-bloom",
+  "sourceAssetId": "arc-visual-027",
+  "channelKey": "instagram-feed-4x5",
+  "platforms": [
+    "Instagram Feed",
+    "Instagram Carousel"
+  ],
+  "ratio": "4:5",
+  "width": 1080,
+  "height": 1350,
+  "sizeBytes": 1749032,
+  "sha256": "4f283158cc35eb9bdc01b1a54e73b846136e2418eabac1e817a11e0548c94c37",
+  "headline": "Make The Song Visible",
+  "subhead": "Sound becomes a proof artifact.",
+  "cta": "Compose something you can keep.",
+  "proof": "Music portal / Voice Gate",
+  "gate": "Voice",
+  "guardian": "Alera",
+  "score30": 29,
+  "sourceImage": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-027-music-portal-bloom-clean.png",
+  "outputPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\social-overlays\\exports\\instagram-feed-4x5\\arc-social-027-music-portal-bloom-instagram-feed-4x5.png",
+  "sourceMethod": "code-rendered deterministic overlays on inspected generated media",
+  "rightsStatus": "generated-owned-derived",
+  "approvalGate": "social-approvals",
+  "createdAt": "2026-07-06T07:49:20+02:00"
+}

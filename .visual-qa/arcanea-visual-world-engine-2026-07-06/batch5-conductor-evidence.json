@@ -1,0 +1,162 @@
+{
+  "version": "1.0",
+  "task": "Arcanea Visual World Conductor Batch 5 review and social overlay QA",
+  "surface": "Arcanea gallery, social static exports, story/worldbuilding source art",
+  "audience": "AI-native creators, fantasy/anime worldbuilding fans, social-feed viewers, and Arcanea Academy story followers",
+  "standards": [
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/best-practices/image-logo-visual-generation.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/VISUAL_DOCTRINE.md"
+  ],
+  "references": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/review.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/ledger.csv",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/iteration-prompts-b5.json",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/social-overlay-manifest.json",
+    "C:/Users/frank/brands/image-system/arcanea/generated/run-2026-07-06-god-mode",
+    "C:/Users/frank/brands/image-system/jobs/2026/07/arcanea-visual-world-engine-2026-07-06"
+  ],
+  "direction": {
+    "keep": [
+      "Batch 5 correction quality for Veloura as membrane/weather infrastructure instead of creature head",
+      "Starweave as perspective architecture rather than generic cosmic pattern",
+      "Source Gate as proof infrastructure rather than deity portrait",
+      "high-scale buildings, human anchors, warm non-combat wonder, and canon-safe Gate naming"
+    ],
+    "avoid": [
+      "promoting Mamoru or any staging-only asset into canon",
+      "publishing externally without Frank approval",
+      "treating social crops as approved when copy is visibly clipped",
+      "generic fantasy spectacle without a story mechanism"
+    ],
+    "signature": "Arcanea world art should feel like proof-led wonder: vast enough to stop a feed, specific enough to belong only to Arcanea, and humane enough that scale does not become empty spectacle.",
+    "system": "Batch 5 source assets are reviewed in the run workspace and mirrored image-system folders; gallery integration remains dirty-agent-owned, so conductor decisions are recorded without touching gallery code."
+  },
+  "asset_quality": {
+    "tier": "B",
+    "source_method": "generated-media",
+    "provenance": "generated",
+    "why_premium": "The strongest Batch 5 assets combine Arcanea-specific Gate lore, monumental architecture, social-readable silhouettes, and visual room for deterministic overlays.",
+    "shortcut_risk": "medium",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-036-flow-gate-veloura-membrane-corridor.png",
+      "kind": "ship-review source art: Flow Gate Veloura membrane corridor",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-037-starweave-vaelith-perspective-loom.png",
+      "kind": "ship-review source art: Starweave Vaelith perspective loom",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-038-unity-kyuro-partnership-sanctuary.png",
+      "kind": "iterate/reference source art: Unity Kyuro partnership sanctuary",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-039-source-gate-shinkami-meta-consciousness-atlas.png",
+      "kind": "ship-review source art: Source Gate Shinkami meta-consciousness atlas",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/contact-sheets/instagram-feed-4x5-contact-sheet.png",
+      "kind": "social overlay contact sheet: Instagram 4x5",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/contact-sheets/vertical-9x16-contact-sheet.png",
+      "kind": "social overlay contact sheet: vertical 9x16",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/contact-sheets/wide-16x9-contact-sheet.png",
+      "kind": "social overlay contact sheet: wide 16x9",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/social-overlay-manifest.json",
+      "kind": "social overlay export manifest with VIS provenance pointers",
+      "inspected": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "notes": "Tier B generated media with Arcanea-specific worldbuilding value; not decorative filler."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "notes": "Batch 5 source images, gallery screenshots, and social contact sheets were visually inspected."
+    },
+    {
+      "name": "vis-provenance",
+      "status": "pass",
+      "notes": "Four missing Batch 5 source sidecars were repaired from metadata.jsonl; social overlays include manifest provenance entries; external publication remains blocked."
+    },
+    {
+      "name": "ledger-schema",
+      "status": "pass",
+      "notes": "Four Batch 5 ledger ship_status values were normalized from candidate to iterate for verifier compatibility without changing QA scores or gate verdicts."
+    },
+    {
+      "name": "image-engine-verifier",
+      "status": "pass",
+      "notes": "node .loop/arcanea-image-engines/verify.mjs passed after ledger normalization."
+    },
+    {
+      "name": "source-art-quality",
+      "status": "pass",
+      "notes": "arc-visual-036, 037, and 039 are ship-review candidates; arc-visual-038 is a useful reference but needs a stronger human action hook."
+    },
+    {
+      "name": "social-overlay-4x5",
+      "status": "pass",
+      "notes": "Instagram 4x5 contact sheet reads as the strongest overlay set; copy is mostly well placed and social-readable."
+    },
+    {
+      "name": "social-overlay-9x16",
+      "status": "fail",
+      "notes": "At least one vertical headline is cropped at the top; vertical templates need safer headline sizing and top margins."
+    },
+    {
+      "name": "social-overlay-16x9",
+      "status": "fail",
+      "notes": "Wide 16x9 contact sheet shows overlay text clipped off the left edge; restart the wide template safe-zone before shipping."
+    },
+    {
+      "name": "canon-status",
+      "status": "pass",
+      "notes": "Mamoru remains STAGING; no staging asset was promoted into canon."
+    },
+    {
+      "name": "external-actions",
+      "status": "pass",
+      "notes": "No publishing, deployment, push, spend, external messaging, minting, or canon promotion was performed."
+    }
+  ],
+  "score": {
+    "total": 25,
+    "max": 30,
+    "breakdown": {
+      "source_art_hook": 9,
+      "canon_specificity": 9,
+      "social_crop_system": 7
+    }
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "The four Batch 5 assets are in gallery-adjacent files touched by other agents; conductor did not modify gallery code.",
+    "VIS report text still mentions unknown rights in places despite generated-owned source sidecars and social overlay manifest entries; next VIS ingestion pass should reconcile rights status.",
+    "Social overlay wide 16x9 exports should be treated as restart until left-edge text clipping is fixed.",
+    "arc-visual-038 should not be used as a flagship social asset until its next variant adds less symmetry and more human action."
+  ]
+}

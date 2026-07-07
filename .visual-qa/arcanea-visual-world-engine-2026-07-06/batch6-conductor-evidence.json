@@ -1,0 +1,163 @@
+{
+  "version": "1.0",
+  "task": "Arcanea Visual World Conductor Batch 6 review and portal/gallery QA",
+  "surface": "Arcanea gallery, Visual World Engine portal, social/source-frame approval queue, story/music source art",
+  "audience": "AI-native creators, Arcanea worldbuilding fans, webtoon/anime viewers, music creators, and social-feed viewers",
+  "standards": [
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/best-practices/image-logo-visual-generation.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/VISUAL_DOCTRINE.md"
+  ],
+  "references": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/review.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/ledger.csv",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/metadata.jsonl",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/iteration-prompts-b6.json",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b6-qa-report.json",
+    "C:/Users/frank/brands/image-system/arcanea/generated/run-2026-07-06-god-mode",
+    "C:/Users/frank/brands/image-system/jobs/2026/07/arcanea-visual-world-engine-2026-07-06"
+  ],
+  "direction": {
+    "keep": [
+      "Unity as active cooperation and proof stewardship, not romance or mirrored iconography",
+      "Webtoon Gate-Descent logic built around blank ledger, consent exit, friends holding the Gate, and no baked-in speech bubbles",
+      "Music proof cover as a clear central resonance artifact with deterministic overlays added later",
+      "VIS-ready generated-owned sidecars and non-published approval posture"
+    ],
+    "avoid": [
+      "publishing portal/gallery changes externally without Frank approval",
+      "promoting Mamoru or other staging-only material into canon",
+      "calling portal UI final when mobile overlay text collides",
+      "using source art close crops where hands or console details could become visible artifacts"
+    ],
+    "signature": "Batch 6 makes proof visible through action: cooperation repairs, witness records, consent exits, and music becomes an artifact.",
+    "system": "Source art can move to Frank review; gallery and portal remain local approval surfaces until the mobile card overlay and gallery hero presentation are cleaned up."
+  },
+  "asset_quality": {
+    "tier": "B",
+    "source_method": "generated-media",
+    "provenance": "generated",
+    "why_premium": "Batch 6 adds three specific, canon-grounded Arcanea source frames with strong first reads, known generated-owned provenance, and stable gallery/portal/public asset paths.",
+    "shortcut_risk": "medium",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-040-unity-kyuro-cooperation-lattice.png",
+      "kind": "ship-review source art: Unity/Kyuro cooperation lattice",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-041-webtoon-gate-choice-blank-ledger.png",
+      "kind": "ship-review source art: Webtoon Gate choice blank ledger",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-042-music-resonance-proof-cover.png",
+      "kind": "ship-review source art: Music resonance proof cover",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b6-desktop.png",
+      "kind": "gallery desktop screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-b6-desktop.png",
+      "kind": "portal desktop screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-b6-mobile-source-focus.png",
+      "kind": "portal mobile source-card screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-b6-mobile-social-focus.png",
+      "kind": "portal mobile social-card screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/gallery-b6-qa-report.json",
+      "kind": "Playwright route and image-load report",
+      "inspected": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "notes": "Tier B generated media; no Tier D primary asset accepted."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "notes": "Batch 6 source images and portal/gallery screenshots were visually inspected."
+    },
+    {
+      "name": "vis-provenance",
+      "status": "pass",
+      "notes": "Run counts show 35 source PNGs, 35 source sidecars, 35 metadata rows, and 35 ledger rows."
+    },
+    {
+      "name": "public-gallery-assets",
+      "status": "pass",
+      "notes": "Public image tree has 27 PNG masters and 27 900x1125 thumbnail derivatives."
+    },
+    {
+      "name": "batch6-source-art",
+      "status": "pass",
+      "notes": "arc-visual-040, 041, and 042 are strong enough for Frank review as source art."
+    },
+    {
+      "name": "batch6-route-smoke",
+      "status": "pass",
+      "notes": "/gallery and /visual-world-engine returned 200 in the existing Batch 6 Playwright report; 16 portal images loaded on mobile and no horizontal overflow was reported."
+    },
+    {
+      "name": "mobile-source-card-ui",
+      "status": "fail",
+      "notes": "visual-world-engine-b6-mobile-source-focus.png shows the score label colliding with the Arcanea brand/nav area on the first source card."
+    },
+    {
+      "name": "gallery-hero-first-read",
+      "status": "fail",
+      "notes": "gallery-b6-desktop.png still shows a strange partial 'Creation' first-viewport read before the gallery grid."
+    },
+    {
+      "name": "dev-server-warnings",
+      "status": "blocked",
+      "notes": "Existing Next dev logs include middleware deprecation and 127.0.0.1 HMR origin warnings; not a blocker for asset review, but not pristine release evidence."
+    },
+    {
+      "name": "canon-status",
+      "status": "pass",
+      "notes": "Batch 6 ledgers/metadata do not introduce Mamoru; Mamoru remains STAGING."
+    },
+    {
+      "name": "external-actions",
+      "status": "pass",
+      "notes": "No publishing, deployment, push, spend, external messaging, minting, or canon promotion was performed by this conductor lap."
+    }
+  ],
+  "score": {
+    "total": 25,
+    "max": 30,
+    "breakdown": {
+      "source_art_quality": 9,
+      "canon_specificity": 9,
+      "portal_gallery_presentation": 7
+    }
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "The app gallery and Visual World Engine portal were modified by other agents; this conductor did not change those code files to avoid dirty-file collisions.",
+    "Batch 6 source images are Frank-review candidates, but the current mobile source-card presentation should not be treated as final public polish.",
+    "Social masters and portal assets remain approval surfaces only; no external platform publish, DB write, or web3 mint has occurred.",
+    "The VIS report may still show rights unknown even when sidecars state generated-owned; next VIS ingestion should reconcile rights status."
+  ]
+}

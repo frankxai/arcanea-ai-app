@@ -1,0 +1,52 @@
+{
+  "ts": "2026-07-05T23:36:07.175Z",
+  "dryRun": true,
+  "run": "run-2026-07-05",
+  "decisions": [
+    {
+      "brief": "brief-thalmaris-archive-dusk",
+      "need": "cinematic",
+      "engine": "higgsfield",
+      "harness": "claude",
+      "invocation": "higgsfield-generate skill (draft-then-4K)",
+      "run": "run-2026-07-05",
+      "ledgered": false
+    },
+    {
+      "brief": "brief-ten-gates-frequency-poster",
+      "need": "text",
+      "engine": "gpt-image-2",
+      "harness": "codex",
+      "invocation": "Codex image_gen per .loop/arcanea-image-lab",
+      "run": "run-2026-07-05",
+      "ledgered": false
+    },
+    {
+      "brief": "brief-emilia-prisma-gauntlet",
+      "need": "character",
+      "engine": "nb2",
+      "harness": "antigravity",
+      "invocation": "NB2 / nb-generate.mjs (GEMINI_API_KEY)",
+      "run": "run-2026-07-05",
+      "ledgered": false
+    },
+    {
+      "brief": "brief-starbound-crews-cards",
+      "need": "volume",
+      "engine": "grok-imagine",
+      "harness": "grok-cli",
+      "invocation": "Grok CLI / Hermes agent",
+      "run": "run-2026-07-05",
+      "ledgered": false
+    },
+    {
+      "brief": "brief-pyrathis-first-fire-vigil",
+      "need": "cinematic",
+      "engine": "higgsfield",
+      "harness": "claude",
+      "invocation": "higgsfield-generate skill (draft-then-4K)",
+      "run": "run-2026-07-05",
+      "ledgered": false
+    }
+  ]
+}

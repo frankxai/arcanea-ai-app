@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-07-06T05:36:14.696Z",
+  "galleryUrl": "http://127.0.0.1:3008/gallery",
+  "portalUrl": "http://127.0.0.1:3008/visual-world-engine",
+  "screenshots": [
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\verification\\gallery-b6-desktop.png",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\verification\\visual-world-engine-b6-desktop.png",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\verification\\visual-world-engine-b6-mobile.png"
+  ],
+  "assertions": {
+    "galleryStatus": 200,
+    "gallery": {
+      "hasUnity": true,
+      "hasWebtoon": true,
+      "hasMusic": true,
+      "hasQa": true,
+      "thumbnailCount": 27,
+      "hasBatch6Thumbs": true,
+      "horizontalOverflow": false
+    },
+    "portalStatus": 200,
+    "portal": {
+      "has35Sources": true,
+      "has27Gallery": true,
+      "has64Vis": true,
+      "hasUnity": true,
+      "imageCount": 16,
+      "horizontalOverflow": false
+    },
+    "mobileStatus": 200,
+    "mobile": {
+      "hasUnity": true,
+      "horizontalOverflow": false
+    }
+  }
+}

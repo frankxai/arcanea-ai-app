@@ -1,0 +1,88 @@
+{
+  "asset_uid": "arcanea-2026-07-genesis-proof-forge-first-call",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b1",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "genesis proof forge first call",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "website-hero-social-16x9",
+  "aspect_ratio": "16:9",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-001-genesis-proof-forge-first-call.png",
+    "sha256": "c1457b85967c6ab31c11004a0184cba4053373642fa939837721a8b765546bdf",
+    "mime_type": "image/png",
+    "width": 1672,
+    "height": 941,
+    "size_bytes": 2620430
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "prompt-bank.json#arc-visual-001",
+    "prompt": "Use case: illustration-story. Asset type: Arcanea website hero and social source frame. Primary request: a creator stands before the Genesis Proof Forge as a small idea becomes a luminous proof artifact. Scene/backdrop: dark AI-lab temple-studio, obsidian floor, ancient paper codex stations, portal light behind a clean central forge. Subject: one modern creator seen from behind, not a chosen-one pose, facing a floating artifact made of gold thread and starlight glass. Style/medium: cinematic high-end concept art, luxury cosmic myth-tech, Arcanea brand, museum-grade production value. Composition/framing: wide 16:9, creator small in foreground, artifact large and centered, clean negative space for later overlay, first read is proof artifact. Lighting/mood: warm gold and teal signal light on deep void indigo, hopeful, precise, alive. Materials/textures: sacred obsidian, dark glass, gold foil, living crystal, parchment, starlight metal. Constraints: no text, no logos, no UI, no watermark; mythic but usable; premium AI-lab, not game menu art.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, or watermark inside the image. Arcanea aesthetic: luxury cosmic myth-tech, sacred obsidian, starlight metal, gold thread, living crystal, ancient paper, dark glass, moonlight, portal light. AI-lab premium, not fantasy-game chrome. Cinematic composition with one dominant subject and clean crop-safe negative space. Avoid generic fantasy cosplay, superhero spandex, medieval mud-grit, neon hacker grids, purple cliche, stock fantasy, overdecorated ornaments, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "16:9"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 26,
+    "decision": "approve-with-crop-check",
+    "failure_modes": [
+      "minor pseudo-diagram detail on side codex pages",
+      "needs desktop/mobile crop proof before public hero use"
+    ],
+    "next_improvement": "Regenerate or crop with blank side pages if used as public first-viewport hero."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md",
+      "Arcanea brand pack",
+      "The Drift",
+      "Genesis proof loop"
+    ],
+    "gate": "Source",
+    "guardian": "Shinkami"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "main-storyline"
+      },
+      {
+        "trait_type": "surface",
+        "value": "website-hero-social-16x9"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Source"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Shinkami"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-001-genesis-proof-forge-first-call.vis.provenance.json"
+  },
+  "used_in": [],
+  "created_at": "2026-07-06T02:32:00+02:00"
+}

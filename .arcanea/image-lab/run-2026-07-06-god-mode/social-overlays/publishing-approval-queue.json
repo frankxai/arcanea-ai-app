@@ -1,0 +1,159 @@
+{
+  "version": "2026-07-06-b8",
+  "run": "run-2026-07-06-god-mode",
+  "status": "approval_ready_not_scheduled",
+  "rights_status": "unknown_until_vis_rights_ingestion",
+  "platform_guidance": {
+    "tiktok": {
+      "source": "https://ads.tiktok.com/business/en-US/blog/creative-best-practices-top-performing-ads",
+      "rule": "Use hook, body, close; communicate the emotional question or value in the first 3-6 seconds."
+    },
+    "instagram": {
+      "source": "https://help.instagram.com/1800814370401535/",
+      "rule": "Publish original Arcanea-created visuals and captions or approved partner work before recommendation review."
+    },
+    "youtube_shorts": {
+      "source": "https://support.google.com/youtube/answer/15424877",
+      "rule": "Use vertical or square Shorts up to 3 minutes; this queue prioritizes 15-45 second proof/story cuts first."
+    },
+    "x": {
+      "source": "https://business.x.com/en/advertising/campaign-types/build-awareness",
+      "rule": "Use concise visual-led awareness posts with one thought and one next action."
+    }
+  },
+  "approval_rules": [
+    "No external publishing before human approval.",
+    "Keep provenance and VIS sidecars attached.",
+    "Treat rights as unknown until VIS rights ingestion upgrades the field.",
+    "Use rights-cleared audio only.",
+    "Do not write DB registry records or mint web3 artifacts until a separate worthiness review passes."
+  ],
+  "campaigns": [
+    {
+      "priority": "P0",
+      "campaign_id": "arc-social-040-unity-cooperation-lattice",
+      "gate": "Unity",
+      "primary_platforms": ["TikTok", "Reels", "Shorts"],
+      "vertical_asset": "exports/vertical-9x16/arc-social-040-unity-cooperation-lattice-vertical-9x16.png",
+      "hook_3s": "Proof needs people.",
+      "instagram_caption": "A proof artifact only holds when the team holds together. Unity Gate: cooperation as infrastructure.",
+      "tiktok_short_script": "Start on the artifact shaking. Cut to the team stabilizing it. Close: Build the bridge together.",
+      "youtube_shorts_angle": "A 20-35s proof ritual: cooperation prevents the artifact from collapsing.",
+      "x_post": "Proof needs people. The Unity Gate is not solo mastery; it is the bridge that holds.",
+      "approval_status": "needs_human_review",
+      "blockers": ["rights_unknown", "caption_review", "no_audio_selected"]
+    },
+    {
+      "priority": "P0",
+      "campaign_id": "arc-social-041-webtoon-gate-choice",
+      "gate": "Foundation",
+      "primary_platforms": ["Reels", "Shorts", "Webtoon teaser", "X"],
+      "vertical_asset": "exports/vertical-9x16/arc-social-041-webtoon-gate-choice-vertical-9x16.png",
+      "hook_3s": "Hold the gate open.",
+      "instagram_caption": "A blank ledger. A consent exit. A choice. This is where the Gate-Descent becomes human.",
+      "tiktok_short_script": "Open on the blank ledger. Reveal the friends holding the gate. Close: Choose proof over control.",
+      "youtube_shorts_angle": "A 25-45s story teaser for the first Gate choice, with no spoilers and no fake dialogue.",
+      "x_post": "The strongest gate is the one you can leave. Hold it open.",
+      "approval_status": "needs_human_review",
+      "blockers": ["rights_unknown", "story_spoiler_review", "no_audio_selected"]
+    },
+    {
+      "priority": "P0",
+      "campaign_id": "arc-social-042-music-resonance-proof",
+      "gate": "Voice",
+      "primary_platforms": ["Shorts", "Reels", "YouTube", "music teaser"],
+      "vertical_asset": "exports/vertical-9x16/arc-social-042-music-resonance-proof-vertical-9x16.png",
+      "hook_3s": "The song leaves proof.",
+      "instagram_caption": "Performance becomes an artifact. Voice Gate turns sound into something you can inspect.",
+      "tiktok_short_script": "Start on the resonance core. Pulse to the performer. Close: Make sound remember.",
+      "youtube_shorts_angle": "A 15-30s cover teaser for a future Arcanea music proof loop.",
+      "x_post": "A song is not gone when it leaves evidence. Voice Gate proof.",
+      "approval_status": "needs_human_review",
+      "blockers": ["rights_unknown", "audio_pairing_needed", "caption_review"]
+    },
+    {
+      "priority": "P1",
+      "campaign_id": "arc-social-033-fire-gate-forge-titan",
+      "gate": "Fire",
+      "primary_platforms": ["TikTok", "Reels", "Shorts", "X"],
+      "vertical_asset": "exports/vertical-9x16/arc-social-033-fire-gate-forge-titan-vertical-9x16.png",
+      "hook_3s": "Power that builds.",
+      "instagram_caption": "Draconis sleeps beneath a forge city. Power means construction, not domination.",
+      "tiktok_short_script": "Start on the sleeping Titan scale. Cut to the forge city. Close: Create proof, not noise.",
+      "youtube_shorts_angle": "A 20-35s awe-scale Titan post that resolves into useful creative work.",
+      "x_post": "Power is only interesting when it builds something.",
+      "approval_status": "needs_human_review",
+      "blockers": ["rights_unknown", "titan_language_review"]
+    },
+    {
+      "priority": "P1",
+      "campaign_id": "arc-social-028-heart-realm-living-ark",
+      "gate": "Heart",
+      "primary_platforms": ["Instagram feed", "Reels", "X"],
+      "vertical_asset": "exports/vertical-9x16/arc-social-028-heart-realm-living-ark-vertical-9x16.png",
+      "hook_3s": "Scale is responsibility.",
+      "instagram_caption": "A living ark carries creators through the Heart Gate. Big worlds should hold people well.",
+      "tiktok_short_script": "Open on the ark scale. Show tiny creators. Close: Build worlds that hold people.",
+      "youtube_shorts_angle": "A 20-40s Heart Gate stewardship cut about scale with care.",
+      "x_post": "Scale is a responsibility. Build worlds that can carry people.",
+      "approval_status": "needs_human_review",
+      "blockers": ["rights_unknown", "caption_review"]
+    },
+    {
+      "priority": "P1",
+      "campaign_id": "arc-social-025-world-tower-practice",
+      "gate": "Heart",
+      "primary_platforms": ["Reels", "TikTok", "carousel"],
+      "vertical_asset": "exports/vertical-9x16/arc-social-025-world-tower-practice-vertical-9x16.png",
+      "hook_3s": "A world big enough to practice in.",
+      "instagram_caption": "Tiny creators. Vast habitats. One proof at a time.",
+      "tiktok_short_script": "Start with the tower scale. Cut to creator detail. Close: Answer The Drift with artifacts.",
+      "youtube_shorts_angle": "A 30-45s world-practice explainer or carousel companion.",
+      "x_post": "The world is vast because practice needs room.",
+      "approval_status": "needs_human_review",
+      "blockers": ["rights_unknown", "carousel_breakdown_needed"]
+    },
+    {
+      "priority": "P2",
+      "campaign_id": "arc-social-027-music-portal-bloom",
+      "gate": "Voice",
+      "primary_platforms": ["Shorts", "Reels", "music cover"],
+      "vertical_asset": "exports/vertical-9x16/arc-social-027-music-portal-bloom-vertical-9x16.png",
+      "hook_3s": "Make the song visible.",
+      "instagram_caption": "Sound becomes a proof artifact. The portal bloom is the receipt.",
+      "tiktok_short_script": "Open on bloom expansion. Add beat-synced motion later. Close: Compose something you can keep.",
+      "youtube_shorts_angle": "A 15-25s music proof visualizer seed.",
+      "x_post": "Make the song visible. Keep the proof.",
+      "approval_status": "needs_human_review",
+      "blockers": ["rights_unknown", "audio_pairing_needed"]
+    },
+    {
+      "priority": "P2",
+      "campaign_id": "arc-social-031-luminor-rank-proof",
+      "gate": "Source",
+      "primary_platforms": ["X", "Instagram", "lore carousel"],
+      "vertical_asset": "exports/vertical-9x16/arc-social-031-luminor-rank-proof-vertical-9x16.png",
+      "hook_3s": "Luminor is earned.",
+      "instagram_caption": "Ten Gates. One proof-led path. Luminor is a rank, not a species.",
+      "tiktok_short_script": "Start with the rank proof. Reveal the Gate path. Close: Mastery leaves evidence.",
+      "youtube_shorts_angle": "A 20-35s lore education cut explaining rank without overexposition.",
+      "x_post": "Luminor is earned. It is rank, proof, and responsibility.",
+      "approval_status": "needs_human_review",
+      "blockers": ["rights_unknown", "lore_accuracy_review"]
+    },
+    {
+      "priority": "P2",
+      "campaign_id": "arc-social-035-music-proof-stage",
+      "gate": "Voice",
+      "primary_platforms": ["Shorts", "Reels", "stage teaser"],
+      "vertical_asset": "exports/vertical-9x16/arc-social-035-music-proof-stage-vertical-9x16.png",
+      "hook_3s": "Turn performance into proof.",
+      "instagram_caption": "A creator shapes resonance in public. Ritual becomes useful.",
+      "tiktok_short_script": "Start on the performer. Reveal the stage artifact. Close: Make the ritual useful.",
+      "youtube_shorts_angle": "A 15-30s performance teaser for future motion/audio pairing.",
+      "x_post": "Performance is stronger when it leaves proof.",
+      "approval_status": "needs_human_review",
+      "blockers": ["rights_unknown", "audio_pairing_needed"]
+    }
+  ]
+}

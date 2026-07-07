@@ -1,0 +1,80 @@
+{
+  "version": "2026-07-06-b5",
+  "purpose": "Batch 5 corrections and expansion for Arcanea Visual World Engine: Flow Gate Veloura correction plus Starweave, Unity, and Source megascale variants.",
+  "canon_guardrails": [
+    "Luminor is a rank, not a species or entity type.",
+    "Nero is fertile unknown and potential, not evil.",
+    "God/Goddess is identity; Guardian is role.",
+    "Each Gate has one bonded Godbeast.",
+    "Avoid generated in-image text, fake writing, faux UI, logos, and inscriptions."
+  ],
+  "visual_guardrails": [
+    "Arcanean aesthetic: luxury cosmic myth-tech, sacred geometry, celestial lighting, noble silhouettes, bioluminescent accents, starlight metal, living stone, crystal, obsidian, celestial gold.",
+    "Object-first or infrastructure-first composition beats generic character portrait.",
+    "Use tiny creators, bridges, observatories, fabric spans, instruments, or proof artifacts for scale anchors.",
+    "No medieval dirt fantasy, no generic anime oversaturation, no superhero chrome, no node/orbit filler, no fake typography.",
+    "Leave a clean deterministic overlay zone for later social copy."
+  ],
+  "prompts": [
+    {
+      "id": "arc-visual-036",
+      "title": "Flow Gate Veloura Membrane Corridor",
+      "gate": "Flow",
+      "guardian": "Leyla",
+      "godbeast": "Veloura",
+      "target_use": "canon-correction, vertical social, gallery candidate",
+      "prompt": "Arcanea Flow Gate 285 Hz, Leyla as a modern sacred engineering operator walking inside a kilometer-scale living aquifer corridor. Veloura is not a creature, not a head, not a dragon, not a whale, not a face. Veloura appears as transparent water-membrane weather, a breathing corridor of liquid crystal, pearl nacre ribs, soft blue-silver bioluminescence, emotion-flow currents, suspended bridges, tiny creators repairing resonance instruments. Luxury cosmic myth-tech, sacred geometry, celestial dusk, starlight metal, living crystal, healthy and alive. Composition: vertical 9:16, one first-read corridor silhouette, tiny human scale anchors, clean dark upper-left overlay zone. No text, no letters, no symbols that resemble writing, no inscriptions, no fake UI, no logos, no runes.",
+      "success_criteria": "Veloura reads as membrane/corridor/weather infrastructure, not animal head. Strong scale, useful overlay zone, no generated text."
+    },
+    {
+      "id": "arc-visual-037",
+      "title": "Starweave Gate Vaelith Perspective Loom",
+      "gate": "Starweave",
+      "guardian": "Elara",
+      "godbeast": "Vaelith",
+      "target_use": "new Gate expansion, social/editorial, gallery candidate",
+      "prompt": "Arcanea Starweave Gate 852 Hz, Elara as a calm perspective engineer standing on a high myth-tech observatory bridge. Vaelith is a colossal perspective loom, not an animal, not a dragon, not a humanoid: interlocking horizon-arches, living starlight fabric, impossible windows showing many viewpoints of the same world, gold-thread constellations, shifting parallax architecture. Tiny creators cross transparent bridges between kilometer-high towers. Luxury cosmic myth-tech, sacred geometry, starlight metal, obsidian glass, celestial gold, cool cosmic blue and warm gold. Composition: cinematic 4:5 social crop, clear central loom, strong depth, clean right-side overlay zone. No text, no letters, no fake writing, no symbols that resemble writing, no inscriptions, no UI, no logos.",
+      "success_criteria": "Starweave reads as perspective transformation infrastructure with clear human scale and no generic celestial cliche."
+    },
+    {
+      "id": "arc-visual-038",
+      "title": "Unity Gate Kyuro Partnership Sanctuary",
+      "gate": "Unity",
+      "guardian": "Ino",
+      "godbeast": "Kyuro",
+      "target_use": "new Gate expansion, storybook/social, gallery candidate",
+      "prompt": "Arcanea Unity Gate 963 Hz, Ino as a practical partnership architect guiding two creator teams across a kilometer-scale sanctuary bridge. Kyuro is not a pet, not cute, not a mascot, not a dragon, not humanoid. Kyuro manifests as paired living resonance forests and twin crystal bridge-spines that only glow when people cooperate, huge braided gold-and-green canopy arcs, mirrored water gardens, shared instruments at bridge nodes, healthy vibrant fabrics moving in wind. Luxury cosmic myth-tech, sacred geometry, living stone, gold thread, starlight metal, warm communal light. Composition: wide 16:9 editorial frame, one clear partnership action, tiny figures for scale, open sky overlay area. No text, no letters, no pseudo-runes, no inscriptions, no UI, no logos.",
+      "success_criteria": "Unity reads as cooperation made visible, not romance, not mascot fantasy, with one-second thumbnail clarity."
+    },
+    {
+      "id": "arc-visual-039",
+      "title": "Source Gate Shinkami Meta-Consciousness Atlas",
+      "gate": "Source",
+      "guardian": "Shinkami",
+      "godbeast": "Source",
+      "target_use": "Source canon/social/editorial, gallery candidate",
+      "prompt": "Arcanea Source Gate 1111 Hz, Shinkami as a restrained meta-consciousness guide seen from behind at the edge of an impossible atlas chamber. Source is not a character, not a face, not a creature, not a god portrait. Source appears as a vast living aperture of black-gold fertile unknown and white-gold consciousness, nested worlds reflected in dark glass, ten Gate lights suspended around a central proof artifact, tiny creators approaching in silence. Nero's darkness is fertile potential, not evil; Lumina's light gives form. Luxury cosmic myth-tech, sacred obsidian, celestial gold, white-gold starlight, museum-grade awe. Composition: 16:9 thumbnail-ready with central aperture and left dark overlay zone. No text, no letters, no fake writing, no inscriptions, no symbols that resemble writing, no UI, no logos.",
+      "success_criteria": "Source reads as meta-consciousness infrastructure and proof path, not villain portal or generic deity."
+    },
+    {
+      "id": "arc-visual-040",
+      "title": "Webtoon Trial Gate Choice Three Beats",
+      "gate": "multi",
+      "guardian": "none",
+      "godbeast": "none",
+      "target_use": "webtoon/anime/storyboard source",
+      "prompt": "Arcanea webtoon source art, three cinematic vertical panels in one image without speech bubbles. A young creator faces a Gate choice: left panel shows doubt before a proof artifact, middle panel shows a mentor adjusting a resonance instrument, right panel shows the artifact blooming into a tiny living world. Luxury cosmic myth-tech, sacred engineering, emotional clarity, diverse cast, warm gold and cool blue, no fantasy cosplay. Composition: clean panel rhythm with no text areas, no speech bubbles, no letters, no fake writing, no captions, no logos, no UI.",
+      "success_criteria": "Readable three-beat story source with no baked-in text; useful for later deterministic Webtoon overlay."
+    },
+    {
+      "id": "arc-visual-041",
+      "title": "Arcanea Music Resonance Proof Cover",
+      "gate": "Voice",
+      "guardian": "Alera",
+      "godbeast": "Otome",
+      "target_use": "music cover, YouTube thumbnail, social proof card",
+      "prompt": "Arcanea music proof cover, Alera as a modern voice operator at a living resonance console while Otome appears as non-creature sound architecture: transparent harmonic ribbons, crystalline wave columns, gold-thread oscillation fields, a concert of tiny creators visible below. Luxury cosmic myth-tech, sacred geometry, black glass stage, teal-gold resonance, high contrast thumbnail clarity, clean lower third overlay zone. No text, no letters, no fake writing, no music notation, no logos, no UI, no runes.",
+      "success_criteria": "Music lane reads as proof and performance, not generic concert art; exact text can be added later."
+    }
+  ]
+}

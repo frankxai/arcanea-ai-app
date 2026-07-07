@@ -1,0 +1,90 @@
+{
+  "asset_uid": "arcanea-2026-07-clean-proof-artifact-og",
+  "source_asset_uid": "arcanea-2026-07-one-proof-artifact-against-the-drift",
+  "batch_id": "2026-07-arcanea-visual-world-engine-b1-revisions",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 2,
+  "title": "clean proof artifact og",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "x-youtube-og-16x9",
+  "aspect_ratio": "16:9",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-024b-clean-proof-artifact-og.png",
+    "sha256": "dbe27e63c8bfcc161ca1e7b50f8dd1420b4683e4fb662c19370fb6adf5ca6216",
+    "mime_type": "image/png",
+    "width": 1672,
+    "height": 941,
+    "size_bytes": 1923375
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b1.json#arc-visual-024b",
+    "prompt": "Use case: ads-marketing. Asset type: revised X, YouTube thumbnail, and website OG source frame. Primary request: one finished proof artifact glowing on a dark table, with completely blank metalwork and no inscriptions, while passive feed-noise dissolves into calm memory routes in the far background. Scene/backdrop: premium Arcanea AI-lab tabletop, no app UI, no cards with imagery, no readable feeds. Subject: one proof artifact, a small handcrafted crystal-codex object, the clear hero, positioned on the left third; right side is quiet dark negative space for deterministic text overlay later. Style/medium: cinematic product-poster hybrid, Arcanea mythic creative intelligence, precise, luxury object photography as illustration. Composition/framing: 16:9, artifact centered left, quiet right side, high contrast, clean silhouette. Lighting/mood: black-gold, teal memory signal, serious and high-agency. Materials/textures: blank dark glass, smooth gold foil with no engraved marks, living crystal, ancient paper texture with no writing, starlight metal. Constraints: no text, no letters, no symbols that resemble writing, no logos, no UI, no screenshots, no inscriptions, no runes, no fake glyphs, no fear-mongering.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, or watermark inside the image. Arcanea aesthetic: luxury cosmic myth-tech, sacred obsidian, starlight metal, gold thread, living crystal, ancient paper, dark glass, moonlight, portal light. AI-lab premium, not fantasy-game chrome. Cinematic composition with one dominant subject and clean crop-safe negative space. Avoid generic fantasy cosplay, superhero spandex, medieval mud-grit, neon hacker grids, purple cliche, stock fantasy, overdecorated ornaments, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "16:9"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 28,
+    "decision": "approve",
+    "failure_modes": [
+      "floor geometry needs contrast check behind overlay"
+    ],
+    "next_improvement": "Build deterministic OG/YouTube/X overlay mockups."
+  },
+  "canon": {
+    "refs": [
+      "The Drift",
+      "Proof artifact",
+      "Arcanea Method"
+    ],
+    "gate": "Source",
+    "guardian": "Shinkami"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 2,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "social-og"
+      },
+      {
+        "trait_type": "surface",
+        "value": "x-youtube-og-16x9"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Source"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Shinkami"
+      },
+      {
+        "trait_type": "revision_of",
+        "value": "arc-visual-024"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-024b-clean-proof-artifact-og.vis.provenance.json"
+  },
+  "used_in": [],
+  "created_at": "2026-07-06T02:32:00+02:00"
+}

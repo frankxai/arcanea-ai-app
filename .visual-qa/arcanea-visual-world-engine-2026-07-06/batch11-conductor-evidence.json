@@ -1,0 +1,172 @@
+{
+  "version": "1.0",
+  "task": "Arcanea Visual World Conductor Batch 11 and Social Launch Room review",
+  "surface": "Batch 11 source-frame candidates, Visual World Engine portal, Social Launch Room approval cockpit, gallery/public image mirrors, VIS provenance sidecars",
+  "audience": "Frank as human canon and launch approver, Arcanea creators, anime/webtoon viewers, music/social audiences, and internal operators reviewing social campaign readiness",
+  "standards": [
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/VISUAL_DOCTRINE.md"
+  ],
+  "references": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/review.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/iteration-prompts-b11.json",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-ingestion-report.json",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-contact-sheet.jpg",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/social-launch-room-playwright-report.json",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/social-launch-room-data-snapshot-report.json",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/planning-with-files/ARCANEA_VISUAL_WORLD_ENGINE_PORTAL_2026-07-06.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-visual-world-engine-2026-07-06/design-loop-evidence.json",
+    "C:/Users/frank/brands/image-system/arcanea/2026-07-06-conductor"
+  ],
+  "direction": {
+    "keep": [
+      "arc-visual-043 as the strongest Unity/Kyuro action source so far: cooperation is physical, asymmetric, and proof-oriented",
+      "arc-visual-044 as a humane Gate-Descent consent-exit story source with blank ledger and witness posture",
+      "Social Launch Room as a read-only approval cockpit with no publish/schedule/DB/web3 affordances",
+      "Bundled JSON snapshots for deployable route rendering, verified against canonical run files",
+      "Mamoru remains STAGING; Batch 11 prompts explicitly avoid named/staging character depiction"
+    ],
+    "avoid": [
+      "Using arc-visual-045 as a first-wave social hero while the blank observatory panel reads like a UI screen or billboard",
+      "Treating Social Launch Room as publishing approval; it is ready for review, not ready for external action",
+      "Assuming VIS asset count includes Batch 11 before a fresh VIS rescan",
+      "Mutating dirty gallery/app files from the conductor lane",
+      "Promoting staging material or generated candidates into locked canon without Frank approval"
+    ],
+    "signature": "Batch 11 turns Unity into action: creators stabilize proof together, the Gate remains open through consent, and world scale becomes habitat rather than threat.",
+    "system": "Ship 043 and 044 to internal review; keep 045 as gallery/worldbuilding with crop caution; ship Social Launch Room only as a read-only approval surface; iterate the full run until VIS rescan, rights ingestion, and human launch approval are complete."
+  },
+  "asset_quality": {
+    "tier": "B",
+    "source_method": "generated-media",
+    "provenance": "generated",
+    "why_premium": "Batch 11 assets were generated from canon-constrained prompts, visually inspected, scored, sidecarred, mirrored, and wired into gallery/portal counts with public derivatives.",
+    "shortcut_risk": "medium",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-043-unity-kyuro-bridge-action.png",
+      "kind": "internal-review source art: Unity/Kyuro bridge action",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-044-gate-stays-open-consent-exit.png",
+      "kind": "internal-review source art: Gate stays open consent exit",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-045-world-tower-dragon-habitat-bridge.png",
+      "kind": "gallery/reference source art with crop caution",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/batch11-contact-sheet.jpg",
+      "kind": "Batch 11 contact sheet",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/social-launch-room-desktop.png",
+      "kind": "Social Launch Room desktop screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/social-launch-room-mobile.png",
+      "kind": "Social Launch Room mobile screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/social-launch-room-data-snapshot-report.json",
+      "kind": "bundled approval queue snapshot report",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/social-launch-room-playwright-report.json",
+      "kind": "Social Launch Room responsive image-load report",
+      "inspected": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "batch11-pixel-review",
+      "status": "pass",
+      "notes": "All three Batch 11 exports and contact sheet were visually inspected."
+    },
+    {
+      "name": "batch11-dimensions",
+      "status": "pass",
+      "notes": "043 and 044 are 941x1672 verticals; 045 is 1672x941 wide; source and public copies match."
+    },
+    {
+      "name": "batch11-provenance",
+      "status": "pass",
+      "notes": "Run now has 38 PNGs and 38 .vis.provenance.json sidecars; Batch 11 sidecars exist in the run outputs."
+    },
+    {
+      "name": "public-gallery-mirror",
+      "status": "pass",
+      "notes": "Public gallery image directory now has 30 PNG masters and 30 thumbnail derivatives."
+    },
+    {
+      "name": "brand-mirror",
+      "status": "pass",
+      "notes": "Batch 11 PNGs and sidecars are mirrored into both the Arcanea generated mirror and dated job mirror."
+    },
+    {
+      "name": "social-launch-room",
+      "status": "pass",
+      "notes": "Desktop and mobile screenshots show clear read-only approval posture; bundled JSON snapshot verifier reports 9 campaigns, 3 P0 campaigns, 36 exports, 5 contact sheets, and rights still blocked."
+    },
+    {
+      "name": "design-evidence-validation",
+      "status": "pass",
+      "notes": "design-loop, conductor, and batch7 evidence manifests validate; this Batch 11 conductor evidence will be validated after write."
+    },
+    {
+      "name": "image-engine-verifier",
+      "status": "pass",
+      "notes": ".loop/arcanea-image-engines/verify.mjs returned GATE PASS."
+    },
+    {
+      "name": "fresh-vis-rescan",
+      "status": "blocked",
+      "notes": "VIS last completed scan remains 76 assets; Batch 11 is sidecarred and mirrored but not included in a fresh VIS rescan yet."
+    },
+    {
+      "name": "arc-visual-045-social-readiness",
+      "status": "fail",
+      "notes": "The blank observatory panel can read as fake UI/billboard; use as gallery/worldbuilding candidate only, or regenerate/crop before social-first use."
+    },
+    {
+      "name": "dev-server-state",
+      "status": "pass",
+      "notes": "A leftover Next dev process on port 3011 was found and stopped; no matching dev server remained afterward."
+    },
+    {
+      "name": "external-actions",
+      "status": "pass",
+      "notes": "No deployment, push, external publish, spend, message, DB write, mint, or canon promotion was performed."
+    }
+  ],
+  "score": {
+    "total": 25,
+    "max": 30,
+    "breakdown": {
+      "batch11_source_quality": 9,
+      "social_launch_room_readiness": 8,
+      "governance_and_release_safety": 8
+    }
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "The main design-loop evidence currently says ship at 29/30 for the internal visual/app surface, but this conductor decision remains iterate because release, publishing, rights ingestion, and VIS rescan are not complete.",
+    "arc-visual-043 still needs phone brightness and crop tests before becoming the next first-wave social master.",
+    "arc-visual-045 should not be used as a social first-read until the blank panel issue is removed or cropped away.",
+    "Dirty gallery/app/package files are owned by other agent lanes and were not changed by this conductor lap.",
+    "Social Launch Room is review-ready only; all external channels, DB registry, and web3 actions remain blocked."
+  ]
+}

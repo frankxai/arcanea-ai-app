@@ -1,0 +1,187 @@
+{
+  "dryRun": true,
+  "execute_supported": false,
+  "requested_execute_ignored": false,
+  "plan_id": "derivative_plan_e6ff213931f0654abfe5df6d",
+  "preset": "social",
+  "label": "Social Variants",
+  "generated_at": "2026-07-06T14:59:38.027Z",
+  "intended_use": "social post derivative use",
+  "write_model": "manifest-only derivative/export plan; no files are transformed, uploaded, published, minted, or deleted",
+  "target_root": null,
+  "requested": 1,
+  "selected": 1,
+  "compatible_assets": 1,
+  "planned_variants": 0,
+  "blocked_variants": 3,
+  "blocked_assets": 1,
+  "filters": {
+    "query": null,
+    "media_type": null,
+    "category": null,
+    "mood": null,
+    "tag": null,
+    "color": null,
+    "limit": 50
+  },
+  "items": [
+    {
+      "ref": "visual://asset/asset_70c54fb51619e220e2d9f2c9",
+      "asset_id": "asset_70c54fb51619e220e2d9f2c9",
+      "visual_uri": "visual://asset/asset_70c54fb51619e220e2d9f2c9",
+      "version_id": "ver_6c1185669838821f0d22f60d07f7c102",
+      "title": "arc-overlay-b12-005-witness-bridge-9x16",
+      "media_type": "image",
+      "media_role": "image-asset",
+      "workflow": "website",
+      "category": "arcanea",
+      "rights_status": "unknown",
+      "approval_status": "candidate",
+      "source_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\overlay-proofs\\b12-2026-07-06T1355\\arc-overlay-b12-005-witness-bridge-9x16.png",
+      "local_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\overlay-proofs\\b12-2026-07-06T1355\\arc-overlay-b12-005-witness-bridge-9x16.png",
+      "relative_path": "../arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/arc-overlay-b12-005-witness-bridge-9x16.png",
+      "dimensions": {
+        "width": 1080,
+        "height": 1920
+      },
+      "duration_seconds": null,
+      "publish_gate": {
+        "status": "blocked",
+        "allowed": false,
+        "intended_use": "social post derivative use",
+        "rights_status": "unknown",
+        "approval_status": "candidate",
+        "blockers": [
+          "rights status requires human review",
+          "approval status must be approved before public use: candidate"
+        ],
+        "warnings": [
+          "quality evaluation missing"
+        ],
+        "next_action": "Run VIS rights review and set rights to owned, generated-owned, or licensed before public use.",
+        "human_gate": true
+      },
+      "status": "blocked",
+      "blockers": [
+        "rights status requires human review",
+        "approval status must be approved before public use: candidate"
+      ],
+      "warnings": [
+        "quality evaluation missing"
+      ],
+      "variants": [
+        {
+          "variant_id": "social-square-1080",
+          "label": "Social square",
+          "target_role": "social-square",
+          "source_media_type": "image",
+          "target_media_type": "image",
+          "format": "jpg",
+          "width": 1080,
+          "height": 1080,
+          "aspect_ratio": "1:1",
+          "duration_seconds": null,
+          "min_duration_seconds": null,
+          "max_duration_seconds": null,
+          "quality": 90,
+          "adapter": "sharp",
+          "adapter_status": "planned-not-executed",
+          "target_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\overlay-proofs\\b12-2026-07-06T1355\\derivatives\\social\\arc-overlay-b12-005-witness-bridge-9x16-social-square-1080.jpg",
+          "status": "blocked",
+          "publish_ready": false,
+          "blockers": [
+            "public-use-gate-blocked"
+          ],
+          "handoff": {
+            "recommended_adapter": "sharp",
+            "action": "Create Social square from visual://asset/asset_70c54fb51619e220e2d9f2c9",
+            "source_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\overlay-proofs\\b12-2026-07-06T1355\\arc-overlay-b12-005-witness-bridge-9x16.png",
+            "target_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\overlay-proofs\\b12-2026-07-06T1355\\derivatives\\social\\arc-overlay-b12-005-witness-bridge-9x16-social-square-1080.jpg",
+            "notes": [
+              "Target dimensions: 1080x1080 (1:1).",
+              "Record the derivative as an asset_derivative/storage_object/provenance event when an execution adapter exists."
+            ]
+          }
+        },
+        {
+          "variant_id": "social-story-1080x1920",
+          "label": "Story/Reels still",
+          "target_role": "social-story",
+          "source_media_type": "image",
+          "target_media_type": "image",
+          "format": "jpg",
+          "width": 1080,
+          "height": 1920,
+          "aspect_ratio": "9:16",
+          "duration_seconds": null,
+          "min_duration_seconds": null,
+          "max_duration_seconds": null,
+          "quality": 90,
+          "adapter": "sharp",
+          "adapter_status": "planned-not-executed",
+          "target_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\overlay-proofs\\b12-2026-07-06T1355\\derivatives\\social\\arc-overlay-b12-005-witness-bridge-9x16-social-story-1080x1920.jpg",
+          "status": "blocked",
+          "publish_ready": false,
+          "blockers": [
+            "public-use-gate-blocked"
+          ],
+          "handoff": {
+            "recommended_adapter": "sharp",
+            "action": "Create Story/Reels still from visual://asset/asset_70c54fb51619e220e2d9f2c9",
+            "source_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\overlay-proofs\\b12-2026-07-06T1355\\arc-overlay-b12-005-witness-bridge-9x16.png",
+            "target_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\overlay-proofs\\b12-2026-07-06T1355\\derivatives\\social\\arc-overlay-b12-005-witness-bridge-9x16-social-story-1080x1920.jpg",
+            "notes": [
+              "Target dimensions: 1080x1920 (9:16).",
+              "Record the derivative as an asset_derivative/storage_object/provenance event when an execution adapter exists."
+            ]
+          }
+        },
+        {
+          "variant_id": "social-wide-1920x1080",
+          "label": "Social wide",
+          "target_role": "social-wide",
+          "source_media_type": "image",
+          "target_media_type": "image",
+          "format": "jpg",
+          "width": 1920,
+          "height": 1080,
+          "aspect_ratio": "16:9",
+          "duration_seconds": null,
+          "min_duration_seconds": null,
+          "max_duration_seconds": null,
+          "quality": 88,
+          "adapter": "sharp",
+          "adapter_status": "planned-not-executed",
+          "target_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\overlay-proofs\\b12-2026-07-06T1355\\derivatives\\social\\arc-overlay-b12-005-witness-bridge-9x16-social-wide-1920x1080.jpg",
+          "status": "blocked",
+          "publish_ready": false,
+          "blockers": [
+            "public-use-gate-blocked"
+          ],
+          "handoff": {
+            "recommended_adapter": "sharp",
+            "action": "Create Social wide from visual://asset/asset_70c54fb51619e220e2d9f2c9",
+            "source_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\overlay-proofs\\b12-2026-07-06T1355\\arc-overlay-b12-005-witness-bridge-9x16.png",
+            "target_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\overlay-proofs\\b12-2026-07-06T1355\\derivatives\\social\\arc-overlay-b12-005-witness-bridge-9x16-social-wide-1920x1080.jpg",
+            "notes": [
+              "Target dimensions: 1920x1080 (16:9).",
+              "Record the derivative as an asset_derivative/storage_object/provenance event when an execution adapter exists."
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "music_boundary": null,
+  "gates": [
+    "Review rights and approval before public use.",
+    "Transformation adapters such as Sharp, FFmpeg, Cloudinary, R2, Postiz, IPFS, and thirdweb remain explicit later steps.",
+    "No external upload, social post, mint, wallet action, or distributor action is performed by this plan."
+  ],
+  "commands": {
+    "cli_dry_run": "node bin\\vis.mjs derivative-plan --preset social --limit 50 --json",
+    "codex_packet": "VIS derivative plan derivative_plan_e6ff213931f0654abfe5df6d: preset social, selected 1 assets, planned 0 variants, blocked 3. Use visual:// URIs and local paths from this manifest; do not publish externally without the listed gates."
+  },
+  "note": "Dry run only. Review the manifest, resolve blockers, then use a future gated adapter to execute transforms or exports."
+}

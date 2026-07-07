@@ -1,0 +1,91 @@
+{
+  "asset_uid": "arcanea-2026-07-fire-gate-draconis-healthy-forge-titan",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b4",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "fire gate draconis healthy forge titan",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "instagram-tiktok-4x5",
+  "aspect_ratio": "4:5",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-033-fire-gate-draconis-healthy-forge-titan.png",
+    "sha256": "bd93d6542f8a55baf2f0b18ad5943e5e7cef59f549d4e5d2f9035905c2f95e68",
+    "mime_type": "image/png",
+    "width": 1122,
+    "height": 1402,
+    "size_bytes": 2931079
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b4.json#arc-visual-033",
+    "prompt": "Use case: illustration-story. Asset type: 4:5 Fire Gate social source frame. Primary request: Draconis and Fire Gate scale without grimdark destruction. Scene/backdrop: a healthy forge-titan city grown around a sleeping lava-crystal Godbeast inside a sunrise volcanic caldera, with gold fabric heat sails, obsidian terraces, and safe creator workshops. Subject: Draconis is vast and dragon-coded because canon permits the Fire Godbeast name, but it must feel ancient, peaceful, and habitat-scale rather than monster attack; Draconia appears only as a tiny forge operator silhouette near a clean proof anvil. Style/medium: Arcanea luxury cosmic myth-tech, cinematic bright fire, social hook, not game boss art. Composition/framing: 4:5, huge sleeping Draconis silhouette first, safe workshops and tiny creators for scale, open top-left glow for overlay. Lighting/mood: red-orange-gold, willpower, warmth, courage, constructive fire. Materials/textures: sacred obsidian, living magma crystal, gold heat fabric, dark glass, starlight metal. Constraints: no text, no logos, no battle, no attack pose, no burning city, no skulls, no grimdark, no medieval castle, no symbols.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "4:5"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 29,
+    "decision": "approve",
+    "failure_modes": [
+      "Fire palette is intense and needs overlay contrast testing",
+      "Draconis is dragon-coded by canon, so balance gallery with non-dragon world assets"
+    ],
+    "next_improvement": "Promote as Fire Gate social hook and test 4:5 overlay copy for constructive power rather than battle fantasy."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md Ten Gates",
+      "Draconia",
+      "Draconis",
+      "Fire Gate"
+    ],
+    "gate": "Fire",
+    "guardian": "Draconia"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "mega-scale-world"
+      },
+      {
+        "trait_type": "surface",
+        "value": "instagram-tiktok-4x5"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Draconia"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-033-fire-gate-draconis-healthy-forge-titan.vis.provenance.json"
+  },
+  "used_in": [
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\app\\gallery\\gallery-data.ts",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T05:20:30+02:00"
+}

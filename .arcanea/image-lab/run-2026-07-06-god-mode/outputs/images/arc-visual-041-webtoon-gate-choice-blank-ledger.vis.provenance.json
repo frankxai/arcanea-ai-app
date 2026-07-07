@@ -1,0 +1,92 @@
+{
+  "asset_uid": "arcanea-2026-07-webtoon-gate-choice-blank-ledger",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b6",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "Webtoon Gate Choice Blank Ledger",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "webtoon-story-portal-16x9",
+  "aspect_ratio": "16:9",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-041-webtoon-gate-choice-blank-ledger.png",
+    "sha256": "73969b6b4fd79f31e601dca8bd049d7867301730197e6e00196a8a53dae1a468",
+    "mime_type": "image/png",
+    "width": 1672,
+    "height": 941,
+    "size_bytes": 2860127
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b6.json#arc-visual-041",
+    "prompt": "Arcanea Visual World Engine batch 6, webtoon/anime trial-choice source frame. A controlled Arcanea Academy Gate-Descent trial inside an impossible living library bridge, with three clean story beats visible in one cinematic source image: left foreground shows a creator reaching for a blank proof ledger, center shows a transparent consent exit latch opening, right distance shows friends holding the Gate open together. The mood is urgent but humane: not battle, not boss fight, a choice about responsibility, witness, memory, and refusing control-as-mercy. Premium anime-webtoon key art source, modern AI-lab myth-tech clothing, diverse young adult creators, blank pages only, no speech bubbles. Use Kaelith stone, Veloura glass, starlight metal, gold thread, living paper, soft portal light, and huge tower shelves with tiny figures for scale. 16:9 composition for YouTube/webtoon header and site story portal, strong diagonal movement, safe dark space for later code overlay. No text, no letters, no fake writing, no inscriptions, no readable marks, no UI, no logo, no watermark, no malformed hands, no stock school uniforms, no generic fantasy armor, no purple cliche, no cluttered magic circles.",
+    "negative_prompt": "No text, letters, fake writing, inscriptions, readable marks, UI, logo, watermark, malformed hands, stock school uniforms, generic fantasy armor, purple cliche, cluttered magic circles, speech bubbles, subtitles.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "16:9"
+    },
+    "original_generated_path": "C:/Users/frank/.codex/generated_images/019f3498-30f9-77a0-b2a3-b54acd0c8e66/ig_07102a35bc605078016a4b3ab822ac819195d95ba9f21e6502.png"
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "approved-candidate",
+    "score30": 28,
+    "decision": "approve",
+    "failure_modes": [
+      "Strong blank-ledger and exit-latch choice logic; a few hands should stay away from tight crops.",
+      "White academy clothing risks stock uniform if reused too often."
+    ],
+    "next_improvement": "Use as webtoon/story portal source; next pass should isolate the three beats into deterministic carousel panels."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md",
+      "VISUAL_DOCTRINE.md",
+      "Webtoon Gate Choice Blank Ledger"
+    ],
+    "gate": "Foundation",
+    "guardian": "Lyssandria",
+    "godbeast": "Kaelith"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "webtoon-anime"
+      },
+      {
+        "trait_type": "surface",
+        "value": "webtoon-story-portal-16x9"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Foundation"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Lyssandria"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-041-webtoon-gate-choice-blank-ledger.vis.provenance.json"
+  },
+  "used_in": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/gallery/gallery-data.ts",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T07:27:54+02:00"
+}
