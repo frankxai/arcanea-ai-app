@@ -1,0 +1,74 @@
+{
+  "base": "http://127.0.0.1:3010",
+  "checkedAt": "2026-07-06T08:31:05.0321837+02:00",
+  "pages": [
+    {
+      "path": "/visual-world-engine",
+      "status": 200
+    },
+    {
+      "path": "/gallery",
+      "status": 200
+    }
+  ],
+  "assertions": {
+    "portalStatus200": true,
+    "galleryStatus200": true,
+    "sourceHas36SocialMasters": true,
+    "sourceHas76VisAssets": true,
+    "sourceHasNewCampaigns": true,
+    "sourceHasNineCampaignCopy": true,
+    "galleryHtmlHasPortalLink": true,
+    "inspectedScreenshotsPresent": true,
+    "mobileFirstViewportInspected": true,
+    "newVerticalAssetsValid": true,
+    "noLocalListenersAfterSmoke": true
+  },
+  "screenshots": [
+    {
+      "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\verification\\visual-world-engine-social-b7-desktop-chrome.png",
+      "width": 1440,
+      "height": 2600,
+      "bytes": 2856811
+    },
+    {
+      "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\verification\\visual-world-engine-social-b7-mobile-edge.png",
+      "width": 390,
+      "height": 1000,
+      "bytes": 369871
+    },
+    {
+      "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\verification\\visual-world-engine-social-b7-gallery-entry-chrome.png",
+      "width": 1440,
+      "height": 2200,
+      "bytes": 2531863
+    }
+  ],
+  "newVerticalAssets": [
+    {
+      "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06\\social-overlays\\vertical-9x16\\arc-social-040-unity-cooperation-lattice-vertical-9x16.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 2613425
+    },
+    {
+      "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06\\social-overlays\\vertical-9x16\\arc-social-041-webtoon-gate-choice-vertical-9x16.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 2115076
+    },
+    {
+      "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06\\social-overlays\\vertical-9x16\\arc-social-042-music-resonance-proof-vertical-9x16.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 2335391
+    }
+  ],
+  "visualInspection": {
+    "desktop": "Chrome headless desktop screenshot inspected: hero, stats, and portal lanes render with updated social and VIS counts.",
+    "mobile": "Edge headless 390x1000 first viewport inspected after layout patches: headline, copy, CTA buttons, and first stats fit the visible mobile capture.",
+    "gallery": "Chrome headless gallery screenshot inspected: World Engine CTA and Batch 6 gallery cards render in the gallery route."
+  },
+  "notes": "Next HTTP status checks passed. Raw streamed HTML was not used for numeric stat assertions because Next splits some rendered text; the TSX source constants and screenshots were used for those checks. Playwright browser binaries were unavailable, so Chrome/Edge headless screenshots were used.",
+  "failed": []
+}

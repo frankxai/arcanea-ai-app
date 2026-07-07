@@ -1,0 +1,182 @@
+{
+  "version": "1.0",
+  "task": "Arcanea Visual World Conductor Batch 7 and Batch 8 social approval review",
+  "surface": "Visual World Engine approval portal, gallery entry point, deterministic social overlay exports, publishing approval queue, and adjacent generated universe lane",
+  "audience": "AI-native creators, Arcanea worldbuilding fans, webtoon/anime viewers, music creators, social-feed viewers, and Frank as human canon/launch approver",
+  "standards": [
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/best-practices/image-logo-visual-generation.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/VISUAL_DOCTRINE.md"
+  ],
+  "references": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/review.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/social-overlay-manifest.json",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/publishing-approval-queue.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/publishing-approval-queue.json",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-social-b7-report.json",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/data/batch7.json",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/gallery/gallery-data.ts",
+    "C:/Users/frank/brands/image-system/arcanea/2026-07-06-conductor"
+  ],
+  "direction": {
+    "keep": [
+      "The P0 social launch wave built from Batch 6 winners: Unity Cooperation Lattice, Webtoon Gate Choice, and Music Resonance Proof",
+      "Deterministic overlays with readable hooks, proof language, gate labels, route-compatible public paths, and VIS/social provenance sidecars",
+      "The Visual World Engine portal as an internal approval/browsing surface, not an external publishing surface",
+      "Dungeon Diver and Gate-Descent language from the story sidecar; avoid generic hunter/loot framing",
+      "Mamoru remains STAGING until Frank explicitly approves canon promotion"
+    ],
+    "avoid": [
+      "External publishing, scheduling, paid promotion, DB registry writes, or web3 minting before human approval and rights ingestion",
+      "Promoting generic Batch 7 arcanea-universe images into canon or social campaigns",
+      "Using demon-lord, absolute-evil, generic alien-race, or ruler/faction shortcuts as Arcanea canon",
+      "Running gallery overwrite scripts while tracked gallery files are dirty",
+      "Treating source-relative queue paths as scheduler-ready without also carrying public route-compatible paths"
+    ],
+    "signature": "Batch 7 makes the strongest Arcanea proof images social-readable: cooperation holds the proof, consent keeps the gate open, and performance leaves evidence.",
+    "system": "P0 social masters can move to Frank internal review. External launch remains blocked. The adjacent generic universe lane should restart or be quarantined before public/canon use."
+  },
+  "asset_quality": {
+    "tier": "B",
+    "source_method": "image-edit",
+    "provenance": "generated",
+    "why_premium": "The P0 social masters combine inspected generated source art with deterministic typography, channel crops, VIS sidecars, and story-specific hooks that survive 9:16 social scanning.",
+    "shortcut_risk": "medium",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/social-overlays/vertical-9x16/arc-social-040-unity-cooperation-lattice-vertical-9x16.png",
+      "kind": "P0 internal-review social master: Unity Cooperation Lattice vertical 9:16",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/social-overlays/vertical-9x16/arc-social-041-webtoon-gate-choice-vertical-9x16.png",
+      "kind": "P0 internal-review social master: Webtoon Gate Choice vertical 9:16",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06/social-overlays/vertical-9x16/arc-social-042-music-resonance-proof-vertical-9x16.png",
+      "kind": "P0 internal-review social master: Music Resonance Proof vertical 9:16",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/contact-sheets/vertical-9x16-contact-sheet.png",
+      "kind": "vertical social contact sheet",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/social-overlays/contact-sheets/wide-16x9-contact-sheet.png",
+      "kind": "wide social contact sheet",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-social-b7-desktop-chrome.png",
+      "kind": "Visual World Engine desktop screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-social-b7-mobile-edge.png",
+      "kind": "Visual World Engine mobile screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/verification/visual-world-engine-social-b7-gallery-entry-chrome.png",
+      "kind": "gallery entry screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-universe/demon_lord_of_the_abyss_1783294376933.png",
+      "kind": "restart/reject example from generic universe Batch 7 lane",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-universe/faction_agentic_swarm_1783294362731.png",
+      "kind": "restart/reject example from generic universe Batch 7 lane",
+      "inspected": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "social-export-counts",
+      "status": "pass",
+      "notes": "Source and public mirrors each contain 36 social export PNGs, 36 .social.provenance.json sidecars, and 5 contact sheets."
+    },
+    {
+      "name": "p0-vertical-dimensions",
+      "status": "pass",
+      "notes": "arc-social-040, 041, and 042 public vertical masters are each 1080x1920 and visually inspected."
+    },
+    {
+      "name": "p0-social-quality",
+      "status": "pass",
+      "notes": "The P0 9:16 masters have strong hooks, readable type, stable crops, and proof-specific emotional framing."
+    },
+    {
+      "name": "portal-gallery-pixel-qa",
+      "status": "pass",
+      "notes": "Batch 7 desktop/mobile screenshots show the Visual World Engine hero and gallery entry without the prior mobile hero CTA clipping or wide-overlay text clipping."
+    },
+    {
+      "name": "route-and-engine-gates",
+      "status": "pass",
+      "notes": "visual-world-engine-social-b7-report.json records /visual-world-engine and /gallery as HTTP 200; arcanea-image-engines verifier returned GATE PASS."
+    },
+    {
+      "name": "design-evidence-validation",
+      "status": "pass",
+      "notes": "Existing design-loop, conductor, batch5, and batch6 evidence manifests validate successfully before this Batch 7 evidence addition."
+    },
+    {
+      "name": "approval-queue-status",
+      "status": "blocked",
+      "notes": "publishing-approval-queue.json status is approval_ready_not_scheduled; every campaign still needs human review, rights ingestion, and audio/caption review before external publish."
+    },
+    {
+      "name": "queue-path-semantics",
+      "status": "pass",
+      "notes": "Queue vertical_asset values are source-relative exports/... paths; the matching public route-compatible paths exist after removing the exports/ prefix."
+    },
+    {
+      "name": "generic-universe-lane",
+      "status": "fail",
+      "notes": "data/batch7.json and gallery-data.ts reference generic/non-canon arcanea-universe assets including demon_lord, alien_race, faction_kings, faction_agentic_swarm, and ruler_queen; inspected samples are not premium Arcanea canon candidates."
+    },
+    {
+      "name": "subagent-output-review",
+      "status": "pass",
+      "notes": "Three existing sidecars completed read-only: story spine prefers Dungeon Diver/Gate-Descent and Mamoru staging; integration map warns dirty gallery/script collisions; ledger/VIS sidecar review identifies registry and provenance gaps."
+    },
+    {
+      "name": "dev-server-state",
+      "status": "pass",
+      "notes": "No matching Next/node localhost dev server remained running after inspection."
+    },
+    {
+      "name": "external-actions",
+      "status": "pass",
+      "notes": "No external publishing, deployment, push, spend, messaging, DB write, minting, or canon promotion was performed."
+    }
+  ],
+  "score": {
+    "total": 25,
+    "max": 30,
+    "breakdown": {
+      "p0_social_master_quality": 9,
+      "portal_gallery_presentation": 8,
+      "governance_and_canon_safety": 8
+    }
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "P0 social masters are ready for Frank internal review, but not external publishing.",
+    "All campaign rights remain unknown until VIS rights ingestion upgrades the queue and registry state.",
+    "Generic Batch 7 arcanea-universe assets are wired into gallery-data.ts and should be restarted, quarantined, or downgraded before public/canon reliance.",
+    "Existing gallery files are dirty and collision-prone; this conductor lap did not edit them.",
+    "The approval queue should eventually carry both source-relative and public route-compatible asset paths for schedulers."
+  ]
+}

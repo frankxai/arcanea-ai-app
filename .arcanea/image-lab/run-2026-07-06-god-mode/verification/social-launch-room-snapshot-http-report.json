@@ -1,0 +1,17 @@
+{
+  "ok": true,
+  "checkedAt": "2026-07-06T07:23:27.0500204Z",
+  "route": "/visual-world-engine/social",
+  "status": 200,
+  "source": "bundled JSON snapshot imports",
+  "checks": {
+    "hasTitle": true,
+    "hasReviewGate": true,
+    "hasP0Unity": true,
+    "hasP0Webtoon": true,
+    "hasP0Music": true,
+    "hasFormatExports": true,
+    "hasContactSheets": true
+  },
+  "failed": []
+}

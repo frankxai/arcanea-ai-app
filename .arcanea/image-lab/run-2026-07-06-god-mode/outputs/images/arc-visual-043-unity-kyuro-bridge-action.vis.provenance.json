@@ -1,0 +1,92 @@
+{
+  "asset_uid": "arcanea-2026-07-unity-kyuro-bridge-action",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b11",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "Unity Kyuro Bridge Action",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "unity-action-vertical-social-gallery",
+  "aspect_ratio": "9:16",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-043-unity-kyuro-bridge-action.png",
+    "sha256": "fa5b41a94ea04364fff0c31a889c1903870572db42c630e914166db2e4c8892e",
+    "mime_type": "image/png",
+    "width": 941,
+    "height": 1672,
+    "size_bytes": 2620830
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b11.json#arc-visual-043",
+    "prompt": "Use case: stylized-concept\nAsset type: Arcanea Visual World Engine source frame for gallery, social 9:16 crop, and future deterministic overlays\nPrimary request: create a premium cinematic Arcanea image about active cooperation, not symmetry.\nScene/backdrop: inside a kilometer-tall living world tower where enormous woven root-bridges, gold-thread fabric rigging, dark glass, living crystal, and starlight metal form a healthy vertical sanctuary. Tiny Academy creators are on different platforms, physically coordinating to stabilize a floating proof artifact suspended between them.\nSubject: Kyuro as a non-humanoid Unity Gate Godbeast expressed as partnership infrastructure: braided luminous bridge-spines, living lattice tendons, and many cooperative contact points, not a face, not a dragon, not a mirrored mandala. The human action is the first read: one creator braces a bridge cable, one releases a lock, one witnesses the artifact, one offers a hand across a gap.\nStyle/medium: premium cinematic myth-tech concept art, realistic materials, Arcanea luxury cosmic engineering, not game UI, not generic fantasy.\nComposition/framing: vertical poster-friendly composition, asymmetric diagonal action from lower left to upper right, clear caption-safe dark air at top, one readable proof artifact center-right, massive scale with tiny humans.\nLighting/mood: warm gold and living teal light, hopeful pressure, awe, responsibility, friendship under strain.\nColor palette: obsidian, dark glass, starlight metal, gold thread, living green-teal crystal, small accents of vibrant fabric.\nMaterials/textures: woven fabric bridges, sacred engineering joints, living root architecture, smooth blank proof artifact, no inscriptions.\nText: none.\nConstraints: no letters, no logos, no symbols that resemble writing, no fake UI, no runes, no watermarks, no mirrored icon composition, no medieval armor, no fantasy gown, no superhero suits.\nAvoid: dragon creature, humanoid deity face, purple nebula cliche, neon hacker grid, orbit/node diagram, stock fantasy castle, cluttered unreadable details.",
+    "negative_prompt": "No letters, logos, symbols that resemble writing, fake UI, runes, watermarks, mirrored icon composition, medieval armor, fantasy gown, superhero suits, dragon creature, humanoid deity face, purple nebula cliche, neon hacker grid, orbit/node diagram, stock fantasy castle, clutter.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "9:16"
+    },
+    "original_generated_path": "C:\\Users\\frank\\.codex\\generated_images\\019f3498-30f9-77a0-b2a3-b54acd0c8e66\\ig_0552f761db081f81016a4b5ab7590c81919b8f0ef24ff7f211.png"
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "approved-candidate",
+    "score30": 29,
+    "decision": "approve",
+    "failure_modes": [
+      "Strongest Unity action hook so far, with clear creator roles and Kyuro-as-infrastructure instead of icon symmetry.",
+      "Dark lower foreground and cable complexity need phone brightness and crop testing before first-wave public social use."
+    ],
+    "next_improvement": "Promote as the preferred next Unity/Kyuro social source; build deterministic 9:16 and 4:5 overlays around proof needing people."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md",
+      "VISUAL_DOCTRINE.md",
+      "Unity Kyuro Bridge Action"
+    ],
+    "gate": "Unity",
+    "guardian": "Ino",
+    "godbeast": "Kyuro"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "main-storyline"
+      },
+      {
+        "trait_type": "surface",
+        "value": "unity-action-vertical-social-gallery"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Unity"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Ino"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-043-unity-kyuro-bridge-action.vis.provenance.json"
+  },
+  "used_in": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/gallery/gallery-data.ts",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T09:45:00+02:00"
+}

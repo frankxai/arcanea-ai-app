@@ -1,0 +1,35 @@
+{
+  "asset_uid": "arc-overlay-b12-005-witness-bridge-9x16",
+  "source_asset": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\images\\arc-conductor-005-witness-bridge-dungeon-divers.png",
+  "output_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06\\overlay-proofs\\b12-2026-07-06T1355\\arc-overlay-b12-005-witness-bridge-9x16.png",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-conductor",
+  "workflow": "deterministic-social-overlay-proof",
+  "asset_tier": "C-over-B",
+  "source_method": "generated-media-plus-code-overlay",
+  "provenance": "generated-owned-source-plus-owned-code-overlay",
+  "surface": "tiktok-reels-shorts-9x16",
+  "crop": "vertical-social-9x16",
+  "text_overlay": {
+    "method": "PIL deterministic code overlay",
+    "title": "THE WITNESS BRIDGE",
+    "subtitle": "Keep the proof true when the tower moves.",
+    "chip": "ARCANEA ACADEMY / GATE-DESCENT"
+  },
+  "governance": {
+    "rights_status": "generated-owned-source-plus-owned-code-overlay",
+    "approval_status": "internal-review-candidate",
+    "score30": 27,
+    "decision": "overlay-proof-pass",
+    "risk": "Strong social proof; still requires human approval and fresh VIS rescan before public use.",
+    "mamoru_status": "not-present; no Mamoru asset promoted"
+  },
+  "file": {
+    "sha256": "70c54fb51619e220e2d9f2c90ba03a214693a1a3f72a1e49d916a66117ce194a",
+    "width": 1080,
+    "height": 1920,
+    "mime_type": "image/png"
+  },
+  "created_at": "2026-07-06T12:00:02.297607Z"
+}

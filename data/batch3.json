@@ -1,0 +1,37 @@
+[
+  {
+    "prompt_id": "lumina_capital",
+    "prompt": "SUBJECT: Lumina, the Capital City of Arcanea. ORGANIZING METAPHOR: A sprawling utopian metropolis built around a massive central spire of light. STYLE: Premium Concept Art, Ghibli meets Cyberpunk (Solarpunk/Magepunk), highly detailed. VIEWPOINT: High aerial sweeping shot from a flying airship. COMPONENTS: 1. THE CITY: Layered circular terraces of white marble, gold, and glowing blue magic conduits. 2. THE CITADEL: In the center, a towering structure piercing the clouds, radiating energy. 3. AIRSHIPS: Elegant wooden and metal flying ships with magical sails traversing the sky. 4. MAGIC: Visible ley lines glowing in the streets below. ORGANIC ANCHOR: Massive cascading waterfalls flowing off the edges of floating districts. ATMOSPHERE: Grand, utopian, bustling, vibrant. EMOTIONAL TONE: Awe, majesty, the height of civilization. NEGATIVE: Dystopian, dark, ruined, chaotic, low quality.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "environment",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "the_abyss_edge",
+    "prompt": "SUBJECT: The Edge of the Abyss, the borderlands of Arcanea. ORGANIZING METAPHOR: A sheer cliff dropping into infinite, swirling violet nothingness. STYLE: Dark Fantasy, Eldritch, high contrast, cinematic. VIEWPOINT: Standing on the edge, looking down into the void. COMPONENTS: 1. THE CLIFF: Jagged obsidian rock, glowing with faint warning runes. 2. THE ABYSS: Swirling violent storm of purple, black, and crimson energy below. 3. CORRUPTION: Dark crystalline growths creeping up over the edge. 4. BASTION: A lonely, heavily fortified watchtower on the cliff, shining a single beam of light into the dark. ORGANIC ANCHOR: Twisted, dying ancient trees grasping at the stone. ATMOSPHERE: Tense, dangerous, oppressive, beautiful terror. EMOTIONAL TONE: Fear, mystery, the unknown. NEGATIVE: Friendly, bright, cartoonish, simple.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "environment",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "academy_grounds_exterior",
+    "prompt": "SUBJECT: The Arcanea Academy Grounds, exterior view. ORGANIZING METAPHOR: An ivy league campus designed by high-fantasy wizards. STYLE: Lush, vibrant, Anime/Concept art fusion, extremely detailed. VIEWPOINT: Wide establishing shot from the front gates. COMPONENTS: 1. THE ACADEMY: Massive gothic/fantasy architecture with impossible floating towers and stained glass. 2. THE GROUNDS: Pristine magical lawns with floating geometric sculptures. 3. STUDENTS: Tiny silhouettes of students walking, some flying on magical artifacts or practicing spells. 4. THE SKY: Bright blue with multiple small moons visible. ORGANIC ANCHOR: Ancient, massive willow trees with glowing bioluminescent leaves. ATMOSPHERE: Inspiring, magical, academic, welcoming. EMOTIONAL TONE: Wonder, potential, the start of an adventure. NEGATIVE: Creepy, dark, empty, low detail.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "environment",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "the_crystal_forest",
+    "prompt": "SUBJECT: The Crystal Forest of Arcanea. ORGANIZING METAPHOR: A dense woodland where the flora is made of living crystal. STYLE: Premium cinematic fantasy, highly saturated, ray-traced lighting. VIEWPOINT: Deep within the forest, looking down a glowing path. COMPONENTS: 1. THE TREES: Towering structures of amethyst, quartz, and emerald, glowing from within. 2. THE GROUND: A mix of moss and shattered prismatic glass. 3. CREATURES: Small, glowing crystalline stags or foxes in the distance. 4. LIGHTING: Light fracturing through the canopy, creating intense rainbows everywhere. ORGANIC ANCHOR: Real, soft green moss contrasting with the hard, sharp crystals. ATMOSPHERE: Ethereal, silent, alien but beautiful, humming with energy. EMOTIONAL TONE: Enchantment, peace, magic. NEGATIVE: Muddy colors, boring, plain trees, low resolution.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "environment",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "dungeon_entrance_gate",
+    "prompt": "SUBJECT: The Gate to the Deep Dungeons. ORGANIZING METAPHOR: A massive, menacing maw in the side of a mountain. STYLE: Dark souls inspired, grimdark but high fantasy, immense scale. VIEWPOINT: Low angle, looking up at the terrifying entrance. COMPONENTS: 1. THE GATE: Massive doors made of dark iron and bone, slightly ajar, glowing red from within. 2. THE CARVINGS: Horrific, ancient reliefs of titans and monsters on the stone frame. 3. ADVENTURERS: A tiny group of heavily armored divers standing before it to show massive scale. 4. ENVIRONMENT: Harsh, rocky, snowy mountain pass leading up to it. ORGANIC ANCHOR: Heavy, wet snow and ice clinging to the warm iron doors. ATMOSPHERE: Oppressive, dangerous, epic scale, foreboding. EMOTIONAL TONE: Courage in the face of terror, the point of no return. NEGATIVE: Cute, small, brightly lit, poorly drawn.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "environment",
+    "status": "completed"
+  }
+]

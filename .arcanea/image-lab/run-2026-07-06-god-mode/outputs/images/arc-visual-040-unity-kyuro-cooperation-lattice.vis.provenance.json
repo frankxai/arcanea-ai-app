@@ -1,0 +1,92 @@
+{
+  "asset_uid": "arcanea-2026-07-unity-kyuro-cooperation-lattice",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b6",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "Unity Gate Kyuro Cooperation Lattice",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "unity-correction-social-gallery",
+  "aspect_ratio": "4:5",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-040-unity-kyuro-cooperation-lattice.png",
+    "sha256": "29a9c5bad2b833dbbac7261f585dc1a10ef7f0b90d0b5e662a3a26eea1c0a707",
+    "mime_type": "image/png",
+    "width": 1122,
+    "height": 1402,
+    "size_bytes": 3188159
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b6.json#arc-visual-040",
+    "prompt": "Arcanea Visual World Engine batch 6, Unity Gate cooperation action hook. A vast living sanctuary built from dark glass, jade-veined stone, starlight metal, woven gold thread, and healthy bioluminescent gardens. Four diverse Arcanea Academy creators stand in a real cooperation posture around a fractured proof artifact: one stabilizes a bridge cable, one records a witness gesture with a blank codex, one opens a consent-based release latch, and one offers a hand to a smaller luminous companion. Kyuro is not a mirrored portrait: show Kyuro as a non-humanoid partnership infrastructure, a warm interlocking lattice of sheltering arches and responsive root-bridges that moves around them. Scale should be immense, with kilometer-high garden towers and tiny creator figures. Premium AI-lab myth-tech, emotional trust, responsibility, and visible action. Cinematic 4:5 composition, strong first-second social hook, clear caption-safe upper left, no text, no letters, no symbols that resemble writing, no logo, no watermark, no UI, no fake glyphs, no superhero costumes, no fantasy armor cosplay, no purple cliche, no clutter, no cute mascot posing, no violence.",
+    "negative_prompt": "No text, letters, fake writing, inscriptions, symbols that resemble writing, logo, watermark, UI, fake glyphs, superhero costumes, fantasy armor cosplay, purple cliche, clutter, cute mascot posing, violence, malformed hands, malformed faces.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "4:5"
+    },
+    "original_generated_path": "C:/Users/frank/.codex/generated_images/019f3498-30f9-77a0-b2a3-b54acd0c8e66/ig_07102a35bc605078016a4b39e9e5ac8191a01f049b8a9c8195.png"
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "approved-candidate",
+    "score30": 29,
+    "decision": "approve",
+    "failure_modes": [
+      "Best Unity correction so far: action-led cooperation, reduced mirror symmetry, clear Kyuro-as-infrastructure read.",
+      "Hand/contact details should not be used as close crop until inspected at social size."
+    ],
+    "next_improvement": "Promote as the preferred Unity/Kyuro source; create deterministic 4:5 and 9:16 social overlays around cooperation, not romance or symmetry."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md",
+      "VISUAL_DOCTRINE.md",
+      "Unity Gate Kyuro Cooperation Lattice"
+    ],
+    "gate": "Unity",
+    "guardian": "Ino",
+    "godbeast": "Kyuro"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "main-storyline"
+      },
+      {
+        "trait_type": "surface",
+        "value": "unity-correction-social-gallery"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Unity"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Ino"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-040-unity-kyuro-cooperation-lattice.vis.provenance.json"
+  },
+  "used_in": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/gallery/gallery-data.ts",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T07:27:54+02:00"
+}

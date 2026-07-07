@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-07-06T05:38:45.139Z",
+  "portalUrl": "http://127.0.0.1:3008/visual-world-engine",
+  "assertions": {
+    "mobileStatus": 200,
+    "mobile": {
+      "imageCount": 16,
+      "loadedImageCount": 16,
+      "hasUnity": true,
+      "horizontalOverflow": false
+    }
+  }
+}

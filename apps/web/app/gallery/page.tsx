@@ -148,6 +148,7 @@ export default function GalleryPage() {
         likeCount: c.likeCount,
         viewCount: c.viewCount,
         tags: c.tags,
+        thumbnailUrl: c.thumbnailUrl ?? undefined,
       }));
     }
     return SHOWCASE_CREATIONS;
@@ -162,7 +163,12 @@ export default function GalleryPage() {
       items = items.filter((c) => c.element === activeElement);
     }
     if (sortBy === "popular") {
-      items = [...items].sort((a, b) => b.likeCount - a.likeCount);
+      items = [...items].sort((a, b) => {
+        const featuredDelta =
+          (a.featuredRank ?? Number.MAX_SAFE_INTEGER) -
+          (b.featuredRank ?? Number.MAX_SAFE_INTEGER);
+        return featuredDelta || b.likeCount - a.likeCount;
+      });
     } else if (sortBy === "views") {
       items = [...items].sort((a, b) => b.viewCount - a.viewCount);
     }

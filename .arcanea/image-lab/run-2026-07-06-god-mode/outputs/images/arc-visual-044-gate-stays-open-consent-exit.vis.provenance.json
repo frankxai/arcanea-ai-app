@@ -1,0 +1,92 @@
+{
+  "asset_uid": "arcanea-2026-07-gate-stays-open-consent-exit",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b11",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "Gate Stays Open Consent Exit",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "story-portal-vertical-social-gallery",
+  "aspect_ratio": "9:16",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-044-gate-stays-open-consent-exit.png",
+    "sha256": "ace0eca4767a6a699e7b076cc19632e0953a62432ce237c31ad7937cd34e5e15",
+    "mime_type": "image/png",
+    "width": 941,
+    "height": 1672,
+    "size_bytes": 2604918
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b11.json#arc-visual-044",
+    "prompt": "Use case: illustration-story\nAsset type: Arcanea storyline source frame for webtoon/story portal and social crop\nPrimary request: create a premium cinematic story frame for The Gate That Must Stay Open without naming or depicting any locked/staging character. Show cooperation as the climax.\nScene/backdrop: a vast Arcanea Academy Gate-Descent threshold inside a living tower aperture, with fabric banners, root bridges, dark glass platforms, and a doorway of soft white-gold light beginning to close.\nSubject: four diverse Academy creators work together to keep the Gate open while a blank proof ledger floats safely between them. One holds a structural bridge line, one witnesses the ledger from a distance, one opens a consent-based exit path, and one refuses to seize control, reaching out instead. The threat is environmental pressure and creative amnesia, not a monster.\nStyle/medium: premium cinematic webtoon key art translated into realistic myth-tech concept art, elegant, humane, emotionally readable.\nComposition/framing: vertical 9:16-friendly asymmetric frame, strong diagonal from closing gate to reaching hand, readable silhouettes, dark top safe zone for future overlay, no speech bubbles.\nLighting/mood: urgent but compassionate, luminous white-gold gate light, teal living crystal, warm human skin tones, hopeful tension.\nColor palette: obsidian, starlight metal, white-gold, living teal, restrained vibrant fabric accents.\nMaterials/textures: blank paper ledger, smooth proof artifact surface, woven ceremonial utility fabrics, engineered root-bridges.\nText: none.\nConstraints: no letters, no fake writing, no runes, no inscriptions, no speech bubbles, no UI, no logo, no watermark. Do not depict Mamoru or any named character. No monster boss, no combat gore, no fantasy armor, no medieval robes.\nAvoid: generic anime poster, purple magic fog, evil villain, dragon, symmetrical mandala, overdecorated clutter, unreadable hands.",
+    "negative_prompt": "No letters, fake writing, runes, inscriptions, speech bubbles, UI, logo, watermark, Mamoru, named character depiction, monster boss, combat gore, fantasy armor, medieval robes, generic anime poster, purple magic fog, evil villain, dragon, symmetrical mandala, clutter.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "9:16"
+    },
+    "original_generated_path": "C:\\Users\\frank\\.codex\\generated_images\\019f3498-30f9-77a0-b2a3-b54acd0c8e66\\ig_0552f761db081f81016a4b5b0ee7c0819189509588a5c1498a.png"
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "approved-candidate",
+    "score30": 28,
+    "decision": "approve",
+    "failure_modes": [
+      "Emotionally clear Gate-Descent choice frame with blank ledger and consent-exit read.",
+      "White uniform language remains close to stock academy styling; use as story portal source and avoid over-repeating the wardrobe."
+    ],
+    "next_improvement": "Use as vertical story-portal source; break the roles into deterministic carousel panels with exact copy outside the image."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md",
+      "VISUAL_DOCTRINE.md",
+      "Gate Stays Open Consent Exit"
+    ],
+    "gate": "Foundation",
+    "guardian": "Lyssandria",
+    "godbeast": "Kaelith"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "webtoon-anime"
+      },
+      {
+        "trait_type": "surface",
+        "value": "story-portal-vertical-social-gallery"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Foundation"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Lyssandria"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-044-gate-stays-open-consent-exit.vis.provenance.json"
+  },
+  "used_in": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/gallery/gallery-data.ts",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T09:45:00+02:00"
+}

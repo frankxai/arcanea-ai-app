@@ -1,0 +1,52 @@
+{
+  "asset_id": "arc-conductor-004",
+  "title": "Witness Bridge V1 Fashion Drift",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-conductor-2026-07-06",
+  "workflow": "built-in-image-gen",
+  "created_at": "2026-07-06T13:00:31+02:00",
+  "source_method": "generated-media",
+  "asset_tier": "B",
+  "provenance": "generated",
+  "rights_status": "generated-owned-source",
+  "approval_status": "iterate-reference-only",
+  "decision": "iterate",
+  "score30": 23,
+  "surface": "vertical-social-source-frame",
+  "dimensions": {
+    "width": 941,
+    "height": 1672
+  },
+  "file": {
+    "path": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-004-witness-bridge-v1-fashion-drift.png",
+    "mime_type": "image/png",
+    "sha256": "716b20042e873d8723453d236e3036546c52d6d864ed1909a6b7e01ec2a1a7b0",
+    "source_path": "C:/Users/frank/.codex/generated_images/019f3498-d4e0-7351-8464-c2ab293192a5/ig_0d3747b35c6ae621016a4b8a2a786481918690f77a135d7937.png"
+  },
+  "characters": [
+    "Arion",
+    "Mera",
+    "Emilia"
+  ],
+  "canon_status": {
+    "mamoru": "not-present",
+    "staging_promotion": "none",
+    "luminor_usage": "not-used-as-species"
+  },
+  "prompt_summary": "Mamoru-free vertical Arcanea Witness Bridge key visual with Arion, Mera, Emilia, colossal living world tower, and gentle Guardian architecture.",
+  "inspection": {
+    "strengths": [
+      "strong world-tower and Guardian scale",
+      "premium gold, stone, greenery, and crystal material language",
+      "clear phone-first 9:16 composition"
+    ],
+    "risks": [
+      "Mera and Emilia drift into exposed-leg/high-fashion styling",
+      "party reads more like beauty-pose lineup than practical Dungeon Divers",
+      "lower-third character credibility is weaker than the environment"
+    ],
+    "next_action": "Use as reference for scale and lighting only; do not ship as social/gallery hero."
+  },
+  "notes": "Generated as Batch 12 v1 to avoid Mamoru staging blocker. Rejected for fashion drift after inspection."
+}

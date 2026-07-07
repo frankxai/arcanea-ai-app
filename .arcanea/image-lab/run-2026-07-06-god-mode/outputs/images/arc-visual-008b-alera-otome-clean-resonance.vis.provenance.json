@@ -1,0 +1,88 @@
+{
+  "asset_uid": "arcanea-2026-07-alera-otome-clean-resonance",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b2",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "alera otome clean resonance",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "square-gallery-1x1",
+  "aspect_ratio": "1:1",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-008b-alera-otome-clean-resonance.png",
+    "sha256": "534ce7c8ce96731569742bc298ddcc77e76f125c4c87856643324cb5dbf791ae",
+    "mime_type": "image/png",
+    "width": 1254,
+    "height": 1254,
+    "size_bytes": 2903362
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b2.json#arc-visual-008b",
+    "prompt": "Use case: illustration-story. Asset type: square gallery hero. Primary request: Alera, Arcanean Goddess of the Voice Gate, with bonded Godbeast Otome, rendered as clean truth-resonance without music-note cliches. Scene/backdrop: silent resonant archive chamber made of dark glass, gold foil, and warm teal sound geometry. Subject: Alera holds a blank creation-frequency crystal near her heart; Otome appears as an elegant sacred Godbeast made of harmonic rings, feather-light glass, and warm light, protective and intelligent, not a pet. Style/medium: premium cinematic concept art, Arcanea AI-lab mythology, precise and social-ready. Composition/framing: 1:1, circular harmonic composition, Alera and Otome form a strong emblem shape, no clutter. Lighting/mood: gold, cream, teal resonance, truthful and expressive. Materials/textures: Otome Resonite, blank gold foil, parchment texture with no writing, dark glass, starlight metal. Constraints: no text, no glyphs, no fake script, no logos, no visible music notes, no waveform decoration, no fantasy robe cosplay.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "1:1"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "reference-only",
+    "score30": 24,
+    "decision": "iterate",
+    "failure_modes": [
+      "Otome reads dragon-adjacent instead of a distinct Voice Gate Godbeast",
+      "Alera styling remains ornate fantasy portrait language"
+    ],
+    "next_improvement": "Regenerate Otome as resonance architecture or vocal-lattice creature, less dragon, less gown, more Arcanea AI-lab truth instrument."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md Ten Gates",
+      "Alera",
+      "Otome",
+      "Voice Gate"
+    ],
+    "gate": "Voice",
+    "guardian": "Alera"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "guardian-godbeast"
+      },
+      {
+        "trait_type": "surface",
+        "value": "square-gallery-1x1"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Voice"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Alera"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-008b-alera-otome-clean-resonance.vis.provenance.json"
+  },
+  "used_in": [],
+  "created_at": "2026-07-06T03:18:30+02:00"
+}

@@ -1,0 +1,6 @@
+{
+  "ok": true,
+  "checkedAt": "2026-07-06T07:31:27.5491203Z",
+  "command": ".\\apps\\web\\node_modules\\.bin\\tsc.cmd --noEmit --pretty false --project .\\apps\\web\\tsconfig.json",
+  "notes": "App TypeScript project check passed after clearing stale generated .next/dev/types and normalizing gallery live thumbnailUrl null to undefined."
+}

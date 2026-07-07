@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "name": "arcanea-social-forge",
+  "slug": "arcanea-social-forge",
+  "goal": "Approved gallery assets plus book excerpts plus the music catalog become weekly batches of gate-passing social assets with ledger rows",
+  "createdAt": "2026-07-05T21:34:30Z",
+  "owner": "Luminor",
+  "cadence": "designed only - activation is Slice 3",
+  "verdict": "MANUAL_FIRST",
+  "stateMode": "global",
+  "ci": "none",
+  "packageManager": "unknown",
+  "maxIterations": 8,
+  "stopAfterSameFailure": 2,
+  "verificationCommands": [],
+  "forbiddenScope": [
+    "credentials",
+    "billing",
+    "production mutation",
+    "destructive file operations",
+    "external sends",
+    "gate weakening",
+    "force pushes",
+    "unapproved dependency upgrades"
+  ],
+  "files": {
+    "loop": "LOOP.md",
+    "gate": "GATE.md",
+    "worker": "WORKER.md",
+    "verifier": "VERIFIER.md",
+    "state": "STATE.md",
+    "signs": "SIGNS.md",
+    "runs": "RUNS.md",
+    "machineRuns": "runs.jsonl",
+    "proofs": "proofs/",
+    "lock": "loop.lock",
+    "abort": "ABORT"
+  }
+}

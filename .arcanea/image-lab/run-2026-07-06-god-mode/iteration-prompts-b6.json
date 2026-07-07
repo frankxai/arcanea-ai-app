@@ -1,0 +1,32 @@
+{
+  "version": "2026-07-06",
+  "batch": "b6",
+  "source": "Codex built-in image_gen",
+  "purpose": "Second correction and expansion pass after the dedicated Visual World Engine portal: stronger Unity cooperation action, webtoon trial-choice source art, and music proof-cover source art.",
+  "prompts": [
+    {
+      "id": "arc-visual-040",
+      "title": "Unity Gate Kyuro Cooperation Lattice",
+      "surface": "unity-correction-social-gallery",
+      "aspect_ratio": "4:5",
+      "prompt": "Arcanea Visual World Engine batch 6, Unity Gate cooperation action hook. A vast living sanctuary built from dark glass, jade-veined stone, starlight metal, woven gold thread, and healthy bioluminescent gardens. Four diverse Arcanea Academy creators stand in a real cooperation posture around a fractured proof artifact: one stabilizes a bridge cable, one records a witness gesture with a blank codex, one opens a consent-based release latch, and one offers a hand to a smaller luminous companion. Kyuro is not a mirrored portrait: show Kyuro as a non-humanoid partnership infrastructure, a warm interlocking lattice of sheltering arches and responsive root-bridges that moves around them. Scale should be immense, with kilometer-high garden towers and tiny creator figures. Premium AI-lab myth-tech, emotional trust, responsibility, and visible action. Cinematic 4:5 composition, strong first-second social hook, clear caption-safe upper left, no text, no letters, no symbols that resemble writing, no logo, no watermark, no UI, no fake glyphs, no superhero costumes, no fantasy armor cosplay, no purple cliche, no clutter, no cute mascot posing, no violence.",
+      "negative_prompt": "No text, letters, fake writing, inscriptions, symbols that resemble writing, logo, watermark, UI, fake glyphs, superhero costumes, fantasy armor cosplay, purple cliche, clutter, cute mascot posing, violence, malformed hands, malformed faces."
+    },
+    {
+      "id": "arc-visual-041",
+      "title": "Webtoon Gate Choice Blank Ledger",
+      "surface": "webtoon-story-portal-16x9",
+      "aspect_ratio": "16:9",
+      "prompt": "Arcanea Visual World Engine batch 6, webtoon/anime trial-choice source frame. A controlled Arcanea Academy Gate-Descent trial inside an impossible living library bridge, with three clean story beats visible in one cinematic source image: left foreground shows a creator reaching for a blank proof ledger, center shows a transparent consent exit latch opening, right distance shows friends holding the Gate open together. The mood is urgent but humane: not battle, not boss fight, a choice about responsibility, witness, memory, and refusing control-as-mercy. Premium anime-webtoon key art source, modern AI-lab myth-tech clothing, diverse young adult creators, blank pages only, no speech bubbles. Use Kaelith stone, Veloura glass, starlight metal, gold thread, living paper, soft portal light, and huge tower shelves with tiny figures for scale. 16:9 composition for YouTube/webtoon header and site story portal, strong diagonal movement, safe dark space for later code overlay. No text, no letters, no fake writing, no inscriptions, no readable marks, no UI, no logo, no watermark, no malformed hands, no stock school uniforms, no generic fantasy armor, no purple cliche, no cluttered magic circles.",
+      "negative_prompt": "No text, letters, fake writing, inscriptions, readable marks, UI, logo, watermark, malformed hands, stock school uniforms, generic fantasy armor, purple cliche, cluttered magic circles, speech bubbles, subtitles."
+    },
+    {
+      "id": "arc-visual-042",
+      "title": "Music Resonance Proof Cover",
+      "surface": "music-proof-cover-square",
+      "aspect_ratio": "1:1",
+      "prompt": "Arcanea Visual World Engine batch 6, music resonance proof cover frame. A mythic AI-lab performance chamber where a musician and an Arcanea Voice Gate operator convert a live song into a visible proof artifact. The central object is a blank, flower-like resonance core made of starlight metal, dark glass, gold thread, and living crystal, hovering above a quiet stage pool. Sound appears as restrained luminous ribbons and architectural harmonics, not random glow. Show a vast healthy amphitheater with fabrics, water reflections, small listeners, and a sense of care. This must work as album cover, YouTube thumbnail, and Reels first frame: one strong central shape, deep negative space for deterministic overlay, rich but not cluttered, premium cinematic lighting. 1:1 square composition. No text, no title, no letters, no fake writing, no notes or music notation, no UI, no logo, no watermark, no microphone brand, no malformed hands, no cyberpunk neon grid, no purple cliche, no generic fantasy spell circle, no celebrity likeness.",
+      "negative_prompt": "No text, title, letters, fake writing, notes, music notation, UI, logo, watermark, microphone brand, malformed hands, cyberpunk neon grid, purple cliche, generic fantasy spell circle, celebrity likeness, clutter."
+    }
+  ]
+}

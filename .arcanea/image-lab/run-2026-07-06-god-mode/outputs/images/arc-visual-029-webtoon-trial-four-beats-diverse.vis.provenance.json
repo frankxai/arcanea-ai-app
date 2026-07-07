@@ -1,0 +1,90 @@
+{
+  "asset_uid": "arcanea-2026-07-webtoon-trial-four-beats-diverse",
+  "source_asset_uid": "arcanea-2026-07-webtoon-first-trial-three-beats",
+  "batch_id": "2026-07-arcanea-visual-world-engine-b3",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 4,
+  "title": "webtoon trial four beats diverse",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "webtoon-vertical-9x16",
+  "aspect_ratio": "9:16",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-029-webtoon-trial-four-beats-diverse.png",
+    "sha256": "3b08024264ceb624644c42ecd24a3d18e15089fdca4e1fa9e4968b0efea263b6",
+    "mime_type": "image/png",
+    "width": 941,
+    "height": 1672,
+    "size_bytes": 2026961
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b3.json#arc-visual-029",
+    "prompt": "Use case: illustration-story. Asset type: vertical webtoon sequence continuation. Primary request: four clean cinematic webtoon beats showing diverse creators choosing proof over The Drift, continuing after the first trial. Scene/backdrop: Arcanea studio night corridor and dark-glass maker room, rain reflections outside, warm forge light inside. Subject: four stacked visual beats without speech bubbles: beat one a Black woman creator notices a passive gray fog at the studio window; beat two an older Asian musician places a blank resonance object on a black-glass table; beat three a brown-skinned nonbinary designer steadies a glowing proof artifact; beat four a small group sees the artifact light a clean doorway. Style/medium: premium webtoon/anime-adjacent cinematic frame, refined linework feel, Arcanea AI-lab premium, not generic anime. Composition/framing: 9:16, four clear beats, clean separators, readable emotion, no tiny clutter. Lighting/mood: intimate gold, teal signal, quiet courage, human warmth. Materials/textures: dark glass, smooth gold foil with no engravings, starlight metal, rain reflections, blank obsidian table. Constraints: no speech bubbles, no text, no letters, no symbols, no books, no papers, no diagrams, no melodrama, no exaggerated anime faces.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "9:16"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 28,
+    "decision": "approve",
+    "failure_modes": [
+      "Cinematic realism is stronger than webtoon linework, so it should be treated as premium storyboard/source art",
+      "Needs deterministic panel captions outside the image for platform publishing"
+    ],
+    "next_improvement": "Promote to gallery as storyboard/Webtoon proof source and build a coded caption/sequence treatment later."
+  },
+  "canon": {
+    "refs": [
+      "Arcanea chosen responsibility",
+      "Genesis proof loop",
+      "The Drift"
+    ],
+    "gate": "Voice",
+    "guardian": "Alera"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 4,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "webtoon"
+      },
+      {
+        "trait_type": "surface",
+        "value": "webtoon-vertical-9x16"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Voice"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Alera"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-029-webtoon-trial-four-beats-diverse.vis.provenance.json"
+  },
+  "used_in": [
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\app\\gallery\\gallery-data.ts",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T04:43:20+02:00"
+}
