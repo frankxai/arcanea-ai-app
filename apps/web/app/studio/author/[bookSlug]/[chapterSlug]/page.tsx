@@ -3,7 +3,7 @@ import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
 
