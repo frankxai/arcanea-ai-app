@@ -170,3 +170,32 @@ Secondary ICP: the **agent-native developer** adopting via MCP/CLI/skills.
 ---
 
 *Method note: screenshots captured to `~/home-*.jpeg`, `~/hub-*.jpeg`, `~/hf-*.jpeg` during this session. Console logs in `~/.playwright-mcp/`. Side finding (different property): several frankx.ai blog hero images 404 (`best-ai-browser-2026-hero-v6.jpg`, others) — fix separately.*
+
+---
+
+## Execution log — same day (2026-07-11)
+
+### P0 — shipped as PR #192 (all CI green)
+Strategy-leak copy rewritten in user voice · NumberTicker SSR-final-value fix ·
+`lib/facts.ts` single source (13 Luminors / 54 MCP tools / 20 skills, provenance
+comments) · drift checker + advisory CI workflow · metadata/title sweep (85
+files, single brand suffix) · PWA icon-192 · dead /games links removed ·
+/v3 + /v4 noindexed · worlds zero-stats hidden · navbar solid-on-scroll ·
+comparison-table legend · chat/community OG metadata wired to FACTS (review
+follow-up).
+
+### P1 — this branch (web/p1-experience)
+1. **Homepage restructured 20 → 9 sections** (hero · artifact cards · engine+doors ·
+   Luminor team · Guardians · comparison · worlds · sovereignty+open-source · FAQ · CTA).
+   ~21.6k px page → ~11k. Cut sections keep dedicated hubs (/voice, /integrations,
+   /creator-economy) linked from nav + footer.
+2. **Facts drift burned to zero** across every public surface (48 interpolations,
+   5 `facts-ok` annotations, 31 files) — and the CI gate flipped to `--strict`:
+   hardcoded platform numbers now fail the build.
+3. **/imagine style presets got real thumbnails** — all 12 generated with the app's
+   own OpenRouter NB2 path from each preset's exact prompt (512px webp, 18–91kb),
+   card labels raised to legible contrast.
+
+Higgsfield MCP note: account had 1.11 credits (NB2 costs 1.5/image) — tranche
+executed via the policy-blessed direct NB2 route instead. Top up Higgsfield to
+use Soul ID / cinematic presets for Guardian portrait refreshes.
