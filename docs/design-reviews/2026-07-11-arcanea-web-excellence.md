@@ -47,7 +47,7 @@ Secondary ICP: the **agent-native developer** adopting via MCP/CLI/skills.
 2. **Claim drift across surfaces**: 13 agents (home, /chat, pricing) vs **16 Luminors** (/luminors) vs 7 (voice section); "42 tools" (/developers) vs "43+" (/mcp) vs 45 registered in `packages/arcanea-mcp`; "6 public repos" vs "15 active" vs "27 repos" (/developers); "80 skills" (stack card) vs "42 skills" (/showcase).
 3. **Metadata template broken site-wide**: titles render "… Arcanea | Arcanea" (dup suffix); `/academy/courses` → "Academy — Arcanea | Academy"; `/chat` titled "Create"; `/studio/author`, `/studio/image`, `/chat/lumina` have **no brand suffix at all** (3 coexisting title patterns). `/games` = bare "Arcanea | Arcanea", **no h1**; `/roadmap` and `/room/*` missing h1.
 4. **Jammed headlines in SSR text** (split-span headline component drops spaces): "What are **youmaking** today?", "Build **onArcanea**", "The **FiveElements**", "**ContactArcanea**", "Install once.**Create** forever.", "Insights & **Storiesfrom** Arcanea" — screen readers and search engines read broken words.
-5. **Console errors in prod**: `[signal] Cannot update signal value directly within React component` (on /chat, /gallery), `appendChild … Invalid or unexpected token`, **broken PWA icon** (`icon-192.png` invalid → manifest error).
+5. **Console errors in prod**: **broken PWA icon** (`icon-192.png` invalid → manifest error). *(Correction 2026-07-11: the `[signal] Cannot update signal value…` and `appendChild … Invalid or unexpected token` errors originally listed here were traced to browser-extension/toolbar scripts in the auditing Chrome profile — not arcanea.ai. Verified by grepping every deployed /chat and /gallery JS chunk and a clean-profile re-check with zero console errors. Re-capture console findings in an extension-free profile before acting on them.)*
 6. **Zero-state social proof**: /worlds prints "0 Forks · 0 Stars"; world cards show gradient placeholders. Publishing zeros reads as abandonment.
 7. **Guardian cards leak generation metadata** onto the art ("SUBJECT: IGNIS… RENDER: 8K PHOTOREALISTIC COMPOSITE…") at illegible size; name/quote text nearly invisible at rest (sub-AA contrast).
 8. Sticky nav is translucent without sufficient backdrop → section eyebrows collide with nav links mid-scroll (seen at Creator Stack + /worlds).
@@ -100,7 +100,7 @@ Secondary ICP: the **agent-native developer** adopting via MCP/CLI/skills.
 2. Fix `NumberTicker`: SSR renders final formatted value; motion enhances after hydrate.
 3. Create `content/facts.ts` — single source for every public number (agents, tools, repos, words, skills, collections); import everywhere; extend `canon-lint.yml` to fail on hardcoded drift. Decide canon: 13 vs 16 Luminors, one number.
 4. Metadata sweep: one title template ("%s — Arcanea"), unique h1 on every route (roadmap, games, rooms), fix split-headline space loss (`<span>` + proper whitespace or `aria-label`).
-5. Fix `icon-192.png`, the React signal error (/chat, /gallery), appendChild error.
+5. Fix `icon-192.png`. ~~React signal error, appendChild error~~ — false positives from the auditing browser profile (see Class B §5 correction).
 6. Route curation: noindex or remove `v3/`, `v4/`, `design-lab/`, `/games` stub from prod; public-route manifest requiring title+h1+OG.
 7. Nav: solid/backdrop-blur background past 40px scroll; z-index audit.
 8. Zero-state policy: never print 0 stars/forks — show "New" badge instead.
@@ -152,7 +152,7 @@ Secondary ICP: the **agent-native developer** adopting via MCP/CLI/skills.
 |---|---|---|
 | `/` hero + artifact cards | A− | World-class top; keep. |
 | `/` sections 3–20 | C+ | Strategy leaks, monotony, length, counters. |
-| `/chat` | B | Solid app shell; title bug, signal error, clipped banner. |
+| `/chat` | B | Solid app shell; title bug, clipped banner. |
 | `/imagine` | B− | Right architecture, zero style previews, empty feed. |
 | `/worlds` (+create) | C+ | Good bones; empty multiverse, gradient covers, zeros. |
 | `/gallery` | A− | Best-in-class cards; clipped titles, z-fight w/ FAB. |
