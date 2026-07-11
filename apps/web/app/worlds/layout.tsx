@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { PageTransition } from "./page-transition";
 
 export const metadata: Metadata = {
-  title: "Explore Worlds — Arcanea",
+  title: "Explore Worlds",
   description:
     "Discover living universes built by creators. Fork, star, and build on each other's worlds.",
   openGraph: {
-    title: "Explore Worlds — Arcanea",
+    title: "Explore Worlds",
     description:
       "Discover living universes built by creators. Fork, star, and build on each other's worlds.",
   },

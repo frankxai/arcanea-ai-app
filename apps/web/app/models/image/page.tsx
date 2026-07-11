@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     "Stable Diffusion vs FLUX",
   ],
   openGraph: {
-    title: "Image Generation Arena | Arcanea",
+    title: "Image Generation Arena",
     description:
       "Transparent comparison of 8 image generation models. Pricing, speed, text rendering, and style control rated side by side.",
     type: "website",

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!world) {
     return {
-      title: "World Not Found — Arcanea",
+      title: "World Not Found",
       description: "This world does not exist or is private.",
     };
   }

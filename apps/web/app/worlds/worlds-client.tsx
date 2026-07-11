@@ -224,12 +224,13 @@ function MultiverseStats({ worlds }: { worlds: WorldCard[] }) {
   const totalCharacters = worlds.reduce((s, w) => s + w.characters, 0);
   const totalForks = worlds.reduce((s, w) => s + w.forks, 0);
   const totalStars = worlds.reduce((s, w) => s + w.stars, 0);
+  // Never print zero social proof — a young multiverse shows what exists, not what doesn't.
   const stats = [
     { value: totalWorlds, label: "Worlds" },
     { value: totalCharacters, label: "Characters" },
     { value: totalForks, label: "Forks" },
     { value: totalStars.toLocaleString(), label: "Stars" },
-  ];
+  ].filter((s) => Number(String(s.value).replace(/,/g, "")) > 0);
   return (
     <div className="flex items-center justify-center gap-3 flex-wrap py-6">
       {stats.map(({ value, label }, i) => (

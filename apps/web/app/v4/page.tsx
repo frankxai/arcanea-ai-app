@@ -3,6 +3,10 @@ import { Suspense } from "react";
 import { getCollections, getAllTexts } from "@/lib/content";
 import { V4Content, V4Loading } from "./v4-content";
 
+// Historical homepage snapshot — kept for reference, hidden from search engines.
+export const metadata = { robots: { index: false, follow: false } };
+
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [

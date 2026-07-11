@@ -245,7 +245,7 @@ export default function BlogPage() {
               </div>
 
               <h1 className="text-fluid-3xl font-display font-bold mb-4">
-                Insights & Stories
+                Insights & Stories{" "}
                 <span className="block text-gradient-brand">from Arcanea</span>
               </h1>
 

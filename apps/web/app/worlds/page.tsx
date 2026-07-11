@@ -4,11 +4,11 @@ import { WorldsClient, type WorldCard } from "./worlds-client";
 import { WorldsHero } from "./worlds-hero";
 
 export const metadata: Metadata = {
-  title: "Worlds — Build Your Universe — Arcanea",
+  title: "Worlds — Build Your Universe",
   description:
     "Build your own fantasy universe with the Living Worlds engine. Characters, locations, magic systems, and lore — all interconnected.",
   openGraph: {
-    title: "Worlds — Build Your Universe — Arcanea",
+    title: "Worlds — Build Your Universe",
     description:
       "Build your own fantasy universe with the Living Worlds engine. Characters, locations, magic systems, and lore — all interconnected.",
   },
