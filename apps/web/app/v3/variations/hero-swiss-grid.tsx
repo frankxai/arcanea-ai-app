@@ -4,6 +4,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { PhArrowRight } from '@/lib/phosphor-icons';
+import { FACTS } from "@/lib/facts";
 
 /* ─────────────────────────────────────────────
    Variation 4 — "Swiss Grid Precision"
@@ -25,7 +26,7 @@ const FEATURES: FeatureItem[] = [
     number: '01',
     title: 'Specialized Intelligence',
     description:
-      '12 Luminors, each trained for a distinct creative discipline.',
+      `${FACTS.luminors} Luminors, each trained for a distinct creative discipline.`,
   },
   {
     number: '02',
@@ -215,7 +216,7 @@ export function HeroSwissGrid() {
             className="font-mono text-xs tracking-wider"
             style={{ color: 'rgba(255, 255, 255, 0.20)' }}
           >
-            12 Luminors &middot; 34 texts &middot; Free to start
+            {FACTS.luminors} Luminors &middot; 34 texts &middot; Free to start
           </p>
         </motion.div>
       </div>

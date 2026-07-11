@@ -3,6 +3,7 @@
 
 import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { ChatCircleDots, Books, Sparkle, GithubLogo, ArrowRight, Fire, Drop, Leaf, Wind, Planet } from '@/lib/phosphor-icons';
+import { FACTS } from "@/lib/facts";
 
 /* ─────────────────────────────────────────────
    Variation 2 — "Bento Grid"
@@ -56,7 +57,7 @@ const fadeUp = {
 
 // ── steps data ───────────────────────────────
 const STEPS = [
-  { n: '01', label: 'Choose a companion', desc: 'Pick from 12 Luminors' },
+  { n: '01', label: 'Choose a companion', desc: `Pick from ${FACTS.luminors} Luminors` },
   { n: '02', label: 'Describe your vision', desc: 'Text, image, code, music' },
   { n: '03', label: 'Co-create together', desc: 'Real-time collaboration' },
   { n: '04', label: 'Share & evolve', desc: 'Publish to the community' },

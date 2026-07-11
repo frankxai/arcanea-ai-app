@@ -5,6 +5,7 @@ import { LazyMotion, domAnimation, m } from 'framer-motion';
 import Image from 'next/image';
 import { PhArrowRight, PhCaretDown } from '@/lib/phosphor-icons';
 import heroImage from '@/assets/brand/arcanea-hero.jpg';
+import { FACTS } from "@/lib/facts";
 
 /* ─────────────────────────────────────────────
    Variation 3 — "Cinematic Dark"
@@ -122,7 +123,7 @@ export function HeroCinematic() {
           animate="visible"
           variants={fadeUp}
         >
-          12 Luminors. Writing, design, code, music, research.
+          {FACTS.luminors} Luminors. Writing, design, code, music, research.
           <br className="hidden md:block" />
           One platform for everything you create.
         </m.p>

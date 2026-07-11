@@ -2,6 +2,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { FACTS } from "@/lib/facts";
 
 /* ─────────────────────────────────────────────
    Variation 9 — "Particle Universe"
@@ -164,7 +165,7 @@ export function V9Particles() {
           fontWeight: 400, lineHeight: 1.15, maxWidth: 800, margin: '0 0 28px',
         }}>The Universe That Creates With You</h1>
         <p style={{ fontSize: 18, opacity: 0.55, maxWidth: 540, margin: '0 0 44px', lineHeight: 1.6 }}>
-          13 specialists. 62 texts. 26 models. Infinite creation.
+          {FACTS.luminors} specialists. 62 texts. 26 models. Infinite creation.
         </p>
         <a href="/discover" className="glass-btn">Enter the Universe</a>
       </section>

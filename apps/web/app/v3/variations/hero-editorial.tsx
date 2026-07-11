@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useRef } from 'react';
 import { PhArrowRight } from '@/lib/phosphor-icons';
 import heroImage from '@/assets/brand/arcanea-hero.jpg';
+import { FACTS } from "@/lib/facts";
 
 /* ─────────────────────────────────────────────
    Variation 7 — "Editorial Magazine"
@@ -155,7 +156,7 @@ export function HeroEditorial() {
             animate={isInView ? 'visible' : 'hidden'}
             variants={fadeIn}
           >
-            Free to start &middot; 12 Luminors &middot; 34+ texts
+            Free to start &middot; {FACTS.luminors} Luminors &middot; 34+ texts
           </motion.p>
         </div>
 

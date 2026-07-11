@@ -3,6 +3,7 @@
 
 import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { PhArrowRight } from '@/lib/phosphor-icons';
+import { FACTS } from "@/lib/facts";
 
 /* ─────────────────────────────────────────────
    Variation 1 — "Void Monochrome"
@@ -59,7 +60,7 @@ export function HeroVoid() {
           animate="visible"
           variants={fadeUp}
         >
-          12 Luminors for writing, design, code, music, and research.
+          {FACTS.luminors} Luminors for writing, design, code, music, and research.
         </m.p>
 
         {/* CTA */}
