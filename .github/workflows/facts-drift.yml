@@ -1,0 +1,28 @@
+name: Facts Drift
+
+# Advisory (non-blocking) while the long tail of hardcoded numbers is wired to
+# lib/facts.ts. Flip `continue-on-error` to false to make it a hard gate.
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/web/app/**'
+      - 'apps/web/components/**'
+      - 'apps/web/lib/facts.ts'
+
+concurrency:
+  group: facts-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  facts-drift:
+    name: Hardcoded platform numbers
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check for hardcoded platform numbers
+        run: node apps/web/scripts/check-facts-drift.mjs
