@@ -15,6 +15,7 @@ Synthesis reports combine findings from multiple papers, tools, benchmarks, and 
 ## Index
 
 <!-- Add entries below in reverse chronological order -->
+- [2026-06-14_narrative-grounding-brief.md](file:///C:/Users/frank/Arcanea/docs/research/synthesis/2026-06-14_narrative-grounding-brief.md) — Grounding brief for progression-fantasy systems, comps, and elements (Relevance: 9/10, Gates: Flow, Voice, Sight, Source, Crown, Starweave)
 <!-- Example:
 - `2026-04-04_agent-memory-landscape.md` — Unified view of agent memory architectures across 5 papers + 3 tools (Relevance: 9/10, Gates: Unity, Crown, Source)
 -->

@@ -1,6 +1,6 @@
 # PROLOGUE: BEFORE THE FLOOD
 
-*Thal'Maris — The Abyssal Athenaeum*
+*Talassara — The Abyssal Athenaeum*
 *The First Year of the Fourth Age*
 *Two Thousand Years Before*
 
@@ -34,7 +34,7 @@ Veradis knew every volume. She had read the Collection in its entirety three tim
 
 She understood it now. She had understood it then, too. She disagreed.
 
-The first volume, opening with the slight resistance of a book that had been opened many times and resisted gently because it had learned to expect handling: the founding documents of the Veltherys research tradition, which predated the Abyssal Athenaeum by several hundred years and had been moved here for safekeeping in the second century of the Third Age, when the Depths became the world's primary repository of historical scholarship. The original archivist who had brought the collection here had noted in his transfer documentation: *these are the most complete records of multi-element channeling in existence. They should be protected rather than hidden, which is why I am bringing them here rather than elsewhere.*
+The first volume, opening with the slight resistance of a book that had been opened many times and resisted gently because it had learned to expect handling: the founding documents of the Veltherys research tradition, which predated the Abyssal Athenaeum by several hundred years and had been moved here for safekeeping in the second century of the Third Age, when the Depths became the world's primary repository of historical scholarship. The original archivist who had brought the collection here had noted in her transfer documentation: *these are the most complete records of multi-element channeling in existence. They should be protected rather than hidden, which is why I am bringing them here rather than elsewhere.*
 
 Veradis stood in the amber light and held the first volume and thought about the difference between protection and hiding, and whether what she was about to do could be called either.
 
@@ -104,7 +104,7 @@ The question was where to put it.
 
 The problem with hiding something in the Archive was the Archive. It remembered. Everything in the Tide Archives was cross-referenced, catalogued, indexed, and tied into the living memory network that the Academy's Water-mages maintained. Concealment in the Archive was, eventually, discovery in the Archive. Something could be moved to restricted access. Something could be given a misleading title. But the Archive itself knew what it contained, and the Archive told, given the right question asked by the right practitioner.
 
-She could take the collection out of the Archive entirely. Hide it somewhere in Thal'Maris, or above the surface in a location she controlled. But then she was creating a single point of failure: if she died, the collection was lost to anyone who didn't know where she had put it.
+She could take the collection out of the Archive entirely. Hide it somewhere in Talassara, or above the surface in a location she controlled. But then she was creating a single point of failure: if she died, the collection was lost to anyone who didn't know where she had put it.
 
 What she needed was a hiding place that would persist past her death, that the Archive itself would not reveal to casual search, but that the right person could find given the right key.
 
@@ -132,9 +132,9 @@ On the twenty-second night, she encoded the last entry. Aelith of the Mountain C
 
 She looked at the last page for a long time.
 
-Then she wrote, in the margin, in her own hand and not in cipher: *tell him: still water runs deepest. Begin there.*
+Then she wrote, in the margin, in her own hand and not in cipher: *tell her: still water runs deepest. Begin there.*
 
-She did not know who him would be. She thought she knew the shape of the person — someone who had found their way to the blank book by perceiving the Void layer, and had been patient enough to wait for the Water, which meant someone who had learned patience after being, probably, congenitally impatient. A person who controlled things because controlling them was the only protection they had known. A person who would need to be reminded that water moved not by force but by yielding.
+She did not know who her would be. She thought she knew the shape of the person — someone who had found their way to the blank book by perceiving the Void layer, and had been patient enough to wait for the Water, which meant someone who had learned patience after being, probably, congenitally impatient. A person who controlled things because controlling them was the only protection they had known. A person who would need to be reminded that water moved not by force but by yielding.
 
 She closed the blank book. She placed it on the shelf in the deep alcove.
 
@@ -178,11 +178,11 @@ She hoped they would be patient. She hoped they would know that still water ran 
 
 She hoped, in the way she had always hoped, in the specific and particular way of a person who does small careful things in the dark against the larger carelessness of the world: that it would be enough.
 
-*Outside, in the waters above Thal'Maris, the Great Turning continued. The seasonal current shifted direction. Something in the deep substrate, far below where even the Dreaming Pools could perceive, began — in the way of all deep things — to wait.*
+*Outside, in the waters above Talassara, the Great Turning continued. The seasonal current shifted direction. Something in the deep substrate, far below where even the Dreaming Pools could perceive, began — in the way of all deep things — to wait.*
 
 ---
 
-*Two thousand years later, a boy from a burned village put his hands flat on the coral floor of a practice yard in the earliest hour of the morning, and the water came.*
+*Two thousand years later, a girl from a burned village put her hands flat on the coral floor of a practice yard in the earliest hour of the morning, and the water came.*
 
 ---
 

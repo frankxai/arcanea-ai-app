@@ -186,3 +186,11 @@ This is the differentiator vs the flood of generic "101 ChatGPT prompts" content
 ---
 
 *Public prompts without provenance are noise. Public prompts with proven lineage are signal — and signal compounds.*
+
+## Publishing House Integration (2026-06)
+The Arcanea Publishing House (arcanea-publishing-house) extends ship-public and ship-it patterns into full coordinated swarms for books, marketing, influencers, and social.
+
+Install: hermes profile install github.com/frankxai/arcanea-publishing-house --name publishing-house --alias --force -y
+
+See: C:/Users/frank/arcanea-publishing-house/ARCHITECTURE.md
+

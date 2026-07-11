@@ -47,3 +47,9 @@ A book without an atom ≠ unread. It means the book hasn't compounded anything 
 Every book-atom gets paired with a book-atom that disagrees with it. If no counter exists in the vault, flag it in [[MOC-Patterns]] as `counter-move` cluster for reading list.
 
 Naval: *"A book without a counter is dogma."*
+
+### Publishing House (Agentic)
+- Full swarm system for book production + marketing + social
+- Replicable profile: arcanea-publishing-house
+- Swarm Sun Agents with own social profiles
+
