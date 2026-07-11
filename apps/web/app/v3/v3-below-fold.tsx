@@ -12,25 +12,15 @@ import {
   Chat,
   Globe,
   Books,
-  GraduationCap,
-  MagicWand,
   Code,
   Diamond,
-  Crown,
   Sparkle,
-  Coins,
-  Lightning,
-  ArrowsClockwise,
-  Microphone,
-  Brain,
-  Waveform,
   ArrowRight,
   CheckCircle,
   Compass,
   Wrench,
 } from "@/lib/phosphor-icons";
 import type { PhosphorIcon as IconComponent } from "@/lib/phosphor-icons";
-import { HowItWorks } from "@/components/landing/how-it-works";
 import { CTASection } from "@/components/landing/cta-section";
 import { GuardianShowcase } from "@/components/landing/guardian-showcase";
 import { WorldsShowcase } from "@/components/landing/worlds-showcase";
@@ -40,13 +30,10 @@ import { Reveal } from "@/components/motion/reveal";
 import { NumberTicker } from "@/components/motion/number-ticker";
 import { FACTS } from "@/lib/facts";
 import { Marquee } from "@/components/motion/marquee";
-import { FeatureCard, FeatureIcon } from "@/components/premium/feature-card";
 import { SectionShell, SectionHeader } from "@/components/premium/section-shell";
 import { ComparisonMatrix } from "@/components/premium/comparison-matrix";
 import { SovereigntyPillars } from "@/components/premium/sovereignty-pillars";
-import { PersonasShowcase } from "@/components/premium/personas-showcase";
 import { LuminorTeamPreview } from "@/components/premium/luminor-team-preview";
-import { IntegrationGrid } from "@/components/premium/integration-grid";
 import { PUBLIC_REPOS, PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
 import { luminorAccents, tierAccents, streamAccents, pillarAccents, brand } from "@arcanea/design-system";
 
@@ -134,103 +121,6 @@ function SurfaceStatusPill({ status }: { status: SurfaceStatus }) {
     </span>
   );
 }
-
-const PRODUCT_PILLARS: ProductPillar[] = [
-  {
-    Icon: Chat,
-    title: "Prompt",
-    description: "Start from one sentence, scene, mechanic, or character.",
-    href: "/chat",
-    glowColor: pillarAccents.chat,
-    status: "Live",
-  },
-  {
-    Icon: Globe,
-    title: "World Graph",
-    description: "Characters, places, rules, and factions stay connected.",
-    href: "/worlds/create",
-    glowColor: pillarAccents.worlds,
-    status: "Live",
-  },
-  {
-    Icon: Books,
-    title: "Canon",
-    description: "Books, lore, and magical systems compile into a single source.",
-    href: "/living-lore",
-    glowColor: pillarAccents.library,
-    status: "Guide",
-  },
-  {
-    Icon: MagicWand,
-    title: "Studio Forge",
-    description: "Image and audio workspaces turn canon into production briefs.",
-    href: "/studio/image",
-    glowColor: pillarAccents.academy,
-    status: "Preview",
-  },
-  {
-    Icon: GraduationCap,
-    title: "Progress",
-    description: "Advanced progression pathways guide you to creative mastery.",
-    href: "/academy",
-    glowColor: pillarAccents.forge,
-    status: "Guide",
-  },
-  {
-    Icon: Code,
-    title: "Runtime",
-    description: "MCP and install docs expose Arcanea context to local agents.",
-    href: "/mcp",
-    glowColor: pillarAccents.code,
-    status: "Preview",
-  },
-];
-
-function ProductPillarsGrid() {
-  return (
-    <SectionShell ambient="teal" size="compact" id="what-arcanea-does">
-      <div className="max-w-5xl mx-auto px-6">
-        <SectionHeader
-          label="Creation Logic"
-          title="A unified creation cycle"
-          subtitle={<>Prompt, graph, canon, and runtime execute in a <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">closed feedback loop</span> instead of scattering across tabs and forgotten sessions.</>}
-          accent="teal"
-        />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {PRODUCT_PILLARS.map((pillar, i) => {
-            const Icon = pillar.Icon;
-            return (
-              <a key={pillar.title} href={pillar.href} className="block">
-                <FeatureCard
-                  glowColor={pillar.glowColor}
-                  delay={i * 0.08}
-                  compact
-                >
-                  <FeatureIcon color={pillar.glowColor} size="sm">
-                    <Icon size={18} weight="duotone" color={pillar.glowColor} />
-                  </FeatureIcon>
-                  <div className="mb-2 flex items-start justify-between gap-3">
-                    <h3 className="text-base font-display font-semibold text-white/90">
-                      {pillar.title}
-                    </h3>
-                    <SurfaceStatusPill status={pillar.status} />
-                  </div>
-                  <p className="text-sm text-white/40 font-body leading-snug">
-                    {pillar.description}
-                  </p>
-                </FeatureCard>
-              </a>
-            );
-          })}
-        </div>
-      </div>
-    </SectionShell>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Living World Engine — Animated graph visualization
-// ---------------------------------------------------------------------------
 
 const CREATOR_FLOW_STEPS: Array<{
   Icon: IconComponent;
@@ -466,312 +356,6 @@ function LivingWorldSection() {
   );
 }
 
-// ---------------------------------------------------------------------------
-// Portal Atlas — premium story cards for the world-building surface
-// ---------------------------------------------------------------------------
-
-const PORTAL_ATLAS: Array<{
-  Icon: IconComponent;
-  label: string;
-  title: string;
-  body: string;
-  href: string;
-  image: string;
-  accent: string;
-}> = [
-  {
-    Icon: Globe,
-    label: "Realm Matrix",
-    title: "Initialize the universe",
-    body: "Boot a world from zero. Bind the gates, sculpt the terrain, inject geopolitical pressure, and compile the social contracts that make your cosmos playable.",
-    href: "/worlds/create",
-    image: "/brand/arcanea-dashboard-hero-premium.png",
-    accent: brand.atlanteanTeal,
-  },
-  {
-    Icon: Diamond,
-    label: "Arcane State",
-    title: "Stateful relics & lore constraints",
-    body: "Vael crystals, raw Luminor ore, and Nero shards become strict engine constraints. Your agents inherit their physical and magical laws across every scene.",
-    href: "/lore/elements",
-    image: "/brand/arcanea-collectible-reliquary-premium.png",
-    accent: brand.arcaneanGold,
-  },
-  {
-    Icon: Brain,
-    label: "Agent Council",
-    title: "Compute magic like code",
-    body: "Storytellers, composers, and systems architects execute on the same hot-swappable world state. Zero narrative drift, pure agentic magic.",
-    href: "/agents",
-    image: "/images/forge/space/004-dreadnought-nebula.png",
-    accent: brand.aquamarine,
-  },
-];
-
-function PortalAtlasSection() {
-  return (
-    <SectionShell ambient="teal" size="default" id="portal-atlas" className="scroll-mt-28">
-      <div className="max-w-6xl mx-auto px-6">
-        <SectionHeader
-          label="The Portal Matrix"
-          title="An operating system for new realms"
-          subtitle={<>We treat creative IP like software. Scaffold your world graph, direct cinematic lanes, spawn agent councils, and <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">fork your entire universe</span> as raw code.</>}
-          accent="teal"
-        />
-        <div className="grid grid-cols-1 gap-4 md:gap-5 lg:auto-rows-fr lg:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.75fr)]">
-          {PORTAL_ATLAS.map((portal, i) => {
-            const Icon = portal.Icon;
-            const cardSize =
-              i === 0
-                ? "min-h-[360px] lg:min-h-[560px]"
-                : "min-h-[320px] lg:min-h-[270px]";
-            return (
-              <m.div
-                key={portal.title}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                className={i === 0 ? "lg:row-span-2" : ""}
-              >
-                <Link href={portal.href} className="group block h-full focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/30 rounded-2xl">
-                  <div className={`relative h-full ${cardSize} overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.025] backdrop-blur-sm`}>
-                    <Image
-                      src={portal.image}
-                      alt=""
-                      fill
-                      sizes={i === 0 ? "(max-width: 1024px) 100vw, 58vw" : "(max-width: 1024px) 100vw, 30vw"}
-                      className="object-cover opacity-70 transition-transform duration-700 group-hover:scale-[1.04]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] via-[var(--arc-cosmic-void)]/56 to-[var(--arc-cosmic-void)]/12" />
-                    <div
-                      className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                      style={{ background: `radial-gradient(620px circle at 30% 18%, ${portal.accent}22, transparent 62%)` }}
-                    />
-                    <div className="absolute inset-x-5 bottom-5 md:inset-x-6 md:bottom-6">
-                      <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-black/35 px-3 py-1.5 backdrop-blur-md">
-                        <Icon size={14} weight="duotone" color={portal.accent} />
-                        <span className="font-editorial text-sm italic leading-none text-white/55">
-                          {portal.label}
-                        </span>
-                      </div>
-                      <h3 className="max-w-xl text-2xl md:text-3xl font-display font-semibold tracking-tight text-white">
-                        {portal.title}
-                      </h3>
-                      <p className="mt-3 max-w-xl text-sm md:text-base leading-relaxed text-white/48">
-                        {portal.body}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              </m.div>
-            );
-          })}
-        </div>
-      </div>
-    </SectionShell>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-// Guardians and runtimes — canon as premium media architecture
-// ---------------------------------------------------------------------------
-
-const GUARDIAN_PREVIEW = [
-  {
-    name: "Draconia + Draconis",
-    gate: "Fire Gate",
-    body: "Willpower, forge logic, battle tempo, and rider-scale transformation.",
-    image: "/guardians/v4/draconia-hero-v4.webp",
-    href: "/lore/guardians/draconia",
-    accent: "var(--arc-fire)",
-  },
-  {
-    name: "Lyria + Yumiko",
-    gate: "Sight Gate",
-    body: "Pattern recognition, prophecy pressure, visual inference, and hidden intent.",
-    image: "/guardians/v4/lyria-hero-v4.webp",
-    href: "/lore/guardians/lyria",
-    accent: "var(--arc-void)",
-  },
-  {
-    name: "Shinkami + Source",
-    gate: "Source Gate",
-    body: "Meta-consciousness, system review, deep synthesis, and final coherence.",
-    image: "/guardians/v4/shinkami-hero-v4.webp",
-    href: "/lore/guardians/shinkami",
-    accent: brand.arcaneanGold,
-  },
-];
-
-function GuardianCouncilSection() {
-  return (
-    <SectionShell ambient="gold" size="default" id="gods-godbeasts">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-14 items-center">
-          <div>
-            <p className="mb-5 font-editorial text-lg italic leading-none text-[var(--arc-brand-atlantean-teal)]/70">
-              Magical Runtimes
-            </p>
-            <h2 className="text-3xl md:text-5xl font-display font-bold tracking-[-0.03em] leading-[1.08] text-white">
-              Magical intelligence compiled at the speed of thought.
-            </h2>
-            <p className="mt-6 text-base md:text-lg leading-relaxed text-white/45">
-              Your system guardians are active runtimes. In Arcanea, each specialist model acts as a validation node, enforcing creative consistency, custom styling, and agent actions. Spawn their logic; execute the generation.
-            </p>
-            <div className="mt-8 grid grid-cols-3 gap-3">
-              {[
-                { value: "10", label: "modules" },
-                { value: "10", label: "guardians" },
-                { value: "16", label: "runtimes" },
-              ].map((stat) => (
-                <div key={stat.label} className="rounded-xl border border-white/[0.06] bg-white/[0.025] p-4 text-center">
-                  <p className="text-2xl font-display font-semibold text-[var(--arc-brand-arcanean-gold)]">
-                    {stat.value}
-                  </p>
-                  <p className="mt-1 text-xs font-body text-white/36">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-8">
-              <Magnetic>
-                <Link
-                  href="/agents"
-                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--arc-brand-arcanean-gold)]/25 bg-[var(--arc-brand-arcanean-gold)]/10 px-6 py-3 text-sm font-medium text-[var(--arc-brand-arcanean-gold)] transition-colors hover:bg-[var(--arc-brand-arcanean-gold)]/16"
-                >
-                  Meet the guardians
-                  <span className="text-xs">&rarr;</span>
-                </Link>
-              </Magnetic>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4">
-            {GUARDIAN_PREVIEW.map((item, i) => (
-              <m.div
-                key={item.name}
-                initial={{ opacity: 0, x: 18 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <Link href={item.href} className="group grid min-h-[190px] grid-cols-[112px_1fr] overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.025] backdrop-blur-sm transition-colors hover:border-white/[0.16] sm:block lg:grid lg:grid-cols-[180px_1fr]">
-                  <div className="relative min-h-[190px] overflow-hidden">
-                    <Image
-                       src={item.image}
-                       alt=""
-                       fill
-                       sizes="(max-width: 1024px) 33vw, 180px"
-                       className="object-cover object-center opacity-82 transition-transform duration-700 group-hover:scale-[1.06]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[var(--arc-cosmic-void)]/35 lg:bg-gradient-to-r" />
-                  </div>
-                  <div className="relative flex flex-col justify-center p-5 md:p-6">
-                    <span className="text-xs font-body" style={{ color: item.accent }}>
-                      {item.gate}
-                    </span>
-                    <h3 className="mt-2 text-lg md:text-xl font-display font-semibold text-white">
-                      {item.name}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-white/45">
-                      {item.body}
-                    </p>
-                  </div>
-                </Link>
-              </m.div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </SectionShell>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Dragon rider scale — cinematic positioning for the gamer/anime audience
-// ---------------------------------------------------------------------------
-
-function DragonRiderScaleSection() {
-  return (
-    <SectionShell ambient="fire" size="default" id="dragon-rider">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="relative overflow-hidden rounded-[1.75rem] border border-white/[0.08] bg-white/[0.025]">
-          <div className="grid min-h-[620px] grid-cols-1 lg:grid-cols-[0.92fr_1.08fr]">
-            <div className="relative order-2 min-h-[360px] lg:order-1 lg:min-h-full">
-              <Image
-                src="/images/books/heart-of-pyrathis-cover-v2.png"
-                alt=""
-                fill
-                sizes="(max-width: 1024px) 100vw, 46vw"
-                className="object-cover object-[50%_58%] opacity-82"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] via-transparent to-[var(--arc-cosmic-void)]/20" />
-              <m.div
-                className="absolute left-[14%] top-[18%] h-px w-[72%] bg-gradient-to-r from-transparent via-[var(--arc-brand-arcanean-gold)]/45 to-transparent"
-                animate={{ opacity: [0.25, 0.7, 0.25], scaleX: [0.9, 1, 0.9] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </div>
-            <div className="relative order-1 flex flex-col justify-center p-7 md:p-10 lg:order-2 lg:p-14">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_50%,color-mix(in_srgb,var(--arc-fire)_13%,transparent),transparent_45%)]" />
-              <div className="relative">
-                <p className="font-editorial text-lg italic leading-none text-[var(--arc-fire)]/72">
-                  Epic scale, cinematic canvas
-                </p>
-                <h2 className="mt-5 text-3xl md:text-5xl font-display font-bold tracking-[-0.03em] leading-[1.05] text-white">
-                  World-building at anime scale, direct to runtime.
-                </h2>
-                <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-white/45">
-                  Forge dragon-rider sagas, compose cinematic score briefs, and map agent handoffs in a single unified workspace. The cinema lane is a preview surface today: strongest for shot lists, briefs, and world-state handoffs while render pipelines mature.
-                </p>
-                <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {[
-                    { Icon: Sparkle, label: "Canon", body: "source rules" },
-                    { Icon: Waveform, label: "Motion", body: "shot rhythm" },
-                    { Icon: Lightning, label: "Runtime", body: "agent handoff" },
-                  ].map(({ Icon, label, body }) => (
-                    <div key={label} className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-4">
-                      <Icon size={18} weight="duotone" color="var(--arc-brand-arcanean-gold)" />
-                      <p className="mt-3 text-sm font-display font-semibold text-white/82">{label}</p>
-                      <p className="mt-1 text-xs font-body text-white/36">{body}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-9 flex flex-wrap gap-3">
-                  <Magnetic>
-                    <Link
-                      href="/cinema-studio"
-                      className="inline-flex items-center gap-2 rounded-xl border border-[var(--arc-fire)]/25 bg-[var(--arc-fire)]/10 px-6 py-3 text-sm font-medium text-[var(--arc-fire)] transition-colors hover:bg-[var(--arc-fire)]/16"
-                    >
-                      Open cinema preview
-                      <span className="text-xs">&rarr;</span>
-                    </Link>
-                  </Magnetic>
-                  <Magnetic>
-                    <Link
-                      href="/books"
-                      className="inline-flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.04] px-6 py-3 text-sm font-medium text-white/68 transition-colors hover:bg-white/[0.075] hover:text-white"
-                    >
-                      Browse the books
-                    </Link>
-                  </Magnetic>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </SectionShell>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Why Arcanea — Comparison matrix
-// ---------------------------------------------------------------------------
-
 function WhyArcaneaSection() {
   return (
     <SectionShell ambient="purple" size="default" id="why-arcanea">
@@ -834,26 +418,6 @@ function LuminorTeamSection() {
 // Personas — "Who Arcanea is for"
 // ---------------------------------------------------------------------------
 
-function PersonasSection() {
-  return (
-    <SectionShell ambient="purple" size="default" id="who-its-for">
-      <div className="max-w-6xl mx-auto px-6">
-        <SectionHeader
-          label="Who it's for"
-          title="Built for makers"
-          subtitle={<>Novelists, game designers, filmmakers, developers, solo creators — Arcanea meets you <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">exactly where you work</span>.</>}
-          accent="purple"
-        />
-        <PersonasShowcase />
-      </div>
-    </SectionShell>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Sovereignty — Keep your keys, keep your IP
-// ---------------------------------------------------------------------------
-
 function SovereigntySection() {
   return (
     <SectionShell ambient="gold" size="default" id="sovereignty">
@@ -894,268 +458,6 @@ interface PersonaTile {
   tagline: string;
   accent: string;
 }
-
-const VOICE_PERSONAS: PersonaTile[] = [
-  { id: "lumina", name: "Lumina", tagline: "First Light · orchestrator", accent: luminorAccents.lumina },
-  { id: "jarvis", name: "Jarvis", tagline: "Just A Rather Very Intelligent System", accent: luminorAccents.jarvis },
-  { id: "draconia", name: "Draconia", tagline: "Fire Gate · forge & willpower", accent: luminorAccents.draconia },
-  { id: "lyria", name: "Lyria", tagline: "Sight Gate · pattern + vision", accent: luminorAccents.lyria },
-  { id: "alera", name: "Alera", tagline: "Voice Gate · clarity + concision", accent: luminorAccents.alera },
-  { id: "shinkami", name: "Shinkami", tagline: "Source Gate · meta-awareness", accent: luminorAccents.shinkami },
-  { id: "nero", name: "Nero", tagline: "Shadow Gate · contrarian edge", accent: luminorAccents.nero },
-];
-
-function PersonaOrb({ accent }: { accent: string }) {
-  return (
-    <div className="relative w-12 h-12 shrink-0">
-      <div
-        className="absolute inset-0 rounded-full blur-[10px] opacity-70 animate-[breathe_3s_ease-in-out_infinite]"
-        style={{ background: `radial-gradient(circle, ${accent}55, transparent 70%)` }}
-      />
-      <div
-        className="absolute inset-[6px] rounded-full"
-        style={{
-          background: `radial-gradient(circle at 35% 30%, ${accent}cc, ${accent}22 60%, transparent 80%)`,
-          boxShadow: `inset 0 0 12px ${accent}66, 0 0 18px ${accent}44`,
-        }}
-      />
-      <div
-        className="absolute inset-[14px] rounded-full bg-white/90 mix-blend-overlay"
-        style={{ filter: "blur(2px)" }}
-      />
-    </div>
-  );
-}
-
-function VoicePresenceSection() {
-  return (
-    <SectionShell ambient="purple" size="default" id="voice-presence">
-      <div className="max-w-6xl mx-auto px-6">
-        <SectionHeader
-          label="Agent Room & Telemetry"
-          title="Talk directly to the machine"
-          subtitle={<>A voice and presence preview for Jarvis, Lumina, and custom agents. Whisper/ElevenLabs streams, <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">WebGL audio-reactive particle nodes</span>, and local CLI hooks are being tightened into one creator room.</>}
-          accent="purple"
-        />
-        <Reveal y={20}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {VOICE_PERSONAS.map((p, i) => (
-              <m.div
-                key={p.id}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -3 }}
-                className="group relative"
-              >
-                <Link
-                  href={`/room/${p.id}`}
-                  className="block h-full p-5 rounded-2xl bg-white/[0.025] border border-white/[0.06] hover:border-white/[0.16] backdrop-blur-sm transition-colors duration-300"
-                  style={{ ["--persona-accent" as string]: p.accent }}
-                >
-                  <div
-                    className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ background: `radial-gradient(380px circle at 50% 0%, ${p.accent}14, transparent 60%)` }}
-                  />
-                  <div className="relative flex items-start gap-4">
-                    <PersonaOrb accent={p.accent} />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-baseline gap-2">
-                        <h3 className="text-base font-display font-semibold text-white/90 leading-tight">
-                          {p.name}
-                        </h3>
-                        <span
-                          className="text-[11px] font-body"
-                          style={{ color: `${p.accent}99` }}
-                        >
-                          live
-                        </span>
-                      </div>
-                      <p className="mt-1 text-xs text-white/45 font-body leading-snug">
-                        {p.tagline}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              </m.div>
-            ))}
-          </div>
-        </Reveal>
-        <Reveal y={12} delay={0.4}>
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            {[
-              { label: "Audio-reactive orb", body: "A living particle orb that glows and moves with your agent's voice in real time.", color: brand.aquamarine, Icon: Waveform },
-              { label: "BYOK presence room", body: "Groq Whisper STT · ElevenLabs TTS · keys live in your browser, never our servers.", color: brand.atlanteanTeal, Icon: Microphone },
-              { label: "Local agent CLI", body: "voice jarvis · voice lumina · multi-round tool chaining · open URL · launch Claude Code.", color: brand.arcaneanGold, Icon: Brain },
-            ].map(({ label, body, color, Icon }, i) => (
-              <m.div
-                key={label}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
-                className="p-5 rounded-xl bg-white/[0.02] border border-white/[0.05]"
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <Icon size={14} weight="duotone" color={color} />
-                  <p className="text-xs font-body" style={{ color }}>
-                    {label}
-                  </p>
-                </div>
-                <p className="text-sm text-white/50 leading-relaxed">{body}</p>
-              </m.div>
-            ))}
-          </div>
-        </Reveal>
-        <Reveal y={10} delay={0.6}>
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <Magnetic>
-              <Link
-                href="/voice"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-void)]/15 to-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-void)]/25 text-sm font-medium text-[var(--arc-void)] hover:from-[var(--arc-void)]/25 hover:to-[var(--arc-brand-atlantean-teal)]/15 transition-colors"
-              >
-                Open the voice dashboard
-                <span className="text-xs">&rarr;</span>
-              </Link>
-            </Magnetic>
-            <Magnetic>
-              <Link
-                href="/room/jarvis"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-white/70 hover:bg-white/[0.08] hover:text-white transition-colors"
-              >
-                Try the Jarvis room
-                <span className="text-xs">&rarr;</span>
-              </Link>
-            </Magnetic>
-          </div>
-        </Reveal>
-      </div>
-    </SectionShell>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Stack Teaser — "Connects to every tool you use"
-// ---------------------------------------------------------------------------
-
-function StackTeaserSection() {
-  return (
-    <SectionShell ambient="teal" size="compact" id="stack-teaser">
-      <div className="max-w-6xl mx-auto px-6">
-        <SectionHeader
-          label="The Creator Stack"
-          title="Built to connect everywhere"
-          subtitle={<>Every integration below is labeled by what it is today — live, beta, or planned. Follow <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">clear status paths</span> instead of mystery doors.</>}
-          accent="teal"
-        />
-        <Reveal y={16}>
-          <IntegrationGrid limit={18} />
-        </Reveal>
-        <Reveal y={10} delay={0.4}>
-          <div className="mt-10 text-center">
-            <Magnetic>
-              <Link
-                href="/integrations"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-white/70 hover:bg-white/[0.08] hover:text-white transition-colors"
-              >
-                See integration status
-                <span className="text-xs">&rarr;</span>
-              </Link>
-            </Magnetic>
-          </div>
-        </Reveal>
-      </div>
-    </SectionShell>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Earn Teaser — "Make a living from your worlds"
-// ---------------------------------------------------------------------------
-
-function EarnTeaserSection() {
-  const STREAMS: Array<{ Icon: IconComponent; label: string; take: string; accent: string }> = [
-    { Icon: Diamond, label: "Template Marketplace", take: "target 90%", accent: streamAccents.marketplace },
-    { Icon: Crown, label: "Memberships", take: "target 97%", accent: streamAccents.membership },
-    { Icon: Sparkle, label: "Collectible drops", take: "research", accent: streamAccents.nft },
-    { Icon: Coins, label: "Commissions", take: "target 88%", accent: streamAccents.commission },
-    { Icon: Lightning, label: "Gated releases", take: "planned", accent: streamAccents.tokenGated },
-    { Icon: ArrowsClockwise, label: "Remix royalties", take: "planned", accent: streamAccents.royalty },
-  ];
-  return (
-    <SectionShell ambient="purple" size="compact" id="earn-teaser">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-6">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--arc-void)]/25 bg-[var(--arc-void)]/10 px-3 py-1 text-xs font-body text-[var(--arc-void)]">
-            <span className="w-1 h-1 rounded-full bg-[var(--arc-void)]" />
-            Roadmap, rolling out in phases
-          </span>
-        </div>
-        <SectionHeader
-          label="Creator Posture"
-          title="Monetize sovereign IP"
-          subtitle={<>The commerce layer is roadmap, not the main door today. We can collect creator demand now, then ship <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">storefronts, royalties, memberships</span>, and remix economics once the creation loop is proven end to end.</>}
-          accent="purple"
-        />
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {STREAMS.map((s, i) => {
-            const Icon = s.Icon;
-            return (
-            <m.div
-              key={s.label}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.025] border border-white/[0.06] hover:border-white/[0.14] transition-colors"
-            >
-              <div
-                className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                style={{
-                  background: `${s.accent}10`,
-                  border: `1px solid ${s.accent}25`,
-                  color: s.accent,
-                }}
-              >
-                <Icon size={16} weight="duotone" color={s.accent} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-display font-semibold text-white/80 truncate">
-                  {s.label}
-                </p>
-                <p
-                  className="text-xs font-body"
-                  style={{ color: `${s.accent}bb` }}
-                >
-                  {s.take}
-                </p>
-              </div>
-            </m.div>
-            );
-          })}
-        </div>
-        <Reveal y={10} delay={0.4}>
-          <div className="mt-10 text-center">
-            <Magnetic>
-              <Link
-                href="/creator-economy"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)]/15 to-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-arcanean-gold)]/25 text-sm font-medium text-[var(--arc-brand-arcanean-gold)] hover:from-[var(--arc-brand-arcanean-gold)]/25 hover:to-[var(--arc-brand-atlantean-teal)]/15 transition-colors"
-              >
-                See creator economy roadmap
-                <span className="text-xs">&rarr;</span>
-              </Link>
-            </Magnetic>
-          </div>
-        </Reveal>
-      </div>
-    </SectionShell>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Atmospheric Divider
-// ---------------------------------------------------------------------------
 
 function AtmosphericDivider({
   variant = "teal",
@@ -1291,75 +593,30 @@ export function V3BelowFold({
   return (
     <MotionProvider>
       <>
-        {/* 0. Living World Engine demo — the differentiator visualized */}
+        {/* 1. Living World Engine — the differentiator, with honest doors */}
         <LivingWorldSection />
 
         <AtmosphericDivider variant="teal" />
 
-        {/* 1. Portal atlas — the world-building story surface */}
-        <PortalAtlasSection />
-
-        <AtmosphericDivider variant="gold" />
-
-        {/* 1b. Active guardians — canon as runtime */}
-        <GuardianCouncilSection />
-
-        <AtmosphericDivider variant="gold" />
-
-        {/* 1c. Dragon rider scale — cinematic proof of ambition */}
-        <DragonRiderScaleSection />
-
-        <AtmosphericDivider variant="teal" />
-
-        {/* 2. Product pillars — the loop behind every artifact */}
-        <ProductPillarsGrid />
-
-        <AtmosphericDivider variant="teal" />
-
-        {/* 2b. Luminor team preview — 13 specialists made visible */}
+        {/* 2. Luminor team — the specialists behind every brief */}
         <LuminorTeamSection />
 
-        <AtmosphericDivider variant="purple" />
+        <AtmosphericDivider variant="gold" />
 
-        {/* 2c. Voice & Presence — Apr 2026 ship: shipped voice room + audio-reactive orb */}
-        <VoicePresenceSection />
-
-        <AtmosphericDivider variant="purple" />
-
-        {/* 2. Why Arcanea — the moat */}
-        <WhyArcaneaSection />
-
-        <AtmosphericDivider variant="teal" />
-
-        {/* 2b. Personas — who it's for */}
-        <PersonasSection />
-
-        <AtmosphericDivider variant="purple" />
-
-        {/* 3. Guardian showcase — visual proof */}
+        {/* 3. Guardians — canon made visible */}
         <GuardianShowcase />
 
         <AtmosphericDivider variant="teal" />
 
-        {/* 4. How it works — 4 clear steps */}
-        <HowItWorks />
+        {/* 4. Why Arcanea — the moat */}
+        <WhyArcaneaSection />
 
-        {/* 5. Worlds showcase — multiverse teaser */}
+        {/* 5. Explore living worlds */}
         <WorldsShowcase />
 
         <AtmosphericDivider variant="teal" />
 
-        {/* 5b. Stack Teaser — connects to every tool you use */}
-        <StackTeaserSection />
-
-        <AtmosphericDivider variant="purple" />
-
-        {/* 5c. Earn Teaser — creator economy preview */}
-        <EarnTeaserSection />
-
-        <AtmosphericDivider variant="teal" />
-
-        {/* 6. Sovereignty pillars — Keep your keys, keep your IP */}
+        {/* 6. Sovereignty — your keys, your IP, your exports */}
         <SovereigntySection />
 
         <AtmosphericDivider variant="teal" />
