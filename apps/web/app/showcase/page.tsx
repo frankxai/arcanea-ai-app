@@ -9,9 +9,9 @@ import { Magnetic } from "@/components/motion/magnetic";
 // Static page — all data is hardcoded constants, no async fetch needed
 
 export const metadata: Metadata = {
-  title: "Showcase — Arcanea",
+  title: "Showcase",
   description:
-    "See what the Arcanea Creative Intelligence Platform can build. Live demos of 42 MCP tools, world-building engine, quest generation, and more.",
+    "See what the Arcanea Creative Intelligence Platform can build. Live demos of the MCP toolchain, world-building engine, quest generation, and more.",
   openGraph: {
     title: "Showcase — Arcanea Creative Intelligence",
     description:

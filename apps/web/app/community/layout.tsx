@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
+import { PUBLIC_REPO_SUMMARY } from '@/lib/public-repo-registry';
+import { FACTS } from '@/lib/facts';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Arcanea Community — Join the Creative Civilization',
   description:
-    'Not just users — co-creators. Contribute lore, agents, skills, code, art, music. 27 repos, 35 npm packages, 54 skills, 200K+ words of lore. Built in the open.',
+    `Not just users — co-creators. Contribute lore, agents, skills, code, art, music. ${PUBLIC_REPO_SUMMARY.public} public repos, ${PUBLIC_REPO_SUMMARY.packages} npm packages, ${FACTS.skills} creator skills, 190K+ words of lore. Built in the open.`,
   openGraph: {
     title: 'Arcanea Community — Join the Creative Civilization',
     description:

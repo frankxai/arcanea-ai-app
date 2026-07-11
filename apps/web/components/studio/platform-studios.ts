@@ -1,3 +1,5 @@
+import { FACTS } from "@/lib/facts";
+
 export type StudioId =
   | "world"
   | "book"
@@ -215,7 +217,7 @@ export const STUDIO_MODES: StudioMode[] = [
       label: "Agent handoff",
       frames: ["Install MCP", "List tools", "Run recipe", "Commit output"],
     },
-    stats: ["43+ tools", "5 recipes", "4 agent hosts"],
+    stats: [`${FACTS.mcpTools} tools`, "5 recipes", "4 agent hosts"],
   },
 ];
 

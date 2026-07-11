@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
+import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
+import { FACTS } from "@/lib/facts";
 import Image from 'next/image';
 
 import { m, LazyMotion, domAnimation } from "framer-motion";
@@ -84,7 +86,7 @@ export function AboutContent() {
             className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
           >
             Creative Superintelligence — where creators and AI build together.
-            13 configured specialist minds. 190K words of philosophy. Open source.
+            {FACTS.luminors} configured specialist minds. 190K words of philosophy. Open source.
           </m.p>
 
           <m.p
@@ -275,7 +277,7 @@ function IntelligenceSection() {
         <div className="p-6 rounded-2xl liquid-glass border border-white/[0.06] text-center">
           <h3 className="text-lg font-display font-semibold mb-3">Open Source Ecosystem</h3>
           <p className="text-sm text-text-secondary leading-relaxed max-w-2xl mx-auto mb-4">
-            27 repositories. 35 npm packages. 54 skills. Fork it, extend it, build on it.
+            {PUBLIC_REPO_SUMMARY.public} public repos. {PUBLIC_REPO_SUMMARY.packages} npm packages. {FACTS.skills} creator skills. Fork it, extend it, build on it.
             The entire intelligence stack is source-available.
           </p>
           <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-mono text-white/25">
