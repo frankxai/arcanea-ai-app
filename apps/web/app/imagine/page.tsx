@@ -324,17 +324,17 @@ export default function ImaginePage() {
                 className="flex-shrink-0 group"
                 aria-label={`Use ${template.label} style`}
               >
-                <div className="w-[140px] h-[100px] rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-[var(--arc-brand-atlantean-teal)]/25 hover:bg-white/[0.05] transition-all duration-200 overflow-hidden relative">
-                  <div
-                    className="absolute inset-0 opacity-25 group-hover:opacity-45 transition-opacity duration-200"
-                    style={{
-                      background: `linear-gradient(${135 + i * 25}deg, ${
-                        ['var(--arc-brand-atlantean-teal)', 'var(--arc-brand-cosmic-blue)', 'var(--arc-void)', 'var(--arc-void)', 'var(--arc-brand-arcanean-gold)', 'var(--arc-wind)', 'var(--arc-void)', 'var(--arc-fire)', 'var(--arc-void)', 'var(--arc-brand-atlantean-teal)', 'var(--arc-text-primary)', 'var(--arc-brand-arcanean-gold)'][i]
-                      }18, transparent 65%)`,
-                    }}
+                <div className="w-[140px] h-[100px] rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-[var(--arc-brand-atlantean-teal)]/25 transition-all duration-200 overflow-hidden relative">
+                  <Image
+                    src={`/imagine/styles/${template.id}.webp`}
+                    alt={`${template.label} style example`}
+                    fill
+                    sizes="140px"
+                    className="object-cover opacity-85 group-hover:opacity-100 group-hover:scale-[1.04] transition-all duration-300"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
                   <div className="absolute inset-0 flex items-end p-3">
-                    <span className="text-xs font-semibold text-white/60 group-hover:text-white/90 transition-colors leading-tight font-display">
+                    <span className="text-xs font-semibold text-white/85 group-hover:text-white transition-colors leading-tight font-display [text-shadow:0_1px_8px_rgba(0,0,0,0.8)]">
                       {template.label}
                     </span>
                   </div>
