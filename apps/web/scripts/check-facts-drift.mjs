@@ -28,6 +28,7 @@ const EXEMPT = [
 const PATTERNS = [
   { re: /\b\d{1,3}\+?\s+(?:specialist agents?|specialists|configured specialist)\b/gi, hint: "FACTS.luminors" },
   { re: /\b\d{1,3}\s+Luminors\b/g, hint: "FACTS.luminors" },
+  { re: /\b(?:two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)\s+Luminors\b/gi, hint: "FACTS.luminors" },
   { re: /\b\d{1,3}\+?\s+(?:MCP\s+)?tools\b/gi, hint: "FACTS.mcpTools" },
   { re: /\b\d{1,3}\+?\s+(?:creator\s+)?skills\b/gi, hint: "FACTS.skills" },
   { re: /\b\d{1,3}\s+(?:npm\s+)?packages\b/gi, hint: "PUBLIC_REPO_SUMMARY.packages" },
