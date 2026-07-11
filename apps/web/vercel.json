@@ -4,7 +4,9 @@
   "installCommand": "cd ../.. && pnpm install --no-frozen-lockfile",
   "outputDirectory": ".next",
   "framework": "nextjs",
-  "regions": ["iad1"],
+  "regions": [
+    "iad1"
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -35,5 +37,10 @@
       "destination": "https://discord.gg/arcanea",
       "permanent": false
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "backup/claude-snapshots": false
+    }
+  }
 }
