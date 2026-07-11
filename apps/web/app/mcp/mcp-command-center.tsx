@@ -1,5 +1,6 @@
 "use client";
 
+import { FACTS } from "@/lib/facts";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import { Terminal, CaretRight, Check, Play, ArrowsClockwise } from "@/lib/phosphor-icons";
@@ -45,7 +46,7 @@ export function McpCommandCenter() {
       input: "claude mcp add arcanea node ./packages/arcanea-mcp/dist/index.js",
       output: [
         { type: "info", text: "Adding MCP server 'arcanea' to configuration..." },
-        { type: "success", text: "✓ Config updated. Loaded 43 tools across 9 creative modules." },
+        { type: "success", text: `✓ Config updated. Loaded ${FACTS.mcpTools} tools across 9 creative modules.` },
         { type: "step", text: "Tools available: plan_world, plan_book, plan_game, plan_music_project, plan_cinematic_scene, get_workflow_recipe, generate_asset_brief, export_project_context..." }
       ]
     },
@@ -139,7 +140,7 @@ export function McpCommandCenter() {
               </h2>
             </div>
             <div className="rounded-2xl border border-[var(--arc-brand-atlantean-teal)]/20 bg-[var(--arc-brand-atlantean-teal)]/8 px-4 py-3 text-xs font-mono text-[var(--arc-brand-atlantean-teal)]">
-              43 tools · 5 recipes · open-core local MCP
+              {FACTS.mcpTools} tools · 5 recipes · open-core local MCP
             </div>
           </div>
 

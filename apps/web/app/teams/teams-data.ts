@@ -30,7 +30,7 @@ export const PRINCIPLES = [
   },
   {
     title: "Minimal surface",
-    body: "Each team owns at most 5 repos. If it grows beyond that, we split the team before we split focus.",
+    body: "Each team owns at most 5 repos. If it grows beyond that, we split the team before we split focus.", // facts-ok
     color: "var(--arc-brand-arcanean-gold)",
     glyph: "◱",
   },

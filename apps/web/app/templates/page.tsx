@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
+import { PUBLIC_REPO_SUMMARY } from '@/lib/public-repo-registry';
+import { FACTS } from '@/lib/facts';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { SplitText } from '@/components/motion/split-text';
@@ -124,7 +126,7 @@ const BLUEPRINTS: Blueprint[] = [
   {
     id: 'mcp',
     name: 'MCP Server',
-    desc: '42 tools: world intelligence, vault memory, media generation, canon validation — one server, any AI client.',
+    desc: `${FACTS.mcpTools} tools: world intelligence, vault memory, media generation, canon validation — one server, any AI client.`,
     audience: 'Claude developers · Agent builders',
     loc: '8,500',
     files: ['packages/arcanea-mcp/src/index.ts', 'packages/arcanea-mcp/src/tools/'],
@@ -431,7 +433,7 @@ pnpm dev`}
                   href="/ecosystem"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-[var(--arc-text-primary)] hover:bg-white/[0.08] transition-colors"
                 >
-                  Browse all 27 repos
+                  Browse all {PUBLIC_REPO_SUMMARY.tracked} repos
                 </Link>
               </Magnetic>
             </div>

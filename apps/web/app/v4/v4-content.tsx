@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
+import { FACTS } from "@/lib/facts";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
@@ -114,7 +115,7 @@ export function V4Content({
         <div className="grid md:grid-cols-3 gap-4">
           <Link href="/lore/guardians" className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 hover:bg-white/[0.05] transition">
             <PhShieldStar className="w-7 h-7 text-cyan-100" />
-            <p className="mt-4 text-xs uppercase tracking-[0.2em] text-white/50">12 Luminors · 4 Teams</p>
+            <p className="mt-4 text-xs uppercase tracking-[0.2em] text-white/50">{FACTS.luminors} Luminors · 4 Teams</p>
             <h3 className="mt-2 text-xl font-semibold">Creative Companions</h3>
             <p className="mt-3 text-sm text-white/70">Each one thinks differently. Create with the one that matches your mind.</p>
           </Link>

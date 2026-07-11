@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
+import { PUBLIC_REPO_SUMMARY } from '@/lib/public-repo-registry';
+import { FACTS } from '@/lib/facts';
 import Link from 'next/link';
 import { getResearchCategories, getResearchItems } from '@/lib/research/loader';
 import { GATE_COLORS } from '@/lib/research/types';
@@ -136,7 +138,7 @@ const REPO_GROUPS: RepoGroup[] = [
     category: 'Creative Tools',
     accent: 'var(--arc-brand-arcanean-gold)',
     repos: [
-      { name: 'claude-arcanea', description: 'Arcanea skills overlay for Claude Code. 54 skills, MCP server, agent harness.', href: 'https://github.com/frankxai/claude-arcanea', language: 'TypeScript', stars: '2.1K' },
+      { name: 'claude-arcanea', description: `Arcanea skills overlay for Claude Code. ${FACTS.skills} skills, MCP server, agent harness.`, href: 'https://github.com/frankxai/claude-arcanea', language: 'TypeScript', stars: '2.1K' },
       { name: 'arcanea-claw', description: 'CLI tool for Arcanea. Project scaffolding, deployment, and management.', href: 'https://github.com/frankxai/arcanea-claw', language: 'TypeScript', stars: '756' },
       { name: 'arcanea-records', description: 'Music studio and frequency-aligned compositions. Suno AI integration.', href: 'https://github.com/frankxai/arcanea-records', language: 'TypeScript', stars: '640' },
     ],
@@ -342,7 +344,7 @@ export default async function ResearchPage() {
               The Ecosystem
             </h2>
             <p className="text-white/40 text-sm mt-1 max-w-xl">
-              27 repositories organized across four domains — all open source, all interconnected.
+              {PUBLIC_REPO_SUMMARY.tracked} repositories organized across four domains — all open source, all interconnected.
             </p>
           </div>
 

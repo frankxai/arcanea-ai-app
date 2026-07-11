@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
+import { FACTS } from '@/lib/facts';
 import { createOGImage, OG_SIZE } from '@/lib/og'
 
 export const runtime = 'edge'
-export const alt = 'Arcanea Developer Documentation — Credits API, MCP Servers, 97 Skills, Open Source'
+export const alt = `Arcanea Developer Documentation — Credits API, MCP Servers, ${FACTS.skills} Skills, Open Source`
 export const size = OG_SIZE
 export const contentType = 'image/png'
 
 export default function OGImage() {
   return createOGImage({
     title: 'Developer Documentation',
-    subtitle: 'Credits API \u00b7 MCP Servers \u00b7 97 Skills \u00b7 Open Source',
+    subtitle: `Credits API \u00b7 MCP Servers \u00b7 ${FACTS.skills} Skills \u00b7 Open Source`,
     accentColor: 'var(--arc-brand-atlantean-teal)',
     glowPositions: [
       { top: '15%', left: '10%', color: 'rgba(127,255,212,0.14)', size: 420 },

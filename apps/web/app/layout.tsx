@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
+import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
+import { FACTS } from "@/lib/facts";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ReactNode, Suspense } from "react";
@@ -167,12 +169,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 "url": "https://arcanea.ai"
               },
               "featureList": [
-                "42 MCP tools for world-building",
+                `${FACTS.mcpTools} MCP tools for world-building`,
                 "13 configured AI specialists (Luminors)",
                 "Image generation with 5+ models",
                 "190K+ words of creative philosophy",
                 "10-gate progression system",
-                "49 open-source npm packages",
+                `${PUBLIC_REPO_SUMMARY.packages} open-source npm packages`,
                 "Living world builder with auto-linking",
                 "Quest and faction generation"
               ]

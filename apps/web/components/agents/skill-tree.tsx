@@ -317,7 +317,7 @@ export function SkillTree({ onSelectGate, onSelectSkill, className = "" }: Skill
           viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
           className="w-full h-auto"
           role="img"
-          aria-label="Skill tree visualization showing 10 Gate branches with 5 skills each"
+          aria-label="Skill tree visualization showing 10 Gate branches with 5 skills each" /* facts-ok */
         >
           <defs>
             {/* Central glow */}

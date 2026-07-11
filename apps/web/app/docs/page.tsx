@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
+import { PUBLIC_REPO_SUMMARY } from '@/lib/public-repo-registry';
 import Link from 'next/link';
 import {
   PhBook,
@@ -88,10 +89,10 @@ const SDK_PACKAGES = [
 ];
 
 const COMMUNITY_LINKS = [
-  { name: 'GitHub', description: '27 repositories, open-source ecosystem', href: 'https://github.com/arcanea-ai', icon: PhGithubLogo, color: 'var(--arc-text-primary)' },
+  { name: 'GitHub', description: `${PUBLIC_REPO_SUMMARY.tracked} repositories, open-source ecosystem`, href: 'https://github.com/arcanea-ai', icon: PhGithubLogo, color: 'var(--arc-text-primary)' },
   { name: 'Discord', description: 'Join the creator community', href: 'https://discord.gg/arcanea', icon: PhUsers, color: 'var(--arc-void)' },
   { name: 'Documentation', description: 'Full API reference and guides', href: '/developers/api', icon: PhBook, color: 'var(--arc-brand-atlantean-teal)' },
-  { name: 'npm Packages', description: '35 packages in the ecosystem', href: 'https://www.npmjs.com/org/arcanea', icon: PhPackage, color: 'var(--arc-fire)' },
+  { name: 'npm Packages', description: `${PUBLIC_REPO_SUMMARY.packages} packages in the ecosystem`, href: 'https://www.npmjs.com/org/arcanea', icon: PhPackage, color: 'var(--arc-fire)' },
 ];
 
 const DOC_CATEGORIES = [

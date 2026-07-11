@@ -1,22 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
+import { FACTS } from "@/lib/facts";
 import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Arcanea MCP — Developer Docs",
   description:
-    "Connect any MCP-compatible AI coding tool to Arcanea's creative production layer: 43 tools, 5 resources, 6 prompts. Works with Claude Code, Codex, Cursor, Windsurf, and Cline.",
+    `Connect any MCP-compatible AI coding tool to Arcanea's creative production layer: ${FACTS.mcpTools} tools, 5 resources, 6 prompts. Works with Claude Code, Codex, Cursor, Windsurf, and Cline.`,
   openGraph: {
     title: "Arcanea MCP — Model Context Protocol Server",
     description:
-      "43 tools, 5 resources, 6 prompts. Connect Claude Code, Codex, Cursor, or Windsurf to Arcanea world intelligence and production workflows.",
+      `${FACTS.mcpTools} tools, 5 resources, 6 prompts. Connect Claude Code, Codex, Cursor, or Windsurf to Arcanea world intelligence and production workflows.`,
   },
   alternates: { canonical: "/docs/mcp" },
 };
 
 const FEATURES = [
   {
-    count: "43",
+    count: String(FACTS.mcpTools),
     label: "Tools",
     description:
       "Worldbuilding, books, games, music, cinema, asset briefs, agent handoffs, creative coaching, memory, canon validation, and APL.",
@@ -326,7 +327,7 @@ export default function McpOverviewPage() {
                 Tool Reference
               </p>
               <p className="mt-1.5 text-sm text-zinc-400">
-                All 43 tools with parameters and usage examples.
+                All {FACTS.mcpTools} tools with parameters and usage examples.
               </p>
             </Link>
             <Link

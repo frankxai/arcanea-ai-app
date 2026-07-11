@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
+import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
+import { FACTS } from "@/lib/facts";
 import { Metadata } from "next";
 import Link from "next/link";
 import { SplitText } from "@/components/motion/split-text";
@@ -271,7 +273,7 @@ export default function ShowcasePage() {
               },
               {
                 title: "Open Source",
-                items: ["49 npm packages", "103 skills", "112 commands", "1,353 commits", "MCP server + bridge", "Agent orchestration", "World engine SDK", "Design system"],
+                items: [`${PUBLIC_REPO_SUMMARY.packages} npm packages`, `${FACTS.skills} skills`, "112 commands", "1,353 commits", "MCP server + bridge", "Agent orchestration", "World engine SDK", "Design system"],
                 accent: "var(--arc-wind)",
               },
             ].map((col) => (
@@ -476,7 +478,7 @@ export default function ShowcasePage() {
             Build Your World
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-sm text-zinc-400">
-            42 tools. 10 Gates. Infinite worlds. Start creating now.
+            {FACTS.mcpTools} tools. 10 Gates. Infinite worlds. Start creating now.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
+import { FACTS } from '@/lib/facts';
 import type { Node, Edge } from '@xyflow/react';
 
 // ─── Color Constants ─────────────────────────────────────────────────────────
@@ -69,7 +70,7 @@ const innerRingNodes: RingNodeDef[] = [
 ];
 
 const middleRingNodes: RingNodeDef[] = [
-  { id: 'claude-arcanea', label: 'claude-arcanea', description: '54 skills overlay for Claude Code. MCP server and agent harness.', color: TEAL, angle: 30 },
+  { id: 'claude-arcanea', label: 'claude-arcanea', description: `${FACTS.skills} skills overlay for Claude Code. MCP server and agent harness.`, color: TEAL, angle: 30 },
   { id: 'arcanea-code', label: 'arcanea-code', description: 'Code intelligence agent with semantic analysis and refactoring.', color: BLUE, angle: 120 },
   { id: 'oh-my-arcanea', label: 'oh-my-arcanea', description: 'Shell integration and terminal experience enhancement.', color: GREEN, angle: 210 },
   { id: 'arcanea-orchestrator', label: 'Orchestrator', description: 'Multi-agent swarm coordination with hierarchical topology.', color: VIOLET, angle: 300 },

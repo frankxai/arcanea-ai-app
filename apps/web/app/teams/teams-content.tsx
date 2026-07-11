@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
+import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import Link from "next/link";
 import {
@@ -407,7 +408,7 @@ export function TeamsContent() {
                   </a>
                 </div>
                 <p className="mt-8 text-[11px] font-mono text-white/20 tracking-wider">
-                  27 repos. MIT license. All issues are public.
+                  {PUBLIC_REPO_SUMMARY.tracked} repos. MIT license. All issues are public.
                 </p>
               </div>
             </m.div>

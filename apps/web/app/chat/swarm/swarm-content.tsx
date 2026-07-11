@@ -227,7 +227,7 @@ function Header({ hasSession, onClear }: { hasSession: boolean; onClear: () => v
           Arcanea · Swarm v1
         </p>
         <h1 className="mt-1 text-2xl sm:text-3xl font-display text-white">
-          Two to five Luminors, thinking in parallel.
+          Two to five Luminors, thinking in parallel.{/* facts-ok */}
         </h1>
         <p className="mt-2 max-w-[620px] text-sm text-white/55 leading-relaxed">
           Preview of the multi-agent chat surface. The planner routes your request,

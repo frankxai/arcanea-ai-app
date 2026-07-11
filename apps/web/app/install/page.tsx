@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
+import { PUBLIC_REPO_SUMMARY } from '@/lib/public-repo-registry';
 import { useState } from 'react';
 import Link from 'next/link';
 import {
@@ -122,7 +123,7 @@ const NEXT_STEPS: NextStep[] = [
   { title: 'Documentation', description: 'Full API reference and guides', href: '/docs', icon: Book, accent: 'text-[var(--arc-brand-atlantean-teal)]' },
   { title: 'Academy', description: 'Learn world-building from Gate 1 to 10', href: '/academy', icon: GraduationCap, accent: 'text-violet-400' },
   { title: 'Chat', description: 'Start a conversation with an AI companion', href: '/chat', icon: ChatCircle, accent: 'text-[var(--arc-brand-cosmic-blue)]' },
-  { title: 'Ecosystem', description: 'Explore all 27 repositories and tools', href: '/ecosystem', icon: Gear, accent: 'text-[var(--arc-brand-arcanean-gold)]' },
+  { title: 'Ecosystem', description: `Explore all ${PUBLIC_REPO_SUMMARY.tracked} repositories and tools`, href: '/ecosystem', icon: Gear, accent: 'text-[var(--arc-brand-arcanean-gold)]' },
 ];
 
 // ─── Components ─────────────────────────────────────────────────────────────

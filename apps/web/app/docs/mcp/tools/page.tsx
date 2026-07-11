@@ -601,7 +601,7 @@ export default function McpToolsPage() {
             </span>
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-400">
-            All 43 tools across 9 categories. Each tool is available via any
+            All {CATEGORIES.reduce((sum, cat) => sum + cat.tools.length, 0)} tools across {CATEGORIES.length} categories. Each tool is available via any
             MCP-compatible client once the server is configured.
           </p>
 

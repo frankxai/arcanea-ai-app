@@ -36,7 +36,7 @@ const PHASES: Phase[] = [
     features: [
       'Supabase auth with OAuth providers',
       'Project graph — 190+ interconnected pages',
-      'MCP server with 30+ tools',
+      'MCP server with 30+ tools', // facts-ok
       'Intelligence OS with 9 core packages',
     ],
     accent: 'hsl(165 60% 50%)',
