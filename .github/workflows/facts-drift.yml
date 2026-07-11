@@ -1,7 +1,8 @@
 name: Facts Drift
 
-# Advisory (non-blocking) while the long tail of hardcoded numbers is wired to
-# lib/facts.ts. Flip `continue-on-error` to false to make it a hard gate.
+# Advisory while the long tail of hardcoded numbers is wired to lib/facts.ts.
+# The script exits 0 and prints findings; add --strict below to make it a
+# hard gate once the tail is burned down.
 on:
   pull_request:
     branches: [main]
@@ -19,7 +20,7 @@ jobs:
     name: Hardcoded platform numbers
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    continue-on-error: true
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6

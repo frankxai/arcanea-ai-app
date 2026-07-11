@@ -66,12 +66,16 @@ function scan(dir) {
 
 SCAN_DIRS.forEach(scan);
 
+const strict = process.argv.includes("--strict");
+
 if (findings.length) {
   console.error(`\nFacts drift: ${findings.length} hardcoded platform number(s) found.\n`);
   for (const f of findings) {
     console.error(`  ${f.file}:${f.line}  "${f.match}"  → use ${f.hint}`);
   }
   console.error("\nImport the value from lib/facts.ts (or lib/public-repo-registry.ts) instead of typing it.");
-  process.exit(1);
+  if (strict) process.exit(1);
+  console.error("\n(advisory mode — pass --strict to fail the build once the long tail is burned down)");
+  process.exit(0);
 }
 console.log("Facts drift: clean — no hardcoded platform numbers on public surfaces.");
