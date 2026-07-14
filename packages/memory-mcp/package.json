@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.19.41",
-    "tsx": "^4.22.3",
+    "tsx": "^4.23.0",
     "typescript": "^5.9.3"
   },
   "engines": {
