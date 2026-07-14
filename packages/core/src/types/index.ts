@@ -113,3 +113,14 @@ export type {
 } from './overlay.js';
 
 export { PROVIDER_CAPABILITIES, OVERLAY_LEVELS } from './overlay.js';
+
+// Skill Constellation Types
+export type {
+  SkillRank,
+  AgentRef,
+  SkillRef,
+  Capability,
+  Perk,
+  XPSource,
+  SkillNode,
+} from './skills.js';
