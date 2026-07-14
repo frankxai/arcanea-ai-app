@@ -14,8 +14,8 @@
     "lint": "eslint src/"
   },
   "dependencies": {
-    "dexie": "^4.0.11",
-    "preact": "^10.29.2"
+    "dexie": "^4.4.4",
+    "preact": "^10.29.7"
   },
   "devDependencies": {
     "@types/chrome": "^0.2.2",
