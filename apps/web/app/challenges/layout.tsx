@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "Compete in creative challenges — writing, art, music, and code — with elemental spellbooks and prizes in the Arcanea arena.",
   openGraph: {
-    title: "Challenges | Arcanea",
+    title: "Challenges",
     description:
       "Compete in creative challenges — writing, art, music, and code — with elemental spellbooks and prizes in the Arcanea arena.",
   },

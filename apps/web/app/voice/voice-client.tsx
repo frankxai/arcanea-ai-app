@@ -194,7 +194,7 @@ export default function VoicePage() {
             className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
             style={{ fontFamily: 'var(--font-display)', background: `linear-gradient(135deg, var(--arc-text-primary) 0%, ${activeP.color} 50%, var(--arc-brand-atlantean-teal) 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
           >
-            Speak. Create.
+            Speak. Create.{" "}
             <br />
             <span className="text-[0.85em]">Let AI Listen.</span>
           </h1>

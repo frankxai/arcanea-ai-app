@@ -11,10 +11,10 @@ import { Magnetic } from '@/components/motion/magnetic';
 import { GradientMesh } from '@/components/motion/gradient-mesh';
 
 export const metadata: Metadata = {
-  title: 'Starlight Vaults — Memory that compounds | Arcanea',
+  title: 'Starlight Vaults — Memory that compounds',
   description: 'Persistent memory for AI agents. 6 semantic vaults powering every Arcanea session. Local-first. Portable. Yours.',
   openGraph: {
-    title: 'Starlight Vaults — Arcanea',
+    title: 'Starlight Vaults',
     description: 'Persistent memory for AI agents. Every session builds on the last.',
     type: 'website',
   },

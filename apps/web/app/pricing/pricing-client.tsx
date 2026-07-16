@@ -1,5 +1,6 @@
 "use client";
 
+import { FACTS } from "@/lib/facts";
 import Image from "next/image";
 import React, { useState } from "react";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
@@ -40,7 +41,7 @@ const TIERS = [
     features: [
       "Bring Your Own Key (BYOK)",
       "Local Markdown / JSONML storage",
-      "Core AI chat with 13 Luminors",
+      `Core AI chat with ${FACTS.luminors} Luminors`,
       "Standard local zip exports",
       "54 open-source CLI tools & skills",
     ],
@@ -56,7 +57,7 @@ const TIERS = [
     features: [
       "Everything in Sovereign",
       "Encrypted cloud sync & backups",
-      "pgvector semantic query database",
+      "Semantic search across your worlds",
       "Multiplayer Canvas collaboration",
       "500 monthly Cloud Bench credits",
     ],
@@ -184,7 +185,7 @@ export function PricingClient() {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--arc-brand-atlantean-teal)]/20 bg-[var(--arc-brand-atlantean-teal)]/6 mb-6">
               <GitBranch size={12} className="text-[var(--arc-brand-atlantean-teal)]" />
               <span className="text-[10px] font-mono text-[var(--arc-brand-atlantean-teal)] uppercase tracking-widest">
-                Path C Hybrid Architecture
+                Sovereign core · optional cloud
               </span>
             </div>
 
@@ -196,7 +197,7 @@ export function PricingClient() {
             </h1>
 
             <p className="text-base md:text-lg text-white/50 max-w-2xl mx-auto leading-relaxed font-body">
-              Your API keys remain in your browser. Your world graphs, lore bibles, and files remain on your disk. Free and open. Pay only when you want the convenience of encrypted cloud synchronization, pgvector semantic search, and multiplayer bench runs.
+              Your API keys remain in your browser. Your world graphs, lore bibles, and files remain on your disk. Free and open. Pay only when you want the convenience of encrypted cloud sync, semantic search, and multiplayer bench runs.
             </p>
           </section>
 

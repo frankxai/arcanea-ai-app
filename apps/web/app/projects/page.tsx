@@ -10,7 +10,7 @@ import { listProjectsForCurrentUser } from '@/lib/projects/server';
 import { ProjectsIndexShell } from './projects-index-shell';
 
 export const metadata: Metadata = {
-  title: 'Projects | Arcanea',
+  title: 'Projects',
   description: 'Browse Arcanea workspaces that connect chats, creations, memories, and graph context.',
 };
 
