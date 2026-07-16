@@ -2,11 +2,11 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Changelog — Arcanea",
+  title: "Changelog",
   description:
     "Latest updates, features, and improvements to the Arcanea Creative Intelligence Platform.",
   openGraph: {
-    title: "Changelog — Arcanea",
+    title: "Changelog",
     description:
       "Latest updates, features, and improvements to the Arcanea Creative Intelligence Platform.",
   },

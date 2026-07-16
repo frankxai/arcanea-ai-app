@@ -190,7 +190,7 @@ export function StudioHub() {
               className="mb-6 flex flex-wrap items-center gap-2"
             >
               <SovereigntyBadge />
-              <StatusBadge level="preview" note="Q2 2026" />
+              <StatusBadge level="preview" note="wiring now" />
             </m.div>
 
             <Reveal delay={0.25} y={12}>
@@ -198,7 +198,7 @@ export function StudioHub() {
                 <StatusNotice
                   level="preview"
                   title="Studio is a preview today"
-                  body="The design is final; the ingestion + transformation plumbing lands through Q2 2026. /chat and /imagine already work — use those while we wire the rest."
+                  body="Chat and Imagine are live today. Studio ingestion is being wired now — each format below lights up as it lands."
                   linkHref="/chat"
                   linkLabel="Open chat"
                 />

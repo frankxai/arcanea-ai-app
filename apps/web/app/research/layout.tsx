@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     'Science-backed mythology — where neuroscience validates the Ten Gates framework. Papers, tools, benchmarks, and cross-domain synthesis.',
   openGraph: {
-    title: 'Research Hub | Arcanea',
+    title: 'Research Hub',
     description:
       'Science-backed mythology — where neuroscience validates the Ten Gates framework. Papers, tools, benchmarks, and cross-domain synthesis.',
     type: 'website',

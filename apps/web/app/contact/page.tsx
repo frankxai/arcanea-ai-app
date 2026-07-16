@@ -254,7 +254,7 @@ export default function ContactPage() {
 
                   <h1 className="text-fluid-3xl font-display font-bold mb-4">
                     Contact
-                    <span className="block text-gradient-brand">Arcanea</span>
+                    {" "}<span className="block text-gradient-brand">Arcanea</span>
                   </h1>
 
                   <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">

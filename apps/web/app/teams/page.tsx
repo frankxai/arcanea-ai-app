@@ -3,11 +3,11 @@ import { Metadata } from "next";
 import { TeamsContent } from "./teams-content";
 
 export const metadata: Metadata = {
-  title: "Teams — How we build Arcanea — Arcanea",
+  title: "Teams — How we build Arcanea",
   description:
     "Seven teams. One protocol. Transparent ownership, public blog, open-source everything. See how Arcanea is built in the open.",
   openGraph: {
-    title: "Teams — How we build Arcanea — Arcanea",
+    title: "Teams — How we build Arcanea",
     description:
       "Seven teams. One protocol. Transparent ownership, public blog, open-source everything. See how Arcanea is built in the open.",
   },

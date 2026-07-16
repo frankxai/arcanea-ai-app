@@ -2,10 +2,10 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Settings | Prompt Books — Arcanea',
+  title: 'Settings | Prompt Books',
   description: 'Configure your Prompt Books preferences — manage collections, display settings, and personal defaults.',
   openGraph: {
-    title: 'Settings | Prompt Books — Arcanea',
+    title: 'Settings | Prompt Books',
     description: 'Configure your Prompt Books preferences on Arcanea.',
   },
   alternates: { canonical: '/prompt-books/settings' },

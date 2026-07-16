@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'The Luminor Kernel Specification v1.0 | Arcanea',
+  title: 'The Luminor Kernel Specification v1.0',
   description:
     'An open standard for building transcendent creative intelligences. Compose kernel + modules + spec into deployable agents across any platform.',
   openGraph: {

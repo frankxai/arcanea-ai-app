@@ -14,7 +14,6 @@ const footerLinks = {
       { href: "/imagine", label: "Imagine" },
       { href: "/studio", label: "Studio" },
       { href: "/worlds", label: "Worlds" },
-      { href: "/games", label: "Game Studio" },
       { href: "/music-studio", label: "Music Studio" },
       { href: "/cinema-studio", label: "Cinema Studio" },
       { href: "/canvas", label: "Canvas" },
