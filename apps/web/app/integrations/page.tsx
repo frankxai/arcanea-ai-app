@@ -7,11 +7,11 @@ import { IntegrationsContent } from "./integrations-content";
 // ---------------------------------------------------------------------------
 
 export const metadata: Metadata = {
-  title: "Integrations Status — Arcanea",
+  title: "Integrations Status",
   description:
     "Arcanea integration status by category: live, beta, and planned tools labeled by what is actually wired today.",
   openGraph: {
-    title: "Integrations Status — Arcanea",
+    title: "Integrations Status",
     description:
       "Live, beta, and planned integration map for Arcanea's creator stack.",
     url: "/integrations",

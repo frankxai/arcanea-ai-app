@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useInView, useMotionValue, useSpring } from 'framer-motion';
+import { useInView, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
 
 interface Props {
   /** Target number to count to */
@@ -42,7 +42,12 @@ export function NumberTicker({
 }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
-  const motionValue = useMotionValue(direction === 'down' ? value : 0);
+  const prefersReducedMotion = useReducedMotion();
+  // SSR and first paint show the resting value — crawlers, reduced-motion users,
+  // and slow devices must never read "0 public repos". The count-up is an
+  // enhancement layered on top, not the source of truth.
+  const restValue = direction === 'down' ? 0 : value;
+  const motionValue = useMotionValue(restValue);
   const spring = useSpring(motionValue, {
     stiffness: 60,
     damping: 18,
@@ -50,13 +55,13 @@ export function NumberTicker({
   });
 
   useEffect(() => {
-    if (isInView) {
-      const timeout = setTimeout(() => {
-        motionValue.set(direction === 'down' ? 0 : value);
-      }, delay * 1000);
-      return () => clearTimeout(timeout);
-    }
-  }, [isInView, motionValue, value, delay, direction]);
+    if (!isInView || prefersReducedMotion) return;
+    const timeout = setTimeout(() => {
+      motionValue.jump(direction === 'down' ? value : 0);
+      motionValue.set(direction === 'down' ? 0 : value);
+    }, delay * 1000);
+    return () => clearTimeout(timeout);
+  }, [isInView, prefersReducedMotion, motionValue, value, delay, direction]);
 
   useEffect(() => {
     const unsubscribe = spring.on('change', (latest) => {
@@ -73,10 +78,17 @@ export function NumberTicker({
     return unsubscribe;
   }, [spring, prefix, suffix, decimals]);
 
-  // Initial render shows 0 (or value if direction down) — spring hydrates client-side
+  const formattedRest =
+    prefix +
+    restValue.toLocaleString('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    }) +
+    suffix;
+
   return (
     <span ref={ref} className={className}>
-      {prefix}0{suffix}
+      {formattedRest}
     </span>
   );
 }

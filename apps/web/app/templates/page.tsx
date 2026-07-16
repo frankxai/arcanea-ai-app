@@ -9,7 +9,7 @@ import { GradientMesh } from '@/components/motion/gradient-mesh';
 import { NumberTicker } from '@/components/motion/number-ticker';
 
 export const metadata: Metadata = {
-  title: 'Blueprints — Open Source Production Code | Arcanea',
+  title: 'Blueprints — Open Source Production Code',
   description: '7 production blueprints for AI startups, authors, game studios, and design engineers. 33K+ lines. MIT licensed. Fork the code behind arcanea.ai.',
   openGraph: {
     title: 'Arcanea Blueprints — Fork the code behind arcanea.ai',

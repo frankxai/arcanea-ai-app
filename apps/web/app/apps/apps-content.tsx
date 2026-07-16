@@ -155,7 +155,7 @@ export function AppsContent() {
                 }}
               >
                 Install once.
-              </span>
+              </span>{" "}
               <br />
               <span className="text-white/80">Create forever.</span>
             </m.h1>

@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import VoiceDashboardClient from '../dashboard/dashboard-client';
 
 export const metadata: Metadata = {
-  title: 'Starlight Intelligence System — Arcanea',
+  title: 'Starlight Intelligence System',
   description:
     'Voice command center for the Starlight Intelligence System — recall, search, contradict.',
   alternates: { canonical: '/voice/sis' },

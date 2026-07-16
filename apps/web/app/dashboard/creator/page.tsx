@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { CreatorDashboardClient } from './creator-dashboard-client';
 
 export const metadata: Metadata = {
-  title: 'Creator Dashboard | Arcanea',
+  title: 'Creator Dashboard',
   description:
     'Your forged Luminors, their usage, and your earnings. Transparent creator economics on the Arcanea registry.',
 };

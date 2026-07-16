@@ -5,7 +5,7 @@ import { COUNCIL_ADVISORS } from "@/lib/council/types";
 import { CouncilDashboard } from "@/components/council/CouncilDashboard";
 
 export const metadata: Metadata = {
-  title: "Your Council | Arcanea",
+  title: "Your Council",
   description:
     "Nine specialized advisors. One strategic mind. Build your personal AI advisory council across Vision, Strategy, Voice, Systems, and more.",
   openGraph: {

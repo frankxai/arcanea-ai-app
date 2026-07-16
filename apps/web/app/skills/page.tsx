@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Skill Marketplace — Arcanea',
+  title: 'Skill Marketplace',
   description:
     'Browse and install open-source skills for Claude Code, OpenCode, Cursor, and more. One-command install for every skill.',
   openGraph: {

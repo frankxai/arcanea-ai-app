@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
+import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
+import { FACTS } from "@/lib/facts";
 import type React from "react";
 import type { IconProps } from "@/lib/phosphor-icons";
 import {
@@ -92,7 +94,7 @@ export const VISION_CARDS: VisionCard[] = [
     icon: Code,
     title: "OSS",
     description:
-      "The open ecosystem. 27 repos, 35 npm packages, 54 skills, overlays for every coding agent. Fork it, extend it, build on it.",
+      `The open ecosystem. ${PUBLIC_REPO_SUMMARY.public} public repos, ${PUBLIC_REPO_SUMMARY.packages} npm packages, ${FACTS.skills} creator skills, overlays for every coding agent. Fork it, extend it, build on it.`,
     color: "draconic-crimson",
   },
   {

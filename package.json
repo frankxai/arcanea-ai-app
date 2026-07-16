@@ -63,17 +63,17 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
-    "@tailwindcss/typography": "^0.5.13",
-    "@turbo/gen": "^2.9.16",
-    "autoprefixer": "^10.4.19",
+    "@tailwindcss/typography": "^0.5.20",
+    "@turbo/gen": "^2.10.3",
+    "autoprefixer": "^10.5.2",
     "eslint": "^9.39.4",
-    "next": "16.2.6",
-    "postcss": "^8.5.15",
-    "prettier": "^3.8.2",
+    "next": "16.2.10",
+    "postcss": "^8.5.19",
+    "prettier": "^3.9.4",
     "tailwindcss": "^3.4.9",
     "tailwindcss-animate": "^1.0.7",
-    "tsx": "^4.22.3",
-    "turbo": "^2.9.16",
+    "tsx": "^4.23.0",
+    "turbo": "^2.10.3",
     "typescript": "^5.9.3"
   },
   "engines": {
@@ -110,12 +110,12 @@
   "homepage": "https://arcanea.ai",
   "pnpm": {
     "overrides": {
-      "next": "16.2.6",
+      "next": "16.2.10",
       "@types/react": "^19.0.0",
       "@types/react-dom": "^19.0.0",
-    "eslint": "9.39.4",
-    "esbuild@<0.28.1": ">=0.28.1",
-    "prismjs@<1.30.0": ">=1.30.0",
+      "eslint": "9.39.4",
+      "esbuild@<0.28.1": ">=0.28.1",
+      "prismjs@<1.30.0": ">=1.30.0",
       "jsondiffpatch@<0.7.2": ">=0.7.2",
       "playwright@<1.55.1": ">=1.55.1",
       "tmp@<=0.2.3": ">=0.2.4",
@@ -126,7 +126,7 @@
       "@modelcontextprotocol/sdk@<1.25.2": ">=1.25.2",
       "lodash@>=4.0.0 <=4.17.22": ">=4.17.23",
       "diff@>=4.0.0 <4.0.4": ">=4.0.4",
-      "gray-matter>js-yaml": "3.14.2",
+      "gray-matter>js-yaml": "3.15.0",
       "mdast-util-to-hast@>=13.0.0 <13.2.1": ">=13.2.1",
       "@modelcontextprotocol/sdk@<1.24.0": ">=1.24.0",
       "devalue@<=5.6.2": ">=5.6.3",
@@ -170,7 +170,7 @@
       "hono@<4.12.25": ">=4.12.25",
       "ajv@>=8.0.0 <8.18.0": ">=8.18.0",
       "js-yaml@>=3.0.0 <3.14.2": ">=3.14.2",
-      "js-yaml@>=4.0.0 <4.1.1": ">=4.1.1",
+      "js-yaml@>=4.0.0 <=4.1.1": ">=4.2.0",
       "qs@>=6.0.0 <6.15.2": ">=6.15.2",
       "ip-address@<10.1.1": ">=10.1.1",
       "protobufjs@<7.6.4": ">=7.6.4",
@@ -178,7 +178,8 @@
       "vite@<8.0.16": ">=8.0.16",
       "@babel/core@<7.29.7": ">=7.29.7",
       "markdown-it@<=14.1.1": ">=14.2.0",
-      "@opentelemetry/core@<2.8.0": ">=2.8.0"
+      "@opentelemetry/core@<2.8.0": ">=2.8.0",
+      "undici": "8.5.0"
     }
   }
 }

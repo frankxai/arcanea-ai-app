@@ -34,7 +34,7 @@ const navLinks: NavLink[] = [
   {
     href: "/chat",
     label: "Create",
-    also: ["/imagine", "/studio", "/forge", "/agents", "/worlds", "/games", "/music-studio", "/cinema-studio", "/canvas", "/voice", "/integrations", "/distribute"],
+    also: ["/imagine", "/studio", "/forge", "/agents", "/worlds", "/music-studio", "/cinema-studio", "/canvas", "/voice", "/integrations", "/distribute"],
     mega: [
       {
         title: "Create",
@@ -43,7 +43,6 @@ const navLinks: NavLink[] = [
           { href: "/imagine", label: "Imagine", desc: "Generate images" },
           { href: "/studio", label: "Studio", desc: "Write & compose" },
           { href: "/worlds", label: "Worlds", desc: "Build universes" },
-          { href: "/games", label: "Games", desc: "Prompt to playable" },
           { href: "/music-studio", label: "Music", desc: "Artist worlds" },
           { href: "/cinema-studio", label: "Cinema", desc: "Trailers & scenes" },
           { href: "/canvas", label: "Canvas", desc: "Node workflows" },
@@ -237,7 +236,7 @@ export function Navbar() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "liquid-glass border-b border-white/[0.06] shadow-[0_8px_36px_rgba(0,0,0,0.32)]"
+            ? "liquid-glass bg-[var(--arc-cosmic-void)]/85 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_8px_36px_rgba(0,0,0,0.32)]"
             : "bg-transparent border-b border-transparent"
         }`}
       >
