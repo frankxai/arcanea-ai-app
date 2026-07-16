@@ -113,6 +113,19 @@ Gate 3 says "animation is rare and intentional." This section names the *specifi
 - **Depth parallax** with camera pan on mouse position.
 - **Gradient mesh backgrounds** (Shadertoy-style) for premium hero canvases.
 
+### Earned scroll set-piece (Track B — the carve-out)
+
+The patterns above are mostly **Track A** (Framer Motion: mount, hover, `whileInView`, spring). Gate 3's "rare and intentional" also permits **Track B** — one *choreographed scroll set-piece per flagship page* driven by GSAP `ScrollTrigger` + Lenis (a pinned section, parallax depth, or scroll-scrubbed video/3D). This is the move that separates a premium product page from a competent one. It is governed, not free.
+
+A Track-B set-piece ships only when it clears **all four**:
+
+1. **Demonstrates, not decorates.** It shows the product/idea unfolding (a feature loop, a system assembling, a narrative beat) — never motion for its own sake.
+2. **Holds the performance budget.** 60fps under scroll, transform/opacity only, LCP < 2.5s, hero video ≤ 4 MB. Verified, not assumed.
+3. **Degrades deliberately.** Under `prefers-reduced-motion: reduce` the static composition still tells the whole story (video → poster, reveal → all content visible).
+4. **Exactly one per page.** One pinned/scrubbed scene. A second is a tech demo, not a product.
+
+Miss any of the four → it is slop, cut it. Operators: the `motion-system` skill holds the patterns; `<SmoothScroll>` / `<ScrollScene>` (`apps/web/components/motion`) hold the code; the `design-motion` agent runs the two tracks; `design-verifier` enforces the 60fps + fallback gate.
+
 ### Easing curves — never the default
 
 | Curve | Bezier | Use for |

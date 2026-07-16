@@ -10,6 +10,7 @@ import type { V3BelowFoldProps } from "./v3-below-fold";
 import { HeroShowcase } from "./hero-showcase";
 import { SovereigntyBadge } from "@/components/premium/sovereignty-pillars";
 import { NumberTicker } from "@/components/motion/number-ticker";
+import { FACTS } from "@/lib/facts";
 import { Sparkle, Diamond, Code, ShieldStar } from "@/lib/phosphor-icons";
 import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
 
@@ -215,7 +216,7 @@ function HeroPortal() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             {[
-              { Icon: Sparkle, num: 13, suffix: "", label: "specialist agents", color: "var(--arc-brand-atlantean-teal)", fixed: true },
+              { Icon: Sparkle, num: FACTS.luminors, suffix: "", label: "specialist agents", color: "var(--arc-brand-atlantean-teal)", fixed: true },
               { Icon: Diamond, num: 190, suffix: "K+", label: "words of canon", color: "var(--arc-brand-atlantean-teal)" },
               { Icon: Code, num: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", color: "var(--arc-brand-cosmic-blue)" },
               { Icon: ShieldStar, num: 0, suffix: "MIT", label: "open source", color: "var(--arc-void)", fixed: true },

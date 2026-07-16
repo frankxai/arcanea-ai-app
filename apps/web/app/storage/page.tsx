@@ -11,11 +11,11 @@ import { StorageSovereignty } from "./storage-sovereignty";
 import { StorageCTA } from "./storage-cta";
 
 export const metadata: Metadata = {
-  title: "Storage & Knowledge Graph — Arcanea",
+  title: "Storage & Knowledge Graph",
   description:
     "Markdown + JSONML for content. pgvector for semantic search. Your choice of backend — Supabase, Arweave, S3, Google Drive, or local files. Open standards top to bottom.",
   openGraph: {
-    title: "Storage & Knowledge Graph — Arcanea",
+    title: "Storage & Knowledge Graph",
     description:
       "Markdown + JSONML for content. pgvector for semantic search. Your choice of backend — Supabase, Arweave, S3, Google Drive, or local files. Open standards top to bottom.",
   },

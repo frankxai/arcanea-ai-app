@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 import { CreatorEconomyContent } from "./creator-economy-content";
 
 export const metadata: Metadata = {
-  title: "Creator Economy — Make a living from your worlds — Arcanea",
+  title: "Creator Economy — Make a living from your worlds",
   description:
     "Seven ways to earn on Arcanea. Marketplace, memberships, NFTs, royalties, tokens. You keep 90%+, always.",
   alternates: { canonical: "/creator-economy" },
   openGraph: {
-    title: "Creator Economy — Make a living from your worlds — Arcanea",
+    title: "Creator Economy — Make a living from your worlds",
     description:
       "Seven ways to earn on Arcanea. Marketplace, memberships, NFTs, royalties, tokens. You keep 90%+, always.",
   },

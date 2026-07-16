@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     "LLM leaderboard",
   ],
   openGraph: {
-    title: "AI Model Arena | Arcanea",
+    title: "AI Model Arena",
     description:
       "Live benchmarks, free model tracker, and production routing for 20+ AI models. Updated weekly.",
     type: "website",

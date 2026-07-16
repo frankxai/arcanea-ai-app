@@ -29,10 +29,10 @@ import {
 } from './community-data';
 
 export const metadata: Metadata = {
-  title: "Community — Arcanea",
+  title: "Community",
   description: "Join the Arcanean community — collaborate, share, and co-create.",
   openGraph: {
-    title: "Community — Arcanea",
+    title: "Community",
     description: "Join the Arcanean community — collaborate, share, and co-create.",
   },
 };
