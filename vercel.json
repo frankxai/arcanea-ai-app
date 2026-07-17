@@ -6,7 +6,6 @@
   "installCommand": "corepack enable && pnpm install --prod=false --no-frozen-lockfile",
   "outputDirectory": "apps/web/.next",
   "devCommand": "pnpm dev:web",
-
   "build": {
     "env": {
       "NEXT_PUBLIC_APP_NAME": "Arcanea",
@@ -14,7 +13,6 @@
       "NODE_OPTIONS": "--max-old-space-size=4096"
     }
   },
-
   "headers": [
     {
       "source": "/api/(.*)",
@@ -83,7 +81,6 @@
       ]
     }
   ],
-
   "rewrites": [
     {
       "source": "/api/:path*",
@@ -94,7 +91,6 @@
       "destination": "/api/health"
     }
   ],
-
   "redirects": [
     {
       "source": "/home",
@@ -102,6 +98,12 @@
       "permanent": true
     }
   ],
-
-  "regions": ["iad1"]
+  "regions": [
+    "iad1"
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "backup/claude-snapshots": false
+    }
+  }
 }
