@@ -1,0 +1,14 @@
+# Claude's canon assertions -- Arcanea: Demonic Soul Resurrection
+
+Source uuid: b5b98772-7b57-47a4-91e4-8635323e43b2
+
+CONFIRMED = Frank's next message reads as explicit approval. PUSHED-BACK = reads as disagreement. UNCLEAR/NO-RESPONSE = no clean signal -- treat as OPEN, not LOCKED.
+
+| Verdict | Claude said | Frank's next message |
+|---|---|---|
+| UNCLEAR | I haven't decided. | Demon clans also work on awakenings of the great beasts. They work on monsters snd others feeding souls and awaken godbeasts. Dungeond and other stuff you coulf suggest and artifacts and spellbooks or grimoirs they want. Or what makes sense for them. Also dragon cored maybe? Sophisticated beautiful  |
+| UNCLEAR | GRIMOIRE OF UNMAKING** - **Type:** Spell Book (Legendary) - **Appearance:** Void-black pages, silver runes that hurt to read - **Curse:** Each spell cast erases something from existence (memory, perso | Naming of the demon lords and kings can be better, i think i gave in other chats lots of authors and Markus heitz and tolkien naming and melodic, evolve more genius. Top global novel team on timeless naming and principles but meaning and original good names |
+| UNCLEAR | HEART OF THE ETERNAL DRAGON** ⭐💀 - **Original Dragon:** Luminos, THE FIRST DRAGON (20,000+ years old) - **Status:** NOT YET KILLED (dragons desperately protecting) - **If Corrupted:** Apocalyptic - ** | Naming of the demon lords and kings can be better, i think i gave in other chats lots of authors and Markus heitz and tolkien naming and melodic, evolve more genius. Top global novel team on timeless naming and principles but meaning and original good names |
+| UNCLEAR | *~ Theron (final entry, corrupted dungeon, Day 4)*  </document>  ---  <document title="CODEX_INFERNUM_FRAGMENT.md" type="text/markdown">  # ⚠️ FORBIDDEN KNOWLEDGE ⚠️ ## Fragment from Codex Infernum ## | Naming of the demon lords and kings can be better, i think i gave in other chats lots of authors and Markus heitz and tolkien naming and melodic, evolve more genius. Top global novel team on timeless naming and principles but meaning and original good names |
+| UNCLEAR | It's poison."*  ---  ## FINAL WARNING  **To the reader who has come this far:**  This fragment represents less than 1% of Codex Infernum's contents. | Naming of the demon lords and kings can be better, i think i gave in other chats lots of authors and Markus heitz and tolkien naming and melodic, evolve more genius. Top global novel team on timeless naming and principles but meaning and original good names |
+| UNCLEAR | DRAKENVÖRR THE CRIMSON THRONE  **OLD NAME:** Korvathus **NEW NAME:** Drakenvörr (DRAY-ken-vor)  **Etymology:** - *"Draken"* (dragon/great) + *"vörr"* (war/blood) - Germanic weight + draconic power  ** | please create a prompt for each type to create image with midjourney |

@@ -1,0 +1,13 @@
+# Claude's canon assertions -- Weekly plan: May 4-10 priorities and execution
+
+Source uuid: d6e88f72-eae9-4a66-a8f2-d1e229d8c93a
+
+CONFIRMED = Frank's next message reads as explicit approval. PUSHED-BACK = reads as disagreement. UNCLEAR/NO-RESPONSE = no clean signal -- treat as OPEN, not LOCKED.
+
+| Verdict | Claude said | Frank's next message |
+|---|---|---|
+| UNCLEAR | The immediate priorities are clear—GenCreator.ai needs to hit May 12, the Madrid demo is locked for end of month, and there's a full slate of deliverables across landing pages and infrastructure. | Bro its sunday i need to make plan for next week, see all i want to buy, all i want to make, all priorities, skills, readings, building, networking. I wam in Croatia. Get context from all sources you can from all chats all my githubs and sites and more |
+| UNCLEAR | I'll build it with the strategic constraints baked in: the Tien situation needs resolution, Ana's got the 24-48 hour protocol, and he's got real capacity limits while managing family time and the crea | Bro its sunday i need to make plan for next week, see all i want to buy, all i want to make, all priorities, skills, readings, building, networking. I wam in Croatia. Get context from all sources you can from all chats all my githubs and sites and more |
+| UNCLEAR | ```   Let me do a final sweep on networking opportunities, check what social commitments are coming up, and make sure I'm prepared for the Madrid trip. | Also reflect on this week all we discussed list maybe all chats. All topics. All we created researched. When done st end give me feedback be top cosch abd think like top superintelligence and 80/20 snd suggest what else to inspire. Reflect and help me get better and other top approaches like 80 20 a |
+| UNCLEAR | I'll keep it dense to avoid long enumerations while still delivering the comprehensive artifact he explicitly requested.Pulled this time: frankx.ai live state, your 66 GitHub repos (pinned: ai-archite | Also reflect on this week all we discussed list maybe all chats. All topics. All we created researched. When done st end give me feedback be top cosch abd think like top superintelligence and 80/20 snd suggest what else to inspire. Reflect and help me get better and other top approaches like 80 20 a |
+| NO-RESPONSE | **Two — your 80/20 is inverted.** 80% of next-30-days outcome comes from 5 things: GenCreator wedge live, 3 GDE artifacts public, Tien decided, Madrid demo executed, Alex retreat venue chosen. | (none) |

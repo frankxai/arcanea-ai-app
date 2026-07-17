@@ -1,0 +1,91 @@
+{
+  "id": "visual-direction-board-2026-07-16",
+  "purpose": "Fair comparison previews of Arcanea style options for Frank decision",
+  "subjects": {
+    "cast": "Mera Tidecrest",
+    "godbeast": "Otome",
+    "product": "Arcanea lab product shell mood"
+  },
+  "items": [
+    {
+      "id": "A1-house-mera",
+      "folder": "01-house-myth-tech",
+      "file": "A1-house-mera.png",
+      "stylePackId": "house-myth-tech",
+      "aspect": "portrait",
+      "prompt": "Cinematic encyclopedia portrait of MERA TIDECREST for Arcanea HOUSE style direction board. Young adult woman, precise empathy, sea-glass green-blue eyes, dark teal-black hair with silver-seafoam strands. Luxury cosmic myth-tech: nacre and water-glass Athenaeum coat, sealed luminous water-memory vial at hip, hand above still lesson pool. Cosmic dusk, cool blue + warm silver light, photoreal materials, high-fashion heroic museum-grade character bible. No text no watermark. Portrait."
+    },
+    {
+      "id": "A2-house-otome",
+      "folder": "01-house-myth-tech",
+      "file": "A2-house-otome.png",
+      "stylePackId": "house-myth-tech",
+      "aspect": "landscape",
+      "prompt": "Cinematic encyclopedia hero of OTOME, sacred Godbeast of the Voice Gate, HOUSE style. Colossal crystalline Resonite song-crane, tall sacred avian, wind-woven crystal wings, concentric harmonic light rings (no musical notes, no text), Desert of Echoes wind-spire, silver-teal creation glow, cosmic dusk. Luxury cosmic myth-tech photoreal museum-grade creature key art. Landscape 16:9. No text."
+    },
+    {
+      "id": "B1-prestige-mera",
+      "folder": "02-prestige-illustrated",
+      "file": "B1-prestige-mera.png",
+      "stylePackId": "prestige-illustrated",
+      "aspect": "portrait",
+      "prompt": "Prestige illustrated feature key art of MERA TIDECREST in Arcane-adjacent style: hand-painted 3D character with 2D painterly textures, emotional story lighting, soft brushstroke surfaces, not photoreal pores, not anime isekai. Young woman water-memory bender, sea-glass eyes, teal-black hair, nacre-like stylized armor panels, sealed glowing vial, calm pool reflection. Warm emotional cinematic palette, Fortiche-like prestige animation look, high production value. No text no watermark. Portrait."
+    },
+    {
+      "id": "B2-prestige-otome",
+      "folder": "02-prestige-illustrated",
+      "file": "B2-prestige-otome.png",
+      "stylePackId": "prestige-illustrated",
+      "aspect": "landscape",
+      "prompt": "Prestige illustrated feature key art of OTOME Godbeast song-crane: Arcane-adjacent hand-painted 3D/2D hybrid, painterly feathers of crystal light, emotional vertical awe, stylized resonance rings as painted light (no sheet music glyphs), desert aurora, storybook-cinematic prestige animation look. Not photoreal, not chibi, not isekai. Epic Netflix-feature quality. Landscape 16:9. No text."
+    },
+    {
+      "id": "C1-anime-mera",
+      "folder": "03-anime-experiment",
+      "file": "C1-anime-mera.png",
+      "stylePackId": "anime-social-experiment",
+      "aspect": "portrait",
+      "prompt": "Premium anime / manhwa character portrait of MERA TIDECREST for social experiment only. Clean modern anime linework, soft cel shading, expressive large eyes sea-glass color, teal-black hair with silver strands, elegant fantasy-sci-fi scholar outfit with pearlescent scale accents, glowing memory vial prop, poolside atmosphere. High-end anime key visual (not chibi, not low-effort isekai spam). Portrait. No text no watermark."
+    },
+    {
+      "id": "C2-anime-otome",
+      "folder": "03-anime-experiment",
+      "file": "C2-anime-otome.png",
+      "stylePackId": "anime-social-experiment",
+      "aspect": "landscape",
+      "prompt": "Premium anime key visual of sacred crystalline song-crane Godbeast OTOME: elegant anime creature design, luminous stylized feathers, magical resonance circles, desert night sky, epic anime fantasy atmosphere, high production anime movie still. Not chibi. Landscape 16:9. No text no watermark no musical notation glyphs."
+    },
+    {
+      "id": "D1-lab-product-shell",
+      "folder": "04-product-lab-chrome",
+      "file": "D1-lab-product-shell.png",
+      "stylePackId": "product-lab-chrome",
+      "aspect": "landscape",
+      "prompt": "Ultra-premium AI product UI mood board for Arcanea creative workspace: dark background #09090b, restrained liquid-glass cards, subtle teal #00bcd4 and gold accents, clean Geist-like modern typography as abstract UI shapes only (NO readable words, NO fake lorem paragraphs), sparse dashboard of projects and memory nodes, Anthropic/Linear/Vercel aesthetic, inevitable expensive lab software, almost no fantasy, no dragons, no purple gradient AI slop. Cinematic product marketing still. Landscape 16:9. Absolutely no legible text."
+    },
+    {
+      "id": "D2-lab-with-framed-codex",
+      "folder": "04-product-lab-chrome",
+      "file": "D2-lab-with-framed-codex.png",
+      "stylePackId": "product-lab-chrome",
+      "aspect": "landscape",
+      "prompt": "Ultra-premium Arcanea product marketing still: AI-lab dark UI shell (Linear/Anthropic restraint, glass panels, teal and soft gold accents) with EXACTLY ONE framed museum-style Codex card embedded as content showing a small elegant crystalline bird silhouette artwork inside a thin gold frame on the right third. Shell is lab software not fantasy game. No dragons filling the background, no particle chaos, no purple slop. No legible text or logos. Landscape 16:9."
+    },
+    {
+      "id": "E1-hybrid-codex-card-mera",
+      "folder": "05-hybrid-codex-card",
+      "file": "E1-hybrid-codex-card-mera.png",
+      "stylePackId": "house-myth-tech+deterministic-frame-concept",
+      "aspect": "portrait",
+      "prompt": "Museum encyclopedia plate concept: photoreal cinematic portrait of Mera Tidecrest (water-memory bender, nacre armor, sealed vial, pool) as the image area, with a clean dark matte museum frame border and empty label band at bottom for later text overlay (band is solid dark empty strip, NO letters). Luxury cosmic myth-tech inside the image. Premium Codex card mock composition. Portrait. No readable text, no watermark."
+    },
+    {
+      "id": "E2-social-9x16-otome-hook",
+      "folder": "05-hybrid-codex-card",
+      "file": "E2-social-9x16-otome-hook.png",
+      "stylePackId": "house-myth-tech-social-crop",
+      "aspect": "portrait",
+      "prompt": "Vertical 9:16 social hero of OTOME crystalline song-crane Godbeast for Reels: tall composition, creature upper body and wings filling frame, face and crest sharp, resonance rings, desert aurora, luxury cosmic myth-tech photoreal, thumbnail-readable silhouette, room at top and bottom for captions later (empty sky bands). No text. Portrait aspect."
+    }
+  ]
+}

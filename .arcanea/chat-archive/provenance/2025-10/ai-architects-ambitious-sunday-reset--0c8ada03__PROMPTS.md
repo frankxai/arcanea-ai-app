@@ -1,0 +1,64 @@
+# Frank's prompts -- AI architect's ambitious sunday reset
+
+Source uuid: 0c8ada03-2ba4-4a44-816d-e5ab7936b8fd
+Created: 2025-10-05T10:00:11.783170Z
+
+Verbatim, chronological.
+
+## Turn 0
+
+This week i was moddy. Bad weather comes. Weed not hitting hard. Was multiple times in gym and now sore. Now is sunday its 4 34 am i should went to sleep hours ago bjt rather gamed and tried setting up ai agent for voding agebz template with Vercel. Ans woke up 10am again. Sore from gym and now needing your help to craft perfect sunday. Where I recharge, prepare for the week, work on my vision board, reflect and improve on strategy, create goals for all type of things. 
+
+Instead i should have done and launched my website frankx.ai next week I will be on Worldsummit AI with Oracle and my story what i showcase needs to be tight and genius. 
+
+I need my story genius. I make music with AI. I am Oracle AI Architect of Ai center of excellence and lead AI transformations with team of world class experts. 
+I am an AI Architect mastering coding Agents, using design patterns ans agentic department and process to create SDLC that rapidly accelerate the coding process, creating logical and functional architectures, user flows and just genius things. I intend to showcase Oracle Coding Agent and demo and create folder and quickly intake in conversations ideas and business and see it transform into mockups. But usually this takes 60 90 min and also needs refinement and i should extend with mcp to Oracle db and deep research tool and image generation tools. But I dont have it yet. But need to demo stuff there potentially or just talk with people might be enough I hope. But i actually bit responsible for demos. Maybe enough if i just use ai agent service without a frontend but just how it could retrieve info from object storage, but also bit boring. But oracle tech difficult to setup and just 2 days to go...
+
+But my strategy to funnel them through my linktree to connect with LinkedIn but i also want capture emails for my newsletter, and have my website frankx.ai ready as a resource hub with Prompt vaults, Links to all my Custom AI from chatgpt and other sites and prepare waitlist fir my products vibe OS, Generative Creator OS, Agentic Creator OS. And maybe more? 
+
+And in general need today a reflection of all our chats, updates in Notion and linear what progress did we do and what not. And I think key will be also to setup supbabase and other API and n8n automations for key business flows and website functionslities and instead of just refining design get first mvps running. But also landing pages and funnels need to sit. But I have many projects.. 
+And also want to make more progress on ai music academy and setup the community spaces and classrooms. I want to make progress on my ai team and their avatars and setup cadence and process to work woth this team on my projects. I want to setup genius content production flows and editing and studio experience that creates for all projects socials. I want to setup ai characters like Nona and others, and their content pipeline and create sexy stuff and videos. For frankxai music i want to create sophisticated music videos that will go viral with 5-10 sec klingai creations for each psrt of the lyrics of 3 min songs. And make these NFTs and sell these massively genuusly. And setup more autonomous AI Agents thaz build following and post themselves on x and instagram super smartly somehow. 
+
+And I wsnt to create family intelligence system and Notion hub with family tree db and then a process to also create a family Codex and then interconnect this with an AI the family can use to enrich their knowledge but also guide next generation. Build lesrning plans abd smart assistants and tutors with chatgpt, gemini, claude. And Notion possibly primary hub. And maybr this whole system becomes give for my brother in 3 weeks as a system which i guide him to configure as an education system and family hub for him and his kids and rituals so he captures his wisdom and refined it with ai, learns to establish principles and saying and importsnt stuff that will help guide his kids. 
+
+Can you help me with all thid? Retrieve additional context and insights from all chats from Notion and linear and github. Then make strategy and plan to also with my input update all systems and focus next weeks sprint
+
+## Turn 1
+
+This week i was moddy. Bad weather comes. Weed not hitting hard. Was multiple times in gym and now sore. Now is sunday its 4 34 am i should went to sleep hours ago bjt rather gamed and tried setting up ai agent for voding agebz template with Vercel. Ans woke up 10am again. Sore from gym and now needing your help to craft perfect sunday. Where I recharge, prepare for the week, work on my vision board, reflect and improve on strategy, create goals for all type of things. 
+
+Instead i should have done and launched my website frankx.ai next week I will be on Worldsummit AI with Oracle and my story what i showcase needs to be tight and genius. 
+
+I need my story genius. I make music with AI. I am Oracle AI Architect of Ai center of excellence and lead AI transformations with team of world class experts. 
+I am an AI Architect mastering coding Agents, using design patterns ans agentic department and process to create SDLC that rapidly accelerate the coding process, creating logical and functional architectures, user flows and just genius things. I intend to showcase Oracle Coding Agent and demo and create folder and quickly intake in conversations ideas and business and see it transform into mockups. But usually this takes 60 90 min and also needs refinement and i should extend with mcp to Oracle db and deep research tool and image generation tools. But I dont have it yet. But need to demo stuff there potentially or just talk with people might be enough I hope. But i actually bit responsible for demos. Maybe enough if i just use ai agent service without a frontend but just how it could retrieve info from object storage, but also bit boring. But oracle tech difficult to setup and just 2 days to go...
+
+But my strategy to funnel them through my linktree to connect with LinkedIn but i also want capture emails for my newsletter, and have my website frankx.ai ready as a resource hub with Prompt vaults, Links to all my Custom AI from chatgpt and other sites and prepare waitlist fir my products vibe OS, Generative Creator OS, Agentic Creator OS. And maybe more? 
+
+And in general need today a reflection of all our chats, updates in Notion and linear what progress did we do and what not. And I think key will be also to setup supbabase and other API and n8n automations for key business flows and website functionslities and instead of just refining design get first mvps running. But also landing pages and funnels need to sit. But I have many projects.. 
+And also want to make more progress on ai music academy and setup the community spaces and classrooms. I want to make progress on my ai team and their avatars and setup cadence and process to work woth this team on my projects. I want to setup genius content production flows and editing and studio experience that creates for all projects socials. I want to setup ai characters like Nona and others, and their content pipeline and create sexy stuff and videos. For frankxai music i want to create sophisticated music videos that will go viral with 5-10 sec klingai creations for each psrt of the lyrics of 3 min songs. And make these NFTs and sell these massively genuusly. And setup more autonomous AI Agents thaz build following and post themselves on x and instagram super smartly somehow. 
+
+And I wsnt to create family intelligence system and Notion hub with family tree db and then a process to also create a family Codex and then interconnect this with an AI the family can use to enrich their knowledge but also guide next generation. Build lesrning plans abd smart assistants and tutors with chatgpt, gemini, claude. And Notion possibly primary hub. And maybr this whole system becomes give for my brother in 3 weeks as a system which i guide him to configure as an education system and family hub for him and his kids and rituals so he captures his wisdom and refined it with ai, learns to establish principles and saying and importsnt stuff that will help guide his kids. 
+
+Can you help me with all thid? Retrieve additional context and insights from all chats from Notion and linear and github. Then make strategy and plan to also with my input update all systems and focus next weeks sprint
+
+## Turn 3
+
+This week i was moddy. Bad weather comes. Weed not hitting hard. Was multiple times in gym and now sore. Now is sunday its 4 34 am i should went to sleep hours ago bjt rather gamed and tried setting up ai agent for voding agebz template with Vercel. Ans woke up 10am again. Sore from gym and now needing your help to craft perfect sunday. Where I recharge, prepare for the week, work on my vision board, reflect and improve on strategy, create goals for all type of things. 
+
+Instead i should have done and launched my website frankx.ai next week I will be on Worldsummit AI with Oracle and my story what i showcase needs to be tight and genius. 
+
+I need my story genius. I make music with AI. I am Oracle AI Architect of Ai center of excellence and lead AI transformations with team of world class experts. 
+I am an AI Architect mastering coding Agents, using design patterns ans agentic department and process to create SDLC that rapidly accelerate the coding process, creating logical and functional architectures, user flows and just genius things. I intend to showcase Oracle Coding Agent and demo and create folder and quickly intake in conversations ideas and business and see it transform into mockups. But usually this takes 60 90 min and also needs refinement and i should extend with mcp to Oracle db and deep research tool and image generation tools. But I dont have it yet. But need to demo stuff there potentially or just talk with people might be enough I hope. But i actually bit responsible for demos. Maybe enough if i just use ai agent service without a frontend but just how it could retrieve info from object storage, but also bit boring. But oracle tech difficult to setup and just 2 days to go...
+
+But my strategy to funnel them through my linktree to connect with LinkedIn but i also want capture emails for my newsletter, and have my website frankx.ai ready as a resource hub with Prompt vaults, Links to all my Custom AI from chatgpt and other sites and prepare waitlist fir my products vibe OS, Generative Creator OS, Agentic Creator OS. And maybe more? 
+
+And in general need today a reflection of all our chats, updates in Notion and linear what progress did we do and what not. And I think key will be also to setup supbabase and other API and n8n automations for key business flows and website functionslities and instead of just refining design get first mvps running. But also landing pages and funnels need to sit. But I have many projects.. 
+And also want to make more progress on ai music academy and setup the community spaces and classrooms. I want to make progress on my ai team and their avatars and setup cadence and process to work woth this team on my projects. I want to setup genius content production flows and editing and studio experience that creates for all projects socials. I want to setup ai characters like Nona and others, and their content pipeline and create sexy stuff and videos. For frankxai music i want to create sophisticated music videos that will go viral with 5-10 sec klingai creations for each psrt of the lyrics of 3 min songs. And make these NFTs and sell these massively genuusly. And setup more autonomous AI Agents thaz build following and post themselves on x and instagram super smartly somehow. 
+
+And I wsnt to create family intelligence system and Notion hub with family tree db and then a process to also create a family Codex and then interconnect this with an AI the family can use to enrich their knowledge but also guide next generation. Build lesrning plans abd smart assistants and tutors with chatgpt, gemini, claude. And Notion possibly primary hub. And maybr this whole system becomes give for my brother in 3 weeks as a system which i guide him to configure as an education system and family hub for him and his kids and rituals so he captures his wisdom and refined it with ai, learns to establish principles and saying and importsnt stuff that will help guide his kids. 
+
+Can you help me with all thid? Retrieve additional context and insights from all chats from Notion and linear and github. Then make strategy and plan to also with my input update all systems and focus next weeks sprint
+
+## Turn 6
+
+I asked you to use linear and notion mcp server and retrieve and also update them

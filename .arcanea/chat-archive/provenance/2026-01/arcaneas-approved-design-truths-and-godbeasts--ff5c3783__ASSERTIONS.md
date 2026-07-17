@@ -1,0 +1,13 @@
+# Claude's canon assertions -- Arcanea's approved design truths and godbeasts
+
+Source uuid: ff5c3783-e7ff-4247-a39c-2e383951e04d
+
+CONFIRMED = Frank's next message reads as explicit approval. PUSHED-BACK = reads as disagreement. UNCLEAR/NO-RESPONSE = no clean signal -- treat as OPEN, not LOCKED.
+
+| Verdict | Claude said | Frank's next message |
+|---|---|---|
+| UNCLEAR | # ARCANEA: THE APPROVED TRUTHS ## What Frank Has Blessed as Canon  *"From the chaos of creation, only what resonates survives. | Is each name the idea behind it and how we designed all this defensible and approached and designed in best way?  Did we follow and used common agreement of truths as foundations? All names feeling real and ancient and familiar and still original to Arcanea? Clarity and our audience just gets it and |
+| UNCLEAR | **AURIEL** - Nature & Harmony  ---  # PART II: THE DARK LORD - MALACHAR (APPROVED AS TRAGIC VILLAIN)  ## The Core Tragedy (Blessed Canon)  **Malachar Lumenbright** - The First Eldrian Luminor, the Ori | Is each name the idea behind it and how we designed all this defensible and approached and designed in best way?  Did we follow and used common agreement of truths as foundations? All names feeling real and ancient and familiar and still original to Arcanea? Clarity and our audience just gets it and |
+| UNCLEAR | ---  # PART VIII: THE CHARACTERS (APPROVED CORE CAST)  ## Protagonists  ### ARION LUMINASTRA - **Age:** 16 (Book 1) → 23 (Book 7) → beyond - **From:** Greenvale (simple village in Heartlands) - **Elem | Is each name the idea behind it and how we designed all this defensible and approached and designed in best way?  Did we follow and used common agreement of truths as foundations? All names feeling real and ancient and familiar and still original to Arcanea? Clarity and our audience just gets it and |
+| UNCLEAR | This is the way of all creation."*  **This is your canon, Frank. | Is each name the idea behind it and how we designed all this defensible and approached and designed in best way?  Did we follow and used common agreement of truths as foundations? All names feeling real and ancient and familiar and still original to Arcanea? Clarity and our audience just gets it and |
+| NO-RESPONSE | Honor without strength is meaningless."*  These need to be: - T-shirt ready - Instagram shareable - Graduation speech quotable  **More Needed:** - A greeting (like "May the Force be with you") - A cur | (none) |

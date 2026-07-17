@@ -118,6 +118,101 @@ export const TYPE_LABELS: Record<CreationType, string> = {
 
 const VISUAL_WORLD_ENGINE_CREATIONS: ShowcaseCreation[] = [
   {
+    id: "vwe-2026-07-101",
+    title: "Lumina & Nero Cosmic Duality",
+    description:
+      "Lumina and Nero in perfect cosmic duality and dance of balance, forming the first creation point.",
+    type: "image",
+    element: "Void",
+    gate: "Source",
+    guardian: "Shinkami",
+    creatorName: "Arcanea Visual World Engine",
+    academyHouse: "Nero",
+    thumbnailUrl:
+      "/images/arcanea-world-engine/god-run-2026-07-15/arc-conductor-101-lumina-nero-duality-thumb.jpg",
+    likeCount: 28,
+    viewCount: 0,
+    featuredRank: 0.0001,
+    visualQaScore: 28,
+    tags: ["visual-world-engine", "source-gate", "duality", "cosmic", "qa-28"],
+  },
+  {
+    id: "vwe-2026-07-102",
+    title: "Mamoru Gate Shield",
+    description:
+      "Mamoru holding exit gate with starlight shield against the Drift in the Academy Gate-Descent trial.",
+    type: "image",
+    element: "Wind",
+    gate: "Foundation",
+    guardian: "Lyssandria",
+    creatorName: "Arcanea Visual World Engine",
+    academyHouse: "Staging",
+    thumbnailUrl:
+      "/images/arcanea-world-engine/god-run-2026-07-15/arc-conductor-102-mamoru-gate-shield-thumb.jpg",
+    likeCount: 27,
+    viewCount: 0,
+    featuredRank: 0.0002,
+    visualQaScore: 27,
+    tags: ["visual-world-engine", "foundation-gate", "shield", "staging", "qa-27"],
+  },
+  {
+    id: "vwe-2026-07-103",
+    title: "Mera Water Record",
+    description:
+      "Mera witnessing historical records spiral through the memory-water archives of Thal'Maris.",
+    type: "image",
+    element: "Water",
+    gate: "Voice",
+    guardian: "Alera",
+    creatorName: "Arcanea Visual World Engine",
+    academyHouse: "Aether",
+    thumbnailUrl:
+      "/images/arcanea-world-engine/god-run-2026-07-15/arc-conductor-103-mera-water-record-thumb.jpg",
+    likeCount: 28,
+    viewCount: 0,
+    featuredRank: 0.0003,
+    visualQaScore: 28,
+    tags: ["visual-world-engine", "voice-gate", "archive", "water-scroll", "qa-28"],
+  },
+  {
+    id: "vwe-2026-07-104",
+    title: "Colossal Tower Dragon",
+    description:
+      "A gigantic Kaelith titan dragon resting peacefully on a massive stone ledge of the World Tower.",
+    type: "image",
+    element: "Earth",
+    gate: "Foundation",
+    guardian: "Lyssandria",
+    creatorName: "Arcanea Visual World Engine",
+    academyHouse: "Terra",
+    thumbnailUrl:
+      "/images/arcanea-world-engine/god-run-2026-07-15/arc-conductor-104-colossal-tower-dragon-thumb.jpg",
+    likeCount: 29,
+    viewCount: 0,
+    featuredRank: 0.0004,
+    visualQaScore: 29,
+    tags: ["visual-world-engine", "foundation-gate", "colossal", "dragon", "qa-29"],
+  },
+  {
+    id: "vwe-2026-07-105",
+    title: "Emilia Prisma Gauntlet",
+    description:
+      "Emilia reading lensed color bands refracted from her custom-repaired Prisma gauntlet.",
+    type: "image",
+    element: "Spirit",
+    gate: "Crown",
+    guardian: "Aiyami",
+    creatorName: "Arcanea Visual World Engine",
+    academyHouse: "Synthesis",
+    thumbnailUrl:
+      "/images/arcanea-world-engine/god-run-2026-07-15/arc-conductor-105-emilia-prisma-gauntlet-thumb.jpg",
+    likeCount: 27,
+    viewCount: 0,
+    featuredRank: 0.0005,
+    visualQaScore: 27,
+    tags: ["visual-world-engine", "crown-gate", "prisma-gauntlet", "invention", "qa-27"],
+  },
+  {
     id: "vwe-2026-07-043",
     title: "Unity Kyuro Bridge Action",
     description:

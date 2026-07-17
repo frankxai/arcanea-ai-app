@@ -1,0 +1,31 @@
+{
+  "id": "nightly-arcanea-2026-07-15_2301",
+  "brand": "arcanea",
+  "subjects": [
+    "Lyssandria & Kaelith - Foundation Gate",
+    "Leyla & Veloura - Flow Gate",
+    "Draconia & Draconis - Fire Gate",
+    "Maylinn & Laeylinn - Heart Gate",
+    "Alera & Otome - Voice Gate",
+    "Lyria & Yumiko - Sight Gate"
+  ],
+  "prompts": [
+    "Premium cinematic portrait of Lyssandria, Arcanean Goddess and Guardian of the Foundation Gate (174 Hz, Earth, survival), standing in a dimly lit granite cavern beside her bonded Godbeast Kaelith. Lyssandria is a stoic mature woman with earth-toned skin, stone-veined ceremonial armor, and living root-like tattoos across shoulders and collarbones; calm resolute face, upper-body crop. Kaelith is a massive quadrupedal Godbeast with rough granite scales, moss-covered horns, and deep amber eyes that glow with warm 174Hz earth resonance. Ancient stone pillars, glowing amber bioluminescent roots pushing through cracks, mineral dust in the air, damp earth atmosphere. Low-key dramatic lighting from fungal amber glow, highly detailed stone and moss textures, arcanea-premium material rendering, photographic realism, no purple fog, no floating tech UI, no ethereal haze.",
+    "Premium cinematic portrait of Leyla, Arcanean Goddess and Guardian of the Flow Gate (285 Hz, creativity and emotion), standing in a serene grotto beside her bonded Godbeast Veloura. Leyla is a graceful woman with flowing blue-silver hair and water-rippled silk robes that catch light like liquid glass; composed emotional presence, upper-body crop. Veloura is a sleek phoenix-serpent aquatic Godbeast with iridescent scales, flowing fin-like mane, and elegant serpentine neck, water sheen on every scale. Cascading crystal waterfalls, bioluminescent pools, visible water droplets on stone and fabric, soft prismatic lighting through misted spray. Highly detailed wet textures, arcanea-premium material rendering, cinematic, concrete sensory detail, no purple ethereal fog, no floating tech UI.",
+    "Premium cinematic showcase portrait of Draconia, Arcanean Goddess and Guardian of the Fire Gate (396 Hz, power and will), standing in a volcanic forge chamber beside her bonded Godbeast Draconis. Draconia is a fierce woman with flame-etched bronze and black armor, ember-glowing eyes, strong jaw, heat-swept hair; showcase crop upper torso. Draconis is a powerful dragon-like Godbeast with molten-veined scales, fiery mane, and intense golden-red eyes, heat haze rising from its body. Molten lava channels, obsidian spires, glowing forge embers, sulfur haze, hot stone. Dramatic fire lighting, highly detailed metal and molten textures, arcanea-premium material rendering, cinematic power, concrete sensory heat, no purple fog, no floating tech UI, no ethereal soft haze.",
+    "Premium cinematic portrait of Maylinn, Arcanean Goddess and Guardian of the Heart Gate (417 Hz, love and healing), standing in a lush healing grove beside her bonded Godbeast Laeylinn. Maylinn is a compassionate woman with soft green and gold robes, Laeylinn Jade crystal accents at the heart and wrists, gentle warm expression; upper-body crop. Laeylinn is a gentle Worldtree deer Godbeast with leaf-patterned fur, living moss antlers, and a glowing heart-gem on its chest. Blooming flowers, soft moss, petal light, scent of blossoms implied by dense botanical detail. Soft warm golden-green lighting, highly detailed fabric and botanical textures, arcanea-premium material rendering, cinematic, concrete sensory, no purple ethereal fog, no floating tech UI.",
+    "Premium cinematic showcase portrait of Alera, Arcanean Goddess and Guardian of the Voice Gate (528 Hz, truth and expression), standing in an echoing stone amphitheater beside her bonded Godbeast Otome. Alera is a commanding woman in silver-white resonant attire with carved voice-symbol jewelry and confident open stance; showcase upper-body crop. Otome is a majestic bird-like Godbeast with shimmering feather-scales and a translucent crystal beak, alert and radiant. Sound-wave carved amphitheater walls, stone acoustics, dramatic shafts of clear acoustic light, fine stone dust motes. Highly detailed stone and feather textures, arcanea-premium material rendering, cinematic, concrete sensory vibration of truth, no purple fog, no floating tech UI, no empty ethereal glow.",
+    "Premium cinematic portrait of Lyria, Arcanean Goddess and Guardian of the Sight Gate (639 Hz, intuition and vision), standing in a prismatic observatory tower beside her bonded Godbeast Yumiko. Lyria is a visionary woman with prismatic multi-hued eyes and a sight-veiled cloak of layered translucent fabrics; calm far-seeing expression, upper-body crop. Yumiko is a fox-like Godbeast with multi-hued fur and a glowing third eye on the brow, refined and intelligent. Crystal lenses and starlight filters on carved stone mounts, refracted spectrum highlights on surfaces, clear air with sharp optical shimmer. Prismatic but concrete lighting, highly detailed crystal and fur textures, arcanea-premium material rendering, cinematic, no generic purple fog, no floating tech UI, no empty ethereal haze."
+  ],
+  "files": [
+    "01_lyssandria_kaelith_foundation.png",
+    "02_leyla_veloura_flow.png",
+    "03_draconia_draconis_fire.png",
+    "04_maylinn_laeylinn_heart.png",
+    "05_alera_otome_voice.png",
+    "06_lyria_yumiko_sight.png"
+  ],
+  "canon_ref": ".arcanea/lore/CANON_LOCKED.md",
+  "date": "2026-07-15_2301",
+  "craft_audit": "6 excellent canon-locked images generated with concrete sensory detail from locked Gates and Godbeasts"
+}

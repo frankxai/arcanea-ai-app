@@ -1,0 +1,27 @@
+{
+  "id": "nightly-arcanea-2026-07-15_2201",
+  "brand": "arcanea",
+  "subjects": [
+    "Lyssandria and Kaelith",
+    "Draconia and Draconis",
+    "Alera and Otome",
+    "Elara and Vaelith",
+    "Lumina"
+  ],
+  "prompts": [
+    "Premium fantasy illustration of Lyssandria, Arcanean Guardian of the Foundation Gate, standing resolute on ancient cyclopean stone foundations half-swallowed by living roots. She is a powerful goddess-figure in earth-toned armor of carved stone and bronze, cloak of moss and worn linen, calm unshakable stance, hands resting on a staff of living wood and dense dark Kaelith stone. Beside her looms Kaelith, her bonded earth godbeast — a massive tortoise-like colossus of basalt plates, root-veined shell, amber eyes, and gravity-heavy presence, moss and mineral crystals along its limbs. Warm earthen palette of ochre, terracotta, deep brown, granite gray, and soft gold sunlight. Cinematic side light, high craft, concrete stone grit, root bark, mineral dust, stable powerful composition, full-body environment scene, no tech UI, no purple fog.",
+    "Premium fantasy illustration of Draconia, Arcanean Guardian of the Fire Gate, channeling transformative fire with both hands raised, body braced in a stance of pure will. She wears forged crimson-bronze plate with ember-veined metal, hair like living flame braided with gold, eyes fierce and focused. Beside and behind her coils Draconis, her bonded dragon-like godbeast — massive scaled body of lava-rock and molten seams, horns of blackened basalt, wings half-unfurled shedding sparks, breath of controlled gold-orange fire. Scene of volcanic stone terrace, cracked basalt, glowing magma veins, ash motes in the air. Palette of deep red, molten orange, gold, charcoal, and white-hot highlights. Cinematic dramatic lighting, high craft, stone and fire textures, heat shimmer, power aesthetic, no tech UI, no purple fog.",
+    "Premium fantasy illustration of Alera, Arcanean Guardian of the Voice Gate, standing in a resonant crystal chamber of silver-blue stone. She is elegant and commanding, robes of pale silk and polished silver, throat and hands open as she sings or speaks a pure note; visible concentric sound waves ripple through the air as translucent rings of light catching on dust and crystal. Beside her stands Otome, her bonded godbeast — a graceful avian-feline hybrid of white and moon-silver fur with crystalline whiskers of Otome Resonite that shimmer with vibration, luminous eyes, attentive posture. Chamber walls of carved resonite and polished marble with hanging silver chimes and reflective pools. Palette of silver, icy blue, pearl white, soft indigo shadow. Cinematic cool side light, high craft, detailed fabric weave, crystal facets, truth and expression, no tech UI, no purple fog.",
+    "Premium fantasy illustration of Elara, Arcanean Guardian of the Starweave Gate, weaving starlight perspectives with outstretched hands as threads of white-gold light braid through black space. She wears midnight robes embroidered with constellation gold, eyes reflecting multiple distant vistas, calm transformative presence. Beside her moves Vaelith, her bonded godbeast — an elegant celestial creature of phase-shifting Vaelith obsidian and feathered starlight, body partially translucent as if existing half outside spacetime, horns or crest of fractured night-glass, trail of purple-white nebula sparks. Setting is a high star-bridge of black stone veined with gold, night sky dense with stars. Palette of black, gold, deep purple, and pure white starlight. Cinematic rim lighting, high craft, concrete fabric, obsidian, star grit, transformation, no tech UI, no empty resonance fog.",
+    "Premium fantasy illustration of Lumina, the First Light of Arcanea — primordial Form-Giver, Creator, and Order. A radiant luminous feminine presence of pure ordered light, not a vague energy blob: clear face and form emerging from brilliant white-gold radiance balanced against deep structured shadow, hands shaping solid geometry from light into stone, crystal, and living form at her feet. Architecture of perfect arches and ordered pillars rising from darkness into illumination. Concrete sensory detail: volumetric light rays, soft heat on stone, sharp shadow edges, dust motes, polished marble and nascent crystal growth. Palette of white gold, soft amber, clean ivory, and disciplined charcoal shadow. Cinematic sacred lighting, high craft, creation and order, primordial grandeur, no tech UI, no generic purple AI fog."
+  ],
+  "files": [
+    "01_Lyssandria_Kaelith_Foundation.png",
+    "02_Draconia_Draconis_Fire.png",
+    "03_Alera_Otome_Voice.png",
+    "04_Elara_Vaelith_Starweave.png",
+    "05_Lumina_First_Light.png"
+  ],
+  "canon_ref": "CANON_LOCKED.md",
+  "date": "2026-07-15_2201"
+}

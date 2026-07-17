@@ -1,0 +1,86 @@
+{
+  "id": "codex-encyclopedia-preview-2026-07-16",
+  "brand": "Arcanea",
+  "created_at": "2026-07-16",
+  "provenance": {
+    "generator": "grok-imagine",
+    "tool": "image_gen",
+    "harness": "grok"
+  },
+  "outputs": [
+    {
+      "filename": "01-draconis-godbeast-fire.png",
+      "path": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/codex-encyclopedia-preview-2026-07-16/01-draconis-godbeast-fire.png",
+      "subject": "DRACONIS",
+      "role": "Godbeast of the Fire Gate",
+      "aspect_ratio": "16:9",
+      "bytes": 1890458,
+      "prompt": "Ultra-premium cinematic encyclopedia hero of DRACONIS, sacred Godbeast of the Fire Gate. Colossal divine dragon of living forge-fire and will. Body of molten sacred obsidian cracked with ember-gold veins, scales of star-forged volcanic glass and celestial gold, wings of translucent flame-membrane with ember particle fields, eyes pure will-fire gold-crimson, crown of black flame that does not consume. Rising from Mount Pyralis volcanic forge at cosmic dusk, heat shimmer, halo star-ember atmospherics, molten rivers. Luxury cosmic myth-tech aesthetic, crystal living stone sacred flame. Photoreal ultra high detail 8K, museum-grade IMAX still, volumetric god-rays. No text no watermark. Landscape 16:9."
+    },
+    {
+      "filename": "02-veloura-godbeast-flow.png",
+      "path": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/codex-encyclopedia-preview-2026-07-16/02-veloura-godbeast-flow.png",
+      "subject": "VELOURA",
+      "role": "Godbeast of the Flow Gate",
+      "aspect_ratio": "16:9",
+      "bytes": 1859570,
+      "prompt": "Ultra-premium cinematic encyclopedia hero of VELOURA, Godbeast of the Flow Gate: Phoenix-Serpent of creativity and emotional memory. Sinuous body of liquid sapphire and mother-of-pearl nacre, iridescent scales shifting between water-glass and rose-gold phoenix plumage, wings half-feather half-membrane of warm bioluminescent light, intelligent opaline eyes, ribbons of liquid light and memory-currents. Under Sapphire Sea at Sunken City Thal'Maris, crystal Athenaeum architecture, underwater caustics, cosmic blue filtered into warm light current. Luxury cosmic myth-tech, photoreal 8K museum-grade. No text. Landscape 16:9."
+    },
+    {
+      "filename": "03-sol-godbeast-crown.png",
+      "path": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/codex-encyclopedia-preview-2026-07-16/03-sol-godbeast-crown.png",
+      "subject": "SOL",
+      "role": "Godbeast of the Crown Gate",
+      "aspect_ratio": "16:9",
+      "bytes": 1772020,
+      "prompt": "Ultra-premium cinematic encyclopedia hero of SOL, Godbeast of the Crown Gate: living luminous sovereign of enlightenment, barely-contained white-gold radiance. Leonine-avian celestial form of Sol Quartz crystal and starlight metal, mane of soft white light that could detonate, wings of prismatic crystal energy, calm annihilating wisdom in eyes, thin crown of white light. Floating Crystalpeak Citadel above Veil Mountains, starfield, halo particle fields, cool cosmic blue shadows vs warm gold core. Photoreal 8K museum-grade. No text. Landscape 16:9."
+    },
+    {
+      "filename": "04-arion-confluence-avatar.png",
+      "path": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/codex-encyclopedia-preview-2026-07-16/04-arion-confluence-avatar.png",
+      "subject": "ARION",
+      "role": "Confluence Avatar candidate",
+      "aspect_ratio": "3:4",
+      "bytes": 2237312,
+      "prompt": "Ultra-premium cinematic encyclopedia portrait of ARION, Confluence Avatar candidate. Young adult male, noble angular features, patient responsibility in green-gold eyes, faint luminous geometric Starlight Mark on collarbone, dark earth hair with ash-gold strands. Luxury cosmic myth-tech armor fragments of living stone and starlight metal over practical travel layers, repaired tool talisman at belt, cloak with subtle constellation thread, moss-crystal Foundation accents. Three-quarter portrait, controlled earth-crystal dust orbiting one hand, Kingdom of Light dusk landscape. High-fashion heroic photoreal 8K character bible still. No text. Portrait or landscape OK."
+    }
+  ],
+  "videos": [
+    {
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/codex-encyclopedia-preview-2026-07-16/01-draconis-godbeast-fire.png",
+      "output": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/codex-encyclopedia-preview-2026-07-16/01-draconis-godbeast-fire.mp4",
+      "tool": "image_to_video",
+      "duration_seconds": 6,
+      "duration_notes": "6s cinematic encyclopedia hero loop (within 5–7s target); 720p; slow majestic wingbeat, ember veins pulse, lava flow, gentle push-in, heat shimmer, cosmic dusk particles; photoreal godbeast documentary",
+      "bytes": 11113282,
+      "status": "ok"
+    },
+    {
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/codex-encyclopedia-preview-2026-07-16/02-veloura-godbeast-flow.png",
+      "output": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/codex-encyclopedia-preview-2026-07-16/02-veloura-godbeast-flow.mp4",
+      "tool": "image_to_video",
+      "duration_seconds": 6,
+      "duration_notes": "6s cinematic encyclopedia hero loop (within 5–7s target); 720p; serpent-phoenix undulation, memory-light shimmer, underwater caustics, liquid light ribbons, slow orbit camera; photoreal sacred undersea",
+      "bytes": 10943398,
+      "status": "ok"
+    },
+    {
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/codex-encyclopedia-preview-2026-07-16/03-sol-godbeast-crown.png",
+      "output": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/codex-encyclopedia-preview-2026-07-16/03-sol-godbeast-crown.mp4",
+      "tool": "image_to_video",
+      "duration_seconds": 6,
+      "duration_notes": "6s cinematic encyclopedia hero loop (within 5–7s target); 720p; white-light mane pulse, crystalline wing shimmer, citadel parallax, starfield drift, halo particles, slow majestic turn; photoreal enlightenment being",
+      "bytes": 8414962,
+      "status": "ok"
+    },
+    {
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/codex-encyclopedia-preview-2026-07-16/04-arion-confluence-avatar.png",
+      "output": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/codex-encyclopedia-preview-2026-07-16/04-arion-confluence-avatar.mp4",
+      "tool": "image_to_video",
+      "duration_seconds": 6,
+      "duration_notes": "6s cinematic encyclopedia hero loop (within 5–7s target); 720p; earth-crystal dust orbit, constellation cloak shift, soft hair/light motion, dusk cloud drift, very slight push-in; photoreal character portrait alive",
+      "bytes": 4920642,
+      "status": "ok"
+    }
+  ]
+}

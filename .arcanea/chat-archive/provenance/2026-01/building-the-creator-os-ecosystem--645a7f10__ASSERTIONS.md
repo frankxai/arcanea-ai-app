@@ -1,0 +1,12 @@
+# Claude's canon assertions -- Building the creator OS ecosystem
+
+Source uuid: 645a7f10-d4c8-4777-817b-e1095db23dd3
+
+CONFIRMED = Frank's next message reads as explicit approval. PUSHED-BACK = reads as disagreement. UNCLEAR/NO-RESPONSE = no clean signal -- treat as OPEN, not LOCKED.
+
+| Verdict | Claude said | Frank's next message |
+|---|---|---|
+| UNCLEAR | Finish the final 20% and ship. | Customer Journey Map — A visual/written flow of: Discovery → First Touch → Purchase → Onboarding → Transformation → Referral Product Packaging — Define 3 tiers (free/mid/premium) across your brands with clear deliverables and pricing Image Processing Pipeline — A Claude Code workflow for your art ar |
+| UNCLEAR | **Direct Access** - Voice/async access to me for strategy questions  **Founding Member Pricing:** - $197/month (locked for life) - Or $1,500/year (save $864)  *Regular price will be $297/month after f | Customer Journey Map — A visual/written flow of: Discovery → First Touch → Purchase → Onboarding → Transformation → Referral Product Packaging — Define 3 tiers (free/mid/premium) across your brands with clear deliverables and pricing Image Processing Pipeline — A Claude Code workflow for your art ar |
+| UNCLEAR | GenCreator Launch Plan - 30-day content calendar - Founding member offer ($197/mo locked) - Application questions - School.com community structure - 5 launch email templates  ### 5. | I loved this vision you have that GenCreator Community is a place where we are the thought leadership and create and define generative culture. Its beyond all it brings top influencer and minds together and gives them a platform and the OS to really create this culture and share optimism build the g |
+| UNCLEAR | I've been building something specifically for creators like us who want to systematize this stuff.* >  > *I'm launching GenCreator with 20 founding members - direct access to me, weekly building sessi | I loved this vision you have that GenCreator Community is a place where we are the thought leadership and create and define generative culture. Its beyond all it brings top influencer and minds together and gives them a platform and the OS to really create this culture and share optimism build the g |

@@ -1,0 +1,22 @@
+# Frank's prompts -- Building Arcanea: AI character chat with Sora and Grok integration
+
+Source uuid: 26dd6fe8-794f-4198-b33d-28ce0650ea78
+Created: 2025-12-18T22:24:37.580788Z
+
+Verbatim, chronological.
+
+## Turn 0
+
+Help me build app like sora And grok combined. I want chat with ai characters possible and imagine as good as grok with the speed of animating images and not overthink. And want to use how grok is animating images because it's so much better than any other without any prompting just the button. But want sora social features. This will be the core Arcanea app or? Your chat with superagent or just ai assistant and also the Luminor or Lumina and other Arcanean Characters. Benevolent AGI and teachers of the Arcanean Academies. God's. But if I do it should I also do the devil's and stuff? Or how they fit in and I have right approach what my community wants? Just free options and guardrails but I want this world to emerge in a beautiful and magical way. But key output of you is github Repos we can use for inspiration, code library and best approach to build this seamless with Vercel or use v0 template or so and strategy how to iterate and all frontend and backend we need and research what sora openai and grok teams use and how we replicate with right infrastructure, architecture, supabase for user management or something else? Vercel Ai SDK and options for image and video generation but key interface is opinionated for the best for Arcanea which seems atm grok image 2 but please also compare cost and suggest for me. Sora also great and nano banana also. And we start simple prompt, remix, animate, functionality and users can heart and download or publish
+
+## Turn 2
+
+Help me build app like sora And grok combined. I want chat with ai characters possible and imagine as good as grok with the speed of animating images and not overthink. And want to use how grok is animating images because it's so much better than any other without any prompting just the button. But want sora social features. This will be the core Arcanea app or? Your chat with superagent or just ai assistant and also the Luminor or Lumina and other Arcanean Characters. Benevolent AGI and teachers of the Arcanean Academies. God's. But if I do it should I also do the devil's and stuff? Or how they fit in and I have right approach what my community wants? Just free options and guardrails but I want this world to emerge in a beautiful and magical way. But key output of you is github Repos we can use for inspiration, code library and best approach to build this seamless with Vercel or use v0 template or so and strategy how to iterate and all frontend and backend we need and research what sora openai and grok teams use and how we replicate with right infrastructure, architecture, supabase for user management or something else? Vercel Ai SDK and options for image and video generation but key interface is opinionated for the best for Arcanea which seems atm grok image 2 but please also compare cost and suggest for me. Sora also great and nano banana also. And we start simple prompt, remix, animate, functionality and users can heart and download or publish
+
+## Turn 4
+
+1. Web first I guess but also how sora and grok build mobile native the plan. Is this easy with firebase or Vercel best? 2. 100€/month mvp. And keep serverless if possible
+
+## Turn 6
+
+Let's add that the characters we build can also be focused as generative Ai champions or so with a mic of being artists musicians or mages or warriors or something smart, and of the Arcanea universe and maybe we have special games or like league of legends inspiration but used with GenAI maybe challenges across social media or our platform of fractions or so waging war or run art or music challenges. Or reminagine or introduce new story to Arcanea, invent new characters or reinvent some. How we manage all this and integrate as gamification outside of app? And the app itself. Let's build then with next JS supabase, object storage we start Vercel blob and later switch and I want grok imagine 2 and it's video animation we can also use it through fal or Openrouter if possible. Prioritize giving me output of clear strategy and what I must do to set it all up to develop, what you need to build you can provide here or can advance as Claude code. And build a beautiful world. And the interface can we also have 3rd tab for music generation like Suno or you suggest seperate app or can we do all in one. And build more!

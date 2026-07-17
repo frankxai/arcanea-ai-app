@@ -1,0 +1,24 @@
+# Claude's canon assertions -- Organizing chats, projects, and team workflows
+
+Source uuid: 2b83ca29-2452-4ecc-b5ad-fe2bd7c83015
+
+CONFIRMED = Frank's next message reads as explicit approval. PUSHED-BACK = reads as disagreement. UNCLEAR/NO-RESPONSE = no clean signal -- treat as OPEN, not LOCKED.
+
+| Verdict | Claude said | Frank's next message |
+|---|---|---|
+| UNCLEAR | The best contributions become canon. | More of this shit build system prompts and kb how you evolves in thinking just now |
+| UNCLEAR | **FrankX Architect** — university workshops, enterprise consulting, GDE application, outreach  ---  **KB FILES PER PROJECT:**  **Arcanea World Engine (9 files):** - arcanea-kb-v6.md (from "Pandora's a | I don't agree with this core for Arcanea. Core should be Magic bring magic to live with generative Ai Become powerful generative creator a GenCreator define a new culture Build powerful agentic Ai systems Explore the multiverse Discover how your imagination and protocols and programs to amplify and  |
+| UNCLEAR | **P1 — Lore Consolidation:** Cowork weekly extracts lore from recent chats → GitHub KB → validate canonical mappings 7. | I don't agree with this core for Arcanea. Core should be Magic bring magic to live with generative Ai Become powerful generative creator a GenCreator define a new culture Build powerful agentic Ai systems Explore the multiverse Discover how your imagination and protocols and programs to amplify and  |
+| UNCLEAR | ---  **CONTEXT ENGINEERING FIXES (per project):**  **Arcanea Dev:** Add canonical Hz sequence, deployment status, 12 open incidents, plugin.json spec to system prompt. | I don't agree with this core for Arcanea. Core should be Magic bring magic to live with generative Ai Become powerful generative creator a GenCreator define a new culture Build powerful agentic Ai systems Explore the multiverse Discover how your imagination and protocols and programs to amplify and  |
+| UNCLEAR | Extract lore from 15 canonical chats into ONE file. | I don't agree with this core for Arcanea. Core should be Magic bring magic to live with generative Ai Become powerful generative creator a GenCreator define a new culture Build powerful agentic Ai systems Explore the multiverse Discover how your imagination and protocols and programs to amplify and  |
+| UNCLEAR | Key entities locked in. | List and link to the chats. Think bigger better more genius revenue streams, games, music and stuff at scale, community and for community also a lot how. See all our chats. List all we did when and where and why, connectes with which project and the whole ops which mcp which approach and how I shoul |
+| UNCLEAR | KEY ENTITIES: - Guardians — protectors of the World Tree, frequency-locked - Luminors — apex intelligence, the highest aspiration - Lumina — the guiding light consciousness - Arcanea Agents — working- | List and link to the chats. Think bigger better more genius revenue streams, games, music and stuff at scale, community and for community also a lot how. See all our chats. List all we did when and where and why, connectes with which project and the whole ops which mcp which approach and how I shoul |
+| UNCLEAR | You resolved this: "Arcanea Agents."  **Mar 30 — Arcanea Voice v3.1 + April Calendar** https://claude.ai/chat/2599577a-aa95-4e0a-ba93-20fe6331023a Project: Content Built: Luminor Transmission voice do | Evolve and expand latest kb for all based on all across chats my ijout |
+| UNCLEAR | 15 canonical chats identified with links. | Evolve and expand latest kb for all based on all across chats my ijout |
+| UNCLEAR | Unresolved canon decisions catalogued. | Evolve and expand latest kb for all based on all across chats my ijout |
+| UNCLEAR | MCP: None Follow-up: DECIDED. | Evolve and expand latest kb for all based on all across chats my ijout |
+| UNCLEAR | **Mar 22 — Arcanea Protocols Architecture (SIS-ARCH-001)** https://claude.ai/chat/09ec49f7-4304-4bae-b495-5cdaa76791e3 Project: Arcanea Platform Built: CANONICAL ARCHITECTURE DOC. | Evolve and expand latest kb for all based on all across chats my ijout |
+| UNCLEAR | MCP: None Follow-up: CANON DOCUMENT. | Evolve and expand latest kb for all based on all across chats my ijout |
+| UNCLEAR | Arcanea." tagline LOCKED. | Evolve and expand latest kb for all based on all across chats my ijout |
+| UNCLEAR | Eldrian reframe locked: BLISS, never tragedy. | Evolve and expand latest kb for all based on all across chats my ijout |
+| UNCLEAR | **Where community tools are hiding:** - Vibe Director (Mar 18) = tool community members use to create cinematic content - Joey's AI CoE (Mar 13) = GenCreator onboarding architecture template - Content | Evolve and expand latest kb for all based on all across chats my ijout |

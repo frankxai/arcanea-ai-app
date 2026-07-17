@@ -1,0 +1,74 @@
+[
+  {
+    "id": "05-mera-tidecrest",
+    "status": "ok",
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\codex-encyclopedia-preview-batch2-2026-07-16\\05-mera-tidecrest.mp4",
+    "bytes": 6029541,
+    "model": "grok-imagine-video-1.5",
+    "public_url": "https://files-cdn.x.ai/UzogCpMwS9yMmtAootdNRA/file_ece1055a-4ddb-46aa-b920-d30419a004c0.mp4",
+    "source_image": "https://files-cdn.x.ai/iBEEtM97R1iiKWOZv4XD7Q/file_7de46c03-0910-4526-a40c-8fc3eed1c4c9.png",
+    "motion": "6s cinematic encyclopedia loop; water surface micro-ripples, nacre and hair shimmer, memory-specks drift, soft breath, gentle push-in to eyes; photoreal portrait alive",
+    "aspect_ratio": "9:16",
+    "duration": 6
+  },
+  {
+    "id": "06-emilia-synthesis",
+    "status": "ok",
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\codex-encyclopedia-preview-batch2-2026-07-16\\06-emilia-synthesis.mp4",
+    "bytes": 6161204,
+    "model": "grok-imagine-video-1.5",
+    "public_url": "https://files-cdn.x.ai/XaKeuGzARimYwzBIImcxYA/file_7cdaef9a-3614-4a4a-9aa4-22919d2d077d.mp4",
+    "source_image": "https://files-cdn.x.ai/fWFZdjB9RAGf56w8zzIQag/file_43de9fcd-1355-448e-ad33-616d76b382e9.png",
+    "motion": "6s cinematic encyclopedia loop; Prisma lenses micro-tick, spectrum threads breathe, coat iridescence shift, soft workshop light drift, slight push-in; photoreal inventor portrait",
+    "aspect_ratio": "9:16",
+    "duration": 6
+  },
+  {
+    "id": "07-akamoto-headmaster",
+    "status": "ok",
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\codex-encyclopedia-preview-batch2-2026-07-16\\07-akamoto-headmaster.mp4",
+    "bytes": 5143995,
+    "model": "grok-imagine-video-1.5",
+    "public_url": "https://files-cdn.x.ai/--X93OvdSEalGi2T6XjUAQ/file_20277ac5-5d84-4495-827e-2dfe29a647f3.mp4",
+    "source_image": "https://files-cdn.x.ai/ZsmbxjofRNe-jfnqVnymOQ/file_0b5ac6f3-2654-4ab8-afbb-4a3bef4df068.png",
+    "motion": "6s cinematic encyclopedia loop; harness straps micro-flex, heat shimmer on pauldron, dragon breath steam in bokeh, hair wind, slow calm authority; photoreal mentor portrait",
+    "aspect_ratio": "9:16",
+    "duration": 6
+  },
+  {
+    "id": "08-kaelith-godbeast-foundation",
+    "status": "ok",
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\codex-encyclopedia-preview-batch2-2026-07-16\\08-kaelith-godbeast-foundation.mp4",
+    "bytes": 12482766,
+    "model": "grok-imagine-video-1.5",
+    "public_url": "https://files-cdn.x.ai/UPc1TNm_Q46ut8-ERPq5rA/file_bfe183a1-5c87-4f31-9f5e-9130fd09f9df.mp4",
+    "source_image": "https://files-cdn.x.ai/1P0e3webTJO5nkV_zqFatw/file_ce1c9176-db0c-4852-b9d6-899dc5ff3f56.png",
+    "motion": "6s cinematic encyclopedia loop; gold veins pulse slowly, dust orbits mass, micro rock-shift, weighty majestic push-in, heatless mountain breath; photoreal foundation godbeast",
+    "aspect_ratio": "16:9",
+    "duration": 6
+  },
+  {
+    "id": "09-otome-godbeast-voice",
+    "status": "ok",
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\codex-encyclopedia-preview-batch2-2026-07-16\\09-otome-godbeast-voice.mp4",
+    "bytes": 7561399,
+    "model": "grok-imagine-video-1.5",
+    "public_url": "https://files-cdn.x.ai/iKBSnbVbREWWk5vN-xxVtw/file_635cb84f-9687-4e8f-831c-7d786da021e4.mp4",
+    "source_image": "https://files-cdn.x.ai/qNAe5YNSTZ-UJXbTKcZqyQ/file_de7d48cf-50a4-4949-81c1-afe91405586b.png",
+    "motion": "6s cinematic encyclopedia loop; resonance rings expand and fade, crystal feathers vibrate, wind ribbons flow, slow vertical orbit, clean tone particles; photoreal voice godbeast",
+    "aspect_ratio": "16:9",
+    "duration": 6
+  },
+  {
+    "id": "10-laeylinn-godbeast-heart",
+    "status": "ok",
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\codex-encyclopedia-preview-batch2-2026-07-16\\10-laeylinn-godbeast-heart.mp4",
+    "bytes": 8095069,
+    "model": "grok-imagine-video-1.5",
+    "public_url": "https://files-cdn.x.ai/emsPUG0wSx6Ot1VB936UXg/file_88130162-ef95-44e1-ab87-2b13eaa72f9e.mp4",
+    "source_image": "https://files-cdn.x.ai/gX_D5WRpR1Oe3UahZIgNog/file_622250cc-e901-470e-b723-ec57626f3a4f.png",
+    "motion": "6s cinematic encyclopedia loop; jade antlers micro-grow then settle, meadow biolume pulse, heart-light breath, soft turn of head, petals drift; photoreal heart godbeast",
+    "aspect_ratio": "16:9",
+    "duration": 6
+  }
+]

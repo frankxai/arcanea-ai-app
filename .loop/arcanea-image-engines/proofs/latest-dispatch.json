@@ -1,7 +1,7 @@
 {
-  "ts": "2026-07-05T23:36:07.175Z",
+  "ts": "2026-07-15T10:28:24.955Z",
   "dryRun": true,
-  "run": "run-2026-07-05",
+  "run": "run-2026-07-15",
   "decisions": [
     {
       "brief": "brief-thalmaris-archive-dusk",
@@ -9,7 +9,7 @@
       "engine": "higgsfield",
       "harness": "claude",
       "invocation": "higgsfield-generate skill (draft-then-4K)",
-      "run": "run-2026-07-05",
+      "run": "run-2026-07-15",
       "ledgered": false
     },
     {
@@ -18,7 +18,7 @@
       "engine": "gpt-image-2",
       "harness": "codex",
       "invocation": "Codex image_gen per .loop/arcanea-image-lab",
-      "run": "run-2026-07-05",
+      "run": "run-2026-07-15",
       "ledgered": false
     },
     {
@@ -27,7 +27,7 @@
       "engine": "nb2",
       "harness": "antigravity",
       "invocation": "NB2 / nb-generate.mjs (GEMINI_API_KEY)",
-      "run": "run-2026-07-05",
+      "run": "run-2026-07-15",
       "ledgered": false
     },
     {
@@ -36,7 +36,7 @@
       "engine": "grok-imagine",
       "harness": "grok-cli",
       "invocation": "Grok CLI / Hermes agent",
-      "run": "run-2026-07-05",
+      "run": "run-2026-07-15",
       "ledgered": false
     },
     {
@@ -45,7 +45,7 @@
       "engine": "higgsfield",
       "harness": "claude",
       "invocation": "higgsfield-generate skill (draft-then-4K)",
-      "run": "run-2026-07-05",
+      "run": "run-2026-07-15",
       "ledgered": false
     }
   ]

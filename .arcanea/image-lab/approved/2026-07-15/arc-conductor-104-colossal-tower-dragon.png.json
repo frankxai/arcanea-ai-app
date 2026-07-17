@@ -1,0 +1,44 @@
+{
+  "asset_id": "arc-conductor-104",
+  "title": "Colossal Tower Dragon",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-conductor-2026-07-15",
+  "workflow": "built-in-image-gen",
+  "created_at": "2026-07-15T10:29:47+02:00",
+  "source_method": "generated-media",
+  "asset_tier": "B",
+  "provenance": "generated",
+  "rights_status": "generated-owned-source",
+  "approval_status": "internal-review-candidate",
+  "decision": "ship-internal-review",
+  "score30": 29,
+  "surface": "showcase-hero-frame",
+  "dimensions": {
+    "width": 1024,
+    "height": 1024
+  },
+  "file": {
+    "path": "apps/web/public/images/arcanea-world-engine/god-run-2026-07-15/arc-conductor-104-colossal-tower-dragon.png",
+    "mime_type": "image/png"
+  },
+  "characters": [],
+  "canon_status": {
+    "mamoru": "not-present",
+    "staging_promotion": "none",
+    "luminor_usage": "not-used-as-species"
+  },
+  "prompt_summary": "Gigantic Kaelith titan dragon resting in world-tower, styled in Dark Premium Glass.",
+  "inspection": {
+    "strengths": [
+      "incredible sense of colossal scale",
+      "rich green-gold scales and cascading waterfalls",
+      "vibrant fabric bridge accents"
+    ],
+    "risks": [
+      "complex structural layout"
+    ],
+    "next_action": "Verify gallery rendering."
+  },
+  "notes": "Generated during 2026-07-15 visual loop."
+}

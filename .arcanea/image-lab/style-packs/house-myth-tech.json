@@ -1,0 +1,59 @@
+{
+  "id": "house-myth-tech",
+  "version": "2026-07-16",
+  "rail": "world",
+  "house": true,
+  "lookName": "Cinematic Myth-Tech Encyclopedia",
+  "description": "Official Arcanea world media house style. Photoreal materials + cinematic light + fashion-editorial people + monumental creatures. Not anime, not mud-fantasy, not product chrome.",
+  "authorities": [
+    "VISUAL_DOCTRINE.md",
+    "CANON_LOCKED.md",
+    "CHARACTER_CORE.md",
+    "PROMPTING_SYSTEM_V2.md"
+  ],
+  "materialsWhitelist": [
+    "crystal",
+    "starlight metal",
+    "living stone",
+    "sacred obsidian",
+    "celestial gold",
+    "liquid light",
+    "nacre",
+    "prismatic crystal",
+    "void-silk",
+    "embersteel",
+    "Vael crystal",
+    "Kaelith Stone",
+    "Otome Resonite",
+    "Laeylinn Jade"
+  ],
+  "lightLaw": "Warm gold × cool cosmic blue; cosmic dusk; restrained god-rays; domain accent secondary. Never flat gray, never neon.",
+  "tone": "Luxury cosmic myth-tech; high-fashion heroic; museum-grade; franchise key art.",
+  "promptTemplates": [
+    "cast-portrait-bible",
+    "godbeast-encyclopedia-hero"
+  ],
+  "defaultAspect": {
+    "cast": "portrait",
+    "godbeast": "landscape"
+  },
+  "enginesPreferred": ["grok-imagine-image-quality@2k"],
+  "enginesVideo": ["grok-imagine-video-1.5"],
+  "enginesAllowed": ["nb2-explore-labeled", "higgsfield-soul", "face-ref-chain"],
+  "identityMode": "design-card-then-soul-id",
+  "forbidden": [
+    "plastic",
+    "mud-medieval",
+    "isekai glow",
+    "neon cyberpunk primary",
+    "spandex MCU",
+    "text watermark UI logo",
+    "sheet-music glyphs",
+    "literal cartoon hearts as architecture",
+    "godbeast as armored humanoid",
+    "prompt noise masterpiece best quality 8k"
+  ],
+  "shipBarScore30": 28,
+  "doNotUseFor": ["product chrome", "app shell", "settings UI"],
+  "socialPackaging": "Codex museum card overlay (deterministic) + one subject per post"
+}

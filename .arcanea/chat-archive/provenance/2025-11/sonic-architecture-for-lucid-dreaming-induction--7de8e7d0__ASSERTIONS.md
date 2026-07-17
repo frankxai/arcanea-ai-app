@@ -1,0 +1,16 @@
+# Claude's canon assertions -- Sonic architecture for lucid dreaming induction
+
+Source uuid: 7de8e7d0-f24a-49f9-bd16-878bbfd19f82
+
+CONFIRMED = Frank's next message reads as explicit approval. PUSHED-BACK = reads as disagreement. UNCLEAR/NO-RESPONSE = no clean signal -- treat as OPEN, not LOCKED.
+
+| Verdict | Claude said | Frank's next message |
+|---|---|---|
+| UNCLEAR | [Steel Tongue Drum] [Crystalline Frequencies]  [Soft Verse 3] In the space between heartbeats In the pause between breaths You find the doorway To infinite depth  [Outro - Gradual Fade] [Return to 40  | More guided more powerful, like really good meditation or visualization and better |
+| UNCLEAR | begin to anchor This memory in your body A golden thread Connecting waking to dreaming  Your breath deepens Your awareness expands You're becoming a bridge Between all states of consciousness  [Final  | The voice and things it's not immersive or voice not really capturing me. Sometimes but the way it's sung currently it's not really getting me to visualize. Improve |
+| UNCLEAR | again  I am lucid I am aware   I am the dream And the dreamer  [Extended Ambient Hold] [Only Binaural Tones] [Singing Bowl Resonance] [Fade to Silence]  [Final Whisper - Barely Audible] ...remember... | The voice and things it's not immersive or voice not really capturing me. Sometimes but the way it's sung currently it's not really getting me to visualize. Improve |
+| UNCLEAR | [Only ambient sounds remain] [Theta waves] [Distant rain] [Singing bowls]  [Final whisper - like wind]  ...remember... | Singing mix is okay. I even want like an ancient Arcanean clan now weaving me in their advanced ritual. Guiding me through the arc. The quantum portal and help me jump and visualize. |
+| UNCLEAR | (Dream-walker, you are awakened forever...)  [Drums fading] [Fire crackling] [Dreamweaver's wings - one last shimmer]  [Elder Shaman - Final words, distant] Go now... | From other chat get actual correct Godbeast and Guardia which would be the right |
+| UNCLEAR | [Tibetan horns - closing the ritual] [Singing bowls - final resonance] [Silence]  [Barely audible - the clan in the distance] Vel'anór... | From other chat get actual correct Godbeast and Guardia which would be the right |
+| UNCLEAR | [Elder Shaman - Final Blessing] We release you now Back to your sleeping body But you carry our frequency Yumiko's vision Lyria's wisdom In every cell  [Breathing - Clan Slowing With You] [Returning T | That's not really good meditation visualization. Also reduce what's not needed or spoken in lyrics. 3000 characters Max. And cooler state of art language but still feeling the ancient epicness. Immerse |
+| UNCLEAR | [Tibetan Horns - Closing The Ceremony] [Singing Bowls - Final 852 Hz Resonance]  [Barely Audible - Clan In The Distance] Yumi'kora... | That's not really good meditation visualization. Also reduce what's not needed or spoken in lyrics. 3000 characters Max. And cooler state of art language but still feeling the ancient epicness. Immerse |

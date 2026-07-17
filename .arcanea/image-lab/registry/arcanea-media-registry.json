@@ -1,0 +1,111 @@
+{
+  "version": "2026-07-16",
+  "description": "Arcanea world IP media graph. Only approved or ship-candidate assets. Multi-brand usedIn also mirrors to brand-image-system runtime registry when social ships.",
+  "shipBarScore30": 28,
+  "houseStylePackId": "house-myth-tech",
+  "assets": [
+    {
+      "id": "arcanea-2026-07-16-mera-tidecrest-v1",
+      "brandId": "arcanea",
+      "rail": "world",
+      "stylePackId": "house-myth-tech",
+      "entity": "mera-tidecrest",
+      "entityClass": "cast",
+      "jobId": "codex-encyclopedia-preview-batch2-2026-07-16",
+      "score30": 28,
+      "soulRefId": null,
+      "decision": "ship-candidate",
+      "files": {
+        "master": ".arcanea/image-lab/codex-encyclopedia-preview-batch2-2026-07-16/05-mera-tidecrest.png",
+        "video": ".arcanea/image-lab/codex-encyclopedia-preview-batch2-2026-07-16/05-mera-tidecrest.mp4"
+      },
+      "usedIn": []
+    },
+    {
+      "id": "arcanea-2026-07-16-emilia-synthesis-v1",
+      "brandId": "arcanea",
+      "rail": "world",
+      "stylePackId": "house-myth-tech",
+      "entity": "emilia",
+      "entityClass": "cast",
+      "jobId": "codex-encyclopedia-preview-batch2-2026-07-16",
+      "score30": 29,
+      "soulRefId": null,
+      "decision": "ship-candidate",
+      "files": {
+        "master": ".arcanea/image-lab/codex-encyclopedia-preview-batch2-2026-07-16/06-emilia-synthesis.png",
+        "video": ".arcanea/image-lab/codex-encyclopedia-preview-batch2-2026-07-16/06-emilia-synthesis.mp4"
+      },
+      "usedIn": []
+    },
+    {
+      "id": "arcanea-2026-07-16-akamoto-headmaster-v1",
+      "brandId": "arcanea",
+      "rail": "world",
+      "stylePackId": "house-myth-tech",
+      "entity": "akamoto",
+      "entityClass": "cast",
+      "jobId": "codex-encyclopedia-preview-batch2-2026-07-16",
+      "score30": 27,
+      "soulRefId": null,
+      "decision": "iterate",
+      "files": {
+        "master": ".arcanea/image-lab/codex-encyclopedia-preview-batch2-2026-07-16/07-akamoto-headmaster.png",
+        "video": ".arcanea/image-lab/codex-encyclopedia-preview-batch2-2026-07-16/07-akamoto-headmaster.mp4"
+      },
+      "usedIn": []
+    },
+    {
+      "id": "arcanea-2026-07-16-kaelith-foundation-v1",
+      "brandId": "arcanea",
+      "rail": "world",
+      "stylePackId": "house-myth-tech",
+      "entity": "kaelith",
+      "entityClass": "godbeast",
+      "jobId": "codex-encyclopedia-preview-batch2-2026-07-16",
+      "score30": 28,
+      "soulRefId": null,
+      "decision": "ship-candidate",
+      "files": {
+        "master": ".arcanea/image-lab/codex-encyclopedia-preview-batch2-2026-07-16/08-kaelith-godbeast-foundation.png",
+        "video": ".arcanea/image-lab/codex-encyclopedia-preview-batch2-2026-07-16/08-kaelith-godbeast-foundation.mp4"
+      },
+      "usedIn": []
+    },
+    {
+      "id": "arcanea-2026-07-16-otome-voice-v1",
+      "brandId": "arcanea",
+      "rail": "world",
+      "stylePackId": "house-myth-tech",
+      "entity": "otome",
+      "entityClass": "godbeast",
+      "jobId": "codex-encyclopedia-preview-batch2-2026-07-16",
+      "score30": 29,
+      "soulRefId": null,
+      "decision": "ship-candidate",
+      "files": {
+        "master": ".arcanea/image-lab/codex-encyclopedia-preview-batch2-2026-07-16/09-otome-godbeast-voice.png",
+        "video": ".arcanea/image-lab/codex-encyclopedia-preview-batch2-2026-07-16/09-otome-godbeast-voice.mp4"
+      },
+      "usedIn": []
+    },
+    {
+      "id": "arcanea-2026-07-16-laeylinn-heart-v1",
+      "brandId": "arcanea",
+      "rail": "world",
+      "stylePackId": "house-myth-tech",
+      "entity": "laeylinn",
+      "entityClass": "godbeast",
+      "jobId": "codex-encyclopedia-preview-batch2-2026-07-16",
+      "score30": 26,
+      "soulRefId": null,
+      "decision": "repair-candidate",
+      "notes": "Optional repair: remove heart-shaped portal architecture",
+      "files": {
+        "master": ".arcanea/image-lab/codex-encyclopedia-preview-batch2-2026-07-16/10-laeylinn-godbeast-heart.png",
+        "video": ".arcanea/image-lab/codex-encyclopedia-preview-batch2-2026-07-16/10-laeylinn-godbeast-heart.mp4"
+      },
+      "usedIn": []
+    }
+  ]
+}

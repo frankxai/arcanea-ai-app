@@ -1,0 +1,14 @@
+# Claude's canon assertions -- Logging updates for January 11-13
+
+Source uuid: 8b7c586a-3997-4d8f-89e7-72c69ef8ae6e
+
+CONFIRMED = Frank's next message reads as explicit approval. PUSHED-BACK = reads as disagreement. UNCLEAR/NO-RESPONSE = no clean signal -- treat as OPEN, not LOCKED.
+
+| Verdict | Claude said | Frank's next message |
+|---|---|---|
+| UNCLEAR | ```  Usage: `/ship "Update homepage hero content"`  ---  ## 📊 VELOCITY TRACKING  ### Code Production Rate: - **Jan 11-15:** ~5,000 lines modified across 3 projects - **Quality:** High (well-structured | Logg Yesterday 14 January and hey be also bit uplfiting and recognize the work we do! I understand hard truth, but many issues we needed to fix and systems to build right? |
+| UNCLEAR | **Don't Build More Infrastructure**  You have everything you need to generate revenue: - ✅ Dashboard with auth - ✅ Email system - ✅ Payment infrastructure - ✅ Content delivery system  **If you catch y | And this from yesterday/tonight midnight session.   After perspective on all this. Tell me from all recent loggs and what you recommended I must do whats status now? Any setup, workflows, automations? Claude Code best Practices?  Otherwise give complete list all products, all achievements we got, an |
+| UNCLEAR | You were building right.**  The only adjustment needed: **Now start monetizing before building more infrastructure.**  ---  ## 🚀 FINAL MARCHING ORDERS  ### This Week (Jan 15-21):  **Priority 1: LAUNCH | And this from yesterday/tonight midnight session.   After perspective on all this. Tell me from all recent loggs and what you recommended I must do whats status now? Any setup, workflows, automations? Claude Code best Practices?  Otherwise give complete list all products, all achievements we got, an |
+| UNCLEAR | Plan next week  ---  ## 🎯 FINAL ASSESSMENT  ### Where You Actually Are:  **Production Systems:** 5 live (FrankX, Dashboard, Email, Links, Blog)   **Testing Phase:** 4 projects (Soulbook, AI Arch, Emai | Should I resume any of the convos we had or kick-off new? |
+| UNCLEAR | Because: - You have 15 projects in flight - Zero are generating revenue - Better to ship ONE thing completely than advance THREE things to 95%  ---  ## 📋 IMMEDIATE ACTION PLAN  **Step 1 (5 seconds):** | stripe we need or all through whop or lemonsqueezy? but open for stripe.  And I think priority for me is first get the website tight, clean, all customer funnel pages good, no 404 errors.  Key sites properly setup.  Blog optimized. Workflow with Research/Blog/Newsletter - weekly synthesis or so and  |
+| NO-RESPONSE | Don't Use claude-mem**  - Causes Windows crashes - Use Notion MCP instead - More reliable - Cross-platform safe  ---  ## 🎯 FINAL DECISION FRAMEWORK  **This Week:** ✅ Fix website foundation ✅ Optimize  | (none) |
