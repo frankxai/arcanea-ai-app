@@ -1,0 +1,123 @@
+{
+  "version": "2026-06-23",
+  "task": "Build and verify the Arcanea Living Codex and Creature Forge vertical slice.",
+  "surface": "Responsive web registry, entity detail pages, and original-creature blueprint tool.",
+  "audience": "Anime and premium fantasy fans, worldbuilders, authors, indie game teams, and AI-native creators.",
+  "first_read": "Arcanea has a specific living creature world, and the visitor can leave with an original artifact they own.",
+  "standards": [
+    "TASTE.md",
+    "DESIGN.md",
+    ".arcanea/lore/VISUAL_DOCTRINE.md",
+    "design-agent-standards/OUTCOMES.md",
+    "design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "design-agent-standards/PREMIUM_ASSET_STANDARD.md"
+  ],
+  "references": [
+    {
+      "label": "Arcanea canon",
+      "source": ".arcanea/lore/CANON_LOCKED.md",
+      "reason": "Locks the ten Godbeast names, Guardians, Gates, and elemental cosmology."
+    },
+    {
+      "label": "Arcanea visual doctrine",
+      "source": ".arcanea/lore/VISUAL_DOCTRINE.md",
+      "reason": "Defines luxury cosmic myth-tech materials and world-media direction."
+    },
+    {
+      "label": "Arcanea visual media council",
+      "source": "planning-with-files/ARCANEA_VISUAL_MEDIA_STRATEGY_COUNCIL_2026-07-16.md",
+      "reason": "Maintains the split between restrained product chrome and cinematic world media."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "AI-lab restraint in product controls",
+      "Tracked cinematic Godbeast media as first-viewport evidence",
+      "Geist product typography with Instrument Serif used only as an editorial accent",
+      "Explicit canon and provenance boundaries"
+    ],
+    "avoid": [
+      "Fantasy-game chrome",
+      "Decorative particle fields as the primary visual",
+      "Frequency values in user-facing product UI",
+      "Generic three-card feature grids",
+      "Third-party creature or card design imitation"
+    ],
+    "signature": "Move from a museum-grade living entity to a portable creator-owned blueprint in one coherent journey.",
+    "system": [
+      "Asymmetric media collage on the Codex hero",
+      "Search and affinity filters in restrained glass controls",
+      "Stable entity URLs with structured data",
+      "Ecology-first Forge with consequence before spectacle",
+      "Tracked WebP world media and token-based application chrome"
+    ]
+  },
+  "asset_quality": {
+    "tier": "B",
+    "source_method": "generated-media",
+    "provenance": "generated",
+    "why_premium": "The interface uses tracked Arcanea Godbeast media already committed as owned world assets rather than placeholders or decorative filler.",
+    "shortcut_risk": "low",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "docs/evidence/living-codex/desktop-codex.png",
+      "kind": "web",
+      "inspected": true,
+      "notes": "Desktop production render inspected at 1440px: strong editorial hierarchy, restrained filter chrome, readable cards, no overlap."
+    },
+    {
+      "path_or_url": "docs/evidence/living-codex/mobile-codex.png",
+      "kind": "web",
+      "inspected": true,
+      "notes": "Mobile production render inspected at 390px: single-column hierarchy, usable horizontal affinity rail, no overflow."
+    },
+    {
+      "path_or_url": "docs/evidence/living-codex/mobile-entity.png",
+      "kind": "web",
+      "inspected": true,
+      "notes": "Mobile Kaelith entity inspected at 390px: image, profile, signals, and CTAs remain legible and unclipped."
+    },
+    {
+      "path_or_url": "docs/evidence/living-codex/mobile-forge.png",
+      "kind": "ui",
+      "inspected": true,
+      "notes": "Mobile Forge inspected after filling Aster Vale; form, live preview, prompt, copy, and download actions remain usable."
+    },
+    {
+      "path_or_url": "docs/evidence/living-codex/aster-vale-creature-blueprint.json",
+      "kind": "ui",
+      "inspected": true,
+      "notes": "Downloaded artifact parsed and inspected; schema, private-draft status, and not-canon provenance are present."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Tier B tracked Arcanea WebP world media; product chrome remains token-based."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "evidence": "Desktop 1440px and mobile 390px PNG exports inspected for Codex, entity, and Forge surfaces."
+    },
+    {
+      "name": "visual-qa",
+      "status": "pass",
+      "evidence": "No horizontal overflow at 1440px or 390px; no clipping or overlap; production routes rendered and Forge export exercised."
+    }
+  ],
+  "score": {
+    "total": 27,
+    "max": 30,
+    "notes": "Ships above the 26/30 gate: strong hierarchy, real tracked world media, clear interaction, responsive integrity, and canon boundaries. One point held for baked labels in inherited world assets; two held until media registry provenance and saved-world persistence are connected."
+  },
+  "decision": "ship",
+  "known_risks": [
+    "Existing generated media provenance predates this feature and should later be linked to the central media registry.",
+    "Some inherited Godbeast images contain baked annotation text; future clean master exports should replace them while preserving the current page composition.",
+    "Forge output is local-only in v1 and is not yet persisted into a creator world."
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "arcanea.creature-blueprint.v1",
+  "status": "private-draft",
+  "name": "Aster Vale",
+  "thesis": "protects stories that would otherwise disappear",
+  "ecology": {
+    "habitat": "silent observatory",
+    "behavior": "appears between reflections",
+    "dietOrFuel": "forgotten names spoken with care"
+  },
+  "design": {
+    "silhouette": "long-limbed guardian with a crown-like dorsal arc",
+    "motionVerb": "appears between reflections",
+    "materialLanguage": "celestial gold, liquid light, and translucent living crystal"
+  },
+  "systems": {
+    "primaryAffinity": "Spirit",
+    "secondaryAffinity": "Void",
+    "bondRule": "chosen stewardship",
+    "signatureCapability": "makes missing connections visible for one decisive moment",
+    "consequence": "reveals one hidden memory"
+  },
+  "provenance": {
+    "generatedBy": "Arcanea Creature Forge",
+    "canonStatus": "not-canon"
+  }
+}

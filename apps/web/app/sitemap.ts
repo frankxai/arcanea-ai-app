@@ -37,6 +37,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/lore/malachar`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.75 },
     { url: `${baseUrl}/lore/library`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.75 },
     { url: `${baseUrl}/factions`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${baseUrl}/codex`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/codex/forge`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
 
     // ── Academy ────────────────────────────────────────────
     { url: `${baseUrl}/academy`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
@@ -114,6 +116,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
+  // Living Codex entity pages (10 canon Godbeast anchors)
+  const godbeastNames = [
+    'kaelith', 'veloura', 'draconis', 'laeylinn', 'otome',
+    'yumiko', 'sol', 'vaelith', 'kyuro', 'source',
+  ];
+  const codexPages: MetadataRoute.Sitemap = godbeastNames.map((name) => ({
+    url: `${baseUrl}/codex/${name}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }));
+
   // Library collections (17)
   const libraryCollectionPages: MetadataRoute.Sitemap = COLLECTIONS.map((c) => ({
     url: `${baseUrl}/library/${c.slug}`,
@@ -186,6 +200,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...staticPages,
     ...guardianPages,
+    ...codexPages,
     ...libraryCollectionPages,
     ...libraryTextPages,
     ...gatePages,
