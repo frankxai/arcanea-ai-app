@@ -80,18 +80,67 @@ async function main() {
     );
   });
 
-  await check('COLORS contain no unresolvable CSS custom properties', async () => {
-    const source = await import('node:fs').then((fs) =>
-      fs.readFileSync(new URL('../og.tsx', import.meta.url), 'utf8')
+  // The repo's lint rule offers `var(--arc-*)` as an accepted alternative to raw
+  // hex, so a future OG route can legitimately pass one in. Satori cannot resolve
+  // custom properties, so createOGImage must map them back to literal values
+  // rather than forwarding them to the renderer.
+  await check('resolves a var(--arc-*) accentColor instead of forwarding it', async () => {
+    await renderToPng(
+      createOGImage({
+        title: 'Tokens',
+        accentColor: 'var(--arc-brand-arcanean-gold)',
+      }) as unknown as Response
     );
-    // Ignore the explanatory comments; check only code lines.
-    const offending = source
-      .split('\n')
-      .filter((l) => !l.trimStart().startsWith('*') && !l.trimStart().startsWith('//'))
-      .filter((l) => l.includes('var(--'));
-    if (offending.length > 0) {
-      throw new Error(`var(--*) found in og.tsx:\n${offending.join('\n')}`);
+  });
+
+  await check('resolves var(--arc-*) glow colours', async () => {
+    await renderToPng(
+      createOGImage({
+        title: 'Tokens',
+        glowPositions: [
+          { top: '10%', left: '10%', color: 'var(--arc-brand-atlantean-teal)', size: 300 },
+          { bottom: '10%', color: 'var(--arc-fire)', size: 200 },
+        ],
+      }) as unknown as Response
+    );
+  });
+
+  await check('falls back for an unrecognised custom property', async () => {
+    await renderToPng(
+      createOGImage({
+        title: 'Unknown token',
+        accentColor: 'var(--arc-does-not-exist)',
+      }) as unknown as Response
+    );
+  });
+
+  // Rendering without throwing is not proof the mapping happened — assert the
+  // var() form produces byte-identical output to the literal token.
+  await check('var() accent renders identically to the literal token', async () => {
+    const { brand } = await import('@arcanea/design-system');
+    const [viaVar, viaLiteral] = await Promise.all([
+      renderToPng(
+        createOGImage({
+          title: 'Equivalence',
+          accentColor: 'var(--arc-brand-arcanean-gold)',
+        }) as unknown as Response
+      ),
+      renderToPng(
+        createOGImage({
+          title: 'Equivalence',
+          accentColor: brand.arcaneanGold,
+        }) as unknown as Response
+      ),
+    ]);
+    if (!viaVar.equals(viaLiteral)) {
+      throw new Error(
+        `var() form did not resolve to the token (${viaVar.length}b vs ${viaLiteral.length}b)`
+      );
     }
+  });
+
+  await check('degrades a blank title to a valid card', async () => {
+    await renderToPng(createOGImage({ title: '   ' }) as unknown as Response);
   });
 
   console.log(`\n${passed} passed, ${failed} failed`);

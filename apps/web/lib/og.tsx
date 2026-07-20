@@ -1,8 +1,36 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { ImageResponse } from 'next/og'
-import { brand, cosmic, text as textToken } from '@arcanea/design-system'
+import { brand, cosmic, elements, text as textToken } from '@arcanea/design-system'
 
 export const OG_SIZE = { width: 1200, height: 630 }
+
+// Belt-and-braces for the var() hazard below. The repo's own lint rule offers
+// `var(--arc-*)` as an accepted alternative to raw hex (TASTE.md Gate 6), so a
+// future OG route can pass one in, satisfy lint, and crash production. Map the
+// tokens in use back to literal hex and fall back to brand teal for anything
+// unrecognised, rather than letting it reach Satori.
+const CSS_VAR_TO_HEX: Record<string, string> = {
+  '--arc-brand-atlantean-teal': brand.atlanteanTeal,
+  '--arc-brand-arcanean-gold': brand.arcaneanGold,
+  '--arc-brand-cosmic-blue': brand.cosmicBlue,
+  '--arc-brand-aquamarine': brand.aquamarine,
+  '--arc-cosmic-void': cosmic.void,
+  '--arc-cosmic-deep': cosmic.deep,
+  '--arc-text-primary': textToken.primary,
+  '--arc-void': elements.void.base,
+  '--arc-earth': elements.earth.base,
+  '--arc-fire': elements.fire.base,
+  '--arc-water': elements.water.base,
+  '--arc-wind': elements.wind.base,
+  '--arc-crystal': elements.crystal.base,
+}
+
+function resolveColor(value: string | undefined, fallback: string): string {
+  if (!value) return fallback
+  const match = /^var\(\s*(--[\w-]+)\s*\)$/.exec(value.trim())
+  if (!match) return value
+  return CSS_VAR_TO_HEX[match[1]] ?? fallback
+}
 
 // Satori (next/og) renders outside the DOM and resolves no CSS custom
 // properties — a `var(...)` value reaches the CSS parser verbatim and throws.
@@ -50,16 +78,22 @@ interface OGImageOptions {
 
 export function createOGImage(options: OGImageOptions) {
   const {
-    title,
+    title: rawTitle,
     subtitle,
     icon,
     stats,
-    accentColor = COLORS.teal,
+    accentColor: rawAccentColor,
     glowPositions = [
       { top: '20%', left: '15%', color: COLORS.tealDim, size: 400 },
       { bottom: '10%', right: '20%', color: COLORS.goldDim, size: 350 },
     ],
   } = options
+
+  const accentColor = resolveColor(rawAccentColor, COLORS.teal)
+
+  // Callers are page-level metadata exports fed by dynamic content; a missing
+  // or blank title should still produce a valid card.
+  const title = rawTitle?.trim() ? rawTitle : 'Arcanea'
 
   return new ImageResponse(
     (
@@ -88,7 +122,7 @@ export function createOGImage(options: OGImageOptions) {
               width: glow.size,
               height: glow.size,
               borderRadius: '50%',
-              background: `radial-gradient(circle, ${glow.color} 0%, transparent 70%)`,
+              background: `radial-gradient(circle, ${resolveColor(glow.color, COLORS.tealDim)} 0%, transparent 70%)`,
             })}
           />
         ))}
