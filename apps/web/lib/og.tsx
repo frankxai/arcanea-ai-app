@@ -1,20 +1,35 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { ImageResponse } from 'next/og'
+import { brand, cosmic, text as textToken } from '@arcanea/design-system'
 
 export const OG_SIZE = { width: 1200, height: 630 }
 
+// Satori (next/og) renders outside the DOM and resolves no CSS custom
+// properties — a `var(...)` value reaches the CSS parser verbatim and throws.
+// Always use literal token values here, never `var(--arc-*)`.
 const COLORS = {
-  background: 'var(--arc-cosmic-void)',
-  backgroundAlt: 'var(--arc-cosmic-void)',
-  text: 'var(--arc-text-primary)',
-  textMuted: 'var(--arc-void)',
-  textDim: 'var(--arc-earth)',
-  teal: 'var(--arc-brand-atlantean-teal)',
+  background: cosmic.void,
+  backgroundAlt: cosmic.deep,
+  text: textToken.primary,
+  textMuted: textToken.secondary,
+  textDim: textToken.muted,
+  teal: brand.atlanteanTeal,
   tealDim: 'rgba(127,255,212,0.12)',
-  gold: 'var(--arc-brand-arcanean-gold)',
+  gold: brand.arcaneanGold,
   goldDim: 'rgba(255,215,0,0.08)',
-  blue: 'var(--arc-brand-cosmic-blue)',
+  blue: brand.cosmicBlue,
   border: 'rgba(127,255,212,0.15)',
+}
+
+/**
+ * Satori iterates style objects with `for...in`, which enumerates keys whose
+ * value is `undefined`, then calls `.trim()` on the value — a TypeError.
+ * Optional style props must therefore be omitted, not set to `undefined`.
+ */
+function omitUndefined<T extends Record<string, unknown>>(style: T): Partial<T> {
+  return Object.fromEntries(
+    Object.entries(style).filter(([, value]) => value !== undefined)
+  ) as Partial<T>
 }
 
 interface OGImageOptions {
@@ -64,8 +79,8 @@ export function createOGImage(options: OGImageOptions) {
         {glowPositions.map((glow, i) => (
           <div
             key={i}
-            style={{
-              position: 'absolute',
+            style={omitUndefined({
+              position: 'absolute' as const,
               top: glow.top,
               bottom: glow.bottom,
               left: glow.left,
@@ -74,7 +89,7 @@ export function createOGImage(options: OGImageOptions) {
               height: glow.size,
               borderRadius: '50%',
               background: `radial-gradient(circle, ${glow.color} 0%, transparent 70%)`,
-            }}
+            })}
           />
         ))}
 

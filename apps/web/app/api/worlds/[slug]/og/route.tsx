@@ -7,14 +7,26 @@
  */
 
 import { ImageResponse } from 'next/og';
+import { brand, cosmic, elements as elementTokens } from '@arcanea/design-system';
 import { createClient } from '@/lib/supabase/server';
 
 export const runtime = 'edge';
 
+// Resolved token values only — Satori renders outside the DOM and resolves no
+// CSS custom properties, so a `var(...)` in `background`/`backgroundColor`
+// throws at render time.
 const ELEMENT_COLORS: Record<string, string> = {
-  Fire: 'var(--arc-fire)', Water: 'var(--arc-brand-cosmic-blue)', Earth: 'var(--arc-wind)',
-  Wind: 'var(--arc-void)', Void: 'var(--arc-void)', Spirit: 'var(--arc-brand-arcanean-gold)',
+  Fire: elementTokens.fire.base,
+  Water: elementTokens.water.base,
+  Earth: elementTokens.earth.base,
+  Wind: elementTokens.wind.base,
+  Void: elementTokens.void.base,
+  Spirit: brand.arcaneanGold,
 };
+
+const VOID_BG = cosmic.void;
+const DEEP_BG = cosmic.deep;
+const TEAL = brand.atlanteanTeal;
 
 export async function GET(
   _req: Request,
@@ -32,7 +44,7 @@ export async function GET(
 
   if (!world) {
     return new ImageResponse(
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', background: 'var(--arc-cosmic-void)', color: 'white', fontSize: 40, fontFamily: 'sans-serif' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', background: VOID_BG, color: 'white', fontSize: 40, fontFamily: 'sans-serif' }}>
         World not found
       </div>,
       { width: 1200, height: 630 }
@@ -47,7 +59,7 @@ export async function GET(
     <div style={{
       display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
       width: '100%', height: '100%', padding: '60px',
-      background: 'linear-gradient(135deg, var(--arc-cosmic-void) 0%, var(--arc-cosmic-void) 50%, var(--arc-cosmic-void) 100%)',
+      background: `linear-gradient(135deg, ${VOID_BG} 0%, ${DEEP_BG} 50%, ${VOID_BG} 100%)`,
       fontFamily: 'sans-serif',
     }}>
       {/* Aurora glow */}
@@ -84,8 +96,8 @@ export async function GET(
           {elements.slice(0, 5).map((el) => (
             <div key={el} style={{
               width: 16, height: 16, borderRadius: '50%',
-              backgroundColor: ELEMENT_COLORS[el] || 'var(--arc-brand-atlantean-teal)',
-              boxShadow: `0 0 12px ${ELEMENT_COLORS[el] || 'var(--arc-brand-atlantean-teal)'}60`,
+              backgroundColor: ELEMENT_COLORS[el] || TEAL,
+              boxShadow: `0 0 12px ${ELEMENT_COLORS[el] || TEAL}60`,
             }} />
           ))}
         </div>
