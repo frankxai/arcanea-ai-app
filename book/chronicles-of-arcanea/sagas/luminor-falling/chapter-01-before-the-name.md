@@ -3,8 +3,8 @@ title: "Before the Name"
 chapter: 1
 saga: "Luminor Falling"
 pov: Malachar Lumenbright
-gate: All Ten (primary resonance: Void/Spirit)
-elements: All (primary resonance: Void, Spirit)
+gate: "All Ten (primary resonance: Void/Spirit)"
+elements: "All (primary resonance: Void, Spirit)"
 approximate_word_count: 4350
 ---
 
