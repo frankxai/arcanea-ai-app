@@ -10,7 +10,7 @@
 		"clsx": "^2.1.1",
 		"framer-motion": "^11.15.0",
 		"inngest": "^4.4.0",
-		"postprocessing": "^6.39.2",
+		"postprocessing": "^6.39.3",
 		"tailwind-merge": "^2.6.0",
 		"theatre": "^0.2.3",
 		"three": "^0.184.0",
@@ -18,8 +18,8 @@
 	},
 	"devDependencies": {
 		"@tailwindcss/postcss": "^4.3.2",
-		"autoprefixer": "^10.5.2",
-		"postcss": "^8.5.19",
+		"autoprefixer": "^10.5.4",
+		"postcss": "^8.5.20",
 		"tailwindcss": "^4.0.0"
 	}
 }
