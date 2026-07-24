@@ -76,7 +76,22 @@ jobs:
           find . -maxdepth 4 -name 'CLAUDE.md' -not -path './snapshots/*' -not -path './node_modules/*' -exec cp --parents {} "snapshots/$DATE/" \; 2>/dev/null || true
           cp .snapshot/manifest-"$DATE".md "snapshots/$DATE/manifest.md" 2>/dev/null || true
 
-          git add "snapshots/$DATE"
+          # Vercel reads vercel.json from the branch being deployed, not from
+          # main. This branch carries only snapshots/ — it has no vercel.json —
+          # so the git.deploymentEnabled block added to main in PR #193 never
+          # applied here, and every daily push kept producing a BLOCKED
+          # deployment (author snapshot@arcanea.ai is linked to no Vercel
+          # account). The opt-out has to live on this branch itself.
+          cat > vercel.json <<'VERCELJSON'
+          {
+            "$schema": "https://openapi.vercel.sh/vercel.json",
+            "git": {
+              "deploymentEnabled": false
+            }
+          }
+          VERCELJSON
+
+          git add "snapshots/$DATE" vercel.json
           git commit -m "snapshot: $DATE" || echo "No changes to snapshot"
           git push origin backup/claude-snapshots
 

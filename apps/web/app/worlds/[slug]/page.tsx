@@ -26,7 +26,40 @@ import { ElementBadge } from "@/components/worlds/ElementBadge";
 import { WorldActions } from "@/components/worlds/WorldActions";
 import { WorldDetailTabs, type WorldPalette } from "./world-detail-tabs";
 
+// Ceiling well below the 300s platform limit so a pathological world fails
+// fast and visibly instead of holding a function open for five minutes.
+export const maxDuration = 20;
+
 // ── Data fetching ────────────────────────────────────────────────────
+
+// These child queries were previously unbounded. A world with a large cast
+// pulled every row (including the `backstory`/`history` TEXT blobs) on every
+// request, and the RLS policy on these tables re-evaluates `can_read_world()`
+// per row — so cost grows with world size and could reach the 300s ceiling.
+const CHILD_ROW_LIMIT = 200;
+const QUERY_TIMEOUT_MS = 8000;
+
+/**
+ * Resolve a child query to rows, degrading to an empty section rather than
+ * taking down the whole page. Aborted queries reject (unlike PostgREST errors,
+ * which resolve with `error` set), so both paths need handling.
+ */
+async function safeRows<T>(
+  label: string,
+  query: PromiseLike<{ data: T[] | null; error: unknown }>
+): Promise<T[]> {
+  try {
+    const { data, error } = await query;
+    if (error) {
+      console.error(`[worlds/[slug]] ${label} query failed:`, error);
+      return [];
+    }
+    return data ?? [];
+  } catch (err) {
+    console.error(`[worlds/[slug]] ${label} query aborted or threw:`, err);
+    return [];
+  }
+}
 
 async function getWorld(slug: string) {
   const [sbClient, user] = await Promise.all([createClient(), getCachedUser()]);
@@ -46,23 +79,31 @@ async function getWorld(slug: string) {
   }
 
   const [characters, factions, locations, events] = await Promise.all([
-    sb
+    safeRows("characters", sb
       .from("world_characters")
       .select("id, name, element, gate, origin_class, title, backstory, portrait_url, motivation, is_agent")
-      .eq("world_id", world.id),
-    sb
+      .eq("world_id", world.id)
+      .limit(CHILD_ROW_LIMIT)
+      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))),
+    safeRows("factions", sb
       .from("world_factions")
       .select("id, name, history, philosophy, territory")
-      .eq("world_id", world.id),
-    sb
+      .eq("world_id", world.id)
+      .limit(CHILD_ROW_LIMIT)
+      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))),
+    safeRows("locations", sb
       .from("world_locations")
       .select("id, name, description, region, significance, image_url")
-      .eq("world_id", world.id),
-    sb
+      .eq("world_id", world.id)
+      .limit(CHILD_ROW_LIMIT)
+      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))),
+    safeRows("events", sb
       .from("world_events")
       .select("id, title, description, era, characters_involved, sort_order, consequences, date_in_world")
       .eq("world_id", world.id)
-      .order("sort_order"),
+      .order("sort_order")
+      .limit(CHILD_ROW_LIMIT)
+      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))),
   ]);
 
   return {
@@ -71,10 +112,10 @@ async function getWorld(slug: string) {
     elements: Array.isArray(world.elements)
       ? (world.elements as string[])
       : [],
-    characters: characters.data || [],
-    factions: factions.data || [],
-    locations: locations.data || [],
-    events: events.data || [],
+    characters,
+    factions,
+    locations,
+    events,
   };
 }
 
