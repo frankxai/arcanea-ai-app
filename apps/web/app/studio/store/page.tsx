@@ -160,7 +160,7 @@ export default function ClawStorePage() {
     setPurchasedSkills((prev) => [...prev, skill.id]);
     setProcessingSkillId(null);
     setPurchaseType(null);
-    alert(`Demo only — ${skill.name} was unlocked against simulated credits. No purchase occurred.`);
+    alert(`Demo only — ${skill.name} was added to this session using simulated credits. No purchase or installation occurred.`);
   };
 
   const handleDeployOnchain = async (skill: SkillItem) => {
@@ -236,7 +236,7 @@ export default function ClawStorePage() {
     <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
       <div className="max-w-6xl mx-auto px-6 pt-8 pb-24">
         {/* Demo-mode notice: no live commerce on this surface yet */}
-        <div className="mb-6 p-4 rounded-xl bg-amber-500/[0.06] border border-amber-500/20 text-sm text-amber-200/90">
+        <div className="mb-6 p-4 rounded-xl bg-[var(--arc-brand-arcanean-gold)]/[0.06] border border-[var(--arc-brand-arcanean-gold)]/20 text-sm text-[var(--arc-brand-arcanean-gold)]/90">
           <span className="font-semibold">Preview build.</span> The Studio Store is a working
           prototype: purchases, credit top-ups, on-chain licensing, and payouts are simulated
           against test data. No payment is processed and no transaction settles anywhere.
@@ -446,18 +446,18 @@ export default function ClawStorePage() {
               <div className="mt-12 p-5 rounded-xl bg-green-500/5 border border-green-500/10 text-sm">
                 <div className="flex items-center gap-2.5 mb-2 text-green-400 font-semibold">
                   <PhCheckCircle className="w-5 h-5" />
-                  Simulated transaction recorded (testnet demo — nothing settled)
+                  Local transaction simulation complete — nothing was submitted to a network
                 </div>
                 <div className="space-y-1.5 font-mono text-xs text-white/75 mt-3">
                   <div>
-                    <span className="text-white/45">STATUS:</span> SIMULATED (local mock — no chain state changed)
+                    <span className="text-white/45">STATUS:</span> LOCAL SIMULATION — no chain state changed
                   </div>
                   <div>
-                    <span className="text-white/45">TX HASH:</span>{' '}
+                    <span className="text-white/45">SIMULATION ID:</span>{' '}
                     <span className="text-white/90 break-all">{txDetails.hash}</span>
                   </div>
                   <div>
-                    <span className="text-white/45">PROVENANCE:</span> Simulated Story Protocol PIL flow (mock contract, not on any network)
+                    <span className="text-white/45">PROVENANCE:</span> Mock Story Protocol PIL flow — no contract or network call
                   </div>
                 </div>
               </div>
