@@ -76,6 +76,11 @@ overrides:
   sharp@<0.35.0: 0.35.3
   undici: 8.5.0
 
+patchedDependencies:
+  minimatch@3.1.5:
+    hash: 2ln44qm675m5h2te64icahnx7m
+    path: patches/minimatch@3.1.5.patch
+
 importers:
 
   .:
@@ -2344,7 +2349,7 @@ packages:
     dependencies:
       '@eslint/object-schema': 2.1.7
       debug: 4.4.3
-      minimatch: 3.1.5
+      minimatch: 3.1.5(patch_hash=2ln44qm675m5h2te64icahnx7m)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2374,7 +2379,7 @@ packages:
       ignore: 5.3.2
       import-fresh: 3.3.1
       js-yaml: 4.3.0
-      minimatch: 3.1.5
+      minimatch: 3.1.5(patch_hash=2ln44qm675m5h2te64icahnx7m)
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
@@ -10372,7 +10377,7 @@ packages:
       is-glob: 4.0.3
       json-stable-stringify-without-jsonify: 1.0.1
       lodash.merge: 4.6.2
-      minimatch: 3.1.5
+      minimatch: 3.1.5(patch_hash=2ln44qm675m5h2te64icahnx7m)
       natural-compare: 1.4.0
       optionator: 0.9.4
     transitivePeerDependencies:
@@ -12892,11 +12897,12 @@ packages:
     dependencies:
       brace-expansion: 5.0.8
 
-  /minimatch@3.1.5:
+  /minimatch@3.1.5(patch_hash=2ln44qm675m5h2te64icahnx7m):
     resolution: {integrity: sha512-VgjWUsnnT6n+NUk6eZq77zeFdpW2LWDzP6zFGrCbHXiYNul5Dzqk2HHQ5uFH2DNW5Xbp8+jVzaeNt94ssEEl4w==}
     dependencies:
       brace-expansion: 5.0.8
     dev: true
+    patched: true
 
   /minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
