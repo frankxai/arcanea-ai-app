@@ -87,3 +87,32 @@ jobs:
             echo "Run \`pnpm install\` locally, then commit the updated lockfile." >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
+
+      - name: Verify web lint runtime contract
+        if: steps.drift.outputs.pkg_changed != '0' || steps.drift.outputs.lock_changed != '0'
+        run: pnpm run verify:web-lint-runtime
+
+      - name: Verify runtime engine contracts
+        if: steps.drift.outputs.pkg_changed != '0' || steps.drift.outputs.lock_changed != '0'
+        run: pnpm run verify:runtime-contracts
+
+      - name: Resolve declared runtime floor
+        if: steps.drift.outputs.pkg_changed != '0' || steps.drift.outputs.lock_changed != '0'
+        id: runtime-floor
+        run: |
+          echo "version=$(node -e 'console.log(require("semver").minVersion(require("./package.json").engines.node).version)')" >> "$GITHUB_OUTPUT"
+
+      - name: Setup minimum supported Node.js
+        if: steps.drift.outputs.pkg_changed != '0' || steps.drift.outputs.lock_changed != '0'
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ steps.runtime-floor.outputs.version }}
+
+      - name: Smoke-test runtime dependencies at declared floor
+        if: steps.drift.outputs.pkg_changed != '0' || steps.drift.outputs.lock_changed != '0'
+        run: |
+          pnpm run verify:runtime-contracts
+          pnpm --dir packages/media build
+          pnpm --dir packages/media exec node --input-type=module -e "await import('./dist/index.js')"
+          pnpm --dir packages/media exec node --input-type=module -e "const sharp = await import('sharp'); await import('glob'); console.log('media runtime: sharp ' + sharp.default.versions.sharp)"
+          pnpm --dir apps/web exec node --input-type=module -e "await import('next'); const sharp = await import('sharp'); console.log('web runtime: sharp ' + sharp.default.versions.sharp)"
