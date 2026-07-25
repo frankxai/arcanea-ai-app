@@ -30,9 +30,9 @@ async function processImage(
   entry: MediaEntry,
   opts: ProcessOptions
 ): Promise<Partial<ProcessResult>> {
-  let sharp: typeof import('sharp');
+  let sharp: typeof import('sharp').default;
   try {
-    sharp = (await import('sharp')).default as unknown as typeof import('sharp');
+    sharp = (await import('sharp')).default;
   } catch {
     return { error: 'sharp not installed — run: npm install sharp' };
   }
