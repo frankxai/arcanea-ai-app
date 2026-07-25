@@ -88,9 +88,9 @@ jobs:
             exit 1
           fi
 
-      - name: Verify web lint contract
+      - name: Verify web lint runtime contract
         if: steps.drift.outputs.pkg_changed != '0' || steps.drift.outputs.lock_changed != '0'
-        run: pnpm --dir apps/web run lint
+        run: pnpm run verify:web-lint-runtime
 
       - name: Verify runtime engine contracts
         if: steps.drift.outputs.pkg_changed != '0' || steps.drift.outputs.lock_changed != '0'
