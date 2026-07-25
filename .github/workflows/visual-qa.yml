@@ -98,7 +98,7 @@ jobs:
 
       - name: Install Playwright + Chromium
         run: |
-          npm install --global playwright@1.61.1
+          npm install -g playwright@1.61.1
           playwright install chromium --with-deps
 
       - name: Capture and validate key routes
