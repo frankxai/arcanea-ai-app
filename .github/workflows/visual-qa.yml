@@ -4,6 +4,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
+      - '.github/workflows/visual-qa.yml'
       - 'apps/web/**'
       - 'packages/design-system/**'
       - 'packages/arcanea-design-preset.js'
@@ -28,64 +29,65 @@ jobs:
     # Cost gate: skip on draft PRs — agents iterate free; QA runs when marked ready.
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
-      - name: Wait for Vercel preview deployment
-        id: wait-vercel
-        if: ${{ inputs.preview_url == '' || inputs.preview_url == null }}
-        uses: patrickedqvist/wait-for-vercel-preview@v1.3.3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 240
-        continue-on-error: true
-
       - name: Resolve preview URL
         id: resolve-url
         uses: actions/github-script@v7
+        env:
+          INPUT_PREVIEW_URL: ${{ inputs.preview_url }}
         with:
           script: |
-            let previewUrl = '${{ inputs.preview_url }}' || '${{ steps.wait-vercel.outputs.url }}';
-            // Commit-status target_url points at the Vercel deployment INSPECTOR page (needs
-            // Vercel auth), not the live *.vercel.app site — confirmed by an actual failed run
-            // (Playwright/Gemini got a 404/auth wall). The reliable source for the real live
-            // URL is vercel[bot]'s own PR comment table, which we've observed to always render
-            // as: | [arcanea-ai-app](...) | ![Ready](...) [Ready](...) | [Preview](LIVE_URL), ...
-            // Match the exact project row (excluding the sibling arcanea-ai-appx row) and only
-            // accept it once that row shows the Ready icon.
-            const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-            for (let attempt = 0; !previewUrl && attempt < 20; attempt++) {
-              const { data: comments } = await github.rest.issues.listComments({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-              });
-              const vercelComment = comments.find(c => c.body.startsWith('[vc]:'));
-              if (vercelComment) {
-                const row = vercelComment.body
+            let previewUrl = (process.env.INPUT_PREVIEW_URL || '').trim();
+            const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+            // The Vercel status target is its inspector, not the live deployment.
+            // Resolve the exact project row from vercel[bot]'s PR comment.
+            if (!previewUrl && context.eventName === 'pull_request') {
+              for (let attempt = 0; attempt < 20 && !previewUrl; attempt++) {
+                const { data: comments } = await github.rest.issues.listComments({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  per_page: 100,
+                });
+                const vercelComment = comments.find(
+                  (comment) =>
+                    comment.user?.login === 'vercel[bot]' &&
+                    comment.body.startsWith('[vc]:'),
+                );
+                const row = vercelComment?.body
                   .split('\n')
-                  .find(l => l.includes('| [arcanea-ai-app](') && !l.includes('arcanea-ai-appx'));
-                if (row) {
-                  const isReady = /!\[Ready\]/.test(row);
-                  const previewMatch = row.match(/\[Preview\]\((https:\/\/[^)]+)\)/);
-                  core.info(`Attempt ${attempt + 1}/20: arcanea-ai-app row ready=${isReady} preview=${previewMatch ? previewMatch[1] : 'none'}`);
-                  if (isReady && previewMatch) { previewUrl = previewMatch[1]; break; }
-                } else {
-                  core.info(`Attempt ${attempt + 1}/20: no arcanea-ai-app row in vercel[bot] comment yet`);
+                  .find(
+                    (line) =>
+                      line.includes('| [arcanea-ai-app](') &&
+                      !line.includes('arcanea-ai-appx'),
+                  );
+                const previewMatch = row?.match(
+                  /\[Preview\]\((https:\/\/[^)]+)\)/,
+                );
+                if (row && /!\[Ready\]/.test(row) && previewMatch) {
+                  previewUrl = previewMatch[1];
+                  break;
                 }
-              } else {
-                core.info(`Attempt ${attempt + 1}/20: no vercel[bot] comment yet`);
+                core.info(`Preview not ready (${attempt + 1}/20).`);
+                await sleep(15000);
               }
-              await sleep(15000);
             }
-            if (!previewUrl) {
-              core.warning('No live Vercel preview URL found after polling. Screenshots will be skipped.');
+
+            if (previewUrl) {
+              const parsed = new URL(previewUrl);
+              if (parsed.protocol !== 'https:') {
+                throw new Error('Visual QA accepts HTTPS preview URLs only.');
+              }
+              core.info(`Preview host: ${parsed.host}`);
             } else {
-              core.info('Preview URL: ' + previewUrl);
+              core.error('No ready Vercel preview URL could be resolved.');
             }
             core.setOutput('url', previewUrl);
 
@@ -96,205 +98,449 @@ jobs:
 
       - name: Install Playwright + Chromium
         run: |
-          npm install -g playwright@latest
-          npx playwright install chromium --with-deps
+          npm install --global playwright@1.61.1
+          playwright install chromium --with-deps
 
-      - name: Screenshot key routes
+      - name: Capture and validate key routes
+        id: capture
+        continue-on-error: true
         env:
           PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: |
           mkdir -p screenshots
-          # playwright is installed globally above; expose it to require() in the inline script
           export NODE_PATH="$(npm root -g)"
           node - <<'JSEOF'
+          const crypto = require('crypto');
+          const fs = require('fs');
           const { chromium } = require('playwright');
+
           const BASE = (process.env.PREVIEW_URL || '').replace(/\/$/, '');
-          if (!BASE) {
-            console.error('No PREVIEW_URL set — skipping screenshots.');
-            require('fs').writeFileSync('screenshots/SKIPPED.txt', 'No preview URL available.');
-            process.exit(0);
-          }
+          const bypassSecret =
+            process.env.VERCEL_AUTOMATION_BYPASS_SECRET || '';
           const routes = [
             { path: '/', name: 'home' },
-            { path: '/worlds', name: 'worlds' },
-            { path: '/create', name: 'create' },
-            { path: '/dashboard', name: 'dashboard' },
+            { path: '/pricing', name: 'pricing' },
+            { path: '/studio/store', name: 'studio-store' },
           ];
-          // Vercel's preview deployments sit behind Deployment Protection (an auth wall) by
-          // default — without this, Playwright only ever captures the login page. If a
-          // Protection Bypass for Automation secret is configured (Vercel Project Settings ->
-          // Deployment Protection), send it as a header on every request; this is a no-op
-          // (and the screenshots stay blocked, same as before) when the secret isn't set.
-          const bypassSecret = process.env.VERCEL_AUTOMATION_BYPASS_SECRET || '';
+          const states = [
+            {
+              name: 'desktop',
+              viewport: { width: 1440, height: 900 },
+              reducedMotion: 'no-preference',
+            },
+            {
+              name: 'mobile',
+              viewport: { width: 390, height: 844 },
+              reducedMotion: 'no-preference',
+            },
+            {
+              name: 'reduced-motion',
+              viewport: { width: 1440, height: 900 },
+              reducedMotion: 'reduce',
+            },
+          ];
+
+          const writeVerdict = (verdict, lines) => {
+            fs.writeFileSync('screenshots/capture-verdict.txt', `${verdict}\n`);
+            fs.writeFileSync(
+              'screenshots/capture-report.md',
+              [
+                '## Deterministic capture gate',
+                '',
+                `**Verdict:** ${verdict}`,
+                '',
+                ...lines,
+                '',
+              ].join('\n'),
+            );
+          };
+          const sha256 = (path) =>
+            crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex');
+          const isVercelAuthWall = (url, title, body) => {
+            let host = '';
+            let path = '';
+            try {
+              const parsed = new URL(url);
+              host = parsed.hostname;
+              path = `${parsed.pathname}${parsed.search}`;
+            } catch {}
+            const visible = `${title}\n${body.slice(0, 2500)}`;
+            return (
+              ((host === 'vercel.com' || host.endsWith('.vercel.com')) &&
+                /(login|sign-in|sso|auth)/i.test(path)) ||
+              /\blog in to vercel\b/i.test(visible) ||
+              /\bvercel authentication\b/i.test(visible) ||
+              /\bthis deployment is protected\b/i.test(visible)
+            );
+          };
+          const failEarly = (message) => {
+            writeVerdict('FAIL', [message]);
+            console.error(`::error::${message}`);
+            process.exit(1);
+          };
+
+          if (!BASE) failEarly('No preview URL was available.');
+          if (!bypassSecret.trim()) {
+            failEarly(
+              'VERCEL_AUTOMATION_BYPASS_SECRET is not configured; protected-preview evidence cannot be accepted.',
+            );
+          }
+
           (async () => {
             const browser = await chromium.launch();
-            const context = await browser.newContext(
-              bypassSecret ? { extraHTTPHeaders: { 'x-vercel-protection-bypass': bypassSecret } } : {}
-            );
-            for (const route of routes) {
-              const page = await context.newPage();
-              await page.setViewportSize({ width: 1440, height: 900 });
-              try {
-                await page.goto(BASE + route.path, { waitUntil: 'networkidle', timeout: 30000 });
-                await page.waitForTimeout(1500);
-                await page.screenshot({ path: 'screenshots/' + route.name + '-desktop.png', fullPage: true });
-                await page.setViewportSize({ width: 390, height: 844 });
-                await page.waitForTimeout(500);
-                await page.screenshot({ path: 'screenshots/' + route.name + '-mobile.png', fullPage: true });
-                console.log('Captured: ' + route.name);
-              } catch (err) {
-                console.error('Failed ' + route.name + ': ' + err.message);
-                require('fs').writeFileSync('screenshots/' + route.name + '-FAILED.txt', err.message);
-              } finally {
-                await page.close();
+            const captures = [];
+            const failures = [];
+            try {
+              for (const state of states) {
+                const context = await browser.newContext({
+                  viewport: state.viewport,
+                  deviceScaleFactor: 1,
+                  reducedMotion: state.reducedMotion,
+                  extraHTTPHeaders: {
+                    'x-vercel-protection-bypass': bypassSecret,
+                    'x-vercel-set-bypass-cookie': 'true',
+                  },
+                });
+                try {
+                  for (const route of routes) {
+                    const page = await context.newPage();
+                    try {
+                      const response = await page.goto(`${BASE}${route.path}`, {
+                        waitUntil: 'domcontentloaded',
+                        timeout: 30000,
+                      });
+                      if (!response) throw new Error('no HTTP response');
+                      await page
+                        .waitForLoadState('networkidle', { timeout: 10000 })
+                        .catch(() => {});
+                      await page.waitForTimeout(1000);
+
+                      const status = response.status();
+                      const finalUrl = page.url();
+                      const title = await page.title();
+                      const body = await page
+                        .locator('body')
+                        .innerText({ timeout: 5000 })
+                        .catch(() => '');
+                      if (status >= 400) throw new Error(`HTTP ${status}`);
+                      if (isVercelAuthWall(finalUrl, title, body)) {
+                        throw new Error(
+                          'Vercel authentication wall detected; bypass was rejected',
+                        );
+                      }
+
+                      const file = `${route.name}-${state.name}.png`;
+                      const path = `screenshots/${file}`;
+                      await page.screenshot({ path, fullPage: true });
+                      captures.push({
+                        route: route.path,
+                        state: state.name,
+                        path: file,
+                        mime_type: 'image/png',
+                        sha256: sha256(path),
+                        bytes: fs.statSync(path).size,
+                        viewport: state.viewport,
+                        device_pixel_ratio: 1,
+                        reduced_motion: state.reducedMotion,
+                        http_status: status,
+                        final_url: finalUrl,
+                      });
+                    } catch (error) {
+                      failures.push(
+                        `${route.path} (${state.name}): ${error.message}`,
+                      );
+                    } finally {
+                      await page.close();
+                    }
+                  }
+                } finally {
+                  await context.close();
+                }
+              }
+            } finally {
+              await browser.close();
+            }
+
+            // Byte-identical pages across all routes are a blocked/common page,
+            // not three independently verified product surfaces.
+            for (const state of states) {
+              const hashes = captures
+                .filter((capture) => capture.state === state.name)
+                .map((capture) => capture.sha256);
+              if (hashes.length === routes.length && new Set(hashes).size === 1) {
+                failures.push(
+                  `All ${state.name} route captures were byte-identical.`,
+                );
               }
             }
-            await browser.close();
-          })();
+            if (captures.length !== routes.length * states.length) {
+              failures.push(
+                `Expected ${routes.length * states.length} captures; accepted ${captures.length}.`,
+              );
+            }
+
+            fs.writeFileSync(
+              'screenshots/capture-manifest.json',
+              `${JSON.stringify(
+                {
+                  schema_version: 1,
+                  preview_url: BASE,
+                  routes,
+                  states,
+                  captures,
+                  failures,
+                },
+                null,
+                2,
+              )}\n`,
+            );
+            if (failures.length) {
+              writeVerdict('FAIL', failures.map((failure) => `- ${failure}`));
+              console.error('::error::Visual capture evidence was rejected.');
+              process.exit(1);
+            }
+            writeVerdict('PASS', [
+              `Accepted ${captures.length} content-addressed screenshots across ${routes.length} routes.`,
+            ]);
+          })().catch((error) => failEarly(`Screenshot runner failed: ${error.message}`));
           JSEOF
 
       - name: Gemini Vision Analysis
         id: gemini-analysis
+        if: always()
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
           PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
-          python3 << 'PYEOF'
-          import os, json, base64, urllib.request
+          python3 <<'PYEOF'
+          import os, json, base64, re, urllib.request
+
+          def write_result(verdict, report):
+            open('screenshots/ai-verdict.txt', 'w').write(verdict + '\n')
+            open('screenshots/ai-report.md', 'w').write(report.rstrip() + '\n')
+
+          try:
+            capture_verdict = open(
+              'screenshots/capture-verdict.txt'
+            ).read().strip()
+          except OSError:
+            capture_verdict = 'FAIL'
+          if capture_verdict != 'PASS':
+            write_result(
+              'FAIL',
+              '## Visual QA\n\n**Overall verdict: FAIL**\n\n'
+              'Gemini analysis was not attempted because deterministic '
+              'capture validation failed.',
+            )
+            raise SystemExit(0)
+
           api_key = os.environ.get('GEMINI_API_KEY', '')
           preview_url = os.environ.get('PREVIEW_URL', 'unknown')
           pr_title = os.environ.get('PR_TITLE', 'unknown')
+          images = []
+          for filename in sorted(os.listdir('screenshots')):
+            if filename.endswith('.png'):
+              with open('screenshots/' + filename, 'rb') as handle:
+                images.append(
+                  {
+                    'name': filename.removesuffix('.png'),
+                    'base64': base64.b64encode(handle.read()).decode('utf-8'),
+                  }
+                )
+          if not images:
+            write_result(
+              'FAIL',
+              '## Visual QA\n\n**Overall verdict: FAIL**\n\n'
+              'No accepted screenshots were available.',
+            )
+            raise SystemExit(0)
+          if not api_key:
+            write_result(
+              'FAIL',
+              '## Visual QA\n\n**Overall verdict: FAIL**\n\n'
+              'GEMINI_API_KEY is not configured.',
+            )
+            raise SystemExit(0)
 
           def resolve_model(key):
-            # gemini-2.0-flash was hardcoded here and started 404ing — Gemini model IDs
-            # get retired over time. Ask the API what's actually available instead of
-            # guessing a version string that will go stale again.
-            #
-            # A naive "contains flash" + alphabetical-descending sort previously picked
-            # 'gemini-omni-flash-preview' (an experimental variant that 400'd on this
-            # plain text+image request) — 'omni' sorts after numbered versions. Match
-            # only the standard `gemini-<version>-flash` shape (no -preview/-exp/-image/
-            # -audio/-tts/-live/-lite suffix) and pick the highest version numerically.
-            import re
-            fallback = 'models/gemini-2.0-flash'
+            fallback = 'models/gemini-2.5-flash'
             try:
-              list_url = 'https://generativelanguage.googleapis.com/v1beta/models?key=' + key
-              with urllib.request.urlopen(list_url, timeout=30) as resp:
-                models = json.loads(resp.read()).get('models', [])
+              list_url = (
+                'https://generativelanguage.googleapis.com/v1beta/models?key='
+                + key
+              )
+              with urllib.request.urlopen(list_url, timeout=30) as response:
+                models = json.loads(response.read()).get('models', [])
               pattern = re.compile(r'^models/gemini-(\d+(?:\.\d+)?)-flash$')
               candidates = []
-              for m in models:
-                if 'generateContent' not in m.get('supportedGenerationMethods', []):
+              for model in models:
+                if 'generateContent' not in model.get(
+                  'supportedGenerationMethods', []
+                ):
                   continue
-                match = pattern.match(m['name'])
+                match = pattern.match(model['name'])
                 if match:
-                  candidates.append((float(match.group(1)), m['name']))
+                  candidates.append((float(match.group(1)), model['name']))
               if candidates:
-                candidates.sort(key=lambda c: c[0], reverse=True)
+                candidates.sort(key=lambda candidate: candidate[0], reverse=True)
                 return candidates[0][1]
-              print('No standard gemini-<version>-flash model found, falling back to ' + fallback)
-              return fallback
-            except Exception as e:
-              print('Model list lookup failed, falling back to ' + fallback + ': ' + str(e))
-              return fallback
+            except Exception as error:
+              print('Model discovery failed: ' + str(error))
+            return fallback
 
-          images = []
-          for fname in sorted(os.listdir('screenshots')):
-            if fname.endswith('-desktop.png'):
-              with open('screenshots/' + fname, 'rb') as f:
-                b64 = base64.b64encode(f.read()).decode('utf-8')
-              images.append({'name': fname.replace('-desktop.png', ''), 'base64': b64})
-          if not images:
-            open('screenshots/ai-report.md', 'w').write('**Visual QA**: No screenshots captured.')
-            exit(0)
-          if not api_key:
-            open('screenshots/ai-report.md', 'w').write('**Visual QA**: GEMINI_API_KEY secret not set.')
-            exit(0)
-          route_names = ', '.join(i['name'] for i in images)
           prompt = (
-            'You are a senior UX engineer reviewing a Vercel preview for Arcanea '
-            '(dark, futuristic AI agent platform).\n'
+            'You are the independent visual release verifier for Arcanea. Review '
+            'every supplied desktop, mobile, and reduced-motion screenshot.\n'
             'PR: ' + pr_title + '\n'
             'Preview URL: ' + preview_url + '\n'
-            'Screenshots provided: ' + route_names + '\n\n'
-            'For EACH screenshot analyze:\n'
-            '1. Visual Integrity - broken layouts, overlapping elements, invisible text?\n'
-            '2. Design Consistency - dark/futuristic Arcanea aesthetic, fonts, colors, spacing?\n'
-            '3. Functional Signals - buttons, nav, CTAs visible and positioned correctly?\n'
-            '4. Responsiveness - any clipping or overflow?\n'
-            '5. Regression Risk - anything worse than production quality?\n\n'
-            'Then provide:\n'
-            '- Overall verdict: PASS, WARN, or FAIL\n'
-            '- Confidence score (0-100)\n'
-            '- Issues found (with page name)\n'
-            '- Things that look good\n'
-            '- One recommendation if WARN or FAIL\n\n'
-            'Format as clean markdown for a GitHub PR comment.'
+            'Screenshots: ' + ', '.join(image['name'] for image in images) + '\n\n'
+            'Check integrity, hierarchy, typography, contrast, clipping, responsive '
+            'composition, interaction affordances, motion-safe resting states, and '
+            'regression risk. A login wall, error page, blank/loading screen, or '
+            'missing Arcanea UI must be FAIL.\n\n'
+            'Begin with exactly: Overall verdict: PASS (use PASS, WARN, or FAIL). '
+            'Then give confidence, route/state-specific findings, strengths, and '
+            'one corrective recommendation for WARN or FAIL.'
           )
           parts = [{'text': prompt}]
-          for img in images:
-            parts.append({'text': '--- Screenshot: ' + img['name'] + ' ---'})
-            parts.append({'inline_data': {'mime_type': 'image/png', 'data': img['base64']}})
-          payload = json.dumps({
-            'contents': [{'parts': parts}],
-            'generationConfig': {'maxOutputTokens': 2048, 'temperature': 0.2}
-          }).encode('utf-8')
+          for image in images:
+            parts.extend(
+              [
+                {'text': '--- Screenshot: ' + image['name'] + ' ---'},
+                {
+                  'inline_data': {
+                    'mime_type': 'image/png',
+                    'data': image['base64'],
+                  }
+                },
+              ]
+            )
+          payload = json.dumps(
+            {
+              'contents': [{'parts': parts}],
+              'generationConfig': {
+                'maxOutputTokens': 3072,
+                'temperature': 0.1,
+              },
+            }
+          ).encode('utf-8')
           model_name = resolve_model(api_key)
-          print('Using model: ' + model_name)
-          url = 'https://generativelanguage.googleapis.com/v1beta/' + model_name + ':generateContent?key=' + api_key
-          req = urllib.request.Request(url, data=payload, headers={'Content-Type': 'application/json'})
+          url = (
+            'https://generativelanguage.googleapis.com/v1beta/'
+            + model_name
+            + ':generateContent?key='
+            + api_key
+          )
+          request = urllib.request.Request(
+            url, data=payload, headers={'Content-Type': 'application/json'}
+          )
           try:
-            with urllib.request.urlopen(req, timeout=120) as resp:
-              result = json.loads(resp.read())
+            with urllib.request.urlopen(request, timeout=120) as response:
+              result = json.loads(response.read())
             analysis = result['candidates'][0]['content']['parts'][0]['text']
-          except Exception as e:
-            analysis = '**Visual QA Error**: Gemini analysis failed - ' + str(e)
-          open('screenshots/ai-report.md', 'w').write(analysis)
-          print('Gemini analysis complete')
-          print(analysis[:500])
+          except Exception as error:
+            write_result(
+              'FAIL',
+              '## Visual QA\n\n**Overall verdict: FAIL**\n\n'
+              'Gemini analysis failed: ' + str(error),
+            )
+            raise SystemExit(0)
+
+          matches = re.findall(
+            r'(?im)(?:\*\*)?overall\s+verdict(?:\*\*)?'
+            r'(?:\s*:\s*|\s*\|\s*)(?:\*\*)?(PASS|WARN|FAIL)\b',
+            analysis,
+          )
+          normalized = [match.upper() for match in matches]
+          verdict = (
+            'FAIL'
+            if 'FAIL' in normalized
+            else 'WARN'
+            if 'WARN' in normalized
+            else 'PASS'
+            if 'PASS' in normalized
+            else 'FAIL'
+          )
+          if not matches:
+            analysis = (
+              '## Visual QA\n\n**Overall verdict: FAIL**\n\n'
+              'The AI response did not satisfy the verdict contract.\n\n---\n\n'
+              + analysis
+            )
+          write_result(verdict, analysis)
+          print('Gemini verdict: ' + verdict)
           PYEOF
 
       - name: Post Visual QA report on PR
-        if: github.event_name == 'pull_request'
+        if: ${{ always() && github.event_name == 'pull_request' }}
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            let report = '';
-            try { report = fs.readFileSync('screenshots/ai-report.md', 'utf8'); }
-            catch { report = 'Visual QA report could not be generated.'; }
+            const read = (path, fallback) => {
+              try {
+                return fs.readFileSync(path, 'utf8').trim();
+              } catch {
+                return fallback;
+              }
+            };
+            const captureVerdict = read(
+              'screenshots/capture-verdict.txt',
+              'FAIL',
+            );
+            const aiVerdict = read('screenshots/ai-verdict.txt', 'FAIL');
             const body = [
-              '## Visual QA Report - Gemini Vision',
+              '## Visual QA Report - Playwright + Gemini Vision',
               '',
-              '**Preview**: ${{ steps.resolve-url.outputs.url }}',
-              '**Routes**: home, worlds, create, dashboard',
-              '**Viewport**: Desktop 1440px + Mobile 390px',
+              '**Preview:** ${{ steps.resolve-url.outputs.url }}',
+              '**Routes:** /, /pricing, /studio/store',
+              '**States:** Desktop 1440x900 · Mobile 390x844 · Reduced motion 1440x900',
+              `**Deterministic capture gate:** ${captureVerdict}`,
+              `**Gemini verdict:** ${aiVerdict}`,
+              '',
+              '---',
+              '',
+              read(
+                'screenshots/capture-report.md',
+                'Capture report could not be generated.',
+              ),
               '',
               '---',
               '',
-              report,
+              read(
+                'screenshots/ai-report.md',
+                'AI report could not be generated.',
+              ),
               '',
               '---',
-              '*Generated by Gemini Flash vision + Playwright screenshots*',
-              '*Full screenshots in workflow artifacts*',
+              '*Content-addressed screenshots and capture manifest are attached.*',
             ].join('\n');
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
+              per_page: 100,
             });
-            const existing = comments.find(c => c.body.includes('Visual QA Report') && c.user.type === 'Bot');
+            const existing = comments.find(
+              (comment) =>
+                comment.body.includes('## Visual QA Report -') &&
+                comment.user.type === 'Bot',
+            );
             if (existing) {
               await github.rest.issues.updateComment({
-                owner: context.repo.owner, repo: context.repo.repo,
-                comment_id: existing.id, body,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
               });
             } else {
               await github.rest.issues.createComment({
-                owner: context.repo.owner, repo: context.repo.repo,
-                issue_number: context.issue.number, body,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
               });
             }
 
@@ -305,4 +551,22 @@ jobs:
           name: visual-qa-screenshots-pr${{ github.event.pull_request.number }}-${{ github.run_number }}
           path: screenshots/
           retention-days: 14
-          if-no-files-found: warn
+          if-no-files-found: error
+
+      - name: Enforce Visual QA verdict
+        if: always()
+        run: |
+          capture_verdict="$(cat screenshots/capture-verdict.txt 2>/dev/null || echo FAIL)"
+          ai_verdict="$(cat screenshots/ai-verdict.txt 2>/dev/null || echo FAIL)"
+          echo "Capture: ${capture_verdict}; Gemini: ${ai_verdict}" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$capture_verdict" != "PASS" ]; then
+            echo "::error::Deterministic capture gate did not pass."
+            exit 1
+          fi
+          if [ "$ai_verdict" = "FAIL" ] || [ -z "$ai_verdict" ]; then
+            echo "::error::Gemini visual verdict is FAIL or missing."
+            exit 1
+          fi
+          if [ "$ai_verdict" = "WARN" ]; then
+            echo "::warning::Gemini reported visual warnings; inspect the report."
+          fi
