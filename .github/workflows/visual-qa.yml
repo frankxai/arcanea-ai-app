@@ -103,7 +103,6 @@ jobs:
 
       - name: Capture and validate key routes
         id: capture
-        continue-on-error: true
         env:
           PREVIEW_URL: ${{ steps.resolve-url.outputs.url }}
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
