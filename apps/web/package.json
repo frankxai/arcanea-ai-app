@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "license": "SEE LICENSE IN LICENSE",
+  "engines": {
+    "node": ">=20.10.0 <21 || >=22.0.0"
+  },
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
