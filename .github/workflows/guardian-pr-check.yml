@@ -223,6 +223,10 @@ jobs:
 
       - name: Fetch immutable PR head as data — never checkout
         shell: bash
+        env:
+          # This job's token has contents: read. It exists only for the immediate
+          # private-repository object fetch and is never persisted by checkout.
+          GUARDIAN_FETCH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           if [[ ! "$PR_NUMBER" =~ ^[1-9][0-9]*$ ]]; then
@@ -243,8 +247,23 @@ jobs:
           fi
 
           PR_DATA_REF="refs/remotes/guardian/pr-$PR_NUMBER"
+          AUTH_HEADER="$(
+            printf 'x-access-token:%s' "$GUARDIAN_FETCH_TOKEN" |
+              base64 |
+              tr -d '\n'
+          )"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0=http.https://github.com/.extraheader
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $AUTH_HEADER"
           git fetch --no-tags --force origin \
             "+refs/pull/$PR_NUMBER/head:$PR_DATA_REF"
+          unset \
+            AUTH_HEADER \
+            GUARDIAN_FETCH_TOKEN \
+            GIT_CONFIG_COUNT \
+            GIT_CONFIG_KEY_0 \
+            GIT_CONFIG_VALUE_0
+
           FETCHED_HEAD="$(git rev-parse "$PR_DATA_REF")"
           if [ "$FETCHED_HEAD" != "$HEAD_SHA" ]; then
             echo "::error::Fetched PR data is $FETCHED_HEAD, expected immutable head $HEAD_SHA."
