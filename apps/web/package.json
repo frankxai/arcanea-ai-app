@@ -82,7 +82,7 @@
     "lenis": "^1.1.18",
     "lucide-react": "^1.16.0",
     "mammoth": "^1.12.0",
-    "next": "16.2.10",
+    "next": "16.2.11",
     "novel": "^1.0.2",
     "postcss": "^8.5.19",
     "react": "^19.2.7",
@@ -108,8 +108,8 @@
     "@playwright/test": "1.61.1",
     "@types/three": "^0.183.0",
     "eslint": "10.2.0",
-    "eslint-config-next": "16.2.10",
+    "eslint-config-next": "16.2.11",
     "schema-dts": "^2.0.0",
-    "sharp": "^0.34.5"
+    "sharp": "^0.35.3"
   }
 }
