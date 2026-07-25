@@ -123,6 +123,9 @@ importers:
       prettier:
         specifier: ^3.9.4
         version: 3.9.4
+      semver:
+        specifier: ^7.8.5
+        version: 7.8.5
       tailwindcss:
         specifier: ^3.4.9
         version: 3.4.19(tsx@4.23.0)
@@ -1912,7 +1915,7 @@ packages:
       package-manager-detector: 0.2.11
       picocolors: 1.1.1
       resolve-from: 5.0.0
-      semver: 7.8.0
+      semver: 7.8.5
       spawndamnit: 3.0.1
       term-size: 2.2.1
     transitivePeerDependencies:
@@ -14872,12 +14875,6 @@ packages:
 
   /semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
-    hasBin: true
-    dev: true
-
-  /semver@7.8.0:
-    resolution: {integrity: sha512-AcM7dV/5ul4EekoQ29Agm5vri8JNqRyj39o0qpX6vDF2GZrtutZl5RwgD1XnZjiTAfncsJhMI48QQH3sN87YNA==}
-    engines: {node: '>=10'}
     hasBin: true
     dev: true
 
