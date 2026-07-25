@@ -160,7 +160,7 @@ export default function ClawStorePage() {
     setPurchasedSkills((prev) => [...prev, skill.id]);
     setProcessingSkillId(null);
     setPurchaseType(null);
-    alert(`Successfully unlocked ${skill.name} via credits! It is now available in your CLI.`);
+    alert(`Demo only — ${skill.name} was unlocked against simulated credits. No purchase occurred.`);
   };
 
   const handleDeployOnchain = async (skill: SkillItem) => {
@@ -209,7 +209,7 @@ export default function ClawStorePage() {
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setCredits((prev) => prev + creditAmt);
     setStripeLoading(null);
-    alert(`Stripe Payment of $${cost} succeeded! Added ${creditAmt} credits to your account.`);
+    alert(`Demo only — simulated a $${cost} checkout and added ${creditAmt} test credits. No payment was processed.`);
   };
 
   const handleConnectStripe = async () => {
@@ -229,12 +229,18 @@ export default function ClawStorePage() {
       pending: 0
     }));
     setPayoutLoading(false);
-    alert('Immediate Stripe Connect payout processed successfully!');
+    alert('Demo only — simulated a payout against test data. No funds moved.');
   };
 
   return (
     <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
       <div className="max-w-6xl mx-auto px-6 pt-8 pb-24">
+        {/* Demo-mode notice: no live commerce on this surface yet */}
+        <div className="mb-6 p-4 rounded-xl bg-amber-500/[0.06] border border-amber-500/20 text-sm text-amber-200/90">
+          <span className="font-semibold">Preview build.</span> The Studio Store is a working
+          prototype: purchases, credit top-ups, on-chain licensing, and payouts are simulated
+          against test data. No payment is processed and no transaction settles anywhere.
+        </div>
         {/* Header & Wallet Banner */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 pb-8 border-b border-white/[0.06]">
           <div>
@@ -440,18 +446,18 @@ export default function ClawStorePage() {
               <div className="mt-12 p-5 rounded-xl bg-green-500/5 border border-green-500/10 text-sm">
                 <div className="flex items-center gap-2.5 mb-2 text-green-400 font-semibold">
                   <PhCheckCircle className="w-5 h-5" />
-                  Onchain Transaction Settled successfully (Paymaster Sponsored)
+                  Simulated transaction recorded (testnet demo — nothing settled)
                 </div>
                 <div className="space-y-1.5 font-mono text-xs text-white/75 mt-3">
                   <div>
-                    <span className="text-white/45">STATUS:</span> SUCCESS (ERC-6551 TBA Counterparty)
+                    <span className="text-white/45">STATUS:</span> SIMULATED (local mock — no chain state changed)
                   </div>
                   <div>
                     <span className="text-white/45">TX HASH:</span>{' '}
                     <span className="text-white/90 break-all">{txDetails.hash}</span>
                   </div>
                   <div>
-                    <span className="text-white/45">PROVENANCE:</span> Story Protocol PIL Register, Base Sepolia L2
+                    <span className="text-white/45">PROVENANCE:</span> Simulated Story Protocol PIL flow (mock contract, not on any network)
                   </div>
                 </div>
               </div>

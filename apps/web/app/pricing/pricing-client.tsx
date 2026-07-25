@@ -257,7 +257,7 @@ export function PricingClient() {
                     Join the Founding Circle
                   </h3>
                   <p className="text-xs text-white/50 leading-relaxed font-body mb-4">
-                    The first 100 creators to join the waitlist secure a permanent **40% lifetime discount** on all sync plans, direct advisory access to the developer, and priority beta access.
+                    The first 100 creators to join the waitlist secure a permanent <strong className="text-white/80">40% lifetime discount</strong> on all sync plans, direct advisory access to the developer, and priority beta access.
                   </p>
                   <ul className="space-y-2 text-[11px] text-white/60 font-mono">
                     <li className="flex items-center gap-2">
