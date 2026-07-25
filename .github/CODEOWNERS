@@ -1,6 +1,11 @@
-# Agentic CODEOWNERS — routing, not gatekeeping
-# Maps areas to the agent types / reviewers best suited for the domain.
-# On free GitHub plans this auto-suggests reviewers; with branch protection it enforces.
+# Agentic CODEOWNERS — routing plus a trust-root review contract
+# Maps areas to the reviewers best suited for the domain.
+#
+# SECURITY LIMITATION: CODEOWNERS alone cannot require that approval is
+# non-author, current for the exact head, or different from the last pusher.
+# The main-branch ruleset must require Code Owner approval, dismiss stale
+# approvals on new commits, require approval of the most recent reviewable push,
+# block force-pushes, and require the Guardian trusted status check.
 
 # Core infrastructure — ops agent
 .github/                    @frankxai
@@ -34,3 +39,13 @@ CLAUDE.md                   @frankxai
 .githooks/                  @frankxai
 scripts/install-hooks.sh    @frankxai
 RECOVERY.md                 @frankxai
+
+# Guardian trust root — keep these last so they override broader patterns.
+# Changes cannot self-certify. Require an exact-head approval from a non-author
+# repository admin before applying the guardian-trusted-run label. After
+# bootstrap changes reach main, that admin must run POST_MERGE_CANARY.
+# When @frankxai authored the change, this current single-owner mapping cannot
+# satisfy that contract: add a verified second admin/code owner before merge.
+/.github/workflows/guardian-pr-check.yml @frankxai
+/scripts/guardian-council.mjs            @frankxai
+/scripts/guardian-council.test.mjs       @frankxai

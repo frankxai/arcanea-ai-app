@@ -1,18 +1,37 @@
-name: Guardian PR Check
+name: Guardian Trusted PR Check
 
-# Tiered PR review with cost cap.
-# TRIVIAL (dependabot, typos, docs-only): fast checks only, no agent cost
-# STANDARD (code, <50 files):              single domain Guardian via Claude API (~$0.10)
-# HIGH-RISK (>50 files OR sacred paths):   full Council (5 agents, ~$1 max)
-# BLOCKED   (>500 files OR >10k deletions): auto-reject, require human SACRED-DELETE: tag
+# SECURITY MODEL
+# - pull_request_target supplies the trusted default-branch workflow.
+# - Only an immutable trusted-source SHA is checked out and executed.
+# - The PR head is fetched as Git object data from refs/pull/<n>/head, verified
+#   against GitHub API/event metadata, diffed with --no-ext-diff/--no-textconv,
+#   and NEVER checked out or executed.
+# - ANTHROPIC_API_KEY exists only on the semantic-evaluation step, after an
+#   exact-head approval from a non-author repository admin and an explicit
+#   guardian-trusted-run label.
+# - A PR changing this trust root cannot self-certify its candidate workflow.
+#   Bootstrap requires a non-author admin approval and a separate
+#   workflow_dispatch POST_MERGE_CANARY after the trusted code reaches main.
+# - CODEOWNERS can route review, but stale/non-author enforcement ultimately
+#   also requires correctly configured GitHub branch protection/rulesets.
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: PR whose immutable base/head diff the post-merge canary reviews
+        required: true
+        type: string
+      acknowledgement:
+        description: Enter POST_MERGE_CANARY; dispatch must run from the default branch
+        required: true
+        type: string
 
 concurrency:
-  group: guardian-${{ github.ref }}
+  group: guardian-trusted-${{ github.event.pull_request.number || inputs.pr_number || github.run_id }}
   cancel-in-progress: true
 
 permissions:
@@ -20,164 +39,465 @@ permissions:
   pull-requests: write
 
 jobs:
-  # ────────────────────────────────────────
-  # 1. Classify risk (free, always runs)
-  # ────────────────────────────────────────
-  classify:
-    name: Classify risk
+  prepare:
+    name: Resolve trust boundary
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 5
     outputs:
-      tier: ${{ steps.tier.outputs.tier }}
-      files_changed: ${{ steps.diff.outputs.files_changed }}
-      deletions: ${{ steps.diff.outputs.deletions }}
-      sacred_touched: ${{ steps.diff.outputs.sacred_touched }}
+      pr_number: ${{ steps.pr.outputs.pr_number }}
+      trusted_sha: ${{ steps.pr.outputs.trusted_sha }}
+      base_sha: ${{ steps.pr.outputs.base_sha }}
+      head_sha: ${{ steps.pr.outputs.head_sha }}
+      pr_author: ${{ steps.pr.outputs.pr_author }}
+      authorized: ${{ steps.pr.outputs.authorized }}
+      authorized_by: ${{ steps.pr.outputs.authorized_by }}
+      authorization_reason: ${{ steps.pr.outputs.authorization_reason }}
     steps:
-      - uses: actions/checkout@v6
+      - name: Resolve immutable PR metadata and exact-head admin approval
+        id: pr
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        env:
+          DISPATCH_PR_NUMBER: ${{ inputs.pr_number }}
+          CANARY_ACKNOWLEDGEMENT: ${{ inputs.acknowledgement }}
         with:
+          script: |
+            const dispatch = context.eventName === 'workflow_dispatch';
+            const suppliedNumber = dispatch
+              ? process.env.DISPATCH_PR_NUMBER
+              : String(context.payload.pull_request?.number ?? '');
+            if (!/^[1-9][0-9]*$/.test(suppliedNumber)) {
+              throw new Error(`Invalid pull-request number: ${suppliedNumber || 'missing'}`);
+            }
+            const prNumber = Number(suppliedNumber);
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+            });
+            if (pr.base.ref !== 'main') {
+              throw new Error(`Guardian only accepts PRs targeting main, received ${pr.base.ref}`);
+            }
+
+            let trustedSha;
+            if (dispatch) {
+              if (process.env.CANARY_ACKNOWLEDGEMENT !== 'POST_MERGE_CANARY') {
+                throw new Error('Manual execution requires acknowledgement POST_MERGE_CANARY');
+              }
+              const defaultBranch = context.payload.repository.default_branch;
+              if (context.ref !== `refs/heads/${defaultBranch}`) {
+                throw new Error(
+                  `Post-merge canary must run from refs/heads/${defaultBranch}, received ${context.ref}`
+                );
+              }
+              if (
+                context.actor.toLowerCase() === pr.user.login.toLowerCase()
+              ) {
+                throw new Error(
+                  'Post-merge canary must be dispatched by a non-author repository admin'
+                );
+              }
+              if (
+                pr.merged !== true ||
+                !pr.merged_at ||
+                !/^[0-9a-f]{40}$/.test(pr.merge_commit_sha ?? '')
+              ) {
+                throw new Error(
+                  'Post-merge canary requires a merged PR with an immutable merge commit'
+                );
+              }
+              const actorPermission = await github.rest.repos.getCollaboratorPermissionLevel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                username: context.actor,
+              });
+              if (actorPermission.data.permission !== 'admin') {
+                throw new Error('Post-merge canary dispatch requires repository admin permission');
+              }
+              const branch = await github.rest.repos.getBranch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                branch: defaultBranch,
+              });
+              trustedSha = branch.data.commit.sha;
+              const inclusion = await github.rest.repos.compareCommits({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                base: pr.merge_commit_sha,
+                head: trustedSha,
+              });
+              if (
+                !['ahead', 'identical'].includes(inclusion.data.status) ||
+                inclusion.data.base_commit.sha !== pr.merge_commit_sha ||
+                inclusion.data.merge_base_commit.sha !== pr.merge_commit_sha
+              ) {
+                throw new Error(
+                  'Merged PR change is not an ancestor of the current trusted default branch'
+                );
+              }
+            } else {
+              const eventPr = context.payload.pull_request;
+              if (
+                eventPr.base.sha !== pr.base.sha ||
+                eventPr.head.sha !== pr.head.sha ||
+                eventPr.number !== prNumber
+              ) {
+                throw new Error(
+                  'Pull-request metadata moved after the event; refusing a mixed-head evaluation'
+                );
+              }
+              if (pr.state !== 'open') {
+                throw new Error(`Automatic Guardian execution requires an open PR, received ${pr.state}`);
+              }
+              trustedSha = pr.base.sha;
+            }
+
+            const reviews = await github.paginate(github.rest.pulls.listReviews, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              per_page: 100,
+            });
+            const latestByLogin = new Map();
+            for (const review of reviews.sort((left, right) => left.id - right.id)) {
+              if (review.user?.login) latestByLogin.set(review.user.login, review);
+            }
+
+            const exactHeadAdminApprovals = [];
+            for (const [login, review] of latestByLogin) {
+              if (
+                login === pr.user.login ||
+                review.state !== 'APPROVED' ||
+                review.commit_id !== pr.head.sha
+              ) {
+                continue;
+              }
+              const permission = await github.rest.repos.getCollaboratorPermissionLevel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                username: login,
+              });
+              if (permission.data.permission === 'admin') {
+                exactHeadAdminApprovals.push(login);
+              }
+            }
+
+            const labels = new Set(pr.labels.map((label) => label.name));
+            const hasTrustedRunLabel = labels.has('guardian-trusted-run');
+            const authorized =
+              hasTrustedRunLabel && exactHeadAdminApprovals.length > 0;
+            const authorizationReason = authorized
+              ? `exact-head non-author admin approval by ${exactHeadAdminApprovals.join(', ')}`
+              : !hasTrustedRunLabel
+                ? 'missing guardian-trusted-run label'
+                : 'missing exact-head approval from a non-author repository admin';
+
+            core.setOutput('pr_number', String(prNumber));
+            core.setOutput('trusted_sha', trustedSha);
+            core.setOutput('base_sha', pr.base.sha);
+            core.setOutput('head_sha', pr.head.sha);
+            core.setOutput('pr_author', pr.user.login);
+            core.setOutput('authorized', String(authorized));
+            core.setOutput('authorized_by', exactHeadAdminApprovals.join(','));
+            core.setOutput('authorization_reason', authorizationReason);
+
+  review:
+    name: Trusted Guardian enforcement
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PR_NUMBER: ${{ needs.prepare.outputs.pr_number }}
+      TRUSTED_SHA: ${{ needs.prepare.outputs.trusted_sha }}
+      BASE_SHA: ${{ needs.prepare.outputs.base_sha }}
+      HEAD_SHA: ${{ needs.prepare.outputs.head_sha }}
+      GUARDIAN_MAX_DIFF_BYTES: "180000"
+      GUARDIAN_MAX_OUTPUT_TOKENS: "1800"
+      COUNCIL_TOKEN_CAP: "300000"
+    steps:
+      - name: Checkout immutable trusted source only
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.prepare.outputs.trusted_sha }}
           fetch-depth: 0
+          persist-credentials: false
 
-      - name: Diff stats
-        id: diff
+      - name: Fetch immutable PR head as data — never checkout
+        shell: bash
         run: |
-          BASE="${{ github.event.pull_request.base.sha }}"
-          HEAD="${{ github.event.pull_request.head.sha }}"
-
-          STATS=$(git diff --shortstat "$BASE".."$HEAD")
-          FILES=$(echo "$STATS" | grep -oE '[0-9]+ files? changed' | grep -oE '[0-9]+' || echo 0)
-          DELS=$(echo "$STATS" | grep -oE '[0-9]+ deletions?' | grep -oE '[0-9]+' || echo 0)
-
-          SACRED=""
-          for path in ".claude/commands/" ".claude/agents/" ".arcanea/" "CLAUDE.md" ".github/CODEOWNERS" ".github/workflows/"; do
-            if git diff --name-only "$BASE".."$HEAD" | grep -q "^$path"; then
-              SACRED="yes"
-              break
+          set -euo pipefail
+          if [[ ! "$PR_NUMBER" =~ ^[1-9][0-9]*$ ]]; then
+            echo "::error::Invalid PR number."
+            exit 1
+          fi
+          for sha in "$TRUSTED_SHA" "$BASE_SHA" "$HEAD_SHA"; do
+            if [[ ! "$sha" =~ ^[0-9a-f]{40}$ ]]; then
+              echo "::error::GitHub did not supply a full immutable SHA."
+              exit 1
             fi
           done
 
-          echo "files_changed=${FILES:-0}" >> "$GITHUB_OUTPUT"
-          echo "deletions=${DELS:-0}" >> "$GITHUB_OUTPUT"
-          echo "sacred_touched=${SACRED:-no}" >> "$GITHUB_OUTPUT"
-
-      - name: Compute tier
-        id: tier
-        run: |
-          F=${{ steps.diff.outputs.files_changed }}
-          D=${{ steps.diff.outputs.deletions }}
-          S=${{ steps.diff.outputs.sacred_touched }}
-
-          if [ "$F" -gt 500 ] || [ "$D" -gt 10000 ]; then
-            echo "tier=BLOCKED" >> "$GITHUB_OUTPUT"
-          elif [ "$F" -gt 50 ] || [ "$S" = "yes" ]; then
-            echo "tier=HIGH_RISK" >> "$GITHUB_OUTPUT"
-          elif [ "$F" -le 5 ] && [ "$D" -le 100 ]; then
-            echo "tier=TRIVIAL" >> "$GITHUB_OUTPUT"
-          else
-            echo "tier=STANDARD" >> "$GITHUB_OUTPUT"
+          OBSERVED_TRUSTED="$(git rev-parse HEAD)"
+          if [ "$OBSERVED_TRUSTED" != "$TRUSTED_SHA" ]; then
+            echo "::error::Trusted checkout is $OBSERVED_TRUSTED, expected $TRUSTED_SHA."
+            exit 1
           fi
 
-      - name: Post risk summary
-        uses: actions/github-script@v8
+          PR_DATA_REF="refs/remotes/guardian/pr-$PR_NUMBER"
+          git fetch --no-tags --force origin \
+            "+refs/pull/$PR_NUMBER/head:$PR_DATA_REF"
+          FETCHED_HEAD="$(git rev-parse "$PR_DATA_REF")"
+          if [ "$FETCHED_HEAD" != "$HEAD_SHA" ]; then
+            echo "::error::Fetched PR data is $FETCHED_HEAD, expected immutable head $HEAD_SHA."
+            exit 1
+          fi
+
+          git cat-file -e "$TRUSTED_SHA^{commit}"
+          git cat-file -e "$BASE_SHA^{commit}"
+          git cat-file -e "$HEAD_SHA^{commit}"
+          git merge-base --is-ancestor "$BASE_SHA" "$HEAD_SHA"
+
+          # Deliberately remain on TRUSTED_SHA. Nothing from HEAD_SHA is sourced,
+          # imported, installed, built, checked out, or executed.
+          test "$(git rev-parse HEAD)" = "$TRUSTED_SHA"
+
+      - name: Test the trusted verifier contract
+        run: node --test scripts/guardian-council.test.mjs
+
+      - name: Independently classify exact immutable diff
+        id: risk
+        run: |
+          node scripts/guardian-council.mjs \
+            --classify \
+            --trusted-sha "$TRUSTED_SHA" \
+            --base "$BASE_SHA" \
+            --expected-head "$HEAD_SHA" \
+            --github-output "$GITHUB_OUTPUT"
+
+      - name: Publish trust and risk summary
+        if: always() && steps.risk.outputs.tier != ''
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        env:
+          GUARDIAN_TIER: ${{ steps.risk.outputs.tier }}
+          GUARDIAN_REASON: ${{ steps.risk.outputs.reason }}
+          GUARDIAN_MODE: ${{ steps.risk.outputs.mode }}
+          FILES_CHANGED: ${{ steps.risk.outputs.files_changed }}
+          DELETIONS: ${{ steps.risk.outputs.deletions }}
+          SACRED_TOUCHED: ${{ steps.risk.outputs.sacred_touched }}
+          SACRED_DELETED: ${{ steps.risk.outputs.sacred_deleted }}
+          DIFF_SHA256: ${{ steps.risk.outputs.diff_sha256 }}
+          TRUSTED_SHA: ${{ needs.prepare.outputs.trusted_sha }}
+          BASE_SHA: ${{ needs.prepare.outputs.base_sha }}
+          HEAD_SHA: ${{ needs.prepare.outputs.head_sha }}
+          AUTHORIZED: ${{ needs.prepare.outputs.authorized }}
+          AUTHORIZATION_REASON: ${{ needs.prepare.outputs.authorization_reason }}
         with:
           script: |
-            const tier = '${{ steps.tier.outputs.tier }}';
-            const f = '${{ steps.diff.outputs.files_changed }}';
-            const d = '${{ steps.diff.outputs.deletions }}';
-            const s = '${{ steps.diff.outputs.sacred_touched }}';
-            const emoji = { TRIVIAL: '🟢', STANDARD: '🟡', HIGH_RISK: '🟠', BLOCKED: '🔴' }[tier];
+            const marker = '<!-- guardian-trusted-risk-summary -->';
+            const tier = process.env.GUARDIAN_TIER;
             const body = [
-              `## ${emoji} Guardian PR Check — tier: **${tier}**`,
-              ``,
-              `| metric | value |`,
-              `|---|---|`,
-              `| files changed | ${f} |`,
-              `| deletions | ${d} |`,
-              `| sacred path touched | ${s} |`,
-              ``,
-              tier === 'TRIVIAL'  ? '_Fast-path: CI only, no agent review._' : '',
-              tier === 'STANDARD' ? '_Single-Guardian review queued._' : '',
-              tier === 'HIGH_RISK'? '_Full Council review queued. Estimated cost: ≤ $1._' : '',
-              tier === 'BLOCKED' ? '_**BLOCKED** — PR exceeds safety thresholds. Add `BIG-CHANGE:` or `SACRED-DELETE:` to at least one commit, or split the PR._' : ''
-            ].filter(Boolean).join('\n');
-            await github.rest.issues.createComment({
+              marker,
+              `## Guardian trusted classification — **${tier}**`,
+              '',
+              `- **Trusted source:** \`${process.env.TRUSTED_SHA}\``,
+              `- **Exact PR head (data only):** \`${process.env.HEAD_SHA}\``,
+              `- **Base:** \`${process.env.BASE_SHA}\``,
+              `- **Diff SHA-256:** \`${process.env.DIFF_SHA256}\``,
+              `- **Files changed:** ${process.env.FILES_CHANGED}`,
+              `- **Deletions:** ${process.env.DELETIONS}`,
+              `- **Sacred path touched:** ${process.env.SACRED_TOUCHED}`,
+              `- **Sacred path deleted/renamed:** ${process.env.SACRED_DELETED}`,
+              `- **Semantic execution authorized:** ${process.env.AUTHORIZED}`,
+              `- **Authorization:** ${process.env.AUTHORIZATION_REASON}`,
+              '',
+              process.env.GUARDIAN_REASON,
+              '',
+              tier === 'BLOCKED'
+                ? '**No commit-message marker can bypass this BLOCKED result.**'
+                : 'The PR head was never checked out or executed.',
+            ].join('\n');
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body
+              issue_number: Number(process.env.PR_NUMBER || context.issue.number),
+              per_page: 100,
             });
+            const existing = comments.find(
+              (comment) => comment.user.type === 'Bot' && comment.body.includes(marker)
+            );
+            const params = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            };
+            if (existing) {
+              await github.rest.issues.updateComment({
+                ...params,
+                comment_id: existing.id,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                ...params,
+                issue_number: Number(process.env.PR_NUMBER || context.issue.number),
+              });
+            }
 
-  # ────────────────────────────────────────
-  # 2. BLOCKED tier → fail unless tagged
-  # ────────────────────────────────────────
-  block-if-oversized:
-    name: Block oversized PR
-    needs: classify
-    if: needs.classify.outputs.tier == 'BLOCKED'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
+      - name: Record immutable BLOCKED policy evidence
+        if: steps.risk.outputs.tier == 'BLOCKED'
+        env:
+          FAILURE_MESSAGE: ${{ steps.risk.outputs.reason }}
+        run: |
+          node scripts/guardian-council.mjs \
+            --record-failure \
+            --failure-code "blocked-policy" \
+            --failure-message "$FAILURE_MESSAGE" \
+            --mode "blocked" \
+            --trusted-sha "$TRUSTED_SHA" \
+            --base "$BASE_SHA" \
+            --expected-head "$HEAD_SHA" \
+            --output guardian-evidence
+
+      - name: Record missing trusted authorization
+        if: >-
+          (steps.risk.outputs.tier == 'STANDARD' ||
+           steps.risk.outputs.tier == 'HIGH_RISK') &&
+          needs.prepare.outputs.authorized != 'true'
+        env:
+          FAILURE_MESSAGE: ${{ needs.prepare.outputs.authorization_reason }}
+        run: |
+          node scripts/guardian-council.mjs \
+            --record-failure \
+            --failure-code "missing-trusted-authorization" \
+            --failure-message "$FAILURE_MESSAGE" \
+            --mode "${{ steps.risk.outputs.mode }}" \
+            --trusted-sha "$TRUSTED_SHA" \
+            --base "$BASE_SHA" \
+            --expected-head "$HEAD_SHA" \
+            --output guardian-evidence
+
+      - name: Run trusted semantic perspectives
+        if: >-
+          (steps.risk.outputs.tier == 'STANDARD' ||
+           steps.risk.outputs.tier == 'HIGH_RISK') &&
+          needs.prepare.outputs.authorized == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GUARDIAN_MODEL: ${{ vars.GUARDIAN_MODEL }}
+        run: |
+          node scripts/guardian-council.mjs \
+            --trusted-sha "$TRUSTED_SHA" \
+            --base "$BASE_SHA" \
+            --expected-head "$HEAD_SHA" \
+            --mode "${{ steps.risk.outputs.mode }}" \
+            --output guardian-evidence
+
+      - name: Publish exact-head semantic report
+        if: always() && steps.risk.outputs.tier != 'TRIVIAL'
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        env:
+          EXPECTED_HEAD: ${{ needs.prepare.outputs.head_sha }}
         with:
-          fetch-depth: 0
-      - name: Check for override tags
-        run: |
-          BASE="${{ github.event.pull_request.base.sha }}"
-          HEAD="${{ github.event.pull_request.head.sha }}"
-          if git log --format=%B "$BASE".."$HEAD" | grep -qE 'BIG-CHANGE:|SACRED-DELETE:|MASS-REFACTOR:'; then
-            echo "✓ Override tag found, allowing."
-            exit 0
-          fi
-          echo "✗ PR exceeds size thresholds and no override tag is present."
-          echo "  Files: ${{ needs.classify.outputs.files_changed }}"
-          echo "  Deletions: ${{ needs.classify.outputs.deletions }}"
-          exit 1
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- guardian-trusted-semantic-report -->';
+            const runUrl =
+              `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}` +
+              `/actions/runs/${context.runId}`;
+            let report;
+            try {
+              report = fs.readFileSync('guardian-evidence/report.md', 'utf8').trim();
+            } catch {
+              report = [
+                '## Guardian semantic review — BLOCK',
+                '',
+                'No valid report was produced. Trusted execution or evidence is incomplete.',
+                '',
+                `- **Exact head:** \`${process.env.EXPECTED_HEAD}\``,
+              ].join('\n');
+            }
+            const body = [
+              marker,
+              report,
+              '',
+              `- **Trusted workflow evidence:** [run ${context.runId}](${runUrl})`,
+            ].join('\n');
+            const issueNumber = Number(process.env.PR_NUMBER || context.issue.number);
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              per_page: 100,
+            });
+            const existing = comments.find(
+              (comment) => comment.user.type === 'Bot' && comment.body.includes(marker)
+            );
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body,
+              });
+            }
 
-  # ────────────────────────────────────────
-  # 3. STANDARD → single-Guardian review
-  # ────────────────────────────────────────
-  single-guardian:
-    name: Single-Guardian review
-    needs: classify
-    if: needs.classify.outputs.tier == 'STANDARD'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v6
-      - name: Queue single-Guardian review
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          # Placeholder: replace with actual Guardian runner script.
-          # Intended: call Anthropic API with ONE Guardian persona
-          # chosen by domain (frontend→Lyria, backend→Lyssandria, etc.)
-          # Hard cap: 60k tokens total, 10 min wall time.
-          echo "TODO: wire scripts/guardian-single-review.mjs"
-          echo "tier=STANDARD, files=${{ needs.classify.outputs.files_changed }}"
+      - name: Upload content-addressed semantic evidence
+        if: always() && steps.risk.outputs.tier != 'TRIVIAL'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: guardian-trusted-pr${{ needs.prepare.outputs.pr_number }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: guardian-evidence/
+          retention-days: 30
+          if-no-files-found: error
 
-  # ────────────────────────────────────────
-  # 4. HIGH-RISK → Council (max 5 Guardians)
-  # ────────────────────────────────────────
-  council:
-    name: Guardian Council (5)
-    needs: classify
-    if: needs.classify.outputs.tier == 'HIGH_RISK'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v6
-      - name: Convene Council with cost cap
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          COUNCIL_BUDGET_USD: '1.00'
-          COUNCIL_TOKEN_CAP: '300000'
+      - name: Recompute context and enforce policy independently
+        if: always()
+        shell: bash
         run: |
-          # Placeholder: replace with actual Council runner script.
-          # Intended: spawn 5 Guardian personas in parallel via Anthropic API.
-          # Each Guardian reviews from their Gate perspective (structure/design/perf/voice/innovation).
-          # Aggregate into one PR comment with approve/request-changes/block verdict.
-          # Hard cap: 300k tokens total, 15 min wall time, $1 budget alert.
-          echo "TODO: wire scripts/guardian-council.mjs"
-          echo "tier=HIGH_RISK, sacred=${{ needs.classify.outputs.sacred_touched }}"
+          set -euo pipefail
+          TIER="${{ steps.risk.outputs.tier }}"
+          MODE="${{ steps.risk.outputs.mode }}"
+          case "$TIER" in
+            TRIVIAL)
+              echo "TRIVIAL exact-head diff: semantic review not required."
+              exit 0
+              ;;
+            BLOCKED)
+              echo "::error::BLOCKED policy is immutable; author commit markers are not overrides."
+              exit 1
+              ;;
+            STANDARD|HIGH_RISK)
+              node scripts/guardian-council.mjs \
+                --verify-evidence \
+                --trusted-sha "$TRUSTED_SHA" \
+                --base "$BASE_SHA" \
+                --expected-head "$HEAD_SHA" \
+                --mode "$MODE" \
+                --output guardian-evidence
+              ;;
+            *)
+              echo "::error::Risk classification is missing or malformed."
+              exit 1
+              ;;
+          esac
 
-  # ────────────────────────────────────────
-  # 5. TRIVIAL → nothing; CI alone suffices
-  # ────────────────────────────────────────
+          VERDICT="$(tr -d '[:space:]' < guardian-evidence/verdict.txt)"
+          case "$VERDICT" in
+            approve)
+              echo "Guardian semantic verdict: approve"
+              ;;
+            request-changes|block)
+              echo "::error::Guardian semantic verdict: $VERDICT"
+              exit 1
+              ;;
+            *)
+              echo "::error::Missing or malformed semantic verdict: $VERDICT"
+              exit 1
+              ;;
+          esac
