@@ -210,6 +210,8 @@ export function resolveReviewContext({
       [
         "diff",
         "--name-status",
+        "--no-ext-diff",
+        "--no-textconv",
         "-z",
         "--find-renames",
         "--find-copies",
