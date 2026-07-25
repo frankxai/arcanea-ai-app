@@ -781,10 +781,14 @@ test("commit-message markers never bypass BLOCKED classification", () => {
   );
 });
 
-test("deletion shortstat disables external diff and text conversion", () => {
+test("all diff metadata disables external diff and text conversion", () => {
   const verifier = readFileSync(
     new URL("./guardian-council.mjs", import.meta.url),
     "utf8",
+  );
+  assert.match(
+    verifier,
+    /\[\s*"diff",\s*"--name-status",\s*"--no-ext-diff",\s*"--no-textconv",\s*"-z"/,
   );
   assert.match(
     verifier,
@@ -798,6 +802,20 @@ test("workflow trust boundary is immutable, pinned, and never checks out PR code
   assert.doesNotMatch(workflow, /^\s{2}pull_request:/m);
   assert.doesNotMatch(workflow, /^\s*git checkout\b/m);
   assert.doesNotMatch(workflow, /ref:\s*\$\{\{[^}\n]*head/i);
+  assert.match(workflow, /persist-credentials:\s*false/);
+  assert.doesNotMatch(workflow, /persist-credentials:\s*true/);
+  assert.match(
+    workflow,
+    /GUARDIAN_FETCH_TOKEN:\s*\$\{\{\s*github\.token\s*\}\}/,
+  );
+  assert.match(
+    workflow,
+    /GIT_CONFIG_KEY_0=http\.https:\/\/github\.com\/\.extraheader/,
+  );
+  assert.match(
+    workflow,
+    /GIT_CONFIG_VALUE_0="AUTHORIZATION: basic \$AUTH_HEADER"/,
+  );
 
   const actionUses = workflow
     .split("\n")
