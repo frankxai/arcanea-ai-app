@@ -339,6 +339,7 @@ jobs:
           api_key = os.environ.get('GEMINI_API_KEY', '')
           preview_url = os.environ.get('PREVIEW_URL', 'unknown')
           pr_title = os.environ.get('PR_TITLE', 'unknown')
+          safe_error = lambda error: str(error).replace(api_key, '[redacted]')
           images = []
           for filename in sorted(os.listdir('screenshots')):
             if filename.endswith('.png'):
@@ -387,7 +388,7 @@ jobs:
                 candidates.sort(key=lambda candidate: candidate[0], reverse=True)
                 return candidates[0][1]
             except Exception as error:
-              print('Model discovery failed: ' + str(error))
+              print('Model discovery failed: ' + safe_error(error))
             return fallback
 
           prompt = (
@@ -444,7 +445,7 @@ jobs:
             write_result(
               'FAIL',
               '## Visual QA\n\n**Overall verdict: FAIL**\n\n'
-              'Gemini analysis failed: ' + str(error),
+              'Gemini analysis failed: ' + safe_error(error),
             )
             raise SystemExit(0)
 
