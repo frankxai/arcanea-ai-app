@@ -108,7 +108,7 @@
     "zustand": "^5.0.14"
   },
   "devDependencies": {
-    "@playwright/test": "1.61.1",
+    "@playwright/test": "1.62.0",
     "@types/three": "^0.183.0",
     "eslint": "10.2.0",
     "eslint-config-next": "16.2.11",
