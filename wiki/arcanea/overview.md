@@ -18,7 +18,7 @@ BYOK-first creative intelligence workspace. Core product: projects, continuity, 
 
 ## Architecture
 
-Next.js 16 (App Router) + React 19 + TypeScript (strict) + Tailwind + Supabase + Vercel AI SDK. Deployed on Vercel (arcanea-ai-appx). See [[arcanea/architecture]].
+Next.js 16 (App Router) + React 19 + TypeScript (strict) + Tailwind + Supabase + Vercel AI SDK. Deployed on Vercel (arcanea-ai-app). See [[arcanea/architecture]].
 
 ## Sub-Products
 

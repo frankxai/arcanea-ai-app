@@ -4,7 +4,7 @@ This file loads every session. Keep it minimal. Domain context lives in director
 
 ## Architecture
 
-Next.js 16 (App Router) + React 19 + TypeScript (strict) + Tailwind + Supabase + Vercel AI SDK. Deployed on Vercel (arcanea-ai-appx).
+Next.js 16 (App Router) + React 19 + TypeScript (strict) + Tailwind + Supabase + Vercel AI SDK. Deployed on Vercel (arcanea-ai-app).
 
 ## Agent System
 
