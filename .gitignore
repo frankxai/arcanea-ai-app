@@ -144,9 +144,26 @@ arcanea-opencode-fork/
 !.claude/hooks/
 .claude/hooks/*
 !.claude/hooks/excellence-*.sh
+!.claude/hooks/web-excellence-*.py
+!.claude/ci/
 .claude/skills/*/
 !.claude/skills/arco/
 !.claude/skills/arcanea-orchestra/
+# web-excellence pack — committed so it travels to cloud sessions
+!.claude/skills/animation-vocabulary/
+!.claude/skills/apple-design/
+!.claude/skills/brandkit/
+!.claude/skills/core-web-vitals/
+!.claude/skills/emil-design-eng/
+!.claude/skills/extract-design-system/
+!.claude/skills/find-animation-opportunities/
+!.claude/skills/image-to-code/
+!.claude/skills/improve-animations/
+!.claude/skills/review-animations/
+!.claude/skills/ui-ux-pro-max/
+!.claude/skills/visual-proof/
+!.claude/skills/web-design-guidelines/
+!.claude/skills/web-release-gate/
 .codex/
 .codacy/
 .cursor/
@@ -296,3 +313,14 @@ link-checker-report.txt
 
 # Starlight/ACOS temporary files
 .starlight/
+!.starlight/
+.starlight/*
+!.starlight/design-contract.json
+!.starlight/release-evidence/
+!.starlight/release-evidence/**
+
+# web-excellence pack — local evidence, not repo artifacts
+.visual-proof/
+.lighthouse.json
+.extract-design-system/
+.claude/skills/.replaced/

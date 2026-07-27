@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { PhCaretDown } from '@/lib/phosphor-icons';
 import { getModelById, CHAT_MODELS, ProviderLogo } from '@/components/chat/model-selector';
 import { FOCUS_MODES, type FocusMode } from './focus-modes';
+import { AiDisclosure } from './ai-disclosure';
 
 interface AgentHeaderProps {
   activeAgent: { type: 'auto' | 'luminor' | 'custom'; id: string; name: string; avatar: string; specialty: string } | null;
@@ -52,6 +53,7 @@ export function AgentHeader({
               <span className="text-sm font-medium text-white/80 group-hover:text-white transition-colors">
                 {agentDisplay.name}
               </span>
+              <AiDisclosure />
               <PhCaretDown className="w-3 h-3 text-white/30 group-hover:text-white/50 transition-colors" />
             </div>
             <span className="text-[10px] text-white/30 leading-none hidden sm:block">

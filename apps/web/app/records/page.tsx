@@ -19,6 +19,7 @@ import {
 } from '@phosphor-icons/react';
 import type { PhosphorIcon as PhIcon } from '@phosphor-icons/react';
 import { MotionProvider, m } from '@/lib/motion';
+import { SyntheticContentNotice } from '@/components/compliance/synthetic-content-notice';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -255,11 +256,13 @@ export default function RecordsPage() {
                   </span>
                 </h1>
 
-                <p className="text-lg text-white/50 leading-relaxed max-w-2xl mb-10">
+                <p className="text-lg text-white/50 leading-relaxed max-w-2xl mb-4">
                   Original compositions tuned to the ten Gate frequencies. Each track is crafted
                   to align with the Arcanean progression system — from the grounding 174 Hz of Foundation
                   to the transcendent 1111 Hz of Source.
                 </p>
+
+                <SyntheticContentNotice medium="music" className="max-w-2xl mb-10" />
 
                 <div className="flex flex-wrap gap-4">
                   <a

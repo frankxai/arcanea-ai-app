@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth/context';
 import { createClient } from '@/lib/supabase/client';
+import { SyntheticContentNotice } from '@/components/compliance/synthetic-content-notice';
 import { getCreations, getUserCreations, deleteCreation, updateCreation } from '@/lib/database/services/creation-service';
 import type { Creation, CreationType } from '@/lib/database/types/api-responses';
 import { AccountAbstractionService } from '@/lib/web3/account-abstraction';
@@ -154,6 +155,7 @@ export default function CreationsPage() {
             <p className="text-sm text-white/60 mt-1">
               {creations.length} creation{creations.length !== 1 ? 's' : ''} saved
             </p>
+            <SyntheticContentNotice medium="content" className="mt-1.5" />
           </div>
           <Link
             href="/chat"
