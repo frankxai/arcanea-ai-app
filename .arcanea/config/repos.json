@@ -10,7 +10,7 @@
       "publicUrl": "https://arcanea.ai",
       "role": "production",
       "stack": ["next.js", "react", "typescript", "supabase"],
-      "vercel": "arcanea-ai-appx",
+      "vercel": "arcanea-ai-app",
       "branch": "main",
       "dependencies": ["@arcanea/core", "@arcanea/aios"],
       "layer": "surface",
