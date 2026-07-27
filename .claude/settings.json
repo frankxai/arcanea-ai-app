@@ -16,6 +16,15 @@
             "continueOnError": true
           }
         ]
+      },
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/web-excellence-session.py"
+          }
+        ]
       }
     ],
     "UserPromptSubmit": [
@@ -39,6 +48,15 @@
             "command": "bash .claude/hooks/excellence-pre-write.sh 2>/dev/null || true",
             "timeout": 2000,
             "continueOnError": true
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/web-excellence-gate.py"
           }
         ]
       }
@@ -69,6 +87,14 @@
             "command": "bash .claude/hooks/excellence-stop.sh 2>/dev/null || true",
             "timeout": 3000,
             "continueOnError": true
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/web-excellence-stop.py"
           }
         ]
       }
