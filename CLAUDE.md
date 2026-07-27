@@ -1,6 +1,7 @@
 # Arcanea — Claude Code Configuration
 
 ## LLM + API key policy (machine-global)
+
 **Authoritative source: `~/.claude/CLAUDE.md` on this machine.** Default LLM route = OpenRouter (`OPENROUTER_API_KEY` + `OPENROUTER_BASE_URL`). Image gen for Arcanea book covers, character art, marketplace cards = Higgsfield MCP (preferred) or direct (NB2 = `gemini-3.1-flash-image`, GPT Image 2 = `gpt-image-1`/`gpt-image-2`). **Reason first** — don't auto-call external LLMs when you can think. Daily monitoring + secret scan via `StarlightAPIKeyMonitor` + `StarlightSecretScan` scheduled tasks. Arcanea-specific overrides: book covers → `/arcanea-book-cover` skill (NB2 with cover-design thinking).
 
 ## Source Of Truth
@@ -12,29 +13,33 @@ Before substantial work, read: `AGENTS.md` → newest `planning-with-files/CURRE
 - Do what has been asked; nothing more, nothing less
 - NEVER create files unless absolutely necessary
 - ALWAYS prefer editing existing files over creating new ones
-- NEVER proactively create *.md or README files unless explicitly requested
+- NEVER proactively create \*.md or README files unless explicitly requested
 - NEVER save working files, text/mds, or tests to the root folder
 - ALWAYS read a file before editing it
 - NEVER commit secrets, credentials, or .env files
 
 ## File Organization
 
-- `apps/web/` — Next.js web app (has own CLAUDE.md)
-- `packages/` — workspace packages
-- `docs/` — documentation
+Turborepo monorepo (`turbo.json` + `pnpm-workspace.yaml`).
+
+- `apps/web/` — Next.js 16 web app (`@arcanea/web`, has own CLAUDE.md)
+- `apps/agenthub/` — Agent Hub app
+- `packages/` — 70+ workspace packages (`@arcanea/design-system`, `arcanea-mcp`, `agent-registry`, `presence`, `world-engine`… — see `packages/CLAUDE.md`)
+- `book/` — Library content collections (has own CLAUDE.md)
 - `.arcanea/` — shared intelligence substrate (has own CLAUDE.md)
-- `book/` — Library content, 17 collections (has own CLAUDE.md)
-- `arcanea-onchain/` — onchain/crypto workspace (has own CLAUDE.md + .mcp.json)
+- `docs/`, `oss/`, `scripts/`, `supabase/`, `planning-with-files/` — docs, OSS mirror, tooling, DB, planning state
 
 ## Build & Test
 
+Scripts route through Turbo (`turbo run <task>`).
+
 ```bash
-pnpm run build          # full monorepo
-pnpm --dir apps/web run build  # web only
-pnpm test && pnpm run lint
+pnpm build              # full monorepo
+pnpm dev:web            # web only (avoid — see Resource Management)
+pnpm test && pnpm lint && pnpm type-check
 ```
 
-ALWAYS run build after code changes. ALWAYS verify before committing. Node 20.x via `.nvmrc`. pnpm only — NEVER npm.
+ALWAYS run build after code changes. ALWAYS verify before committing. Node 22 via `.nvmrc` (engines allow `>=20`). pnpm@8.15.0 only — NEVER npm.
 
 ## Git Discipline
 
