@@ -5,14 +5,25 @@ import { successResponse, handleApiError, parsePaginationParams } from '@/lib/ap
 
 // `trending_creations` is a view whose `trending_score` is computed, so Postgres
 // must materialise and sort the whole view on every request — it cannot use an
-// index. Without a ceiling that runs to the 300s platform limit. Cap the request
-// so a slow query fails fast, and cache the result: trending is stale-tolerant.
-// The durable fix is a materialised view + index on trending_score (needs a
-// migration; the view definition is not currently checked into supabase/).
+// index. Without a ceiling that runs to the platform limit. Cap the request and
+// cache the result: trending is stale-tolerant. The durable fix is a materialised
+// view + index on trending_score (the view definition is not currently checked in).
 export const maxDuration = 15;
 export const revalidate = 60;
 
-const QUERY_TIMEOUT_MS = 8000;
+// Leave enough headroom for cold start, response serialization, and the platform
+// to flush the response before the 15-second function ceiling.
+const QUERY_TIMEOUT_MS = 6000;
+
+function emptyTrendingResponse(
+  page: number,
+  pageSize: number,
+  reason?: 'trending-timeout'
+) {
+  const response = successResponse({ creations: [], page, pageSize });
+  if (reason) response.headers.set('x-arcanea-degraded', reason);
+  return response;
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -22,25 +33,55 @@ export async function GET(request: NextRequest) {
     const gate = searchParams.get('gate');
 
     const supabase = await createClient();
+    const controller = new AbortController();
 
-    // trending_creations is a view that may not exist yet in all environments.
-    // Gracefully return empty array instead of 500.
+    // `abortSignal()` alone was not sufficient in production: the upstream
+    // PostgREST request still reached Vercel's 15-second function ceiling. Race
+    // it explicitly so this stale-tolerant endpoint always returns a bounded,
+    // truthful fallback while the abort tears down the underlying request.
     let query = supabase
       .from('trending_creations')
       .select('*')
       .order('trending_score', { ascending: false })
       .range((page - 1) * pageSize, page * pageSize - 1)
-      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS));
+      .abortSignal(controller.signal);
 
     if (element) query = query.eq('element', element);
     if (gate) query = query.eq('gate', gate);
 
-    const { data, error } = await query;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    const timeout = new Promise<{ kind: 'timeout' }>((resolve) => {
+      timeoutId = setTimeout(() => {
+        // Resolve the bounded fallback before aborting so an AbortError cannot
+        // win the race and be misreported as an internal server error.
+        resolve({ kind: 'timeout' });
+        controller.abort();
+      }, QUERY_TIMEOUT_MS);
+    });
 
-    // If the table/view doesn't exist, return empty rather than 500
+    const queryResult = Promise.resolve(query).then(
+      (result) => ({ kind: 'result' as const, result }),
+      (error: unknown) => ({ kind: 'error' as const, error })
+    );
+
+    const outcome = await Promise.race([queryResult, timeout]);
+    if (timeoutId) clearTimeout(timeoutId);
+
+    if (outcome.kind === 'timeout') {
+      console.warn(
+        `[api/trending] query exceeded ${QUERY_TIMEOUT_MS}ms; returning empty fallback`
+      );
+      return emptyTrendingResponse(page, pageSize, 'trending-timeout');
+    }
+
+    if (outcome.kind === 'error') throw outcome.error;
+
+    const { data, error } = outcome.result;
+
+    // If the table/view doesn't exist, return empty rather than 500.
     if (error) {
       if (error.code === '42P01' || error.message?.includes('does not exist')) {
-        return successResponse({ creations: [], page, pageSize });
+        return emptyTrendingResponse(page, pageSize);
       }
       throw error;
     }
