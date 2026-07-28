@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
       }, QUERY_TIMEOUT_MS);
     });
 
-    const queryResult = query.then(
+    const queryResult = Promise.resolve(query).then(
       (result) => ({ kind: 'result' as const, result }),
       (error: unknown) => ({ kind: 'error' as const, error })
     );
