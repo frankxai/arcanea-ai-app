@@ -228,6 +228,18 @@ interface ChapterInfo {
   readTime: number;
 }
 
+const NON_CHAPTER_FILES = new Set([
+  'README.md',
+  'PITCH.md',
+  'CLAUDE.md',
+  'AUTHORS_NOTE.md',
+  'GLOSSARY.md',
+]);
+
+function isChapterMarkdown(filename: string): boolean {
+  return filename.endsWith('.md') && !NON_CHAPTER_FILES.has(filename);
+}
+
 function extractTitle(content: string, fallbackId: string): string {
   const chapterHeading = content.match(/^#\s+Chapter\s+\w+:\s+(.+)$/m);
   if (chapterHeading) return chapterHeading[1].trim();
@@ -242,7 +254,7 @@ async function getChapters(bookDir: string): Promise<ChapterInfo[]> {
   try {
     const files = await readdir(bookDir);
     const mdFiles = files
-      .filter((f) => f.endsWith('.md') && !f.startsWith('00-'))
+      .filter((f) => isChapterMarkdown(f) && !f.startsWith('00-'))
       .sort();
 
     const chapters: ChapterInfo[] = [];
