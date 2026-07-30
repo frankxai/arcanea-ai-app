@@ -458,7 +458,7 @@ export function ChapterReader({
               </span>
             )}
           </span>
-          <span>{wordCount.toLocaleString()} words &middot; {readTime} min read</span>
+          <span>{wordCount.toLocaleString('en-US')} words &middot; {readTime} min read</span>
         </div>
       </div>
 
