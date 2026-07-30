@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getBookRoot } from '@/lib/content/book-path';
+import { countChapterWords, isChapterMarkdown } from '@/lib/saga/chapter-files';
 const BOOK_ROOT = getBookRoot();
 
 export const dynamic = 'force-dynamic';
@@ -228,18 +229,6 @@ interface ChapterInfo {
   readTime: number;
 }
 
-const NON_CHAPTER_FILES = new Set([
-  'README.md',
-  'PITCH.md',
-  'CLAUDE.md',
-  'AUTHORS_NOTE.md',
-  'GLOSSARY.md',
-]);
-
-function isChapterMarkdown(filename: string): boolean {
-  return filename.endsWith('.md') && !NON_CHAPTER_FILES.has(filename);
-}
-
 function extractTitle(content: string, fallbackId: string): string {
   const chapterHeading = content.match(/^#\s+Chapter\s+\w+:\s+(.+)$/m);
   if (chapterHeading) return chapterHeading[1].trim();
@@ -254,7 +243,7 @@ async function getChapters(bookDir: string): Promise<ChapterInfo[]> {
   try {
     const files = await readdir(bookDir);
     const mdFiles = files
-      .filter((f) => isChapterMarkdown(f) && !f.startsWith('00-'))
+      .filter(isChapterMarkdown)
       .sort();
 
     const chapters: ChapterInfo[] = [];
@@ -262,7 +251,7 @@ async function getChapters(bookDir: string): Promise<ChapterInfo[]> {
     for (let i = 0; i < mdFiles.length; i++) {
       const raw = await readFile(join(bookDir, mdFiles[i]), 'utf-8');
       const id = mdFiles[i].replace(/\.md$/, '').replace(/^\d+-/, '');
-      const words = raw.split(/\s+/).length;
+      const words = countChapterWords(raw);
 
       chapters.push({
         id,
