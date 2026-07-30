@@ -1,23 +1,28 @@
 import matter from 'gray-matter';
 
-const NON_CHAPTER_FILES = new Set([
-  'README.MD',
-  'PITCH.MD',
-  'CLAUDE.MD',
-  'AUTHORS_NOTE.MD',
-  'GLOSSARY.MD',
+const NON_CHAPTER_BASENAMES = new Set([
+  'README',
+  'PITCH',
+  'CLAUDE',
+  'AUTHORS_NOTE',
+  'GLOSSARY',
 ]);
 
-const PROLOGUE_FILE = /^00-prolog(?:ue|o)?(?:[-_.]|$)/i;
+const PROLOGUE_BASENAME = /^00-prolog(?:ue|o)?(?:[-_.]|$)/i;
 
 export function isChapterMarkdown(filename: string): boolean {
-  const normalized = filename.toUpperCase();
-
-  if (!normalized.endsWith('.MD') || NON_CHAPTER_FILES.has(normalized)) {
+  if (!filename.endsWith('.md')) {
     return false;
   }
 
-  return !normalized.startsWith('00-') || PROLOGUE_FILE.test(filename);
+  const basename = filename.slice(0, -3);
+  const normalizedBasename = basename.toUpperCase();
+
+  if (NON_CHAPTER_BASENAMES.has(normalizedBasename)) {
+    return false;
+  }
+
+  return !normalizedBasename.startsWith('00-') || PROLOGUE_BASENAME.test(basename);
 }
 
 export function countChapterWords(markdown: string): number {
