@@ -43,6 +43,10 @@ function main() {
     }
   });
 
+  test('chapter policy rejects uppercase extensions the routes cannot strip', () => {
+    assert.equal(isChapterMarkdown('CHAPTER-02.MD'), false);
+  });
+
   test('word counts ignore YAML frontmatter', () => {
     const body = 'One two\n\nthree four.';
     const withFrontmatter = [
