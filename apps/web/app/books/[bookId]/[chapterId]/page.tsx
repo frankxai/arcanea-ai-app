@@ -123,11 +123,23 @@ interface ChapterFile {
   number: number;
 }
 
+const NON_CHAPTER_FILES = new Set([
+  'README.md',
+  'PITCH.md',
+  'CLAUDE.md',
+  'AUTHORS_NOTE.md',
+  'GLOSSARY.md',
+]);
+
+function isChapterMarkdown(filename: string): boolean {
+  return filename.endsWith('.md') && !NON_CHAPTER_FILES.has(filename);
+}
+
 async function getChapterFiles(bookDir: string): Promise<ChapterFile[]> {
   try {
     const files = await readdir(bookDir);
     return files
-      .filter((f) => f.endsWith('.md'))
+      .filter(isChapterMarkdown)
       .sort()
       .map((filename, idx) => ({
         filename,
