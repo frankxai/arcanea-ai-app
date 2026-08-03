@@ -9,15 +9,29 @@ import {
   honorCode,
   relics,
 } from "./meridian-data";
+import { captureMeridianEvent } from "./meridian-analytics";
 import styles from "./meridian.module.css";
 
 type MeridianSectionsProps = {
   activeRelicId: string;
+  variant: "world" | "story";
   onSelectRelic: (id: string, source: string) => void;
 };
 
-export function MeridianSections({ activeRelicId, onSelectRelic }: MeridianSectionsProps) {
+export function MeridianSections({
+  activeRelicId,
+  variant,
+  onSelectRelic,
+}: MeridianSectionsProps) {
   const activeRelic = relics.find((relic) => relic.id === activeRelicId) ?? relics[0];
+
+  function moveRelicFocus(currentId: string, offset: number) {
+    const currentIndex = relics.findIndex((relic) => relic.id === currentId);
+    const nextIndex = (currentIndex + offset + relics.length) % relics.length;
+    const nextRelic = relics[nextIndex];
+    onSelectRelic(nextRelic.id, "archive_keyboard");
+    requestAnimationFrame(() => document.getElementById("relic-tab-" + nextRelic.id)?.focus());
+  }
 
   return (
     <>
@@ -66,7 +80,7 @@ export function MeridianSections({ activeRelicId, onSelectRelic }: MeridianSecti
         </div>
         <div className={styles.archiveLayout}>
           <div className={styles.archiveTabs} role="tablist" aria-label="Living relic records">
-            {relics.map((relic) => {
+            {relics.map((relic, relicIndex) => {
               const isActive = relic.id === activeRelic.id;
               return (
                 <button
@@ -76,8 +90,26 @@ export function MeridianSections({ activeRelicId, onSelectRelic }: MeridianSecti
                   role="tab"
                   aria-selected={isActive}
                   aria-controls="relic-record"
+                  tabIndex={isActive ? 0 : -1}
                   className={isActive ? styles.archiveTabActive : styles.archiveTab}
                   onClick={() => onSelectRelic(relic.id, "archive")}
+                  onKeyDown={(event) => {
+                    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+                      event.preventDefault();
+                      moveRelicFocus(relic.id, 1);
+                    }
+                    if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+                      event.preventDefault();
+                      moveRelicFocus(relic.id, -1);
+                    }
+                    if (event.key === "Home" || event.key === "End") {
+                      event.preventDefault();
+                      moveRelicFocus(
+                        relic.id,
+                        event.key === "Home" ? -relicIndex : relics.length - 1 - relicIndex,
+                      );
+                    }
+                  }}
                 >
                   <Image src={relic.image} alt="" width={68} height={68} sizes="68px" />
                   <span>
@@ -92,6 +124,7 @@ export function MeridianSections({ activeRelicId, onSelectRelic }: MeridianSecti
           <article
             id="relic-record"
             role="tabpanel"
+            tabIndex={0}
             aria-labelledby={"relic-tab-" + activeRelic.id}
             className={styles.relicRecord}
           >
@@ -207,10 +240,28 @@ export function MeridianSections({ activeRelicId, onSelectRelic }: MeridianSecti
         <p className={styles.eyebrow}>Chapter 00 · The Sea Rose</p>
         <h2 id="final-title">The sea rose. Five voices answered. One memory went dark.</h2>
         <div className={styles.finalActions}>
-          <Link href="/sagas/meridian/chapter-zero" className={styles.primaryAction}>
+          <Link
+            href={`/sagas/meridian/chapter-zero?entry=${variant}`}
+            className={styles.primaryAction}
+            onClick={() =>
+              captureMeridianEvent("meridian_cta_clicked", {
+                variant,
+                cta: "chapter_zero_final",
+              })
+            }
+          >
             Begin the story
           </Link>
-          <Link href="/sagas/meridian?entry=story" className={styles.secondaryAction}>
+          <Link
+            href="/sagas/meridian?entry=story"
+            className={styles.secondaryAction}
+            onClick={() =>
+              captureMeridianEvent("meridian_cta_clicked", {
+                variant,
+                cta: "preview_story",
+              })
+            }
+          >
             Preview story entry
           </Link>
         </div>
