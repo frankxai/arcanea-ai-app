@@ -35,8 +35,8 @@
     "directory": "packages/arcanea-registry-mcp"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.29.0",
-    "@supabase/supabase-js": "^2.106.1",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "@supabase/supabase-js": "^2.111.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
