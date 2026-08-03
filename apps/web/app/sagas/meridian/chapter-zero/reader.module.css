@@ -1,0 +1,371 @@
+.reader {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background: var(--arc-cosmic-void);
+  color: var(--arc-text-primary);
+  font-family: var(--arc-font-body);
+  overflow: clip;
+}
+
+.reader * {
+  box-sizing: border-box;
+}
+
+.progressTrack {
+  position: fixed;
+  z-index: 60;
+  top: var(--nav-h, 0);
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: color-mix(in srgb, var(--arc-text-primary) 8%, transparent);
+}
+
+.progressValue {
+  height: 100%;
+  background: var(--arc-brand-atlantean-teal);
+  transition: width 120ms linear;
+}
+
+.readerHero {
+  position: relative;
+  isolation: isolate;
+  min-height: calc(100svh - var(--nav-h, 4rem));
+  overflow: hidden;
+  background: var(--arc-cosmic-deep);
+}
+
+.desktopArt,
+.mobileArt {
+  object-fit: cover;
+  object-position: center;
+  animation: readerReveal var(--arc-duration-ambient) var(--arc-ease-expo-out) both;
+}
+
+.mobileArt {
+  display: none;
+}
+
+.heroShade {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: color-mix(in srgb, var(--arc-cosmic-void) 38%, transparent);
+}
+
+.heroCopy {
+  position: absolute;
+  z-index: 2;
+  bottom: clamp(5rem, 11vh, 8rem);
+  left: clamp(1.5rem, 7vw, 7rem);
+  width: min(38rem, calc(100% - 3rem));
+  text-shadow: var(--arc-shadow-elevation-3);
+}
+
+.heroCopy > p,
+.heroCopy > span,
+.chapterMarker,
+.chapterNav,
+.sectionLabel,
+.readerFooter > p {
+  font-family: var(--arc-font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.heroCopy > p {
+  margin: 0 0 2rem;
+  color: var(--arc-gold-medium);
+  font-size: 0.7rem;
+}
+
+.heroCopy > span {
+  color: var(--arc-brand-atlantean-teal);
+  font-size: 0.68rem;
+}
+
+.heroCopy h1 {
+  margin: 0.55rem 0 1.3rem;
+  color: var(--arc-text-primary);
+  font-family: var(--arc-font-editorial);
+  font-size: clamp(4rem, 8vw, 8.6rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.82;
+  text-transform: uppercase;
+}
+
+.heroCopy blockquote {
+  max-width: 29rem;
+  margin: 0 0 2rem;
+  color: var(--arc-gold-medium);
+  font-family: var(--arc-font-editorial);
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  line-height: 1.25;
+}
+
+.heroCopy a,
+.primaryAction,
+.secondaryAction {
+  display: inline-flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--arc-radius-md);
+  padding: 0.85rem 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 650;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.heroCopy a,
+.primaryAction {
+  border: 1px solid var(--arc-brand-atlantean-teal);
+  background: var(--arc-brand-atlantean-teal);
+  color: var(--arc-cosmic-void);
+}
+
+.secondaryAction {
+  border: 1px solid color-mix(in srgb, var(--arc-gold-medium) 44%, transparent);
+  background: transparent;
+  color: var(--arc-text-primary);
+}
+
+.heroCopy a:focus-visible,
+.primaryAction:focus-visible,
+.secondaryAction:focus-visible,
+.chapterNav a:focus-visible {
+  outline: 2px solid var(--arc-gold-bright);
+  outline-offset: 3px;
+}
+
+.chapterMarker {
+  position: absolute;
+  z-index: 2;
+  right: clamp(1.5rem, 5vw, 5rem);
+  bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  color: var(--arc-gold-dark);
+  font-size: 0.62rem;
+}
+
+.readerBody {
+  display: grid;
+  grid-template-columns: 12rem minmax(0, 46rem);
+  gap: clamp(3rem, 8vw, 9rem);
+  width: min(100% - 3rem, 78rem);
+  margin: 0 auto;
+  padding: clamp(5rem, 10vw, 9rem) 0 clamp(7rem, 13vw, 12rem);
+}
+
+.chapterNav {
+  position: sticky;
+  top: calc(var(--nav-h, 4rem) + 2rem);
+  display: flex;
+  height: fit-content;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid color-mix(in srgb, var(--arc-text-primary) 14%, transparent);
+  color: var(--arc-text-muted);
+  font-size: 0.62rem;
+  line-height: 1.5;
+}
+
+.chapterNav a,
+.chapterNav span {
+  border-bottom: 1px solid color-mix(in srgb, var(--arc-text-primary) 10%, transparent);
+  color: inherit;
+  padding: 0.9rem 0;
+  text-decoration: none;
+}
+
+.chapterNav a:hover {
+  color: var(--arc-brand-atlantean-teal);
+}
+
+.chapterNav span {
+  color: var(--arc-gold-dark);
+}
+
+.prose {
+  min-width: 0;
+}
+
+.prose section {
+  scroll-margin-top: calc(var(--nav-h, 4rem) + 2rem);
+}
+
+.prose section + section {
+  margin-top: 6rem;
+}
+
+.sectionLabel {
+  margin: 0 0 2.6rem;
+  border-top: 1px solid color-mix(in srgb, var(--arc-gold-medium) 24%, transparent);
+  color: var(--arc-gold-dark);
+  font-size: 0.66rem;
+  padding-top: 0.85rem;
+}
+
+.prose section > p:not(.sectionLabel) {
+  margin: 0 0 1.45em;
+  color: var(--arc-text-secondary);
+  font-family: var(--arc-font-editorial);
+  font-size: clamp(1.15rem, 1.8vw, 1.38rem);
+  line-height: 1.78;
+}
+
+.prose .opening {
+  color: var(--arc-text-primary);
+  font-size: clamp(1.65rem, 2.7vw, 2.25rem);
+  line-height: 1.42;
+}
+
+.opening::first-letter {
+  float: left;
+  margin: 0.08em 0.12em 0 0;
+  color: var(--arc-gold-medium);
+  font-size: 4.2em;
+  line-height: 0.72;
+}
+
+.prose .dialogue {
+  color: var(--arc-text-primary);
+}
+
+.readerFooter {
+  display: flex;
+  min-height: 42rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid color-mix(in srgb, var(--arc-gold-medium) 22%, transparent);
+  background: var(--arc-cosmic-deep);
+  padding: 5rem 1.5rem;
+  text-align: center;
+}
+
+.readerFooter > p {
+  color: var(--arc-brand-atlantean-teal);
+  font-size: 0.68rem;
+}
+
+.readerFooter h2 {
+  max-width: 58rem;
+  margin: 1.2rem 0 2.3rem;
+  font-family: var(--arc-font-editorial);
+  font-size: clamp(2.7rem, 6vw, 6rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.96;
+}
+
+.readerFooter > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+@keyframes readerReveal {
+  from { transform: scale(1.035); opacity: 0.78; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 54rem) {
+  .readerBody {
+    display: block;
+  }
+
+  .chapterNav {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 4rem;
+  }
+
+  .chapterNav a,
+  .chapterNav span {
+    padding-right: 0.7rem;
+  }
+}
+
+@media (max-width: 40rem) {
+  .readerHero {
+    min-height: 52rem;
+  }
+
+  .desktopArt {
+    display: none;
+  }
+
+  .mobileArt {
+    display: block;
+    object-position: center top;
+  }
+
+  .heroShade {
+    background: color-mix(in srgb, var(--arc-cosmic-void) 48%, transparent);
+  }
+
+  .heroCopy {
+    bottom: 4.5rem;
+  }
+
+  .heroCopy > p {
+    margin-bottom: 1.2rem;
+  }
+
+  .heroCopy h1 {
+    font-size: clamp(3.7rem, 19vw, 5.5rem);
+  }
+
+  .chapterMarker {
+    display: none;
+  }
+
+  .readerBody {
+    width: min(100% - 2rem, 46rem);
+  }
+
+  .chapterNav {
+    display: flex;
+    overflow-x: auto;
+    flex-direction: row;
+    white-space: nowrap;
+  }
+
+  .chapterNav a,
+  .chapterNav span {
+    min-width: max-content;
+    padding-right: 1.5rem;
+  }
+
+  .prose section > p:not(.sectionLabel) {
+    font-size: 1.16rem;
+    line-height: 1.72;
+  }
+
+  .readerFooter > div {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .primaryAction,
+  .secondaryAction {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desktopArt,
+  .mobileArt {
+    animation: none;
+  }
+
+  .progressValue {
+    transition: none;
+  }
+}
