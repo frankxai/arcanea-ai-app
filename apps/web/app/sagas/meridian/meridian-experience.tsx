@@ -212,7 +212,11 @@ export function MeridianExperience({ variant }: MeridianExperienceProps) {
       ) : (
         <WorldEntryHero activeRelicId={activeRelicId} onSelectRelic={selectRelic} />
       )}
-      <MeridianSections activeRelicId={activeRelicId} onSelectRelic={selectRelic} />
+      <MeridianSections
+        activeRelicId={activeRelicId}
+        variant={variant}
+        onSelectRelic={selectRelic}
+      />
     </div>
   );
 }
