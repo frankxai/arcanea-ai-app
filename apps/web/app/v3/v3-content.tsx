@@ -2,7 +2,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { LazyMotion, domAnimation, m, useScroll, useTransform } from "framer-motion";
+import { LazyMotion, domAnimation, m, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
@@ -91,6 +91,8 @@ export function V3Loading() {
 function HeroPortal() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const reducedMotion = useReducedMotion();
+  const prefersReduced = !isLoaded || !!reducedMotion;
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -154,7 +156,7 @@ function HeroPortal() {
       {/* Content */}
       <m.div
         className="relative z-10 w-full max-w-3xl mx-auto px-5 sm:px-6"
-        style={{ y: contentY, opacity: contentOpacity }}
+        style={prefersReduced ? { y: 0, opacity: 1 } : { y: contentY, opacity: contentOpacity }}
       >
         <div className="flex flex-col items-center text-center">
           {/* Canonical brand mark */}

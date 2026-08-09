@@ -77,7 +77,7 @@ function Select({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="bg-white/[0.03] border border-white/[0.08] rounded-md px-2 py-1 text-zinc-200"
+        className="bg-white/[0.03] border border-white/[0.08] rounded-md px-2.5 py-2 min-h-[44px] text-zinc-200"
       >
         {options.map((o) => (
           <option key={o} value={o}>
