@@ -357,18 +357,18 @@ export default function ImaginePage() {
             </div>
             <div className="flex items-center gap-2">
               {autoScrollEnabled && (
-                <button onClick={() => setAutoScrollEnabled(false)} className="text-xs text-white/30 hover:text-white/60 px-3 py-1 rounded-lg hover:bg-white/[0.04] transition-all">
+                <button onClick={() => setAutoScrollEnabled(false)} className="text-xs text-white/30 hover:text-white/60 px-3 py-2 min-h-[44px] rounded-lg hover:bg-white/[0.04] transition-all">
                   Stop auto-generate
                 </button>
               )}
               {!autoScrollEnabled && currentPrompt && (
-                <button onClick={() => setAutoScrollEnabled(true)} className="text-xs text-[var(--arc-brand-atlantean-teal)]/70 hover:text-[var(--arc-brand-atlantean-teal)] px-3 py-1 rounded-lg hover:bg-[var(--arc-brand-atlantean-teal)]/10 transition-all">
+                <button onClick={() => setAutoScrollEnabled(true)} className="text-xs text-[var(--arc-brand-atlantean-teal)]/70 hover:text-[var(--arc-brand-atlantean-teal)] px-3 py-2 min-h-[44px] rounded-lg hover:bg-[var(--arc-brand-atlantean-teal)]/10 transition-all">
                   Resume
                 </button>
               )}
               <button
                 onClick={() => { refreshFavorites(); setShowFavorites(true); }}
-                className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs text-pink-300/60 hover:text-pink-300 hover:bg-pink-500/10 transition-all"
+                className="flex items-center gap-1.5 px-3 py-2 min-h-[44px] rounded-lg text-xs text-pink-300/60 hover:text-pink-300 hover:bg-pink-500/10 transition-all"
               >
                 <Heart size={12} weight="fill" className="text-pink-400" />
                 {favCount > 0 && favCount}
