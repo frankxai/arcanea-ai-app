@@ -15,7 +15,7 @@ overrides:
   playwright@<1.55.1: '>=1.55.1'
   tmp@<=0.2.3: '>=0.2.4'
   tmp@<0.2.6: '>=0.2.6'
-  nanoid@<3.3.17: '>=3.3.17'
+  nanoid@<3.3.17: 3.3.17
   glob@>=10.2.0 <10.5.0: '>=10.5.0'
   ai@<5.0.52: '>=5.0.52'
   '@modelcontextprotocol/sdk@<1.25.2': '>=1.25.2'
@@ -1491,7 +1491,7 @@ packages:
     dependencies:
       '@ai-sdk/provider': 0.0.3
       eventsource-parser: 1.1.2
-      nanoid: 6.0.0
+      nanoid: 3.3.17
       secure-json-parse: 2.7.0
       zod: 3.25.76
     dev: false
@@ -13245,9 +13245,9 @@ packages:
       three: 0.185.1
     dev: false
 
-  /nanoid@6.0.0:
-    resolution: {integrity: sha512-mkUH+rPkwU2qPadJ0oJZOjeZ5Mxn8Q1UhevwkTRWNuUZzyia3h4rhzK39hxaHTk0o2OxB8W2SQ6A8k23ZDi1pQ==}
-    engines: {node: ^22 || ^24 || >=26}
+  /nanoid@3.3.17:
+    resolution: {integrity: sha512-xQLf0A3HOMlgHq0n247/LRuAOYmB7dXJ/DvAxGvsSBij45XtBSmQycu+F8ODbHwns/XyFZagyL1+J0Offw1E0g==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
   /napi-build-utils@2.0.0:
@@ -14111,7 +14111,7 @@ packages:
     resolution: {integrity: sha512-g50586zr4bZmwFiTlflMu8E0bDTb5I5gertgwAKmsdUlTQIhZtunzUlD1WSzwcVWPoAVpsrA6vlfCD7oXvRwgg==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
-      nanoid: 6.0.0
+      nanoid: 3.3.17
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -14119,7 +14119,7 @@ packages:
     resolution: {integrity: sha512-DTPx3RWSSnWyzLxQnlH0rJP+EW5ekl16ZU4/psbIhA0e53kJfdgaN5vKM+xP7yJtXVu+nfdVFmlgFDEKAe4Pyw==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
-      nanoid: 6.0.0
+      nanoid: 3.3.17
       picocolors: 1.1.1
       source-map-js: 1.2.1
     dev: true
