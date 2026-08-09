@@ -29,7 +29,6 @@ const footerLinks = {
       { href: "/lore", label: "Lore" },
       { href: "/factions", label: "Factions" },
       { href: "/showcase", label: "Showcase" },
-      { href: "/community-hub", label: "Community Hub" },
       { href: "/templates", label: "Templates" },
     ],
   },

@@ -266,10 +266,10 @@ export function ProtocolContent() {
               className="mt-8 text-center"
             >
               <Link
-                href="/community-hub"
+                href="/contact"
                 className="inline-flex items-center gap-2 text-sm font-display text-[var(--arc-brand-arcanean-gold)]/70 hover:text-[var(--arc-brand-arcanean-gold)] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-arcanean-gold)]/40 rounded"
               >
-                Join the governance discussion
+                Contact for governance discussion
                 <ArrowRight />
               </Link>
             </m.div>
@@ -393,10 +393,10 @@ export function ProtocolContent() {
                 </m.a>
                 <m.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
                   <Link
-                    href="/community-hub"
+                    href="/contact"
                     className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-[var(--arc-brand-atlantean-teal)]/25 text-[var(--arc-brand-atlantean-teal)] font-semibold text-sm rounded-xl hover:bg-[var(--arc-brand-atlantean-teal)]/[0.06] hover:border-[var(--arc-brand-atlantean-teal)]/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
                   >
-                    Join protocol discussion
+                    Contact about the protocol
                     <ArrowRight />
                   </Link>
                 </m.div>

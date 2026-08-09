@@ -310,7 +310,6 @@ const FLOW_LANES: Array<{
     body: "Storefronts, royalties, memberships, and gated drops open once the creation loop is proven. Join the waitlist to hear the moment they are real.",
     status: "Roadmap",
     links: [
-      { label: "Creator Economy", href: "/creator-economy" },
       { label: "Pricing", href: "/pricing" },
       { label: "Roadmap", href: "/roadmap" },
     ],
@@ -1139,10 +1138,10 @@ function EarnTeaserSection() {
           <div className="mt-10 text-center">
             <Magnetic>
               <Link
-                href="/creator-economy"
+                href="/roadmap"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)]/15 to-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-arcanean-gold)]/25 text-sm font-medium text-[var(--arc-brand-arcanean-gold)] hover:from-[var(--arc-brand-arcanean-gold)]/25 hover:to-[var(--arc-brand-atlantean-teal)]/15 transition-colors"
               >
-                See creator economy roadmap
+                See product roadmap
                 <span className="text-xs">&rarr;</span>
               </Link>
             </Magnetic>

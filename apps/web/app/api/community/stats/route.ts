@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 /**
  * Community Stats API
  *
  * GET /api/community/stats - Returns platform-wide community metrics.
- * Queries Supabase for real counts, falls back to plausible demo numbers
- * when Supabase is not configured.
+ * Queries Supabase for real counts. When DB is empty or unconfigured,
+ * returns 204 (no fabricated demo metrics).
  */
 
 import { NextResponse } from "next/server";
@@ -32,18 +31,33 @@ async function fetchLiveStats(): Promise<CommunityStats | null> {
 
   try {
     const [profilesRes, creationsRes, likesRes, collectionsRes] = await Promise.all([
-      fetch(`${SUPABASE_URL}/rest/v1/profiles?select=id&limit=0`, { headers, next: { revalidate: 600 } }),
-      fetch(`${SUPABASE_URL}/rest/v1/creations?select=id,guardian&status=eq.published`, { headers, next: { revalidate: 300 } }),
-      fetch(`${SUPABASE_URL}/rest/v1/likes?select=id&limit=0`, { headers, next: { revalidate: 300 } }),
-      fetch(`${SUPABASE_URL}/rest/v1/collections?select=id&limit=0`, { headers, next: { revalidate: 600 } }),
+      fetch(`${SUPABASE_URL}/rest/v1/profiles?select=id&limit=0`, {
+        headers,
+        next: { revalidate: 600 },
+      }),
+      fetch(`${SUPABASE_URL}/rest/v1/creations?select=id,guardian&status=eq.published`, {
+        headers,
+        next: { revalidate: 300 },
+      }),
+      fetch(`${SUPABASE_URL}/rest/v1/likes?select=id&limit=0`, {
+        headers,
+        next: { revalidate: 300 },
+      }),
+      fetch(`${SUPABASE_URL}/rest/v1/collections?select=id&limit=0`, {
+        headers,
+        next: { revalidate: 600 },
+      }),
     ]);
 
     const creators = parseInt(profilesRes.headers.get("content-range")?.split("/")[1] ?? "0");
     const likes = parseInt(likesRes.headers.get("content-range")?.split("/")[1] ?? "0");
-    const collections = parseInt(collectionsRes.headers.get("content-range")?.split("/")[1] ?? "0");
+    const collections = parseInt(
+      collectionsRes.headers.get("content-range")?.split("/")[1] ?? "0",
+    );
 
-    // Count creations + guardian distribution
-    const creationsData: Array<{ guardian: string | null }> = creationsRes.ok ? await creationsRes.json() : [];
+    const creationsData: Array<{ guardian: string | null }> = creationsRes.ok
+      ? await creationsRes.json()
+      : [];
     const guardianCounts: Record<string, number> = {};
     for (const c of creationsData) {
       if (c.guardian) {
@@ -61,7 +75,7 @@ async function fetchLiveStats(): Promise<CommunityStats | null> {
       creations: creationsData.length,
       likes,
       collections,
-      galleryImages: 47 + creationsData.length, // Storage images + user creations
+      galleryImages: creationsData.length,
       topGuardians,
     };
   } catch {
@@ -69,29 +83,19 @@ async function fetchLiveStats(): Promise<CommunityStats | null> {
   }
 }
 
-// Plausible demo numbers when DB is empty or not configured
-const DEMO_STATS: CommunityStats = {
-  creators: 389,
-  creations: 1247,
-  likes: 8432,
-  collections: 156,
-  galleryImages: 47,
-  topGuardians: [
-    { name: "Draconia", count: 218 },
-    { name: "Lyria",    count: 187 },
-    { name: "Shinkami",  count: 164 },
-    { name: "Leyla",    count: 142 },
-    { name: "Maylinn",  count: 119 },
-  ],
-};
-
 export async function GET() {
   try {
     const live = await fetchLiveStats();
 
-    const stats = live && live.creators > 0 ? live : DEMO_STATS;
+    // Honest empty: no fabricated demo metrics when DB is empty or missing.
+    if (!live || live.creators <= 0) {
+      return new NextResponse(null, {
+        status: 204,
+        headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300" },
+      });
+    }
 
-    return NextResponse.json(stats, {
+    return NextResponse.json(live, {
       headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" },
     });
   } catch {

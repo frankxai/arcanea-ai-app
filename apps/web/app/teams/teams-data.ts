@@ -24,7 +24,7 @@ export const PRINCIPLES = [
   },
   {
     title: "Creator-first",
-    body: "Decisions routed through /community-hub. Every major change opens an AIP — Arcanean Improvement Proposal.",
+    body: "Decisions route through open contact and AIP process — Arcanean Improvement Proposal for every major change.",
     color: "var(--arc-void)",
     glyph: "◐",
   },
