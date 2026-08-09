@@ -68,7 +68,7 @@ const navLinks: NavLink[] = [
   {
     href: "/gallery",
     label: "Explore",
-    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/showcase", "/models", "/community-hub", "/creator-economy"],
+    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/showcase", "/models"],
     mega: [
       {
         title: "Discover",
@@ -87,13 +87,6 @@ const navLinks: NavLink[] = [
           { href: "/lore/guardians", label: "Guardians", desc: "The Ten Gate-keepers" },
           { href: "/living-lore", label: "Chronicles", desc: "Interactive stories" },
           { href: "/glossary", label: "Glossary", desc: "Arcanean terminology" },
-        ],
-      },
-      {
-        title: "Community",
-        items: [
-          { href: "/community-hub", label: "Community Hub", desc: "Discord, Reddit, Whop" },
-          { href: "/creator-economy", label: "Creator Economy", desc: "7 ways to earn" },
         ],
       },
     ],

@@ -390,10 +390,10 @@ export function TeamsContent() {
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Link
-                    href="/community-hub"
+                    href="/contact"
                     className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-[var(--arc-void)] to-[var(--arc-void)] text-sm font-semibold text-white hover:shadow-[0_0_40px_rgba(192,132,252,0.25)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
                   >
-                    Join a team
+                    Contact about teams
                     <span className="text-xs">→</span>
                   </Link>
                   <a
