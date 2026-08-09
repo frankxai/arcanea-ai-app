@@ -34,7 +34,7 @@
     "url": "https://github.com/frankxai/arcanea-ai-app"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "@arcanea/publishing-house": "workspace:*",
     "zod": "^4.3.6"
   },
