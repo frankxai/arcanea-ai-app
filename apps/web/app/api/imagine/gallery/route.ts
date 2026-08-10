@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const supabase = await createClient();
     const {
@@ -17,12 +17,10 @@ export async function GET(request: Request) {
       return NextResponse.json({ images: [], hasStorage: false });
     }
 
-    const cursor = new URL(request.url).searchParams.get('cursor') ?? undefined;
     const { list } = await import('@vercel/blob');
-    const { blobs, cursor: nextCursor, hasMore } = await list({
+    const { blobs } = await list({
       prefix: `imagine/${user.id}/`,
       limit: 100,
-      cursor,
     });
 
     const images = blobs
@@ -37,8 +35,6 @@ export async function GET(request: Request) {
     return NextResponse.json({
       images,
       hasStorage: true,
-      hasMore,
-      cursor: hasMore ? nextCursor : null,
     });
   } catch (error) {
     console.error('Imagine gallery failed', {
