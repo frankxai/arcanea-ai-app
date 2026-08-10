@@ -1,4 +1,5 @@
-import { describe, expect, it } from 'vitest';
+import assert from 'node:assert/strict';
+import test from 'node:test';
 
 import { VISUAL_ENCYCLOPEDIA_ENTRIES } from './catalog';
 import { applyPublicationReceipt, type PublicationReceipt } from './publication-contract';
@@ -32,65 +33,97 @@ function receipt(overrides: Partial<PublicationReceipt> = {}): PublicationReceip
   };
 }
 
-describe('visual encyclopedia publication receipt', () => {
-  it('hydrates a registry-published rendition with release evidence', () => {
-    const entries = applyPublicationReceipt(VISUAL_ENCYCLOPEDIA_ENTRIES, receipt(), publicOrigin);
-    const published = entries.find((entry) => entry.id === 'K01');
+test('hydrates a registry-published rendition with release evidence', () => {
+  const entries = applyPublicationReceipt(VISUAL_ENCYCLOPEDIA_ENTRIES, receipt(), publicOrigin);
+  const published = entries.find((entry) => entry.id === 'K01');
 
-    expect(published?.review.state).toBe('published');
-    expect(published?.media).toMatchObject({
+  assert.equal(published?.review.state, 'published');
+  assert.deepEqual(
+    {
+      status: published?.media.status,
+      registryAssetId: published?.media.registryAssetId,
+      renditionId: published?.media.renditionId,
+      publicationReviewId: published?.media.publicationReviewId,
+      rightsRecordId: published?.media.rightsRecordId,
+      renditionSha256: published?.media.renditionSha256,
+    },
+    {
       status: 'published',
       registryAssetId: publishedAsset.registryAssetId,
       renditionId: publishedAsset.renditionId,
       publicationReviewId: publishedAsset.publicationReviewId,
       rightsRecordId: publishedAsset.rightsRecordId,
       renditionSha256,
-    });
-  });
+    },
+  );
+});
 
-  it('rejects duplicate visual IDs', () => {
-    expect(() =>
+test('rejects duplicate visual IDs', () => {
+  assert.throws(
+    () =>
       applyPublicationReceipt(
         VISUAL_ENCYCLOPEDIA_ENTRIES,
         receipt({ assets: [publishedAsset, publishedAsset] }),
         publicOrigin,
       ),
-    ).toThrow(/Duplicate publication receipt/u);
-  });
+    /Duplicate publication receipt/u,
+  );
+});
 
-  it('rejects source checksum and public-key drift', () => {
-    expect(() =>
+test('rejects source checksum and public-key drift', () => {
+  assert.throws(
+    () =>
       applyPublicationReceipt(
         VISUAL_ENCYCLOPEDIA_ENTRIES,
         receipt({ assets: [{ ...publishedAsset, sourceSha256: 'b'.repeat(64) }] }),
         publicOrigin,
       ),
-    ).toThrow(/source master checksum mismatch/u);
+    /source master checksum mismatch/u,
+  );
 
-    expect(() =>
+  assert.throws(
+    () =>
       applyPublicationReceipt(
         VISUAL_ENCYCLOPEDIA_ENTRIES,
-        receipt({ assets: [{ ...publishedAsset, publicKey: `v1/arcanea/images/${'b'.repeat(64)}.webp` }] }),
+        receipt({
+          assets: [
+            {
+              ...publishedAsset,
+              publicKey: `v1/arcanea/images/${'b'.repeat(64)}.webp`,
+            },
+          ],
+        }),
         publicOrigin,
       ),
-    ).toThrow(/public key does not match/u);
-  });
+    /public key does not match/u,
+  );
+});
 
-  it('rejects an untrusted delivery origin or missing evidence ID', () => {
-    expect(() =>
+test('rejects an untrusted delivery origin or missing evidence ID', () => {
+  assert.throws(
+    () =>
       applyPublicationReceipt(
         VISUAL_ENCYCLOPEDIA_ENTRIES,
-        receipt({ assets: [{ ...publishedAsset, url: publishedAsset.url.replace(publicOrigin, 'https://example.com') }] }),
+        receipt({
+          assets: [
+            {
+              ...publishedAsset,
+              url: publishedAsset.url.replace(publicOrigin, 'https://example.com'),
+            },
+          ],
+        }),
         publicOrigin,
       ),
-    ).toThrow(/configured origin/u);
+    /configured origin/u,
+  );
 
-    expect(() =>
+  assert.throws(
+    () =>
       applyPublicationReceipt(
         VISUAL_ENCYCLOPEDIA_ENTRIES,
         receipt({ assets: [{ ...publishedAsset, rightsRecordId: '' }] }),
         publicOrigin,
       ),
-    ).toThrow(/registry evidence ID/u);
-  });
+    /registry evidence ID/u,
+  );
 });

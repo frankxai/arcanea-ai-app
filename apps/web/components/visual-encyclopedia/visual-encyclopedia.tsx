@@ -134,7 +134,7 @@ export function VisualEncyclopedia({ entries, graphEdges, cinema }: VisualEncycl
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search a name, role, gift, or content use…"
-                className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/28"
+                className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/28 focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--arc-cosmic-void)]"
               />
               <span className="font-mono text-xs text-white/30">{filtered.length}</span>
             </label>
@@ -186,7 +186,7 @@ function ViewButton({ active, onClick, icon: Icon, label }: { active: boolean; o
 }
 
 function SelectFilter({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (value: string) => void }) {
-  return <label className="flex shrink-0 items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.025] px-3 py-2 text-xs text-white/38"><span>{label}</span><select value={value} onChange={(event) => onChange(event.target.value)} className="bg-transparent font-medium capitalize text-white outline-none"><option value="all" className="bg-slate-950">All</option>{options.map((option) => <option key={option} value={option} className="bg-slate-950">{option}</option>)}</select></label>;
+  return <label className="flex shrink-0 items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.025] px-3 py-2 text-xs text-white/38"><span>{label}</span><select value={value} onChange={(event) => onChange(event.target.value)} className="bg-transparent font-medium capitalize text-white outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--arc-cosmic-void)]"><option value="all" className="bg-slate-950">All</option>{options.map((option) => <option key={option} value={option} className="bg-slate-950">{option}</option>)}</select></label>;
 }
 
 function CatalogGrid({ entries, selectedId, onSelect }: { entries: VisualEncyclopediaEntry[]; selectedId?: string; onSelect: (id: string) => void }) {
