@@ -19,7 +19,10 @@ export async function POST(req: NextRequest) {
     const stripeKey = process.env.STRIPE_SECRET_KEY;
     if (!stripeKey) {
       return NextResponse.json(
-        { error: 'Stripe not configured. Contact support.' },
+        {
+          error: 'Payments are not configured yet.',
+          code: 'stripe_not_configured',
+        },
         { status: 503 }
       );
     }
