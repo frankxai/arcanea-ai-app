@@ -25,8 +25,9 @@ Public delivery is impossible from a `private` asset. A public rendition is a di
 
 1. Apply `20260810000001_media_fabric_registry.sql` to the Arcanea Supabase project.
 2. Provision isolated staging R2 buckets and Worker secrets through the paired Media Fabric repository.
-3. Move new generation uploads to the Worker service; preserve prompt/model/provenance at ingest.
-4. Migrate existing Blob objects by manifest, validate references, then retire Blob reads.
+3. Run `scripts/inventory-legacy-imagine-blob.ts` to create a non-destructive Blob manifest and resolve every legacy object's owner before copying it.
+4. Move new generation uploads to the Worker service; preserve prompt/model/provenance at ingest.
+5. Migrate existing Blob objects by manifest, validate references, then retire Blob reads.
 
 ## Explicitly rejected
 
