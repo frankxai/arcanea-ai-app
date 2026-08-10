@@ -1,5 +1,6 @@
 import { CHARACTERS } from './characters';
 import { CREATURES } from './creatures';
+import { FOUNDATION_MEDIA } from './foundation-media';
 import { GENERATION_OVERRIDES } from './generation-manifest';
 import { KINFORMS } from './kinforms';
 import { PLACES, SCENES } from './places-scenes';
@@ -17,7 +18,10 @@ export const VISUAL_ENCYCLOPEDIA_ENTRIES: VisualEncyclopediaEntry[] = [
   .map((entry) => {
     const override = GENERATION_OVERRIDES[entry.id];
     const resolved = override ? { ...entry, ...override } : entry;
-    const { blobPath, ...media } = resolved.media;
+    const foundationMedia = FOUNDATION_MEDIA[entry.id];
+    const { blobPath, ...media } = foundationMedia
+      ? { ...resolved.media, ...foundationMedia }
+      : resolved.media;
 
     return {
       ...resolved,
@@ -135,6 +139,16 @@ export function validateVisualCatalog(): string[] {
     if (slugs.has(entry.slug)) errors.push(`Duplicate slug: ${entry.slug}.`);
     ids.add(entry.id);
     slugs.add(entry.slug);
+
+    if (
+      entry.media.status !== 'generated' ||
+      !entry.media.sha256?.match(/^[a-f0-9]{64}$/u) ||
+      !entry.media.width ||
+      !entry.media.height ||
+      entry.media.mimeType !== 'image/png'
+    ) {
+      errors.push(`${entry.id} is missing its generated-master checksum or PNG dimensions.`);
+    }
 
     if (entry.canon.state !== 'proposal') {
       errors.push(`${entry.id} is ${entry.canon.state}; generated additions must remain proposal state.`);

@@ -91,7 +91,13 @@ export default async function VisualDossierPage({ params }: DossierPageProps) {
                 <InlineDatum label="State" value={entry.media.status} />
                 <InlineDatum label="Model" value={entry.media.generationModel ?? 'Not generated'} />
                 <InlineDatum label="Date" value={entry.media.generatedAt ?? 'Pending'} />
-                <InlineDatum label="Hash" value={entry.media.sha256 ? `${entry.media.sha256.slice(0, 12)}…` : 'Pending'} />
+                <InlineDatum label="Source hash" value={entry.media.sha256 ? `${entry.media.sha256.slice(0, 12)}…` : 'Pending'} />
+                {entry.media.renditionSha256 ? <InlineDatum label="Rendition hash" value={`${entry.media.renditionSha256.slice(0, 12)}…`} /> : null}
+                {entry.media.registryAssetId ? <InlineDatum label="Registry" value={shortId(entry.media.registryAssetId)} /> : null}
+                {entry.media.renditionId ? <InlineDatum label="Rendition" value={shortId(entry.media.renditionId)} /> : null}
+                {entry.media.publicationReviewId ? <InlineDatum label="Publication review" value={shortId(entry.media.publicationReviewId)} /> : null}
+                {entry.media.rightsRecordId ? <InlineDatum label="Rights record" value={shortId(entry.media.rightsRecordId)} /> : null}
+                {entry.media.publishedAt ? <InlineDatum label="Published" value={entry.media.publishedAt} /> : null}
               </dl>
             </Panel>
           </aside>
@@ -116,6 +122,10 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
 
 function InlineDatum({ label, value }: { label: string; value: string }) {
   return <div className="flex items-start justify-between gap-4 border-b border-white/[0.06] pb-3 last:border-0 last:pb-0"><dt className="text-white/30">{label}</dt><dd className="max-w-[12rem] text-right text-white/58">{value}</dd></div>;
+}
+
+function shortId(value: string) {
+  return `${value.slice(0, 8)}…${value.slice(-4)}`;
 }
 
 function Quality({ score, state }: { score: VisualQualityScore | null; state: string }) {

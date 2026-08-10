@@ -49,6 +49,10 @@ export interface VisualMedia {
   blobPath?: string;
   deliveryKey?: string;
   registryAssetId?: string;
+  renditionId?: string;
+  renditionSha256?: string;
+  publicationReviewId?: string;
+  rightsRecordId?: string;
   width?: number;
   height?: number;
   mimeType?: string;

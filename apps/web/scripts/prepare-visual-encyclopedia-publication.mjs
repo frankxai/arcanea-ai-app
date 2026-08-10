@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { basename, dirname, relative, resolve } from 'node:path';
+import { dirname, relative, resolve } from 'node:path';
 
 const args = parseArgs(process.argv.slice(2));
 for (const key of ['foundationManifest', 'waveManifest', 'waveLedger', 'out']) {
@@ -8,10 +8,9 @@ for (const key of ['foundationManifest', 'waveManifest', 'waveLedger', 'out']) {
 }
 
 const outputPath = resolve(args.out);
-const receiptTemplatePath = resolve(
-  args.receiptTemplate ?? dirname(outputPath),
-  args.receiptTemplate ? '' : 'visual-encyclopedia-publication-receipt.template.json',
-);
+const receiptTemplatePath = args.receiptTemplate
+  ? resolve(args.receiptTemplate)
+  : resolve(dirname(outputPath), 'visual-encyclopedia-publication-receipt.template.json');
 const foundationPath = resolve(args.foundationManifest);
 const wavePath = resolve(args.waveManifest);
 const ledgerPath = resolve(args.waveLedger);
@@ -74,8 +73,9 @@ if (candidates.length !== 130) fail(`Expected 130 approved masters, found ${cand
 
 const assets = [];
 const seenVisualIds = new Set();
-const seenRegistryIds = new Set();
+const seenClientAssetIds = new Set();
 const seenHashes = new Map();
+const MAX_INGEST_BYTES = 25 * 1024 * 1024;
 
 for (const candidate of candidates) {
   if (seenVisualIds.has(candidate.visualId)) fail(`Duplicate visual ID: ${candidate.visualId}.`);
@@ -101,11 +101,34 @@ for (const candidate of candidates) {
     fail(`${candidate.visualId}: height mismatch.`);
   }
 
-  const registryAssetId = uuidFromSeed(`arcanea:visual-encyclopedia:${candidate.visualId}`);
-  if (seenRegistryIds.has(registryAssetId)) fail(`Registry UUID collision: ${registryAssetId}.`);
-  seenRegistryIds.add(registryAssetId);
+  if (body.byteLength > MAX_INGEST_BYTES) {
+    fail(`${candidate.visualId}: exceeds the Media Control Worker 25 MiB ingest limit.`);
+  }
 
-  const publicKey = `arcanea/visual-encyclopedia/${candidate.wave}/${basename(candidate.sourcePath)}`;
+  const clientAssetId = uuidFromSeed(`arcanea:visual-encyclopedia:${candidate.visualId}`);
+  if (seenClientAssetIds.has(clientAssetId)) fail(`Client asset UUID collision: ${clientAssetId}.`);
+  seenClientAssetIds.add(clientAssetId);
+
+  const assetType = `visual-encyclopedia-${candidate.kind}`;
+  const provenanceHeader = JSON.stringify({
+    client_asset_id: clientAssetId,
+    visual_id: candidate.visualId,
+    slug: candidate.slug,
+    gate: candidate.gate,
+    batch: candidate.batch,
+    canon_state: candidate.canonState,
+    collection_wave: candidate.wave,
+    source_manifest: toPosix(candidate.sourceManifest),
+    quality_score: candidate.score,
+    quality_maximum: candidate.score === null ? null : 30,
+    generator: 'openai-codex-imagegen',
+    generated_at: candidate.generatedAt,
+  });
+  if (provenanceHeader.length > 4_096) {
+    fail(`${candidate.visualId}: x-media-provenance exceeds the 4,096 character contract.`);
+  }
+
+  const expectedSourceKey = `v1/arcanea/images/${sha256}.png`;
   assets.push({
     visual: {
       id: candidate.visualId,
@@ -117,14 +140,22 @@ for (const candidate of candidates) {
       role: candidate.role,
       canonState: candidate.canonState,
     },
-    registryInput: {
-      id: registryAssetId,
-      brandSlug: 'arcanea',
-      ownerSubject: 'service:arcanea-studio',
-      assetType: 'image',
-      category: `visual-encyclopedia.${candidate.kind}`,
-      title: candidate.name,
-      actorSubject: 'service:arcanea-studio',
+    clientAssetId,
+    ingestRequest: {
+      method: 'POST',
+      path: '/v1/ingest',
+      authorizationCapability: 'MEDIA_INGEST_TOKEN',
+      headers: {
+        'content-length': String(body.byteLength),
+        'content-type': 'image/png',
+        'x-media-brand': 'arcanea',
+        'x-media-asset-type': assetType,
+        'x-media-owner-subject': 'service:arcanea-studio',
+        'x-media-actor-subject': 'service:arcanea-studio',
+        'x-media-title': candidate.name,
+        'x-media-provenance': provenanceHeader,
+      },
+      bodyFile: toPosix(relative(dirname(outputPath), candidate.sourcePath)),
     },
     source: {
       localPath: toPosix(relative(dirname(outputPath), candidate.sourcePath)),
@@ -147,10 +178,18 @@ for (const candidate of candidates) {
         maximum: candidate.score === null ? null : 30,
       },
     },
-    proposedDelivery: {
+    expectedIngestResult: {
+      registryAssetId: 'assigned-by-media-control-worker',
+      category: 'images',
+      sourceKey: expectedSourceKey,
+      sha256,
+      reconciliationKey: `arcanea:${sha256}`,
+    },
+    deliveryPolicy: {
       provider: 'cloudflare-r2',
-      publicKey,
       publicOrigin: 'https://media.starlightintelligence.org',
+      publicKeyTemplate: 'v1/arcanea/images/{prepared-rendition-sha256}.{extension}',
+      note: 'The Control Worker derives the final immutable key from the prepared rendition; the source filename never becomes the canonical public key.',
     },
     publicationGate: {
       sourceIngest: 'prepared-not-executed',
@@ -160,6 +199,7 @@ for (const candidate of candidates) {
       publication: 'not-authorized',
     },
     usageLink: {
+      registryAssetId: 'from-ingest-response',
       targetType: 'arcanea.visual-encyclopedia',
       targetId: candidate.visualId,
       placement: 'gallery',
@@ -191,6 +231,7 @@ const packet = {
     arcaneaBoundaryPr: 'https://github.com/frankxai/arcanea-ai-app/pull/241',
     canonicalBytes: 'Cloudflare R2',
     canonicalMetadata: 'Dedicated shared Starlight Supabase registry',
+    controlWorkerContract: 'media-platform/src/control.ts@agent/codex/media-control-plane',
   },
   safety: {
     cloudResourcesMutated: false,
@@ -216,7 +257,7 @@ const receiptTemplate = {
   schemaVersion: 'starlight.media-publication-receipt.v1',
   brandSlug: 'arcanea',
   generatedAt: null,
-  note: 'Populate only from registry-confirmed published renditions. The gallery rejects unlisted assets.',
+  note: 'Populate only from registry-confirmed published renditions. sourceSha256 identifies the approved master; renditionSha256 identifies the delivered bytes.',
   assets: [],
 };
 
