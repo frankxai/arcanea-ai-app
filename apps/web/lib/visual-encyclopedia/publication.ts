@@ -7,7 +7,10 @@ import type { VisualEncyclopediaEntry } from './schema';
 export async function getVisualEncyclopediaEntries(): Promise<VisualEncyclopediaEntry[]> {
   const receiptUrl = process.env.ARCANEA_MEDIA_PUBLICATION_MANIFEST_URL;
   const publicOrigin = process.env.ARCANEA_MEDIA_PUBLIC_ORIGIN;
-  if (!receiptUrl || !publicOrigin) return VISUAL_ENCYCLOPEDIA_ENTRIES;
+  if (!receiptUrl && !publicOrigin) return VISUAL_ENCYCLOPEDIA_ENTRIES;
+  if (!receiptUrl || !publicOrigin) {
+    throw new Error('Arcanea media publication configuration is incomplete.');
+  }
 
   try {
     const receiptOrigin = new URL(receiptUrl).origin;
@@ -25,6 +28,6 @@ export async function getVisualEncyclopediaEntries(): Promise<VisualEncyclopedia
     console.error('Unable to hydrate the visual encyclopedia from its publication receipt.', {
       type: error instanceof Error ? error.name : 'unknown',
     });
-    return VISUAL_ENCYCLOPEDIA_ENTRIES;
+    throw error;
   }
 }

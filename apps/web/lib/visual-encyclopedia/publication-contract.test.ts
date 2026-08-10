@@ -22,6 +22,15 @@ const publishedAsset = {
   renditionSha256,
   publishedAt: '2026-08-10T06:00:00.000Z',
 };
+const withdrawnAsset = {
+  visualId: 'K01',
+  registryAssetId: publishedAsset.registryAssetId,
+  renditionId: publishedAsset.renditionId,
+  withdrawalReviewId: '55555555-5555-4555-8555-555555555555',
+  state: 'withdrawn' as const,
+  sourceSha256: source.media.sha256,
+  withdrawnAt: '2026-08-10T07:00:00.000Z',
+};
 
 function receipt(overrides: Partial<PublicationReceipt> = {}): PublicationReceipt {
   return {
@@ -29,6 +38,7 @@ function receipt(overrides: Partial<PublicationReceipt> = {}): PublicationReceip
     brandSlug: 'arcanea',
     generatedAt: '2026-08-10T06:01:00.000Z',
     assets: [publishedAsset],
+    withdrawals: [],
     ...overrides,
   };
 }
@@ -125,5 +135,64 @@ test('rejects an untrusted delivery origin or missing evidence ID', () => {
         publicOrigin,
       ),
     /registry evidence ID/u,
+  );
+});
+
+test('removes a visual only when the receipt carries a valid withdrawal tombstone', () => {
+  const entries = applyPublicationReceipt(
+    VISUAL_ENCYCLOPEDIA_ENTRIES,
+    receipt({ assets: [], withdrawals: [withdrawnAsset] }),
+    publicOrigin,
+  );
+
+  assert.equal(entries.some((entry) => entry.id === 'K01'), false);
+  assert.equal(entries.length, VISUAL_ENCYCLOPEDIA_ENTRIES.length - 1);
+});
+
+test('rejects duplicate, overlapping, unknown, or checksum-drifted withdrawals', () => {
+  assert.throws(
+    () =>
+      applyPublicationReceipt(
+        VISUAL_ENCYCLOPEDIA_ENTRIES,
+        receipt({ assets: [], withdrawals: [withdrawnAsset, withdrawnAsset] }),
+        publicOrigin,
+      ),
+    /Duplicate publication withdrawal/u,
+  );
+
+  assert.throws(
+    () =>
+      applyPublicationReceipt(
+        VISUAL_ENCYCLOPEDIA_ENTRIES,
+        receipt({ withdrawals: [withdrawnAsset] }),
+        publicOrigin,
+      ),
+    /states overlap/u,
+  );
+
+  assert.throws(
+    () =>
+      applyPublicationReceipt(
+        VISUAL_ENCYCLOPEDIA_ENTRIES,
+        receipt({
+          assets: [],
+          withdrawals: [{ ...withdrawnAsset, visualId: 'UNKNOWN' }],
+        }),
+        publicOrigin,
+      ),
+    /Unknown publication withdrawal/u,
+  );
+
+  assert.throws(
+    () =>
+      applyPublicationReceipt(
+        VISUAL_ENCYCLOPEDIA_ENTRIES,
+        receipt({
+          assets: [],
+          withdrawals: [{ ...withdrawnAsset, sourceSha256: 'b'.repeat(64) }],
+        }),
+        publicOrigin,
+      ),
+    /withdrawn source master checksum mismatch/u,
   );
 });

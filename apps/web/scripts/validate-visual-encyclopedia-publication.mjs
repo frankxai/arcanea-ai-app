@@ -5,7 +5,7 @@ import { dirname, isAbsolute, relative, resolve } from 'node:path';
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu;
 
 const args = parseArgs(process.argv.slice(2));
-if (!args.packet) fail('Usage: node scripts/validate-visual-encyclopedia-publication.mjs --packet <packet.json> [--receipt-template <template.json>]');
+if (!args.packet) fail('Usage: node scripts/validate-visual-encyclopedia-publication.mjs --packet <packet.json> [--receipt-template <template.json>] [--export-request <request.json>]');
 
 const packetPath = resolve(args.packet);
 const packetRoot = dirname(packetPath);
@@ -110,6 +110,37 @@ if (args.receiptTemplate) {
   check(template.brandSlug === 'arcanea', 'Invalid receipt template brand.');
   check(template.generatedAt === null, 'Unpublished receipt template must not claim a generation date.');
   check(Array.isArray(template.assets) && template.assets.length === 0, 'Receipt template must be empty before registry publication.');
+  check(
+    Array.isArray(template.withdrawals) && template.withdrawals.length === 0,
+    'Receipt template withdrawals must be empty before registry publication.',
+  );
+}
+
+if (args.exportRequest) {
+  const request = JSON.parse(await readFile(resolve(args.exportRequest), 'utf8'));
+  const expectedVisualIds = [...seenVisualIds];
+  const withdrawnVisualIds = Array.isArray(request.withdrawnVisualIds) ? request.withdrawnVisualIds : [];
+  check(request.brandSlug === 'arcanea', 'Invalid export-request brand.');
+  check(request.collectionSlug === 'visual-encyclopedia', 'Invalid export-request collection.');
+  check(request.assetTypePrefix === 'visual-encyclopedia', 'Invalid export-request asset prefix.');
+  check(request.renditionKind === 'gallery', 'Invalid export-request rendition kind.');
+  check(
+    JSON.stringify(request.expectedVisualIds) === JSON.stringify(expectedVisualIds),
+    'Export-request visual IDs do not exactly match packet order.',
+  );
+  check(Array.isArray(request.withdrawnVisualIds), 'Export request must declare withdrawnVisualIds.');
+  check(
+    new Set(withdrawnVisualIds).size === withdrawnVisualIds.length,
+    'Export-request withdrawals contain duplicates.',
+  );
+  check(
+    withdrawnVisualIds.every((visualId) => seenVisualIds.has(visualId)),
+    'Export-request withdrawals must be a subset of packet IDs.',
+  );
+  check(
+    request.publicOrigin === 'https://media.starlightintelligence.org',
+    'Invalid export-request public origin.',
+  );
 }
 
 const report = {
@@ -138,6 +169,7 @@ function parseArgs(values) {
   for (let index = 0; index < values.length; index += 1) {
     if (values[index] === '--packet') parsed.packet = values[index + 1];
     if (values[index] === '--receipt-template') parsed.receiptTemplate = values[index + 1];
+    if (values[index] === '--export-request') parsed.exportRequest = values[index + 1];
   }
   return parsed;
 }

@@ -259,6 +259,7 @@ const receiptTemplate = {
   generatedAt: null,
   note: 'Populate only from registry-confirmed published renditions. sourceSha256 identifies the approved master; renditionSha256 identifies the delivered bytes.',
   assets: [],
+  withdrawals: [],
 };
 
 await mkdir(dirname(outputPath), { recursive: true });

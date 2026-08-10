@@ -115,3 +115,11 @@ The remaining risk is no longer image quality or explanation coverage. The 100 e
 The architecture reconciliation sharpened the collection rather than delaying it. A direct Vercel Blob dump would have made attractive bytes available without proving asset identity, rights, lineage, or release authority. The 130-asset intake packet now preserves every checksum and proposed delivery key while leaving `publication: not-authorized`. The gallery’s empty published count is therefore honest: image quality approval is evidence for a human release decision, not a substitute for one.
 
 The final art direction principle is therefore simple: keep wonder subordinate to relationship. Arcanea looks most original when the image shows what a being helps others do, what that help costs, and what remains unresolved after the beautiful frame ends.
+
+## Lifecycle reflection
+
+The removal design exposed a subtle but consequential failure mode: omission is not deletion when a local catalog still exists. A receipt containing only published entries could drop K01 while the application quietly restored K01 from its bundled metadata. The corrected contract therefore treats a withdrawal as first-class evidence, not absence. Each tombstone names the visual, registry asset, rendition, independent withdrawal review, source checksum, and revocation time; the gallery validates that evidence before removing the entry.
+
+The same reasoning changed failure behavior. Once the hosted-media manifest is configured, an invalid or unavailable receipt may no longer fall back to all 130 local entries, because that would resurrect withdrawn work. Build or revalidation now fails and leaves the last known-good deployment serving. Before media activation, the reviewed local catalog remains the deliberate preview mode.
+
+Physical deletion is intentionally later and separate. The active gallery can stop presenting a visual immediately after reviewed withdrawal, while content-addressed bytes, prior immutable receipts, proposal history, and audit events remain recoverable through an observation window. This gives the collection a humane editorial model: approve, publish, reconsider, withdraw, and potentially redesign without pretending the past never existed.

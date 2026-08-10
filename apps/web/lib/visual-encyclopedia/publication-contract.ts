@@ -14,11 +14,22 @@ export interface PublishedVisualReceipt {
   publishedAt: string;
 }
 
+export interface WithdrawnVisualReceipt {
+  visualId: string;
+  registryAssetId: string;
+  renditionId: string;
+  withdrawalReviewId: string;
+  state: 'withdrawn';
+  sourceSha256: string;
+  withdrawnAt: string;
+}
+
 export interface PublicationReceipt {
   schemaVersion: 'starlight.media-publication-receipt.v1';
   brandSlug: 'arcanea';
   generatedAt: string;
   assets: PublishedVisualReceipt[];
+  withdrawals: WithdrawnVisualReceipt[];
 }
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu;
@@ -34,6 +45,7 @@ export function applyPublicationReceipt(
     receipt.schemaVersion !== 'starlight.media-publication-receipt.v1' ||
     receipt.brandSlug !== 'arcanea' ||
     !Array.isArray(receipt.assets) ||
+    !Array.isArray(receipt.withdrawals) ||
     !isIsoDate(receipt.generatedAt)
   ) {
     throw new Error('Publication receipt has an unsupported shape.');
@@ -42,6 +54,7 @@ export function applyPublicationReceipt(
   const expectedOrigin = new URL(publicOrigin).origin;
   const entriesById = new Map(entries.map((entry) => [entry.id, entry] as const));
   const publishedByVisualId = new Map<string, PublishedVisualReceipt>();
+  const withdrawnVisualIds = new Set<string>();
 
   for (const asset of receipt.assets) {
     if (publishedByVisualId.has(asset.visualId)) {
@@ -86,27 +99,63 @@ export function applyPublicationReceipt(
     publishedByVisualId.set(asset.visualId, asset);
   }
 
-  return entries.map((entry) => {
-    const published = publishedByVisualId.get(entry.id);
-    if (!published) return entry;
+  for (const withdrawal of receipt.withdrawals) {
+    if (withdrawnVisualIds.has(withdrawal.visualId)) {
+      throw new Error(`Duplicate publication withdrawal: ${withdrawal.visualId}.`);
+    }
+    if (publishedByVisualId.has(withdrawal.visualId)) {
+      throw new Error(`${withdrawal.visualId}: publication and withdrawal states overlap.`);
+    }
 
-    return {
-      ...entry,
-      review: { ...entry.review, state: 'published' },
-      media: {
-        ...entry.media,
-        status: 'published',
-        url: published.url,
-        deliveryKey: published.publicKey,
-        registryAssetId: published.registryAssetId,
-        renditionId: published.renditionId,
-        renditionSha256: published.renditionSha256,
-        publicationReviewId: published.publicationReviewId,
-        rightsRecordId: published.rightsRecordId,
-        publishedAt: published.publishedAt,
-      },
-    };
-  });
+    const entry = entriesById.get(withdrawal.visualId);
+    if (!entry) throw new Error(`Unknown publication withdrawal: ${withdrawal.visualId}.`);
+    if (withdrawal.state !== 'withdrawn') {
+      throw new Error(`${withdrawal.visualId}: invalid withdrawal state.`);
+    }
+    for (const id of [
+      withdrawal.registryAssetId,
+      withdrawal.renditionId,
+      withdrawal.withdrawalReviewId,
+    ]) {
+      if (!UUID_PATTERN.test(id)) {
+        throw new Error(`${withdrawal.visualId}: invalid withdrawal evidence ID.`);
+      }
+    }
+    if (!SHA256_PATTERN.test(withdrawal.sourceSha256)) {
+      throw new Error(`${withdrawal.visualId}: invalid withdrawal checksum.`);
+    }
+    if (!entry.media.sha256 || entry.media.sha256 !== withdrawal.sourceSha256) {
+      throw new Error(`${withdrawal.visualId}: withdrawn source master checksum mismatch.`);
+    }
+    if (!isIsoDate(withdrawal.withdrawnAt)) {
+      throw new Error(`${withdrawal.visualId}: invalid withdrawal date.`);
+    }
+    withdrawnVisualIds.add(withdrawal.visualId);
+  }
+
+  return entries
+    .filter((entry) => !withdrawnVisualIds.has(entry.id))
+    .map((entry) => {
+      const published = publishedByVisualId.get(entry.id);
+      if (!published) return entry;
+
+      return {
+        ...entry,
+        review: { ...entry.review, state: 'published' },
+        media: {
+          ...entry.media,
+          status: 'published',
+          url: published.url,
+          deliveryKey: published.publicKey,
+          registryAssetId: published.registryAssetId,
+          renditionId: published.renditionId,
+          renditionSha256: published.renditionSha256,
+          publicationReviewId: published.publicationReviewId,
+          rightsRecordId: published.rightsRecordId,
+          publishedAt: published.publishedAt,
+        },
+      };
+    });
 }
 
 function isIsoDate(value: unknown): value is string {
