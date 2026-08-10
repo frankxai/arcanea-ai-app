@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { updateSession } from '@/lib/supabase/middleware';
@@ -24,19 +23,16 @@ export async function middleware(request: NextRequest) {
       '/api/gates/', '/api/analytics/', '/api/storage/',
       '/api/upload', '/api/forge/',
       '/api/create', '/api/command/', '/api/projects/',
-      '/api/profile/', '/api/activity/',
+      '/api/profile/', '/api/activity/', '/api/imagine',
     ],
     publicApiPrefixes: [
       '/api/health', '/api/stripe/webhook', '/api/search/',
       '/api/trending', '/api/leaderboard', '/api/gallery',
       '/api/community/stats', '/api/guardians/', '/api/profiles/',
       '/api/v1/',
-      // Core creation APIs — must work without auth (keys are client-side)
-      '/api/ai', '/api/chat', '/api/imagine', '/api/luminors',
+      // Core creation APIs remain public where their own provider controls require it.
+      '/api/ai', '/api/chat', '/api/luminors',
       '/api/media', '/api/arcs', '/api/apl', '/api/studio',
-      // Voice surfaces — /api/voice/cognition probes COGNITION_BRIDGE_URL
-      // (returns 503 in cloud where bridge is unset), /api/voice/greeting
-      // and /api/voice/classify are room-mounted helpers.
       '/api/voice',
     ],
     authPrefixes: ['/auth/login', '/auth/signup'],
