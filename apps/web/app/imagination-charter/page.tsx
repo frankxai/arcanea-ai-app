@@ -98,7 +98,7 @@ export default function ImaginationCharterPage() {
     isPartOf: {
       "@type": "DigitalDocument",
       name: "The Starlight Accord",
-      url: "https://starlight-intelligence.vercel.app/constitution",
+      url: "https://starlightintelligence.org/constitution",
     },
     mainEntityOfPage: "https://arcanea.ai/imagination-charter",
   };
@@ -312,7 +312,7 @@ export default function ImaginationCharterPage() {
             Explore Arcanea
           </Link>
           <a
-            href="https://starlight-intelligence.vercel.app/constitution"
+            href="https://starlightintelligence.org/constitution"
             className="text-sm text-white/60 underline decoration-white/20 underline-offset-8"
           >
             Read the Starlight Accord
