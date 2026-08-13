@@ -6,8 +6,8 @@
  * Uses one-time payment mode (not subscription) since credit packs
  * are single purchases.
  *
- * TODO: Configure STRIPE_SECRET_KEY and STRIPE_PRICE_PACK_* env vars,
- *       then uncomment the Stripe session creation below.
+ * Fail-closed: missing STRIPE_SECRET_KEY or pack stripePriceId → HTTP 503.
+ * Never return 200 "pending" that UI can treat as checkout success.
  */
 
 import { NextRequest, NextResponse } from "next/server";
@@ -65,24 +65,35 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ── Stripe checkout ────────────────────────────────────────────────────
+    // ── Stripe checkout (fail-closed) ─────────────────────────────────────
     const stripeKey = process.env.STRIPE_SECRET_KEY;
 
-    if (!stripeKey || !pack.stripePriceId) {
-      // Stripe not configured yet — return informational response
-      return NextResponse.json({
-        message: "Stripe integration pending — API key needed",
-        pack: {
-          id: pack.id,
-          credits: pack.credits,
-          priceUsd: pack.priceUsd,
-          unitPrice: pack.unitPrice,
+    if (!stripeKey) {
+      return NextResponse.json(
+        {
+          error: "Payments are not configured yet.",
+          code: "stripe_not_configured",
+          pack: {
+            id: pack.id,
+            credits: pack.credits,
+            priceUsd: pack.priceUsd,
+          },
         },
-        // url: stripeSession.url // uncomment when Stripe configured
-      });
+        { status: 503 },
+      );
     }
 
-    // TODO: Uncomment once STRIPE_SECRET_KEY and stripePriceIds are set
+    if (!pack.stripePriceId) {
+      return NextResponse.json(
+        {
+          error: "This credit pack is not available for purchase yet.",
+          code: "price_not_configured",
+          packId: pack.id,
+        },
+        { status: 503 },
+      );
+    }
+
     const siteUrl =
       process.env.NEXT_PUBLIC_SITE_URL || "https://arcanea.ai";
 
@@ -107,6 +118,14 @@ export async function POST(req: NextRequest) {
 
     // Credit granting happens in the Stripe webhook handler
     // (checkout.session.completed) after payment is confirmed.
+    // Never invent a local success URL without a live session.
+
+    if (!session.url) {
+      return NextResponse.json(
+        { error: "Checkout session created without a redirect URL." },
+        { status: 502 },
+      );
+    }
 
     return NextResponse.json({
       url: session.url,

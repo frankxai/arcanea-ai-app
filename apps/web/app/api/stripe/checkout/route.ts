@@ -9,17 +9,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
-const PRICE_IDS: Record<string, string> = {
+const PRICE_IDS: Record<'creator' | 'studio', string> = {
   creator: process.env.STRIPE_PRICE_CREATOR || '',
   studio: process.env.STRIPE_PRICE_STUDIO || '',
 };
+
+function isCheckoutTier(tier: unknown): tier is keyof typeof PRICE_IDS {
+  return tier === 'creator' || tier === 'studio';
+}
 
 export async function POST(req: NextRequest) {
   try {
     const stripeKey = process.env.STRIPE_SECRET_KEY;
     if (!stripeKey) {
       return NextResponse.json(
-        { error: 'Stripe not configured. Contact support.' },
+        {
+          error: 'Payments are not configured yet.',
+          code: 'stripe_not_configured',
+        },
         { status: 503 }
       );
     }
@@ -32,10 +39,22 @@ export async function POST(req: NextRequest) {
     }
 
     const { tier } = await req.json();
+
+    if (!isCheckoutTier(tier)) {
+      return NextResponse.json({ error: 'Invalid tier' }, { status: 400 });
+    }
+
     const priceId = PRICE_IDS[tier];
 
     if (!priceId) {
-      return NextResponse.json({ error: 'Invalid tier' }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: 'This plan is not available for purchase yet.',
+          code: 'price_not_configured',
+          tier,
+        },
+        { status: 503 }
+      );
     }
 
     // Dynamic import to avoid build errors when stripe isn't installed
@@ -54,6 +73,13 @@ export async function POST(req: NextRequest) {
         tier,
       },
     });
+
+    if (!session.url) {
+      return NextResponse.json(
+        { error: 'Checkout session created without a redirect URL.' },
+        { status: 502 }
+      );
+    }
 
     return NextResponse.json({ url: session.url });
   } catch (error: unknown) {
