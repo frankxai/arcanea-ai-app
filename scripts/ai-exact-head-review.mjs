@@ -36,6 +36,65 @@ async function github(path) {
   return response.json();
 }
 
+async function selectGeminiModel() {
+  const models = [];
+  let pageToken;
+
+  for (let page = 0; page < 10; page += 1) {
+    const url = new URL('https://generativelanguage.googleapis.com/v1beta/models');
+    url.searchParams.set('key', process.env.GEMINI_API_KEY);
+    url.searchParams.set('pageSize', '1000');
+    if (pageToken) {
+      url.searchParams.set('pageToken', pageToken);
+    }
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Gemini model discovery failed: ${response.status}`);
+    }
+
+    const payload = await response.json();
+    if (Array.isArray(payload.models)) {
+      models.push(...payload.models);
+    }
+    pageToken = payload.nextPageToken;
+    if (!pageToken) {
+      break;
+    }
+  }
+  if (pageToken) {
+    throw new Error('Gemini model discovery exceeded its 10-page safety limit');
+  }
+  const requested = process.env.GEMINI_MODEL;
+  const preferredNames = [
+    requested,
+    'gemini-2.5-flash',
+    'gemini-2.0-flash',
+  ].filter(Boolean);
+
+  for (const preferredName of preferredNames) {
+    const match = models.find((model) => (
+      model?.name === `models/${preferredName}`
+      && Array.isArray(model.supportedGenerationMethods)
+      && model.supportedGenerationMethods.includes('generateContent')
+    ));
+    if (match) {
+      return match.name.replace(/^models\//, '');
+    }
+  }
+
+  const fallback = models.find((model) => (
+    typeof model?.name === 'string'
+    && model.name.startsWith('models/gemini-')
+    && Array.isArray(model.supportedGenerationMethods)
+    && model.supportedGenerationMethods.includes('generateContent')
+  ));
+  if (!fallback) {
+    throw new Error('Gemini model discovery returned no generateContent-capable Gemini model');
+  }
+  return fallback.name.replace(/^models\//, '');
+}
+
 function failSummary(reason, head = expectedHead) {
   return [
     '<!-- ai-exact-head-review -->',
@@ -111,7 +170,7 @@ async function main() {
     'DIFF END',
   ].join('\n');
 
-  const model = process.env.GEMINI_MODEL || 'gemini-2.5-pro';
+  const model = await selectGeminiModel();
   const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(process.env.GEMINI_API_KEY)}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
