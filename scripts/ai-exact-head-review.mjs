@@ -37,15 +37,34 @@ async function github(path) {
 }
 
 async function selectGeminiModel() {
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(process.env.GEMINI_API_KEY)}`,
-  );
-  if (!response.ok) {
-    throw new Error(`Gemini model discovery failed: ${response.status}`);
-  }
+  const models = [];
+  let pageToken;
 
-  const payload = await response.json();
-  const models = Array.isArray(payload.models) ? payload.models : [];
+  for (let page = 0; page < 10; page += 1) {
+    const url = new URL('https://generativelanguage.googleapis.com/v1beta/models');
+    url.searchParams.set('key', process.env.GEMINI_API_KEY);
+    url.searchParams.set('pageSize', '1000');
+    if (pageToken) {
+      url.searchParams.set('pageToken', pageToken);
+    }
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Gemini model discovery failed: ${response.status}`);
+    }
+
+    const payload = await response.json();
+    if (Array.isArray(payload.models)) {
+      models.push(...payload.models);
+    }
+    pageToken = payload.nextPageToken;
+    if (!pageToken) {
+      break;
+    }
+  }
+  if (pageToken) {
+    throw new Error('Gemini model discovery exceeded its 10-page safety limit');
+  }
   const requested = process.env.GEMINI_MODEL;
   const preferredNames = [
     requested,
