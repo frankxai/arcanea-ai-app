@@ -36,6 +36,46 @@ async function github(path) {
   return response.json();
 }
 
+async function selectGeminiModel() {
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(process.env.GEMINI_API_KEY)}`,
+  );
+  if (!response.ok) {
+    throw new Error(`Gemini model discovery failed: ${response.status}`);
+  }
+
+  const payload = await response.json();
+  const models = Array.isArray(payload.models) ? payload.models : [];
+  const requested = process.env.GEMINI_MODEL;
+  const preferredNames = [
+    requested,
+    'gemini-2.5-flash',
+    'gemini-2.0-flash',
+  ].filter(Boolean);
+
+  for (const preferredName of preferredNames) {
+    const match = models.find((model) => (
+      model?.name === `models/${preferredName}`
+      && Array.isArray(model.supportedGenerationMethods)
+      && model.supportedGenerationMethods.includes('generateContent')
+    ));
+    if (match) {
+      return match.name.replace(/^models\//, '');
+    }
+  }
+
+  const fallback = models.find((model) => (
+    typeof model?.name === 'string'
+    && model.name.startsWith('models/gemini-')
+    && Array.isArray(model.supportedGenerationMethods)
+    && model.supportedGenerationMethods.includes('generateContent')
+  ));
+  if (!fallback) {
+    throw new Error('Gemini model discovery returned no generateContent-capable Gemini model');
+  }
+  return fallback.name.replace(/^models\//, '');
+}
+
 function failSummary(reason, head = expectedHead) {
   return [
     '<!-- ai-exact-head-review -->',
@@ -111,7 +151,7 @@ async function main() {
     'DIFF END',
   ].join('\n');
 
-  const model = process.env.GEMINI_MODEL || 'gemini-2.5-pro';
+  const model = await selectGeminiModel();
   const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(process.env.GEMINI_API_KEY)}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
