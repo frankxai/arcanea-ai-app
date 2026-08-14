@@ -39,49 +39,45 @@ The roost second, a lean Bonded named Sura, shifts. “Headmaster. The boy’s F
 
 “I know what the earth did,” Akamoto says. Not unkind. Final. “I also know what institutions do when a dragon becomes a solution. We are not manufacturing solutions today.”
 
-Arion steps to the chalk line. The dragon’s breath lifts his hair. Somewhere in the pine distance a hawk screams like a thin hinge.
+Arion steps to the chalk line. The dragon’s breath lifts his hair. Somewhere in the pines a hawk screams once and is done.
 
 “Begin,” Akamoto says.
 
-He lets his own bond-sense open — not to command. To witness. The dragon presses forward an inch. Stone under Arion’s boots answers with a faint sympathetic hum, Foundation wanting to be useful, wanting to be wall.
+Bond-sense opens — witness, not command. The dragon presses forward an inch. Stone under Arion’s boots hums, Foundation wanting wall.
 
-“Don’t,” Akamoto tells the stone as much as the boy. “Useful is how cages introduce themselves.”
+Arion’s hands shake. He does not hide them.
 
-Arion’s hands shake. He does not hide them. Good. Hidden hands lie.
+The dragon offers a wing-curve. Heat spikes. Akamoto’s dead student crosses his mind like a collar’s click.
 
-The dragon offers a wing-curve — shelter, instinct, sacred. Heat spikes. Akamoto feels the old wound open: a student who took every offered wing until the institution measured the wing-span and issued a collar.
+“Stand down,” he tells the dragon, two fingers on heat-dull wrist iron.
 
-“Stand down,” Akamoto says to the dragon.
+She hesitates. The wing stays a fraction too long.
 
-She does not like it. Love rarely likes limits that arrive as words.
+Arion’s left boot slips on scale-dust at the chalk edge. His body does the stupid brave thing — flings a hand toward the offered membrane.
 
-He places two fingers on the heat-dull iron at his wrist. Dragon-law. Not domination. A remembered agreement: *no rider enters the sky as property; no beast enters service as furniture*.
+Sura moves. Not to save Arion. She slaps the wing joint with an open palm, a roost correction older than speech. The dragon recoils, offended, loyal, hot. Air yanks into the empty place where rescue almost lived.
 
-“Stand down,” he repeats, softer. “He is not prey. He is not cargo. He is not your apology for my dead.”
+Arion drops hard to one knee on the ledge. Chisel skitters, stops half over the drop. He grabs it by pure craft-stupid reflex and stays down, breathing like someone who almost bought the wrong religion with his fingers.
 
-The wing withdraws. Air rushes into the space where rescue wanted to live. Arion sways — not falling, adjusting to the sudden absence of borrowed courage.
+Sura’s mouth is a flat line. “He reached.”
 
-Sura exhales through her teeth. “Cruel.”
+“I saw,” Akamoto says.
 
-“No,” Akamoto says. “Cruel is letting him think power that answers fear is the same as courage.”
+Arion stays on the knee. “I didn’t mean—”
 
-Arion finds the line again with his feet. The chisel taps once against his thigh, a craftsman’s metronome. The stone settles. The dragon’s eyes half-lid, offended and loyal.
+“Meaning is for after the body,” Akamoto says. He does not offer a hand up. Offering would finish the lesson wrong. “Up when the stone is only stone.”
 
-“Again,” Akamoto says.
+A long breath. Two. The hum under the ledge dies. Arion stands. Dust on his trousers. A scrape on his palm that will annoy him all day, which is useful in the ordinary way.
 
-Arion looks at him. “Do you hate how good you are at this?”
+The dragon’s eyes half-lid. She does not offer the wing again.
 
-Akamoto almost smiles. It does not reach the part of him that keeps count of harness repairs.
-
-“I hate how necessary it is,” he says. “Hold the ledge. When you can hold it without asking the world to flinch for you, we will talk about sky.”
-
-Wind moves through pine. Far below, the netting waits like a truth no one wants to need.
+“Hold,” Akamoto says.
 
 Arion holds.
 
-The dragon does not catch him.
+Wind in pine. Netting below, unneeded and ready.
 
-For the first time all morning, Akamoto’s shoulders drop half an inch — not victory. Temporary mercy.
+Akamoto’s shoulders drop half an inch. Not victory. The boy reached, and the world did not get to become a cage about it.
 
 ---
 
