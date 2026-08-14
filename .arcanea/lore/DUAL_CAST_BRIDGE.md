@@ -127,11 +127,11 @@ FIELD PATH (scale / legitimacy)
 
 From dirty primary (read-only source) → clean main-based PR:
 
-1. `CHARACTER_CORE.md` as STAGING with provenance note
-2. `FACTION_COMPACT.md` as STAGING
-3. Update this bridge with any deltas
-4. Do **not** auto-edit FLAGSHIP_TEAM longform in the same PR
-5. Add CONTINUITY_ALIAS_LEDGER entries if missing on main
+1. `CHARACTER_CORE.md` as STAGING with provenance note — **DONE 2026-08-14** (sha256 in file frontmatter)
+2. `FACTION_COMPACT.md` as STAGING — **DONE 2026-08-14** (sha256 in file frontmatter)
+3. Update this bridge with any deltas — **this section**
+4. Do **not** auto-edit FLAGSHIP_TEAM longform in the same PR — **held**
+5. Add CONTINUITY_ALIAS_LEDGER entries if missing on main — **deferred** (ledger absent on this base; do not invent full ledger this PR)
 
 ## 9. Public copy rules (effective immediately in this program)
 
