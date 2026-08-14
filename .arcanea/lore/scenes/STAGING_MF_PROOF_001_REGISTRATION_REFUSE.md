@@ -23,8 +23,8 @@ tags:
 
 # Proof Scene — The Name That Starts a War
 
-> **STAGING fiction.** Not LOCKED. Demonstrates MasterFaction pressure + Story Articulation Standard.  
-> **Camera:** Confluence public center.  
+> **STAGING fiction.** Not LOCKED. Demonstrates MasterFaction pressure + Story Articulation Standard.
+> **Camera:** Confluence public center.
 > **Pressure verb:** Locate → Shelter → **Refuse**.
 
 ---
@@ -132,5 +132,5 @@ He does not know yet whether that is mercy or the beginning of a lie.
 | Residue question | Yes | mercy vs lie at the door |
 | Distinctive / original | Yes | no protected franchise labels |
 
-**Self-score: 19/20** (deduction: could deepen clerk interior one beat more in revision).  
+**Self-score: 19/20** (deduction: could deepen clerk interior one beat more in revision).
 **Independent verifier still required before any LOCKED or public site use.**

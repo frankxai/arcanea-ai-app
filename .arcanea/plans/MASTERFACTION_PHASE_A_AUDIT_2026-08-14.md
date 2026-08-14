@@ -31,12 +31,12 @@ lane: agent/hermes/masterfaction-uplevel-2026-08-14
 
 ## Missing on main (present on dirty primary)
 
-- `FACTION_COMPACT.md` — layered society + Confluence Compact protocols  
-- `CHARACTER_CORE.md` — Arion / Mera / Emilia / Akamoto public center  
+- `FACTION_COMPACT.md` — layered society + Confluence Compact protocols
+- `CHARACTER_CORE.md` — Arion / Mera / Emilia / Akamoto public center
 
 ## Quality verdict
 
-**Ceiling: high. Consistency of human intimacy: uneven.**  
+**Ceiling: high. Consistency of human intimacy: uneven.**
 Volume and systems thinking exceed many indie worlds. Felt scene density and dual-cast governance lag elite human rooms. MasterFaction program addresses governance + articulation + proof before more encyclopedia.
 
 ## Phase A deliverables
@@ -50,6 +50,6 @@ Volume and systems thinking exceed many indie worlds. Felt scene density and dua
 
 ## Non-touches
 
-- CANON_LOCKED body  
-- Codex primary dirty files  
+- CANON_LOCKED body
+- Codex primary dirty files
 - Product UI / homepage (Codex-owned)

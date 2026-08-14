@@ -117,36 +117,36 @@ FIELD PATH (scale / legitimacy)
 
 ## 7. Continuity hazards (active)
 
-1. **Kael collision** — protagonist alias vs Flagship leader nickname  
-2. **Solenne / Sol naming** — Synth member vs Godbeast Sol / House names (check LIGHTBRINGER ledger before new Sol- names)  
-3. **Architect on a team** — Mireth as field Architect is a deliberate rarity; do not spawn many  
-4. **Product Emilia vs in-world Emilia** — keep marketing OS language out of her dialogue  
-5. **Mamoru** — remains STAGING; not public center without Frank  
+1. **Kael collision** — protagonist alias vs Flagship leader nickname
+2. **Solenne / Sol naming** — Synth member vs Godbeast Sol / House names (check LIGHTBRINGER ledger before new Sol- names)
+3. **Architect on a team** — Mireth as field Architect is a deliberate rarity; do not spawn many
+4. **Product Emilia vs in-world Emilia** — keep marketing OS language out of her dialogue
+5. **Mamoru** — remains STAGING; not public center without Frank
 
 ## 8. Port plan (Phase B)
 
 From dirty primary (read-only source) → clean main-based PR:
 
-1. `CHARACTER_CORE.md` as STAGING with provenance note  
-2. `FACTION_COMPACT.md` as STAGING  
-3. Update this bridge with any deltas  
-4. Do **not** auto-edit FLAGSHIP_TEAM longform in the same PR  
-5. Add CONTINUITY_ALIAS_LEDGER entries if missing on main  
+1. `CHARACTER_CORE.md` as STAGING with provenance note
+2. `FACTION_COMPACT.md` as STAGING
+3. Update this bridge with any deltas
+4. Do **not** auto-edit FLAGSHIP_TEAM longform in the same PR
+5. Add CONTINUITY_ALIAS_LEDGER entries if missing on main
 
 ## 9. Public copy rules (effective immediately in this program)
 
-- Homepage / trailer / first-chapter marketing: **Confluence center** unless Frank directs otherwise  
-- Corps merch / crew expansion / multiplayer fantasy: **Flagship** allowed with clear labeling  
-- Never imply the Flagship does not exist in-world  
+- Homepage / trailer / first-chapter marketing: **Confluence center** unless Frank directs otherwise
+- Corps merch / crew expansion / multiplayer fantasy: **Flagship** allowed with clear labeling
+- Never imply the Flagship does not exist in-world
 - Never imply Arion is “non-canon temporary”
 
 ## 10. Frank confirmation checklist
 
-- [ ] Public center = Arion / Mera / Emilia / Akamoto  
-- [ ] Flagship remains parallel franchise cast  
-- [ ] Kael → Arion migration timing  
-- [ ] Whether “Dawnsworn” remains public team name  
-- [ ] When Compact institutions may be cited in product UI  
+- [ ] Public center = Arion / Mera / Emilia / Akamoto
+- [ ] Flagship remains parallel franchise cast
+- [ ] Kael → Arion migration timing
+- [ ] Whether “Dawnsworn” remains public team name
+- [ ] When Compact institutions may be cited in product UI
 
 ## 11. Operator summary
 

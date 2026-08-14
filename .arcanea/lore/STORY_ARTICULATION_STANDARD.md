@@ -18,7 +18,7 @@ tags:
 
 # Story Articulation Standard — Arcanea
 
-> **Status:** STAGING  
+> **Status:** STAGING
 > **Job:** Make our language as rigorous as our cosmology. Prevent “AI-impressive, human-empty” output.
 
 ## 1. The problem this solves
@@ -154,16 +154,16 @@ Arcanea multi-agent work must simulate this with **role separation**, not more t
 
 Score 0–2 each (max 20):
 
-1. Desire clarity  
-2. Cost clarity  
-3. Sensory life  
-4. Dialogue pressure  
-5. Institutional texture  
-6. Moral residue  
-7. Canon fidelity  
-8. Originality / inversion  
-9. Language cleanliness (ban list)  
-10. Re-read desire  
+1. Desire clarity
+2. Cost clarity
+3. Sensory life
+4. Dialogue pressure
+5. Institutional texture
+6. Moral residue
+7. Canon fidelity
+8. Originality / inversion
+9. Language cleanliness (ban list)
+10. Re-read desire
 
 **Ship ≥18. Revise 14–17. Restart ≤13.**
 
