@@ -63,49 +63,41 @@ The private lenses die.
 
 The wall plate does not.
 
-“Kelth,” she says, already moving. “Kill the bay mirror.”
+“Kelth—” She’s already moving. “Kill the bay mirror.”
 
-“It’s automatic capture,” he says, eyes still on the braid as if beauty were an argument. “Safety requires—”
+He does not move. His thumb is on his slate. A soft confirm-chime — too small for the damage it does.
 
-“Consent requires a way out,” Emilia snaps. She rips the Shael lead with her bare fingers; it bites; blood beads bright as a bad thesis. The wall plate stutters, holds a ghost of the braid, then collapses into gray.
+“Safety mirror is House channel,” he says, still staring at the braid like it is a rare moth. “I mirrored a still to instructional review. Three frames. Not the stream.”
 
-Silence. Solvent drips somewhere like a clock that refused to learn manners.
+Emilia rips the Shael lead with her bare fingers. It bites. Blood beads. The wall plate stutters, holds a ghost of the braid, then collapses into gray — too late. The stills are already gone from the bay and into a queue she does not control.
 
-Arion’s hands are fists at his sides. Not threatening. Containing.
+Solvent drips. Once. Twice.
 
-“You said I could shut it down,” he says.
+Arion’s hands are fists. Not threatening. Containing.
 
-“You could,” Emilia answers. Her throat hurts. “I built a door in my glove. I forgot the room had its own mouth.”
+“You said I could shut it down.”
 
-Mera drops from the ledge. She does not touch Arion. She looks at Kelth the way tides look at cliffs they will eventually rename.
+“You could shut *mine*.” Emilia’s voice cracks on the ownership. “I built a door in my glove. I forgot the room had its own mouth.”
 
-“Delete the log,” Mera says.
+Mera is off the ledge without sound. “Pull the stills.”
 
-“I don’t have authority—”
+“They’re stamped instructional,” Kelth says. Color high. “I can request purge. I cannot promise the White Ledger isn’t listening to instructional. You know that. You built half their favorite toys.”
 
-“Then find someone who does before I start remembering this room in places you can’t redact.”
+Emilia’s laugh is ugly and short. She sets the ruined lead on brass; blood makes a coin of itself.
 
-Kelth colors. “That is not a legal threat.”
+“Arion.” She makes herself look at him without designing the sentence. “I will file the purge. I will name myself in the fault log. I will rebuild so a room cannot speak when a person says stop. If you never stand in my circle again, I still rebuild it.”
 
-“It’s a weather report,” Mera says.
+He does not loosen his fists yet. “Who has the three frames tonight?”
 
-Emilia sets the ruined lead on the bench. Her blood makes a small coin of itself on brass.
+Kelth swallows. “Review queue. Possibly two eyes. Possibly a listening script.”
 
-“Arion,” she says, and makes herself meet his eyes without designing the sentence first. “I will walk to archive with you. I will stand there until the log is ash or I am removed. And I will rebuild the kit so the room cannot speak when the person says stop. If you never stand in my circle again, I will still rebuild it. That is not a bargain. That is the work.”
+“Then we are already late,” Mera says. Not poetry. Inventory.
 
-Arion’s fists loosen, one finger at a time.
+Arion’s fists open one finger at a time. “I don’t need you perfect. I need you to stop being surprised when the hinge becomes a latch.”
 
-“I don’t need you perfect,” he says. “I need you to hate the cage as much as you love the hinge.”
+Emilia nods once. No clever line left.
 
-Emilia laughs once, wrecked and grateful. “I can do that.”
-
-Master Kelth picks up his slate. For the first time he looks less hungry than afraid — afraid of a future where instruments have ethics that slow discovery.
-
-“You realize,” he says carefully, “that pattern will save lives if studied.”
-
-“Then study it with him in the room,” Emilia says. “Or don’t study it. Those are the only clean options.”
-
-On the bench, the thumb-jade cools. It keeps a faint warmth, like a hand that almost held too hard and learned to open.
+On the bench the thumb-jade cools. Somewhere above the bay, a queue light that none of them can see finishes writing Arion’s braid into a file with a number instead of a name.
 
 ---
 

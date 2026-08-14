@@ -61,21 +61,41 @@ Shadow does not pour off him. That is the horror. The corruption is not costume;
 
 He stands. The hall’s polite light dims without becoming night — a withheld dawn.
 
-“When they ask you to become necessary,” Malachar says, “ask who loses the right to say no. If the answer is anyone who is not you, walk away. If the answer is you, walk away faster. That is the only sermon I have left that is not a weapon.”
+“When they ask you to become necessary,” Malachar says, “ask who loses the right to say no.”
 
-Arion’s throat hurts. “Why tell me the exit?”
+Arion’s fingers tighten on the chisel until dream-wood creaks. “Stop finishing my thoughts. They’re mine even when they’re ugly.”
 
-“Because if you take it,” Malachar says, “you prove a thing I cannot afford to be true. And if you don’t—” a shrug, human, almost shy “—then when belief thins, we will not be strangers.”
+Malachar waits. Patient as a seal.
 
-The hall folds.
+“I refused the gallery,” Arion says. “I will refuse Stabilization. I will not refuse every hand forever and call that virtue. People are allowed to help without owning.”
 
-Arion wakes with the taste of ink and rain and old gold light. His hands are shaking again. He is absurdly grateful for the shake. It means the room is real.
+“Are they?” Malachar’s head tilts. “Show me the difference on a form, Arion. Ink is where ownership hides when love is shy.”
 
-On the desk, Mera’s sealed vial catches moonlight like a held breath. He does not touch it. He does not pray. He writes one line on scrap paper for morning:
+The polite light presses closer. For one breath Arion wants the relief so badly his knees soften — the fantasy of a world where no twelve-year-old cries without sound in a barley-smelling hall, because someone strong enough finally said *enough* for everyone.
 
-*Mercy that cannot hear no is not mercy.*
+“No,” he makes himself say. The word is small. It costs more than the stamp did. “Not like that. Not if *enough* needs me on a throne of other people’s breath.”
 
-Then he underlines *hear* until the page almost tears.
+Malachar’s face does something almost like grief. “Good. Then wake up poorer.”
+
+The hall folds hard — not gentle.
+
+Arion wakes tasting ink, rain, old gold. His nose is bleeding. One dark drop has already hit the scrap paper on his desk, blooming like the registration star.
+
+Mera’s sealed vial catches moonlight. From the other cot-side of the shared student room, her breathing changes — not full wake, the half-attention of someone who hears weather in people.
+
+“Arion?” Soft. Precise.
+
+He could tell her. The Voice. The soft knees. The wanting.
+
+“Bad dream,” he says. “Go back.”
+
+A pause long enough to be a small betrayal. Then her breathing steadies, choosing to believe him for both their sakes.
+
+His hands shake. He is grateful and sick about it. On the scrap, under the blood-star, he forces a line in his own ugly morning hand:
+
+*If I need him to be wrong, I have to stay interruptible.*
+
+He does not underline it. Underlining would be theater. He wipes his nose, hides the paper under the chisel, and lies awake until the registry bell, already practicing the face that says *fine*.
 
 ---
 

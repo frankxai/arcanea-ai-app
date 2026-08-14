@@ -88,17 +88,15 @@ Sera’s stamp hand freezes. “This counter is sequential. You will take a numb
 
 Mera speaks then. Her voice is careful, the way water is careful when it chooses a crack.
 
-“If you put him in Hall Seven with a gallery,” she says, “you will not measure control. You will measure the room’s fear. I can hear what this building has already decided about him. It is loud. It is wrong. And it will make the earth answer.”
+“Gallery makes it worse,” Mera says. “You’ll get panic. Not control. The building’s already decided about him. It’s… loud.”
 
-Sera’s gaze flicks to Mera’s collar pin — Athenaeum student mark, small as a secret. “Memory testimony is not admissible at intake.”
+Sera’s gaze flicks to Mera’s collar pin — Athenaeum, small as a secret. “Memory testimony is not admissible at intake.”
 
-“Good,” Mera says. “I’m not testifying. I’m bargaining. Strike the gallery. One room. Two witnesses. Or I file a consent challenge under Compact protocol seven before second bell, and you spend tomorrow explaining poetry to people with worse stamps than yours.”
+“Then don’t call it testimony.” Mera’s fingers worry the seam of her sleeve. “Strike the gallery. One room. Two witnesses. Or I file protocol seven before second bell and you explain the queue to someone with a worse stamp.”
 
-For the first time, Sera almost smiles — a dry, unwilling twitch. “You learned the forms quickly.”
+Sera’s mouth twitches. Not quite a smile. “Students with forms. Every term.”
 
-“I learned what rooms do to people,” Mera says.
-
-Jorren taps the table edge once, not Arion’s form. A refuse without theater. “Locate. Shelter. You do not own Train because your metal is heavier than his breath.”
+Jorren taps the table edge once, not the form. “Stamp him. Don’t sell seats.”
 
 “And if the next one breaks a wall?” Sera asks. Not villainous. Tired. Honest in the way hunger is honest. She turns the stamp in her fingers; the metal clicks her ring. “If the seal thins because people stop believing we can hold what we open? You want a boy’s dignity. I want a city that still has floors tomorrow. Tell me which one I am allowed to love first.”
 
