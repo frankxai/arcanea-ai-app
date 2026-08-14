@@ -67,6 +67,13 @@ If a chapter has none of these, it is lore furniture. Cut or reconceive.
 
 **Moral question Book 1:** Is guilt the same as goodness?
 
+**Book 1 external drive (craft gate — verifier 2026-08-15):** Thematic tests alone are not enough. Force clock:
+
+1. **Three instructional stills** of Arion’s Confluence braid leave Emilia’s bay into a review queue (Scene 002) — White Ledger may already be listening.
+2. **Dawn private demo** (Scene 001 bargain) watched by Corps liaison; any tremor becomes political fact.
+3. **Meteor-generation pressure** (Gate Storm adjacency) moves from rumor to body count — Registry overflow; Compact verbs fire without consent theater.
+4. Choices must **worsen options**: lie to Mera (004), uncleared stills (002), reaching for the wing (003) are permanent debts, not reset buttons.
+
 ### Book 2 — *The Edited Ocean* (Mera-weighted)
 
 Memory, Athenaeum silence, Silent Index, Gate Storm generation pressure. Moral question: When is knowing a violence?
