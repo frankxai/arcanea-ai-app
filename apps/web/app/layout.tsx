@@ -2,7 +2,8 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ReactNode, Suspense } from "react";
-import { JetBrains_Mono, Newsreader, Instrument_Serif } from "next/font/google";
+import { JetBrains_Mono, Instrument_Serif } from "next/font/google";
+// import { Newsreader } from "next/font/google"; // Temporarily disabled — Turbopack font loader bug in CI (Next.js 16)
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { cn } from "@/lib/utils";
@@ -41,13 +42,14 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-serif",
-  display: "swap",
-});
+// Newsreader temporarily disabled — Turbopack font loader bug in CI (Next.js 16)
+// const newsreader = Newsreader({
+//   subsets: ["latin"],
+//   weight: ["400", "500", "600", "700"],
+//   style: ["normal", "italic"],
+//   variable: "--font-serif",
+//   display: "swap",
+// });
 
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
@@ -131,11 +133,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       style={{ colorScheme: "dark" }}
-      className={cn(
+            className={cn(
               GeistSans.variable,
               GeistMono.variable,
               jetbrainsMono.variable,
-              newsreader.variable,
+              // newsreader.variable, // Temporarily disabled
               instrumentSerif.variable,
               "font-sans",
             )}
