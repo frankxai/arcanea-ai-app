@@ -252,16 +252,6 @@ export const COLLECTIONS: Collection[] = [
     textCount: 0,
     icon: '📓',
   },
-  {
-    slug: 'grimoire-of-magic',
-    name: 'The Grimoire of Magic',
-    description: 'The spell taxonomy - disciplines, tiers, and the grammar of casting',
-    order: 21,
-    format: 'reference',
-    readWhen: 'you study how Arcanean magic is classified and cast',
-    textCount: 1,
-    icon: '🜲',
-  },
 ];
 
 // Situation-to-collection mapping for recommendations
