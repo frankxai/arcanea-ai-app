@@ -98,10 +98,6 @@
       "permanent": true
     }
   ],
-  "domains": [
-    "www.arcanea.ai",
-    "arcanea.ai"
-  ],
   "regions": [
     "iad1"
   ],
