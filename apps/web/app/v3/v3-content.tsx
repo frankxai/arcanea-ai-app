@@ -88,7 +88,11 @@ export function V3Loading() {
 // HERO — Minimal, Chat-First, Premium
 // ---------------------------------------------------------------------------
 
-function HeroPortal() {
+interface HeroPortalProps {
+  totalWords: number;
+}
+
+function HeroPortal({ totalWords }: HeroPortalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const reducedMotion = useReducedMotion();
@@ -219,7 +223,7 @@ function HeroPortal() {
           >
             {[
               { Icon: Sparkle, num: FACTS.luminors, suffix: "", label: "specialist agents", color: "var(--arc-brand-atlantean-teal)", fixed: true },
-              { Icon: Diamond, num: 190, suffix: "K+", label: "words of canon", color: "var(--arc-brand-atlantean-teal)" },
+              { Icon: Diamond, num: Math.round(totalWords / 1000), suffix: "K+", label: "words of canon", color: "var(--arc-brand-atlantean-teal)" },
               { Icon: Code, num: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", color: "var(--arc-brand-cosmic-blue)" },
               { Icon: ShieldStar, num: 0, suffix: "MIT", label: "open source", color: "var(--arc-void)", fixed: true },
             ].map(({ Icon, num, suffix, label, color, fixed }, i) => (
@@ -284,7 +288,7 @@ export function V3Content({
 }: V3BelowFoldProps) {
   return (
     <div className="overflow-x-clip">
-      <HeroPortal />
+      <HeroPortal totalWords={totalWords} />
 
       {/* Gradient line separator — teal center glow */}
       <div className="relative h-px mx-6 md:mx-auto md:max-w-4xl">
