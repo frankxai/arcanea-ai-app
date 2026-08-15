@@ -488,8 +488,27 @@ export async function getTextsInCollection(collectionSlug: string): Promise<Text
     const files = await readdir(collectionPath);
     const mdFiles = files.filter(f => f.endsWith('.md') && f !== 'README.md' && f !== 'CLAUDE.md');
 
+    // Check for chapters/ subdirectory
+    const chaptersPath = join(collectionPath, 'chapters');
+    let chapterFiles: string[] = [];
+    try {
+      await access(chaptersPath);
+      const chaptersDir = await readdir(chaptersPath);
+      chapterFiles = chaptersDir
+        .filter(f => f.endsWith('.md') && f !== 'README.md' && f !== 'CLAUDE.md')
+        .map(f => join('chapters', f));
+    } catch (error) {
+      // No chapters/ directory or not accessible, skip
+      if (!isMissingPathError(error)) {
+        console.error(`Error reading chapters directory for ${collectionSlug}:`, error);
+      }
+    }
+
+    // Combine root-level and chapter files
+    const allMdFiles = [...mdFiles, ...chapterFiles];
+
     const texts = await Promise.all(
-      mdFiles.map(async (filename) => {
+      allMdFiles.map(async (filename) => {
         const filePath = join(collectionPath, filename);
         return loadText(filePath, collectionSlug, filename);
       })
@@ -564,10 +583,31 @@ export async function getText(slug: string): Promise<Text | null> {
     const files = await readdir(collectionPath);
 
     // Find matching file (slug could be lowercase with dashes)
-    const filename = files.find(f => {
+    let filename = files.find(f => {
       const normalizedFilename = f.replace('.md', '').toLowerCase().replace(/_/g, '-');
       return normalizedFilename === textSlug;
     });
+
+    // If not found in root, check chapters/ subdirectory
+    if (!filename) {
+      const chaptersPath = join(collectionPath, 'chapters');
+      try {
+        await access(chaptersPath);
+        const chapterFiles = await readdir(chaptersPath);
+        const chapterFilename = chapterFiles.find(f => {
+          const normalizedFilename = f.replace('.md', '').toLowerCase().replace(/_/g, '-');
+          return normalizedFilename === textSlug;
+        });
+        if (chapterFilename) {
+          filename = join('chapters', chapterFilename);
+        }
+      } catch (error) {
+        // No chapters/ directory, continue
+        if (!isMissingPathError(error)) {
+          console.error(`Error reading chapters directory for ${collectionSlug}:`, error);
+        }
+      }
+    }
 
     if (!filename) return null;
 
