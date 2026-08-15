@@ -171,7 +171,7 @@ export function Footer() {
                             "aria-label": `${link.label} (opens in new tab)`,
                           }
                         : {})}
-                      className="text-sm text-white/55 hover:text-[var(--arc-brand-atlantean-teal)] transition-colors duration-300 link-underline"
+                      className="inline-block py-1 text-sm text-white/55 hover:text-[var(--arc-brand-atlantean-teal)] transition-colors duration-300 link-underline"
                     >
                       {link.label}
                     </Link>

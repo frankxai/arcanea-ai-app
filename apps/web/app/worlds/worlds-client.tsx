@@ -382,7 +382,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  className="bg-white/[0.05] border border-white/[0.08] rounded-lg px-3 py-1.5 text-sm text-white/60 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/40 transition-all appearance-none cursor-pointer"
+                  className="bg-white/[0.05] border border-white/[0.08] rounded-lg px-3 py-2 min-h-[44px] text-sm text-white/60 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/40 transition-colors appearance-none cursor-pointer"
                   aria-label="Sort worlds"
                 >
                   {SORT_OPTIONS.map((opt) => (

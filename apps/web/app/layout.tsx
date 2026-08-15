@@ -131,7 +131,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       style={{ colorScheme: "dark" }}
-      className={cn(
+            className={cn(
               GeistSans.variable,
               GeistMono.variable,
               jetbrainsMono.variable,

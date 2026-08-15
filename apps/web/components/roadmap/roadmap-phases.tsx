@@ -2,11 +2,9 @@
 'use client';
 
 import { useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
+import { gsap, ScrollTrigger, useGSAP, registerGsap, prefersReducedMotion, revealOnScroll } from '@/lib/design/gsap';
 
-gsap.registerPlugin(ScrollTrigger);
+registerGsap();
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -162,7 +160,7 @@ function StatusBadge({ status }: { status: Phase['status'] }) {
 function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
   return (
     <div
-      className="phase-card opacity-0 translate-y-12 relative flex gap-6 md:gap-8"
+      className="phase-card relative flex gap-6 md:gap-8"
       data-index={index}
     >
       {/* Left timeline connector */}
@@ -269,7 +267,7 @@ function ScrollProgressBar() {
   const barRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    if (!barRef.current) return;
+    if (!barRef.current || prefersReducedMotion()) return;
     gsap.to(barRef.current, {
       scaleX: 1,
       ease: 'none',
@@ -306,21 +304,11 @@ export function RoadmapPhases() {
 
   useGSAP(
     () => {
-      const cards = gsap.utils.toArray<HTMLElement>('.phase-card');
-
-      cards.forEach((card) => {
-        gsap.to(card, {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 88%',
-            end: 'top 40%',
-            toggleActions: 'play none none reverse',
-          },
-        });
+      revealOnScroll('.phase-card', {
+        y: 48,
+        duration: 0.7,
+        start: 'top 88%',
+        end: 'top 40%',
       });
     },
     { scope: containerRef }
