@@ -52,11 +52,11 @@ export function WorldsHero() {
   });
 
   // Parallax depths: title moves faster, stats slower, background slowest
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : -150]);
-  const subtitleY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : -100]);
-  const statsY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : -50]);
-  const orbY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : 80]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0.2]);
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : -60]);
+  const subtitleY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : -40]);
+  const statsY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : -20]);
+  const orbY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : 40]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, reducedMotion ? 1 : 0.6]);
 
   return (
     <LazyMotion features={domAnimation}>
@@ -67,12 +67,11 @@ export function WorldsHero() {
           <FloatingOrbs preset="cosmic" />
         </m.div>
 
-        {/* Enhanced liquid glass overlay with blur */}
+        {/* Enhanced liquid glass overlay */}
         <div
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
-            background: "radial-gradient(ellipse 100% 60% at 50% 0%, rgba(0,188,212,0.03) 0%, transparent 70%)",
-            backdropFilter: reducedMotion ? "none" : "blur(0.5px)",
+            background: "radial-gradient(ellipse 100% 60% at 50% 0%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 3%, transparent) 0%, transparent 70%)",
           }}
           aria-hidden
         />
@@ -88,21 +87,21 @@ export function WorldsHero() {
           }}
         />
 
-        {/* Horizontal rule glow — enhanced */}
+        {/* Horizontal rule glow */}
         <div
           className="pointer-events-none absolute top-0 left-0 right-0 h-px -z-10"
           style={{
             background:
-              "linear-gradient(90deg, transparent 0%, rgba(0,188,212,0.3) 35%, rgba(127,255,212,0.45) 50%, rgba(0,188,212,0.3) 65%, transparent 100%)",
-            boxShadow: "0 0 16px rgba(0,188,212,0.2)",
+              "linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 30%, transparent) 35%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 45%, transparent) 50%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 30%, transparent) 65%, transparent 100%)",
+            boxShadow: reducedMotion ? "none" : "0 0 16px color-mix(in srgb, var(--arc-brand-atlantean-teal) 20%, transparent)",
           }}
           aria-hidden
         />
 
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-          {/* Eyebrow label — blur-to-focus reveal */}
+          {/* Eyebrow label */}
           <m.div
-            initial={{ opacity: 0, y: -8, filter: "blur(12px)" }}
+            initial={{ opacity: 0, y: -8, filter: reducedMotion ? "none" : "blur(12px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{
               type: "spring",
@@ -119,11 +118,11 @@ export function WorldsHero() {
             <div className="h-px w-8 bg-gradient-to-l from-transparent to-[var(--arc-brand-atlantean-teal)]/50" />
           </m.div>
 
-          {/* Headline — parallax + blur-to-focus + spring */}
+          {/* Headline — parallax + spring */}
           <m.h1
             style={{ y: titleY }}
-            initial={{ opacity: 0, scale: 0.95, filter: "blur(20px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            initial={{ opacity: 0, filter: reducedMotion ? "none" : "blur(20px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
             transition={{
               type: "spring",
               stiffness: 260,
@@ -143,10 +142,10 @@ export function WorldsHero() {
             </span>
           </m.h1>
 
-          {/* Subtitle — parallax + blur-to-focus */}
+          {/* Subtitle — parallax */}
           <m.p
             style={{ y: subtitleY }}
-            initial={{ opacity: 0, y: 16, filter: "blur(10px)" }}
+            initial={{ opacity: 0, y: 16, filter: reducedMotion ? "none" : "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{
               type: "spring",
@@ -180,7 +179,7 @@ export function WorldsHero() {
               <m.div
                 key={label}
                 variants={{
-                  hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
+                  hidden: { opacity: 0, y: 20, filter: reducedMotion ? "none" : "blur(8px)" },
                   visible: {
                     opacity: 1,
                     y: 0,
