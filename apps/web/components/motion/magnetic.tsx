@@ -3,34 +3,42 @@
 
 import { useRef } from 'react';
 import { LazyMotion, domAnimation, m, useMotionValue, useSpring } from 'framer-motion';
-import { SPRING } from '@/lib/motion';
 
 interface Props {
   children: React.ReactNode;
   className?: string;
   strength?: number;
+  radius?: number;
 }
 
 /**
  * Magnetic hover — element attracts toward cursor with spring physics.
- * Use on primary CTAs for premium feel. Strength is pixel radius (default 16).
+ * Use on primary CTAs for premium feel. Strength controls attraction power,
+ * radius controls detection distance.
  */
-export function Magnetic({ children, className = '', strength = 16 }: Props) {
+export function Magnetic({ children, className = '', strength = 16, radius = 80 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const springX = useSpring(x, SPRING.snappy);
-  const springY = useSpring(y, SPRING.snappy);
+  const springX = useSpring(x, { stiffness: 300, damping: 24 });
+  const springY = useSpring(y, { stiffness: 300, damping: 24 });
 
   function handleMouse(e: React.MouseEvent<HTMLDivElement>) {
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    const dx = (e.clientX - centerX) / (rect.width / 2);
-    const dy = (e.clientY - centerY) / (rect.height / 2);
-    x.set(dx * strength);
-    y.set(dy * strength);
+    const distance = Math.sqrt(
+      Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2)
+    );
+    
+    // Only apply magnetic effect within radius
+    if (distance < radius) {
+      const dx = (e.clientX - centerX) / (rect.width / 2);
+      const dy = (e.clientY - centerY) / (rect.height / 2);
+      x.set(dx * strength);
+      y.set(dy * strength);
+    }
   }
 
   function handleLeave() {

@@ -96,28 +96,28 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
 
   return (
     <TiltCard intensity={5}>
-    <LiquidGlass intensity="standard" tint={primaryColor} className="group relative rounded-2xl border border-white/[0.06] hover:border-white/[0.14] transition-colors duration-300">
+    <LiquidGlass intensity="standard" tint={primaryColor} className="group relative rounded-2xl border border-white/[0.06] hover:border-white/[0.14] transition-all duration-500 hover:shadow-[0_8px_32px_rgba(0,188,212,0.12)]">
       {/* Hero image / gradient */}
       <div
         className="relative overflow-hidden"
         style={{ background: world.gradient, height: 160 }}
       >
-        {/* Shimmer overlay */}
+        {/* Shimmer overlay — enhanced */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
           style={{
             background:
-              "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.13) 50%, rgba(255,255,255,0.08) 55%, transparent 60%)",
+              "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.1) 45%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.1) 55%, transparent 60%)",
             backgroundSize: "200% 100%",
             animation: "shimmer 2s infinite",
           }}
         />
-        {/* Noise overlay */}
+        {/* Noise overlay — enhanced */}
         <div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-15 group-hover:opacity-25 transition-opacity duration-500"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 30% 40%, rgba(255,255,255,0.15) 0%, transparent 60%)",
+              "radial-gradient(circle at 30% 40%, rgba(255,255,255,0.2) 0%, transparent 60%)",
           }}
         />
         {world.isTemplate && (
@@ -135,8 +135,8 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
             <span className="text-[10px] text-emerald-300 font-medium">Active</span>
           </div>
         )}
-        {/* Hover glow */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] via-transparent to-transparent opacity-60 group-hover:opacity-50 transition-opacity" />
+        {/* Hover glow — enhanced */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] via-transparent to-transparent opacity-70 group-hover:opacity-40 transition-opacity duration-500" />
       </div>
 
       {/* Content */}
@@ -410,13 +410,18 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
           {filteredWorlds.length > 0 ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredWorlds.map((world, i) => (
-                <m.div
-                  key={world.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: Math.min(i * 0.08, 0.3) }}
-                  className="h-full"
-                >
+              <m.div
+                key={world.id}
+                initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ 
+                  type: "spring",
+                  stiffness: 280,
+                  damping: 24,
+                  delay: Math.min(i * 0.08, 0.3) 
+                }}
+                className="h-full"
+              >
                   <WorldCardComponent world={world} />
                 </m.div>
               ))}
@@ -483,19 +488,29 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                   and lore. Then share it for others to explore and fork.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <m.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                    <Link
-                      href="/worlds/create"
-                      className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
+                  <Magnetic strength={0.4} radius={120}>
+                    <m.div 
+                      whileHover={{ scale: 1.04 }} 
+                      whileTap={{ scale: 0.97 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
                     >
-                      Create a World
-                      <Plus className="w-4 h-4" />
-                    </Link>
-                  </m.div>
-                  <m.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+                      <Link
+                        href="/worlds/create"
+                        className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
+                      >
+                        Create a World
+                        <Plus className="w-4 h-4" />
+                      </Link>
+                    </m.div>
+                  </Magnetic>
+                  <m.div 
+                    whileHover={{ scale: 1.02, y: -2 }} 
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  >
                     <Link
                       href="/lore"
-                      className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/70 font-bold rounded-xl hover:bg-white/[0.04] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
+                      className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/70 font-bold rounded-xl hover:bg-white/[0.04] hover:border-white/[0.15] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
                     >
                       Explore Arcanea Lore
                       <ArrowRight className="w-4 h-4" />
