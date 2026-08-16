@@ -219,8 +219,8 @@ function HeroPortal() {
           >
             {[
               { Icon: Sparkle, num: FACTS.luminors, suffix: "", label: "specialist agents", color: "var(--arc-brand-atlantean-teal)", fixed: true },
-              { Icon: Diamond, num: 190, suffix: "K+", label: "words of canon", color: "var(--arc-brand-atlantean-teal)", fixed: true },
-              { Icon: Code, num: 27, suffix: "", label: "open source repos", color: "var(--arc-brand-cosmic-blue)", fixed: true },
+              { Icon: Diamond, num: FACTS.publicCanonWords, suffix: "K+", label: "words of canon", color: "var(--arc-brand-atlantean-teal)", fixed: true },
+              { Icon: Code, num: FACTS.publicRepos, suffix: "", label: "open source repos", color: "var(--arc-brand-cosmic-blue)", fixed: true },
               { Icon: ShieldStar, num: 0, suffix: "MIT", label: "open source", color: "var(--arc-void)", fixed: true },
             ].map(({ Icon, num, suffix, label, color, fixed }, i) => (
               <div
