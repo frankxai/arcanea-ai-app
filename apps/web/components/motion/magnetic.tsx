@@ -14,7 +14,7 @@ interface Props {
 /**
  * Magnetic hover — element attracts toward cursor with spring physics.
  * Use on primary CTAs for premium feel. Strength controls attraction power,
- * radius controls detection distance.
+ * radius controls detection distance. Respects prefers-reduced-motion.
  */
 export function Magnetic({ children, className = '', strength = 16, radius = 80 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
@@ -22,8 +22,11 @@ export function Magnetic({ children, className = '', strength = 16, radius = 80 
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 300, damping: 24 });
   const springY = useSpring(y, { stiffness: 300, damping: 24 });
+  const reducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function handleMouse(e: React.MouseEvent<HTMLDivElement>) {
+    if (reducedMotion) return; // No magnetic effect under reduced motion
+    
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
     const centerX = rect.left + rect.width / 2;
@@ -42,6 +45,7 @@ export function Magnetic({ children, className = '', strength = 16, radius = 80 
   }
 
   function handleLeave() {
+    if (reducedMotion) return;
     x.set(0);
     y.set(0);
   }

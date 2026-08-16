@@ -10,6 +10,7 @@ import { WorldsOnboarding } from "@/components/worlds/WorldsOnboarding";
 import { SplitText } from "@/components/motion/split-text";
 import { TiltCard } from "@/components/motion/tilt-card";
 import { LiquidGlass } from "@/components/motion/liquid-glass";
+import { Magnetic } from "@/components/motion/magnetic";
 import { GradientMesh } from "@/components/motion/gradient-mesh";
 
 // ---------------------------------------------------------------------------
@@ -224,7 +225,7 @@ function MultiverseStats({ worlds }: { worlds: WorldCard[] }) {
     <div className="flex items-center justify-center gap-3 flex-wrap py-6">
       {stats.map(({ value, label }, i) => (
         <span key={label} className="flex items-center gap-1.5 text-sm">
-          <span className="font-display font-bold text-white" style={{ textShadow: "0 0 12px rgba(0,188,212,0.4)" }}>{value}</span>
+          <span className="font-display font-bold text-white" style={{ textShadow: "0 0 12px color-mix(in srgb, var(--arc-brand-atlantean-teal) 40%, transparent)" }}>{value}</span>
           <span className="text-white/35">{label}</span>
           {i < stats.length - 1 && <span className="text-white/10 ml-2">·</span>}
         </span>
@@ -439,7 +440,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,188,212,0.04) 0%, transparent 70%)",
+                "radial-gradient(ellipse 80% 60% at 50% 50%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 4%, transparent) 0%, transparent 70%)",
             }}
             aria-hidden="true"
           />
@@ -475,11 +476,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                   and lore. Then share it for others to explore and fork.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <m.div 
-                    whileHover={{ scale: 1.04 }} 
-                    whileTap={{ scale: 0.97 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  >
+                  <Magnetic strength={0.4} radius={120}>
                     <Link
                       href="/worlds/create"
                       className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
@@ -487,7 +484,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                       Create a World
                       <Plus className="w-4 h-4" />
                     </Link>
-                  </m.div>
+                  </Magnetic>
                   <m.div 
                     whileHover={{ scale: 1.02, y: -2 }} 
                     whileTap={{ scale: 0.98 }}

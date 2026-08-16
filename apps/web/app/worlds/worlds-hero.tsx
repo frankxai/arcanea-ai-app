@@ -275,7 +275,7 @@ export function WorldsHero() {
           className="h-px w-full"
           style={{
             background:
-              "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 40%, rgba(0,188,212,0.12) 50%, rgba(255,255,255,0.05) 60%, transparent 100%)",
+              "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 40%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 12%, transparent) 50%, rgba(255,255,255,0.05) 60%, transparent 100%)",
           }}
         />
       </div>
