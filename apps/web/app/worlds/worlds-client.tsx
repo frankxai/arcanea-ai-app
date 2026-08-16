@@ -267,8 +267,6 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
 
   return (
     <LazyMotion features={domAnimation}>
-      {/* Shimmer keyframe for card hover */}
-      <style dangerouslySetInnerHTML={{ __html: `@keyframes shimmer{0%{background-position:200% 0}to{background-position:-200% 0}}` }} />
       <main className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
         {/* ── Hero ──────────────────────────────────────────────── */}
         <section className="relative pt-32 pb-16 overflow-hidden">
