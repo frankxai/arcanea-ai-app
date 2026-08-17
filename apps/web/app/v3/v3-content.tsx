@@ -229,7 +229,7 @@ function HeroPortal() {
               >
                 <Icon size={11} weight="duotone" color={color} className="opacity-70" />
                 <span className="text-[11px] font-display font-semibold text-white/55">
-                  {fixed ? (suffix || num) : <NumberTicker value={num} suffix={suffix} delay={0.36 + i * 0.08} />}
+                  {fixed ? (num > 0 ? `${num}${suffix}` : suffix || num) : <NumberTicker value={num} suffix={suffix} delay={0.36 + i * 0.08} />}
                 </span>
                 <span className="text-[10px] text-white/34 font-body">{label}</span>
               </div>
