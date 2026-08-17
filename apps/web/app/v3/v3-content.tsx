@@ -218,7 +218,6 @@ function HeroPortal() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             {[
-              { Icon: Sparkle, num: FACTS.luminors, suffix: "", label: "specialist agents", color: "var(--arc-brand-atlantean-teal)", fixed: true },
               { Icon: ShieldStar, num: 0, suffix: "MIT", label: "open source", color: "var(--arc-void)", fixed: true },
             ].map(({ Icon, num, suffix, label, color, fixed }, i) => (
               <div
