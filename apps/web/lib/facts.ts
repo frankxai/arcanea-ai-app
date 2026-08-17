@@ -26,10 +26,6 @@ export const FACTS = {
   mcpTools: 54,
   /** Skills shipped in packages/arcanea-skills/skills/. */
   skills: 20,
-  /** Public claim: words of canon in Library — locked claim used by Library (line 21), About (line 214). Display as "190K+". */
-  publicCanonWords: 190,
-  /** Public claim: open-source repos — locked claim used by About (line 218). Verified 2026-08-16. */
-  publicRepos: 27,
 } as const;
 
 export type Facts = typeof FACTS;
