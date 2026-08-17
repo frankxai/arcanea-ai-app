@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "dexie": "^4.4.4",
-    "preact": "^10.29.7"
+    "preact": "^10.29.8"
   },
   "devDependencies": {
     "@types/chrome": "^0.2.2",
