@@ -133,22 +133,18 @@ export default function SkillCard({ skill }: { skill: Skill }) {
         </CardContent>
 
         <CardFooter className="relative mt-auto border-t-0 pt-0">
-          <div className="flex w-full items-center gap-2 rounded-md border border-white/[0.04] bg-black/40 px-3 py-2">
-            <code className="flex-1 truncate font-mono text-[11px] text-white/60">
-              {installCommand}
-            </code>
-            <button
-              type="button"
-              onClick={handleCopy}
-              aria-label="Copy install command"
-              className="shrink-0 rounded p-1 text-white/40 transition-colors hover:bg-white/10 hover:text-[var(--arc-brand-atlantean-teal)]"
-            >
-              {copied ? (
-                <Check className="h-3.5 w-3.5 text-green-400" />
-              ) : (
-                <Copy className="h-3.5 w-3.5" />
-              )}
-            </button>
+          <div className="w-full space-y-2">
+            <div className="text-[9px] uppercase tracking-[0.15em] text-white/30 mb-1">
+              Install
+            </div>
+            <div className="rounded-md border border-white/[0.04] bg-black/40 px-3 py-2">
+              <code className="block font-mono text-[10px] text-white/50">
+                npx @arcanea/skills
+              </code>
+              <p className="mt-1 text-[9px] text-white/30">
+                20 bundled skills
+              </p>
+            </div>
           </div>
         </CardFooter>
       </LiquidGlass>
