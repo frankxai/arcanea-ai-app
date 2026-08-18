@@ -58,7 +58,7 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "@supabase/ssr": "^0.12.4",
-    "@supabase/supabase-js": "^2.111.0",
+    "@supabase/supabase-js": "^2.112.3",
     "dotenv": "^16.4.5",
     "glob": "^11.0.0",
     "stripe": "^20.4.1"
@@ -69,7 +69,7 @@
     "@turbo/gen": "^2.10.3",
     "autoprefixer": "^10.5.4",
     "eslint": "^9.39.4",
-    "next": "16.2.12",
+    "next": "16.3.1",
     "postcss": "^8.5.23",
     "prettier": "^3.9.4",
     "semver": "^7.8.5",
@@ -113,7 +113,7 @@
   "homepage": "https://arcanea.ai",
   "pnpm": {
     "overrides": {
-      "next": "16.2.12",
+      "next": "16.3.1",
       "@types/react": "^19.0.0",
       "@types/react-dom": "^19.0.0",
       "eslint": "9.39.4",
