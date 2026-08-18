@@ -45,15 +45,6 @@ const navLinks: NavLink[] = [
         ],
       },
       {
-        title: "Studio (Beta)",
-        items: [
-          { href: "/chat", label: "Chat", desc: "Talk with Luminors" },
-          { href: "/studio", label: "Studio", desc: "Write & compose" },
-          { href: "/music-studio", label: "Music", desc: "Artist worlds" },
-          { href: "/cinema-studio", label: "Cinema", desc: "Trailers & scenes" },
-        ],
-      },
-      {
         title: "Ecosystem",
         items: [
           { href: "/integrations", label: "Integrations", desc: "Connect your stack" },
@@ -96,8 +87,8 @@ const navLinks: NavLink[] = [
       {
         title: "Install",
         items: [
-          { href: "/mcp", label: "MCP Server", desc: "31 tools for Claude, Cursor" },
-          { href: "/skills", label: "Skills", desc: "9 open library skills" },
+          { href: "/mcp", label: "MCP Server", desc: "Worldbuilding tools" },
+          { href: "/skills", label: "Skills", desc: "Open library" },
           { href: "/ecosystem", label: "Open Source", desc: "Open on GitHub" },
         ],
       },

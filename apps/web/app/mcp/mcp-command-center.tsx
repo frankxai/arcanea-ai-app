@@ -7,7 +7,7 @@ import { Terminal } from "@/lib/phosphor-icons";
 const PLATFORMS = [
   {
     name: "Claude Code",
-    description: "31 worldbuilding tools will install via MCP protocol once the workspace dependency is resolved.",
+    description: "Worldbuilding tools will install via MCP protocol once the workspace dependency is resolved.",
     status: "coming" as const,
   },
   {
@@ -32,11 +32,11 @@ export function McpCommandCenter() {
               Arcanea MCP Server
             </h2>
             <p className="text-lg text-white/55 max-w-2xl mx-auto leading-relaxed mb-3">
-              31 worldbuilding tools for Claude, ChatGPT, and Cursor.
+              Worldbuilding tools for Claude, ChatGPT, and Cursor.
             </p>
             <div className="inline-flex items-center gap-2 rounded-full border border-[var(--arc-brand-arcanean-gold)]/20 bg-[var(--arc-brand-arcanean-gold)]/8 px-4 py-2 text-sm text-[var(--arc-brand-arcanean-gold)]">
               <span className="inline-block w-2 h-2 rounded-full bg-[var(--arc-brand-arcanean-gold)] animate-pulse" aria-hidden="true" />
-              Coming soon (workspace dependency being fixed)
+              Being repaired (workspace dependency)
             </div>
           </div>
 
@@ -73,19 +73,21 @@ export function McpCommandCenter() {
             ))}
           </div>
 
-          {/* What's coming */}
+          {/* What's available */}
           <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6">
             <h3 className="text-xl font-display font-semibold text-white/90 mb-4">
-              What's in the MCP server
+              Available now
             </h3>
             <div className="grid gap-3 md:grid-cols-2">
               <div className="flex items-start gap-3">
-                <div className="shrink-0 w-6 h-6 rounded-lg bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/30 flex items-center justify-center">
-                  <span className="text-xs font-display font-bold text-[var(--arc-brand-atlantean-teal)]">31</span>
+                <div className="shrink-0 w-6 h-6 rounded-lg bg-white/[0.08] border border-white/[0.12] flex items-center justify-center">
+                  <span className="text-xs text-white/60">→</span>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-white/80">Worldbuilding tools</p>
-                  <p className="text-xs text-white/40">Characters, locations, creatures, artifacts, magic</p>
+                  <p className="text-sm font-medium text-white/80">Skills</p>
+                  <p className="text-xs text-white/40">
+                    <code className="text-[var(--arc-brand-atlantean-teal)]">npx @arcanea/skills</code>
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -93,28 +95,19 @@ export function McpCommandCenter() {
                   <Terminal size={12} weight="duotone" className="text-white/60" aria-hidden="true" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-white/80">Local MCP server</p>
+                  <p className="text-sm font-medium text-white/80">Local runtime</p>
                   <p className="text-xs text-white/40">Your data stays on your machine, MIT licensed</p>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="shrink-0 w-6 h-6 rounded-lg bg-white/[0.08] border border-white/[0.12] flex items-center justify-center">
-                  <span className="text-xs text-white/60">→</span>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white/80">Available now: Skills</p>
-                  <p className="text-xs text-white/40">
-                    <code className="text-[var(--arc-brand-atlantean-teal)]">npx @arcanea/skills</code> — 20 bundled skills
-                  </p>
-                </div>
-              </div>
+            </div>
+            <div className="mt-4 pt-4 border-t border-white/[0.06]">
               <div className="flex items-start gap-3">
                 <div className="shrink-0 w-6 h-6 rounded-lg bg-[var(--arc-brand-arcanean-gold)]/10 border border-[var(--arc-brand-arcanean-gold)]/30 flex items-center justify-center">
                   <span className="text-xs font-display font-bold text-[var(--arc-brand-arcanean-gold)]">v0.7.0</span>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-white/80">Published on npm</p>
-                  <p className="text-xs text-white/40">workspace:* dependency being fixed</p>
+                  <p className="text-sm font-medium text-white/80">MCP server on npm</p>
+                  <p className="text-xs text-white/40">workspace:* dependency being repaired</p>
                 </div>
               </div>
             </div>
