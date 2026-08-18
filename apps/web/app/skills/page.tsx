@@ -50,7 +50,7 @@ export default async function SkillsMarketplacePage() {
           </h1>
 
           <p className="text-lg text-white/50 max-w-2xl mx-auto leading-relaxed mb-10">
-            {skills.length} skills for Claude Code, OpenCode, and Cursor. Install with one command.
+            {skills.length} skills for Claude Code, OpenCode, and Cursor.
           </p>
 
           {/* Stats row */}
@@ -102,12 +102,6 @@ export default async function SkillsMarketplacePage() {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[var(--arc-brand-atlantean-teal)]/15 border border-[var(--arc-brand-atlantean-teal)]/30 text-[var(--arc-brand-atlantean-teal)] text-sm font-medium hover:bg-[var(--arc-brand-atlantean-teal)]/25 transition-colors"
             >
               View on GitHub →
-            </Link>
-            <Link
-              href="/developers"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/70 text-sm font-medium hover:bg-white/[0.08] hover:text-white transition-colors"
-            >
-              Skill guide
             </Link>
           </div>
         </div>
