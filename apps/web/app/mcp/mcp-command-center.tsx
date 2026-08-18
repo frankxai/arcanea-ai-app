@@ -60,7 +60,7 @@ export function McpCommandCenter() {
                       <h3 className="text-lg font-display font-semibold text-white/90">
                         {platform.name}
                       </h3>
-                      <span className="text-[10px] uppercase tracking-[0.15em] text-[var(--arc-brand-arcanean-gold)]/70 px-2 py-0.5 rounded border border-[var(--arc-brand-arcanean-gold)]/20 bg-[var(--arc-brand-arcanean-gold)]/5">
+                      <span className="text-[11px] tracking-tight text-[var(--arc-brand-arcanean-gold)]/70 px-2 py-0.5 rounded border border-[var(--arc-brand-arcanean-gold)]/20 bg-[var(--arc-brand-arcanean-gold)]/5">
                         Soon
                       </span>
                     </div>
