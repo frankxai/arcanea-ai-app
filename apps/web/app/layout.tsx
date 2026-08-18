@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "@fontsource-variable/newsreader";
 import { ReactNode, Suspense } from "react";
-import { JetBrains_Mono, Newsreader, Instrument_Serif } from "next/font/google";
+import { JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { cn } from "@/lib/utils";
@@ -38,14 +39,6 @@ function CosmicBackgroundFallback() {
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
-  display: "swap",
-});
-
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-serif",
   display: "swap",
 });
 
@@ -130,12 +123,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      style={{ colorScheme: "dark" }}
+      style={{ colorScheme: "dark", "--font-serif": "'Newsreader Variable', serif" } as React.CSSProperties}
             className={cn(
               GeistSans.variable,
               GeistMono.variable,
               jetbrainsMono.variable,
-              newsreader.variable,
               instrumentSerif.variable,
               "font-sans",
             )}

@@ -218,9 +218,6 @@ function HeroPortal() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             {[
-              { Icon: Sparkle, num: FACTS.luminors, suffix: "", label: "specialist agents", color: "var(--arc-brand-atlantean-teal)", fixed: true },
-              { Icon: Diamond, num: 190, suffix: "K+", label: "words of canon", color: "var(--arc-brand-atlantean-teal)" },
-              { Icon: Code, num: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", color: "var(--arc-brand-cosmic-blue)" },
               { Icon: ShieldStar, num: 0, suffix: "MIT", label: "open source", color: "var(--arc-void)", fixed: true },
             ].map(({ Icon, num, suffix, label, color, fixed }, i) => (
               <div
@@ -229,7 +226,7 @@ function HeroPortal() {
               >
                 <Icon size={11} weight="duotone" color={color} className="opacity-70" />
                 <span className="text-[11px] font-display font-semibold text-white/55">
-                  {fixed ? (suffix || num) : <NumberTicker value={num} suffix={suffix} delay={0.36 + i * 0.08} />}
+                  {fixed ? (num > 0 ? `${num}${suffix}` : suffix || num) : <NumberTicker value={num} suffix={suffix} delay={0.36 + i * 0.08} />}
                 </span>
                 <span className="text-[10px] text-white/34 font-body">{label}</span>
               </div>
