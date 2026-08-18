@@ -96,9 +96,9 @@ const navLinks: NavLink[] = [
       {
         title: "Install",
         items: [
-          { href: "/mcp", label: "MCP Server", desc: "54 tools for Claude, Cursor" },
+          { href: "/mcp", label: "MCP Server", desc: "31 tools for Claude, Cursor" },
           { href: "/skills", label: "Skills", desc: "9 open library skills" },
-          { href: "/ecosystem", label: "Open Source", desc: "27 repos on GitHub" },
+          { href: "/ecosystem", label: "Open Source", desc: "Open on GitHub" },
         ],
       },
       {

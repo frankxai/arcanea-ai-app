@@ -2,16 +2,12 @@
 'use client';
 
 import Link from 'next/link';
-import { useCallback, useState } from 'react';
 import {
-  Check,
   Code,
-  Copy,
   Edit3,
   Terminal,
   ArrowUpRight,
 } from 'lucide-react';
-import { toast } from 'sonner';
 
 import {
   CardContent,
@@ -53,29 +49,6 @@ const TOOL_ICONS: Record<string, React.ComponentType<{ className?: string }>> = 
 };
 
 export default function SkillCard({ skill }: { skill: Skill }) {
-  const [copied, setCopied] = useState(false);
-
-  const installCommand =
-    skill.installCommand || `npx arcanea install ${skill.slug}`;
-
-  const handleCopy = useCallback(
-    async (e: React.MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      try {
-        await navigator.clipboard.writeText(installCommand);
-        setCopied(true);
-        toast.success('Install command copied', {
-          description: installCommand,
-        });
-        setTimeout(() => setCopied(false), 2000);
-      } catch {
-        toast.error('Failed to copy command');
-      }
-    },
-    [installCommand]
-  );
-
   const tint = CATEGORY_TINT[skill.category?.toLowerCase() ?? ''] ?? 'crystal';
 
   return (
