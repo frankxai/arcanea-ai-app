@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.19.43",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.28.2",
     "typescript": "^5.9.3"
   },
   "engines": {

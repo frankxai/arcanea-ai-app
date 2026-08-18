@@ -66,17 +66,17 @@
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
     "@tailwindcss/typography": "^0.5.20",
-    "@turbo/gen": "^2.10.3",
+    "@turbo/gen": "^2.10.10",
     "autoprefixer": "^10.5.4",
     "eslint": "^9.39.4",
     "next": "16.3.1",
     "postcss": "^8.5.23",
-    "prettier": "^3.9.4",
+    "prettier": "^3.9.6",
     "semver": "^7.8.5",
     "tailwindcss": "^3.4.9",
     "tailwindcss-animate": "^1.0.7",
-    "tsx": "^4.23.0",
-    "turbo": "^2.10.3",
+    "tsx": "^4.23.12",
+    "turbo": "^2.10.10",
     "typescript": "^5.9.3"
   },
   "engines": {
