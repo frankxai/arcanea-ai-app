@@ -179,7 +179,7 @@ function HeroPortal() {
             </div>
           </m.div>
 
-          {/* Headline — direct value before mythology */}
+          {/* Headline */}
           <m.h1
             className="text-[clamp(2.25rem,5.1vw,4.45rem)] font-display font-bold tracking-[-0.025em] leading-[1.04] mb-4 md:mb-5 text-white"
             initial={{ opacity: 0, y: 18 }}
@@ -190,7 +190,7 @@ function HeroPortal() {
             <span className="block">with AI agents.</span>
           </m.h1>
 
-          {/* One-line value prop */}
+          {/* Value prop */}
           <m.p
             className="max-w-2xl mx-auto text-base md:text-lg text-white/55 leading-relaxed mb-5 md:mb-9 font-body"
             initial={{ opacity: 0, y: 16 }}
@@ -200,7 +200,7 @@ function HeroPortal() {
             Turn one idea into a persistent world graph: lore, characters, rules, media briefs, and agent tasks stay connected across sessions.
           </m.p>
 
-          {/* Chat box — the hero element */}
+          {/* Chat box */}
           <m.div
             className="w-full mb-5 md:mb-9"
             initial={{ opacity: 0, y: 16 }}
@@ -210,7 +210,7 @@ function HeroPortal() {
             <HeroChatBox />
           </m.div>
 
-          {/* Trust signals after the primary action */}
+          {/* Trust signals */}
           <m.div
             className="flex w-full max-w-full flex-nowrap items-center justify-start gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] sm:flex-wrap sm:justify-center sm:overflow-visible md:gap-3 [&::-webkit-scrollbar]:hidden"
             initial={{ opacity: 0 }}
