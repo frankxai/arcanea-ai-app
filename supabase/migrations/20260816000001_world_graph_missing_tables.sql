@@ -58,7 +58,12 @@ CREATE TABLE IF NOT EXISTS public.world_forks (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   parent_world_id UUID REFERENCES public.worlds(id) ON DELETE SET NULL,
   forked_world_id UUID REFERENCES public.worlds(id) ON DELETE SET NULL,
-  forked_by UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+  -- Plain UUID, deliberately not a FK. supabase-generated.ts lists only the two
+  -- world relationships for world_forks, so a profiles FK here would make fresh
+  -- databases reject rows production accepts. Reproduce production, do not
+  -- redesign it; if this reference should exist it belongs in its own migration
+  -- applied to production as well.
+  forked_by UUID,
   changes_summary TEXT,
   created_at TIMESTAMPTZ DEFAULT now()
 );
@@ -107,12 +112,19 @@ BEGIN
       );
   END IF;
 
-  -- A fork record may only be written by the user it credits, and only for a world
-  -- they actually own — this is what stops lineage from being forged.
+  -- A fork record may only be written by the user it credits, only for a world they
+  -- actually own, and only naming a parent they are allowed to read.
   IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'world_forks' AND policyname = 'forks_insert_own') THEN
     CREATE POLICY "forks_insert_own" ON public.world_forks
       FOR INSERT WITH CHECK (
-        forked_by = auth.uid() AND public.owns_world(forked_world_id)
+        forked_by = auth.uid()
+        AND public.owns_world(forked_world_id)
+        -- parent_world_id must also be readable by the caller. Without this, owning
+        -- any world is enough to attach forged lineage to an arbitrary parent whose
+        -- UUID you know; forks_readable then surfaces that row to anyone who can read
+        -- either end, and there is no UPDATE/DELETE policy for the real owner to
+        -- remove it. NULL stays permitted for a fork with no recorded parent.
+        AND (parent_world_id IS NULL OR public.can_read_world(parent_world_id))
       );
   END IF;
 END $$;
