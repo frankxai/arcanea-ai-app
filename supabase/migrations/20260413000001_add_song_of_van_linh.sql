@@ -35,7 +35,8 @@ INSERT INTO public.book_covers (
     storage_path,
     public_url,
     model_id,
-    model_tier
+    model_tier,
+    generation_params
 )
 SELECT
     b.id,
@@ -45,7 +46,8 @@ SELECT
     '/images/books/song-of-van-linh-cover.png',
     '/images/books/song-of-van-linh-cover.png',
     'canva-ai',
-    'canva'
+    'canva',
+    jsonb_build_object('prompt_hash', 'hoan-kiem-turtle-cover')
 FROM public.books b WHERE b.slug = 'song-of-van-linh'
 ON CONFLICT DO NOTHING;
 

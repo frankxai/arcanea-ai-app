@@ -90,7 +90,14 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
   },
   typescript: {
-    ignoreBuildErrors: true,
+    // Verified 2026-08-16: `tsc --noEmit` reports 0 errors across 1,864 files once the
+    // workspace packages are built. Both build paths do build them first — turbo.json's
+    // build task declares dependsOn ["^build"], and vercel.json runs
+    // `pnpm --filter @arcanea/web... build`, where the `...` suffix includes dependencies.
+    // So this flag was suppressing nothing, while removing the only gate that would catch
+    // a real type regression before it reached production. If it ever needs to come back,
+    // record the error count and the reason here rather than flipping it silently.
+    ignoreBuildErrors: false,
   },
   // eslint config moved to eslint.config.js (Next.js 16+)
   async headers() {
