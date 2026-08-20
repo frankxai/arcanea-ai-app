@@ -48,7 +48,7 @@ tags:
 
 ### What we already have (high ceiling)
 
-- Locked cosmology with emotional spine: Lumina / Nero (Nero not evil), Malachar as tragic fall, Ten Gates + Godbeasts, Seven Wisdoms, Academy Houses.
+- Locked cosmology with emotional spine: Lumina / Nero (Nero as fertile unknown), Malachar as tragic fall, Ten Gates + Godbeasts, Seven Wisdoms, Academy Houses.
 - Faction architecture with **identity / visual / power / mission / internal tension** (FACTIONS design philosophy).
 - Multi-arc story engine with moral questions, not only plot beats.
 - Continuity audit trail and naming ledgers.

@@ -1,0 +1,25 @@
+title: "Series Pack"
+slug: series-pack
+tier: canon
+status: in-progress
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator
+
+ai_transparency:
+  models_used:
+    - id: claude-opus-4-6
+      provider: anthropic
+      role: world-architecture-and-prose
+  human_contribution: 50%
+  ai_contribution: 50%
+  method: "Human worldbuilding, lore architecture, series planning, and curation."
+
+license: CC-BY-NC-SA-4.0
+content_rating: teen
+tags: [arcanea, series-pack, planning, lore, story-world]
+
+acknowledgments: |
+  Series Pack documentation for Arcanea story world.
