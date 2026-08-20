@@ -13,7 +13,7 @@ canon_anchors:
   - Foundation / Earth first Gate (CANON_LOCKED frequencies context)
   - Malachar as tragic attractor (logic only)
   - Compact Refuse protocol
-  - Nero not evil; no cartoon void
+  - Nero as fertile unknown; no cartoon void
 tags:
   - scene
   - proof

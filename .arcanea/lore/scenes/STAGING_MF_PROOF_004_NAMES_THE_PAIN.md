@@ -9,7 +9,7 @@ masterfaction_layers: [beyond-layer attractor]
 canon_anchors:
   - Malachar sealed Shadowfen (CANON_LOCKED)
   - tragic not cartoon evil
-  - Nero not evil; Shadow is corruption
+  - Nero as fertile unknown; Shadow is corruption
   - Source Gate rejection backstory as wound, not gore show
 tags: [scene, proof, malachar, arion, temptation]
 ---

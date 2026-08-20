@@ -46,7 +46,7 @@ All MasterFaction work must remain compatible with:
 
 | Anchor | Rule |
 |--------|------|
-| Lumina / Nero | Nero is not evil; Shadow is corrupted Void |
+| Lumina / Nero | Nero is the Fertile Unknown, not corrupt; Shadow is corrupted Void |
 | Ten Gates + Gods + Godbeasts | identity vs role (God/Goddess vs Guardian) preserved |
 | Malachar | sole true antagonist; tragic, not cartoon evil |
 | Luminor | rank, not species |

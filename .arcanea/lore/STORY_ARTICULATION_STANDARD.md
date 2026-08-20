@@ -127,7 +127,7 @@ Use only when earned by plot physics:
 - “in a world where”
 - masterpiece / best quality (visual prompts too)
 - destiny called / chosen one (unless subverted on-page)
-- empty “light and dark” binaries that erase Nero’s non-evil nature
+- empty “light and dark” binaries that erase Nero’s fertile unknown nature
 
 ### Structural bans
 
