@@ -1,0 +1,25 @@
+title: "Chronicles of Arcanea"
+slug: chronicles-of-arcanea
+tier: canon
+status: in-progress
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator
+
+ai_transparency:
+  models_used:
+    - id: claude-opus-4-6
+      provider: anthropic
+      role: world-architecture-and-prose
+  human_contribution: 40%
+  ai_contribution: 60%
+  method: "Human worldbuilding, lore architecture, character design, and curation. AI-assisted prose and scene drafting."
+
+license: CC-BY-NC-SA-4.0
+content_rating: teen
+tags: [arcanea, sagas, fantasy, worldbuilding, chronicle]
+
+acknowledgments: |
+  Chronicles of Arcanea by FrankX and the Arcanea creative world team.
