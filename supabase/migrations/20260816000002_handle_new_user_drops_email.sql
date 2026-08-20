@@ -12,19 +12,29 @@
 -- row (line 30). Adding an email column there would publish every user's email
 -- to anyone holding the anon key. So the trigger drops the column instead.
 --
--- display_name keeps its NEW.email fallback: that value is chosen by the user's
--- own signup metadata when present, and a self-chosen display name is a
--- different exposure question from a mirrored account email. Unchanged here.
+-- display_name loses its NEW.email fallback for the same reason. The old
+-- COALESCE(full_name, NEW.email) only looks self-chosen: when signup metadata
+-- carries no full_name -- the ordinary email/password case -- it wrote the
+-- account address into a column every anon caller can read. That is the same
+-- PII in the same place, just under a different column name. It now falls back
+-- to the generated username instead, which carries no account data.
 --
 -- CREATE OR REPLACE so existing databases are corrected too, not just fresh ones.
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
+DECLARE
+    resolved_username TEXT;
 BEGIN
+    resolved_username := COALESCE(
+        NEW.raw_user_meta_data->>'username',
+        'user_' || substr(NEW.id::TEXT, 1, 8)
+    );
+
     INSERT INTO public.profiles (id, username, display_name)
     VALUES (
         NEW.id,
-        COALESCE(NEW.raw_user_meta_data->>'username', 'user_' || substr(NEW.id::TEXT, 1, 8)),
-        COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.email)
+        resolved_username,
+        COALESCE(NEW.raw_user_meta_data->>'full_name', resolved_username)
     );
     RETURN NEW;
 END;
