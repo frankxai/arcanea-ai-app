@@ -96,7 +96,7 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
 
   return (
     <TiltCard intensity={5}>
-    <LiquidGlass intensity="standard" tint={primaryColor} className="group relative rounded-2xl border border-white/[0.06] hover:border-white/[0.14] transition-all duration-500">
+    <LiquidGlass intensity="standard" tint={primaryColor} className="group relative rounded-2xl border border-white/[0.06] hover:border-white/[0.14] transition-colors duration-500">
       {/* Hero image / gradient */}
       <div
         className="relative overflow-hidden"
@@ -492,7 +492,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                   >
                     <Link
                       href="/lore"
-                      className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/70 font-bold rounded-xl hover:bg-white/[0.04] hover:border-white/[0.15] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
+                      className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/70 font-bold rounded-xl hover:bg-white/[0.04] hover:border-white/[0.15] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
                     >
                       Explore Arcanea Lore
                       <ArrowRight className="w-4 h-4" />
