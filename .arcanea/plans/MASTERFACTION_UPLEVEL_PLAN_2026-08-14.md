@@ -79,7 +79,7 @@ Abstracted from elite franchise practice (Cosmere / Mistborn–Stormlight craft 
 ### How the best worlds *sell* the story
 
 1. **Promise before encyclopedia** — One sentence a stranger would repeat after hearing it once.
-2. **Character as lens** — World details arrive only when a person needs them (SFWA: story-as-worldbuilding).
+2. **Character as lens** — World details arrive only when a person needs them (Science Fiction and Fantasy Writers Association (SFWA) craft guidance: story-as-worldbuilding).
 3. **Limitation as drama** — Sanderson’s laws in spirit: reader understanding of magic correlates with problem-solving satisfaction; limitations > powers; deepen before expand.
 4. **Faction = conflicting good** — Not evil vs good only; institutions that are right for the wrong reasons.
 5. **Language of invitation** — Public surfaces use second-person wonder and first-person stakes (“You arrive…”, “She will not open the vial…”) rather than wiki tone.
@@ -106,7 +106,7 @@ Abstracted from elite franchise practice (Cosmere / Mistborn–Stormlight craft 
 
 Work is not “done” when it is long. Work is done when it passes:
 
-### MasterFaction Human Bar (ship gate)
+### MasterFaction Human Bar (shipping gate)
 
 1. **Emotional truth** — At least one relationship would still matter if all magic were deleted.
 2. **Cost** — Power creates a concrete loss within the scene or sheet (body, bond, reputation, memory, time).

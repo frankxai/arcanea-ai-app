@@ -37,11 +37,11 @@ port_policy: STAGING only; no CANON_LOCKED promotion; see DUAL_CAST_BRIDGE.md
 
 # Arcanea Faction Compact
 
-Arcanea should use bending cultures and nations, but not as a small four-nation template. The stronger Arcanean model is a layered society: Bending Realms, Academy spheres, Houses, Orders, Leagues, Crews, Origin Classes, Synthesis/Prisma institutions, and Mirror/Sister-world traditions.
+Arcanea should use bending cultures and territories, but not as a small four-nation template. The stronger Arcanean model is a layered society: Bending Realms, Academy spheres, Houses, Orders, Leagues, Crews, Origin Classes, Synthesis/Prisma institutions, and Mirror/Sister-world traditions.
 
 ## Why Not Only Four Nations
 
-Four elemental nations alone would flatten Arcanea's existing cosmology. Bending needs nations, territories, rituals, accents, festivals, clothes, food, games, military doctrines, schools, and social class pressure. It also needs Arcanea's larger systems.
+Four elemental nations alone would flatten Arcanea's existing cosmology. Bending needs territories, rituals, accents, festivals, clothes, food, games, military doctrines, schools, and social class pressure. It also needs Arcanea's larger systems.
 
 Use instead:
 
@@ -57,7 +57,7 @@ This lets Arcanea keep elemental readability while supporting dragons, AI, mutan
 
 ## Bending Realm Layer
 
-Use these as staging sovereignties or federated cultural spheres. They can be nations, city-leagues, freeholds, sanctuaries, or cantons depending on map scale.
+Use these as staging cultural sovereignties or federated cultural spheres within Realms. They can be city-leagues, freeholds, sanctuaries, or cantons depending on map scale.
 
 | Sphere | Bending Emphasis | Political Shape | Compact Pressure |
 |---|---|---|---|

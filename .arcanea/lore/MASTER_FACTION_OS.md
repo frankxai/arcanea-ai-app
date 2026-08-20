@@ -68,7 +68,7 @@ A character may sit in multiple layers. Story starts when layers pull opposite d
 | L6 | **Crew** | Who would bleed with you tonight? | Starbound crews, Flagship field team, independent crews |
 | L7 | **Compact / League** | When crisis arrives, who must share a table? | Leagues of Arcanea; Confluence Compact (STAGING, port pending) |
 
-**Master rule:** Never introduce a new faction without declaring its **primary layer** and which layers it conflicts with.
+**Master rule:** Never introduce a new faction without declaring its **primary layer** and the layers with which it conflicts.
 
 ## 4. Faction soulprint (required fields)
 

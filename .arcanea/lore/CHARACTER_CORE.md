@@ -37,7 +37,7 @@ port_policy: STAGING only; no CANON_LOCKED promotion; see DUAL_CAST_BRIDGE.md
 
 # Arcanea Character Core
 
-This file is the forward staging core for the Confluence arc. It does not bulk-rewrite historical book files. The alias ledger defines migration names for later passes.
+This file is the forward staging core for the Confluence arc. It does not bulk-rewrite historical book files. See DUAL_CAST_BRIDGE.md for cast reconciliation and migration guidelines.
 
 ## Cast Center
 
