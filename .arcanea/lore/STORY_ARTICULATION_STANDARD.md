@@ -44,7 +44,7 @@ Use patterns. Never copy protected names, maps, spells, or distinctive mechanic 
 | **Reveal-on-need** | Trust that depth exists off-page | Iceberg confidence | No tour-guide prose | STORY_ENGINE arcs; dossiers not dumps |
 | **Limitation drama** | Weakness creates plot | “What can’t they do?” | Scars, bans, cooldowns | Gate emotional demand; bond separation pain |
 
-Sources informing this matrix (craft discourse, not canon): Sanderson’s laws of magic (power/limit/depth), SFWA story-as-worldbuilding guidance, organic worldbuilding craft pillars (language, culture, sensory immersion), and franchise invitation practice across major fantasy/media properties.
+Sources informing this matrix (craft discourse, not canon): Sanderson’s laws of magic (power/limit/depth), Science Fiction and Fantasy Writers Association (SFWA) story-as-worldbuilding guidance, organic worldbuilding craft pillars (language, culture, sensory immersion), and franchise invitation practice across major fantasy/media properties.
 
 ## 3. Three channels of articulation
 
