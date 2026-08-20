@@ -32,33 +32,21 @@ interface NavLink {
 
 const navLinks: NavLink[] = [
   {
-    href: "/chat",
-    label: "Create",
-    also: ["/imagine", "/studio", "/forge", "/agents", "/worlds", "/music-studio", "/cinema-studio", "/canvas", "/voice", "/integrations", "/distribute"],
+    href: "/worlds",
+    label: "Worlds",
+    also: ["/forge", "/canvas"],
     mega: [
       {
-        title: "Create",
+        title: "Build",
         items: [
-          { href: "/chat", label: "Chat", desc: "Talk with Luminors" },
-          { href: "/imagine", label: "Imagine", desc: "Generate images" },
-          { href: "/studio", label: "Studio", desc: "Write & compose" },
           { href: "/worlds", label: "Worlds", desc: "Build universes" },
-          { href: "/music-studio", label: "Music", desc: "Artist worlds" },
-          { href: "/cinema-studio", label: "Cinema", desc: "Trailers & scenes" },
           { href: "/canvas", label: "Canvas", desc: "Node workflows" },
-        ],
-      },
-      {
-        title: "Agents",
-        items: [
-          { href: "/agents", label: "Marketplace", desc: "Specialist agents" },
-          { href: "/forge/companion", label: "Forge", desc: "Create your own" },
+          { href: "/forge/companion", label: "Forge", desc: "Create agents" },
         ],
       },
       {
         title: "Ecosystem",
         items: [
-          { href: "/create", label: "Create Hub", desc: "Start from a template" },
           { href: "/integrations", label: "Integrations", desc: "Connect your stack" },
           { href: "/distribute", label: "Distribute", desc: "Publish everywhere" },
         ],
@@ -92,28 +80,31 @@ const navLinks: NavLink[] = [
     ],
   },
   {
-    href: "/academy",
-    label: "Learn",
-    also: ["/academy/courses", "/academy/gates", "/academy/houses", "/quiz", "/skills", "/docs/mcp", "/ecosystem", "/protocol", "/apps", "/teams", "/storage"],
+    href: "/mcp",
+    label: "Install",
+    also: ["/skills", "/docs/mcp", "/ecosystem", "/protocol"],
     mega: [
+      {
+        title: "Install",
+        items: [
+          { href: "/mcp", label: "MCP Server", desc: "Worldbuilding tools" },
+          { href: "/skills", label: "Skills", desc: "Open library" },
+          { href: "/ecosystem", label: "Open Source", desc: "Open on GitHub" },
+        ],
+      },
+      {
+        title: "Docs",
+        items: [
+          { href: "/docs/mcp", label: "MCP Docs", desc: "Developer toolkit" },
+          { href: "/protocol", label: "Protocol", desc: "Standards spec" },
+        ],
+      },
       {
         title: "Academy",
         items: [
           { href: "/academy", label: "Ten Gates", desc: "Creative progression" },
           { href: "/academy/courses", label: "Courses", desc: "Structured paths" },
           { href: "/quiz", label: "Origin Quiz", desc: "Discover your class" },
-        ],
-      },
-      {
-        title: "Build",
-        items: [
-          { href: "/mcp", label: "MCP & CLI", desc: "Claude, Codex, Cursor" },
-          { href: "/docs/mcp", label: "MCP Docs", desc: "Developer toolkit" },
-          { href: "/ecosystem", label: "Ecosystem", desc: "Open source repos" },
-          { href: "/protocol", label: "Protocol", desc: "Open standards spec" },
-          { href: "/apps", label: "Apps", desc: "Connector marketplace" },
-          { href: "/teams", label: "Teams", desc: "How we build" },
-          { href: "/storage", label: "Storage", desc: "Semantic memory" },
         ],
       },
     ],

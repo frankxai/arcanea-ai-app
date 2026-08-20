@@ -9,20 +9,20 @@ import { Badge } from '@/components/ui/badge';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Skill Marketplace',
+  title: 'Skills',
   description:
-    'Browse and install open-source skills for Claude Code, OpenCode, Cursor, and more. One-command install for every skill.',
+    'Browse and install open-source skills for Claude Code, OpenCode, and Cursor.',
   openGraph: {
-    title: 'Arcanea Skill Marketplace',
+    title: 'Arcanea Skills',
     description:
-      'Open-source skills for Claude Code, OpenCode, Cursor, and more. Install with one command.',
+      'Open-source skills for Claude Code, OpenCode, and Cursor.',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Arcanea Skill Marketplace',
+    title: 'Arcanea Skills',
     description:
-      'Open-source skills for Claude Code, OpenCode, Cursor, and more.',
+      'Open-source skills for Claude Code, OpenCode, and Cursor.',
   },
   alternates: { canonical: '/skills' },
   robots: { index: true, follow: true },
@@ -46,12 +46,11 @@ export default async function SkillsMarketplacePage() {
           </p>
 
           <h1 className="text-4xl sm:text-6xl font-display font-bold tracking-tight text-white/95 mb-5">
-            Skill Marketplace
+            Skill library
           </h1>
 
           <p className="text-lg text-white/50 max-w-2xl mx-auto leading-relaxed mb-10">
-            {skills.length}+ skills for Claude Code, OpenCode, Cursor, and
-            more. Install with one command.
+            {skills.length} skills for Claude Code, OpenCode, and Cursor.
           </p>
 
           {/* Stats row */}
@@ -88,13 +87,12 @@ export default async function SkillsMarketplacePage() {
 
       {/* Footer CTA */}
       <section className="max-w-6xl mx-auto px-6 pb-24">
-        <div className="rounded-2xl bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/[0.08] via-white/[0.02] to-transparent border border-white/[0.06] backdrop-blur-sm p-8 sm:p-12 text-center">
+          <div className="rounded-2xl bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/[0.08] via-white/[0.02] to-transparent border border-white/[0.06] backdrop-blur-sm p-8 sm:p-12 text-center">
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-white/95 mb-3">
             Build your own skill
           </h2>
           <p className="text-white/50 max-w-xl mx-auto mb-6 text-sm leading-relaxed">
-            Every skill is a markdown file with frontmatter. Fork the OSS repo,
-            add your skill, open a PR. It will appear here automatically.
+            Skills are markdown files with frontmatter. Fork the repo, add your skill, open a PR.
           </p>
           <div className="flex items-center justify-center gap-3">
             <Link
@@ -104,12 +102,6 @@ export default async function SkillsMarketplacePage() {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[var(--arc-brand-atlantean-teal)]/15 border border-[var(--arc-brand-atlantean-teal)]/30 text-[var(--arc-brand-atlantean-teal)] text-sm font-medium hover:bg-[var(--arc-brand-atlantean-teal)]/25 transition-colors"
             >
               View on GitHub →
-            </Link>
-            <Link
-              href="/developers"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/70 text-sm font-medium hover:bg-white/[0.08] hover:text-white transition-colors"
-            >
-              Skill guide
             </Link>
           </div>
         </div>
