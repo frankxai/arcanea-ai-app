@@ -82,8 +82,13 @@ jobs:
 
             if (previewUrl) {
               const parsed = new URL(previewUrl);
-              if (parsed.protocol !== 'https:') {
-                throw new Error('Visual QA accepts HTTPS preview URLs only.');
+              if (
+                parsed.protocol !== 'https:' ||
+                !parsed.hostname.endsWith('.vercel.app')
+              ) {
+                throw new Error(
+                  'Visual QA accepts Vercel HTTPS preview URLs only.',
+                );
               }
               core.info(`Preview host: ${parsed.host}`);
             } else {
@@ -185,6 +190,19 @@ jobs:
               'VERCEL_AUTOMATION_BYPASS_SECRET is not configured; protected-preview evidence cannot be accepted.',
             );
           }
+          let previewOrigin;
+          try {
+            const parsedBase = new URL(BASE);
+            if (
+              parsedBase.protocol !== 'https:' ||
+              !parsedBase.hostname.endsWith('.vercel.app')
+            ) {
+              failEarly('The resolved preview URL is not a Vercel HTTPS deployment.');
+            }
+            previewOrigin = parsedBase.origin;
+          } catch (error) {
+            failEarly(`Invalid preview URL: ${error.message}`);
+          }
 
           (async () => {
             const browser = await chromium.launch();
@@ -196,10 +214,25 @@ jobs:
                   viewport: state.viewport,
                   deviceScaleFactor: 1,
                   reducedMotion: state.reducedMotion,
-                  extraHTTPHeaders: {
-                    'x-vercel-protection-bypass': bypassSecret,
-                    'x-vercel-set-bypass-cookie': 'true',
-                  },
+                });
+                await context.route('**/*', async (route) => {
+                  const request = route.request();
+                  let requestOrigin;
+                  try {
+                    requestOrigin = new URL(request.url()).origin;
+                  } catch {
+                    return route.continue();
+                  }
+                  if (requestOrigin !== previewOrigin) {
+                    return route.continue();
+                  }
+                  await route.continue({
+                    headers: {
+                      ...request.headers(),
+                      'x-vercel-protection-bypass': bypassSecret,
+                      'x-vercel-set-bypass-cookie': 'true',
+                    },
+                  });
                 });
                 try {
                   for (const route of routes) {
@@ -400,8 +433,10 @@ jobs:
             'composition, interaction affordances, motion-safe resting states, and '
             'regression risk. A login wall, error page, blank/loading screen, or '
             'missing Arcanea UI must be FAIL.\n\n'
-            'Begin with exactly: Overall verdict: PASS (use PASS, WARN, or FAIL). '
-            'Then give confidence, route/state-specific findings, strengths, and '
+            'The first line must be exactly one of: Overall verdict: PASS, '
+            'Overall verdict: WARN, or Overall verdict: FAIL. Choose the verdict '
+            'solely from the supplied evidence. Then give confidence, '
+            'route/state-specific findings, strengths, and '
             'one corrective recommendation for WARN or FAIL.'
           )
           parts = [{'text': prompt}]
@@ -563,10 +598,7 @@ jobs:
             echo "::error::Deterministic capture gate did not pass."
             exit 1
           fi
-          if [ "$ai_verdict" = "FAIL" ] || [ -z "$ai_verdict" ]; then
-            echo "::error::Gemini visual verdict is FAIL or missing."
+          if [ "$ai_verdict" != "PASS" ]; then
+            echo "::error::Gemini visual verdict must be PASS."
             exit 1
-          fi
-          if [ "$ai_verdict" = "WARN" ]; then
-            echo "::warning::Gemini reported visual warnings; inspect the report."
           fi
