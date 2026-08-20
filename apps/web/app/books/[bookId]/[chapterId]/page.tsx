@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import matter from 'gray-matter';
 import { ChapterReader } from '@/components/saga/chapter-reader';
 import { getBookRoot } from '@/lib/content/book-path';
+import { countChapterWords, isChapterMarkdown } from '@/lib/saga/chapter-files';
 const BOOK_ROOT = getBookRoot();
 
 export const dynamic = 'force-dynamic';
@@ -127,7 +128,7 @@ async function getChapterFiles(bookDir: string): Promise<ChapterFile[]> {
   try {
     const files = await readdir(bookDir);
     return files
-      .filter((f) => f.endsWith('.md'))
+      .filter(isChapterMarkdown)
       .sort()
       .map((filename, idx) => ({
         filename,
@@ -173,7 +174,7 @@ async function loadChapter(bookId: string, chapterId: string) {
   const raw = await readFile(join(bookMeta.dir, match.filename), 'utf-8');
   const { data: fm, content: body } = matter(raw);
   const title = (fm.title as string)?.trim() || extractTitle(body, match.id);
-  const words = body.split(/\s+/).filter(Boolean).length;
+  const words = countChapterWords(raw);
   const readTime = Math.max(1, Math.ceil(words / 250));
 
   const idx = chapters.indexOf(match);
