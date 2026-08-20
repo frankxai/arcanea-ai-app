@@ -1,0 +1,26 @@
+{
+  "name": "@arcanea/product-kernel",
+  "version": "0.1.0",
+  "description": "Provider-neutral run policy, approval, usage, cost and provenance contracts for Arcanea products",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "type-check": "tsc --noEmit -p tsconfig.json",
+    "test": "node --test tests/*.test.ts",
+    "clean": "rm -rf dist"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
+

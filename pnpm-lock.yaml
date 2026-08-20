@@ -1182,6 +1182,8 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/product-kernel: {}
+
   packages/publishing-house:
     dependencies:
       '@notionhq/client':
