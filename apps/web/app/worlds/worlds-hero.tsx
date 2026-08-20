@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
-import { LazyMotion, domAnimation, m } from "framer-motion";
+import { LazyMotion, domAnimation, m, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { FloatingOrbs, StatCard, FeatureCard, FeatureIcon } from "@/components/premium";
+import { useRef } from "react";
 
 // ---------------------------------------------------------------------------
 // WorldsHero — Premium hero section for the Worlds page (Client Component)
@@ -41,11 +42,39 @@ const HERO_STATS = [
 ];
 
 export function WorldsHero() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  // Scroll-linked parallax transforms
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Parallax depths: title moves faster, stats slower, background slowest
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : -60]);
+  const subtitleY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : -40]);
+  const statsY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : -20]);
+  const orbY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : 40]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, reducedMotion ? 1 : 0.6]);
+
   return (
     <LazyMotion features={domAnimation}>
-      {/* ── Premium Hero ─────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pt-28 pb-20">
-        <FloatingOrbs preset="cosmic" />
+      {/* ── Premium Hero with Scroll-Linked Parallax ───────────────────── */}
+      <section ref={containerRef} className="relative overflow-hidden pt-28 pb-20">
+        {/* Parallax background layer */}
+        <m.div style={{ y: orbY, opacity }} className="absolute inset-0">
+          <FloatingOrbs preset="cosmic" />
+        </m.div>
+
+        {/* Enhanced liquid glass overlay */}
+        <div
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{
+            background: "radial-gradient(ellipse 100% 60% at 50% 0%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 3%, transparent) 0%, transparent 70%)",
+          }}
+          aria-hidden
+        />
 
         {/* Dot grid */}
         <div
@@ -63,7 +92,8 @@ export function WorldsHero() {
           className="pointer-events-none absolute top-0 left-0 right-0 h-px -z-10"
           style={{
             background:
-              "linear-gradient(90deg, transparent 0%, rgba(0,188,212,0.25) 40%, rgba(127,255,212,0.35) 50%, rgba(0,188,212,0.25) 60%, transparent 100%)",
+              "linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 30%, transparent) 35%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 45%, transparent) 50%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 30%, transparent) 65%, transparent 100%)",
+            boxShadow: reducedMotion ? "none" : "0 0 16px color-mix(in srgb, var(--arc-brand-atlantean-teal) 20%, transparent)",
           }}
           aria-hidden
         />
@@ -71,9 +101,14 @@ export function WorldsHero() {
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
           {/* Eyebrow label */}
           <m.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, y: -8, filter: reducedMotion ? "none" : "blur(12px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 25,
+              delay: 0.05,
+            }}
             className="inline-flex items-center gap-3 mb-8"
           >
             <div className="h-px w-8 bg-gradient-to-r from-transparent to-[var(--arc-brand-atlantean-teal)]/50" />
@@ -83,11 +118,17 @@ export function WorldsHero() {
             <div className="h-px w-8 bg-gradient-to-l from-transparent to-[var(--arc-brand-atlantean-teal)]/50" />
           </m.div>
 
-          {/* Headline */}
+          {/* Headline — parallax + spring */}
           <m.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.05 }}
+            style={{ y: titleY }}
+            initial={{ opacity: 0, filter: reducedMotion ? "none" : "blur(20px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
+            transition={{
+              type: "spring",
+              stiffness: 260,
+              damping: 20,
+              delay: 0.1,
+            }}
             className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-[-0.03em] leading-[1.04] mb-6"
           >
             <span
@@ -101,26 +142,58 @@ export function WorldsHero() {
             </span>
           </m.h1>
 
-          {/* Subtitle */}
+          {/* Subtitle — parallax */}
           <m.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.12 }}
+            style={{ y: subtitleY }}
+            initial={{ opacity: 0, y: 16, filter: reducedMotion ? "none" : "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{
+              type: "spring",
+              stiffness: 280,
+              damping: 22,
+              delay: 0.2,
+            }}
             className="text-base md:text-xl text-white/45 max-w-2xl mx-auto leading-relaxed mb-12 font-body"
           >
             A world-building engine where every character, location, and legend
             connects into a coherent, living universe — ready to fork, explore, and evolve.
           </m.p>
 
-          {/* Stats row */}
+          {/* Stats row — parallax + stagger with spring */}
           <m.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            style={{ y: statsY }}
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.08,
+                  delayChildren: 0.3,
+                },
+              },
+            }}
             className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl mx-auto"
           >
             {HERO_STATS.map(({ value, label, color }, i) => (
-              <StatCard key={label} value={value} label={label} color={color} delay={0.24 + i * 0.06} />
+              <m.div
+                key={label}
+                variants={{
+                  hidden: { opacity: 0, y: 20, filter: reducedMotion ? "none" : "blur(8px)" },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    filter: "blur(0px)",
+                    transition: {
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 24,
+                    },
+                  },
+                }}
+              >
+                <StatCard value={value} label={label} color={color} delay={0} />
+              </m.div>
             ))}
           </m.div>
         </div>
@@ -202,7 +275,7 @@ export function WorldsHero() {
           className="h-px w-full"
           style={{
             background:
-              "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 40%, rgba(0,188,212,0.12) 50%, rgba(255,255,255,0.05) 60%, transparent 100%)",
+              "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 40%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 12%, transparent) 50%, rgba(255,255,255,0.05) 60%, transparent 100%)",
           }}
         />
       </div>
