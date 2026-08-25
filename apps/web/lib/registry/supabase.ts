@@ -15,6 +15,21 @@ import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { getSupabaseEnv, getSupabaseServiceRoleKey } from '@/lib/supabase/env';
 
 /**
+ * Public registry client for read-only discovery surfaces.
+ * Uses the publishable/anon key so Postgres grants and RLS remain authoritative.
+ */
+export function createRegistryPublicClient() {
+  const { url, anonKey } = getSupabaseEnv();
+
+  return createSupabaseClient(url, anonKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  });
+}
+
+/**
  * Untyped admin client for registry operations.
  * Bypasses RLS for read/write. Use only in server-side contexts.
  */
