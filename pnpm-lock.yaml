@@ -224,6 +224,9 @@ importers:
       '@arcanea/design-system':
         specifier: workspace:^
         version: link:../../packages/design-system
+      '@arcanea/mcp-server':
+        specifier: workspace:^
+        version: link:../../packages/arcanea-mcp
       '@arcanea/orchestrator':
         specifier: workspace:*
         version: link:../../packages/orchestrator
@@ -621,6 +624,9 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: ^1.30.0
         version: 1.30.0(zod@4.3.6)
+      canonicalize:
+        specifier: ^1.0.8
+        version: 1.0.8
       zod:
         specifier: ^4.3.6
         version: 4.3.6
