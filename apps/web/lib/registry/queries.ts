@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 /**
  * Registry Queries — Server-side data loaders for the Arcanea Agent Registry.
- * Uses the admin client for read operations. Public data, no auth required.
+ * Uses the public Supabase client for read operations so RLS remains authoritative.
  */
 
-import { createRegistryAdminClient } from '@/lib/registry/supabase';
+import { createRegistryPublicClient } from '@/lib/registry/supabase';
 
 export interface RegistryAgent {
   id: string;
@@ -58,7 +58,7 @@ export interface SearchParams {
  */
 export async function searchAgents(params: SearchParams = {}): Promise<RegistryAgent[]> {
   try {
-    const supabase = createRegistryAdminClient();
+    const supabase = createRegistryPublicClient();
     let query = supabase
       .from('marketplace_agents')
       .select('*')
@@ -93,7 +93,7 @@ export async function searchAgents(params: SearchParams = {}): Promise<RegistryA
  */
 export async function getAgent(id: string): Promise<RegistryAgent | null> {
   try {
-    const supabase = createRegistryAdminClient();
+    const supabase = createRegistryPublicClient();
     const { data, error } = await supabase
       .from('marketplace_agents')
       .select('*')
@@ -117,7 +117,7 @@ export async function getAgent(id: string): Promise<RegistryAgent | null> {
  */
 export async function getRegistryStats(): Promise<RegistryStats> {
   try {
-    const supabase = createRegistryAdminClient();
+    const supabase = createRegistryPublicClient();
 
     const [agentsRes, deploymentsRes, platformsRes] = await Promise.all([
       supabase.from('marketplace_agents').select('category', { count: 'exact' }).eq('is_published', true),
@@ -151,7 +151,7 @@ export async function getAgentStats(agentId: string): Promise<{
   platforms_reached: number;
 }> {
   try {
-    const supabase = createRegistryAdminClient();
+    const supabase = createRegistryPublicClient();
     const [deploysRes, usagesRes] = await Promise.all([
       supabase.from('attribution_events').select('platform_id', { count: 'exact' }).eq('agent_id', agentId).eq('event_type', 'deploy'),
       supabase.from('usage_events').select('id', { count: 'exact', head: true }).eq('agent_id', agentId),
@@ -177,7 +177,7 @@ export async function getAgentStats(agentId: string): Promise<{
  */
 export async function getRelatedAgents(agent: RegistryAgent, limit = 4): Promise<RegistryAgent[]> {
   try {
-    const supabase = createRegistryAdminClient();
+    const supabase = createRegistryPublicClient();
     const { data } = await supabase
       .from('marketplace_agents')
       .select('*')
