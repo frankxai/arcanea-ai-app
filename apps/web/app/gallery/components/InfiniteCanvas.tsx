@@ -173,10 +173,11 @@ export function InfiniteCanvas({ images, onAddImage, onTransformChange }: Infini
                 <img
                   src={img.url}
                   alt={img.label}
-                  className="w-full h-full object-cover rounded-lg border-2 transition-all"
+                  className="w-full h-full object-cover rounded-lg border-2"
                   style={{
                     borderColor: hoveredImage === img.id ? brand.arcaneanGold : 'rgba(255,255,255,0.1)',
                     boxShadow: hoveredImage === img.id ? '0 0 20px rgba(255, 215, 0, 0.3)' : 'none',
+                    transition: 'border-color 0.2s, box-shadow 0.2s',
                   }}
                 />
               )}

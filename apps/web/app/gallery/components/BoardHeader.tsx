@@ -33,7 +33,7 @@ export function BoardHeader({
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleSidebar}
-          className="p-2 rounded-md hover:bg-white/5 transition-colors"
+          className="p-2 rounded-md hover:bg-white/5 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2"
           aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
         >
           {sidebarOpen ? (
@@ -54,31 +54,31 @@ export function BoardHeader({
       <div className="flex items-center gap-2">
         <button
           onClick={onImport}
-          className="p-2 rounded-md border transition-all hover:bg-white/5"
+          className="p-2 rounded-md border transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-offset-2"
           style={{
             borderColor: cosmic.borderBright,
             color: brand.atlanteanTeal,
           }}
-          title="Import board"
+          aria-label="Import board"
         >
           <Upload className="w-4 h-4" />
         </button>
 
         <button
           onClick={onExport}
-          className="p-2 rounded-md border transition-all hover:bg-white/5"
+          className="p-2 rounded-md border transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-offset-2"
           style={{
             borderColor: cosmic.borderBright,
             color: brand.atlanteanTeal,
           }}
-          title="Export board"
+          aria-label="Export board"
         >
           <Download className="w-4 h-4" />
         </button>
 
         <button
           onClick={onGenerate}
-          className="px-4 py-2 rounded-md flex items-center gap-2 transition-all hover:opacity-90"
+          className="px-4 py-2 rounded-md flex items-center gap-2 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-offset-2"
           style={{
             backgroundColor: brand.arcaneanGold,
             color: cosmic.void,
@@ -92,7 +92,7 @@ export function BoardHeader({
 
         <button
           onClick={onShare}
-          className="px-4 py-2 rounded-md flex items-center gap-2 border transition-all hover:bg-white/5"
+          className="px-4 py-2 rounded-md flex items-center gap-2 border transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-offset-2"
           style={{
             borderColor: cosmic.borderBright,
             color: brand.atlanteanTeal,

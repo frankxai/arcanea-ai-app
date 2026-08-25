@@ -73,10 +73,10 @@ export function BoardGenerateDialog({ onClose, onImageGenerated, viewportTransfo
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-md hover:bg-white/5 transition-colors"
+          className="absolute top-4 right-4 p-2 rounded-md hover:bg-white/5 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2"
           aria-label="Close"
         >
-          <X className="w-5 h-5" style={{ color: text.secondary }} />
+          <X className="w-5 h-5" style={{ color: text.secondary }} aria-hidden="true" />
         </button>
 
         <div className="flex items-center gap-3 mb-6">
@@ -90,7 +90,11 @@ export function BoardGenerateDialog({ onClose, onImageGenerated, viewportTransfo
         </div>
 
         <div className="space-y-4">
+          <label htmlFor="prompt-input" className="sr-only">
+            Image description prompt
+          </label>
           <textarea
+            id="prompt-input"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Describe the image you want to generate..."
@@ -106,7 +110,7 @@ export function BoardGenerateDialog({ onClose, onImageGenerated, viewportTransfo
           <button
             onClick={handleGenerate}
             disabled={generating || !prompt.trim()}
-            className="w-full px-4 py-2 rounded-md flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-2 rounded-md flex items-center justify-center gap-2 transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-offset-2"
             style={{
               backgroundColor: brand.arcaneanGold,
               color: cosmic.void,
@@ -116,12 +120,12 @@ export function BoardGenerateDialog({ onClose, onImageGenerated, viewportTransfo
           >
             {generating ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Generating...</span>
+                <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                <span>Generating…</span>
               </>
             ) : (
               <>
-                <Sparkles className="w-4 h-4" />
+                <Sparkles className="w-4 h-4" aria-hidden="true" />
                 <span>Generate</span>
               </>
             )}
