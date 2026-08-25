@@ -126,7 +126,7 @@ export function BoardShareDialog({ boardId, boardName, onClose }: BoardShareDial
               className="text-sm"
               style={{ color: text.primary, fontFamily: 'Geist, sans-serif' }}
             >
-              Anyone with this link can view the board. Board state is stored locally in your browser using tldraw's persistence.
+              Anyone with this link can view the board. Board state is stored locally in your browser.
             </p>
           </div>
         </div>
