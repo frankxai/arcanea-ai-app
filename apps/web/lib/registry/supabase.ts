@@ -31,7 +31,9 @@ export function createRegistryPublicClient() {
 
 /**
  * Untyped admin client for registry operations.
- * Bypasses RLS for read/write. Use only in server-side contexts.
+ * Bypasses RLS for read/write. Use only in server-side write contexts;
+ * public discovery must use createRegistryPublicClient, and the absence of a
+ * service-role credential in a public deployment is a valid secure state.
  */
 export function createRegistryAdminClient() {
   const { url } = getSupabaseEnv();
