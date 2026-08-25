@@ -21,6 +21,14 @@ interface CanvasImage {
   height: number;
 }
 
+interface BoardState {
+  currentBoard: BoardTemplate;
+  images: CanvasImage[];
+  version: number;
+}
+
+const STORAGE_KEY = 'arcanea-board-state';
+
 const SEEDED_BOARDS: Record<BoardTemplate, { id: string; name: string; images: CanvasImage[] }> = {
   arcanea: {
     id: 'arcanea-kings-table',
@@ -46,6 +54,40 @@ export function ArcaneanBoard() {
   const [showShareDialog, setShowShareDialog] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [images, setImages] = useState<CanvasImage[]>(SEEDED_BOARDS.arcanea.images);
+  const [viewportTransform, setViewportTransform] = useState({ x: 0, y: 0, scale: 1 });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const state: BoardState = JSON.parse(saved);
+          setCurrentBoard(state.currentBoard);
+          setImages(state.images);
+        }
+      } catch (error) {
+        console.error('Failed to load board state:', error);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    if (typeof window !== 'undefined') {
+      try {
+        const state: BoardState = {
+          currentBoard,
+          images,
+          version: 1,
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (error) {
+        console.error('Failed to save board state:', error);
+      }
+    }
+  }, [currentBoard, images, mounted]);
 
   const handleNewWorld = useCallback(() => {
     setCurrentBoard('blank');
@@ -70,6 +112,44 @@ export function ArcaneanBoard() {
     setImages((prev) => [...prev, newImage]);
   }, []);
 
+  const handleExportBoard = useCallback(() => {
+    const state: BoardState = {
+      currentBoard,
+      images,
+      version: 1,
+    };
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${SEEDED_BOARDS[currentBoard].name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.arcanea-board.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, [currentBoard, images]);
+
+  const handleImportBoard = useCallback(() => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.arcanea-board.json,application/json';
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        try {
+          const text = await file.text();
+          const state: BoardState = JSON.parse(text);
+          setCurrentBoard(state.currentBoard);
+          setImages(state.images);
+        } catch (error) {
+          console.error('Failed to import board:', error);
+          alert('Failed to import board. Please ensure the file is a valid .arcanea-board.json file.');
+        }
+      }
+    };
+    input.click();
+  }, []);
+
   const board = SEEDED_BOARDS[currentBoard];
 
   return (
@@ -79,6 +159,8 @@ export function ArcaneanBoard() {
         onGenerate={() => setShowGenerateDialog(true)}
         onShare={() => setShowShareDialog(true)}
         onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+        onExport={handleExportBoard}
+        onImport={handleImportBoard}
         sidebarOpen={sidebarOpen}
       />
 
@@ -92,14 +174,18 @@ export function ArcaneanBoard() {
         )}
 
         <div className="flex-1 relative">
-          <InfiniteCanvas images={images} onAddImage={handleAddImage} />
+          <InfiniteCanvas images={images} onAddImage={handleAddImage} onTransformChange={setViewportTransform} />
         </div>
       </div>
 
       <DawnswornStrip />
 
       {showGenerateDialog && (
-        <BoardGenerateDialog onClose={() => setShowGenerateDialog(false)} onImageGenerated={handleAddImage} />
+        <BoardGenerateDialog
+          onClose={() => setShowGenerateDialog(false)}
+          onImageGenerated={handleAddImage}
+          viewportTransform={viewportTransform}
+        />
       )}
 
       {showShareDialog && (

@@ -1,23 +1,26 @@
 'use client';
 
 import { useState } from 'react';
-import { X, Sparkles, Loader2 } from 'lucide-react';
+import { X, Sparkles, Loader2, AlertCircle } from 'lucide-react';
 import { brand, cosmic, text } from '@arcanea/design-system/tokens';
 
 interface BoardGenerateDialogProps {
   onClose: () => void;
   onImageGenerated: (url: string, x: number, y: number) => void;
+  viewportTransform: { x: number; y: number; scale: number };
 }
 
-export function BoardGenerateDialog({ onClose, onImageGenerated }: BoardGenerateDialogProps) {
+export function BoardGenerateDialog({ onClose, onImageGenerated, viewportTransform }: BoardGenerateDialogProps) {
   const [prompt, setPrompt] = useState('');
   const [generating, setGenerating] = useState(false);
-  const [generationStatus, setGenerationStatus] = useState<'ready' | 'wiring' | 'error'>('wiring');
+  const [error, setError] = useState<string | null>(null);
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
 
     setGenerating(true);
+    setError(null);
+
     try {
       const response = await fetch('/api/imagine/generate', {
         method: 'POST',
@@ -32,18 +35,23 @@ export function BoardGenerateDialog({ onClose, onImageGenerated }: BoardGenerate
       if (response.ok) {
         const data = await response.json();
         if (data.assetUrls?.[0]) {
-          setGenerationStatus('ready');
-          onImageGenerated(data.assetUrls[0], 0, 0);
+          const centerX = -viewportTransform.x / viewportTransform.scale + (window.innerWidth / 2) / viewportTransform.scale;
+          const centerY = -viewportTransform.y / viewportTransform.scale + (window.innerHeight / 2) / viewportTransform.scale;
+          onImageGenerated(data.assetUrls[0], centerX - 150, centerY - 200);
           onClose();
         } else {
-          setGenerationStatus('error');
+          setError('No image returned. The API may need configuration.');
         }
       } else {
-        setGenerationStatus('error');
+        const errorData = await response.json().catch(() => ({}));
+        if (response.status === 401 || response.status === 403) {
+          setError('API key required. Please configure your image generation provider.');
+        } else {
+          setError(errorData.error || `Generation failed (${response.status})`);
+        }
       }
-    } catch (error) {
-      console.error('Generation error:', error);
-      setGenerationStatus('error');
+    } catch (err) {
+      setError(`Network error: ${err instanceof Error ? err.message : 'Unknown error'}`);
     } finally {
       setGenerating(false);
     }
@@ -81,103 +89,59 @@ export function BoardGenerateDialog({ onClose, onImageGenerated }: BoardGenerate
           </h2>
         </div>
 
-        {generationStatus === 'wiring' ? (
-          <div className="space-y-4">
+        <div className="space-y-4">
+          <textarea
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="Describe the image you want to generate..."
+            className="w-full h-32 px-3 py-2 rounded-md border resize-none focus:outline-none focus:ring-2"
+            style={{
+              backgroundColor: cosmic.raised,
+              borderColor: cosmic.borderBright,
+              color: text.primary,
+              fontFamily: 'Geist, sans-serif',
+            }}
+          />
+
+          <button
+            onClick={handleGenerate}
+            disabled={generating || !prompt.trim()}
+            className="w-full px-4 py-2 rounded-md flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              backgroundColor: brand.arcaneanGold,
+              color: cosmic.void,
+              fontFamily: 'Geist, sans-serif',
+              fontWeight: 500,
+            }}
+          >
+            {generating ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Generating...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-4 h-4" />
+                <span>Generate</span>
+              </>
+            )}
+          </button>
+
+          {error && (
             <div
-              className="p-4 rounded-md border"
+              className="p-3 rounded-md flex items-start gap-2"
               style={{
-                backgroundColor: 'rgba(255,215,0,0.05)',
-                borderColor: 'rgba(255,215,0,0.2)',
+                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                border: '1px solid rgba(239, 68, 68, 0.3)',
               }}
             >
-              <p
-                className="text-sm"
-                style={{ color: text.primary, fontFamily: 'Geist, sans-serif' }}
-              >
-                Image generation is being wired
-              </p>
-              <p
-                className="text-xs mt-2"
-                style={{ color: text.muted, fontFamily: 'Geist, sans-serif' }}
-              >
-                The generate endpoint exists at <code className="px-1 py-0.5 rounded bg-black/20">/api/imagine/generate</code> but may need provider configuration.
+              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: '#ef4444' }} />
+              <p className="text-sm" style={{ color: '#ef4444', fontFamily: 'Geist, sans-serif' }}>
+                {error}
               </p>
             </div>
-
-            <textarea
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder="Describe the image you want to generate..."
-              className="w-full h-32 px-3 py-2 rounded-md border resize-none"
-              style={{
-                backgroundColor: cosmic.raised,
-                borderColor: cosmic.borderBright,
-                color: text.primary,
-                fontFamily: 'Geist, sans-serif',
-              }}
-              disabled
-            />
-
-            <button
-              className="w-full px-4 py-2 rounded-md flex items-center justify-center gap-2 opacity-50 cursor-not-allowed"
-              style={{
-                backgroundColor: brand.arcaneanGold,
-                color: cosmic.void,
-                fontFamily: 'Geist, sans-serif',
-                fontWeight: 500,
-              }}
-              disabled
-            >
-              <Sparkles className="w-4 h-4" />
-              <span>Generate</span>
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            <textarea
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder="Describe the image you want to generate..."
-              className="w-full h-32 px-3 py-2 rounded-md border resize-none focus:outline-none focus:ring-2"
-              style={{
-                backgroundColor: cosmic.raised,
-                borderColor: cosmic.borderBright,
-                color: text.primary,
-                fontFamily: 'Geist, sans-serif',
-              }}
-            />
-
-            <button
-              onClick={handleGenerate}
-              disabled={generating || !prompt.trim()}
-              className="w-full px-4 py-2 rounded-md flex items-center justify-center gap-2 transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{
-                backgroundColor: brand.arcaneanGold,
-                color: cosmic.void,
-                fontFamily: 'Geist, sans-serif',
-                fontWeight: 500,
-              }}
-            >
-              {generating ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Generating...</span>
-                </>
-              ) : (
-                <>
-                  <Sparkles className="w-4 h-4" />
-                  <span>Generate</span>
-                </>
-              )}
-            </button>
-
-            {generationStatus === 'error' && (
-              <p className="text-sm text-center" style={{ color: '#ef4444' }}>
-                Generation failed. Check API configuration.
-              </p>
-            )}
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

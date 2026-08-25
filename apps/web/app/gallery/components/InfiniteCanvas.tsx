@@ -16,15 +16,20 @@ interface CanvasImage {
 interface InfiniteCanvasProps {
   images: CanvasImage[];
   onAddImage: (url: string, x: number, y: number) => void;
+  onTransformChange?: (transform: { x: number; y: number; scale: number }) => void;
 }
 
-export function InfiniteCanvas({ images, onAddImage }: InfiniteCanvasProps) {
+export function InfiniteCanvas({ images, onAddImage, onTransformChange }: InfiniteCanvasProps) {
   const canvasRef = useRef<HTMLDivElement>(null);
   const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [hoveredImage, setHoveredImage] = useState<string | null>(null);
   const [loadedImages, setLoadedImages] = useState<Map<string, HTMLImageElement>>(new Map());
+
+  useEffect(() => {
+    onTransformChange?.(transform);
+  }, [transform, onTransformChange]);
 
   useEffect(() => {
     images.forEach((img) => {

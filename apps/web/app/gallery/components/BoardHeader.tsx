@@ -1,6 +1,6 @@
 'use client';
 
-import { Share2, Sparkles, PanelLeftClose, PanelLeft } from 'lucide-react';
+import { Share2, Sparkles, PanelLeftClose, PanelLeft, Download, Upload } from 'lucide-react';
 import { brand, cosmic } from '@arcanea/design-system/tokens';
 
 interface BoardHeaderProps {
@@ -8,6 +8,8 @@ interface BoardHeaderProps {
   onGenerate: () => void;
   onShare: () => void;
   onToggleSidebar: () => void;
+  onExport: () => void;
+  onImport: () => void;
   sidebarOpen: boolean;
 }
 
@@ -16,6 +18,8 @@ export function BoardHeader({
   onGenerate,
   onShare,
   onToggleSidebar,
+  onExport,
+  onImport,
   sidebarOpen,
 }: BoardHeaderProps) {
   return (
@@ -48,6 +52,30 @@ export function BoardHeader({
       </div>
 
       <div className="flex items-center gap-2">
+        <button
+          onClick={onImport}
+          className="p-2 rounded-md border transition-all hover:bg-white/5"
+          style={{
+            borderColor: cosmic.borderBright,
+            color: brand.atlanteanTeal,
+          }}
+          title="Import board"
+        >
+          <Upload className="w-4 h-4" />
+        </button>
+
+        <button
+          onClick={onExport}
+          className="p-2 rounded-md border transition-all hover:bg-white/5"
+          style={{
+            borderColor: cosmic.borderBright,
+            color: brand.atlanteanTeal,
+          }}
+          title="Export board"
+        >
+          <Download className="w-4 h-4" />
+        </button>
+
         <button
           onClick={onGenerate}
           className="px-4 py-2 rounded-md flex items-center gap-2 transition-all hover:opacity-90"
