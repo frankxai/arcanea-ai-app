@@ -30,7 +30,7 @@ export function BoardHeader({
         borderColor: cosmic.border,
       }}
     >
-      {/* Dawnsworn strip - always visible on first fold */}
+      {/* Dawnsworn - always visible on first fold */}
       <div
         className="px-4 py-2 border-b"
         style={{ borderColor: cosmic.border }}
