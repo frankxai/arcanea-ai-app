@@ -164,6 +164,8 @@ export function ArcaneanBoard() {
         sidebarOpen={sidebarOpen}
       />
 
+      <DawnswornStrip />
+
       <div className="flex-1 flex relative overflow-hidden">
         {sidebarOpen && (
           <BoardSidebar
@@ -177,8 +179,6 @@ export function ArcaneanBoard() {
           <InfiniteCanvas images={images} onAddImage={handleAddImage} onTransformChange={setViewportTransform} />
         </div>
       </div>
-
-      <DawnswornStrip />
 
       {showGenerateDialog && (
         <BoardGenerateDialog

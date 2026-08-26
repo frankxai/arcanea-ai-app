@@ -6,35 +6,33 @@ import { brand, cosmic, text } from '@arcanea/design-system/tokens';
 export function DawnswornStrip() {
   return (
     <div
-      className="border-t"
+      className="border-b"
       style={{
         backgroundColor: cosmic.deep,
         borderColor: cosmic.border,
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="flex items-center justify-between gap-8 flex-wrap">
-          <div className="flex items-center gap-3">
-            <Shield className="w-6 h-6" style={{ color: brand.arcaneanGold }} />
-            <div>
-              <h3
-                className="text-base font-medium mb-1"
-                style={{ color: text.primary, fontFamily: 'Geist, sans-serif' }}
-              >
-                Become Dawnsworn
-              </h3>
-              <p
-                className="text-sm"
-                style={{ color: text.secondary, fontFamily: 'Geist, sans-serif' }}
-              >
-                Fund the journey and own editions. Display license only — you do not buy story rights.
-              </p>
-            </div>
+      <div className="px-4 py-2.5">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <Shield className="w-4 h-4" style={{ color: brand.arcaneanGold }} aria-hidden="true" />
+            <span
+              className="text-sm font-medium"
+              style={{ color: text.primary, fontFamily: 'Geist, sans-serif' }}
+            >
+              Become Dawnsworn
+            </span>
+            <span
+              className="text-xs hidden sm:inline"
+              style={{ color: text.secondary, fontFamily: 'Geist, sans-serif' }}
+            >
+              — Fund the journey, own editions. Display license only.
+            </span>
           </div>
 
           <a
             href="mailto:frank@arcanea.ai?subject=Dawnsworn Interest"
-            className="px-6 py-2.5 rounded-md flex items-center gap-2 transition-all hover:opacity-90"
+            className="px-4 py-1.5 rounded-md flex items-center gap-1.5 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-offset-2 text-sm"
             style={{
               backgroundColor: brand.arcaneanGold,
               color: cosmic.void,
@@ -42,7 +40,7 @@ export function DawnswornStrip() {
               fontWeight: 500,
             }}
           >
-            <Mail className="w-4 h-4" />
+            <Mail className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Join waitlist</span>
           </a>
         </div>
