@@ -5,7 +5,6 @@ import { BoardHeader } from './BoardHeader';
 import { BoardSidebar } from './BoardSidebar';
 import { BoardGenerateDialog } from './BoardGenerateDialog';
 import { BoardShareDialog } from './BoardShareDialog';
-import { DawnswornStrip } from './DawnswornStrip';
 import { InfiniteCanvas } from './InfiniteCanvas';
 import { cosmic } from '@arcanea/design-system/tokens';
 
@@ -163,8 +162,6 @@ export function ArcaneanBoard() {
         onImport={handleImportBoard}
         sidebarOpen={sidebarOpen}
       />
-
-      <DawnswornStrip />
 
       <div className="flex-1 flex relative overflow-hidden">
         {sidebarOpen && (
