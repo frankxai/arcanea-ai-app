@@ -49,7 +49,7 @@ export interface Integration {
 // integration carries one today.
 export const INTEGRATIONS: Integration[] = [
   // Coding & Dev — the IDE/CLI layer
-  { name: "Claude Code", category: "coding", color: thirdPartyBrand.anthropicClaude, status: "live", note: `MCP server · ${FACTS.mcpTools} tools` },
+  { name: "Claude Code", category: "coding", color: thirdPartyBrand.anthropicClaude, status: "live", note: "MCP server" },
   { name: "Cursor", category: "coding", color: thirdPartyBrand.cursor, status: "beta", note: "MCP via .cursor/mcp.json" },
   { name: "VS Code", category: "coding", color: thirdPartyBrand.vsCode, status: "beta", note: "MCP-ready, no extension yet" },
   { name: "Windsurf", category: "coding", color: thirdPartyBrand.windsurf, status: "beta", note: "MCP + rules bridge" },

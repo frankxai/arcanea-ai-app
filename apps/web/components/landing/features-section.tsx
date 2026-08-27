@@ -44,7 +44,6 @@ const FEATURES = [
     href: "/studio",
     gradient: "from-[var(--arc-brand-atlantean-teal)]/15 to-[var(--arc-brand-cosmic-blue)]/15",
     borderGradient: "from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)]",
-    stats: "10 Gates",
   },
   {
     title: "Enter the Academy",

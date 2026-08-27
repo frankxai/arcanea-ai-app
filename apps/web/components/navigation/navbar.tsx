@@ -71,8 +71,8 @@ const navLinks: NavLink[] = [
       {
         title: "Lore",
         items: [
-          { href: "/library", label: "Library", desc: "200K+ words of wisdom" },
-          { href: "/lore/guardians", label: "Guardians", desc: "The Ten Gate-keepers" },
+          { href: "/library", label: "Library", desc: "Wisdom and philosophy" },
+          { href: "/lore/guardians", label: "Guardians", desc: "Guardian archetypes" },
           { href: "/living-lore", label: "Chronicles", desc: "Interactive stories" },
           { href: "/glossary", label: "Glossary", desc: "Arcanean terminology" },
         ],
@@ -102,7 +102,7 @@ const navLinks: NavLink[] = [
       {
         title: "Academy",
         items: [
-          { href: "/academy", label: "Ten Gates", desc: "Creative progression" },
+          { href: "/academy", label: "Academy", desc: "Creative progression" },
           { href: "/academy/courses", label: "Courses", desc: "Structured paths" },
           { href: "/quiz", label: "Origin Quiz", desc: "Discover your class" },
         ],
