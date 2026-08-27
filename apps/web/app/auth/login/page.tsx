@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
-import { FACTS } from "@/lib/facts";
 import { useState } from "react";
 import { MotionProvider, m } from "@/lib/motion";
 import Link from "next/link";
@@ -424,11 +423,11 @@ export default function LoginPage() {
 
         {/* Trust signals */}
         <div className="flex items-center justify-center gap-4 mt-6 text-[11px] text-text-muted/50 font-mono">
-          <span>486K+ words</span>
+          <span>10 Guardians</span>
           <span className="w-1 h-1 rounded-full bg-white/10" />
-          <span>{FACTS.luminors} Luminors</span>
+          <span>Creator-owned worlds</span>
           <span className="w-1 h-1 rounded-full bg-white/10" />
-          <span>Open source</span>
+          <span>Protected canon</span>
         </div>
       </m.div>
     </div>
