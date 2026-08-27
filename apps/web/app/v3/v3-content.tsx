@@ -10,9 +10,7 @@ import type { V3BelowFoldProps } from "./v3-below-fold";
 import { HeroShowcase } from "./hero-showcase";
 import { SovereigntyBadge } from "@/components/premium/sovereignty-pillars";
 import { NumberTicker } from "@/components/motion/number-ticker";
-import { FACTS } from "@/lib/facts";
-import { Sparkle, Diamond, Code, ShieldStar } from "@/lib/phosphor-icons";
-import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
+import { ShieldStar } from "@/lib/phosphor-icons";
 
 // ---------------------------------------------------------------------------
 // Lazy-load the chat box — it pulls in useRouter + phosphor icons which are
@@ -186,8 +184,8 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="block">Build living worlds</span>
-            <span className="block">with AI agents.</span>
+            <span className="block">Enter living worlds.</span>
+            <span className="block">Build your own.</span>
           </m.h1>
 
           {/* Value prop */}
@@ -197,7 +195,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.16 }}
           >
-            Turn one idea into a persistent world graph: lore, characters, rules, media briefs, and agent tasks stay connected across sessions.
+            Read Arcanea’s stories, meet its Guardians and Godbeasts, or use the Arcanea Connector to shape a creator-owned world across writing, image, music, video, and web.
           </m.p>
 
           {/* Chat box */}
@@ -218,7 +216,7 @@ function HeroPortal() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             {[
-              { Icon: ShieldStar, num: 0, suffix: "MIT", label: "open source", color: "var(--arc-void)", fixed: true },
+              { Icon: ShieldStar, num: 0, suffix: "Protected", label: "canon", color: "var(--arc-void)", fixed: true },
             ].map(({ Icon, num, suffix, label, color, fixed }, i) => (
               <div
                 key={label}
@@ -241,7 +239,7 @@ function HeroPortal() {
           >
             <SovereigntyBadge />
             <span className="hidden h-1 w-1 rounded-full bg-white/20 sm:block" />
-            <span className="font-body">BYOK / your IP / no lock-in</span>
+            <span className="font-body">Your world stays yours / Arcanea canon stays Arcanea</span>
           </m.div>
 
           <m.div
@@ -258,7 +256,7 @@ function HeroPortal() {
               sizes="28px"
               className="object-contain"
             />
-            <span className="text-[11px] text-white/35">Lumina routes the first brief to the right creation agents.</span>
+            <span className="text-[11px] text-white/35">The Arcanea Connector routes each brief while keeping world and release boundaries explicit.</span>
           </m.div>
         </div>
       </m.div>
