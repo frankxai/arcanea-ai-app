@@ -11,7 +11,7 @@ import { elementNameAccents, neutralFallback } from "@arcanea/design-system";
 const SHOWCASE_WORLDS = [
   {
     name: "Arcanea Prime",
-    tagline: "The original world of Luminors, Guardians, and the Ten Gates",
+    tagline: "The original world of Luminors, Guardians, and living mythology",
     gradient: "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold))",
     elements: ["Fire", "Water", "Earth", "Wind", "Void"],
     href: "/lore",
@@ -25,7 +25,7 @@ const SHOWCASE_WORLDS = [
   },
   {
     name: "Starweave Academy",
-    tagline: "Seven houses, ten gates, and a thousand stories waiting to unfold",
+    tagline: "Seven houses and a thousand stories waiting to unfold",
     gradient: "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold), var(--arc-brand-atlantean-teal))",
     elements: ["Spirit", "Water", "Wind"],
     href: "/lore",
