@@ -8,7 +8,7 @@ import navLogo from "@/assets/brand/arcanea-mark.jpg";
 
 const BENEFITS = [
   "Creative partners across writing, code, design, music, and research",
-  "190K+ words of original philosophy, meditations, and practical craft guidance",
+  "Original philosophy, meditations, and practical craft guidance",
   "Free to start — create music, stories, art, and worlds immediately",
 ];
 
