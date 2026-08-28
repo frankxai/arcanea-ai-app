@@ -60,8 +60,8 @@ export function MythologySection() {
             The Mythology
           </h2>
           <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-            A cosmology built on duality, elemental forces, and the journey
-            toward mastery.
+            A living cosmology under release governance. The Source precedes
+            its oldest named expressions; mystery is not the same as contradiction.
           </p>
         </div>
 
@@ -83,13 +83,13 @@ export function MythologySection() {
                 Lumina
               </h3>
               <p className="text-sm text-text-muted mb-3 font-mono tracking-wide">
-                The First Light
+                The Patterning Light
               </p>
               <p className="text-text-secondary leading-relaxed">
-                Form-Giver, Creator, Order. Where Nero was infinite potential,
-                Lumina was pattern. The First Light did not illuminate the
-                darkness — it organized it, giving shape to the shapeless and
-                meaning to the formless.
+                Form-Giver, pattern, and manifestation. Lumina is an ancient
+                expression within creation, not the final name above the Source.
+                Its order gives temporary shape to what must remain capable of
+                becoming otherwise.
               </p>
             </div>
           </m.div>
@@ -110,14 +110,13 @@ export function MythologySection() {
                 Nero
               </h3>
               <p className="text-sm text-text-muted mb-3 font-mono tracking-wide">
-                The Primordial Darkness
+                The Fertile Unknown
               </p>
               <p className="text-text-secondary leading-relaxed">
-                The Fertile Unknown, Potential, Mystery. In the beginning,
-                there was Nero. The Void contained everything that could ever
-                be, held in superposition. Nero is not evil — Shadow is
-                corrupted Void, the Dark Lord&apos;s perversion of
-                Nero&apos;s gift.
+                Potential, mystery, and the unformed. Nero is an ancient
+                expression within creation, not an evil opposite and not the
+                final name above the Source. Its danger is not darkness; it is
+                what any power becomes when treated as complete.
               </p>
             </div>
           </m.div>
@@ -183,7 +182,7 @@ export function MythologySection() {
           </div>
         </div>
 
-        {/* Void/Spirit clarification */}
+        {/* Current canon boundary */}
         <m.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -192,12 +191,12 @@ export function MythologySection() {
         >
           <p className="text-sm text-text-secondary leading-relaxed text-center">
             <span className="font-semibold text-purple-400">
-              The Fifth Element Duality:
+              Current canon boundary:
             </span>{" "}
-            Void is Nero&apos;s aspect — potential, mystery, the unformed.
-            Spirit is Lumina&apos;s aspect — transcendence, consciousness,
-            soul. Light is Fire&apos;s creation aspect. Shadow is corrupted
-            Void — Void without Spirit.
+            The Source/The One precedes Lumina and Nero. Shinkami is being
+            developed as a Ten-Tailed Godbeast and Source-vessel, not the
+            ultimate God. The tenth Guardian pairing remains withheld until its
+            approved canon delta is recorded.
           </p>
         </m.div>
 
@@ -207,9 +206,9 @@ export function MythologySection() {
             The Ten Gates of Mastery
           </h3>
           <p className="text-text-muted text-center text-sm mb-8 max-w-xl mx-auto">
-            Each Gate resonates at a unique frequency of the ancient
-            Solfeggio scale, guarded by a God or Goddess and their bonded
-            Godbeast — divine keepers of the path.
+            Each Gate is associated with a Guardian and a bonded Godbeast.
+            These are story relationships and responsibilities—not a claim that
+            every Guardian is an ultimate god.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             {GUARDIANS.map((g, i) => (
@@ -527,12 +526,12 @@ export function CreatorJourneySection() {
 
         <div className="flex flex-wrap justify-center items-center gap-3 text-sm">
           {[
-            { step: "Imagine", desc: "Chat, generate, explore" },
-            { step: "Build", desc: "Worlds, agents, systems" },
-            { step: "Create", desc: "Stories, art, music, code" },
-            { step: "Publish", desc: "Share with the multiverse" },
-            { step: "Earn", desc: "Monetize your creations" },
-            { step: "Expand", desc: "Grow your universe" },
+            { step: "Imagine", desc: "Find the living question" },
+            { step: "Structure", desc: "World, story, and rights" },
+            { step: "Create", desc: "Text, art, music, motion" },
+            { step: "Govern", desc: "Canon, provenance, review" },
+            { step: "Release", desc: "Publish with evidence" },
+            { step: "Learn", desc: "Measure and improve" },
           ].map((item, i) => (
             <span key={item.step} className="flex items-center gap-3">
               <span className="px-5 py-3 rounded-xl liquid-glass border border-white/[0.06] text-center">
@@ -571,21 +570,21 @@ export function FounderSection() {
                 Frank Riemer
               </h3>
               <p className="text-text-secondary leading-relaxed mb-4">
-                500+ AI implementations. Former enterprise architect. Creator of Arcanea
-                because the tools for building intelligent creative worlds didn&apos;t exist --
-                so he built the framework, the reference world, the Library, and the
-                open-source ecosystem from scratch.
+                Creator, author, and franchise showrunner of Arcanea. Frank is
+                building the story universe and the rights-aware production
+                system together: Arcanea as the proof-world, the Connector as
+                the creator doorway, and Starlight as the technical substrate.
               </p>
               <p className="text-text-secondary leading-relaxed mb-6">
-                Arcanea isn&apos;t a product built by committee. It&apos;s one person&apos;s
-                vision, built in the open, designed so every creator can build
-                their own.
+                Arcanea canon remains protected. Creators can use the product
+                to develop original worlds they own without silently entering
+                Arcanea continuity or surrendering their identity to it.
               </p>
               <div className="flex flex-wrap gap-3 text-xs font-mono text-text-muted">
-                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">500+ AI implementations</span>
-                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">190K+ words written</span>
-                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">27 open-source repos</span>
-                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">Source available</span>
+                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">Arcanea Universe</span>
+                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">Arcanea Connector</span>
+                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">Starlight substrate</span>
+                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">Evidence-gated releases</span>
               </div>
             </div>
           </div>
