@@ -93,7 +93,7 @@ export function ProtocolContent() {
               transition={{ duration: 0.5, delay: 0.05 }}
               className="font-mono text-[10px] tracking-[0.35em] uppercase text-white/30 mb-5"
             >
-              Arcanean Protocol &middot; v0.1.0
+              Arcanea Interfaces &middot; Preview
             </m.p>
             <m.h1
               id="hero-heading"
@@ -109,7 +109,7 @@ export function ProtocolContent() {
                     "linear-gradient(135deg, var(--arc-brand-atlantean-teal) 0%, var(--arc-brand-atlantean-teal) 40%, var(--arc-void) 75%, var(--arc-brand-arcanean-gold) 100%)",
                 }}
               >
-                Open standards for agentic creation
+                Interoperable interfaces for worldbuilding
               </span>
             </m.h1>
             <m.p
@@ -118,8 +118,8 @@ export function ProtocolContent() {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="text-base md:text-xl text-white/45 max-w-2xl mx-auto leading-relaxed mb-14 font-body"
             >
-              Six protocol layers anyone can implement. Agent registry, IP licensing, royalties, BYOK inference.
-              MIT licensed. No Arcanea lock-in — ever.
+              Six interface areas are being specified for portable worlds, release evidence, and provider-neutral creation.
+              Each component carries its own license. Arcanea canon and trademarks are not included.
             </m.p>
             <m.div
               initial={{ opacity: 0, y: 12 }}
@@ -139,8 +139,8 @@ export function ProtocolContent() {
           <div className="max-w-5xl mx-auto px-6">
             <SectionHeader
               label="The Stack"
-              title="Six layers of sovereignty"
-              subtitle="Each layer is open, interoperable, and independently adoptable. Implement one or all."
+              title="Six boundaries that make worlds portable"
+              subtitle="Each area can evolve independently. Treat its status, implementation evidence, and repository license as separate facts."
               accent="teal"
             />
             <ProtocolLayerStack />
@@ -152,8 +152,8 @@ export function ProtocolContent() {
           <div className="max-w-5xl mx-auto px-6">
             <SectionHeader
               label="What's included"
-              title="Six open protocols"
-              subtitle="Every spec is a Markdown document. Every implementation is MIT licensed. Every standard is yours to adopt."
+              title="Six interoperable interface areas"
+              subtitle="The direction is public; implementations remain preview or planned until their source, license, tests, and release evidence are linked."
               accent="teal"
             />
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -175,8 +175,8 @@ export function ProtocolContent() {
           <div className="max-w-5xl mx-auto px-6">
             <SectionHeader
               label="Spec status"
-              title="Where each protocol stands"
-              subtitle="Live specs, reference implementations, and deployment timelines."
+              title="Where each interface actually stands"
+              subtitle="Evidence states replace roadmap theater. Preview does not mean stable, approved, or production-ready."
               accent="teal"
             />
             <m.div
@@ -212,8 +212,8 @@ export function ProtocolContent() {
           <div className="max-w-5xl mx-auto px-6">
             <SectionHeader
               label="How contributors work"
-              title="Three steps to conformance"
-              subtitle="Read a spec, build an implementation, submit your test results. That's it."
+              title="Three steps to responsible adoption"
+              subtitle="Check the boundary, adopt only the licensed component, and return reproducible evidence."
               accent="teal"
             />
             <ConnectedFlow steps={CONTRIBUTOR_STEPS} />
@@ -225,14 +225,14 @@ export function ProtocolContent() {
               className="mt-10 flex justify-center"
             >
               <a
-                href="https://github.com/frankxai/arcanea"
+                href="https://github.com/frankxai/arcanea/pull/116"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.09] text-sm font-display font-semibold text-white/70 hover:text-white hover:border-[var(--arc-brand-atlantean-teal)]/30 hover:bg-white/[0.07] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/50"
-                aria-label="Read the specifications on GitHub"
+                aria-label="Review the Arcanea governance proposal on GitHub"
               >
                 <GitHubIcon />
-                View specs on GitHub
+                Review governance on GitHub
                 <ExternalIcon />
               </a>
             </m.div>
@@ -244,8 +244,8 @@ export function ProtocolContent() {
           <div className="max-w-5xl mx-auto px-6">
             <SectionHeader
               label="Governance"
-              title="How the protocol evolves"
-              subtitle="Open process, public RFCs, community maintainers. No decisions behind closed doors."
+              title="How the interfaces evolve"
+              subtitle="Versioned decisions, explicit ownership, compatibility notes, and evidence. Governance claims advance only when the process exists."
               accent="gold"
             />
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -269,7 +269,7 @@ export function ProtocolContent() {
                 href="/contact"
                 className="inline-flex items-center gap-2 text-sm font-display text-[var(--arc-brand-arcanean-gold)]/70 hover:text-[var(--arc-brand-arcanean-gold)] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-arcanean-gold)]/40 rounded"
               >
-                Contact for governance discussion
+                Discuss an interface boundary
                 <ArrowRight />
               </Link>
             </m.div>
@@ -295,7 +295,7 @@ export function ProtocolContent() {
               transition={{ duration: 0.5 }}
               className="text-center font-mono text-[10px] tracking-[0.35em] uppercase text-white/25 mb-5"
             >
-              The Sovereignty Promise
+              The World Boundary
             </m.p>
             <m.h2
               id="byok-heading"
@@ -309,7 +309,7 @@ export function ProtocolContent() {
                 className="bg-clip-text text-transparent"
                 style={{ backgroundImage: "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-atlantean-teal))" }}
               >
-                Built so you never depend on us
+                Your world stays yours. Arcanea stays Arcanea.
               </span>
             </m.h2>
             <div className="grid sm:grid-cols-2 gap-4">
@@ -371,32 +371,32 @@ export function ProtocolContent() {
                       "linear-gradient(135deg, var(--arc-brand-atlantean-teal) 0%, var(--arc-brand-atlantean-teal) 50%, var(--arc-brand-cosmic-blue) 100%)",
                   }}
                 >
-                  Open protocol. Open source. Open forever.
+                  Open interfaces. Protected worlds.
                 </span>
               </h2>
               <p className="text-base text-white/40 mb-12 max-w-lg mx-auto font-body leading-relaxed">
-                Read the AIPs, implement a layer, or join the discussion.
-                The protocol belongs to every creator who builds on it.
+                Review the governance packet, test a preview interface, or discuss the boundary.
+                Adopt only components whose source and license are explicit.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <m.a
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  href="https://github.com/frankxai/arcanea"
+                  href="https://github.com/frankxai/arcanea/pull/116"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-semibold text-sm rounded-xl shadow-[0_0_24px_rgba(127,255,212,0.2)] hover:shadow-[0_0_32px_rgba(127,255,212,0.3)] transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
-                  aria-label="Read the Arcanean Improvement Proposals on GitHub"
+                  aria-label="Review Arcanea governance on GitHub"
                 >
                   <GitHubIcon />
-                  Read the AIPs
+                  Review governance
                 </m.a>
                 <m.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
                   <Link
                     href="/contact"
                     className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-[var(--arc-brand-atlantean-teal)]/25 text-[var(--arc-brand-atlantean-teal)] font-semibold text-sm rounded-xl hover:bg-[var(--arc-brand-atlantean-teal)]/[0.06] hover:border-[var(--arc-brand-atlantean-teal)]/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
                   >
-                    Contact about the protocol
+                    Contact about interfaces
                     <ArrowRight />
                   </Link>
                 </m.div>
