@@ -1,91 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 /**
- * Saga API — Documents by category
+ * Public Saga API — released-reference boundary.
  *
- * GET /api/saga/docs/[category] — List documents in a category.
- * GET /api/saga/docs/[category]?slug=xxx — Get a single document with full content.
- *
- * Valid categories: worldbuilding, characters, legends, reference
- * Public endpoint, no auth required.
+ * Canon bibles, mystery ledgers, and development reference documents are
+ * internal unless an approved release manifest explicitly publishes them.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { getSagaDocuments, getSagaDocument } from '@/lib/saga/loader';
-import type { SagaDocument } from '@/lib/saga/loader';
+import { NextResponse } from 'next/server';
+import { notPublicPayload } from '@/lib/saga/public-release-registry';
 
 export const dynamic = 'force-dynamic';
 
-const VALID_CATEGORIES = new Set<SagaDocument['category']>([
-  'worldbuilding',
-  'characters',
-  'legends',
-  'reference',
-]);
-
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ category: string }> },
-) {
-  try {
-    const { category } = await params;
-
-    if (!VALID_CATEGORIES.has(category as SagaDocument['category'])) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: {
-            code: 'INVALID_INPUT',
-            message: `Invalid category "${category}". Valid: ${[...VALID_CATEGORIES].join(', ')}`,
-          },
-          meta: { timestamp: new Date().toISOString() },
-        },
-        { status: 400 },
-      );
-    }
-
-    const cat = category as SagaDocument['category'];
-    const { searchParams } = new URL(request.url);
-    const slug = searchParams.get('slug');
-
-    // Single document mode
-    if (slug) {
-      const doc = await getSagaDocument(cat, slug);
-
-      if (!doc) {
-        return NextResponse.json(
-          {
-            success: false,
-            error: { code: 'NOT_FOUND', message: `Document "${slug}" not found in ${category}` },
-            meta: { timestamp: new Date().toISOString() },
-          },
-          { status: 404 },
-        );
-      }
-
-      return NextResponse.json({
-        success: true,
-        data: { document: doc },
-        meta: { timestamp: new Date().toISOString() },
-      });
-    }
-
-    // List mode
-    const documents = await getSagaDocuments(cat);
-
-    return NextResponse.json({
-      success: true,
-      data: { documents, total: documents.length },
-      meta: { timestamp: new Date().toISOString() },
-    });
-  } catch (error) {
-    console.error('[saga/docs/category GET] Error:', error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: { code: 'INTERNAL_ERROR', message: 'Failed to load documents' },
-        meta: { timestamp: new Date().toISOString() },
-      },
-      { status: 500 },
-    );
-  }
+export async function GET() {
+  return NextResponse.json(notPublicPayload('document'), { status: 404 });
 }
