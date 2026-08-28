@@ -71,33 +71,33 @@ const STATS = [
   { value: String(PUBLIC_REPO_SUMMARY.active), label: "Active Repos" },
   { value: String(PUBLIC_REPO_SUMMARY.public), label: "Public on GitHub" },
   { value: String(PUBLIC_REPO_SUMMARY.unresolved), label: "Needs Verification" },
-  { value: "80+", label: "Agent Skills" },
+  { value: "Per repo", label: "Licenses" },
 ];
 
 const LAYERS = [
   {
-    title: "arcanea.ai",
-    subtitle: "The Product",
+    title: "Arcanea Universe",
+    subtitle: "Protected Story IP",
     accent: "var(--arc-brand-atlantean-teal)",
-    description: "Next.js 16, React 19, Vercel. The creative surface where users chat, imagine, build worlds, and publish.",
-    stats: ["181 pages", "12 AI models", "13 configured Luminors", "6 product layers"],
-    features: ["Chat & Imagine", "Studio & Worlds", "Gallery & Feed", "Academy & Library"],
+    description: "The story world: books, Guardians, Godbeasts, music, visual identity, adaptations, and released canon.",
+    stats: ["All Rights Reserved canon", "release-gated continuity", "rights registry", "ARC-REL identifiers"],
+    features: ["Arcanea Press", "Arcanea Studios", "Arcanea Records", "Arcanea Interactive"],
   },
   {
-    title: "Intelligence Layer",
-    subtitle: "The Brain",
+    title: "Arcanea Connector",
+    subtitle: "Creator Product",
     accent: "var(--arc-brand-cosmic-blue)",
-    description: "Multi-model orchestration, persistent memory, agent coordination, and repo-level context.",
-    stats: ["SIS substrate", "MCP adapters", "release-triggered sync", "manual harness sync"],
-    features: ["starlight-intelligence-system", "starlight", "oh-my-arcanea", "arcanea-orchestrator"],
+    description: "A rights-aware creator layer for developing worlds, coordinating specialist workflows, and compiling release evidence.",
+    stats: ["creator-owned namespaces", "private by default", "provider-neutral adapters", "release receipts"],
+    features: ["World Graph", "Canon Validator", "Rights Manifest", "Export Bundle"],
   },
   {
-    title: "Open Source",
-    subtitle: "The Ecosystem",
+    title: "Starlight",
+    subtitle: "Technical Substrate",
     accent: "var(--arc-brand-arcanean-gold)",
-    description: "The public repos are forkable. Private production and unresolved historical entries are labeled instead of linked.",
+    description: "Reusable infrastructure beneath Arcanea. Components may be public, private, open-source, or source-available; each repository license controls.",
     stats: [`${PUBLIC_REPO_SUMMARY.public} public repos`, `${PUBLIC_REPO_SUMMARY.private} private repo`, `${PUBLIC_REPO_SUMMARY.unresolved} unresolved`, `${PUBLIC_REPO_SUMMARY.upstream} upstream dependency`],
-    features: ["arcanea", "oh-my-arcanea", "arcanea-code", "arcanea-vault"],
+    features: ["schemas and validators", "orchestration adapters", "provenance contracts", "deployment infrastructure"],
   },
 ];
 
@@ -245,7 +245,7 @@ export default function EcosystemHubPage() {
           <div className="mb-10">
             <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-2">Architecture</p>
             <h2 id="arch-heading" className="text-2xl sm:text-3xl font-display font-bold text-white">The Three-Layer Stack</h2>
-            <p className="text-white/40 text-sm mt-1">Product, intelligence, and open source — each layer powers the next.</p>
+            <p className="text-white/40 text-sm mt-1">Protected universe, creator product, and technical substrate — connected by explicit rights boundaries.</p>
           </div>
 
           <LayerCards layers={LAYERS} />
@@ -257,7 +257,7 @@ export default function EcosystemHubPage() {
         {/* ── Repository Map ───────────────────────────────────────────── */}
         <section className="mb-20" aria-labelledby="repos-heading">
           <div className="mb-10">
-            <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-2">Open Source</p>
+            <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-2">Public Components</p>
             <h2 id="repos-heading" className="text-2xl sm:text-3xl font-display font-bold text-white">Repository Map</h2>
             <p className="text-white/40 text-sm mt-1 max-w-xl">
               Registry-derived map from <code className="font-mono text-white/45">.arcanea/config/repos.json</code>. Public links resolve; private and unresolved repos are labeled.
@@ -381,7 +381,7 @@ export default function EcosystemHubPage() {
               </h2>
 
               <p className="text-white/40 text-sm mb-8 max-w-md mx-auto">
-                Install the Arcanea harness from the public framework repo. Skills and agents are evolving; the registry marks what is active, beta, or unresolved.
+                Use only components whose repository, license, version, and evidence state are explicit. Public code never grants Arcanea canon or trademark rights.
               </p>
 
               {/* Install command */}
