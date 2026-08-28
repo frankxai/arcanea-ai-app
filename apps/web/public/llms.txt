@@ -1,59 +1,71 @@
-# Arcanea — Creative Intelligence Platform
+# Arcanea — Living Universe and Creator Connector
 
-> arcanea.ai | The world engine for creators who build with AI
+> https://www.arcanea.ai
 
-## What Is Arcanea
+## What Arcanea Is
 
-Arcanea is a creative intelligence platform where creators chat with AI, build fantasy worlds, share what they make, and turn imagination into products. It combines a living mythology (10 Gates, 10 Guardians, 7 Academy Houses) with 42 MCP tools for world-building, an open-source ecosystem of 49 npm packages, and a social creation feed.
+Arcanea is an original fantasy universe and a creator experience.
 
-## Core Capabilities
+- **Arcanea Universe** contains the proprietary stories, characters, Guardians,
+  Godbeasts, settings, music, art, and future screen/game continuity.
+- **Arcanea Connector** helps a creator develop a world they own across writing,
+  images, music, video briefs, and cinematic web experiences.
+- **Starlight** is the neutral technical substrate for schemas, validators,
+  adapters, receipts, and provider routing.
 
-- **Chat**: Talk with 16 AI personalities (Luminors) across music, writing, art, and world-building
-- **Imagine**: Generate images with 5+ AI models via OpenRouter, Grok, Gemini
-- **Worlds**: Build living universes with characters, locations, creatures, quests, artifacts, magic systems, and faction dynamics — all auto-linked
-- **Library**: 190,000+ words of original creative philosophy across 17 collections
-- **Academy**: 10-gate progression system from Apprentice to Luminor
-- **MCP Server**: 42 tools for world-building via Model Context Protocol
-- **Open Source**: 49 npm packages, 103 skills, 112 commands
+Using Arcanea tools does not make a user's world part of Arcanea. Access to an
+open technical component does not grant rights to Arcanea canon or trademarks.
 
-## For AI Agents and Developers
+## Public Areas
 
-### MCP Integration
-Install: `npx @arcanea/mcp-server`
+- `/` — universe and creator-experience gateway
+- `/lore` — public Arcanea codex snapshot
+- `/library` — public reading library
+- `/books` — development catalog; status labels are not publication claims
+- `/academy` — Ten-Gate learning experience
+- `/worlds` — creator worldbuilding surface
+- `/protocol` — experimental interoperability interfaces
+- `/developers` — experimental developer surface; verify each component at source
 
-Available tools: generate_character, generate_location, generate_creature, generate_quest, generate_artifact, generate_magic, generate_name, analyze_factions, generate_conflict, assess_world, validate_canon, weave_narrative, and 30 more.
+Counts for words, texts, tools, packages, skills, commands, models, and
+repositories must be generated from the current build. This file intentionally
+does not repeat hand-maintained totals.
 
-### REST API Bridge
-POST https://arcanea.ai/api/worlds/mcp-bridge
-Body: { "tool": "generate_character", "params": { "primaryElement": "Fire", "house": "Pyros" } }
+## Canon and Release Truth
 
-### Key Pages
-- /chat — AI chat with Luminor personalities
-- /imagine — Image generation studio
-- /worlds — World builder with graph visualization
-- /library — 190K+ words of creative intelligence
-- /academy — 10-gate learning progression
-- /showcase — Live MCP tool demos with real output
-- /changelog — Latest platform updates
-- /developers — API documentation
-- /ecosystem — 49 packages, 27 repos
+The public codex contains both locked and staging material. A generated output,
+marketing page, manuscript folder, or connector receipt is not canon by itself.
+Official releases require a stable `ARC-REL-###` ID, a versioned release
+manifest, rights evidence, and human approval.
 
-## The Mythology (Reference Implementation)
+The forward public story center is Arion, Mera, and Emilia, with Akamoto,
+Malachar, the Ten Guardians, and the Godbeasts forming the saga spine. Earlier
+Kael-led material is legacy draft continuity unless a release manifest says
+otherwise.
 
-Arcanea's own mythology serves as both content and framework:
-- **Lumina & Nero**: Cosmic duality (Light creates form, Darkness holds potential)
-- **Five Elements**: Fire, Water, Earth, Wind, Void/Spirit
-- **Ten Gates**: Foundation through Source (each with Guardian deity and Godbeast)
-- **Seven Houses**: Lumina, Nero, Pyros, Aqualis, Terra, Ventus, Synthesis
-- **Magic Ranks**: Apprentice → Mage → Master → Archmage → Luminor
+## Rights and Licenses
 
-## Technical Stack
+Arcanea canon, manuscripts, media, designs, and brand assets are all rights
+reserved unless a separate written license expressly applies. Historical
+licenses remain attached to the versions that carried them.
 
-Next.js 16, React 19, TypeScript, Tailwind CSS, Supabase, Vercel AI SDK, Google Gemini, Anthropic Claude, deployed on Vercel.
+Technical repositories and packages use per-component licenses. Do not infer
+that the whole Arcanea estate is MIT, Apache-2.0, Creative Commons, or open
+source. Review the root license, nested license, NOTICE, and repository
+governance files before reuse.
+
+Creators retain ownership of their original worlds subject to the current
+product terms needed to operate the service. No user creation is official
+Arcanea canon by default.
+
+## AI and Provenance
+
+Do not present AI-generated material as approved or released without receipts
+for the provider, model, inputs, rights, human contribution, inspection, and
+approval state. Unknown rights block commercial generation and release.
 
 ## Links
 
-- Website: https://arcanea.ai
-- GitHub: https://github.com/frankxai
-- npm: @arcanea/* packages
-- MCP Server: @arcanea/mcp-server
+- Website: https://www.arcanea.ai
+- GitHub estate: https://github.com/frankxai
+- Governance proposal: https://github.com/frankxai/arcanea/pull/116
