@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
-import { FACTS } from "@/lib/facts";
 import type React from "react";
 import type { IconProps } from "@/lib/phosphor-icons";
 import {
@@ -70,45 +68,45 @@ export interface MagicRank {
 
 export const VISION_CARDS: VisionCard[] = [
   {
-    icon: ChatCircleDots,
-    title: "Chat / Imagine",
+    icon: Sparkle,
+    title: "Arcanea Stories",
     description:
-      "The creation surface. Talk to AI, generate images, write stories, compose music. Not just a chatbot — creation powered by the framework underneath.",
+      "The protected universe: books, Guardians, Godbeasts, music, art, and governed adaptations. Development material is not released canon by default.",
+    color: "[var(--arc-brand-arcanean-gold)]",
+  },
+  {
+    icon: ChatCircleDots,
+    title: "Arcanea Connector",
+    description:
+      "A rights-aware creator product for developing original worlds across writing, image, music, video, web, and release workflows.",
     color: "[var(--arc-brand-atlantean-teal)]",
   },
   {
     icon: Globe,
-    title: "Worlds",
+    title: "Creator Worlds",
     description:
-      "The framework for building YOUR fantasy universe. Gates for progression, Archetypes for characters, Elements for systems. Arcanea's own world is the first in the multiverse.",
-    color: "[var(--arc-brand-arcanean-gold)]",
-  },
-  {
-    icon: Radio,
-    title: "Feed",
-    description:
-      "The social layer. See what other creators build, get inspired, share your worlds, agents, art, music. Discover new worlds in the multiverse.",
+      "Private, creator-owned namespaces with explicit canon, collaboration, rights, and export states. Using the Connector never places a world inside Arcanea.",
     color: "[var(--arc-brand-cosmic-blue)]",
   },
   {
-    icon: Code,
-    title: "OSS",
+    icon: Radio,
+    title: "Production Studio",
     description:
-      `The open ecosystem. ${PUBLIC_REPO_SUMMARY.public} public repos, ${PUBLIC_REPO_SUMMARY.packages} npm packages, ${FACTS.skills} creator skills, overlays for every coding agent. Fork it, extend it, build on it.`,
-    color: "draconic-crimson",
-  },
-  {
-    icon: Users,
-    title: "Community",
-    description:
-      "Not just users — co-creators. Contribute lore, agents, skills, code, art. Inner circle earns governance. Eventually: shared ownership.",
+      "Story, visual, audio, cinematic, and web artifacts move through evidence gates before they are described as available or released.",
     color: "[var(--arc-brand-atlantean-teal)]",
   },
   {
-    icon: GraduationCap,
-    title: "Academy",
+    icon: Code,
+    title: "Published Components",
     description:
-      "Learn world-building, prompt craft, agent design, the Arcanean Code. 190K+ words of reference material. Learn by building.",
+      "Starlight schemas, validators, adapters, and other technical components are governed repository by repository. Public code never grants Arcanea canon rights.",
+    color: "draconic-crimson",
+  },
+  {
+    icon: GraduationCap,
+    title: "Community & Academy",
+    description:
+      "Learn worldbuilding and share original work without a default claim to Arcanea canon, platform governance, ownership, or endorsement.",
     color: "[var(--arc-brand-arcanean-gold)]",
   },
 ];
@@ -248,11 +246,11 @@ export const GUARDIANS: Guardian[] = [
     border: "border-amber-400/20",
   },
   {
-    name: "Shinkami",
+    name: "The Tenth Place",
     gate: "Source",
-    frequency: "Where the dreamer and the dream become one",
-    domain: "Meta-consciousness",
-    element: "All",
+    frequency: "Withheld while the oldest record is reconciled",
+    domain: "Canon conflict under review",
+    element: "Unresolved",
     color: "from-gold-bright/30 to-amber-700/20",
     accent: "text-gold-bright",
     border: "border-gold-bright/30",
