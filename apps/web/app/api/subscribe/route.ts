@@ -5,6 +5,13 @@ import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limit
 
 const SUBSCRIBE_RATE_LIMIT = { maxRequests: 3, windowMs: 60_000 };
 
+// A green response must mean the email is stored; placeholder config gets the
+// no-op mock client in lib/supabase/server.ts, which resolves as success.
+function supabaseConfigured(): boolean {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
+  return url.length > 0 && !url.includes('example.supabase.co');
+}
+
 export async function POST(req: NextRequest) {
   const rl = checkRateLimit(getClientIdentifier(req), SUBSCRIBE_RATE_LIMIT);
   if (!rl.allowed) {
@@ -18,6 +25,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { success: false, error: 'Valid email required' },
         { status: 400 },
+      );
+    }
+
+    if (!supabaseConfigured()) {
+      console.error('[subscribe] Supabase not configured; refusing capture');
+      return NextResponse.json(
+        { success: false, error: 'Subscriptions are temporarily unavailable. Please try again shortly.' },
+        { status: 503 },
       );
     }
 
@@ -36,9 +51,11 @@ export async function POST(req: NextRequest) {
       );
 
     if (error) {
-      // If the table doesn't exist yet, still respond success
-      // (the email was acknowledged — table can be created later)
-      console.warn('[subscribe] Supabase error (non-fatal):', error.message);
+      console.error('[subscribe] Supabase upsert failed:', error.message);
+      return NextResponse.json(
+        { success: false, error: 'Subscriptions are temporarily unavailable. Please try again shortly.' },
+        { status: 503 },
+      );
     }
 
     return NextResponse.json({ success: true });

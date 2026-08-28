@@ -11,9 +11,54 @@ const PAGES = [
     internalPath: '/',
   },
   {
+    title: 'Chat',
+    description: 'BYOK AI chat — your key stays in your browser',
+    internalPath: '/chat',
+  },
+  {
+    title: 'Worlds',
+    description: 'Build and explore living fantasy worlds',
+    internalPath: '/worlds',
+  },
+  {
+    title: 'Library',
+    description: 'The Arcanea library of living texts',
+    internalPath: '/library',
+  },
+  {
     title: 'Books',
     description: 'Living books that grow with their readers',
     internalPath: '/books',
+  },
+  {
+    title: 'Gallery',
+    description: 'Curated Arcanea art and world imagery',
+    internalPath: '/gallery',
+  },
+  {
+    title: 'Academy',
+    description: 'Learn world-building and creative craft',
+    internalPath: '/academy',
+  },
+  {
+    title: 'Agents',
+    description: 'The Arcanea agent roster',
+    internalPath: '/agents',
+  },
+  {
+    title: 'Luminors',
+    description: 'The Luminor guides of Arcanea',
+    internalPath: '/luminors',
+  },
+  {
+    title: 'MCP',
+    description: 'Connect any AI to Arcanea via the Model Context Protocol',
+    internalPath: '/mcp',
+  },
+  {
+    title: 'Pricing',
+    description: 'Plans and the Founding Circle',
+    internalPath: '/pricing',
   },
   {
     title: 'About',
@@ -44,7 +89,14 @@ export function GET() {
       },
     ],
   });
-  return new Response(manifest, {
+  // llmstxt.org convention: the index links the full-detail file.
+  const fullReference = [
+    '',
+    '## Full reference',
+    `- [Complete MCP tool schemas](${buildLocalizedUrl(routing, '/llms-full.txt', locale)}): every Arcanea MCP tool with parameters`,
+    '',
+  ].join('\n');
+  return new Response(manifest + fullReference, {
     headers: { 'content-type': 'text/plain; charset=utf-8' },
   });
 }
