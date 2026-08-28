@@ -5,12 +5,12 @@ import { AboutContent } from "./about-content";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Arcanea is a creative multiverse — chat with AI, build fantasy worlds, share what you make, and turn imagination into products. Six layers, one ecosystem.",
+    "Arcanea is a protected living universe and a creator platform for building worlds you own.",
   openGraph: {
-    title: "About Arcanea — The Creative Multiverse",
+    title: "About Arcanea — Universe and Creator Platform",
     description:
-      "Chat with AI. Build fantasy worlds. Share what you make. Turn imagination into products. Six layers, one creative multiverse.",
-    images: [{ url: '/guardians/v3/shinkami-hero-v3.webp', width: 1024, height: 1024, alt: 'Shinkami — Guardian of the Source Gate' }],
+      "Enter the Arcanea universe, or use the Arcanea Connector to build a world you own.",
+    images: [{ url: '/guardians/v3/shinkami-hero-v3.webp', width: 1024, height: 1024, alt: 'Shinkami of Arcanea' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -23,14 +23,14 @@ const jsonLd = {
   '@type': 'AboutPage',
   name: 'About Arcanea',
   description:
-    'A creative multiverse where creators chat with AI, build fantasy worlds, contribute to an open-source civilization, and turn imagination into products.',
+    'A protected story universe and a creator platform for building rights-aware worlds with AI.',
   url: 'https://arcanea.ai/about',
   mainEntity: {
     '@type': 'Organization',
     name: 'Arcanea',
     url: 'https://arcanea.ai',
     description:
-      'Creative multiverse platform. Six layers: Chat, Worlds, Feed, OSS, Community, Academy. 190K+ words of creative philosophy. Open source.',
+      'Arcanea separates its protected canon from the Arcanea Connector creator layer and the Starlight technical substrate. Creator worlds remain creator-owned.',
   },
 };
 
