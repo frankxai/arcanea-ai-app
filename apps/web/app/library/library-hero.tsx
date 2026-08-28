@@ -18,8 +18,8 @@ export function LibraryHero({ collectionsCount, textsCount }: LibraryHeroProps) 
   const stats = [
     { value: String(collectionsCount), label: "Collections", color: "var(--arc-brand-atlantean-teal)" },
     { value: String(textsCount), label: "Texts", color: "var(--arc-brand-atlantean-teal)" },
-    { value: "190K+", label: "Words", color: "var(--arc-brand-arcanean-gold)" },
-    { value: "Free", label: "Always open", color: "var(--arc-void)" },
+    { value: "Live", label: "Inventory", color: "var(--arc-brand-arcanean-gold)" },
+    { value: "Governed", label: "Status aware", color: "var(--arc-void)" },
   ];
 
   return (
@@ -88,8 +88,9 @@ export function LibraryHero({ collectionsCount, textsCount }: LibraryHeroProps) 
             transition={{ duration: 0.6, delay: 0.13 }}
             className="text-base md:text-xl text-white/45 max-w-2xl mx-auto leading-relaxed mb-12 font-body"
           >
-            190,000+ words of original philosophy, poetry, legend, and practice
-            for the creative soul. Laws. Meditations. Parables. Equipment for living.
+            Lore, philosophy, poetry, legend, and creative practice from a living
+            inventory. Published canon, development material, reference, and archive
+            are distinct states—not one undifferentiated claim.
           </m.p>
 
           {/* Stat row */}
