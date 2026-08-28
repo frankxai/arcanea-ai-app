@@ -1,11 +1,12 @@
 name: Quality Gate
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
-    types: [opened, synchronize, reopened, ready_for_review]
+    # Heavy E2E/Lighthouse/security suite runs once at the review boundary.
+    # Required CI continues to validate every review-ready head update.
+    types: [opened, ready_for_review]
+  workflow_dispatch:
 
 concurrency:
   group: quality-${{ github.ref }}
@@ -23,8 +24,8 @@ jobs:
   # ============================================
   install:
     name: Install
-    # Cost gate: skip on draft PRs — agents iterate free; gate runs on
-    # ready_for_review and on every push to main.
+    # Cost gate: skip on draft PRs; gate runs when a non-draft PR opens or a
+    # draft transitions to ready. Use workflow_dispatch for an intentional rerun.
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 5

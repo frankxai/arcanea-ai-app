@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     template: "%s | Arcanea",
   },
   description:
-    "A creative multiverse: chat with AI, build fantasy worlds, share what you make, and turn imagination into products. 190K+ words of creative philosophy. Free to start.",
+    "A creative multiverse: chat with AI, build fantasy worlds, share what you make, and turn imagination into products. Free to start.",
   keywords: [
     "AI",
     "creativity",
@@ -159,12 +159,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 "url": "https://arcanea.ai"
               },
               "featureList": [
-                "42 MCP tools for world-building",
-                "13 configured AI specialists (Luminors)",
-                "Image generation with 5+ models",
-                "190K+ words of creative philosophy",
-                "10-gate progression system",
-                "49 open-source npm packages",
                 "Living world builder with auto-linking",
                 "Quest and faction generation"
               ]

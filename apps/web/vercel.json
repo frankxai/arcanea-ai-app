@@ -4,6 +4,7 @@
   "installCommand": "cd ../.. && pnpm install --no-frozen-lockfile",
   "outputDirectory": ".next",
   "framework": "nextjs",
+  "ignoreCommand": "bash scripts/vercel-ignore-build.sh",
   "regions": [
     "iad1"
   ],
