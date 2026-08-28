@@ -15,90 +15,90 @@ export const metadata: Metadata = {
 
 const FAQ_CATEGORIES = [
   {
-    name: "Getting Started",
-    icon: "🚀",
+    name: "Arcanea",
+    icon: "✦",
     questions: [
       {
         q: "What is Arcanea?",
-        a: "Arcanea is a creative multiverse — a living ecosystem where you chat with AI, build fantasy worlds, share what you make, and turn imagination into products. It includes creative partners across development, design, writing, and research, a Library of 190K+ words of creative philosophy, an Academy for world-building, and a Studio for generating art, music, and code.",
+        a: "Arcanea is two connected experiences with a firm rights boundary: a protected story universe, and the Arcanea Connector for developing creator-owned worlds with AI. Starlight is the separate technical substrate beneath the creator tools.",
       },
       {
-        q: "How do I get started?",
-        a: "Simply create a free account at arcanea.ai. You'll immediately have access to 3 companions and 100 messages per month. From there, you can explore the Library, start Academy training, or upgrade for access to the full creative team.",
+        q: "Is everything on Arcanea canon?",
+        a: "No. Published canon, development canon, reference material, drafts, archives, and generated assets are different states. A work becomes released Arcanea canon only after its release record passes story, editorial, rights, production, and publication gates.",
       },
       {
-        q: "How are Arcanea's companions different from regular AI?",
-        a: "Arcanea is not just a chat interface — it is a creative framework. The companions are domain-specialized creative partners, but they are one layer of a six-layer ecosystem that also includes world-building tools, a social feed, an open-source foundation, a learning Academy, and a community of co-creators.",
+        q: "Who are the current story leads?",
+        a: "ARC-REL-001 is being developed around Arion, Mera, and Emilia, with the Ten Guardians and their Godbeasts as the saga spine. Kael remains legacy development ancestry rather than the public flagship.",
       },
       {
-        q: "What are the Seven Wisdoms?",
-        a: "The Seven Wisdoms are practical mental models for creative work: Sophron (Structure), Kardia (Heart), Valora (Courage), Eudaira (Play), Orakis (Vision), Poiesis (Creation), and Enduran (Endurance). Every companion applies these lenses when approaching your work, giving you proven frameworks for any creative challenge.",
-      },
-    ],
-  },
-  {
-    name: "Companions",
-    icon: "🌟",
-    questions: [
-      {
-        q: "How many companions are there?",
-        a: "There are 13 configured companions organized across five teams: Orchestrator, Development, Creative, Writing, and Research. Each has a distinct philosophy, expertise, and conversational style. You can explore them all on the Companions page.",
-      },
-      {
-        q: "Which companion should I use?",
-        a: "It depends on your creative challenge. Need to architect a system? Start with System Architect. Writing a story? Try Narrative Architect. Need research? Deep Analyst or Knowledge Keeper. You can also chat with multiple companions and let them collaborate on complex projects.",
-      },
-      {
-        q: "Can companions work together?",
-        a: "Yes. One of Arcanea's most powerful features is multi-companion collaboration. You can bring in different domain experts for different aspects of a project, or have them review and enhance each other's work. The system is designed for this kind of creative collaboration.",
-      },
-      {
-        q: "How do companions learn and improve?",
-        a: "Companions improve through the SONA learning system, which records trajectories of successful creative sessions and identifies patterns that lead to better outcomes. They also learn from your feedback — every interaction helps them better understand your creative style and preferences.",
+        q: "Is Dragonborne a released book?",
+        a: "No. Dragonborne is the greenlit creative lane and an internal descriptor pending professional title clearance. The flagship working title is The Unchosen Bond, in The Godbeast Covenant saga. It is in development, not yet a released novel.",
       },
     ],
   },
   {
-    name: "Pricing & Plans",
-    icon: "💎",
+    name: "Creator Worlds",
+    icon: "🌐",
     questions: [
       {
-        q: "What's included in the free plan?",
-        a: "The Spark (free) plan includes 3 creative companions, 100 messages per month, full Library access, and Gallery browsing. It's everything you need to explore the platform and see if Arcanea fits your creative workflow.",
+        q: "Who owns a world I build with the Arcanea Connector?",
+        a: "You retain your rights in the original world and content you create, subject to the service terms and any third-party model or asset terms you choose. Using the Connector does not place your world inside Arcanea canon.",
       },
       {
-        q: "What do the paid plans include?",
-        a: "The Creator plan ($19/month) unlocks all creative partners with 5,000 messages per month, full Studio creation tools, complete Academy access, and custom prompt templates. The Studio plan ($49/month) adds API access, priority support, custom partner training, and team collaboration features.",
+        q: "Can I publish inside Arcanea?",
+        a: "Not by default. Arcanea canon is curated and protected. Creator projects use separate namespaces and cannot use Arcanea characters, lore, visual identity, music, or trademarks unless Arcanea grants a specific written license.",
       },
       {
-        q: "Can I switch plans later?",
-        a: "Yes. You can upgrade or downgrade at any time. Changes take effect immediately, and we prorate any payments. Your conversations and progress are always preserved.",
+        q: "Are generated assets public automatically?",
+        a: "No. New work should begin private and in draft status. Publication requires an explicit action, a rights and provenance record, and the release checks appropriate to the medium.",
       },
       {
-        q: "Do you offer team or enterprise plans?",
-        a: "Yes. The enterprise plan ($99/month) includes team collaboration, custom companion deployment, dedicated support, SLA guarantees, custom integrations, and white-label options. Contact us for custom solutions.",
+        q: "Can the Connector help with images, music, video, books, and cinematic sites?",
+        a: "That is the intended product direction. Individual capabilities may be preview, staged, or unavailable. The product interface and release records are authoritative; roadmap language is not a promise of current availability.",
       },
     ],
   },
   {
-    name: "Technical",
-    icon: "⚙️",
+    name: "Product & Access",
+    icon: "◇",
     questions: [
       {
-        q: "What technologies power Arcanea?",
-        a: "Arcanea is built on a modern stack: Next.js 16 for the frontend, TypeScript throughout, Supabase for data, and Vercel AI SDK for AI integration. The platform uses advanced consensus algorithms, vector search, and reinforcement learning for the intelligence layer.",
+        q: "How many creative specialists are configured?",
+        a: "The current product configuration tracks 13 specialist roles. A configured role is not the same as a guaranteed model, autonomous agent, or generally available feature.",
+      },
+      {
+        q: "What is included in each plan?",
+        a: "Use the current pricing and checkout surfaces as the source of truth. Entitlements, limits, model availability, and prices can change; this FAQ intentionally does not duplicate them.",
+      },
+      {
+        q: "Is there a stable public API or MCP server?",
+        a: "The Developers and Protocol pages describe preview interfaces and evidence states. Treat an interface as stable only when its versioned documentation and release status explicitly say so.",
+      },
+      {
+        q: "Can I self-host Arcanea?",
+        a: "Do not assume so. Public repositories and packages are governed component by component. Their licenses do not include the hosted Arcanea product, protected canon, private production systems, or Arcanea trademarks.",
+      },
+    ],
+  },
+  {
+    name: "Rights, AI & Security",
+    icon: "⚖",
+    questions: [
+      {
+        q: "Is Arcanea open source?",
+        a: "That label is too broad. Some technical components may use open-source licenses; other repositories are source-available, private, archived, or unresolved. Arcanea canon and brand assets are All Rights Reserved. Always read the license in the specific repository and the content-rights notice.",
+      },
+      {
+        q: "Does AI output automatically receive copyright protection?",
+        a: "No universal promise can be made. Protection depends on jurisdiction and meaningful human authorship. Keep human creative decisions, edits, source records, permissions, and model receipts, and obtain legal advice for important releases.",
       },
       {
         q: "Is my data secure?",
-        a: "Security is paramount. All conversations are encrypted at rest and in transit. We never use your conversations to train public models. Your creative work remains yours, and you can delete it at any time.",
+        a: "Use the current Privacy, Terms, and security documentation as the governing statements. Never place passwords, API keys, unreleased deal terms, or other secrets in a creative prompt.",
       },
       {
-        q: "Can I use Arcanea via API?",
-        a: "Yes. Studio and Enterprise plans include API access. You can integrate Arcanea's companions into your own applications, workflows, and tools. See the Developers page for details.",
-      },
-      {
-        q: "Do you offer self-hosting?",
-        a: "Arcanea is available as a CLI tool that you can run locally. Enterprise customers can also explore custom deployment options. Contact us for details.",
+        q: "Where do I report a rights or security issue?",
+        a: "Use the contact and policy links published on arcanea.ai. A claim is not considered resolved until it has an owner, evidence, and a recorded disposition.",
       },
     ],
   },
