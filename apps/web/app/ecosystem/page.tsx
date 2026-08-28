@@ -5,7 +5,6 @@ import { LiquidGlass } from "@/components/motion/liquid-glass";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal } from "@/components/motion/reveal";
 import { LayerCards } from "./layer-cards";
-import { EcosystemViews } from "./ecosystem-views";
 import {
   FloatingOrbs,
   GridTexture,
@@ -68,9 +67,9 @@ function IconTerminal({ className = "w-4 h-4" }: { className?: string }) {
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const STATS = [
-  { value: String(PUBLIC_REPO_SUMMARY.active), label: "Active Repos" },
-  { value: String(PUBLIC_REPO_SUMMARY.public), label: "Public on GitHub" },
-  { value: String(PUBLIC_REPO_SUMMARY.unresolved), label: "Needs Verification" },
+  { value: String(PUBLIC_REPO_SUMMARY.active), label: "Tracked active entries" },
+  { value: String(PUBLIC_REPO_SUMMARY.public), label: "Linked public entries" },
+  { value: String(PUBLIC_REPO_SUMMARY.unresolved), label: "Unresolved in snapshot" },
   { value: "Per repo", label: "Licenses" },
 ];
 
@@ -182,15 +181,16 @@ export default function EcosystemHubPage() {
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight tracking-tight">
-                <SplitText as="span" text={`${PUBLIC_REPO_SUMMARY.public} public repos.`} className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] bg-clip-text text-transparent" delay={0.1} stagger={0.04} />
+                <SplitText as="span" text="Repository truth." className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-atlantean-teal)] bg-clip-text text-transparent" delay={0.1} stagger={0.04} />
                 {" "}
-                <SplitText as="span" text="One ecosystem." className="text-white" delay={0.5} stagger={0.04} />
+                <SplitText as="span" text="Governed by evidence." className="text-white" delay={0.5} stagger={0.04} />
               </h1>
 
               <p className="text-lg text-white/50 leading-relaxed max-w-2xl mb-10">
-                {PUBLIC_REPO_SUMMARY.active} active Arcanea repos are tracked in the registry.
-                {` ${PUBLIC_REPO_SUMMARY.public}`} are public on GitHub today, {PUBLIC_REPO_SUMMARY.private} is private,
-                and {PUBLIC_REPO_SUMMARY.unresolved} historical entries need verification before we link them.
+                This page shows the current operational registry snapshot, not
+                the complete Arcanea public estate and not a license grant.
+                Visibility, release status, and rights are separate; the license
+                and evidence in each repository control.
               </p>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
@@ -224,17 +224,15 @@ export default function EcosystemHubPage() {
       {/* ── Divider ──────────────────────────────────────────────────── */}
       <div className="mb-16 h-px bg-gradient-to-r from-transparent via-[var(--arc-brand-atlantean-teal)]/20 to-transparent" />
 
-      {/* ── Connected Map (interactive views) ────────────────────────── */}
+      {/* Legacy graph withheld until it is regenerated from current governance. */}
       <section className="mb-20" aria-labelledby="map-heading">
-        <div className="mb-8">
-          <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-2">The Connected Map</p>
-          <h2 id="map-heading" className="text-2xl sm:text-3xl font-display font-bold text-white">Explore the ecosystem</h2>
-          <p className="text-white/40 text-sm mt-1 max-w-2xl">
-            Three views into the same 35-node graph: <span className="text-white/60">Layered</span> (substrate → product → surface), <span className="text-white/60">Ten Gates</span> (canonical mythology arrangement), and <span className="text-white/60">Arc ⊕ Nea</span> (sovereign / specialization hemispheres). Filter by status, hemisphere, or gate. Click any node to see what it consumes, who consumes it, and where to reach it.
+        <div className="rounded-2xl border border-[var(--arc-brand-arcanean-gold)]/15 bg-[var(--arc-brand-arcanean-gold)]/[0.03] p-6">
+          <p className="text-xs font-mono text-[var(--arc-brand-arcanean-gold)]/60 uppercase tracking-widest mb-2">Inventory state</p>
+          <h2 id="map-heading" className="text-2xl font-display font-bold text-white">The legacy connected graph is under regeneration</h2>
+          <p className="text-white/50 text-sm mt-3 max-w-3xl leading-relaxed">
+            The previous 35-node view mixed product status, mythology, book drafts, and repository state from an older snapshot. It is hidden until generated from the canon, rights, release, and public-estate registries. The architecture and repository sections below use the narrower operational registry and explicit evidence labels.
           </p>
         </div>
-
-        <EcosystemViews />
       </section>
 
       {/* ── Divider ──────────────────────────────────────────────────── */}
@@ -260,7 +258,7 @@ export default function EcosystemHubPage() {
             <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-2">Public Components</p>
             <h2 id="repos-heading" className="text-2xl sm:text-3xl font-display font-bold text-white">Repository Map</h2>
             <p className="text-white/40 text-sm mt-1 max-w-xl">
-              Registry-derived map from <code className="font-mono text-white/45">.arcanea/config/repos.json</code>. Public links resolve; private and unresolved repos are labeled.
+              Operational snapshot derived from <code className="font-mono text-white/45">.arcanea/config/repos.json</code>. It is not the complete estate. Public links resolve; private and unresolved entries are labeled.
             </p>
           </div>
 
