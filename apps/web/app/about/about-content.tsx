@@ -305,12 +305,12 @@ function VisionSection() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            Six Layers, One Multiverse
+            One Universe. One Creator Doorway. Clear Rights.
           </h2>
           <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-            All six coexist. None is &ldquo;the real Arcanea.&rdquo;
-            Together they form a creative multiverse where
-            imagination becomes reality.
+            Arcanea&apos;s protected stories, the Arcanea Connector, and the
+            Starlight substrate can reinforce one another without sharing an
+            implied license or canon boundary.
           </p>
         </div>
 
