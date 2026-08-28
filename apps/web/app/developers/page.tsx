@@ -1,362 +1,155 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { FACTS } from "@/lib/facts";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
-import { Icons } from "./developers-icons";
-import {
-  PACKAGES,
-  TOOLS,
-  QUICK_STARTS,
-  CREDITS_ENDPOINTS,
-  MCP_SERVERS,
-  OPEN_SOURCE_REPOS,
-  ARCHITECTURE_LAYERS,
-} from "./developers-data";
 
 export const metadata: Metadata = {
-  title: "Developers — Build on Arcanea",
+  title: "Developers — Arcanea Interfaces Preview",
   description:
-    `Build on the Arcanea platform. Open-source packages, an MCP server with ${FACTS.mcpTools} tools, and comprehensive APIs.`,
+    "Preview interoperable worldbuilding interfaces with explicit licenses, evidence states, and a protected Arcanea canon boundary.",
   openGraph: {
-    title: "Developers — Build on Arcanea",
+    title: "Developers — Arcanea Interfaces Preview",
     description:
-      `Build on the Arcanea platform. Open-source packages, an MCP server with ${FACTS.mcpTools} tools, and comprehensive APIs.`,
+      "Technical interfaces are licensed per component. Arcanea canon and trademarks are not included.",
   },
   alternates: { canonical: "/developers" },
 };
 
+const boundaries = [
+  {
+    title: "Arcanea Universe",
+    status: "Protected IP",
+    body: "Stories, characters, Guardians, Godbeasts, manuscripts, music, art, screen and game continuity. All rights reserved unless a written license says otherwise.",
+  },
+  {
+    title: "Arcanea Connector",
+    status: "Creator experience",
+    body: "Guided worldbuilding across writing, images, music, video briefs, and cinematic web. A creator's original world remains separate from Arcanea.",
+  },
+  {
+    title: "Starlight",
+    status: "Technical substrate",
+    body: "Schemas, validators, adapters, export bundles, provider routing, and receipts. Every component must state its own source and license.",
+  },
+];
+
+const evidence = [
+  ["World Graph", "Preview", "Draft schema and internal implementation evidence"],
+  ["Agent / Connector packet", "Preview", "Provider-neutral task and receipt contract"],
+  ["Rights manifest", "In review", "Governance proposal; counsel review still required"],
+  ["Asset provenance", "Planned", "Contract defined; production implementation pending"],
+  ["Portable export", "In review", "Internal build; public conformance evidence pending"],
+  ["Canon validator", "Preview", "Repository governance audit exists; broader validators pending"],
+];
+
 export default function DevelopersPage() {
   return (
-    <div className="relative min-h-screen">
-      {/* Background */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-cosmic-void" />
-        <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(13,71,161,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
-      </div>
+    <div className="relative min-h-screen bg-[var(--arc-cosmic-void)] text-white">
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-cosmic-mesh opacity-40" />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
-        {/* Hero Section */}
-        <section className="mb-16">
-          <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-12 sm:px-12 sm:py-16">
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/12 via-transparent to-crystal/10 pointer-events-none" />
-            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/8 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-crystal/6 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="relative max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-primary/30 bg-brand-primary/10 mb-6">
-                <Icons.Code />
-                <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
-                  For Developers
-                </span>
-              </div>
-
-              <h1 className="text-fluid-3xl font-display font-bold mb-4">
-                Build on{" "}
-                <span className="block text-gradient-brand">Arcanea</span>
-              </h1>
-
-              <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
-                The Arcanea platform is built on a foundation of intelligent
-                packages. Build creative skills, contribute to our open source
-                packages, and extend the platform with the MCP server.
-              </p>
-
-              <div className="flex flex-wrap gap-4">
-                <a
-                  href="https://github.com/frankxai/arcanea"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
-                >
-                  <Icons.Github />
-                  View on GitHub
-                </a>
-                <Link
-                  href="/developers/api"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
-                >
-                  <Icons.Code />
-                  API Reference
-                  <Icons.ChevronRight />
-                </Link>
-                <Link
-                  href="/skills"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
-                >
-                  <Icons.Sparkles />
-                  Create a Skill
-                  <Icons.ChevronRight />
-                </Link>
-              </div>
-            </div>
+      <main className="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+        <section className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] px-7 py-12 sm:px-12 sm:py-16">
+          <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.32em] text-[var(--arc-brand-atlantean-teal)]">
+            Developer preview
+          </p>
+          <h1 className="max-w-4xl font-display text-4xl font-bold tracking-tight sm:text-6xl">
+            Open interfaces. Protected worlds.
+          </h1>
+          <p className="mt-6 max-w-3xl text-base leading-relaxed text-white/65 sm:text-lg">
+            Arcanea is defining portable interfaces for creator-owned worlds.
+            This page intentionally withholds package, tool, skill, command, model,
+            and install counts until the current build can generate and verify them.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              href="/protocol"
+              className="rounded-xl bg-[var(--arc-brand-atlantean-teal)] px-5 py-3 text-sm font-semibold text-[var(--arc-cosmic-void)]"
+            >
+              Review interface status
+            </Link>
+            <a
+              href="https://github.com/frankxai/arcanea/pull/116"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold text-white/80 hover:border-white/30 hover:text-white"
+            >
+              Review governance proposal
+            </a>
           </div>
         </section>
 
-        {/* Packages */}
-        <section className="mb-16" aria-labelledby="packages-heading">
-          <div className="mb-8">
-            <h2 id="packages-heading" className="text-xs font-mono tracking-[0.35em] uppercase text-crystal mb-2">Intelligence Packages</h2>
-            <h3 className="text-fluid-2xl font-display font-bold">The Foundation</h3>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {PACKAGES.map((pkg) => (
-              <a key={pkg.name} href={pkg.href} target="_blank" rel="noopener noreferrer" className="group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all hover:border-white/[0.12]">
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" style={{ background: `radial-gradient(ellipse at 30% 30%, ${pkg.color}12, transparent 65%)` }} />
-                <div className="relative">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <Icons.Box style={{ color: pkg.color }} />
-                      <span className="font-mono text-sm text-text-primary">{pkg.name}</span>
-                    </div>
-                    <div className="flex items-center gap-1 text-xs text-text-muted">
-                      <Icons.GitBranch />
-                      {pkg.stars}
-                    </div>
-                  </div>
-                  <p className="text-text-secondary text-sm leading-relaxed font-sans mb-4">{pkg.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {pkg.tags.map((tag) => (
-                      <span key={tag} className="text-xs px-2 py-1 rounded-full border" style={{ backgroundColor: `${pkg.color}12`, color: pkg.color, borderColor: `${pkg.color}30` }}>{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </a>
+        <section className="py-16" aria-labelledby="boundaries-heading">
+          <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-white/45">
+            The boundary
+          </p>
+          <h2 id="boundaries-heading" className="font-display text-3xl font-bold">
+            Three layers, three different rights surfaces
+          </h2>
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {boundaries.map((item) => (
+              <article key={item.title} className="rounded-2xl border border-white/10 bg-white/[0.025] p-6">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--arc-brand-atlantean-teal)]">
+                  {item.status}
+                </p>
+                <h3 className="mt-3 font-display text-xl font-semibold">{item.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-white/60">{item.body}</p>
+              </article>
             ))}
           </div>
+          <p className="mt-6 max-w-3xl text-sm leading-relaxed text-white/55">
+            Using Arcanea tools does not make a creator's world Arcanea canon.
+            An open-source license on one technical component does not grant story,
+            adaptation, merchandise, training, or trademark rights.
+          </p>
         </section>
 
-        {/* Tools */}
-        <section className="mb-16" aria-labelledby="tools-heading">
-          <div className="mb-8">
-            <h2 id="tools-heading" className="text-xs font-mono tracking-[0.35em] uppercase text-brand-gold mb-2">Platform Tools</h2>
-            <h3 className="text-fluid-2xl font-display font-bold">What you can build</h3>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {TOOLS.map((category) => (
-              <div key={category.category} className="liquid-glass rounded-2xl p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: category.color }} />
-                  <h4 className="font-display font-semibold text-text-primary">{category.category}</h4>
-                </div>
-                <ul className="space-y-3">
-                  {category.items.map((item) => (
-                    <li key={item.name} className="flex items-start gap-3">
-                      <Icons.Check className="w-4 h-4 mt-0.5 shrink-0" style={{ color: category.color }} />
-                      <div>
-                        <span className="text-sm text-text-primary font-medium">{item.name}</span>
-                        <p className="text-xs text-text-muted">{item.description}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Quick Starts */}
-        <section className="mb-16" aria-labelledby="quickstart-heading">
-          <div className="mb-8">
-            <h2 id="quickstart-heading" className="text-xs font-mono tracking-[0.35em] uppercase text-earth mb-2">Quick Starts</h2>
-            <h3 className="text-fluid-2xl font-display font-bold">Begin building</h3>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {QUICK_STARTS.map((item) => {
-              const ItemIcon = Icons[item.iconKey];
-              return (
-                <Link key={item.title} href={item.href} className="group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all">
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" style={{ background: `radial-gradient(ellipse at 30% 30%, ${item.color}12, transparent 65%)` }} />
-                  <div className="relative">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: `${item.color}18` }}>
-                      {ItemIcon && <ItemIcon style={{ color: item.color }} />}
-                    </div>
-                    <h4 className="font-display font-semibold text-text-primary mb-1">{item.title}</h4>
-                    <p className="text-xs text-text-muted mb-3">{item.description}</p>
-                    <div className="flex items-center gap-1 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: item.color }}>
-                      <span>Explore</span>
-                      <Icons.ArrowRight />
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
+        <section className="pb-16" aria-labelledby="evidence-heading">
+          <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.3em] text-white/45">
+            Current evidence
+          </p>
+          <h2 id="evidence-heading" className="font-display text-3xl font-bold">
+            Status without roadmap theater
+          </h2>
+          <div className="mt-8 overflow-x-auto rounded-2xl border border-white/10">
+            <table className="w-full min-w-[680px] text-left text-sm">
+              <thead className="border-b border-white/10 bg-white/[0.035] text-[10px] uppercase tracking-[0.18em] text-white/45">
+                <tr>
+                  <th className="px-5 py-4">Interface</th>
+                  <th className="px-5 py-4">State</th>
+                  <th className="px-5 py-4">Evidence</th>
+                </tr>
+              </thead>
+              <tbody>
+                {evidence.map(([name, state, proof]) => (
+                  <tr key={name} className="border-b border-white/[0.06] last:border-0">
+                    <td className="px-5 py-4 font-medium text-white/85">{name}</td>
+                    <td className="px-5 py-4 font-mono text-xs text-[var(--arc-brand-atlantean-teal)]">{state}</td>
+                    <td className="px-5 py-4 text-white/55">{proof}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 
-        {/* Quick Start Install */}
-        <section className="mb-16" aria-labelledby="install-heading">
-          <div className="mb-8">
-            <h2 id="install-heading" className="text-xs font-mono tracking-[0.35em] uppercase text-brand-primary mb-2">Quick Start</h2>
-            <h3 className="text-fluid-2xl font-display font-bold">Get up and running</h3>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { icon: Icons.Terminal, color: "var(--arc-brand-atlantean-teal)", title: "Install Arcanea Skills", desc: "Add 54 skills to your coding agent", cmd: "npx @arcanea/skills" },
-              { icon: Icons.Sparkles, color: "var(--arc-void)", title: "Launch Claude Arcanea", desc: "Start the Arcanea-enhanced Claude agent", cmd: "npx claude-arcanea" },
-              { icon: Icons.Box, color: "var(--arc-brand-arcanean-gold)", title: "Install a Package", desc: "Add any intelligence package to your project", cmd: "npm install @arcanea/council @arcanea/rituals" },
-              { icon: Icons.Server, color: "var(--arc-brand-cosmic-blue)", title: "Start MCP Server", desc: "Run the Arcanea MCP server locally", cmd: "npx @arcanea/mcp-server" },
-            ].map((item) => {
-              const ItemIcon = item.icon;
-              return (
-                <div key={item.title} className="liquid-glass rounded-2xl p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${item.color}15` }}>
-                      <ItemIcon style={{ color: item.color }} />
-                    </div>
-                    <div>
-                      <h4 className="font-display font-semibold text-text-primary text-sm">{item.title}</h4>
-                      <p className="text-xs text-text-muted">{item.desc}</p>
-                    </div>
-                  </div>
-                  <div className="bg-[var(--arc-cosmic-void)] border border-white/[0.06] rounded-xl p-4 overflow-x-auto">
-                    <code className="font-mono text-sm" style={{ color: item.color }}>{item.cmd}</code>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Credits API */}
-        <section className="mb-16" aria-labelledby="credits-heading">
-          <div className="mb-8">
-            <h2 id="credits-heading" className="text-xs font-mono tracking-[0.35em] uppercase text-brand-gold mb-2">Credits API</h2>
-            <h3 className="text-fluid-2xl font-display font-bold">Billing & Credits</h3>
-            <p className="text-text-secondary text-sm mt-2 max-w-2xl">
-              All credits endpoints require authentication via Supabase session.
-              The webhook endpoint requires Stripe signature verification.
-            </p>
-          </div>
-          <div className="space-y-3">
-            {CREDITS_ENDPOINTS.map((ep) => (
-              <div key={ep.path} className="liquid-glass rounded-xl p-5">
-                <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                  <div className="flex items-center gap-3 sm:w-56 shrink-0">
-                    <span className={`text-xs font-mono font-bold px-2 py-0.5 rounded ${ep.method === "POST" ? "bg-emerald-500/15 text-emerald-400" : "bg-blue-500/15 text-blue-400"}`}>{ep.method}</span>
-                    <code className="text-sm font-mono text-text-primary">{ep.path}</code>
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-text-secondary mb-3">{ep.description}</p>
-                    {ep.body && (
-                      <div className="mb-2">
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-text-muted">Body</span>
-                        <div className="bg-[var(--arc-cosmic-void)] border border-white/[0.06] rounded-lg p-3 mt-1 overflow-x-auto">
-                          <code className="text-xs font-mono text-[var(--arc-brand-atlantean-teal)]">{ep.body}</code>
-                        </div>
-                      </div>
-                    )}
-                    <div>
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-text-muted">Response</span>
-                      <div className="bg-[var(--arc-cosmic-void)] border border-white/[0.06] rounded-lg p-3 mt-1 overflow-x-auto">
-                        <code className="text-xs font-mono text-[var(--arc-brand-cosmic-blue)]">{ep.response}</code>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* MCP Servers */}
-        <section className="mb-16" aria-labelledby="mcp-heading">
-          <div className="mb-8">
-            <h2 id="mcp-heading" className="text-xs font-mono tracking-[0.35em] uppercase text-crystal mb-2">MCP Servers</h2>
-            <h3 className="text-fluid-2xl font-display font-bold">Model Context Protocol</h3>
-            <p className="text-text-secondary text-sm mt-2 max-w-2xl">
-              Connect Arcanea tools to Claude, Cursor, Windsurf, or any MCP-compatible agent. Each server runs as a standalone process.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-5">
-            {MCP_SERVERS.map((server) => (
-              <div key={server.name} className="liquid-glass rounded-2xl p-6 flex flex-col">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: server.color }} />
-                  <h4 className="font-mono text-sm font-semibold" style={{ color: server.color }}>{server.name}</h4>
-                </div>
-                <p className="text-text-secondary text-sm leading-relaxed mb-4 flex-1">{server.description}</p>
-                <div className="bg-[var(--arc-cosmic-void)] border border-white/[0.06] rounded-xl p-3 overflow-x-auto">
-                  <code className="font-mono text-xs" style={{ color: server.color }}>{server.install}</code>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Open Source */}
-        <section className="mb-16" aria-labelledby="oss-heading">
-          <div className="mb-8">
-            <h2 id="oss-heading" className="text-xs font-mono tracking-[0.35em] uppercase text-earth mb-2">Open Source</h2>
-            <h3 className="text-fluid-2xl font-display font-bold">Build with us</h3>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-5">
-            {OPEN_SOURCE_REPOS.map((repo) => (
-              <a key={repo.name} href={repo.href} target="_blank" rel="noopener noreferrer" className="group liquid-glass rounded-2xl p-6 hover-lift transition-all hover:border-white/[0.12]">
-                <div className="flex items-center gap-3 mb-3">
-                  <Icons.Github style={{ color: repo.color }} />
-                  <span className="font-mono text-sm font-semibold" style={{ color: repo.color }}>{repo.name}</span>
-                  <Icons.ExternalLink className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity text-text-muted" />
-                </div>
-                <p className="text-text-secondary text-sm leading-relaxed">{repo.description}</p>
-              </a>
-            ))}
-          </div>
-        </section>
-
-        {/* Architecture */}
-        <section className="mb-16">
-          <div className="liquid-glass rounded-2xl p-8">
-            <h2 className="font-display text-2xl font-semibold text-text-primary mb-6 text-center">Architecture Overview</h2>
-            <div className="grid md:grid-cols-5 gap-4">
-              {ARCHITECTURE_LAYERS.map((layer) => {
-                const LayerIcon = Icons[layer.iconKey];
-                return (
-                  <div key={layer.layer} className="text-center p-4 rounded-xl hover:bg-white/[0.04] transition-colors">
-                    <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full" style={{ backgroundColor: `${layer.color}18` }}>
-                      {LayerIcon && <LayerIcon style={{ color: layer.color }} />}
-                    </div>
-                    <h3 className="font-semibold text-text-primary text-sm mb-2">{layer.layer}</h3>
-                    <ul className="space-y-1">
-                      {layer.items.map((item) => (
-                        <li key={item} className="text-xs text-text-muted">{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section>
-          <div className="relative liquid-glass rounded-3xl overflow-hidden p-8 sm:p-12 text-center">
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/10 via-transparent to-crystal/8 pointer-events-none" />
-            <div className="absolute -top-16 -right-16 w-64 h-64 bg-brand-primary/6 rounded-full blur-3xl pointer-events-none" />
-            <div className="relative max-w-2xl mx-auto">
-              <h2 className="text-fluid-2xl font-display font-bold mb-4">Start Building Today</h2>
-              <p className="text-text-secondary font-body leading-relaxed mb-8">
-                Join our developer community. Create skills, contribute to packages, and help shape the future of creative AI.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <a href="https://github.com/frankxai/arcanea" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200">
-                  <Icons.Github />
-                  Explore the Repo
-                </a>
-                <Link href="/ecosystem" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200">
-                  <Icons.Zap />
-                  Full Ecosystem
-                </Link>
-              </div>
-              <div className="flex flex-wrap justify-center gap-3 mt-4">
-                <Link href="/install" className="text-sm text-white/40 hover:text-white/70 transition-colors">Install Tools</Link>
-                <span className="text-white/20">·</span>
-                <Link href="/contribute" className="text-sm text-white/40 hover:text-white/70 transition-colors">Contribute</Link>
-                <span className="text-white/20">·</span>
-                <Link href="/docs" className="text-sm text-white/40 hover:text-white/70 transition-colors">API Docs</Link>
-              </div>
-            </div>
+        <section className="rounded-3xl border border-[var(--arc-brand-arcanean-gold)]/20 bg-[var(--arc-brand-arcanean-gold)]/[0.035] p-8 sm:p-10">
+          <h2 className="font-display text-2xl font-bold">Before adopting a component</h2>
+          <ol className="mt-5 grid gap-4 text-sm leading-relaxed text-white/65 sm:grid-cols-3">
+            <li><span className="mr-2 font-mono text-[var(--arc-brand-arcanean-gold)]">01</span>Verify the exact repository, version, root license, nested license, and NOTICE.</li>
+            <li><span className="mr-2 font-mono text-[var(--arc-brand-arcanean-gold)]">02</span>Confirm protected Arcanea content, private prompts, datasets, and brand assets are excluded.</li>
+            <li><span className="mr-2 font-mono text-[var(--arc-brand-arcanean-gold)]">03</span>Run the documented tests and retain a receipt. A successful install is not conformance.</li>
+          </ol>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <a
+              href="https://github.com/frankxai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold text-[var(--arc-brand-arcanean-gold)] hover:text-white"
+            >
+              Inspect the GitHub estate
+            </a>
+            <span className="text-white/20">·</span>
+            <Link href="/contact" className="text-sm font-semibold text-white/65 hover:text-white">
+              Discuss an integration
+            </Link>
           </div>
         </section>
       </main>
