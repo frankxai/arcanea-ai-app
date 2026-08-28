@@ -8,12 +8,12 @@ import { getCollections, getTextsInCollection } from "../../lib/content";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Library of Arcanea — 190K+ Words of Creative Philosophy",
+  title: "Library of Arcanea — Canon, Reference, and Practice",
   description:
-    "Browse the Library of Arcanea — 190K+ words of original philosophy, poetry, legend, and practice for creators across 20 collections. Equipment for living.",
+    "Browse Arcanea's living library of lore, philosophy, poetry, legend, and creative practice. Collection and text counts are generated from the live inventory.",
   openGraph: {
     title: "Library of Arcanea",
-    description: "190K+ words of original philosophy, poetry, legend, and practice for creators across 20 collections. Equipment for living.",
+    description: "A living, inventory-backed library of Arcanea lore, philosophy, poetry, legend, and creative practice.",
     images: [{ url: '/guardians/v3/maylinn-hero-v3.webp', width: 1024, height: 1024, alt: 'Maylinn — Guardian of the Heart Gate' }],
   },
   twitter: {
@@ -50,7 +50,7 @@ export default async function LibraryPage() {
     '@type': 'CollectionPage',
     name: 'Library of Arcanea',
     description:
-      '190,000+ words of wisdom, legend, poetry, and practice for the creative soul across 20 collections of original content.',
+      'An inventory-backed collection of Arcanea lore, philosophy, poetry, legend, and creative practice.',
     url: 'https://arcanea.ai/library',
     mainEntity: {
       '@type': 'ItemList',
