@@ -75,7 +75,7 @@ export function AboutContent() {
             className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight"
           >
             <span className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-white to-[var(--arc-brand-arcanean-gold)] bg-clip-text text-transparent">
-              The Creative Multiverse
+              Enter Living Worlds. Build Your Own.
             </span>
           </m.h1>
 
@@ -85,8 +85,8 @@ export function AboutContent() {
             transition={{ delay: 0.3 }}
             className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
           >
-            Creative Superintelligence — where creators and AI build together.
-            {FACTS.luminors} configured specialist minds. 190K words of philosophy. Open source.
+            Arcanea is a protected story universe and a creator system for building worlds you own.
+            {FACTS.luminors} configured specialist minds. Ten Guardians. One governed release at a time.
           </m.p>
 
           <m.p
@@ -95,10 +95,10 @@ export function AboutContent() {
             transition={{ delay: 0.4 }}
             className="text-base text-text-muted max-w-2xl mx-auto mt-6 leading-relaxed"
           >
-            Arcanea is a creative superintelligence — 13 configured AI specialists
-            trained on 190K words of original creative philosophy, a three-layer
-            intelligence architecture, and an open-source ecosystem of 27
-            repositories. Not a chatbot. A creative operating system.
+            Enter Arcanea through its stories, Guardians, Godbeasts, music, and worlds.
+            Use the Arcanea Connector to develop your own continuity with explicit
+            rights, provenance, and release states. The Starlight substrate remains
+            a separate technical layer governed component by component.
           </m.p>
 
           <m.div
@@ -111,13 +111,13 @@ export function AboutContent() {
               Built by Frank Riemer
             </span>
             <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">
-              500+ AI Implementations
+              Arcanea Universe + Connector
             </span>
             <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">
               Next.js + Vercel AI SDK
             </span>
             <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">
-              Open Source
+              Rights-Aware Interfaces
             </span>
           </m.div>
         </div>
@@ -211,11 +211,11 @@ function StatsBar() {
       <div className="max-w-5xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
           {[
-            { value: "190K+", label: "Words of Intelligence" },
-            { value: "17", label: "Knowledge Collections" },
-            { value: "10", label: "Mastery Gates" },
-            { value: "16", label: "AI Intelligences" },
-            { value: "27", label: "Open Source Repos" },
+            { value: String(FACTS.guardians), label: "Guardians" },
+            { value: String(FACTS.gates), label: "Mastery Gates" },
+            { value: String(FACTS.elements), label: "Elements" },
+            { value: String(FACTS.luminors), label: "Configured Specialists" },
+            { value: "1", label: "Flagship in Development" },
           ].map((stat, i) => (
             <m.div
               key={stat.label}
@@ -260,7 +260,7 @@ function IntelligenceSection() {
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           {[
             { num: "13", label: "Configured AI Specialists", desc: "Each grounded in a specific creative domain - writing, research, design, music, code, strategy, and world-building. Not one general AI. Thirteen configured minds.", border: "border-[var(--arc-brand-atlantean-teal)]/20", numBg: "bg-[var(--arc-brand-atlantean-teal)]/10", numColor: "text-[var(--arc-brand-atlantean-teal)]" },
-            { num: "190K", label: "Words of Creative Philosophy", desc: "The knowledge foundation that trains every AI in the system. Original philosophy grounded in consciousness, creativity, and transformation — not scraped data.", border: "border-[var(--arc-brand-arcanean-gold)]/20", numBg: "bg-[var(--arc-brand-arcanean-gold)]/10", numColor: "text-[var(--arc-brand-arcanean-gold)]" },
+            { num: "1", label: "Protected Story Universe", desc: "Arcanea canon, characters, names, and release assets are governed separately from creator tools and technical components.", border: "border-[var(--arc-brand-arcanean-gold)]/20", numBg: "bg-[var(--arc-brand-arcanean-gold)]/10", numColor: "text-[var(--arc-brand-arcanean-gold)]" },
             { num: "3", label: "Three-Layer Architecture", desc: "Starlight Intelligence (memory + learning) feeds Intelligence OS (orchestration + routing), which powers the Platform (creation tools you interact with).", border: "border-[var(--arc-brand-cosmic-blue)]/20", numBg: "bg-[var(--arc-brand-cosmic-blue)]/10", numColor: "text-[var(--arc-brand-cosmic-blue)]" },
             { num: "10", label: "Progression Gates", desc: "From Apprentice to Luminor mastery. Each Gate unlocks deeper AI capabilities, specialized training, and creative power. Progress earned through creation.", border: "border-purple-500/20", numBg: "bg-purple-500/10", numColor: "text-purple-400" },
           ].map((card) => (
@@ -275,10 +275,10 @@ function IntelligenceSection() {
         </div>
 
         <div className="p-6 rounded-2xl liquid-glass border border-white/[0.06] text-center">
-          <h3 className="text-lg font-display font-semibold mb-3">Open Source Ecosystem</h3>
+          <h3 className="text-lg font-display font-semibold mb-3">Published Technical Components</h3>
           <p className="text-sm text-text-secondary leading-relaxed max-w-2xl mx-auto mb-4">
-            {PUBLIC_REPO_SUMMARY.public} public repos. {PUBLIC_REPO_SUMMARY.packages} npm packages. {FACTS.skills} creator skills. Fork it, extend it, build on it.
-            The entire intelligence stack is source-available.
+            The public registry currently tracks {PUBLIC_REPO_SUMMARY.public} public repositories and {PUBLIC_REPO_SUMMARY.packages} package references.
+            Each component is governed by its own license. No repository license grants rights to Arcanea canon, characters, artwork, music, or trademarks.
           </p>
           <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-mono text-white/25">
             <span>Next.js 16</span>
