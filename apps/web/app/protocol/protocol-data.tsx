@@ -27,10 +27,10 @@ export interface SpecRow {
 // ---------------------------------------------------------------------------
 
 export const HERO_STATS = [
-  { value: "6",   label: "Protocol layers", color: "var(--arc-brand-atlantean-teal)" },
-  { value: "MIT", label: "Licensed",         color: "var(--arc-brand-atlantean-teal)" },
-  { value: "3",   label: "Reference impls",  color: "var(--arc-void)" },
-  { value: "EIP", label: "Compatible",       color: "var(--arc-brand-arcanean-gold)" },
+  { value: "6",       label: "Interface areas", color: "var(--arc-brand-atlantean-teal)" },
+  { value: "Per repo", label: "Licenses",        color: "var(--arc-brand-atlantean-teal)" },
+  { value: "Preview", label: "Evidence state",   color: "var(--arc-void)" },
+  { value: "0",       label: "Canon grants",     color: "var(--arc-brand-arcanean-gold)" },
 ] as const;
 
 // ---------------------------------------------------------------------------
@@ -39,8 +39,8 @@ export const HERO_STATS = [
 
 export const FEATURES = [
   {
-    title: "Agent Registry Protocol",
-    body: "Every Luminor, Companion, or custom agent gets a portable Agent Card (A2A-compatible). Reputation travels with the agent.",
+    title: "Agent / Connector Interface",
+    body: "A provider-neutral envelope for tasks, capabilities, inputs, outputs, evidence states, and release receipts.",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
@@ -51,7 +51,7 @@ export const FEATURES = [
   },
   {
     title: "World Graph Schema",
-    body: "Open JSONML + Markdown schema for characters, locations, magic, lore. Interoperable with Obsidian, Notion, Logseq.",
+    body: "A versioned schema for entities, relationships, continuity, canonicality, and export. Current status: draft.",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -61,8 +61,8 @@ export const FEATURES = [
     delay: 0.06,
   },
   {
-    title: "IP Licensing (Story Protocol)",
-    body: "Every creation can be licensed on-chain. Royalty terms set by creator. Automatic payouts.",
+    title: "Rights Manifest",
+    body: "A rights and provenance record for sources, contributors, providers, permitted uses, restrictions, and blockers.",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -72,8 +72,8 @@ export const FEATURES = [
     delay: 0.12,
   },
   {
-    title: "ERC-8004 Identity",
-    body: "Creator identity as NFT. Verifiable on-chain. Links your ENS, Farcaster, Arcanea profile.",
+    title: "Asset Provenance",
+    body: "Stable asset IDs separated from versions, renditions, placements, approvals, and superseded outputs.",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
@@ -83,8 +83,8 @@ export const FEATURES = [
     delay: 0.18,
   },
   {
-    title: "x402 Micropayments",
-    body: "Pay-per-inference. Pay-per-remix. No subscriptions. Coinbase x402 standard.",
+    title: "Portable Export Bundle",
+    body: "A creator-owned bundle for lore, manuscripts, media references, metadata, and receipts without an Arcanea canon grant.",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -94,8 +94,8 @@ export const FEATURES = [
     delay: 0.24,
   },
   {
-    title: "Signed Content",
-    body: "Every creation cryptographically signed. Provenance verifiable forever.",
+    title: "Canon and Release Validators",
+    body: "Deterministic checks for naming, continuity, rights, public claims, release gates, and evidence completeness.",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -111,12 +111,12 @@ export const FEATURES = [
 // ---------------------------------------------------------------------------
 
 export const SPEC_TABLE: SpecRow[] = [
-  { protocol: "Agent Registry", spec: "draft",  refImpl: "stable", testnet: "Base Sepolia",  mainnet: "Q2 2026" },
-  { protocol: "World Graph",    spec: "stable", refImpl: "stable", testnet: "N/A",           mainnet: "Live"    },
-  { protocol: "IP Licensing",   spec: "draft",  refImpl: "draft",  testnet: "Story testnet", mainnet: "Live"    },
-  { protocol: "Identity",       spec: "draft",  refImpl: "draft",  testnet: "Base Sepolia",  mainnet: "Q3 2026" },
-  { protocol: "Micropayments",  spec: "review", refImpl: "review", testnet: "TBD",           mainnet: "Q4 2026" },
-  { protocol: "Signing",        spec: "stable", refImpl: "stable", testnet: "N/A",           mainnet: "Live"    },
+  { protocol: "Agent / Connector", spec: "draft",  refImpl: "draft",  testnet: "Internal packet", mainnet: "Preview" },
+  { protocol: "World Graph",       spec: "draft",  refImpl: "review", testnet: "Internal build",  mainnet: "Preview" },
+  { protocol: "Rights Manifest",   spec: "review", refImpl: "draft",  testnet: "Governance PR",   mainnet: "Planned" },
+  { protocol: "Asset Provenance",  spec: "review", refImpl: "draft",  testnet: "Contract only",   mainnet: "Planned" },
+  { protocol: "Export Bundle",     spec: "draft",  refImpl: "review", testnet: "Internal build",  mainnet: "Planned" },
+  { protocol: "Canon Validator",   spec: "review", refImpl: "draft",  testnet: "Audit script",    mainnet: "Planned" },
 ];
 
 export const STATUS_PILL: Record<SpecStatus, { label: string; bg: string; color: string; border: string }> = {
@@ -132,8 +132,8 @@ export const STATUS_PILL: Record<SpecStatus, { label: string; bg: string; color:
 export const CONTRIBUTOR_STEPS: FlowStep[] = [
   {
     number: "01",
-    title: "Read the spec",
-    body: "Each protocol is a single Markdown document in the GitHub repo. Spec, rationale, and examples in one place.",
+    title: "Check the boundary",
+    body: "Confirm the component, source repository, evidence state, controlling license, and whether protected content is excluded.",
     accent: "var(--arc-brand-atlantean-teal)",
     iconNode: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -143,8 +143,8 @@ export const CONTRIBUTOR_STEPS: FlowStep[] = [
   },
   {
     number: "02",
-    title: "Implement in your stack",
-    body: "Reference implementations in TypeScript, Rust, and Python. All MIT licensed. Fork, adapt, ship.",
+    title: "Adopt only what is licensed",
+    body: "Use an explicitly licensed schema, SDK, validator, or adapter. A technical license never includes Arcanea canon or marks.",
     accent: "var(--arc-brand-atlantean-teal)",
     iconNode: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -154,8 +154,8 @@ export const CONTRIBUTOR_STEPS: FlowStep[] = [
   },
   {
     number: "03",
-    title: "Register a conformance test",
-    body: "Submit your test suite results to the Arcanean Protocol Registry. Earn a conformance badge visible on your agent cards.",
+    title: "Return evidence",
+    body: "Attach validation results, provenance, known limitations, and the exact version. Evidence may support approval; it never grants it.",
     accent: "var(--arc-void)",
     iconNode: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -171,20 +171,20 @@ export const CONTRIBUTOR_STEPS: FlowStep[] = [
 
 export const GOVERNANCE_CARDS = [
   {
-    title: "Arcanean Improvement Proposals",
-    body: "Any change to the protocol starts as an AIP — a structured document modeled on EIPs. Anyone can author one. The community debates it. Core team ratifies.",
+    title: "Versioned decisions",
+    body: "Material interface changes require a recorded owner, rationale, compatibility impact, evidence, and effective version.",
     color: "var(--arc-brand-arcanean-gold)",
     delay: 0,
   },
   {
-    title: "Public RFC Process",
-    body: "Major changes go through a 30-day public comment period before merging. All feedback is on GitHub Issues, in the open.",
+    title: "Evidence before status",
+    body: "Preview, generated, inspected, judged, approved, and released are separate states. Public pages may not collapse them.",
     color: "var(--arc-brand-atlantean-teal)",
     delay: 0.08,
   },
   {
-    title: "Community Maintainers",
-    body: "Core team ships the reference impls. Community maintainers own conformance tests. Merged by reputation, not by company affiliation.",
+    title: "Protected-world boundary",
+    body: "Creators own their original worlds. Arcanea remains separate, protected canon unless a written franchise license says otherwise.",
     color: "var(--arc-brand-atlantean-teal)",
     delay: 0.16,
   },
@@ -196,23 +196,23 @@ export const GOVERNANCE_CARDS = [
 
 export const SOVEREIGNTY_ITEMS = [
   {
-    label: "Your keys, not ours",
-    body: "BYOK at every layer. We never hold, log, or mark up your API keys.",
+    label: "Bring your provider access",
+    body: "Where BYOK is supported, current product terms and the deployed implementation control storage, logging, and processing.",
     color: "var(--arc-brand-atlantean-teal)",
   },
   {
-    label: "Your IP, not licensed to us",
-    body: "Zero claims on your output. No training on your creations. Export anytime.",
+    label: "Your world remains yours",
+    body: "Creator ownership is the product intent. Current terms must state the minimum service license, export, deletion, and training rules.",
     color: "var(--arc-brand-atlantean-teal)",
   },
   {
-    label: "Your data, not trained on",
-    body: "Inference runs on your keys. Nothing is used to improve our models without consent.",
+    label: "Every asset keeps provenance",
+    body: "Sources, providers, model versions, permissions, transformations, and approvals travel with consequential outputs.",
     color: "var(--arc-void)",
   },
   {
-    label: "Your community, not captured",
-    body: "Open spec means other platforms can implement it. You are never locked in.",
+    label: "Arcanea stays separate",
+    body: "Using the Connector or an open component does not grant Arcanea story, character, adaptation, merchandise, or trademark rights.",
     color: "var(--arc-brand-arcanean-gold)",
   },
 ];
@@ -243,7 +243,7 @@ export function SpecTable() {
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-white/[0.06]">
-            {["Protocol", "Spec", "Reference Impl", "Testnet", "Mainnet"].map((h) => (
+            {["Interface", "Spec", "Reference Impl", "Evidence", "Availability"].map((h) => (
               <th
                 key={h}
                 className="text-left px-5 py-3.5 text-[10px] font-mono tracking-[0.2em] uppercase text-white/30"
