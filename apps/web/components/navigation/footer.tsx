@@ -72,23 +72,24 @@ export function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [subscriptionError, setSubscriptionError] = useState(false);
 
   const handleSubscribe = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || submitting) return;
     setSubmitting(true);
+    setSubscriptionError(false);
     try {
-      await fetch('/api/subscribe', {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.trim(), source: 'footer' }),
       });
+      if (!response.ok) throw new Error('Subscription request failed');
       setSubscribed(true);
       setEmail("");
     } catch {
-      // Still show success — email intent was captured
-      setSubscribed(true);
-      setEmail("");
+      setSubscriptionError(true);
     } finally {
       setSubmitting(false);
     }
@@ -116,8 +117,8 @@ export function Footer() {
               Creative Intelligence
             </p>
             <p className="text-sm text-white/50 mt-4 leading-relaxed">
-              Chat with AI. Build fantasy worlds. Create art, stories, music.
-              An open creative multiverse for world-builders.
+              Enter Arcanea&apos;s protected universe, or build a world you own
+              with the Arcanea Connector.
             </p>
           </div>
 
@@ -127,9 +128,10 @@ export function Footer() {
             </h3>
             {subscribed ? (
               <p className="text-sm text-[var(--arc-brand-atlantean-teal)]">
-                Welcome to the multiverse.
+                Welcome to Arcanea.
               </p>
             ) : (
+              <>
               <form onSubmit={handleSubscribe} className="flex gap-2">
                 <input
                   type="email"
@@ -148,6 +150,12 @@ export function Footer() {
                   {submitting ? "..." : "Subscribe"}
                 </button>
               </form>
+              {subscriptionError ? (
+                <p role="alert" className="mt-2 text-xs text-red-300/80">
+                  Subscription could not be confirmed. Please try again.
+                </p>
+              ) : null}
+              </>
             )}
           </div>
         </div>
