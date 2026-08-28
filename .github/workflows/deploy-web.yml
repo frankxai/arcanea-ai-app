@@ -1,20 +1,8 @@
-name: Deploy Arcanea Web
+name: Manual Arcanea Web Deploy
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'apps/web/**'
-      - '.github/workflows/deploy-web.yml'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'apps/web/**'
-      - '.github/workflows/deploy-web.yml'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
+  # Emergency/manual deploy path only. Vercel's native Git integration is the
+  # canonical automatic deploy path; ci.yml is the merge-quality gate.
   workflow_dispatch:
     inputs:
       environment:
@@ -100,7 +88,7 @@ jobs:
     # handles auto-deploys natively, so this CLI-driven path is optional.
     # Without the token, this job would fail with 'No existing credentials'
     # and turn main red even though the actual site deploys fine.
-    if: ${{ (github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'preview')) && vars.HAS_VERCEL_TOKEN == 'true' }}
+    if: ${{ github.event.inputs.environment == 'preview' && vars.HAS_VERCEL_TOKEN == 'true' }}
     environment:
       name: preview
       url: ${{ steps.deploy.outputs.preview_url }}
@@ -148,7 +136,7 @@ jobs:
     # handles production deploys natively when the repo is linked to the
     # Vercel project. To re-enable CLI-driven deploys, set repo variable
     # HAS_VERCEL_TOKEN=true and add VERCEL_TOKEN to repo secrets.
-    if: ${{ ((github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')) && vars.HAS_VERCEL_TOKEN == 'true' }}
+    if: ${{ github.event.inputs.environment == 'production' && vars.HAS_VERCEL_TOKEN == 'true' }}
     environment:
       name: production
       url: ${{ steps.deploy.outputs.production_url }}

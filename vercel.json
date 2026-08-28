@@ -6,6 +6,7 @@
   "installCommand": "corepack enable && pnpm install --prod=false --no-frozen-lockfile",
   "outputDirectory": "apps/web/.next",
   "devCommand": "pnpm dev:web",
+  "ignoreCommand": "bash scripts/vercel-ignore-build.sh",
   "build": {
     "env": {
       "NEXT_PUBLIC_APP_NAME": "Arcanea",
