@@ -2,7 +2,8 @@
 title: Book 1 title and positioning gate
 status: working-shortlist
 canon_status: staging
-searched: 2026-08-29
+searched: 2026-08-30
+implementation_state: The Last Free Path is the provisional web title pending cover test and legal review
 ---
 
 # Book 1 title gate
@@ -31,7 +32,7 @@ Do not choose by internal preference alone. Test both on the same cover system a
 
 ## Search record
 
-Exact-phrase web searches on 2026-08-29 surfaced no exact fiction-title match for *The Last Free Path*, *The Gate No One Owns*, or *The Unowned Gate*. This is a preliminary discoverability check, not legal clearance.
+Exact-phrase web searches on 2026-08-29 and a follow-up on 2026-08-30 surfaced no exact fiction-title match for *The Last Free Path*, *The Gate No One Owns*, or *The Unowned Gate*. This is a preliminary discoverability check, not legal clearance.
 
 The same search surfaced:
 
@@ -50,7 +51,7 @@ Absence from a search result is never recorded as rights clearance.
 
 ## Positioning sentence under either title
 
-Three young creators collide inside an Academy system built to protect everyone from their gifts. When that system measures Arion without meaningful consent and a buried living structure begins returning evidence the Academies erased, they must decide who may hold a miracle, who may remember it, and whether safety can exist without possession.
+Three young makers collide inside an Academy system built to protect everyone from their gifts. When that system measures Arion without meaningful consent and an unauthenticated lower structure exposes evidence of prior institutional contact, they must decide who may hold a miracle, who may remember it, and whether safety can exist without possession.
 
 ## Cover-copy guardrail
 

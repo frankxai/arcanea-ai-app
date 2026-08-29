@@ -40,7 +40,7 @@ The chapter must work as fiction without an accompanying image or lore note.
 | Relationship | State entering | Friction/action | State leaving |
 |---|---|---|---|
 | Arion / Lio | Early craft respect after the practice wall | Lio accepts the revised route, then asks Arion for exact information rather than heroic rescue while trapped | Trust survives the injury, but Arion cannot use Lio's agency to erase the cost of waiting |
-| Arion / Akamoto | Conditional trust after one successful open stop | Akamoto enforces the stop, sends the second team, and must own that his tool/state policy made the wrong-route delay foreseeable | Pedagogical authority becomes accountable; Arion sees Akamoto change procedure without asking forgiveness |
+| Arion / Akamoto | Conditional trust after one successful open stop | Akamoto enforces the stop and must own that his tool/state policy contributed to a chain in which the full command was acoustically corrupted, both route names were masked in a wrong readback, a false confirmation returned, and shared field-state visibility was absent | Pedagogical authority becomes accountable; Arion sees Akamoto change procedure without asking forgiveness |
 | Arion / Emilia | Bounded acceptance of one tool test | Her witness remains sealed; she names what it could and could not have shown without claiming it would decide the rescue | Arion understands an informative tool may protect refusal rather than replace it |
 | Arion / Mera | Personal witness relationship newly stated | Mera records call times and preserves conflicting truths without choosing a hero | Her record becomes materially useful to Lio and the council while remaining attributable |
 

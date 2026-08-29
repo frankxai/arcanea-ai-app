@@ -234,7 +234,7 @@ Mera must choose which evidence not to reveal in the climax, knowing silence may
 **Sensory lexicon:** tolerance, color shift, seam, latency, refraction, tool warmth, feedback hum, visible exit paths.
 **Voice:** structured, quick, specific; she can fit a whole decision tree into one sentence, then cut herself off when she notices she is avoiding the person. Humor exposes bad system design rather than mocking vulnerability.
 
-Emilia must publicly accept responsibility for revealing Arion's pattern even though the instrument performed correctly and the Academy authorized the test. Her emerging friendship with Mera becomes the relationship her systems thinking cannot safely optimize: they repair mundane objects, enjoy one another's exacting competence, and learn enough private detail to hurt each other.
+Emilia must accept responsibility on her attributed maker/council record for revealing Arion's pattern even though the instrument performed correctly and the Academy authorized the test. Her emerging friendship with Mera becomes the relationship her systems thinking cannot safely optimize: they repair mundane objects, enjoy one another's exacting competence, and learn enough private detail to hurt each other.
 
 ### Headmaster Akamoto
 
@@ -272,7 +272,7 @@ Every listed conflict needs at least one scene in which both people are substant
 | Arion / Akamoto | Training without choice repeats custody | Untrained power can kill before autonomy is negotiated | Arion walks away from a test and someone else bears the physical risk |
 | Mera / Akamoto | Witnesses must be able to contradict authority | Context released too early can expose students to capture | Akamoto seals a report; Mera records that he did |
 | Emilia / Akamoto | Safety tools can distribute expertise | Institutions turn every safety tool into a control surface | Emilia destroys a useful buried interface to preserve refusal, extending the lesson of Akamoto's earlier tool ban without making him the author of her choice |
-| Trio / Academy council | The trio are people, not an incident | The council is responsible for everyone their powers could harm | The council loses monopoly on the Hollow Root evidence |
+| Trio / Academy council | The trio are people, not an incident | The council is responsible for everyone their powers could harm | Incomplete evidence remains in separate named custody routes; no single institution controls the whole record, and Hollow Root identity remains unauthenticated |
 | Arion / Malachar | Relief from impossible guilt is a real need | Freedom includes the right to risk, fail, and refuse help | Arion keeps the connection secret for one act |
 
 ## Ordinary life and attachment obligations
@@ -304,9 +304,9 @@ The book needs pleasure, vanity, humor, craft, appetite, family residue, and bor
 - Each protagonist experiences why people love one Academy before encountering its institutional failure: Luminary civic care hides unequal load, the Athenaeum's reverence for context becomes custody, and Forge competence turns every failure into reusable data.
 - The trio enters Roost field training: body before miracle, ordinary skill before spectacle.
 - Arion gains small competence, sketches the repair house he wants to build, and loses privacy.
-- Mera discovers that the voice in her memory is present in an archive only as redaction.
+- Mera discovers matching engineered-absence geometry under a Hollow Root catalogue label, without source, removed-content, voice, motive, or Roost-response authentication.
 - Emilia learns her instrument's results are being used for custody policy.
-- Lio pursues a rescue license, befriends the trio through work, and is injured after Akamoto's defensible ban on Emilia's field-state aid sends a second team down the wrong route.
+- Lio pursues a rescue license, befriends the trio through work, and is injured after a chain in which the full command is acoustically corrupted, both route names are masked in a wrong readback, a false confirmation returns, and the lack of shared field-state visibility contributes. Akamoto's defensible ban remains one accountable contribution, not the sole cause.
 - Sympathetic characters collide over disclosure, safety, and refusal.
 - Midpoint: Arion refuses a measurement protocol; an unauthenticated buried response follows refusal status through an existing joint continuity service, showing that an Academy system can reach the site without proving the site's identity or motive.
 
@@ -314,7 +314,7 @@ The book needs pleasure, vanity, humor, craft, appetite, family residue, and bor
 
 - Institutional inquiry separates the trio and offers each a defensible private deal.
 - Mera violates a promised boundary to protect Arion; what she learns helps and damages the trust she meant to save.
-- Malachar extends Akamoto's true “last free path” lesson into a forbidden bodily technique: Arion can force a path open by carrying its trapped movement. It saves lives, leaves a branching structural strain inside him, and makes secrecy and attraction to Malachar emotionally credible while the responding source remains unauthenticated.
+- A voice self-identifying as Malachar describes a forbidden bodily method extending Akamoto's true “last free path” lesson: Arion can force a path open by carrying its trapped movement. Arion's unauthorized use saves lives, leaves a branching structural strain inside him, and makes secrecy and attraction emotionally credible while identity, location, channel, reach, service-network relation, and responding source remain unauthenticated.
 - Akamoto seals part of a report to prevent immediate capture.
 - Mera records the seal and withholds the underlying memory.
 - Emilia establishes an active, unlisted retention-return line in the course record and recognizes its protocol family without authenticating destination, owner, motive, or a Root identity.
@@ -328,7 +328,7 @@ The book needs pleasure, vanity, humor, craft, appetite, family residue, and bor
 - Malachar names Arion's guilt and offers relief through surrender of choice.
 - The trio cannot win through combined force. They must distribute the load, limit what truth leaves, destroy the retained physical lead-state layer before it substitutes for renewed consent, and build a manual exit that works under the observed lower-structure conditions.
 - Arion asks rather than forces; Mera chooses contextual silence after repairing the boundary she violated; Emilia leaves a critical variable unmeasured because knowing it would violate someone she has learned to love.
-- The evidence returns incomplete but unowned.
+- Incomplete evidence remains in separate named custody routes: Mera's personal pages, the protected source below, site evidence in situ under guard, the report and supplement on the original clock, signer-held annex originals, and attributed read-only copies. No single institution controls the whole record.
 - The council cannot claim clean victory or deny documented prior institutional contact and coordination; authorship, cause, purpose, and Hollow Root identity remain unproved.
 - Ending: before negotiation, Arion chooses ordinary presence over fixing Lio's weather vane. He then refuses institutional possession and Malachar's relief, but accepts witnessed limits and training. Mera and Emilia remain beside him without promising agreement.
 
@@ -338,11 +338,11 @@ The book needs pleasure, vanity, humor, craft, appetite, family residue, and bor
 |---|---|
 | Arion's repaired tool has a visible seam | He repairs a damaged release without hiding its scar |
 | Mera seals a memory vial rather than reading it | She later violates one boundary, admits it, repairs what she can, and chooses costly non-access inside the buried structure |
-| Emilia's manual release is mocked as redundant | It becomes a shared, unowned model for making a manual route through the buried works without assigning personhood, desire, or decision authority |
+| Emilia's manual release is mocked as redundant | It becomes a shared, nonexclusive manual method for making a route through the buried works without assigning personhood, desire, or decision authority |
 | Akamoto asks students to name the nearest safe stopping point | Arion stops before catastrophic overreach |
 | Akamoto bars a safety aid and Lio is injured | He names his error, changes field procedure, and receives no automatic absolution |
 | Archive pages contain aligned absences | Buried records add visually matching authority forms and dated handling states while leaving performance, authorization, subject, purpose, and intent unproved |
-| Malachar's extension moves trapped strain into Arion | It saves people, creates a recurring path that later fractures the descent route, and makes disclosure necessary; whether the path is tracking him must be established rather than assumed |
+| The borrowed method described by a self-identifying voice moves trapped strain into Arion | Arion's use saves people, creates a possible recurring path, and makes disclosure necessary; the unauthorized one-interval hold and ensuing separation are observed, while speaker identity and broader causal reach remain unauthenticated |
 | The Academies argue over which institution owns risk | The climax makes ownership itself the destabilizing force |
 
 ## Legacy source migration map

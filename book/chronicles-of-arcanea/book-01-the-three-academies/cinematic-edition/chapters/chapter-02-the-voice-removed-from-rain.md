@@ -2,9 +2,9 @@
 title: The voice removed from rain
 chapter: 2
 book: Chronicles of Arcanea — Book 1 cinematic edition
-pov: Mera Tidecrest
+pov: Mera
 movement: The fracture
-status: first-draft
+status: revised-draft
 canon_status: staging
 access: free
 ---
@@ -319,7 +319,7 @@ Mera reached inside her wet coat and removed the letter she had carried for six 
 
 “I planned to refuse your first answer. The evidence was considerate enough to improve my argument.”
 
-Orrel took off his hat. Rain had flattened his hair at the temples. For the first time he looked less like a function of the Athenaeum and more like a tired man standing on a flooded quay while a young practitioner used a narrow clause exactly as written.
+Orrel took off his hat. Rain had flattened his hair at the temples.
 
 “Personal liability is not a dramatic phrase,” he said. “If this sample exposes private content, the harm is yours. If it is lost, you cannot accuse custody of erasing it. If you open it without a second witness, your provisional standing ends. If the source proves dangerous, I will take it under emergency authority and your refusal will be recorded.”
 

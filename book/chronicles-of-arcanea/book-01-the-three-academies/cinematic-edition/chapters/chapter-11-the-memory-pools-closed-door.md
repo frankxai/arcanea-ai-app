@@ -4,7 +4,7 @@ chapter: 11
 book: Chronicles of Arcanea — Book 1 cinematic edition
 pov: Mera
 movement: The measure
-status: first-draft
+status: revised-draft
 canon_status: staging
 access: paid
 ---
@@ -31,7 +31,7 @@ Iven had donated only the peel.
 
 Mera turned the fragment once inside the vessel of her mouth, searching for the clean boundary he had named.
 
-“Return,” Instructor Neris said from the dry edge.
+“Return,” Examiner Neris Vale said from the dry edge.
 
 Mera released.
 

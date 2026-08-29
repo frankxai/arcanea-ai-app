@@ -4,7 +4,7 @@ chapter: 16
 book: Chronicles of Arcanea — Book 1 cinematic edition
 pov: Arion
 movement: The measure
-status: first-draft
+status: revised-draft
 canon_status: staging
 access: paid
 ---
@@ -19,7 +19,7 @@ Arion touched the corner of the terminal, not the image. “Did Lio approve this
 
 The council recorder answered through the wall speaker. “The course incident entered joint safety review.”
 
-“That was not the question.”
+“I asked whether Lio agreed.”
 
 “The image contains no body or identifying mark.”
 
@@ -275,8 +275,8 @@ The hairline descent remained open in the floor.
 
 No one crossed the evidence line. Nemi called the west stair clear from the landing. Emilia clipped a transparent guard over the six exposed conductors without disconnecting them and entered their warm or cold state on the local slate. Mera took the refusal copy in its sealed sleeve and kept the folded meal story separate.
 
-Akamoto lowered a clear bridge shield over the opened floor joint. Its feet rested outside the old seam. He passed numbered wire through both anchors and entered the temporary custody state: Roost local custody; hammer and chamber untouched; joint council retains its remote record only; access requires the local custodian, a structural operator, and an independent witness. No field or tool contact authorized.
+Akamoto lowered a clear shield over the seam and wired both anchors to the custody number. The Roost held the chamber; the council kept its remote record. Reopening required Akamoto, a structural operator, and an independent witness.
 
 Arion withdrew first. Emilia followed, then Mera. Akamoto closed the iron chamber door from the stair and sealed its latch with the same custody number. Through the wired inspection glass, the tool remained visible behind its separate shield.
 
-Behind the clear shield, the hammer's brass pins held the broken handle together. Between them, the wordless shape glowed inside the repair like a signature from which the name had been cut away.
+Behind the inspection glass, brass pins crossed the hammer's broken handle. The wordless shape lit one uneven strip of old ash between them.

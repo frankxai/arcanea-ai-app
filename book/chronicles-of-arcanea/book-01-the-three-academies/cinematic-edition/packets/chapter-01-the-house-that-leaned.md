@@ -6,8 +6,8 @@
 **Visible want:** Keep Slate Row standing until the last residents leave.
 **Opposing want:** His father and neighbors need him to release a structure that is redistributing damage through the entire row.
 **Dramatic question:** Can Arion stop being useful before usefulness becomes another form of harm?
-**Irreversible turn:** He holds the failing house, transfers its load into three adjoining homes, then follows Akamoto's staged release.
-**Persistent cost:** The district survives with visible damage; Arion becomes a hazardous transfer; resonance burn remains in his hands.
+**Irreversible turn:** He holds the failing row, redistributes load across the three affected connected homes, then follows Akamoto's staged release.
+**Persistent cost:** Twenty-One loses its facade, Seventeen settles six inches, and Nineteen loses its front room and most of its roof; Arion becomes a hazardous transfer, and resonance burn remains in his hands.
 **Exit image:** Dust settling into the repaired seam of his mason's hammer.
 
 ## Scene sequence

@@ -4,7 +4,7 @@ chapter: 1
 book: Chronicles of Arcanea — Book 1 cinematic edition
 pov: Arion
 movement: The fracture
-status: first-draft
+status: revised-draft
 canon_status: staging
 access: free
 ---
@@ -281,7 +281,7 @@ His father walked over and took the hammer from Arion's hand. Arion's fingers re
 
 “Eventually.”
 
-“That was not my question.”
+“Now.”
 
 Arion tried. The fingers moved a little. The skin along both palms had blistered in branching lines.
 

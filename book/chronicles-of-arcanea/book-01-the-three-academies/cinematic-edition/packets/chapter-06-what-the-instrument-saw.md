@@ -17,7 +17,7 @@
 |---:|---|---|---|---|
 | 1 | Invoke the agreed stop | The officials claim emergency continuation under the comparison clause | Akamoto names a real building risk and asks Arion whether he can hold until evacuation | Arion chooses a short continuation that becomes institutionally open-ended |
 | 2 | Keep the field material and non-memory | The hall recruits Mera's sealed source and Emilia's mirror into the same pattern | Mera protects private content by breaking custody sequence; Emilia uses the brass release and discovers the mirror continues | Evidence integrity and instrument integrity fail in different directions |
-| 3 | Release without dropping the structure | The buried building answers as if remembering Arion | Arion stops holding all systems, accepts collapse, and wakes after the Academies receive the result | Custody dispute replaces routine intake; the trio share consequence without shared interpretation |
+| 3 | Release without dropping the structure | Buried load and pressure follow existing joint continuity through the open field | Arion stops holding all systems, accepts collapse, and wakes after the Academies receive the result | Custody dispute replaces routine intake; the trio share consequence without shared interpretation |
 
 ## Voice and life
 

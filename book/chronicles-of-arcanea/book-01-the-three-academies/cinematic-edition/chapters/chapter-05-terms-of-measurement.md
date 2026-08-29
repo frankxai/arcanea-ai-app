@@ -4,7 +4,7 @@ chapter: 5
 book: Chronicles of Arcanea — Book 1 cinematic edition
 pov: Arion
 movement: The fracture
-status: first-draft
+status: revised-draft
 canon_status: staging
 access: paid
 ---

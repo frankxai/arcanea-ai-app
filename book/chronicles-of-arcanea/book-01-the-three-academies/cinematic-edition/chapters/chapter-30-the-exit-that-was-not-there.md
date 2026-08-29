@@ -117,7 +117,7 @@ Arion looked at it, then at her face. “Gone?”
 
 The lower row clicked once. No upper shutter moved before it.
 
-Emilia threaded the full surviving free length on the operator-bay side through the common yoke. Nothing remained over the glass. Nothing remained across the chalked joint. The two old white marks remained as evidence of the earlier contact.
+Emilia threaded the full surviving operator-bay length through the common yoke, leaving the glass and chalked joint bare. Only the two white contact marks showed where the cord had crossed.
 
 She raised the yoke by less than a nail. Counterweight tug travelled through the cord and flattened its twist against her palm. The lower rods drew at the floor-slot collar. One current shutter climbed cleanly. Another hesitated between notches. The third tilted across its guide.
 

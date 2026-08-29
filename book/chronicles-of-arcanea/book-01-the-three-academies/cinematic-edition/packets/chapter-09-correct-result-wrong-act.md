@@ -52,8 +52,8 @@ The chapter must work as fiction without an accompanying image or lore note.
 
 ## Continuity and canon
 
-**Locked canon touched:** Prism and Synthesis remain book practices within established elements/Gates; no new Gate, House, or rank
-**Staging continuity touched:** Forge certification and maker-mark practice; council custody model; Emilia's Synthesis-adjacent training
+**Locked canon touched:** House Synthesis exists; no new Element, Gate, House, or rank is introduced
+**Staging continuity touched:** Prism is a Forge interface/material mode; Emilia's Synthesis-adjacent practice, Forge certification and maker-mark practice, and the council custody model remain book staging
 **Prior setups advanced or paid off:** Live-body test; hidden remote mirror; signed intake agreement; late-added brass release; severed unmarked conductor; participant-witness status
 **New setups introduced:** Decontextualized custody-model copy; revocable lab credentials; responsibility statement later used in inquiry
 **Objects/status/injuries carried forward:** Prism conduction through right arm; cuff and relay disassembled as evidence; manual brass release remains on evidence instrument; Renn's burned hand; Arion's requested-witness notice arrives after the ruling

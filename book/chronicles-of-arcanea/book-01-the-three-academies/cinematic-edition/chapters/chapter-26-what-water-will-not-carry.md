@@ -187,7 +187,7 @@ Emilia set the lamp close and lay on one side to sight along the groove. Chalk w
 
 Emilia tilted her head until the yellow cuff almost met her cheek. “They resemble the three traditions on the exterior plate. They are worn, incomplete, and down here.”
 
-“That was not my question.”
+“Do you call them receipt marks?”
 
 “It is the answer I have.”
 

@@ -2,9 +2,9 @@
 title: A vessel at the gate
 chapter: 4
 book: Chronicles of Arcanea — Book 1 cinematic edition
-pov: Mera Tidecrest
+pov: Mera
 movement: The fracture
-status: first-draft
+status: revised-draft
 canon_status: staging
 access: free
 ---

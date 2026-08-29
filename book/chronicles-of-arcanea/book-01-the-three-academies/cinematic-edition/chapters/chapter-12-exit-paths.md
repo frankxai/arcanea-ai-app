@@ -4,7 +4,7 @@ chapter: 12
 book: Chronicles of Arcanea — Book 1 cinematic edition
 pov: Emilia
 movement: The measure
-status: first-draft
+status: revised-draft
 canon_status: staging
 access: paid
 ---
@@ -181,7 +181,7 @@ The manual operator lifted both hands from the wheel. “Do I fail?”
 
 “The tile set fails,” Tavin said. “You found material the instrument missed.”
 
-“That was not my question.”
+“And me?”
 
 He looked at the slate, then at Renn. “The practicum grades safe shutdown. Pass.”
 

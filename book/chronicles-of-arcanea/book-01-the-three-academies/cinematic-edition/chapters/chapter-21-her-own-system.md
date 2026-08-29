@@ -347,4 +347,4 @@ It issued a narrow read-only receipt naming Emilia's revision, Renn's witness ma
 
 Emilia folded neither the receipt nor her inert teaching strip. She held one in each hand.
 
-Behind the locked prism panes, the historical pattern remained. So did the rough brass square beneath it. Its green edge stayed lit around one word, and Emilia's maker mark remained in the visible seam.
+Behind the locked prism panes, the historical pattern lay above the rough brass square. Green light ringed one word on the square; Emilia's maker mark cut through its visible seam.

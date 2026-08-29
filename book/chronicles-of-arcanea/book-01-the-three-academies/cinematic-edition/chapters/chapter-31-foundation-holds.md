@@ -395,7 +395,7 @@ They moved through the gallery at the pace set by his ribs. Emilia carried the f
 
 The first sixteen steps cost him one rest. He asked for it before the rib binding made the choice. Mera set her lamp on level stone and kept her supporting hand at his left elbow. Emilia stood behind them, watching the passage they had just crossed rather than pretending the noises had stopped.
 
-Nothing followed. A loosened chip fell from the turning joint and lay pale-side-up in the lamplight.
+A loosened chip fell from the turning joint and lay pale-side-up in the lamplight.
 
 “Breath?” Emilia asked.
 

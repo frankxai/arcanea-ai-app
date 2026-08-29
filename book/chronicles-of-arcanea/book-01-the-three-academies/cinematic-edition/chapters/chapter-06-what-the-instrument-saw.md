@@ -4,7 +4,7 @@ chapter: 6
 book: Chronicles of Arcanea — Book 1 cinematic edition
 pov: Arion
 movement: The fracture
-status: first-draft
+status: revised-draft
 canon_status: staging
 access: paid
 ---
@@ -119,7 +119,7 @@ Arion pulled the hammerhead from the floor.
 
 Nothing released.
 
-The local ring remained bright around his boots. The east wall stayed inside his shoulder. Somewhere below, the older structure had accepted the test as support and transferred its missing load into the open field.
+The local ring stayed bright around his boots. The east wall held inside his shoulder. Somewhere below, the open field had become a support path for the older structure, and missing load flowed into it.
 
 Akamoto came to the edge of the ring. “Speech?”
 
@@ -189,7 +189,7 @@ The mirror found that word before the officials did. A bright line appeared on t
 
 The four traces aligned.
 
-The mirror assigned no name. It rendered a shape like a wound that had learned to bear weight. On the terminal, the same repaired seam repeated in stone, current, reflected light, and empty joint. Each system bent toward one absent edge.
+The mirror assigned no name. It rendered one irregular gap bearing pressure along four different edges. On the terminal, the hammer's repaired seam repeated in stone, current, reflected light, and empty joint. Each trace narrowed toward the same absent edge.
 
 Every observer station lit.
 
@@ -361,7 +361,7 @@ Akamoto pulled the hammer clear as the ash handle opened at the old seam.
 
 Arion released.
 
-For a fraction of a second, the buried structure answered without passing through him. He felt a vast unfinished movement under the hall, held open long after every hand responsible had gone.
+For a fraction of a second, the buried structure moved without passing the load through him. He felt a vast unfinished movement under the hall, held open long after every visible support had gone.
 
 Then the floor struck his chest.
 

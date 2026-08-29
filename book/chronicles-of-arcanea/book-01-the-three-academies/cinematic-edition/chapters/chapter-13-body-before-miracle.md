@@ -4,7 +4,7 @@ chapter: 13
 book: Chronicles of Arcanea — Book 1 cinematic edition
 pov: Arion
 movement: The measure
-status: first-draft
+status: revised-draft
 canon_status: staging
 access: paid
 ---

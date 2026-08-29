@@ -16,10 +16,10 @@ status: draft-packet
 **Story time / continuity position:** Evening after Chapter 18; Arion has not received Lio, Emilia, or Mera's three records
 **Location:** Roost lower assembly chamber under a narrow tool-preservation window; Arion works alone inside the evidence line while the required custody roles remain visible beyond the inspection glass
 **Visible want by word 500:** Stabilize the opened seam in his father's repaired hammer before its moving mark becomes further evidence, using only ordinary hand tools and the exact contact the custody terms permit
-**Opposing want:** Akamoto, Emilia, and Nemi must preserve the tool, chamber, and Arion without allowing a new field event; the warm intelligence in the stone offers a way to finish the repair by violating the no-field condition without visibly crossing the evidence line
+**Opposing want:** Akamoto, Emilia, and Nemi must preserve the tool, chamber, and Arion without allowing a new field event; a voice self-identifying as Malachar offers a way to finish the repair by violating the no-field condition without visibly crossing the evidence line
 **Dramatic question:** When every lawful helper is also an observer, will Arion accept uncertain shared protection or choose a private method that lets him carry the whole consequence himself?
-**Irreversible turn:** Malachar extends Akamoto's true last-free-path lesson: where no structure has room to release, a willing body can carry the memory of its last movement until a path opens. Arion knowingly uses the method inside his lawful preservation window
-**Persistent cost:** The hammer's trapped strain enters Arion's right forearm, leaving a taut cord at the seam's angle and his right ring and smallest fingers unable to fully extend; a matching pressure answers through the shielded floor joint, and Arion infers he may now be locatable. He learns the speaker is Malachar Lumenbright and conceals the contact and the unauthorized technique
+**Irreversible turn:** The voice describes a method extending Akamoto's true last-free-path lesson: where no structure has room to release, a willing body can carry the memory of its last movement until a path opens. Arion knowingly uses the method inside his lawful preservation window
+**Persistent cost:** The hammer's trapped strain enters Arion's right forearm, leaving a taut cord at the seam's angle and his right ring and smallest fingers unable to fully extend; a later matching pressure occurs through the shielded floor joint, and Arion infers he may now be locatable. He knows only that the voice identified itself as Malachar Lumenbright and conceals the contact and unauthorized technique; identity, location, channel, reach, and causal relation remain unauthenticated
 **Exit image:** The hammer's ash seam lies quiet behind glass while Arion fastens his sleeve one notch tighter over two fingers that no longer straighten
 
 ## Reader experience
@@ -28,7 +28,7 @@ status: draft-packet
 **Pleasure lane:** exact tool repair, the smell of ash and oil, dry argument over tolerances, the relief of being understood without explaining the whole wound
 **Academy/world texture:** Evidence custody can permit conservation without permitting inquiry, field practice, extraction, or removal; witnesses observe state and boundaries rather than claiming access to interior experience
 **Magic in material form:** The pin drift's ring dies too early, warmth moves against the chamber's cooling direction, and ash grain relaxes without pressure before any voice arrives; the forbidden method transfers stored movement from an overconstrained object into a consenting body without invoking a new named Gate or Element
-**Material consequence:** Arion stabilizes the hammer but becomes its hidden support; a buried pressure answers the carried strain, making him fear that the service can now locate his body
+**Material consequence:** Arion stabilizes the hammer but becomes its hidden support; a later matching buried pressure makes him fear, without proving, that a recurring path can locate his body
 **One image the reader should remember a week later:** Arion's bare forearm above a silent hammer seam while everyone beyond the glass sees only a completed ordinary repair
 
 The chapter must work as fiction without an accompanying image or lore note.

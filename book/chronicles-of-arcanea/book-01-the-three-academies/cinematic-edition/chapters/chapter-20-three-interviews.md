@@ -31,7 +31,7 @@ The key was thin enough to disappear behind one finger. Inside its blue length, 
 
 Neris laid the written offer beside it.
 
-Six hours of inquiry custody. One named source reader. Automatic return of the original vial at the custody limit. Every derivative sealed under the same disputed-source restrictions. Mera's dissent attached to any interpretation before circulation. Her participant-witness recognition restored on receipt, with a seat as source reader for the active inquiry.
+The Athenaeum wanted the vial for six hours under one named reader, with automatic return and Mera's dissent attached before any interpretation circulated. In exchange, it would restore her participant-witness recognition and give her a source-reader seat in the inquiry.
 
 The Athenaeum had repaired every obvious defect in its first demand.
 
@@ -163,7 +163,7 @@ A small amber control sat at the lower edge of the table. Mera had seen it when 
 
 “I did not design the service.”
 
-“That was not my question.”
+“Who decided not to tell us?”
 
 “Strategic timing was treated as a risk to independent deliberation.”
 

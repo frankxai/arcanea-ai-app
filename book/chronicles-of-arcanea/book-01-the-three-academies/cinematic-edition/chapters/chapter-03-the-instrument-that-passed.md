@@ -4,7 +4,7 @@ chapter: 3
 book: Chronicles of Arcanea — Book 1 cinematic edition
 pov: Emilia
 movement: The fracture
-status: first-draft
+status: revised-draft
 canon_status: staging
 access: free
 ---
@@ -133,7 +133,7 @@ Renn’s eyes came to her. He had spent eighteen months keeping the relay from b
 
 “Under the specified profiles,” Emilia said, “the residual state cannot injure a wearer or reopen a field.”
 
-“That was not the whole question.”
+“Safe for the wearer, Emilia.”
 
 “It is the whole answer I can support.”
 
