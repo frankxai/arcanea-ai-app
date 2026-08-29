@@ -1,0 +1,303 @@
+# Arcanea cinematic book strategy
+
+**Status:** Active working contract
+**Date:** 2026-08-29
+**Branch:** `codex/arcanea-cinematic-book`
+**Canonical product:** `arcanea.ai/books`
+**Working edition:** Book 1 cinematic edition, derived from *The Three Academies* zero draft
+
+## Task contract
+
+**Scope**
+
+- Recover and rewrite the strongest existing Arcanea Book 1 material around Arion, Mera, Emilia, Headmaster Akamoto, and Malachar.
+- Produce a publication-grade novel, cover, cinematic art set, responsive web reader, free preview, paid edition, and buyer-only Creator's Ledger.
+- Launch the finished edition on `arcanea.ai` through a verified Vercel preview and a human-approved Polar production product.
+
+**Owner**
+
+- Primary: Codex on `codex/arcanea-cinematic-book`.
+- Editorial council: World Architect, Character Psychologist, Fantasy & Sci-Fi Master, Publishing Strategist, Line Editor/Voice Alchemist.
+- Independent release verifier: a reviewer who did not write the assessed slice.
+
+**Owned files**
+
+- `book/chronicles-of-arcanea/book-01-the-three-academies/cinematic-edition/**`
+- `apps/web/app/books/**` only after a hotspot audit
+- book-specific assets under `apps/web/public/books/**`
+- book-specific commerce/entitlement files after the existing Polar and auth contracts are mapped
+- this initiative's files in `planning-with-files/**`
+
+**Non-goals**
+
+- Changing `CANON_LOCKED.md` without Frank's explicit canon approval.
+- Recasting `arcanea.academy`; it remains the World Proof Lab.
+- Replacing the Arcanea platform, Studio, or existing unrelated books.
+- Shipping a cosmetic client-side paywall.
+- Publishing raw chain-of-thought, hidden system prompts, third-party proprietary prompts, secrets, or unlicensed source material.
+- Buying a domain, creating a live Polar product, adding secrets, changing DNS, or promoting production without the relevant human gate.
+
+**Acceptance criteria**
+
+- One canon-fenced Book 1 bible distinguishes LOCKED, book-approved staging, and working invention.
+- A complete, edited novel exists; target 95,000–110,000 words, with length earned by conflict and consequence.
+- Arion, Mera, and Emilia each have independent agency, POV texture, and a consequential choice that changes the ending.
+- The Academy teaches through dramatized practice, failure, cost, consent, release, and repair—not exposition lectures.
+- One rewritten opening unit is free. The remainder is protected by server-verified entitlement.
+- The paid edition includes the finished story, cinematic art, exportable reading formats when verified, and a curated Creator's Ledger.
+- Mobile reading at 375 px and desktop reading both pass accessibility, comprehension, performance, and visual-quality gates.
+- Polar signature verification, idempotent fulfillment, refund/revocation behavior, and account mapping are tested before live checkout.
+- Preview is verified on Vercel; production promotion is a deliberate, reversible, human-approved action.
+
+**Verification**
+
+- Editorial: developmental, continuity, humanizer, sensitivity/originality, proof, and read-aloud passes.
+- Technical: changed-scope lint/type/build, entitlement tests, accessibility, reduced motion, 375 px/desktop visual QA, Core Web Vitals budget.
+- Commerce: valid webhook, invalid signature, replay/idempotency, paid order, refund/revoke, logged-out return, and account mismatch cases.
+- Release: Vercel preview desktop/mobile, live CTA audit, metadata/OG/schema, and rollback proof.
+
+**Rollback**
+
+- Keep the legacy manuscript unchanged as source material.
+- Implement the cinematic edition in new files/routes until migration verification passes.
+- Revert the book-specific commit or route flag; restore the previous Vercel production deployment if a promoted release fails.
+- Disable checkout and retain the free preview if entitlement or fulfillment is uncertain.
+
+## Evidence recovered
+
+- The canonical repository is `frankxai/arcanea-ai-app`; the canonical Vercel project is `arcanea-ai-app`.
+- `arcanea.ai` and `www.arcanea.ai` are attached. Current production is READY.
+- The current public `/books` surface exposes legacy manuscripts and internal development bibles; it is not a valid paid-edition boundary.
+- Book 1 contains 20 legacy chapters and 66,498 words. It is a promising zero draft, not a finished 100–120K novel.
+- The strongest reusable material is the opening Foundation event, Mera's rain-memory arrival, consent-aware training, Hollow Root atmosphere, archive redaction, institutional questioning, and the final Foundation trial.
+- Main contains `@polar-sh/sdk` and a signature-verifying `/api/webhook/polar` endpoint. Fulfillment is intentionally `TODO`; no reader entitlement exists yet.
+- A draft PR adds a cinematic `/story` gateway. It is adjacent work, not the book product, and must be integrated without duplication.
+- `.book` is a real top-level domain; `.books` is not. `arcaneabooks.com` was available at the time of research, but a second brand/domain would dilute launch focus.
+- The machine is currently HOLD for build/media workloads. Text editing is permitted; build, browser loops, and image generation remain blocked until preflight opens.
+
+## Strategic decisions
+
+### 1. Domain
+
+Use `https://arcanea.ai/books` as the canonical library and a stable book route such as:
+
+`https://arcanea.ai/books/the-three-academies`
+
+Why:
+
+- Arcanea already owns the reader's trust, search authority, analytics, auth, project graph, and commerce integration.
+- The `.ai` ending supports the broader AI-native creative-universe positioning; the reading surface itself should feel like a literary publication, not an AI tool landing page.
+- A new domain creates identity, SEO, analytics, entitlement, and operational fragmentation before the book has demand.
+
+Later, `books.arcanea.ai` or `read.arcanea.ai` may redirect to the canonical path if campaign attribution benefits. Do not make a subdomain the source of truth. Do not purchase `arcaneabooks.com` for launch. Reconsider `arcanea.book` only after readership proves the need and trademark/domain review passes.
+
+### 2. Product positioning
+
+Lead with the story:
+
+> Three young creators arrive carrying powers that institutions would rather measure than understand. When a buried Academy root begins remembering what the masters erased, they must decide whether protection without consent is another name for possession.
+
+The durable advantage is Arcanea's moral magic architecture:
+
+- power creates debt;
+- witnesses may refuse;
+- tools cannot perform moral work;
+- repair completes an act;
+- love never authorizes control.
+
+Do not lead with “AI-written,” model counts, prompt engineering, or a technology demonstration. Those are provenance and process signals, not the reader promise.
+
+### 3. Edition and price
+
+Launch one deliberately valuable direct product:
+
+**Founding cinematic edition — €17 one-time**
+
+Included at launch only when complete:
+
+- the finished novel in the premium web reader;
+- verified EPUB/PDF downloads if their typography and accessibility pass;
+- the cover and a restrained cinematic artbook;
+- the curated Creator's Ledger;
+- corrected digital editions and the first art/reader updates.
+
+Free:
+
+- story landing page;
+- prologue plus Chapter 1 or an equivalent 8–12K-word opening movement;
+- 2–3 inspected art plates;
+- honest edition contents and status.
+
+Pricing logic:
+
+- A plain ebook should sit closer to the mainstream €9.99–€12.99 band.
+- €17 is justified only as a direct cinematic bundle, not as an unfinished web novel or ordinary EPUB.
+- Polar's fixed transaction component makes a meaningful bundle price healthier than a very low micro-price.
+- Keep a future €12.99 Reader Edition available as a test, but do not create multiple launch SKUs before demand.
+- Never claim a €100 value without evidence. Let completion, art count, word count, and reader proof establish value.
+
+### 4. Transparency
+
+Create a buyer-only **Creator's Ledger** with optional public excerpts.
+
+It should disclose:
+
+- human creative direction and final editorial responsibility;
+- which model/tool families supported ideation, drafting, editing, verification, and art;
+- the final owned prompt brief for each published asset or chapter pass when safe;
+- skill/workflow names and version/date;
+- source and canon files consulted;
+- asset rights/provenance and transformation notes;
+- what was rejected and why, in concise editorial terms;
+- known limitations and corrections.
+
+It must not disclose:
+
+- chain-of-thought or hidden reasoning;
+- system/developer prompts or provider-confidential instructions;
+- API keys, private data, unpublished third-party text, or unsafe internal paths;
+- an undifferentiated transcript that makes the reader do the editorial work.
+
+The ledger is secondary navigation. The default reader contains only story, chapter controls, unobtrusive notes, and art that earns its place.
+
+### 5. Commerce and access
+
+Use Polar as Merchant of Record with one-time, forever access.
+
+Required design:
+
+1. A signed-in Arcanea account initiates checkout from a server-created session.
+2. Checkout metadata carries a stable internal user ID and edition ID.
+3. `order.paid` is signature-verified and written idempotently to an entitlement table.
+4. The reader checks entitlement server-side. JavaScript state, cookies alone, or a checkout query parameter never grants access.
+5. Refund/revocation events update entitlement without deleting the audit record.
+6. The success route reconciles the order and explains account mismatch without exposing order data.
+7. The free preview remains available when Polar or auth is unavailable.
+
+Live product creation, pricing/tax behavior, terms checkbox, refund policy, webhook secret, and production checkout require human approval.
+
+## Canon and continuity decision register
+
+### Locked and safe
+
+- Lumina and Nero duality; Nero is not evil.
+- Five Elements and Ten Gates.
+- Luminor is a rank, not a species or AI entity inside the fiction.
+- Malachar Lumenbright's fall, imprisonment, tragic nature, and role as the core antagonist.
+- Seven Academy Houses as institutions.
+
+### Approved by the direct story brief for this working edition
+
+- Arion, Mera, and Emilia are the central student trio.
+- They journey into an Academy-centered story with Akamoto as a major teacher/mentor presence.
+- The book explores teaching, practice, magic, and massive challenges with emotional depth.
+
+These are **book-working approvals**, not an automatic edit to `CANON_LOCKED.md`.
+
+### Working continuity pending canon elevation
+
+- Arion inherits the strongest Kael source scenes without a bulk name replacement.
+- Mera inherits the strongest Mira source scenes after a complete voice/agency rewrite.
+- Emilia is Synthesis-adjacent and not an Earth-isekai character in Book 1.
+- Three major Academies hold cross-institutional Houses; Akamoto Roost is a specialist Bonded field annex, not a replacement for all Academy leadership.
+- Akamoto's exact dragon/bond status remains unrevealed in Book 1.
+- The Foundation event damages Arion's home and relationships; casualty count stays unspecified until approved.
+- “Confluence” is a feared research classification, not a triumphal chosen-one title.
+
+### Naming/IP gate
+
+“Avatar” and “bending” may be generic words, but their combined fantasy use creates strong franchise association. Public title, cover, metadata, and sales copy will avoid those terms until a trademark/originality review is complete. The manuscript may instead foreground Arcanean terms such as shaping, resonance, Gate-work, Foundation, prismwork, bond law, and restoration.
+
+## Series architecture
+
+Use a five-book reader-facing arc. Keep the Ten Gates as the deeper cosmological progression across the series rather than forcing one novel per Gate.
+
+1. **Book 1 — Foundation / custody:** Who owns a miracle when everyone is afraid?
+2. **Book 2 — Memory / truth:** What truth should be released, and who pays?
+3. **Book 3 — Bond / force:** Can power be trained without becoming military property?
+4. **Book 4 — Synthesis / personhood:** When does a tool become a person?
+5. **Book 5 — Source / freedom:** Can love refuse control at cosmic scale?
+
+This preserves the Ten-Gate depth while giving readers five clean commercial promises. A later series may expand individual Gates without making the debut carry ten-book commitment language.
+
+## Book 1 production shape
+
+- Target: 95K–110K words.
+- Structure: prologue or cold open, 30–34 chapters, epilogue optional.
+- POV: Arion approximately 50%; Mera approximately 25%; Emilia approximately 25%. Akamoto appears through their perception, with at most two short interludes if essential.
+- Malachar: one or two brief contacts. He names pain accurately and offers a morally serious wrong answer.
+- Romantic pressure: subtext only in Book 1. No triangle, no satellite heroine, no destiny bond.
+- Ending: Arion refuses institutional ownership but accepts witnessed limits, repair, and training. The trio chooses one another without becoming a frictionless “found family.”
+
+## Experience thesis
+
+The web reader is a quiet literary instrument surrounded by cinematic thresholds.
+
+- Reading pages prioritize typographic comfort, progress, place, privacy, and low-distraction navigation.
+- Cinematic art marks acts, locations, and irreversible story turns; it does not interrupt every chapter.
+- One flagship interaction lets the reader move between “story,” “world note,” and “making of” for an approved moment without losing reading position.
+- Motion reveals relationships or spatial transitions; reduced motion shows the complete composition immediately.
+- Audio is off by default and must be user-initiated. No autoplay video or ambient sound.
+- Mobile is primary. Desktop gains wider art direction and marginalia, not a longer line length.
+
+## Production phases and gates
+
+### Phase A — Foundation
+
+- Lock this strategy, page spec, scene brief, and Book 1 bible.
+- Produce chapter-level beat sheet and character conflict grid.
+- Resolve title shortlist and naming/IP review.
+- Gate: no manuscript drafting until the continuity ledger has no release-blocking ambiguity in the current act.
+
+### Phase B — Manuscript
+
+- Rewrite in act-sized batches, preserving only earned legacy sentences/scenes.
+- Run developmental review after each act and a separate voice/humanizer pass after meaning is stable.
+- Maintain word count, POV balance, setup/payoff, consent/debt, injury, artifact, and timeline ledgers.
+- Gate: no public “complete book” claim before all chapters exist and the ending survives developmental review.
+
+### Phase C — Visual identity
+
+- Audit existing approved Mera/Emilia/Arion/Akamoto anchors.
+- Lock faces, silhouettes, materials, and palette before scene generation.
+- Generate cover concepts only after opening, midpoint, and climax are stable.
+- Produce a restrained 12–18 plate launch set; inspect every result at full size and on mobile crop.
+- Gate: no generic fantasy, anime-bright, spandex, grimdark, accidental text, malformed anatomy, or unlogged provenance.
+
+### Phase D — Product
+
+- Implement the edition route and free preview with static content first.
+- Add server-side entitlement and Polar checkout after the data/auth contract is reviewed.
+- Add Creator's Ledger as a separate, calm layer.
+- Gate: inaccessible paid content must not be present in client bundles or public static payloads.
+
+### Phase E — Release
+
+- Run full editorial, canon, legal/naming, accessibility, performance, commerce, and visual gates.
+- Deploy one Vercel preview for the coherent release slice.
+- Obtain human approvals for canon elevation, product/price, terms/refund, secrets, and production promotion.
+- Promote, verify live `www.arcanea.ai` and canonical metadata, then monitor the first paid-order path.
+
+## Human gates
+
+- Canon elevation or change to `CANON_LOCKED.md`.
+- Final title and cover brand identity.
+- Legal/IP clearance and rights representation.
+- Polar organization/product creation, billing/tax behavior, refund terms, and secrets.
+- Database migration and production entitlement rollout.
+- DNS/domain purchase.
+- Production promotion and first live sale.
+
+## Current risks
+
+1. Canon: central characters and forward magic vocabulary are staging.
+2. Originality: combined “Avatar/bending” language invites immediate comparison.
+3. Editorial: the legacy draft is short and under-conflicted for the desired premium promise.
+4. Product: current public routes expose material that conflicts with a paid-edition boundary.
+5. Commerce: webhook verification exists; fulfillment, idempotency, refunds, and entitlements do not.
+6. Operations: the machine is HOLD for builds and media, and other valuable tasks must not be archived or interrupted.
+7. Claims: current `/books` metadata claims seven books and 486K+ words without distinguishing finished publication from development corpus.
+
+## Next bounded action
+
+Create the Book 1 conflict grid and 32-chapter master outline, then rewrite the opening movement only after the editorial council signs off on its character promises. UI implementation waits for the machine build gate.
