@@ -2,10 +2,23 @@
 import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import type { Metadata } from 'next';
+import { CinematicBookOverview } from '@/components/books/cinematic-book-overview';
 import { getBookRoot } from '@/lib/content/book-path';
 import { countChapterWords, isChapterMarkdown } from '@/lib/saga/chapter-files';
+import {
+  CINEMATIC_BOOK_DESCRIPTION,
+  CINEMATIC_BOOK_ID,
+  CINEMATIC_BOOK_TITLE,
+  CINEMATIC_CHAPTER_DIR,
+  getCinematicBookStats,
+  getCinematicChapter,
+} from '@/lib/books/cinematic-edition';
+import {
+  getCinematicBookAccess,
+  isCinematicCheckoutConfigured,
+} from '@/lib/books/polar-access';
 const BOOK_ROOT = getBookRoot();
 
 export const dynamic = 'force-dynamic';
@@ -25,6 +38,13 @@ interface BookDef {
 }
 
 const BOOKS: Record<string, BookDef> = {
+  [CINEMATIC_BOOK_ID]: {
+    title: CINEMATIC_BOOK_TITLE,
+    subtitle: 'Book One of the Chronicles of Arcanea',
+    description: CINEMATIC_BOOK_DESCRIPTION,
+    status: 'in-progress',
+    dir: CINEMATIC_CHAPTER_DIR,
+  },
   book1: {
     title: 'The Three Academies',
     subtitle: 'Book One of the Arcanea Saga',
@@ -309,6 +329,30 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function BookOverviewPage({ params }: PageProps) {
   const { bookId } = await params;
+
+  if (bookId === 'book1' || bookId === 'chronicles-book1') {
+    redirect(`/books/${CINEMATIC_BOOK_ID}`);
+  }
+
+  if (bookId === CINEMATIC_BOOK_ID) {
+    const stats = await getCinematicBookStats();
+    const firstChapter = stats.chapters[0]
+      ? await getCinematicChapter(stats.chapters[0].id, true)
+      : null;
+    const access = await getCinematicBookAccess();
+
+    return (
+      <CinematicBookOverview
+        chapters={stats.chapters}
+        wordCount={stats.wordCount}
+        readTime={stats.readTime}
+        openingContent={firstChapter?.content ?? ''}
+        access={access}
+        checkoutConfigured={isCinematicCheckoutConfigured()}
+      />
+    );
+  }
+
   const book = BOOKS[bookId];
   if (!book) notFound();
 

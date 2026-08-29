@@ -486,7 +486,7 @@ export function ChapterReader({
         aria-hidden={!showToc}
       >
         <div className="px-5">
-          <p className={`text-[10px] uppercase tracking-widest mb-4 ${isLight ? 'text-gray-400' : 'text-white/25'}`}>
+          <p className={`mb-4 text-[10px] tracking-[0.08em] ${isLight ? 'text-gray-400' : 'text-white/25'}`}>
             In this chapter
           </p>
           <nav className="space-y-0.5">
@@ -568,7 +568,7 @@ export function ChapterReader({
                 onClick={handleSaveNote}
                 className="px-3 py-1.5 text-xs bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)] rounded-lg hover:bg-[var(--arc-brand-atlantean-teal)]/15 border border-[var(--arc-brand-atlantean-teal)]/20"
               >
-                Save Note
+                Save note
               </button>
             </div>
           </div>

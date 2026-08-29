@@ -1,12 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { readdir, readFile } from 'fs/promises';
 import { join } from 'path';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import type { Metadata } from 'next';
 import matter from 'gray-matter';
 import { ChapterReader } from '@/components/saga/chapter-reader';
+import { CinematicPaywall } from '@/components/books/cinematic-paywall';
 import { getBookRoot } from '@/lib/content/book-path';
 import { countChapterWords, isChapterMarkdown } from '@/lib/saga/chapter-files';
+import {
+  CINEMATIC_BOOK_DESCRIPTION,
+  CINEMATIC_BOOK_ID,
+  CINEMATIC_BOOK_TITLE,
+  getCinematicChapter,
+} from '@/lib/books/cinematic-edition';
+import {
+  getCinematicBookAccess,
+  isCinematicCheckoutConfigured,
+} from '@/lib/books/polar-access';
 const BOOK_ROOT = getBookRoot();
 
 export const dynamic = 'force-dynamic';
@@ -218,6 +229,25 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { bookId, chapterId } = await params;
+
+  if (bookId === CINEMATIC_BOOK_ID) {
+    const chapter = await getCinematicChapter(chapterId, false);
+    if (!chapter) return { title: 'Chapter Not Found' };
+
+    return {
+      title: `${chapter.title} — ${CINEMATIC_BOOK_TITLE}`,
+      description: chapter.access === 'free'
+        ? `Read Chapter ${chapter.number}, “${chapter.title},” from ${CINEMATIC_BOOK_TITLE}.`
+        : CINEMATIC_BOOK_DESCRIPTION,
+      robots: chapter.access === 'free'
+        ? { index: true, follow: true }
+        : { index: false, follow: true },
+      alternates: {
+        canonical: `/books/${CINEMATIC_BOOK_ID}/${chapter.id}`,
+      },
+    };
+  }
+
   const chapter = await loadChapter(bookId, chapterId);
   if (!chapter) return { title: 'Chapter Not Found' };
 
@@ -237,6 +267,49 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ChapterPage({ params }: PageProps) {
   const { bookId, chapterId } = await params;
+
+  if (bookId === 'book1' || bookId === 'chronicles-book1') {
+    redirect(`/books/${CINEMATIC_BOOK_ID}`);
+  }
+
+  if (bookId === CINEMATIC_BOOK_ID) {
+    const summary = await getCinematicChapter(chapterId, false);
+    if (!summary) notFound();
+
+    if (summary.access === 'paid') {
+      const access = await getCinematicBookAccess();
+      if (access.status !== 'granted') {
+        return (
+          <CinematicPaywall
+            chapterNumber={summary.number}
+            chapterTitle={summary.title}
+            chapterId={summary.id}
+            access={access}
+            checkoutConfigured={isCinematicCheckoutConfigured()}
+          />
+        );
+      }
+    }
+
+    const chapter = await getCinematicChapter(chapterId, true);
+    if (!chapter) notFound();
+
+    return (
+      <ChapterReader
+        bookId={bookId}
+        bookTitle={CINEMATIC_BOOK_TITLE}
+        chapterNumber={chapter.number}
+        totalChapters={chapter.totalChapters}
+        title={chapter.title}
+        content={chapter.content}
+        wordCount={chapter.wordCount}
+        readTime={chapter.readTime}
+        prev={chapter.prev}
+        next={chapter.next}
+      />
+    );
+  }
+
   const chapter = await loadChapter(bookId, chapterId);
   if (!chapter) notFound();
 

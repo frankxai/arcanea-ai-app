@@ -56,6 +56,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // ── Books ──────────────────────────────────────────────
     { url: `${baseUrl}/books`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/books/the-last-free-path`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/books/the-last-free-path/01-the-house-that-leaned`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.82 },
+    { url: `${baseUrl}/books/the-last-free-path/02-the-voice-removed-from-rain`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.82 },
+    { url: `${baseUrl}/books/the-last-free-path/03-the-instrument-that-passed`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.82 },
+    { url: `${baseUrl}/books/the-last-free-path/04-a-vessel-at-the-gate`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.82 },
 
     // ── Creation Tools ─────────────────────────────────────
     { url: `${baseUrl}/studio`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },

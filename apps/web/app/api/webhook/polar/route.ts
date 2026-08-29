@@ -33,10 +33,12 @@ export async function POST(request: Request): Promise<Response> {
 
   switch (event.type) {
     case "order.paid":
-      // TODO: grant access for the paid order. Do not invent entitlements here.
+      // Paid-book access is reconciled against Polar Orders by external customer
+      // ID on every protected request. The signed webhook is intentionally an
+      // idempotent acknowledgement, not a second entitlement authority.
       break;
     case "customer.state_changed":
-      // TODO: sync Polar customer state to the app user. Do not invent mapping here.
+      // No local customer state is cached for book access.
       break;
     default:
       break;
