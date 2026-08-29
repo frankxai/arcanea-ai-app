@@ -2,15 +2,18 @@
 /**
  * Local contract gate for /story — no Next runtime required.
  */
-import { readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const webRoot = join(here, "../..");
+const repoRoot = join(webRoot, "../..");
 const page = readFileSync(join(here, "page.tsx"), "utf8");
 const content = readFileSync(join(here, "story-content.ts"), "utf8");
 const css = readFileSync(join(here, "story.module.css"), "utf8");
+const bookIdPage = readFileSync(join(here, "../books/[bookId]/page.tsx"), "utf8");
+const chapterPage = readFileSync(join(here, "../books/[bookId]/[chapterId]/page.tsx"), "utf8");
 
 const requiredHrefs = [
   "/books",
@@ -41,7 +44,57 @@ const covers = [
 
 const booksPage = readFileSync(join(here, "../books/page.tsx"), "utf8");
 const artbookBlock = content.slice(content.indexOf("export const ARTBOOK"));
-const artbookHrefs = [...artbookBlock.matchAll(/href:\s*"([^"]+)"/g)].map((m) => m[1]);
+const artbookTiles = [...artbookBlock.matchAll(/title:\s*"([^"]+)"\s*,\s*href:\s*"([^"]+)"/g)].map(
+  (m) => ({ title: m[1], href: m[2] }),
+);
+
+function normTitle(value) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function parseCatalog(src) {
+  const catalog = new Map();
+  const re = /['"]([a-z0-9-]+)['"]:\s*\{\s*title:\s*['"]([^'"]+)['"]/g;
+  for (const match of src.matchAll(re)) {
+    catalog.set(match[1], match[2]);
+  }
+  return catalog;
+}
+
+const liveBooks = new Map([...parseCatalog(bookIdPage), ...parseCatalog(chapterPage)]);
+
+function chapterFiles(bookId) {
+  const dirs = [join(repoRoot, "book", bookId, "chapters"), join(repoRoot, "book", "chapters", bookId)];
+  const files = [];
+  for (const dir of dirs) {
+    if (!existsSync(dir)) continue;
+    files.push(...readdirSync(dir).filter((name) => name.endsWith(".md")));
+  }
+  return files;
+}
+
+function liveRouteFor(href) {
+  const parts = href.split("/").filter(Boolean);
+  if (parts[0] !== "books" || parts.length < 2) return null;
+  const bookId = parts[1];
+  const rest = parts.slice(2);
+  const staticPage = join(webRoot, "app", ...parts, "page.tsx");
+  if (existsSync(staticPage)) {
+    return { bookId, kind: "static", rest };
+  }
+  if (rest.length === 0 && liveBooks.has(bookId)) {
+    return { bookId, kind: "book", rest };
+  }
+  if (rest.length === 1 && liveBooks.has(bookId)) {
+    const slug = rest[0];
+    const files = chapterFiles(bookId);
+    const hasChapter = files.some(
+      (name) => name === `${slug}.md` || name.startsWith(`${slug}.`) || name.startsWith(`${slug}-`),
+    );
+    if (hasChapter) return { bookId, kind: "chapter", rest };
+  }
+  return null;
+}
 
 let failed = 0;
 function check(name, ok, detail = "") {
@@ -77,11 +130,26 @@ check("uses next/image", page.includes('from "next/image"'));
 check("reduced-motion gate", css.includes("prefers-reduced-motion"));
 check("no navbar edit in this slice", !page.includes("Navbar"));
 check("inbound /story from /books", /href=["']\/story["']/.test(booksPage));
-check("ARTBOOK has at least two live titles", artbookHrefs.length >= 2);
-for (const href of artbookHrefs) {
+check("library index is not a live ARTBOOK route", liveRouteFor("/books") === null && liveRouteFor("/books/") === null);
+check("ARTBOOK has at least two live titles", artbookTiles.length >= 2);
+for (const tile of artbookTiles) {
+  const href = tile.href;
+  const notIndex = href.startsWith("/books/") && href !== "/books" && href !== "/books/";
+  check(`ARTBOOK href is not library index: ${tile.title} → ${href}`, notIndex);
+  const route = notIndex ? liveRouteFor(href) : null;
+  check(`ARTBOOK href is a live book route: ${tile.title} → ${href}`, Boolean(route));
+  if (!route) continue;
+  const catalogTitle = liveBooks.get(route.bookId);
   check(
-    `ARTBOOK href is a book route not library index: ${href}`,
-    href.startsWith("/books/") && href !== "/books",
+    `ARTBOOK title maps to catalog ${route.bookId}`,
+    Boolean(catalogTitle) && normTitle(tile.title) === normTitle(catalogTitle),
+    catalogTitle ? `${tile.title} vs ${catalogTitle}` : "missing catalog title",
+  );
+  const chapters = chapterFiles(route.bookId);
+  check(
+    `ARTBOOK book is readable now: ${route.bookId}`,
+    chapters.length > 0,
+    `${chapters.length} chapter file(s)`,
   );
 }
 
