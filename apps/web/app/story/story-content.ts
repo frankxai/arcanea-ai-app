@@ -57,11 +57,6 @@ export const ARTBOOK = [
     href: "/books/lumara-valle-de-los-destellos/print",
   },
   {
-    src: "/images/books/las-tierras-de-luz-cover-v2.png",
-    title: "Las Tierras de Luz",
-    href: "/books",
-  },
-  {
     src: "/images/books/song-of-van-linh-cover.png",
     title: "The Girl Who Heard the River",
     href: "/books/song-of-van-linh/01-subject-7",

@@ -36,9 +36,12 @@ const stills = [
 
 const covers = [
   join(webRoot, "public/images/books/lumara-valle-de-los-destellos-cover-v2.png"),
-  join(webRoot, "public/images/books/las-tierras-de-luz-cover-v2.png"),
   join(webRoot, "public/images/books/song-of-van-linh-cover.png"),
 ];
+
+const booksPage = readFileSync(join(here, "../books/page.tsx"), "utf8");
+const artbookBlock = content.slice(content.indexOf("export const ARTBOOK"));
+const artbookHrefs = [...artbookBlock.matchAll(/href:\s*"([^"]+)"/g)].map((m) => m[1]);
 
 let failed = 0;
 function check(name, ok, detail = "") {
@@ -73,6 +76,14 @@ for (const file of [...stills, ...covers]) {
 check("uses next/image", page.includes('from "next/image"'));
 check("reduced-motion gate", css.includes("prefers-reduced-motion"));
 check("no navbar edit in this slice", !page.includes("Navbar"));
+check("inbound /story from /books", /href=["']\/story["']/.test(booksPage));
+check("ARTBOOK has at least two live titles", artbookHrefs.length >= 2);
+for (const href of artbookHrefs) {
+  check(
+    `ARTBOOK href is a book route not library index: ${href}`,
+    href.startsWith("/books/") && href !== "/books",
+  );
+}
 
 if (failed > 0) {
   console.error(`\n${failed} check(s) failed`);
