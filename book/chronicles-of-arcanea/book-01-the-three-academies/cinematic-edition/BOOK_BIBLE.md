@@ -323,10 +323,10 @@ The book needs pleasure, vanity, humor, craft, appetite, family residue, and bor
 
 ### Movement IV — The refusal (approximately 78–100%)
 
-- Inside the Root, Arion's concealed borrowed method causes a physical separation that leaves Mera alone with forbidden memories and Emilia holding a predictive map.
+- Inside the lower structure, Arion's concealed borrowed method causes a physical separation that leaves Mera alone with memories she has refused to enter and Emilia beside a pre-existing operator interface retaining physical lead/current route lines.
 - Space responds to what each character refuses to release.
 - Malachar names Arion's guilt and offers relief through surrender of choice.
-- The trio cannot win through combined force. They must distribute the load, limit what truth leaves, destroy predictive certainty, and build a manual exit the Root can accept.
+- The trio cannot win through combined force. They must distribute the load, limit what truth leaves, destroy the retained physical lead-state layer before it substitutes for renewed consent, and build a manual exit that works under the observed lower-structure conditions.
 - Arion asks rather than forces; Mera chooses contextual silence after repairing the boundary she violated; Emilia leaves a critical variable unmeasured because knowing it would violate someone she has learned to love.
 - The evidence returns incomplete but unowned.
 - The council cannot claim clean victory or erase its involvement.

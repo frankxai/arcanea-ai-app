@@ -271,26 +271,26 @@ No chapter exists solely to explain lore, demonstrate a lesson, travel between l
 
 ### 26. What water will not carry — Mera
 
-**Want:** Trace the missing voice through the Root without opening every memory it has absorbed.
-**Opposition:** The Root offers total recall as the shortest path. It also carries memories of students who never consented to become evidence.
-**Turn:** Mera follows the pressure around memories rather than their content and discovers the missing voice belongs to a witness who asked the Academies to release the Root.
-**Cost:** She chooses not to learn the witness's identity, losing the clean accusation that could restore her standing.
+**Want:** Trace the missing voice through the basin water without opening the human memories present in it.
+**Opposition:** Content and identity access would produce the cleanest proof, but the overlapping human traces carry no known permission; a shape-only method leaves the result contestable.
+**Turn:** Mera follows pressure around memory boundaries and observes the recurring absence geometry beside an outward release-state. The path crosses three unauthenticated receipt-form impressions that visually correspond to Academy traditions and ends at a retained return. This establishes correlation only—not a requester, witness, source, recipient, institutional understanding, denial, decisionmaker, or living structure.
+**Cost:** She chooses not to seek source identity or open content, losing the clean accusation that could strengthen a later review petition; the result cannot restore her standing by itself.
 **Setup/payoff:** Ethical non-access; truth can be structurally sufficient and personally incomplete.
 
 ### 27. The borrowed method — Emilia
 
-**Want:** Find the operator interface that kept the Root forced open and keep the descent team on one route.
-**Opposition:** Emilia's aid detects a second movement living inside Arion—the forbidden extension he has concealed. It is functioning as both an escape path and a beacon. Arion denies the signal because releasing it may collapse the passage under Mera.
-**Turn:** Arion uses the borrowed method again before Emilia can expose its cost. The Root follows it into the passage, shears the route between them, and leaves Mera beyond a closing memory current while Emilia and Arion are thrown against the operator chamber.
-**Cost:** Mera is isolated with the memories she has sworn not to enter. Emilia's aid absorbs the Root's predictive map while saving Arion's location. The trio's trust failure has become architecture, not argument.
-**Setup/payoff:** The Chapter 19 bargain causes the descent rupture; the predictive map becomes Emilia's final temptation in Chapter 30.
+**Want:** Follow the manual cord's changed tension to the pre-existing operator interface and keep the descent team on one route.
+**Opposition:** The interface's one-joint lead row involuntarily correlates a thin route line with the wall seam beside Arion when his injured side catches; the line cannot establish body content, cause, or identity. Arion answers a narrower question than Emilia asks. Mera must view the retained-return bar from the far ledge, and the lead row takes the central-slab-return position before the lower current state changes.
+**Turn:** After Mera is safely on the far ledge, Arion uses the concealed borrowed method in an unauthorized attempt to preserve her possible return. The counter-motion holds the slab for one observed interval, then travels through the connected seam to the retained-return bar. Aligned slots open, the slab retracts, and a branch returns through Arion's contact as the route shears between them. Mera remains beyond the memory current while Emilia and Arion are thrown against the operator chamber.
+**Cost:** Mera is isolated with the memories she has sworn not to enter. The pre-existing interface retains physical lead/current route lines that offer only a provisional cue to Arion's position; Emilia must verify him by lamp and touch. The trio's trust failure has become architecture, not argument.
+**Setup/payoff:** The Chapter 19 bargain causes the descent rupture; the retained lead-state layer becomes Emilia's final temptation in Chapter 30.
 
 ### 28. The weight everyone gave him — Arion
 
-**Want:** Release the borrowed movement before it draws the Root fully through him and find a way back to Mera.
-**Opposition:** The Root transfers abandoned institutional loads into Arion: failed protocols, injured students, withheld reports, and the belief that he must carry them to earn survival. Emilia can see what he hid but cannot remove it without his account of how it entered.
-**Turn:** Malachar returns and offers to take the burden permanently if Arion lets him close the field of choice around it. Arion gives Emilia the complete account of both contacts and asks her to witness his refusal rather than repair him.
-**Cost:** Emilia no longer has to guess, but the truth confirms that Arion made her instrument and body part of a risk she did not consent to. She helps him reach Mera without offering forgiveness, and the Root destabilizes as the borrowed movement leaves him.
+**Want:** Keep the unresolved returned branch from worsening the damage in his forearm and ribs, and recover a visible route toward Mera.
+**Opposition:** The returned branch tightens when the lower structure shifts, while Arion's guilt makes every damaged route feel like a load he should carry. Emilia can see what he hid but cannot help him establish a safe limit without his complete account of how the movement entered and returned. The branch's source, intent, and relationship to the lower structure remain unverified.
+**Turn:** Malachar offers permanent relief if Arion lets him close the field of choice around the burden. Arion gives Emilia the complete account of both contacts, refuses the offer, and asks her to witness a bounded stabilization rather than repair or take the movement from him.
+**Cost:** Emilia no longer has to guess, but the truth confirms that Arion made her observation and body part of a risk she did not consent to. She helps him stabilize the returned branch and regain line of sight toward Mera without offering forgiveness. The carried movement remains in him, the lower structure continues shifting, and no source claim is established.
 **Setup/payoff:** Chosen vulnerability; Malachar's relief through control.
 
 ### 29. The memory that could convict them — Mera
@@ -303,11 +303,11 @@ No chapter exists solely to explain lore, demonstrate a lesson, travel between l
 
 ### 30. The exit that was not there — Emilia
 
-**Want:** Give the Root a release path it can choose while preserving the evidence Mera protected.
-**Opposition:** Every available interface was designed to keep the Root useful. Her aid now carries a perfect predictive map that could prove the Academies' actions, reveal the memory Mera protected, and anticipate every refusal—but using it would make consent another forecast.
-**Turn:** Emilia destroys the predictive layer and converts the remaining instrument from observer to disposable hinge. Arion shapes an imperfect load-bearing joint from the logic of his repaired tool; Mera contributes a water interval she deliberately does not record. The Root must choose to move through a device none of them can claim as sole author.
-**Cost:** The instrument, her sponsor relationship, and her claim to the system are destroyed. The Root opens only partially because Arion is still holding it.
-**Setup/payoff:** Predicted refusal is no refusal; manual release and shared authorship replace Emilia's control; freedom cannot be made frictionless.
+**Want:** Convert the buried operator interface into a release path while preserving the evidence Mera protected.
+**Opposition:** Every available interface was designed to keep the retained system useful. Its lead-state layer now holds retained route lines that could help prove how the Academies physically routed around protected memory boundaries and declared stop points—but following its optimized forecast would substitute an old mechanism's path for renewed human consent.
+**Turn:** Emilia destroys the lead-state layer and converts the interface's remaining mechanism from observer to disposable hinge. Arion shapes an imperfect load-bearing joint from the logic of his repaired tool; Mera contributes a water interval she deliberately does not record. The retained system must be able to move through a device none of them can claim as sole author.
+**Cost:** The retained route-state proof, the interface, and Emilia's remaining path to reclaim Forge standing through the discovery are destroyed. The release opens only partially because Arion is still holding the carried movement.
+**Setup/payoff:** A route around a declared stop is not consent; manual release and shared authorship replace Emilia's control; freedom cannot be made frictionless.
 
 ### 31. Foundation holds — Arion
 
