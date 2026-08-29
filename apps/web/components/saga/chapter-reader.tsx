@@ -7,7 +7,6 @@ import dynamic from 'next/dynamic';
 import { ReadingToolbar } from './reading-toolbar';
 
 const ChatMarkdown = dynamic(() => import('@/components/chat/chat-markdown'), {
-  ssr: false,
   loading: () => <div className="animate-pulse h-4 bg-white/[0.04] rounded w-3/4" />,
 });
 
@@ -196,6 +195,8 @@ export function ChapterReader({
   const [showToc, setShowToc] = useState(false);
   const [activeHeading, setActiveHeading] = useState('');
   const tocHeadings = useMemo(() => extractHeadings(content), [content]);
+  const tocPanelRef = useRef<HTMLElement | null>(null);
+  const tocReturnFocusRef = useRef<HTMLElement | null>(null);
 
   // Notes (existing functionality preserved)
   const [showNotes, setShowNotes] = useState(false);
@@ -258,13 +259,14 @@ export function ChapterReader({
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
+      if (showToc) return;
+      if (e.target instanceof HTMLElement && e.target.closest('a, button, input, textarea, select, [role="dialog"]')) return;
       if (e.key === 'ArrowLeft' && prev) window.location.href = `/books/${bookId}/${prev.id}`;
       if (e.key === 'ArrowRight' && next) window.location.href = `/books/${bookId}/${next.id}`;
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [bookId, prev, next]);
+  }, [bookId, prev, next, showToc]);
 
   /* ---------------------------------------------------------------- */
   /*  TOC IntersectionObserver                                         */
@@ -286,6 +288,41 @@ export function ChapterReader({
     }
     return () => observer.disconnect();
   }, [tocHeadings]);
+
+  useEffect(() => {
+    if (!showToc) return;
+    const panel = tocPanelRef.current;
+    if (!panel) return;
+
+    const focusable = Array.from(
+      panel.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'),
+    );
+    focusable[0]?.focus();
+
+    const handleDialogKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setShowToc(false);
+        return;
+      }
+      if (event.key !== 'Tab' || focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleDialogKey);
+    return () => {
+      document.removeEventListener('keydown', handleDialogKey);
+      tocReturnFocusRef.current?.focus();
+    };
+  }, [showToc]);
 
   /* ---------------------------------------------------------------- */
   /*  Fetch reactions                                                  */
@@ -314,6 +351,7 @@ export function ChapterReader({
   }, []);
 
   const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (showToc) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
     const dy = e.changedTouches[0].clientY - touchStartY.current;
 
@@ -322,16 +360,7 @@ export function ChapterReader({
 
     if (dx < -60 && next) window.location.href = `/books/${bookId}/${next.id}`;
     if (dx > 60 && prev) window.location.href = `/books/${bookId}/${prev.id}`;
-  }, [bookId, prev, next]);
-
-  const handleTap = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    // Only process clicks directly on the overlay div, not bubbled events from interactive elements
-    if ((e.target as HTMLElement).closest('a,button,textarea,input')) return;
-    const x = e.clientX;
-    const width = window.innerWidth;
-    if (x < width * 0.2 && prev) window.location.href = `/books/${bookId}/${prev.id}`;
-    if (x > width * 0.8 && next) window.location.href = `/books/${bookId}/${next.id}`;
-  }, [bookId, prev, next]);
+  }, [bookId, prev, next, showToc]);
 
   /* ---------------------------------------------------------------- */
   /*  Preference mutations                                             */
@@ -395,6 +424,15 @@ export function ChapterReader({
     } catch { /* silent */ }
   }, [bookId, chapterSlug, isBookmarked]);
 
+  const handleTocToggle = useCallback(() => {
+    if (!showToc) {
+      tocReturnFocusRef.current = document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    }
+    setShowToc((visible) => !visible);
+  }, [showToc]);
+
   /* ---------------------------------------------------------------- */
   /*  Notes (existing)                                                 */
   /* ---------------------------------------------------------------- */
@@ -433,7 +471,6 @@ export function ChapterReader({
       className={`min-h-screen ${s.bg} ${s.text} transition-colors duration-300`}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      onClick={handleTap}
     >
       {/* Progress bar */}
       <div className="fixed top-0 left-0 right-0 h-0.5 z-50">
@@ -478,48 +515,60 @@ export function ChapterReader({
         </article>
       </div>
 
-      {/* TOC slide-in panel */}
-      <div
-        className={`fixed top-0 right-0 h-full w-64 z-30 transition-transform duration-300 ${
-          showToc ? 'translate-x-0' : 'translate-x-full'
-        } ${isLight ? 'bg-white/95 border-l border-gray-200' : 'bg-[var(--arc-cosmic-void)]/95 border-l border-white/[0.07]'} backdrop-blur-xl pt-20 pb-24 overflow-y-auto`}
-        aria-hidden={!showToc}
-      >
-        <div className="px-5">
-          <p className={`mb-4 text-[10px] tracking-[0.08em] ${isLight ? 'text-gray-400' : 'text-white/25'}`}>
-            In this chapter
-          </p>
-          <nav className="space-y-0.5">
-            {tocHeadings.map((h) => (
-              <a
-                key={h.id}
-                href={`#${h.id}`}
-                onClick={() => setShowToc(false)}
-                className={`block text-[12px] py-1 transition-colors truncate ${
-                  h.level === 3 ? 'pl-3' : ''
-                } ${
-                  activeHeading === h.id
-                    ? 'text-[var(--arc-brand-atlantean-teal)] font-medium'
-                    : isLight
-                    ? 'text-gray-400 hover:text-gray-700'
-                    : 'text-white/25 hover:text-white/50'
-                }`}
-              >
-                {h.text}
-              </a>
-            ))}
-          </nav>
-        </div>
-      </div>
-
-      {/* TOC backdrop */}
       {showToc && (
-        <button
-          type="button"
-          className="fixed inset-0 z-20 cursor-default"
-          onClick={() => setShowToc(false)}
-          aria-label="Close table of contents"
-        />
+        <>
+          <aside
+            ref={tocPanelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="chapter-toc-title"
+            className={`fixed right-0 top-0 z-50 h-full w-72 max-w-[88vw] overflow-y-auto border-l pb-24 pt-6 backdrop-blur-xl ${
+              isLight ? 'border-gray-200 bg-white/95' : 'border-white/[0.07] bg-[var(--arc-cosmic-void)]/95'
+            }`}
+          >
+            <div className="px-5">
+              <div className="mb-7 flex items-center justify-between gap-4">
+                <h2 id="chapter-toc-title" className={`text-sm font-medium ${isLight ? 'text-gray-800' : 'text-white/80'}`}>
+                  In this chapter
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => setShowToc(false)}
+                  className={`flex h-10 w-10 items-center justify-center rounded-full ${isLight ? 'text-gray-500 hover:bg-black/5' : 'text-white/50 hover:bg-white/10'}`}
+                  aria-label="Close chapter contents"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <nav className="space-y-0.5" aria-label="Chapter sections">
+                {tocHeadings.map((h) => (
+                  <a
+                    key={h.id}
+                    href={`#${h.id}`}
+                    onClick={() => setShowToc(false)}
+                    className={`block py-2 text-[13px] transition-colors ${
+                      h.level === 3 ? 'pl-3' : ''
+                    } ${
+                      activeHeading === h.id
+                        ? 'font-medium text-[var(--arc-brand-atlantean-teal)]'
+                        : isLight
+                        ? 'text-gray-500 hover:text-gray-800'
+                        : 'text-white/38 hover:text-white/70'
+                    }`}
+                  >
+                    {h.text}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          </aside>
+          <button
+            type="button"
+            className="fixed inset-0 z-[45] cursor-default bg-black/20"
+            onClick={() => setShowToc(false)}
+            aria-label="Close chapter contents"
+          />
+        </>
       )}
 
       {/* Chapter navigation */}
@@ -595,7 +644,7 @@ export function ChapterReader({
         onFontFamilyToggle={handleFontFamilyToggle}
         onLineHeightCycle={handleLineHeightCycle}
         onBookmarkToggle={handleBookmarkToggle}
-        onTocToggle={() => setShowToc((v) => !v)}
+        onTocToggle={handleTocToggle}
       />
     </div>
   );

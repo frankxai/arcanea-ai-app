@@ -14,6 +14,24 @@ declare module '@vercel/blob' {
     contentType?: string;
     addRandomSuffix?: boolean;
   }
+  interface GetResult {
+    statusCode: number;
+    stream: ReadableStream<Uint8Array> | null;
+    blob: {
+      url: string;
+      pathname: string;
+      contentType: string;
+      contentDisposition: string;
+      cacheControl: string;
+      etag: string;
+      size: number;
+      uploadedAt: Date;
+    };
+  }
+  export function get(
+    urlOrPathname: string,
+    options: { access: 'public' | 'private'; token?: string },
+  ): Promise<GetResult | null>;
   export function list(options: { prefix?: string; limit?: number }): Promise<ListResult>;
   export function put(pathname: string, body: Buffer | ReadableStream | string, options: PutOptions): Promise<BlobResult>;
 }

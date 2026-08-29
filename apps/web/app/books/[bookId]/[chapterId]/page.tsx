@@ -13,11 +13,13 @@ import {
   CINEMATIC_BOOK_ID,
   CINEMATIC_BOOK_TITLE,
   getCinematicChapter,
+  isCinematicEditionReleased,
 } from '@/lib/books/cinematic-edition';
 import {
   getCinematicBookAccess,
   isCinematicCheckoutConfigured,
 } from '@/lib/books/polar-access';
+import { canReadCinematicChapter } from '@/lib/books/cinematic-access-contract';
 const BOOK_ROOT = getBookRoot();
 
 export const dynamic = 'force-dynamic';
@@ -233,15 +235,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (bookId === CINEMATIC_BOOK_ID) {
     const chapter = await getCinematicChapter(chapterId, false);
     if (!chapter) return { title: 'Chapter Not Found' };
+    const released = isCinematicEditionReleased();
 
     return {
       title: `${chapter.title} — ${CINEMATIC_BOOK_TITLE}`,
       description: chapter.access === 'free'
         ? `Read Chapter ${chapter.number}, “${chapter.title},” from ${CINEMATIC_BOOK_TITLE}.`
         : CINEMATIC_BOOK_DESCRIPTION,
-      robots: chapter.access === 'free'
+      robots: released && chapter.access === 'free'
         ? { index: true, follow: true }
-        : { index: false, follow: true },
+        : { index: false, follow: false, nocache: true },
       alternates: {
         canonical: `/books/${CINEMATIC_BOOK_ID}/${chapter.id}`,
       },
@@ -278,7 +281,7 @@ export default async function ChapterPage({ params }: PageProps) {
 
     if (summary.access === 'paid') {
       const access = await getCinematicBookAccess();
-      if (access.status !== 'granted') {
+      if (!canReadCinematicChapter(summary.access, access.status)) {
         return (
           <CinematicPaywall
             chapterNumber={summary.number}

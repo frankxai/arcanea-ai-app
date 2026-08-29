@@ -5,6 +5,7 @@ import {
   CINEMATIC_BOOK_ID,
   CINEMATIC_BOOK_TITLE,
   CINEMATIC_EDITION_PRICE,
+  isCinematicEditionReleased,
 } from '@/lib/books/cinematic-edition';
 
 interface CinematicPaywallProps {
@@ -24,6 +25,7 @@ export function CinematicPaywall({
 }: CinematicPaywallProps) {
   const signedOut = access.status === 'signed-out';
   const verifying = access.status === 'unavailable';
+  const released = isCinematicEditionReleased();
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#06080d] px-6 py-20 text-[#f4efe4]">
@@ -39,7 +41,9 @@ export function CinematicPaywall({
           </p>
           <h1 className="mt-4 font-display text-4xl leading-tight md:text-5xl">{chapterTitle}</h1>
           <p className="mt-8 max-w-xl font-serif text-lg leading-8 text-white/65">
-            The free opening ends after Chapter 4. The complete founding edition includes all 32 chapters, the responsive reader, and the documented production ledger as it is approved for release.
+            {released
+              ? 'The free opening ends after Chapter 4. The complete founding edition includes all 32 chapters, the responsive reader, EPUB and PDF ownership files, the cinematic artbook, and the documented production ledger.'
+              : 'This chapter belongs to the in-revision edition. Sales and paid access remain closed until the title, canon, art, ownership files, accessibility, and commerce gates are approved.'}
           </p>
 
           <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">

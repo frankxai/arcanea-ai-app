@@ -45,6 +45,10 @@ the-last-free-path/
 
 `manifest.json` records edition ID, manuscript revision, publication date, file hashes, byte sizes, format versions, cover asset ID, art asset IDs, rights status, accessibility check, and approval receipts. The server exposes downloads only after the same Polar access verification used for paid chapters.
 
+Release-mode artifact builds refuse a dirty git worktree and record both the source commit and a deterministic manuscript-content hash. Draft builds may run from a dirty tree but mark that state visibly in the manifest.
+
+Release files are uploaded to a private Vercel Blob store under `editions/the-last-free-path/book-01-founding-cinematic/`. The application authenticates the Arcanea account, verifies the live Polar order, fetches the allow-listed private pathname server-side, and streams it with an attachment header. Neither public blob URLs nor user-supplied pathnames are accepted.
+
 # Commerce activation gate
 
 Before setting `CINEMATIC_BOOK_SALES_ENABLED=true` in preview or production:
@@ -55,5 +59,7 @@ Before setting `CINEMATIC_BOOK_SALES_ENABLED=true` in preview or production:
 - EPUB/PDF/artbook files exist and open correctly;
 - reader, checkout, confirmation, refund denial, ledger, and downloads pass desktop/mobile/accessibility checks;
 - Polar product name, €17 one-time price, refund terms, tax handling, and receipt copy are reviewed by the human creator;
+- live Polar Orders, exact product ID, exact book/edition metadata, and refund state remain the entitlement authority for the first release; an outage locks protected access rather than granting it;
 - production secrets are configured through Vercel, never committed;
+- the private Blob store is connected, files match `manifest.json`, and `CINEMATIC_BOOK_DOWNLOADS_ENABLED=true` is set only after file QA;
 - rollback is defined as setting `CINEMATIC_BOOK_SALES_ENABLED=false` while preserving existing buyer verification and free chapters.

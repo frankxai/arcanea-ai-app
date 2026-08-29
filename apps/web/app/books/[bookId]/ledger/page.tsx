@@ -6,6 +6,10 @@ import {
   CINEMATIC_BOOK_TITLE,
   CINEMATIC_EDITION_ID,
 } from '@/lib/books/cinematic-edition';
+import {
+  areCinematicDownloadsEnabled,
+  CINEMATIC_DOWNLOADS,
+} from '@/lib/books/downloads';
 import { getCinematicBookAccess } from '@/lib/books/polar-access';
 
 export const dynamic = 'force-dynamic';
@@ -46,6 +50,8 @@ export default async function LedgerPage({ params }: LedgerPageProps) {
     );
   }
 
+  const downloadsEnabled = areCinematicDownloadsEnabled();
+
   return (
     <main className="min-h-screen bg-[#f1ede3] text-[#211f1a]">
       <header className="border-b border-black/12 bg-[#0a0e13] px-6 py-16 text-[#f5f0e6]">
@@ -71,6 +77,33 @@ export default async function LedgerPage({ params }: LedgerPageProps) {
         </aside>
 
         <div className="space-y-16">
+          <section>
+            <p className="font-mono text-xs tracking-[0.08em] text-[#78603b]">Edition files</p>
+            <h2 className="mt-3 font-display text-3xl">Keep the book</h2>
+            <p className="mt-5 leading-8 text-black/65">
+              Buyer files are served from private storage only after the same live purchase check that opens paid chapters.
+            </p>
+            {downloadsEnabled ? (
+              <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+                {Object.entries(CINEMATIC_DOWNLOADS).map(([id, asset]) => (
+                  <li key={id}>
+                    <a
+                      href={`/api/books/downloads/${id}`}
+                      className="flex h-full items-center justify-between gap-4 border border-black/12 px-5 py-4 text-sm text-black/72 transition hover:border-black/30 hover:bg-white/45"
+                    >
+                      <span>{asset.label}</span>
+                      <span aria-hidden="true">↓</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-6 border-l-2 border-[#9c7b45] pl-5 text-sm leading-7 text-black/56">
+                The EPUB, reading PDFs, and cinematic artbook stay unavailable until their final render, accessibility, rights, and file-integrity checks pass.
+              </p>
+            )}
+          </section>
+
           <section>
             <p className="font-mono text-xs tracking-[0.08em] text-[#78603b]">01 · Human story decisions</p>
             <h2 className="mt-3 font-display text-3xl">The governing choice</h2>

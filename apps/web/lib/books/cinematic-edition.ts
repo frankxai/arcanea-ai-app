@@ -13,6 +13,10 @@ export const CINEMATIC_EDITION_ID = 'book-01-founding-cinematic';
 export const CINEMATIC_EDITION_PRICE = '€17';
 export const FREE_CHAPTER_COUNT = 4;
 
+export function isCinematicEditionReleased(): boolean {
+  return process.env.CINEMATIC_BOOK_PUBLICATION_STATE === 'released';
+}
+
 export const CINEMATIC_BOOK_DESCRIPTION =
   'After one impossible act saves a street and breaks the trust beneath it, a young mason is taken into a joint Academy inquiry where every lesson is also a claim on his future. Arion, Mera, and Emilia must decide whether power can be taught without becoming property.';
 

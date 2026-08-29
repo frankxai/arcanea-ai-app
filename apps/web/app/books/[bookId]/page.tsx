@@ -14,6 +14,7 @@ import {
   CINEMATIC_CHAPTER_DIR,
   getCinematicBookStats,
   getCinematicChapter,
+  isCinematicEditionReleased,
 } from '@/lib/books/cinematic-edition';
 import {
   getCinematicBookAccess,
@@ -317,6 +318,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const book = BOOKS[bookId];
   if (!book) return { title: 'Book Not Found' };
 
+  if (bookId === CINEMATIC_BOOK_ID) {
+    const released = isCinematicEditionReleased();
+    return {
+      title: `${CINEMATIC_BOOK_TITLE} — Chronicles of Arcanea`,
+      description: released
+        ? CINEMATIC_BOOK_DESCRIPTION
+        : `An in-revision preview of ${CINEMATIC_BOOK_TITLE}.`,
+      robots: released
+        ? { index: true, follow: true }
+        : { index: false, follow: false, nocache: true },
+      alternates: { canonical: `/books/${CINEMATIC_BOOK_ID}` },
+    };
+  }
+
   return {
     title: `${book.title} -- The Arcanea Saga`,
     description: book.description,
@@ -349,6 +364,7 @@ export default async function BookOverviewPage({ params }: PageProps) {
         openingContent={firstChapter?.content ?? ''}
         access={access}
         checkoutConfigured={isCinematicCheckoutConfigured()}
+        released={isCinematicEditionReleased()}
       />
     );
   }

@@ -18,6 +18,7 @@ interface CinematicBookOverviewProps {
   openingContent: string;
   access: BookAccessState;
   checkoutConfigured: boolean;
+  released: boolean;
 }
 
 function openingParagraphs(content: string): string[] {
@@ -46,6 +47,7 @@ export function CinematicBookOverview({
   openingContent,
   access,
   checkoutConfigured,
+  released,
 }: CinematicBookOverviewProps) {
   const hasAccess = access.status === 'granted';
   const opening = openingParagraphs(openingContent);
@@ -65,7 +67,7 @@ export function CinematicBookOverview({
         <div className="relative mx-auto grid min-h-[78svh] max-w-7xl items-center gap-14 pt-12 lg:grid-cols-[0.86fr_1.14fr] lg:gap-20">
           <div>
             <p className="font-mono text-xs tracking-[0.13em] text-[#c8ad75]">
-              Book one · founding cinematic edition
+              {released ? 'Book one · founding cinematic edition' : 'Book one · private edition preview'}
             </p>
             <h1 className="mt-6 max-w-xl font-display text-5xl font-semibold leading-[0.98] tracking-[-0.035em] sm:text-6xl lg:text-7xl">
               {CINEMATIC_BOOK_TITLE}
@@ -103,7 +105,9 @@ export function CinematicBookOverview({
               )}
             </div>
             <p className="mt-5 text-xs leading-5 text-white/35">
-              Chapters 1–{FREE_CHAPTER_COUNT} are free. Purchase access is tied to your Arcanea account and verified by Polar.
+              {released
+                ? `Chapters 1–${FREE_CHAPTER_COUNT} are free. Purchase access is tied to your Arcanea account and verified by Polar.`
+                : `Chapters 1–${FREE_CHAPTER_COUNT} are available for review. Title, art, publication, and sales approval remain pending.`}
             </p>
           </div>
 
@@ -185,23 +189,27 @@ export function CinematicBookOverview({
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="font-mono text-xs tracking-[0.12em] text-[#bda46f]">The complete edition</p>
-            <h2 className="mt-4 font-display text-4xl leading-tight">The story stays first.</h2>
+            <h2 className="mt-4 font-display text-4xl leading-tight">{released ? 'The story stays first.' : 'The planned release package.'}</h2>
             <p className="mt-6 max-w-xl leading-8 text-white/60">
-              One purchase opens the complete novel in the adaptive reader. A separate Creator’s Ledger documents story decisions, sources, material model contributions, editorial changes, and art provenance without exposing private reasoning or interrupting the fiction.
+              {released
+                ? 'One purchase opens the complete novel in the adaptive reader. A separate Creator’s Ledger documents story decisions, sources, material model contributions, editorial changes, and art provenance without exposing private reasoning or interrupting the fiction.'
+                : 'When the edition passes title, canon, art, file, accessibility, and commerce review, one purchase will open the novel, ownership files, artbook, and a separate public-safe Creator’s Ledger. Sales remain closed during revision.'}
             </p>
           </div>
           <div className="border border-white/12 bg-white/[0.025] p-7 sm:p-9">
             <div className="flex items-end justify-between gap-6">
               <div>
-                <p className="text-sm text-white/45">Founding cinematic edition</p>
+                <p className="text-sm text-white/45">{released ? 'Founding cinematic edition' : 'Planned founding edition'}</p>
                 <p className="mt-2 font-display text-4xl">{CINEMATIC_EDITION_PRICE}</p>
               </div>
-              <span className="text-sm text-white/35">One-time</span>
+              <span className="text-sm text-white/35">{released ? 'One-time' : 'Target price'}</span>
             </div>
             <ul className="mt-7 space-y-3 border-t border-white/10 pt-7 text-sm leading-6 text-white/62">
               <li>Complete 32-chapter novel</li>
               <li>Responsive desktop and mobile reading modes</li>
-              <li>Buyer-only production ledger as release evidence is approved</li>
+              <li>Reflowable EPUB and typeset screen and print PDFs</li>
+              <li>Cinematic artbook with rights-cleared narrative plates at release</li>
+              <li>Buyer-only production ledger with verified release evidence</li>
               <li>Account-based access with refund-aware verification</li>
             </ul>
             <div className="mt-8">

@@ -62,7 +62,7 @@ export function ReadingToolbar({
 }: ToolbarProps) {
   const isLight = theme === 'light' || theme === 'sepia';
 
-  const btnBase = `flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-150 active:scale-95 ${
+  const btnBase = `flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-all duration-150 active:scale-95 sm:h-9 sm:w-9 ${
     isLight
       ? 'text-gray-600 hover:bg-black/10 hover:text-gray-900'
       : 'text-white/50 hover:bg-white/10 hover:text-white/90'
@@ -74,12 +74,14 @@ export function ReadingToolbar({
 
   return (
     <div
-      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-40 transition-all duration-300 ${
+      className={`fixed bottom-3 left-1/2 z-40 max-w-[calc(100vw-1rem)] -translate-x-1/2 transition-all duration-300 sm:bottom-6 ${
         toolbarVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
       }`}
     >
       <div
-        className={`flex items-center gap-0.5 px-3 py-2 rounded-2xl border shadow-elevation-3 backdrop-blur-xl ${
+        role="toolbar"
+        aria-label="Reading controls"
+        className={`flex max-w-full items-center gap-0.5 overflow-x-auto rounded-2xl border px-2 py-2 shadow-elevation-3 backdrop-blur-xl sm:px-3 ${
           isLight
             ? 'bg-white/80 border-black/10'
             : 'bg-black/60 border-white/10'
@@ -87,6 +89,7 @@ export function ReadingToolbar({
       >
         {/* Theme toggle */}
         <button
+          type="button"
           onClick={onThemeCycle}
           className={btnBase}
           title={`Theme: ${theme}`}
@@ -118,6 +121,7 @@ export function ReadingToolbar({
 
         {/* Font size controls */}
         <button
+          type="button"
           onClick={onFontSizeDown}
           disabled={fontSize === 14}
           className={`${btnBase} disabled:opacity-30 disabled:cursor-not-allowed text-xs font-bold`}
@@ -129,6 +133,7 @@ export function ReadingToolbar({
           {FONT_SIZE_LABELS[fontSize]}
         </span>
         <button
+          type="button"
           onClick={onFontSizeUp}
           disabled={fontSize === 30}
           className={`${btnBase} disabled:opacity-30 disabled:cursor-not-allowed text-sm font-bold`}
@@ -137,26 +142,29 @@ export function ReadingToolbar({
           A<sup>+</sup>
         </button>
 
-        <div className={divider} />
+        <div className="hidden items-center sm:flex">
+          <div className={divider} />
 
-        {/* Font family toggle */}
-        <button
-          onClick={onFontFamilyToggle}
-          className={`${btnBase} text-xs font-medium`}
-          aria-label={`Font: ${fontFamily}`}
-          title={fontFamily === 'serif' ? 'Switch to sans-serif' : 'Switch to serif'}
-        >
-          {fontFamily === 'serif' ? 'Aa' : 'Aa'}
-          <span className="sr-only">{fontFamily}</span>
-        </button>
+          {/* Font family toggle */}
+          <button
+            type="button"
+            onClick={onFontFamilyToggle}
+            className={`${btnBase} text-xs font-medium`}
+            aria-label={`Font: ${fontFamily}`}
+            title={fontFamily === 'serif' ? 'Switch to sans-serif' : 'Switch to serif'}
+          >
+            Aa
+            <span className="sr-only">{fontFamily}</span>
+          </button>
 
-        {/* Line height cycle */}
-        <button
-          onClick={onLineHeightCycle}
-          className={`${btnBase} flex-col gap-[2px]`}
-          aria-label={`Line spacing: ${lineHeight}`}
-          title={`Line spacing: ${lineHeight}`}
-        >
+          {/* Line height cycle */}
+          <button
+            type="button"
+            onClick={onLineHeightCycle}
+            className={`${btnBase} flex-col gap-[2px]`}
+            aria-label={`Line spacing: ${lineHeight}`}
+            title={`Line spacing: ${lineHeight}`}
+          >
           {lineHeight === 'compact' && (
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" d="M3 7h18M3 12h18M3 17h18" />
@@ -173,12 +181,14 @@ export function ReadingToolbar({
               <path strokeLinecap="round" d="M3 5h18M3 12h18M3 19h18" />
             </svg>
           )}
-        </button>
+          </button>
+        </div>
 
         <div className={divider} />
 
         {/* Bookmark / reaction */}
         <button
+          type="button"
           onClick={onBookmarkToggle}
           className={`${btnBase} ${isBookmarked ? 'text-[var(--arc-brand-atlantean-teal)]' : ''} relative`}
           aria-label={isBookmarked ? 'Remove bookmark' : 'Bookmark chapter'}
@@ -231,6 +241,7 @@ export function ReadingToolbar({
           <>
             <div className={divider} />
             <button
+              type="button"
               onClick={onTocToggle}
               className={`${btnBase} ${showToc ? (isLight ? 'bg-black/10 text-gray-900' : 'bg-white/15 text-white') : ''}`}
               aria-label="Toggle table of contents"
