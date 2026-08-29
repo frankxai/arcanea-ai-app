@@ -177,19 +177,19 @@ No chapter exists solely to explain lore, demonstrate a lesson, travel between l
 **Want:** Refuse a council protocol that would reopen the intake pattern under controlled conditions.
 **Opposition:** The council can truthfully cite both Lio's worsened injury and the newly discovered buried field as evidence that the unknown pattern threatens every student at the Roost. Mera wants conditions; Emilia wants to expose the mirror feed; Akamoto supports refusal but cannot erase collective risk.
 **Turn:** Arion says no before anyone agrees on a safer alternative. The Foundation beneath the chamber answers the refusal, opening a hairline descent into the Hollow Root.
-**Cost:** A dormant field crosses the Roost perimeter and marks Arion's tool with the same redaction pattern Mera found.
-**Midpoint:** The Root is not responding to power. It is responding to an unfinished act.
+**Cost:** An unauthenticated buried response crosses the Roost perimeter and marks Arion's tool with the same redaction pattern Mera found.
+**Midpoint:** The event follows a refusal-status transmission through active joint continuity. Identity, life, motive, and relation to an unfinished act remain unproven.
 **Exit image:** The wordless shape of an erased signature glowing inside the tool's repaired seam.
 
 ## Movement III — The record
 
 **Range:** Chapters 17–24 · approximately 23–26K
 **Promise:** Separation and defensible private deals force each protagonist to define what they will not trade for safety.
-**Turn:** The Hollow Root opens under witness and reveals that the Academies helped maintain its dangerous forced state.
+**Turn:** A buried wall opens under witness and exposes a joint three-Academy authority plate behind six-year uncut exterior work. Prior institutional contact is established; purpose, authorship, forced-state theory, and causation remain open.
 
 ### 17. An absence with edges — Mera
 
-**Want:** Prove the Root mark and archive redaction share a source.
+**Want:** Test whether the tool mark and public archive redactions share a source without claiming a match the evidence cannot authenticate.
 **Opposition:** The Athenaeum grants access only if Mera surrenders her sealed vial and agrees that the resulting interpretation belongs to the Academy.
 **Turn:** She refuses the content bargain and maps physical redaction cuts across catalogues, proving a coordinated removal without revealing a memory.
 **Cost:** The archive suspends her witness standing for obstructing a safety inquiry.
@@ -197,49 +197,49 @@ No chapter exists solely to explain lore, demonstrate a lesson, travel between l
 
 ### 18. The wind terrace — Emilia
 
-**Want:** Determine why the Root and her instrument share a restoration failure without replaying Arion's data.
+**Want:** Determine whether the course record and her instrument use related retention-return logic without replaying Arion's data or authenticating the buried response.
 **Opposition:** Emilia has no lab access and only the training aid, partial logs, and the field sequence Lio remembers from his failed rescue trial. Lio wants the sequence recorded because he still intends to earn his rescue license; Akamoto has ordered him away from the inquiry while he heals.
 **Attachment beat:** Mera and Emilia bring Lio food on the wind terrace. Lio makes them walk the exercise with cups, bandages, and a broken weather vane, then insists that his injury not become proof that he should lose his future. Mera enjoys being corrected. Emilia stays after her usefulness ends.
-**Turn:** The three prove the shared pattern without using Arion's signal: both systems were forced to hold a state after their operators left, skipping release and repair. Lio identifies the second route as a live Root service line rather than an exercise error.
-**Cost:** The result implicates a cross-Academy protocol, including the Forge sponsor who trained Emilia, and gives Lio information the Roost cannot safely let him act on.
-**Setup/payoff:** The danger is maintained, not ancient mystery alone; Lio contributes operational knowledge that will save people in Chapter 22.
+**Turn:** Lio's authored route sequence establishes an active unlisted retention-return line. Emilia recognizes a protocol family without assigning its destination, owner, motive, or relation to the possible Hollow Root recurrence.
+**Cost:** The result places a current unlisted procedure beneath an injured student's course record but remains too incomplete for Lio or Emilia to use as proof against an institution.
+**Setup/payoff:** Active procedure replaces ancient-mystery assumption without proving maintenance of the danger; Lio's route knowledge will save people in Chapter 22.
 
 ### 19. The man in the warm stone — Arion
 
 **Want:** Repair the mark on his tool alone before it becomes further evidence against him.
 **Opposition:** Warmth arrives inside stone with no physical source, and Malachar speaks as someone who understands the exhaustion of holding what others refuse.
 **Turn:** Malachar recognizes Akamoto's legitimate “last free path” lesson, then extends it into a forbidden application: if a structure has no free path left, a willing body can carry the memory of its last movement long enough to force one open. He tells Arion the Academies need his consent only until they can redefine him as a public danger.
-**Cost:** The extension works on the marked tool, but the tool's trapped strain enters Arion's forearm and the Root can now feel where he is. Arion conceals the contact because the warning is proving true and the help is something no teacher offered.
-**Setup/payoff:** Malachar builds from true teaching rather than replacing it; relief arrives through self-sacrifice; the hidden cost prevents harm and deepens the connection in Chapter 22; the secret is disclosed in Chapter 28.
+**Cost:** The extension works on the marked tool, but its trapped strain enters Arion's forearm and a matching pressure answers through the shielded joint. Arion fears the recurring path can locate him, though identity, source, life, and intent remain unauthenticated. He conceals the contact because the warning is proving true and the help is something no teacher offered.
+**Setup/payoff:** Malachar builds from true teaching rather than replacing it; relief arrives through self-sacrifice; the hidden cost prevents harm and may deepen the recurrence in Chapter 22; the secret is disclosed in Chapter 28.
 
 ### 20. Three interviews — Mera
 
 **Want:** Keep the trio's accounts from being converted into one institutional narrative.
 **Opposition:** Each Academy offers a private, defensible deal: treatment and home repair for Arion, archive access for Mera, restored lab authority for Emilia.
-**Turn:** Mera realizes the interviews are synchronized to make each believe the others have accepted. Afraid that Arion is about to be transferred, she reads one fragment from the sealed channel she promised not to access. It reveals the timing key and lets her interrupt the synchronized offers.
+**Turn:** Mera realizes the interviews are synchronized to make each believe the others have accepted. Afraid that Arion is about to be transferred, she accesses one previously unaccessed interval of the embodied intake trace in her palm, correlated with Arion's refusal, after promising the trace would remain unread. It reveals the timing key and lets her interrupt the offers; she self-seals the derived cup while the rain-memory vial remains sealed.
 **Cost:** The intervention helps, but Arion recognizes where the knowledge came from. Mera protected his custody choice by violating a memory boundary, and he no longer trusts her restraint.
 **Setup/payoff:** Mera can be ethically wrong for loving reasons; Chapters 23, 26, and 29 become repair rather than repeated proof of correctness.
 
 ### 21. Her own system — Emilia
 
-**Want:** Regain control of the custody model built from her data and insert an explicit refusal path.
-**Opposition:** Her sponsor offers full authority over the system if she signs the existing intake result as valid. With control, she could protect Arion; by signing, she legitimizes the breach.
-**Turn:** Emilia signs responsibility for causing the breach but refuses validity of the consent model, separating accountability from endorsement.
-**Cost:** She gains temporary access and immediately loses ownership when the sponsor removes her credentials. She leaves one manual exit in the model before lockout.
-**Setup/payoff:** Responsibility without control; manual exit becomes evidence in the council record.
+**Want:** Use one council-authorized, model-specific session to distinguish present withdrawal from accidental signal loss without erasing incident evidence.
+**Opposition:** The council separates its offer into corrective responsibility, technical occurrence, and consent-validity/present custody suitability. Emilia may sign or refuse each position, but the temporary authority ends with the session. Renn is her former sponsor and the credentialed bench administrator, not the owner of her decision.
+**Turn:** Emilia preserves accidental-loss evidence while barring fresh placement, activates Arion's Chapter 16 refusal as a current withdrawn state, signs corrective responsibility, affirms the technical occurrence, and refuses the consent-validity/present-suitability attestation.
+**Cost:** The temporary credential closes. Renn cancels his earlier credential-closure appeal so the revision remains Emilia's rather than becoming former-sponsor interference; her original instrument and the model remain inaccessible.
+**Setup/payoff:** Responsibility without institutional control; present withdrawal and manual user action become part of the council record without validating custody.
 
 ### 22. When the route moved — Arion
 
-**Want:** Reach the Roost service court after the Root opens beneath an active cross-Academy inquiry and cuts off a student group.
-**Opposition:** The official route is collapsing, the inquiry team prioritizes the measuring rig that may explain the breach, and Arion's marked arm is beginning to echo the structure's trapped movement. Each protagonist values a different rescue order.
-**Turn:** Lio, confined to the wind terrace, recognizes the moving service line and relays the one route the adults have mistaken for sealed. Mera identifies which memory-vessels contain living consent claims; Emilia makes every available exit state visible; Arion uses Malachar's forbidden extension to carry the route's trapped movement into his body and force it open.
-**Cost:** Every person escapes and the measuring rig is lost. The borrowed movement remains inside Arion after the route closes, leaving a Root-shaped strain that ordinary Foundation practice cannot release. The council calls the rescue humane and strategically damaging.
-**Setup/payoff:** Lio acts rather than serving as an injury symbol; teamwork is negotiated difference, not perfect synchronization; Malachar's help saves lives while making Arion easier for the Root to reach.
+**Want:** Reach the Roost service court after an ordinary cistern-and-brace failure collapses the active inquiry route and cuts off five people.
+**Opposition:** The official route is gone, the west return is moving, two living-claim vessels and a passive rig remain below under separate owners, and Arion's prior forbidden strain has not released. Each participant controls a different rescue fact or object.
+**Turn:** Lio, confined to the wind terrace, recognizes the moving service line and relays the one route the adults have mistaken for sealed. Nemi and Iven identify their own living-claim vessels and choose to carry them; Mera verifies spoken labels and recommends abandonment of the institutional derivatives and duplicate case; Emilia makes every available exit state visible; Arion uses Malachar's forbidden extension to carry the route's trapped movement into his body and force it open.
+**Cost:** Every person escapes after Pell authorizes release of the passive rig, which is lost with four institutional derivatives and one duplicate case. The borrowed movement remains inside Arion after the route closes, leaving a branching hand, forearm, and rib strain of unauthenticated source. The council calls the rescue humane and strategically damaging.
+**Setup/payoff:** Lio acts rather than serving as an injury symbol; teamwork is negotiated difference, not perfect synchronization; Malachar's help saves lives while creating a possible recurring path through Arion that remains inference rather than proof.
 
 ### 23. The sealed report — Mera
 
-**Want:** Make the rescue and Root evidence public enough that no Academy can erase it.
-**Opposition:** Akamoto seals the report because it identifies vulnerable students, exposes the Roost perimeter, and would trigger immediate military custody.
+**Want:** Make the rescue and buried-response evidence public enough that no Academy can erase it.
+**Opposition:** Akamoto seals the report because it identifies vulnerable students, exposes the Roost perimeter, and would trigger immediate containment custody.
 **Conflict where both are right:** Public evidence constrains power; premature publication makes people targets.
 **Turn:** Before he seals the report, Akamoto states that banning Emilia's aid contributed to Lio's injury and changes Roost field procedure. He does not ask Lio to absolve him. Mera signs as witness to both the error and the seal, creating a visible record that a person—not an anonymous process—made each decision.
 **Cost:** The public receives no evidence yet, Mera's name becomes attached to institutional silence she despises, and Arion still will not let her witness his private state after Chapter 20.
@@ -247,11 +247,11 @@ No chapter exists solely to explain lore, demonstrate a lesson, travel between l
 
 ### 24. A manual door — Emilia
 
-**Want:** Build a descent interface that lets the Root accept or refuse contact without measuring Arion.
-**Opposition:** The Academies demand automatic containment if the Root response exceeds threshold; Akamoto refuses a device that can trap a living field; Arion distrusts every sensor.
-**Turn:** Emilia removes the measurement layer entirely and makes the door report only its own open/closed state. The Root opens before the containment team is ready.
-**Cost:** The opening exposes a buried Academy seal and forces an immediate witnessed descent before the field closes again.
-**Movement turn:** The institutions can no longer claim the Root is an external anomaly.
+**Want:** Build a descent interface that offers the unauthenticated buried response a bounded contact path without measuring Arion.
+**Opposition:** The Academies demand automatic containment above a movement threshold; Akamoto refuses a device that can close across a possibly occupied interface; Arion distrusts every sensor or proxy built around him.
+**Turn:** Emilia removes the measurement and automatic-closure layer and makes the manual door report only its own leaf state. The buried wall opens before the containment team is admitted.
+**Cost:** The opening exposes one joint plate bearing three Academy authority marks and starts returning while everyone remains outside.
+**Movement turn:** The institutions can no longer sustain a purely external-origin claim. Identity, cause, motive, and the plate's purpose remain open.
 **Exit image:** A door opening inward with no one standing on the other side.
 
 ## Movement IV — The refusal
@@ -262,11 +262,12 @@ No chapter exists solely to explain lore, demonstrate a lesson, travel between l
 
 ### 25. Descent under witness — Arion
 
-**Want:** Enter the Root on terms that keep every participant able to stop.
-**Opposition:** The descent window is closing; the council wants remote control; Akamoto wants a smaller team; Mera and Emilia refuse to be treated as Arion's equipment.
-**Turn:** Arion requires each person to name what they may stop and what they will not carry for him. The council accepts because no alternative remains.
-**Cost:** Akamoto stays at the threshold as external witness, leaving the trio without his physical rescue inside.
-**Setup/payoff:** Witnesses with refusal authority; Arion asks rather than assumes.
+**Want:** Enter the buried structure on terms that keep every participant able to stop while the inner wall and exterior shutter are closing.
+**Opposition:** The three-Academy safety order still controls lower admission; Akamoto's authority ends at the exterior face; Anet's current restriction bars Arion from climbing, load work, or unsupervised movement; the council wants remote control; Mera and Emilia refuse to be treated as Arion's equipment.
+**Turn:** Neris obtains a single named evidence-preservation admission from the council with no transfer or custody effect. Anet grants only harness-assisted ingress: no right-arm load, no Foundation brace, no unentered method, continuous breath/hand checks, and medical stop authority from the threshold. Arion requires each person to name what they may stop and what they will not carry for him. The council accepts the separate authorities because no other witnessed access remains.
+**Sensitive custody:** Mera locks her red-threaded vial/cup frame and her separate document sleeve containing the boundary-only refusal copy and closed meal-story coordinates into distinct compartments of an exterior cradle. She retains one release key; Nemi accepts the second as non-access custodian. Lio's candidate amendment remains in the candidate registry; Emilia's maker record and Mera's separate limit note remain in the safety tray. None enters the descent as evidence or authority.
+**Cost:** Akamoto and Anet stay at the threshold as external safety witnesses, leaving the trio without their physical rescue inside. The passage receives three injured, uncredentialed, or suspended participants under an authority that expires with this access attempt.
+**Setup/payoff:** Witnesses with refusal authority; Arion asks rather than assumes; medical risk and source custody are explicit rather than silently waived.
 
 ### 26. What water will not carry — Mera
 

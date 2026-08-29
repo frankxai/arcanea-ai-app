@@ -371,6 +371,14 @@ Arion tested the upper boundary stone with his thumb. “Why tell me?”
 
 “Because I accepted participant witness in my own capacity. No Academy assigned me to you. I should have stated that directly.”
 
+Arion looked at the violet line healing across her palm. “The pressure that crossed your hand at intake. Did you read it?”
+
+“No. My deposition marks it unaccessed.”
+
+“Keep it that way.”
+
+“Unless you give me a different answer, I will.”
+
 The lower court stayed quiet except for the field operator checking isolation bars behind them.
 
 “Do you want the coordinates entered?” Mera asked.

@@ -308,18 +308,18 @@ The book needs pleasure, vanity, humor, craft, appetite, family residue, and bor
 - Emilia learns her instrument's results are being used for custody policy.
 - Lio pursues a rescue license, befriends the trio through work, and is injured after Akamoto's defensible ban on Emilia's field-state aid sends a second team down the wrong route.
 - Sympathetic characters collide over disclosure, safety, and refusal.
-- Midpoint: Arion refuses a measurement protocol; the Hollow Root answers the refusal and reveals that an Academy system has touched it before.
+- Midpoint: Arion refuses a measurement protocol; an unauthenticated buried response follows refusal status through an existing joint continuity service, showing that an Academy system can reach the site without proving the site's identity or motive.
 
 ### Movement III — The record (approximately 50–78%)
 
 - Institutional inquiry separates the trio and offers each a defensible private deal.
 - Mera violates a promised boundary to protect Arion; what she learns helps and damages the trust she meant to save.
-- Malachar extends Akamoto's true “last free path” lesson into a forbidden bodily technique: Arion can force a path open by carrying its trapped movement. It saves lives, leaves the Root's strain inside him, and makes secrecy and attraction to Malachar emotionally credible.
+- Malachar extends Akamoto's true “last free path” lesson into a forbidden bodily technique: Arion can force a path open by carrying its trapped movement. It saves lives, leaves a branching structural strain inside him, and makes secrecy and attraction to Malachar emotionally credible while the responding source remains unauthenticated.
 - Akamoto seals part of a report to prevent immediate capture.
 - Mera records the seal and withholds the underlying memory.
-- Emilia discovers the Root and her instrument share a restoration flaw: both were left in a forced state without release.
-- A real Root breach replaces tournament spectacle. Lio contributes the route from outside the danger; the trio saves people while disagreeing; Arion's forbidden technique destroys the measuring rig and lets the Root mark his body.
-- Second turn: the Hollow Root opens under supervised conditions and preserves evidence that the Academies helped create or maintain the danger.
+- Emilia establishes an active, unlisted retention-return line in the course record and recognizes its protocol family without authenticating destination, owner, motive, or a Root identity.
+- An ordinary mechanical collapse replaces tournament spectacle. Lio contributes the moved route from outside the danger; the trapped group and trio save people while disagreeing; Pell authorizes release of the passive rig before it is lost, and Arion's forbidden technique leaves a branching strain in his body.
+- Second turn: a buried wall opens during a bounded exterior non-entry trial and exposes one joint plate bearing three Academy authority marks. The plate proves prior institutional contact, not who created the danger or why.
 
 ### Movement IV — The refusal (approximately 78–100%)
 
@@ -336,13 +336,13 @@ The book needs pleasure, vanity, humor, craft, appetite, family residue, and bor
 
 | Setup | Payoff |
 |---|---|
-| Arion's repaired tool has a visible seam | He repairs the Root without hiding damage |
-| Mera seals a memory vial rather than reading it | She later violates one boundary, admits it, repairs what she can, and chooses costly non-access in the Root |
-| Emilia's manual release is mocked as redundant | It becomes a shared, unowned model for giving the Root an exit |
+| Arion's repaired tool has a visible seam | He repairs a damaged release without hiding its scar |
+| Mera seals a memory vial rather than reading it | She later violates one boundary, admits it, repairs what she can, and chooses costly non-access inside the buried structure |
+| Emilia's manual release is mocked as redundant | It becomes a shared, unowned model for giving the buried structure an exit without assigning personhood in advance |
 | Akamoto asks students to name the nearest safe stopping point | Arion stops before catastrophic overreach |
 | Akamoto bars a safety aid and Lio is injured | He names his error, changes field procedure, and receives no automatic absolution |
-| Archive pages contain aligned absences | The Root reveals absence was an institutional action |
-| Malachar's extension moves trapped strain into Arion | It saves people, lets the Root follow him, fractures the descent route, and makes disclosure necessary rather than merely virtuous |
+| Archive pages contain aligned absences | Buried records connect the absence pattern to named institutional acts |
+| Malachar's extension moves trapped strain into Arion | It saves people, creates a recurring path that later fractures the descent route, and makes disclosure necessary; whether the path is tracking him must be established rather than assumed |
 | The Academies argue over which institution owns risk | The climax makes ownership itself the destabilizing force |
 
 ## Legacy source migration map

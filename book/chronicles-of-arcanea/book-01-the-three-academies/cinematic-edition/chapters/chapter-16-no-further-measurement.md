@@ -255,6 +255,12 @@ The light formed no letter. It stopped bluntly near the top pin, narrowed along 
 
 The council recorder spoke over her. “Secure the tool under joint custody.”
 
+Mera kept her pencil above the participant copy. “May I draw the mark’s boundary for an attributed public comparison?”
+
+Arion looked at the light inside the seam. “The boundary only. Keep my name on its source. Nothing else from the tool or this room.”
+
+Mera wrote his permission beside the drawing line.
+
 Akamoto crossed to the wall speaker and pulled its physical shutter closed.
 
 The six names remained on the terminal without voices.
