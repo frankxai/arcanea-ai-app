@@ -295,18 +295,18 @@ No chapter exists solely to explain lore, demonstrate a lesson, travel between l
 
 ### 29. The memory that could convict them — Mera
 
-**Want:** Recover enough evidence to force institutional accountability and rebuild trust with Arion.
-**Opposition:** The decisive memory includes the private final moments of the witness and names a living person whose exposure would trigger immediate retaliation.
-**Turn:** Mera records the protocol, dates, and institutional signatures but seals identity and intimate content. She tells Arion exactly what she read in Chapter 20, offers him the record of her violation, and gives Arion and Emilia the choice to witness her limitation—not the memory.
-**Cost:** The evidence can prove involvement but not intent. The guilty institution will have room to deny its moral knowledge. Arion accepts the operational limit but does not offer immediate forgiveness.
-**Setup/payoff:** Contextual silence becomes hard-won action; repair does not restore the previous trust on demand.
+**Want:** Recover a dry state record strong enough to support accountability, preserve the sealed source boundary, and make a concrete repair for violating Arion's refusal in Chapter 20.
+**Opposition:** Four imperfect dated state slips carry three recurring authority-impression families that visually match the Chapter 24 plate, but they do not independently authenticate maker, Academy performance, or authorization. A sealed inner source interval might establish moral knowledge or intent, but Mera cannot know without opening private content. Its protection-state form has an expiry/renewal field that appears unelapsed, while issuer, validity, legal force, identity, and living status remain unknown. Arion and Emilia remain beyond the memory-water barrier, so she cannot demand immediate witness, forgiveness, or a response.
+**Turn:** Mera aggregates and corrects the dry state sequence, reduces her strongest claim to four dated handling records with subject and purpose unknown, and leaves the inner source interval unopened. On a separate sheet she concisely records the ordinary-cup drop, narrow duration access, amber-control use, corridor opening, disclosure, and Arion's changed-witness choice; she gives him control over whether the page is read or survives. She notices unequal water thinnings and writes only *unequal—call by sight*.
+**Cost:** The personal record strengthens an inference of related handling when read beside Chapter 17's separate authenticated coordination finding, but does not prove Academy performance, authorization, intent, source identity, personhood, or moral knowledge. Mera's standing is not restored, Arion may refuse her repair, and the most decisive possible evidence remains inaccessible by her choice.
+**Setup/payoff:** Contextual silence becomes hard-won action; repair does not restore previous trust on demand; the unrecorded water interval becomes Mera's consent-safe contribution to Chapter 30.
 
 ### 30. The exit that was not there — Emilia
 
 **Want:** Convert the buried operator interface into a release path while preserving the evidence Mera protected.
-**Opposition:** Every available interface was designed to keep the retained system useful. Its lead-state layer now holds retained route lines that could help prove how the Academies physically routed around protected memory boundaries and declared stop points—but following its optimized forecast would substitute an old mechanism's path for renewed human consent.
-**Turn:** Emilia destroys the lead-state layer and converts the interface's remaining mechanism from observer to disposable hinge. Arion shapes an imperfect load-bearing joint from the logic of his repaired tool; Mera contributes a water interval she deliberately does not record. The retained system must be able to move through a device none of them can claim as sole author.
-**Cost:** The retained route-state proof, the interface, and Emilia's remaining path to reclaim Forge standing through the discovery are destroyed. The release opens only partially because Arion is still holding the carried movement.
+**Opposition:** The interface's original purpose remains unknown. Under current conditions, its physical lead/current lines display routes around protected boundaries and declared stop points, but treating those lines as permission would substitute observed route state for renewed human consent. Mera's cue exists only in present observation; no stored timing can automate it.
+**Turn:** Emilia destroys the physical lead-state layer and repurposes the remaining shutters and counterweights as a one-use hinge under Mera's present lamp cue and manually called conditions. Arion shapes an imperfect load-bearing joint from the logic of his repaired tool; Mera contributes the live Water interval she refused to turn into a reusable duration. None of them can claim the release mechanism as sole author.
+**Cost:** The retained route-state evidence, the interface, and Emilia's remaining path to reclaim Forge standing through the discovery are destroyed. The mechanism opens the route only partway; Arion's carried movement remains in him.
 **Setup/payoff:** A route around a declared stop is not consent; manual release and shared authorship replace Emilia's control; freedom cannot be made frictionless.
 
 ### 31. Foundation holds — Arion
