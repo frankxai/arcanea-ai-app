@@ -311,20 +311,20 @@ No chapter exists solely to explain lore, demonstrate a lesson, travel between l
 
 ### 31. Foundation holds — Arion
 
-**Want:** Release the accumulated load held in the lower structure without dropping its damage onto the Academy above.
-**Opposition:** Arion's instinct is to become the final support. Malachar argues that accepting control is the only way to prevent innocent people from paying. Mera and Emilia cannot make him stop.
-**Turn:** Arion asks what support the lower structure will accept without presuming an answerer or identity. He gives Foundation to the release path, Mera carries only the consent-safe record, and Emilia keeps the exit materially open. Under those present conditions, the lower structure's accumulated load redistributes across multiple supports instead of entering one bearer; agency and cause remain unauthenticated.
-**Cost:** The Academy foundations visibly crack, the concealed seal is destroyed, and Arion cannot return to the fiction that repair leaves no scar.
+**Want:** Release the accumulated load presently carried through the lower structural continuity without dropping its damage onto the Academy above, routing it through the sealed source housing, or making his injured body the final support.
+**Opposition:** Arion's instinct is to become the final support. A voice identifying itself as Malachar makes the unauthenticated claim that one controlled bearer can prevent harm above. Mera and Emilia can stop only their own participation; Arion must honor those stops and call his own before his body becomes the terminal bearing.
+**Turn:** Arion's first one-exhale Foundation probe begins drawing the accumulated load toward the carried branch in his right forearm and ribs. He calls stop, fully releases, reports the failure and Malachar's offer, and keeps his hand off stone until Mera and Emilia state separate limits that do not medically or institutionally authorize his Gate use. On a second design, he senses present compression and fracture through his left palm and offers bounded Earth-associated Foundation pressure into the already-existing operator-bay sill, central-slab side housing, and ordinary foundation joints, fully releasing between increments. Mera carries her Chapter 26 page, Chapter 29 state page, and separate folded Arion page while leaving the protected source sealed and unread; Emilia holds the spent hinge only within its marked travel. Only material bearings that remain stable after Arion releases enter the final path. Water drains through the established return groove. After Arion fully withdraws on body change, he checks breath, finger pressure, and carried movement against their pre-act state and explicitly clears his own stop for one new bounded act; this is neither medical clearance nor peer authorization. He then directly shapes the same central slab back along its side housing, releases Foundation for the final time, and repeats the body check. The slab remains stable without his touch. Emilia verifies the near bearing, Mera verifies the far bearing and crosses under her own power. The turning gallery realigns, the trio presents visibly at the buried threshold, and Akamoto exercises the single authorized return; Arion is raised by stair-sledge rather than climbing.
+**Cost:** Arion's emergency Foundation use exceeds Anet's clearance and remains reportable; his carried movement, contracted fingers, and rib injury persist. The Academy foundations visibly crack, the pre-existing architectural concealment/outer-access closure splits beside the documented three-authority plate, and the one authorized return is consumed. The sealed source housing, fixed slips, and protection-state form remain intact and unauthenticated. No collapse, casualty, source identity, authorship, purpose, or exclusive cause is inferred.
 **Climax payoff:** The tool's seam; nearest safe stop; distributed responsibility; asking rather than forcing; rejection of relief through control.
-**Exit image:** Morning light entering through a crack no one will be allowed to plaster over.
+**Exit image:** Morning light enters through the new foundation crack and exposes the architectural concealment seal in cross-section, its blackened brass caught between new plaster and old mortar.
 
 ### 32. What no one owns — Arion
 
 **Want:** Leave the inquiry with his personhood, the trio's evidence, and a path to continue training.
-**Opposition:** The council can no longer deny involvement but argues that the public risk justifies permanent custody. Mera's evidence is incomplete; Emilia's instrument is gone; Akamoto's sealed report compromises him.
+**Opposition:** The council can no longer deny documented prior institutional contact and coordination but can still dispute authorship, cause, purpose, intent, and any Hollow Root identity; it argues that the public risk justifies permanent custody. Mera's evidence is incomplete; Emilia's instrument is gone; Akamoto's sealed report compromises him.
 **Quiet choice:** Before the hearing, Arion brings Lio the repair-house sketch and offers to rebuild the damaged weather vane. Lio says the vane can wait and asks him to sit. Arion stays without solving anything. Mera brings the terrible tea; Emilia leaves the heater's visible repairs alone.
 **Turn:** Arion refuses ownership by any Academy and also refuses to declare himself beyond oversight. He accepts a witnessed compact with revocable terms, independent records, and the right of every witness to stop participation. Mera and Emilia sign separate, non-identical commitments.
-**Cost:** Arion cannot go home yet. Mera remains outside formal witness standing. Emilia loses her Forge sponsor. Akamoto's Roost is placed under review. Malachar's line of contact remains open.
+**Cost:** Arion cannot go home yet. Mera remains outside formal witness standing. Emilia loses her Forge sponsor. Akamoto's Roost is placed under review. Arion continues to experience a warm-stone channel whose source, location, and capability remain unauthenticated beyond the speaker's self-identification as Malachar.
 **Series launch:** The trio has chosen one another as difficult witnesses, not frictionless family. The Three Academies must reform, contain them, or fracture.
 **Final image:** Three signatures on different pages, laid over the same unrepaired table.
 
@@ -360,7 +360,7 @@ Arion chapters may average longer in Movements II and IV. Final word share matte
 3. Does Arion's refusal create risk for people outside the trio?
 4. Is Akamoto ever wrong in a way that costs a student, not only himself?
 5. Does Malachar offer emotional relief before cosmic ideology?
-6. Does the Root behave like a living unfinished act rather than a puzzle dungeon?
+6. Does the unauthenticated lower structure remain materially responsive under bounded physical acts without becoming a puzzle dungeon or authenticated living Root?
 7. Can a blind reader identify the POV through sensory language and sentence behavior?
 8. Are there at least six scenes where sympathetic people are both right?
 9. Does each lesson alter relationship or status, rather than merely demonstrate curriculum?

@@ -38,7 +38,7 @@ Working title is not cover-approved. It survives because it preserves lineage an
 
 ## Reader promise
 
-Three young creators arrive at Arcanea's Academies carrying different definitions of care. Arion believes usefulness can repay harm. Mera believes truth without consent is another kind of theft. Emilia believes a well-designed system can make freedom scalable. When an instrument reveals a dangerous pattern inside Arion and the buried Hollow Root begins returning evidence the Academies erased, the three must decide who may measure a miracle, who may remember it, and whether protection can exist without possession.
+Three young creators arrive at Arcanea's Academies carrying different definitions of care. Arion believes usefulness can repay harm. Mera believes truth without consent is another kind of theft. Emilia believes a well-designed system can make freedom scalable. When an instrument reveals a dangerous pattern inside Arion and buried works begin returning incomplete physical records of prior institutional contact and coordination, the three must decide who may measure a miracle, who may remember it, and whether protection can exist without possession.
 
 ## The book's governing question
 
@@ -84,7 +84,7 @@ The direct brief establishes Arion, Mera, Emilia, and the Academy journey as thi
 - Akamoto Roost is a specialist field annex for bond law, dangerous practice, and dragon-rider disciplines.
 - Akamoto is its headmaster/field mentor. His exact bond and dragon status remain unrevealed.
 - Arion's Foundation event damages his home and trust. No casualty count is asserted in Book 1 planning until approved.
-- The Hollow Root is a responsive living structure and evidence site, not a loot dungeon.
+- The place the records call Hollow Root is an unauthenticated, materially responsive lower structure and evidence site, not a loot dungeon; Book 1 does not establish identity, life, personhood, intent, or authorship.
 - “Confluence” is an institutional research term used reluctantly; the narration does not crown Arion a chosen savior.
 
 ### Prohibited carryovers
@@ -324,12 +324,12 @@ The book needs pleasure, vanity, humor, craft, appetite, family residue, and bor
 ### Movement IV — The refusal (approximately 78–100%)
 
 - Inside the lower structure, Arion's concealed borrowed method causes a physical separation that leaves Mera alone with memories she has refused to enter and Emilia beside a pre-existing operator interface retaining physical lead/current route lines.
-- Space responds to what each character refuses to release.
+- Physical space changes under the characters' bounded acts and omissions; narration does not convert material response into recognition, desire, judgment, or personhood.
 - Malachar names Arion's guilt and offers relief through surrender of choice.
 - The trio cannot win through combined force. They must distribute the load, limit what truth leaves, destroy the retained physical lead-state layer before it substitutes for renewed consent, and build a manual exit that works under the observed lower-structure conditions.
 - Arion asks rather than forces; Mera chooses contextual silence after repairing the boundary she violated; Emilia leaves a critical variable unmeasured because knowing it would violate someone she has learned to love.
 - The evidence returns incomplete but unowned.
-- The council cannot claim clean victory or erase its involvement.
+- The council cannot claim clean victory or deny documented prior institutional contact and coordination; authorship, cause, purpose, and Hollow Root identity remain unproved.
 - Ending: before negotiation, Arion chooses ordinary presence over fixing Lio's weather vane. He then refuses institutional possession and Malachar's relief, but accepts witnessed limits and training. Mera and Emilia remain beside him without promising agreement.
 
 ## Setup and payoff ledger
@@ -338,10 +338,10 @@ The book needs pleasure, vanity, humor, craft, appetite, family residue, and bor
 |---|---|
 | Arion's repaired tool has a visible seam | He repairs a damaged release without hiding its scar |
 | Mera seals a memory vial rather than reading it | She later violates one boundary, admits it, repairs what she can, and chooses costly non-access inside the buried structure |
-| Emilia's manual release is mocked as redundant | It becomes a shared, unowned model for giving the buried structure an exit without assigning personhood in advance |
+| Emilia's manual release is mocked as redundant | It becomes a shared, unowned model for making a manual route through the buried works without assigning personhood, desire, or decision authority |
 | Akamoto asks students to name the nearest safe stopping point | Arion stops before catastrophic overreach |
 | Akamoto bars a safety aid and Lio is injured | He names his error, changes field procedure, and receives no automatic absolution |
-| Archive pages contain aligned absences | Buried records connect the absence pattern to named institutional acts |
+| Archive pages contain aligned absences | Buried records add visually matching authority forms and dated handling states while leaving performance, authorization, subject, purpose, and intent unproved |
 | Malachar's extension moves trapped strain into Arion | It saves people, creates a recurring path that later fractures the descent route, and makes disclosure necessary; whether the path is tracking him must be established rather than assumed |
 | The Academies argue over which institution owns risk | The climax makes ownership itself the destabilizing force |
 
