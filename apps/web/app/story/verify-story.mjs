@@ -20,7 +20,7 @@ const requiredHrefs = [
   "/books/book1/the-storm-that-remembered",
   "/books/docs/founding-myths",
   "/gallery",
-  "/books/song-of-van-linh/01-subject-7",
+  "/books/song-of-van-linh/subject-7",
   "/books/lumara-valle-de-los-destellos/print",
 ];
 
@@ -88,9 +88,10 @@ function liveRouteFor(href) {
   if (rest.length === 1 && liveBooks.has(bookId)) {
     const slug = rest[0];
     const files = chapterFiles(bookId);
-    const hasChapter = files.some(
-      (name) => name === `${slug}.md` || name.startsWith(`${slug}.`) || name.startsWith(`${slug}-`),
-    );
+    const hasChapter = files.some((name) => {
+      const id = name.replace(/\.md$/, "").replace(/^\d+-/, "");
+      return id === slug;
+    });
     if (hasChapter) return { bookId, kind: "chapter", rest };
   }
   return null;

@@ -59,6 +59,6 @@ export const ARTBOOK = [
   {
     src: "/images/books/song-of-van-linh-cover.png",
     title: "The Girl Who Heard the River",
-    href: "/books/song-of-van-linh/01-subject-7",
+    href: "/books/song-of-van-linh/subject-7",
   },
 ] as const;
