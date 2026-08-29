@@ -271,7 +271,7 @@ Every listed conflict needs at least one scene in which both people are substant
 | Mera / Emilia | Some information should not be captured | Unrecorded systems let powerful people rewrite events | Their evidence ledger becomes incomplete by ethical choice |
 | Arion / Akamoto | Training without choice repeats custody | Untrained power can kill before autonomy is negotiated | Arion walks away from a test and someone else bears the physical risk |
 | Mera / Akamoto | Witnesses must be able to contradict authority | Context released too early can expose students to capture | Akamoto seals a report; Mera records that he did |
-| Emilia / Akamoto | Safety tools can distribute expertise | Institutions turn every safety tool into a control surface | Akamoto destroys a useful interface to preserve refusal |
+| Emilia / Akamoto | Safety tools can distribute expertise | Institutions turn every safety tool into a control surface | Emilia destroys a useful buried interface to preserve refusal, extending the lesson of Akamoto's earlier tool ban without making him the author of her choice |
 | Trio / Academy council | The trio are people, not an incident | The council is responsible for everyone their powers could harm | The council loses monopoly on the Hollow Root evidence |
 | Arion / Malachar | Relief from impossible guilt is a real need | Freedom includes the right to risk, fail, and refuse help | Arion keeps the connection secret for one act |
 

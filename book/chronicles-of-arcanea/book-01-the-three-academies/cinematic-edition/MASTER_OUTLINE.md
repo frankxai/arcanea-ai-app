@@ -287,10 +287,10 @@ No chapter exists solely to explain lore, demonstrate a lesson, travel between l
 
 ### 28. The weight everyone gave him — Arion
 
-**Want:** Keep the unresolved returned branch from worsening the damage in his forearm and ribs, and recover a visible route toward Mera.
+**Want:** Keep the unresolved returned branch from worsening, confirm Mera's visible physical stability, and establish a longer holding position that keeps his right side off visible stone.
 **Opposition:** The returned branch tightens when the lower structure shifts, while Arion's guilt makes every damaged route feel like a load he should carry. Emilia can see what he hid but cannot help him establish a safe limit without his complete account of how the movement entered and returned. The branch's source, intent, and relationship to the lower structure remain unverified.
-**Turn:** Malachar offers permanent relief if Arion lets him close the field of choice around the burden. Arion gives Emilia the complete account of both contacts, refuses the offer, and asks her to witness a bounded stabilization rather than repair or take the movement from him.
-**Cost:** Emilia no longer has to guess, but the truth confirms that Arion made her observation and body part of a risk she did not consent to. She helps him stabilize the returned branch and regain line of sight toward Mera without offering forgiveness. The carried movement remains in him, the lower structure continues shifting, and no source claim is established.
+**Turn:** Malachar offers permanent relief if Arion lets him close the field of choice around the burden. Arion gives Emilia the complete account of all three structural contact/use events and the present Malachar offer, refuses it, and asks her to witness a bounded stabilization rather than repair or take the movement from him.
+**Cost:** Emilia no longer has to guess, but the truth confirms that Arion made her observation and body part of a risk she did not consent to. She helps him stabilize the returned branch without offering forgiveness. The carried movement remains in him, the lower structure continues shifting, and no source claim is established.
 **Setup/payoff:** Chosen vulnerability; Malachar's relief through control.
 
 ### 29. The memory that could convict them — Mera
@@ -304,16 +304,16 @@ No chapter exists solely to explain lore, demonstrate a lesson, travel between l
 ### 30. The exit that was not there — Emilia
 
 **Want:** Convert the buried operator interface into a release path while preserving the evidence Mera protected.
-**Opposition:** The interface's original purpose remains unknown. Under current conditions, its physical lead/current lines display routes around protected boundaries and declared stop points, but treating those lines as permission would substitute observed route state for renewed human consent. Mera's cue exists only in present observation; no stored timing can automate it.
-**Turn:** Emilia destroys the physical lead-state layer and repurposes the remaining shutters and counterweights as a one-use hinge under Mera's present lamp cue and manually called conditions. Arion shapes an imperfect load-bearing joint from the logic of his repaired tool; Mera contributes the live Water interval she refused to turn into a reusable duration. None of them can claim the release mechanism as sole author.
-**Cost:** The retained route-state evidence, the interface, and Emilia's remaining path to reclaim Forge standing through the discovery are destroyed. The mechanism opens the route only partway; Arion's carried movement remains in him.
-**Setup/payoff:** A route around a declared stop is not consent; manual release and shared authorship replace Emilia's control; freedom cannot be made frictionless.
+**Opposition:** The interface's original purpose remains unknown. Under current conditions, its physical lead/current lines display one-joint-ahead and present route states near the visible protection-state form and observed joint positions; the lines establish no valid protection, declaration, refusal, consent, or permission. Mera's cue reports only a present water thinning; no stored timing can automate it.
+**Turn:** Without reading or copying the covered routes, Emilia destroys the physical one-joint-ahead lead carrier and repurposes only the present-state shutters and counterweight yoke as a one-use hinge. Arion uses ordinary left-handed load reasoning—not Foundation, the borrowed method, or his body—to shape a non-flush sacrificial joint from the bent carrier and its already-present kitchen-brass shim. Mera contributes a live Water thinning she refused to turn into a reusable duration; Emilia waits for independently observed present-state travel and releases the counterweight by hand.
+**Cost:** The retained route-state evidence, the interface, and Emilia's remaining path to reclaim Forge standing through the discovery are destroyed. The improvised joint deforms after one travel and cannot reset. The mechanism opens only a low dry gap for light and speech, not bodies or full egress; Arion's carried movement remains in him.
+**Setup/payoff:** Observed route state is not consent; manual release and shared authorship replace Emilia's control; freedom cannot be made frictionless.
 
 ### 31. Foundation holds — Arion
 
-**Want:** Release the Root without dropping its accumulated damage onto the Academy above.
+**Want:** Release the accumulated load held in the lower structure without dropping its damage onto the Academy above.
 **Opposition:** Arion's instinct is to become the final support. Malachar argues that accepting control is the only way to prevent innocent people from paying. Mera and Emilia cannot make him stop.
-**Turn:** Arion asks the Root what support it will accept. He gives Foundation to the release path, Mera carries only the consent-safe record, and Emilia keeps the exit materially open. The Root redistributes its load instead of handing it to one bearer.
+**Turn:** Arion asks what support the lower structure will accept without presuming an answerer or identity. He gives Foundation to the release path, Mera carries only the consent-safe record, and Emilia keeps the exit materially open. Under those present conditions, the lower structure's accumulated load redistributes across multiple supports instead of entering one bearer; agency and cause remain unauthenticated.
 **Cost:** The Academy foundations visibly crack, the concealed seal is destroyed, and Arion cannot return to the fiction that repair leaves no scar.
 **Climax payoff:** The tool's seam; nearest safe stop; distributed responsibility; asking rather than forcing; rejection of relief through control.
 **Exit image:** Morning light entering through a crack no one will be allowed to plaster over.
