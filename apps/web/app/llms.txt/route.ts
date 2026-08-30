@@ -31,6 +31,11 @@ const PAGES = [
     internalPath: '/books',
   },
   {
+    title: 'Story',
+    description: 'The First Light — Lumina and Nero, origin of the Arcanea universe',
+    internalPath: '/story',
+  },
+  {
     title: 'Library',
     description: 'Philosophy and craft for creators',
     internalPath: '/library',
@@ -55,11 +60,72 @@ const PAGES = [
     description: 'Where creators and AI build worlds together',
     internalPath: '/about',
   },
+  {
+    title: 'Blog',
+    description: 'Insights and stories from Arcanea',
+    internalPath: '/blog',
+  },
+  {
+    title: 'Gallery',
+    description: 'Visual encyclopedia of inspectable worlds',
+    internalPath: '/gallery',
+  },
+  {
+    title: 'Create',
+    description: 'Start-building hub for new work',
+    internalPath: '/create',
+  },
+  {
+    title: 'Imagine',
+    description: 'Image generation studio',
+    internalPath: '/imagine',
+  },
+  {
+    title: 'Showcase',
+    description: 'Connected-world demos from a single prompt',
+    internalPath: '/showcase',
+  },
+  {
+    title: 'Install',
+    description: 'Set up Arcanea',
+    internalPath: '/install',
+  },
+  {
+    title: 'Agents',
+    description: 'HTML product hub for Luminors; machine-readable orientation is /agents.md',
+    internalPath: '/agents',
+  },
+  {
+    title: 'Pricing',
+    description: 'Sovereign by default, SaaS by choice',
+    internalPath: '/pricing',
+  },
+  {
+    title: 'Developers',
+    description: 'Build on Arcanea',
+    internalPath: '/developers',
+  },
+  {
+    title: 'Contact',
+    description: 'Get in touch',
+    internalPath: '/contact',
+  },
+  {
+    title: 'Privacy',
+    description: 'Privacy policy',
+    internalPath: '/privacy',
+  },
+  {
+    title: 'Terms',
+    description: 'Terms of service',
+    internalPath: '/terms',
+  },
 ];
 
 /**
  * /llms.txt — manifest for AI agents (default English version).
  * https://llmstxt.org/
+ * Curated live public doors only. Do not invent counts. Full URL inventory is /sitemap.xml.
  */
 export function GET() {
   const locale = routing.defaultLocale;

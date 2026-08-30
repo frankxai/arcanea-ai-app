@@ -87,6 +87,9 @@ export default async function BooksPage() {
               Begin Reading
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
             </a>
+            <Link href="/story" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-3.5 text-sm font-medium text-white/65 transition-all hover:border-white/30 hover:text-white/85">
+              The First Light
+            </Link>
             <Link href="/books/docs/founding-myths" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-3.5 text-sm font-medium text-white/65 transition-all hover:border-white/30 hover:text-white/85">
               Read the Myths
             </Link>

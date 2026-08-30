@@ -26,6 +26,7 @@ const footerLinks = {
     links: [
       { href: "/gallery", label: "Gallery" },
       { href: "/library", label: "Library" },
+      { href: "/story", label: "The First Light" },
       { href: "/lore", label: "Lore" },
       { href: "/factions", label: "Factions" },
       { href: "/showcase", label: "Showcase" },
