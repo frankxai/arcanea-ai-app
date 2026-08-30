@@ -33,6 +33,15 @@ test('published Luminor reads carry abort and application deadlines below five s
 });
 
 test('the public route exposes a retryable failure instead of a function timeout', () => {
+  assert.match(route, /async function withPublicReadDeadline/);
+  assert.match(
+    route,
+    /Promise\.race\(\[operation\(\), deadline\]\)/,
+  );
+  assert.match(
+    route,
+    /withPublicReadDeadline\(\(\) =>\s*getPublishedLuminors/,
+  );
   assert.match(route, /status:\s*503/);
   assert.match(route, /'Retry-After':\s*'30'/);
   assert.match(route, /'Cache-Control':\s*'no-store'/);
