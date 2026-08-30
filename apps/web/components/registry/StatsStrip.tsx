@@ -5,27 +5,30 @@ import { m, LazyMotion, domAnimation } from 'framer-motion';
 
 interface StatsStripProps {
   stats: {
-    total_deploys: number;
+    total_deploys: number | null;
     total_usages: number;
-    platforms_reached: number;
+    platforms_reached: number | null;
   };
 }
 
 const PREMIUM_EASE = [0.22, 1, 0.36, 1] as const;
 
 export function StatsStrip({ stats }: StatsStripProps) {
-  const items = [
+  const items: Array<{ label: string; value: number | null }> = [
     { label: 'Deploys', value: stats.total_deploys },
     { label: 'Invocations', value: stats.total_usages },
     { label: 'Platforms reached', value: stats.platforms_reached },
   ];
+  const visibleItems = items.filter(
+    (item): item is { label: string; value: number } => item.value !== null
+  );
 
   return (
     <LazyMotion features={domAnimation} strict>
       <section className="border-b border-white/[0.06]">
         <div className="mx-auto max-w-6xl px-6 py-8">
           <div className="flex flex-wrap gap-x-16 gap-y-4">
-            {items.map((item, i) => (
+            {visibleItems.map((item, i) => (
               <m.div
                 key={item.label}
                 initial={{ opacity: 0, y: 8 }}
