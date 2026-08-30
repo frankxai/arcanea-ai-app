@@ -583,7 +583,7 @@ export function FounderSection() {
               </p>
               <div className="flex flex-wrap gap-3 text-xs font-mono text-text-muted">
                 <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">500+ AI implementations</span>
-                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">190K+ words written</span>
+                <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">Original philosophy</span>
                 <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">27 open-source repos</span>
                 <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">Source available</span>
               </div>
