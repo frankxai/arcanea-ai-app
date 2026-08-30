@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "bookId": "the-last-free-path",
+  "editionId": "book-01-founding-cinematic",
+  "title": "The Last Free Path",
+  "series": "Chronicles of Arcanea",
+  "subtitle": "A material record of learning to leave",
+  "status": "protected-staging",
+  "titleStatus": "provisional",
+  "rightsStatus": "pending-human-approval",
+  "humanApprovals": {
+    "canon": false,
+    "casting": false,
+    "rights": false,
+    "title": false
+  },
+  "publication": {
+    "byline": null,
+    "bylineStatus": "pending",
+    "bylineApprovalReceipt": null
+  },
+  "cover": {
+    "assetId": "cover-held-interval-preview-r03",
+    "path": "apps/web/public/images/books/the-last-free-path/cover-held-interval-preview.png",
+    "sha256": "3399de7f71a7300c74bbd2ded1ff2f3f0730adbe58f00766dc4e06e5762d7008",
+    "width": 992,
+    "height": 1586,
+    "alt": "Three adult forearms converge above a workbench path beside contained mineral-blue water, blank pages, a dismantled brass interface, and a latched daylight door.",
+    "status": "protected-staging",
+    "approvalReceipts": {
+      "casting": null,
+      "rights": null,
+      "title": null
+    }
+  },
+  "provenance": {
+    "generator": "OpenAI image generation through the Codex imagegen workflow",
+    "backendModel": null,
+    "backendModelNote": "The image tool did not surface the exact backend model, so the edition does not reconstruct one.",
+    "selection": "Editors selected and corrected candidates against the manuscript, character continuity, and the edition's art direction.",
+    "rightsNote": "Commercial-use terms and human rights approval remain required before release."
+  },
+  "plates": [
+    {
+      "id": "plate-01",
+      "mode": "scene",
+      "title": "Slate Row",
+      "chapter": "Chapter 1 · The house that leaned",
+      "caption": "Rain shortened the time Arion thought he had. Beneath Slate Row, each correction shifted the danger into another home.",
+      "materialNote": "Wet connected masonry, rough timber shores, Arion's wrapped hand, and Akamoto inspecting the roof keep the scene at street scale.",
+      "alt": "Adult Arion stands in rain before connected damaged row houses while Akamoto examines the roof structure behind him.",
+      "frameNote": "Narrative scene.",
+      "primary": { "assetId": "plate-01-slate-row-r01", "path": "art/plates/plate-01-slate-row.webp", "width": 1672, "height": 941, "aspect": "16:9" },
+      "companion": { "assetId": "plate-01-slate-row-4x5-r01", "path": "art/plates/plate-01-slate-row-4x5.webp", "width": 1122, "height": 1402, "aspect": "4:5" },
+      "primaryLabel": "Slate Row in rain",
+      "companionLabel": "Arion at the breach"
+    },
+    {
+      "id": "plate-02",
+      "mode": "scene",
+      "title": "The rain record",
+      "chapter": "Chapter 2 · The voice removed from rain",
+      "caption": "Mera kept one vial dry while rain soaked her coat. The silence sealed inside it was the only part of the morning she could still attribute.",
+      "materialNote": "The rain stays physical; the papers and tags stay blank; the single capped blue vial remains dry inside the wet coat.",
+      "alt": "Mera records evidence beneath a station awning with rain outside, blank papers and vessel tags, and one capped blue vial protected inside her coat.",
+      "frameNote": "Narrative scene.",
+      "primary": { "assetId": "plate-02-rain-record-r01", "path": "art/plates/plate-02-rain-record.webp", "width": 1536, "height": 1024, "aspect": "3:2" },
+      "companion": { "assetId": "plate-02-rain-record-4x5-r02", "path": "art/plates/plate-02-rain-record-4x5.webp", "width": 1122, "height": 1402, "aspect": "4:5" },
+      "primaryLabel": "Quay beneath rain",
+      "companionLabel": "The protected vial"
+    },
+    {
+      "id": "plate-03",
+      "mode": "scene",
+      "title": "Correct instrument",
+      "chapter": "Chapter 3 · The instrument that passed",
+      "caption": "The cuff closed past Emilia's second joint before she could find the smooth stop plate. She recorded the failed reach beside the passing result.",
+      "materialNote": "Three passive inspection windows, a fine driver, and a rough manual side plate show the release as an added mechanical part.",
+      "alt": "Emilia uses a fine driver on a rough manual side plate beside three passive glass inspection windows on a brass instrument.",
+      "frameNote": "Narrative scene.",
+      "primary": { "assetId": "plate-03-correct-instrument-r02", "path": "art/plates/plate-03-correct-instrument.webp", "width": 1536, "height": 1024, "aspect": "3:2" },
+      "companion": { "assetId": "plate-03-correct-instrument-4x5-r02", "path": "art/plates/plate-03-correct-instrument-4x5.webp", "width": 1122, "height": 1402, "aspect": "4:5" },
+      "primaryLabel": "Instrument bench",
+      "companionLabel": "The manual release"
+    },
+    {
+      "id": "plate-04",
+      "mode": "editorial-study",
+      "title": "The shared breach",
+      "chapter": "Editorial safety study · The hall failure",
+      "caption": "Three hands held the same broken line. Mera took the last prism charge through a wet hand; Emilia kept memory and current apart; Arion kept the cable off the floor.",
+      "materialNote": "Exactly three hands meet at one dry severed cable while a raised curb keeps physical water away from the exposed copper.",
+      "alt": "Three hands share one cable repair: a wrapped hand braces stone, one hand holds dry insulation, and a yellow-cuffed hand operates the release while water stays behind a curb.",
+      "frameNote": "Editorial safety study. Chapter 6 puts all three hands on the broken line, with Mera's wet hand grounding the last prism charge into the basin; this image moves the water behind a curb and redistributes the contact.",
+      "primary": { "assetId": "plate-04-shared-breach-r03", "path": "art/plates/plate-04-shared-breach.webp", "width": 1536, "height": 1024, "aspect": "3:2" },
+      "companion": { "assetId": "plate-04-shared-breach-16x9-r01", "path": "art/plates/plate-04-shared-breach-16x9.webp", "width": 1672, "height": 941, "aspect": "16:9" },
+      "primaryLabel": "Three hands at the cable",
+      "companionLabel": "Service bay and water curb"
+    },
+    {
+      "id": "plate-05",
+      "mode": "scene",
+      "title": "A beautiful weight",
+      "chapter": "Chapter 10 · A beautiful weight",
+      "caption": "Above twelve participants, the ceiling passed weight from rib to rib. At station four, Nara's boots showed where the design stopped sharing it.",
+      "materialNote": "The twelve adults include students and an older civic bridge reader; only Nara's pair of boots sinks into the warm stone.",
+      "alt": "Twelve adult participants stand beneath an elegant load-sharing ceiling while Nara's boots sink into softened stone at the central station.",
+      "frameNote": "Narrative scene.",
+      "primary": { "assetId": "plate-05-beautiful-weight-r01", "path": "art/plates/plate-05-beautiful-weight.webp", "width": 1672, "height": 941, "aspect": "16:9" },
+      "companion": { "assetId": "plate-05-beautiful-weight-4x5-r01", "path": "art/plates/plate-05-beautiful-weight-4x5.webp", "width": 1122, "height": 1402, "aspect": "4:5" },
+      "primaryLabel": "Load-sharing chamber",
+      "companionLabel": "Boots in warm stone"
+    },
+    {
+      "id": "plate-06",
+      "mode": "editorial-study",
+      "title": "A manual door",
+      "chapter": "Editorial mechanism study · Chapter 24",
+      "caption": "The certified collar lay in pieces while Akamoto worked the shutter and Emilia rested the unfastened brass tongue against the buried face. Then the stone withdrew toward an unlit stair.",
+      "materialNote": "The image renders the stripped-control principle as a timber threshold; its latch, inert collar, and directional corridor daylight remain entirely physical.",
+      "alt": "A worn timber door opens inward on an ordinary corridor while a removed brass control collar hangs inert beside the manual latch.",
+      "frameNote": "Editorial mechanism study, not literal architecture. The manuscript's buried door is stone, withdraws inward toward an unlit stair, and bears three authority impressions.",
+      "primary": { "assetId": "plate-06-manual-door-r01", "path": "art/plates/plate-06-manual-door.webp", "width": 1672, "height": 941, "aspect": "16:9" },
+      "companion": { "assetId": "plate-06-manual-door-3x2-r01", "path": "art/plates/plate-06-manual-door-3x2.webp", "width": 1536, "height": 1024, "aspect": "3:2" },
+      "primaryLabel": "Door at the threshold",
+      "companionLabel": "Latch and collar"
+    },
+    {
+      "id": "plate-07",
+      "mode": "scene",
+      "title": "The borrowed method",
+      "chapter": "Chapter 27 · The borrowed method",
+      "caption": "Arion held Mera's possible return route for one interval. The lodged movement returned through his already-injured hand, and two tight fingers closed farther.",
+      "materialNote": "Arion's splinted fingers press the stone; Emilia covers the brass route mechanism; Mera stands beyond the water-framed opening.",
+      "alt": "Arion braces a splinted contracted hand against stone while yellow-cuffed Emilia covers a brass route mechanism and Mera stands beyond framed physical water.",
+      "frameNote": "Narrative scene.",
+      "primary": { "assetId": "plate-07-borrowed-method-r01", "path": "art/plates/plate-07-borrowed-method.webp", "width": 1672, "height": 941, "aspect": "16:9" },
+      "companion": { "assetId": "plate-07-borrowed-method-4x5-r01", "path": "art/plates/plate-07-borrowed-method-4x5.webp", "width": 1122, "height": 1402, "aspect": "4:5" },
+      "primaryLabel": "The return route",
+      "companionLabel": "Arion's injured hand"
+    },
+    {
+      "id": "plate-08",
+      "mode": "editorial-study",
+      "title": "Foundation holds",
+      "chapter": "Editorial evidence study · Chapter 31",
+      "caption": "Arion lifted his hand and the visible mortar held. Mera kept the three folds apart beneath her coat while Emilia watched the bowed brass.",
+      "materialNote": "The still life brings the wrapped hand, fresh mortar, three dry folds, bowed brass, and thinning physical water into one evidence study.",
+      "alt": "A wrapped hand lifts above a fresh mortar seam beside three separate blank folded records, one pencil, bowed brass, and a thin physical water flow.",
+      "frameNote": "Editorial still life, not a literal object arrangement. In the manuscript, Mera keeps all three folds separated beneath her coat rather than laying them beside the repair.",
+      "primary": { "assetId": "plate-08-foundation-holds-r02", "path": "art/plates/plate-08-foundation-holds.webp", "width": 1672, "height": 941, "aspect": "16:9" },
+      "companion": { "assetId": "plate-08-foundation-holds-4x5-r01", "path": "art/plates/plate-08-foundation-holds-4x5.webp", "width": 1122, "height": 1402, "aspect": "4:5" },
+      "primaryLabel": "Foundation seam",
+      "companionLabel": "Records beside bowed brass"
+    },
+    {
+      "id": "plate-09",
+      "mode": "scene",
+      "title": "The final record",
+      "chapter": "Chapter 32 · What no one owns",
+      "caption": "Mera, Emilia, and Arion signed separate pages. A pencil, a bent key, and a chipped cup kept the wind from lifting them off the unrepaired table.",
+      "materialNote": "Three visually blank pages lie across the table crack beside a pencil, bent key, and chipped cup.",
+      "alt": "Three unlike blank pages, a pencil, bent key, and chipped cup rest on an unrepaired table while Arion, Mera, and Emilia sit blurred behind it.",
+      "frameNote": "Narrative scene. The pages are visually blank in the artwork to avoid invented legible writing; the manuscript establishes all three signatures.",
+      "primary": { "assetId": "plate-09-final-record-r01", "path": "art/plates/plate-09-final-record.webp", "width": 1536, "height": 1024, "aspect": "3:2" },
+      "companion": { "assetId": "plate-09-final-record-4x5-r01", "path": "art/plates/plate-09-final-record-4x5.webp", "width": 1122, "height": 1402, "aspect": "4:5" },
+      "primaryLabel": "Three signed pages",
+      "companionLabel": "The unrepaired table"
+    }
+  ]
+}

@@ -47,6 +47,17 @@ the-last-free-path/
 
 Release-mode artifact builds refuse a dirty git worktree and record both the source commit and a deterministic manuscript-content hash. Draft builds may run from a dirty tree but mark that state visibly in the manifest.
 
+The artbook is built from `artbook-spec.json`, which owns the ordered plate sequence, captions, image descriptions, material notes, aspect-ratio pairings, provenance wording, and human approval flags. Its source builder refuses a release artifact while the title, canon, casting, or rights gates remain open. Draft proofs carry a visible protected-staging label.
+
+The reproducible build order is:
+
+1. Run `pnpm --filter @arcanea/web book:edition -- --out <edition-output> --cover <approved-cover> --author <approved-publication-name> --draft` for an internal novel proof, omitting `--draft` only after release approval.
+2. Run `pnpm --filter @arcanea/web book:artbook -- --out <edition-output> --author <approved-publication-name> --draft` with the same draft/release mode. The artbook cover is bound to the committed asset and hash in `artbook-spec.json`; it cannot be replaced at the command line.
+3. Render the novel PDFs with `pnpm --filter @arcanea/web book:pdf -- --source <edition-output>/the-last-free-path-print-source.html --out <edition-output>`.
+4. Render the artbook with `pnpm --filter @arcanea/web book:artbook-pdf -- --source <edition-output>/the-last-free-path-artbook-source.html --out <edition-output>`.
+
+The HTML artbook source is self-contained for durable proofing. Each plate receives a plate page and a composition-study page, yielding a 21-page source: cover, reading note, eighteen plate/study pages, and a public-safe production record. The PDF renderer accepts only that canonical source and manifest, blocks network requests, and validates the final page count, tagged structure, document outline, and readable text layer before removing the artifact from the pending list.
+
 Release files are uploaded to a private Vercel Blob store under `editions/the-last-free-path/book-01-founding-cinematic/`. The application authenticates the Arcanea account, verifies the live Polar order, fetches the allow-listed private pathname server-side, and streams it with an attachment header. Neither public blob URLs nor user-supplied pathnames are accepted.
 
 # Commerce activation gate
