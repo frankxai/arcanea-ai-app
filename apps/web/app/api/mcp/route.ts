@@ -9,6 +9,12 @@ import {
 
 import { authenticateWorldContextBearer } from "@/lib/mcp/world-context-auth";
 import { createWorldContextMcpHttpHandler } from "@/lib/mcp/world-context-http";
+import {
+  PUBLIC_MCP_CORS_HEADERS,
+  handlePublicMcpJsonRpc,
+  publicMcpDiscovery,
+} from "@/lib/mcp/public-http";
+import { executePublicMcpTool } from "@/lib/mcp/public-tools";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,8 +24,6 @@ const previewAuthority = createInMemoryPreviewAuthority();
 const previewAdmissionLimiter = createInMemoryPreviewAdmissionLimiter();
 const audit: WorldContextAuditSink = {
   record(event) {
-    // Receipts contain only authority references/hashes/counts; never token,
-    // raw query, or creator payload.
     const { authenticatedActorId, authenticatedTenantId, worldId, ...receipt } =
       event;
     console.info("[world-context-gateway]", {
@@ -31,7 +35,7 @@ const audit: WorldContextAuditSink = {
   },
 };
 
-const handlePost = createWorldContextMcpHttpHandler({
+const handleWorldContextPost = createWorldContextMcpHttpHandler({
   getMode: () => process.env.ARCANEA_WORLD_CONTEXT_GATEWAY_MODE,
   authenticate: authenticateWorldContextBearer,
   admissionLimiter: previewAdmissionLimiter,
@@ -39,27 +43,48 @@ const handlePost = createWorldContextMcpHttpHandler({
   audit,
 });
 
-export async function POST(request: NextRequest): Promise<Response> {
-  return handlePost(request);
-}
-
-function methodNotAllowed(): NextResponse {
-  return NextResponse.json(
-    {
-      error: { code: "method-not-allowed", message: "Only POST is supported." },
-    },
-    { status: 405, headers: { allow: "POST", "cache-control": "no-store" } },
-  );
-}
-
-export async function GET(): Promise<NextResponse> {
-  return methodNotAllowed();
-}
-
-export async function DELETE(): Promise<NextResponse> {
-  return methodNotAllowed();
+function withCors(response: NextResponse): NextResponse {
+  for (const [key, value] of Object.entries(PUBLIC_MCP_CORS_HEADERS)) {
+    response.headers.set(key, value);
+  }
+  return response;
 }
 
 export async function OPTIONS(): Promise<NextResponse> {
-  return methodNotAllowed();
+  return withCors(new NextResponse(null, { status: 204 }));
+}
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
+  const url = new URL(request.url);
+  return withCors(
+    NextResponse.json(publicMcpDiscovery(`${url.origin}/api/mcp`)),
+  );
+}
+
+export async function POST(request: NextRequest): Promise<Response> {
+  if (request.headers.get("authorization")) {
+    return handleWorldContextPost(request);
+  }
+
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return withCors(
+      NextResponse.json(
+        {
+          jsonrpc: "2.0",
+          id: null,
+          error: { code: -32700, message: "Parse error" },
+        },
+        { status: 400 },
+      ),
+    );
+  }
+
+  const { status, payload } = handlePublicMcpJsonRpc(body, executePublicMcpTool);
+  if (payload === null) {
+    return withCors(new NextResponse(null, { status }));
+  }
+  return withCors(NextResponse.json(payload, { status }));
 }

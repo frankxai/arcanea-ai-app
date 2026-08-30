@@ -34,6 +34,8 @@ export async function middleware(request: NextRequest) {
       '/api/ai', '/api/chat', '/api/luminors',
       '/api/media', '/api/arcs', '/api/apl', '/api/studio',
       '/api/voice',
+      '/api/mcp',
+      '/api/worlds/mcp-bridge',
     ],
     authPrefixes: ['/auth/login', '/auth/signup'],
     loginPath: '/auth/login',
