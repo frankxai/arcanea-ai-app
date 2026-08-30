@@ -242,9 +242,24 @@ export async function getPublishedLuminors(options: BrowseOptions = {}): Promise
   }
 
   const signal = AbortSignal.timeout(LUMINOR_READ_TIMEOUT_MS);
+  const timeoutError = new Error(
+    `Published Luminor read exceeded ${LUMINOR_READ_TIMEOUT_MS}ms`
+  );
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
   try {
-    const { data, error } = await query.abortSignal(signal);
+    // Supabase/PostgREST retries may outlive an abort in some runtimes. The
+    // application deadline guarantees that the route can still return a
+    // retryable response even if the underlying request has not settled.
+    const { data, error } = await Promise.race([
+      query.abortSignal(signal),
+      new Promise<never>((_, reject) => {
+        timeoutId = setTimeout(
+          () => reject(timeoutError),
+          LUMINOR_READ_TIMEOUT_MS
+        );
+      }),
+    ]);
 
     if (error) {
       throw new Error(`Failed to browse luminors: ${error.message}`);
@@ -252,13 +267,12 @@ export async function getPublishedLuminors(options: BrowseOptions = {}): Promise
 
     return (data ?? []) as LuminorRow[];
   } catch (error) {
-    if (signal.aborted) {
-      throw new Error(
-        `Published Luminor read exceeded ${LUMINOR_READ_TIMEOUT_MS}ms`,
-        { cause: error }
-      );
+    if (error === timeoutError || signal.aborted) {
+      throw new Error(timeoutError.message, { cause: error });
     }
     throw error;
+  } finally {
+    if (timeoutId) clearTimeout(timeoutId);
   }
 }
 
