@@ -134,3 +134,9 @@ No asset may be called cover art, edition art, or canon identity until the chara
 - **Visual verdict:** protected-staging PASS. The path, adult cast, evidence props, material architecture, and gold/mineral-blue separation survive thumbnail reduction. Public/commercial status remains WARN until post-produced title and approved author lockup pass at roughly 120 pixels, mobile/social derivatives are produced, print-safe color and shadow detail are proofed, and the human creator approves casting and image rights.
 - **Canon verdict:** staging-safe, not canon identity. It depicts no authenticated lower-structure personhood, dragon bond, prophecy, portal, Malachar body, or decorative lore claim.
 - **Rights verdict:** pending current terms review and human approval before commercial release.
+
+## Narrative plate staging package — 2026-08-30
+
+Nine selected plate masters now have tracked private WebP derivatives, source and derivative hashes, prompt summaries, edit histories, and crop status in `ledger/art-plates-2026-08-30.md`. A verifier separate from the image maker passed the full set for protected internal staging in `reviews/art-plates-staging-qa-2026-08-30.md`.
+
+This is not a public, commercial, canon, casting, or rights approval. All required alternate crops, print proofing, captions, alt text, and human gates remain open.
