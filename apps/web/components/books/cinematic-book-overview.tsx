@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { BookPurchaseButton } from '@/components/books/book-purchase-button';
 import type { BookAccessState } from '@/lib/books/polar-access';
@@ -64,7 +65,7 @@ export function CinematicBookOverview({
           <span>{CINEMATIC_BOOK_SERIES}</span>
         </div>
 
-        <div className="relative mx-auto grid min-h-[78svh] max-w-7xl items-center gap-14 pt-12 lg:grid-cols-[0.86fr_1.14fr] lg:gap-20">
+        <div className="relative mx-auto grid min-h-[78svh] max-w-7xl items-center gap-14 pt-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14">
           <div>
             <p className="font-mono text-xs tracking-[0.13em] text-[#c8ad75]">
               {released ? 'Book one · founding cinematic edition' : 'Book one · private edition preview'}
@@ -111,18 +112,38 @@ export function CinematicBookOverview({
             </p>
           </div>
 
-          <article className="relative mx-auto w-full max-w-2xl border border-white/12 bg-[#0b1015]/88 p-7 shadow-[0_40px_120px_rgba(0,0,0,0.45)] backdrop-blur sm:p-10 lg:rotate-[0.35deg]">
-            <div className="absolute -left-3 top-12 h-24 w-px bg-[#e2c484]/70" aria-hidden="true" />
-            <p className="font-mono text-[11px] tracking-[0.12em] text-[#bfa66f]">From Chapter 1 · The house that leaned</p>
-            <div className="mt-7 space-y-5 font-serif text-[1.04rem] leading-[1.85] text-[#e9e2d5]/84 sm:text-lg">
-              {opening.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-            </div>
-            {firstChapter ? (
-              <Link href={`/books/${CINEMATIC_BOOK_ID}/${firstChapter.id}`} className="mt-8 inline-flex text-sm text-[#bed5d1] transition hover:text-white">
-                Continue Chapter 1 →
-              </Link>
-            ) : null}
-          </article>
+          <div className="grid items-center gap-6 sm:grid-cols-[0.72fr_1.28fr] lg:gap-7">
+            <figure className="relative mx-auto w-full max-w-[19rem] sm:max-w-none">
+              <div className="relative aspect-[2/3] overflow-hidden border border-white/14 bg-[#0a0e13] shadow-[0_32px_100px_rgba(0,0,0,0.5)]">
+                <Image
+                  src="/images/books/the-last-free-path/cover-held-interval-preview.png"
+                  alt="Cover study showing Arion, Mera, and Emilia around a narrow dry path through stone and mineral water."
+                  fill
+                  priority
+                  sizes="(max-width: 639px) 76vw, (max-width: 1023px) 34vw, 22vw"
+                  className="object-cover"
+                />
+              </div>
+              {!released ? (
+                <figcaption className="absolute inset-x-3 bottom-3 border border-white/12 bg-black/70 px-3 py-2 text-center text-[11px] leading-4 text-white/68 backdrop-blur">
+                  Cover study · character and rights approval pending
+                </figcaption>
+              ) : null}
+            </figure>
+
+            <article className="relative w-full border border-white/12 bg-[#0b1015]/88 p-7 shadow-[0_40px_120px_rgba(0,0,0,0.45)] backdrop-blur sm:p-9 lg:rotate-[0.35deg]">
+              <div className="absolute -left-3 top-12 h-24 w-px bg-[#e2c484]/70" aria-hidden="true" />
+              <p className="font-mono text-[11px] tracking-[0.12em] text-[#bfa66f]">From Chapter 1 · The house that leaned</p>
+              <div className="mt-7 space-y-5 font-serif text-[1.02rem] leading-[1.82] text-[#e9e2d5]/84">
+                {opening.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              </div>
+              {firstChapter ? (
+                <Link href={`/books/${CINEMATIC_BOOK_ID}/${firstChapter.id}`} className="mt-8 inline-flex text-sm text-[#bed5d1] transition hover:text-white">
+                  Continue Chapter 1 →
+                </Link>
+              ) : null}
+            </article>
+          </div>
         </div>
       </section>
 

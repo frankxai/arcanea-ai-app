@@ -2,8 +2,8 @@
 title: The Last Free Path — cinematic edition art direction
 status: staging
 canon_status: not approved
-cover_status: not generated
-rights_status: pending generation receipts and human approval
+cover_status: three internal studies generated; revision 03 staged in protected preview; human approval pending
+rights_status: OpenAI generation receipt recorded; terms and human rights review pending
 updated: 2026-08-30
 ---
 
@@ -117,3 +117,20 @@ The first paid edition should ship with eight finished narrative plates plus the
 Every selected asset needs: asset ID, generation date, model and product name, final owned prompt, source/reference list, exact character-sheet revision, scene/chapter reference, crop variants, editorial changes, rights status, canon verdict, visual-quality verdict, and human approval. Rejected generations remain internal and are not evidence of value.
 
 No asset may be called cover art, edition art, or canon identity until the character-casting, title, rights, and canon gates are approved by the human creator.
+
+## Cover study receipt — revision 03
+
+- **Asset ID:** `cover-held-interval-preview-r03`
+- **Generated:** 2026-08-30
+- **Generator:** OpenAI image generation through the Codex imagegen workflow; exact backend model was not surfaced by the tool and is therefore not reconstructed.
+- **Tracked preview asset:** `apps/web/public/images/books/the-last-free-path/cover-held-interval-preview.png`
+- **Source SHA-256:** `3399de7f71a7300c74bbd2ded1ff2f3f0730adbe58f00766dc4e06e5762d7008`
+- **Owned prompt:** the art-only generation brief above, followed by bounded edits requesting an upright mineral-water boundary, ordinary maker forearms and a chalk-whitened yellow cuff for Emilia, a visibly hovering wrapped hand for Arion, a real latched daylight exit, coherent simplified machinery, and a calm title field.
+- **Reference:** internal revisions 01 and 02 generated in the same owned session; no third-party visual reference was supplied.
+- **Story anchor:** the hand-built path and three-person interval from the founding cinematic edition; this is a symbolic cover composition, not a literal single chapter frame.
+- **Editorial changes:** revision 03 gives the water a worn frame, meniscus, runoff, and floor contact; turns the bright opening into a latched masonry doorway with directional daylight; restores Emilia's ochre-yellow fabric cuff; simplifies the dismantled interface; clarifies Arion's hovering hand; and opens a dark upper title field. No typography or post-generation compositing has been applied.
+- **Independent review history:** revision 02 received a WARN that permitted protected staging only. Its blockers were the missing yellow cuff, under-contained water, portal-like exit blowout, synthetic machinery density, unfinished 1:1.6/title/mobile composition, and open typography/delivery gates. Revision 03 passed the independent full-resolution visual/canon gate for protected staging: the first five visual blockers are closed, adults and anatomy read plausibly, and no generic AI material artifact or prohibited canon implication remains.
+- **Measured source:** 992 × 1586 pixels, height-to-width ratio 1.5988. A centered mobile crop retains the waiting hand, path, water boundary, lamp, and pages, but actual derivative files still require production and approval.
+- **Visual verdict:** protected-staging PASS. The path, adult cast, evidence props, material architecture, and gold/mineral-blue separation survive thumbnail reduction. Public/commercial status remains WARN until post-produced title and approved author lockup pass at roughly 120 pixels, mobile/social derivatives are produced, print-safe color and shadow detail are proofed, and the human creator approves casting and image rights.
+- **Canon verdict:** staging-safe, not canon identity. It depicts no authenticated lower-structure personhood, dragon bond, prophecy, portal, Malachar body, or decorative lore claim.
+- **Rights verdict:** pending current terms review and human approval before commercial release.
