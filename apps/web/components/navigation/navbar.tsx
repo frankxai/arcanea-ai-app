@@ -56,7 +56,7 @@ const navLinks: NavLink[] = [
   {
     href: "/gallery",
     label: "Explore",
-    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/showcase", "/models"],
+    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/showcase", "/models", "/story"],
     mega: [
       {
         title: "Discover",
