@@ -1,0 +1,36 @@
+{
+  "task": "t_cf9b7683",
+  "surface": "/story",
+  "repo": "frankxai/arcanea-ai-app",
+  "branch": "agent/hermes/cinematic-story-t_cf9b7683",
+  "tier": "B",
+  "inspected": true,
+  "ship_threshold": 26,
+  "stills": [
+    {
+      "path": "apps/web/public/story/first-light.webp",
+      "role": "hero",
+      "prompt": "First Light as FORM organizing darkness; gold lattice; void indigo; no characters; no text",
+      "inspection": "No watermark, no faces, no UI, no purple slop. Gold geometric form over teal-lit stone. Reads as pattern, not a fireball or goddess.",
+      "score_30": 27
+    },
+    {
+      "path": "apps/web/public/story/aethermoor-dawn.webp",
+      "role": "chapter-still",
+      "prompt": "Luminor Valley / Aethermoor first dawn; terraced light architecture; river; no characters; no text",
+      "inspection": "Photographic landscape, gold light lines, mist, no text or figures. Premium enough to ship as sequence still.",
+      "score_30": 28
+    }
+  ],
+  "live_ctas": [
+    "/books",
+    "/books/book1/the-storm-that-remembered",
+    "/books/docs/founding-myths",
+    "/gallery"
+  ],
+  "non_goals": [
+    "navbar",
+    "new invented book",
+    "Codex parallel writer on this worktree"
+  ]
+}

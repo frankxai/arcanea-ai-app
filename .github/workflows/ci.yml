@@ -199,11 +199,17 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
 
+      - name: Verify registry public-read boundary
+        run: node --test scripts/tests/registry-public-read-contract.test.mjs
+
       - name: Verify World Context Gateway trust boundary
         run: |
           pnpm --dir apps/web exec eslint app/api/mcp/route.ts lib/mcp --max-warnings=0
           pnpm --dir packages/arcanea-mcp test:gateway
           pnpm --dir apps/web test:mcp-world-context
+
+      - name: Verify Luminor public-read timeout
+        run: pnpm test:luminor-read-timeout
 
       - name: Run package tests
         run: pnpm test:quick

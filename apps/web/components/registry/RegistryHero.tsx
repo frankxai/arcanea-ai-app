@@ -60,7 +60,13 @@ export function RegistryHero({ stats }: RegistryHeroProps) {
             {/* Stats row */}
             <div className="flex flex-wrap gap-8 border-t border-white/[0.06] pt-8">
               <StatItem value={stats.total_agents} label="Published agents" delay={0.3} />
-              <StatItem value={stats.total_deployments} label="Active deployments" delay={0.4} />
+              {stats.total_deployments !== null ? (
+                <StatItem
+                  value={stats.total_deployments}
+                  label="Active deployments"
+                  delay={0.4}
+                />
+              ) : null}
               <StatItem value={stats.total_platforms} label="Platforms" delay={0.5} />
               <StatItem value="MIT" label="License" delay={0.6} />
             </div>
