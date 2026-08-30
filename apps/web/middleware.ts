@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
       '/api/health', '/api/stripe/webhook', '/api/search/',
       '/api/trending', '/api/leaderboard', '/api/gallery',
       '/api/community/stats', '/api/guardians/', '/api/profiles/',
-      '/api/v1/',
+      '/api/registry', '/api/v1/',
       // Core creation APIs remain public where their own provider controls require it.
       '/api/ai', '/api/chat', '/api/luminors',
       '/api/media', '/api/arcs', '/api/apl', '/api/studio',
