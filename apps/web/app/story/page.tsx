@@ -36,7 +36,7 @@ export default function StoryPage() {
   const valley = STILLS[1];
 
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
       <a className={styles.skip} href="#story-read">
         Skip to reading
       </a>
@@ -147,6 +147,6 @@ export default function StoryPage() {
           ))}
         </div>
       </section>
-    </main>
+    </div>
   );
 }
