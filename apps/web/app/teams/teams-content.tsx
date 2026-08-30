@@ -119,7 +119,7 @@ const TEAMS: TeamDef[] = [
   },
   {
     name: "Author & Lore",
-    charter: "The 190K-word library, Guardian lore, canon maintenance, and book production pipeline.",
+    charter: "The Library of Arcanea, Guardian lore, canon maintenance, and the book production pipeline.",
     owns: ["book/ collections", "CANON_LOCKED.md", "publishing-house CLI", "editorial standards"],
     icon: Sparkle as unknown as NarrowIcon,
     accent: "var(--arc-void)",
@@ -407,7 +407,7 @@ export function TeamsContent() {
                   </a>
                 </div>
                 <p className="mt-8 text-[11px] font-mono text-white/20 tracking-wider">
-                  27 repos. MIT license. All issues are public.
+                  Public repos, public issues, source available.
                 </p>
               </div>
             </m.div>

@@ -271,7 +271,7 @@ export default function ShowcasePage() {
               },
               {
                 title: "Open Source",
-                items: ["49 npm packages", "103 skills", "112 commands", "1,353 commits", "MCP server + bridge", "Agent orchestration", "World engine SDK", "Design system"],
+                items: ["14 public repos", "54 MCP tools", "20 creator skills", "MCP server + bridge", "Agent orchestration", "World engine SDK", "Design system"],
                 accent: "var(--arc-wind)",
               },
             ].map((col) => (
@@ -476,7 +476,7 @@ export default function ShowcasePage() {
             Build Your World
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-sm text-zinc-400">
-            42 tools. 10 Gates. Infinite worlds. Start creating now.
+            54 tools. 10 Gates. Infinite worlds. Start creating now.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link

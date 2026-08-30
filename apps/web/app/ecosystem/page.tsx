@@ -21,6 +21,7 @@ import {
   type PublicRepoGroup,
   type PublicRepoStatus,
 } from "@/lib/public-repo-registry";
+import { FACTS } from "@/lib/facts";
 
 // ─── Inline SVG Icons ─────────────────────────────────────────────────────────
 
@@ -71,7 +72,7 @@ const STATS = [
   { value: String(PUBLIC_REPO_SUMMARY.active), label: "Active Repos" },
   { value: String(PUBLIC_REPO_SUMMARY.public), label: "Public on GitHub" },
   { value: String(PUBLIC_REPO_SUMMARY.unresolved), label: "Needs Verification" },
-  { value: "80+", label: "Agent Skills" },
+  { value: String(FACTS.skills), label: "Agent Skills" },
 ];
 
 const LAYERS = [

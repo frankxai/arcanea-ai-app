@@ -83,7 +83,7 @@ const CAPABILITY_GRID = [
   {
     icon: PhLayers,
     title: "The Library",
-    description: "17 collections of original philosophy for the creative life",
+    description: "20 collections of original philosophy for the creative life",
   },
 ];
 

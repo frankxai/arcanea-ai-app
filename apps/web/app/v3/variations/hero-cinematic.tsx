@@ -168,7 +168,7 @@ export function HeroCinematic() {
           animate="visible"
           variants={fadeUp}
         >
-          Free &middot; No credit card &middot; 34+ original texts
+          Free &middot; No credit card &middot; 57 original texts
         </m.p>
       </div>
 

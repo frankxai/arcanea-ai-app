@@ -222,7 +222,7 @@ export function V5GradientMesh() {
             />
             <PillarCard
               title="Discover"
-              description="Explore 62 texts of creation wisdom"
+              description="Explore 57 texts of creation wisdom"
               icon={<BookOpen size={28} weight="duotone" className="text-cyan-400" />}
               blobs={[
                 { color: 'var(--arc-brand-atlantean-teal)', size: '30vw', top: '5%', left: '30%', animation: 'blob3', duration: '20s' },

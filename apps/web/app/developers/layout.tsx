@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Arcanea Developers',
     description:
-      'Credits API, MCP servers, 97 skills, and open-source packages for creative intelligence.',
+      'Credits API, MCP servers, 20 creator skills, and open-source packages for creative intelligence.',
     type: 'website',
     url: 'https://arcanea.ai/developers',
   },
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Arcanea Developers',
     description:
-      'Credits API, MCP servers, 97 skills, and open-source packages for creative intelligence.',
+      'Credits API, MCP servers, 20 creator skills, and open-source packages for creative intelligence.',
   },
 };
 

@@ -194,7 +194,7 @@ export function HeroWarmGradient() {
           animate="visible"
           variants={fadeUp}
         >
-          No credit card required &middot; Free to start &middot; 34+ original texts
+          No credit card required &middot; Free to start &middot; 57 original texts
         </m.p>
 
         {/* ── Feature cards ── */}

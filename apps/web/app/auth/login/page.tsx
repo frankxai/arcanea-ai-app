@@ -424,7 +424,7 @@ export default function LoginPage() {
 
         {/* Trust signals */}
         <div className="flex items-center justify-center gap-4 mt-6 text-[11px] text-text-muted/50 font-mono">
-          <span>486K+ words</span>
+          <span>Ten Gates</span>
           <span className="w-1 h-1 rounded-full bg-white/10" />
           <span>{FACTS.luminors} Luminors</span>
           <span className="w-1 h-1 rounded-full bg-white/10" />

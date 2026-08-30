@@ -147,7 +147,7 @@ export function V2Bento() {
             animate="visible"
             variants={fadeUp}
           >
-            10 AI companions. 62 wisdom texts. One creative universe.
+            10 AI companions. 57 wisdom texts. One creative universe.
           </m.p>
           <m.div
             className="mt-8 flex flex-wrap items-center justify-center gap-4"

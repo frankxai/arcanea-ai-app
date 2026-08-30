@@ -10,10 +10,10 @@ import { NumberTicker } from '@/components/motion/number-ticker';
 
 export const metadata: Metadata = {
   title: 'Blueprints — Open Source Production Code',
-  description: '7 production blueprints for AI startups, authors, game studios, and design engineers. 33K+ lines. MIT licensed. Fork the code behind arcanea.ai.',
+  description: 'Nine production blueprints for AI startups, authors, game studios, and design engineers. Fork the code running arcanea.ai.',
   openGraph: {
     title: 'Arcanea Blueprints — Fork the code behind arcanea.ai',
-    description: '7 production blueprints. 33K+ lines. MIT licensed. Multi-model chat, world engine, publishing house, MCP server.',
+    description: 'Nine production blueprints. Multi-model chat, world engine, publishing house, MCP server. Fork the code running arcanea.ai.',
     type: 'website',
   },
   alternates: { canonical: '/templates' },
@@ -64,7 +64,7 @@ const BLUEPRINTS: Blueprint[] = [
   {
     id: 'library',
     name: 'Living Library',
-    desc: '190K+ words across 17 collections with reading progress, semantic graph visualization, and content loader.',
+    desc: 'Twenty markdown collections with reading progress, semantic graph visualization, and a content loader.',
     audience: 'Publishers · Authors',
     loc: '5,000',
     files: ['app/library/page.tsx', 'lib/content/index.ts', 'app/library/graph/'],
@@ -124,7 +124,7 @@ const BLUEPRINTS: Blueprint[] = [
   {
     id: 'mcp',
     name: 'MCP Server',
-    desc: '42 tools: world intelligence, vault memory, media generation, canon validation — one server, any AI client.',
+    desc: '54 tools: world intelligence, vault memory, media generation, canon validation — one server, any AI client.',
     audience: 'Claude developers · Agent builders',
     loc: '8,500',
     files: ['packages/arcanea-mcp/src/index.ts', 'packages/arcanea-mcp/src/tools/'],
@@ -431,7 +431,7 @@ pnpm dev`}
                   href="/ecosystem"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-[var(--arc-text-primary)] hover:bg-white/[0.08] transition-colors"
                 >
-                  Browse all 27 repos
+                  Browse all public repos
                 </Link>
               </Magnetic>
             </div>

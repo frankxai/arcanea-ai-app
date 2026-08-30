@@ -122,7 +122,7 @@ const NEXT_STEPS: NextStep[] = [
   { title: 'Documentation', description: 'Full API reference and guides', href: '/docs', icon: Book, accent: 'text-[var(--arc-brand-atlantean-teal)]' },
   { title: 'Academy', description: 'Learn world-building from Gate 1 to 10', href: '/academy', icon: GraduationCap, accent: 'text-violet-400' },
   { title: 'Chat', description: 'Start a conversation with an AI companion', href: '/chat', icon: ChatCircle, accent: 'text-[var(--arc-brand-cosmic-blue)]' },
-  { title: 'Ecosystem', description: 'Explore all 27 repositories and tools', href: '/ecosystem', icon: Gear, accent: 'text-[var(--arc-brand-arcanean-gold)]' },
+  { title: 'Ecosystem', description: 'Explore all 14 public repositories and tools', href: '/ecosystem', icon: Gear, accent: 'text-[var(--arc-brand-arcanean-gold)]' },
 ];
 
 // ─── Components ─────────────────────────────────────────────────────────────

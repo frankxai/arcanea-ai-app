@@ -27,7 +27,7 @@ const HEADLINE = 'Creative intelligence, specialized.';
 
 const STATS: { value: string; label: string }[] = [
   { value: '10', label: 'Luminors' },
-  { value: '34+', label: 'Texts' },
+  { value: '57', label: 'Texts' },
   { value: 'Free', label: 'To Start' },
 ];
 

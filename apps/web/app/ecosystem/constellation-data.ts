@@ -69,7 +69,7 @@ const innerRingNodes: RingNodeDef[] = [
 ];
 
 const middleRingNodes: RingNodeDef[] = [
-  { id: 'claude-arcanea', label: 'claude-arcanea', description: '54 skills overlay for Claude Code. MCP server and agent harness.', color: TEAL, angle: 30 },
+  { id: 'claude-arcanea', label: 'claude-arcanea', description: '20 creator skills overlay for Claude Code. MCP server and agent harness.', color: TEAL, angle: 30 },
   { id: 'arcanea-code', label: 'arcanea-code', description: 'Code intelligence agent with semantic analysis and refactoring.', color: BLUE, angle: 120 },
   { id: 'oh-my-arcanea', label: 'oh-my-arcanea', description: 'Shell integration and terminal experience enhancement.', color: GREEN, angle: 210 },
   { id: 'arcanea-orchestrator', label: 'Orchestrator', description: 'Multi-agent swarm coordination with hierarchical topology.', color: VIOLET, angle: 300 },
@@ -78,7 +78,7 @@ const middleRingNodes: RingNodeDef[] = [
 const outerRingNodes: RingNodeDef[] = [
   { id: 'arcanea-claw', label: 'Arcanea Claw', description: 'Media generation CLI. Image, video, and audio pipelines.', color: PINK, angle: 0 },
   { id: 'arcanea-infogenius', label: 'InfoGenius', description: 'Research synthesis agent. Web search, analysis, visual reports.', color: CYAN, angle: 72 },
-  { id: 'author-os', label: 'Author OS', description: 'Book publishing pipeline. 17 collections, 200K+ words of lore.', color: AMBER, angle: 144 },
+  { id: 'author-os', label: 'Author OS', description: 'Book publishing pipeline behind the Chronicles and the Library.', color: AMBER, angle: 144 },
   { id: 'suno-mcp', label: 'Suno MCP', description: 'Music creation via Suno AI. Frequency-aligned compositions.', color: RED, angle: 216 },
   { id: 'arcanea-vault', label: 'Arcanea Vault', description: 'Knowledge capture and archival with semantic search.', color: GREEN, angle: 288 },
 ];

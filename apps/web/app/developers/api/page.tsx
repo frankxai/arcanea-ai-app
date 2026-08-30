@@ -48,7 +48,7 @@ const ENDPOINTS = [
   {
     method: 'GET',
     path: '/v1/library',
-    description: 'Access 200K+ words of creative wisdom across 17 Library collections.',
+    description: 'Read any text from the twenty collections of the Library of Arcanea.',
     icon: PhBookOpen,
     color: 'var(--arc-brand-cosmic-blue)',
   },
