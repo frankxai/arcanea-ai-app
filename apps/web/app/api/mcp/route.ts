@@ -15,6 +15,11 @@ import {
   publicMcpDiscovery,
 } from "@/lib/mcp/public-http";
 import { executePublicMcpTool } from "@/lib/mcp/public-tools";
+import { rateLimit, rateLimitKey } from "@/lib/rate-limit";
+
+/** The public tools are pure generators; this only caps a single hammering client. */
+const PUBLIC_MCP_RATE_LIMIT = { limit: 60, windowSeconds: 60 };
+const PUBLIC_MCP_MAX_BODY_BYTES = 64 * 1024;
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -66,9 +71,57 @@ export async function POST(request: NextRequest): Promise<Response> {
     return handleWorldContextPost(request);
   }
 
+  const limit = rateLimit(
+    `mcp-public:${rateLimitKey(request)}`,
+    PUBLIC_MCP_RATE_LIMIT,
+  );
+  if (!limit.success) {
+    const response = NextResponse.json(
+      {
+        jsonrpc: "2.0",
+        id: null,
+        error: { code: -32000, message: "Rate limit exceeded." },
+      },
+      { status: 429 },
+    );
+    response.headers.set(
+      "retry-after",
+      String(Math.max(1, Math.ceil((limit.resetAt - Date.now()) / 1000))),
+    );
+    return withCors(response);
+  }
+
+  const declaredLength = Number(request.headers.get("content-length") ?? "");
+  if (Number.isFinite(declaredLength) && declaredLength > PUBLIC_MCP_MAX_BODY_BYTES) {
+    return withCors(
+      NextResponse.json(
+        {
+          jsonrpc: "2.0",
+          id: null,
+          error: { code: -32600, message: "Request body too large." },
+        },
+        { status: 413 },
+      ),
+    );
+  }
+
+  const raw = await request.text();
+  if (raw.length > PUBLIC_MCP_MAX_BODY_BYTES) {
+    return withCors(
+      NextResponse.json(
+        {
+          jsonrpc: "2.0",
+          id: null,
+          error: { code: -32600, message: "Request body too large." },
+        },
+        { status: 413 },
+      ),
+    );
+  }
+
   let body: unknown;
   try {
-    body = await request.json();
+    body = JSON.parse(raw);
   } catch {
     return withCors(
       NextResponse.json(

@@ -204,6 +204,7 @@ jobs:
           pnpm --dir apps/web exec eslint app/api/mcp/route.ts lib/mcp --max-warnings=0
           pnpm --dir packages/arcanea-mcp test:gateway
           pnpm --dir apps/web test:mcp-world-context
+          pnpm --dir apps/web test:mcp-public
 
       - name: Run package tests
         run: pnpm test:quick
