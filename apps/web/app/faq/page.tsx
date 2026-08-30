@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "FAQ",
   description:
     "Frequently asked questions about Arcanea, companions, pricing, and how it works.",
+  alternates: { canonical: "/faq" },
   openGraph: {
     title: "FAQ",
     description:
