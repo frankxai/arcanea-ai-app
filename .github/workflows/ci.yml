@@ -205,6 +205,9 @@ jobs:
           pnpm --dir packages/arcanea-mcp test:gateway
           pnpm --dir apps/web test:mcp-world-context
 
+      - name: Verify Luminor public-read timeout
+        run: pnpm test:luminor-read-timeout
+
       - name: Run package tests
         run: pnpm test:quick
         continue-on-error: true
