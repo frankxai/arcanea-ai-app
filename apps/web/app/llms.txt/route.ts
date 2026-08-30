@@ -11,9 +11,44 @@ const PAGES = [
     internalPath: '/',
   },
   {
+    title: 'Imagination Charter',
+    description: 'Commitments for human authorship, provenance, and participatory worldbuilding',
+    internalPath: '/imagination-charter',
+  },
+  {
+    title: 'Worlds',
+    description: 'Build living worlds with AI agents',
+    internalPath: '/worlds',
+  },
+  {
+    title: 'Chat',
+    description: 'Talk with Arcanea creative partners',
+    internalPath: '/chat',
+  },
+  {
     title: 'Books',
     description: 'Living books that grow with their readers',
     internalPath: '/books',
+  },
+  {
+    title: 'Library',
+    description: 'Philosophy and craft for creators',
+    internalPath: '/library',
+  },
+  {
+    title: 'Lore',
+    description: 'The Arcanea universe, guardians, and living mythology',
+    internalPath: '/lore',
+  },
+  {
+    title: 'Academy',
+    description: 'Creative progression for builders',
+    internalPath: '/academy',
+  },
+  {
+    title: 'MCP',
+    description: 'Model Context Protocol surface for agents',
+    internalPath: '/mcp',
   },
   {
     title: 'About',
