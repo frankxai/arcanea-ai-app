@@ -57,6 +57,9 @@ export interface BrowseOptions {
   offset?: number;
 }
 
+/** Public discovery must fail before Vercel's function deadline. */
+export const LUMINOR_READ_TIMEOUT_MS = 4_500;
+
 // ---------------------------------------------------------------------------
 // Mapping: LuminorSpec (camelCase) <-> DB row (snake_case)
 // ---------------------------------------------------------------------------
@@ -238,13 +241,25 @@ export async function getPublishedLuminors(options: BrowseOptions = {}): Promise
     query = query.eq('element', element);
   }
 
-  const { data, error } = await query;
+  const signal = AbortSignal.timeout(LUMINOR_READ_TIMEOUT_MS);
 
-  if (error) {
-    throw new Error(`Failed to browse luminors: ${error.message}`);
+  try {
+    const { data, error } = await query.abortSignal(signal);
+
+    if (error) {
+      throw new Error(`Failed to browse luminors: ${error.message}`);
+    }
+
+    return (data ?? []) as LuminorRow[];
+  } catch (error) {
+    if (signal.aborted) {
+      throw new Error(
+        `Published Luminor read exceeded ${LUMINOR_READ_TIMEOUT_MS}ms`,
+        { cause: error }
+      );
+    }
+    throw error;
   }
-
-  return (data ?? []) as LuminorRow[];
 }
 
 /**
