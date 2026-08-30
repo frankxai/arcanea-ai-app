@@ -25,8 +25,17 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ data: luminors, count: luminors.length });
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Failed to fetch luminors';
-    return NextResponse.json({ error: message }, { status: 500 });
+    console.error('[api/luminors] public read unavailable:', error);
+    return NextResponse.json(
+      { error: 'Published Luminors are temporarily unavailable. Please retry.' },
+      {
+        status: 503,
+        headers: {
+          'Retry-After': '30',
+          'Cache-Control': 'no-store',
+        },
+      }
+    );
   }
 }
 
