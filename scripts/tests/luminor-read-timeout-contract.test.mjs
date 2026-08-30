@@ -11,7 +11,7 @@ const route = readFileSync(
   'utf8',
 );
 
-test('published Luminor reads carry an abort signal below five seconds', () => {
+test('published Luminor reads carry abort and application deadlines below five seconds', () => {
   const timeoutMatch = service.match(
     /export const LUMINOR_READ_TIMEOUT_MS\s*=\s*([\d_]+);/,
   );
@@ -24,6 +24,12 @@ test('published Luminor reads carry an abort signal below five seconds', () => {
     /AbortSignal\.timeout\(LUMINOR_READ_TIMEOUT_MS\)/,
   );
   assert.match(service, /query\.abortSignal\(signal\)/);
+  assert.match(service, /Promise\.race\(\[/);
+  assert.match(
+    service,
+    /setTimeout\([\s\S]*LUMINOR_READ_TIMEOUT_MS/,
+  );
+  assert.match(service, /clearTimeout\(timeoutId\)/);
 });
 
 test('the public route exposes a retryable failure instead of a function timeout', () => {
