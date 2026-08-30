@@ -65,15 +65,15 @@ const FAQ_ITEMS = [
   },
   {
     q: "How do the Luminors work?",
-    a: "Each agent is equipped with domain-specific toolkits and system prompts grounded in Arcanea's 190K+ word codebase and philosophy. Runtimes hand off context using structured schemas, passing a cinematic scene from a storyteller to a composer or visual builder without forcing the creator to restart from a blank chat.",
+    a: "Each agent is equipped with domain-specific toolkits and system prompts grounded in Arcanea's codebase and philosophy. Runtimes hand off context using structured schemas, passing a cinematic scene from a storyteller to a composer or visual builder without forcing the creator to restart from a blank chat.",
   },
   {
     q: "What is the Library of Arcanea?",
-    a: "190K+ words of original creative theory, laws, meditations, and dialogues across 17 collections. This serves as the grounding database for all agent personas, providing a consistent structural and thematic foundation across the platform.",
+    a: "Original creative theory, laws, meditations, and dialogues across collections. This serves as the grounding database for all agent personas, providing a consistent structural and thematic foundation across the platform.",
   },
   {
-    q: "What is the Ten Gates system?",
-    a: "Our leveling system for creators and builders. You start as an Apprentice at Gate 1 and rank up to a Master world-builder at Gate 10. You unlock developer permissions, advanced model routing, and specialized agents by shipping code, writing canon, and completing creation quests.",
+    q: "What is the Gates system?",
+    a: "Our leveling system for creators and builders. You start as an Apprentice and rank up to Master world-builder. You unlock developer permissions, advanced model routing, and specialized agents by shipping code, writing canon, and completing creation quests.",
   },
   {
     q: "How does BYOK work?",
@@ -804,7 +804,7 @@ function LuminorTeamSection() {
       <div className="max-w-5xl mx-auto px-6">
         <SectionHeader
           label="Luminor Specialists"
-          title="13 specialized AI agents"
+          title="Specialized AI agents"
           subtitle={<>Start with one specialist or route work across the council. From Systems Architects to Composers, Storytellers, and Motion Designers, each agent carries its own <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">project context, toolset</span>, and distinct creative voice.</>}
           accent="teal"
         />

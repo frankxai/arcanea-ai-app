@@ -226,9 +226,6 @@ export function GuardianShowcase() {
               </div>
             </Link>
           ))}
-          <span className="text-[10px] text-white/25 ml-3 font-mono tracking-wider">
-            10 gates
-          </span>
         </m.div>
       </div>
     </section>
