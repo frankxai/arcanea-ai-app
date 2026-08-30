@@ -3,6 +3,12 @@ name: Quality Gate
 on:
   pull_request:
     branches: [main]
+    paths-ignore:
+      - 'book/**'
+      - 'docs/**'
+      - '*.md'
+      - '.arcanea/lore/**'
+      - '.arcanea/projects/log/**'
     # Heavy E2E/Lighthouse/security suite runs once at the review boundary.
     # Required CI continues to validate every review-ready head update.
     types: [opened, ready_for_review]

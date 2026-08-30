@@ -9,22 +9,22 @@ const FEATURES = [
   {
     title: "Explore Arcanea",
     description:
-      "Ten Gods. Ten Gates. A living mythology where ancient archetypes of creation guide your work across writing, design, code, music, and strategy.",
+      "A living mythology where ancient archetypes of creation guide your work across writing, design, code, music, and strategy.",
     symbol: "\u25C8",
     href: "/lore",
     gradient: "from-[var(--arc-brand-atlantean-teal)]/15 to-[var(--arc-brand-cosmic-blue)]/15",
     borderGradient: "from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)]",
-    stats: "Ten Gods",
+    stats: "Living mythology",
   },
   {
     title: "Read Arcanean Books",
     description:
-      "17 wisdom collections. 34+ original texts. A philosophy library for the creative life \u2014 not self-help, but equipment for mastery.",
+      "A philosophy library for the creative life \u2014 not self-help, but equipment for mastery.",
     symbol: "\uD800\uDF00",
     href: "/library",
     gradient: "from-[var(--arc-brand-arcanean-gold)]/15 to-[var(--arc-brand-arcanean-gold)]/15",
     borderGradient: "from-[var(--arc-brand-arcanean-gold)] to-[var(--arc-brand-arcanean-gold)]",
-    stats: "34+ Texts",
+    stats: "Library",
   },
   {
     title: "Create with the Gods",
@@ -34,7 +34,7 @@ const FEATURES = [
     href: "/chat",
     gradient: "from-[var(--arc-fire)]/15 to-[var(--arc-fire)]/15",
     borderGradient: "from-[var(--arc-fire)] to-[var(--arc-fire)]",
-    stats: "Ten Gates",
+    stats: "Specialists",
   },
   {
     title: "Listen to Arcanean Music",
@@ -44,17 +44,16 @@ const FEATURES = [
     href: "/studio",
     gradient: "from-[var(--arc-brand-atlantean-teal)]/15 to-[var(--arc-brand-cosmic-blue)]/15",
     borderGradient: "from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)]",
-    stats: "10 Gates",
   },
   {
     title: "Enter the Academy",
     description:
-      "Seven Houses. Ten Gates of mastery. Each Gate unlocks a new creative domain \u2014 from Foundation to Source.",
+      "Seven Houses of mastery. Each stage unlocks a new creative domain \u2014 from Foundation to Source.",
     symbol: "\u29BF",
     href: "/academy",
     gradient: "from-[var(--arc-void)]/15 to-[var(--arc-brand-cosmic-blue)]/15",
     borderGradient: "from-[var(--arc-void)] to-[var(--arc-brand-cosmic-blue)]",
-    stats: "Ten Gates",
+    stats: "Academy",
   },
   {
     title: "Deploy Arcanean Swarms",

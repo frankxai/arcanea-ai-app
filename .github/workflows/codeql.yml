@@ -3,9 +3,21 @@ name: CodeQL
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'book/**'
+      - 'docs/**'
+      - '*.md'
+      - '.arcanea/lore/**'
+      - '.arcanea/projects/log/**'
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened, ready_for_review]
+    paths-ignore:
+      - 'book/**'
+      - 'docs/**'
+      - '*.md'
+      - '.arcanea/lore/**'
+      - '.arcanea/projects/log/**'
   schedule:
     # Weekly scan — Mondays 06:00 UTC
     - cron: '0 6 * * 1'

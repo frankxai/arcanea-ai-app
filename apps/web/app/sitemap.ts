@@ -4,7 +4,7 @@ import { COLLECTIONS, getAllTexts } from '@/lib/content';
 import { BLOG_POSTS } from '@/lib/blog-data';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://arcanea.ai';
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.arcanea.ai';
 
   const staticPages: MetadataRoute.Sitemap = [
     // ── Core Product ───────────────────────────────────────
@@ -56,6 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // ── Books ──────────────────────────────────────────────
     { url: `${baseUrl}/books`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/story`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
 
     // ── Creation Tools ─────────────────────────────────────
     { url: `${baseUrl}/studio`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
