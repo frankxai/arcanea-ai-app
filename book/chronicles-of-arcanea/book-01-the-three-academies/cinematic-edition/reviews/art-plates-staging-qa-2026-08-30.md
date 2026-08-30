@@ -29,6 +29,22 @@ status: pass-protected-staging
 ## Release blockers retained
 
 - Human canon, character-casting, rights, and commercial-use approval.
-- Required portrait and alternate landscape crops, composed rather than auto-cropped.
+- Placement-safe-zone and trim verification for the approved portrait and alternate landscape compositions.
 - Print proof, final captions and alt text, and placement against the final reader/artbook layouts.
 - Final cover typography and author byline are separate human-gated work.
+
+## Alternate-composition crop QA
+
+**PASS for protected internal staging.** A verifier separate from the image maker inspected every required companion composition at full resolution and checked its mobile story hierarchy, object/person counts, anatomy, aspect ratio, physical evidence boundaries, and canon implications.
+
+| Companion composition | Verdict | Finding |
+|---|---|---|
+| P01 Slate Row 4:5 | PASS | Arion, wrapped hands, connected damaged homes, and Akamoto's practical roof inspection remain legible at mobile size. |
+| P02 Rain Record 4:5 | PASS after bounded edit | Notebook pages and vessel tags are blank; one capped blue vial remains dry inside Mera's coat. |
+| P03 Correct Instrument 4:5 | PASS after bounded edit | Exactly three passive neutral windows remain; the violet flecks were removed without weakening the manual side-plate action. |
+| P04 Shared Breach 16:9 | PASS | Exactly three hands act at one dry breach; identity cues and water separation remain readable. |
+| P05 Beautiful Weight 4:5 | PASS | Exactly twelve adults remain; only the central pair of boots sinks, and the ceiling/consequence relationship survives thumbnail reduction. |
+| P06 Manual Door 3:2 | PASS | Timber leaf, manual latch, inert collar, corridor daylight, and non-linguistic wear remain physical and unambiguous. |
+| P07 Borrowed Method 4:5 | PASS | The trio, splint, contracted hand, materially covered route, and framed physical water remain legible without a portal implication. |
+| P08 Foundation Holds 4:5 | PASS | One hand, fresh mortar, three blank folds, one pencil, brass, and water remain countable and separated. |
+| P09 Final Record 4:5 | PASS | Three pages, pencil, bent key, chipped cup, three blurred adults, and the unrepaired table remain intact. |

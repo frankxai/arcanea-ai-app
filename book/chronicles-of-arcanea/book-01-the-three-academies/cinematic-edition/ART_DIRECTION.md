@@ -139,4 +139,4 @@ No asset may be called cover art, edition art, or canon identity until the chara
 
 Nine selected plate masters now have tracked private WebP derivatives, source and derivative hashes, prompt summaries, edit histories, and crop status in `ledger/art-plates-2026-08-30.md`. A verifier separate from the image maker passed the full set for protected internal staging in `reviews/art-plates-staging-qa-2026-08-30.md`.
 
-This is not a public, commercial, canon, casting, or rights approval. All required alternate crops, print proofing, captions, alt text, and human gates remain open.
+This is not a public, commercial, canon, casting, or rights approval. All required alternate compositions now pass protected-staging review; layout safe zones, print proofing, captions, alt text, and human gates remain open.
