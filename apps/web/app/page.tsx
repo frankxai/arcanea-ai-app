@@ -1,10 +1,31 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { getCollections, getAllTexts } from "@/lib/content";
 import {
   V3Content as HomeContent,
   V3Loading as HomeLoading,
 } from "./v3/v3-content";
+
+export const metadata: Metadata = {
+  title: "Arcanea — A World Engine That Remembers",
+  description:
+    "Arcanea keeps canon, characters, relationships, rules, and creative lineage coherent across changing AI models, sessions, and media.",
+  openGraph: {
+    title: "Arcanea — Build a world that remembers itself",
+    description:
+      "Persistent Creative Intelligence for creators and studios building narrative IP across models, tools, and media.",
+    url: "/",
+    images: [{ url: "/brand/arcanea-og.jpg", width: 1200, height: 630, alt: "Arcanea World Engine" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Arcanea — Build a world that remembers itself",
+    description:
+      "A World Engine for narrative IP that must remain coherent across models, tools, and time.",
+    images: ["/brand/arcanea-og.jpg"],
+  },
+};
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -14,7 +35,7 @@ const jsonLd = {
       name: "Arcanea",
       url: "https://www.arcanea.ai",
       description:
-        "A creative multiverse where creators chat with AI, build fantasy worlds, share what they make, and turn imagination into products.",
+        "A BYOK-first World Engine for creators building persistent narrative IP across models, tools, and media.",
       potentialAction: {
         "@type": "SearchAction",
         target: "https://www.arcanea.ai/library?q={search_term_string}",
@@ -28,7 +49,7 @@ const jsonLd = {
       logo: "https://www.arcanea.ai/icon",
       sameAs: ["https://github.com/frankxai"],
       description:
-        "Creative multiverse for builders: chat with AI, build worlds, share creations, and turn imagination into products.",
+        "Persistent Creative Intelligence for keeping canon, characters, relationships, rules, and creative lineage coherent across AI tools.",
     },
   ],
 };
