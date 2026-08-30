@@ -55,11 +55,11 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_APP_URL || "https://www.arcanea.ai",
   ),
   title: {
-    default: "Arcanea™ — Creative Intelligence Platform",
+    default: "Arcanea™ — World Engine for Persistent Creative Intelligence",
     template: "%s | Arcanea",
   },
   description:
-    "A creative multiverse: chat with AI, build fantasy worlds, share what you make, and turn imagination into products. Free to start.",
+    "A BYOK-first World Engine that keeps canon, characters, relationships, rules, and creative lineage coherent across AI models and media.",
   keywords: [
     "AI",
     "creativity",
@@ -77,9 +77,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea — Build a world that remembers itself",
     description:
-      "Creative AI partners, a philosophy library, and creation studio in one platform.",
+      "Persistent Creative Intelligence for creators and studios building narrative IP across models, tools, and media.",
     siteName: "Arcanea",
     images: [
       {
@@ -92,9 +92,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea — Build a world that remembers itself",
     description:
-      "Creative AI partners, a philosophy library, and creation studio in one platform.",
+      "Persistent Creative Intelligence for creators and studios building narrative IP across models, tools, and media.",
     images: ["/brand/arcanea-og.jpg"],
   },
   alternates: {
@@ -144,7 +144,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               "@type": "WebApplication",
               "name": "Arcanea",
               "url": "https://www.arcanea.ai",
-              "description": "Creative Intelligence Platform — chat with AI, build fantasy worlds, share what you make, and turn imagination into products.",
+              "description": "A BYOK-first World Engine for building persistent narrative IP across models, tools, and media.",
               "applicationCategory": "CreativeWork",
               "operatingSystem": "Web",
               "offers": {
@@ -159,8 +159,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 "url": "https://www.arcanea.ai"
               },
               "featureList": [
-                "Living world builder with auto-linking",
-                "Quest and faction generation"
+                "Persistent canon and relationship context",
+                "BYOK creative intelligence workspace",
+                "MCP world and studio tools"
               ]
             })
           }}
