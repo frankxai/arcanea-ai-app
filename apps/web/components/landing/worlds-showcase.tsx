@@ -25,7 +25,7 @@ const SHOWCASE_WORLDS = [
   },
   {
     name: "Starweave Academy",
-    tagline: "Seven houses, ten gates, and a thousand stories waiting to unfold",
+    tagline: "Seven houses, the Ten Gates, and a thousand stories waiting to unfold",
     gradient: "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold), var(--arc-brand-atlantean-teal))",
     elements: ["Spirit", "Water", "Wind"],
     href: "/lore",

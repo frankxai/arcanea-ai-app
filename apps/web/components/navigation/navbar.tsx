@@ -71,7 +71,7 @@ const navLinks: NavLink[] = [
       {
         title: "Lore",
         items: [
-          { href: "/library", label: "Library", desc: "200K+ words of wisdom" },
+          { href: "/library", label: "Library", desc: "Wisdom and philosophy" },
           { href: "/lore/guardians", label: "Guardians", desc: "The Ten Gate-keepers" },
           { href: "/living-lore", label: "Chronicles", desc: "Interactive stories" },
           { href: "/glossary", label: "Glossary", desc: "Arcanean terminology" },
