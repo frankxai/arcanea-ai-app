@@ -8,6 +8,7 @@ import { useRef, useState, useEffect } from "react";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 import type { V3BelowFoldProps } from "./v3-below-fold";
 import { HeroShowcase } from "./hero-showcase";
+import { WorldSeedExperience } from "./world-seed-experience";
 import { SovereigntyBadge } from "@/components/premium/sovereignty-pillars";
 import { NumberTicker } from "@/components/motion/number-ticker";
 import { FACTS } from "@/lib/facts";
@@ -281,17 +282,7 @@ export function V3Content({
 }: V3BelowFoldProps) {
   return (
     <div className="overflow-x-clip">
-      <HeroPortal />
-
-      {/* Gradient line separator — teal center glow */}
-      <div className="relative h-px mx-6 md:mx-auto md:max-w-4xl">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[120px] pointer-events-none"
-          style={{ background: "radial-gradient(ellipse, color-mix(in srgb, var(--arc-brand-atlantean-teal) 12%, transparent), transparent 70%)" }}
-        />
-      </div>
-
-      <HeroShowcase />
+      <WorldSeedExperience />
       <V3BelowFold
         collectionsCount={collectionsCount}
         textsCount={textsCount}
