@@ -35,7 +35,7 @@ const STEPS = [
     number: "04",
     title: "Grow",
     description:
-      "Progress through the Ten Gates. Earn recognition through creation, not consumption. From Apprentice to Luminor, the path is the product.",
+      "Progress through the Academy. Earn recognition through creation, not consumption. From Apprentice to Luminor, the path is the product.",
     accent: stepAccents.grow,
     href: "/academy",
   },
