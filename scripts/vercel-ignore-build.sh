@@ -19,6 +19,21 @@ if [[ "${VERCEL_ENV:-}" == "production" ]]; then
   exit 1
 fi
 
+# Agents may push intermediate commits without spending preview minutes.
+# The final coherent commit MUST omit [agent-wip] and will build.
+COMMIT_MESSAGE="${VERCEL_GIT_COMMIT_MESSAGE:-}"
+if [[ "$COMMIT_MESSAGE" == *"[agent-wip]"* ]]; then
+  echo "⏭️  skip: explicit agent work-in-progress checkpoint"
+  exit 0
+fi
+
+# If the parent was an ignored checkpoint, force this coherent checkpoint to
+# build before any branch/path filters can skip it.
+if git log -1 --format=%B HEAD^ 2>/dev/null | grep -Fq "[agent-wip]"; then
+  echo "✅ build: coherent checkpoint follows [agent-wip]"
+  exit 1
+fi
+
 # Skip patterns (most noise comes from these)
 case "$BRANCH" in
   dependabot/*)         echo "⏭️  skip: dependabot branch ($BRANCH)"; exit 0 ;;
