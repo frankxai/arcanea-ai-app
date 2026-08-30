@@ -52,7 +52,7 @@ const instrumentSerif = Instrument_Serif({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL || "https://arcanea.ai",
+    process.env.NEXT_PUBLIC_APP_URL || "https://www.arcanea.ai",
   ),
   title: {
     default: "Arcanea™ — Creative Intelligence Platform",
