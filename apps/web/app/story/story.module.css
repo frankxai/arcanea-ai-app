@@ -1,0 +1,366 @@
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  color: color-mix(in srgb, var(--arc-text-primary, #f4efe4) 92%, transparent);
+  background: var(--arc-cosmic-void, #05070f);
+  overflow-x: clip;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 60;
+  padding: 0.5rem 0.85rem;
+  background: var(--arc-brand-arcanean-gold, #c5a26f);
+  color: var(--arc-cosmic-void, #05070f);
+  font-family: var(--font-geist-sans, system-ui);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+.skip:focus {
+  top: 1rem;
+}
+
+.spine {
+  display: none;
+}
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: end;
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.frame :global(img) {
+  object-fit: cover;
+  object-position: center 42%;
+  width: 100%;
+  height: 100%;
+  animation: ken 36s ease-in-out alternate infinite;
+  will-change: transform;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to top,
+      var(--arc-cosmic-void, #05070f) 0%,
+      color-mix(in srgb, var(--arc-cosmic-void, #05070f) 55%, transparent) 42%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 80% 50% at 50% 100%,
+      color-mix(in srgb, var(--arc-brand-atlantean-teal, #2a5c5c) 18%, transparent),
+      transparent 70%
+    );
+  pointer-events: none;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+  background-size: 180px 180px;
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 2;
+  padding: clamp(4.5rem, 12vh, 8rem) clamp(1.25rem, 5vw, 4.5rem) 3.5rem;
+  max-width: 46rem;
+}
+
+.kicker {
+  margin: 0 0 1rem;
+  font-family: var(--font-geist-mono, ui-monospace, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--arc-brand-atlantean-teal, #7fd4c8);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-editorial, var(--font-geist-sans), Georgia, serif);
+  font-weight: 400;
+  font-size: clamp(3.1rem, 9vw, 7.2rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  color: color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 88%, white);
+}
+
+.lede {
+  margin: 1.5rem 0 0;
+  max-width: 34rem;
+  font-family: var(--font-editorial, Georgia, serif);
+  font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--arc-text-primary, #f4efe4) 78%, transparent);
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-top: 2rem;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.55rem 1.15rem;
+  border: 1px solid color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 45%, transparent);
+  color: var(--arc-brand-arcanean-gold, #c5a26f);
+  font-family: var(--font-geist-sans, system-ui);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: color-mix(in srgb, var(--arc-cosmic-void, #05070f) 55%, transparent);
+  backdrop-filter: blur(8px);
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.cta:hover,
+.cta:focus-visible {
+  border-color: var(--arc-brand-arcanean-gold, #c5a26f);
+  background: color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 14%, transparent);
+  color: white;
+  outline: none;
+}
+
+.ctaGhost {
+  border-color: color-mix(in srgb, white 22%, transparent);
+  color: color-mix(in srgb, white 72%, transparent);
+}
+
+.chapter {
+  position: relative;
+  display: grid;
+  gap: 0;
+}
+
+.dual {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.panel {
+  padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4.5rem);
+  border-top: 1px solid color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 16%, transparent);
+}
+
+.mark {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-geist-mono, ui-monospace, monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--arc-brand-atlantean-teal, #7fd4c8);
+}
+
+.entity {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-editorial, Georgia, serif);
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.aspect {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-geist-mono, ui-monospace, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, white 45%, transparent);
+}
+
+.body {
+  margin: 0;
+  max-width: 38rem;
+  font-family: var(--font-editorial, Georgia, serif);
+  font-size: clamp(1.12rem, 2vw, 1.35rem);
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--arc-text-primary, #f4efe4) 82%, transparent);
+}
+
+.gold {
+  color: var(--arc-brand-arcanean-gold, #c5a26f);
+}
+
+.teal {
+  color: var(--arc-brand-atlantean-teal, #7fd4c8);
+}
+
+.stillChapter {
+  position: relative;
+  min-height: 92svh;
+  display: grid;
+  align-items: end;
+}
+
+.stillChapter .frame {
+  position: absolute;
+}
+
+.quoteWrap {
+  position: relative;
+  z-index: 2;
+  padding: clamp(3rem, 8vh, 5.5rem) clamp(1.25rem, 5vw, 4.5rem);
+  max-width: 44rem;
+}
+
+.quote {
+  margin: 0;
+  font-family: var(--font-editorial, Georgia, serif);
+  font-size: clamp(1.25rem, 2.6vw, 1.85rem);
+  font-style: italic;
+  line-height: 1.45;
+  color: white;
+}
+
+.cite {
+  display: block;
+  margin-top: 1.25rem;
+  font-family: var(--font-geist-mono, ui-monospace, monospace);
+  font-size: 0.7rem;
+  font-style: normal;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--arc-brand-arcanean-gold, #c5a26f);
+}
+
+.cite a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.28em;
+}
+
+.artbook {
+  padding: clamp(3.5rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4.5rem) 5rem;
+}
+
+.strip {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.tile {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid color-mix(in srgb, white 12%, transparent);
+  background: color-mix(in srgb, black 35%, transparent);
+  overflow: hidden;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.tile:hover,
+.tile:focus-visible {
+  border-color: color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 55%, transparent);
+  outline: none;
+}
+
+.tileCover {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: #0a0d16;
+}
+
+.tileCover :global(img) {
+  object-fit: cover;
+}
+
+.tileTitle {
+  margin: 0;
+  padding: 0.85rem 1rem 1.1rem;
+  font-family: var(--font-geist-sans, system-ui);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+.endCard {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 18%, transparent);
+}
+
+@keyframes ken {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.07) translate3d(-1.4%, 1.1%, 0);
+  }
+}
+
+@media (min-width: 900px) {
+  .spine {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 0.85rem;
+    z-index: 30;
+    transform: translateY(-50%) rotate(180deg);
+    writing-mode: vertical-rl;
+    font-family: var(--font-geist-mono, ui-monospace, monospace);
+    font-size: 0.62rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 55%, transparent);
+    pointer-events: none;
+  }
+
+  .dual {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dual .panel + .panel {
+    border-left: 1px solid color-mix(in srgb, var(--arc-brand-arcanean-gold, #c5a26f) 16%, transparent);
+  }
+
+  .strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .heroCopy {
+    padding-left: 5.5rem;
+  }
+
+  .panel,
+  .quoteWrap,
+  .artbook {
+    padding-left: 5.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame :global(img) {
+    animation: none;
+  }
+
+  .cta,
+  .tile {
+    transition: none;
+  }
+}
