@@ -54,11 +54,12 @@ export interface SearchParams {
 
 /**
  * Search agents in the registry.
- * Falls back to empty array if Supabase is unreachable — page still renders.
+ * Missing configuration returns immediately without network I/O; unreachable configured services still fail closed.
  */
 export async function searchAgents(params: SearchParams = {}): Promise<RegistryAgent[]> {
   try {
     const supabase = createRegistryPublicClient();
+    if (!supabase) return [];
     let query = supabase
       .from('marketplace_agents')
       .select('*')
@@ -94,6 +95,7 @@ export async function searchAgents(params: SearchParams = {}): Promise<RegistryA
 export async function getAgent(id: string): Promise<RegistryAgent | null> {
   try {
     const supabase = createRegistryPublicClient();
+    if (!supabase) return null;
     const { data, error } = await supabase
       .from('marketplace_agents')
       .select('*')
@@ -118,6 +120,7 @@ export async function getAgent(id: string): Promise<RegistryAgent | null> {
 export async function getRegistryStats(): Promise<RegistryStats> {
   try {
     const supabase = createRegistryPublicClient();
+    if (!supabase) return { total_agents: 0, total_deployments: 0, total_platforms: 0, categories: {} };
 
     const [agentsRes, deploymentsRes, platformsRes] = await Promise.all([
       supabase.from('marketplace_agents').select('category', { count: 'exact' }).eq('is_published', true),
@@ -152,6 +155,7 @@ export async function getAgentStats(agentId: string): Promise<{
 }> {
   try {
     const supabase = createRegistryPublicClient();
+    if (!supabase) return { total_deploys: 0, total_usages: 0, platforms_reached: 0 };
     const [deploysRes, usagesRes] = await Promise.all([
       supabase.from('attribution_events').select('platform_id', { count: 'exact' }).eq('agent_id', agentId).eq('event_type', 'deploy'),
       supabase.from('usage_events').select('id', { count: 'exact', head: true }).eq('agent_id', agentId),
@@ -178,6 +182,7 @@ export async function getAgentStats(agentId: string): Promise<{
 export async function getRelatedAgents(agent: RegistryAgent, limit = 4): Promise<RegistryAgent[]> {
   try {
     const supabase = createRegistryPublicClient();
+    if (!supabase) return [];
     const { data } = await supabase
       .from('marketplace_agents')
       .select('*')
