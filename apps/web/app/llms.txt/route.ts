@@ -31,6 +31,11 @@ const PAGES = [
     internalPath: '/books',
   },
   {
+    title: 'Story',
+    description: 'The First Light — Lumina and Nero, origin of the Arcanea universe',
+    internalPath: '/story',
+  },
+  {
     title: 'Library',
     description: 'Philosophy and craft for creators',
     internalPath: '/library',
