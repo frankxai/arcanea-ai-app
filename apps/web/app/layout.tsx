@@ -143,7 +143,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               "@context": "https://schema.org",
               "@type": "WebApplication",
               "name": "Arcanea",
-              "url": "https://arcanea.ai",
+              "url": "https://www.arcanea.ai",
               "description": "Creative Intelligence Platform — chat with AI, build fantasy worlds, share what you make, and turn imagination into products.",
               "applicationCategory": "CreativeWork",
               "operatingSystem": "Web",
@@ -156,7 +156,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               "creator": {
                 "@type": "Organization",
                 "name": "Arcanea",
-                "url": "https://arcanea.ai"
+                "url": "https://www.arcanea.ai"
               },
               "featureList": [
                 "Living world builder with auto-linking",
