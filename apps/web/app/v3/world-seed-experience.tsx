@@ -116,8 +116,9 @@ export function WorldSeedExperience() {
             <p className={styles.lede}>
               Arcanea grew across versioned lore, character files, books, agent
               prompts, and generated media. Today, its live path can turn a prompt
-              into a structured world record and save it. The next test is harder:
-              can that world retain its identity as models, sessions, and media change?
+              into a structured world record; signed-in creators can save it. The
+              next test is harder: can that world retain its identity as models,
+              sessions, and media change?
             </p>
 
             <div className={styles.actions}>
@@ -152,9 +153,9 @@ export function WorldSeedExperience() {
             <h2 id="proof-title">What runs now. What must be proven next.</h2>
           </div>
           <p>
-            Arcanea is not claiming external customer traction yet. It is a live,
-            founder-used proving environment with a public mirror, structured
-            world creation, and a Vercel product awaiting external validation.
+            Arcanea is a live, founder-used proving environment with a public
+            mirror, structured world creation, and a Vercel product. Its first
+            external validation is the three-partner pilot described below.
           </p>
         </header>
 
