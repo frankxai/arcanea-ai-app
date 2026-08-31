@@ -143,6 +143,11 @@ function countCollections() {
 
 const collectionsCount = countCollections();
 
+/** Texts across the Library — the sum of every collection's textCount. */
+const textsCount = loaderSrc
+  ? [...loaderSrc.matchAll(/textCount:\s*(\d+)/g)].reduce((sum, m) => sum + Number(m[1]), 0) || null
+  : null;
+
 /**
  * Package and repo counts come from .arcanea/config/repos.json, the same file
  * lib/public-repo-registry.ts imports. Only the two derivations with a single
@@ -176,6 +181,7 @@ const RESOLVED = {
   "FACTS.mcpTools": FACTS.mcpTools,
   "FACTS.skills": FACTS.skills,
   "COLLECTIONS.length": collectionsCount,
+  "the textCount total in COLLECTIONS": textsCount,
   "PUBLIC_REPO_SUMMARY.packages": REPO_CONFIG.packages,
   PUBLIC_REPO_SUMMARY: REPO_CONFIG.repoRange,
 };
@@ -212,6 +218,9 @@ const PATTERNS = [
   // their own; the previous check had no pattern for them at all.
   { re: /\b(\d{1,3})\+?\s+collections\b/gi, hint: "COLLECTIONS.length" },
   { re: new RegExp(`\\b(${WORD_ALT})\\s+collections\\b`, "gi"), hint: "COLLECTIONS.length" },
+
+  // Three sibling pages under /v3 claim 34+, 62 and 62 texts.
+  { re: /\b(\d{1,4})\+?\s+(?:wisdom\s+|Library\s+)?texts\b/gi, hint: "the textCount total in COLLECTIONS" },
 
   // The Ten Gates and Ten Guardians are proper nouns, not counts — they have
   // never drifted and rewriting them as interpolations would damage the prose.
@@ -256,7 +265,7 @@ function scanSource(dir) {
       .split("\n")
       .forEach((line, i) => {
         // Template-literal interpolations of the resolved values are the fix, not drift.
-        if (line.includes("FACTS.") || line.includes("PUBLIC_REPO_SUMMARY") || line.includes("COLLECTIONS.length")) return;
+        if (line.includes("FACTS.") || line.includes("PUBLIC_REPO_SUMMARY") || line.includes("COLLECTIONS")) return;
         // `facts-ok` annotates numbers that are contextually correct (skill-tree nodes, per-request caps).
         if (line.includes("facts-ok")) return;
         if (/^\s*(\/\/|\/?\*)/.test(line)) return; // comments
@@ -319,8 +328,8 @@ function scanAssets() {
 // ---------------------------------------------------------------------------
 
 verifyFactsProvenance();
-if (!collectionsCount) {
-  report("provenance", "apps/web/lib/content/loader.ts", "cannot count COLLECTIONS entries — collection claims are unguarded");
+if (!collectionsCount || !textsCount) {
+  report("provenance", "apps/web/lib/content/loader.ts", "cannot count COLLECTIONS entries or their textCount total — collection and text claims are unguarded");
 }
 if (!REPO_CONFIG.packages) {
   report("provenance", ".arcanea/config/repos.json", "cannot resolve published package names — package and repo claims are unguarded");
