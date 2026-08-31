@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { WorldSeedExperience } from "./v3/world-seed-experience";
 
 export const metadata: Metadata = {
-  title: "Arcanea — A World Engine That Remembers",
+  title: { absolute: "Arcanea — A World Engine That Remembers" },
   description:
     "A live creative-world proving environment building continuity for canon, characters, relationships, rules, and source lineage across AI tools.",
   openGraph: {
