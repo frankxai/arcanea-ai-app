@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Arcanea — Build a world that remembers itself",
     description:
-      "Persistent Creative Intelligence for creators and studios building narrative IP across models, tools, and media.",
+      "Persistent Creative Intelligence for narrative studios and game-world teams stewarding long-lived IP.",
     url: "/",
     images: [
       {
