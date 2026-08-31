@@ -1,6 +1,10 @@
-.hero {
+.hero,
+.proofSection {
   --seed-gold: var(--arc-brand-arcanean-gold);
   --seed-cyan: var(--arc-brand-atlantean-teal);
+}
+
+.hero {
   position: relative;
   isolation: isolate;
   min-height: calc(100svh - var(--nav-h));
@@ -260,7 +264,7 @@
   border: 1px solid color-mix(in srgb, var(--seed-gold) 45%, transparent);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 35% 28%, var(--arc-gold-light), var(--seed-gold) 17%, var(--arc-gold-dark) 38%, var(--arc-cosmic-surface) 68%, var(--arc-cosmic-void));
+    radial-gradient(circle at 35% 28%, color-mix(in srgb, var(--seed-gold) 38%, var(--arc-cosmic-surface)), var(--arc-cosmic-deep) 44%, var(--arc-cosmic-void) 78%);
   color: var(--arc-text-primary);
   text-align: center;
 }
@@ -442,7 +446,7 @@
 
 .proofCard p {
   margin: 0;
-  color: color-mix(in srgb, var(--arc-text-primary) 46%, transparent);
+  color: color-mix(in srgb, var(--arc-text-primary) 64%, transparent);
   font-size: 0.85rem;
   line-height: 1.62;
 }
@@ -610,7 +614,7 @@
   }
 }
 
-@media (max-width: 780px) {
+@media (max-width: 840px) {
   .heroGrid,
   .truthRail,
   .proofSection {
@@ -672,7 +676,8 @@
   }
 
   .seedCore strong { font-size: 0.82rem; }
-  .seedCore span, .seedCore small { font-size: 0.38rem; }
+  .seedCore span { font-size: 0.52rem; }
+  .seedCore small { font-size: 0.48rem; }
 
   .layerNode {
     width: 7.35rem;
@@ -753,7 +758,21 @@
   }
 
   .figure {
-    height: 24rem;
+    height: 25.5rem;
+  }
+
+  .seedHalo {
+    width: 7.1rem;
+    height: 7.1rem;
+  }
+
+  .seedCore {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  .layerNode {
+    width: 6.1rem;
   }
 
   .mergeSteps {
