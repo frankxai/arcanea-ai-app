@@ -89,7 +89,7 @@ export const COLLECTIONS: Collection[] = [
     order: 4,
     format: 'story',
     readWhen: 'you need to remember the grandeur',
-    textCount: 11,
+    textCount: 12,
     icon: '🏔️',
   },
   {
@@ -189,7 +189,7 @@ export const COLLECTIONS: Collection[] = [
     order: 14,
     format: 'practical',
     readWhen: 'you need comprehensive practical guidance for the creative path',
-    textCount: 2,
+    textCount: 3,
     icon: '📖',
   },
   {
@@ -239,7 +239,7 @@ export const COLLECTIONS: Collection[] = [
     order: 19,
     format: 'theory',
     readWhen: 'you need foundational principles for your creative practice',
-    textCount: 0,
+    textCount: 6,
     icon: '💎',
   },
   {
@@ -249,7 +249,7 @@ export const COLLECTIONS: Collection[] = [
     order: 20,
     format: 'practical',
     readWhen: 'you craft prompts and seek mastery in AI collaboration',
-    textCount: 0,
+    textCount: 6,
     icon: '📓',
   },
 ];

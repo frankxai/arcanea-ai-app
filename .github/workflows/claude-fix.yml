@@ -27,7 +27,7 @@ jobs:
       - name: Run Claude Sonnet via claude-code-action
         uses: anthropics/claude-code-action@beta
         with:
-          model: claude-sonnet-4-5
+          model: claude-sonnet-5
           # Uses ANTHROPIC_API_KEY secret — set this in repo Settings > Secrets
           # To avoid API charges, use OAuth token from Max plan if supported
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
