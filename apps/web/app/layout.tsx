@@ -159,7 +159,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 "url": "https://www.arcanea.ai"
               },
               "featureList": [
-                "Versioned world and lore source",
+                "Arcanea lore and canon versioned in public Git",
                 "Live world and creation surfaces",
                 "Public repository mirror and MCP status surface"
               ]
