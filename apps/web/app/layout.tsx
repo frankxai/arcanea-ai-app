@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     template: "%s | Arcanea",
   },
   description:
-    "A BYOK-first World Engine that keeps canon, characters, relationships, rules, and creative lineage coherent across AI models and media.",
+    "A live creative-world proving environment building continuity infrastructure for narrative IP across AI tools.",
   keywords: [
     "AI",
     "creativity",
@@ -144,7 +144,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               "@type": "WebApplication",
               "name": "Arcanea",
               "url": "https://www.arcanea.ai",
-              "description": "A BYOK-first World Engine for building persistent narrative IP across models, tools, and media.",
+              "description": "A live creative-world proving environment building continuity infrastructure for narrative IP across AI tools.",
               "applicationCategory": "CreativeWork",
               "operatingSystem": "Web",
               "offers": {
@@ -159,9 +159,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 "url": "https://www.arcanea.ai"
               },
               "featureList": [
-                "Persistent canon and relationship context",
-                "BYOK creative intelligence workspace",
-                "MCP world and studio tools"
+                "Versioned world and lore source",
+                "Live world and creation surfaces",
+                "54 MCP tools registered in source"
               ]
             })
           }}
