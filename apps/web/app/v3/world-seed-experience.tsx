@@ -110,7 +110,7 @@ export function WorldSeedExperience() {
           <div className={styles.copy}>
             <p className={styles.eyebrow}>For teams stewarding narrative IP</p>
             <h1 id="world-seed-title">
-              Build a world
+              Build a world{" "}
               <span>that remembers itself.</span>
             </h1>
             <p className={styles.lede}>
