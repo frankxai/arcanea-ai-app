@@ -19,6 +19,8 @@ import {
   PhRocket,
   PhHeart,
 } from '@/lib/phosphor-icons';
+import { PUBLIC_REPO_SUMMARY } from '@/lib/public-repo-registry';
+import { FACTS } from '@/lib/facts';
 
 // ─── Community Spaces ─────────────────────────────────────────────────────────
 
@@ -162,7 +164,7 @@ export const FEATURED_REPOS = [
     name: "arcanea",
     fullName: "frankxai/arcanea",
     description:
-      "The main Arcanea monorepo — Next.js platform, AI services, design system, and the Library of 200K+ words.",
+      "The main Arcanea monorepo — Next.js platform, AI services, design system, and the Library of Arcanea.",
     href: "https://github.com/frankxai/arcanea",
     tags: ["monorepo", "next.js", "ai"],
     color: "var(--arc-brand-atlantean-teal)",
@@ -325,9 +327,8 @@ export const QUICK_LINKS = [
 // ─── OSS Stats ────────────────────────────────────────────────────────────────
 
 export const OSS_STATS = [
-  { value: "27", label: "Repositories", color: "var(--arc-brand-atlantean-teal)" },
-  { value: "35", label: "npm Packages", color: "var(--arc-brand-arcanean-gold)" },
-  { value: "54", label: "Skills", color: "var(--arc-void)" },
-  { value: "791", label: "Tests Passing", color: "var(--arc-earth)" },
-  { value: "200K+", label: "Words of Lore", color: "var(--arc-fire)" },
+  { value: String(PUBLIC_REPO_SUMMARY.public), label: "Public Repos", color: "var(--arc-brand-atlantean-teal)" },
+  { value: String(FACTS.mcpTools), label: "MCP Tools", color: "var(--arc-brand-arcanean-gold)" },
+  { value: String(FACTS.skills), label: "Creator Skills", color: "var(--arc-void)" },
+  { value: String(FACTS.luminors), label: "Luminors", color: "var(--arc-earth)" },
 ];

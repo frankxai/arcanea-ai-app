@@ -310,7 +310,7 @@ export default function ClawPage() {
                 The Pipeline
               </h2>
               <p className="text-2xl sm:text-3xl font-display font-bold text-text-primary">
-                8 skills. Fully automated.
+                20 creator skills. Fully automated.
               </p>
               <p className="text-text-muted mt-3 max-w-xl mx-auto">
                 From raw media on your drives to scored, tagged, published content — every step handled by a specialized AI skill.

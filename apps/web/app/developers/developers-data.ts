@@ -87,7 +87,7 @@ export const TOOLS = [
       { name: "IntelligenceRouter", description: "Request routing to AI models" },
       { name: "VoiceEnforcer", description: "Output validation" },
       { name: "Token Optimizer", description: "Context window management" },
-      { name: "MCP Server", description: "42 tools with skill-rules" },
+      { name: "MCP Server", description: "54 tools with skill-rules" },
     ],
     color: "var(--arc-brand-atlantean-teal)",
   },
@@ -162,7 +162,7 @@ export const MCP_SERVERS = [
   {
     name: "arcanea-mcp",
     description:
-      "The core MCP server with 42 tools: world-building, canon validation, Luminor companions, story generation, agent orchestration.",
+      "The core MCP server with 54 tools: world-building, canon validation, Luminor companions, story generation, agent orchestration.",
     install: "npx @arcanea/mcp-server",
     color: "var(--arc-brand-atlantean-teal)",
   },
@@ -186,7 +186,7 @@ export const OPEN_SOURCE_REPOS = [
   {
     name: "frankxai/arcanea",
     description:
-      "Main monorepo. Web app, intelligence packages, MCP servers, creative pipeline, and 49 npm packages.",
+      "Main monorepo. Web app, intelligence packages, MCP servers, creative pipeline, and the published packages.",
     href: "https://github.com/frankxai/arcanea",
     color: "var(--arc-brand-atlantean-teal)",
   },

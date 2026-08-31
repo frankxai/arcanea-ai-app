@@ -10,7 +10,7 @@ const ECOSYSTEM_ITEMS = [
   { name: 'Vercel AI SDK', label: 'Intelligence' },
   { name: 'TypeScript', label: 'Language' },
   { name: 'React 19', label: 'UI' },
-  { name: '37 Packages', label: 'Ecosystem' },
+  { name: 'MCP Server', label: 'Ecosystem' },
   { name: 'Source Available', label: 'Open Source' },
   { name: '10 Guardians', label: 'Archetypes' },
 ];

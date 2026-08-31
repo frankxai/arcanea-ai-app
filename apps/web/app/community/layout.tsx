@@ -3,7 +3,7 @@ import { PUBLIC_REPO_SUMMARY } from '@/lib/public-repo-registry';
 import { FACTS } from '@/lib/facts';
 import type { Metadata } from 'next';
 
-const communityDescription = `Not just users — co-creators. Contribute lore, agents, skills, code, art, music. ${PUBLIC_REPO_SUMMARY.public} public repos, ${PUBLIC_REPO_SUMMARY.packages} npm packages, ${FACTS.skills} creator skills, 190K+ words of lore. Built in the open.`;
+const communityDescription = `Not just users — co-creators. Contribute lore, agents, skills, code, art, music. ${PUBLIC_REPO_SUMMARY.public} public repos, ${FACTS.mcpTools} MCP tools, ${FACTS.skills} creator skills, and the Library of Arcanea. Built in the open.`;
 
 export const metadata: Metadata = {
   title: 'Arcanea Community — Join the Creative Civilization',

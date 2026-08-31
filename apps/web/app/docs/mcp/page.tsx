@@ -5,11 +5,11 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Arcanea MCP — Developer Docs",
   description:
-    "Connect any MCP-compatible AI coding tool to Arcanea's creative production layer: 43 tools, 5 resources, 6 prompts. Works with Claude Code, Codex, Cursor, Windsurf, and Cline.",
+    "Connect any MCP-compatible AI coding tool to Arcanea's creative production layer: 54 tools, 5 resources, 6 prompts. Works with Claude Code, Codex, Cursor, Windsurf, and Cline.",
   openGraph: {
     title: "Arcanea MCP — Model Context Protocol Server",
     description:
-      "43 tools, 5 resources, 6 prompts. Connect Claude Code, Codex, Cursor, or Windsurf to Arcanea world intelligence and production workflows.",
+      "54 tools, 5 resources, 6 prompts. Connect Claude Code, Codex, Cursor, or Windsurf to Arcanea world intelligence and production workflows.",
   },
   alternates: { canonical: "/docs/mcp" },
 };
@@ -326,7 +326,7 @@ export default function McpOverviewPage() {
                 Tool Reference
               </p>
               <p className="mt-1.5 text-sm text-zinc-400">
-                All 43 tools with parameters and usage examples.
+                All 54 tools with parameters and usage examples.
               </p>
             </Link>
             <Link
