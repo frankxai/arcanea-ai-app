@@ -26,9 +26,9 @@ const LIVE_PROOF = [
     Icon: Code,
   },
   {
-    status: "Source",
-    title: "54 MCP tools registered",
-    body: "The implementation registers 54 world and studio tools in source. Client packaging and installation are being repaired before runtime claims.",
+    status: "Status",
+    title: "MCP integration in repair",
+    body: "The public mirror includes the earlier tool package. Client packaging and installation are being repaired before runtime claims.",
     href: "/mcp",
     label: "See MCP status",
     Icon: Sparkle,
@@ -61,6 +61,7 @@ const CANON_MERGE_STEPS = [
 function WorldSeedDiagram() {
   return (
     <figure className={styles.figure} aria-labelledby="world-seed-caption">
+      <p className={styles.figureLabel}>Proposed World Seed model</p>
       <div className={styles.diagram} aria-hidden="true">
         <div className={`${styles.orbit} ${styles.orbitOuter}`} />
         <div className={`${styles.orbit} ${styles.orbitMiddle}`} />
@@ -69,9 +70,9 @@ function WorldSeedDiagram() {
 
         <div className={styles.seedHalo}>
           <div className={styles.seedCore}>
-            <span>Creator-owned</span>
+            <span>Proposed model</span>
             <strong>World<br />Seed</strong>
-            <small>final canon authority</small>
+            <small>creator review required</small>
           </div>
         </div>
 
@@ -107,17 +108,16 @@ export function WorldSeedExperience() {
       <section className={styles.hero} aria-labelledby="world-seed-title">
         <div className={styles.heroGrid}>
           <div className={styles.copy}>
-            <p className={styles.eyebrow}>Arcanea World Engine</p>
+            <p className={styles.eyebrow}>For teams stewarding narrative IP</p>
             <h1 id="world-seed-title">
               Build a world
               <span>that remembers itself.</span>
             </h1>
             <p className={styles.lede}>
-              AI can generate a character in seconds. Ask five tools to continue
-              that character for a year and identity begins to drift. Arcanea
-              is building the continuity layer for canon, relationships, rules,
-              and creative lineage—so worlds can eventually move across models,
-              sessions, and media without forgetting themselves.
+              Arcanea grew across versioned lore, character files, books, agent
+              prompts, and generated media. Today, its live path can turn a prompt
+              into a structured world record and save it. The next test is harder:
+              can that world retain its identity as models, sessions, and media change?
             </p>
 
             <div className={styles.actions}>
@@ -130,7 +130,7 @@ export function WorldSeedExperience() {
             </div>
 
             <dl className={styles.metrics} aria-label="Arcanea product facts">
-              <div><dt>54</dt><dd>tools registered</dd></div>
+              <div><dt>Git</dt><dd>versioned lore</dd></div>
               <div><dt>13</dt><dd>Luminors</dd></div>
               <div><dt>Live</dt><dd>on Vercel</dd></div>
             </dl>
@@ -140,7 +140,7 @@ export function WorldSeedExperience() {
         </div>
 
         <div className={styles.truthRail}>
-          <p><strong>Live now</strong> Vercel product · versioned lore and canon · 54 MCP tools registered in source</p>
+          <p><strong>Live now</strong> Vercel product · structured world creation · versioned lore and canon · public repository mirror</p>
           <p><strong>Building next</strong> client-ready MCP packaging · canon conflict detection · branch previews · creator-reviewed merge</p>
         </div>
       </section>
@@ -149,12 +149,12 @@ export function WorldSeedExperience() {
         <header className={styles.sectionHeader}>
           <div>
             <p className={styles.eyebrow}>What exists today</p>
-            <h2 id="proof-title">One world. Four inspectable surfaces.</h2>
+            <h2 id="proof-title">What runs now. What must be proven next.</h2>
           </div>
           <p>
             Arcanea is not claiming external customer traction yet. It is a live,
-            founder-used proving environment with a public mirror, 54 registered
-            MCP tools in source, and a Vercel product awaiting external validation.
+            founder-used proving environment with a public mirror, structured
+            world creation, and a Vercel product awaiting external validation.
           </p>
         </header>
 
