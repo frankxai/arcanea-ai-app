@@ -22,6 +22,20 @@ const expectedHead = process.env.EXPECTED_HEAD_SHA;
 const maxFiles = 50;
 const maxDiffCharacters = 120_000;
 
+// GitHub omits `patch` for binary blobs. Only these extensions are treated as
+// legitimately non-textual; any other patchless file still fails the gate closed.
+const binaryAssetExtensions = new Set([
+  'avif', 'bmp', 'gif', 'heic', 'ico', 'jpeg', 'jpg', 'png', 'psd', 'tif', 'tiff', 'webp',
+  'eot', 'otf', 'ttf', 'woff', 'woff2',
+  'aac', 'flac', 'm4a', 'mp3', 'mp4', 'mov', 'ogg', 'wav', 'webm',
+  'pdf', 'zip', 'gz', 'tgz', 'br', 'wasm',
+]);
+
+function isBinaryAsset(filename) {
+  const extension = filename.split('.').pop()?.toLowerCase();
+  return Boolean(extension) && binaryAssetExtensions.has(extension);
+}
+
 async function github(path) {
   const response = await fetch(`https://api.github.com${path}`, {
     headers: {
@@ -138,9 +152,13 @@ async function main() {
   const renderedFiles = [];
   for (const file of files) {
     if (!file.patch) {
-      await writeSummary(failSummary(`GitHub supplied no textual patch for \`${file.filename}\`; reviewer context is incomplete.`, pr.head.sha));
-      process.exitCode = 1;
-      return;
+      if (!isBinaryAsset(file.filename)) {
+        await writeSummary(failSummary(`GitHub supplied no textual patch for \`${file.filename}\`; reviewer context is incomplete.`, pr.head.sha));
+        process.exitCode = 1;
+        return;
+      }
+      renderedFiles.push(`### ${file.status}: ${file.filename}\n\nBinary asset — no textual diff. Judge it on path, status, and stated purpose only.`);
+      continue;
     }
     diffCharacters += file.patch.length;
     if (diffCharacters > maxDiffCharacters) {
