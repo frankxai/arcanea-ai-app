@@ -6,6 +6,7 @@ import { m, LazyMotion, domAnimation } from "framer-motion";
 import { AgentCard, type AgentCardProps } from "@/components/agents/agent-card";
 import { CreditBadge } from "@/components/agents/credit-badge";
 import { PremiumCard, PREMIUM_PRODUCTS } from "@/components/agents/premium-card";
+import { FACTS } from "@/lib/facts";
 import {
   SectionShell,
   SectionHeader,
@@ -303,6 +304,8 @@ const AGENTS_CATALOG: MarketplaceAgent[] = [
   },
 ];
 
+const AGENT_DOMAIN_COUNT = new Set(AGENTS_CATALOG.map((a) => a.category)).size;
+
 const CATEGORY_TABS: { key: AgentCategory; label: string }[] = [
   { key: "all",         label: "All" },
   { key: "writing",     label: "Writing" },
@@ -485,8 +488,8 @@ export default function AgentsMarketplacePage() {
               transition={{ duration: 0.6, delay: 0.18 }}
               className="text-center text-base md:text-xl text-white/50 max-w-2xl mx-auto mb-14 leading-relaxed font-body"
             >
-              13 configured AI specialists grounded in 190K words of original philosophy.
-              Not generic chatbots — creative specialists.
+              {FACTS.luminors} named specialists, each with its own craft, memory, and voice.
+              Pick the one whose work is closest to yours.
             </m.p>
 
             {/* Stats row */}
@@ -494,12 +497,11 @@ export default function AgentsMarketplacePage() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.26 }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto"
+              className="grid grid-cols-3 gap-6 max-w-xl mx-auto"
             >
-              <StatCard value="16" label="Luminors" color="var(--arc-brand-atlantean-teal)" delay={0.3} />
-              <StatCard value="6" label="Domains" color="var(--arc-brand-atlantean-teal)" delay={0.36} />
-              <StatCard value="190K+" label="Training words" color="var(--arc-brand-cosmic-blue)" delay={0.42} />
-              <StatCard value="4.8" label="Avg rating" color="var(--arc-brand-arcanean-gold)" delay={0.48} />
+              <StatCard value={String(FACTS.luminors)} label="Luminors" color="var(--arc-brand-atlantean-teal)" delay={0.3} />
+              <StatCard value={String(AGENT_DOMAIN_COUNT)} label="Domains" color="var(--arc-brand-atlantean-teal)" delay={0.36} />
+              <StatCard value={String(AGENTS_CATALOG.length)} label="Agents live" color="var(--arc-brand-cosmic-blue)" delay={0.42} />
             </m.div>
           </div>
         </section>
