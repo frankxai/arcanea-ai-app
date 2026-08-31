@@ -155,7 +155,7 @@ export function HeroEditorial() {
             animate={isInView ? 'visible' : 'hidden'}
             variants={fadeIn}
           >
-            Free to start &middot; 12 Luminors &middot; 34+ texts
+            Free to start &middot; 12 Luminors &middot; 57 texts
           </motion.p>
         </div>
 

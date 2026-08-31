@@ -20,7 +20,7 @@ const BOOT = [
   { t: '', c: C.white },
   { t: 'Initializing creative universe...', c: C.white },
   { t: 'Loading 10 Guardian intelligences............. \u2713', c: C.green },
-  { t: 'Indexing 62 wisdom texts...................... \u2713', c: C.green },
+  { t: 'Indexing 57 wisdom texts...................... \u2713', c: C.green },
   { t: 'Connecting 26 AI models....................... \u2713', c: C.green },
   { t: 'Gateway status: ONLINE', c: C.cyan, b: true },
   { t: '', c: C.white },
@@ -30,7 +30,7 @@ const BOOT = [
 
 const CMDS = [
   { cmd: 'chat <guardian>', desc: 'Talk to an AI intelligence', href: '/chat' },
-  { cmd: 'library search', desc: 'Browse 62 texts of creation wisdom', href: '/library' },
+  { cmd: 'library search', desc: 'Browse 57 texts of creation wisdom', href: '/library' },
   { cmd: 'forge create', desc: 'Generate art, stories, music', href: '/studio' },
   { cmd: 'gateway models', desc: 'List 26 curated AI models', href: '/gateway' },
   { cmd: 'gate status', desc: 'Check your creative journey', href: '/gates' },

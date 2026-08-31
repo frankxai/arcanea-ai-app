@@ -188,7 +188,7 @@ export function V8Social() {
                 Where AI meets mythology meets you.
               </p>
               <div style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 20 }}>
-                {[['10 Guardians', Users], ['62 Texts', BookOpen], ['26 Models', Code]].map(([l, I]) => {
+                {[['10 Guardians', Users], ['57 Texts', BookOpen], ['26 Models', Code]].map(([l, I]) => {
                   const Icon = I as typeof Users;
                   return <span key={l as string} style={pill}><Icon size={14} />{l as string}</span>;
                 })}

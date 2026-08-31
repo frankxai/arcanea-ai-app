@@ -35,7 +35,7 @@ const SIDEBAR_ITEMS = [
 // --- Feature Pills ---
 const FEATURE_PILLS = [
   '10 AI Guardians',
-  '62 Wisdom Texts',
+  '57 wisdom texts',
   '26 AI Models',
   '5 Elements',
   'Voice Chat',

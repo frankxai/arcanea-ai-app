@@ -193,7 +193,7 @@ export function V7Gallery() {
         <section className="px-8 py-32 max-w-[1000px] mx-auto">
           <ExhibitTitle
             title="The Library"
-            subtitle="Collection &mdash; 62 Texts of Creation Wisdom"
+            subtitle="Collection &mdash; 57 Texts of Creation Wisdom"
           />
           <div className="flex justify-center gap-6 flex-wrap">
             {BOOKS.map((b) => <BookSpine key={b.title} book={b} />)}

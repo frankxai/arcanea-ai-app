@@ -344,7 +344,7 @@ export function HeroNeonGlass() {
             animate="visible"
             variants={fadeUp}
           >
-            Free &middot; No credit card &middot; 34+ original texts
+            Free &middot; No credit card &middot; 57 original texts
           </m.p>
 
           {/* ── Floating pills (positioned relative to card) ── */}

@@ -172,7 +172,7 @@ export function V1Cinematic() {
         </MockupBox>
       </CinemaPanel>
 
-      <CinemaPanel title="Library" subtitle="62 wisdom texts across 17 collections. Laws, parables, prophecies, and meditations. Ancient frameworks for modern creators." align="center">
+      <CinemaPanel title="Library" subtitle="57 wisdom texts across 20 collections. Laws, parables, prophecies, and meditations. Ancient frameworks for modern creators." align="center">
         <div className="relative w-full" style={{ height: '240px' }}>
           {[{ t: '10%', l: '15%', d: '0s', s: 24 }, { t: '25%', r: '20%', d: '1.5s', s: 20 }, { b: '30%', l: '25%', d: '0.8s', s: 22 }, { t: '60%', r: '10%', d: '2.2s', s: 18 }, { b: '15%', l: '45%', d: '1.2s', s: 26 }].map((p, i) => (
             <div key={i} className="absolute" style={{ top: p.t, bottom: p.b, left: p.l, right: p.r, animation: `floatBook 6s ease-in-out ${p.d} infinite` }}>

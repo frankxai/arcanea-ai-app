@@ -203,13 +203,13 @@ export function HeroBento() {
                 Philosophy Library
               </p>
               <p className="mt-1 font-display text-3xl font-bold text-white">
-                34+ texts
+                57 texts
               </p>
               <p
                 className="mt-2 text-sm leading-relaxed"
                 style={{ color: 'rgba(255, 255, 255, 0.45)' }}
               >
-                Original wisdom across 17 collections for the creative journey.
+                Original wisdom across 20 collections for the creative journey.
               </p>
             </div>
           </motion.div>

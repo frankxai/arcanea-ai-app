@@ -164,7 +164,7 @@ export function V9Particles() {
           fontWeight: 400, lineHeight: 1.15, maxWidth: 800, margin: '0 0 28px',
         }}>The Universe That Creates With You</h1>
         <p style={{ fontSize: 18, opacity: 0.55, maxWidth: 540, margin: '0 0 44px', lineHeight: 1.6 }}>
-          13 specialists. 62 texts. 26 models. Infinite creation.
+          13 specialists. 57 texts. 26 models. Infinite creation.
         </p>
         <a href="/discover" className="glass-btn">Enter the Universe</a>
       </section>
@@ -297,7 +297,7 @@ export function V9Particles() {
           The Library
         </h2>
         <p style={{ fontSize: 17, opacity: 0.5, lineHeight: 1.7, maxWidth: 480, margin: '0 auto 40px' }}>
-          62 texts of wisdom. Not entertainment &mdash; equipment for living.
+          57 texts of wisdom. Not entertainment &mdash; equipment for living.
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
           {COLLECTIONS.map(c => (
