@@ -3,14 +3,14 @@ import { createOGImage, OG_SIZE } from '@/lib/og'
 import { brand } from '@arcanea/design-system'
 
 export const runtime = 'edge'
-export const alt = 'Arcanea Research — 27 repos, 35 packages, 54 skills'
+export const alt = 'Arcanea Research — 14 public repos, 54 MCP tools, 20 creator skills'
 export const size = OG_SIZE
 export const contentType = 'image/png'
 
 export default function OGImage() {
   return createOGImage({
     title: 'Arcanea Research',
-    subtitle: '27 repos \u00b7 35 packages \u00b7 54 skills',
+    subtitle: '14 public repos \u00b7 54 MCP tools \u00b7 20 creator skills',
     stats: ['Open Source', 'TypeScript', 'Multi-Agent'],
     accentColor: brand.atlanteanTeal,
     glowPositions: [

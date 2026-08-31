@@ -4,6 +4,7 @@
 import { m, useInView, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import { PhQuotes, PhCaretLeft, PhCaretRight, PhStar } from '@/lib/phosphor-icons';
+import { FACTS } from '@/lib/facts';
 
 const TESTIMONIALS = [
   {
@@ -239,10 +240,10 @@ export function TestimonialsV2() {
           className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-12 border-t border-white/[0.06]"
         >
           {[
-            { value: '10', label: 'Guardian Archetypes' },
-            { value: '7', label: 'Wisdom Frameworks' },
-            { value: '34+', label: 'Original Texts' },
-            { value: '50K+', label: 'Words of Wisdom' },
+            { value: String(FACTS.guardians), label: 'Guardian Archetypes' },
+            { value: String(FACTS.wisdoms), label: 'Wisdom Frameworks' },
+            { value: String(FACTS.gates), label: 'Gates of Progression' },
+            { value: '20', label: 'Library Collections' },
           ].map((stat, i) => (
             <div key={stat.label} className="text-center">
               <div className="text-3xl md:text-4xl font-display font-bold text-white mb-2">
