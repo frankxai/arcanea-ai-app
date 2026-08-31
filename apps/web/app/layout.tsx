@@ -79,7 +79,7 @@ export const metadata: Metadata = {
     url: "/",
     title: "Arcanea — Build a world that remembers itself",
     description:
-      "Persistent Creative Intelligence for creators and studios building narrative IP across models, tools, and media.",
+      "Persistent Creative Intelligence for narrative studios and game-world teams stewarding long-lived IP.",
     siteName: "Arcanea",
     images: [
       {
@@ -94,7 +94,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Arcanea — Build a world that remembers itself",
     description:
-      "Persistent Creative Intelligence for creators and studios building narrative IP across models, tools, and media.",
+      "Persistent Creative Intelligence for narrative studios and game-world teams stewarding long-lived IP.",
     images: ["/brand/arcanea-og.jpg"],
   },
   alternates: {
@@ -161,7 +161,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               "featureList": [
                 "Versioned world and lore source",
                 "Live world and creation surfaces",
-                "54 MCP tools registered in source"
+                "Public repository mirror and MCP status surface"
               ]
             })
           }}
