@@ -19,18 +19,18 @@ const WORLD_LAYERS = [
 const LIVE_PROOF = [
   {
     status: "Source",
-    title: "Versioned world state",
-    body: "Canon, lore, agents, and World Engine logic live in inspectable source rather than disappearing inside a chat history.",
+    title: "Versioned creative source",
+    body: "The public Arcanea mirror exposes canon, lore, agents, and product code for inspection. The World Engine package is not yet published there.",
     href: "https://github.com/frankxai/arcanea",
     label: "Open the public source",
     Icon: Code,
   },
   {
-    status: "Runtime",
-    title: "54 MCP tools",
-    body: "Arcanea exposes world and studio context to Claude, Codex, Cursor, and other MCP clients through one working tool surface.",
+    status: "Source",
+    title: "54 MCP tools registered",
+    body: "The implementation registers 54 world and studio tools in source. Client packaging and installation are being repaired before runtime claims.",
     href: "/mcp",
-    label: "Inspect the MCP runtime",
+    label: "See MCP status",
     Icon: Sparkle,
   },
   {
@@ -42,9 +42,9 @@ const LIVE_PROOF = [
     Icon: Globe,
   },
   {
-    status: "Authority",
-    title: "Creator decides canon",
-    body: "Arcanea is BYOK-first. Models can propose and extend; the creator retains the final decision about what becomes true.",
+    status: "Contract",
+    title: "Creator remains authority",
+    body: "Arcanea's product contract reserves the final canon decision for the creator. Conflict detection and merge review are the next product slice.",
     href: "/living-lore",
     label: "Read the living canon",
     Icon: ShieldStar,
@@ -89,8 +89,8 @@ function WorldSeedDiagram() {
       </div>
 
       <figcaption id="world-seed-caption" className="sr-only">
-        A creator-owned World Seed carries canon, characters, creations,
-        relationships, and provenance across changing AI models and media.
+        The proposed World Seed model connects canon, characters, creations,
+        relationships, and source lineage under creator authority.
       </figcaption>
       <ul className="sr-only">
         {WORLD_LAYERS.map((layer) => (
@@ -115,8 +115,9 @@ export function WorldSeedExperience() {
             <p className={styles.lede}>
               AI can generate a character in seconds. Ask five tools to continue
               that character for a year and identity begins to drift. Arcanea
-              keeps canon, characters, relationships, rules, and creative lineage
-              coherent as models, sessions, and media change.
+              is building the continuity layer for canon, relationships, rules,
+              and creative lineage—so worlds can eventually move across models,
+              sessions, and media without forgetting themselves.
             </p>
 
             <div className={styles.actions}>
@@ -124,14 +125,14 @@ export function WorldSeedExperience() {
                 Create a world <ArrowRight size={16} weight="bold" />
               </Link>
               <Link className={styles.secondaryAction} href="/mcp">
-                Inspect the engine
+                Inspect MCP status
               </Link>
             </div>
 
             <dl className={styles.metrics} aria-label="Arcanea product facts">
-              <div><dt>54</dt><dd>MCP tools</dd></div>
+              <div><dt>54</dt><dd>tools registered</dd></div>
               <div><dt>13</dt><dd>Luminors</dd></div>
-              <div><dt>BYOK</dt><dd>by design</dd></div>
+              <div><dt>Live</dt><dd>on Vercel</dd></div>
             </dl>
           </div>
 
@@ -139,8 +140,8 @@ export function WorldSeedExperience() {
         </div>
 
         <div className={styles.truthRail}>
-          <p><strong>Live now</strong> BYOK workspace · versioned lore and canon · MIT World Engine package · MCP runtime · Vercel production</p>
-          <p><strong>Building next</strong> canon branches · preview worlds · creator-only merge</p>
+          <p><strong>Live now</strong> Vercel product · versioned lore and canon · 54 MCP tools registered in source</p>
+          <p><strong>Building next</strong> client-ready MCP packaging · canon conflict detection · branch previews · creator-reviewed merge</p>
         </div>
       </section>
 
@@ -152,8 +153,8 @@ export function WorldSeedExperience() {
           </div>
           <p>
             Arcanea is not claiming external customer traction yet. It is a live,
-            founder-used proving environment with public source, a working MCP
-            surface, and a production product ready for design-partner validation.
+            founder-used proving environment with a public mirror, 54 registered
+            MCP tools in source, and a Vercel product awaiting external validation.
           </p>
         </header>
 
@@ -166,7 +167,11 @@ export function WorldSeedExperience() {
               </div>
               <h3>{title}</h3>
               <p>{body}</p>
-              <Link href={href} target={href.startsWith("http") ? "_blank" : undefined}>
+              <Link
+                href={href}
+                target={href.startsWith("http") ? "_blank" : undefined}
+                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+              >
                 {label} <ArrowRight size={14} weight="bold" />
               </Link>
             </article>
@@ -179,9 +184,9 @@ export function WorldSeedExperience() {
             <p className={styles.mergeKicker}>The Canon Merge</p>
             <h2>Branch reality. Preview possible worlds. Merge canon.</h2>
             <p>
-              GitHub becomes the source of possible realities. Vercel makes each
-              branch tangible. Arcanea exposes conflicts and provenance before the
-              creator decides which reality becomes canonical.
+              GitHub will hold possible realities. Vercel will make each branch
+              tangible. Arcanea will expose conflicts and source lineage before
+              the creator reviews a canonical merge.
             </p>
           </div>
 
@@ -201,9 +206,9 @@ export function WorldSeedExperience() {
             <p className={styles.eyebrow}>Design-partner cohort</p>
             <h2>Bring us one world that cannot afford to forget itself.</h2>
             <p>
-              We are opening three pilots for narrative studios, game-world teams,
-              and transmedia creators. The test is concrete: continuity, recall,
-              provenance, conflict detection, and portability between models.
+              We are seeking three design partners across narrative studios,
+              game-world teams, and transmedia creators. Each pilot will measure
+              continuity, recall, source linkage, conflict detection, and portability.
             </p>
           </div>
           <a
