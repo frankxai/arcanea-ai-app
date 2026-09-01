@@ -229,10 +229,10 @@ export function FeaturesPremium() {
 
             <div className="grid grid-cols-2 gap-4">
               {[
-                { icon: PhLightning, label: "Fast Generation", value: "< 5s" },
-                { icon: PhShield, label: "Secure & Private", value: "100%" },
-                { icon: PhGlobe, label: "Global CDN", value: "40+" },
-                { icon: PhDatabase, label: "Uptime", value: "99.9%" },
+                { icon: PhLightning, label: "Generation", value: "Streamed" },
+                { icon: PhShield, label: "Your keys", value: "BYOK" },
+                { icon: PhGlobe, label: "Hosting", value: "Vercel Edge" },
+                { icon: PhDatabase, label: "Your work", value: "Exportable" },
               ].map((stat, index) => (
                 <m.div
                   key={stat.label}
