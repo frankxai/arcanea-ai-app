@@ -2,11 +2,13 @@
 /**
  * Luminor Service — CRUD operations for the `luminors` Supabase table.
  *
- * Server-side only. Uses cookie-based auth via @/lib/supabase/server.
- * All mutations respect RLS (user must own the luminor to update/delete).
+ * Server-side only. Public discovery uses a stateless anon/RLS client;
+ * authenticated mutations use the cookie-bound server client.
  */
 
 import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
+import { PublicSupabaseBindingError } from '@/lib/supabase/env';
 import type { LuminorSpec } from './luminor-spec';
 
 // ---------------------------------------------------------------------------
@@ -59,6 +61,38 @@ export interface BrowseOptions {
 
 /** Public discovery must fail before Vercel's function deadline. */
 export const LUMINOR_READ_TIMEOUT_MS = 4_500;
+
+export type PublishedLuminorReadErrorCode =
+  | 'SUPABASE_PUBLIC_BINDING_MISSING'
+  | 'SUPABASE_PUBLIC_BINDING_INVALID'
+  | 'SUPABASE_PUBLIC_READ_TIMEOUT'
+  | 'SUPABASE_PUBLIC_QUERY_FAILED'
+  | 'SUPABASE_PUBLIC_READ_UNEXPECTED';
+
+export class PublishedLuminorReadError extends Error {
+  constructor(
+    readonly code: PublishedLuminorReadErrorCode,
+    options?: ErrorOptions,
+  ) {
+    const messages: Record<PublishedLuminorReadErrorCode, string> = {
+      SUPABASE_PUBLIC_BINDING_MISSING: 'Public Supabase binding is missing.',
+      SUPABASE_PUBLIC_BINDING_INVALID: 'Public Supabase binding is invalid.',
+      SUPABASE_PUBLIC_READ_TIMEOUT: 'Published Luminor read timed out.',
+      SUPABASE_PUBLIC_QUERY_FAILED: 'Published Luminor query failed.',
+      SUPABASE_PUBLIC_READ_UNEXPECTED: 'Published Luminor read failed.',
+    };
+    super(messages[code], options);
+    this.name = 'PublishedLuminorReadError';
+  }
+}
+
+export function getPublishedLuminorErrorCode(
+  error: unknown,
+): PublishedLuminorReadErrorCode {
+  if (error instanceof PublishedLuminorReadError) return error.code;
+  if (error instanceof PublicSupabaseBindingError) return error.code;
+  return 'SUPABASE_PUBLIC_READ_UNEXPECTED';
+}
 
 // ---------------------------------------------------------------------------
 // Mapping: LuminorSpec (camelCase) <-> DB row (snake_case)
@@ -225,7 +259,7 @@ export async function getMyLuminors(userId: string): Promise<LuminorRow[]> {
  */
 export async function getPublishedLuminors(options: BrowseOptions = {}): Promise<LuminorRow[]> {
   const { domain, element, limit = 24, offset = 0 } = options;
-  const supabase = await createClient();
+  const { client: supabase } = createPublicClient();
 
   let query = supabase
     .from('luminors')
@@ -262,13 +296,19 @@ export async function getPublishedLuminors(options: BrowseOptions = {}): Promise
     ]);
 
     if (error) {
-      throw new Error(`Failed to browse luminors: ${error.message}`);
+      throw new PublishedLuminorReadError(
+        'SUPABASE_PUBLIC_QUERY_FAILED',
+        { cause: error },
+      );
     }
 
     return (data ?? []) as LuminorRow[];
   } catch (error) {
     if (error === timeoutError || signal.aborted) {
-      throw new Error(timeoutError.message, { cause: error });
+      throw new PublishedLuminorReadError(
+        'SUPABASE_PUBLIC_READ_TIMEOUT',
+        { cause: error },
+      );
     }
     throw error;
   } finally {
