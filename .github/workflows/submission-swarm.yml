@@ -2,6 +2,7 @@ name: Aiyami Submission Swarm
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - 'book/**'
       - 'world/**'
@@ -20,6 +21,7 @@ permissions:
 
 jobs:
   aiyami-swarm:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     name: Aiyami Guard — Compliance, Tone & Plagiarism Swarm
 

@@ -8,7 +8,7 @@ name: Guardian PR Check
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, ready_for_review]
     branches: [main]
 
 concurrency:
@@ -24,6 +24,7 @@ jobs:
   # 1. Classify risk (free, always runs)
   # ────────────────────────────────────────
   classify:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     name: Classify risk
     runs-on: ubuntu-latest
     timeout-minutes: 3
@@ -137,7 +138,10 @@ jobs:
   single-guardian:
     name: Single-Guardian review
     needs: classify
-    if: needs.classify.outputs.tier == 'STANDARD'
+    # Disabled 2026-09-03: allocated a runner on every matching PR and did nothing but
+    # echo "TODO: wire scripts/guardian-*.mjs". Restore when that script exists:
+    #   if: needs.classify.outputs.tier == 'STANDARD'
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -159,7 +163,10 @@ jobs:
   council:
     name: Guardian Council (5)
     needs: classify
-    if: needs.classify.outputs.tier == 'HIGH_RISK'
+    # Disabled 2026-09-03: allocated a runner on every matching PR and did nothing but
+    # echo "TODO: wire scripts/guardian-*.mjs". Restore when that script exists:
+    #   if: needs.classify.outputs.tier == 'HIGH_RISK'
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

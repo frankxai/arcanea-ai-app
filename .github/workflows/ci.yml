@@ -3,8 +3,24 @@ name: CI
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'book/**'
+      - 'docs/**'
+      - '**/*.md'
+      - '.arcanea/lore/**'
+      - '.arcanea/projects/log/**'
+      - 'planning-with-files/**'
+      - 'wiki/**'
   pull_request:
     branches: [main]
+    paths-ignore:
+      - 'book/**'
+      - 'docs/**'
+      - '**/*.md'
+      - '.arcanea/lore/**'
+      - '.arcanea/projects/log/**'
+      - 'planning-with-files/**'
+      - 'wiki/**'
     types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:

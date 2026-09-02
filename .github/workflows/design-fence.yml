@@ -14,7 +14,7 @@ name: Design Fence
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - "apps/**"
       - "packages/**"
@@ -29,6 +29,7 @@ concurrency:
 
 jobs:
   check:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     name: Diff-only banned-token scan
     runs-on: ubuntu-latest
     timeout-minutes: 3
