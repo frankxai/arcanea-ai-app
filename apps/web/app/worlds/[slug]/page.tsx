@@ -1,26 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const sb = (await createClient()) as any;
-  const { data: world } = await sb.from("worlds").select("name, description, element").eq("slug", slug).single();
-  if (!world) return { title: "World Not Found — Arcanea" };
-  return {
-    title: `${world.name} — Arcanea Worlds`,
-    description: world.description?.slice(0, 160) || `Explore ${world.name}, a ${world.element || ""} world on Arcanea.`,
-    openGraph: {
-      title: `${world.name} — Arcanea Worlds`,
-      description: world.description?.slice(0, 160) || `Explore ${world.name} on Arcanea.`,
-      url: `https://www.arcanea.ai/worlds/${slug}`,
-    },
-  };
-}
 import { getCachedUser } from "@/lib/supabase/cached-auth";
 import { ElementBadge } from "@/components/worlds/ElementBadge";
 import { WorldActions } from "@/components/worlds/WorldActions";
@@ -37,7 +20,7 @@ export const maxDuration = 20;
 // request, and the RLS policy on these tables re-evaluates `can_read_world()`
 // per row — so cost grows with world size and could reach the 300s ceiling.
 const CHILD_ROW_LIMIT = 200;
-const QUERY_TIMEOUT_MS = 8000;
+const QUERY_TIMEOUT_MS = 3_500;
 
 /**
  * Resolve a child query to rows, degrading to an empty section rather than
@@ -61,21 +44,65 @@ async function safeRows<T>(
   }
 }
 
+async function getCurrentUserWithinDeadline() {
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+  try {
+    return await Promise.race([
+      getCachedUser(),
+      new Promise<never>((_, reject) => {
+        timeoutId = setTimeout(
+          () => reject(new Error("World auth lookup timed out")),
+          QUERY_TIMEOUT_MS
+        );
+      }),
+    ]);
+  } catch (error) {
+    console.error("[worlds/[slug]] auth lookup failed or timed out", {
+      errorName: error instanceof Error ? error.name : "UnknownError",
+    });
+    return null;
+  } finally {
+    if (timeoutId) clearTimeout(timeoutId);
+  }
+}
+
 async function getWorld(slug: string) {
-  const [sbClient, user] = await Promise.all([createClient(), getCachedUser()]);
+  const sbClient = await createClient();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const sb = sbClient as any;
 
-  const { data: world, error } = await sb
-    .from("worlds")
-    .select("*")
-    .eq("slug", slug)
-    .single();
+  let world: any = null;
 
-  if (error || !world) return null;
+  try {
+    const result = await sb
+      .from("worlds")
+      .select("*")
+      .eq("slug", slug)
+      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))
+      .single();
 
-  if (world.visibility !== "public" && world.creator_id !== user?.id) {
+    if (result.error) {
+      console.error("[worlds/[slug]] world query failed", {
+        errorName:
+          result.error instanceof Error ? result.error.name : "SupabaseError",
+      });
+      return null;
+    }
+
+    world = result.data;
+  } catch (error) {
+    console.error("[worlds/[slug]] world query aborted or threw", {
+      errorName: error instanceof Error ? error.name : "UnknownError",
+    });
     return null;
+  }
+
+  if (!world) return null;
+
+  if (world.visibility !== "public") {
+    const user = await getCurrentUserWithinDeadline();
+    if (world.creator_id !== user?.id) return null;
   }
 
   const [characters, factions, locations, events] = await Promise.all([
