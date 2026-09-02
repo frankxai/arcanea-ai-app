@@ -2,7 +2,7 @@
 "use client";
 
 import { m, useInView, LazyMotion, domAnimation } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import {
   PhCheck,
   PhSparkle,
@@ -14,65 +14,53 @@ import Link from "next/link";
 
 const PLANS = [
   {
-    name: "Spark",
-    description: "A real starting point, not a demo",
-    price: { monthly: 0, yearly: 0 },
+    name: "Open Core",
+    description: "Public source and Library access",
+    availability: "Available",
     featured: false,
-    cta: "Start Free",
-    href: "/auth/signup",
+    cta: "View Availability",
+    href: "/pricing",
     features: [
-      "3 companions — writing, research, brainstorming",
-      "100 messages per month",
-      "Browse the full Library (20 collections)",
-      "Academy access through Gate 2",
-      "Export to PDF",
+      "Browse the public Library (20 collections)",
+      "Read twenty-two draft works chapter by chapter",
+      "Use the published open-core repositories",
     ],
-    limits: ["Studio tools not included", "No custom prompts"],
+    limits: ["Hosted usage quotas are not guaranteed"],
   },
   {
-    name: "Creator",
-    description: "The full creative toolkit",
-    price: { monthly: 19, yearly: 190 },
+    name: "Cloud Sync",
+    description: "Hosted access is not generally released",
+    availability: "Waitlist",
     featured: true,
-    cta: "Upgrade",
-    href: "/auth/signup?plan=creator",
-    badge: "Most Popular",
+    cta: "Join Waitlist",
+    href: "/pricing#waitlist",
+    badge: "Waitlist",
     features: [
-      "All creative partners — writing, code, design, music, research",
-      "5,000 messages per month",
-      "Full Library with reading progress",
-      "Academy progression through all 10 Gates",
-      "The Studio — image, music, and code generation",
-      "Custom prompt templates",
-      "Direct support within 24 hours",
-      "All export formats",
+      "Cloud Sync remains waitlist-only",
+      "Final quotas and entitlements are not published",
+      "No SLA or support-time promise",
     ],
-    limits: [],
+    limits: ["Confirm availability before production use"],
   },
   {
-    name: "Studio",
-    description: "For teams and professional workflows",
-    price: { monthly: 49, yearly: 490 },
+    name: "Studio Bench",
+    description: "Team access is not generally released",
+    availability: "Waitlist",
     featured: false,
-    cta: "Contact Us",
-    href: "/contact",
+    cta: "Join Waitlist",
+    href: "/pricing#waitlist",
     features: [
-      "Everything in Creator",
-      "5 team seats with shared workspace",
-      "API access (REST + streaming)",
-      "Train custom companions on your content",
-      "Direct support within 4 hours",
-      "Export without Arcanea branding",
-      "Usage analytics dashboard",
+      "Studio Bench remains waitlist-only",
+      "Team, API, and analytics terms are not published",
+      "No seat count or export entitlement is guaranteed",
     ],
-    limits: [],
+    limits: ["Confirm availability before production use"],
   },
 ];
 
 export function PricingSection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [isYearly, setIsYearly] = useState(true);
 
   return (
     <LazyMotion features={domAnimation}>
@@ -93,51 +81,24 @@ export function PricingSection() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-gold-bright/20 mb-6">
             <PhSparkle className="w-3.5 h-3.5 text-gold-bright" />
             <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-gold-bright/90">
-              Simple Pricing
+              Access Preview
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            Simple, transparent pricing
+            Availability before promises
           </h2>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-10">
-            Start free, upgrade when you're ready. All plans include core
-            Arcanea features.
+            The public Library and open-core source are available now. Hosted
+            tiers remain waitlist-only, with no published quota or SLA guarantee.
           </p>
 
-          {/* Billing toggle */}
-          <div className="inline-flex items-center gap-4 p-1.5 rounded-full liquid-glass border border-white/[0.06]">
-            <button
-              onClick={() => setIsYearly(false)}
-              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
-                !isYearly
-                  ? "bg-white text-cosmic-deep"
-                  : "text-text-muted hover:text-white"
-              }`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setIsYearly(true)}
-              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
-                isYearly
-                  ? "bg-white text-cosmic-deep"
-                  : "text-text-muted hover:text-white"
-              }`}
-            >
-              Yearly
-              <span className="px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 text-xs">
-                Save 17%
-              </span>
-            </button>
-          </div>
+
         </m.div>
 
         {/* Pricing cards */}
         <div className="grid lg:grid-cols-3 gap-8">
           {PLANS.map((plan, i) => {
             const Icon = i === 0 ? PhLightning : i === 1 ? PhSparkle : PhCrown;
-            const price = isYearly ? plan.price.yearly : plan.price.monthly;
-            const period = isYearly ? "/year" : "/month";
 
             return (
               <m.div
@@ -179,21 +140,11 @@ export function PricingSection() {
                   <p className="text-text-secondary">{plan.description}</p>
                 </div>
 
-                {/* Price */}
+                {/* Availability */}
                 <div className="mb-8">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-display font-bold">
-                      {price === 0 ? "Free" : `$${price}`}
-                    </span>
-                    {price > 0 && (
-                      <span className="text-text-muted">{period}</span>
-                    )}
-                  </div>
-                  {isYearly && price > 0 && (
-                    <p className="text-sm text-text-muted mt-2">
-                      ${Math.round(price / 12)}/month billed annually
-                    </p>
-                  )}
+                  <span className="text-4xl font-display font-bold">
+                    {plan.availability}
+                  </span>
                 </div>
 
                 {/* CTA */}
@@ -252,13 +203,14 @@ export function PricingSection() {
           className="mt-16 text-center"
         >
           <p className="text-text-muted mb-4">
-            Need more than 5 seats or custom integrations?
+            Hosted tiers remain waitlist-only. Verify availability before
+            production use.
           </p>
           <Link
-            href="/contact"
+            href="/pricing#waitlist"
             className="inline-flex items-center gap-2 text-atlantean-teal-aqua hover:underline"
           >
-            Contact Us
+            Join Waitlist
             <PhArrowRight className="w-4 h-4" />
           </Link>
         </m.div>

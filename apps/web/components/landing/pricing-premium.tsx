@@ -8,51 +8,45 @@ import Link from "next/link";
 
 const plans = [
   {
-    name: "Spark",
-    price: "Free",
-    description: "A real starting point, not a demo",
+    name: "Open Core",
+    price: "Available",
+    description: "Public source and Library access",
     features: [
-      "3 companions — writing, research, brainstorming",
-      "100 messages per month",
-      "Browse the full Library (20 collections)",
-      "Academy access through Gate 2",
-      "Community Discord",
+      "Browse the public Library (20 collections)",
+      "Read twenty-two draft works chapter by chapter",
+      "Use the published open-core repositories",
+      "Hosted usage quotas are not guaranteed",
     ],
-    cta: "Start Free",
+    cta: "View Availability",
+    href: "/pricing",
     popular: false,
   },
   {
-    name: "Creator",
-    price: "$19",
-    period: "/month",
-    description: "The full creative toolkit",
+    name: "Cloud Sync",
+    price: "Waitlist",
+    description: "Hosted access is not generally released",
     features: [
-      "All creative partners — writing, code, design, music, research",
-      "5,000 messages per month",
-      "Full Library with reading progress",
-      "The Studio — image, music, and code generation",
-      "Custom prompt templates",
-      "Academy progression through all 10 Gates",
-      "Direct support within 24 hours",
+      "Cloud Sync remains waitlist-only",
+      "Final quotas and entitlements are not published",
+      "No SLA or support-time promise",
+      "Confirm availability before production use",
     ],
-    cta: "Upgrade",
-    popular: true,
+    cta: "Join Waitlist",
+    href: "/pricing#waitlist",
+    popular: false,
   },
   {
-    name: "Studio",
-    price: "$49",
-    period: "/month",
-    description: "For teams and professional workflows",
+    name: "Studio Bench",
+    price: "Waitlist",
+    description: "Team access is not generally released",
     features: [
-      "Everything in Creator",
-      "5 team seats with shared workspace",
-      "API access (REST + streaming)",
-      "Train custom companions on your content",
-      "Direct support within 4 hours",
-      "Export without Arcanea branding",
-      "Usage analytics dashboard",
+      "Studio Bench remains waitlist-only",
+      "Team, API, and analytics terms are not published",
+      "No seat count or export entitlement is guaranteed",
+      "Confirm availability before production use",
     ],
-    cta: "Contact Us",
+    cta: "Join Waitlist",
+    href: "/pricing#waitlist",
     popular: false,
   },
 ];
@@ -109,9 +103,6 @@ function PricingCard({
             >
               {plan.price}
             </span>
-            {plan.period && (
-              <span className="text-text-muted">{plan.period}</span>
-            )}
           </div>
           <p className="text-sm text-text-secondary mt-2">{plan.description}</p>
         </div>
@@ -143,7 +134,7 @@ function PricingCard({
 
         {/* CTA */}
         <Link
-          href={plan.price === "Free" ? "/auth/signup" : plan.popular ? "/auth/signup?plan=creator" : "/contact"}
+          href={plan.href}
           className={`block w-full py-4 rounded-2xl text-center font-display font-semibold transition-all ${
             plan.popular
               ? "bg-gradient-to-r from-crystal to-brand-primary text-cosmic-deep hover:shadow-glow-md"
@@ -215,18 +206,18 @@ export function PricingPremium() {
             viewport={{ once: true }}
             className="inline-block px-4 py-2 rounded-full liquid-glass border border-brand-primary/20 text-brand-primary font-medium text-sm mb-6"
           >
-            Simple Pricing
+            Access Preview
           </m.span>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            Start Free, Upgrade
+            Open Now, Hosted Later
             <br />
-            <span className="text-gradient-brand">When You're Ready</span>
+            <span className="text-gradient-brand">Availability Before Promises</span>
           </h2>
 
           <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-            Choose the plan that fits your creative journey. Upgrade anytime as
-            your needs grow.
+            The public Library and open-core source are available now. Hosted
+            tiers remain waitlist-only, with no published quota or SLA guarantee.
           </p>
         </m.div>
 
@@ -244,15 +235,9 @@ export function PricingPremium() {
           viewport={{ once: true }}
           className="text-center mt-12 text-text-muted"
         >
-          <p>Start free. Upgrade when you need more. No credit card required.</p>
-          <p className="mt-2">
-            Need more than 5 seats or custom integrations?{" "}
-            <a
-              href="mailto:enterprise@arcanea.ai"
-              className="text-crystal hover:underline"
-            >
-              Contact us
-            </a>
+          <p>
+            Hosted tiers remain waitlist-only. Verify current availability before
+            relying on Arcanea for production workloads.
           </p>
         </m.div>
       </div>

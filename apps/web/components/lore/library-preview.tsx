@@ -135,7 +135,7 @@ export function LibraryPreview() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.6, duration: durations.normal }}
-          className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mb-12"
+          className="grid grid-cols-2 gap-8 max-w-xl mx-auto mb-12"
         >
           {[
             { value: "20", label: "Collections" },
