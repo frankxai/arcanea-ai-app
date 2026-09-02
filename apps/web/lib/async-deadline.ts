@@ -6,8 +6,8 @@
 export async function withAbortDeadline<T>(
   label: string,
   timeoutMs: number,
-  operation: (signal: AbortSignal) => PromiseLike<T>
-): Promise<T> {
+  operation: (signal: AbortSignal) => T
+): Promise<Awaited<T>> {
   const controller = new AbortController();
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
