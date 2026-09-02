@@ -90,27 +90,38 @@ test("every world data query is hard-bounded below the route deadline", () => {
 });
 
 test("public worlds do not wait for an authentication round trip", () => {
+  const fetchWorldRootStart = page.indexOf("async function fetchWorldRoot");
+  const fetchWorldRootEnd = page.indexOf(
+    "async function getWorld",
+    fetchWorldRootStart
+  );
+  const fetchWorldRoot = page.slice(fetchWorldRootStart, fetchWorldRootEnd);
   const getWorldStart = page.indexOf("async function getWorld");
   const getWorldEnd = page.indexOf("type WorldData", getWorldStart);
   const getWorld = page.slice(getWorldStart, getWorldEnd);
+
+  assert.ok(fetchWorldRootStart >= 0);
+  assert.ok(fetchWorldRootEnd > fetchWorldRootStart);
 
   assert.doesNotMatch(
     getWorld,
     /Promise\.all\(\[createClient\(\), getCachedUser\(\)\]\)/
   );
 
+  const publicClientInit = getWorld.indexOf("createPublicClient()");
+  const publicWorldLookup = getWorld.indexOf("fetchWorldRoot(sb, slug)");
   const publicGuard = getWorld.indexOf(
     'if (world.visibility !== "public")'
   );
-  const authLookup = getWorld.indexOf(
-    "getCurrentUserWithinDeadline()"
-  );
+  const authLookup = getWorld.indexOf("getCurrentUserWithinDeadline()");
 
-  assert.ok(publicGuard >= 0);
+  assert.ok(publicClientInit >= 0);
+  assert.ok(publicWorldLookup > publicClientInit);
+  assert.ok(publicGuard > publicWorldLookup);
   assert.ok(authLookup > publicGuard);
   assert.match(
-    getWorld,
-    /\.from\("worlds"\)[\s\S]*\.abortSignal\(signal\)[\s\S]*\.single\(\)/
+    fetchWorldRoot,
+    /withAbortDeadline\([\s\S]*"world root query"[\s\S]*\.from\("worlds"\)[\s\S]*\.abortSignal\(signal\)[\s\S]*\.single\(\)/
   );
 });
 
