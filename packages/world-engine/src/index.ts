@@ -85,3 +85,6 @@ export {
   locationToImagePrompt,
   creatureToImagePrompt,
 } from "./visual.js";
+
+// Canon-safe ecology contract, validators, graph analysis, and APL compiler
+export * from "./ecology/index.js";

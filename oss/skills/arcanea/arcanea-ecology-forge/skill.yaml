@@ -1,0 +1,38 @@
+name: "Arcanea Ecology Forge"
+slug: "arcanea-ecology-forge"
+description: "Forge canon-safe Arcanean species and ecosystems with biological causality, magical costs, Covenant Ecology, and APL visual direction."
+version: "1.0.0"
+category: "worldbuilding"
+author: "FrankX"
+license: "MIT"
+
+tags:
+  - "ecology"
+  - "flora"
+  - "fauna"
+  - "worldbuilding"
+  - "canon"
+  - "visual-direction"
+
+tool_compatibility:
+  - "codex"
+  - "claude-code"
+  - "opencode"
+
+dependencies:
+  - "arcanea-canon"
+  - "arcanea-anti-trope"
+
+install_commands:
+  claude-code: "npx arcanea install arcanea-ecology-forge --tool claude-code"
+  opencode: "npx arcanea install arcanea-ecology-forge --tool opencode"
+  universal: "npx arcanea install arcanea-ecology-forge"
+
+usage_examples:
+  - "User: design a colossal Arcanean rose → AI: forges its anatomy, lifecycle, covenant, dependencies, costs, and APL image brief"
+  - "User: make these glowing plants an ecosystem → AI: closes energy, pollination, predation, decomposition, and removal consequences"
+  - "User: audit Veldoria's flora and fauna → AI: separates canon from proposals and reports missing ecological functions"
+
+homepage: "https://arcanea.ai/skills/arcanea-ecology-forge"
+repository: "https://github.com/frankxai/arcanea-ai-app"
+support: "https://github.com/frankxai/arcanea-ai-app/issues"

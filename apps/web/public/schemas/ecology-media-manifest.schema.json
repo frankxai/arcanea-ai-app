@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arcanea.ai/schemas/ecology-media-manifest.schema.json",
+  "title": "Arcanea Ecology Media Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "collection",
+    "version",
+    "generatedAt",
+    "totalBytes",
+    "generator",
+    "promptStandard",
+    "reviewAuthority",
+    "canonNote",
+    "rightsState",
+    "publication",
+    "assets"
+  ],
+  "properties": {
+    "$schema": { "type": "string", "format": "uri" },
+    "collection": { "type": "string", "minLength": 3 },
+    "version": { "type": "integer", "minimum": 1 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "totalBytes": { "type": "integer", "minimum": 1 },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interface", "reportedModel"],
+      "properties": {
+        "interface": { "type": "string", "minLength": 3 },
+        "reportedModel": { "type": ["string", "null"], "minLength": 1 }
+      }
+    },
+    "promptStandard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "grammar", "sources"],
+      "properties": {
+        "name": { "type": "string", "minLength": 3 },
+        "grammar": { "const": "WORLD + SPARK_SHAPE_SHARPEN + VISUAL_DIRECTIVES" },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 3 }
+        }
+      }
+    },
+    "reviewAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewer", "independence", "standard"],
+      "properties": {
+        "reviewer": { "type": "string", "minLength": 3 },
+        "independence": { "enum": ["generation-pass", "independent"] },
+        "standard": { "type": "string", "minLength": 3 }
+      }
+    },
+    "canonNote": { "type": "string", "minLength": 12 },
+    "rightsState": { "enum": ["review-required", "cleared"] },
+    "publication": { "enum": ["not-authorized", "authorized", "published", "withdrawn"] },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/asset" }
+    }
+  },
+  "$defs": {
+    "score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "craft",
+        "composition",
+        "originality",
+        "canonAlignment",
+        "emotionalForce",
+        "accessibility",
+        "total",
+        "verdict"
+      ],
+      "properties": {
+        "craft": { "$ref": "#/$defs/score" },
+        "composition": { "$ref": "#/$defs/score" },
+        "originality": { "$ref": "#/$defs/score" },
+        "canonAlignment": { "$ref": "#/$defs/score" },
+        "emotionalForce": { "$ref": "#/$defs/score" },
+        "accessibility": { "$ref": "#/$defs/score" },
+        "total": { "type": "integer", "minimum": 0, "maximum": 30 },
+        "verdict": { "enum": ["ship", "revise", "restart"] }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assetId",
+        "slug",
+        "gate",
+        "path",
+        "width",
+        "height",
+        "mimeType",
+        "bytes",
+        "sourceMasterSha256",
+        "binarySha256",
+        "generatedAt",
+        "review"
+      ],
+      "properties": {
+        "assetId": { "type": "string", "pattern": "^arcanea-flora-w[0-9]{2}-[0-9]{2}$" },
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "gate": {
+          "enum": [
+            "Foundation",
+            "Flow",
+            "Fire",
+            "Heart",
+            "Voice",
+            "Sight",
+            "Crown",
+            "Starweave",
+            "Unity",
+            "Source"
+          ]
+        },
+        "path": { "type": "string", "pattern": "^apps/web/public/images/ecology/.+-hero\\.webp$" },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "mimeType": { "const": "image/webp" },
+        "bytes": { "type": "integer", "minimum": 1 },
+        "sourceMasterSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "binarySha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "generatedAt": { "type": "string", "format": "date-time" },
+        "review": { "$ref": "#/$defs/review" }
+      }
+    }
+  }
+}

@@ -622,14 +622,22 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/arcanea-ecology-plugin: {}
+
   packages/arcanea-mcp:
     dependencies:
+      '@arcanea/world-engine':
+        specifier: workspace:*
+        version: link:../world-engine
       '@modelcontextprotocol/sdk':
         specifier: ^1.30.0
         version: 1.30.0(zod@4.3.6)
       canonicalize:
         specifier: ^1.0.8
         version: 1.0.8
+      ajv:
+        specifier: ^8.20.0
+        version: 8.20.0
       zod:
         specifier: ^4.3.6
         version: 4.3.6

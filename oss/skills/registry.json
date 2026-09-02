@@ -271,6 +271,51 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "arcanea-ecology-forge",
+      "type": "registry:skill",
+      "title": "Arcanea Ecology Forge",
+      "description": "Forge canon-safe Arcanean species and ecosystems with biological causality, magical costs, Covenant Ecology, and APL visual direction.",
+      "categories": [
+        "worldbuilding"
+      ],
+      "author": "FrankX",
+      "homepage": "https://arcanea.ai/skills/arcanea-ecology-forge",
+      "keywords": [
+        "ecology",
+        "flora",
+        "fauna",
+        "worldbuilding",
+        "canon",
+        "visual-direction"
+      ],
+      "meta": {
+        "slug": "arcanea-ecology-forge",
+        "version": "1.0.0",
+        "license": "MIT",
+        "tags": [
+          "ecology",
+          "flora",
+          "fauna",
+          "worldbuilding",
+          "canon",
+          "visual-direction"
+        ]
+      },
+      "files": [
+        {
+          "path": "skills/arcanea/arcanea-ecology-forge/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-ecology-forge/SKILL.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-ecology-forge/skill.yaml",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-ecology-forge/skill.yaml"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "arcanea-lore",
       "type": "registry:skill",
       "title": "Arcanea Lore Master",

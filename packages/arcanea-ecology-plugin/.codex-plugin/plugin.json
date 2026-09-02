@@ -1,0 +1,41 @@
+{
+  "name": "arcanea-ecology-plugin",
+  "version": "0.1.0",
+  "description": "Canon-safe Arcanean ecology planning, validation, ecosystem analysis, and APL visual-prompt compilation.",
+  "author": {
+    "name": "FrankX",
+    "url": "https://frankx.ai"
+  },
+  "homepage": "https://arcanea.ai/lore/ecology",
+  "repository": "https://github.com/frankxai/arcanea-ai-app",
+  "license": "MIT",
+  "keywords": [
+    "arcanea",
+    "worldbuilding",
+    "ecology",
+    "flora",
+    "fauna",
+    "canon"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Arcanea Ecology",
+    "shortDescription": "Forge living worlds with causal magic",
+    "longDescription": "Design Arcanean flora, fauna, fungi, and symbiotic networks; validate biological and magical causality; preserve canon provenance; and compile production-ready APL image briefs.",
+    "developerName": "FrankX",
+    "category": "Creativity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://arcanea.ai",
+    "defaultPrompt": [
+      "Forge a colossal Arcanean plant with a costly ecological covenant.",
+      "Audit these species and close the missing ecosystem functions.",
+      "Turn this validated species into three APL image briefs."
+    ],
+    "brandColor": "#00BCD4"
+  }
+}

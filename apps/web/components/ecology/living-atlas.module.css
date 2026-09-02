@@ -1,0 +1,84 @@
+.pulseField {
+  position: relative;
+}
+
+.pulseField::before {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: min(70vw, 32rem);
+  aspect-ratio: 1;
+  content: '';
+  border: 1px solid color-mix(in srgb, var(--arc-brand-atlantean-teal) 14%, transparent);
+  border-radius: var(--arc-radius-full);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.node {
+  position: relative;
+  isolation: isolate;
+}
+
+.node::after {
+  position: absolute;
+  inset: -0.25rem;
+  z-index: -1;
+  content: '';
+  border: 1px solid transparent;
+  border-radius: var(--arc-radius-xl);
+  opacity: 0;
+}
+
+.traceRun .node::after {
+  animation: covenant-pulse var(--arc-duration-ambient) var(--arc-ease-expo-out) both;
+}
+
+.traceRun .delayOne::after {
+  animation-delay: 240ms;
+}
+
+.traceRun .delayTwo::after {
+  animation-delay: 480ms;
+}
+
+.traceRun .delayThree::after {
+  animation-delay: 720ms;
+}
+
+.traceRun .delayFour::after {
+  animation-delay: 960ms;
+}
+
+@keyframes covenant-pulse {
+  0% {
+    border-color: color-mix(in srgb, var(--arc-brand-atlantean-teal) 0%, transparent);
+    box-shadow: 0 0 0 color-mix(in srgb, var(--arc-brand-atlantean-teal) 0%, transparent);
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  34% {
+    border-color: color-mix(in srgb, var(--arc-brand-atlantean-teal) 72%, transparent);
+    box-shadow: var(--arc-shadow-glow);
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    border-color: color-mix(in srgb, var(--arc-brand-atlantean-teal) 12%, transparent);
+    box-shadow: 0 0 0 color-mix(in srgb, var(--arc-brand-atlantean-teal) 0%, transparent);
+    opacity: 0;
+    transform: scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .traceRun .node::after,
+  .traceRun .delayOne::after,
+  .traceRun .delayTwo::after,
+  .traceRun .delayThree::after,
+  .traceRun .delayFour::after {
+    animation: none;
+    border-color: color-mix(in srgb, var(--arc-brand-atlantean-teal) 46%, transparent);
+    opacity: 1;
+    transform: none;
+  }
+}
