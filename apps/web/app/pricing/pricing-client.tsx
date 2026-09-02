@@ -135,9 +135,11 @@ export function PricingClient() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+  const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email.trim() || status === "loading") return;
+
+    const company = String(new FormData(e.currentTarget).get("company") ?? "");
 
     setStatus("loading");
     setErrorMessage("");
@@ -146,11 +148,18 @@ export function PricingClient() {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim() }),
+        body: JSON.stringify({
+          email: email.trim(),
+          company,
+          program: "arcanea-founding-circle",
+          source: "pricing_founding_circle",
+          referrer: document.referrer || undefined,
+          page_path: window.location.pathname + window.location.search,
+        }),
       });
 
       const data = await res.json();
-      if (data.success) {
+      if (res.ok && data.success) {
         setStatus("success");
         setEmail("");
       } else {
@@ -295,6 +304,14 @@ export function PricingClient() {
                         animate={{ opacity: 1 }}
                         className="space-y-3"
                       >
+                        <input
+                          type="text"
+                          name="company"
+                          tabIndex={-1}
+                          autoComplete="off"
+                          className="sr-only"
+                          aria-hidden="true"
+                        />
                         <div>
                           <label className="block text-[10px] font-mono text-white/40 uppercase tracking-widest mb-2">
                             Secure your access
