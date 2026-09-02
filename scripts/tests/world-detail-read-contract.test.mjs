@@ -14,6 +14,10 @@ const deadline = readFileSync(
   "apps/web/lib/async-deadline.ts",
   "utf8"
 );
+const middleware = readFileSync(
+  "apps/web/middleware.ts",
+  "utf8"
+);
 
 function numericConstant(source, name) {
   const match = source.match(
@@ -100,5 +104,16 @@ test("public worlds do not wait for an authentication round trip", () => {
   assert.match(
     getWorld,
     /\.from\("worlds"\)[\s\S]*\.abortSignal\(signal\)[\s\S]*\.single\(\)/
+  );
+});
+
+test("public world pages never enter the global auth middleware bundle", () => {
+  assert.match(
+    middleware,
+    /worlds\(\?:\/\|\$\)/
+  );
+  assert.doesNotMatch(
+    middleware,
+    /protectedPrefixes:\s*\[[^\]]*["']\/worlds/s
   );
 });
