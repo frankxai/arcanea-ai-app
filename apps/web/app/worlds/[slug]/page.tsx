@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
+import { withAbortDeadline } from "@/lib/async-deadline";
 
 import { getCachedUser } from "@/lib/supabase/cached-auth";
 import { ElementBadge } from "@/components/worlds/ElementBadge";
@@ -29,10 +30,16 @@ const QUERY_TIMEOUT_MS = 3_500;
  */
 async function safeRows<T>(
   label: string,
-  query: PromiseLike<{ data: T[] | null; error: unknown }>
+  query: (
+    signal: AbortSignal
+  ) => PromiseLike<{ data: T[] | null; error: unknown }>
 ): Promise<T[]> {
   try {
-    const { data, error } = await query;
+    const { data, error } = await withAbortDeadline(
+      `${label} query`,
+      QUERY_TIMEOUT_MS,
+      query
+    );
     if (error) {
       console.error(`[worlds/[slug]] ${label} query failed:`, error);
       return [];
@@ -45,25 +52,17 @@ async function safeRows<T>(
 }
 
 async function getCurrentUserWithinDeadline() {
-  let timeoutId: ReturnType<typeof setTimeout> | undefined;
-
   try {
-    return await Promise.race([
-      getCachedUser(),
-      new Promise<never>((_, reject) => {
-        timeoutId = setTimeout(
-          () => reject(new Error("World auth lookup timed out")),
-          QUERY_TIMEOUT_MS
-        );
-      }),
-    ]);
+    return await withAbortDeadline(
+      "world auth lookup",
+      QUERY_TIMEOUT_MS,
+      () => getCachedUser()
+    );
   } catch (error) {
     console.error("[worlds/[slug]] auth lookup failed or timed out", {
       errorName: error instanceof Error ? error.name : "UnknownError",
     });
     return null;
-  } finally {
-    if (timeoutId) clearTimeout(timeoutId);
   }
 }
 
@@ -75,12 +74,17 @@ async function getWorld(slug: string) {
   let world: any = null;
 
   try {
-    const result = await sb
-      .from("worlds")
-      .select("*")
-      .eq("slug", slug)
-      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))
-      .single();
+    const result = await withAbortDeadline(
+      "world root query",
+      QUERY_TIMEOUT_MS,
+      (signal) =>
+        sb
+          .from("worlds")
+          .select("*")
+          .eq("slug", slug)
+          .abortSignal(signal)
+          .single()
+    );
 
     if (result.error) {
       console.error("[worlds/[slug]] world query failed", {
@@ -106,31 +110,31 @@ async function getWorld(slug: string) {
   }
 
   const [characters, factions, locations, events] = await Promise.all([
-    safeRows("characters", sb
+    safeRows("characters", (signal) => sb
       .from("world_characters")
       .select("id, name, element, gate, origin_class, title, backstory, portrait_url, motivation, is_agent")
       .eq("world_id", world.id)
       .limit(CHILD_ROW_LIMIT)
-      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))),
-    safeRows("factions", sb
+      .abortSignal(signal)),
+    safeRows("factions", (signal) => sb
       .from("world_factions")
       .select("id, name, history, philosophy, territory")
       .eq("world_id", world.id)
       .limit(CHILD_ROW_LIMIT)
-      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))),
-    safeRows("locations", sb
+      .abortSignal(signal)),
+    safeRows("locations", (signal) => sb
       .from("world_locations")
       .select("id, name, description, region, significance, image_url")
       .eq("world_id", world.id)
       .limit(CHILD_ROW_LIMIT)
-      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))),
-    safeRows("events", sb
+      .abortSignal(signal)),
+    safeRows("events", (signal) => sb
       .from("world_events")
       .select("id, title, description, era, characters_involved, sort_order, consequences, date_in_world")
       .eq("world_id", world.id)
       .order("sort_order")
       .limit(CHILD_ROW_LIMIT)
-      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))),
+      .abortSignal(signal)),
   ]);
 
   return {

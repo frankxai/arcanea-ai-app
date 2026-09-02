@@ -10,6 +10,10 @@ const layout = readFileSync(
   "apps/web/app/worlds/[slug]/layout.tsx",
   "utf8"
 );
+const deadline = readFileSync(
+  "apps/web/lib/async-deadline.ts",
+  "utf8"
+);
 
 function numericConstant(source, name) {
   const match = source.match(
@@ -19,7 +23,7 @@ function numericConstant(source, name) {
   return Number(match[1].replaceAll("_", ""));
 }
 
-test("world detail emits dynamic metadata from one bounded implementation", () => {
+test("world detail emits dynamic metadata from one hard-bounded implementation", () => {
   const pageMetadataCount = (
     page.match(/export async function generateMetadata/g) ?? []
   ).length;
@@ -29,14 +33,12 @@ test("world detail emits dynamic metadata from one bounded implementation", () =
 
   assert.equal(pageMetadataCount, 0);
   assert.equal(layoutMetadataCount, 1);
-  assert.match(
-    layout,
-    /abortSignal\(AbortSignal\.timeout\(METADATA_QUERY_TIMEOUT_MS\)\)/
-  );
+  assert.match(layout, /withAbortDeadline\(/);
+  assert.match(layout, /\.abortSignal\(signal\)/);
   assert.match(layout, /return fallbackMetadata\(slug\);/);
 });
 
-test("every world data query is bounded below the route deadline", () => {
+test("every world data query is hard-bounded below the route deadline", () => {
   const queryTimeout = numericConstant(page, "QUERY_TIMEOUT_MS");
   const metadataTimeout = numericConstant(
     layout,
@@ -50,12 +52,23 @@ test("every world data query is bounded below the route deadline", () => {
   assert.ok(metadataTimeout <= 3_000);
   assert.equal(maxDuration, 20);
 
-  const boundedReads = (
-    page.match(
-      /abortSignal\(AbortSignal\.timeout\(QUERY_TIMEOUT_MS\)\)/g
-    ) ?? []
+  const transportAborts = (
+    page.match(/\.abortSignal\(signal\)/g) ?? []
   ).length;
-  assert.equal(boundedReads, 5, "root plus four child reads must be bounded");
+  assert.equal(
+    transportAborts,
+    5,
+    "root plus four child reads must share hard abort deadlines"
+  );
+
+  const childHardDeadlines = (
+    page.match(/safeRows\("[^"]+", \(signal\) =>/g) ?? []
+  ).length;
+  assert.equal(childHardDeadlines, 4);
+
+  assert.match(page, /withAbortDeadline\([\s\S]*"world root query"/);
+  assert.match(deadline, /Promise\.race\(/);
+  assert.match(deadline, /controller\.abort\(\)/);
 
   const publicPathWorstCaseMs =
     metadataTimeout + queryTimeout + queryTimeout;
@@ -86,6 +99,6 @@ test("public worlds do not wait for an authentication round trip", () => {
   assert.ok(authLookup > publicGuard);
   assert.match(
     getWorld,
-    /\.from\("worlds"\)[\s\S]*\.abortSignal\(AbortSignal\.timeout\(QUERY_TIMEOUT_MS\)\)[\s\S]*\.single\(\)/
+    /\.from\("worlds"\)[\s\S]*\.abortSignal\(signal\)[\s\S]*\.single\(\)/
   );
 });

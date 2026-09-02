@@ -215,7 +215,9 @@ jobs:
         run: pnpm test:luminor-read-timeout
 
       - name: Verify World detail read deadlines
-        run: node --test scripts/tests/world-detail-read-contract.test.mjs
+        run: |
+          node --test scripts/tests/world-detail-read-contract.test.mjs
+          pnpm --filter @arcanea/web exec tsx --test lib/__tests__/async-deadline.test.ts
 
       - name: Run package tests
         run: pnpm test:quick
