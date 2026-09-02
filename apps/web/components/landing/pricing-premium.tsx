@@ -14,7 +14,7 @@ const plans = [
     features: [
       "Browse the public Library (20 collections)",
       "Read twenty-two draft works chapter by chapter",
-      "Use the published open-core repositories",
+      "Use the public open-core repositories",
       "Hosted usage quotas are not guaranteed",
     ],
     cta: "View Availability",
