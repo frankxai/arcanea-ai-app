@@ -202,6 +202,9 @@ jobs:
       - name: Verify registry public-read boundary
         run: node --test scripts/tests/registry-public-read-contract.test.mjs
 
+      - name: Verify Gemini key boundary for NFT scripts
+        run: node --test scripts/tests/nft-gemini-key-contract.test.mjs
+
       - name: Verify World Context Gateway trust boundary
         run: |
           pnpm --dir apps/web exec eslint app/api/mcp/route.ts lib/mcp --max-warnings=0
