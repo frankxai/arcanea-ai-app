@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public";
 import { withAbortDeadline } from "@/lib/async-deadline";
 
 import { getCachedUser } from "@/lib/supabase/cached-auth";
@@ -67,28 +68,7 @@ async function getCurrentUserWithinDeadline() {
   }
 }
 
-async function getWorld(slug: string) {
-  console.error("[worlds/[slug]][deadline-probe] load-start");
-  let sbClient: Awaited<ReturnType<typeof createClient>>;
-
-  try {
-    sbClient = await withAbortDeadline(
-      "world client init",
-      CLIENT_INIT_TIMEOUT_MS,
-      () => createClient()
-    );
-    console.error("[worlds/[slug]][deadline-probe] client-ready");
-  } catch (error) {
-    console.error("[worlds/[slug]] client init failed or timed out", {
-      errorName: error instanceof Error ? error.name : "UnknownError",
-    });
-    return null;
-  }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const sb = sbClient as any;
-
-  let world: any = null;
-
+async function fetchWorldRoot(sb: any, slug: string) {
   try {
     const result = await withAbortDeadline(
       "world root query",
@@ -110,13 +90,43 @@ async function getWorld(slug: string) {
       return null;
     }
 
-    world = result.data;
-    console.error("[worlds/[slug]][deadline-probe] root-ready");
+    return result.data;
   } catch (error) {
     console.error("[worlds/[slug]] world query aborted or threw", {
       errorName: error instanceof Error ? error.name : "UnknownError",
     });
     return null;
+  }
+}
+
+async function getWorld(slug: string) {
+  // Public world discovery must not initialize request cookies. The
+  // publishable/anon client remains governed by the existing table grants and
+  // RLS policies; a cookie-bound session client is only a private-owner
+  // fallback after the public read returns no visible row.
+  let sb: any = createPublicClient();
+  if (!sb) {
+    console.error("[worlds/[slug]] public Supabase binding unavailable");
+    return null;
+  }
+
+  let world: any = await fetchWorldRoot(sb, slug);
+
+  if (!world) {
+    try {
+      sb = (await withAbortDeadline(
+        "world client init",
+        CLIENT_INIT_TIMEOUT_MS,
+        () => createClient()
+      )) as any;
+    } catch (error) {
+      console.error("[worlds/[slug]] private client init failed or timed out", {
+        errorName: error instanceof Error ? error.name : "UnknownError",
+      });
+      return null;
+    }
+
+    world = await fetchWorldRoot(sb, slug);
   }
 
   if (!world) return null;
@@ -153,7 +163,6 @@ async function getWorld(slug: string) {
       .limit(CHILD_ROW_LIMIT)
       .abortSignal(signal)),
   ]);
-  console.error("[worlds/[slug]][deadline-probe] children-ready");
 
   return {
     ...world,
@@ -179,7 +188,6 @@ interface Props {
 export default async function WorldDetailPage({ params }: Props) {
   const { slug } = await params;
   const world = await getWorld(slug);
-  console.error("[worlds/[slug]][deadline-probe] page-data-ready");
 
   if (!world) notFound();
 

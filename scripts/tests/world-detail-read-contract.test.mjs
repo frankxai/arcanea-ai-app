@@ -18,6 +18,10 @@ const middleware = readFileSync(
   "apps/web/middleware.ts",
   "utf8"
 );
+const publicClient = readFileSync(
+  "apps/web/lib/supabase/public.ts",
+  "utf8"
+);
 
 function numericConstant(source, name) {
   const match = source.match(
@@ -45,10 +49,6 @@ test("world detail emits dynamic metadata from one hard-bounded implementation",
 test("every world data query is hard-bounded below the route deadline", () => {
   const clientInitTimeout = numericConstant(page, "CLIENT_INIT_TIMEOUT_MS");
   const queryTimeout = numericConstant(page, "QUERY_TIMEOUT_MS");
-  const metadataClientTimeout = numericConstant(
-    layout,
-    "METADATA_CLIENT_TIMEOUT_MS"
-  );
   const metadataTimeout = numericConstant(
     layout,
     "METADATA_QUERY_TIMEOUT_MS"
@@ -59,7 +59,6 @@ test("every world data query is hard-bounded below the route deadline", () => {
 
   assert.ok(clientInitTimeout <= 1_000);
   assert.ok(queryTimeout <= 3_500);
-  assert.ok(metadataClientTimeout <= 1_000);
   assert.ok(metadataTimeout <= 3_000);
   assert.equal(maxDuration, 20);
 
@@ -79,13 +78,11 @@ test("every world data query is hard-bounded below the route deadline", () => {
 
   assert.match(page, /withAbortDeadline\([\s\S]*"world client init"/);
   assert.match(page, /withAbortDeadline\([\s\S]*"world root query"/);
-  assert.match(layout, /withAbortDeadline\([\s\S]*"world metadata client init"/);
   assert.match(deadline, /Promise\.race\(/);
   assert.match(deadline, /controller\.abort\(\)/);
 
   const publicPathWorstCaseMs =
-    metadataClientTimeout + metadataTimeout +
-    clientInitTimeout + queryTimeout + queryTimeout;
+    metadataTimeout + queryTimeout + queryTimeout;
   assert.ok(
     publicPathWorstCaseMs < maxDuration * 1_000,
     "metadata, root, and parallel child deadlines must fit the route budget"
@@ -126,4 +123,13 @@ test("public world pages never enter the global auth middleware bundle", () => {
     middleware,
     /protectedPrefixes:\s*\[[^\]]*["']\/worlds/s
   );
+});
+
+test("public world reads use a cookie-free client with RLS authoritative", () => {
+  assert.match(page, /createPublicClient\(\)/);
+  assert.match(layout, /createPublicClient\(\)/);
+  assert.doesNotMatch(layout, /createClient\(\)/);
+  assert.match(publicClient, /createSupabaseClient<Database>/);
+  assert.match(publicClient, /persistSession:\s*false/);
+  assert.doesNotMatch(publicClient, /service.?role/i);
 });

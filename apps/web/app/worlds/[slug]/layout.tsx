@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import type { Metadata } from "next";
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public";
 import { withAbortDeadline } from "@/lib/async-deadline";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-const METADATA_CLIENT_TIMEOUT_MS = 1_000;
 const METADATA_QUERY_TIMEOUT_MS = 3_000;
 
 function fallbackMetadata(slug: string): Metadata {
@@ -22,13 +21,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
   try {
-    console.error("[worlds/[slug]][deadline-probe] metadata-start");
-    const sb = await withAbortDeadline(
-      "world metadata client init",
-      METADATA_CLIENT_TIMEOUT_MS,
-      () => createClient()
-    );
-    console.error("[worlds/[slug]][deadline-probe] metadata-client-ready");
+    // Metadata is public discovery: avoid request-cookie initialization and
+    // keep the publishable key constrained by the same RLS policies.
+    const sb = createPublicClient();
+    if (!sb) return fallbackMetadata(slug);
     const { data: world, error } = await withAbortDeadline(
       "world metadata query",
       METADATA_QUERY_TIMEOUT_MS,
@@ -40,8 +36,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           .abortSignal(signal)
           .single()
     );
-
-    console.error("[worlds/[slug]][deadline-probe] metadata-query-ready");
 
     if (error || !world) {
       if (error) {
