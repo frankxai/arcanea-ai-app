@@ -298,7 +298,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
               <div className="h-px w-10 bg-gradient-to-l from-transparent to-[var(--arc-brand-atlantean-teal)]/60" />
             </m.div>
 
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 tracking-tight">
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 tracking-tight">
               <SplitText as="span" text="Explore " className="text-white" delay={0.05} stagger={0.03} />
               <span
                 className="bg-clip-text text-transparent"
@@ -309,7 +309,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
               >
                 Worlds
               </span>
-            </h1>
+            </h2>
 
             <m.p
               initial={{ opacity: 0, y: 20 }}

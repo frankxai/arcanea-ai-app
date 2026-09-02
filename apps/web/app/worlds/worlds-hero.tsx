@@ -3,6 +3,7 @@
 
 import { LazyMotion, domAnimation, m, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { FloatingOrbs, StatCard, FeatureCard, FeatureIcon } from "@/components/premium";
+import { MagicWand, PencilSimple, TreeStructure } from "@/lib/phosphor-icons";
 import { useRef } from "react";
 
 // ---------------------------------------------------------------------------
@@ -15,21 +16,21 @@ const HOW_IT_WORKS = [
     step: "01",
     title: "Describe",
     body: "Type one sentence about your world. A name, an atmosphere, a founding myth — anything. The engine takes it from there.",
-    icon: "✍",
+    icon: PencilSimple,
     color: "var(--arc-brand-atlantean-teal)",
   },
   {
     step: "02",
     title: "Generate",
     body: "AI creates characters, locations, magic systems, and lore — all consistent with each other and rooted in your seed idea.",
-    icon: "✦",
+    icon: MagicWand,
     color: "var(--arc-brand-atlantean-teal)",
   },
   {
     step: "03",
     title: "Connect",
     body: "Everything links together into a living universe. Fork it, share it, build on it with other creators across the multiverse.",
-    icon: "⬡",
+    icon: TreeStructure,
     color: "var(--arc-brand-arcanean-gold)",
   },
 ];
@@ -230,7 +231,7 @@ export function WorldsHero() {
 
           {/* 3-step cards */}
           <div className="grid md:grid-cols-3 gap-5">
-            {HOW_IT_WORKS.map(({ step, title, body, icon, color }, i) => (
+            {HOW_IT_WORKS.map(({ step, title, body, icon: Icon, color }, i) => (
               <FeatureCard key={step} glowColor={color} delay={0.08 + i * 0.1}>
                 {/* Step badge */}
                 <div className="flex items-center gap-3 mb-5">
@@ -245,9 +246,7 @@ export function WorldsHero() {
                     {step}
                   </span>
                   <FeatureIcon color={color} size="sm">
-                    <span className="text-base leading-none" aria-hidden>
-                      {icon}
-                    </span>
+                    <Icon className="h-4 w-4" aria-hidden="true" />
                   </FeatureIcon>
                 </div>
 
