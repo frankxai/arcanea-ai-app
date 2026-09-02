@@ -121,6 +121,8 @@ export function WorldsHero() {
 
           {/* Headline — parallax + spring */}
           <m.h1
+            id="worlds-heading"
+            tabIndex={-1}
             style={{ y: titleY }}
             initial={{ opacity: 0, filter: reducedMotion ? "none" : "blur(20px)" }}
             animate={{ opacity: 1, filter: "blur(0px)" }}

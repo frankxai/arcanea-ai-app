@@ -26,10 +26,18 @@ export function WorldsOnboarding() {
   const [show, setShow] = useState(false);
   const [step, setStep] = useState(0);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     try {
-      if (!localStorage.getItem(STORAGE_KEY)) setShow(true);
+      if (!localStorage.getItem(STORAGE_KEY)) {
+        const activeElement = document.activeElement;
+        returnFocusRef.current =
+          activeElement instanceof HTMLElement && activeElement !== document.body
+            ? activeElement
+            : document.getElementById('worlds-heading');
+        setShow(true);
+      }
     } catch {
       /* SSR or private browsing */
     }
@@ -74,6 +82,13 @@ export function WorldsOnboarding() {
             onOpenAutoFocus={(event) => {
               event.preventDefault();
               nextButtonRef.current?.focus();
+            }}
+            onCloseAutoFocus={(event) => {
+              event.preventDefault();
+              const returnTarget = returnFocusRef.current?.isConnected
+                ? returnFocusRef.current
+                : document.getElementById('worlds-heading');
+              returnTarget?.focus({ preventScroll: true });
             }}
           >
             <m.div

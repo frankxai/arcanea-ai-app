@@ -21,6 +21,10 @@ test('Worlds onboarding uses the governed modal boundary', async () => {
     '<Dialog.Description asChild>',
     'onOpenAutoFocus',
     'nextButtonRef.current?.focus()',
+    'onCloseAutoFocus',
+    'returnFocusRef.current?.isConnected',
+    "document.getElementById('worlds-heading')",
+    'returnTarget?.focus({ preventScroll: true })',
     'onOpenChange',
   ]) {
     assert.ok(source.includes(contract), `missing onboarding contract: ${contract}`);
@@ -45,6 +49,8 @@ test('Worlds route exposes one primary heading', async () => {
 
   assert.equal(h1Count, 1);
   assert.match(hero, /<m\.h1\b/);
+  assert.match(hero, /id="worlds-heading"/);
+  assert.match(hero, /tabIndex=\{-1\}/);
   assert.match(client, /<h2 className="text-4xl/);
 });
 
