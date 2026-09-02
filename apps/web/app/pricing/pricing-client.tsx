@@ -95,7 +95,7 @@ const FREE_CAPABILITIES = [
   {
     Icon: BookOpen,
     name: "The Library",
-    desc: "486,000+ words of mythology, philosophy, and creative frameworks",
+    desc: "Twenty collections of mythology, philosophy, and creative frameworks",
     accent: "var(--arc-brand-atlantean-teal)",
   },
   {
