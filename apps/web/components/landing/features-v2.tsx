@@ -115,8 +115,8 @@ export function FeaturesV2() {
             </span>
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Sixteen companions rooted in the mythology of Arcanea.
-            Seven Wisdoms that diagnose creative blocks. A Library of 34 original texts.
+            Companions rooted in the mythology of Arcanea.
+            Seven Wisdoms that diagnose creative blocks. A Library of 57 original texts.
             A coherent philosophy of creation, not features strung together.
           </p>
         </m.div>
