@@ -259,16 +259,12 @@ export default function LibraryPage() {
             className="flex justify-center gap-8"
           >
             <div className="text-center">
-              <div className="text-3xl font-display font-bold text-gold-bright">17</div>
+              <div className="text-3xl font-display font-bold text-gold-bright">20</div>
               <div className="text-sm text-text-muted">Collections</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-display font-bold text-gold-bright">{totalTexts}+</div>
               <div className="text-sm text-text-muted">Texts</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-display font-bold text-gold-bright">190K+</div>
-              <div className="text-sm text-text-muted">Words</div>
             </div>
           </m.div>
         </div>
