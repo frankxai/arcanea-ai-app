@@ -135,11 +135,12 @@ export function PricingClient() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleWaitlistSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
     if (!email.trim() || status === "loading") return;
 
-    const company = String(new FormData(e.currentTarget).get("company") ?? "");
+    const company =
+      e.currentTarget.querySelector<HTMLInputElement>('input[name="company"]')?.value ?? "";
 
     setStatus("loading");
     setErrorMessage("");
