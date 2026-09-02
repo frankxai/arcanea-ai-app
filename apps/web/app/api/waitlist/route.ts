@@ -22,11 +22,11 @@ function textValue(value: unknown, max: number): string | undefined {
   return normalized ? normalized.slice(0, max) : undefined;
 }
 
-function resolveProgram(value: unknown): WaitlistProgram {
+function resolveProgram(value: unknown): WaitlistProgram | null {
   return typeof value === "string" &&
     WAITLIST_PROGRAMS.includes(value as WaitlistProgram)
     ? (value as WaitlistProgram)
-    : "arcanea-founding-circle";
+    : null;
 }
 
 export async function POST(req: NextRequest) {
@@ -61,6 +61,13 @@ export async function POST(req: NextRequest) {
   }
 
   const program = resolveProgram(raw.program);
+  if (!program) {
+    return NextResponse.json(
+      { success: false, error: "Invalid waitlist program." },
+      { status: 400 },
+    );
+  }
+
   const requestOrigin = req.headers.get("origin") ?? new URL(req.url).origin;
   const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
   const headers: Record<string, string> = {
