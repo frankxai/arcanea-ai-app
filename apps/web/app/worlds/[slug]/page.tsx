@@ -21,6 +21,7 @@ export const maxDuration = 20;
 // request, and the RLS policy on these tables re-evaluates `can_read_world()`
 // per row — so cost grows with world size and could reach the 300s ceiling.
 const CHILD_ROW_LIMIT = 200;
+const CLIENT_INIT_TIMEOUT_MS = 1_000;
 const QUERY_TIMEOUT_MS = 3_500;
 
 /**
@@ -67,7 +68,22 @@ async function getCurrentUserWithinDeadline() {
 }
 
 async function getWorld(slug: string) {
-  const sbClient = await createClient();
+  console.error("[worlds/[slug]][deadline-probe] load-start");
+  let sbClient: Awaited<ReturnType<typeof createClient>>;
+
+  try {
+    sbClient = await withAbortDeadline(
+      "world client init",
+      CLIENT_INIT_TIMEOUT_MS,
+      () => createClient()
+    );
+    console.error("[worlds/[slug]][deadline-probe] client-ready");
+  } catch (error) {
+    console.error("[worlds/[slug]] client init failed or timed out", {
+      errorName: error instanceof Error ? error.name : "UnknownError",
+    });
+    return null;
+  }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const sb = sbClient as any;
 
@@ -95,6 +111,7 @@ async function getWorld(slug: string) {
     }
 
     world = result.data;
+    console.error("[worlds/[slug]][deadline-probe] root-ready");
   } catch (error) {
     console.error("[worlds/[slug]] world query aborted or threw", {
       errorName: error instanceof Error ? error.name : "UnknownError",
@@ -136,6 +153,7 @@ async function getWorld(slug: string) {
       .limit(CHILD_ROW_LIMIT)
       .abortSignal(signal)),
   ]);
+  console.error("[worlds/[slug]][deadline-probe] children-ready");
 
   return {
     ...world,
@@ -161,6 +179,7 @@ interface Props {
 export default async function WorldDetailPage({ params }: Props) {
   const { slug } = await params;
   const world = await getWorld(slug);
+  console.error("[worlds/[slug]][deadline-probe] page-data-ready");
 
   if (!world) notFound();
 

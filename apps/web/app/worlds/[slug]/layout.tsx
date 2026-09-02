@@ -7,6 +7,7 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
+const METADATA_CLIENT_TIMEOUT_MS = 1_000;
 const METADATA_QUERY_TIMEOUT_MS = 3_000;
 
 function fallbackMetadata(slug: string): Metadata {
@@ -21,7 +22,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
   try {
-    const sb = await createClient();
+    console.error("[worlds/[slug]][deadline-probe] metadata-start");
+    const sb = await withAbortDeadline(
+      "world metadata client init",
+      METADATA_CLIENT_TIMEOUT_MS,
+      () => createClient()
+    );
+    console.error("[worlds/[slug]][deadline-probe] metadata-client-ready");
     const { data: world, error } = await withAbortDeadline(
       "world metadata query",
       METADATA_QUERY_TIMEOUT_MS,
@@ -33,6 +40,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           .abortSignal(signal)
           .single()
     );
+
+    console.error("[worlds/[slug]][deadline-probe] metadata-query-ready");
 
     if (error || !world) {
       if (error) {
