@@ -1,0 +1,65 @@
+name: Conflict Markers
+
+# No `paths:` filter and no draft gate, both deliberate. A PR that matches no
+# path never gets a check run, so a required context with a `paths:` filter makes
+# such a PR permanently unmergeable; and GitHub counts a skipped required check
+# as passing, so an `if: draft == false` gate would let some PRs through
+# unverified. This job must run and conclude on every pull request.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+
+concurrency:
+  group: conflict-markers-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  conflict-markers:
+    name: No committed conflict markers
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Scan files this PR touches
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          # fetch-depth: 0 above must have brought both endpoints in. If it did
+          # not, stop: an uncomputable diff has to fail the job, never pass it empty.
+          git cat-file -e "$BASE_SHA^{commit}"
+          git cat-file -e "$HEAD_SHA^{commit}"
+          git diff --name-only --diff-filter=ACMR -z "$BASE_SHA" "$HEAD_SHA" > changed.z
+          mapfile -d '' -t CHANGED < changed.z
+          if [ ${#CHANGED[@]} -eq 0 ]; then
+            echo "No added or modified files in this PR."
+            exit 0
+          fi
+          printf 'Scanning %d changed file(s).\n' "${#CHANGED[@]}"
+          node scripts/check-conflict-markers.mjs "${CHANGED[@]}"
+
+      - name: Report pre-existing markers already on the base branch
+        if: always()
+        run: |
+          set -uo pipefail
+          # Advisory only. docs/canon/ARCANEA_UNIVERSE_CANON.md still carries a
+          # committed conflict that needs Frank's canon decision, so a tree-wide
+          # failing scan would block every unrelated PR. Keeping the count
+          # visible avoids the debt going quiet again.
+          if node scripts/check-conflict-markers.mjs --all > /dev/null 2>tree.log; then
+            echo "Tree-wide: clean. Promote this scan to a hard failure." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "### Pre-existing conflict markers still on the base branch" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            grep -oP '(?<=::error file=)[^,]+' tree.log | sort -u >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
