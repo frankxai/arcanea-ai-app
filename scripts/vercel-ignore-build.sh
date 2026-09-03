@@ -2,6 +2,7 @@
 # Vercel ignoreCommand — exit 0 SKIPS the build, exit 1 PROCEEDS.
 #   vercel.json: "ignoreCommand": "bash scripts/vercel-ignore-build.sh"
 # Use [vercel-force] on a coherent commit when an exact preview must bypass skip filters.
+# The override runs before draft and path filters so verification cannot be skipped.
 #
 # Measured 2026-09-03: 20 deployment records in 7.7h. The branch skips below were already
 # working (5 dependabot builds correctly skipped). The remaining spend was 8 preview builds
