@@ -15,6 +15,7 @@ export async function middleware(request: NextRequest) {
   return updateSession(request, {
     protectedPrefixes: [
       '/profile', '/onboarding', '/dashboard', '/settings',
+      '/studio',
     ],
     protectedApiPrefixes: [
       '/api/conversations/', '/api/creations/',

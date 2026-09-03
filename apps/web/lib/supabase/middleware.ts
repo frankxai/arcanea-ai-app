@@ -68,16 +68,7 @@ export async function updateSession(
     },
   });
 
-  let url: string;
-  let anonKey: string;
-
-  try {
-    const env = getSupabaseEnv();
-    url = env.url;
-    anonKey = env.anonKey;
-  } catch {
-    return response;
-  }
+  const { url, anonKey } = getSupabaseEnv();
 
   const supabase = createServerClient(
     url,
