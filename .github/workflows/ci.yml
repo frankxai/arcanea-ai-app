@@ -5,7 +5,11 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-    types: [opened, synchronize, reopened, ready_for_review]
+    # 'edited' is required: it is the only pull_request activity type that fires
+    # when the base branch is retargeted, and required-check verdicts are recorded
+    # against the head SHA. Without it a green earned against one base survives a
+    # retarget to another and gates a merge that was never verified.
+    types: [opened, synchronize, reopened, ready_for_review, edited]
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -21,9 +25,17 @@ jobs:
   # ============================================
   install:
     name: Install
-    # Draft iterations are intentionally free. The ready_for_review event is
-    # included above, so the required Build context executes before merge.
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+    # Unconditional. Build, Lint, TypeScript and CI Status are required contexts,
+    # and GitHub treats a required
+    # check whose conclusion is 'skipped' as satisfied -- measured 2026-09-03 on
+    # frankxai/disruptivepassiveincome#4 (build=skipped, mergeStateStatus=CLEAN).
+    # A draft condition here therefore does not hold an unverified PR back; it
+    # publishes a green rollup that no job earned. This gate was removed once in
+    # #252 and reintroduced by #293 as a cost control. Measured cost of the drafts
+    # it suppresses: ~140 runs/month x ~14 billable minutes = ~1,960 min/month
+    # (~$12 at $0.006/min) against this repo's 10,450 minutes in 2026-08.
+    # Buy the verified merge; the concurrency block above already cancels
+    # superseded draft iterations.
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -62,6 +74,10 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     needs: install
+    # Runs even when install failed, so this required context fails instead of
+    # skipping; a skipped required check is counted as satisfied. !cancelled()
+    # rather than always() so cancel-in-progress still stops superseded runs.
+    if: ${{ !cancelled() }}
     timeout-minutes: 8
 
     steps:
@@ -117,14 +133,14 @@ jobs:
         continue-on-error: true
 
   # ============================================
-  # TYPECHECK — informational, does not block merge
-  # Reports error count but never fails the job.
-  # Once errors hit 0, flip continue-on-error to false.
+  # TYPECHECK — blocking. Exits 1 on any TS error, and TypeScript is a required
+  # context. (The previous comment here claimed the opposite.)
   # ============================================
   typecheck:
     name: TypeScript
     runs-on: ubuntu-latest
     needs: install
+    if: ${{ !cancelled() }}
     timeout-minutes: 8
 
     steps:
@@ -168,6 +184,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     needs: [install, lint]
+    if: ${{ !cancelled() }}
     timeout-minutes: 15
 
     steps:
@@ -227,16 +244,18 @@ jobs:
           echo "- **pnpm**: ${{ env.PNPM_VERSION }}" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
-  # STATUS — merge gate (green = safe to ship)
-  # Gates on Install + Lint + TypeScript + Build.
-  # TypeScript is now blocking — apps/web tsc --noEmit exits 0.
+  # STATUS — the merge gate. It is the only job here that cannot skip under any
+  # event, so it is the only context whose green is unconditionally earned.
+  # Gates on Lint + TypeScript + Build; an install failure surfaces through them.
   # ============================================
   ci-status:
     name: CI Status
     runs-on: ubuntu-latest
     needs: [lint, typecheck, build]
-    # Do not publish a false failure for intentionally skipped draft suites.
-    if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
+    # always() and nothing else: this job must run even when an upstream job fails
+    # or is cancelled, so it reports a real verdict. Any condition that can make it
+    # skip reads as a passing required check.
+    if: always()
 
     steps:
       - name: Check results
