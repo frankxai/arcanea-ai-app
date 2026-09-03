@@ -1,12 +1,12 @@
-import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import test from 'node:test';
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import test from "node:test";
 
-const env = readFileSync('apps/web/lib/supabase/env.ts', 'utf8');
-const health = readFileSync('apps/web/app/api/health/route.ts', 'utf8');
-const media = readFileSync('apps/web/app/api/media/catalog/route.ts', 'utf8');
+const env = readFileSync("apps/web/lib/supabase/env.ts", "utf8");
+const health = readFileSync("apps/web/app/api/health/route.ts", "utf8");
+const media = readFileSync("apps/web/app/api/media/catalog/route.ts", "utf8");
 
-test('public Supabase reads require one complete non-placeholder pair', () => {
+test("public Supabase reads require one complete non-placeholder pair", () => {
   assert.match(env, /getPublicSupabaseBinding/);
   assert.match(env, /SUPABASE_PUBLIC_BINDING_MISSING/);
   assert.match(env, /SUPABASE_PUBLIC_BINDING_INVALID/);
@@ -19,13 +19,13 @@ test('public Supabase reads require one complete non-placeholder pair', () => {
   assert.match(env, /!isSupportedPublicApiKey\(apiKey\)/);
 
   const publicBinding = env.slice(
-    env.indexOf('export function getPublicSupabaseBinding'),
-    env.indexOf('export function getSupabaseEnv'),
+    env.indexOf("export function getPublicSupabaseBinding"),
+    env.indexOf("export function getSupabaseEnv"),
   );
   assert.doesNotMatch(publicBinding, /SUPABASE_SERVICE_ROLE_KEY/);
 });
 
-test('media catalog fails closed without leaking upstream details', () => {
+test("media catalog fails closed without leaking upstream details", () => {
   assert.match(media, /getPublicSupabaseBinding\(\)/);
   assert.match(media, /AbortSignal\.timeout\(CATALOG_READ_TIMEOUT_MS\)/);
   assert.match(media, /status:\s*503/);
@@ -38,7 +38,7 @@ test('media catalog fails closed without leaking upstream details', () => {
   assert.doesNotMatch(media, /Authorization:/);
 });
 
-test('health reports readiness instead of unconditional success', () => {
+test("health reports readiness instead of unconditional success", () => {
   assert.match(health, /checkPublicDataReadiness\(\)/);
   assert.match(health, /rest\/v1\/media_catalog\?select=id&limit=1/);
   assert.match(health, /AbortSignal\.timeout\(READINESS_TIMEOUT_MS\)/);
