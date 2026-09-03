@@ -31,13 +31,20 @@ if [[ "$COMMIT_MESSAGE" == *"[agent-wip]"* ]]; then
   exit 0
 fi
 
-# 3. First coherent commit after a skipped checkpoint must build, before any filter below.
+# 3. Explicit operator override. Use on a coherent commit when the path/draft filters
+#    intentionally skipped the preview that must prove a deployment-pipeline change.
+if [[ "$COMMIT_MESSAGE" == *"[vercel-force]"* ]]; then
+  echo "build: explicit [vercel-force] override"
+  exit 1
+fi
+
+# 4. First coherent commit after a skipped checkpoint must build, before any filter below.
 if git log -1 --format=%B HEAD^ 2>/dev/null | grep -Fq "[agent-wip]"; then
   echo "build: coherent checkpoint follows [agent-wip]"
   exit 1
 fi
 
-# 4. Noisy branch classes that never need a preview.
+# 5. Noisy branch classes that never need a preview.
 case "$BRANCH" in
   dependabot/*)         echo "skip: dependabot branch ($BRANCH)"; exit 0 ;;
   backup/*)             echo "skip: backup branch ($BRANCH)"; exit 0 ;;
@@ -47,7 +54,7 @@ case "$BRANCH" in
   docs/*)               echo "skip: docs-only branch ($BRANCH)"; exit 0 ;;
 esac
 
-# 5. Draft PR. Ported from frankx.ai-vercel-website, which has had this since 2026-05 —
+# 6. Draft PR. Ported from frankx.ai-vercel-website, which has had this since 2026-05 —
 #    arcanea did not. VERCEL_GIT_PULL_REQUEST_ID is only set for PR-linked previews, so
 #    this can never affect production. Any curl or parse failure falls through to the
 #    path filters below rather than risking a false skip.
@@ -78,6 +85,7 @@ RELEVANT_PATHS=(
   pnpm-workspace.yaml
   turbo.json
   vercel.json
+  scripts/vercel-ignore-build.sh
   tsconfig.json
   next.config.mjs
   next.config.js
@@ -88,7 +96,7 @@ RELEVANT_PATHS=(
   .npmrc
 )
 
-# 6. A preview only earns a build if it differs from what production already built.
+# 7. A preview only earns a build if it differs from what production already built.
 #    Catches "Merge branch 'main' into agent/..." commits, which otherwise rebuild a
 #    preview that reviews nothing new. Only runs when origin/main is present locally
 #    (Vercel clones are shallow); otherwise falls through and builds.
@@ -100,7 +108,7 @@ if [ "$BRANCH" != "main" ] && git rev-parse --verify -q origin/main >/dev/null 2
   fi
 fi
 
-# 7. Path diff against the previous commit.
+# 8. Path diff against the previous commit.
 if ! git rev-parse HEAD^ >/dev/null 2>&1; then
   echo "build: no parent commit (first build or shallow clone)"
   exit 1
