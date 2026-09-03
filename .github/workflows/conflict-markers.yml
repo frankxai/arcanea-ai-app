@@ -27,6 +27,23 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          persist-credentials: false
+
+      - name: Restore the scanner from the base branch
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          # The checkout above is the PR merge result, so the scanner on disk is
+          # PR-authored and could be edited to exit 0. Run the base branch's copy
+          # instead and treat PR content purely as data.
+          if git cat-file -e "$BASE_SHA:scripts/check-conflict-markers.mjs" 2>/dev/null; then
+            git checkout "$BASE_SHA" -- scripts/check-conflict-markers.mjs
+            echo "Scanner restored from base."
+          else
+            # Only true of the PR that introduces the scanner.
+            echo "::warning::No scanner on the base branch; running this PR's copy."
+          fi
 
       - name: Scan files this PR touches
         env:
@@ -38,28 +55,33 @@ jobs:
           # not, stop: an uncomputable diff has to fail the job, never pass it empty.
           git cat-file -e "$BASE_SHA^{commit}"
           git cat-file -e "$HEAD_SHA^{commit}"
-          git diff --name-only --diff-filter=ACMR -z "$BASE_SHA" "$HEAD_SHA" > changed.z
-          mapfile -d '' -t CHANGED < changed.z
+          # Written outside the workspace so a file committed at this path cannot
+          # influence it. `--diff-filter=d` excludes only deletions, so type
+          # changes (T) are scanned too.
+          CHANGED_FILE="$RUNNER_TEMP/changed.z"
+          git diff --name-only --diff-filter=d -z "$BASE_SHA" "$HEAD_SHA" > "$CHANGED_FILE"
+          mapfile -d '' -t CHANGED < "$CHANGED_FILE"
           if [ ${#CHANGED[@]} -eq 0 ]; then
             echo "No added or modified files in this PR."
             exit 0
           fi
           printf 'Scanning %d changed file(s).\n' "${#CHANGED[@]}"
-          node scripts/check-conflict-markers.mjs "${CHANGED[@]}"
+          node scripts/check-conflict-markers.mjs -- "${CHANGED[@]}"
 
-      - name: Report pre-existing markers already on the base branch
+      - name: Report markers elsewhere in the merged tree
         if: always()
         run: |
           set -uo pipefail
           # Advisory only. docs/canon/ARCANEA_UNIVERSE_CANON.md still carries a
           # committed conflict that needs Frank's canon decision, so a tree-wide
           # failing scan would block every unrelated PR. Keeping the count
-          # visible avoids the debt going quiet again.
-          if node scripts/check-conflict-markers.mjs --all > /dev/null 2>tree.log; then
-            echo "Tree-wide: clean. Promote this scan to a hard failure." >> "$GITHUB_STEP_SUMMARY"
+          # visible avoids the debt going quiet again. This scans the PR merge
+          # result, not the base branch alone.
+          if node scripts/check-conflict-markers.mjs --all > /dev/null 2>"$RUNNER_TEMP/tree.log"; then
+            echo "Whole merged tree is clean. Promote this scan to a hard failure." >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "### Pre-existing conflict markers still on the base branch" >> "$GITHUB_STEP_SUMMARY"
+            echo "### Conflict markers elsewhere in the merged tree (advisory)" >> "$GITHUB_STEP_SUMMARY"
             echo '```' >> "$GITHUB_STEP_SUMMARY"
-            grep -oP '(?<=::error file=)[^,]+' tree.log | sort -u >> "$GITHUB_STEP_SUMMARY"
+            grep -oP '(?<=::error file=)[^,]+' "$RUNNER_TEMP/tree.log" | sort -u >> "$GITHUB_STEP_SUMMARY"
             echo '```' >> "$GITHUB_STEP_SUMMARY"
           fi
