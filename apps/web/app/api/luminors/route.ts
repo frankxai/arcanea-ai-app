@@ -8,7 +8,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
   getPublishedLuminors,
+  getPublishedLuminorErrorCode,
   LUMINOR_READ_TIMEOUT_MS,
+  PublishedLuminorReadError,
   saveLuminor,
 } from '@/lib/luminors/luminor-service';
 import { createClient } from '@/lib/supabase/server';
@@ -26,8 +28,8 @@ async function withPublicReadDeadline<T>(
     timeoutId = setTimeout(
       () =>
         reject(
-          new Error(
-            `Published Luminor read exceeded ${LUMINOR_READ_TIMEOUT_MS}ms`
+          new PublishedLuminorReadError(
+            'SUPABASE_PUBLIC_READ_TIMEOUT'
           )
         ),
       LUMINOR_READ_TIMEOUT_MS
@@ -41,21 +43,71 @@ async function withPublicReadDeadline<T>(
   }
 }
 
+function boundedInteger(
+  value: string | null,
+  fallback: number,
+  min: number,
+  max: number,
+): number {
+  if (value === null) return fallback;
+  const parsed = Number.parseInt(value, 10);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.min(Math.max(parsed, min), max);
+}
+
 export async function GET(req: NextRequest) {
+  const requestId = crypto.randomUUID();
+  const startedAt = performance.now();
+
   try {
     const { searchParams } = new URL(req.url);
     const domain = searchParams.get('domain') ?? undefined;
     const element = searchParams.get('element') ?? undefined;
-    const limit = Math.min(parseInt(searchParams.get('limit') ?? '24', 10), 100);
-    const offset = Math.max(parseInt(searchParams.get('offset') ?? '0', 10), 0);
+    const limit = boundedInteger(searchParams.get('limit'), 24, 1, 100);
+    const offset = boundedInteger(
+      searchParams.get('offset'),
+      0,
+      0,
+      10_000,
+    );
 
     const luminors = await withPublicReadDeadline(() =>
       getPublishedLuminors({ domain, element, limit, offset })
     );
+    const durationMs = Math.round(performance.now() - startedAt);
 
-    return NextResponse.json({ data: luminors, count: luminors.length });
+    console.info('[api/luminors] public_read', {
+      requestId,
+      outcome: 'ok',
+      durationMs,
+      count: luminors.length,
+      limit,
+      offset,
+      filtered: Boolean(domain || element),
+    });
+
+    return NextResponse.json(
+      { data: luminors, count: luminors.length },
+      {
+        headers: {
+          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          'Server-Timing': `luminors;dur=${durationMs}`,
+          'X-Request-Id': requestId,
+        },
+      },
+    );
   } catch (error) {
-    console.error('[api/luminors] public read unavailable:', error);
+    const durationMs = Math.round(performance.now() - startedAt);
+    const code = getPublishedLuminorErrorCode(error);
+
+    console.error('[api/luminors] public_read', {
+      requestId,
+      outcome: 'error',
+      code,
+      durationMs,
+      errorName: error instanceof Error ? error.name : 'UnknownError',
+    });
+
     return NextResponse.json(
       { error: 'Published Luminors are temporarily unavailable. Please retry.' },
       {
@@ -63,6 +115,8 @@ export async function GET(req: NextRequest) {
         headers: {
           'Retry-After': '30',
           'Cache-Control': 'no-store',
+          'Server-Timing': `luminors;dur=${durationMs}`,
+          'X-Request-Id': requestId,
         },
       }
     );
