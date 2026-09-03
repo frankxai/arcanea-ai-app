@@ -12,10 +12,10 @@ test("public Supabase reads require one complete non-placeholder pair", () => {
   assert.match(env, /SUPABASE_PUBLIC_BINDING_INVALID/);
   assert.match(env, /NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY/);
   assert.match(env, /SUPABASE_PUBLISHABLE_KEY/);
-  assert.match(env, /parsedUrl\.protocol !== 'https:'/);
-  assert.match(env, /apiKey\.startsWith\('sb_publishable_'\)/);
-  assert.match(env, /apiKey\.startsWith\('sb_'\)/);
-  assert.match(env, /payload\.role === 'anon'/);
+  assert.match(env, /parsedUrl\.protocol !== ["']https:["']/);
+  assert.match(env, /apiKey\.startsWith\(["']sb_publishable_["']\)/);
+  assert.match(env, /apiKey\.startsWith\(["']sb_["']\)/);
+  assert.match(env, /payload\.role === ["']anon["']/);
   assert.match(env, /!isSupportedPublicApiKey\(apiKey\)/);
 
   const publicBinding = env.slice(
@@ -29,8 +29,8 @@ test("media catalog fails closed without leaking upstream details", () => {
   assert.match(media, /getPublicSupabaseBinding\(\)/);
   assert.match(media, /AbortSignal\.timeout\(CATALOG_READ_TIMEOUT_MS\)/);
   assert.match(media, /status:\s*503/);
-  assert.match(media, /'Retry-After': '30'/);
-  assert.match(media, /'Cache-Control': 'no-store'/);
+  assert.match(media, /["']Retry-After["']:\s*["']30["']/);
+  assert.match(media, /["']Cache-Control["']:\s*["']no-store["']/);
   assert.match(media, /MEDIA_CATALOG_UNAVAILABLE/);
   assert.match(media, /public, s-maxage=60, stale-while-revalidate=300/);
   assert.doesNotMatch(media, /details:/);
@@ -42,7 +42,10 @@ test("health reports readiness instead of unconditional success", () => {
   assert.match(health, /checkPublicDataReadiness\(\)/);
   assert.match(health, /rest\/v1\/media_catalog\?select=id&limit=1/);
   assert.match(health, /AbortSignal\.timeout\(READINESS_TIMEOUT_MS\)/);
-  assert.match(health, /status: publicData\.ready \? 'healthy' : 'degraded'/);
+  assert.match(
+    health,
+    /status:\s*publicData\.ready\s*\?\s*["']healthy["']\s*:\s*["']degraded["']/,
+  );
   assert.match(health, /status: publicData\.ready \? 200 : 503/g);
   assert.match(health, /live: true/);
   assert.match(health, /ready: publicData\.ready/);
