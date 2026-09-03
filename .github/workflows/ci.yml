@@ -231,6 +231,9 @@ jobs:
       - name: Verify Luminor public-read timeout
         run: pnpm test:luminor-read-timeout
 
+      - name: Verify saga public release boundary (default-deny)
+        run: pnpm --dir apps/web test:saga-gate
+
       - name: Run package tests
         run: pnpm test:quick
         continue-on-error: true
