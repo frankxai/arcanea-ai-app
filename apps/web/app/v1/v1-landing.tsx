@@ -3,11 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import {
-  m,
-  EASE,
-  MotionProvider,
-} from "@/lib/motion";
+import { m, EASE, MotionProvider } from "@/lib/motion";
 import {
   useMotionValueEvent,
   useReducedMotion,
@@ -21,7 +17,6 @@ import {
   PhBrain,
   PhCode,
   PhCompass,
-  PhFire,
   PhGameController,
   PhGlobe,
   PhMagicWand,
@@ -140,7 +135,6 @@ const OUTPUTS = [
   },
 ];
 
-
 function FadeIn({
   children,
   delay = 0,
@@ -170,13 +164,29 @@ function HeroSection() {
     target: ref,
     offset: ["start start", "end start"],
   });
-  const mediaY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 92]);
-  const mediaScale = useTransform(scrollYProgress, [0, 1], reduce ? [1, 1] : [1.04, 1.14]);
-  const contentY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -48]);
+  const mediaY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reduce ? [0, 0] : [0, 92],
+  );
+  const mediaScale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reduce ? [1, 1] : [1.04, 1.14],
+  );
+  const contentY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reduce ? [0, 0] : [0, -48],
+  );
   const contentOpacity = useTransform(scrollYProgress, [0, 0.78], [1, 0]);
 
   return (
-    <section id="v1-hero" ref={ref} className="relative min-h-[92svh] overflow-hidden">
+    <section
+      id="v1-hero"
+      ref={ref}
+      className="relative min-h-[92svh] overflow-hidden"
+    >
       <m.div
         aria-hidden
         className="absolute inset-0 bg-[var(--arc-cosmic-void)]"
@@ -199,7 +209,10 @@ function HeroSection() {
           poster="/brand/arcanea-dashboard-hero-premium.png"
           className="absolute inset-0 hidden h-full w-full object-cover object-[50%_42%] opacity-95 motion-safe:block"
         >
-          <source src="/brand/arcanea-dashboard-hero-premium.mp4" type="video/mp4" />
+          <source
+            src="/brand/arcanea-dashboard-hero-premium.mp4"
+            type="video/mp4"
+          />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--arc-cosmic-void)]/22 via-[var(--arc-cosmic-void)]/36 to-[var(--arc-cosmic-void)]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[var(--arc-cosmic-void)]/88 via-transparent to-[var(--arc-cosmic-void)]/78" />
@@ -212,7 +225,11 @@ function HeroSection() {
         <div className="max-w-5xl">
           <FadeIn>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.05] px-3 py-1.5 text-xs text-white/58 backdrop-blur-md">
-              <PhSparkle size={14} weight="duotone" color="var(--arc-brand-atlantean-teal)" />
+              <PhSparkle
+                size={14}
+                weight="duotone"
+                color="var(--arc-brand-atlantean-teal)"
+              />
               Sovereign World Engine
             </div>
           </FadeIn>
@@ -223,7 +240,10 @@ function HeroSection() {
           </FadeIn>
           <FadeIn delay={0.16}>
             <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/64 md:text-2xl">
-              Compile persistent universes with magical intelligence. Scaffold living world-graphs, orchestrate cinematic score briefs, and deploy agent swarms that share a single memory. Magic engineered like code.
+              Compile persistent universes with magical intelligence. Scaffold
+              living world-graphs, orchestrate cinematic score briefs, and
+              deploy agent swarms that share a single memory. Magic engineered
+              like code.
             </p>
           </FadeIn>
           <FadeIn delay={0.24}>
@@ -239,7 +259,11 @@ function HeroSection() {
                 href="/agents"
                 className="inline-flex items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white/78 backdrop-blur-md transition-colors hover:bg-white/[0.09] focus:outline-none focus:ring-2 focus:ring-white/20"
               >
-                <PhCode size={18} weight="duotone" color="var(--arc-brand-cosmic-blue)" />
+                <PhCode
+                  size={18}
+                  weight="duotone"
+                  color="var(--arc-brand-cosmic-blue)"
+                />
                 Deploy agents
               </Link>
             </div>
@@ -255,8 +279,13 @@ function HeroSection() {
             ["Canon", "magic rules engine"],
             ["Runtime", "16 agent specialists"],
           ].map(([label, value]) => (
-            <div key={label} className="border-white/[0.06] px-5 py-4 md:border-r md:last:border-r-0">
-              <p className="text-xs font-mono uppercase text-white/28">{label}</p>
+            <div
+              key={label}
+              className="border-white/[0.06] px-5 py-4 md:border-r md:last:border-r-0"
+            >
+              <p className="text-xs font-mono uppercase text-white/28">
+                {label}
+              </p>
               <p className="mt-1 text-sm text-white/72">{value}</p>
             </div>
           ))}
@@ -274,13 +303,24 @@ function ScrollRitual() {
     target: ref,
     offset: ["start start", "end end"],
   });
-  const smooth = useSpring(scrollYProgress, { stiffness: 88, damping: 28, mass: 0.7 });
-  const portalScale = useTransform(smooth, [0, 0.5, 1], reduce ? [1, 1, 1] : [0.96, 1.03, 0.98]);
+  const smooth = useSpring(scrollYProgress, {
+    stiffness: 88,
+    damping: 28,
+    mass: 0.7,
+  });
+  const portalScale = useTransform(
+    smooth,
+    [0, 0.5, 1],
+    reduce ? [1, 1, 1] : [0.96, 1.03, 0.98],
+  );
   const portalRotate = useTransform(smooth, [0, 1], reduce ? [0, 0] : [-2, 2]);
   const traceHeight = useTransform(smooth, [0, 1], ["0%", "100%"]);
 
   useMotionValueEvent(smooth, "change", (latest) => {
-    const index = Math.min(SCROLL_BEATS.length - 1, Math.max(0, Math.floor(latest * SCROLL_BEATS.length)));
+    const index = Math.min(
+      SCROLL_BEATS.length - 1,
+      Math.max(0, Math.floor(latest * SCROLL_BEATS.length)),
+    );
     setActive(index);
   });
 
@@ -288,7 +328,11 @@ function ScrollRitual() {
   const Icon = beat.icon;
 
   return (
-    <section id="v1-scroll-ritual" ref={ref} className="relative bg-[var(--arc-cosmic-void)] py-20 md:py-24 lg:min-h-[520svh] lg:py-0">
+    <section
+      id="v1-scroll-ritual"
+      ref={ref}
+      className="relative bg-[var(--arc-cosmic-void)] py-20 md:py-24 lg:min-h-[520svh] lg:py-0"
+    >
       <div className="flex min-h-screen items-center overflow-hidden lg:sticky lg:top-0 lg:py-24">
         <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
@@ -299,7 +343,9 @@ function ScrollRitual() {
               From magic seed to living world.
             </h2>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-white/52 md:text-lg">
-              The system runs like computed magic: your initial prompt compiles into a persistent world-graph, and autonomous agent councils run the generation.
+              The system runs like computed magic: your initial prompt compiles
+              into a persistent world-graph, and autonomous agent councils run
+              the generation.
             </p>
 
             <div className="mt-10 hidden gap-3 lg:grid">
@@ -322,8 +368,12 @@ function ScrollRitual() {
                       <ItemIcon size={18} weight="duotone" />
                     </div>
                     <div>
-                      <p className="text-xs font-mono uppercase text-white/32">{item.eyebrow}</p>
-                      <p className="mt-1 text-base font-semibold text-white/88">{item.title}</p>
+                      <p className="text-xs font-mono uppercase text-white/32">
+                        {item.eyebrow}
+                      </p>
+                      <p className="mt-1 text-base font-semibold text-white/88">
+                        {item.title}
+                      </p>
                     </div>
                   </div>
                 );
@@ -365,7 +415,9 @@ function ScrollRitual() {
                 >
                   <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-black/35 px-3 py-1.5 backdrop-blur-md">
                     <Icon size={15} weight="duotone" color={beat.accent} />
-                    <span className="text-xs font-mono uppercase text-white/46">{beat.output}</span>
+                    <span className="text-xs font-mono uppercase text-white/46">
+                      {beat.output}
+                    </span>
                   </div>
                   <h3 className="font-display text-3xl font-semibold leading-[1.05] text-white md:text-5xl">
                     {beat.title}
@@ -385,7 +437,10 @@ function ScrollRitual() {
 
 function GuardianCouncil() {
   return (
-    <section id="v1-guardians" className="relative overflow-hidden bg-[var(--arc-cosmic-void)] py-24 md:py-32">
+    <section
+      id="v1-guardians"
+      className="relative overflow-hidden bg-[var(--arc-cosmic-void)] py-24 md:py-32"
+    >
       <div className="mx-auto max-w-7xl px-6">
         <FadeIn>
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
@@ -398,7 +453,9 @@ function GuardianCouncil() {
               </h2>
             </div>
             <p className="max-w-2xl text-base leading-relaxed text-white/52 md:text-lg">
-              Each module represents a unique creative capacity, each guardian acts as an active validation node, and every execution loop refines your world-graph.
+              Each module represents a unique creative capacity, each guardian
+              acts as an active validation node, and every execution loop
+              refines your world-graph.
             </p>
           </div>
         </FadeIn>
@@ -421,11 +478,18 @@ function GuardianCouncil() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] via-transparent to-transparent" />
                 </div>
                 <div className="p-6">
-                  <p className="text-xs font-mono uppercase" style={{ color: item.accent }}>
+                  <p
+                    className="text-xs font-mono uppercase"
+                    style={{ color: item.accent }}
+                  >
                     {item.gate}
                   </p>
-                  <h3 className="mt-3 text-2xl font-semibold text-white">{item.name}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-white/50">{item.body}</p>
+                  <h3 className="mt-3 text-2xl font-semibold text-white">
+                    {item.name}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-white/50">
+                    {item.body}
+                  </p>
                 </div>
               </Link>
             </FadeIn>
@@ -443,10 +507,18 @@ function DragonRiderSection() {
     target: ref,
     offset: ["start end", "end start"],
   });
-  const imageY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [-52, 52]);
+  const imageY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reduce ? [0, 0] : [-52, 52],
+  );
 
   return (
-    <section id="v1-dragon-rider" ref={ref} className="relative overflow-hidden bg-[var(--arc-cosmic-void)] py-24 md:py-32">
+    <section
+      id="v1-dragon-rider"
+      ref={ref}
+      className="relative overflow-hidden bg-[var(--arc-cosmic-void)] py-24 md:py-32"
+    >
       <div className="mx-auto grid max-w-7xl gap-8 px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <FadeIn>
           <div className="relative min-h-[560px] overflow-hidden rounded-[2rem] border border-white/[0.08] bg-white/[0.025]">
@@ -461,8 +533,12 @@ function DragonRiderSection() {
             </m.div>
             <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] via-[var(--arc-cosmic-void)]/34 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6 rounded-2xl border border-white/[0.08] bg-black/40 p-5 backdrop-blur-md">
-              <p className="text-xs font-mono uppercase text-[var(--arc-fire)]">Dragon Rider Proof</p>
-              <p className="mt-2 text-2xl font-semibold text-white">The magic has to compile.</p>
+              <p className="text-xs font-mono uppercase text-[var(--arc-fire)]">
+                Dragon Rider Proof
+              </p>
+              <p className="mt-2 text-2xl font-semibold text-white">
+                The magic has to compile.
+              </p>
             </div>
           </div>
         </FadeIn>
@@ -476,15 +552,26 @@ function DragonRiderSection() {
               World-building at anime scale, direct to runtime.
             </h2>
             <p className="mt-6 text-base leading-relaxed text-white/54 md:text-lg">
-              Arcanea compiles complex media assets—world bibles, character schemas, audio-reactive sequences, and developer environments—into a single, stateful workspace.
+              Arcanea compiles complex media assets—world bibles, character
+              schemas, audio-reactive sequences, and developer environments—into
+              a single, stateful workspace.
             </p>
           </FadeIn>
 
           <div className="mt-10 grid gap-4">
             {[
-              ["Magic Graph", "Your relational magic system and world schemas remain the immutable source of truth."],
-              ["Cinematic Engine", "Direct camera angles, pacing, and visual style via structured code parameters."],
-              ["Agent Swarms", "Coordinate 16 agent runtimes that share a single, unified SQLite memory state."],
+              [
+                "Magic Graph",
+                "Your relational magic system and world schemas remain the immutable source of truth.",
+              ],
+              [
+                "Cinematic Engine",
+                "Direct camera angles, pacing, and visual style via structured code parameters.",
+              ],
+              [
+                "Agent Swarms",
+                "Coordinate 16 agent runtimes that share a single, unified SQLite memory state.",
+              ],
             ].map(([label, body], i) => (
               <FadeIn key={label} delay={0.1 + i * 0.07}>
                 <div className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5">
@@ -521,7 +608,10 @@ function DragonRiderSection() {
 
 function OutputGrid() {
   return (
-    <section id="v1-outputs" className="bg-[var(--arc-cosmic-void)] py-24 md:py-32">
+    <section
+      id="v1-outputs"
+      className="bg-[var(--arc-cosmic-void)] py-24 md:py-32"
+    >
       <div className="mx-auto max-w-7xl px-6">
         <FadeIn>
           <div className="max-w-3xl">
@@ -532,7 +622,9 @@ function OutputGrid() {
               One world graph. Unlimited media formats.
             </h2>
             <p className="mt-6 text-base leading-relaxed text-white/52 md:text-lg">
-              Compile your central world graph into game schemas, publication-ready markdown, cinematic audio scripts, or custom agent templates.
+              Compile your central world graph into game schemas,
+              publication-ready markdown, cinematic audio scripts, or custom
+              agent templates.
             </p>
           </div>
         </FadeIn>
@@ -546,13 +638,25 @@ function OutputGrid() {
                   href={item.href}
                   className="group flex min-h-[260px] flex-col justify-between rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 transition-colors hover:border-white/[0.18] hover:bg-white/[0.045]"
                 >
-                  <Icon size={26} weight="duotone" color="var(--arc-brand-atlantean-teal)" />
+                  <Icon
+                    size={26}
+                    weight="duotone"
+                    color="var(--arc-brand-atlantean-teal)"
+                  />
                   <div>
-                    <h3 className="text-xl font-semibold text-white">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-white/48">{item.body}</p>
+                    <h3 className="text-xl font-semibold text-white">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-white/48">
+                      {item.body}
+                    </p>
                     <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--arc-brand-atlantean-teal)]">
                       Open
-                      <PhArrowRight size={16} weight="bold" className="transition-transform group-hover:translate-x-1" />
+                      <PhArrowRight
+                        size={16}
+                        weight="bold"
+                        className="transition-transform group-hover:translate-x-1"
+                      />
                     </span>
                   </div>
                 </Link>
@@ -567,7 +671,10 @@ function OutputGrid() {
 
 function FinalCta() {
   return (
-    <section id="v1-cta" className="relative overflow-hidden bg-[var(--arc-cosmic-void)] px-6 py-24 md:py-32">
+    <section
+      id="v1-cta"
+      className="relative overflow-hidden bg-[var(--arc-cosmic-void)] px-6 py-24 md:py-32"
+    >
       <div className="mx-auto max-w-5xl text-center">
         <FadeIn>
           <p className="text-sm font-mono uppercase text-[var(--arc-brand-arcanean-gold)]/72">
@@ -577,7 +684,8 @@ function FinalCta() {
             The world is the interface.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/54 md:text-lg">
-            Arcanea is an operating system for world architects: cinematic at the surface, stateful and compiled underneath.
+            Arcanea is an operating system for world architects: cinematic at
+            the surface, stateful and compiled underneath.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Link

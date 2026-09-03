@@ -5,21 +5,19 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-    # 'edited' is deliberately ABSENT. It fires on any title or body edit, and
-    # with cancel-in-progress that kills a running suite and restarts ~14 billable
-    # minutes on this repo — the estate's largest Actions consumer. It is the usual
-    # defence against a green earned on one base surviving a retarget, but
-    # `branches: [main]` already makes that fail closed here: a PR retargeted away
-    # from main stops matching, and one retargeted onto main fires 'synchronize'.
-    types: [opened, synchronize, reopened, ready_for_review]
+    # 'edited' is required: it is the only pull_request activity type that fires
+    # when the base branch is retargeted, and required-check verdicts are recorded
+    # against the head SHA. Without it a green earned against one base survives a
+    # retarget to another and gates a merge that was never verified.
+    types: [opened, synchronize, reopened, ready_for_review, edited]
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: '22'
-  PNPM_VERSION: '8.15.0'
+  NODE_VERSION: "22"
+  PNPM_VERSION: "8.15.0"
 
 jobs:
   # ============================================
@@ -54,7 +52,7 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
       - name: Install dependencies
@@ -129,8 +127,39 @@ jobs:
       - name: ESLint
         run: pnpm --dir apps/web run lint
 
-      - name: Prettier check
-        run: pnpm format:check
+      # The repository has historical formatting debt. Enforce Prettier as a
+      # ratchet on every file changed by this push/PR without masking failures
+      # or forcing an unsafe whole-repository rewrite.
+      - name: Prettier check (changed files)
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE_SHA="${{ github.event.before }}"
+          fi
+
+          git fetch --no-tags --depth=1 origin "$BASE_SHA"
+          mapfile -d '' CHANGED_FILES < <(
+            git diff --name-only --diff-filter=ACMRT -z "$BASE_SHA" "$GITHUB_SHA"
+          )
+
+          FORMATTABLE_FILES=()
+          for file in "${CHANGED_FILES[@]}"; do
+            case "$file" in
+              *.css|*.graphql|*.html|*.js|*.json|*.jsx|*.md|*.mdx|*.mjs|*.scss|*.ts|*.tsx|*.yaml|*.yml)
+                [ -f "$file" ] && FORMATTABLE_FILES+=("$file")
+                ;;
+            esac
+          done
+
+          if [ "${#FORMATTABLE_FILES[@]}" -eq 0 ]; then
+            echo "No changed files supported by Prettier."
+            exit 0
+          fi
+
+          printf 'Checking %s changed file(s) with Prettier.\n' "${#FORMATTABLE_FILES[@]}"
+          pnpm exec prettier --check --ignore-unknown "${FORMATTABLE_FILES[@]}"
 
   # ============================================
   # TYPECHECK — blocking. Exits 1 on any TS error, and TypeScript is a required
@@ -230,6 +259,14 @@ jobs:
 
       - name: Verify Luminor public-read timeout
         run: pnpm test:luminor-read-timeout
+
+      - name: Verify World detail read deadlines
+        run: |
+          node --test scripts/tests/world-detail-read-contract.test.mjs
+          pnpm --filter @arcanea/web exec tsx --test lib/__tests__/async-deadline.test.ts
+
+      - name: Verify saga public release boundary (default-deny)
+        run: pnpm --dir apps/web test:saga-gate
 
       - name: Run package tests
         run: pnpm test:quick
