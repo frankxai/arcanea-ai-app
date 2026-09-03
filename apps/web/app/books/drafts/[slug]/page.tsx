@@ -13,6 +13,7 @@ import { ReviewForm } from '@/components/books/ReviewForm';
 import GuardianReport from '@/components/books/GuardianReport';
 import { LiquidGlass } from '@/components/ui/liquid-glass';
 import { getBookRoot } from '@/lib/content/book-path';
+import { isBookPublic } from '@/lib/content/book-visibility';
 
 export const dynamic = 'force-dynamic';
 
@@ -282,7 +283,12 @@ function makeExcerpt(content: string): string {
 /* ------------------------------------------------------------------ */
 
 async function loadBook(slug: string) {
+  const entries = await readdir(BOOK_ROOT, { withFileTypes: true });
+  if (!entries.some((e) => e.isDirectory() && e.name === slug)) return null;
+
   const bookDir = join(BOOK_ROOT, slug);
+  if (!(await isBookPublic(bookDir))) return null;
+
   const yamlPath = join(bookDir, 'book.yaml');
   if (!(await fileExists(yamlPath))) return null;
 
