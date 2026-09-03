@@ -88,9 +88,12 @@ test('allowlists contain only non-empty strings', () => {
 
 test('no release in the registry claims a public manuscript while story lock is pending', () => {
   for (const release of PUBLIC_RELEASE_REGISTRY.releases) {
-    if (release.storyLock !== 'approved') {
+    const storyLock: string = release.storyLock;
+    const publicManuscript: boolean = release.publicManuscript;
+
+    if (storyLock !== 'approved') {
       assert.equal(
-        release.publicManuscript,
+        publicManuscript,
         false,
         `${release.id} exposes a manuscript without an approved story lock`,
       );
