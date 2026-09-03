@@ -5,11 +5,13 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-    # 'edited' is required: it is the only pull_request activity type that fires
-    # when the base branch is retargeted, and required-check verdicts are recorded
-    # against the head SHA. Without it a green earned against one base survives a
-    # retarget to another and gates a merge that was never verified.
-    types: [opened, synchronize, reopened, ready_for_review, edited]
+    # 'edited' is deliberately ABSENT. It fires on any title or body edit, and
+    # with cancel-in-progress that kills a running suite and restarts ~14 billable
+    # minutes on this repo — the estate's largest Actions consumer. It is the usual
+    # defence against a green earned on one base surviving a retarget, but
+    # `branches: [main]` already makes that fail closed here: a PR retargeted away
+    # from main stops matching, and one retargeted onto main fires 'synchronize'.
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -126,11 +128,9 @@ jobs:
 
       - name: ESLint
         run: pnpm --dir apps/web run lint
-        continue-on-error: true
 
       - name: Prettier check
         run: pnpm format:check
-        continue-on-error: true
 
   # ============================================
   # TYPECHECK — blocking. Exits 1 on any TS error, and TypeScript is a required
@@ -233,7 +233,6 @@ jobs:
 
       - name: Run package tests
         run: pnpm test:quick
-        continue-on-error: true
 
       - name: Build summary
         if: always()
