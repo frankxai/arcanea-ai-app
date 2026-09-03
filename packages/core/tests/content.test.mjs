@@ -400,11 +400,10 @@ describe('generateDesignTokensSection', () => {
     assert.ok(tokens.includes(COLORS.cosmic.void));
   });
 
-  it('should include font names', () => {
-    assert.ok(tokens.includes('Cinzel'));
-    assert.ok(tokens.includes('Crimson Pro'));
-    assert.ok(tokens.includes('Inter'));
-    assert.ok(tokens.includes('JetBrains Mono'));
+  it('should include every canonical font token', () => {
+    for (const font of new Set(Object.values(FONTS))) {
+      assert.ok(tokens.includes(font.replace(/'/g, '')));
+    }
   });
 
   it('should include cosmic palette', () => {
