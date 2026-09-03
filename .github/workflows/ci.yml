@@ -16,8 +16,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: '22'
-  PNPM_VERSION: '8.15.0'
+  NODE_VERSION: "22"
+  PNPM_VERSION: "8.15.0"
 
 jobs:
   # ============================================
@@ -52,7 +52,7 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
       - name: Install dependencies
@@ -126,11 +126,40 @@ jobs:
 
       - name: ESLint
         run: pnpm --dir apps/web run lint
-        continue-on-error: true
 
-      - name: Prettier check
-        run: pnpm format:check
-        continue-on-error: true
+      # The repository has historical formatting debt. Enforce Prettier as a
+      # ratchet on every file changed by this push/PR without masking failures
+      # or forcing an unsafe whole-repository rewrite.
+      - name: Prettier check (changed files)
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE_SHA="${{ github.event.before }}"
+          fi
+
+          git fetch --no-tags --depth=1 origin "$BASE_SHA"
+          mapfile -d '' CHANGED_FILES < <(
+            git diff --name-only --diff-filter=ACMRT -z "$BASE_SHA" "$GITHUB_SHA"
+          )
+
+          FORMATTABLE_FILES=()
+          for file in "${CHANGED_FILES[@]}"; do
+            case "$file" in
+              *.css|*.graphql|*.html|*.js|*.json|*.jsx|*.md|*.mdx|*.mjs|*.scss|*.ts|*.tsx|*.yaml|*.yml)
+                [ -f "$file" ] && FORMATTABLE_FILES+=("$file")
+                ;;
+            esac
+          done
+
+          if [ "${#FORMATTABLE_FILES[@]}" -eq 0 ]; then
+            echo "No changed files supported by Prettier."
+            exit 0
+          fi
+
+          printf 'Checking %s changed file(s) with Prettier.\n' "${#FORMATTABLE_FILES[@]}"
+          pnpm exec prettier --check --ignore-unknown "${FORMATTABLE_FILES[@]}"
 
   # ============================================
   # TYPECHECK — blocking. Exits 1 on any TS error, and TypeScript is a required
@@ -241,7 +270,6 @@ jobs:
 
       - name: Run package tests
         run: pnpm test:quick
-        continue-on-error: true
 
       - name: Build summary
         if: always()
