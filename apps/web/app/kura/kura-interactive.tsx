@@ -1,43 +1,53 @@
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import { motion, LazyMotion, domAnimation, useReducedMotion } from 'framer-motion';
+import { useRef } from "react";
+import {
+  motion,
+  LazyMotion,
+  domAnimation,
+  useReducedMotion,
+} from "framer-motion";
 import {
   AnimatedBeam,
   BorderBeam,
   NumberTicker,
   Spotlight,
   Marquee,
-} from '@arcanea/design-system/primitives';
-import { brand } from '@arcanea/design-system/tokens';
+} from "@arcanea/design-system/primitives";
+import { brand } from "@arcanea/design-system/tokens";
 
 const STAGES = [
   {
-    n: '01',
-    label: 'Export',
-    body:
-      'One click in your browser. The current conversation, its prompts, and any generated media land in ArcaneaKura/ on your disk.',
+    n: "01",
+    label: "Export",
+    body: "One click in your browser. The current conversation, its prompts, and any generated media land in ArcaneaKura/ on your disk.",
   },
   {
-    n: '02',
-    label: 'Process',
-    body:
-      'Run /kura-process in Claude Code. The skill extracts characters, locations, artifacts and lore — populating Obsidian wikilinks in the frontmatter.',
+    n: "02",
+    label: "Process",
+    body: "Run /kura-process in Claude Code. The skill extracts characters, locations, artifacts and lore — populating Obsidian wikilinks in the frontmatter.",
   },
   {
-    n: '03',
-    label: 'See',
-    body:
-      'Open the folder in Obsidian. The graph view builds itself from the wikilinks. Your AI work becomes a knowledge network you actually own.',
+    n: "03",
+    label: "See",
+    body: "Open the folder in Obsidian. The graph view builds itself from the wikilinks. Your AI work becomes a knowledge network you actually own.",
   },
 ];
 
-const PLATFORMS = ['ChatGPT', 'Claude', 'Gemini', 'Grok', 'DeepSeek', 'Perplexity', 'AI Studio'];
+const PLATFORMS = [
+  "ChatGPT",
+  "Claude",
+  "Gemini",
+  "Grok",
+  "DeepSeek",
+  "Perplexity",
+  "AI Studio",
+];
 
 const SCALE_NUMBERS = [
-  { value: 7, label: 'platforms' },
-  { value: 0, label: 'cloud servers' },
-  { value: 100, label: '% local-first' },
+  { value: 7, label: "platforms" },
+  { value: 0, label: "cloud servers" },
+  { value: 100, label: "% local-first" },
 ];
 
 export function KuraHero() {
@@ -79,11 +89,11 @@ export function KuraHero() {
 
           <motion.h1
             variants={{
-              hidden: { opacity: 0, y: 32, filter: 'blur(12px)' },
+              hidden: { opacity: 0, y: 32, filter: "blur(12px)" },
               show: {
                 opacity: 1,
                 y: 0,
-                filter: 'blur(0px)',
+                filter: "blur(0px)",
                 transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] },
               },
             }}
@@ -110,7 +120,7 @@ export function KuraHero() {
             A 蔵 (<em className="italic text-zinc-300">kura</em>) is the
             fireproof storehouse a family kept for their most valuable scrolls
             and records. This is the digital one — for every ChatGPT, Claude,
-            Grok, Gemini, DeepSeek and Perplexity conversation you've ever
+            Grok, Gemini, DeepSeek and Perplexity conversation you&apos;ve ever
             wanted to keep.
           </motion.p>
 
@@ -129,7 +139,12 @@ export function KuraHero() {
               href="https://github.com/frankxai/arcanea-vault"
               className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl border border-[var(--arc-brand-atlantean-teal)]/30 bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_28px_-12px_rgba(0,188,212,0.6)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-12px_rgba(0,188,212,0.7)]"
             >
-              <BorderBeam size={180} duration={6} colorFrom={brand.atlanteanTeal} colorTo={brand.arcaneanGold} />
+              <BorderBeam
+                size={180}
+                duration={6}
+                colorFrom={brand.atlanteanTeal}
+                colorTo={brand.arcaneanGold}
+              />
               <span className="relative">Install (developer mode)</span>
               <span aria-hidden="true" className="relative">
                 →
@@ -187,10 +202,7 @@ export function KuraWorkflow() {
         The capture loop
       </h2>
 
-      <div
-        ref={containerRef}
-        className="relative grid gap-6 md:grid-cols-3"
-      >
+      <div ref={containerRef} className="relative grid gap-6 md:grid-cols-3">
         {STAGES.map((s, i) => {
           const stageRef = i === 0 ? r1 : i === 1 ? r2 : r3;
           return (
