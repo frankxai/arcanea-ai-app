@@ -2,6 +2,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { brand, elementNameAccents, elements, text as textToken } from '@arcanea/design-system/tokens';
 
 interface Particle {
   x: number;
@@ -63,7 +64,14 @@ export default function CosmicParticles({ count = 60 }: { count?: number }) {
     const isMobile = window.innerWidth < 768;
     const effectiveCount = isMobile ? Math.min(count, 20) : count;
 
-    const colors = ['#0d47a1', '#a78bfa', '#00bcd4', '#ffd700', '#f8fafc', '#e2e8f0'];
+    const colors = [
+      brand.cosmicBlue,
+      elementNameAccents.WindCompanion,
+      brand.atlanteanTeal,
+      brand.arcaneanGold,
+      textToken.primary,
+      elements.wind.base,
+    ];
 
     const resize = () => {
       canvas.width = canvas.offsetWidth;

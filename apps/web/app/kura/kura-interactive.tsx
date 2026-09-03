@@ -48,9 +48,9 @@ export function KuraHero() {
 
       {/* Backdrop glows */}
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-[640px] w-[1100px] -translate-x-1/2 rounded-full bg-[#00bcd4]/[0.07] blur-3xl" />
-        <div className="absolute bottom-0 left-1/4 h-[420px] w-[680px] rounded-full bg-[#0d47a1]/[0.10] blur-3xl" />
-        <div className="absolute right-0 top-1/3 h-[320px] w-[420px] rounded-full bg-[#ffd700]/[0.04] blur-3xl" />
+        <div className="absolute left-1/2 top-0 h-[640px] w-[1100px] -translate-x-1/2 rounded-full bg-[var(--arc-brand-atlantean-teal)]/[0.07] blur-3xl" />
+        <div className="absolute bottom-0 left-1/4 h-[420px] w-[680px] rounded-full bg-[var(--arc-brand-cosmic-blue)]/[0.10] blur-3xl" />
+        <div className="absolute right-0 top-1/3 h-[320px] w-[420px] rounded-full bg-[var(--arc-brand-arcanean-gold)]/[0.04] blur-3xl" />
       </div>
 
       <LazyMotion features={domAnimation} strict>
@@ -73,7 +73,7 @@ export function KuraHero() {
             }}
             className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-zinc-400 backdrop-blur-sm"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-[#00bcd4]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--arc-brand-atlantean-teal)]" />
             v0.2.0 · Chrome MV3 · Local-first
           </motion.div>
 
@@ -91,7 +91,7 @@ export function KuraHero() {
           >
             Kura.
             <br />
-            <span className="bg-gradient-to-br from-[#00bcd4] via-[#7fffd4] to-[#ffd700] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-crystal)] to-[var(--arc-brand-arcanean-gold)] bg-clip-text text-transparent">
               Export your most precious writing.
             </span>
           </motion.h1>
@@ -127,9 +127,9 @@ export function KuraHero() {
           >
             <a
               href="https://github.com/frankxai/arcanea-vault"
-              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl border border-[#00bcd4]/30 bg-gradient-to-br from-[#00bcd4] to-[#0d47a1] px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_28px_-12px_rgba(0,188,212,0.6)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-12px_rgba(0,188,212,0.7)]"
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl border border-[var(--arc-brand-atlantean-teal)]/30 bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_28px_-12px_rgba(0,188,212,0.6)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-12px_rgba(0,188,212,0.7)]"
             >
-              <BorderBeam size={180} duration={6} colorFrom="#00bcd4" colorTo="#ffd700" />
+              <BorderBeam size={180} duration={6} colorFrom={brand.atlanteanTeal} colorTo={brand.arcaneanGold} />
               <span className="relative">Install (developer mode)</span>
               <span aria-hidden="true" className="relative">
                 →
@@ -159,7 +159,7 @@ export function KuraHero() {
           >
             {SCALE_NUMBERS.map((n) => (
               <div key={n.label}>
-                <div className="font-serif text-4xl font-normal text-[#00bcd4]">
+                <div className="font-serif text-4xl font-normal text-[var(--arc-brand-atlantean-teal)]">
                   <NumberTicker value={n.value} />
                 </div>
                 <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
@@ -197,10 +197,10 @@ export function KuraWorkflow() {
             <div
               key={s.n}
               ref={stageRef}
-              className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] p-7 backdrop-blur-sm transition hover:border-[#00bcd4]/30"
+              className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] p-7 backdrop-blur-sm transition hover:border-[var(--arc-brand-atlantean-teal)]/30"
             >
               <div className="mb-4 font-mono text-xs text-zinc-500">{s.n}</div>
-              <div className="mb-3 font-serif text-2xl font-normal text-[#00bcd4]">
+              <div className="mb-3 font-serif text-2xl font-normal text-[var(--arc-brand-atlantean-teal)]">
                 {s.label}
               </div>
               <p className="text-sm leading-relaxed text-zinc-400">{s.body}</p>
@@ -214,8 +214,8 @@ export function KuraWorkflow() {
               containerRef={containerRef as React.RefObject<HTMLElement>}
               fromRef={r1 as React.RefObject<HTMLElement>}
               toRef={r2 as React.RefObject<HTMLElement>}
-              gradientStartColor="#00bcd4"
-              gradientStopColor="#7fffd4"
+              gradientStartColor={brand.atlanteanTeal}
+              gradientStopColor={brand.aquamarine}
               duration={3.5}
               pathOpacity={0.18}
               className="hidden md:block"
@@ -224,8 +224,8 @@ export function KuraWorkflow() {
               containerRef={containerRef as React.RefObject<HTMLElement>}
               fromRef={r2 as React.RefObject<HTMLElement>}
               toRef={r3 as React.RefObject<HTMLElement>}
-              gradientStartColor="#7fffd4"
-              gradientStopColor="#ffd700"
+              gradientStartColor={brand.aquamarine}
+              gradientStopColor={brand.arcaneanGold}
               duration={3.5}
               delay={0.4}
               pathOpacity={0.18}

@@ -20,7 +20,7 @@
     "build": "turbo run build",
     "test": "turbo run test",
     "test:all": "node --test packages/*/tests/*.test.mjs",
-    "test:quick": "node --test packages/extension-core/tests/*.test.mjs packages/auth/tests/*.test.mjs packages/core/tests/*.test.mjs packages/arcanea-mcp/tests/*.test.mjs",
+    "test:quick": "pnpm --filter @arcanea/core build && pnpm --filter @arcanea/extension-core build && node --test packages/extension-core/tests/*.test.mjs packages/auth/tests/*.test.mjs packages/core/tests/*.test.mjs packages/arcanea-mcp/tests/*.test.mjs",
     "test:luminor-read-timeout": "node --test scripts/tests/luminor-read-timeout-contract.test.mjs",
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",
