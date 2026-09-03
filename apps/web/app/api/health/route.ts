@@ -7,20 +7,20 @@
  * while degraded so monitors cannot mistake a partial deployment for healthy.
  */
 
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 import {
   getPublicSupabaseBinding,
   PublicSupabaseBindingError,
-} from '@/lib/supabase/env';
+} from "@/lib/supabase/env";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
 const startedAt = Date.now();
 const READINESS_TIMEOUT_MS = 2_500;
 
 type ReadinessCheck = {
   ready: boolean;
-  status: 'ready' | 'missing' | 'invalid' | 'unreachable';
+  status: "ready" | "missing" | "invalid" | "unreachable";
   code?: string;
   latencyMs?: number;
 };
@@ -37,32 +37,32 @@ async function checkPublicDataReadiness(): Promise<ReadinessCheck> {
           apikey: apiKey,
         },
         signal: AbortSignal.timeout(READINESS_TIMEOUT_MS),
-        cache: 'no-store',
+        cache: "no-store",
       },
     );
     const latencyMs = Math.round(performance.now() - started);
 
     return response.ok
-      ? { ready: true, status: 'ready', latencyMs }
+      ? { ready: true, status: "ready", latencyMs }
       : {
           ready: false,
-          status: 'unreachable',
-          code: 'SUPABASE_PUBLIC_READ_UNAVAILABLE',
+          status: "unreachable",
+          code: "SUPABASE_PUBLIC_READ_UNAVAILABLE",
           latencyMs,
         };
   } catch (error) {
     if (error instanceof PublicSupabaseBindingError) {
       return {
         ready: false,
-        status: error.code.endsWith('_MISSING') ? 'missing' : 'invalid',
+        status: error.code.endsWith("_MISSING") ? "missing" : "invalid",
         code: error.code,
       };
     }
 
     return {
       ready: false,
-      status: 'unreachable',
-      code: 'SUPABASE_PUBLIC_READ_UNAVAILABLE',
+      status: "unreachable",
+      code: "SUPABASE_PUBLIC_READ_UNAVAILABLE",
       latencyMs: Math.round(performance.now() - started),
     };
   }
@@ -74,10 +74,10 @@ export async function GET() {
 
   return NextResponse.json(
     {
-      status: publicData.ready ? 'healthy' : 'degraded',
+      status: publicData.ready ? "healthy" : "degraded",
       live: true,
       ready: publicData.ready,
-      version: '1.8.0',
+      version: "1.8.0",
       timestamp: new Date().toISOString(),
       uptime: {
         ms: uptimeMs,
@@ -86,16 +86,17 @@ export async function GET() {
       checks: {
         publicData,
       },
-      guardian: 'Shinkami',
-      gate: 'Source',
-      environment: process.env.VERCEL_ENV || process.env.NODE_ENV || 'development',
+      guardian: "Shinkami",
+      gate: "Source",
+      environment:
+        process.env.VERCEL_ENV || process.env.NODE_ENV || "development",
     },
     {
       status: publicData.ready ? 200 : 503,
       headers: {
-        'Cache-Control': 'no-store, no-cache, must-revalidate',
-        'Content-Type': 'application/json',
-        ...(publicData.ready ? {} : { 'Retry-After': '30' }),
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "Content-Type": "application/json",
+        ...(publicData.ready ? {} : { "Retry-After": "30" }),
       },
     },
   );
@@ -107,9 +108,9 @@ export async function HEAD() {
   return new NextResponse(null, {
     status: publicData.ready ? 200 : 503,
     headers: {
-      'Cache-Control': 'no-store',
-      'X-Arcanea-Readiness': publicData.status,
-      ...(publicData.ready ? {} : { 'Retry-After': '30' }),
+      "Cache-Control": "no-store",
+      "X-Arcanea-Readiness": publicData.status,
+      ...(publicData.ready ? {} : { "Retry-After": "30" }),
     },
   });
 }
