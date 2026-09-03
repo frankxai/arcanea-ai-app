@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getBookRoot } from '@/lib/content/book-path';
 import { countChapterWords, isChapterMarkdown } from '@/lib/saga/chapter-files';
+import { isBookPublic } from '@/lib/content/book-visibility';
 const BOOK_ROOT = getBookRoot();
 
 export const dynamic = 'force-dynamic';
@@ -296,6 +297,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { bookId } = await params;
   const book = BOOKS[bookId];
   if (!book) return { title: 'Book Not Found' };
+  if (!(await isBookPublic(book.dir))) return { title: 'Book Not Found' };
 
   return {
     title: `${book.title} -- The Arcanea Saga`,
@@ -311,6 +313,7 @@ export default async function BookOverviewPage({ params }: PageProps) {
   const { bookId } = await params;
   const book = BOOKS[bookId];
   if (!book) notFound();
+  if (!(await isBookPublic(book.dir))) notFound();
 
   const chapters = await getChapters(book.dir);
   const { hasAuthorsNote, hasGlossary } = await getCompanionFlags(book.dir);

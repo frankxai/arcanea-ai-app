@@ -28,7 +28,7 @@ const ALL_COLLECTIONS = [
   "Chronicles of Luminors", "Parables of Creation", "Tales of Creators", "Book of Rituals",
   "Dialogues of Masters", "Prophecies", "Bestiary of Creation", "Songs and Hymns",
   "Meditations on Elements", "Academy Handbook", "Book of Shadows", "Codex of Collaboration",
-  "Atlas of Territories",
+  "Atlas of Territories", "Codex of Living Tools", "Creator Principles", "Prompt Sage's Grimoire",
 ];
 
 const CollectionIcon = ({ icon }: { icon: string }) => {
@@ -67,7 +67,7 @@ export function LibraryPreview() {
             <span className="text-sm font-medium text-draconic-crimson">The Library</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            17 Collections of Wisdom
+            20 Collections of Wisdom
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto font-body italic">
             &quot;These books are not entertainment. They are equipment for living. Use them.&quot;
@@ -116,7 +116,7 @@ export function LibraryPreview() {
           className="mb-12"
         >
           <h3 className="text-lg font-display font-semibold text-center mb-6 text-text-muted">
-            All 17 Collections
+            All 20 Collections
           </h3>
           <div className="flex flex-wrap justify-center gap-3">
             {ALL_COLLECTIONS.map((name) => (
@@ -138,9 +138,8 @@ export function LibraryPreview() {
           className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mb-12"
         >
           {[
-            { value: "17", label: "Collections" },
-            { value: "34+", label: "Major Texts" },
-            { value: "190K+", label: "Words of Wisdom" },
+            { value: "20", label: "Collections" },
+            { value: "Free", label: "Always open" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-3xl font-display font-bold text-gold-bright">{stat.value}</div>
