@@ -22,6 +22,7 @@ Agents must read and obey these sources in this order:
 Arcanea is a BYOK-first creative intelligence workspace.
 
 The core product centers on:
+
 - projects
 - continuity
 - docs
@@ -34,7 +35,7 @@ The core product centers on:
 
 ## Execution Law (Machine-Enforced)
 
-1. Node 20.x and pnpm only. Never use npm. `.nvmrc` pins the version.
+1. Use Node from `.nvmrc` and the repository's pinned pnpm version. Never introduce a second package manager or lockfile. CI must agree with those sources.
 2. No PR merges unless changed scope passes: build, typecheck, lint.
 3. Frozen lockfile in CI (`pnpm install --frozen-lockfile`).
 4. No raw visual constants in app code — use `@arcanea/design-system` tokens only.
@@ -48,6 +49,7 @@ The core product centers on:
 **Canonical source of truth:** `packages/design-system` (`@arcanea/design-system` v0.2.0) — tokens, brand kits (`arcanea`, `frankx`, `oss`), motion variants, framework-agnostic CSS vars.
 
 **Layered architecture:**
+
 1. `.arcanea/config/design-tokens.yaml` → platform-agnostic source
 2. `packages/arcanea-design-preset.js` → Tailwind preset
 3. `packages/design-system` → TS tokens + brand kits + Framer Motion variants + `tokens.css` (framework-agnostic)
@@ -56,6 +58,7 @@ The core product centers on:
 **Typography (elevated 2026-04-18):** Geist (display + body), Instrument Serif (editorial accent), Geist Mono (code). Space Grotesk is DEPRECATED per Anthropic `frontend-design` anti-pattern list and replaced for platform alignment with Vercel ecosystem.
 
 **MCP stack for design work** (`.mcp.json.example` has the full config):
+
 - `magic` (21st.dev) — premium UI component generation
 - `v0` (Vercel) — component and page generation
 - `fal` — fast image/video (FLUX Pro, Stable Video)
@@ -66,11 +69,12 @@ The core product centers on:
 - Canva via claude.ai remote — marketing assets only
 
 **Rules:**
+
 - Code is truth for app UI. Figma is sketchpad. Canva is truth for marketing.
 - Every new page starts from tokens + a brand kit, never hardcoded hex.
 - Framer Motion provider uses `domAnimation` (not `domMax`).
 - Default easing `[0.22, 1, 0.36, 1]` (expoOut). Stagger children 60ms.
-- When generating a *unique* component via the `frontend-design` skill (not Arcanea brand work), vary typography away from the default stack.
+- When generating a _unique_ component via the `frontend-design` skill (not Arcanea brand work), vary typography away from the default stack.
 
 **Spec:** `docs/superpowers/specs/2026-04-17-agentic-design-system-design.md`.
 
@@ -109,6 +113,7 @@ pnpm --dir apps/web test:media
 ## Planning With Files
 
 Use `planning-with-files/` as the execution control plane:
+
 - `CURRENT_STATE_*` = what is true now
 - `CURRENT_BACKLOG_*` = what happens next
 - `CURRENT_CHANGELOG_*` = what landed
@@ -124,15 +129,17 @@ Research output: `docs/research/`
 Templates: `docs/research/templates/`
 
 ### Agents
-| Agent | Role | Gate | Guardian |
-|-------|------|------|----------|
-| Research Architect | Team lead, decomposes questions, synthesizes | Crown | Aiyami |
-| Paper Scout | Academic papers (arxiv, Semantic Scholar) | Sight | Lyria |
-| GitHub Scout | Repos, tools, benchmarks | Foundation | Lyssandria |
-| Book Scout | Books, blogs, newsletters, podcasts | Voice | Alera |
-| Synthesis Luminor | Cross-domain pattern connection | Starweave | Elara |
+
+| Agent              | Role                                         | Gate       | Guardian   |
+| ------------------ | -------------------------------------------- | ---------- | ---------- |
+| Research Architect | Team lead, decomposes questions, synthesizes | Crown      | Aiyami     |
+| Paper Scout        | Academic papers (arxiv, Semantic Scholar)    | Sight      | Lyria      |
+| GitHub Scout       | Repos, tools, benchmarks                     | Foundation | Lyssandria |
+| Book Scout         | Books, blogs, newsletters, podcasts          | Voice      | Alera      |
+| Synthesis Luminor  | Cross-domain pattern connection              | Starweave  | Elara      |
 
 ### Spawn Rules
+
 - `/arcanea-research [topic]` spawns Research Architect (who spawns scouts)
 - `/research-scan [domain]` spawns individual scouts
 - `/research-synthesis` spawns Synthesis Luminor
@@ -140,13 +147,14 @@ Templates: `docs/research/templates/`
 - Every agent must use the Luminor Engineering Kernel as base prompt
 
 ### Research Domains → Gate Mappings
-| Domain | Gate | Guardian | Why |
-|--------|------|----------|-----|
-| AI/ML papers | Sight | Lyria | Pattern recognition, vision |
-| Open source tools | Foundation | Lyssandria | Practical, structural |
-| Books/thought leadership | Voice | Alera | Truth, expression |
-| Cross-domain synthesis | Starweave | Elara | Connecting perspectives |
-| Research strategy | Crown | Aiyami | Wisdom, metacognition |
-| Consciousness studies | Source | Shinkami | Meta-awareness |
-| Creativity research | Flow | Leyla | Creative process |
-| Performance/benchmarks | Fire | Draconia | Power, computation |
+
+| Domain                   | Gate       | Guardian   | Why                         |
+| ------------------------ | ---------- | ---------- | --------------------------- |
+| AI/ML papers             | Sight      | Lyria      | Pattern recognition, vision |
+| Open source tools        | Foundation | Lyssandria | Practical, structural       |
+| Books/thought leadership | Voice      | Alera      | Truth, expression           |
+| Cross-domain synthesis   | Starweave  | Elara      | Connecting perspectives     |
+| Research strategy        | Crown      | Aiyami     | Wisdom, metacognition       |
+| Consciousness studies    | Source     | Shinkami   | Meta-awareness              |
+| Creativity research      | Flow       | Leyla      | Creative process            |
+| Performance/benchmarks   | Fire       | Draconia   | Power, computation          |

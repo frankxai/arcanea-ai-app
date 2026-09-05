@@ -46,7 +46,7 @@ ALWAYS run build after code changes. ALWAYS verify before committing. Node 22 vi
 - Messages: `type(scope): description` (e.g., `feat(worlds): add fork API`)
 - Stage specific files only — NEVER `git add .`
 - Push to `origin` (arcanea-ai-app). NEVER push to `records`.
-- Git lock: `rm -f .git/index.lock`
+- A Git lock may belong to another active operation. Identify the owning process and wait for it to finish. Remove a lock only after verifying it is stale and no operation is using that repository; never delete it as a routine recovery step.
 
 ## Security
 
