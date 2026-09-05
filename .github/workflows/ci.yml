@@ -90,6 +90,9 @@ jobs:
         uses: actions/checkout@v7
         with:
           persist-credentials: false
+          # The formatter needs the PR base or previous push commit. Fetch
+          # history inside checkout while its scoped token is available.
+          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -145,7 +148,6 @@ jobs:
         env:
           FORMAT_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
-          git fetch --no-tags --depth=1 origin "$FORMAT_BASE_SHA"
           bash scripts/check-changed-format.sh "$FORMAT_BASE_SHA" "$GITHUB_SHA"
 
   # ============================================

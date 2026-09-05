@@ -24,4 +24,6 @@ The focused formatting suite passes six tests; Bash syntax passes. Independent r
 
 Full application build, lint, and typecheck remain required before merge; the local source snapshot is partial. GitHub CI and repository protection must be checked on the final proposed revision. No production claim follows from these focused tests.
 
+The first remote run passed installation, the six regression cases, and ESLint, then failed at the formatter's separate authenticated Git fetch after checkout credentials were removed. The correction fetches full history within the lint checkout while its read-only token is available, then performs the diff locally. Credentials remain unpersisted. This trades additional checkout history for a reliable base comparison and requires a new exact-revision CI result.
+
 Pending cost-control PR #334 overlaps CI and proposes draft skips. Reconcile it explicitly during review; preserve earned aggregate results and do not treat equality with a local main ref as evidence of what Vercel deployed.
