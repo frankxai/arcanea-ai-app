@@ -15,6 +15,18 @@
 
 set +e  # Exit codes are controlled explicitly below; never abort mid-script.
 
+# Anchor at the repo root. Git pathspecs are resolved relative to the working
+# directory, and this repo has two entry points into this script: the root
+# vercel.json ignoreCommand (runs at the repo root) and the apps/web shim, which
+# execs here with the working directory still apps/web. Under the shim, an
+# unanchored `git diff -- apps/web packages ...` matches nothing, every allowlist
+# entry misses, and the script skips a preview it should have built. Anchoring
+# makes the allowlist mean the same thing from either entry point.
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+if [ -n "$REPO_ROOT" ]; then
+  cd "$REPO_ROOT" || { echo "build: cannot enter repo root — failing safe"; exit 1; }
+fi
+
 BRANCH="${VERCEL_GIT_COMMIT_REF:-${GITHUB_REF_NAME:-unknown}}"
 
 # 1. Production always builds.
@@ -100,12 +112,33 @@ RELEVANT_PATHS=(
 
 # 7. A preview only earns a build if it differs from what production already built.
 #    Catches "Merge branch 'main' into agent/..." commits, which otherwise rebuild a
-#    preview that reviews nothing new. Only runs when origin/main is present locally
-#    (Vercel clones are shallow); otherwise falls through and builds.
-if [ "$BRANCH" != "main" ] && git rev-parse --verify -q origin/main >/dev/null 2>&1; then
-  git diff --quiet origin/main HEAD -- "${RELEVANT_PATHS[@]}" 2>/dev/null
-  if [ $? -eq 0 ]; then
-    echo "skip: branch has no relevant diff against origin/main"
+#    preview that reviews nothing new.
+#
+#    This was originally conditioned on origin/main already resolving locally, which
+#    made it dead code: Vercel clones previews shallow and WITHOUT a remote-tracking
+#    origin/main, so the guard was never true in the only environment it runs in.
+#    Measured on frankx.ai-vercel-website 2026-09-07, which carried the same shape:
+#    0 of the previous 20 preview deployments were skipped by any path.
+#
+#    A depth-1 fetch is enough — `git diff A B -- paths` compares two trees directly
+#    and needs no merge base. A failed fetch, an absent ref or a git error all fall
+#    through to the parent diff below rather than risking a false skip.
+if [ "$BRANCH" != "main" ]; then
+  MAIN_REF=""
+  if git rev-parse --verify -q origin/main >/dev/null 2>&1; then
+    MAIN_REF="origin/main"
+  elif command -v timeout >/dev/null 2>&1 \
+       && timeout 45 git fetch --no-tags --depth=1 origin main >/dev/null 2>&1; then
+    MAIN_REF="FETCH_HEAD"
+  elif ! command -v timeout >/dev/null 2>&1 \
+       && git fetch --no-tags --depth=1 origin main >/dev/null 2>&1; then
+    MAIN_REF="FETCH_HEAD"
+  fi
+
+  if [ -z "$MAIN_REF" ]; then
+    echo "build-check: main not reachable for branch comparison — continuing to parent diff"
+  elif git diff --quiet "$MAIN_REF" HEAD -- "${RELEVANT_PATHS[@]}" 2>/dev/null; then
+    echo "skip: branch has no relevant diff against main ($MAIN_REF)"
     exit 0
   fi
 fi
