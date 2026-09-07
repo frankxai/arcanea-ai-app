@@ -1,17 +1,27 @@
-import { VisualEncyclopedia } from '@/components/visual-encyclopedia/visual-encyclopedia';
-import { getVisualEncyclopediaEntries } from '@/lib/visual-encyclopedia/publication';
-import { CINEMA_USE_MAP, VISUAL_GRAPH_EDGES } from '@/lib/visual-encyclopedia/catalog';
+'use client';
 
-export const revalidate = 300;
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 
-export default async function GalleryPage() {
-  const entries = await getVisualEncyclopediaEntries();
+const ArcaneanBoard = dynamic(
+  () => import('./components/ArcaneanBoard').then((mod) => ({ default: mod.ArcaneanBoard })),
+  { ssr: false }
+);
 
-  return (
-    <VisualEncyclopedia
-      entries={entries}
-      graphEdges={VISUAL_GRAPH_EDGES}
-      cinema={CINEMA_USE_MAP}
-    />
-  );
+export default function GalleryPage() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-[#09090b]">
+        <div className="text-[#00bcd4]">Loading gallery...</div>
+      </div>
+    );
+  }
+
+  return <ArcaneanBoard />;
 }
