@@ -15,6 +15,7 @@ export async function middleware(request: NextRequest) {
   return updateSession(request, {
     protectedPrefixes: [
       '/profile', '/onboarding', '/dashboard', '/settings',
+      '/studio',
     ],
     protectedApiPrefixes: [
       '/api/conversations/', '/api/creations/',
@@ -47,6 +48,8 @@ export const config = {
      * Run on all routes except Next internals and static assets.
      * Supabase recommends middleware for session refresh in SSR apps.
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|map)$).*)',
+    // Public Worlds already bypass auth in updateSession. Exclude them before
+    // loading the edge middleware bundle so it cannot consume the page budget.
+    '/((?!worlds(?:/|$)|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|map)$).*)',
   ],
 };
