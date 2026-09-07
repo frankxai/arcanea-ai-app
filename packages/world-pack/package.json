@@ -1,0 +1,23 @@
+{
+  "name": "@arcanea/world-pack",
+  "version": "0.1.0",
+  "description": "WorldPack.v1 — the typed contract for a creator-owned Arcanean world: 21 node kinds, canon-conflict detection against CANON_LOCKED.md, branch/diff/merge, Guardian agent roles, and the Arcanean Prompt Language compiler.",
+  "type": "module",
+  "main": "src/index.mjs",
+  "types": "index.d.ts",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./apl": "./src/apl.mjs",
+    "./canon": "./src/canon-index.mjs",
+    "./schema": "./schema/worldpack.v1.schema.json"
+  },
+  "bin": { "world-pack": "./bin/world-pack.mjs" },
+  "files": ["src", "bin", "schema", "index.d.ts", "README.md"],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "keywords": ["arcanea", "worldbuilding", "canon", "provenance", "world-pack", "apl"],
+  "author": "FrankX",
+  "license": "MIT",
+  "engines": { "node": ">=18.0.0" }
+}
