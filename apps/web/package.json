@@ -116,7 +116,7 @@
     "@playwright/test": "1.62.1",
     "@types/three": "^0.185.4",
     "eslint": "10.2.0",
-    "eslint-config-next": "16.3.3",
+    "eslint-config-next": "16.3.4",
     "schema-dts": "^2.0.0",
     "sharp": "^0.35.4"
   }
