@@ -167,3 +167,86 @@ test('dependabot branches are skipped', (t) => {
   assert.equal(result.status, 0, result.stdout + result.stderr)
   assert.match(result.stdout, /dependabot branch/)
 })
+
+// Markers are matched on the subject line only. Matching the whole body means a
+// commit that merely describes a marker triggers it. Measured 2026-09-08 on
+// starlight-intelligence-web: commit f0abfcb explained what [agent-wip] does and
+// deployment dpl_DFrAVq1r2rpZkTpQtiKgz9U4orcc was cancelled in 3.3 seconds by its
+// own new filter, so the preview that would have verified it never ran.
+test('a commit that only describes [agent-wip] in its body still builds', (t) => {
+  const { dir, git, commit } = fixture(t)
+  commit('apps/web/page.tsx', 'export default function Page() {}\n')
+  commit('apps/web/page.tsx', 'export default function Page() { return null }\n')
+  git('remote', 'add', 'origin', 'file:///arcanea/does/not/exist')
+
+  const result = run(
+    {
+      VERCEL_ENV: 'preview',
+      VERCEL_GIT_COMMIT_REF: 'agent/claude/documents-the-marker',
+      VERCEL_GIT_COMMIT_MESSAGE:
+        'fix(vercel): give the ignore step filters that can skip a preview\n\n' +
+        'The previous version covered production always builds and [agent-wip]\n' +
+        'always skips. Every other preview built.\n',
+    },
+    dir,
+  )
+
+  assert.equal(result.status, 1, result.stdout + result.stderr)
+  assert.match(result.stdout, /relevant changes detected/)
+})
+
+test('[agent-wip] in the subject still skips', (t) => {
+  const { dir, commit } = fixture(t)
+  commit('apps/web/page.tsx', 'export default function Page() {}\n')
+
+  const result = run(
+    {
+      VERCEL_ENV: 'preview',
+      VERCEL_GIT_COMMIT_REF: 'agent/claude/checkpoint',
+      VERCEL_GIT_COMMIT_MESSAGE: '[agent-wip] checkpoint\n\nbody text\n',
+    },
+    dir,
+  )
+
+  assert.equal(result.status, 0, result.stdout + result.stderr)
+  assert.match(result.stdout, /work-in-progress/)
+})
+
+test('a commit that only describes [vercel-force] in its body does not force a build', (t) => {
+  const { dir, git, commit } = fixture(t)
+  commit('apps/web/page.tsx', 'export default function Page() {}\n')
+  commit('book/atlas.md', 'lore only\n')
+  git('remote', 'add', 'origin', 'file:///arcanea/does/not/exist')
+
+  const result = run(
+    {
+      VERCEL_ENV: 'preview',
+      VERCEL_GIT_COMMIT_REF: 'agent/claude/mentions-force',
+      VERCEL_GIT_COMMIT_MESSAGE:
+        'docs: record the override convention\n\nUse [vercel-force] when a preview must prove a pipeline change.\n',
+    },
+    dir,
+  )
+
+  assert.equal(result.status, 0, result.stdout + result.stderr)
+  assert.match(result.stdout, /no paths affecting the web build changed/)
+})
+
+test('[vercel-force] in the subject still forces a build', (t) => {
+  const { dir, git, commit } = fixture(t)
+  commit('apps/web/page.tsx', 'export default function Page() {}\n')
+  commit('book/atlas.md', 'lore only\n')
+  git('remote', 'add', 'origin', 'file:///arcanea/does/not/exist')
+
+  const result = run(
+    {
+      VERCEL_ENV: 'preview',
+      VERCEL_GIT_COMMIT_REF: 'agent/claude/force',
+      VERCEL_GIT_COMMIT_MESSAGE: 'test(vercel): verify cache keys [vercel-force]\n',
+    },
+    dir,
+  )
+
+  assert.equal(result.status, 1, result.stdout + result.stderr)
+  assert.match(result.stdout, /vercel-force/)
+})
