@@ -36,24 +36,35 @@ if [[ "${VERCEL_ENV:-}" == "production" ]]; then
 fi
 
 # 2. Explicit agent checkpoint. The final coherent commit MUST omit the marker.
-COMMIT_MESSAGE="${VERCEL_GIT_COMMIT_MESSAGE:-}"
-if [ -z "$COMMIT_MESSAGE" ]; then
-  COMMIT_MESSAGE="$(git log -1 --format=%B HEAD 2>/dev/null)"
+#
+#    Every marker below is matched on the SUBJECT LINE ONLY. The estate convention
+#    puts them in the subject, and matching the whole body means any commit that
+#    merely *describes* a marker triggers it. Measured 2026-09-08 on
+#    starlight-intelligence-web: commit f0abfcb explained what [agent-wip] does and
+#    deployment dpl_DFrAVq1r2rpZkTpQtiKgz9U4orcc was cancelled in 3.3 seconds by its
+#    own new filter, so the preview that would have verified the change never ran.
+#    For [agent-wip] a body match fails toward NOT building, which ships stale; for
+#    [vercel-force] it only wastes a build. One definition for both is still better
+#    than two, and this file already had two.
+COMMIT_SUBJECT="${VERCEL_GIT_COMMIT_MESSAGE:-}"
+if [ -z "$COMMIT_SUBJECT" ]; then
+  COMMIT_SUBJECT="$(git log -1 --format=%s HEAD 2>/dev/null)"
 fi
-if [[ "$COMMIT_MESSAGE" == *"[agent-wip]"* ]]; then
+COMMIT_SUBJECT="$(printf '%s\n' "$COMMIT_SUBJECT" | head -n 1)"
+if [[ "$COMMIT_SUBJECT" == *"[agent-wip]"* ]]; then
   echo "skip: explicit agent work-in-progress checkpoint"
   exit 0
 fi
 
 # 3. Explicit operator override. Use on a coherent commit when the path/draft filters
 #    intentionally skipped the preview that must prove a deployment-pipeline change.
-if [[ "$COMMIT_MESSAGE" == *"[vercel-force]"* ]]; then
+if [[ "$COMMIT_SUBJECT" == *"[vercel-force]"* ]]; then
   echo "build: explicit [vercel-force] override"
   exit 1
 fi
 
 # 4. First coherent commit after a skipped checkpoint must build, before any filter below.
-if git log -1 --format=%B HEAD^ 2>/dev/null | grep -Fq "[agent-wip]"; then
+if git log -1 --format=%s HEAD^ 2>/dev/null | grep -Fq "[agent-wip]"; then
   echo "build: coherent checkpoint follows [agent-wip]"
   exit 1
 fi
