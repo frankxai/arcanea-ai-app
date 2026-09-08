@@ -8,7 +8,9 @@ name: Guardian PR Check
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    # ready_for_review re-fires the draft-gated job(s) below; without it a gated
+    # job skips on the draft and never reports once the PR is marked ready.
+    types: [opened, synchronize, reopened, ready_for_review]
     branches: [main]
 
 concurrency:
@@ -24,6 +26,8 @@ jobs:
   # 1. Classify risk (free, always runs)
   # ────────────────────────────────────────
   classify:
+    # Cost gate: skip on draft PRs — agents iterate free; review runs when marked ready.
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     name: Classify risk
     runs-on: ubuntu-latest
     timeout-minutes: 3
@@ -112,7 +116,7 @@ jobs:
   block-if-oversized:
     name: Block oversized PR
     needs: classify
-    if: needs.classify.outputs.tier == 'BLOCKED'
+    if: (github.event_name != 'pull_request' || github.event.pull_request.draft == false) && needs.classify.outputs.tier == 'BLOCKED'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -137,7 +141,7 @@ jobs:
   single-guardian:
     name: Single-Guardian review
     needs: classify
-    if: needs.classify.outputs.tier == 'STANDARD'
+    if: (github.event_name != 'pull_request' || github.event.pull_request.draft == false) && needs.classify.outputs.tier == 'STANDARD'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -159,7 +163,7 @@ jobs:
   council:
     name: Guardian Council (5)
     needs: classify
-    if: needs.classify.outputs.tier == 'HIGH_RISK'
+    if: (github.event_name != 'pull_request' || github.event.pull_request.draft == false) && needs.classify.outputs.tier == 'HIGH_RISK'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

@@ -8,6 +8,9 @@ on:
       - 'packages/router-spec/**'
       - '.github/workflows/orchestrator-ci.yml'
   pull_request:
+    # ready_for_review re-fires the draft-gated job(s) below; without it a gated
+    # job skips on the draft and never reports once the PR is marked ready.
+    types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - 'packages/orchestrator/**'
       - 'packages/router-spec/**'
@@ -22,6 +25,8 @@ concurrency:
 
 jobs:
   test:
+    # Cost gate: skip on draft PRs — agents iterate free; the suite runs when marked ready.
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     name: Test + build
     runs-on: ubuntu-latest
     steps:

@@ -8,6 +8,9 @@ on:
   # check rather than a condition on whether the check reports.
   pull_request:
     branches: [main]
+    # ready_for_review re-fires the draft-gated job(s) below; without it a gated
+    # job skips on the draft and never reports once the PR is marked ready.
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: canon-${{ github.ref }}
@@ -15,6 +18,8 @@ concurrency:
 
 jobs:
   canon-lint:
+    # Cost gate: skip on draft PRs — agents iterate free; the canon check runs when marked ready.
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     name: Canon Consistency Check
     runs-on: ubuntu-latest
     timeout-minutes: 5
