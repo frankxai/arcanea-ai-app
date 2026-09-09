@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
 import { useCallback, useRef, useEffect, type ReactNode } from "react";
@@ -47,6 +46,8 @@ export interface DocEditorSavePayload {
 
 interface DocEditorProps {
   initialContent?: JSONContent;
+  /** Used when a chapter starts as HTML rather than a stored document. */
+  initialHtml?: string;
   placeholder?: string;
   /** Reports each edit immediately, before the debounced save. */
   onChange?: (payload: DocEditorSavePayload) => void;
@@ -314,6 +315,7 @@ const extensions = [
 
 export function DocEditor({
   initialContent,
+  initialHtml,
   onChange,
   onSave,
   saveDelay = 2000,
@@ -376,6 +378,12 @@ export function DocEditor({
           className="prose prose-invert prose-sm sm:prose-base max-w-none focus:outline-none [&_.ProseMirror]:min-h-[60vh] [&_.ProseMirror]:px-0 [&_.ProseMirror]:py-2 [&_.ProseMirror_h1]:font-display [&_.ProseMirror_h1]:text-3xl [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h2]:font-display [&_.ProseMirror_h2]:text-2xl [&_.ProseMirror_h2]:font-semibold [&_.ProseMirror_h3]:font-display [&_.ProseMirror_h3]:text-xl [&_.ProseMirror_h3]:font-semibold [&_.ProseMirror_blockquote]:border-l-2 [&_.ProseMirror_blockquote]:border-white/20 [&_.ProseMirror_blockquote]:pl-4 [&_.ProseMirror_blockquote]:text-white/50 [&_.ProseMirror_code]:bg-white/[0.06] [&_.ProseMirror_code]:rounded [&_.ProseMirror_code]:px-1.5 [&_.ProseMirror_code]:py-0.5 [&_.ProseMirror_code]:text-[var(--arc-brand-atlantean-teal)] [&_.ProseMirror_pre]:bg-white/[0.04] [&_.ProseMirror_pre]:rounded-xl [&_.ProseMirror_pre]:p-4 [&_.ProseMirror_pre]:border [&_.ProseMirror_pre]:border-white/[0.06]"
           onUpdate={({ editor }) => {
             triggerSave(editor);
+          }}
+          onCreate={({ editor }) => {
+            if (initialContent === undefined && initialHtml !== undefined) {
+              // Tiptap parses HTML into its document; loading is not an edit.
+              editor.commands.setContent(initialHtml, false);
+            }
           }}
           editorProps={{
             handleDrop: (view, event, _slice, moved) =>
@@ -491,7 +499,6 @@ export function DocEditor({
 function BubbleButton({
   label,
   onSelect,
-  isActive,
   highlight,
   mono,
   className = "",

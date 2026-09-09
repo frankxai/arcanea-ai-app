@@ -146,3 +146,51 @@ test("change reporting works without a save callback", () => {
   assert.equal(timers.size, 0);
   view.unmount();
 });
+
+test("HTML chapters use the parser without generating an edit or autosave", () => {
+  const parsed = [],
+    changes = [],
+    saves = [];
+  const html = "<h1>A chapter</h1><p>Words with <em>meaning</em>.</p>";
+  const { view, timers } = setup({
+    initialHtml: html,
+    onChange: (value) => changes.push(value),
+    onSave: (value) => saves.push(value),
+  });
+  const content = view.find("EditorContent");
+  assert.equal(content.props.initialContent, undefined);
+  content.props.onCreate({
+    editor: {
+      commands: {
+        setContent(value, emitUpdate) {
+          parsed.push({ value, emitUpdate });
+        },
+      },
+    },
+  });
+  assert.deepEqual(parsed, [{ value: html, emitUpdate: false }]);
+  assert.equal(changes.length, 0);
+  assert.equal(saves.length, 0);
+  assert.equal(timers.size, 0);
+  view.unmount();
+});
+
+test("stored JSON takes precedence over the HTML fallback", () => {
+  const json = { type: "doc", content: [{ type: "paragraph" }] };
+  const { view } = setup({
+    initialContent: json,
+    initialHtml: "<p>Fallback</p>",
+  });
+  const content = view.find("EditorContent");
+  assert.equal(content.props.initialContent, json);
+  content.props.onCreate({
+    editor: {
+      commands: {
+        setContent() {
+          assert.fail("Stored JSON must not be overwritten");
+        },
+      },
+    },
+  });
+  view.unmount();
+});

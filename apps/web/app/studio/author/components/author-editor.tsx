@@ -5,7 +5,6 @@ import {
   DocEditor,
   type DocEditorSavePayload,
 } from "@/components/docs/doc-editor";
-import type { JSONContent } from "novel";
 
 interface AuthorEditorProps {
   bookSlug: string;
@@ -189,7 +188,7 @@ export function AuthorEditor({
       )}
 
       <DocEditor
-        initialContent={initialHtml as unknown as JSONContent}
+        initialHtml={initialHtml}
         onChange={handleChange}
         onSave={handleSave}
         saveDelay={2000}

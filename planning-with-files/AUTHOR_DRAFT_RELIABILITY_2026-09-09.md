@@ -25,8 +25,8 @@ No database schema, account permissions, publication, or canon changes.
 
 - Eleven regressions failed against the previous components for the actual
   failure symptoms, then passed against the implementation.
-- Seventeen focused Node regressions cover save errors, confirmation, ordering,
-  immediate changes, downloads, keyboard save, and editor teardown.
+- Nineteen focused Node regressions cover save errors, confirmation, ordering,
+  immediate changes, downloads, keyboard save, editor teardown, and initialization.
 - The tests execute the real TSX with mocked React hooks and editor/browser APIs.
   They are logic regressions, not a real React or browser integration verdict.
 - CI runs these regressions in the existing lint job.
@@ -54,7 +54,10 @@ No database schema, account permissions, publication, or canon changes.
 4. A stalled fetch can keep the saving indicator active. The download action and
    exit warning remain available. Add a bounded request deadline together with
    the server revision protocol so uncertain writes cannot race a retry.
-5. Independent reviewer verdict and Vercel preview evidence remain pending.
+5. The first independent review (Gemini 2.5 Flash, head 649f32356) requested
+   changes to the inherited HTML-to-JSON cast. The correction uses Tiptap's
+   typed HTML parser without emitting an edit; stored JSON takes precedence.
+   A fresh independent verdict and Vercel preview evidence remain pending.
    Rollback is a revert of this bounded change; there is no data migration.
 
 ## Coordination
