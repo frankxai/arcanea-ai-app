@@ -74,6 +74,7 @@ const navLinks: NavLink[] = [
           { href: "/story", label: "The First Light", desc: "Origins · Lumina & Nero" },
           { href: "/library", label: "Library", desc: "Wisdom and philosophy" },
           { href: "/lore/guardians", label: "Guardians", desc: "Guardian archetypes" },
+          { href: "/lore/ecology", label: "Living Atlas", desc: "Flora, fauna, and covenants" },
           { href: "/living-lore", label: "Chronicles", desc: "Interactive stories" },
           { href: "/glossary", label: "Glossary", desc: "Arcanean terminology" },
         ],

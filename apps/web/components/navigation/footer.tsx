@@ -28,6 +28,7 @@ const footerLinks = {
       { href: "/library", label: "Library" },
       { href: "/story", label: "The First Light" },
       { href: "/lore", label: "Lore" },
+      { href: "/lore/ecology", label: "Living Atlas" },
       { href: "/factions", label: "Factions" },
       { href: "/showcase", label: "Showcase" },
       { href: "/templates", label: "Templates" },

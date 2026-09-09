@@ -1,0 +1,986 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arcanea.ai/schemas/ecology-entry.schema.json",
+  "title": "Arcanea Ecology Entry",
+  "description": "A canon-governed organism or living colony with biological, magical, ecological, narrative, visual, and provenance contracts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "slug",
+    "name",
+    "kind",
+    "origin",
+    "gate",
+    "elementAffinity",
+    "taxonomy",
+    "lifeCycle",
+    "energy",
+    "ecology",
+    "covenant",
+    "narrative",
+    "visual",
+    "provenance",
+    "canon",
+    "review"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^ECO-[A-Z0-9][A-Z0-9-]{2,31}$"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "maxLength": 80
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 80
+    },
+    "kind": {
+      "$ref": "#/$defs/ecologyKind"
+    },
+    "origin": {
+      "$ref": "#/$defs/origin"
+    },
+    "gate": {
+      "$ref": "#/$defs/gate"
+    },
+    "elementAffinity": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/element"
+      },
+      "minItems": 1,
+      "maxItems": 2,
+      "uniqueItems": true
+    },
+    "taxonomy": {
+      "$ref": "#/$defs/taxonomy"
+    },
+    "lifeCycle": {
+      "$ref": "#/$defs/lifeCycle"
+    },
+    "energy": {
+      "$ref": "#/$defs/energy"
+    },
+    "radiance": {
+      "$ref": "#/$defs/radiance"
+    },
+    "ecology": {
+      "$ref": "#/$defs/ecology"
+    },
+    "covenant": {
+      "$ref": "#/$defs/covenant"
+    },
+    "narrative": {
+      "$ref": "#/$defs/narrative"
+    },
+    "visual": {
+      "$ref": "#/$defs/visual"
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    },
+    "canon": {
+      "$ref": "#/$defs/canon"
+    },
+    "review": {
+      "$ref": "#/$defs/review"
+    },
+    "media": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/media"
+      },
+      "default": []
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "provenance": {
+            "type": "object",
+            "properties": {
+              "proposalMechanics": {
+                "type": "array",
+                "minItems": 1
+              }
+            },
+            "required": ["proposalMechanics"]
+          }
+        },
+        "required": ["provenance"]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "canon": {
+            "type": "object",
+            "properties": {
+              "state": {
+                "const": "proposal"
+              }
+            },
+            "required": ["state"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "canon": {
+            "type": "object",
+            "properties": {
+              "state": { "const": "locked" }
+            },
+            "required": ["state"]
+          }
+        },
+        "required": ["canon"]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "provenance": {
+            "type": "object",
+            "properties": {
+              "sources": {
+                "type": "array",
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "type": { "const": "creator-approval" }
+                  },
+                  "required": ["type"]
+                },
+                "minContains": 1
+              }
+            },
+            "required": ["sources"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "canon": {
+            "type": "object",
+            "properties": {
+              "state": { "enum": ["staging", "locked"] }
+            },
+            "required": ["state"]
+          }
+        },
+        "required": ["canon"]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "provenance": {
+            "type": "object",
+            "properties": {
+              "sourceClaims": { "type": "array", "minItems": 1 }
+            },
+            "required": ["sourceClaims"]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "nonEmptyText": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 1200
+    },
+    "ecologyKind": {
+      "type": "string",
+      "enum": ["flora", "fauna", "fungus", "symbiote", "colony"]
+    },
+    "gate": {
+      "type": "string",
+      "enum": [
+        "Foundation",
+        "Flow",
+        "Fire",
+        "Heart",
+        "Voice",
+        "Sight",
+        "Crown",
+        "Starweave",
+        "Unity",
+        "Source"
+      ]
+    },
+    "element": {
+      "type": "string",
+      "enum": ["Fire", "Water", "Earth", "Wind", "Void/Spirit"]
+    },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["worldId", "worldName", "biome"],
+      "properties": {
+        "worldId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "worldName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 80
+        },
+        "realmId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "realmName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 80
+        },
+        "biome": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "range": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 400
+        }
+      }
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 280
+        },
+        "heightM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "spanM": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "massKg": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "minProperties": 1
+    },
+    "taxonomy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "morphology",
+        "bodySubstrate",
+        "silhouetteThesis",
+        "scaleClass",
+        "dimensions",
+        "structuralAdaptations",
+        "sensesOrTropisms"
+      ],
+      "properties": {
+        "morphology": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "bodySubstrate": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "silhouetteThesis": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 280
+        },
+        "scaleClass": {
+          "type": "string",
+          "enum": ["microscopic", "minute", "small", "human-scale", "large", "colossal", "landscape"]
+        },
+        "dimensions": {
+          "$ref": "#/$defs/dimensions"
+        },
+        "structuralAdaptations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyText"
+          },
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true
+        },
+        "sensesOrTropisms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyText"
+          },
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true
+        }
+      }
+    },
+    "lifeCycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin", "reproduction", "growth", "maturity", "senescence", "deathAndReturn"],
+      "properties": {
+        "origin": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "reproduction": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "dispersal": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "growth": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "maturity": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "senescence": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "deathAndReturn": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "typicalLifespan": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120
+        }
+      }
+    },
+    "energy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primarySource", "intake", "storage", "expenditure", "recovery", "failureMode"],
+      "properties": {
+        "primarySource": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "secondarySource": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "intake": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "storage": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "expenditure": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "recovery": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "failureMode": {
+          "$ref": "#/$defs/nonEmptyText"
+        }
+      }
+    },
+    "radiance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mechanism", "carrier", "trigger", "appearance", "information", "cost", "failureMode"],
+      "properties": {
+        "mechanism": {
+          "type": "string",
+          "enum": [
+            "bioluminescence",
+            "fluorescence",
+            "phosphorescence",
+            "structural-color",
+            "reflected-light",
+            "mechanoluminescence",
+            "thermoluminescence",
+            "vael-resonance"
+          ]
+        },
+        "carrier": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "trigger": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "appearance": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "information": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "cost": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "failureMode": {
+          "$ref": "#/$defs/nonEmptyText"
+        }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetId", "type", "direction", "effect", "description", "ifBroken"],
+      "properties": {
+        "targetId": {
+          "type": "string",
+          "pattern": "^ECO-[A-Z0-9][A-Z0-9-]{2,31}$"
+        },
+        "targetName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 80
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "mutualism",
+            "commensalism",
+            "predation",
+            "herbivory",
+            "parasitism",
+            "competition",
+            "decomposition",
+            "pollination",
+            "dispersal",
+            "shelter",
+            "signaling",
+            "cultivation"
+          ]
+        },
+        "direction": {
+          "type": "string",
+          "enum": ["outbound", "inbound", "bidirectional"]
+        },
+        "effect": {
+          "type": "string",
+          "enum": ["beneficial", "harmful", "neutral", "conditional"]
+        },
+        "description": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "ifBroken": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "evidence": {
+          "type": "string",
+          "enum": ["canon", "staging", "research-inference", "design-proposal"]
+        }
+      }
+    },
+    "ecology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["niche", "trophicRole", "habitatFunction", "keystone", "relationships", "removalConsequence"],
+      "properties": {
+        "niche": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "trophicRole": {
+          "type": "string",
+          "enum": [
+            "primary-producer",
+            "consumer",
+            "apex-consumer",
+            "detritivore",
+            "decomposer",
+            "parasite",
+            "symbiotic-network",
+            "habitat-engineer",
+            "mixed"
+          ]
+        },
+        "habitatFunction": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "keystone": {
+          "type": "boolean"
+        },
+        "populationControls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyText"
+          },
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/relationship"
+          },
+          "minItems": 0,
+          "maxItems": 16
+        },
+        "removalConsequence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["firstOrder", "secondOrder", "cultural"],
+          "properties": {
+            "firstOrder": {
+              "$ref": "#/$defs/nonEmptyText"
+            },
+            "secondOrder": {
+              "$ref": "#/$defs/nonEmptyText"
+            },
+            "cultural": {
+              "$ref": "#/$defs/nonEmptyText"
+            }
+          }
+        }
+      }
+    },
+    "covenant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gift", "cost", "balance", "taboo", "breachConsequence"],
+      "properties": {
+        "gift": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "cost": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "balance": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "stewards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyText"
+          },
+          "maxItems": 8,
+          "uniqueItems": true
+        },
+        "taboo": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "breachConsequence": {
+          "$ref": "#/$defs/nonEmptyText"
+        }
+      }
+    },
+    "narrative": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["signatureBehavior", "sensorySignature", "encounter", "choicePressure", "storyUses"],
+      "properties": {
+        "signatureBehavior": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "sensorySignature": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "encounter": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "choicePressure": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "storyUses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyText"
+          },
+          "minItems": 2,
+          "maxItems": 8,
+          "uniqueItems": true
+        }
+      }
+    },
+    "visual": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "spark",
+        "shapePalettes",
+        "sharpen",
+        "visualDNA",
+        "silhouetteTest",
+        "materialLanguage",
+        "lightBehavior",
+        "scaleEvidence",
+        "camera",
+        "renderIntent"
+      ],
+      "properties": {
+        "spark": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 320
+        },
+        "shapePalettes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["Forge", "Tide", "Root", "Drift", "Void"]
+          },
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true
+        },
+        "sharpen": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 180
+          },
+          "minItems": 3,
+          "maxItems": 10,
+          "uniqueItems": true
+        },
+        "visualDNA": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "silhouetteTest": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "materialLanguage": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 120
+          },
+          "minItems": 2,
+          "maxItems": 8,
+          "uniqueItems": true
+        },
+        "lightBehavior": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "scaleEvidence": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "camera": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "renderIntent": {
+          "$ref": "#/$defs/nonEmptyText"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "reference", "note"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^SRC-[A-Z0-9][A-Z0-9-]{2,31}$"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["locked-canon", "staging-lore", "creator-approval", "research", "inspiration", "generated"]
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 500
+        },
+        "note": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "accessedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "sourceClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "claim", "sourceIds", "fieldPaths"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^CLAIM-[A-Z0-9][A-Z0-9-]{2,31}$"
+        },
+        "claim": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "sourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^SRC-[A-Z0-9][A-Z0-9-]{2,31}$"
+          },
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true
+        },
+        "fieldPaths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true
+        }
+      }
+    },
+    "proposalMechanic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "mechanic", "rationale", "fieldPaths", "supportedByClaimIds", "state"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^MECH-[A-Z0-9][A-Z0-9-]{2,31}$"
+        },
+        "mechanic": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "rationale": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "fieldPaths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "minItems": 1,
+          "maxItems": 24,
+          "uniqueItems": true
+        },
+        "supportedByClaimIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CLAIM-[A-Z0-9][A-Z0-9-]{2,31}$"
+          },
+          "maxItems": 12,
+          "uniqueItems": true
+        },
+        "state": {
+          "const": "proposal"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sources", "sourceClaims", "proposalMechanics", "originalityNotes"],
+      "properties": {
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source"
+          },
+          "minItems": 1,
+          "maxItems": 24
+        },
+        "sourceClaims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceClaim"
+          },
+          "maxItems": 32
+        },
+        "proposalMechanics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/proposalMechanic"
+          },
+          "maxItems": 48
+        },
+        "originalityNotes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyText"
+          },
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true
+        }
+      }
+    },
+    "canon": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "anchors", "note"],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["proposal", "staging", "locked"]
+        },
+        "anchors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 300
+          },
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true
+        },
+        "note": {
+          "$ref": "#/$defs/nonEmptyText"
+        },
+        "approvedBy": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "approvedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "state": { "const": "locked" }
+            },
+            "required": ["state"]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "approvedBy": true,
+              "approvedAt": true
+            },
+            "required": ["approvedBy", "approvedAt"]
+          },
+          "else": {
+            "type": "object",
+            "properties": {
+              "approvedBy": false,
+              "approvedAt": false
+            }
+          }
+        }
+      ]
+    },
+    "qualityScore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["biologicalCoherence", "ecologicalClosure", "covenantLogic", "originality", "canonAlignment", "visualReadiness", "total", "verdict"],
+      "properties": {
+        "biologicalCoherence": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "ecologicalClosure": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "covenantLogic": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "originality": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "canonAlignment": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "visualReadiness": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "total": { "type": "integer", "minimum": 0, "maximum": 30 },
+        "verdict": { "type": "string", "enum": ["ship", "iterate", "restart"] }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "score", "notes"],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["draft", "planned", "generating", "review", "approved", "revise", "rejected", "published"]
+        },
+        "score": {
+          "oneOf": [
+            { "$ref": "#/$defs/qualityScore" },
+            { "type": "null" }
+          ]
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "maxItems": 30
+        }
+      }
+    },
+    "media": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "status"],
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["habitat-hero", "specimen", "relationship", "macro", "lifecycle", "diagram"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["planned", "generated", "staged", "published"]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "deliveryKey": {
+          "type": "string"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "mimeType": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "alt": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 500
+        },
+        "generationModel": {
+          "type": "string"
+        },
+        "promptHash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "rightsRecordId": {
+          "type": "string"
+        },
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "publishedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

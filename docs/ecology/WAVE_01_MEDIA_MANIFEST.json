@@ -1,0 +1,171 @@
+{
+  "$schema": "https://arcanea.ai/schemas/ecology-media-manifest.schema.json",
+  "collection": "Arcanea Living Atlas — Wave 01",
+  "version": 1,
+  "generatedAt": "2026-09-02T22:02:54.947Z",
+  "totalBytes": 1699654,
+  "generator": {
+    "interface": "OpenAI built-in image_gen",
+    "reportedModel": null
+  },
+  "promptStandard": {
+    "name": "Arcanean Prompt Language",
+    "grammar": "WORLD + SPARK_SHAPE_SHARPEN + VISUAL_DIRECTIVES",
+    "sources": [
+      "prompts/ARCANEA-PROMPT-LANGUAGE.md",
+      "prompts/templates/visual-style.md",
+      "apps/web/lib/apl/world-dna.ts",
+      "apps/web/lib/visual-encyclopedia/schema.ts"
+    ]
+  },
+  "reviewAuthority": {
+    "reviewer": "Codex production pass",
+    "independence": "generation-pass",
+    "standard": "Arcanea Visual Encyclopedia 30-point rubric"
+  },
+  "canonNote": "Every visual is proposal-derived. A source-attested name or short trait does not attest the generated anatomy, mechanism, cost, or appearance.",
+  "rightsState": "review-required",
+  "publication": "not-authorized",
+  "assets": [
+    {
+      "assetId": "arcanea-flora-w01-01",
+      "slug": "stonegrass",
+      "gate": "Foundation",
+      "path": "apps/web/public/images/ecology/stonegrass-hero.webp",
+      "width": 1448,
+      "height": 1086,
+      "mimeType": "image/webp",
+      "bytes": 247312,
+      "sourceMasterSha256": "c01f5693bdebca0bdcd828a76ad6079f810adff8bd4710ef8e1605bfffabc39d",
+      "binarySha256": "43b7ec3ab3e10cf888e52b2b82f800287ed5b3ca28f41f4f402c86e7ab93bfb0",
+      "generatedAt": "2026-09-02T21:44:59.500Z",
+      "review": { "craft": 5, "composition": 5, "originality": 5, "canonAlignment": 5, "emotionalForce": 4, "accessibility": 5, "total": 29, "verdict": "ship" }
+    },
+    {
+      "assetId": "arcanea-flora-w01-02",
+      "slug": "tideplant",
+      "gate": "Flow",
+      "path": "apps/web/public/images/ecology/tideplant-hero.webp",
+      "width": 1448,
+      "height": 1086,
+      "mimeType": "image/webp",
+      "bytes": 164414,
+      "sourceMasterSha256": "52d1a5eab771e9ddee374a580af95667a3cb0f4d581c5044aa34710699503aeb",
+      "binarySha256": "395c0a94f418a5aaeedaa095a99f634e49143451e927786bb5f2ecf20c08b025",
+      "generatedAt": "2026-09-02T20:54:17.159Z",
+      "review": { "craft": 5, "composition": 5, "originality": 5, "canonAlignment": 4, "emotionalForce": 4, "accessibility": 5, "total": 28, "verdict": "ship" }
+    },
+    {
+      "assetId": "arcanea-flora-w01-03",
+      "slug": "heartbound-emberlily",
+      "gate": "Fire",
+      "path": "apps/web/public/images/ecology/heartbound-emberlily-hero.webp",
+      "width": 1448,
+      "height": 1086,
+      "mimeType": "image/webp",
+      "bytes": 163914,
+      "sourceMasterSha256": "30923860741b5c0b436c51ca8063d95320efe605c8bc8619b6bf2e75af994b11",
+      "binarySha256": "c8a927fee783414f6c2db65da0f204d2d8836d6352bf6253f7ce2648758c6832",
+      "generatedAt": "2026-09-02T20:53:10.085Z",
+      "review": { "craft": 5, "composition": 5, "originality": 4, "canonAlignment": 4, "emotionalForce": 4, "accessibility": 5, "total": 27, "verdict": "ship" }
+    },
+    {
+      "assetId": "arcanea-flora-w01-04",
+      "slug": "choirheart-rose",
+      "gate": "Heart",
+      "path": "apps/web/public/images/ecology/choirheart-rose-hero.webp",
+      "width": 1448,
+      "height": 1086,
+      "mimeType": "image/webp",
+      "bytes": 144068,
+      "sourceMasterSha256": "7781aff75d5813687d555c227f4d9a08ca2ccfbff87484289c8337699b278012",
+      "binarySha256": "c4c62de05e462c62d52508802cf96fd7131a4146f3181284b15ea066871506f7",
+      "generatedAt": "2026-09-02T20:50:24.037Z",
+      "review": { "craft": 5, "composition": 5, "originality": 5, "canonAlignment": 4, "emotionalForce": 5, "accessibility": 5, "total": 29, "verdict": "ship" }
+    },
+    {
+      "assetId": "arcanea-flora-w01-05",
+      "slug": "floracion-azul",
+      "gate": "Voice",
+      "path": "apps/web/public/images/ecology/floracion-azul-hero.webp",
+      "width": 1448,
+      "height": 1086,
+      "mimeType": "image/webp",
+      "bytes": 167186,
+      "sourceMasterSha256": "4b32f38be200aae29248bd8c2744ae7a2dc1cd0e13f0e24a513089be99559346",
+      "binarySha256": "25fd01aba4f5685e902bf5c0bfbbcd2f3501f7374173511f6b3d85c296f96ca4",
+      "generatedAt": "2026-09-02T20:56:42.422Z",
+      "review": { "craft": 5, "composition": 5, "originality": 4, "canonAlignment": 4, "emotionalForce": 4, "accessibility": 5, "total": 27, "verdict": "ship" }
+    },
+    {
+      "assetId": "arcanea-flora-w01-06",
+      "slug": "espejo-de-agua",
+      "gate": "Sight",
+      "path": "apps/web/public/images/ecology/espejo-de-agua-hero.webp",
+      "width": 1448,
+      "height": 1086,
+      "mimeType": "image/webp",
+      "bytes": 97424,
+      "sourceMasterSha256": "18a19d8a310686481ee7a03bcfd660f0e5cccc992631d9f3ffba6f9d2506b94f",
+      "binarySha256": "3b407cc5e0bfeaf955e990692ee8653911d99038038c4b81798b254f77257b6b",
+      "generatedAt": "2026-09-02T20:57:08.403Z",
+      "review": { "craft": 5, "composition": 5, "originality": 5, "canonAlignment": 4, "emotionalForce": 5, "accessibility": 5, "total": 29, "verdict": "ship" }
+    },
+    {
+      "assetId": "arcanea-flora-w01-07",
+      "slug": "granada-luminica",
+      "gate": "Crown",
+      "path": "apps/web/public/images/ecology/granada-luminica-hero.webp",
+      "width": 1448,
+      "height": 1086,
+      "mimeType": "image/webp",
+      "bytes": 104634,
+      "sourceMasterSha256": "a4dd4d49bdf55fce0f7a99a092cafecc463da843d4b179f9dd27e442f901413e",
+      "binarySha256": "7e47705fd24162634ae02009d17de44a6e989e764aff53f3517b8602346fe41d",
+      "generatedAt": "2026-09-02T20:57:39.900Z",
+      "review": { "craft": 5, "composition": 5, "originality": 4, "canonAlignment": 4, "emotionalForce": 4, "accessibility": 5, "total": 27, "verdict": "ship" }
+    },
+    {
+      "assetId": "arcanea-flora-w01-08",
+      "slug": "aevor-threadvine",
+      "gate": "Starweave",
+      "path": "apps/web/public/images/ecology/aevor-threadvine-hero.webp",
+      "width": 1448,
+      "height": 1086,
+      "mimeType": "image/webp",
+      "bytes": 105832,
+      "sourceMasterSha256": "b855603c310e4b261b903a72dec027f804b992e05074c4c6b56c79466ef78ecf",
+      "binarySha256": "103804528f48dfbd318a80886d8dd673ee1fd559f311bc0b87601f8a5b56ab61",
+      "generatedAt": "2026-09-02T21:45:29.789Z",
+      "review": { "craft": 5, "composition": 5, "originality": 5, "canonAlignment": 5, "emotionalForce": 4, "accessibility": 5, "total": 29, "verdict": "ship" }
+    },
+    {
+      "assetId": "arcanea-flora-w01-09",
+      "slug": "sombraluz",
+      "gate": "Unity",
+      "path": "apps/web/public/images/ecology/sombraluz-hero.webp",
+      "width": 1448,
+      "height": 1086,
+      "mimeType": "image/webp",
+      "bytes": 261748,
+      "sourceMasterSha256": "a3ceb05bf0dcc4678b30e5641bc93f61d99ec2570fc6fcc07703a8ab5604b615",
+      "binarySha256": "9bc518cc8925f6a0401c10d0a37f1b98e9cf55497481c98b4d36d49b83910d27",
+      "generatedAt": "2026-09-02T21:46:33.834Z",
+      "review": { "craft": 5, "composition": 5, "originality": 5, "canonAlignment": 5, "emotionalForce": 4, "accessibility": 5, "total": 29, "verdict": "ship" }
+    },
+    {
+      "assetId": "arcanea-flora-w01-10",
+      "slug": "firstseed-of-shinkami",
+      "gate": "Source",
+      "path": "apps/web/public/images/ecology/firstseed-of-shinkami-hero.webp",
+      "width": 1448,
+      "height": 1086,
+      "mimeType": "image/webp",
+      "bytes": 243122,
+      "sourceMasterSha256": "236620076211f74210651226f07f8c5d1a8dc06bee9238d7c87d51fd72e7c220",
+      "binarySha256": "aea7c8cee558afb0a68dc3ae0b297e2d467aa6f98c95400f9a068e5cab4a570c",
+      "generatedAt": "2026-09-02T22:02:54.947Z",
+      "review": { "craft": 5, "composition": 5, "originality": 5, "canonAlignment": 5, "emotionalForce": 5, "accessibility": 5, "total": 30, "verdict": "ship" }
+    }
+  ]
+}

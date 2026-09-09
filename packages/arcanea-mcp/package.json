@@ -1,6 +1,6 @@
 {
   "name": "@arcanea/mcp-server",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": false,
   "description": "Arcanea worldbuilding tools plus an isolated, authenticated World Context Gateway boundary.",
   "type": "module",
@@ -12,6 +12,7 @@
     "./tools/world-intelligence": "./dist/tools/world-intelligence.js",
     "./tools/visual-prompts": "./dist/tools/visual-prompts.js",
     "./tools/creation-graph": "./dist/tools/creation-graph.js",
+    "./tools/ecology": "./dist/tools/ecology.js",
     "./gateway": "./dist/gateway/index.js"
   },
   "bin": {
@@ -51,9 +52,11 @@
   },
   "homepage": "https://arcanea.ai/docs/mcp",
   "dependencies": {
+    "@arcanea/world-engine": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.30.0",
     "canonicalize": "^1.0.8",
-    "zod": "^4.3.6"
+    "zod": "^4.3.6",
+    "ajv": "^8.20.0"
   },
   "devDependencies": {
     "@types/node": "^20.19.43",

@@ -1,0 +1,16 @@
+{
+  "name": "@arcanea/ecology-plugin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Codex plugin distribution shell for Arcanea Ecology Forge and @arcanea/mcp-server ecology tools.",
+  "license": "MIT",
+  "scripts": {
+    "sync:skill": "node scripts/sync-skill.mjs",
+    "prepack": "pnpm run sync:skill"
+  },
+  "files": [
+    ".codex-plugin/",
+    ".mcp.json",
+    "skills/"
+  ]
+}

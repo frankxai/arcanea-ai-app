@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "arcanea-ecology": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@arcanea/mcp-server@1.1.0"
+      ],
+      "env": {},
+      "description": "Arcanea ecology contracts, validation, graph analysis, and APL visual prompts"
+    }
+  }
+}

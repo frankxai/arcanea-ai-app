@@ -18,6 +18,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
+import { registerEcologyTools } from "./tools/ecology.js";
 
 // Helper: cast legacy tool results (type: string) to SDK 1.29 CallToolResult (type: "text")
 function toolResult(r: { content: Array<{ type: string; text: string }> }): CallToolResult {
@@ -155,7 +156,8 @@ const APL_PALETTES = ["forge", "tide", "root", "drift", "void"] as const;
 const ASSET_KINDS = ["character", "location", "cover", "poster", "trailer", "sprite", "album_art", "brand_pack", "ui"] as const;
 const WORKFLOW_RECIPE_IDS = ["book_to_publish", "world_to_game", "artist_release", "cinematic_trailer", "campaign_pack"] as const;
 
-const server = new McpServer({ name: "arcanea-mcp", version: "0.3.0" });
+const server = new McpServer({ name: "arcanea-mcp", version: "1.1.0" });
+registerEcologyTools(server);
 
 // =========================================================================
 // WORLDBUILDING GENERATORS
