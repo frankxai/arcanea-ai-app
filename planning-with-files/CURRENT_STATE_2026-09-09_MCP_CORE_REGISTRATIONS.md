@@ -10,7 +10,7 @@ world graph, world intelligence, persistence and visual-prompt registration
 modules, plus this record. No runtime behavior, dependencies, canon, review policy,
 installation, publication or production settings change.
 
-The entrypoint now composes thirteen registration functions in 65 lines. Five
+The entrypoint now composes twelve registration functions in 65 lines. Five
 additional modules contain the remaining 23 tool registrations; each stays below
 300 lines. All registration modules, including the parent change, stay below 400
 lines. The existing singleton remains in place until the separate runtime repair.
