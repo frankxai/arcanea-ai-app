@@ -108,6 +108,14 @@
   font-size: 0.8rem;
   color: var(--arc-text-secondary);
 }
+.completionLink {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-left: auto;
+  font-size: 0.875rem;
+  text-decoration: underline;
+}
 .cueOption {
   display: flex;
   align-items: center;
@@ -426,6 +434,7 @@
   align-items: center;
   padding: 1.5rem;
   border-top: 1px solid var(--arc-cosmic-border-bright);
+  scroll-margin-top: calc(var(--nav-h, 4rem) + 6rem);
 }
 .snapshotBar > div:first-child {
   flex: 1 1 20rem;
@@ -551,7 +560,7 @@
     padding-inline: 0.5rem;
     font-size: 0.8rem;
   }
-  .clockState {
+  .toolbar:not([data-complete="true"]) .clockState {
     position: absolute;
     width: 1px;
     height: 1px;

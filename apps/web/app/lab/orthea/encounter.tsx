@@ -76,26 +76,29 @@ export function OrtheaEncounter() {
       className={styles.encounter}
       aria-label="Playable load-transfer encounter"
     >
-      <div className={styles.toolbar}>
-        <div className={styles.clockControls}>
-          <button
-            type="button"
-            className={styles.primary}
-            disabled={complete}
-            onClick={game.toggleLive}
-          >
-            {complete
-              ? "Encounter complete"
-              : game.live
+      <div
+        className={styles.toolbar}
+        data-complete={complete}
+        data-testid="orthea-toolbar"
+      >
+        {!complete && (
+          <div className={styles.clockControls}>
+            <button
+              type="button"
+              className={styles.primary}
+              onClick={game.toggleLive}
+            >
+              {game.live
                 ? "Pause live play"
                 : state.elapsedMs
                   ? "Resume live play"
                   : "Start live play"}
-          </button>
-          <button type="button" disabled={complete} onClick={game.step}>
-            Advance 1 second
-          </button>
-        </div>
+            </button>
+            <button type="button" onClick={game.step}>
+              Advance 1 second
+            </button>
+          </div>
+        )}
         <span className={styles.clockState}>
           {complete
             ? "Encounter complete"
@@ -103,15 +106,22 @@ export function OrtheaEncounter() {
               ? "Live · time is moving"
               : "Paused · plan, act or advance time"}
         </span>
-        <label className={styles.cueOption}>
-          <input
-            type="checkbox"
-            checked={state.extendedCues}
-            disabled={windup || complete}
-            onChange={(event) => game.setExtendedCues(event.target.checked)}
-          />
-          Longer footfall cues
-        </label>
+        {!complete && (
+          <label className={styles.cueOption}>
+            <input
+              type="checkbox"
+              checked={state.extendedCues}
+              disabled={windup}
+              onChange={(event) => game.setExtendedCues(event.target.checked)}
+            />
+            Longer footfall cues
+          </label>
+        )}
+        {complete && (
+          <a className={styles.completionLink} href="#orthea-snapshot">
+            Keep this world state
+          </a>
+        )}
         {!complete && (
           <div className={styles.mobileSafety} data-danger={windup}>
             <span>
@@ -417,7 +427,7 @@ export function OrtheaEncounter() {
           </p>
         </section>
       )}
-      <div className={styles.snapshotBar}>
+      <div className={styles.snapshotBar} id="orthea-snapshot" tabIndex={-1}>
         <div>
           <h2>Keep this world state</h2>
           <p>

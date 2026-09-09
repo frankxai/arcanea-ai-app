@@ -202,7 +202,7 @@ async function main() {
     );
     const endingBounds = await desktopEnding.boundingBox();
     const toolbarBounds = await encounter
-      .locator("button", { hasText: "Encounter complete" })
+      .getByTestId("orthea-toolbar")
       .boundingBox();
     assert.ok(
       endingBounds &&
@@ -217,6 +217,10 @@ async function main() {
       "Mobile refuge/return controls, recoverable fall and complete supply-saved ending through real actions",
     );
 
+    await encounter
+      .getByRole("link", { name: "Keep this world state", exact: true })
+      .click();
+    await expect(button("Download snapshot")).toBeInViewport();
     const [download] = await Promise.all([
       page.waitForEvent("download"),
       button("Download snapshot").click(),
