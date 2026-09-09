@@ -1,0 +1,41 @@
+{
+  "version": "2026-06-23",
+  "task": "01a04dd1-0b3b-7102-a946-4bbf1a30bd26: private cover composition proof",
+  "surface": "Native front-cover concept at source size and actual thumbnail widths; not browser or print proof",
+  "audience": "Adult fantasy readers; creator's stated 29-year-old reader profile",
+  "standards": ["Arcanea book-cover skill", "Premium Web OS", "Agentic Design Loop", "Premium Asset Standard", "edition ART_DIRECTION"],
+  "references": ["edition-spec.json", "Chapters 1 and 30", "cover-composition-proof-2026-09-09.md", "https://github.com/google/fonts/tree/main/ofl/newsreader"],
+  "direction": {
+    "keep": "Three people, raised physical path, dark title field, exact edition title",
+    "avoid": "Invented byline, unsupported print claims, title collision with water-frame rim, cropped hands",
+    "signature": "Level two-line literary title above a human-scale choice",
+    "system": "Editable JSON layout; native Pango type over unchanged generated source; licensed Newsreader"
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "unknown",
+    "provenance": "owned",
+    "why_premium": "Native designed typography over an existing generated source with licensed type. Schema has no native typesetting method; unknown is retained rather than mislabeling this as new generated media or a browser capture. Source artwork retains its own prior staging provenance.",
+    "shortcut_risk": "low",
+    "context_tested": true,
+    "context_scope": "Actual native PNG at 992 and 420 pixels plus 120-pixel comparison. No browser, print or independent proof."
+  },
+  "artifacts": [
+    {"path_or_url": "C:/Users/frank/.starlight/arcanea-cinematic-book-20260829/cover-native-2026-09-09-r03/held-interval-992.png", "kind": "native front-cover proof", "inspected": true, "sha256": "051dfeedc313e824bd2d816693f3e9df0983237e14f6993fef6c5c31c20e247e"},
+    {"path_or_url": "C:/Users/frank/.starlight/arcanea-cinematic-book-20260829/cover-native-2026-09-09-r03/held-interval-420.png", "kind": "native cover proof at reading width", "inspected": true, "sha256": "36910596bbe029f1f1d511baab5a2d5a730ef5b27c6a82577dd813bbf56c2c03"},
+    {"path_or_url": "C:/Users/frank/.starlight/arcanea-cinematic-book-20260829/cover-native-2026-09-09-r03/cover-comparison-120.png", "kind": "actual thumbnail comparison", "inspected": true, "sha256": "232555ccafc4b7776dfdea130391570ea04c2e39b17b648a14d5c8f9c36993d2"},
+    {"path_or_url": "C:/Users/frank/.starlight/arcanea-cinematic-book-20260829/cover-proof-2026-09-09-r02/cover-selected.html", "kind": "editable HTML proposal", "inspected": false, "sha256": "758811d006e7f78a826b7d17acb6d276063b901f25220e5d614765dbb3345532"}
+  ],
+  "checks": [
+    {"name": "source-integrity", "status": "pass", "notes": "Original raster hash, dimensions and edition identity pinned; original asset untouched."},
+    {"name": "native-typography", "status": "pass", "notes": "Official TTF and full OFL pinned; fallback caught and corrected; actual font has distinct metrics."},
+    {"name": "export-inspection", "status": "pass", "notes": "Native PNG only. Refined title clears bright rim; faces, hands and path preserved. Small ancillary labels not certified readable at 120 px."},
+    {"name": "automated-contracts", "status": "pass", "notes": "Eight cover-proof and six artbook tests; not visual or literary approval."},
+    {"name": "browser-qa", "status": "blocked", "notes": "Local file URL rejected by browser security policy. No workaround attempted; offline native typesetting is separate from browser rendering."},
+    {"name": "motion", "status": "not_applicable", "notes": "Static native proof; no web motion changed."},
+    {"name": "independent-review", "status": "blocked", "notes": "PP holds new swarms; no alternate reviewer dispatch."},
+    {"name": "release", "status": "blocked", "notes": "Private proof. Title, byline, casting, rights, print specification, independent critique and production approval remain open."}
+  ],
+  "score": {"total": 25, "max": 30, "hierarchy": 5, "brand_fit": 4, "craft": 4, "surface_fit": 4, "accuracy": 4, "usefulness": 4, "assessor": "maker only; diagnostic, not independent approval"},
+  "decision": "iterate"
+}

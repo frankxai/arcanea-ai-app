@@ -94,6 +94,17 @@ Next bounded work: independent challenge of these teaching scenes when admitted;
 
 Next bounded work: compare all three protagonists' opening performance frames with their environment plates at actual reader size, refine the cover's thumbnail silhouette and separately typeset title/byline, and obtain independent review when machine policy admits it. Continue the teaching/relationship developmental work without padding to a word quota. Shared waitlist integration requires its own owned lane; do not overwrite the active control-plane work.
 
+### Native cover composition — private proof checkpoint
+
+- The held-interval cover now has editable composition sources and a maker-inspected native PNG proof. Three typography variants were compared over the unchanged source artwork. The selected refinement uses a level two-line Newsreader title, raised clear of the water-frame rim; faces, hands and path remain unobstructed. No byline was invented.
+- Selected private proof: `C:/Users/frank/.starlight/arcanea-cinematic-book-20260829/cover-native-2026-09-09-r03/held-interval-992.png`, 992 × 1586, SHA-256 `051dfeedc313e824bd2d816693f3e9df0983237e14f6993fef6c5c31c20e247e`. Native 420 px and 120 px context checks informed the refinement. This is not a new high-resolution print master or an approved public cover.
+- Browser policy rejected the local HTML URL; no alternate browser, local server or indirect navigation workaround was attempted. The safe fallback was offline native Pango typesetting using an explicitly verified official Newsreader TTF and license. Editable HTML proposals remain browser-uninspected and are not pixel-equivalence proof.
+- Eight new cover-proof tests and six artbook contract tests pass after refinement and formatting. The source artwork, public routes, release specifications and manuscript are unchanged. No full app build, fresh reader browser run or new image generation occurred in this private production-tool slice.
+- Exact provenance, native renderer receipts, refinement decisions, source limitations and maker-only 25/30 iteration verdict are in `ledger/cover-composition-proof-2026-09-09.md` and its companion design-evidence record. Independent review remains open; PP holds new swarms. No task-owned server or browser tab remains running.
+- The latest READY manuscript preview remains source `7cba3eafb4ea98af947d039ebf6d0b8c870368c0`; private-art checkpoint `f251b5ec04462fd015ad0d7ff3d92cc3d2252283` was intentionally skipped by Vercel as docs-only. Another coordination task reports production has advanced again; reconcile that baseline before any book promotion. This proof does not change release scope or permissions.
+
+Next bounded work: independent critique of the composed cover when admitted, then a reader-sized opening sequence using the three protagonists' performance studies and existing environment plates. Prioritize the shared-waitlist integration and release blockers alongside creative refinement; do not let repeated private proof generation replace launch work. The 32-chapter, 78,608-word draft, final artbook, approved sale and production release remain unfinished.
+
 ## Task contract
 
 **Scope**

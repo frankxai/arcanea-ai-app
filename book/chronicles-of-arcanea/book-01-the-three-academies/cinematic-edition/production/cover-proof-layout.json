@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "status": "private-concept",
+  "title": "The Last Free Path",
+  "series": "Chronicles of Arcanea",
+  "byline": null,
+  "selected": "held-interval",
+  "source": {
+    "path": "apps/web/public/images/books/the-last-free-path/cover-held-interval-preview.png",
+    "sha256": "3399de7f71a7300c74bbd2ded1ff2f3f0730adbe58f00766dc4e06e5762d7008",
+    "width": 992,
+    "height": 1586
+  },
+  "palette": {
+    "ink": "#111416",
+    "paper": "#f4eee2",
+    "muted": "#b6b4ae",
+    "gold": "#ddc797"
+  },
+  "variants": [
+    {
+      "id": "quiet-interval",
+      "label": "Quiet interval",
+      "size": 112,
+      "weight": 400,
+      "top": 89,
+      "leading": 0.95,
+      "offset": 0
+    },
+    {
+      "id": "held-interval",
+      "label": "Held interval",
+      "size": 136,
+      "weight": 500,
+      "top": 64,
+      "leading": 0.85,
+      "offset": 0
+    },
+    {
+      "id": "open-joint",
+      "label": "Open joint",
+      "size": 154,
+      "weight": 500,
+      "top": 86,
+      "leading": 0.89,
+      "offset": 10
+    }
+  ]
+}
