@@ -193,9 +193,23 @@ async function main() {
     await page.screenshot({ path: path.join(output, "mobile-ending.png") });
     report.screenshots.push("mobile-ending.png");
     await page.setViewportSize({ width: 1365, height: 900 });
-    await page
-      .getByRole("heading", { name: "The supply survives.", exact: true })
-      .scrollIntoViewIfNeeded();
+    const desktopEnding = page.getByRole("heading", {
+      name: "The supply survives.",
+      exact: true,
+    });
+    await desktopEnding.evaluate((heading) =>
+      heading.scrollIntoView({ block: "center", behavior: "instant" }),
+    );
+    const endingBounds = await desktopEnding.boundingBox();
+    const toolbarBounds = await encounter
+      .locator("button", { hasText: "Encounter complete" })
+      .boundingBox();
+    assert.ok(
+      endingBounds &&
+        toolbarBounds &&
+        endingBounds.y > toolbarBounds.y + toolbarBounds.height + 16,
+      "The desktop ending is visible below the sticky controls",
+    );
     await page.screenshot({ path: path.join(output, "desktop-ending.png") });
     report.screenshots.push("desktop-ending.png");
     await page.setViewportSize({ width: 375, height: 812 });
