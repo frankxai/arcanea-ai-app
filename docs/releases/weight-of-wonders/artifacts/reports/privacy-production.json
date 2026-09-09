@@ -1,0 +1,24 @@
+{
+  "tested_url": "https://www.arcanea.ai/gallery/weight-of-wonders",
+  "new_collection_auth_free": true,
+  "no_submission_performed": true,
+  "no_new_collection_data_capture": true,
+  "existing_footer_newsletter_form_present": true,
+  "private_mcp_status": 401,
+  "gate_passed": true,
+  "scope": "Weight of Wonders collection and dossier interactions only",
+  "source_receipts": {
+    "browser": {
+      "path": "production-browser-receipt.json",
+      "sha256": "dcbec7811dc1ab29826ad0d797fc66a03bc77c1dae052307e7bb68b2de51a37e",
+      "bytes": 12065,
+      "mime": "application/json"
+    },
+    "http": {
+      "path": "production-http.json",
+      "sha256": "89b74b7820cce41593c8fea4936012efa2b0e17553fe03dbcde7b432f8155326",
+      "bytes": 10619,
+      "mime": "application/json"
+    }
+  }
+}

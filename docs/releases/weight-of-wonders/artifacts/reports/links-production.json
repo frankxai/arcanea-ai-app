@@ -1,0 +1,46 @@
+{
+  "tested_url": "https://www.arcanea.ai/gallery/weight-of-wonders",
+  "scope": "Full direct production HTTP verification plus actual browser traversal; supplemental connector bypass failures are retained only as historical transport noise",
+  "collection_loaded": true,
+  "dossiers_http_200": 12,
+  "dossiers_visited_in_browser": 12,
+  "dossier_headings_correct": 12,
+  "primary_and_related_images_loaded_in_browser": 24,
+  "production_images_hash_verified": 12,
+  "production_images_byte_count_verified": 12,
+  "api_checks_passed": 9,
+  "api_double_opt_in_totals": [
+    0,
+    0,
+    0,
+    12
+  ],
+  "boss_total": 6,
+  "dungeon_total": 6,
+  "new_id_total": 1,
+  "query_total": 1,
+  "invalid_query_status": 400,
+  "private_mcp_status": 401,
+  "sovereign_depths_total": 36,
+  "gate_passed": true,
+  "source_receipts": {
+    "http": {
+      "path": "production-http.json",
+      "sha256": "89b74b7820cce41593c8fea4936012efa2b0e17553fe03dbcde7b432f8155326",
+      "bytes": 10619,
+      "mime": "application/json"
+    },
+    "browser": {
+      "path": "production-browser-receipt.json",
+      "sha256": "dcbec7811dc1ab29826ad0d797fc66a03bc77c1dae052307e7bb68b2de51a37e",
+      "bytes": 12065,
+      "mime": "application/json"
+    },
+    "connector_history": {
+      "path": "production-http-connector.json",
+      "sha256": "7ba02d686e0c31100d8f6ce1e143f5316bfceaed703191f233232d8aef7a9290",
+      "bytes": 19003,
+      "mime": "application/json"
+    }
+  }
+}

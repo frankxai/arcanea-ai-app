@@ -1,0 +1,377 @@
+{
+  "all12DossiersAndImagesLoaded": true,
+  "api": {
+    "allExperimental": true,
+    "httpStatus": 200,
+    "total": 12,
+    "uniqueIds": 12,
+    "url": "https://www.arcanea.ai/api/lore/weight-of-wonders?includeProposals=true&includeExperimental=true"
+  },
+  "ciCheckoutCommit": "6b3517317e07b936f48ce918a2aabde65ef5dea5",
+  "claims": {
+    "encountersAreConcepts": true,
+    "experimentalLabelsVisible": true,
+    "noShippedGameOrPublishedBookClaim": true,
+    "trilogyIsOutline": true
+  },
+  "collection": {
+    "atlasLinks": 12,
+    "experimental": true,
+    "fontStatus": "loaded",
+    "fonts": {
+      "body": {
+        "family": "GeistSans, \"GeistSans Fallback\", Geist, \"Geist Sans\", system-ui, sans-serif",
+        "lineHeight": "34.32px",
+        "size": "20.8px",
+        "weight": "400"
+      },
+      "control": {
+        "family": "GeistSans, \"GeistSans Fallback\", Geist, \"Geist Sans\", system-ui, sans-serif",
+        "lineHeight": "21px",
+        "size": "14px",
+        "weight": "400"
+      },
+      "display": {
+        "family": "\"Instrument Serif\", Migra, Georgia, serif",
+        "lineHeight": "103.588px",
+        "size": "109.04px",
+        "weight": "400"
+      }
+    },
+    "heading": "The Weight of Wonders",
+    "overflow": false,
+    "viewport": {
+      "height": 936,
+      "width": 1363
+    }
+  },
+  "customAnalyticsEvents": {
+    "expected": [],
+    "verified": []
+  },
+  "deployment": {
+    "aliasError": null,
+    "aliases": [
+      "www.arcanea.ai",
+      "arcanea-ai-app.vercel.app",
+      "arcanea.ai",
+      "arcanea-ai-app-starlight-intelligence.vercel.app",
+      "arcanea-ai-app-git-main-starlight-intelligence.vercel.app"
+    ],
+    "id": "dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+    "sha": "141ad072132597f741979eee58671b3bd4e26a88",
+    "state": "READY",
+    "target": "production",
+    "url": "arcanea-ai-euq4jl733-starlight-intelligence.vercel.app"
+  },
+  "dossier": {
+    "briefContainsSelectedEnding": true,
+    "briefContainsVictoryReward": true,
+    "copyStatus": "Copied to clipboard",
+    "ending": "Kill Othrek and open the gate",
+    "fontStatus": "loaded",
+    "fonts": {
+      "control": {
+        "family": "GeistSans, \"GeistSans Fallback\", Geist, \"Geist Sans\", system-ui, sans-serif",
+        "lineHeight": "24px",
+        "size": "16px",
+        "weight": "400"
+      },
+      "display": {
+        "family": "\"Instrument Serif\", Migra, Georgia, serif",
+        "lineHeight": "77.691px",
+        "size": "81.78px",
+        "weight": "400"
+      },
+      "manualBrief": {
+        "family": "\"Geist Mono\", \"JetBrains Mono\", \"Fira Code\", monospace",
+        "lineHeight": "19.968px",
+        "size": "12.48px",
+        "weight": "400"
+      }
+    },
+    "heading": "Marshal Othrek",
+    "overflow": false,
+    "phase": "Phase 3 The last levy",
+    "route": "https://www.arcanea.ai/gallery/weight-of-wonders/othrek"
+  },
+  "limitations": [
+    "Production field INP and raw browser console were not instrumented; exact-tree CI lab results are separate.",
+    "An additional one-off executor read was cancelled and supplemental Vercel connector reads encountered bypass 409/429 errors. The original full direct HTTP verification completed successfully, including all twelve live image hashes and both telemetry scripts."
+  ],
+  "privacy": {
+    "existingFooterNewsletterFormPresent": true,
+    "newCollectionAuthFree": true,
+    "noNewCollectionDataCapture": true,
+    "noSubmissionPerformed": true
+  },
+  "productionCommit": "141ad072132597f741979eee58671b3bd4e26a88",
+  "productionTree": "10474f7c77b78371719ca6f593e993ba66215a4b",
+  "productionUrl": "https://www.arcanea.ai/gallery/weight-of-wonders",
+  "reviewedSourceCommit": "e8adbc3399420f3a86ff8068132c09ab8410896f",
+  "reviewer": "/root",
+  "rollbackCommit": "f3524a8c947d6ed7a54dea90e7496ec726590156",
+  "rollbackIsDirectParent": true,
+  "routes": [
+    {
+      "expectedHeading": "Orvess",
+      "experimental": true,
+      "heading": "Orvess",
+      "images": [
+        {
+          "height": 1024,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/orvess.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1536
+        },
+        {
+          "height": 941,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/breathing-city.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1672
+        }
+      ],
+      "overflow": false,
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/orvess"
+    },
+    {
+      "expectedHeading": "The City That Holds Its Breath",
+      "experimental": true,
+      "heading": "The City That Holds Its Breath",
+      "images": [
+        {
+          "height": 941,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/breathing-city.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1672
+        },
+        {
+          "height": 1024,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/orvess.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1536
+        }
+      ],
+      "overflow": false,
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/breathing-city"
+    },
+    {
+      "expectedHeading": "Vesrane",
+      "experimental": true,
+      "heading": "Vesrane",
+      "images": [
+        {
+          "height": 1536,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/vesrane.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1024
+        },
+        {
+          "height": 941,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/unreturned-names.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1672
+        }
+      ],
+      "overflow": false,
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/vesrane"
+    },
+    {
+      "expectedHeading": "The Palace of Unreturned Names",
+      "experimental": true,
+      "heading": "The Palace of Unreturned Names",
+      "images": [
+        {
+          "height": 941,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/unreturned-names.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1672
+        },
+        {
+          "height": 1536,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/vesrane.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1024
+        }
+      ],
+      "overflow": false,
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/unreturned-names"
+    },
+    {
+      "expectedHeading": "Qorath",
+      "experimental": true,
+      "heading": "Qorath",
+      "images": [
+        {
+          "height": 1024,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/qorath.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1536
+        },
+        {
+          "height": 941,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/storm-orchard.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1672
+        }
+      ],
+      "overflow": false,
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/qorath"
+    },
+    {
+      "expectedHeading": "The Orchard Above the Storm",
+      "experimental": true,
+      "heading": "The Orchard Above the Storm",
+      "images": [
+        {
+          "height": 941,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/storm-orchard.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1672
+        },
+        {
+          "height": 1024,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/qorath.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1536
+        }
+      ],
+      "overflow": false,
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/storm-orchard"
+    },
+    {
+      "expectedHeading": "Tharvoss",
+      "experimental": true,
+      "heading": "Tharvoss",
+      "images": [
+        {
+          "height": 1024,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/tharvoss.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1536
+        },
+        {
+          "height": 941,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/spawning-stair.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1672
+        }
+      ],
+      "overflow": false,
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/tharvoss"
+    },
+    {
+      "expectedHeading": "The Spawning Stair",
+      "experimental": true,
+      "heading": "The Spawning Stair",
+      "images": [
+        {
+          "height": 941,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/spawning-stair.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1672
+        },
+        {
+          "height": 1024,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/tharvoss.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1536
+        }
+      ],
+      "overflow": false,
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/spawning-stair"
+    },
+    {
+      "expectedHeading": "The Glassroot Hunger",
+      "experimental": true,
+      "heading": "The Glassroot Hunger",
+      "images": [
+        {
+          "height": 1024,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/glassroot-hunger.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1536
+        },
+        {
+          "height": 941,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/glassroot-sepulchre.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1672
+        }
+      ],
+      "overflow": false,
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/glassroot-hunger"
+    },
+    {
+      "expectedHeading": "The Glassroot Sepulchre",
+      "experimental": true,
+      "heading": "The Glassroot Sepulchre",
+      "images": [
+        {
+          "height": 941,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/glassroot-sepulchre.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1672
+        },
+        {
+          "height": 1024,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/glassroot-hunger.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1536
+        }
+      ],
+      "overflow": false,
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/glassroot-sepulchre"
+    },
+    {
+      "expectedHeading": "Marshal Othrek",
+      "experimental": true,
+      "heading": "Marshal Othrek",
+      "images": [
+        {
+          "height": 1536,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/othrek.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1024
+        },
+        {
+          "height": 941,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/brine-tribunal.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1672
+        }
+      ],
+      "overflow": false,
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/othrek"
+    },
+    {
+      "expectedHeading": "The Brine Tribunal",
+      "experimental": true,
+      "heading": "The Brine Tribunal",
+      "images": [
+        {
+          "height": 941,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/brine-tribunal.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1672
+        },
+        {
+          "height": 1536,
+          "loaded": true,
+          "src": "/images/weight-of-wonders/othrek.webp?dpl=dpl_H8aPzSHY3RpALorLNTjkeB87ErYB",
+          "width": 1024
+        }
+      ],
+      "overflow": false,
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/brine-tribunal"
+    }
+  ],
+  "sameReviewedBuiltDeployedTree": true,
+  "scope": "Actual production desktop browser UI plus completed direct HTTP verification in production-http.json. Full mobile, timing and raw console proof belongs to exact-tree CI.",
+  "screenshots": [
+    "artifacts/production/collection.jpg",
+    "artifacts/production/encounter.jpg"
+  ],
+  "productionHttpEvidence": "production-http.json",
+  "productionHttpPass": true
+}

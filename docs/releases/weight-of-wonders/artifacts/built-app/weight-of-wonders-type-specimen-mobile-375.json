@@ -1,0 +1,37 @@
+{
+  "scope": "Real built-app mobile typography specimen",
+  "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/orvess",
+  "viewport": {
+    "width": 375,
+    "height": 812
+  },
+  "deviceScaleFactor": 1,
+  "reflow": true,
+  "typography": {
+    "documentFontsStatus": "loaded",
+    "heading": {
+      "family": "\"Instrument Serif\", Migra, Georgia, serif",
+      "weight": "400",
+      "size": "48px",
+      "lineHeight": "45.6px"
+    },
+    "body": {
+      "family": "GeistSans, \"GeistSans Fallback\", Geist, \"Geist Sans\", system-ui, sans-serif",
+      "weight": "400",
+      "size": "16px",
+      "lineHeight": "24px"
+    },
+    "control": {
+      "family": "GeistSans, \"GeistSans Fallback\", Geist, \"Geist Sans\", system-ui, sans-serif",
+      "weight": "400",
+      "size": "16px",
+      "lineHeight": "24px"
+    },
+    "manualBrief": {
+      "family": "\"Geist Mono\", \"JetBrains Mono\", \"Fira Code\", monospace",
+      "weight": "400",
+      "size": "12.48px",
+      "lineHeight": "19.968px"
+    }
+  }
+}

@@ -1,0 +1,399 @@
+{
+  "scope": "Real built Next app at the CI checkout commit; production URL verification is separate",
+  "builtCommit": "6b3517317e07b936f48ce918a2aabde65ef5dea5",
+  "reviewedSourceCommit": "e8adbc3399420f3a86ff8068132c09ab8410896f",
+  "states": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference"
+    },
+    {
+      "name": "mobile-375",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference"
+    },
+    {
+      "name": "reduced-motion",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "reduce"
+    }
+  ],
+  "captures": [
+    {
+      "path": "screenshots/collection-hero-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 1518427,
+      "sha256": "5e33fd349696c1516f1eb7f19047ef56f4f8da2c613e3d8e92cbec65e7bc78a6",
+      "url": "http://127.0.0.1:3001/gallery/sovereign-depths"
+    },
+    {
+      "path": "screenshots/collection-grid-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 1204124,
+      "sha256": "102b69d346573318530ee7fdebcde9643811040ac61251f97b905da3f317d6f7",
+      "url": "http://127.0.0.1:3001/gallery/sovereign-depths#collection"
+    },
+    {
+      "path": "screenshots/vorrak-dossier-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 778461,
+      "sha256": "4e3c3b717d2f2a49e4d30f1ae8314c1adb3d761b1972bf4a047ea1373aef89e6",
+      "url": "http://127.0.0.1:3001/gallery/sovereign-depths/vorrak"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-encounter-desk-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 150286,
+      "sha256": "7853f17eacc11fd675a5d40383527216fa316434d8fd13311d0580f05e3aabb6",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/orvess"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-orvess-dossier-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 1674349,
+      "sha256": "10bd21e6f67403d7528f18b407ee9aa8a7b066b63b939fe05ff0d85fd8a7cd8b",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/orvess"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-vesrane-dossier-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 586888,
+      "sha256": "3c3c794f4b8897044f5d3cb4535e6ca6ae83375f44965188eb83ae047b19a284",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/vesrane"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-tharvoss-dossier-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 1884780,
+      "sha256": "0a11fdbaa5d251c5efbb5bc300e7d452b4a07b682218479c9fc8392b6624f3e0",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/tharvoss"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-spawning-stair-dossier-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 2038747,
+      "sha256": "ee822822bf10f73253550271f524b277f6c00d7bd7fcfb2b36379da15b6283ca",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/spawning-stair"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-glassroot-hunger-dossier-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 1664626,
+      "sha256": "3237bf523a2ffca0d232f29c2adee6a76eb02fc7cd615c9ea33f0aa4857bcbd0",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/glassroot-hunger"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-glassroot-sepulchre-dossier-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 2058185,
+      "sha256": "0fe006ce65085154c4a6d7cc8074a50664c8b570622449c16a6c6f6fa6fa0d11",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/glassroot-sepulchre"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-othrek-dossier-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 698161,
+      "sha256": "b30d103975fd6e6ffd4300de8513438700fac891ce7ba0607d34bcf75a9692e2",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/othrek"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-brine-tribunal-dossier-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 1795069,
+      "sha256": "5fdf1a8400abb9ccb4e141229b261eac857026ce4929c63e4a86f312318704b1",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/brine-tribunal"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-hero-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 1828722,
+      "sha256": "802077c6a3e25674121d077b7eb0d58f666b280869041a03cb57eefdce2ec031",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-atlas-desktop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 758838,
+      "sha256": "d0f463d09bf6beacbfa0d0480674befc301c6b33bd683f8132b35c09d8cc03e2",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders#atlas"
+    },
+    {
+      "path": "screenshots/collection-hero-mobile-375.png",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 417264,
+      "sha256": "67ae9e42a6764984795b6fdedacccbf075b26882c187c497a030b4be8571cba4",
+      "url": "http://127.0.0.1:3001/gallery/sovereign-depths"
+    },
+    {
+      "path": "screenshots/collection-grid-mobile-375.png",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 228573,
+      "sha256": "229c5d2374f5919f232904b15cd1874d72ca5eaa31a816bc3de1411a6df1b3b0",
+      "url": "http://127.0.0.1:3001/gallery/sovereign-depths#collection"
+    },
+    {
+      "path": "screenshots/vorrak-dossier-mobile-375.png",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 272175,
+      "sha256": "ce718b54ca419d797a467f7fa82ee4f5b67d0892974e66e55f842bd585c369e3",
+      "url": "http://127.0.0.1:3001/gallery/sovereign-depths/vorrak"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-encounter-desk-mobile-375.png",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 97914,
+      "sha256": "41e89a25682b8704a5e605f8f502f2b0b0234773c26338fe151cafb09990b246",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/orvess"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-orvess-dossier-mobile-375.png",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 190094,
+      "sha256": "0bb84966e8d4321f7afa222851f6b16bbfccd533530b5c82fc5941184baaeff4",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/orvess"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-vesrane-dossier-mobile-375.png",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 322017,
+      "sha256": "b74525ed3b25bef49e0d69c2aa74396b9024edcf9943bdd6bd274a00e617deaf",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/vesrane"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-othrek-dossier-mobile-375.png",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 377200,
+      "sha256": "b829c0efca02e115d4b6496083999d4908863ccb334f96534442afbc3dbfc034",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/othrek"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-type-specimen-mobile-375.png",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 101438,
+      "sha256": "9f91fb6f2f7941a60b8f447592c38f6e4b407f07a242350e0b219013e684bdc9",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/orvess",
+      "element": "authoring desk typography specimen"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-hero-mobile-375.png",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 458078,
+      "sha256": "1546363ff8b04379800430ae3dfd9d2fba2a2c76a2a406dbde94a342a3990f63",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-atlas-mobile-375.png",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 209379,
+      "sha256": "c70b12ea04f7968bf4e9eaafdabefea03cd6229a44b44248e9cd4ab0bcd28e28",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders#atlas"
+    },
+    {
+      "path": "screenshots/collection-hero-reduced-motion.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "reduce",
+      "bytes": 1519108,
+      "sha256": "2627a7d8e7d9018fc0c3f1697043122de156e66dfe921312b5a7e1104df1e433",
+      "url": "http://127.0.0.1:3001/gallery/sovereign-depths"
+    },
+    {
+      "path": "screenshots/collection-grid-reduced-motion.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "reduce",
+      "bytes": 1206294,
+      "sha256": "f583f323420362817ecb3da980547f8a5e668a4e3fe1e590e4c0d35a377c3b92",
+      "url": "http://127.0.0.1:3001/gallery/sovereign-depths#collection"
+    },
+    {
+      "path": "screenshots/vorrak-dossier-reduced-motion.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "reduce",
+      "bytes": 775893,
+      "sha256": "69f6193cc5a30e321722e40c15396e35841405681bf21f54c43401f654eef8ca",
+      "url": "http://127.0.0.1:3001/gallery/sovereign-depths/vorrak"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-encounter-desk-reduced-motion.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "reduce",
+      "bytes": 150286,
+      "sha256": "dcf7cea686477b5feedcfc4ac5b612747dc4110626e34d2cb8f5b02d223f0749",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/orvess"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-orvess-dossier-reduced-motion.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "reduce",
+      "bytes": 1674532,
+      "sha256": "1a1e759009eb166c11b71553944530072a578e67bc51e9d58dabe56207c53d67",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/orvess"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-vesrane-dossier-reduced-motion.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "reduce",
+      "bytes": 586831,
+      "sha256": "f023dcab8ba09db9485e7360ba67593f20b33c8c8f7ee05249c234de0aa06098",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/vesrane"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-hero-reduced-motion.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "reduce",
+      "bytes": 1828921,
+      "sha256": "39f6b7c0792a5cc7dc0b09f338c4d559d993f871ab55baaa0d133a3b6f77e583",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-atlas-reduced-motion.png",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "reducedMotion": "reduce",
+      "bytes": 762313,
+      "sha256": "064ce604ac584cf9fe0c028c4b69b5516c1b8bf56afd4990496d80544ed1f806",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders#atlas"
+    },
+    {
+      "path": "screenshots/weight-of-wonders-type-specimen-fallback-375.png",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "reducedMotion": "reduce",
+      "bytes": 136043,
+      "sha256": "d52d9adf35765c6c19208c63401c2a8c22d10a0417e6b435b09ababb899417f7",
+      "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/orvess",
+      "element": "authoring desk typography fallback specimen",
+      "fontRequestsBlocked": 5
+    }
+  ]
+}

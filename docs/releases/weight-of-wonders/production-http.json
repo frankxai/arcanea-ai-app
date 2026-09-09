@@ -1,0 +1,338 @@
+{
+  "verifiedAt": "2026-09-09T15:23:51.382447+00:00",
+  "origin": "https://www.arcanea.ai",
+  "productionCommit": "141ad072132597f741979eee58671b3bd4e26a88",
+  "images": [
+    {
+      "id": "wow-b01",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/orvess.webp",
+      "status": 200,
+      "bytes": 455976,
+      "sha256": "04bec78333d6cba70d1152775ed72333e84923ff498fbc601017b0f5915d2312",
+      "expectedSha256": "04bec78333d6cba70d1152775ed72333e84923ff498fbc601017b0f5915d2312",
+      "mime": "image/webp",
+      "pass": true
+    },
+    {
+      "id": "wow-d01",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/breathing-city.webp",
+      "status": 200,
+      "bytes": 445050,
+      "sha256": "be8538220efab5eeccdb567d47506a39a71752d4feab7e60ac8d352ae0a94018",
+      "expectedSha256": "be8538220efab5eeccdb567d47506a39a71752d4feab7e60ac8d352ae0a94018",
+      "mime": "image/webp",
+      "pass": true
+    },
+    {
+      "id": "wow-b02",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/vesrane.webp",
+      "status": 200,
+      "bytes": 276118,
+      "sha256": "e430e7ca49902063847441804abf86927aff741f8d7626930117bce62b43e3d8",
+      "expectedSha256": "e430e7ca49902063847441804abf86927aff741f8d7626930117bce62b43e3d8",
+      "mime": "image/webp",
+      "pass": true
+    },
+    {
+      "id": "wow-d02",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/unreturned-names.webp",
+      "status": 200,
+      "bytes": 264944,
+      "sha256": "a84ec4c9c0cae5b060c8bec702bcb121ab566570828df91a27cdcf7be561a7a7",
+      "expectedSha256": "a84ec4c9c0cae5b060c8bec702bcb121ab566570828df91a27cdcf7be561a7a7",
+      "mime": "image/webp",
+      "pass": true
+    },
+    {
+      "id": "wow-b03",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/qorath.webp",
+      "status": 200,
+      "bytes": 484642,
+      "sha256": "bc18cfb9a466911afbf6fb2f120cf833cee429ac17759de81dafb5285159e31a",
+      "expectedSha256": "bc18cfb9a466911afbf6fb2f120cf833cee429ac17759de81dafb5285159e31a",
+      "mime": "image/webp",
+      "pass": true
+    },
+    {
+      "id": "wow-d03",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/storm-orchard.webp",
+      "status": 200,
+      "bytes": 565436,
+      "sha256": "99f9bd63db0d85659b8b930dac0045560ecf282244b480c450def526ef68604d",
+      "expectedSha256": "99f9bd63db0d85659b8b930dac0045560ecf282244b480c450def526ef68604d",
+      "mime": "image/webp",
+      "pass": true
+    },
+    {
+      "id": "wow-b04",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/tharvoss.webp",
+      "status": 200,
+      "bytes": 547198,
+      "sha256": "4c9acd3d4dfcf5f5822e73dcb7aedb8f882cbb96dbdafaeb8f729e3a82fd4f07",
+      "expectedSha256": "4c9acd3d4dfcf5f5822e73dcb7aedb8f882cbb96dbdafaeb8f729e3a82fd4f07",
+      "mime": "image/webp",
+      "pass": true
+    },
+    {
+      "id": "wow-d04",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/spawning-stair.webp",
+      "status": 200,
+      "bytes": 576552,
+      "sha256": "4b8f70b9b8d14aa333386242eb86aa613c2caacdfa05d52d3541e5695ebb0763",
+      "expectedSha256": "4b8f70b9b8d14aa333386242eb86aa613c2caacdfa05d52d3541e5695ebb0763",
+      "mime": "image/webp",
+      "pass": true
+    },
+    {
+      "id": "wow-b05",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/glassroot-hunger.webp",
+      "status": 200,
+      "bytes": 425766,
+      "sha256": "560dcefda1cbf30ff2c9441aa57e3c636535021f495c12b9799f5ef1a3e407bd",
+      "expectedSha256": "560dcefda1cbf30ff2c9441aa57e3c636535021f495c12b9799f5ef1a3e407bd",
+      "mime": "image/webp",
+      "pass": true
+    },
+    {
+      "id": "wow-d05",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/glassroot-sepulchre.webp",
+      "status": 200,
+      "bytes": 591192,
+      "sha256": "d18d5a09a40321bd3f1bc4982e47bd3231101860037350c7f697f9318cfaa7ce",
+      "expectedSha256": "d18d5a09a40321bd3f1bc4982e47bd3231101860037350c7f697f9318cfaa7ce",
+      "mime": "image/webp",
+      "pass": true
+    },
+    {
+      "id": "wow-b06",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/othrek.webp",
+      "status": 200,
+      "bytes": 438248,
+      "sha256": "cb5bc8a8877a638d596b8eb84715fde58118a4dfa51b8b673004bf0ed9f37480",
+      "expectedSha256": "cb5bc8a8877a638d596b8eb84715fde58118a4dfa51b8b673004bf0ed9f37480",
+      "mime": "image/webp",
+      "pass": true
+    },
+    {
+      "id": "wow-d06",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/brine-tribunal.webp",
+      "status": 200,
+      "bytes": 464064,
+      "sha256": "e24a8c03f940b68e33162c504dcdf82b0c4c2bbb8dccdd6ceb9ebf6c787f07a1",
+      "expectedSha256": "e24a8c03f940b68e33162c504dcdf82b0c4c2bbb8dccdd6ceb9ebf6c787f07a1",
+      "mime": "image/webp",
+      "pass": true
+    }
+  ],
+  "pages": [
+    {
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders",
+      "status": 200,
+      "bytes": 144692,
+      "mime": "text/html; charset=utf-8",
+      "pass": true
+    },
+    {
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/orvess",
+      "status": 200,
+      "bytes": 123513,
+      "mime": "text/html; charset=utf-8",
+      "pass": true
+    },
+    {
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/breathing-city",
+      "status": 200,
+      "bytes": 119509,
+      "mime": "text/html; charset=utf-8",
+      "pass": true
+    },
+    {
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/vesrane",
+      "status": 200,
+      "bytes": 123207,
+      "mime": "text/html; charset=utf-8",
+      "pass": true
+    },
+    {
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/unreturned-names",
+      "status": 200,
+      "bytes": 120227,
+      "mime": "text/html; charset=utf-8",
+      "pass": true
+    },
+    {
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/qorath",
+      "status": 200,
+      "bytes": 122514,
+      "mime": "text/html; charset=utf-8",
+      "pass": true
+    },
+    {
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/storm-orchard",
+      "status": 200,
+      "bytes": 119442,
+      "mime": "text/html; charset=utf-8",
+      "pass": true
+    },
+    {
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/tharvoss",
+      "status": 200,
+      "bytes": 135470,
+      "mime": "text/html; charset=utf-8",
+      "pass": true
+    },
+    {
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/spawning-stair",
+      "status": 200,
+      "bytes": 126668,
+      "mime": "text/html; charset=utf-8",
+      "pass": true
+    },
+    {
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/glassroot-hunger",
+      "status": 200,
+      "bytes": 135376,
+      "mime": "text/html; charset=utf-8",
+      "pass": true
+    },
+    {
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/glassroot-sepulchre",
+      "status": 200,
+      "bytes": 126782,
+      "mime": "text/html; charset=utf-8",
+      "pass": true
+    },
+    {
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/othrek",
+      "status": 200,
+      "bytes": 135416,
+      "mime": "text/html; charset=utf-8",
+      "pass": true
+    },
+    {
+      "url": "https://www.arcanea.ai/gallery/weight-of-wonders/brine-tribunal",
+      "status": 200,
+      "bytes": 127239,
+      "mime": "text/html; charset=utf-8",
+      "pass": true
+    }
+  ],
+  "api": [
+    {
+      "url": "https://www.arcanea.ai/api/lore/weight-of-wonders",
+      "status": 200,
+      "total": 0,
+      "expectedTotal": 0,
+      "uniqueIds": 0,
+      "allEntriesExperimental": true,
+      "pass": true,
+      "canonStatus": "EXPERIMENTAL"
+    },
+    {
+      "url": "https://www.arcanea.ai/api/lore/weight-of-wonders?includeProposals=true",
+      "status": 200,
+      "total": 0,
+      "expectedTotal": 0,
+      "uniqueIds": 0,
+      "allEntriesExperimental": true,
+      "pass": true,
+      "canonStatus": "EXPERIMENTAL"
+    },
+    {
+      "url": "https://www.arcanea.ai/api/lore/weight-of-wonders?includeExperimental=true",
+      "status": 200,
+      "total": 0,
+      "expectedTotal": 0,
+      "uniqueIds": 0,
+      "allEntriesExperimental": true,
+      "pass": true,
+      "canonStatus": "EXPERIMENTAL"
+    },
+    {
+      "url": "https://www.arcanea.ai/api/lore/weight-of-wonders?includeProposals=true&includeExperimental=true",
+      "status": 200,
+      "total": 12,
+      "expectedTotal": 12,
+      "uniqueIds": 12,
+      "allEntriesExperimental": true,
+      "pass": true,
+      "canonStatus": "EXPERIMENTAL"
+    },
+    {
+      "url": "https://www.arcanea.ai/api/lore/weight-of-wonders?includeProposals=true&includeExperimental=true&kind=boss",
+      "status": 200,
+      "total": 6,
+      "expectedTotal": 6,
+      "uniqueIds": 6,
+      "allEntriesExperimental": true,
+      "pass": true,
+      "canonStatus": "EXPERIMENTAL"
+    },
+    {
+      "url": "https://www.arcanea.ai/api/lore/weight-of-wonders?includeProposals=true&includeExperimental=true&kind=dungeon",
+      "status": 200,
+      "total": 6,
+      "expectedTotal": 6,
+      "uniqueIds": 6,
+      "allEntriesExperimental": true,
+      "pass": true,
+      "canonStatus": "EXPERIMENTAL"
+    },
+    {
+      "url": "https://www.arcanea.ai/api/lore/weight-of-wonders?includeProposals=true&includeExperimental=true&id=wow-b06",
+      "status": 200,
+      "total": 1,
+      "expectedTotal": 1,
+      "uniqueIds": 1,
+      "allEntriesExperimental": true,
+      "pass": true,
+      "canonStatus": "EXPERIMENTAL"
+    },
+    {
+      "url": "https://www.arcanea.ai/api/lore/weight-of-wonders?includeProposals=true&includeExperimental=true&query=Riposte",
+      "status": 200,
+      "total": 1,
+      "expectedTotal": 1,
+      "uniqueIds": 1,
+      "allEntriesExperimental": true,
+      "pass": true,
+      "canonStatus": "EXPERIMENTAL"
+    },
+    {
+      "url": "https://www.arcanea.ai/api/lore/weight-of-wonders?includeExperimental=1",
+      "status": 400,
+      "total": null,
+      "expectedTotal": null,
+      "uniqueIds": 0,
+      "allEntriesExperimental": true,
+      "pass": true,
+      "canonStatus": null
+    }
+  ],
+  "telemetry": [
+    {
+      "url": "https://www.arcanea.ai/_vercel/speed-insights/script.js",
+      "status": 200,
+      "mime": "application/javascript; charset=utf-8",
+      "bytes": 12567,
+      "pass": true
+    },
+    {
+      "url": "https://www.arcanea.ai/_vercel/insights/script.js",
+      "status": 200,
+      "mime": "application/javascript; charset=utf-8",
+      "bytes": 3106,
+      "pass": true
+    }
+  ],
+  "privateMcp": {
+    "status": 401,
+    "pass": true
+  },
+  "sovereignDepths": {
+    "status": 200,
+    "total": 36,
+    "pass": true
+  },
+  "pass": true
+}

@@ -1,0 +1,9 @@
+{
+  "target_commit_sha": "f3524a8c947d6ed7a54dea90e7496ec726590156",
+  "production_commit_sha": "141ad072132597f741979eee58671b3bd4e26a88",
+  "target_is_distinct": true,
+  "is_ancestor": true,
+  "is_direct_parent": true,
+  "verification": "Real SHA-verified Git commit objects; git merge-base --is-ancestor exits 0",
+  "reason": "Restore the immediately preceding production main commit if rollback is required."
+}

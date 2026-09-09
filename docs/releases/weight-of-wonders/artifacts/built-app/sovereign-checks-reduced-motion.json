@@ -1,0 +1,12 @@
+{
+  "state": "reduced-motion",
+  "overflow": {
+    "viewport": 1440,
+    "content": 1440
+  },
+  "dossierOverflow": true,
+  "filters": true,
+  "search": true,
+  "emptyReset": true,
+  "dossierNavigation": true
+}

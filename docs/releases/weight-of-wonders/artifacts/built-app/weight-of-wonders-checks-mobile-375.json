@@ -1,0 +1,3360 @@
+{
+  "state": "mobile-375",
+  "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/orvess",
+  "viewport": {
+    "width": 375,
+    "height": 812
+  },
+  "devicePixelRatio": 1,
+  "collectionNavigation": true,
+  "dossierNavigation": true,
+  "phaseNavigation": true,
+  "selectedOutcome": "destroy",
+  "clipboardSuccess": true,
+  "clipboardRejection": true,
+  "manualCopyFallback": true,
+  "keyboardFocus": true,
+  "collectionOverflow": true,
+  "dossierOverflow": true,
+  "typography": {
+    "documentFontsStatus": "loaded",
+    "heading": {
+      "family": "\"Instrument Serif\", Migra, Georgia, serif",
+      "weight": "400",
+      "size": "48px",
+      "lineHeight": "45.6px"
+    },
+    "body": {
+      "family": "GeistSans, \"GeistSans Fallback\", Geist, \"Geist Sans\", system-ui, sans-serif",
+      "weight": "400",
+      "size": "16px",
+      "lineHeight": "24px"
+    },
+    "control": {
+      "family": "GeistSans, \"GeistSans Fallback\", Geist, \"Geist Sans\", system-ui, sans-serif",
+      "weight": "400",
+      "size": "16px",
+      "lineHeight": "24px"
+    },
+    "manualBrief": {
+      "family": "\"Geist Mono\", \"JetBrains Mono\", \"Fira Code\", monospace",
+      "weight": "400",
+      "size": "12.48px",
+      "lineHeight": "19.968px"
+    }
+  },
+  "controlMotion": {
+    "animationName": "none",
+    "transitionDuration": "0s"
+  },
+  "performance": {
+    "scope": "Local built-app lab observation; not field data",
+    "collection": {
+      "cls": 0,
+      "inp": 40,
+      "eventCount": 43,
+      "interactionCount": 1,
+      "interactionEventCount": 3,
+      "events": [
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.2000000000116,
+          "processingEnd": 696.5,
+          "inputDelay": 1.099999999976717,
+          "processingDuration": 0.29999999998835847,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.7000000000116,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 38.40000000002328,
+          "target": null
+        },
+        {
+          "name": "mouseenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.7000000000116,
+          "processingEnd": 697.4000000000233,
+          "inputDelay": 1.599999999976717,
+          "processingDuration": 0.7000000000116415,
+          "presentationDelay": 37.70000000001164,
+          "target": null
+        },
+        {
+          "name": "pointerdown",
+          "interactionId": 4542,
+          "startTime": 695.2999999999884,
+          "duration": 40,
+          "processingStart": 698.5,
+          "processingEnd": 699.5,
+          "inputDelay": 3.2000000000116415,
+          "processingDuration": 1,
+          "presentationDelay": 35.79999999998836,
+          "target": null
+        },
+        {
+          "name": "mousedown",
+          "interactionId": 0,
+          "startTime": 695.2999999999884,
+          "duration": 40,
+          "processingStart": 699.5,
+          "processingEnd": 699.7000000000116,
+          "inputDelay": 4.2000000000116415,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 35.59999999997672,
+          "target": null
+        },
+        {
+          "name": "pointerup",
+          "interactionId": 4542,
+          "startTime": 695.4000000000233,
+          "duration": 40,
+          "processingStart": 700.7000000000116,
+          "processingEnd": 700.7000000000116,
+          "inputDelay": 5.2999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 34.70000000001164,
+          "target": null
+        },
+        {
+          "name": "mouseup",
+          "interactionId": 0,
+          "startTime": 695.4000000000233,
+          "duration": 40,
+          "processingStart": 700.7000000000116,
+          "processingEnd": 700.7999999999884,
+          "inputDelay": 5.2999999999883585,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 34.600000000034925,
+          "target": null
+        },
+        {
+          "name": "click",
+          "interactionId": 4542,
+          "startTime": 695.4000000000233,
+          "duration": 40,
+          "processingStart": 700.7999999999884,
+          "processingEnd": 701.2999999999884,
+          "inputDelay": 5.399999999965075,
+          "processingDuration": 0.5,
+          "presentationDelay": 34.100000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.4000000000233,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.2999999999883585,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 54.5,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Open the first encounter"
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Open the first encounter"
+          }
+        },
+        {
+          "name": "mouseenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerout",
+          "interactionId": 0,
+          "startTime": 833.4000000000233,
+          "duration": 80,
+          "processingStart": 839,
+          "processingEnd": 839.2000000000116,
+          "inputDelay": 5.599999999976717,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 74.20000000001164,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Open the first encounter"
+          }
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 833.4000000000233,
+          "duration": 80,
+          "processingStart": 839.2000000000116,
+          "processingEnd": 839.2000000000116,
+          "inputDelay": 5.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 74.20000000001164,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 833.4000000000233,
+          "duration": 80,
+          "processingStart": 839.2000000000116,
+          "processingEnd": 839.2000000000116,
+          "inputDelay": 5.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 74.20000000001164,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Explore the twelve concepts"
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 833.4000000000233,
+          "duration": 80,
+          "processingStart": 839.2000000000116,
+          "processingEnd": 839.2000000000116,
+          "inputDelay": 5.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 74.20000000001164,
+          "target": null
+        },
+        {
+          "name": "mouseout",
+          "interactionId": 0,
+          "startTime": 833.4000000000233,
+          "duration": 80,
+          "processingStart": 839.2000000000116,
+          "processingEnd": 839.2000000000116,
+          "inputDelay": 5.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 74.20000000001164,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Open the first encounter"
+          }
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 833.4000000000233,
+          "duration": 80,
+          "processingStart": 839.2000000000116,
+          "processingEnd": 839.2000000000116,
+          "inputDelay": 5.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 74.20000000001164,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Explore the twelve concepts"
+          }
+        },
+        {
+          "name": "pointerout",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.4000000000233,
+          "processingEnd": 1075.600000000035,
+          "inputDelay": 0.29999999998835847,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 31.5,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Explore the twelve concepts"
+          }
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.600000000035,
+          "processingEnd": 1075.600000000035,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 31.5,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.600000000035,
+          "processingEnd": 1075.600000000035,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 31.5,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.600000000035,
+          "processingEnd": 1075.600000000035,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 31.5,
+          "target": {
+            "tag": "h1",
+            "id": "wonders-title",
+            "type": null,
+            "text": "The Weight of Wonders"
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.600000000035,
+          "processingEnd": 1075.600000000035,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 31.5,
+          "target": null
+        },
+        {
+          "name": "mouseout",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.600000000035,
+          "processingEnd": 1075.600000000035,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 31.5,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Explore the twelve concepts"
+          }
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.600000000035,
+          "processingEnd": 1075.7000000000116,
+          "inputDelay": 0.5,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 31.400000000023283,
+          "target": {
+            "tag": "h1",
+            "id": "wonders-title",
+            "type": null,
+            "text": "The Weight of Wonders"
+          }
+        }
+      ],
+      "longTasks": [
+        {
+          "startTime": 119.90000000002328,
+          "duration": 78,
+          "name": "self"
+        }
+      ],
+      "lcp": 416
+    },
+    "dossier": {
+      "measurementScope": "Gallery discovery, collection-to-dossier navigation, and Orvess phase, keyboard outcome, manual selection, clipboard and outcome-reset interactions",
+      "cls": 0,
+      "lcp": 416,
+      "clickCount": 8,
+      "inp": {
+        "status": "measured",
+        "valueMs": 96,
+        "eventCount": 26,
+        "interactionCount": 9,
+        "slowestInteraction": {
+          "interactionId": 4598,
+          "valueMs": 96,
+          "events": [
+            {
+              "name": "pointerdown",
+              "interactionId": 4598,
+              "startTime": 5612.200000000012,
+              "duration": 96,
+              "processingStart": 5613.100000000035,
+              "processingEnd": 5613.299999999988,
+              "inputDelay": 0.9000000000232831,
+              "processingDuration": 0.19999999995343387,
+              "presentationDelay": 94.90000000002328,
+              "target": {
+                "tag": "input",
+                "id": null,
+                "type": "radio",
+                "text": "Destroy OrvessThe defensive cycle stops immediately. Without the engine holding the surge, the lower city floods; the ne"
+              }
+            },
+            {
+              "name": "pointerup",
+              "interactionId": 4598,
+              "startTime": 5613.799999999988,
+              "duration": 96,
+              "processingStart": 5616.400000000023,
+              "processingEnd": 5616.5,
+              "inputDelay": 2.6000000000349246,
+              "processingDuration": 0.09999999997671694,
+              "presentationDelay": 93.29999999998836,
+              "target": {
+                "tag": "input",
+                "id": null,
+                "type": "radio",
+                "text": "Destroy OrvessThe defensive cycle stops immediately. Without the engine holding the surge, the lower city floods; the ne"
+              }
+            },
+            {
+              "name": "click",
+              "interactionId": 4598,
+              "startTime": 5613.799999999988,
+              "duration": 96,
+              "processingStart": 5616.5,
+              "processingEnd": 5618.900000000023,
+              "inputDelay": 2.7000000000116415,
+              "processingDuration": 2.400000000023283,
+              "presentationDelay": 90.89999999996508,
+              "target": {
+                "tag": "input",
+                "id": null,
+                "type": "radio",
+                "text": "Destroy OrvessThe defensive cycle stops immediately. Without the engine holding the surge, the lower city floods; the ne"
+              }
+            }
+          ]
+        }
+      },
+      "gate": {
+        "thresholdMs": 200,
+        "passed": true
+      },
+      "rawEventCount": 180,
+      "interactionEventCount": 26,
+      "events": [
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.2000000000116,
+          "processingEnd": 696.5,
+          "inputDelay": 1.099999999976717,
+          "processingDuration": 0.29999999998835847,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.5,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 38.600000000034925,
+          "target": null
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.5,
+          "processingEnd": 696.7000000000116,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 38.40000000002328,
+          "target": null
+        },
+        {
+          "name": "mouseenter",
+          "interactionId": 0,
+          "startTime": 695.1000000000349,
+          "duration": 40,
+          "processingStart": 696.7000000000116,
+          "processingEnd": 697.4000000000233,
+          "inputDelay": 1.599999999976717,
+          "processingDuration": 0.7000000000116415,
+          "presentationDelay": 37.70000000001164,
+          "target": null
+        },
+        {
+          "name": "pointerdown",
+          "interactionId": 4542,
+          "startTime": 695.2999999999884,
+          "duration": 40,
+          "processingStart": 698.5,
+          "processingEnd": 699.5,
+          "inputDelay": 3.2000000000116415,
+          "processingDuration": 1,
+          "presentationDelay": 35.79999999998836,
+          "target": null
+        },
+        {
+          "name": "mousedown",
+          "interactionId": 0,
+          "startTime": 695.2999999999884,
+          "duration": 40,
+          "processingStart": 699.5,
+          "processingEnd": 699.7000000000116,
+          "inputDelay": 4.2000000000116415,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 35.59999999997672,
+          "target": null
+        },
+        {
+          "name": "pointerup",
+          "interactionId": 4542,
+          "startTime": 695.4000000000233,
+          "duration": 40,
+          "processingStart": 700.7000000000116,
+          "processingEnd": 700.7000000000116,
+          "inputDelay": 5.2999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 34.70000000001164,
+          "target": null
+        },
+        {
+          "name": "mouseup",
+          "interactionId": 0,
+          "startTime": 695.4000000000233,
+          "duration": 40,
+          "processingStart": 700.7000000000116,
+          "processingEnd": 700.7999999999884,
+          "inputDelay": 5.2999999999883585,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 34.600000000034925,
+          "target": null
+        },
+        {
+          "name": "click",
+          "interactionId": 4542,
+          "startTime": 695.4000000000233,
+          "duration": 40,
+          "processingStart": 700.7999999999884,
+          "processingEnd": 701.2999999999884,
+          "inputDelay": 5.399999999965075,
+          "processingDuration": 0.5,
+          "presentationDelay": 34.100000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.4000000000233,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.2999999999883585,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 54.5,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Open the first encounter"
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Open the first encounter"
+          }
+        },
+        {
+          "name": "mouseenter",
+          "interactionId": 0,
+          "startTime": 741.1000000000349,
+          "duration": 56,
+          "processingStart": 742.6000000000349,
+          "processingEnd": 742.6000000000349,
+          "inputDelay": 1.5,
+          "processingDuration": 0,
+          "presentationDelay": 54.5,
+          "target": null
+        },
+        {
+          "name": "pointerout",
+          "interactionId": 0,
+          "startTime": 833.4000000000233,
+          "duration": 80,
+          "processingStart": 839,
+          "processingEnd": 839.2000000000116,
+          "inputDelay": 5.599999999976717,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 74.20000000001164,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Open the first encounter"
+          }
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 833.4000000000233,
+          "duration": 80,
+          "processingStart": 839.2000000000116,
+          "processingEnd": 839.2000000000116,
+          "inputDelay": 5.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 74.20000000001164,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 833.4000000000233,
+          "duration": 80,
+          "processingStart": 839.2000000000116,
+          "processingEnd": 839.2000000000116,
+          "inputDelay": 5.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 74.20000000001164,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Explore the twelve concepts"
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 833.4000000000233,
+          "duration": 80,
+          "processingStart": 839.2000000000116,
+          "processingEnd": 839.2000000000116,
+          "inputDelay": 5.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 74.20000000001164,
+          "target": null
+        },
+        {
+          "name": "mouseout",
+          "interactionId": 0,
+          "startTime": 833.4000000000233,
+          "duration": 80,
+          "processingStart": 839.2000000000116,
+          "processingEnd": 839.2000000000116,
+          "inputDelay": 5.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 74.20000000001164,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Open the first encounter"
+          }
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 833.4000000000233,
+          "duration": 80,
+          "processingStart": 839.2000000000116,
+          "processingEnd": 839.2000000000116,
+          "inputDelay": 5.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 74.20000000001164,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Explore the twelve concepts"
+          }
+        },
+        {
+          "name": "pointerout",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.4000000000233,
+          "processingEnd": 1075.600000000035,
+          "inputDelay": 0.29999999998835847,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 31.5,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Explore the twelve concepts"
+          }
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.600000000035,
+          "processingEnd": 1075.600000000035,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 31.5,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.600000000035,
+          "processingEnd": 1075.600000000035,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 31.5,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.600000000035,
+          "processingEnd": 1075.600000000035,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 31.5,
+          "target": {
+            "tag": "h1",
+            "id": "wonders-title",
+            "type": null,
+            "text": "The Weight of Wonders"
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.600000000035,
+          "processingEnd": 1075.600000000035,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 31.5,
+          "target": null
+        },
+        {
+          "name": "mouseout",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.600000000035,
+          "processingEnd": 1075.600000000035,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 31.5,
+          "target": {
+            "tag": "a",
+            "id": null,
+            "type": null,
+            "text": "Explore the twelve concepts"
+          }
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 1075.100000000035,
+          "duration": 32,
+          "processingStart": 1075.600000000035,
+          "processingEnd": 1075.7000000000116,
+          "inputDelay": 0.5,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 31.400000000023283,
+          "target": {
+            "tag": "h1",
+            "id": "wonders-title",
+            "type": null,
+            "text": "The Weight of Wonders"
+          }
+        },
+        {
+          "name": "pointerout",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1214.7000000000116,
+          "processingEnd": 1214.9000000000233,
+          "inputDelay": 0.20000000001164153,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 47.59999999997672,
+          "target": {
+            "tag": "h1",
+            "id": "wonders-title",
+            "type": null,
+            "text": "The Weight of Wonders"
+          }
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1214.9000000000233,
+          "processingEnd": 1214.9000000000233,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 47.59999999997672,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1214.9000000000233,
+          "processingEnd": 1214.9000000000233,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 47.59999999997672,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1214.9000000000233,
+          "processingEnd": 1214.9000000000233,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 47.59999999997672,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1214.9000000000233,
+          "processingEnd": 1214.9000000000233,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 47.59999999997672,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1214.9000000000233,
+          "processingEnd": 1215,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 47.5,
+          "target": {
+            "tag": "img",
+            "id": null,
+            "type": null,
+            "text": ""
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1215,
+          "processingEnd": 1215,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 47.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1215,
+          "processingEnd": 1215,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 47.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1215,
+          "processingEnd": 1215,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 47.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1215,
+          "processingEnd": 1215,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 47.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1215,
+          "processingEnd": 1215,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 47.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1215,
+          "processingEnd": 1215,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 47.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1215,
+          "processingEnd": 1215,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 47.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1215,
+          "processingEnd": 1215,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 47.5,
+          "target": null
+        },
+        {
+          "name": "mouseout",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1215,
+          "processingEnd": 1215,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 47.5,
+          "target": {
+            "tag": "h1",
+            "id": "wonders-title",
+            "type": null,
+            "text": "The Weight of Wonders"
+          }
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 1214.5,
+          "duration": 48,
+          "processingStart": 1215,
+          "processingEnd": 1215.100000000035,
+          "inputDelay": 0.5,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 47.399999999965075,
+          "target": {
+            "tag": "img",
+            "id": null,
+            "type": null,
+            "text": ""
+          }
+        },
+        {
+          "name": "pointerdown",
+          "interactionId": 4549,
+          "startTime": 1322.2000000000116,
+          "duration": 48,
+          "processingStart": 1322.7999999999884,
+          "processingEnd": 1323.2999999999884,
+          "inputDelay": 0.5999999999767169,
+          "processingDuration": 0.5,
+          "presentationDelay": 46.90000000002328,
+          "target": null
+        },
+        {
+          "name": "mousedown",
+          "interactionId": 0,
+          "startTime": 1322.2000000000116,
+          "duration": 48,
+          "processingStart": 1323.2999999999884,
+          "processingEnd": 1323.5,
+          "inputDelay": 1.099999999976717,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 46.70000000001164,
+          "target": null
+        },
+        {
+          "name": "pointerup",
+          "interactionId": 4549,
+          "startTime": 1322.2999999999884,
+          "duration": 48,
+          "processingStart": 1323.7000000000116,
+          "processingEnd": 1323.9000000000233,
+          "inputDelay": 1.400000000023283,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 46.399999999965075,
+          "target": null
+        },
+        {
+          "name": "mouseup",
+          "interactionId": 0,
+          "startTime": 1322.2999999999884,
+          "duration": 48,
+          "processingStart": 1323.9000000000233,
+          "processingEnd": 1323.9000000000233,
+          "inputDelay": 1.6000000000349246,
+          "processingDuration": 0,
+          "presentationDelay": 46.399999999965075,
+          "target": null
+        },
+        {
+          "name": "click",
+          "interactionId": 4549,
+          "startTime": 1322.2999999999884,
+          "duration": 48,
+          "processingStart": 1323.9000000000233,
+          "processingEnd": 1325.100000000035,
+          "inputDelay": 1.6000000000349246,
+          "processingDuration": 1.2000000000116415,
+          "presentationDelay": 45.199999999953434,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.20000000001164153,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 47.699999999953434,
+          "target": {
+            "tag": "p",
+            "id": null,
+            "type": null,
+            "text": "Its bronze bearings polish where they move; ceramic plates retain mineral deposits from former flood levels. The chest o"
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367.100000000035,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.30000000004656613,
+          "processingDuration": 0,
+          "presentationDelay": 47.699999999953434,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367.100000000035,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.30000000004656613,
+          "processingDuration": 0,
+          "presentationDelay": 47.699999999953434,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367.100000000035,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.30000000004656613,
+          "processingDuration": 0,
+          "presentationDelay": 47.699999999953434,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367.100000000035,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.30000000004656613,
+          "processingDuration": 0,
+          "presentationDelay": 47.699999999953434,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367.100000000035,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.30000000004656613,
+          "processingDuration": 0,
+          "presentationDelay": 47.699999999953434,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367.100000000035,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.30000000004656613,
+          "processingDuration": 0,
+          "presentationDelay": 47.699999999953434,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367.100000000035,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.30000000004656613,
+          "processingDuration": 0,
+          "presentationDelay": 47.699999999953434,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367.100000000035,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.30000000004656613,
+          "processingDuration": 0,
+          "presentationDelay": 47.699999999953434,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367.100000000035,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.30000000004656613,
+          "processingDuration": 0,
+          "presentationDelay": 47.699999999953434,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367.100000000035,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.30000000004656613,
+          "processingDuration": 0,
+          "presentationDelay": 47.699999999953434,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367.100000000035,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.30000000004656613,
+          "processingDuration": 0,
+          "presentationDelay": 47.699999999953434,
+          "target": null
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367.100000000035,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.30000000004656613,
+          "processingDuration": 0,
+          "presentationDelay": 47.699999999953434,
+          "target": {
+            "tag": "p",
+            "id": null,
+            "type": null,
+            "text": "Its bronze bearings polish where they move; ceramic plates retain mineral deposits from former flood levels. The chest o"
+          }
+        },
+        {
+          "name": "mouseenter",
+          "interactionId": 0,
+          "startTime": 1366.7999999999884,
+          "duration": 48,
+          "processingStart": 1367.100000000035,
+          "processingEnd": 1367.100000000035,
+          "inputDelay": 0.30000000004656613,
+          "processingDuration": 0,
+          "presentationDelay": 47.699999999953434,
+          "target": null
+        },
+        {
+          "name": "pointerout",
+          "interactionId": 0,
+          "startTime": 2014.2000000000116,
+          "duration": 24,
+          "processingStart": 2014.4000000000233,
+          "processingEnd": 2014.600000000035,
+          "inputDelay": 0.20000000001164153,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 23.599999999976717,
+          "target": {
+            "tag": "p",
+            "id": null,
+            "type": null,
+            "text": "Its bronze bearings polish where they move; ceramic plates retain mineral deposits from former flood levels. The chest o"
+          }
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 2014.2000000000116,
+          "duration": 24,
+          "processingStart": 2014.600000000035,
+          "processingEnd": 2014.600000000035,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 23.599999999976717,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 2014.2000000000116,
+          "duration": 24,
+          "processingStart": 2014.600000000035,
+          "processingEnd": 2014.600000000035,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 23.599999999976717,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 2014.2000000000116,
+          "duration": 24,
+          "processingStart": 2014.600000000035,
+          "processingEnd": 2014.600000000035,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 23.599999999976717,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 2014.2000000000116,
+          "duration": 24,
+          "processingStart": 2014.600000000035,
+          "processingEnd": 2014.600000000035,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 23.599999999976717,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 2014.2000000000116,
+          "duration": 24,
+          "processingStart": 2014.600000000035,
+          "processingEnd": 2014.600000000035,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 23.599999999976717,
+          "target": {
+            "tag": "header",
+            "id": null,
+            "type": null,
+            "text": "EXPERIMENTAL / Encounter concept / The Last AbutmentOrvessAn ancient flood engine still protects a boundary that leaves "
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 2014.2000000000116,
+          "duration": 24,
+          "processingStart": 2014.600000000035,
+          "processingEnd": 2014.600000000035,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 23.599999999976717,
+          "target": null
+        },
+        {
+          "name": "mouseout",
+          "interactionId": 0,
+          "startTime": 2014.2000000000116,
+          "duration": 24,
+          "processingStart": 2014.600000000035,
+          "processingEnd": 2014.600000000035,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 23.599999999976717,
+          "target": {
+            "tag": "p",
+            "id": null,
+            "type": null,
+            "text": "Its bronze bearings polish where they move; ceramic plates retain mineral deposits from former flood levels. The chest o"
+          }
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 2014.2000000000116,
+          "duration": 24,
+          "processingStart": 2014.600000000035,
+          "processingEnd": 2014.600000000035,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 23.599999999976717,
+          "target": {
+            "tag": "header",
+            "id": null,
+            "type": null,
+            "text": "EXPERIMENTAL / Encounter concept / The Last AbutmentOrvessAn ancient flood engine still protects a boundary that leaves "
+          }
+        },
+        {
+          "name": "pointerout",
+          "interactionId": 0,
+          "startTime": 3391,
+          "duration": 16,
+          "processingStart": 3391.5,
+          "processingEnd": 3391.7999999999884,
+          "inputDelay": 0.5,
+          "processingDuration": 0.29999999998835847,
+          "presentationDelay": 15.200000000011642,
+          "target": {
+            "tag": "div",
+            "id": null,
+            "type": null,
+            "text": "The historyOrvess was commissioned to prevent a particular flood, not to govern a city. Settlements accumulated in its m"
+          }
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 3391,
+          "duration": 16,
+          "processingStart": 3391.7999999999884,
+          "processingEnd": 3391.7999999999884,
+          "inputDelay": 0.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 15.200000000011642,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 3391,
+          "duration": 16,
+          "processingStart": 3391.7999999999884,
+          "processingEnd": 3391.7999999999884,
+          "inputDelay": 0.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 15.200000000011642,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 2The price of pressure"
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 3391,
+          "duration": 16,
+          "processingStart": 3391.7999999999884,
+          "processingEnd": 3391.7999999999884,
+          "inputDelay": 0.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 15.200000000011642,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 3391,
+          "duration": 16,
+          "processingStart": 3391.7999999999884,
+          "processingEnd": 3391.7999999999884,
+          "inputDelay": 0.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 15.200000000011642,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 3391,
+          "duration": 16,
+          "processingStart": 3391.7999999999884,
+          "processingEnd": 3391.7999999999884,
+          "inputDelay": 0.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 15.200000000011642,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 3391,
+          "duration": 16,
+          "processingStart": 3391.7999999999884,
+          "processingEnd": 3391.7999999999884,
+          "inputDelay": 0.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 15.200000000011642,
+          "target": null
+        },
+        {
+          "name": "mouseout",
+          "interactionId": 0,
+          "startTime": 3391,
+          "duration": 16,
+          "processingStart": 3391.7999999999884,
+          "processingEnd": 3391.7999999999884,
+          "inputDelay": 0.7999999999883585,
+          "processingDuration": 0,
+          "presentationDelay": 15.200000000011642,
+          "target": {
+            "tag": "div",
+            "id": null,
+            "type": null,
+            "text": "The historyOrvess was commissioned to prevent a particular flood, not to govern a city. Settlements accumulated in its m"
+          }
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 3391,
+          "duration": 16,
+          "processingStart": 3391.7999999999884,
+          "processingEnd": 3391.9000000000233,
+          "inputDelay": 0.7999999999883585,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 15.099999999976717,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 2The price of pressure"
+          }
+        },
+        {
+          "name": "pointerdown",
+          "interactionId": 4556,
+          "startTime": 3391.100000000035,
+          "duration": 16,
+          "processingStart": 3392.2000000000116,
+          "processingEnd": 3392.5,
+          "inputDelay": 1.099999999976717,
+          "processingDuration": 0.29999999998835847,
+          "presentationDelay": 14.600000000034925,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 2The price of pressure"
+          }
+        },
+        {
+          "name": "mousedown",
+          "interactionId": 0,
+          "startTime": 3391.100000000035,
+          "duration": 16,
+          "processingStart": 3392.5,
+          "processingEnd": 3392.600000000035,
+          "inputDelay": 1.3999999999650754,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 14.5,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 2The price of pressure"
+          }
+        },
+        {
+          "name": "pointerup",
+          "interactionId": 4556,
+          "startTime": 3391.2999999999884,
+          "duration": 16,
+          "processingStart": 3392.9000000000233,
+          "processingEnd": 3393,
+          "inputDelay": 1.6000000000349246,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 14.299999999988358,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 2The price of pressure"
+          }
+        },
+        {
+          "name": "mouseup",
+          "interactionId": 0,
+          "startTime": 3391.2999999999884,
+          "duration": 16,
+          "processingStart": 3393,
+          "processingEnd": 3393,
+          "inputDelay": 1.7000000000116415,
+          "processingDuration": 0,
+          "presentationDelay": 14.299999999988358,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 2The price of pressure"
+          }
+        },
+        {
+          "name": "click",
+          "interactionId": 4556,
+          "startTime": 3391.2999999999884,
+          "duration": 16,
+          "processingStart": 3393,
+          "processingEnd": 3393.7000000000116,
+          "inputDelay": 1.7000000000116415,
+          "processingDuration": 0.7000000000116415,
+          "presentationDelay": 13.599999999976717,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 2The price of pressure"
+          }
+        },
+        {
+          "name": "keydown",
+          "interactionId": 4563,
+          "startTime": 3430.7000000000116,
+          "duration": 32,
+          "processingStart": 3430.9000000000233,
+          "processingEnd": 3431.9000000000233,
+          "inputDelay": 0.20000000001164153,
+          "processingDuration": 1,
+          "presentationDelay": 30.79999999998836,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 1The old instruction"
+          }
+        },
+        {
+          "name": "keyup",
+          "interactionId": 4563,
+          "startTime": 3432.2999999999884,
+          "duration": 32,
+          "processingStart": 3432.2999999999884,
+          "processingEnd": 3432.4000000000233,
+          "inputDelay": 0,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 31.899999999965075,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 2The price of pressure"
+          }
+        },
+        {
+          "name": "keydown",
+          "interactionId": 4570,
+          "startTime": 3481.5,
+          "duration": 48,
+          "processingStart": 3481.7000000000116,
+          "processingEnd": 3483.4000000000233,
+          "inputDelay": 0.20000000001164153,
+          "processingDuration": 1.7000000000116415,
+          "presentationDelay": 46.09999999997672,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Repair the protectorControlled flooding destroys valuable stores while evacuation routes preserve more homes. The city i"
+          }
+        },
+        {
+          "name": "click",
+          "interactionId": 4570,
+          "startTime": 3481.5,
+          "duration": 48,
+          "processingStart": 3482.2000000000116,
+          "processingEnd": 3483.4000000000233,
+          "inputDelay": 0.7000000000116415,
+          "processingDuration": 1.2000000000116415,
+          "presentationDelay": 46.09999999997672,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Destroy OrvessThe defensive cycle stops immediately. Without the engine holding the surge, the lower city floods; the ne"
+          }
+        },
+        {
+          "name": "keyup",
+          "interactionId": 4570,
+          "startTime": 3484,
+          "duration": 48,
+          "processingStart": 3485.4000000000233,
+          "processingEnd": 3485.4000000000233,
+          "inputDelay": 1.400000000023283,
+          "processingDuration": 0,
+          "presentationDelay": 46.59999999997672,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Destroy OrvessThe defensive cycle stops immediately. Without the engine holding the surge, the lower city floods; the ne"
+          }
+        },
+        {
+          "name": "pointerout",
+          "interactionId": 0,
+          "startTime": 3490.2999999999884,
+          "duration": 40,
+          "processingStart": 3490.7999999999884,
+          "processingEnd": 3490.9000000000233,
+          "inputDelay": 0.5,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 39.399999999965075,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 2The price of pressure"
+          }
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 3490.2999999999884,
+          "duration": 40,
+          "processingStart": 3490.9000000000233,
+          "processingEnd": 3490.9000000000233,
+          "inputDelay": 0.6000000000349246,
+          "processingDuration": 0,
+          "presentationDelay": 39.399999999965075,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 3490.2999999999884,
+          "duration": 40,
+          "processingStart": 3490.9000000000233,
+          "processingEnd": 3491,
+          "inputDelay": 0.6000000000349246,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 39.29999999998836,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 3A different boundary"
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 3490.2999999999884,
+          "duration": 40,
+          "processingStart": 3491,
+          "processingEnd": 3491,
+          "inputDelay": 0.7000000000116415,
+          "processingDuration": 0,
+          "presentationDelay": 39.29999999998836,
+          "target": null
+        },
+        {
+          "name": "mouseout",
+          "interactionId": 0,
+          "startTime": 3490.2999999999884,
+          "duration": 40,
+          "processingStart": 3491,
+          "processingEnd": 3491.100000000035,
+          "inputDelay": 0.7000000000116415,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 39.199999999953434,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 2The price of pressure"
+          }
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 3490.2999999999884,
+          "duration": 40,
+          "processingStart": 3491.100000000035,
+          "processingEnd": 3491.100000000035,
+          "inputDelay": 0.8000000000465661,
+          "processingDuration": 0,
+          "presentationDelay": 39.199999999953434,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 3A different boundary"
+          }
+        },
+        {
+          "name": "pointerout",
+          "interactionId": 0,
+          "startTime": 4104.700000000012,
+          "duration": 40,
+          "processingStart": 4104.900000000023,
+          "processingEnd": 4105.100000000035,
+          "inputDelay": 0.20000000001164153,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 39.59999999997672,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 3A different boundary"
+          }
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 4104.700000000012,
+          "duration": 40,
+          "processingStart": 4105.100000000035,
+          "processingEnd": 4105.100000000035,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 39.59999999997672,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 4104.700000000012,
+          "duration": 40,
+          "processingStart": 4105.100000000035,
+          "processingEnd": 4105.100000000035,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 39.59999999997672,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 4104.700000000012,
+          "duration": 40,
+          "processingStart": 4105.100000000035,
+          "processingEnd": 4105.100000000035,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0,
+          "presentationDelay": 39.59999999997672,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 4104.700000000012,
+          "duration": 40,
+          "processingStart": 4105.100000000035,
+          "processingEnd": 4105.200000000012,
+          "inputDelay": 0.40000000002328306,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 39.5,
+          "target": {
+            "tag": "div",
+            "id": null,
+            "type": null,
+            "text": "Writing prompt / Session briefReady to copy"
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 4104.700000000012,
+          "duration": 40,
+          "processingStart": 4105.200000000012,
+          "processingEnd": 4105.200000000012,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 39.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 4104.700000000012,
+          "duration": 40,
+          "processingStart": 4105.200000000012,
+          "processingEnd": 4105.200000000012,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 39.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 4104.700000000012,
+          "duration": 40,
+          "processingStart": 4105.200000000012,
+          "processingEnd": 4105.200000000012,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 39.5,
+          "target": null
+        },
+        {
+          "name": "mouseout",
+          "interactionId": 0,
+          "startTime": 4104.700000000012,
+          "duration": 40,
+          "processingStart": 4105.200000000012,
+          "processingEnd": 4105.299999999988,
+          "inputDelay": 0.5,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 39.40000000002328,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Phase 3A different boundary"
+          }
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 4104.700000000012,
+          "duration": 40,
+          "processingStart": 4105.299999999988,
+          "processingEnd": 4105.299999999988,
+          "inputDelay": 0.5999999999767169,
+          "processingDuration": 0,
+          "presentationDelay": 39.40000000002328,
+          "target": {
+            "tag": "div",
+            "id": null,
+            "type": null,
+            "text": "Writing prompt / Session briefReady to copy"
+          }
+        },
+        {
+          "name": "pointerdown",
+          "interactionId": 4577,
+          "startTime": 4991.100000000035,
+          "duration": 24,
+          "processingStart": 4991.600000000035,
+          "processingEnd": 4991.900000000023,
+          "inputDelay": 0.5,
+          "processingDuration": 0.29999999998835847,
+          "presentationDelay": 23.20000000001164,
+          "target": {
+            "tag": "textarea",
+            "id": "manual-authoring-brief",
+            "type": null,
+            "text": "THE WEIGHT OF WONDERS — Orvess Status: EXPERIMENTAL Arcanea concept An ancient flood engine still protects a boundary th"
+          }
+        },
+        {
+          "name": "mousedown",
+          "interactionId": 0,
+          "startTime": 4991.100000000035,
+          "duration": 24,
+          "processingStart": 4991.900000000023,
+          "processingEnd": 4992,
+          "inputDelay": 0.7999999999883585,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 23.100000000034925,
+          "target": {
+            "tag": "textarea",
+            "id": "manual-authoring-brief",
+            "type": null,
+            "text": "THE WEIGHT OF WONDERS — Orvess Status: EXPERIMENTAL Arcanea concept An ancient flood engine still protects a boundary th"
+          }
+        },
+        {
+          "name": "pointerup",
+          "interactionId": 4577,
+          "startTime": 4991.100000000035,
+          "duration": 24,
+          "processingStart": 4993.299999999988,
+          "processingEnd": 4993.299999999988,
+          "inputDelay": 2.199999999953434,
+          "processingDuration": 0,
+          "presentationDelay": 21.800000000046566,
+          "target": {
+            "tag": "textarea",
+            "id": "manual-authoring-brief",
+            "type": null,
+            "text": "THE WEIGHT OF WONDERS — Orvess Status: EXPERIMENTAL Arcanea concept An ancient flood engine still protects a boundary th"
+          }
+        },
+        {
+          "name": "mouseup",
+          "interactionId": 0,
+          "startTime": 4991.100000000035,
+          "duration": 24,
+          "processingStart": 4993.299999999988,
+          "processingEnd": 4993.5,
+          "inputDelay": 2.199999999953434,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 21.600000000034925,
+          "target": {
+            "tag": "textarea",
+            "id": "manual-authoring-brief",
+            "type": null,
+            "text": "THE WEIGHT OF WONDERS — Orvess Status: EXPERIMENTAL Arcanea concept An ancient flood engine still protects a boundary th"
+          }
+        },
+        {
+          "name": "click",
+          "interactionId": 4577,
+          "startTime": 4991.100000000035,
+          "duration": 24,
+          "processingStart": 4993.5,
+          "processingEnd": 4993.5,
+          "inputDelay": 2.3999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 21.600000000034925,
+          "target": {
+            "tag": "textarea",
+            "id": "manual-authoring-brief",
+            "type": null,
+            "text": "THE WEIGHT OF WONDERS — Orvess Status: EXPERIMENTAL Arcanea concept An ancient flood engine still protects a boundary th"
+          }
+        },
+        {
+          "name": "pointerout",
+          "interactionId": 0,
+          "startTime": 5304.900000000023,
+          "duration": 24,
+          "processingStart": 5305,
+          "processingEnd": 5305.200000000012,
+          "inputDelay": 0.09999999997671694,
+          "processingDuration": 0.20000000001164153,
+          "presentationDelay": 23.70000000001164,
+          "target": {
+            "tag": "textarea",
+            "id": "manual-authoring-brief",
+            "type": null,
+            "text": "THE WEIGHT OF WONDERS — Orvess Status: EXPERIMENTAL Arcanea concept An ancient flood engine still protects a boundary th"
+          }
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 5304.900000000023,
+          "duration": 24,
+          "processingStart": 5305.200000000012,
+          "processingEnd": 5305.200000000012,
+          "inputDelay": 0.29999999998835847,
+          "processingDuration": 0,
+          "presentationDelay": 23.70000000001164,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 5304.900000000023,
+          "duration": 24,
+          "processingStart": 5305.200000000012,
+          "processingEnd": 5305.200000000012,
+          "inputDelay": 0.29999999998835847,
+          "processingDuration": 0,
+          "presentationDelay": 23.70000000001164,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 5304.900000000023,
+          "duration": 24,
+          "processingStart": 5305.200000000012,
+          "processingEnd": 5305.200000000012,
+          "inputDelay": 0.29999999998835847,
+          "processingDuration": 0,
+          "presentationDelay": 23.70000000001164,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 5304.900000000023,
+          "duration": 24,
+          "processingStart": 5305.200000000012,
+          "processingEnd": 5305.200000000012,
+          "inputDelay": 0.29999999998835847,
+          "processingDuration": 0,
+          "presentationDelay": 23.70000000001164,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 5304.900000000023,
+          "duration": 24,
+          "processingStart": 5305.200000000012,
+          "processingEnd": 5305.200000000012,
+          "inputDelay": 0.29999999998835847,
+          "processingDuration": 0,
+          "presentationDelay": 23.70000000001164,
+          "target": {
+            "tag": "span",
+            "id": null,
+            "type": null,
+            "text": "EXPERIMENTAL concept artwork and authoring material. Game implementation and book publication are separate."
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 5304.900000000023,
+          "duration": 24,
+          "processingStart": 5305.200000000012,
+          "processingEnd": 5305.200000000012,
+          "inputDelay": 0.29999999998835847,
+          "processingDuration": 0,
+          "presentationDelay": 23.70000000001164,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 5304.900000000023,
+          "duration": 24,
+          "processingStart": 5305.200000000012,
+          "processingEnd": 5305.200000000012,
+          "inputDelay": 0.29999999998835847,
+          "processingDuration": 0,
+          "presentationDelay": 23.70000000001164,
+          "target": null
+        },
+        {
+          "name": "mouseout",
+          "interactionId": 0,
+          "startTime": 5304.900000000023,
+          "duration": 24,
+          "processingStart": 5305.200000000012,
+          "processingEnd": 5305.299999999988,
+          "inputDelay": 0.29999999998835847,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 23.600000000034925,
+          "target": {
+            "tag": "textarea",
+            "id": "manual-authoring-brief",
+            "type": null,
+            "text": "THE WEIGHT OF WONDERS — Orvess Status: EXPERIMENTAL Arcanea concept An ancient flood engine still protects a boundary th"
+          }
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 5304.900000000023,
+          "duration": 24,
+          "processingStart": 5305.299999999988,
+          "processingEnd": 5305.400000000023,
+          "inputDelay": 0.3999999999650754,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 23.5,
+          "target": {
+            "tag": "span",
+            "id": null,
+            "type": null,
+            "text": "EXPERIMENTAL concept artwork and authoring material. Game implementation and book publication are separate."
+          }
+        },
+        {
+          "name": "pointerout",
+          "interactionId": 0,
+          "startTime": 5410.600000000035,
+          "duration": 40,
+          "processingStart": 5411.400000000023,
+          "processingEnd": 5411.5,
+          "inputDelay": 0.7999999999883585,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 39.100000000034925,
+          "target": {
+            "tag": "span",
+            "id": null,
+            "type": null,
+            "text": "EXPERIMENTAL concept artwork and authoring material. Game implementation and book publication are separate."
+          }
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 5410.600000000035,
+          "duration": 40,
+          "processingStart": 5411.5,
+          "processingEnd": 5411.5,
+          "inputDelay": 0.8999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 39.100000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 5410.600000000035,
+          "duration": 40,
+          "processingStart": 5411.5,
+          "processingEnd": 5411.5,
+          "inputDelay": 0.8999999999650754,
+          "processingDuration": 0,
+          "presentationDelay": 39.100000000034925,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 5410.600000000035,
+          "duration": 40,
+          "processingStart": 5411.5,
+          "processingEnd": 5411.600000000035,
+          "inputDelay": 0.8999999999650754,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 39,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Copy brief"
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 5410.600000000035,
+          "duration": 40,
+          "processingStart": 5411.600000000035,
+          "processingEnd": 5411.600000000035,
+          "inputDelay": 1,
+          "processingDuration": 0,
+          "presentationDelay": 39,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 5410.600000000035,
+          "duration": 40,
+          "processingStart": 5411.600000000035,
+          "processingEnd": 5411.600000000035,
+          "inputDelay": 1,
+          "processingDuration": 0,
+          "presentationDelay": 39,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 5410.600000000035,
+          "duration": 40,
+          "processingStart": 5411.600000000035,
+          "processingEnd": 5411.600000000035,
+          "inputDelay": 1,
+          "processingDuration": 0,
+          "presentationDelay": 39,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 5410.600000000035,
+          "duration": 40,
+          "processingStart": 5411.600000000035,
+          "processingEnd": 5411.600000000035,
+          "inputDelay": 1,
+          "processingDuration": 0,
+          "presentationDelay": 39,
+          "target": null
+        },
+        {
+          "name": "mouseout",
+          "interactionId": 0,
+          "startTime": 5410.600000000035,
+          "duration": 40,
+          "processingStart": 5411.600000000035,
+          "processingEnd": 5411.700000000012,
+          "inputDelay": 1,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 38.90000000002328,
+          "target": {
+            "tag": "span",
+            "id": null,
+            "type": null,
+            "text": "EXPERIMENTAL concept artwork and authoring material. Game implementation and book publication are separate."
+          }
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 5410.600000000035,
+          "duration": 40,
+          "processingStart": 5411.700000000012,
+          "processingEnd": 5411.700000000012,
+          "inputDelay": 1.099999999976717,
+          "processingDuration": 0,
+          "presentationDelay": 38.90000000002328,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Copy brief"
+          }
+        },
+        {
+          "name": "pointerdown",
+          "interactionId": 4584,
+          "startTime": 5410.700000000012,
+          "duration": 40,
+          "processingStart": 5412.299999999988,
+          "processingEnd": 5414.799999999988,
+          "inputDelay": 1.599999999976717,
+          "processingDuration": 2.5,
+          "presentationDelay": 35.90000000002328,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Copy brief"
+          }
+        },
+        {
+          "name": "mousedown",
+          "interactionId": 0,
+          "startTime": 5410.700000000012,
+          "duration": 40,
+          "processingStart": 5414.799999999988,
+          "processingEnd": 5414.900000000023,
+          "inputDelay": 4.099999999976717,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 35.79999999998836,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Copy brief"
+          }
+        },
+        {
+          "name": "pointerup",
+          "interactionId": 4584,
+          "startTime": 5410.799999999988,
+          "duration": 40,
+          "processingStart": 5415.600000000035,
+          "processingEnd": 5415.600000000035,
+          "inputDelay": 4.800000000046566,
+          "processingDuration": 0,
+          "presentationDelay": 35.199999999953434,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Copy brief"
+          }
+        },
+        {
+          "name": "mouseup",
+          "interactionId": 0,
+          "startTime": 5410.799999999988,
+          "duration": 40,
+          "processingStart": 5415.600000000035,
+          "processingEnd": 5415.600000000035,
+          "inputDelay": 4.800000000046566,
+          "processingDuration": 0,
+          "presentationDelay": 35.199999999953434,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Copy brief"
+          }
+        },
+        {
+          "name": "click",
+          "interactionId": 4584,
+          "startTime": 5410.799999999988,
+          "duration": 40,
+          "processingStart": 5415.700000000012,
+          "processingEnd": 5417.600000000035,
+          "inputDelay": 4.900000000023283,
+          "processingDuration": 1.900000000023283,
+          "presentationDelay": 33.199999999953434,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Copy brief"
+          }
+        },
+        {
+          "name": "pointerout",
+          "interactionId": 0,
+          "startTime": 5523.400000000023,
+          "duration": 48,
+          "processingStart": 5524.299999999988,
+          "processingEnd": 5524.400000000023,
+          "inputDelay": 0.8999999999650754,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 47,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Copy brief"
+          }
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 5523.400000000023,
+          "duration": 48,
+          "processingStart": 5524.400000000023,
+          "processingEnd": 5524.400000000023,
+          "inputDelay": 1,
+          "processingDuration": 0,
+          "presentationDelay": 47,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 5523.400000000023,
+          "duration": 48,
+          "processingStart": 5524.400000000023,
+          "processingEnd": 5524.400000000023,
+          "inputDelay": 1,
+          "processingDuration": 0,
+          "presentationDelay": 47,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 5523.400000000023,
+          "duration": 48,
+          "processingStart": 5524.400000000023,
+          "processingEnd": 5524.400000000023,
+          "inputDelay": 1,
+          "processingDuration": 0,
+          "presentationDelay": 47,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 5523.400000000023,
+          "duration": 48,
+          "processingStart": 5524.400000000023,
+          "processingEnd": 5524.5,
+          "inputDelay": 1,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 46.90000000002328,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Repair the protectorControlled flooding destroys valuable stores while evacuation routes preserve more homes. The city i"
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 5523.400000000023,
+          "duration": 48,
+          "processingStart": 5524.5,
+          "processingEnd": 5524.5,
+          "inputDelay": 1.099999999976717,
+          "processingDuration": 0,
+          "presentationDelay": 46.90000000002328,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 5523.400000000023,
+          "duration": 48,
+          "processingStart": 5524.5,
+          "processingEnd": 5524.5,
+          "inputDelay": 1.099999999976717,
+          "processingDuration": 0,
+          "presentationDelay": 46.90000000002328,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 5523.400000000023,
+          "duration": 48,
+          "processingStart": 5524.5,
+          "processingEnd": 5524.5,
+          "inputDelay": 1.099999999976717,
+          "processingDuration": 0,
+          "presentationDelay": 46.90000000002328,
+          "target": null
+        },
+        {
+          "name": "mouseout",
+          "interactionId": 0,
+          "startTime": 5523.400000000023,
+          "duration": 48,
+          "processingStart": 5524.5,
+          "processingEnd": 5524.5,
+          "inputDelay": 1.099999999976717,
+          "processingDuration": 0,
+          "presentationDelay": 46.90000000002328,
+          "target": {
+            "tag": "button",
+            "id": null,
+            "type": "button",
+            "text": "Copy brief"
+          }
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 5523.400000000023,
+          "duration": 48,
+          "processingStart": 5524.5,
+          "processingEnd": 5524.600000000035,
+          "inputDelay": 1.099999999976717,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 46.79999999998836,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Repair the protectorControlled flooding destroys valuable stores while evacuation routes preserve more homes. The city i"
+          }
+        },
+        {
+          "name": "pointerdown",
+          "interactionId": 4591,
+          "startTime": 5523.700000000012,
+          "duration": 48,
+          "processingStart": 5525.5,
+          "processingEnd": 5525.799999999988,
+          "inputDelay": 1.7999999999883585,
+          "processingDuration": 0.29999999998835847,
+          "presentationDelay": 45.90000000002328,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Repair the protectorControlled flooding destroys valuable stores while evacuation routes preserve more homes. The city i"
+          }
+        },
+        {
+          "name": "mousedown",
+          "interactionId": 0,
+          "startTime": 5523.700000000012,
+          "duration": 48,
+          "processingStart": 5525.799999999988,
+          "processingEnd": 5525.900000000023,
+          "inputDelay": 2.099999999976717,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 45.79999999998836,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Repair the protectorControlled flooding destroys valuable stores while evacuation routes preserve more homes. The city i"
+          }
+        },
+        {
+          "name": "pointerup",
+          "interactionId": 4591,
+          "startTime": 5524,
+          "duration": 48,
+          "processingStart": 5526.600000000035,
+          "processingEnd": 5526.600000000035,
+          "inputDelay": 2.6000000000349246,
+          "processingDuration": 0,
+          "presentationDelay": 45.399999999965075,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Repair the protectorControlled flooding destroys valuable stores while evacuation routes preserve more homes. The city i"
+          }
+        },
+        {
+          "name": "mouseup",
+          "interactionId": 0,
+          "startTime": 5524,
+          "duration": 48,
+          "processingStart": 5526.700000000012,
+          "processingEnd": 5526.700000000012,
+          "inputDelay": 2.7000000000116415,
+          "processingDuration": 0,
+          "presentationDelay": 45.29999999998836,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Repair the protectorControlled flooding destroys valuable stores while evacuation routes preserve more homes. The city i"
+          }
+        },
+        {
+          "name": "click",
+          "interactionId": 4591,
+          "startTime": 5524,
+          "duration": 48,
+          "processingStart": 5526.700000000012,
+          "processingEnd": 5528.299999999988,
+          "inputDelay": 2.7000000000116415,
+          "processingDuration": 1.599999999976717,
+          "presentationDelay": 43.70000000001164,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Repair the protectorControlled flooding destroys valuable stores while evacuation routes preserve more homes. The city i"
+          }
+        },
+        {
+          "name": "pointerout",
+          "interactionId": 0,
+          "startTime": 5612,
+          "duration": 96,
+          "processingStart": 5612.200000000012,
+          "processingEnd": 5612.5,
+          "inputDelay": 0.20000000001164153,
+          "processingDuration": 0.29999999998835847,
+          "presentationDelay": 95.5,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Repair the protectorControlled flooding destroys valuable stores while evacuation routes preserve more homes. The city i"
+          }
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 5612,
+          "duration": 96,
+          "processingStart": 5612.5,
+          "processingEnd": 5612.5,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 95.5,
+          "target": null
+        },
+        {
+          "name": "pointerleave",
+          "interactionId": 0,
+          "startTime": 5612,
+          "duration": 96,
+          "processingStart": 5612.5,
+          "processingEnd": 5612.5,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 95.5,
+          "target": null
+        },
+        {
+          "name": "pointerover",
+          "interactionId": 0,
+          "startTime": 5612,
+          "duration": 96,
+          "processingStart": 5612.5,
+          "processingEnd": 5612.5,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 95.5,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Destroy OrvessThe defensive cycle stops immediately. Without the engine holding the surge, the lower city floods; the ne"
+          }
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 5612,
+          "duration": 96,
+          "processingStart": 5612.5,
+          "processingEnd": 5612.5,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 95.5,
+          "target": null
+        },
+        {
+          "name": "pointerenter",
+          "interactionId": 0,
+          "startTime": 5612,
+          "duration": 96,
+          "processingStart": 5612.5,
+          "processingEnd": 5612.5,
+          "inputDelay": 0.5,
+          "processingDuration": 0,
+          "presentationDelay": 95.5,
+          "target": null
+        },
+        {
+          "name": "mouseout",
+          "interactionId": 0,
+          "startTime": 5612,
+          "duration": 96,
+          "processingStart": 5612.5,
+          "processingEnd": 5612.600000000035,
+          "inputDelay": 0.5,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 95.39999999996508,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Repair the protectorControlled flooding destroys valuable stores while evacuation routes preserve more homes. The city i"
+          }
+        },
+        {
+          "name": "mouseover",
+          "interactionId": 0,
+          "startTime": 5612,
+          "duration": 96,
+          "processingStart": 5612.600000000035,
+          "processingEnd": 5612.600000000035,
+          "inputDelay": 0.6000000000349246,
+          "processingDuration": 0,
+          "presentationDelay": 95.39999999996508,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Destroy OrvessThe defensive cycle stops immediately. Without the engine holding the surge, the lower city floods; the ne"
+          }
+        },
+        {
+          "name": "pointerdown",
+          "interactionId": 4598,
+          "startTime": 5612.200000000012,
+          "duration": 96,
+          "processingStart": 5613.100000000035,
+          "processingEnd": 5613.299999999988,
+          "inputDelay": 0.9000000000232831,
+          "processingDuration": 0.19999999995343387,
+          "presentationDelay": 94.90000000002328,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Destroy OrvessThe defensive cycle stops immediately. Without the engine holding the surge, the lower city floods; the ne"
+          }
+        },
+        {
+          "name": "mousedown",
+          "interactionId": 0,
+          "startTime": 5612.200000000012,
+          "duration": 96,
+          "processingStart": 5613.299999999988,
+          "processingEnd": 5613.400000000023,
+          "inputDelay": 1.099999999976717,
+          "processingDuration": 0.1000000000349246,
+          "presentationDelay": 94.79999999998836,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Destroy OrvessThe defensive cycle stops immediately. Without the engine holding the surge, the lower city floods; the ne"
+          }
+        },
+        {
+          "name": "pointerup",
+          "interactionId": 4598,
+          "startTime": 5613.799999999988,
+          "duration": 96,
+          "processingStart": 5616.400000000023,
+          "processingEnd": 5616.5,
+          "inputDelay": 2.6000000000349246,
+          "processingDuration": 0.09999999997671694,
+          "presentationDelay": 93.29999999998836,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Destroy OrvessThe defensive cycle stops immediately. Without the engine holding the surge, the lower city floods; the ne"
+          }
+        },
+        {
+          "name": "mouseup",
+          "interactionId": 0,
+          "startTime": 5613.799999999988,
+          "duration": 96,
+          "processingStart": 5616.5,
+          "processingEnd": 5616.5,
+          "inputDelay": 2.7000000000116415,
+          "processingDuration": 0,
+          "presentationDelay": 93.29999999998836,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Destroy OrvessThe defensive cycle stops immediately. Without the engine holding the surge, the lower city floods; the ne"
+          }
+        },
+        {
+          "name": "click",
+          "interactionId": 4598,
+          "startTime": 5613.799999999988,
+          "duration": 96,
+          "processingStart": 5616.5,
+          "processingEnd": 5618.900000000023,
+          "inputDelay": 2.7000000000116415,
+          "processingDuration": 2.400000000023283,
+          "presentationDelay": 90.89999999996508,
+          "target": {
+            "tag": "input",
+            "id": null,
+            "type": "radio",
+            "text": "Destroy OrvessThe defensive cycle stops immediately. Without the engine holding the surge, the lower city floods; the ne"
+          }
+        }
+      ],
+      "longTasks": [
+        {
+          "startTime": 119.90000000002328,
+          "duration": 78,
+          "name": "self"
+        }
+      ]
+    }
+  },
+  "browserDiagnostics": {
+    "rawConsoleErrors": [
+      {
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "location": {
+          "url": "http://127.0.0.1:3001/_vercel/speed-insights/script.js",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      },
+      {
+        "text": "Refused to execute script from 'http://127.0.0.1:3001/_vercel/speed-insights/script.js' because its MIME type ('text/plain') is not executable, and strict MIME type checking is enabled.",
+        "location": {
+          "url": "http://127.0.0.1:3001/gallery",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      },
+      {
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "location": {
+          "url": "http://127.0.0.1:3001/_vercel/insights/script.js",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      },
+      {
+        "text": "Refused to execute script from 'http://127.0.0.1:3001/_vercel/insights/script.js' because its MIME type ('text/plain') is not executable, and strict MIME type checking is enabled.",
+        "location": {
+          "url": "http://127.0.0.1:3001/gallery",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      }
+    ],
+    "expectedLocalInfrastructureErrors": [
+      {
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "location": {
+          "url": "http://127.0.0.1:3001/_vercel/speed-insights/script.js",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      },
+      {
+        "text": "Refused to execute script from 'http://127.0.0.1:3001/_vercel/speed-insights/script.js' because its MIME type ('text/plain') is not executable, and strict MIME type checking is enabled.",
+        "location": {
+          "url": "http://127.0.0.1:3001/gallery",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      },
+      {
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "location": {
+          "url": "http://127.0.0.1:3001/_vercel/insights/script.js",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      },
+      {
+        "text": "Refused to execute script from 'http://127.0.0.1:3001/_vercel/insights/script.js' because its MIME type ('text/plain') is not executable, and strict MIME type checking is enabled.",
+        "location": {
+          "url": "http://127.0.0.1:3001/gallery",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      }
+    ],
+    "unexpectedConsoleErrors": [],
+    "pageErrors": [],
+    "gatePassed": true,
+    "productionTelemetryVerification": "Separate production check must confirm both Vercel telemetry scripts return HTTP 200"
+  }
+}

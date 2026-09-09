@@ -1,0 +1,272 @@
+{
+  "state": "desktop",
+  "overflow": {
+    "viewport": 1440,
+    "content": 1440
+  },
+  "dossierOverflow": true,
+  "filters": true,
+  "search": true,
+  "emptyReset": true,
+  "dossierNavigation": true,
+  "api": {
+    "default": 0,
+    "proposals": 30,
+    "all": 36
+  },
+  "assets": [
+    {
+      "id": "b01",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b01.webp",
+      "status": 200,
+      "bytes": 156946,
+      "sha256": "0297f199c40cc040b5a8f8e92a6b4e915700af396c4ed955e7f2b1062adf10d1"
+    },
+    {
+      "id": "b02",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b02.webp",
+      "status": 200,
+      "bytes": 180390,
+      "sha256": "7300803feefc44fec29456a6c2eefd436513abd24ec42c54721521a2badd4e96"
+    },
+    {
+      "id": "b03",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b03.webp",
+      "status": 200,
+      "bytes": 271698,
+      "sha256": "3f7a1a49cfcc06c802e3b1250bf101db6147977f8dddbbac151f9e11eec6ebd2"
+    },
+    {
+      "id": "b04",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b04.webp",
+      "status": 200,
+      "bytes": 175578,
+      "sha256": "53ff1339be53bc88b7c326cd510037944ec2374ae9cc62ffa3cb1830c5b1b74b"
+    },
+    {
+      "id": "b05",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b05.webp",
+      "status": 200,
+      "bytes": 162944,
+      "sha256": "375dcbad84d09fa012a2edc2f654c984b06b673aaaca81760b7c3c739dd67a90"
+    },
+    {
+      "id": "b06",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b06.webp",
+      "status": 200,
+      "bytes": 153112,
+      "sha256": "6d4571ce140dcf31644cea42196f37319fcf524dbc132557b8da15d12ca3b61e"
+    },
+    {
+      "id": "b07",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b07.webp",
+      "status": 200,
+      "bytes": 231322,
+      "sha256": "9082cb5693447269d8685845ad120654e16609d939a7be66333d1fde12c8d9ea"
+    },
+    {
+      "id": "b08",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b08.webp",
+      "status": 200,
+      "bytes": 275872,
+      "sha256": "d839706514cb814599f8786fcdbb70299dae3185b208aa3ec1778976c4395bc3"
+    },
+    {
+      "id": "b09",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b09.webp",
+      "status": 200,
+      "bytes": 215374,
+      "sha256": "4cd793c353604de8dd8dab523f69eb3b29f618b6f37e106b05771929343cd85b"
+    },
+    {
+      "id": "b10",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b10.webp",
+      "status": 200,
+      "bytes": 190714,
+      "sha256": "e66e3490165fb5123456c55a17b81ec7fe368a12a735fff5a1ae8de9e3e4e279"
+    },
+    {
+      "id": "b11",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b11.webp",
+      "status": 200,
+      "bytes": 139780,
+      "sha256": "eaff037b07b1d40fd2c0e65bdbec46c526f727df36fdb2d166f15c745a811234"
+    },
+    {
+      "id": "b12",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b12.webp",
+      "status": 200,
+      "bytes": 174460,
+      "sha256": "fd0ca8ed4a0a0eb55d0b440556e6b004746be428a45749144b7681d1d6dd6ead"
+    },
+    {
+      "id": "b13",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b13.webp",
+      "status": 200,
+      "bytes": 238158,
+      "sha256": "c5e95cec213e43cccad64194f14830587b66e48cad558f053f3bb29b6bc82c26"
+    },
+    {
+      "id": "b14",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b14.webp",
+      "status": 200,
+      "bytes": 231160,
+      "sha256": "9d73de5829d5fc2daf7513f5cb30d0a0a536d6c4dafeeb1394a6a54afd766f12"
+    },
+    {
+      "id": "b15",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b15.webp",
+      "status": 200,
+      "bytes": 321652,
+      "sha256": "16477ad344f2f978c81610bfd508905b4a408980c2d5aa513e63fde7f57938c1"
+    },
+    {
+      "id": "b16",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b16.webp",
+      "status": 200,
+      "bytes": 259094,
+      "sha256": "3d6af43cda9402f4ae67cf82c9f109ff5d09a81f4784c1e065460de7ed94d338"
+    },
+    {
+      "id": "b17",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b17.webp",
+      "status": 200,
+      "bytes": 183964,
+      "sha256": "6d622f281f2343ca0e645fbc69cd6b84c048a724121b948f09507b57981cfeb7"
+    },
+    {
+      "id": "b18",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b18.webp",
+      "status": 200,
+      "bytes": 204054,
+      "sha256": "1a707cefcdbdbd84940bbaccf06002c0d81159b2afa0d2eb2242608c217ad9d9"
+    },
+    {
+      "id": "b19",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b19.webp",
+      "status": 200,
+      "bytes": 223522,
+      "sha256": "eb5c8e3b901573dd391a7708ef72f7b75714f0114b3ab90fdda501914bb21d1b"
+    },
+    {
+      "id": "b20",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b20.webp",
+      "status": 200,
+      "bytes": 263854,
+      "sha256": "242fabe6b83ff0e67e2eb655fdcbaf3f2607b49a485563c79083a84462e3cc8e"
+    },
+    {
+      "id": "b21",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b21.webp",
+      "status": 200,
+      "bytes": 224724,
+      "sha256": "571ca23b8e1f30f762c293767dbc68677f33e65047e4a947e1d9bc62193b09ba"
+    },
+    {
+      "id": "b22",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b22.webp",
+      "status": 200,
+      "bytes": 194300,
+      "sha256": "7603d4f895024f0d07c46b81fdd8f3d84d65464c7caa20cd65ff45748b5234be"
+    },
+    {
+      "id": "b23",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b23.webp",
+      "status": 200,
+      "bytes": 178496,
+      "sha256": "d42ba986ad2443033e0d1b6b89031b02c248289fde1ec20cde6762e3edc9c9d2"
+    },
+    {
+      "id": "b24",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/b24.webp",
+      "status": 200,
+      "bytes": 96228,
+      "sha256": "6dd143ebf488fba8390615ddd5bb19c5f307fa00ca5aa2c013d2d2da5e588d63"
+    },
+    {
+      "id": "d01",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/d01.webp",
+      "status": 200,
+      "bytes": 159376,
+      "sha256": "ed5351d485b15c9d30a80e63c8695fdbbced0e9a5b6b3d7700edd6e4cede94dc"
+    },
+    {
+      "id": "d02",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/d02.webp",
+      "status": 200,
+      "bytes": 209440,
+      "sha256": "690d05288a8f5d47c0a051539c554163d0b36cb73d29b5c5fae2a2e30ab30294"
+    },
+    {
+      "id": "d03",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/d03.webp",
+      "status": 200,
+      "bytes": 183282,
+      "sha256": "ac26980917973473491352b5aac7b2f1e994f2e06ce34831e9b6ee0406eb978b"
+    },
+    {
+      "id": "d04",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/d04.webp",
+      "status": 200,
+      "bytes": 302528,
+      "sha256": "21d25dcc73c5be3be32930b60430920ba4dd4053cbf24de1bd65d11fd39d3cfc"
+    },
+    {
+      "id": "d05",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/d05.webp",
+      "status": 200,
+      "bytes": 199136,
+      "sha256": "0718053495cdd115643e7673c773d3bad42738f9f722ff13a45caebba2a43e0b"
+    },
+    {
+      "id": "d06",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/d06.webp",
+      "status": 200,
+      "bytes": 138218,
+      "sha256": "dd4a5af1c665a1f5bab4be83783635cdbc31e7269a07307750ea677abd57e1ea"
+    },
+    {
+      "id": "d07",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/d07.webp",
+      "status": 200,
+      "bytes": 192414,
+      "sha256": "6ac5270a65c02f7e3ed707e13c305c6482535d1f9aa292636699443191adcd94"
+    },
+    {
+      "id": "d08",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/d08.webp",
+      "status": 200,
+      "bytes": 241836,
+      "sha256": "f9c3bb5a7ec40c865ed63086e86be84432814e7a8a45580dedfaa9f4b4aff832"
+    },
+    {
+      "id": "d09",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/d09.webp",
+      "status": 200,
+      "bytes": 216126,
+      "sha256": "ea13c1b7c5fa878a7cdb66d7ff8f6a668ac768b6631e994d1c96af1012fa2b5d"
+    },
+    {
+      "id": "d10",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/d10.webp",
+      "status": 200,
+      "bytes": 211958,
+      "sha256": "563775f7c9bed5546b5510ac5cd22c29c9f5aaa98f846c419769052e23d5aa5d"
+    },
+    {
+      "id": "d11",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/d11.webp",
+      "status": 200,
+      "bytes": 172102,
+      "sha256": "bbe5750a112dd43f0838772b97a1669fe04c3b122b681ddfd5c14a461d3552f1"
+    },
+    {
+      "id": "d12",
+      "url": "http://127.0.0.1:3001/images/sovereign-depths/d12.webp",
+      "status": 200,
+      "bytes": 196694,
+      "sha256": "5860da025b96f2b826f0f4c39c11c6df02da6331dfdd75850fc5d053c6419c8c"
+    }
+  ],
+  "privateGatewayStatus": 401
+}

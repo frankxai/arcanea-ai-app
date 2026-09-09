@@ -1,0 +1,54 @@
+{
+  "scope": "Local built-app lab observation at the exact reviewed source tree; not field or production data",
+  "lab_observed_url": "http://127.0.0.1:3001/gallery/weight-of-wonders/orvess",
+  "reviewed_source_commit": "e8adbc3399420f3a86ff8068132c09ab8410896f",
+  "reviewed_source_tree": "10474f7c77b78371719ca6f593e993ba66215a4b",
+  "ci_merge_checkout": "6b3517317e07b936f48ce918a2aabde65ef5dea5",
+  "ci_merge_tree": "10474f7c77b78371719ca6f593e993ba66215a4b",
+  "thresholds": {
+    "lcp_ms_max": 2500,
+    "cls_max": 0.1,
+    "inp_ms_max": 200
+  },
+  "states": {
+    "desktop": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "lcp_ms": 660,
+      "cls": 0.024350244341563784,
+      "inp_ms": 192,
+      "passed": true
+    },
+    "mobile_375": {
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "lcp_ms": 416,
+      "cls": 0,
+      "inp_ms": 96,
+      "passed": true
+    },
+    "reduced_motion": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "lcp_ms": 568,
+      "cls": 0.002161758401920439,
+      "inp_ms": 128,
+      "passed": true
+    }
+  },
+  "gate_passed": true,
+  "field_data_claimed": false,
+  "production_limitation": "Production field INP was not instrumented; no field metric is claimed.",
+  "source_receipt": {
+    "path": "final12-ci-verification.md",
+    "sha256": "e44ef985cde005db58857b178e3173f67b14bafb157804d020ee31bacd5f1644",
+    "bytes": 3322,
+    "mime": "text/markdown"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "tested_url": "https://www.arcanea.ai/gallery/weight-of-wonders",
+  "experimental_labels_visible": true,
+  "encounters_are_concepts": true,
+  "trilogy_is_outline": true,
+  "no_shipped_game_claim": true,
+  "no_published_book_claim": true,
+  "gate_passed": true,
+  "source_receipt": {
+    "path": "production-browser-receipt.json",
+    "sha256": "dcbec7811dc1ab29826ad0d797fc66a03bc77c1dae052307e7bb68b2de51a37e",
+    "bytes": 12065,
+    "mime": "application/json"
+  }
+}

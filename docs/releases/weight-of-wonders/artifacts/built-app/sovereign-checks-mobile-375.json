@@ -1,0 +1,12 @@
+{
+  "state": "mobile-375",
+  "overflow": {
+    "viewport": 375,
+    "content": 375
+  },
+  "dossierOverflow": true,
+  "filters": true,
+  "search": true,
+  "emptyReset": true,
+  "dossierNavigation": true
+}

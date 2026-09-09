@@ -1,0 +1,16 @@
+{
+  "tested_url": "https://www.arcanea.ai/gallery/weight-of-wonders",
+  "expected_events": [],
+  "verified_events": [],
+  "new_custom_events_shipped": false,
+  "vercel_speed_insights_script_http_200": true,
+  "vercel_insights_script_http_200": true,
+  "telemetry_mime": "application/javascript; charset=utf-8",
+  "gate_passed": true,
+  "source_receipt": {
+    "path": "production-http.json",
+    "sha256": "89b74b7820cce41593c8fea4936012efa2b0e17553fe03dbcde7b432f8155326",
+    "bytes": 10619,
+    "mime": "application/json"
+  }
+}

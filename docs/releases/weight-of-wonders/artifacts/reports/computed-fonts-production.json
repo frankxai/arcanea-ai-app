@@ -1,0 +1,56 @@
+{
+  "tested_url": "https://www.arcanea.ai/gallery/weight-of-wonders",
+  "mode": "preserve-host-stack",
+  "display_family": "Instrument Serif",
+  "body_family": "GeistSans",
+  "weights_verified": [
+    400
+  ],
+  "font_status": "loaded",
+  "collection": {
+    "display": {
+      "computed_family": "\"Instrument Serif\", Migra, Georgia, serif",
+      "weight": "400",
+      "size": "109.04px",
+      "line_height": "103.588px"
+    },
+    "body": {
+      "computed_family": "GeistSans, \"GeistSans Fallback\", Geist, \"Geist Sans\", system-ui, sans-serif",
+      "weight": "400",
+      "size": "20.8px",
+      "line_height": "34.32px"
+    },
+    "control": {
+      "computed_family": "GeistSans, \"GeistSans Fallback\", Geist, \"Geist Sans\", system-ui, sans-serif",
+      "weight": "400",
+      "size": "14px",
+      "line_height": "21px"
+    }
+  },
+  "dossier": {
+    "display": {
+      "computed_family": "\"Instrument Serif\", Migra, Georgia, serif",
+      "weight": "400",
+      "size": "81.78px",
+      "line_height": "77.691px"
+    },
+    "control": {
+      "computed_family": "GeistSans, \"GeistSans Fallback\", Geist, \"Geist Sans\", system-ui, sans-serif",
+      "weight": "400",
+      "size": "16px",
+      "line_height": "24px"
+    },
+    "manual_brief": {
+      "computed_family": "\"Geist Mono\", \"JetBrains Mono\", \"Fira Code\", monospace",
+      "weight": "400",
+      "size": "12.48px",
+      "line_height": "19.968px"
+    }
+  },
+  "source_receipt": {
+    "path": "production-browser-receipt.json",
+    "sha256": "dcbec7811dc1ab29826ad0d797fc66a03bc77c1dae052307e7bb68b2de51a37e",
+    "bytes": 12065,
+    "mime": "application/json"
+  }
+}

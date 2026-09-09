@@ -1,0 +1,40 @@
+{
+  "tested_url": "https://www.arcanea.ai/gallery/weight-of-wonders",
+  "scope": "Actual production desktop semantics/interactions plus exact-deployed-tree CI mobile, keyboard, fallback and reduced-motion evidence",
+  "serious_violations": 0,
+  "critical_violations": 0,
+  "automated_axe_claimed": false,
+  "production_observations": {
+    "collection_heading": true,
+    "experimental_label": true,
+    "overflow": false,
+    "dossiers_visited": 12,
+    "dossier_headings_correct": 12,
+    "phase_control": true,
+    "native_ending_selection": true,
+    "clipboard_status": true,
+    "brief_reward": true
+  },
+  "exact_tree_ci_observations": {
+    "mobile_375_reflow": true,
+    "keyboard_phase_order": true,
+    "native_radio_keyboard": true,
+    "clipboard_rejection_fallback": true,
+    "reduced_motion": true
+  },
+  "finding": "No serious or critical issue observed in the tested surfaces; this is scoped manual/interaction evidence, not exhaustive WCAG conformance.",
+  "source_receipts": {
+    "production": {
+      "path": "production-browser-receipt.json",
+      "sha256": "dcbec7811dc1ab29826ad0d797fc66a03bc77c1dae052307e7bb68b2de51a37e",
+      "bytes": 12065,
+      "mime": "application/json"
+    },
+    "ci": {
+      "path": "final12-ci-verification.md",
+      "sha256": "e44ef985cde005db58857b178e3173f67b14bafb157804d020ee31bacd5f1644",
+      "bytes": 3322,
+      "mime": "text/markdown"
+    }
+  }
+}

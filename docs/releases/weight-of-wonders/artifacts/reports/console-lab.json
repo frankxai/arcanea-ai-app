@@ -1,0 +1,39 @@
+{
+  "scope": "Local built-app browser diagnostics at the exact reviewed source tree; not relabeled as production",
+  "lab_observed_url": "http://127.0.0.1:3001/gallery/weight-of-wonders/orvess",
+  "reviewed_source_commit": "e8adbc3399420f3a86ff8068132c09ab8410896f",
+  "reviewed_source_tree": "10474f7c77b78371719ca6f593e993ba66215a4b",
+  "ci_merge_checkout": "6b3517317e07b936f48ce918a2aabde65ef5dea5",
+  "ci_merge_tree": "10474f7c77b78371719ca6f593e993ba66215a4b",
+  "states": {
+    "desktop": {
+      "raw_errors": 4,
+      "expected_local_telemetry_errors": 4,
+      "unexpected_console_errors": 0,
+      "page_errors": 0,
+      "passed": true
+    },
+    "mobile_375": {
+      "raw_errors": 4,
+      "expected_local_telemetry_errors": 4,
+      "unexpected_console_errors": 0,
+      "page_errors": 0,
+      "passed": true
+    },
+    "reduced_motion": {
+      "raw_errors": 4,
+      "expected_local_telemetry_errors": 4,
+      "unexpected_console_errors": 0,
+      "page_errors": 0,
+      "passed": true
+    }
+  },
+  "gate_passed": true,
+  "production_limitation": "Raw production console was not instrumented; no production-console claim is made.",
+  "source_receipt": {
+    "path": "final12-ci-verification.md",
+    "sha256": "e44ef985cde005db58857b178e3173f67b14bafb157804d020ee31bacd5f1644",
+    "bytes": 3322,
+    "mime": "text/markdown"
+  }
+}

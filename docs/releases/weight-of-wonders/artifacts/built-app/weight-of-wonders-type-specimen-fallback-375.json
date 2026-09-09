@@ -1,0 +1,65 @@
+{
+  "scope": "Real built-app fallback specimen with webfont requests blocked; readability is shown by the accompanying PNG",
+  "url": "http://127.0.0.1:3001/gallery/weight-of-wonders/orvess",
+  "viewport": {
+    "width": 375,
+    "height": 812
+  },
+  "deviceScaleFactor": 1,
+  "blockedFontRequests": [
+    "http://127.0.0.1:3001/_next/static/media/70bc3e132a0a741e-s.p.3t6q91iet4nsy.woff2",
+    "http://127.0.0.1:3001/_next/static/media/7ebf22b5a21034f8-s.p.3j3877k49yy0l.woff2",
+    "http://127.0.0.1:3001/_next/static/media/GeistMono_Variable.p.3ms9vq719j3f8.woff2",
+    "http://127.0.0.1:3001/_next/static/media/Geist_Variable-s.p.0mrjj4bg00-he.woff2",
+    "http://127.0.0.1:3001/_next/static/media/e41d5df559864f9e-s.p.1g73gv09-xcb6.woff2"
+  ],
+  "reflow": true,
+  "specimenBox": {
+    "x": 16,
+    "y": 3066.75,
+    "width": 343,
+    "height": 2140.796875
+  },
+  "typography": {
+    "documentFontsStatus": "loaded",
+    "heading": {
+      "family": "\"Instrument Serif\", Migra, Georgia, serif",
+      "weight": "400",
+      "size": "48px",
+      "lineHeight": "45.6px",
+      "declaredFontAvailable": null
+    },
+    "body": {
+      "family": "GeistSans, \"GeistSans Fallback\", Geist, \"Geist Sans\", system-ui, sans-serif",
+      "weight": "400",
+      "size": "16px",
+      "lineHeight": "24px",
+      "declaredFontAvailable": null
+    },
+    "control": {
+      "family": "GeistSans, \"GeistSans Fallback\", Geist, \"Geist Sans\", system-ui, sans-serif",
+      "weight": "400",
+      "size": "16px",
+      "lineHeight": "24px",
+      "declaredFontAvailable": null
+    },
+    "manualBrief": {
+      "family": "\"Geist Mono\", \"JetBrains Mono\", \"Fira Code\", monospace",
+      "weight": "400",
+      "size": "12.48px",
+      "lineHeight": "19.968px",
+      "declaredFontAvailable": null
+    }
+  },
+  "consoleErrors": [
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Refused to execute script from 'http://127.0.0.1:3001/_vercel/insights/script.js' because its MIME type ('text/plain') is not executable, and strict MIME type checking is enabled.",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Refused to execute script from 'http://127.0.0.1:3001/_vercel/speed-insights/script.js' because its MIME type ('text/plain') is not executable, and strict MIME type checking is enabled."
+  ]
+}
