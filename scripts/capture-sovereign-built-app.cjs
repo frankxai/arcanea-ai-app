@@ -330,24 +330,34 @@ const typographyReport = async (page) =>
       2,
     ) + "\n",
   );
-  const failedInteractionGate = wonderReports.find(
+  const failedInteractionGates = wonderReports.filter(
     (report) => !report.performance.dossier.gate.passed,
   );
-  if (failedInteractionGate) {
+  const failedBrowserDiagnostics = wonderReports.filter(
+    (report) => !report.browserDiagnostics.gatePassed,
+  );
+  if (failedInteractionGates.length || failedBrowserDiagnostics.length) {
     console.error(
-      "Weight of Wonders interaction latency diagnostic:\n" +
+      "Weight of Wonders deferred browser diagnostics:\n" +
         JSON.stringify(
           {
-            state: failedInteractionGate.state,
-            url: failedInteractionGate.url,
-            performance: failedInteractionGate.performance.dossier,
+            interactionLatency: failedInteractionGates.map((report) => ({
+              state: report.state,
+              url: report.url,
+              performance: report.performance.dossier,
+            })),
+            browserErrors: failedBrowserDiagnostics.map((report) => ({
+              state: report.state,
+              url: report.url,
+              browserDiagnostics: report.browserDiagnostics,
+            })),
           },
           null,
           2,
         ),
     );
     assert.fail(
-      `Lab interaction latency exceeds 200ms in ${failedInteractionGate.state}: ${failedInteractionGate.performance.dossier.inp.valueMs}ms`,
+      `Deferred browser gates failed: ${failedInteractionGates.length} interaction latency, ${failedBrowserDiagnostics.length} console/page error`,
     );
   }
   console.log(
