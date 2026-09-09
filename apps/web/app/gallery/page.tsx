@@ -75,7 +75,7 @@ export default async function GalleryPage() {
           </div>
           <div className={wonderStyles.galleryFeatureCopy}>
             <p className={wonderStyles.eyebrow}>
-              EXPERIMENTAL / Six connected concepts
+              EXPERIMENTAL / Twelve connected concepts
             </p>
             <h2 id="weight-of-wonders-feature">The Weight of Wonders</h2>
             <p>

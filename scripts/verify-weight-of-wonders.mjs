@@ -10,18 +10,40 @@ const dataPath = join(
   "apps/web/lib/visual-encyclopedia/weight-of-wonders.json",
 );
 const data = JSON.parse(await readFile(dataPath, "utf8"));
-const { collection, entries } = data;
+const extensionSource =
+  "docs/worldbuilding/weight-of-wonders/living-crucibles.md";
+const extensionEntries = JSON.parse(
+  await readFile(
+    join(
+      root,
+      "docs/worldbuilding/weight-of-wonders/living-crucibles-entries.json",
+    ),
+    "utf8",
+  ),
+);
+const collection = {
+  ...data.collection,
+  source: {
+    foundation: data.collection.source,
+    extension: extensionSource,
+  },
+};
+const entries = [...data.entries, ...extensionEntries];
 
 assert.equal(collection.id, "weight-of-wonders");
 assert.equal(collection.canonStatus, "EXPERIMENTAL");
+assert.deepEqual(collection.source, {
+  foundation: "docs/worldbuilding/weight-of-wonders/creative-packet.md",
+  extension: "docs/worldbuilding/weight-of-wonders/living-crucibles.md",
+});
 assert.equal(collection.trilogy.length, 3, "three-part proposed trilogy");
-assert.equal(entries.length, 6, "six independent concept records");
-assert.equal(entries.filter((entry) => entry.kind === "boss").length, 3);
-assert.equal(entries.filter((entry) => entry.kind === "dungeon").length, 3);
-assert.equal(new Set(entries.map((entry) => entry.id)).size, 6, "unique IDs");
+assert.equal(entries.length, 12, "twelve independent concept records");
+assert.equal(entries.filter((entry) => entry.kind === "boss").length, 6);
+assert.equal(entries.filter((entry) => entry.kind === "dungeon").length, 6);
+assert.equal(new Set(entries.map((entry) => entry.id)).size, 12, "unique IDs");
 assert.equal(
   new Set(entries.map((entry) => entry.slug)).size,
-  6,
+  12,
   "unique slugs",
 );
 
@@ -54,16 +76,22 @@ const hashes = new Set();
 let totalBytes = 0;
 for (const entry of entries) {
   assert.equal(entry.canonStatus, "EXPERIMENTAL", `${entry.id}: status`);
-  assert.match(entry.id, /^wow-[bd]0[1-3]$/u, `${entry.id}: stable ID`);
+  assert.match(entry.id, /^wow-[bd]0[1-6]$/u, `${entry.id}: stable ID`);
   assert.match(entry.slug, /^[a-z0-9-]+$/u, `${entry.id}: route slug`);
   assert.ok(entry.history.length > 0, `${entry.id}: history`);
   assert.ok(entry.storySeeds.length > 0, `${entry.id}: story seeds`);
   assert.ok(entry.sessionKit.prompt.length > 80, `${entry.id}: useful prompt`);
   assert.ok(entry.sessionKit.beats.length >= 3, `${entry.id}: session beats`);
   assert.ok(entry.artNote.length > 20, `${entry.id}: artwork limits`);
+  if (entry.growth) {
+    for (const [key, value] of Object.entries(entry.growth))
+      assert.ok(value.length > 40, `${entry.id}: useful growth ${key}`);
+  }
   if (entry.kind === "boss") {
     assert.equal(entry.encounter.phases.length, 3, `${entry.id}: phases`);
     assert.equal(entry.encounter.endings.length, 3, `${entry.id}: endings`);
+    if (entry.foodWeb)
+      assert.ok(entry.foodWeb.length >= 3, `${entry.id}: food web`);
   } else {
     assert.ok(entry.place.routes.length >= 3, `${entry.id}: routes`);
     assert.ok(entry.place.consequence.length > 40, `${entry.id}: consequence`);
@@ -109,8 +137,8 @@ console.log(
     {
       status: "PASS",
       records: entries.length,
-      bosses: 3,
-      dungeons: 3,
+      bosses: 6,
+      dungeons: 6,
       images: hashes.size,
       renditionBytes: totalBytes,
       canonStatus: collection.canonStatus,

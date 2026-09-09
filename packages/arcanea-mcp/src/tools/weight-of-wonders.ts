@@ -7,7 +7,7 @@ export const weightOfWondersQuerySchema = z.object({
   query: z.string().max(160).default(""),
   id: z
     .string()
-    .regex(/^wow-[bd]0[1-3]$/u)
+    .regex(/^wow-[bd]\d{2}$/u)
     .optional(),
 });
 
@@ -51,18 +51,18 @@ export async function searchWeightOfWonders(
         includeProposals: z.literal(true),
         includeExperimental: z.literal(true),
         trilogy: z.array(z.unknown()).max(3).default([]),
-        total: z.number().int().min(0).max(6),
+        total: z.number().int().min(0).max(64),
         entries: z
           .array(
             z
               .object({
-                id: z.string().regex(/^wow-[bd]0[1-3]$/u),
+                id: z.string().regex(/^wow-[bd]\d{2}$/u),
                 kind: z.enum(["boss", "dungeon"]),
                 canonStatus: z.literal("EXPERIMENTAL"),
               })
               .passthrough(),
           )
-          .max(6),
+          .max(64),
       })
       .passthrough()
       .parse(payload);

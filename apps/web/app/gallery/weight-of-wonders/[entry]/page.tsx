@@ -134,6 +134,16 @@ export default async function WonderEntryPage({ params }: Props) {
                     ))}
                   </section>
                 )}
+                {record.foodWeb && (
+                  <section>
+                    <h2>Ecology and pressure</h2>
+                    <ul>
+                      {record.foodWeb.map((relationship) => (
+                        <li key={relationship}>{relationship}</li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
               </>
             ) : (
               <>
@@ -160,6 +170,19 @@ export default async function WonderEntryPage({ params }: Props) {
                   <p>{record.place.consequence}</p>
                 </section>
               </>
+            )}
+            {record.growth && (
+              <section>
+                <h2>Victory and mastery</h2>
+                <h3>Practice</h3>
+                <p>{record.growth.practice}</p>
+                <h3>Mastery</h3>
+                <p>{record.growth.mastery}</p>
+                <h3>Reward</h3>
+                <p>{record.growth.reward}</p>
+                <h3>Rematch</h3>
+                <p>{record.growth.rematch}</p>
+              </section>
             )}
             <section>
               <h2>Story seeds</h2>

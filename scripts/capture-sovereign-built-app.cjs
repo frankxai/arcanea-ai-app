@@ -180,7 +180,22 @@ const typographyReport = async (page) =>
         });
         wonderReports.push(wonderReport);
         await capture(page, state, "weight-of-wonders-encounter-desk");
-        for (const slug of ["orvess", "vesrane"]) {
+        const wonderDossiers = [
+          "orvess",
+          "vesrane",
+          ...(state.name === "desktop"
+            ? [
+                "tharvoss",
+                "spawning-stair",
+                "glassroot-hunger",
+                "glassroot-sepulchre",
+                "othrek",
+                "brine-tribunal",
+              ]
+            : []),
+          ...(state.name === "mobile-375" ? ["othrek"] : []),
+        ];
+        for (const slug of wonderDossiers) {
           const dossier = await page.goto(
             `${base}/gallery/weight-of-wonders/${slug}`,
             { waitUntil: "domcontentloaded" },
@@ -244,7 +259,10 @@ const typographyReport = async (page) =>
           .evaluate((image) => image.decode());
         await capture(page, state, "weight-of-wonders-hero");
         await page
-          .getByRole("link", { name: "Explore the six concepts", exact: true })
+          .getByRole("link", {
+            name: "Explore the twelve concepts",
+            exact: true,
+          })
           .click();
         await page.waitForFunction(() => {
           const top = document
@@ -393,7 +411,7 @@ const typographyReport = async (page) =>
     );
   }
   console.log(
-    `Verified both real gallery collections, private gateway protection, 42 delivered image hashes and ${captures.length} PNG desktop/mobile/reduced-motion captures.`,
+    `Verified both real gallery collections, private gateway protection, 48 delivered image hashes and ${captures.length} PNG desktop/mobile/reduced-motion captures.`,
   );
 })().catch((error) => {
   console.error(error);

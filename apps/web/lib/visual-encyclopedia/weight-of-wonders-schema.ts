@@ -18,6 +18,14 @@ const sessionKit = z
     beats: z.array(prose).min(1),
   })
   .strict();
+const growth = z
+  .object({
+    practice: prose,
+    mastery: prose,
+    reward: prose,
+    rematch: prose,
+  })
+  .strict();
 const shared = {
   canonStatus: z.literal("EXPERIMENTAL"),
   slug,
@@ -30,15 +38,17 @@ const shared = {
   image,
   artNote: prose,
   sessionKit,
+  growth: growth.optional(),
 };
 
 export const wonderBossSchema = z
   .object({
     ...shared,
-    id: z.string().regex(/^wow-b0[1-3]$/u),
+    id: z.string().regex(/^wow-b0[1-6]$/u),
     kind: z.literal("boss"),
     entrance: prose,
     bodyMovement: z.array(prose).min(1).optional(),
+    foodWeb: z.array(prose).min(3).optional(),
     encounter: z
       .object({
         objective: prose,
@@ -58,7 +68,7 @@ export const wonderBossSchema = z
 export const wonderDungeonSchema = z
   .object({
     ...shared,
-    id: z.string().regex(/^wow-d0[1-3]$/u),
+    id: z.string().regex(/^wow-d0[1-6]$/u),
     kind: z.literal("dungeon"),
     place: z
       .object({
@@ -92,7 +102,7 @@ export const weightOfWondersSchema = z
           .length(3),
       })
       .strict(),
-    entries: z.array(wonderEntrySchema).length(6),
+    entries: z.array(wonderEntrySchema).length(12),
   })
   .strict()
   .superRefine(({ entries }, context) => {
@@ -128,13 +138,17 @@ export function filterWonderEntries(
   kind = "all",
 ): WonderEntry[] {
   const terms = query.trim().toLocaleLowerCase().split(/\s+/u).filter(Boolean);
-  return entries.filter(
-    (entry) =>
+  return entries.filter((entry) => {
+    const growth = entry.growth ? Object.values(entry.growth).join(" ") : "";
+    const kindSpecific =
+      entry.kind === "boss"
+        ? `${entry.entrance} ${entry.bodyMovement?.join(" ") ?? ""} ${entry.foodWeb?.join(" ") ?? ""} ${entry.encounter.objective} ${entry.encounter.phases.map((phase) => `${phase.title} ${phase.description}`).join(" ")} ${entry.encounter.endings.map((ending) => `${ending.label} ${ending.consequence}`).join(" ")}`
+        : `${entry.place.spatialIdentity} ${entry.place.ecology.join(" ")} ${entry.place.routes.join(" ")} ${entry.place.discoveries.join(" ")} ${entry.place.consequence}`;
+    const searchable =
+      `${entry.name} ${entry.title} ${entry.summary} ${entry.history.join(" ")} ${entry.storySeeds.join(" ")} ${entry.sessionKit.prompt} ${entry.sessionKit.beats.join(" ")} ${growth} ${kindSpecific}`.toLocaleLowerCase();
+    return (
       (kind === "all" || entry.kind === kind) &&
-      terms.every((term) =>
-        `${entry.name} ${entry.title} ${entry.summary} ${entry.history.join(" ")} ${entry.storySeeds.join(" ")}`
-          .toLocaleLowerCase()
-          .includes(term),
-      ),
-  );
+      terms.every((term) => searchable.includes(term))
+    );
+  });
 }

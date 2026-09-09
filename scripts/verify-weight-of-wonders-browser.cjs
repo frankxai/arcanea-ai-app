@@ -450,9 +450,54 @@ module.exports.verifyWeightOfWondersPreview = async ({
         read("?includeProposals=true"),
         read("?includeProposals=true&includeExperimental=true"),
       ]);
-      assert.deepEqual([none.total, proposals.total, all.total], [0, 0, 6]);
+      assert.deepEqual([none.total, proposals.total, all.total], [0, 0, 12]);
       assert.equal(all.canonStatus, "EXPERIMENTAL");
-      report.api = { default: 0, proposals: 0, all: 6 };
+      assert.equal(all.entries.length, 12);
+      assert.equal(new Set(all.entries.map((entry) => entry.id)).size, 12);
+      assert.equal(
+        all.entries.filter((entry) => entry.kind === "boss").length,
+        6,
+      );
+      assert.equal(
+        all.entries.filter((entry) => entry.kind === "dungeon").length,
+        6,
+      );
+      report.api = { default: 0, proposals: 0, all: 12 };
+      const extensionPage = await context.newPage();
+      try {
+        const growthResponse = await extensionPage.goto(
+          `${base}/gallery/weight-of-wonders/tharvoss`,
+          { waitUntil: "domcontentloaded" },
+        );
+        assert.equal(growthResponse.status(), 200);
+        await extensionPage
+          .getByRole("heading", { name: "Victory and mastery", exact: true })
+          .waitFor();
+        const growthBrief = await extensionPage
+          .getByLabel("Manual copy", { exact: true })
+          .inputValue();
+        assert.ok(growthBrief.includes("PRACTICE\nRead the water"));
+        assert.ok(growthBrief.includes("VICTORY REWARD"));
+        assert.ok(growthBrief.includes("Anchor Step"));
+        const hungerResponse = await extensionPage.goto(
+          `${base}/gallery/weight-of-wonders/glassroot-hunger`,
+          { waitUntil: "domcontentloaded" },
+        );
+        assert.equal(hungerResponse.status(), 200);
+        await extensionPage
+          .getByRole("heading", { name: "Ecology and pressure", exact: true })
+          .waitFor();
+        await extensionPage
+          .getByText(/fantasy extrapolation from marine colonial organisms/u)
+          .waitFor();
+        report.extensionProof = {
+          growthBrief: true,
+          ecology: true,
+          artworkLimits: true,
+        };
+      } finally {
+        await extensionPage.close();
+      }
       report.assets = [];
       for (const entry of all.entries) {
         const assetResponse = await context.request.get(

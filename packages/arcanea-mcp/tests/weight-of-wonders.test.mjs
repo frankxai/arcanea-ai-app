@@ -22,7 +22,7 @@ test("retrieval requires both proposal and experimental opt-ins without network"
   }
 });
 
-test("explicit retrieval uses only the fixed public endpoint", async () => {
+test("explicit retrieval uses only the fixed public endpoint and accepts reviewed expansion totals", async () => {
   const original = globalThis.fetch;
   let requested;
   globalThis.fetch = async (url) => {
@@ -33,14 +33,12 @@ test("explicit retrieval uses only the fixed public endpoint", async () => {
       canonStatus: "EXPERIMENTAL",
       includeProposals: true,
       includeExperimental: true,
-      total: 1,
-      entries: [
-        {
-          id: "wow-b01",
-          kind: "boss",
-          canonStatus: "EXPERIMENTAL",
-        },
-      ],
+      total: 7,
+      entries: Array.from({ length: 7 }, (_, index) => ({
+        id: `wow-${index % 2 === 0 ? "b" : "d"}${String(index + 1).padStart(2, "0")}`,
+        kind: index % 2 === 0 ? "boss" : "dungeon",
+        canonStatus: "EXPERIMENTAL",
+      })),
     });
   };
   try {
@@ -49,13 +47,16 @@ test("explicit retrieval uses only the fixed public endpoint", async () => {
       includeExperimental: true,
       query: "water & names",
       kind: "boss",
+      id: "wow-b06",
     });
     assert.equal(result.isError, undefined);
     assert.equal(requested.origin, "https://www.arcanea.ai");
     assert.equal(requested.pathname, "/api/lore/weight-of-wonders");
     assert.equal(requested.searchParams.get("query"), "water & names");
+    assert.equal(requested.searchParams.get("id"), "wow-b06");
     assert.equal(requested.searchParams.get("includeProposals"), "true");
     assert.equal(requested.searchParams.get("includeExperimental"), "true");
+    assert.equal(JSON.parse(result.content[0].text).total, 7);
   } finally {
     globalThis.fetch = original;
   }

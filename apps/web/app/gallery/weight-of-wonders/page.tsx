@@ -11,12 +11,12 @@ import styles from "./weight-of-wonders.module.css";
 export const metadata: Metadata = {
   title: "The Weight of Wonders",
   description:
-    "Six experimental Arcanea concepts connecting living infrastructure, borrowed identity and a cultivated storm ecology.",
+    "Twelve experimental Arcanea concepts connecting living infrastructure, predators, borrowed identity, cultivated ecologies and contested water.",
   alternates: { canonical: "/gallery/weight-of-wonders" },
   openGraph: {
     title: "The Weight of Wonders | Arcanea",
     description:
-      "Three connected boss and place pairs with encounter concepts and story tools.",
+      "Six connected boss and place pairs with encounter concepts and story tools.",
     images: [{ url: "/images/weight-of-wonders/storm-orchard.webp" }],
   },
 };
@@ -49,7 +49,7 @@ export default function WeightOfWondersPage() {
             </p>
             <div className={styles.actions}>
               <a className={`${styles.action} ${styles.primary}`} href="#atlas">
-                Explore the six concepts
+                Explore the twelve concepts
               </a>
               <Link
                 className={styles.action}
@@ -64,9 +64,7 @@ export default function WeightOfWondersPage() {
 
       <div className={styles.wrap}>
         <section className={styles.intro} aria-labelledby="atlas-intro-title">
-          <p className={styles.eyebrow}>
-            Three linked pairs / One river system
-          </p>
+          <p className={styles.eyebrow}>Six linked pairs / One river system</p>
           <div>
             <h2 id="atlas-intro-title">Follow what a wonder costs to keep.</h2>
             <p>
@@ -94,7 +92,14 @@ export default function WeightOfWondersPage() {
                 <article className={styles.pair} key={boss.id}>
                   <header className={styles.pairHeader}>
                     <p className={styles.eyebrow}>
-                      {["Water", "Identity", "Territory"][index]}
+                      {[
+                        "Water",
+                        "Identity",
+                        "Territory",
+                        "Predation",
+                        "Parasitism",
+                        "Water monopoly",
+                      ][index] ?? "Connected pair"}
                     </p>
                     <h3>{boss.encounter.objective}</h3>
                   </header>

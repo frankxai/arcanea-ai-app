@@ -34,11 +34,27 @@ function buildBrief(
         (phase, index) => `${index + 1}. ${phase.title}: ${phase.description}`,
       ),
     );
+    if (entry.foodWeb) lines.push("", "ECOLOGY AND PRESSURE", ...entry.foodWeb);
   }
   if (ending)
     lines.push("", "SELECTED OUTCOME", ending.label, ending.consequence);
   if (entry.kind === "dungeon")
     lines.push("", "ROUTE CONSEQUENCE", entry.place.consequence);
+  if (entry.growth)
+    lines.push(
+      "",
+      "PRACTICE",
+      entry.growth.practice,
+      "",
+      "MASTERY",
+      entry.growth.mastery,
+      "",
+      "VICTORY REWARD",
+      entry.growth.reward,
+      "",
+      "REMATCH",
+      entry.growth.rematch,
+    );
   return lines.join("\n");
 }
 

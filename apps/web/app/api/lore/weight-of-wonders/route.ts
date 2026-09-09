@@ -13,7 +13,7 @@ const querySchema = z.object({
   query: z.string().max(160).default(""),
   id: z
     .string()
-    .regex(/^wow-[bd]0[1-3]$/u)
+    .regex(/^wow-[bd]0[1-6]$/u)
     .optional(),
 });
 
@@ -42,7 +42,7 @@ export function GET(request: NextRequest) {
       canonStatus: WEIGHT_OF_WONDERS.collection.canonStatus,
       source: WEIGHT_OF_WONDERS.collection.source,
       notice:
-        "These six records are experimental worldbuilding proposals. Encounter and story material is an authoring aid, not shipped gameplay or locked canon.",
+        "These records are experimental worldbuilding proposals. Encounter and story material is an authoring aid, not shipped gameplay or locked canon.",
       includeProposals: includeProposals === "true",
       includeExperimental: includeExperimental === "true",
       trilogy: optedIn ? WEIGHT_OF_WONDERS.collection.trilogy : [],
