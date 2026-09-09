@@ -2,7 +2,8 @@
 
 Source: Codex task 01a06ecf-6107-7e80-abe9-bb0fcdc9b7f2.
 Owner: this task's authoring lane in arcanea-ai-app.
-Parent: save-handling candidate PR379 at f024eeb6.
+Review: PR379. This record consolidates the original save-reliability plan and
+the restoration follow-up; the parent objective and remaining work stay active.
 
 ## Scope and observed failure
 
@@ -24,6 +25,10 @@ the new tests.
 
 ## Files and implementation
 
+- Save handling: immediate edit tracking, serial/coalesced requests, confirmed
+  draft-only success, retry/download after failures, empty-chapter keyboard save,
+  and a document-exit warning. Shared editor cleanup flushes only pending content;
+  typed HTML initialization and native formatting controls preserve editor state.
 - lib/author/read-draft.ts: session-scoped lookup, four-second deadline, database
   abort signal, supported document structure checks, literal-text legacy fallback.
 - Author workspace page: restores the account draft, shows a retry state on
@@ -57,6 +62,10 @@ restoration/read regressions pass. The server and component tests use explicit
 boundary doubles; they do not prove a real Supabase session. Five workspace
 and five API assertions failed before implementation.
 
+Eleven original save assertions failed before their fix. Targeted ESLint,
+Prettier and secret checks passed. Parent head f024eeb6 passed full CI and an
+independent Gemini 2.5 Flash review; that verdict does not cover this extension.
+
 The SQL fixture is guarded to run only in arcanea_author_draft_test. Its test
 table deletion exercises legacy upgrade inside that isolated database; it is
 not a production rollback script.
@@ -83,3 +92,10 @@ book publication, provider-registration or billing change in this work.
 
 Remaining product work includes cross-tab/server revisions, uncertain-write
 recovery, client navigation recovery and a complete authenticated browser run.
+Serialization covers one mounted editor. A stalled write can remain pending;
+download and exit warnings remain available. Manuscripts are not silently cached
+locally. Browser exit events do not cover every mobile termination or SPA route.
+
+The separate capabilities task owns MCP distribution, plugins, skills and the
+developer portal. World Atlas and open book candidates remain separate work;
+this authoring change neither publishes nor supersedes them.
