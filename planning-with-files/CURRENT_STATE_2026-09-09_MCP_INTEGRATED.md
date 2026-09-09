@@ -2,7 +2,7 @@
 
 Source: Codex task `01a086b7-f24a-7d40-98d3-f94d9f6a2ba9`.
 Branch: `codex/arcanea-world-mcp-integrated-20260909`.
-Parents: modular preparation `b0acd605966a25fcb3a4173b3585f56db19ac397`
+Preparation: modular base `e53d6ccd2d5200fb288aca960abe55b7c54f09a1`
 and tested runtime/package/identity candidate
 `168d24f2c6315883b21d48749fdd4cb8e024fbd9`.
 
