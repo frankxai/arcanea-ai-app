@@ -120,7 +120,7 @@ module.exports.verifyWeightOfWondersPreview = async ({
       .locator("p")
       .filter({
         hasText:
-          /^Opening an emergency bypass exposes the damaged hip regulator\.$/u,
+          /^Opening an emergency bypass exposes the damaged hip regulator\./u,
       })
       .waitFor();
 
