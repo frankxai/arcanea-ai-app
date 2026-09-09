@@ -1,6 +1,9 @@
 // Arcanea Memory Layer
 // Inspired by mem0 and Qdrant patterns
 
+import * as path from "node:path";
+import { getDataDirectory } from "../storage-paths.js";
+
 export interface CreativeSession {
   id: string;
   startedAt: string | Date;
@@ -47,7 +50,7 @@ export interface Milestone {
 // TODO: Add SQLite persistence for production
 const sessions = new Map<string, CreativeSession>();
 
-const MEMORY_FILE_PATH = `${process.env.HOME || process.env.USERPROFILE || '.'}/.arcanea/memories.json`;
+const MEMORY_FILE_PATH = path.join(getDataDirectory(), "memories.json");
 
 function normalizeCreation(sessionId: string, creation: CreationRef): CreationRef {
   return {

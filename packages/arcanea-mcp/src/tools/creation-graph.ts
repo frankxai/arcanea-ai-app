@@ -2,6 +2,7 @@
 // Inspired by Qdrant vector patterns and knowledge graphs
 
 import { CreationRef } from "../memory/index.js";
+import { validateCreationGraph } from "./graph-validation.js";
 
 export interface CreationNode {
   id: string;
@@ -64,6 +65,15 @@ export function getGraphNodes(sessionId: string): CreationNode[] {
 export function getGraphEdges(sessionId: string): CreationEdge[] {
   const graph = getOrCreateGraph(sessionId);
   return [...graph.edges];
+}
+
+/** Replace one world only after the complete snapshot passes validation. */
+export function restoreGraph(sessionId: string, nodes: unknown, edges: unknown): void {
+  const snapshot = validateCreationGraph(nodes, edges);
+  graphs.set(sessionId, {
+    nodes: new Map(snapshot.nodes.map((node) => [node.id, node])),
+    edges: snapshot.edges,
+  });
 }
 
 export function addCreationToGraph(

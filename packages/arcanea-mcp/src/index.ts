@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Arcanea MCP Server v3
+ * Arcanea worldbuilding MCP server
  * A worldbuilding toolkit for the Arcanea universe.
  * Making magic through AI-human co-creation.
  *
@@ -8,7 +8,7 @@
  * - Worldbuilding generators (characters, magic, locations, creatures, artifacts)
  * - Luminor AI companions with Council mode
  * - Bestiary of creative blocks with deep diagnosis
- * - Memory layer for persistent creative journeys
+ * - In-process creative journeys and explicitly saved world graphs
  * - Canon validation and Ten Gates system
  * - Agent orchestration system (inspired by oh-my-opencode)
  * - Multi-agent parallel execution
@@ -18,6 +18,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
+import { RUNTIME_INFO } from "./runtime-info.js";
 
 // Helper: cast legacy tool results (type: string) to SDK 1.29 CallToolResult (type: "text")
 function toolResult(r: { content: Array<{ type: string; text: string }> }): CallToolResult {
@@ -67,6 +68,7 @@ import {
   findPath,
   getGraphNodes,
   getGraphEdges,
+  restoreGraph,
   type RelationshipType,
 } from "./tools/creation-graph.js";
 
@@ -155,7 +157,8 @@ const APL_PALETTES = ["forge", "tide", "root", "drift", "void"] as const;
 const ASSET_KINDS = ["character", "location", "cover", "poster", "trailer", "sprite", "album_art", "brand_pack", "ui"] as const;
 const WORKFLOW_RECIPE_IDS = ["book_to_publish", "world_to_game", "artist_release", "cinematic_trailer", "campaign_pack"] as const;
 
-const server = new McpServer({ name: "arcanea-mcp", version: "0.3.0" });
+export function createServer(): McpServer {
+const server = new McpServer(RUNTIME_INFO);
 
 // =========================================================================
 // WORLDBUILDING GENERATORS
@@ -1017,7 +1020,8 @@ server.registerTool(
 server.registerTool(
   "save_world",
   {
-    description: "Save your current world to disk so it persists across sessions.",
+    description: "Save the current world graph to local disk, replacing any saved snapshot with this session id. Journey memory is not included.",
+    annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
     inputSchema: z.object({ sessionId: z.string().optional() }),
   },
   async ({ sessionId }) => {
@@ -1032,7 +1036,8 @@ server.registerTool(
 server.registerTool(
   "load_world",
   {
-    description: "Load a previously saved world, or list available worlds if no session specified.",
+    description: "Restore a saved world graph into memory, replacing the current graph for that session id. Omit the id to list saved worlds. Journey memory is not restored.",
+    annotations: { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
     inputSchema: z.object({ sessionId: z.string().optional() }),
   },
   async ({ sessionId }) => {
@@ -1042,6 +1047,7 @@ server.registerTool(
     }
     const data = loadWorldFromDisk(sessionId);
     if (!data) return { content: [{ type: "text" as const, text: JSON.stringify({ error: `No world "${sessionId}" found`, available: listSavedWorlds().map(w => w.sessionId) }) }] };
+    restoreGraph(sessionId, data.nodes, data.edges);
     return { content: [{ type: "text" as const, text: JSON.stringify({ loaded: true, sessionId, nodeCount: data.nodes.length, edgeCount: data.edges.length, nodes: data.nodes.map(n => ({ name: n.name, type: n.type, element: n.element })) }, null, 2) }] };
   }
 );
@@ -1568,8 +1574,8 @@ server.registerTool(
 // EXPORTS
 // =========================================================================
 
-export { server };
-
-export function createServer() {
   return server;
 }
+
+/** Backwards-compatible library instance. New transports should use createServer(). */
+export const server = createServer();
