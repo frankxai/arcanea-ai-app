@@ -89,7 +89,7 @@ export default async function BooksPage() {
             The Library of Arcanea
           </h1>
           <p className="mt-5 font-mono text-sm text-white/60 tracking-wide">
-            Twenty-two works in draft. Nothing finished, everything readable.
+            Illustrated journeys, complete stories, and works in progress.
           </p>
           <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">
             Enter seeking. Leave transformed. Return whenever needed.
