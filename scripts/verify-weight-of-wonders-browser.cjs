@@ -30,6 +30,7 @@ module.exports.verifyWeightOfWondersPreview = async ({
       interactionCount: 0,
       interactionEventCount: 0,
       events: [],
+      longTasks: [],
       lcp: 0,
     };
     document.addEventListener(
@@ -65,6 +66,12 @@ module.exports.verifyWeightOfWondersPreview = async ({
           interactionId: entry.interactionId,
           startTime: entry.startTime,
           duration: entry.duration,
+          processingStart: entry.processingStart,
+          processingEnd: entry.processingEnd,
+          inputDelay: entry.processingStart - entry.startTime,
+          processingDuration: entry.processingEnd - entry.processingStart,
+          presentationDelay:
+            entry.startTime + entry.duration - entry.processingEnd,
           target:
             target instanceof Element
               ? {
@@ -83,6 +90,14 @@ module.exports.verifyWeightOfWondersPreview = async ({
         );
       }
     }).observe({ type: "event", buffered: true, durationThreshold: 16 });
+    new PerformanceObserver((list) => {
+      for (const entry of list.getEntries())
+        window.__weightOfWondersLab.longTasks.push({
+          startTime: entry.startTime,
+          duration: entry.duration,
+          name: entry.name,
+        });
+    }).observe({ type: "longtask", buffered: true });
   });
   const settleVisiblePage = () =>
     page.evaluate(async () => {
@@ -135,11 +150,13 @@ module.exports.verifyWeightOfWondersPreview = async ({
       () => window.__weightOfWondersLab,
     );
 
-    await page
+    const firstDossierLink = page
       .locator("#atlas a")
       .filter({ hasText: "Orvess" })
-      .first()
-      .click();
+      .first();
+    await firstDossierLink.scrollIntoViewIfNeeded();
+    await settleVisiblePage();
+    await firstDossierLink.click();
     await page.waitForURL(`${base}/gallery/weight-of-wonders/orvess`);
     await page
       .getByRole("heading", { name: "Orvess", exact: true, level: 1 })
@@ -411,6 +428,7 @@ module.exports.verifyWeightOfWondersPreview = async ({
           rawEventCount: dossierPerformance.eventCount,
           interactionEventCount: dossierPerformance.interactionEventCount,
           events: dossierPerformance.events,
+          longTasks: dossierPerformance.longTasks,
         },
       },
     };

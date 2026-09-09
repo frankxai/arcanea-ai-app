@@ -107,6 +107,26 @@ const typographyReport = async (page) =>
       url: page.url(),
     });
   };
+  const hideSpecimenChrome = async (page) => {
+    const hidden = await page.evaluate(() =>
+      ["nav.fixed", '[aria-label="Open Arcanea assistant"]'].map((selector) => {
+        const elements = [...document.querySelectorAll(selector)];
+        for (const element of elements)
+          element.style.setProperty("display", "none", "important");
+        return {
+          selector,
+          count: elements.length,
+          hidden: elements.every(
+            (element) => getComputedStyle(element).display === "none",
+          ),
+        };
+      }),
+    );
+    for (const result of hidden) {
+      assert.ok(result.count > 0, `${result.selector} is present to hide`);
+      assert.ok(result.hidden, `${result.selector} is hidden in specimen`);
+    }
+  };
   try {
     for (const state of states) {
       const context = await browser.newContext({
@@ -176,11 +196,11 @@ const typographyReport = async (page) =>
             waitUntil: "domcontentloaded",
           });
           await settlePaint(page);
+          await hideSpecimenChrome(page);
           const specimen = page.locator("[data-type-specimen]");
           await specimen.screenshot({
             path: "screenshots/weight-of-wonders-type-specimen-mobile-375.png",
             type: "png",
-            style: "nav.fixed { visibility: hidden !important; }",
           });
           const specimenBytes = fs.readFileSync(
             "screenshots/weight-of-wonders-type-specimen-mobile-375.png",
@@ -281,10 +301,10 @@ const typographyReport = async (page) =>
         "Fallback specimen does not clip horizontally",
       );
       await settlePaint(fallbackPage);
+      await hideSpecimenChrome(fallbackPage);
       await fallbackSpecimen.screenshot({
         path: "screenshots/weight-of-wonders-type-specimen-fallback-375.png",
         type: "png",
-        style: "nav.fixed { visibility: hidden !important; }",
       });
       const fallbackBytes = fs.readFileSync(
         "screenshots/weight-of-wonders-type-specimen-fallback-375.png",
