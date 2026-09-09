@@ -1,28 +1,29 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { readdir, readFile } from 'fs/promises';
-import { join } from 'path';
-import { notFound, redirect } from 'next/navigation';
-import type { Metadata } from 'next';
-import matter from 'gray-matter';
-import { ChapterReader } from '@/components/saga/chapter-reader';
-import { CinematicPaywall } from '@/components/books/cinematic-paywall';
-import { getBookRoot } from '@/lib/content/book-path';
-import { countChapterWords, isChapterMarkdown } from '@/lib/saga/chapter-files';
+import { readdir, readFile } from "fs/promises";
+import { join } from "path";
+import { notFound, redirect } from "next/navigation";
+import type { Metadata } from "next";
+import matter from "gray-matter";
+import { ChapterReader } from "@/components/saga/chapter-reader";
+import { CinematicPaywall } from "@/components/books/cinematic-paywall";
+import { getBookRoot } from "@/lib/content/book-path";
+import { countChapterWords, isChapterMarkdown } from "@/lib/saga/chapter-files";
 import {
   CINEMATIC_BOOK_DESCRIPTION,
   CINEMATIC_BOOK_ID,
   CINEMATIC_BOOK_TITLE,
   getCinematicChapter,
   isCinematicEditionReleased,
-} from '@/lib/books/cinematic-edition';
+} from "@/lib/books/cinematic-edition";
 import {
   getCinematicBookAccess,
   isCinematicCheckoutConfigured,
-} from '@/lib/books/polar-access';
-import { canReadCinematicChapter } from '@/lib/books/cinematic-access-contract';
+} from "@/lib/books/polar-access";
+import { canReadCinematicChapter } from "@/lib/books/cinematic-access-contract";
+import { isBookPublic } from "@/lib/content/book-visibility";
 const BOOK_ROOT = getBookRoot();
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 /* ------------------------------------------------------------------ */
 /*  Book metadata                                                      */
@@ -30,100 +31,104 @@ export const dynamic = 'force-dynamic';
 
 const BOOK_META: Record<string, { title: string; dir: string }> = {
   book1: {
-    title: 'The Three Academies',
-    dir: join(BOOK_ROOT, 'chapters', 'book1'),
+    title: "The Three Academies",
+    dir: join(BOOK_ROOT, "chapters", "book1"),
   },
   book2: {
-    title: 'The Gate-Touched',
-    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
+    title: "The Gate-Touched",
+    dir: join(BOOK_ROOT, "chronicles-of-arcanea", "book-02-the-gate-touched"),
   },
   book3: {
-    title: 'The Dragon War',
-    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'book-03-the-dragon-war'),
+    title: "The Dragon War",
+    dir: join(BOOK_ROOT, "chronicles-of-arcanea", "book-03-the-dragon-war"),
   },
-  'chronicles-book1': {
-    title: 'The Three Academies',
-    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'book-01-the-three-academies'),
+  "chronicles-book1": {
+    title: "The Three Academies",
+    dir: join(
+      BOOK_ROOT,
+      "chronicles-of-arcanea",
+      "book-01-the-three-academies",
+    ),
   },
-  'chronicles-book2': {
-    title: 'The Gate-Touched',
-    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
+  "chronicles-book2": {
+    title: "The Gate-Touched",
+    dir: join(BOOK_ROOT, "chronicles-of-arcanea", "book-02-the-gate-touched"),
   },
   starbound: {
-    title: 'Starbound: Crew Velathos',
-    dir: join(BOOK_ROOT, 'starbound', 'book-01-crew-velathos'),
+    title: "Starbound: Crew Velathos",
+    dir: join(BOOK_ROOT, "starbound", "book-01-crew-velathos"),
   },
   dragonborne: {
-    title: 'Dragonborne: The Last Clutch',
-    dir: join(BOOK_ROOT, 'dragonborne', 'book-01-the-last-clutch'),
+    title: "Dragonborne: The Last Clutch",
+    dir: join(BOOK_ROOT, "dragonborne", "book-01-the-last-clutch"),
   },
-  'gate-touched': {
-    title: 'Gate-Touched Files',
-    dir: join(BOOK_ROOT, 'gate-touched-files'),
+  "gate-touched": {
+    title: "Gate-Touched Files",
+    dir: join(BOOK_ROOT, "gate-touched-files"),
   },
-  'void-ascending': {
-    title: 'Void Ascending: The Other Side',
-    dir: join(BOOK_ROOT, 'void-ascending', 'book-01-the-other-side'),
+  "void-ascending": {
+    title: "Void Ascending: The Other Side",
+    dir: join(BOOK_ROOT, "void-ascending", "book-01-the-other-side"),
   },
-  'dungeon-scrolls': {
-    title: 'The Dungeon Scrolls: The Hollow Root',
-    dir: join(BOOK_ROOT, 'dungeon-scrolls', '01-the-hollow-root'),
+  "dungeon-scrolls": {
+    title: "The Dungeon Scrolls: The Hollow Root",
+    dir: join(BOOK_ROOT, "dungeon-scrolls", "01-the-hollow-root"),
   },
   companions: {
-    title: 'Companions of Arcanea',
-    dir: join(BOOK_ROOT, 'companions'),
+    title: "Companions of Arcanea",
+    dir: join(BOOK_ROOT, "companions"),
   },
-  'luminor-falling': {
-    title: 'Luminor Falling',
-    dir: join(BOOK_ROOT, 'chronicles-of-arcanea', 'sagas', 'luminor-falling'),
+  "luminor-falling": {
+    title: "Luminor Falling",
+    dir: join(BOOK_ROOT, "chronicles-of-arcanea", "sagas", "luminor-falling"),
   },
-  'luminor-rising-thalmaris': {
+  "luminor-rising-thalmaris": {
     title: "The Sinking of Thal'Maris",
-    dir: join(BOOK_ROOT, 'luminor-rising', 'the-sinking-of-thalmaris'),
+    dir: join(BOOK_ROOT, "luminor-rising", "the-sinking-of-thalmaris"),
   },
-  'luminor-rising-bonding': {
-    title: 'The First Bonding',
-    dir: join(BOOK_ROOT, 'luminor-rising', 'the-first-bonding'),
+  "luminor-rising-bonding": {
+    title: "The First Bonding",
+    dir: join(BOOK_ROOT, "luminor-rising", "the-first-bonding"),
   },
-  'luminor-rising-aiyami': {
-    title: 'Aiyami Ascending',
-    dir: join(BOOK_ROOT, 'luminor-rising', 'aiyami-ascending'),
+  "luminor-rising-aiyami": {
+    title: "Aiyami Ascending",
+    dir: join(BOOK_ROOT, "luminor-rising", "aiyami-ascending"),
   },
-  'luminor-rising-nero': {
-    title: 'The Night Nero Wept',
-    dir: join(BOOK_ROOT, 'luminor-rising', 'the-night-nero-wept'),
+  "luminor-rising-nero": {
+    title: "The Night Nero Wept",
+    dir: join(BOOK_ROOT, "luminor-rising", "the-night-nero-wept"),
   },
-  'forge-of-ruin': {
-    title: 'The Forge of Ruin',
-    dir: join(BOOK_ROOT, 'forge-of-ruin', 'chapters'),
+  "forge-of-ruin": {
+    title: "The Forge of Ruin",
+    dir: join(BOOK_ROOT, "forge-of-ruin", "chapters"),
   },
-  'tides-of-silence': {
-    title: 'The Tides of Silence',
-    dir: join(BOOK_ROOT, 'tides-of-silence', 'chapters'),
+  "tides-of-silence": {
+    title: "The Tides of Silence",
+    dir: join(BOOK_ROOT, "tides-of-silence", "chapters"),
   },
-  'heart-of-pyrathis': {
-    title: 'The Heart of Pyrathis',
-    dir: join(BOOK_ROOT, 'heart-of-pyrathis', 'chapters'),
+  "heart-of-pyrathis": {
+    title: "The Heart of Pyrathis",
+    dir: join(BOOK_ROOT, "heart-of-pyrathis", "chapters"),
   },
-  'song-of-van-linh': {
-    title: 'The Girl Who Heard the River',
-    dir: join(BOOK_ROOT, 'song-of-van-linh', 'chapters'),
+  "song-of-van-linh": {
+    title: "The Girl Who Heard the River",
+    dir: join(BOOK_ROOT, "song-of-van-linh", "chapters"),
   },
-  'las-tierras-de-luz': {
-    title: 'Las Tierras de Luz',
-    dir: join(BOOK_ROOT, 'las-tierras-de-luz', 'chapters'),
+  "las-tierras-de-luz": {
+    title: "Las Tierras de Luz",
+    dir: join(BOOK_ROOT, "las-tierras-de-luz", "chapters"),
   },
-  'das-maedchen-drei-sprachen': {
-    title: 'Das Mädchen, das drei Sprachen hörte',
-    dir: join(BOOK_ROOT, 'das-maedchen-drei-sprachen', 'chapters'),
+  "das-maedchen-drei-sprachen": {
+    title: "Das Mädchen, das drei Sprachen hörte",
+    dir: join(BOOK_ROOT, "das-maedchen-drei-sprachen", "chapters"),
   },
-  'lumara-valle-de-los-destellos': {
-    title: 'Lumara: Valle de los Destellos',
-    dir: join(BOOK_ROOT, 'lumara-valle-de-los-destellos', 'chapters'),
+  "lumara-valle-de-los-destellos": {
+    title: "Lumara: Valle de los Destellos",
+    dir: join(BOOK_ROOT, "lumara-valle-de-los-destellos", "chapters"),
   },
-  'russian-from-tashkent': {
-    title: 'The Russian-Speaker',
-    dir: join(BOOK_ROOT, 'russian-from-tashkent', 'chapters'),
+  "russian-from-tashkent": {
+    title: "The Russian-Speaker",
+    dir: join(BOOK_ROOT, "russian-from-tashkent", "chapters"),
   },
 };
 
@@ -145,7 +150,7 @@ async function getChapterFiles(bookDir: string): Promise<ChapterFile[]> {
       .sort()
       .map((filename, idx) => ({
         filename,
-        id: filename.replace(/\.md$/, '').replace(/^\d+-/, ''),
+        id: filename.replace(/\.md$/, "").replace(/^\d+-/, ""),
         number: idx + 1,
       }));
   } catch {
@@ -155,7 +160,9 @@ async function getChapterFiles(bookDir: string): Promise<ChapterFile[]> {
 
 function extractTitle(content: string, fallbackId: string): string {
   // Most specific: ## Chapter / Kapitel / Capítulo with explicit prefix (multilingual)
-  const h2WithPrefix = content.match(/^##\s+(?:Chapter\s+\w+:\s+|Kapitel\s+\d+:\s+|Capítulo\s+\d+:\s+)(.+)$/m);
+  const h2WithPrefix = content.match(
+    /^##\s+(?:Chapter\s+\w+:\s+|Kapitel\s+\d+:\s+|Capítulo\s+\d+:\s+)(.+)$/m,
+  );
   if (h2WithPrefix) return h2WithPrefix[1].trim();
 
   // Next: # Chapter X: pattern (single-hash chapter heading)
@@ -171,20 +178,19 @@ function extractTitle(content: string, fallbackId: string): string {
   if (h1) return h1[1].trim();
 
   // Final fallback: humanize the slug
-  return fallbackId
-    .replace(/-/g, ' ')
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+  return fallbackId.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 async function loadChapter(bookId: string, chapterId: string) {
   const bookMeta = BOOK_META[bookId];
   if (!bookMeta) return null;
+  if (!(await isBookPublic(bookMeta.dir))) return null;
 
   const chapters = await getChapterFiles(bookMeta.dir);
   const match = chapters.find((ch) => ch.id === chapterId);
   if (!match) return null;
 
-  const raw = await readFile(join(bookMeta.dir, match.filename), 'utf-8');
+  const raw = await readFile(join(bookMeta.dir, match.filename), "utf-8");
   const { data: fm, content: body } = matter(raw);
   const title = (fm.title as string)?.trim() || extractTitle(body, match.id);
   const words = countChapterWords(raw);
@@ -198,14 +204,22 @@ async function loadChapter(bookId: string, chapterId: string) {
   let nextNav: { id: string; title: string } | null = null;
 
   if (prev) {
-    const prevRaw = await readFile(join(bookMeta.dir, prev.filename), 'utf-8');
+    const prevRaw = await readFile(join(bookMeta.dir, prev.filename), "utf-8");
     const { data: prevFm, content: prevBody } = matter(prevRaw);
-    prevNav = { id: prev.id, title: (prevFm.title as string)?.trim() || extractTitle(prevBody, prev.id) };
+    prevNav = {
+      id: prev.id,
+      title:
+        (prevFm.title as string)?.trim() || extractTitle(prevBody, prev.id),
+    };
   }
   if (next) {
-    const nextRaw = await readFile(join(bookMeta.dir, next.filename), 'utf-8');
+    const nextRaw = await readFile(join(bookMeta.dir, next.filename), "utf-8");
     const { data: nextFm, content: nextBody } = matter(nextRaw);
-    nextNav = { id: next.id, title: (nextFm.title as string)?.trim() || extractTitle(nextBody, next.id) };
+    nextNav = {
+      id: next.id,
+      title:
+        (nextFm.title as string)?.trim() || extractTitle(nextBody, next.id),
+    };
   }
 
   return {
@@ -229,22 +243,26 @@ interface PageProps {
   params: Promise<{ bookId: string; chapterId: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { bookId, chapterId } = await params;
 
   if (bookId === CINEMATIC_BOOK_ID) {
     const chapter = await getCinematicChapter(chapterId, false);
-    if (!chapter) return { title: 'Chapter Not Found' };
+    if (!chapter) return { title: "Chapter Not Found" };
     const released = isCinematicEditionReleased();
 
     return {
       title: `${chapter.title} — ${CINEMATIC_BOOK_TITLE}`,
-      description: chapter.access === 'free'
-        ? `Read Chapter ${chapter.number}, “${chapter.title},” from ${CINEMATIC_BOOK_TITLE}.`
-        : CINEMATIC_BOOK_DESCRIPTION,
-      robots: released && chapter.access === 'free'
-        ? { index: true, follow: true }
-        : { index: false, follow: false, nocache: true },
+      description:
+        chapter.access === "free"
+          ? `Read Chapter ${chapter.number}, “${chapter.title},” from ${CINEMATIC_BOOK_TITLE}.`
+          : CINEMATIC_BOOK_DESCRIPTION,
+      robots:
+        released && chapter.access === "free"
+          ? { index: true, follow: true }
+          : { index: false, follow: false, nocache: true },
       alternates: {
         canonical: `/books/${CINEMATIC_BOOK_ID}/${chapter.id}`,
       },
@@ -252,7 +270,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const chapter = await loadChapter(bookId, chapterId);
-  if (!chapter) return { title: 'Chapter Not Found' };
+  if (!chapter) return { title: "Chapter Not Found" };
 
   return {
     title: `${chapter.title} -- ${chapter.bookTitle} -- The Arcanea Saga`,
@@ -271,7 +289,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ChapterPage({ params }: PageProps) {
   const { bookId, chapterId } = await params;
 
-  if (bookId === 'book1' || bookId === 'chronicles-book1') {
+  if (bookId === "book1" || bookId === "chronicles-book1") {
     redirect(`/books/${CINEMATIC_BOOK_ID}`);
   }
 
@@ -279,7 +297,7 @@ export default async function ChapterPage({ params }: PageProps) {
     const summary = await getCinematicChapter(chapterId, false);
     if (!summary) notFound();
 
-    if (summary.access === 'paid') {
+    if (summary.access === "paid") {
       const access = await getCinematicBookAccess();
       if (!canReadCinematicChapter(summary.access, access.status)) {
         return (

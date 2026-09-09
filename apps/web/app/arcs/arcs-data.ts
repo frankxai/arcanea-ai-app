@@ -228,7 +228,7 @@ export const DEMO_ARCS: DemoArc[] = [
     history: [
       { stage: 'potential', at: '2026-03-01T00:00:00Z' },
       { stage: 'manifestation', at: '2026-03-05T00:00:00Z', model: 'claude-opus-4-20250514', quality: 98 },
-      { stage: 'experience', at: '2026-03-10T00:00:00Z', note: '190K+ words, 200+ pages live' },
+      { stage: 'experience', at: '2026-03-10T00:00:00Z', note: 'Library, Academy, and Chronicles live' },
     ],
     bonds: [
       { target: 'arc_forgeg01', relation: 'collection_of' },

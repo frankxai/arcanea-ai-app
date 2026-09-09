@@ -5,12 +5,13 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Points, PointMaterial } from "@react-three/drei";
 import { type ComponentRef, useMemo, useRef } from "react";
+import { brand, cosmic, elements, text as textToken } from "@arcanea/design-system/tokens";
 
 const THREE_COLORS = {
-  atlanteanTeal: "#00bcd4",
-  cosmicVoid: "#060b17",
-  textPrimary: "#f8fafc",
-  void: "#a78bfa",
+  atlanteanTeal: brand.atlanteanTeal,
+  cosmicVoid: cosmic.void,
+  textPrimary: textToken.primary,
+  void: elements.void.base,
 } as const;
 
 type RotatingObject = {

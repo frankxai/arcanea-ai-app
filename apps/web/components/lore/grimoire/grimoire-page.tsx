@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import { LazyMotion, domAnimation, m } from 'framer-motion';
+import { cosmic } from '@arcanea/design-system/tokens';
 import {
   DISCIPLINES, TIERS, TIER_ORDER, ELEMENT_META, getMatrix,
   type Discipline, type SpellTier,
@@ -67,7 +68,7 @@ function DisciplineCards() {
                   className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl"
                   style={{ background: d.color, opacity: 0.95 }}
                 >
-                  <Icon size={26} weight="duotone" color="#0a0a12" />
+                  <Icon size={26} weight="duotone" color={cosmic.void} />
                 </div>
                 <h3 className="text-xl font-semibold text-white">{d.name}</h3>
                 <p className="mt-1 text-sm text-white/40">{d.german} · {d.school}</p>
@@ -137,7 +138,7 @@ function Matrix() {
                           className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
                           style={{ background: spell.color ?? ELEMENT_META[spell.element].color, opacity: 0.9 }}
                         >
-                          <EIcon size={18} weight="duotone" color="#0a0a12" />
+                          <EIcon size={18} weight="duotone" color={cosmic.void} />
                         </span>
                         <span className="min-w-0">
                           <span className="block truncate text-sm font-medium text-white">{spell.name}</span>

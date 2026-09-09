@@ -4,6 +4,7 @@
 import { useRef, useMemo, useState, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { brand, elements } from '@arcanea/design-system/tokens';
 import type { VaultEntry } from '@/lib/vault-data';
 import { VAULT_CONFIG, type VaultCategory } from '@/lib/vault-data';
 
@@ -18,11 +19,11 @@ const REGION_POSITIONS: Record<VaultCategory, [number, number, number]> = {
 };
 
 const THREE_COLOR_TOKENS: Record<string, string> = {
-  'var(--arc-brand-arcanean-gold)': '#ffd700',
-  'var(--arc-brand-cosmic-blue)': '#0d47a1',
-  'var(--arc-fire)': '#ff6b4a',
-  'var(--arc-void)': '#a78bfa',
-  'var(--arc-wind)': '#4ade80',
+  'var(--arc-brand-arcanean-gold)': brand.arcaneanGold,
+  'var(--arc-brand-cosmic-blue)': brand.cosmicBlue,
+  'var(--arc-fire)': elements.fire.base,
+  'var(--arc-void)': elements.void.base,
+  'var(--arc-wind)': elements.wind.deep,
 };
 
 interface StarData {

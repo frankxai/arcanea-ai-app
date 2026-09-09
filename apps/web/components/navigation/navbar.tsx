@@ -56,7 +56,7 @@ const navLinks: NavLink[] = [
   {
     href: "/gallery",
     label: "Explore",
-    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/showcase", "/models"],
+    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/showcase", "/models", "/story"],
     mega: [
       {
         title: "Discover",
@@ -71,6 +71,7 @@ const navLinks: NavLink[] = [
       {
         title: "Lore",
         items: [
+          { href: "/story", label: "The First Light", desc: "Origins · Lumina & Nero" },
           { href: "/library", label: "Library", desc: "Wisdom and philosophy" },
           { href: "/lore/guardians", label: "Guardians", desc: "Guardian archetypes" },
           { href: "/living-lore", label: "Chronicles", desc: "Interactive stories" },
