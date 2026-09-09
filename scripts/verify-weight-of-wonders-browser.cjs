@@ -117,12 +117,13 @@ module.exports.verifyWeightOfWondersPreview = async ({
         .getByRole("heading", { name: "The Weight of Wonders", exact: true })
         .waitFor();
       await settleVisiblePage();
-      await page
-        .getByRole("link", {
-          name: "Explore the atlas and encounter desk",
-          exact: true,
-        })
-        .click();
+      const collectionLink = page.getByRole("link", {
+        name: "Explore the atlas and encounter desk",
+        exact: true,
+      });
+      await collectionLink.scrollIntoViewIfNeeded();
+      await settleVisiblePage();
+      await collectionLink.click();
       await page.waitForURL(`${base}/gallery/weight-of-wonders`);
       await settleVisiblePage();
     } else {
