@@ -3,6 +3,22 @@ import { NextResponse } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
+  // Deny before the shared loading boundary streams a 200 response. The page
+  // also checks admission, but notFound() alone cannot change streamed headers.
+  if (
+    /^\/lab\/orthea(?:\/|$)/.test(request.nextUrl.pathname) &&
+    process.env.VERCEL_ENV !== "preview" &&
+    process.env.NODE_ENV !== "development"
+  ) {
+    return new NextResponse("Not found", {
+      status: 404,
+      headers: {
+        "Cache-Control": "no-store",
+        "X-Robots-Tag": "noindex, nofollow",
+      },
+    });
+  }
+
   // Redirect non-www to www (permanent 308) so all client-side fetches
   // (including streamed POST requests to /api/ai/chat) go directly to
   // the canonical origin without an extra 307 hop.

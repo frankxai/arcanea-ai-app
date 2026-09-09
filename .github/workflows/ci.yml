@@ -271,16 +271,36 @@ jobs:
           node scripts/verify-weight-of-wonders.mjs
           pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/weight-of-wonders.test.ts
 
+      - name: Verify Orthea encounter invariants
+        run: node --test scripts/verify-orthea-engine.test.mjs
+
       - name: Verify galleries rendered desktop, 375px mobile and reduced motion
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
           NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
         run: |
-          pnpm --dir apps/web exec playwright install --with-deps chromium
-          pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/sovereign-next.log" 2>&1 &
+          pnpm --dir apps/web exec playwright install chromium
+          VERCEL_ENV=preview pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/sovereign-next.log" 2>&1 &
           sovereign_server_pid=$!
           trap 'kill "$sovereign_server_pid" 2>/dev/null || true' EXIT
-          node scripts/capture-sovereign-built-app.cjs
+          gallery_status=0
+          node scripts/capture-sovereign-built-app.cjs || gallery_status=$?
+          orthea_status=0
+          node scripts/verify-orthea-app-browser.cjs || orthea_status=$?
+          if [ "$gallery_status" -ne 0 ] || [ "$orthea_status" -ne 0 ]; then
+            echo "::error::Browser gates failed: galleries=$gallery_status, Orthea=$orthea_status"
+            exit 1
+          fi
+
+      - name: Verify restricted Orthea route is unavailable in production
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+        run: |
+          VERCEL_ENV=production pnpm --dir apps/web exec next start -p 3002 > "$RUNNER_TEMP/orthea-production.log" 2>&1 &
+          orthea_server_pid=$!
+          trap 'kill "$orthea_server_pid" 2>/dev/null || true' EXIT
+          node scripts/verify-orthea-app-browser.cjs --production
 
       - name: Upload gallery rendered evidence
         if: always()
