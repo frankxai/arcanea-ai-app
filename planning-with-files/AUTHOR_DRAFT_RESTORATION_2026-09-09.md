@@ -15,6 +15,9 @@ Read-only Supabase inspection of the Arcanea project on 2026-09-09 found:
 
 - public.book_chapter_drafts does not exist; columns and policies are absent.
 - public.books and public.book_authors do exist.
+- Table defaults for supabase_admin grant ALL to anon/authenticated. The repair
+  revokes inherited grants before allowing only account-scoped CRUD; the SQL
+  fixture reproduces those defaults and rejects authenticated TRUNCATE.
 - The existing 20260414 migration is present in Git; that alone does not prove
   installation in the live database.
 

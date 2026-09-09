@@ -22,6 +22,9 @@ CREATE FUNCTION auth.uid() RETURNS UUID LANGUAGE SQL STABLE
 GRANT USAGE ON SCHEMA public, auth TO authenticated, anon;
 GRANT EXECUTE ON FUNCTION auth.uid() TO authenticated, anon;
 
+-- Reproduce broad defaults present for a production schema-creating role.
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO anon, authenticated;
+
 -- Fresh restoration and safe reapplication.
 \ir ../../../supabase/migrations/20260909000001_restore_author_drafts.sql
 \ir ../../../supabase/migrations/20260909000001_restore_author_drafts.sql
@@ -33,7 +36,9 @@ BEGIN
   END IF;
   IF has_table_privilege('anon', 'public.book_chapter_drafts', 'SELECT')
       OR has_table_privilege('anon', 'public.book_chapter_drafts', 'INSERT')
-      OR has_table_privilege('authenticated', 'public.book_chapter_drafts', 'TRUNCATE') THEN
+      OR has_table_privilege('authenticated', 'public.book_chapter_drafts', 'TRUNCATE')
+      OR has_table_privilege('authenticated', 'public.book_chapter_drafts', 'REFERENCES')
+      OR has_table_privilege('authenticated', 'public.book_chapter_drafts', 'TRIGGER') THEN
     RAISE EXCEPTION 'Unexpected draft grants';
   END IF;
 END;
@@ -41,6 +46,15 @@ $$;
 
 SET ROLE authenticated;
 SELECT set_config('request.jwt.claim.sub', '00000000-0000-4000-8000-000000000001', false);
+DO $$
+BEGIN
+  BEGIN
+    TRUNCATE public.book_chapter_drafts;
+    RAISE EXCEPTION 'An authenticated account could truncate all drafts';
+  EXCEPTION WHEN insufficient_privilege THEN NULL;
+  END;
+END;
+$$;
 INSERT INTO public.book_chapter_drafts (book_slug, chapter_slug, author_user_id, content, content_json, updated_at)
 VALUES ('sample', 'chapter-1', auth.uid(), 'Saved words',
   '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Saved words","marks":[{"type":"bold"}]}]}]}',
@@ -116,6 +130,9 @@ BEGIN
     WHERE table_schema = 'public' AND table_name = 'book_chapter_drafts'
       AND column_name = 'author_user_id' AND is_nullable <> 'NO') THEN
     RAISE EXCEPTION 'Legacy ownership remains nullable';
+  END IF;
+  IF has_table_privilege('authenticated', 'public.book_chapter_drafts', 'TRUNCATE') THEN
+    RAISE EXCEPTION 'Legacy broad grants survived migration';
   END IF;
 END;
 $$;

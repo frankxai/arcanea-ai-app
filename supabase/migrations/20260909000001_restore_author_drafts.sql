@@ -44,7 +44,8 @@ END;
 $$;
 
 ALTER TABLE public.book_chapter_drafts ENABLE ROW LEVEL SECURITY;
-REVOKE ALL ON TABLE public.book_chapter_drafts FROM PUBLIC, anon;
+-- Supabase defaults may grant ALL, including privileges that bypass row policies.
+REVOKE ALL ON TABLE public.book_chapter_drafts FROM PUBLIC, anon, authenticated;
 GRANT SELECT, INSERT, UPDATE, DELETE ON public.book_chapter_drafts TO authenticated;
 
 DROP POLICY IF EXISTS authors_read_own_drafts ON public.book_chapter_drafts;
