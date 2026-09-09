@@ -183,7 +183,7 @@ async function main() {
     await expect(
       page.getByRole("heading", { name: "The supply survives.", exact: true }),
     ).toBeVisible();
-    await expect(step).toBeDisabled();
+    await expect(step).toHaveCount(0);
     await expect(
       encounter.getByRole("button", { name: "Open this sluice", exact: true }),
     ).toHaveCount(0);
