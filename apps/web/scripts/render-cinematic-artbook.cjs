@@ -167,6 +167,9 @@ function validateManifest(manifest, sourceBytes) {
     fail('Manifest backend model provenance must be text or null.');
   }
   if (typeof manifest.draft !== 'boolean') fail('Manifest draft mode must be a boolean.');
+  if (manifest.draft && manifest.author !== 'Byline pending approval') {
+    fail('Protected draft manifests must use the pending-byline marker.');
+  }
   if (
     !/^[a-f0-9]{40,64}$/.test(manifest.artbook.sourceCommit || '')
     || manifest.artbook.sourceCommit !== manifest.sourceCommit

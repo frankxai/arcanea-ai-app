@@ -56,7 +56,7 @@ function manifestFixture(sourceBytes) {
     bookId: 'the-last-free-path',
     editionId: 'book-01-founding-cinematic',
     title: 'The Last Free Path',
-    author: 'Internal proof name',
+    author: 'Byline pending approval',
     releaseDate: '2026-08-30',
     draft: true,
     sourceCommit: commit,

@@ -8,6 +8,7 @@ import {
 } from '@/lib/books/downloads';
 import { getCinematicBookAccess } from '@/lib/books/polar-access';
 import { cinematicDownloadHttpStatus } from '@/lib/books/cinematic-access-contract';
+import { readVerifiedCinematicArtifact } from '@/lib/books/cinematic-artifact-integrity';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -17,7 +18,7 @@ interface DownloadRouteProps {
 }
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: DownloadRouteProps,
 ): Promise<Response> {
   const { assetId } = await params;
@@ -40,7 +41,7 @@ export async function GET(
   if (accessStatus === 403) {
     return NextResponse.json({ error: 'Complete-edition access is required.' }, { status: 403 });
   }
-  if (accessStatus === 503) {
+  if (accessStatus === 503 || access.status !== 'granted') {
     return NextResponse.json(
       { error: 'Edition downloads are still being verified.' },
       { status: 503 },
@@ -48,9 +49,16 @@ export async function GET(
   }
 
   const asset = CINEMATIC_DOWNLOADS[assetId];
+  const evidence = access.releaseFiles[asset.filename];
+  if (!evidence) {
+    return NextResponse.json({ error: 'Edition downloads are still being verified.' }, { status: 503 });
+  }
   let result: Awaited<ReturnType<typeof get>>;
   try {
-    result = await get(cinematicDownloadPath(assetId), { access: 'private' });
+    result = await get(cinematicDownloadPath(assetId), {
+      access: 'private',
+      abortSignal: AbortSignal.any([request.signal, AbortSignal.timeout(30_000)]),
+    });
   } catch {
     return NextResponse.json(
       { error: 'Edition storage could not be reached. Please try again.' },
@@ -61,11 +69,21 @@ export async function GET(
     return NextResponse.json({ error: 'Edition file not found.' }, { status: 404 });
   }
 
-  return new NextResponse(result.stream, {
+  if (result.blob.size !== evidence.bytes) {
+    void result.stream.cancel().catch(() => undefined);
+    return NextResponse.json({ error: 'Edition file could not be verified. Please try again.' }, { status: 503 });
+  }
+  const bytes = await readVerifiedCinematicArtifact(result.stream, evidence, { signal: request.signal });
+  if (!bytes) {
+    return NextResponse.json({ error: 'Edition file could not be verified. Please try again.' }, { status: 503 });
+  }
+
+  return new NextResponse(bytes, {
     headers: {
       'Cache-Control': 'private, no-store',
       'Content-Disposition': `attachment; filename="${asset.filename}"`,
       'Content-Type': asset.contentType,
+      'Content-Length': String(bytes.byteLength),
       'X-Content-Type-Options': 'nosniff',
     },
   });

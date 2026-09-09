@@ -6,6 +6,23 @@
 **Canonical product:** `arcanea.ai/books`
 **Working edition:** Book 1 cinematic edition, derived from *The Three Academies* zero draft
 
+## Current continuation evidence — 2026-09-09
+
+This section supersedes the historical recovery, risks, and next-action sections below. The original brief and decisions remain preserved as source context.
+
+- Assigned worktree: `starlight/worktrees/arcanea-cinematic-book-20260829`, branch `codex/arcanea-cinematic-book`, origin `frankxai/arcanea-ai-app`; draft PR [#314](https://github.com/frankxai/arcanea-ai-app/pull/314).
+- The 32-chapter revised draft is approximately 76,800 words. It is still below the 95K–110K development target; a complete draft is not proof of final editorial readiness. Expansion must deepen the trio's choices, teaching, relationships, and consequences.
+- The current edition route is `/books/the-last-free-path`. Chapters 1–4 form the free opening. Paid prose, the Creator's Ledger, and downloads require server-side access verification.
+- Live Polar Orders is the first-release entitlement authority. It matches the exact product, book, and edition, and reconciles refunds on each protected request. This supersedes the earlier proposal for a new local entitlement table; no such migration is needed for this slice.
+- Novel and artbook builders reject release mode without exact approval receipts and approved source hashes. Draft artifacts remain visibly marked. Checkout and protected reading require the private manifest's approved bytes and source revision to match the deployed revision.
+- Delivery now verifies each complete file against the approved manifest before returning bytes; replacement, truncation, trailing data, stalled reads, and cancellation are covered. Each file must fit the 128 MiB buffer ceiling.
+- The earlier TypeScript failure was resolved by building the seven workspace dependencies. After delivery changes, the complete web `tsc --noEmit --incremental false`, changed-scope ESLint, and `next build` passed; 471 static pages were generated. The obsolete local Vercel Blob type shim was removed, so these checks use the installed SDK types. The build reports eight existing dynamic-filesystem tracing warnings in `lib/saga/loader.ts`; they need integration review before a production promotion.
+- Production was independently advanced by other work. Vercel reports production deployment `dpl_H8aPzSHY3RpALorLNTjkeB87ErYB`, source `141ad072132597f741979eee58671b3bd4e26a88`. This book lane has not been promoted. Do not deploy this older branch over current production without integration review.
+- The estate's 2026-08-31 demand-capture rule applies: the product needs its registered per-product waitlist while the release gate is pending. The older disabled checkout state is insufficient for a public launch surface. Integrate the shared capture contract before public preview promotion.
+- Canon, title, casting, byline, rights, commercial settings, and production approvals remain open in `book/chronicles-of-arcanea/book-01-the-three-academies/cinematic-edition/reviews/release-approval-packet-2026-08-30.md`.
+
+Next actions: obtain independent review of the delivery slice and preserve it in the existing draft PR; reconcile current main and the shared waitlist; then refine the director's bible, teaching sequences, and cinematic anchors against the manuscript before final exports and desktop/mobile preview QA. All 37 cinematic tests and the complete changed-scope lint pass. ESLint now loads its existing plugins for CommonJS publishing scripts, allowing those scripts to be checked alongside the application code.
+
 ## Task contract
 
 **Scope**

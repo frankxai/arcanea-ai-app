@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "bookId": "the-last-free-path",
+  "editionId": "book-01-founding-cinematic",
+  "title": "The Last Free Path",
+  "series": "Chronicles of Arcanea",
+  "status": "protected-staging",
+  "manuscriptStatus": "revised-draft",
+  "titleStatus": "provisional",
+  "rightsStatus": "pending-human-approval",
+  "expectedChapterCount": 32,
+  "approvedManuscriptSha256": null,
+  "humanApprovals": {
+    "canon": false,
+    "editorial": false,
+    "legal": false,
+    "rights": false,
+    "title": false
+  },
+  "approvalReceipts": {
+    "canon": null,
+    "editorial": null,
+    "legal": null,
+    "rights": null,
+    "title": null
+  },
+  "publication": {
+    "byline": null,
+    "bylineStatus": "pending",
+    "bylineApprovalReceipt": null
+  },
+  "cover": {
+    "assetId": "cover-held-interval-preview-r03",
+    "path": "apps/web/public/images/books/the-last-free-path/cover-held-interval-preview.png",
+    "sha256": "3399de7f71a7300c74bbd2ded1ff2f3f0730adbe58f00766dc4e06e5762d7008",
+    "width": 992,
+    "height": 1586,
+    "status": "protected-staging",
+    "approvalReceipts": {
+      "casting": null,
+      "rights": null,
+      "title": null
+    }
+  }
+}

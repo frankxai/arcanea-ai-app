@@ -24,7 +24,10 @@ const noRawHex = {
 };
 
 export default defineConfig([
-  ...nextVitals,
+  ...nextVitals.map((config) => config.name === 'next' ? {
+    ...config,
+    files: [...config.files, 'scripts/**/*.cjs'],
+  } : config),
   ...nextTs,
   {
     linterOptions: {
@@ -46,6 +49,15 @@ export default defineConfig([
       'react-hooks/static-components': 'warn',
       'react/no-unescaped-entities': 'warn',
       'no-restricted-syntax': ['error', noRawHex],
+    },
+  },
+  {
+    files: ['scripts/**/*.cjs'],
+    languageOptions: { sourceType: 'commonjs' },
+    rules: {
+      // These are Node publishing programs, including standalone print styles.
+      '@typescript-eslint/no-require-imports': 'off',
+      'no-restricted-syntax': 'off',
     },
   },
   globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),

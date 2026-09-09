@@ -67,6 +67,7 @@ test('checkout opens only when every release requirement is ready', () => {
     salesEnabled: true,
     editionReleased: true,
     downloadsEnabled: true,
+    releaseManifestVerified: true,
     hasAccessToken: true,
     hasProductId: true,
   };

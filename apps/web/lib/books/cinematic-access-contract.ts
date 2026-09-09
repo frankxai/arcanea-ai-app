@@ -16,6 +16,7 @@ interface CinematicCheckoutRequirements {
   salesEnabled: boolean;
   editionReleased: boolean;
   downloadsEnabled: boolean;
+  releaseManifestVerified: boolean;
   hasAccessToken: boolean;
   hasProductId: boolean;
 }
@@ -63,6 +64,7 @@ export function isCinematicCheckoutReady(
   return requirements.salesEnabled
     && requirements.editionReleased
     && requirements.downloadsEnabled
+    && requirements.releaseManifestVerified
     && requirements.hasAccessToken
     && requirements.hasProductId;
 }

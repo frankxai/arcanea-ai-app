@@ -105,12 +105,14 @@ Decision: ____________________  Approver: ____________________  Date: __________
 
 # Activation sequence after approval
 
-1. Record exact release, rights, casting, title, and byline receipts in `artbook-spec.json` and the edition manifest inputs. Record any Creator-approved canon promotion separately in the locked canon SSOT and its approval log.
+Engineering evidence, 2026-09-09: all seven web workspace dependencies build; the complete web TypeScript check and production build pass (471 static pages). All 37 cinematic tests pass: 14 delivery/entitlement, six manifest, 11 novel, and six artbook cases. Changed-scope ESLint passes, including the CommonJS publishing scripts after correcting their plugin coverage. The installed Vercel Blob SDK supplies its own types; the earlier handwritten shim has been removed. Final manifest receipt validation, buffer limits, overwritten files, truncation, trailing bytes, storage failure, timeout, and cancellation are covered by local tests. These results do not stand in for independent review, real Polar sandbox transactions, artifact inspection, final-file load tests, or desktop/mobile preview QA. The build still reports eight existing tracing warnings in the separate saga loader.
+
+1. Record exact release, editorial, legal, rights, casting, title, and byline receipts in `edition-spec.json` and `artbook-spec.json`. Bind `edition-spec.json` to the exact approved manuscript SHA-256. Record any Creator-approved canon promotion separately in the locked canon SSOT and its approval log.
 2. Produce final title/byline typography and approved derivatives.
 3. Render EPUB, novel PDFs, and the 21-page tagged artbook from a clean commit.
-4. Inspect every file, desktop/mobile reader state, keyboard flow, reduced motion, and protected route.
+4. Inspect every file, desktop/mobile reader state, keyboard flow, reduced motion, and protected route. Verify the final manifest contains the four promised buyer downloads with matching hashes and no release-blocking pending item. Verify each file remains below the 128 MiB delivery ceiling and that approved files download while overwritten, truncated, or stalled files return no artifact bytes. Measure delivery with the final file sizes.
 5. Run Polar sandbox purchase/refund and private Blob download verification.
 6. Resolve or supersede PR #299.
-7. Keep sales test-only in the private preview environment and use Polar sandbox/test mode. Repeat the complete verification there, then request a separate production approval. Live charging requires explicit human release-lead approval; automation must not enable it.
+7. Keep sales test-only in the private Vercel preview environment and use Polar sandbox/test mode. Repeat the complete verification there, then request a separate production approval. Only the human release lead may record the verified private-manifest hash and source commit in the checkout receipt variables. The application must fetch and verify those exact manifest bytes and require the manifest source commit to match Vercel's deployed git revision before checkout can open. Live charging requires explicit human release-lead approval; automation must not enable it.
 
 Rollback is `CINEMATIC_BOOK_SALES_ENABLED=false`; existing buyer verification and the four free chapters remain available.

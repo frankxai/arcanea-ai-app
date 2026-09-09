@@ -288,7 +288,7 @@ export default async function ChapterPage({ params }: PageProps) {
             chapterTitle={summary.title}
             chapterId={summary.id}
             access={access}
-            checkoutConfigured={isCinematicCheckoutConfigured()}
+            checkoutConfigured={await isCinematicCheckoutConfigured()}
           />
         );
       }

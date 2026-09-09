@@ -5,7 +5,6 @@ import {
   CINEMATIC_EDITION_ID,
 } from '@/lib/books/cinematic-edition';
 import {
-  CINEMATIC_DOWNLOADS,
   cinematicAssetPath,
   type CinematicDownloadId,
 } from '@/lib/books/cinematic-download-contract';
@@ -18,6 +17,10 @@ export {
 
 export function cinematicDownloadPath(id: CinematicDownloadId): string {
   return cinematicAssetPath(CINEMATIC_BOOK_ID, CINEMATIC_EDITION_ID, id);
+}
+
+export function cinematicManifestPath(): string {
+  return ['editions', CINEMATIC_BOOK_ID, CINEMATIC_EDITION_ID, 'manifest.json'].join('/');
 }
 
 export function areCinematicDownloadsEnabled(): boolean {

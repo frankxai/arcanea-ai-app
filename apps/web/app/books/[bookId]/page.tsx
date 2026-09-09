@@ -363,7 +363,7 @@ export default async function BookOverviewPage({ params }: PageProps) {
         readTime={stats.readTime}
         openingContent={firstChapter?.content ?? ''}
         access={access}
-        checkoutConfigured={isCinematicCheckoutConfigured()}
+        checkoutConfigured={await isCinematicCheckoutConfigured()}
         released={isCinematicEditionReleased()}
       />
     );

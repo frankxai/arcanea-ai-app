@@ -26,7 +26,7 @@ export async function POST(): Promise<Response> {
 
   const accessToken = process.env.POLAR_ACCESS_TOKEN?.trim();
   const productId = process.env.POLAR_BOOK_PRODUCT_ID?.trim();
-  if (!isCinematicCheckoutConfigured() || !accessToken || !productId) {
+  if (!(await isCinematicCheckoutConfigured()) || !accessToken || !productId) {
     return NextResponse.json(
       { error: 'The founding edition is not open for purchase yet.' },
       { status: 503 },

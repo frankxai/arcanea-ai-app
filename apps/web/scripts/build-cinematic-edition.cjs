@@ -1,29 +1,35 @@
 'use strict';
 
-const { createHash } = require('node:crypto');
-const { execFileSync } = require('node:child_process');
-const { mkdir, readFile, readdir, stat, writeFile } = require('node:fs/promises');
+const { lstat, readFile, readdir, realpath, writeFile } = require('node:fs/promises');
 const path = require('node:path');
-const JSZip = require('jszip');
-
-const BOOK_ID = 'the-last-free-path';
-const EDITION_ID = 'book-01-founding-cinematic';
-const TITLE = 'The Last Free Path';
-const SERIES = 'Chronicles of Arcanea';
-const DESCRIPTION = 'Three young makers enter the Academies. The first lesson is who gets to own the person being taught.';
-const REPO_ROOT = path.resolve(__dirname, '../../..');
-const CHAPTER_DIR = path.join(
+const {
+  BOOK_DIR,
+  EXPECTED_BOOK_ID,
+  EXPECTED_EDITION_ID,
+  EXPECTED_SERIES,
+  EXPECTED_TITLE,
   REPO_ROOT,
-  'book',
-  'chronicles-of-arcanea',
-  'book-01-the-three-academies',
-  'cinematic-edition',
-  'chapters',
-);
+  assertOutputFile,
+  assertReleaseApproval,
+  ensureOutputDirectory,
+  fail,
+  loadSpecification,
+  normalizedPath,
+  repositoryState,
+  sha256,
+  trackedHeadRecord,
+  validateReleaseDate,
+  workingTreeRecord,
+} = require('./cinematic-edition-contract.cjs');
 
-function fail(message) {
-  throw new Error(message);
-}
+const BOOK_ID = EXPECTED_BOOK_ID;
+const EDITION_ID = EXPECTED_EDITION_ID;
+const TITLE = EXPECTED_TITLE;
+const SERIES = EXPECTED_SERIES;
+const DESCRIPTION = 'Three young makers enter the Academies. The first lesson is who gets to own the person being taught.';
+const CHAPTER_DIR = path.join(BOOK_DIR, 'chapters');
+const DRAFT_BYLINE = 'Byline pending approval';
+const DRAFT_NOTICE = 'Protected staging proof · Not for distribution';
 
 function parseArgs(argv) {
   const result = { draft: false, releaseDate: new Date().toISOString().slice(0, 10) };
@@ -46,7 +52,7 @@ function parseArgs(argv) {
 
   if (!result.out) fail('Pass an explicit output directory with --out.');
   if (!result.author) fail('Pass the approved publication name with --author.');
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(result.releaseDate)) fail('--release-date must be YYYY-MM-DD.');
+  validateReleaseDate(result.releaseDate);
   if (!result.draft && !result.cover) fail('A release build requires --cover. Use --draft only for internal layout QA.');
   return result;
 }
@@ -105,7 +111,7 @@ function chapterNumber(filename) {
   return match ? Number.parseInt(match[1], 10) : Number.NaN;
 }
 
-async function loadChapters() {
+async function loadChapters(draft) {
   const files = (await readdir(CHAPTER_DIR))
     .filter((filename) => /^chapter-\d+-.+\.md$/.test(filename))
     .sort();
@@ -113,17 +119,30 @@ async function loadChapters() {
 
   const chapters = [];
   for (const filename of files) {
-    const raw = await readFile(path.join(CHAPTER_DIR, filename), 'utf8');
+    const absolute = path.join(CHAPTER_DIR, filename);
+    const source = draft
+      ? await workingTreeRecord(absolute, `Chapter source ${filename}`)
+      : await trackedHeadRecord(absolute, `Chapter source ${filename}`);
+    const raw = source.bytes.toString('utf8');
     const { data, content } = parseFrontmatter(raw, filename);
     const number = chapterNumber(filename);
-    if (data.status !== 'revised-draft') fail(`${filename} has release-ineligible status: ${data.status || 'missing'}.`);
+    const allowedStatus = draft
+      ? ['revised-draft', 'release-approved'].includes(data.status)
+      : data.status === 'release-approved';
+    if (!allowedStatus) {
+      const required = draft ? 'revised-draft or release-approved' : 'release-approved';
+      fail(`${filename} has status ${data.status || 'missing'}; ${required} is required.`);
+    }
     if (!data.title) fail(`${filename} is missing a title.`);
     chapters.push({
       number,
       id: `chapter-${String(number).padStart(2, '0')}`,
+      filename,
+      repoPath: source.relative,
       title: data.title,
       pov: data.pov || '',
       movement: data.movement || '',
+      status: data.status,
       xhtml: renderParagraphs(content, filename),
       wordCount: content
         .replace(/^#\s+.+$/m, '')
@@ -157,11 +176,12 @@ ${body}
 </html>`;
 }
 
-function chapterXhtml(chapter) {
+function chapterXhtml(chapter, draft = false) {
   return xhtmlDocument(
     `${chapter.number}. ${chapter.title}`,
     `<article epub:type="chapter">
   <header class="chapter-header">
+    ${draft ? `<p class="draft-mark">${DRAFT_NOTICE}</p>` : ''}
     <p class="chapter-number">Chapter ${chapter.number}</p>
     <h1>${escapeXml(chapter.title)}</h1>
     <p class="chapter-pov">${escapeXml(chapter.pov)}</p>
@@ -196,7 +216,7 @@ ${landmarks}      <li><a epub:type="bodymatter" href="chapter-01.xhtml">Start re
   );
 }
 
-function contentOpf(chapters, author, releaseDate, cover) {
+function contentOpf(chapters, author, releaseDate, cover, draft = false) {
   const chapterItems = chapters
     .map((chapter) => `    <item id="${chapter.id}" href="${chapter.id}.xhtml" media-type="application/xhtml+xml" />`)
     .join('\n');
@@ -212,13 +232,13 @@ function contentOpf(chapters, author, releaseDate, cover) {
 <package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="edition-id" xml:lang="en">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
     <dc:identifier id="edition-id">urn:arcanea:${BOOK_ID}:${EDITION_ID}</dc:identifier>
-    <dc:title>${TITLE}</dc:title>
+    <dc:title>${draft ? `${TITLE} — protected staging proof` : TITLE}</dc:title>
     <dc:creator>${escapeXml(author)}</dc:creator>
     <dc:language>en</dc:language>
-    <dc:publisher>Arcanea</dc:publisher>
-    <dc:description>${escapeXml(DESCRIPTION)}</dc:description>
-    <dc:date>${releaseDate}</dc:date>
-    <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
+    <dc:publisher>${draft ? 'Arcanea internal proof' : 'Arcanea'}</dc:publisher>
+    <dc:description>${escapeXml(draft ? `${DRAFT_NOTICE}. ${DESCRIPTION}` : DESCRIPTION)}</dc:description>
+    <dc:rights>${draft ? DRAFT_NOTICE : 'Publication rights recorded in the edition manifest.'}</dc:rights>
+${draft ? '' : `    <dc:date>${releaseDate}</dc:date>\n`}    <meta property="dcterms:modified">${releaseDate}T00:00:00Z</meta>
     <meta property="belongs-to-collection">${SERIES}</meta>
     <meta property="collection-type">series</meta>
     <meta property="group-position">1</meta>
@@ -252,6 +272,7 @@ h1 { font-size: 2em; line-height: 1.08; font-weight: 500; }
 .prose p:first-child::first-letter { float: left; font-size: 3.35em; line-height: .82; padding: .08em .08em 0 0; color: #78603b; }
 .story-list { margin: 1.2em 0 1.2em 1.4em; padding: 0; }
 .story-list li { margin: .28em 0; }
+.draft-mark { margin: 0 0 1.2em; font-family: sans-serif; font-size: .66em; letter-spacing: .05em; color: #8b2f2f; }
 em { font-style: italic; }
 nav ol { padding-left: 1.4em; }
 nav li { margin: .55em 0; }
@@ -266,6 +287,9 @@ html { color: #211f1a; background: white; font-family: Georgia, "Times New Roman
 body { margin: 0; font-size: 10.7pt; line-height: 1.48; }
 .cover-page { width: 6in; height: 9in; break-after: page; overflow: hidden; }
 .cover-page img { width: 100%; height: 100%; object-fit: cover; }
+.draft .cover-page { position: relative; }
+.draft-cover-mark { position: absolute; left: .22in; right: .22in; bottom: .22in; z-index: 2; padding: .08in .12in; background: rgba(255,255,255,.92); border: 1px solid #8b2f2f; color: #742626; font: 700 8pt/1.2 system-ui, sans-serif; text-align: center; }
+.draft::before { content: "Protected staging · Not for distribution"; position: fixed; z-index: 20; top: .14in; right: .18in; color: #8b2f2f; font: 700 6.8pt/1 system-ui, sans-serif; letter-spacing: .04em; }
 .title-page { height: 7.45in; break-after: page; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
 .title-page h1 { max-width: 4.5in; margin: .2in 0; font-size: 32pt; font-weight: 500; line-height: 1.05; }
 .eyebrow, .chapter-number, .chapter-pov { font-family: Arial, sans-serif; font-size: 7.8pt; letter-spacing: .08em; color: #78603b; }
@@ -282,19 +306,21 @@ body { margin: 0; font-size: 10.7pt; line-height: 1.48; }
 .prose p:first-child::first-letter { float: left; font-size: 40pt; line-height: .78; padding: .07in .06in 0 0; color: #78603b; }
 .story-list { margin: .16in 0 .16in .28in; padding: 0; }
 .story-list li { margin: .035in 0; }
+.draft-mark { margin: 0 0 .15in; color: #8b2f2f; font: 700 7.5pt/1.2 system-ui, sans-serif; letter-spacing: .04em; }
 em { font-style: italic; }
 `;
 
-function titlePage(author) {
+function titlePage(author, draft = false) {
   return `<section class="title-page">
+  ${draft ? `<p class="draft-mark">${DRAFT_NOTICE}</p>` : ''}
   <p class="eyebrow">${SERIES} · Book one</p>
   <h1>${TITLE}</h1>
-  <p class="series">Founding cinematic edition</p>
+  <p class="series">${draft ? 'Founding cinematic edition · protected proof' : 'Founding cinematic edition'}</p>
   <p>${escapeXml(author)}</p>
 </section>`;
 }
 
-function printHtml(chapters, author, cover) {
+function printHtml(chapters, author, cover, draft = false) {
   const contents = chapters
     .map((chapter) => `<li><a href="#${chapter.id}">${chapter.number}. ${escapeXml(chapter.title)}</a></li>`)
     .join('\n');
@@ -309,7 +335,7 @@ function printHtml(chapters, author, cover) {
 </article>`)
     .join('\n');
   const coverMarkup = cover
-    ? `<section class="cover-page"><img src="${cover.dataUrl}" alt="Cover artwork for ${TITLE}" /></section>`
+    ? `<section class="cover-page"><img src="${cover.dataUrl}" alt="Cover artwork for ${TITLE}" />${draft ? `<div class="draft-cover-mark">${DRAFT_NOTICE}</div>` : ''}</section>`
     : '';
   return `<!doctype html>
 <html lang="en">
@@ -319,82 +345,127 @@ function printHtml(chapters, author, cover) {
   <title>${TITLE}</title>
   <style>${PRINT_CSS}</style>
 </head>
-<body>
+<body${draft ? ' class="draft"' : ''}>
 ${coverMarkup}
-${titlePage(author)}
+${titlePage(author, draft)}
 <nav class="contents" aria-label="Contents"><h1>Contents</h1><ol>${contents}</ol></nav>
 ${chapterBodies}
 </body>
 </html>`;
 }
 
-function sha256(buffer) {
-  return createHash('sha256').update(buffer).digest('hex');
+function imageDimensions(bytes, mediaType) {
+  if (mediaType === 'image/png') {
+    const signature = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+    if (bytes.length < 24 || !bytes.subarray(0, 8).equals(signature)) fail('Cover has an invalid PNG header.');
+    return { width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20) };
+  }
+  if (bytes.length < 4 || bytes[0] !== 0xff || bytes[1] !== 0xd8) fail('Cover has an invalid JPEG header.');
+  let offset = 2;
+  while (offset + 4 <= bytes.length) {
+    if (bytes[offset] !== 0xff) {
+      offset += 1;
+      continue;
+    }
+    const marker = bytes[offset + 1];
+    offset += 2;
+    if (marker === 0xd8 || marker === 0xd9) continue;
+    const length = bytes.readUInt16BE(offset);
+    if (length < 2 || offset + length > bytes.length) fail('Cover has a truncated JPEG segment.');
+    if ([0xc0, 0xc1, 0xc2, 0xc3, 0xc5, 0xc6, 0xc7, 0xc9, 0xca, 0xcb, 0xcd, 0xce, 0xcf].includes(marker)) {
+      return { height: bytes.readUInt16BE(offset + 3), width: bytes.readUInt16BE(offset + 5) };
+    }
+    offset += length;
+  }
+  fail('Cover JPEG dimensions are unavailable.');
 }
 
-async function loadCover(coverPath) {
+async function loadCover(coverPath, spec, draft) {
   if (!coverPath) return null;
-  const coverStat = await stat(coverPath).catch(() => null);
-  if (!coverStat?.isFile()) fail(`Cover not found: ${coverPath}`);
-  const extension = path.extname(coverPath).toLowerCase();
+  const expectedPath = path.resolve(REPO_ROOT, spec.cover.path);
+  if (normalizedPath(coverPath) !== normalizedPath(expectedPath)) {
+    fail(`Cover must use the edition specification asset: ${spec.cover.path}.`);
+  }
+  const coverStat = await lstat(expectedPath).catch(() => null);
+  if (!coverStat?.isFile() || coverStat.isSymbolicLink()) fail(`Cover must be a regular file, not a link: ${expectedPath}`);
+  const coverReal = await realpath(expectedPath);
+  if (normalizedPath(coverReal) !== normalizedPath(expectedPath)) fail('Cover resolves through an alias or linked parent.');
+  const source = draft
+    ? { bytes: await readFile(coverReal), relative: spec.cover.path }
+    : await trackedHeadRecord(coverReal, 'Edition cover');
+  const extension = path.extname(coverReal).toLowerCase();
   const mediaType = extension === '.png' ? 'image/png' : extension === '.jpg' || extension === '.jpeg' ? 'image/jpeg' : null;
   if (!mediaType) fail('Cover must be a PNG or JPEG.');
-  const bytes = await readFile(coverPath);
+  const bytes = source.bytes;
+  const digest = sha256(bytes);
+  if (digest !== spec.cover.sha256) fail('Cover does not match its edition specification SHA-256.');
+  const dimensions = imageDimensions(bytes, mediaType);
+  if (dimensions.width !== spec.cover.width || dimensions.height !== spec.cover.height) {
+    fail(`Cover dimensions are ${dimensions.width}×${dimensions.height}; expected ${spec.cover.width}×${spec.cover.height}.`);
+  }
   const filename = `cover${extension === '.jpeg' ? '.jpg' : extension}`;
   return {
+    assetId: spec.cover.assetId,
     bytes,
     filename,
     mediaType,
+    repoPath: source.relative,
+    width: dimensions.width,
+    height: dimensions.height,
+    status: spec.cover.status,
+    approvalReceipts: { ...spec.cover.approvalReceipts },
     dataUrl: `data:${mediaType};base64,${bytes.toString('base64')}`,
-    sha256: sha256(bytes),
+    sha256: digest,
   };
 }
 
-function sourceState(draft) {
-  let commit;
-  let changes;
-  try {
-    commit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
-    changes = execFileSync(
-      'git',
-      ['status', '--porcelain', '--untracked-files=normal'],
-      { cwd: REPO_ROOT, encoding: 'utf8' },
-    ).trim();
-  } catch {
-    if (!draft) fail('Release builds require readable git provenance.');
-    return { commit: null, dirty: true };
-  }
-  if (changes && !draft) {
-    fail('Release builds require a clean git worktree. Commit or remove source changes first.');
-  }
-  return { commit, dirty: Boolean(changes) };
+function addZipFile(zip, filename, content, archiveDate, options = {}) {
+  zip.file(filename, content, { createFolders: false, date: archiveDate, ...options });
 }
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
-  const [chapters, cover] = await Promise.all([loadChapters(), loadCover(options.cover)]);
-  const provenance = sourceState(options.draft);
-  await mkdir(options.out, { recursive: true });
+  const JSZip = require('jszip');
+  const provenance = repositoryState(options.draft);
+  const { spec, receipt: specReceipt } = await loadSpecification(options.draft);
+  const chapters = await loadChapters(options.draft);
+  const manuscriptSha256 = sha256(chapters.map((chapter) => `${chapter.number}:${chapter.sourceSha256}`).join('\n'));
+  assertReleaseApproval(spec, options.draft, options.author, manuscriptSha256);
+  const displayAuthor = options.draft ? DRAFT_BYLINE : options.author;
+  const [cover, outputDirectory] = await Promise.all([
+    loadCover(options.cover, spec, options.draft),
+    ensureOutputDirectory(options.out),
+  ]);
+  options.out = outputDirectory;
+  const archiveDate = new Date(`${options.releaseDate}T00:00:00Z`);
 
   const zip = new JSZip();
-  zip.file('mimetype', 'application/epub+zip', { compression: 'STORE' });
-  zip.file('META-INF/container.xml', `<?xml version="1.0" encoding="utf-8"?>
+  addZipFile(zip, 'mimetype', 'application/epub+zip', archiveDate, { compression: 'STORE' });
+  addZipFile(zip, 'META-INF/container.xml', `<?xml version="1.0" encoding="utf-8"?>
 <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
   <rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml" /></rootfiles>
-</container>`);
-  zip.file('OEBPS/styles.css', EPUB_CSS);
-  zip.file('OEBPS/nav.xhtml', navXhtml(chapters, Boolean(cover)));
-  zip.file('OEBPS/title.xhtml', xhtmlDocument(TITLE, titlePage(options.author), 'title-page'));
+</container>`, archiveDate);
+  addZipFile(zip, 'OEBPS/styles.css', EPUB_CSS, archiveDate);
+  addZipFile(zip, 'OEBPS/nav.xhtml', navXhtml(chapters, Boolean(cover)), archiveDate);
+  addZipFile(zip, 'OEBPS/title.xhtml', xhtmlDocument(TITLE, titlePage(displayAuthor, options.draft), 'title-page'), archiveDate);
   if (cover) {
-    zip.file(`OEBPS/${cover.filename}`, cover.bytes);
-    zip.file('OEBPS/cover.xhtml', xhtmlDocument(
+    addZipFile(zip, `OEBPS/${cover.filename}`, cover.bytes, archiveDate);
+    addZipFile(zip, 'OEBPS/cover.xhtml', xhtmlDocument(
       `Cover — ${TITLE}`,
-      `<div class="cover"><img src="${cover.filename}" alt="Cover artwork for ${TITLE}" /></div>`,
+      `<div class="cover"><img src="${cover.filename}" alt="Cover artwork for ${TITLE}" />${options.draft ? `<p class="draft-mark">${DRAFT_NOTICE}</p>` : ''}</div>`,
       'cover',
-    ));
+    ), archiveDate);
   }
-  for (const chapter of chapters) zip.file(`OEBPS/${chapter.id}.xhtml`, chapterXhtml(chapter));
-  zip.file('OEBPS/content.opf', contentOpf(chapters, options.author, options.releaseDate, cover));
+  for (const chapter of chapters) {
+    addZipFile(zip, `OEBPS/${chapter.id}.xhtml`, chapterXhtml(chapter, options.draft), archiveDate);
+  }
+  addZipFile(zip, 'OEBPS/content.opf', contentOpf(
+    chapters,
+    displayAuthor,
+    options.releaseDate,
+    cover,
+    options.draft,
+  ), archiveDate);
 
   const epubBytes = await zip.generateAsync({
     type: 'nodebuffer',
@@ -403,9 +474,15 @@ async function main() {
     mimeType: 'application/epub+zip',
     platform: 'UNIX',
   });
-  const html = printHtml(chapters, options.author, cover);
+  const html = printHtml(chapters, displayAuthor, cover, options.draft);
   const epubPath = path.join(options.out, `${BOOK_ID}.epub`);
   const htmlPath = path.join(options.out, `${BOOK_ID}-print-source.html`);
+  const manifestPath = path.join(options.out, 'manifest.json');
+  await Promise.all([
+    assertOutputFile(epubPath, 'EPUB output'),
+    assertOutputFile(htmlPath, 'Print source output'),
+    assertOutputFile(manifestPath, 'Edition manifest output'),
+  ]);
   await Promise.all([
     writeFile(epubPath, epubBytes),
     writeFile(htmlPath, html, 'utf8'),
@@ -416,28 +493,68 @@ async function main() {
     editionId: EDITION_ID,
     title: TITLE,
     series: SERIES,
-    author: options.author,
+    author: displayAuthor,
     draft: options.draft,
     releaseDate: options.releaseDate,
     generatedAt: new Date().toISOString(),
     sourceCommit: provenance.commit,
     sourceDirty: provenance.dirty,
-    manuscriptSha256: sha256(chapters.map((chapter) => `${chapter.number}:${chapter.sourceSha256}`).join('\n')),
+    manuscriptSha256,
     chapterCount: chapters.length,
     wordCount: chapters.reduce((total, chapter) => total + chapter.wordCount, 0),
-    cover: cover ? { filename: cover.filename, sha256: cover.sha256 } : null,
+    cover: cover ? {
+      assetId: cover.assetId,
+      filename: cover.filename,
+      path: cover.repoPath,
+      sha256: cover.sha256,
+      width: cover.width,
+      height: cover.height,
+      status: cover.status,
+      approvalReceipts: cover.approvalReceipts,
+    } : null,
+    edition: {
+      status: spec.status,
+      manuscriptStatus: spec.manuscriptStatus,
+      titleStatus: spec.titleStatus,
+      rightsStatus: spec.rightsStatus,
+      approvedManuscriptSha256: spec.approvedManuscriptSha256,
+      humanApprovals: { ...spec.humanApprovals },
+      approvalReceipts: { ...spec.approvalReceipts },
+      publication: { ...spec.publication },
+      spec: specReceipt,
+      requiredReleaseChapterStatus: 'release-approved',
+      chapters: chapters.map((chapter) => ({
+        number: chapter.number,
+        filename: chapter.filename,
+        path: chapter.repoPath,
+        status: chapter.status,
+        sha256: chapter.sourceSha256,
+      })),
+    },
     files: [
       { filename: path.basename(epubPath), bytes: epubBytes.length, sha256: sha256(epubBytes), format: 'EPUB 3' },
       { filename: path.basename(htmlPath), bytes: Buffer.byteLength(html), sha256: sha256(html), format: 'HTML print source' },
     ],
     pending: ['screen PDF render', 'print PDF render', 'cinematic artbook PDF', 'accessibility audit', 'EPUB conformance check', 'human approval'],
   };
-  await writeFile(path.join(options.out, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+  await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
 
   process.stdout.write(`Built draft=${options.draft} chapters=${chapters.length} words=${manifest.wordCount} out=${options.out}\n`);
 }
 
-main().catch((error) => {
-  process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
-  process.exitCode = 1;
-});
+if (require.main === module) {
+  main().catch((error) => {
+    process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
+    process.exitCode = 1;
+  });
+}
+
+module.exports = {
+  contentOpf,
+  imageDimensions,
+  loadChapters,
+  loadCover,
+  parseArgs,
+  printHtml,
+  renderParagraphs,
+};

@@ -598,7 +598,8 @@ async function updateManifest(options, spec, specReceipt, provenance, cover, pla
   if (manifest.bookId !== spec.bookId || manifest.editionId !== spec.editionId) {
     fail('Artbook specification does not match the edition manifest.');
   }
-  if (manifest.title !== spec.title || manifest.author !== options.author) {
+  const expectedManifestAuthor = options.draft ? 'Byline pending approval' : options.author;
+  if (manifest.title !== spec.title || manifest.author !== expectedManifestAuthor) {
     fail('Artbook title and publication name must match the novel edition manifest.');
   }
   if (manifest.releaseDate !== options.releaseDate) {
