@@ -52,6 +52,16 @@ This section supersedes the historical recovery, risks, and next-action sections
 
 Next actions: obtain an owned integration lane for the shared waitlist and close its documented failure cases; place the opening performance proof beside the existing environment plate for review; continue the Mera/Emilia sequence and developmental passes. The cover still needs a thumbnail-legible composition and separately typeset title/byline. Independent editorial, visual, commerce and release reviews remain required. The full novel, final artbook, verified sale and production release remain the goal.
 
+### Academy teaching revision — 2026-09-09
+
+- Previous turn classification: progress. `8cbfba62e85d40a2ce46275bb62c9def61a11042` was committed/pushed and its protected Vercel deployment `dpl_5B6Hp4HNtrSfJhzg4D43RcBRNCD8` reached READY; PR 314 remained draft. No production release occurred.
+- Chapter 13 now gives Arion and Cass a modest shared success, Lio a desired coastal life beyond his examination, and the later peer rupture a specific social cost. Foundation attention includes an imperfect attempt, physical feedback and a second try. Akamoto's injury accommodation and recovery pause do not resolve the disputed clearance criterion. No plot outcome, locked canon, hammer custody or subsequent rescue causality changed.
+- Corrected the manual's belt/shoulder inconsistency and the duplicate student count. The chapter and its packet/ledger received a second maker-only line/continuity pass. New prose remains private staging, not covered by the old independent movement verdict.
+- Actual edition loading renders all 32 current chapters with supported markup: 77,648 words overall, 3,098 in Chapter 13. All 39 relevant access/sample, edition and artbook tests pass. Tests and counts are technical evidence only; independent literary judgment is still required.
+- Fresh swarm preflight returns HOLD: no new author agents or alternate dispatch route. Text editing and small checks continued in the single owned worktree. No new image, dev server, external manuscript upload, live capture or purchase was made.
+
+Next manuscript action: independent review of the revised teaching/attachment balance when admitted, then apply the same reader-experience scrutiny to Mera's memory lesson and Emilia's maker practicum. Keep the shared waitlist, final cover/artbook, commerce rehearsal and production release as unfinished parts of the original goal.
+
 ## Task contract
 
 **Scope**

@@ -68,3 +68,28 @@ A buyer-facing Creator's Ledger may later disclose owned prompt summaries, model
 - Canon/continuity verdict: pass after bounded corrections.
 - Mechanical whitespace check: pass.
 - Publication, art, commerce, build, preview, and production verdicts: pending.
+
+## Chapter 13 developmental revision — 2026-09-09
+
+This is a new private revision after the historical movement review. Source task: `01a04dd1-0b3b-7102-a946-4bbf1a30bd26`. Source revision before editing: `8cbfba62e85d40a2ce46275bb62c9def61a11042`. It carries no independent release approval.
+
+### Owned revision brief
+
+```text
+Revise Chapter 13, Body before miracle, inside its existing story contract. Make the Academy teaching feel lived rather than like a chain of ethical demonstrations. Give Arion and Cass a modest shared hauling success in which she can correct him. Let Lio want a future beyond his rescue license. Make the subsequent rupture cost Arion a specific moment of belonging. Dramatize how Arion learns Foundation attention through an imperfect attempt, physical feedback and a second try. Preserve the safe fall lane, the Slate Row sound trigger, Lio's independent inference, Arion's unchanged perimeter clearance, the secured hammer and healing injuries. Akamoto may show care without being vindicated on discretionary custody. Do not add a new power, named place, injury, prophecy, rescue incident or romantic commitment. Finish with a meaning-preserving line pass and record the limits of maker-only review.
+```
+
+### Contribution and verification
+
+- Audience and intent preserved: adult fantasy readers who want challenging magic education and people worth caring about. The wall still falls safely; Arion stops an open response; Cass remains afraid; Lio helps clear and adds the break-out door; clearance remains unchanged.
+- New story detail: Lio hopes for a coastal posting and a room where he can hear the sea. This is book-staging invention, not a confirmed assignment or canon promotion. No new named location or family history is asserted.
+- Material additions: an injury-adjusted block tray; Cass's correction of Arion's imperfect fit; brief off-duty conversation; an overworked attempt at Foundation attention followed by a gentler read; Cass's specific loss of confidence in her footing; water and recovery time after the collapse.
+- Continuity repairs: the manual stays in the belt until explicitly removed and returned; the inventory counts five other students rather than counting Arion twice. Breakfast consumption is now explicit. The refinement corrected an added sentence that accidentally placed Cass's boot back at the earlier bench.
+- Humanizer findings in the original assessed prose: the fragment stack “Block piles. Rope. Chalk.” and the polished abstraction “Your body is also reusable if you stop treating that as permission.” were rewritten as physical description and a material answer. “That answers why. It does not answer who accepted the risk.” became a concrete question about what the peers know. No listed banned vocabulary was needed in the new prose. Dialogue repetition during the refusal remains deliberate but needs an independent rhythm review.
+- Sources: Chapter 13 packet, Movement II review, book bible, outline, locked canon, full Chapter 10 and Chapters 14–15, Chapter 18 outline and Chapter 32 opening. No external fiction was copied. No fresh whole-manuscript prose review is claimed.
+- Tools/workflow: Codex drafting and local patching; author-team character/scene discipline; Studio Ops and native bridge for private staging; Humanizer for the maker line pass. Exact backend author-model version is not surfaced in a trustworthy receipt, so no Astra/version claim is made. Imagegen was loaded for the requested visual workflow but no image was commissioned in this text pass.
+- Current output: Chapter 13 has 3,098 prose words, SHA-256 `49b90e131f3ec6c0b3873e88b7cde63aa00a7c2f7a5a5d61b6d6d96ffadbb1c8`. The actual edition loader parsed and rendered all 32 working-tree chapters, totaling 77,648 words. This verifies source structure and supported markup, not the appearance of a final EPUB/PDF or the quality of the novel.
+- Checks: 39 focused tests passed (22 access/delivery/preferences/public sample, 11 edition, six artbook). `git diff --check` passed. An initial ad hoc probe incorrectly asked the loader's returned objects for a `content` field; it failed without writing files. The corrected probe checks their already-rendered `xhtml` and passed using pinned Node 22.23.2.
+- Independent review: not dispatched because the current machine preflight holds new swarms. No workaround agent, external manuscript upload, production promotion or live purchase was made. New wording remains `revised-draft` / `staging` / `paid`.
+
+Next editorial test: ask an independent reader whether the shared fit and water break make the wall's aftermath more affecting, or whether the middle needs cutting. Do not award a publication pass from word count, unit tests or this maker assessment.

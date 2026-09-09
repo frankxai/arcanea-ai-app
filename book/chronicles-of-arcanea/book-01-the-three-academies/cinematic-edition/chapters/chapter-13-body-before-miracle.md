@@ -37,7 +37,7 @@ Arion shifted the bowl away from the cable burn in his left hand. “Half a ston
 
 Akamoto stepped aside. Arion put the bowl on the table and signed the lesson slate beneath the same terms.
 
-The service court occupied the lowest level of the Roost between a retaining wall and a line of roofed stalls. It contained nothing worth singing about. Block piles. Rope. Chalk. Timber with old nails removed and sorted in jars. A handcart whose left wheel complained every third turn. Beyond the outer gate, the road descended toward the city and, eventually, Slate Row.
+The service court occupied the lowest level of the Roost between a retaining wall and a line of roofed stalls. Under the stall roofs, old nails sat sorted in jars beside the timber they had come from. Rope hung above piles of loose stone. A student pushed a handcart through the gate, its left wheel complaining every third turn. Beyond him, the road descended toward the city and, eventually, Slate Row.
 
 Arion had been at the Roost nearly a week. He knew the distance between his room and infirmary, infirmary and dining hall, dining hall and three supervised courts. He did not have clearance to cross the outer gate without an escort.
 
@@ -56,6 +56,8 @@ Arion had been at the Roost nearly a week. He knew the distance between his room
 Arion wrote beneath the lesson terms: *Completion criterion disputed. Participation does not accept discretionary clearance.*
 
 Akamoto read the line and left it there.
+
+Arion ate the oats standing at the table while Akamoto set out the clearing bars. He scraped the bowl clean before going to the block piles.
 
 Five other students waited beside the block piles. One Arion recognized from the dining hall as the person who stole crisp edges from every loaf and left the centers. He had close-cropped black hair, a narrow face built for disapproval, and a rescue-route manual tucked into the back of his belt.
 
@@ -81,7 +83,11 @@ Lio lifted five.
 
 Lio lowered the fifth block onto one corner. It rocked twice before settling. He watched Akamoto instead of the block.
 
-Arion chose four blocks. Their grain ran in different directions, causing the top pair to slip when he turned. He shifted the load against his chest. The turn dragged his ribs against their binding and emptied half a breath.
+Arion reached for the same size. Akamoto put a boot against the pile.
+
+“Anet cleared the smaller cuts.”
+
+They stood on a separate tray, four to the weight of two ordinary blocks. Arion could have carried them in one hand before Slate Row. He bent over the tray until the others had passed him, then lifted his four. Their grain ran in different directions, causing the top pair to slip when he turned. He shifted the load against his chest. The turn dragged his ribs against their binding and emptied half a breath.
 
 At station two, Cass's bottom block began sliding from her forearms.
 
@@ -139,7 +145,7 @@ Akamoto looked at Arion.
 
 Arion lifted his blocks again. “I want to finish.”
 
-“That answers why. It does not answer who accepted the risk.”
+“Which of them knows what you changed?”
 
 The next time Cass's stance slipped, Arion let her see it. She dropped the top block onto the marked clear ground, swore at him as if he had moved it, then adjusted her feet.
 
@@ -147,11 +153,69 @@ No one reset the pile.
 
 The work continued.
 
-By the tenth trip, dust had entered Arion's boots and the oat mash had become a cold weight in his stomach. The court gave him a map of small errors he refused to correct. Rope dragging. A wheel striking its rut. Lio's stack tilting every time he turned north because he led with the shoulder carrying the rescue manual.
+By the tenth trip, dust had entered Arion's boots and the oat mash had become a cold weight in his stomach. The court gave him a map of small errors he refused to correct. Rope dragging. A wheel striking its rut. Lio's stack tilting every time he turned north before planting his inside heel.
 
-Lio moved the rescue manual to his other shoulder. The handcart student unloaded two blocks before wrenching the wheel free.
+Lio began setting both feet before the turn. The handcart student unloaded two blocks before wrenching the wheel free.
 
-They finished last among the morning groups.
+Cass stood at the pile with a block balanced on each forearm, trying to reach the next pair. Arion had finished his trip. He picked up the upper blocks for her.
+
+“Turn the bottom one,” he said.
+
+“I cannot turn anything while you explain it.”
+
+He set down his pair and took one of hers. Cass rolled the remaining block against her stomach. Its broad face was smooth; a shallow hollow ran through the rough underside where the cutter had followed a soft vein. She had put the smooth face up because it looked level.
+
+Arion pointed to the hollow. “That will take the ridge on the next one.”
+
+He handed it back with the ridge down. She fitted the blocks together. The ridge caught halfway, leaving one end high.
+
+“Your turn,” she said.
+
+He tried it himself. The joint rocked beneath his thumb. From above, the ridge had looked continuous. Around the far edge, a white inclusion rose proud of the cut.
+
+Cass took the block back and rotated it end for end. This time the surfaces seated. She pressed one corner, then the other, giving him time to see that neither moved.
+
+“I was going to suggest that,” Arion said.
+
+“You were taking your time.”
+
+He laid the upper pair across her stack. She waited until his hands were clear before moving. At the turn her elbow stayed low, and all four blocks arrived together. She set them down with a small, satisfied noise he knew from his father's workshop.
+
+On the next trip she chose her own cuts. Arion found himself looking for her at the north platform when he arrived. They were still last, but the pile was shrinking.
+
+Akamoto gave them water before the wall. The cup passed from hand to hand along the stall bench. Lio pulled the manual from his belt and fanned the damp cover against his neck. Its corners had softened; a page near the back had been opened so often that the stitching showed.
+
+Arion glanced at the drawing there. A shore station perched above water, its lower stair interrupted by a rising wave. Someone had corrected the printed landing with a narrow pencil bridge.
+
+“Is that in the examination?”
+
+“No.” Lio shut the book halfway, then let it fall open again. “After the license. If they have a place.”
+
+“You want the coast?” Cass asked.
+
+“I want a room where I can hear the water at night.”
+
+She took the cup from him. “You object when the wash pipe knocks.”
+
+“The wash pipe knocks beside my head.”
+
+“Ask for a room beside a quieter sea.”
+
+Lio reached for the cup, but she passed it to Arion. He drank. Beyond the court, roofs descended in warm, uneven courses toward streets he could name without seeing. He had imagined leaving the Roost only by that road. In Lio's book, a whole building waited beyond the edge of the page, occupied by people Arion had never had to disappoint.
+
+“Salt would get into every fitting,” he said.
+
+“Then I will send you a terrible hinge.”
+
+“Send two. I need one to open while I repair the other.”
+
+Lio tapped the room above the shore station's arch. “No workshop in this one.”
+
+Arion had already filled it with a workbench. He made room for a bed, pushed the bench out altogether, and pictured Lio asleep with the window open to the water.
+
+Cass nudged his boot with hers. “Cup.”
+
+He had forgotten he was holding it. He passed it on, and Lio tucked the manual back into his belt with the drawing folded shut.
 
 “Second task,” Akamoto said. “Practice wall.”
 
@@ -175,7 +239,19 @@ Akamoto touched one track with the end of a chalk stick.
 
 Arion placed two fingers against the block at his station.
 
-The wall carried the day's warmth near its surface. Deeper in, cool pressure followed the joints down and east. One lower block had slid that way many times. Its western edge was rough. Its eastern edge had been polished by movement. If the opposing curve released, the entire wall would fold toward the red lane.
+At first he felt too much. Each block pressed at a different angle; the paths crossed beneath his fingertips until he could no longer tell old damage from the strain of holding still. He pushed his attention deeper. Heat began to gather under the bandage.
+
+“Less,” Akamoto said.
+
+Arion nearly took his hand away.
+
+“Keep the contact. Let the pressure reach it.”
+
+He loosened his thumb. The wall carried the day's warmth near its surface. Behind it came a cooler pull, so slight that the effort of searching had covered it. He followed it down to a joint and waited. A cart passed beyond the gate. The small tremor travelled through the wall and separated into two directions: one stopped against the rough western edge of a lower block; the other ran cleanly east over a face polished by earlier movement.
+
+Arion moved his fingertips the width of a nail. The difference remained. He tried once more, gently enough that the heat beneath his bandage began to fade. He could feel the old slide without starting a new one.
+
+If the opposing curve released, the entire wall would fold toward the red lane.
 
 “East,” Arion said.
 
@@ -209,7 +285,7 @@ The polished joint held the wall's weight committed eastward. Pulling the chock 
 
 “Why build a wall to waste it?”
 
-“The blocks are reusable. Your body is also reusable if you stop treating that as permission.”
+“We will sort them afterward. The sound ones go back into the wall.”
 
 Lio glanced between them. “If he can lower it without damage, the rescue license would award control marks.”
 
@@ -265,7 +341,7 @@ The wall folded east along the polished joint. Its final third turned north arou
 
 No one was there.
 
-Arion counted six students, Akamoto, two kitchen workers at the high door, and himself. He counted again because the first number belonged to the wrong street.
+Arion counted the five other students, Akamoto, and two kitchen workers at the high door. He counted again because the first number belonged to the wrong street.
 
 Cass stared at the fallen wall. “He almost caught it.”
 
@@ -279,11 +355,31 @@ Arion looked down. Grey lines had spread from his boots into the packed earth an
 
 Cass met his eyes now. “You are dangerous even when you stop.”
 
+Dust whitened the toe she had nudged against his boot. He remembered watching her carry the fitted blocks and wanting her to see him arrive with his own.
+
+“It stayed inside the mark,” he said.
+
+“I can see the mark.” She rubbed the sole of one boot against the other. “This morning I thought I had found my balance. Then he said you had done it.”
+
+Arion glanced at Akamoto. The headmaster was looking at the grey line.
+
+“Next time tell me,” Cass said.
+
+“I was trying to keep it off your foot.”
+
+“I know what you were trying.”
+
+She went to the north end of the wall. The block she had fitted lay safe on the platform, with the small white inclusion facing out.
+
 Lio picked up a clearing hook. “The grey reached the edge of your station.”
 
 Akamoto checked each fallen course and marked the blocks safe to lift. “Third task. Sort reusable material by damage and grain.”
 
-Cass moved to the north end. The others chose positions with a little more room between themselves and Arion than before.
+The others chose positions with a little more room between themselves and Arion than before. Akamoto brought the bench cup and set it on a dry block beside him.
+
+“You can wait.”
+
+Arion's jaw hurt. He loosened it enough to drink, watching the water tremble against the rim. Akamoto stayed until he put the cup down, then went to check the clearing hooks.
 
 Arion wanted to leave. The outer gate stood open for a delivery cart. Beyond it, the road descended through sunlit roofs. No one had placed a guard in the opening because the lesson slate and his own answer were supposed to hold him.
 
