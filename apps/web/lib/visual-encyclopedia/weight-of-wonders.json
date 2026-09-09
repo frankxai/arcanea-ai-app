@@ -2,7 +2,7 @@
   "collection": {
     "id": "weight-of-wonders",
     "title": "The Weight of Wonders",
-    "subtitle": "A city needs its flood engine. Refugees need borrowed names. An orchard needs the bird it fears. Enter six connected works and decide what survives.",
+    "subtitle": "Follow a river through a storm-bird’s orchard, an inhabited dam and a sanctuary that keeps the names of its refugees. Each place survives by passing a cost downstream.",
     "canonStatus": "EXPERIMENTAL",
     "source": "docs/worldbuilding/weight-of-wonders/creative-packet.md",
     "opening": "The city missed a breath at dawn.\n\nMara noticed because the tea did not tremble. For twenty-three years the cup had rattled against its saucer every seventeenth count, when the upper chambers let their pressure into the mountain. That morning the surface lay flat.\n\nBelow the window, ferrymen were already taking their ropes off the public hooks. Nobody rang the alarm. Bells were for accidents. This was something older.\n\nHer father set down the bread knife.\n\n“Take your coat,” he said.\n\nShe looked at the dry ceiling, the ordinary bread, the cup that would not move.\n\n“Which one?”\n\n“The one you can swim in.”\n\nOn the stair, their neighbor was tying a bedsheet through the handles of a trunk. Her husband had died on the lower ferry in winter. She had spent the spring learning to sleep without hearing his key in the door.\n\n“Leave it,” Mara’s father said.\n\n“It has his things.”\n\nHe knelt and tested the knot instead.\n\nMara went ahead with the pressure key knocking against her thigh. At the seventeenth step she stopped. A sound had come through the stone: a bearing taking weight, slowly, as if the mountain were settling into a chair. Below it lay the clean click of the lower locks closing.\n\nThe inspection board beside the landing still showed green. Someone had painted over the lowest district on its little map. Not recently. The paint had cracked.\n\nShe put her thumb against the crack and lifted one flake away. Under it, in the same neat hand as the maintenance instructions, were three words.\n\nPermitted to flood.\n\nBehind her, the trunk scraped the stair. Her father had taken one end. The neighbor carried the other. Neither had a hand free for the rail.\n\nMara turned the pressure key in the inspection door. It would cost her the apprenticeship. That seemed, suddenly, a very small thing to lose.",
@@ -32,8 +32,7 @@
       "summary": "An ancient flood engine still protects a boundary that leaves half its city outside. Saving it means changing what it was built to save.",
       "history": [
         "Orvess was commissioned to prevent a particular flood, not to govern a city. Settlements accumulated in its maintenance galleries over generations. Its original operating boundary never changed. When a contaminated pressure signal predicts the ancient disaster again, the machine prepares to seal the lower districts as sacrificial overflow chambers.",
-        "It is not angry. It is working from a definition of safety that no longer includes everyone.",
-        "Its bronze bearings polish where they move; ceramic plates retain mineral deposits from former flood levels. The chest opening is a working water conduit, not an ornamental weak spot. A narrow amber leak at the hip marks pressure loss. Its limbs move in deliberate sequences: plant, transfer load, test resistance, commit. A giant should not turn like a human wearing a large costume."
+        "It is not angry. It is working from a definition of safety that no longer includes everyone."
       ],
       "storySeeds": [
         "An engineer’s parent signed the obsolete evacuation boundary. Write the moment the engineer finds the signature while people wait for a safe route.",
@@ -92,7 +91,10 @@
           }
         ]
       },
-      "artNote": "The image establishes the colossus’s weight and working conduit. Exact scale, movement and hydraulic behavior remain design proposals."
+      "artNote": "The image establishes the colossus’s weight and working conduit. Exact scale, movement and hydraulic behavior remain design proposals.",
+      "bodyMovement": [
+        "Its bronze bearings polish where they move; ceramic plates retain mineral deposits from former flood levels. The chest opening is a working water conduit, not an ornamental weak spot. A narrow amber leak at the hip marks pressure loss. Its limbs move in deliberate sequences: plant, transfer load, test resistance, commit. A giant should not turn like a human wearing a large costume."
+      ]
     },
     {
       "id": "wow-d01",
@@ -157,8 +159,7 @@
       "summary": "She lent the dead’s identities to people who needed to disappear. Now she decides who is allowed to become themselves again.",
       "history": [
         "Vesrane began lending the names of the dead to people fleeing targeted persecution. A borrowed identity could conceal a family from a hostile registry. The process required an original name to be held in escrow, so one person could not claim several lives.",
-        "The emergency ended unevenly. The institution endured. Returning a name now risks exposing the people sheltered behind it; withholding it leaves a survivor unable to prove a marriage, inheritance or promise. Vesrane knows the harms in exact detail. She continues because she distrusts anyone who promises an easy alternative.",
-        "She has a mature, particular face, ordinary human proportions and controlled movement. Her power appears through a small action: a thread drawn taut, a reflection losing correspondence, a mask turning toward a voice. Her expression carries more threat than a cloud of effects."
+        "The emergency ended unevenly. The institution endured. Returning a name now risks exposing the people sheltered behind it; withholding it leaves a survivor unable to prove a marriage, inheritance or promise. Vesrane knows the harms in exact detail. She continues because she distrusts anyone who promises an easy alternative."
       ],
       "storySeeds": [
         "A borrowed name has inherited a debt and a marriage. Write a meeting where three people can each tell the truth and still contradict one another.",
@@ -217,7 +218,10 @@
           }
         ]
       },
-      "artNote": "The portrait establishes Vesrane’s face, coat, mask and thread. The proposed face-omitting reflection is a story direction, not a clearly visible event in this image."
+      "artNote": "The portrait establishes Vesrane’s face, coat, mask and thread. The proposed face-omitting reflection is a story direction, not a clearly visible event in this image.",
+      "bodyMovement": [
+        "She has a mature, particular face, ordinary human proportions and controlled movement. Her power appears through a small action: a thread drawn taut, a reflection losing correspondence, a mask turning toward a voice. Her expression carries more threat than a cloud of effects."
+      ]
     },
     {
       "id": "wow-d02",
@@ -283,8 +287,7 @@
       "summary": "A vast territorial bird attacks the collectors that threaten its nest. Those same towers keep the richest orchards watered.",
       "history": [
         "Qorath's species nests where ridge thermals intersect moisture-bearing winds. Its flight does not create weather from nothing. It concentrates and redirects local updrafts, a bounded fantasy adaptation with visible effects on cloud, petals, cloth and water.",
-        "Farmers have learned to cultivate beneath those flight paths. New collector towers now force more moisture toward profitable terraces and dry neighboring land. Qorath attacks the towers because their pressure changes threaten its nesting cleft. From below, the attacks look like an animal turning against its beneficiaries.",
-        "The design has two wings and two legs. Feather wear, muscle mass, wing loading and turns must remain consistent in future depictions. The proposed enormous span is a design target; the cinematic's perspective does not validate a precise measurement or a flight simulation."
+        "Farmers have learned to cultivate beneath those flight paths. New collector towers now force more moisture toward profitable terraces and dry neighboring land. Qorath attacks the towers because their pressure changes threaten its nesting cleft. From below, the attacks look like an animal turning against its beneficiaries."
       ],
       "storySeeds": [
         "An orchard keeper can predict Qorath’s next pass but refuses to abandon the harvest that pays the village’s winter debt.",
@@ -343,7 +346,10 @@
           }
         ]
       },
-      "artNote": "The near wing extends beyond the frame. The image does not establish an exact wingspan; full proportions and flight behavior remain to be developed."
+      "artNote": "The near wing extends beyond the frame. The image does not establish an exact wingspan; full proportions and flight behavior remain to be developed.",
+      "bodyMovement": [
+        "The design has two wings and two legs. Feather wear, muscle mass, wing loading and turns must remain consistent in future depictions. The proposed enormous span is a design target; the cinematic's perspective does not validate a precise measurement or a flight simulation."
+      ]
     },
     {
       "id": "wow-d03",

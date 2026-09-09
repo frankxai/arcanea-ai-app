@@ -7,6 +7,9 @@ const { chromium } = createRequire(resolve("apps/web/package.json"))(
   "@playwright/test",
 );
 const { verifySovereignPreview } = require("./verify-sovereign-browser.cjs");
+const {
+  verifyWeightOfWondersPreview,
+} = require("./verify-weight-of-wonders-browser.cjs");
 
 const base = "http://127.0.0.1:3001";
 const states = [
@@ -27,6 +30,32 @@ const states = [
   },
 ];
 
+const typographyReport = async (page) =>
+  page.evaluate(async () => {
+    await document.fonts.ready;
+    const sample = (element) => {
+      const style = getComputedStyle(element);
+      let declaredFontAvailable = null;
+      try {
+        declaredFontAvailable = document.fonts.check(style.font, "Arcanea");
+      } catch {}
+      return {
+        family: style.fontFamily,
+        weight: style.fontWeight,
+        size: style.fontSize,
+        lineHeight: style.lineHeight,
+        declaredFontAvailable,
+      };
+    };
+    return {
+      documentFontsStatus: document.fonts.status,
+      heading: sample(document.querySelector("h1")),
+      body: sample(document.body),
+      control: sample(document.querySelector("[aria-pressed]")),
+      manualBrief: sample(document.querySelector("textarea[readonly]")),
+    };
+  });
+
 (async () => {
   fs.mkdirSync("screenshots", { recursive: true });
   let ready = false;
@@ -44,8 +73,8 @@ const states = [
   const browser = await chromium.launch();
   const captures = [];
   const capture = async (page, state, name) => {
-    const path = `screenshots/${name}-${state.name}.jpg`;
-    await page.screenshot({ path, fullPage: false, type: "jpeg", quality: 90 });
+    const path = `screenshots/${name}-${state.name}.png`;
+    await page.screenshot({ path, fullPage: false, type: "png" });
     const bytes = fs.readFileSync(path);
     captures.push({
       path,
@@ -100,9 +129,174 @@ const states = [
           .first()
           .evaluate((image) => image.decode());
         await capture(page, state, "vorrak-dossier");
+
+        const wonderReport = await verifyWeightOfWondersPreview({
+          page,
+          context,
+          base,
+          state: state.name,
+        });
+        await capture(page, state, "weight-of-wonders-encounter-desk");
+        for (const slug of ["orvess", "vesrane"]) {
+          const dossier = await page.goto(
+            `${base}/gallery/weight-of-wonders/${slug}`,
+            { waitUntil: "domcontentloaded" },
+          );
+          assert.equal(dossier.status(), 200);
+          await page
+            .locator("[data-orientation] img")
+            .evaluate((image) => image.decode());
+          await capture(page, state, `weight-of-wonders-${slug}-dossier`);
+        }
+        if (state.name === "mobile-375") {
+          await page.goto(`${base}/gallery/weight-of-wonders/orvess`, {
+            waitUntil: "domcontentloaded",
+          });
+          const specimen = page.locator("[data-type-specimen]");
+          await specimen.screenshot({
+            path: "screenshots/weight-of-wonders-type-specimen-mobile-375.png",
+            type: "png",
+          });
+          const specimenBytes = fs.readFileSync(
+            "screenshots/weight-of-wonders-type-specimen-mobile-375.png",
+          );
+          captures.push({
+            path: "screenshots/weight-of-wonders-type-specimen-mobile-375.png",
+            viewport: state.viewport,
+            reducedMotion: state.reducedMotion,
+            bytes: specimenBytes.length,
+            sha256: crypto
+              .createHash("sha256")
+              .update(specimenBytes)
+              .digest("hex"),
+            url: page.url(),
+            element: "authoring desk typography specimen",
+          });
+          fs.writeFileSync(
+            "screenshots/weight-of-wonders-type-specimen-mobile-375.json",
+            JSON.stringify(
+              {
+                scope: "Real built-app mobile typography specimen",
+                url: page.url(),
+                viewport: state.viewport,
+                deviceScaleFactor: 1,
+                reflow: wonderReport.dossierOverflow,
+                typography: wonderReport.typography,
+              },
+              null,
+              2,
+            ) + "\n",
+          );
+        }
+        const collection = await page.goto(
+          `${base}/gallery/weight-of-wonders`,
+          { waitUntil: "domcontentloaded" },
+        );
+        assert.equal(collection.status(), 200);
+        await page
+          .locator('section[aria-labelledby="wonders-title"] img')
+          .first()
+          .evaluate((image) => image.decode());
+        await capture(page, state, "weight-of-wonders-hero");
+        await page
+          .getByRole("link", { name: "Explore the six concepts", exact: true })
+          .click();
+        await page.waitForFunction(() => {
+          const top = document
+            .querySelector("#atlas")
+            .getBoundingClientRect().top;
+          return top >= -2 && top <= 100;
+        });
+        await page
+          .locator("#atlas img")
+          .first()
+          .evaluate((image) => image.decode());
+        await capture(page, state, "weight-of-wonders-atlas");
       } finally {
         await context.close();
       }
+    }
+
+    const blockedFonts = [];
+    const fallbackConsoleErrors = [];
+    const fallbackContext = await browser.newContext({
+      viewport: { width: 375, height: 812 },
+      reducedMotion: "reduce",
+      deviceScaleFactor: 1,
+    });
+    try {
+      await fallbackContext.route("**/*", async (route) => {
+        if (route.request().resourceType() === "font") {
+          blockedFonts.push(route.request().url());
+          await route.abort();
+        } else await route.continue();
+      });
+      const fallbackPage = await fallbackContext.newPage();
+      fallbackPage.on("console", (message) => {
+        if (message.type() === "error")
+          fallbackConsoleErrors.push(message.text());
+      });
+      const fallbackResponse = await fallbackPage.goto(
+        `${base}/gallery/weight-of-wonders/orvess`,
+        { waitUntil: "domcontentloaded" },
+      );
+      assert.equal(fallbackResponse.status(), 200);
+      await fallbackPage
+        .getByRole("heading", { name: "Orvess", exact: true, level: 1 })
+        .waitFor();
+      const fallbackReflow = await fallbackPage.evaluate(
+        () => document.documentElement.scrollWidth <= window.innerWidth + 1,
+      );
+      assert.ok(fallbackReflow, "Font fallback retains 375px reflow");
+      const fallbackTypography = await typographyReport(fallbackPage);
+      const fallbackSpecimen = fallbackPage.locator("[data-type-specimen]");
+      const specimenBox = await fallbackSpecimen.boundingBox();
+      assert.ok(
+        specimenBox && specimenBox.width <= 375,
+        "Fallback specimen does not clip horizontally",
+      );
+      await fallbackSpecimen.screenshot({
+        path: "screenshots/weight-of-wonders-type-specimen-fallback-375.png",
+        type: "png",
+      });
+      const fallbackBytes = fs.readFileSync(
+        "screenshots/weight-of-wonders-type-specimen-fallback-375.png",
+      );
+      captures.push({
+        path: "screenshots/weight-of-wonders-type-specimen-fallback-375.png",
+        viewport: { width: 375, height: 812 },
+        reducedMotion: "reduce",
+        bytes: fallbackBytes.length,
+        sha256: crypto.createHash("sha256").update(fallbackBytes).digest("hex"),
+        url: fallbackPage.url(),
+        element: "authoring desk typography fallback specimen",
+        fontRequestsBlocked: blockedFonts.length,
+      });
+      assert.ok(
+        blockedFonts.length > 0,
+        "Fallback capture blocked at least one webfont request",
+      );
+      fs.writeFileSync(
+        "screenshots/weight-of-wonders-type-specimen-fallback-375.json",
+        JSON.stringify(
+          {
+            scope:
+              "Real built-app fallback specimen with webfont requests blocked; readability is shown by the accompanying PNG",
+            url: fallbackPage.url(),
+            viewport: { width: 375, height: 812 },
+            deviceScaleFactor: 1,
+            blockedFontRequests: blockedFonts,
+            reflow: fallbackReflow,
+            specimenBox,
+            typography: fallbackTypography,
+            consoleErrors: fallbackConsoleErrors,
+          },
+          null,
+          2,
+        ) + "\n",
+      );
+    } finally {
+      await fallbackContext.close();
     }
   } finally {
     await browser.close();
@@ -122,7 +316,7 @@ const states = [
     ) + "\n",
   );
   console.log(
-    `Verified real gallery interactions, private gateway protection, 36 delivered image hashes and ${captures.length} desktop/mobile/reduced-motion captures.`,
+    `Verified both real gallery collections, private gateway protection, 42 delivered image hashes and ${captures.length} PNG desktop/mobile/reduced-motion captures.`,
   );
 })().catch((error) => {
   console.error(error);

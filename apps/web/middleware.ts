@@ -45,6 +45,7 @@ export async function middleware(request: NextRequest) {
     ],
     publicApiPrefixes: [
       "/api/lore/sovereign-depths",
+      "/api/lore/weight-of-wonders",
       "/api/health",
       "/api/stripe/webhook",
       "/api/search/",
