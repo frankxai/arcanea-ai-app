@@ -164,7 +164,7 @@ export function advance(state, milliseconds = STEP_MS) {
     milliseconds % STEP_MS
   )
     throw new RangeError("Advance time in 100ms steps, up to one minute.");
-  let next = structuredClone(state);
+  const next = structuredClone(state);
   for (
     let remaining = milliseconds;
     remaining > 0 && !next.outcome;

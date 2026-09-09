@@ -298,6 +298,13 @@ export function OrtheaEncounter() {
               : `At the ${CISTERNS[location].toLowerCase()} wheel`}
           </h2>
           <p>{objectives[state.phase - 1]}</p>
+          {state.phase === 2 && !state.opened[2] && (
+            <p className={styles.passage}>
+              This route crosses Mara’s family dock. Opening its sluice makes
+              the private passage available to everyone, including after the
+              rescue.
+            </p>
+          )}
           {state.phase < 3 && (
             <div className={styles.actionArea}>
               <Action

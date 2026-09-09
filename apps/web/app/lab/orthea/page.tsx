@@ -6,7 +6,7 @@ import styles from "./encounter.module.css";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
-  title: "Orthea playtest | Arcanea",
+  title: "Orthea playtest",
   description:
     "A playable study of a walking reservoir, twelve units of water and a costly passage.",
   robots: { index: false, follow: false },
@@ -40,12 +40,8 @@ export default function OrtheaPlaytestPage() {
           </div>
           <div className={styles.premise}>
             <p>
-              A walking reservoir is drowning its harbor. Reconnect three
-              sluices, balance the water, then help Orthea kneel.
-            </p>
-            <p>
-              The route crosses Mara’s family dock. Saving the reserve means
-              opening that private passage to everyone.
+              A walking reservoir is drowning its harbor. Balance three cisterns
+              and open Mara’s family dock to bring Orthea to its knees.
             </p>
           </div>
         </header>

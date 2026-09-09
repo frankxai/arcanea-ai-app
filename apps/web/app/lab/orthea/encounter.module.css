@@ -23,7 +23,7 @@
   grid-template-columns: 1.2fr 1fr;
   align-items: end;
   gap: 3rem;
-  padding-block: 2rem 2.5rem;
+  padding-block: 1rem 2rem;
 }
 .eyebrow {
   font-size: 0.8rem;
@@ -120,6 +120,8 @@
   accent-color: var(--arc-brand-atlantean-teal);
   width: 1rem;
   height: 1rem;
+  min-width: 1rem;
+  min-height: 1rem;
 }
 .mobileSafety {
   display: none;
@@ -324,6 +326,10 @@
   font-size: 0.9rem;
   line-height: 1.7;
 }
+.operations .passage {
+  margin-top: 1rem;
+  color: var(--arc-text-secondary);
+}
 .actionArea {
   margin-block: 1.5rem;
 }
@@ -517,10 +523,15 @@
     width: calc(100% - 1.5rem);
   }
   .intro {
-    padding-block: 1rem 1.75rem;
+    padding-block: 0.5rem 1.25rem;
+    gap: 1rem;
   }
   .intro h1 {
-    font-size: 2.6rem;
+    font-size: 2.2rem;
+  }
+  .premise {
+    font-size: 0.9rem;
+    line-height: 1.6;
   }
   .toolbar,
   .board,
@@ -541,18 +552,22 @@
     font-size: 0.8rem;
   }
   .clockState {
-    width: 100%;
-    margin-block: 0.35rem;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
   .cueOption {
     margin-left: 0;
-    min-height: 2rem;
+    min-height: 2.75rem;
   }
   .mobileSafety {
     padding-top: 0.5rem;
   }
   .mobileSafety span {
-    flex-basis: 100%;
+    flex: 1 1 8rem;
   }
   .mobileSafety button {
     font-size: 0.8rem;

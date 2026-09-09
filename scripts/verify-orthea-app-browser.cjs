@@ -26,6 +26,15 @@ async function main() {
       404,
       "Production cannot render the restricted study",
     );
+    assert.equal(await response.text(), "Not found");
+    assert.equal(response.headers.get("cache-control"), "no-store");
+    assert.match(response.headers.get("x-robots-tag") || "", /noindex/);
+    const flight = await fetch(`${base}/lab/orthea?_rsc=boundary-check`, {
+      headers: { RSC: "1" },
+      signal: AbortSignal.timeout(5000),
+    });
+    assert.equal(flight.status, 404, "Flight requests use the same denial");
+    assert.equal(await flight.text(), "Not found");
     console.log("Orthea production route returns 404.");
     return;
   }
@@ -94,7 +103,7 @@ async function main() {
         .locator("button:visible")
         .evaluateAll((buttons) =>
           buttons
-            .filter((item) => item.getBoundingClientRect().height < 43)
+            .filter((item) => item.getBoundingClientRect().height < 43.99)
             .map((item) => item.textContent),
         );
       assert.deepEqual(
@@ -104,7 +113,6 @@ async function main() {
       );
       await page.screenshot({
         path: path.join(output, `${name}-entry.png`),
-        fullPage: true,
       });
       report.screenshots.push(`${name}-entry.png`);
     }
@@ -184,6 +192,13 @@ async function main() {
       .scrollIntoViewIfNeeded();
     await page.screenshot({ path: path.join(output, "mobile-ending.png") });
     report.screenshots.push("mobile-ending.png");
+    await page.setViewportSize({ width: 1365, height: 900 });
+    await page
+      .getByRole("heading", { name: "The supply survives.", exact: true })
+      .scrollIntoViewIfNeeded();
+    await page.screenshot({ path: path.join(output, "desktop-ending.png") });
+    report.screenshots.push("desktop-ending.png");
+    await page.setViewportSize({ width: 375, height: 812 });
     report.checks.push(
       "Mobile refuge/return controls, recoverable fall and complete supply-saved ending through real actions",
     );
