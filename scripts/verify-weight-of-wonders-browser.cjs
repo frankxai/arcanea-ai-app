@@ -84,6 +84,13 @@ module.exports.verifyWeightOfWondersPreview = async ({
       }
     }).observe({ type: "event", buffered: true, durationThreshold: 16 });
   });
+  const settleVisiblePage = () =>
+    page.evaluate(async () => {
+      await document.fonts.ready;
+      await new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      );
+    });
 
   try {
     if (verifyDiscovery) {
@@ -94,6 +101,7 @@ module.exports.verifyWeightOfWondersPreview = async ({
       await page
         .getByRole("heading", { name: "The Weight of Wonders", exact: true })
         .waitFor();
+      await settleVisiblePage();
       await page
         .getByRole("link", {
           name: "Explore the atlas and encounter desk",
@@ -101,6 +109,7 @@ module.exports.verifyWeightOfWondersPreview = async ({
         })
         .click();
       await page.waitForURL(`${base}/gallery/weight-of-wonders`);
+      await settleVisiblePage();
     } else {
       const response = await page.goto(`${base}/gallery/weight-of-wonders`, {
         waitUntil: "domcontentloaded",
@@ -117,6 +126,7 @@ module.exports.verifyWeightOfWondersPreview = async ({
       .locator('section[aria-labelledby="wonders-title"] img')
       .first();
     await hero.evaluate((image) => image.decode());
+    await settleVisiblePage();
     const collectionOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth + 1,
     );
@@ -140,6 +150,7 @@ module.exports.verifyWeightOfWondersPreview = async ({
     await page
       .locator("[data-orientation] img")
       .evaluate((image) => image.decode());
+    await settleVisiblePage();
     const dossierOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth + 1,
     );
@@ -155,9 +166,11 @@ module.exports.verifyWeightOfWondersPreview = async ({
           /^Opening an emergency bypass exposes the damaged hip regulator\./u,
       })
       .waitFor();
+    await settleVisiblePage();
 
     await phaseButtons.nth(0).focus();
     await page.keyboard.press("Tab");
+    await settleVisiblePage();
     assert.ok(
       await phaseButtons
         .nth(1)
@@ -167,11 +180,13 @@ module.exports.verifyWeightOfWondersPreview = async ({
     const radios = page.getByRole("radio");
     await radios.nth(0).focus();
     await page.keyboard.press("ArrowDown");
+    await settleVisiblePage();
     assert.ok(
       await radios.nth(1).isChecked(),
       "Native outcome radios support keyboard choice",
     );
     await page.getByRole("radio", { name: /Destroy Orvess/u }).check();
+    await settleVisiblePage();
     const manualBrief = page.getByLabel("Manual copy", { exact: true });
     await manualBrief.waitFor();
     assert.ok(
@@ -181,6 +196,7 @@ module.exports.verifyWeightOfWondersPreview = async ({
       "Chosen outcome updates the copy-ready brief",
     );
     await manualBrief.click();
+    await settleVisiblePage();
     assert.ok(
       await manualBrief.evaluate(
         (element) =>
@@ -194,6 +210,7 @@ module.exports.verifyWeightOfWondersPreview = async ({
     });
     await page.getByRole("button", { name: "Copy brief", exact: true }).click();
     await page.getByText("Copied to clipboard", { exact: true }).waitFor();
+    await settleVisiblePage();
     const copied = await page.evaluate(() => navigator.clipboard.readText());
     assert.ok(
       copied.includes("Destroy Orvess"),
@@ -207,7 +224,9 @@ module.exports.verifyWeightOfWondersPreview = async ({
       ),
       "Editing the brief clears the previous clipboard success state",
     );
+    await settleVisiblePage();
     await page.getByRole("radio", { name: /Destroy Orvess/u }).check();
+    await settleVisiblePage();
 
     const rejectionPage = await context.newPage();
     try {
@@ -446,14 +465,26 @@ module.exports.verifyWeightOfWondersPreview = async ({
       "/_vercel/insights/script.js",
     ]);
     const baseUrl = new URL(base);
+    const isLocalTelemetryUrl = (value) => {
+      try {
+        const url = new URL(value);
+        return (
+          url.origin === baseUrl.origin && localTelemetryPaths.has(url.pathname)
+        );
+      } catch {
+        return false;
+      }
+    };
+    const localMimeRefusal =
+      /^Refused to execute script from '([^']+)' because its MIME type \('text\/plain'\) is not executable, and strict MIME type checking is enabled\.$/u;
     const expectedLocalInfrastructureErrors = consoleErrors.filter((error) => {
       if (baseUrl.origin !== "http://127.0.0.1:3001") return false;
+      if (isLocalTelemetryUrl(error.location.url)) return true;
       try {
         const locationUrl = new URL(error.location.url);
-        return (
-          locationUrl.origin === baseUrl.origin &&
-          localTelemetryPaths.has(locationUrl.pathname)
-        );
+        if (locationUrl.origin !== baseUrl.origin) return false;
+        const mimeMatch = error.text.match(localMimeRefusal);
+        return mimeMatch ? isLocalTelemetryUrl(mimeMatch[1]) : false;
       } catch {
         return false;
       }

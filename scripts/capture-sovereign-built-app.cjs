@@ -86,7 +86,15 @@ const typographyReport = async (page) =>
   const browser = await chromium.launch();
   const captures = [];
   const wonderReports = [];
+  const settlePaint = (page) =>
+    page.evaluate(async () => {
+      await document.fonts.ready;
+      await new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      );
+    });
   const capture = async (page, state, name) => {
+    await settlePaint(page);
     const path = `screenshots/${name}-${state.name}.png`;
     await page.screenshot({ path, fullPage: false, type: "png" });
     const bytes = fs.readFileSync(path);
@@ -167,10 +175,12 @@ const typographyReport = async (page) =>
           await page.goto(`${base}/gallery/weight-of-wonders/orvess`, {
             waitUntil: "domcontentloaded",
           });
+          await settlePaint(page);
           const specimen = page.locator("[data-type-specimen]");
           await specimen.screenshot({
             path: "screenshots/weight-of-wonders-type-specimen-mobile-375.png",
             type: "png",
+            style: "nav.fixed { visibility: hidden !important; }",
           });
           const specimenBytes = fs.readFileSync(
             "screenshots/weight-of-wonders-type-specimen-mobile-375.png",
@@ -270,9 +280,11 @@ const typographyReport = async (page) =>
         specimenBox && specimenBox.width <= 375,
         "Fallback specimen does not clip horizontally",
       );
+      await settlePaint(fallbackPage);
       await fallbackSpecimen.screenshot({
         path: "screenshots/weight-of-wonders-type-specimen-fallback-375.png",
         type: "png",
+        style: "nav.fixed { visibility: hidden !important; }",
       });
       const fallbackBytes = fs.readFileSync(
         "screenshots/weight-of-wonders-type-specimen-fallback-375.png",
