@@ -748,7 +748,8 @@
       "approval": "Not promoted to canon"
     },
     "implementationStatus": "Authored encounter design; no playable implementation claimed",
-    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate."
+    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate.",
+    "canonStatusNote": "The animal’s migratory ecology is a STAGING proposal. Its linked story remains EXPERIMENTAL because the dungeon’s coercion claim is unratified. Retrieval quarantines this entire dossier unless experimental content is explicitly requested; containment does not change the status of independently scoped claims."
   },
   {
     "id": "b23",
