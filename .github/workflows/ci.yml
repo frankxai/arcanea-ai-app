@@ -23,6 +23,37 @@ env:
   PNPM_VERSION: "8.15.0"
 
 jobs:
+  author_drafts:
+    name: Author draft database
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: arcanea_author_draft_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: isolated-ci-fixture
+        ports:
+          - 5432:5432
+        options: >-
+          --cpus 1 --memory 768m
+          --health-cmd "pg_isready -U postgres -d arcanea_author_draft_test"
+          --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: 5432
+      PGDATABASE: arcanea_author_draft_test
+      PGUSER: postgres
+      PGPASSWORD: isolated-ci-fixture
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Verify fresh and legacy draft schemas with real row-level security
+        run: psql -v ON_ERROR_STOP=1 -f scripts/tests/sql/author-drafts-contract.sql
+
   # ============================================
   # INSTALL — shared dependency install step
   # ============================================
@@ -138,7 +169,10 @@ jobs:
         run: node --test scripts/tests/changed-format.test.mjs
 
       - name: Verify author draft save handling
-        run: node --test scripts/tests/author-editor.test.mjs scripts/tests/doc-editor.test.mjs
+        run: >-
+          node --test scripts/tests/author-editor.test.mjs scripts/tests/doc-editor.test.mjs
+          scripts/tests/author-draft-read.test.mjs scripts/tests/author-workspace.test.mjs
+          scripts/tests/author-chapter-api.test.mjs
 
       - name: ESLint
         run: pnpm --dir apps/web run lint
@@ -299,13 +333,13 @@ jobs:
   # ============================================
   # STATUS — the merge gate. It is the only job here that cannot skip under any
   # event, so it is the only context whose green is unconditionally earned.
-  # Gates on Install + Lint + TypeScript + Build. A restored cache can let a
+  # Gates on Install + Lint + TypeScript + Build + Author draft database. A restored cache can let a
   # downstream job pass after install fails, so install must be checked directly.
   # ============================================
   ci-status:
     name: CI Status
     runs-on: ubuntu-latest
-    needs: [install, lint, typecheck, build]
+    needs: [install, lint, typecheck, build, author_drafts]
     # always() and nothing else: this job must run even when an upstream job fails
     # or is cancelled, so it reports a real verdict. Any condition that can make it
     # skip reads as a passing required check.
@@ -321,6 +355,7 @@ jobs:
           echo "| Lint | ${{ needs.lint.result }} | yes |" >> $GITHUB_STEP_SUMMARY
           echo "| TypeScript | ${{ needs.typecheck.result }} | yes |" >> $GITHUB_STEP_SUMMARY
           echo "| Build | ${{ needs.build.result }} | yes |" >> $GITHUB_STEP_SUMMARY
+          echo "| Author draft database | ${{ needs.author_drafts.result }} | yes |" >> $GITHUB_STEP_SUMMARY
 
           PASS=true
           if [ "${{ needs.install.result }}" != "success" ]; then
@@ -340,8 +375,13 @@ jobs:
             PASS=false
           fi
 
+          if [ "${{ needs.author_drafts.result }}" != "success" ]; then
+            echo "::error::Author draft database failed — blocks merge"
+            PASS=false
+          fi
+
           if [ "$PASS" = true ]; then
-            echo "CI checks passed (install + lint + typecheck + build green); other release gates still apply"
+            echo "CI checks passed (install + lint + typecheck + build + draft database green); other release gates still apply"
           else
             exit 1
           fi

@@ -5,11 +5,16 @@ import {
   DocEditor,
   type DocEditorSavePayload,
 } from "@/components/docs/doc-editor";
+import type { JSONContent } from "novel";
 
 interface AuthorEditorProps {
   bookSlug: string;
   chapterSlug: string;
   initialHtml: string;
+  initialContent?: JSONContent;
+  initialWordCount?: number;
+  initialSavedAt?: string | null;
+  initialSource?: "draft" | "published";
 }
 
 interface SaveRequest {
@@ -21,10 +26,16 @@ export function AuthorEditor({
   bookSlug,
   chapterSlug,
   initialHtml,
+  initialContent,
+  initialWordCount = 0,
+  initialSavedAt,
+  initialSource = "published",
 }: AuthorEditorProps) {
   const [saving, setSaving] = useState(false);
-  const [lastSaved, setLastSaved] = useState<Date | null>(null);
-  const [wordCount, setWordCount] = useState(0);
+  const [lastSaved, setLastSaved] = useState<Date | null>(() =>
+    initialSavedAt ? new Date(initialSavedAt) : null,
+  );
+  const [wordCount, setWordCount] = useState(initialWordCount);
   const [dirty, setDirty] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const latest = useRef<SaveRequest | null>(null);
@@ -188,6 +199,7 @@ export function AuthorEditor({
       )}
 
       <DocEditor
+        initialContent={initialContent}
         initialHtml={initialHtml}
         onChange={handleChange}
         onSave={handleSave}
@@ -208,7 +220,9 @@ export function AuthorEditor({
                 ? "Unsaved changes"
                 : lastSaved
                   ? `Draft saved ${lastSaved.toLocaleTimeString()}`
-                  : "Ready to write"}
+                  : initialSource === "draft"
+                    ? "Saved draft"
+                    : "Published starting point"}
           </span>
           {dirty && (
             <>
