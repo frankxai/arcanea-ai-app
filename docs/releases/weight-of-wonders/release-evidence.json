@@ -765,6 +765,12 @@
         "bytes": 6117,
         "mime": "application/json"
       }
+    },
+    "final_release_verdict": {
+      "path": "release-verdict.md",
+      "sha256": "6f039d193295c34c955cca1446dbd417d8af11bea93a82fde5f3c56ce7b6d539",
+      "bytes": 2638,
+      "mime": "text/markdown"
     }
   },
   "release": {
