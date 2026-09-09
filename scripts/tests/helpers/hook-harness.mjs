@@ -104,6 +104,11 @@ export function mountComponent(
     find(type) {
       return nodes(tree).find((node) => node?.type === type);
     },
+    findComponent(name) {
+      return nodes(tree).find(
+        (node) => typeof node?.type === "function" && node.type.name === name,
+      );
+    },
     findButton(label) {
       return nodes(tree).find(
         (node) =>

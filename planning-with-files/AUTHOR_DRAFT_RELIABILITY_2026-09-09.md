@@ -25,8 +25,8 @@ No database schema, account permissions, publication, or canon changes.
 
 - Eleven regressions failed against the previous components for the actual
   failure symptoms, then passed against the implementation.
-- Nineteen focused Node regressions cover save errors, confirmation, ordering,
-  immediate changes, downloads, keyboard save, editor teardown, and initialization.
+- Twenty-one focused Node regressions cover save errors, confirmation, ordering,
+  immediate changes, downloads, keyboard save, teardown, initialization and toolbar state.
 - The tests execute the real TSX with mocked React hooks and editor/browser APIs.
   They are logic regressions, not a real React or browser integration verdict.
 - CI runs these regressions in the existing lint job.
@@ -58,6 +58,10 @@ No database schema, account permissions, publication, or canon changes.
    changes to the inherited HTML-to-JSON cast. The correction uses Tiptap's
    typed HTML parser without emitting an edit; stored JSON takes precedence.
    A fresh independent verdict and Vercel preview evidence remain pending.
+   The second review repeated the removed cast finding; the current-head regression
+   verifies that HTML reaches the dedicated parser prop. It also identified
+   missing toolbar active state, which now uses the editor context and a native
+   button with aria-pressed. The prior implementation did not consume isActive.
    Rollback is a revert of this bounded change; there is no data migration.
 
 ## Coordination

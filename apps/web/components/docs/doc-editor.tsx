@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useEffect, type ReactNode } from "react";
 import {
+  useEditor as useNovelEditor,
   EditorRoot,
   EditorContent,
   EditorBubble,
@@ -499,6 +500,7 @@ export function DocEditor({
 function BubbleButton({
   label,
   onSelect,
+  isActive,
   highlight,
   mono,
   className = "",
@@ -511,8 +513,11 @@ function BubbleButton({
   mono?: boolean;
   className?: string;
 }) {
+  const { editor } = useNovelEditor();
+  const active = editor ? isActive(editor) : false;
   return (
     <EditorBubbleItem
+      asChild
       onSelect={(editor) => onSelect(editor)}
       className={[
         "cursor-pointer select-none rounded-lg px-2.5 py-1.5 text-xs transition-colors font-sans",
@@ -523,12 +528,15 @@ function BubbleButton({
         !highlight && !mono
           ? "text-white/50 hover:bg-white/[0.08] hover:text-white"
           : "",
+        active ? "bg-white/10 ring-1 ring-inset ring-white/35" : "",
         className,
       ]
         .filter(Boolean)
         .join(" ")}
     >
-      {label}
+      <button type="button" aria-pressed={active}>
+        {label}
+      </button>
     </EditorBubbleItem>
   );
 }

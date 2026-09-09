@@ -48,6 +48,14 @@ async function settle(view) {
   view.render();
 }
 
+test("initial chapter HTML reaches the dedicated parser input", () => {
+  const { view } = setup(async () => ok());
+  const editor = view.find("editor");
+  assert.equal(editor.props.initialHtml, "<p>Initial</p>");
+  assert.equal(editor.props.initialContent, undefined);
+  view.unmount();
+});
+
 test("expired authentication retains unsaved state and warns before leaving", async () => {
   const { view, listeners } = setup(async () => ({ ok: false, status: 401 }));
   view.find("editor").props.onSave(payload("A draft worth keeping"));

@@ -35,6 +35,7 @@ for (const name of [
   novel[name] = extension;
 novel.createImageUpload = () => () => {};
 novel.createSuggestionItems = (items) => items;
+novel.useEditor = () => ({ editor: { isActive: () => true } });
 
 function setup(props = {}) {
   const timers = new Map();
@@ -192,5 +193,19 @@ test("stored JSON takes precedence over the HTML fallback", () => {
       },
     },
   });
+  view.unmount();
+});
+
+test("formatting controls expose active state on a native button", () => {
+  const { view } = setup();
+  const bubble = view.findComponent("BubbleButton");
+  const active = bubble.type(bubble.props);
+  assert.equal(active.props.asChild, true);
+  assert.equal(active.props.children.type, "button");
+  assert.equal(active.props.children.props["aria-pressed"], true);
+  assert.match(active.props.className, /ring-inset/);
+  const inactive = bubble.type({ ...bubble.props, isActive: () => false });
+  assert.equal(inactive.props.children.props["aria-pressed"], false);
+  assert.doesNotMatch(inactive.props.className, /ring-inset/);
   view.unmount();
 });
