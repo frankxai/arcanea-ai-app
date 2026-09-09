@@ -140,6 +140,9 @@ jobs:
       - name: Verify visual-review trust and evidence boundaries
         run: node --test scripts/excellence-review.test.mjs
 
+      - name: Verify preview deployment history handling
+        run: node --test scripts/tests/vercel-ignore-build.test.mjs
+
       - name: ESLint
         run: pnpm --dir apps/web run lint
 
