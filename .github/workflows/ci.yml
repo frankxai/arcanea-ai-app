@@ -137,6 +137,9 @@ jobs:
       - name: Verify changed-file formatting failure handling
         run: node --test scripts/tests/changed-format.test.mjs
 
+      - name: Verify author draft save handling
+        run: node --test scripts/tests/author-editor.test.mjs scripts/tests/doc-editor.test.mjs
+
       - name: ESLint
         run: pnpm --dir apps/web run lint
 

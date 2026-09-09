@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { useCallback, useRef, useEffect, type ReactNode } from 'react';
+import { useCallback, useRef, useEffect, type ReactNode } from "react";
 import {
   EditorRoot,
   EditorContent,
@@ -33,7 +33,7 @@ import {
   handleCommandNavigation,
   type JSONContent,
   type EditorInstance,
-} from 'novel';
+} from "novel";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -48,6 +48,8 @@ export interface DocEditorSavePayload {
 interface DocEditorProps {
   initialContent?: JSONContent;
   placeholder?: string;
+  /** Reports each edit immediately, before the debounced save. */
+  onChange?: (payload: DocEditorSavePayload) => void;
   onSave?: (payload: DocEditorSavePayload) => Promise<void> | void;
   /** Debounce delay in ms (default 2000) */
   saveDelay?: number;
@@ -61,14 +63,17 @@ interface DocEditorProps {
 const uploadFn = createImageUpload({
   onUpload: async (file: File) => {
     const formData = new FormData();
-    formData.append('file', file);
-    const res = await fetch('/api/upload/image', { method: 'POST', body: formData });
-    if (!res.ok) throw new Error('Upload failed');
+    formData.append("file", file);
+    const res = await fetch("/api/upload/image", {
+      method: "POST",
+      body: formData,
+    });
+    if (!res.ok) throw new Error("Upload failed");
     const data = await res.json();
     return data.url as string;
   },
   validateFn: (file: File) => {
-    if (!file.type.startsWith('image/')) return false;
+    if (!file.type.startsWith("image/")) return false;
     if (file.size > 10 * 1024 * 1024) return false;
     return true;
   },
@@ -88,105 +93,191 @@ function commandIcon(label: string): ReactNode {
 
 const suggestionItems = createSuggestionItems([
   {
-    title: 'Text',
-    description: 'Plain paragraph',
-    icon: commandIcon('T'),
-    searchTerms: ['text', 'paragraph', 'p'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).toggleNode('paragraph', 'paragraph').run();
+    title: "Text",
+    description: "Plain paragraph",
+    icon: commandIcon("T"),
+    searchTerms: ["text", "paragraph", "p"],
+    command: ({
+      editor,
+      range,
+    }: {
+      editor: EditorInstance;
+      range: { from: number; to: number };
+    }) => {
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .toggleNode("paragraph", "paragraph")
+        .run();
     },
   },
   {
-    title: 'Heading 1',
-    description: 'Large section heading',
-    icon: commandIcon('H1'),
-    searchTerms: ['h1', 'heading', 'title'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).setNode('heading', { level: 1 }).run();
+    title: "Heading 1",
+    description: "Large section heading",
+    icon: commandIcon("H1"),
+    searchTerms: ["h1", "heading", "title"],
+    command: ({
+      editor,
+      range,
+    }: {
+      editor: EditorInstance;
+      range: { from: number; to: number };
+    }) => {
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .setNode("heading", { level: 1 })
+        .run();
     },
   },
   {
-    title: 'Heading 2',
-    description: 'Medium section heading',
-    icon: commandIcon('H2'),
-    searchTerms: ['h2', 'heading', 'subtitle'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).setNode('heading', { level: 2 }).run();
+    title: "Heading 2",
+    description: "Medium section heading",
+    icon: commandIcon("H2"),
+    searchTerms: ["h2", "heading", "subtitle"],
+    command: ({
+      editor,
+      range,
+    }: {
+      editor: EditorInstance;
+      range: { from: number; to: number };
+    }) => {
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .setNode("heading", { level: 2 })
+        .run();
     },
   },
   {
-    title: 'Heading 3',
-    description: 'Small section heading',
-    icon: commandIcon('H3'),
-    searchTerms: ['h3', 'heading'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
-      editor.chain().focus().deleteRange(range).setNode('heading', { level: 3 }).run();
+    title: "Heading 3",
+    description: "Small section heading",
+    icon: commandIcon("H3"),
+    searchTerms: ["h3", "heading"],
+    command: ({
+      editor,
+      range,
+    }: {
+      editor: EditorInstance;
+      range: { from: number; to: number };
+    }) => {
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .setNode("heading", { level: 3 })
+        .run();
     },
   },
   {
-    title: 'Bullet List',
-    description: 'Unordered list',
-    icon: commandIcon('•'),
-    searchTerms: ['ul', 'list', 'bullet', 'unordered'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
+    title: "Bullet List",
+    description: "Unordered list",
+    icon: commandIcon("•"),
+    searchTerms: ["ul", "list", "bullet", "unordered"],
+    command: ({
+      editor,
+      range,
+    }: {
+      editor: EditorInstance;
+      range: { from: number; to: number };
+    }) => {
       editor.chain().focus().deleteRange(range).toggleBulletList().run();
     },
   },
   {
-    title: 'Numbered List',
-    description: 'Ordered list',
-    icon: commandIcon('1.'),
-    searchTerms: ['ol', 'list', 'numbered', 'ordered'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
+    title: "Numbered List",
+    description: "Ordered list",
+    icon: commandIcon("1."),
+    searchTerms: ["ol", "list", "numbered", "ordered"],
+    command: ({
+      editor,
+      range,
+    }: {
+      editor: EditorInstance;
+      range: { from: number; to: number };
+    }) => {
       editor.chain().focus().deleteRange(range).toggleOrderedList().run();
     },
   },
   {
-    title: 'To-Do',
-    description: 'Task checklist item',
-    icon: commandIcon('[]'),
-    searchTerms: ['todo', 'task', 'check', 'checkbox'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
+    title: "To-Do",
+    description: "Task checklist item",
+    icon: commandIcon("[]"),
+    searchTerms: ["todo", "task", "check", "checkbox"],
+    command: ({
+      editor,
+      range,
+    }: {
+      editor: EditorInstance;
+      range: { from: number; to: number };
+    }) => {
       editor.chain().focus().deleteRange(range).toggleTaskList().run();
     },
   },
   {
-    title: 'Quote',
-    description: 'Block quotation',
+    title: "Quote",
+    description: "Block quotation",
     icon: commandIcon('"'),
-    searchTerms: ['blockquote', 'quote'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
+    searchTerms: ["blockquote", "quote"],
+    command: ({
+      editor,
+      range,
+    }: {
+      editor: EditorInstance;
+      range: { from: number; to: number };
+    }) => {
       editor.chain().focus().deleteRange(range).toggleBlockquote().run();
     },
   },
   {
-    title: 'Code',
-    description: 'Code block with syntax highlighting',
-    icon: commandIcon('</>'),
-    searchTerms: ['code', 'codeblock', 'pre'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
+    title: "Code",
+    description: "Code block with syntax highlighting",
+    icon: commandIcon("</>"),
+    searchTerms: ["code", "codeblock", "pre"],
+    command: ({
+      editor,
+      range,
+    }: {
+      editor: EditorInstance;
+      range: { from: number; to: number };
+    }) => {
       editor.chain().focus().deleteRange(range).toggleCodeBlock().run();
     },
   },
   {
-    title: 'Divider',
-    description: 'Horizontal rule',
-    icon: commandIcon('---'),
-    searchTerms: ['hr', 'divider', 'separator', 'rule'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
+    title: "Divider",
+    description: "Horizontal rule",
+    icon: commandIcon("---"),
+    searchTerms: ["hr", "divider", "separator", "rule"],
+    command: ({
+      editor,
+      range,
+    }: {
+      editor: EditorInstance;
+      range: { from: number; to: number };
+    }) => {
       editor.chain().focus().deleteRange(range).setHorizontalRule().run();
     },
   },
   {
-    title: 'Image',
-    description: 'Upload or embed an image',
-    icon: commandIcon('Img'),
-    searchTerms: ['image', 'img', 'photo', 'picture'],
-    command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
+    title: "Image",
+    description: "Upload or embed an image",
+    icon: commandIcon("Img"),
+    searchTerms: ["image", "img", "photo", "picture"],
+    command: ({
+      editor,
+      range,
+    }: {
+      editor: EditorInstance;
+      range: { from: number; to: number };
+    }) => {
       editor.chain().focus().deleteRange(range).run();
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'image/*';
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
       input.onchange = async () => {
         if (!input.files?.[0]) return;
         uploadFn(input.files[0], editor.view, editor.state.selection.from);
@@ -210,7 +301,7 @@ const extensions = [
   TextStyle,
   Color,
   HighlightExtension.configure({ multicolor: true }),
-  Placeholder.configure({ placeholder: 'Type / for commands…' }),
+  Placeholder.configure({ placeholder: "Type / for commands…" }),
   CodeBlockLowlight,
   HorizontalRule,
   CharacterCount,
@@ -223,44 +314,57 @@ const extensions = [
 
 export function DocEditor({
   initialContent,
+  onChange,
   onSave,
   saveDelay = 2000,
   readOnly = false,
 }: DocEditorProps) {
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const editorRef = useRef<EditorInstance | null>(null);
+  const pendingSave = useRef<DocEditorSavePayload | null>(null);
+  const saveCallback = useRef(onSave);
+
+  useEffect(() => {
+    saveCallback.current = onSave;
+  }, [onSave]);
 
   const triggerSave = useCallback(
     (editor: EditorInstance) => {
-      if (!onSave) return;
-      if (saveTimer.current) clearTimeout(saveTimer.current);
+      const text = editor.getText();
+      const payload: DocEditorSavePayload = {
+        content_json: editor.getJSON(),
+        content_text: text,
+        word_count:
+          (
+            editor.storage as { characterCount?: { words?: () => number } }
+          ).characterCount?.words?.() ??
+          text.split(/\s+/).filter(Boolean).length,
+      };
+      onChange?.(payload);
+      if (saveTimer.current !== null) clearTimeout(saveTimer.current);
+      saveTimer.current = null;
+      pendingSave.current = null;
+      if (!saveCallback.current) return;
+      pendingSave.current = payload;
       saveTimer.current = setTimeout(async () => {
-        const json = editor.getJSON();
-        const text = editor.getText();
-        const wordCount =
-          (editor.storage as { characterCount?: { words?: () => number } })
-            .characterCount?.words?.() ?? text.split(/\s+/).filter(Boolean).length;
-        await onSave({ content_json: json, content_text: text, word_count: wordCount });
+        saveTimer.current = null;
+        const snapshot = pendingSave.current;
+        pendingSave.current = null;
+        if (snapshot) await saveCallback.current?.(snapshot);
       }, saveDelay);
     },
-    [onSave, saveDelay]
+    [onChange, saveDelay],
   );
 
-  // Flush pending save on unmount
+  // Flush only a pending snapshot, without consulting an editor being destroyed.
   useEffect(() => {
     return () => {
-      if (saveTimer.current) {
-        clearTimeout(saveTimer.current);
-        if (editorRef.current && onSave) {
-          const editor = editorRef.current;
-          const json = editor.getJSON();
-          const text = editor.getText();
-          const wordCount = text.split(/\s+/).filter(Boolean).length;
-          void onSave({ content_json: json, content_text: text, word_count: wordCount });
-        }
-      }
+      if (saveTimer.current !== null) clearTimeout(saveTimer.current);
+      saveTimer.current = null;
+      const snapshot = pendingSave.current;
+      pendingSave.current = null;
+      if (snapshot) void saveCallback.current?.(snapshot);
     };
-  }, [onSave]);
+  }, []);
 
   return (
     <div className="doc-editor relative min-h-[60vh]">
@@ -271,11 +375,7 @@ export function DocEditor({
           editable={!readOnly}
           className="prose prose-invert prose-sm sm:prose-base max-w-none focus:outline-none [&_.ProseMirror]:min-h-[60vh] [&_.ProseMirror]:px-0 [&_.ProseMirror]:py-2 [&_.ProseMirror_h1]:font-display [&_.ProseMirror_h1]:text-3xl [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h2]:font-display [&_.ProseMirror_h2]:text-2xl [&_.ProseMirror_h2]:font-semibold [&_.ProseMirror_h3]:font-display [&_.ProseMirror_h3]:text-xl [&_.ProseMirror_h3]:font-semibold [&_.ProseMirror_blockquote]:border-l-2 [&_.ProseMirror_blockquote]:border-white/20 [&_.ProseMirror_blockquote]:pl-4 [&_.ProseMirror_blockquote]:text-white/50 [&_.ProseMirror_code]:bg-white/[0.06] [&_.ProseMirror_code]:rounded [&_.ProseMirror_code]:px-1.5 [&_.ProseMirror_code]:py-0.5 [&_.ProseMirror_code]:text-[var(--arc-brand-atlantean-teal)] [&_.ProseMirror_pre]:bg-white/[0.04] [&_.ProseMirror_pre]:rounded-xl [&_.ProseMirror_pre]:p-4 [&_.ProseMirror_pre]:border [&_.ProseMirror_pre]:border-white/[0.06]"
           onUpdate={({ editor }) => {
-            editorRef.current = editor;
             triggerSave(editor);
-          }}
-          onCreate={({ editor }) => {
-            editorRef.current = editor;
           }}
           editorProps={{
             handleDrop: (view, event, _slice, moved) =>
@@ -286,7 +386,7 @@ export function DocEditor({
               return handleCommandNavigation(event) ?? false;
             },
             attributes: {
-              class: 'outline-none',
+              class: "outline-none",
             },
           }}
         >
@@ -305,9 +405,13 @@ export function DocEditor({
                 >
                   <span className="flex-shrink-0">{item.icon}</span>
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-sm font-medium text-white/80">{item.title}</span>
+                    <span className="text-sm font-medium text-white/80">
+                      {item.title}
+                    </span>
                     {item.description && (
-                      <span className="text-[11px] text-white/35">{item.description}</span>
+                      <span className="text-[11px] text-white/35">
+                        {item.description}
+                      </span>
                     )}
                   </div>
                 </EditorCommandItem>
@@ -317,54 +421,58 @@ export function DocEditor({
 
           {/* Bubble toolbar */}
           <EditorBubble
-            tippyOptions={{ duration: 100, placement: 'top' }}
+            tippyOptions={{ duration: 100, placement: "top" }}
             className="flex items-center gap-0.5 rounded-xl border border-white/[0.10] bg-[var(--arc-cosmic-void)]/95 backdrop-blur-xl px-1.5 py-1 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
           >
             <BubbleButton
               label="Bold"
               shortcut="B"
               onSelect={(editor) => editor.chain().focus().toggleBold().run()}
-              isActive={(editor) => editor.isActive('bold')}
+              isActive={(editor) => editor.isActive("bold")}
             />
             <BubbleButton
               label="Italic"
               shortcut="I"
               onSelect={(editor) => editor.chain().focus().toggleItalic().run()}
-              isActive={(editor) => editor.isActive('italic')}
+              isActive={(editor) => editor.isActive("italic")}
             />
             <BubbleButton
               label="U"
               shortcut="U"
-              onSelect={(editor) => editor.chain().focus().toggleUnderline().run()}
-              isActive={(editor) => editor.isActive('underline')}
+              onSelect={(editor) =>
+                editor.chain().focus().toggleUnderline().run()
+              }
+              isActive={(editor) => editor.isActive("underline")}
             />
             <BubbleButton
               label="S"
               shortcut="S"
               className="line-through"
               onSelect={(editor) => editor.chain().focus().toggleStrike().run()}
-              isActive={(editor) => editor.isActive('strike')}
+              isActive={(editor) => editor.isActive("strike")}
             />
             <div className="w-px h-4 bg-white/[0.10] mx-0.5" />
             <BubbleButton
               label="Mark"
-              onSelect={(editor) => editor.chain().focus().toggleHighlight().run()}
-              isActive={(editor) => editor.isActive('highlight')}
+              onSelect={(editor) =>
+                editor.chain().focus().toggleHighlight().run()
+              }
+              isActive={(editor) => editor.isActive("highlight")}
               highlight
             />
             <BubbleButton
               label="Code"
               onSelect={(editor) => editor.chain().focus().toggleCode().run()}
-              isActive={(editor) => editor.isActive('code')}
+              isActive={(editor) => editor.isActive("code")}
               mono
             />
             <BubbleButton
               label="Link"
               onSelect={(editor) => {
-                const url = window.prompt('URL:');
+                const url = window.prompt("URL:");
                 if (url) editor.chain().focus().setLink({ href: url }).run();
               }}
-              isActive={(editor) => editor.isActive('link')}
+              isActive={(editor) => editor.isActive("link")}
             />
           </EditorBubble>
 
@@ -386,7 +494,7 @@ function BubbleButton({
   isActive,
   highlight,
   mono,
-  className = '',
+  className = "",
 }: {
   label: string;
   shortcut?: string;
@@ -400,14 +508,18 @@ function BubbleButton({
     <EditorBubbleItem
       onSelect={(editor) => onSelect(editor)}
       className={[
-        'cursor-pointer select-none rounded-lg px-2.5 py-1.5 text-xs transition-colors font-sans',
-        highlight ? 'bg-yellow-400/20 text-yellow-300 hover:bg-yellow-400/30' : '',
-        mono ? 'font-mono text-[var(--arc-brand-atlantean-teal)]' : '',
-        !highlight && !mono ? 'text-white/50 hover:bg-white/[0.08] hover:text-white' : '',
+        "cursor-pointer select-none rounded-lg px-2.5 py-1.5 text-xs transition-colors font-sans",
+        highlight
+          ? "bg-yellow-400/20 text-yellow-300 hover:bg-yellow-400/30"
+          : "",
+        mono ? "font-mono text-[var(--arc-brand-atlantean-teal)]" : "",
+        !highlight && !mono
+          ? "text-white/50 hover:bg-white/[0.08] hover:text-white"
+          : "",
         className,
       ]
         .filter(Boolean)
-        .join(' ')}
+        .join(" ")}
     >
       {label}
     </EditorBubbleItem>
