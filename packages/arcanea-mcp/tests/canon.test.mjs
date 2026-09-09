@@ -140,7 +140,7 @@ test("companion invocation choices match the actual companion resource", async (
 });
 test("tool discovery exposes the actual unique generator tools", () => {
   const names = tools.map((tool) => tool.name);
-  assert.equal(names.length, 54);
+  assert.equal(names.length, 55);
   assert.equal(new Set(names).size, names.length);
   for (const name of [
     "generate_character",
