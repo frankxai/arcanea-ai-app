@@ -30,6 +30,19 @@ const states = [
   },
 ];
 
+const commitEvidence = () => {
+  const builtCommit = process.env.GITHUB_SHA || null;
+  if (!process.env.GITHUB_EVENT_PATH)
+    return { builtCommit, reviewedSourceCommit: builtCommit };
+  const event = JSON.parse(
+    fs.readFileSync(process.env.GITHUB_EVENT_PATH, "utf8"),
+  );
+  return {
+    builtCommit,
+    reviewedSourceCommit: event.pull_request?.head?.sha || builtCommit,
+  };
+};
+
 const typographyReport = async (page) =>
   page.evaluate(async () => {
     await document.fonts.ready;
@@ -306,8 +319,8 @@ const typographyReport = async (page) =>
     JSON.stringify(
       {
         scope:
-          "Real built Next app at this CI commit; production URL verification is separate",
-        commit: process.env.GITHUB_SHA,
+          "Real built Next app at the CI checkout commit; production URL verification is separate",
+        ...commitEvidence(),
         states,
         captures,
       },

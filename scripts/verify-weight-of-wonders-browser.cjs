@@ -117,12 +117,11 @@ module.exports.verifyWeightOfWondersPreview = async ({
     assert.equal(await phaseButtons.count(), 3);
     await phaseButtons.nth(1).click();
     await page
-      .getByText(
-        "Opening an emergency bypass exposes the damaged hip regulator.",
-        {
-          exact: false,
-        },
-      )
+      .locator("p")
+      .filter({
+        hasText:
+          /^Opening an emergency bypass exposes the damaged hip regulator\.$/u,
+      })
       .waitFor();
 
     await phaseButtons.nth(0).focus();
