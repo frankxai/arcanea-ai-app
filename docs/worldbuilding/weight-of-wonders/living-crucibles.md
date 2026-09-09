@@ -15,11 +15,11 @@ A memorable boss should make a promise the player can understand: learn this dan
 
 ## Three distinct combat promises
 
-| Boss and dungeon | What makes the fight different | Visible victory | Proposed growth |
-|---|---|---|---|
-| Tharvoss / The Spawning Stair | Suction, low body mass, current direction, a lure that loses effectiveness when repeated | Boats and migrating fish regain a crossing | Anchor Step: brace at suitable cover against a sustained pull |
+| Boss and dungeon                               | What makes the fight different                                                                   | Visible victory                                                             | Proposed growth                                                             |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Tharvoss / The Spawning Stair                  | Suction, low body mass, current direction, a lure that loses effectiveness when repeated         | Boats and migrating fish regain a crossing                                  | Anchor Step: brace at suitable cover against a sustained pull               |
 | The Glassroot Hunger / The Glassroot Sepulchre | Specialized colonial parts, feeding sequences, interrupting a network while protecting a nursery | The giant colony loses access to living roots; viable seeds leave the vault | Pulse Reading: observe a repeatable sequence and mark an opening for allies |
-| Marshal Othrek / The Brine Tribunal | A human duel, finite pressure supply, guard coordination and a controllable bypass | The defeated ruler loses the gate; drinking water runs again | Counterweight Riposte and a limited environmental grapple |
+| Marshal Othrek / The Brine Tribunal            | A human duel, finite pressure supply, guard coordination and a controllable bypass               | The defeated ruler loses the gate; drinking water runs again                | Counterweight Riposte and a limited environmental grapple                   |
 
 All three include three phases, three consequential endings, a four-beat session kit, two writing seeds, ecology, and explicit practice/mastery/reward/rematch notes. The techniques are proposals for a future game system; they are not new locked Gates or universal powers.
 
