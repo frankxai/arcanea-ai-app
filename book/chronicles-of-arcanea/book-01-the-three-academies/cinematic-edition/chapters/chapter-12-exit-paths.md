@@ -47,9 +47,11 @@ He had shaved one side of his head since Emilia last saw him and braided the res
 
 “I can move around furniture.”
 
-“The user inside the cascade cannot move around your confidence.”
+“You'll have to turn sideways to reach station one.”
 
 Tavin faced her then. “Good. We have reached the argument before the material is hot.”
+
+He moved to the other side of the console anyway. Emilia looked down before he could catch her checking the new route.
 
 Renn placed his credential ring against the terms. “Do you accept observer access under these limits?”
 
@@ -127,9 +129,21 @@ Tavin moved one control. “Reduce roller field by three.”
 
 The station-three apprentice pulled the lever back. The ribbon loosened with a ringing note. Its edge returned to gold.
 
-“My call was wrong,” Emilia told the exercise slate.
+At station four, the student's hand still hovered above the blue lever. He was looking between her and Tavin.
 
-The recorder wrote it before Renn could.
+“Leave it closed,” Emilia told him. “I read the pressure change incorrectly.”
+
+“I heard. Who do I watch now?”
+
+She had been about to explain the blue edge. The student needed his next instruction, and the hot ribbon was still passing him.
+
+“Tavin,” she said.
+
+Tavin raised a closed fist where all six stations could see. “Hold current positions.”
+
+The student lowered his hand to the rest beside the lever. Emilia waited until he had turned back to the material before she looked at the slate.
+
+The recorder entered her wrong vent call before Renn could.
 
 Tavin glanced at her. “The console agreed with you.”
 
@@ -245,7 +259,7 @@ Emilia arranged it beside a mechanical continuity fork and a small return spring
 
 The fork answered one question only: did the physical exit path connect through the device?
 
-Emilia cut three narrow slots into a scrap-brass faceplate. She seated the fork behind the first two, aligned Tavin's wafer across its contact points, and linked the return spring to a manual shutter tab. Green could reach the first slot only when the fork carried a complete path. Closing the shutter shifted the wafer and put red behind the second. If the spring, fork, or wafer slipped out of alignment, neither color could reach the faceplate; plain amber backing remained visible through the third slot.
+Emilia cut three narrow slots into a scrap-brass faceplate. She seated the fork behind the first two, placed Tavin's wafer across its contact points, and linked the return spring to a manual shutter tab. The fork's seated position directed green toward the first slot. Closing the shutter shifted the wafer and put red behind the second. Loss of contact released the wafer from either position, leaving plain amber backing visible through the third slot.
 
 Open meant the path existed through the aid. Closed meant the aid's own shutter blocked it. Unknown meant the fork, shutter, or spring could not verify itself.
 
@@ -275,7 +289,51 @@ Tavin crouched beside the bench. “Where is the automatic stop?”
 
 He held out both hands. “I am locating the product.”
 
-Emilia closed the shutter. The first window darkened and the second showed a red bar. She opened it; green appeared. Then she loosened the return spring by one turn. Both colors vanished, exposing the amber backing. The device offered no conclusion beyond the failure of its own answer. A person looking at it would know whether the aid offered a path and whether it had lost the ability to say.
+Emilia closed the shutter. The first window darkened and the second showed a red bar. She opened it; green appeared. Then she loosened the return spring by one turn. Both colors vanished, exposing the amber backing.
+
+Tavin stayed crouched beside the bench.
+
+“It's green.”
+
+“The spring is loose.”
+
+“I can see that. I can also see green.”
+
+She bent to his height. A thin green stroke survived at the bottom of the first slot. The loose wafer had caught daylight from the court and reflected it off the brass behind the faceplate. From above, her own shadow covered it. From here it looked like an open path.
+
+“At that angle—”
+
+“This is where my eyes are.”
+
+Emilia put the device down without tightening the spring. The green stroke stayed there.
+
+She had been ready to take it to Renn.
+
+Tavin moved his head slowly from side to side. Green disappeared, returned, and grew bright enough to read from the next bench.
+
+“Don't move,” she said.
+
+She slid a scrap of brass behind the slot. The stroke vanished. When she shifted the scrap toward the wafer, red leaked through the neighboring window instead.
+
+“Also wrong,” Tavin said.
+
+“I can see.”
+
+“From up there?”
+
+She sat on the floor beside him. The stone was cold through her trousers. At this height the faceplate was a roof with badly fitted partitions; light found every gap she had left beneath it.
+
+The first baffle she cut caught the return spring. She took it out, shortened it, and eased the wafer deeper into its seat. Her right hand cramped while she held the small clamp. Tavin steadied it while she worked the file with her left hand.
+
+They fitted separate thin walls behind the red and green slots and blackened the inner brass. She left room for the spring's full travel, then checked it again after tightening the faceplate. The filing dust stuck to the new yellow thread at her cuff. She brushed at it once and went back to the shutter.
+
+With the spring loose, Tavin turned the device toward the court. Amber held. Emilia moved from the floor to the bench and stood over it. No green. She reseated the spring and opened the shutter; the green bar appeared. Closed, it showed red. She lifted one side of the fork from its contact and repeated the views. Amber again.
+
+“Those positions,” Tavin said. “In this light.”
+
+She wrote them down. Beside them she added the reflected green they had removed, so the next person to test it would know where to look.
+
+The object occupied no more of the bench than it had before. Emilia turned it over in her hands. The new walls were hidden beneath a faceplate she would once have polished before allowing anyone to see it. She left the scratches where they were and called Renn over.
 
 Renn brought the certification slate to the outside bench.
 

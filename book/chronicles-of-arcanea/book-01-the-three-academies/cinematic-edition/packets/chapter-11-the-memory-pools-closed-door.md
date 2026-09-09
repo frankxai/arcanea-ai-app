@@ -10,7 +10,7 @@
 **Visible want by word 500:** Earn a narrow archive comparison that tests the sealed rain-memory's redaction shape without exposing captured voices
 **Opposing want:** The archive will authenticate only a full trace comparison; shape and metadata can be forged, detached, or misread
 **Dramatic question:** Can Mera prove a removal by studying what surrounds it rather than opening what it took?
-**Irreversible turn:** She maps missing metadata across an old Hollow Root file and finds the same engineered redaction coordinates as the rain-memory
+**Irreversible turn:** She finds missing-coordinate geometry in a catalogue entry labelled Hollow Root that resembles the rain-memory's boundary, then makes an unauthorized duplicate of the coordinates
 **Persistent cost:** She leaves with coordinates no other scholar is required to accept and no authorized proof; copying them quietly adds another undisclosed act to her custody record
 **Exit image:** Mera's dry coordinate marks surrounding a locked pool door while every private voice remains underwater
 
@@ -55,19 +55,19 @@ The chapter must work as fiction without an accompanying image or lore note.
 **Locked canon touched:** Water as one of the Five Elements; no new Gate, rank, House, god, or Godbeast claim
 **Staging continuity touched:** Athenaeum practice current and archive authentication; Hollow Root historical catalogue; witness-standing review
 **Prior setups advanced or paid off:** Engineered absence in rain; protective-removal appendix; blue cup wound; deliberate non-access in Chapters 4 and 7; redaction as institutional action
-**New setups introduced:** Hollow Root archive coordinate match; Mera's covert coordinate notes; harmless-memory return discipline
+**New setups introduced:** Hollow Root catalogue geometry resemblance, not an authenticated source match; Mera's covert coordinate notes; harmless-memory return discipline
 **Objects/status/injuries carried forward:** Blue vial in external cradle with red disputed thread; healing cable burn; amber wrist mark; provisional access; participant-witness acceptance completed
-**Facts the next chapter must inherit:** Mera has a coordinate match but no admissible proof; the sealed vial remains unopened; Emilia may know only that an archive pattern exists, not its private content
+**Facts the next chapter must inherit:** Mera has a suspected geometry correspondence but no authenticated source or admissible proof; the sealed vial remains unopened; Emilia may know only that an archive pattern exists, not its private content
 **Canon approval required:** no, if retained as book continuity only
 
 ## Scene sequence
 
 | Scene | POV want | Opposition | Turn | Cost / new condition | Sensory anchor |
 |---:|---|---|---|---|---|
-| 1 | Secure shape-only comparison access | Neris requires full trace because metadata alone cannot authenticate source | Mera agrees to complete the practice current before receiving a formal answer | She enters Academy practice while her evidence remains closed | Blue vial behind red thread beside a black-water channel |
-| 2 | Demonstrate precise carrying and release | Iven's volunteered sensory fragment feels deliberately unfinished; Mera keeps it beyond the return cue | Iven names the exact fragment he gave and demands it back without added context | Mera returns it and loses the exercise's highest mark | Orange peel bitterness lingering after the water warms |
-| 3 | Belong among peers without discussing custody | Students annotate short anonymous stories during the late meal and challenge omissions | Mera wins a marginal-source argument, laughs, and lets one omission stand because its author chose it | Peers invite her to the deep-pool catalogue table | Tea rings crossing handwritten notes |
-| 4 | Test redaction shape without opening any memory | The deep pool remains locked; shape-only method is uncertified | Mera maps missing custody coordinates through condensation and finds a Hollow Root file with the rain trace's same blunt upper edge | She copies only coordinates; conclusion remains private and disputable | Dry marks around a wet locked door |
+| 1 | Complete the practice required for catalogue access | Mera keeps Iven's peel beyond the return cue; Neris requires its return | Mera returns it completely, then completes a bounded spoon-pressure exchange | Her late release remains on the record | Orange peel bitterness lingering after two bells |
+| 2 | Recover precision without conceding the delay's meaning | Iven names the limit she ignored | Mera admits the delay, returns his pressure fragment, and volunteers an ordinary warmth of her own | Giving creates pleasure without erasing the conditional mark; shape comparison remains unauthenticated | Warmth held in a cold right palm |
+| 3 | Belong among peers without discussing custody | Students dispute the meal story and challenge her annotations | Mera loses one argument, proposes a fictional line, and accepts another reader's pleasure without demanding agreement | Iven offers a shared catalogue table; she chooses a separate desk | Tea rings crossing handwritten notes |
+| 4 | Test redaction shape without opening any memory | The deep pool remains locked; shape-only method is uncertified | Mera finds a catalogue gap with a similar blunt upper edge and irregular side | She copies only coordinates without the required citation seal; conclusion remains private and disputable | Dry marks around a wet locked door |
 
 ## Prose constraints
 
@@ -99,10 +99,20 @@ The chapter must work as fiction without an accompanying image or lore note.
 | Skill / workflow names | source-command-serenia-author-team; humanizer; canon-first-arcanea-expansion; book-publishing |
 | Owned task prompt version | Cinematic Book Goal, 2026-08-29; Chapter 11 packet v1 |
 | Draft date | 2026-08-29 |
-| Material model contribution | Chapter packet structure and scene causality; prose pending |
+| Material model contribution | Chapter packet, staged prose, and subsequent maker revisions; not a claim of human-only authorship or final approval |
 | Human / editorial intervention | Frank's story/product brief; prior architecture, character, canon, and line review |
 | Rejected directions | Trauma-sharing class; mind-reading; archive villain; easy admissible proof; lore dump; memory as romantic shortcut |
 | Rights or attribution notes | Original Arcanea production; no external prose or art incorporated |
+
+## Bounded revision contract — 2026-09-09
+
+- Add a voluntary, ordinary sensory gift from Mera after Iven's correct return. She chooses its limits and experiences waiting for a return; no trauma, hidden person, or coerced disclosure.
+- Place the last received pressure in her right hand. The left cable burn may stay wet, but it must not imply retained content or a new injury.
+- Give the meal scene a brief act of invention explicitly distinguished from evidence, then a concrete invitation she declines through choosing a separate catalogue desk.
+- Preserve every plot outcome: conditional return score; full-trace refusal; sealed vial in external cradle; geometry resemblance only; official tray note and unauthorized coordinate-only duplicate.
+- Preserve all private source boundaries. No words, faces, identity, motive, or historical truth may be recovered from the closed pool or catalogue label.
+- Apply a second maker line/continuity pass. Fresh independent editorial review remains pending; the historical Movement II review does not approve changed prose.
+- No additional illustration in this pass. Imagegen is loaded for the goal, not credited as having generated an asset here.
 
 ## Review gates
 
@@ -147,3 +157,13 @@ The chapter must work as fiction without an accompanying image or lore note.
 **Open risks:** Memory exercise could become illustrative rather than causal; archive refusal must not repeat Chapter 7; Hollow Root evidence remains staging and weak proof
 **Approved final word count:** pending
 **Final manuscript checksum / revision:** pending
+
+### Current maker checkpoint — 2026-09-09
+
+The bounded revision is implemented and has received a second maker line/continuity pass. Iven receives only the volunteered warmth and returns it on the bell. Mera's invented meal-story line is presented as fiction; she asks him to keep a catalogue place, then takes a separate desk. Her conditional mark, sealed vial and unauthorized coordinate copy remain. A refinement removed pressure accidentally added to the warmth-only return and made the receiving hand explicit.
+
+Current working prose: 2,519 words; SHA-256 `99b2ea8ea1a3d46c23dd8b85f87b78aa3f48185b5298df4e2e8a6755f7f614c8`. These are not an approved final count or release hash. All 32 source chapters parse/render through the edition loader; 39 focused book/export tests pass. Mechanical vocabulary and whitespace checks pass, but cannot certify literary quality.
+
+Open reader questions: does the gift feel freely chosen rather than a demonstration inserted to teach the reader? Does the meal-story exchange make the empty catalogue place matter? Does the late return retain its weight after the warmer social scene? Fresh independent review is pending under the current swarm HOLD. The historical Movement II verdict does not cover this revision.
+
+Revision workflow: author-team scene/character discipline, Studio Ops, native bridge, Humanizer; no new image generation. Exact author-model backend/version is not exposed in a trustworthy receipt. The owned brief and source boundaries are recorded in the Movement II ledger.

@@ -93,3 +93,31 @@ Revise Chapter 13, Body before miracle, inside its existing story contract. Make
 - Independent review: not dispatched because the current machine preflight holds new swarms. No workaround agent, external manuscript upload, production promotion or live purchase was made. New wording remains `revised-draft` / `staging` / `paid`.
 
 Next editorial test: ask an independent reader whether the shared fit and water break make the wall's aftermath more affecting, or whether the middle needs cutting. Do not award a publication pass from word count, unit tests or this maker assessment.
+
+## Mera and Emilia teaching revision — 2026-09-09
+
+Private revision after the historical movement review. Source task: `01a04dd1-0b3b-7102-a946-4bbf1a30bd26`. Source revision before editing: `25f9b726983db67f974e14ccef5e169eebecba5e`. No fresh independent approval is attached to these changes.
+
+### Owned revision briefs
+
+```text
+Revise Chapter 11 inside its existing story contract. Let Mera voluntarily offer an ordinary, bounded sensory fragment after she returns Iven's memory correctly. Make giving, waiting and receiving the return physically felt; no traumatic source or coerced disclosure. Give the meal scene a small act of invention explicitly distinguished from evidence and a shared catalogue place she chooses not to take. Preserve the conditional mark, sealed vial in its external cradle, left-hand cable burn, full-trace refusal, weak catalogue geometry, official tray note and unauthorized coordinate-only duplicate. Do not reveal private words, faces, source identity, motive or protected contents. Refine the prose without making her later boundary failures impossible.
+```
+
+```text
+Revise Chapter 12 inside its existing story contract. Give Tavin and Emilia a practical accommodation and make her answer directly to the operator who nearly follows her wrong vent call. Make the first uncertified indicator fail visibly: an oblique green reflection survives a loose spring. Tavin identifies it; Emilia reworks the physical light path and records limited bench tests. Keep all six manual stations, the valid isolation, successful automatic shutdown, failed tiles and passing operator. Preserve closed credentials, the right-arm burn, yellow cuff, personal wafer contribution, denied certification and personal custody. Add no source/person sensing, stored data, remote broadcast, automatic stop, new injury or Arion acceptance. Finish with a second maker line/continuity pass.
+```
+
+### Contribution and verification
+
+- Chapter 11 adds a warmth-only cup fragment, Iven's exact return, Mera's desire to sit with a real cup, an invented landlady sentence and an offered shared catalogue place. These are ordinary book-staging details, not new locked canon or recovered memories of another person. The warmer exchange does not erase her recorded delay or prevent her later unauthorized copy.
+- Chapter 12 adds Tavin's changed standing position, an explicit handoff after Emilia's error, false green from the prototype's reflected light, a baffle that initially catches its spring, shared filing work and limited retests. The indicator still reports only its own path/shutter/unknown state. It is not a complete fail-safe, and the bench checks are not certification.
+- Packet corrections remove stronger claims than the prose supports: authenticated coordinate match, a shutdown no person could reach, a proven adverse Tavin score, and a four-operator illustration plan. Six operators and a lawful manual isolation remain in the text. Historical human-approval language is not used to approve the new staging details.
+- The refinement removed an added pressure sensation from Mera's warmth-only return, clarified her right-hand reception and left burn check, replaced an abstract permission maxim with Iven's concrete return request, made the exercise recorder's entry explicit, and clarified who steadies the clamp while Emilia files with her left hand. Existing technical words and deliberate dialogue repetition were assessed in context.
+- Sources: both complete chapters and packets, the book bible's character contracts, the locked canon, master outline, historical Movement II review, Chapter 9's custody conclusion and Chapter 14's device/repair handoff. Nearby injury and rescue context was consulted in the preceding pass. No new full-novel read or external prose reuse is claimed.
+- Actual edition loader output: all 32 chapters parse and render supported XHTML; 78,608 total prose words. Chapter 11: 2,519 words, SHA-256 `99b2ea8ea1a3d46c23dd8b85f87b78aa3f48185b5298df4e2e8a6755f7f614c8`. Chapter 12: 2,888 words, SHA-256 `4e0663a02528d790a4d18f71b2ea75bae73daa06565ebe9dcacc8b679b0fa9c3`. No final export was generated or approved.
+- Checks on pinned Node 22.23.2: 22 access/delivery/preferences/sample tests, 11 edition tests and six artbook tests pass; `git diff --check` and whole-word Humanizer vocabulary scan pass. Tests verify structure and product contracts, not story merit.
+- Workflow: Codex drafting/local patching; named author-team scene discipline, Studio Ops, native bridge and Humanizer. Imagegen was loaded but no image was made in this text pass. The exact author-model backend/version is not exposed; do not add Astra or Image 2.5 attribution without a real receipt.
+- Fresh swarm preflight: HOLD, 9,499 MB free versus 10,240 required; 12 task runtimes versus budget eight. No independent agent, alternate dispatch, external manuscript upload, customer signup, sale or production promotion occurred. This is maker-reviewed `revised-draft` / `staging` / `paid` text.
+
+Next review must challenge whether both additions earn their length: Mera's gift should feel like desire, and Emilia's second failure should change the relationship rather than repeat a lesson. Independent editorial, canon, art, rights, commerce and release gates remain open.

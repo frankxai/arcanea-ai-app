@@ -11,8 +11,8 @@
 **Opposing want:** The Forge evaluators certify automatic shutdowns; Emilia cannot operate certified equipment and her former peers believe automation protects the least skilled user
 **Dramatic question:** Can Emilia make an exit visible without turning the tool into the authority that decides when someone must take it?
 **Irreversible turn:** She builds an aid that reports only its own open, closed, or unknown state and leaves every stop decision outside the device
-**Persistent cost:** The Forge refuses certification because the aid cannot guarantee compliance; Emilia keeps it in personal custody with no institutional protection if it fails
-**Exit image:** A small three-window object glowing *unknown* in Emilia's palm while the certified rig beside it reports a perfect shutdown no person inside could have reached
+**Persistent cost:** The Forge refuses certification as a complete fail-safe because the indicator cannot guarantee automatic stop; Emilia keeps it in personal custody with no institutional protection if it fails
+**Exit image:** A small three-window object showing *unknown* in Emilia's palm while the certified rig reports a completed shutdown beyond the credential line she still cannot cross
 
 ## Reader experience
 
@@ -20,8 +20,8 @@
 **Pleasure lane:** borrowed tools, visible garment repairs, maker-mark teasing, shared workshop meal, the tactile satisfaction of a mechanism that does exactly one thing
 **Academy/world texture:** Forge practice travels through tools, peer challenge, certified tolerances, and social authorship even when the institution closes one maker's credentials
 **Magic in material form:** A Synthesis cascade moves one material through glass, metal, and clay states; manual routes change heat, pressure, and form while Prism panes show only the rig's declared state
-**Material consequence:** Emilia's wrong timing call is corrected; a Roost operator safely isolates the live cascade through a visible manual action; Emilia then loses certification for refusing automatic enforcement in her new aid
-**One image the reader should remember a week later:** Emilia directing six visible hands around a changing material river while forbidden from touching the master console
+**Material consequence:** Emilia's wrong timing call is corrected; a Roost operator safely isolates the live cascade through a visible manual action; a false-green prototype requires physical rework; the resulting indicator is refused certification as a complete fail-safe
+**One image the reader should remember a week later:** Emilia calling to a manual team around a changing material river while forbidden from touching the master console
 
 The chapter must work as fiction without an accompanying image or lore note.
 
@@ -48,7 +48,7 @@ The chapter must work as fiction without an accompanying image or lore note.
 - Emilia accepts a supervised observer role, directs the manual team without touching controls, redesigns the aid, and accepts personal liability.
 - Tavin operates the rig, catches one of Emilia's timing errors, and prevents a glass-state rupture; Renn enforces credential limits even when they inconvenience the lesson.
 - Automatic shutdown protects users who cannot perceive every state and allows rescue systems to act when a person is unconscious.
-- The manual team carries risk created by Emilia's design choice; Tavin's certification score is disrupted; Renn's appeal becomes harder.
+- The manual team bears the immediate risk of Emilia's wrong vent call. Tavin corrects it; the later operator earns a safe-shutdown pass while the tile set fails. Neither Tavin's score nor the outcome of Renn's appeal is established here.
 
 ## Continuity and canon
 
@@ -65,9 +65,9 @@ The chapter must work as fiction without an accompanying image or lore note.
 | Scene | POV want | Opposition | Turn | Cost / new condition | Sensory anchor |
 |---:|---|---|---|---|---|
 | 1 | Enter the exchange as a working maker | Her credential ring opens no console; Renn permits observation and verbal direction only | Emilia accepts no-touch access after adding a right to stop her own participation | Her peers will perform every action she designs | Borrowed tools aligned beyond a red boundary line |
-| 2 | Prove manual affordances can stop the cascade | Tavin's automatic sequence is fast and protects novices; Emilia cannot reach the hidden path from observer position | A manual operator feels a recurring guide knock both instruments miss and prevents rupture | Emilia's first timing call is wrong; Tavin corrects it | Material changing from clear glass to ringing metal |
+| 2 | Prove manual affordances can stop the cascade | Tavin's automatic sequence protects novices; Emilia misreads a pressure change | Tavin prevents her wrong vent call; later a manual operator feels a recurring knock both instruments miss and isolates the fault | Emilia must answer to the operator who nearly followed her; the tile set fails but safe shutdown passes | Material changing from clear glass to ringing metal |
 | 3 | Belong at the common-workshop meal | Former peers tease her seamless tailoring while every shared object shows repairs | Emilia accepts a visible patch to protect the burned sleeve instead of hiding it | Her lack of maker access remains visible but socially survivable | Bright repair thread crossing a dark cuff |
-| 4 | Build an aid that informs without deciding | Certification requires automatic stop and deterministic compliance | Emilia removes source sensing and outputs only open/closed/unknown; Tavin's component makes manual state legible | Certification denied; Renn witnesses personal custody | Three physical windows and one warm manual switch |
+| 4 | Build an aid that informs without deciding | A reflection creates false green in the first prototype; certification requires a complete automatic stop function | Tavin identifies the misleading viewing angle; Emilia reworks the light path and tests only open/closed/unknown | Indicator passes its limited bench checks, not a complete safety review; certification denied and personal custody witnessed | A thin green reflection surviving where the first prototype should show unknown |
 
 ## Prose constraints
 
@@ -82,9 +82,9 @@ The chapter must work as fiction without an accompanying image or lore note.
 
 **Plate candidate:** yes
 **Narrative function:** teaching, collaboration, and invention
-**Composition:** Roost workshop divided by a red credential line; Emilia outside the console zone directing Tavin and four manual operators around a live ribbon of transforming material; borrowed Forge tools with visible maker marks
+**Composition:** Roost workshop divided by a red credential line; Emilia outside the console zone calling recommendations to Tavin and six manual operators around a live ribbon of transforming material; borrowed Forge tools with visible maker marks
 **Character identity locks required:** Emilia, Renn, Tavin, right-arm injury, repaired work sleeve
-**Mobile crop-safe focus:** Emilia's uncovered hand stopped at the red line while six other hands execute her visible route
+**Mobile crop-safe focus:** Emilia outside the red line, with an operator's hands and lever in the same frame; never imply that she touches a certified control
 **Continuity-critical details:** She never crosses the credential boundary; no original instrument; three-state aid is small, physical, and non-weaponized
 **Avoid:** neon lab, touchscreens everywhere, superhero engineering pose, magical gauntlet, effortless solo fix, sinister automation
 
@@ -99,10 +99,20 @@ The chapter must work as fiction without an accompanying image or lore note.
 | Skill / workflow names | source-command-serenia-author-team; humanizer; canon-first-arcanea-expansion; book-publishing |
 | Owned task prompt version | Cinematic Book Goal, 2026-08-29; Chapter 12 packet v1 |
 | Draft date | 2026-08-29 |
-| Material model contribution | Chapter packet structure and scene causality; prose pending |
+| Material model contribution | Chapter packet, staged prose, and subsequent maker revisions; not a claim of human-only authorship or final approval |
 | Human / editorial intervention | Frank's story/product brief; prior architecture, character, canon, and line review |
 | Rejected directions | Restored lab access; villainous automation; solo genius fix; aid measuring Arion; automatic compliance; magical weapon |
 | Rights or attribution notes | Original Arcanea production; no external prose or art incorporated |
+
+## Bounded revision contract — 2026-09-09
+
+- Let the existing rivalry show one practical accommodation and let Emilia address the operator who nearly follows her wrong vent call. No new incident, injury, credential access, or invented adverse review outcome.
+- Give the first uncertified indicator a tangible optical fault: green reflected from the brass remains visible at an oblique angle while the spring is unseated. Tavin notices it; Emilia must rework the light path and retest.
+- Use only physical baffles, surface treatment, and component placement to correct that fault. Do not add source/person sensing, storage, remote broadcasting, an automatic stop, or a claim that the exit beyond its anchors is safe.
+- Keep the six manual stations, Tavin's correction, the operator's valid isolation, automation's successful shutdown, and the failed tile set with a passing operator.
+- Preserve the right-arm burn, yellow cuff repair, personal wafer contribution, certification denial, closed credentials, and Arion's later right to reject the offer.
+- Apply a second maker line/continuity pass. Fresh independent editorial review remains pending; no automatic transfer of the historical Movement II verdict.
+- No additional illustration in this pass. Imagegen is loaded for the goal, not credited as having generated an asset here.
 
 ## Review gates
 
@@ -147,3 +157,13 @@ The chapter must work as fiction without an accompanying image or lore note.
 **Open risks:** Technical lesson density; automation debate could become abstract; access loss must constrain rather than decorate
 **Approved final word count:** pending
 **Final manuscript checksum / revision:** pending
+
+### Current maker checkpoint — 2026-09-09
+
+The bounded revision is implemented and has received a second maker line/continuity pass. Tavin accommodates the obstructed route; Emilia gives the affected operator a clear handoff after her wrong call. The first indicator shows a false green reflection with its spring loose. Tavin identifies the viewing problem, Emilia reworks its physical light paths, and they record the limited positions/light tested. The wafer, injury, yellow cuff, six stations, automatic shutdown, denied certification and personal custody remain consistent with the handoff to Chapter 14.
+
+Current working prose: 2,888 words; SHA-256 `4e0663a02528d790a4d18f71b2ea75bae73daa06565ebe9dcacc8b679b0fa9c3`. These are not an approved final count or release hash. All 32 source chapters parse/render through the edition loader; 39 focused book/export tests pass. Mechanical vocabulary and whitespace checks pass, but cannot certify literary quality.
+
+Open reader questions: does the second technical failure deepen the rivalry and trust, or repeat the earlier corrected mistake? Are the optical fault and physical repair clear without reading like a manual? The bench checks must never imply universal safety or source/person sensing. Fresh independent review is pending under the current swarm HOLD; the historical Movement II verdict does not cover this revision.
+
+Revision workflow: author-team scene/character discipline, Studio Ops, native bridge, Humanizer; no new image generation. Exact author-model backend/version is not exposed in a trustworthy receipt. The owned brief and source boundaries are recorded in the Movement II ledger.

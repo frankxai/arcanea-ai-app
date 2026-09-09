@@ -101,7 +101,7 @@ Iven lifted both hands from the water. “Did you return the part I gave?”
 
 “Yes.”
 
-“Then the rest was not unfinished. It was absent from your permission.”
+“Next time, give it back on the bell. Even if you have questions.”
 
 Neris still held the stylus but did not rescue either of them with a ruling.
 
@@ -113,7 +113,7 @@ Iven lowered his hands into the current again.
 
 “Fragment,” he said. “Pressure of an empty palm waiting for return. One bell.”
 
-This time the memory entered Mera as a small cold weight against the center of her hand. No room surrounded it. No source waited beyond it. Only the exact shape of another person expecting her to finish.
+This time the memory entered Mera as a small cold weight against the center of her right hand. No room surrounded it. No source waited beyond it. Only the exact shape of another person expecting her to finish.
 
 The bell sounded.
 
@@ -123,7 +123,37 @@ Iven closed his hand around it. “Received.”
 
 Neris marked the slate.
 
-At the end of the sequence, students stepped from the channel one at a time and held their hands over a dry-stone rail. Water left skin at different speeds. A clean return dried first at the fingertips. Carried residue lingered in the creases. Mera's right hand dried at once. Her left stayed wet along the cable burn, though she had carried nothing there during the last round.
+The inlet changed pitch as Neris lowered the current for the final exchange. Mera could have waited for another donor.
+
+“I have one,” she said.
+
+Iven left his hands open.
+
+She chose the cup she had held that afternoon, before entering the Athenaeum. She had drunk standing up, thinking about her petition. The tea itself had been unremarkable. She could barely recall its taste. But she had kept her right hand around the empty cup because the thick base stayed warm.
+
+“Warmth of a cup against my right palm,” she said. “No room or voices. Return on one bell.”
+
+“Only warmth?”
+
+“Only warmth.”
+
+“Received as stated.”
+
+She lowered her hand. A pale patch spread across the black surface, no wider than the cup's base had been, and moved into Iven's waiting palm. Mera felt the cold current against her own fingers. She had not noticed it so sharply while she was receiving.
+
+Iven's thumb curled inward. The corners of his mouth lifted a little.
+
+She wanted to tell him that the cup had already been empty. That the warmth belonged to the part after drinking, when she had been reluctant to put it down. Neither fact altered the fragment she had named. She held the explanation behind her teeth and watched his hand.
+
+The bell rang. His palm opened before its note had faded.
+
+Warmth settled against hers, a small circle on skin that the current had chilled. For a moment she wanted the actual cup: its weight, something to wrap both hands around, tea she could finish sitting down.
+
+“That was good,” Iven said.
+
+Mera nodded. He was looking toward Neris for the signal to leave. She let him go without asking which part he meant.
+
+At the end of the sequence, students stepped from the channel one at a time and held their hands over a dry-stone rail. Water left skin at different speeds. A clean return dried first at the fingertips. Carried residue lingered in the creases. Mera's right hand dried at once. Water clung along the cable burn in her left palm. She held both hands out until Neris had checked them.
 
 Neris gave each student a plain cloth and their score strip.
 
@@ -203,9 +233,33 @@ The student beside her wrote *withdrawn with unusual grace* in the margin.
 
 Mera added *source: hostile witness* and passed the page on.
 
+There was a clean strip beneath the last paragraph. When the story came back to her, she wrote: *Each winter the landlady laid one place she could not afford to keep empty.*
+
+Iven read it over the rim of his cup.
+
+“Where did you get that?”
+
+“I made it up.”
+
+“Does she want the woman back?”
+
+“I haven't decided.”
+
+“I'd like to know.”
+
+Mera took the pen again. She could give the woman a reason to return, something better than a spoon, and then the story would need a different ending. She began a sentence in the margin, crossed out its first word, and stopped. Across from her, Iven was still reading the line she had already written.
+
+She set the pen down beside his hand.
+
 By the time the catalogue bell sounded, her tea had gone cold and Iven had given her half his bread in exchange for the right to annotate her next correction first.
 
-The deep-pool catalogue occupied a descending corridor beyond the meal hall. Most students chose tables near the entrance. Mera carried the vial to the last permitted desk.
+The deep-pool catalogue occupied a descending corridor beyond the meal hall. Most students chose tables near the entrance. Iven drew out a chair beside his and set the pen across its place.
+
+“You still owe the landlady an ending.”
+
+“Keep the place,” Mera said.
+
+She carried the vial to the last permitted desk.
 
 A round black door closed the corridor ahead. Its lower half stood below the waterline. Behind it, the archive pool held protected source vessels in separate currents, each pressure path kept from touching another. The door had no viewing glass. Public catalogue bands circled the stone around it like growth rings, thin strips of silver script listing file name, source class, custody transfers, access history, and restoration state.
 
