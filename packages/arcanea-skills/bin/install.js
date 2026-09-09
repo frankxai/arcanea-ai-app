@@ -1,117 +1,91 @@
 #!/usr/bin/env node
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
+const { parseArgs } = require("node:util");
+const { installSkills } = require("../lib/installer.js");
+const meta = require("../index.js");
 
-const PACKAGE_NAME = '@arcanea/skills';
-const SRC_DIR = path.join(__dirname, '..', 'skills');
-const HOME = process.env.HOME || process.env.USERPROFILE;
-const DEST_DIR = path.join(HOME, '.claude', 'skills');
-
-function printUsage() {
-  console.log(`
-  ${PACKAGE_NAME} — Install Arcanea skills to Claude Code
-
-  Usage:
-    arcanea-skills              Install all bundled skills
-    arcanea-skills --list       List available skills
-    arcanea-skills --category   List skill categories
-    arcanea-skills --dry-run    Show what would be installed
-    arcanea-skills --help       Show this help message
-
-  Skills are installed to: ${DEST_DIR}
-`);
-}
-
-function listSkills() {
-  const meta = require('../index.js');
-  console.log(`\n  ${PACKAGE_NAME} v${meta.version}`);
-  console.log(`  ${meta.bundledCount} bundled skills (${meta.skillCount} total in ecosystem)\n`);
-
-  for (const [key, cat] of Object.entries(meta.categories)) {
-    console.log(`  ${cat.label}:`);
-    for (const skill of cat.skills) {
-      console.log(`    - ${skill}`);
-    }
-    console.log();
+function main(args = process.argv.slice(2)) {
+  const { values, tokens } = parseArgs({
+    args,
+    allowPositionals: false,
+    tokens: true,
+    options: {
+      help: { type: "boolean", short: "h" },
+      list: { type: "boolean", short: "l" },
+      category: { type: "boolean", short: "c" },
+      all: { type: "boolean" },
+      skill: { type: "string", multiple: true },
+      target: { type: "string" },
+      "dry-run": { type: "boolean" },
+      json: { type: "boolean" },
+    },
+  });
+  const seen = new Set();
+  for (const token of tokens.filter((token) => token.kind === "option")) {
+    if (token.name !== "skill" && seen.has(token.name))
+      throw new Error(`Duplicate option: --${token.name}`);
+    seen.add(token.name);
   }
-}
-
-function copyDirRecursive(src, dest) {
-  if (!fs.existsSync(src)) return 0;
-
-  fs.mkdirSync(dest, { recursive: true });
-  let count = 0;
-  const entries = fs.readdirSync(src, { withFileTypes: true });
-
-  for (const entry of entries) {
-    const srcPath = path.join(src, entry.name);
-    const destPath = path.join(dest, entry.name);
-
-    if (entry.isDirectory()) {
-      count += copyDirRecursive(srcPath, destPath);
-    } else {
-      fs.copyFileSync(srcPath, destPath);
-      count++;
-    }
+  const informational = ["help", "list", "category"].filter(
+    (key) => values[key],
+  );
+  if (
+    informational.length > 1 ||
+    (informational.length &&
+      (values.all || values.skill || values.target || values["dry-run"]))
+  ) {
+    throw new Error("Use one information command, or select an installation");
   }
-  return count;
-}
+  if (!args.length || values.help) {
+    console.log(`@arcanea/skills ${meta.version}
 
-function install(dryRun) {
-  if (!fs.existsSync(SRC_DIR)) {
-    console.error('  Error: Skills source directory not found at', SRC_DIR);
-    process.exit(1);
-  }
+Preview all bundled skills:  arcanea-skills --dry-run
+Install selected skills:     arcanea-skills --skill story-weave --skill world-build
+Install the whole bundle:    arcanea-skills --all
+Choose an exact registry:    add --target /absolute/path/to/skills
+Machine-readable receipt:    add --json
+List skills or categories:   --list or --category
 
-  const skillDirs = fs.readdirSync(SRC_DIR, { withFileTypes: true })
-    .filter(d => d.isDirectory())
-    .map(d => d.name);
-
-  if (skillDirs.length === 0) {
-    console.log('  No skill directories found to install.');
-    console.log('  Skills will be populated in a future release.');
+The default registry is the OS home directory's .claude/skills folder.
+Existing differing skills and symbolic links/junctions are preserved with an error.
+An identical installation is unchanged. Dry runs create no files or directories.`);
     return;
   }
-
-  console.log(`\n  Installing ${skillDirs.length} skills to ${DEST_DIR}\n`);
-
-  if (dryRun) {
-    for (const dir of skillDirs) {
-      console.log(`  [dry-run] Would copy: ${dir}`);
-    }
-    console.log(`\n  Destination: ${DEST_DIR}`);
+  if (values.list || values.category) {
+    const output = values.category
+      ? meta.categories
+      : {
+          name: meta.name,
+          version: meta.version,
+          bundledCount: meta.bundledCount,
+          skills: meta.skills,
+        };
+    console.log(JSON.stringify(output, null, 2));
     return;
   }
-
-  fs.mkdirSync(DEST_DIR, { recursive: true });
-
-  let totalFiles = 0;
-  for (const dir of skillDirs) {
-    const src = path.join(SRC_DIR, dir);
-    const dest = path.join(DEST_DIR, dir);
-    const count = copyDirRecursive(src, dest);
-    totalFiles += count;
-    console.log(`  Installed: ${dir} (${count} files)`);
+  const report = installSkills({
+    skills: values.skill,
+    target: values.target,
+    all: values.all || (values["dry-run"] && !values.skill),
+    dryRun: values["dry-run"],
+  });
+  if (values.json) console.log(JSON.stringify(report, null, 2));
+  else {
+    console.log(
+      `${report.mode === "dry-run" ? "Preview" : "Verified"}: ${report.destination}`,
+    );
+    for (const item of report.skills)
+      console.log(`  ${item.name}: ${item.state} (${item.files.length} files)`);
   }
-
-  console.log(`\n  Done. ${totalFiles} files installed to ${DEST_DIR}`);
-  console.log('  Restart Claude Code to activate skills.\n');
 }
 
-// --- CLI ---
-const args = process.argv.slice(2);
-
-if (args.includes('--help') || args.includes('-h')) {
-  printUsage();
-} else if (args.includes('--list') || args.includes('-l')) {
-  listSkills();
-} else if (args.includes('--category') || args.includes('-c')) {
-  const meta = require('../index.js');
-  console.log('\n  Categories:', Object.keys(meta.categories).join(', '), '\n');
-} else if (args.includes('--dry-run')) {
-  install(true);
-} else {
-  install(false);
+if (require.main === module) {
+  try {
+    main();
+  } catch (error) {
+    console.error(`arcanea-skills: ${error.message}`);
+    process.exitCode = 1;
+  }
 }
+module.exports = { main };

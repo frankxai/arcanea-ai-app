@@ -1,110 +1,103 @@
 # @arcanea/skills
 
-> 97 Claude Code skills for creative intelligence — worldbuilding, coding, writing, design, and more.
+A bundle of 20 creative and engineering skills with a previewable installer.
+The package reports the skills actually present; it does not claim a measured
+quality grade or count every skill in the Arcanea ecosystem.
 
-This package bundles the **top 20 A-grade skills** from the Arcanea ecosystem, ready to install into Claude Code with a single command.
+## Release state
 
-## Install
+This checkout is the **1.1.0 source candidate**. The npm registry reported 1.0.0 on
+2026-09-09. A Git commit or preview deployment does not publish this candidate.
+The older CLI can overwrite existing skills; use the reviewed candidate artifact
+or inspect source before running an installation against a personal registry.
 
-```bash
-# One-shot install (no global install needed)
-npx @arcanea/skills
+Node.js 22 or later is required. The installer uses Node built-ins and has no
+runtime dependencies. From this package directory:
 
-# Or install globally
-npm install -g @arcanea/skills
-arcanea-skills
+```sh
+npm run check
+npm test
+node bin/install.js --list
+node bin/install.js --dry-run --json
 ```
 
-Skills are copied to `~/.claude/skills/` where Claude Code picks them up automatically.
+## Install only what the task needs
 
-## What's Included
+No arguments show help. `--dry-run` previews the whole bundle without creating a
+registry, parent directories or receipts. Select one or more names to apply:
 
-### Creative Writing (7 skills)
-
-| Skill | Description |
-|-------|-------------|
-| **story-weave** | Narrative structure, plot arcs, and story architecture |
-| **character-forge** | Deep character creation with psychology and arcs |
-| **world-build** | Complete world construction — geography, culture, magic systems |
-| **scene-craft** | Scene-level writing with pacing, tension, and beats |
-| **dialogue-mastery** | Authentic dialogue with subtext and voice differentiation |
-| **voice-alchemy** | Distinctive narrative voice and prose style development |
-| **bestiary-nav** | Creative creature design and mythological taxonomy |
-
-### Software Development (7 skills)
-
-| Skill | Description |
-|-------|-------------|
-| **code-review** | Structured code review with security and quality focus |
-| **tdd** | Test-driven development with London School mocking |
-| **systematic-debug** | Root-cause analysis and systematic debugging methodology |
-| **api-design** | RESTful and GraphQL API design patterns |
-| **architecture-patterns** | System architecture, DDD, and design patterns |
-| **refactoring-ritual** | Safe refactoring with incremental transformation |
-| **performance-tuning** | Performance profiling, optimization, and benchmarking |
-
-### Arcanea Framework (6 skills)
-
-| Skill | Description |
-|-------|-------------|
-| **centaur-mode** | Human-AI collaborative workflow orchestration |
-| **prompt-craft** | Advanced prompt engineering and chain-of-thought design |
-| **luminor-wisdom** | Arcanea's council of AI advisors for strategic guidance |
-| **arcanea-creator-academy** | Complete creator onboarding through the Ten Gates |
-| **deep-work** | Focus protocols and deep concentration techniques |
-| **creative-flow** | Creative state management and inspiration systems |
-
-## Usage
-
-### CLI
-
-```bash
-# List all bundled skills
-arcanea-skills --list
-
-# Preview what would be installed
-arcanea-skills --dry-run
-
-# Install to ~/.claude/skills/
-arcanea-skills
+```sh
+node bin/install.js --skill story-weave --skill world-build --dry-run
+node bin/install.js --skill story-weave --skill world-build
 ```
 
-### Programmatic
+Use `--all` explicitly for the complete bundle. The default destination is the OS
+home directory's `.claude/skills`. Select another harness registry explicitly:
 
-```javascript
-const skills = require('@arcanea/skills');
-
-// Get all skill names
-console.log(skills.skills);
-// => ['story-weave', 'character-forge', 'world-build', ...]
-
-// Get skills by category
-const devSkills = skills.getByCategory('development');
-// => ['code-review', 'tdd', 'systematic-debug', ...]
-
-// Get path to a specific skill
-const storyPath = skills.getSkillPath('story-weave');
+```sh
+node bin/install.js --skill story-weave --target /absolute/path/to/skills --dry-run
+node bin/install.js --skill story-weave --target /absolute/path/to/skills --json
 ```
 
-## The Arcanea Ecosystem
+The executable in an installed candidate is `arcanea-skills`, with the same flags.
+Supply an ordinary directory. A registry managed through a symbolic link or
+Windows junction requires a separately reviewed integration; this installer
+refuses to write through it.
 
-This package is part of the [Arcanea](https://arcanea.ai) creative multiverse — a living ecosystem where creators chat with AI, build fantasy worlds, share what they make, and turn imagination into products.
+Every selected destination is inspected before copying starts. Differing files,
+extra files, links, junctions, missing source entrypoints and invalid names fail
+without overwriting existing skills. An identical installation is a byte-preserving
+no-op, including file timestamps. There is no force-overwrite option.
 
-The full ecosystem includes 97 skills across categories:
+New installs copy references before the entrypoint and then verify the entire
+file inventory. A failed write attempts to remove only the files created by that
+run whose bytes remain unchanged, plus empty directories it created. Concurrent
+or modified content is preserved. This is a local installer, not a filesystem
+access-control boundary; do not run competing installers against the same target.
 
-- Creative Writing and Worldbuilding
-- Software Development and Architecture
-- AI Agent Design and Orchestration
-- Visual Design and Brand Systems
-- Game Development and Interactive Fiction
-- Community and Collaboration
+`--json` writes a structured result to stdout: destination, skill state, file paths,
+byte counts and SHA-256 hashes. Save it privately if installation evidence is
+needed. A dry run and an applied receipt are distinct states. No credentials,
+MCP servers, plugins, hooks or provider connections are configured.
 
-### Related Packages
+## What's bundled
 
-- [`@arcanea/soul`](https://www.npmjs.com/package/@arcanea/soul) — Core identity and lore engine
-- [`@arcanea/mcp`](https://www.npmjs.com/package/@arcanea/mcp) — MCP server for worldbuilding tools
-- [`claude-arcanea`](https://www.npmjs.com/package/claude-arcanea) — Claude Code overlay with Arcanea integration
+| Category             | Skills                                                                                                        |
+| -------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Creative writing     | story-weave, character-forge, world-build, scene-craft, dialogue-mastery, voice-alchemy, bestiary-nav         |
+| Software development | code-review, tdd, systematic-debug, api-design, architecture-patterns, refactoring-ritual, performance-tuning |
+| Arcanea framework    | centaur-mode, prompt-craft, luminor-wisdom, arcanea-creator-academy, creative-flow, deep-work                 |
 
-## License
+These are the package's existing skill bodies. The installation checks establish
+file delivery, not creative quality, current canon, clinical effectiveness or
+working tools mentioned in an older instruction. Review the selected skill in the
+context of the task. This package is separate from the nine-skill Arcanea Creative
+Worlds plugin in `frankxai/arcanea-agent-skills`.
 
-MIT
+## Programmatic catalog
+
+```js
+const catalog = require("@arcanea/skills");
+console.log(catalog.version, catalog.bundledCount);
+console.log(catalog.skills);
+const development = catalog.getByCategory("development");
+const directory = catalog.getSkillPath("story-weave");
+```
+
+`skillCount` and `bundledCount` both describe the actual bundle. Category results
+are copies; modifying one does not change the catalog. Unknown names are rejected.
+
+## Update and rollback
+
+Inspect a candidate with `--dry-run` first. If a previous full skill differs,
+compare it with the candidate and prepare a backed-up, reviewed update outside
+this installer. Do not replace custom content or detach a managed link blindly.
+For rollback, verify the installed files against the saved receipt before removing
+only that installation or restoring the prior backup. Source and user content
+remain separate.
+
+Run `npm pack` after validation to create an artifact for a clean consumer test.
+Publishing requires the repository's release review and actual npm publication;
+this guide does not claim that either has occurred.
+
+License: MIT, as declared by the package.

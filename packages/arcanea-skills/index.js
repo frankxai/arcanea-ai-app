@@ -1,105 +1,84 @@
-'use strict';
+"use strict";
 
-const path = require('path');
-
-const SKILL_CATEGORIES = {
+const path = require("node:path");
+const { name, version } = require("./package.json");
+const { availableSkills } = require("./lib/installer.js");
+const skills = Object.freeze(availableSkills());
+const definitions = {
   creative: {
-    label: 'Creative Writing',
+    label: "Creative writing",
     skills: [
-      'story-weave',
-      'character-forge',
-      'world-build',
-      'scene-craft',
-      'dialogue-mastery',
-      'voice-alchemy',
-      'bestiary-nav',
+      "story-weave",
+      "character-forge",
+      "world-build",
+      "scene-craft",
+      "dialogue-mastery",
+      "voice-alchemy",
+      "bestiary-nav",
     ],
   },
   development: {
-    label: 'Software Development',
+    label: "Software development",
     skills: [
-      'code-review',
-      'tdd',
-      'systematic-debug',
-      'api-design',
-      'architecture-patterns',
-      'refactoring-ritual',
-      'performance-tuning',
+      "code-review",
+      "tdd",
+      "systematic-debug",
+      "api-design",
+      "architecture-patterns",
+      "refactoring-ritual",
+      "performance-tuning",
     ],
   },
   arcanea: {
-    label: 'Arcanea Framework',
+    label: "Arcanea framework",
     skills: [
-      'centaur-mode',
-      'prompt-craft',
-      'luminor-wisdom',
-      'arcanea-creator-academy',
-      'creative-flow',
-      'deep-work',
+      "centaur-mode",
+      "prompt-craft",
+      "luminor-wisdom",
+      "arcanea-creator-academy",
+      "creative-flow",
+      "deep-work",
     ],
   },
 };
+const categories = Object.fromEntries(
+  Object.entries(definitions).map(([key, category]) => [
+    key,
+    Object.freeze({
+      label: category.label,
+      skills: Object.freeze(
+        category.skills.filter((skill) => skills.includes(skill)),
+      ),
+    }),
+  ]),
+);
+const classified = new Set(
+  Object.values(categories).flatMap((category) => category.skills),
+);
+const others = skills.filter((skill) => !classified.has(skill));
+if (others.length)
+  categories.other = Object.freeze({
+    label: "Other bundled skills",
+    skills: Object.freeze(others),
+  });
+Object.freeze(categories);
 
-const TOP_20_SKILLS = [
-  'story-weave',
-  'character-forge',
-  'world-build',
-  'code-review',
-  'tdd',
-  'systematic-debug',
-  'centaur-mode',
-  'prompt-craft',
-  'bestiary-nav',
-  'scene-craft',
-  'dialogue-mastery',
-  'voice-alchemy',
-  'luminor-wisdom',
-  'api-design',
-  'architecture-patterns',
-  'refactoring-ritual',
-  'performance-tuning',
-  'deep-work',
-  'creative-flow',
-  'arcanea-creator-academy',
-];
-
-module.exports = {
-  name: '@arcanea/skills',
-  version: '1.0.0',
-  skillCount: 97,
-  bundledCount: TOP_20_SKILLS.length,
-  categories: SKILL_CATEGORIES,
-  skills: TOP_20_SKILLS,
-  skillsDir: path.join(__dirname, 'skills'),
-
-  /**
-   * Returns the absolute path to a specific skill directory.
-   * @param {string} skillName - Name of the skill
-   * @returns {string} Absolute path to the skill directory
-   */
+module.exports = Object.freeze({
+  name,
+  version,
+  skillCount: skills.length,
+  bundledCount: skills.length,
+  categories,
+  skills,
+  skillsDir: path.join(__dirname, "skills"),
   getSkillPath(skillName) {
-    if (!TOP_20_SKILLS.includes(skillName)) {
-      throw new Error(
-        `Skill "${skillName}" is not in the bundled top-20 set. ` +
-        `Available: ${TOP_20_SKILLS.join(', ')}`
-      );
-    }
-    return path.join(__dirname, 'skills', skillName);
+    if (!skills.includes(skillName))
+      throw new Error(`Unknown bundled skill: ${skillName}`);
+    return path.join(__dirname, "skills", skillName);
   },
-
-  /**
-   * Returns skills filtered by category.
-   * @param {string} category - Category key (creative, development, arcanea)
-   * @returns {string[]} Array of skill names
-   */
   getByCategory(category) {
-    const cat = SKILL_CATEGORIES[category];
-    if (!cat) {
-      throw new Error(
-        `Unknown category "${category}". ` +
-        `Available: ${Object.keys(SKILL_CATEGORIES).join(', ')}`
-      );
-    }
-    return cat.skills;
+    if (!Object.hasOwn(categories, category))
+      throw new Error(`Unknown category: ${category}`);
+    return [...categories[category].skills];
   },
-};
+});
