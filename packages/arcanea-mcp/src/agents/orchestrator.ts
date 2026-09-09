@@ -15,6 +15,7 @@ import {
 import { AGENTS, getAgent } from "./definitions.js";
 import { getGraphSummary } from "../tools/creation-graph.js";
 import { getSessionSummary, getOrCreateSession } from "../memory/index.js";
+import { createRuntimeIdentifier } from "../runtime-identifiers.js";
 
 // Task queue for background execution
 const taskQueue: Map<string, AgentTask> = new Map();
@@ -158,7 +159,7 @@ export function createAgentTasks(
     if (!agent) continue;
 
     const task: AgentTask = {
-      id: `${sessionId}-${agentId}-${Date.now()}`,
+      id: createRuntimeIdentifier("task"),
       agentId,
       type: decision.action,
       input: {
@@ -307,7 +308,7 @@ export async function orchestrateCreativeSession(
 }> {
   // Create session
   const session: CreativeSession = {
-    id: `session-${Date.now()}`,
+    id: createRuntimeIdentifier("session"),
     goal: request,
     orchestrator: "creator",
     agents: [],

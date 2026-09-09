@@ -19,6 +19,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 import { RUNTIME_INFO } from "./runtime-info.js";
+import { createRuntimeIdentifier } from "./runtime-identifiers.js";
 
 // Helper: cast legacy tool results (type: string) to SDK 1.29 CallToolResult (type: "text")
 function toolResult(r: { content: Array<{ type: string; text: string }> }): CallToolResult {
@@ -181,7 +182,7 @@ server.registerTool(
     const sessionId = args.sessionId ?? "default";
     const result = await generateCharacter(args as any);
     const parsed = JSON.parse(result.content[0].text);
-    const creation = { id: Date.now().toString(), type: "character" as const, name: parsed.name, element: parsed.primaryElement, gate: parsed.gatesOpen, createdAt: new Date(), summary: `${parsed.rank} of ${parsed.house}` };
+    const creation = { id: createRuntimeIdentifier("creation"), type: "character" as const, name: parsed.name, element: parsed.primaryElement, gate: parsed.gatesOpen, createdAt: new Date(), summary: `${parsed.rank} of ${parsed.house}` };
     recordCreation(sessionId, creation);
     addCreationToGraph(sessionId, creation, parsed);
     return toolResult(result);
@@ -216,7 +217,7 @@ server.registerTool(
     const sessionId = args.sessionId ?? "default";
     const result = await generateLocation(args as any);
     const parsed = JSON.parse(result.content[0].text);
-    const creation = { id: Date.now().toString(), type: "location" as const, name: parsed.name, element: parsed.dominantElement, createdAt: new Date(), summary: parsed.type };
+    const creation = { id: createRuntimeIdentifier("creation"), type: "location" as const, name: parsed.name, element: parsed.dominantElement, createdAt: new Date(), summary: parsed.type };
     recordCreation(sessionId, creation);
     addCreationToGraph(sessionId, creation, parsed);
     return toolResult(result);
@@ -238,7 +239,7 @@ server.registerTool(
     const sessionId = args.sessionId ?? "default";
     const result = await generateCreature(args as any);
     const parsed = JSON.parse(result.content[0].text);
-    const creation = { id: Date.now().toString(), type: "creature" as const, name: parsed.name, element: parsed.element, createdAt: new Date(), summary: parsed.species };
+    const creation = { id: createRuntimeIdentifier("creation"), type: "creature" as const, name: parsed.name, element: parsed.element, createdAt: new Date(), summary: parsed.species };
     recordCreation(sessionId, creation);
     addCreationToGraph(sessionId, creation, parsed);
     return toolResult(result);
@@ -260,7 +261,7 @@ server.registerTool(
     const sessionId = args.sessionId ?? "default";
     const result = await generateArtifact(args as any);
     const parsed = JSON.parse(result.content[0].text);
-    const creation = { id: Date.now().toString(), type: "artifact" as const, name: parsed.name, element: parsed.element, createdAt: new Date(), summary: parsed.type };
+    const creation = { id: createRuntimeIdentifier("creation"), type: "artifact" as const, name: parsed.name, element: parsed.element, createdAt: new Date(), summary: parsed.type };
     recordCreation(sessionId, creation);
     addCreationToGraph(sessionId, creation, parsed);
     return toolResult(result);

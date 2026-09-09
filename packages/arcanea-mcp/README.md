@@ -59,6 +59,13 @@ Core world generation, graph storage and planning need no provider key. Other co
 
 ## Saved worlds
 
+Generated creation, planning-task and planning-session identifiers are opaque
+strings backed by UUIDs. Rapid calls, equal timestamps and clock corrections do
+not reuse a timestamp as the identity. Use `createdAt`/`startedAt` for chronology;
+do not parse time, world or agent identity from an id. Existing saved node ids
+remain unchanged when loaded, and callers may continue choosing their world
+session ids. The planner still returns scaffolding rather than launching models.
+
 The default directory is `~/.arcanea/worlds`, resolved using the operating system's home directory. Set `ARCANEA_DATA_DIR` to an **absolute path** to choose a different data root; snapshots go in its `worlds` subdirectory. Storage is independent of the package's installation directory.
 
 World ids must contain 1–128 letters, digits, underscores or hyphens and cannot be reserved Windows filenames. Snapshots validate their identity, node and relationship structure before loading. A corrupt file produces an explicit error and is preserved. A listing fails visibly if it encounters an invalid snapshot, so corruption is not mistaken for an empty library.
