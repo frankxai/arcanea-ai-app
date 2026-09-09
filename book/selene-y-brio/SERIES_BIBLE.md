@@ -1,4 +1,5 @@
 # Selene & Brío — Las Tierras de Luz
+
 > Status: STAGING ⏳ · 2026-09-09 · Adult illustrated companion reimagining.
 > Purpose: series architecture, character continuity, magic boundaries, and source provenance.
 > Touches LOCKED canon: no. The vault and earlier editions remain unchanged.
@@ -133,17 +134,16 @@ Brío: ordinary Spanish stable name, meaning vigour/spirit. Candidates Brío, Lu
 Tomás: established Spanish human name. Plain mortal register, no symbolic twin lineage. Candidates Tomás, Mateo, and Andrés; Tomás selected for clear sound beside Selene and existing cast.
 Ada Rell and Tovan Reed: new mortal faculty names with Luminor rank as metadata. Three-candidate pools, collision evidence, stress, and etymology are recorded in the independent editorial evaluation; neither introduces a divine name family.
 
-| Question | Treatment | Boundary |
-|---|---|---|
-| What does Selene's own destello look like? | Never answer visually | Neither lens nor rank defeats the rule. |
-| How much did the jaguar understand? | Oblique only | Behaviour remains readable in multiple ways; no secret bonded Godbeast reveal. |
-| What moved along the eastern mountain? | Book II investigation | Not a lens summons; no predetermined chosen-one answer. |
-| Why do old routes predate the Academy records? | Book III evidence | Archives can be incomplete; do not invent a third primordial. |
+| Question                                       | Treatment             | Boundary                                                                       |
+| ---------------------------------------------- | --------------------- | ------------------------------------------------------------------------------ |
+| What does Selene's own destello look like?     | Never answer visually | Neither lens nor rank defeats the rule.                                        |
+| How much did the jaguar understand?            | Oblique only          | Behaviour remains readable in multiple ways; no secret bonded Godbeast reveal. |
+| What moved along the eastern mountain?         | Book II investigation | Not a lens summons; no predetermined chosen-one answer.                        |
+| Why do old routes predate the Academy records? | Book III evidence     | Archives can be incomplete; do not invent a third primordial.                  |
 
 ## STAGING LOG
 
-| Date | Revision | Status |
-|---|---|---|
-| 2026-09-09 | Adult companion adaptation, complete Book I, 24 plates, three-book architecture | STAGING |
+| Date       | Revision                                                                                                    | Status  |
+| ---------- | ----------------------------------------------------------------------------------------------------------- | ------- |
+| 2026-09-09 | Adult companion adaptation, complete Book I, 24 plates, three-book architecture                             | STAGING |
 | 2026-09-09 | Independent review repairs: bounded lens, passive shutters, paw scene, signal deployment, source separation | STAGING |
-
