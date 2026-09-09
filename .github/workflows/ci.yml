@@ -233,7 +233,7 @@ jobs:
   # ============================================
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [install, lint]
     if: ${{ !cancelled() }}
     timeout-minutes: 15
@@ -307,7 +307,10 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
           NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
         run: |
-          pnpm --dir apps/web exec playwright install --with-deps chromium
+          # The hosted Ubuntu image includes Chromium's system libraries.
+          # Avoid refreshing unrelated apt mirrors; browser launch still fails
+          # if a required library is missing. Keep Playwright's pinned browser.
+          pnpm --dir apps/web exec playwright install chromium
           pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/sovereign-next.log" 2>&1 &
           sovereign_server_pid=$!
           trap 'kill "$sovereign_server_pid" 2>/dev/null || true' EXIT

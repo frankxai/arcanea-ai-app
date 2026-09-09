@@ -77,6 +77,14 @@ PostgreSQL CI, final independent review and authenticated visual verification
 remain pending. Local browser/build admission is held; code and small tests
 remain allowed. No production database write has occurred.
 
+Follow-up evidence: c5a5448dd passed PostgreSQL, TypeScript, lint, application
+compilation, package checks and independent Gemini review. Both CI attempts
+stopped before gallery tests because Google's apt mirror returned a hash mismatch.
+Build now pins the hosted Ubuntu 24.04 image and installs Playwright's Chromium
+without refreshing system packages. Browser launch and all existing gallery
+assertions remain mandatory; no thresholds, retries or checks were relaxed.
+Runner inventory: https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md.
+
 ## Production migration gate and rollback
 
 Production application is a human-gated migration under the supplied AGENTS
