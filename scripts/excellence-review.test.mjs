@@ -13,6 +13,10 @@ import {
   reviewRun,
   alreadyReviewed,
   renderReview,
+  generationBudget,
+  providerReceipt,
+  parseProviderReview,
+  failureReceipt,
 } from "./excellence-review.mjs";
 
 const head = "a".repeat(40);
@@ -83,6 +87,106 @@ const clear = {
   summary: "No visible defects in these five states.",
   findings: [],
 };
+
+test("a rejected provider verdict has a safe, distinguishable boundary reason", () => {
+  assert.throws(
+    () => validateReview({ verdict: "ship" }, selection.images),
+    (error) =>
+      error.name === "ReviewBoundaryError" &&
+      error.message === "Invalid visual verdict",
+  );
+});
+
+test("provider receipt preserves bounded final answer and numeric usage without thought parts or envelope data", () => {
+  const receipt = providerReceipt({
+    candidates: [
+      {
+        finishReason: "STOP",
+        content: {
+          parts: [
+            { thought: true, text: "private reasoning bait" },
+            { text: JSON.stringify(clear) },
+          ],
+        },
+        credential: "secret envelope bait",
+      },
+    ],
+    usageMetadata: {
+      thoughtsTokenCount: 1000,
+      candidatesTokenCount: 300,
+      totalTokenCount: "untrusted",
+      random: "bait",
+    },
+  });
+  assert.deepEqual(receipt.usage, {
+    candidatesTokenCount: 300,
+    thoughtsTokenCount: 1000,
+  });
+  assert.deepEqual(parseProviderReview(receipt), clear);
+  assert.doesNotMatch(JSON.stringify(receipt), /bait|private reasoning/);
+  assert.equal(
+    providerReceipt({ candidates: [{ finishReason: "secret bait" }] })
+      .finishReason,
+    "UNKNOWN",
+  );
+});
+
+test("truncated, blocked, ambiguous and invalid provider responses retain diagnostics and cannot produce a review", () => {
+  for (const payload of [
+    {
+      candidates: [
+        {
+          finishReason: "MAX_TOKENS",
+          content: { parts: [{ text: '{"verdict":' }] },
+        },
+      ],
+      usageMetadata: { thoughtsTokenCount: 4096 },
+    },
+    { candidates: [{ finishReason: "SAFETY" }] },
+    { candidates: [{ finishReason: "STOP" }, { finishReason: "STOP" }] },
+    {
+      candidates: [
+        {
+          finishReason: "STOP",
+          content: { parts: [{ text: "not valid JSON" }] },
+        },
+      ],
+    },
+    {
+      candidates: [
+        {
+          finishReason: "STOP",
+          content: { parts: [{ text: "x".repeat(17000) }] },
+        },
+      ],
+    },
+  ]) {
+    const receipt = providerReceipt(payload);
+    assert.ok(receipt.answer.length <= 16000);
+    assert.throws(() => parseProviderReview(receipt), {
+      name: "ReviewBoundaryError",
+    });
+  }
+});
+
+test("failure receipts reveal only static boundary reasons and reserve bounded answer capacity", () => {
+  const unsafe = failureReceipt(
+    new Error("https://signed.example/?secret=DO_NOT_RECORD"),
+    "independent image critique",
+  );
+  assert.doesNotMatch(JSON.stringify(unsafe), /signed\.example|DO_NOT_RECORD/);
+  assert.equal(unsafe.shipVerdictIssued, false);
+  try {
+    validateReview({ verdict: "ship" }, selection.images);
+  } catch (error) {
+    assert.equal(
+      failureReceipt(error, "independent image critique").reason,
+      "Invalid visual verdict",
+    );
+  }
+  assert.equal(generationBudget.maxOutputTokens, 4096);
+  assert.equal(generationBudget.thinkingConfig.thinkingBudget, 1024);
+});
 
 function harness(overrides = {}) {
   const calls = [];

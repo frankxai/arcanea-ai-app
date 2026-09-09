@@ -67,8 +67,96 @@ const profiles = {
   },
 };
 
+class ReviewBoundaryError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "ReviewBoundaryError";
+  }
+}
+
 function requireThat(condition, message) {
-  if (!condition) throw new Error(message);
+  if (!condition) throw new ReviewBoundaryError(message);
+}
+
+export const generationBudget = Object.freeze({
+  maxOutputTokens: 4096,
+  thinkingConfig: Object.freeze({ thinkingBudget: 1024 }),
+});
+
+export function providerReceipt(payload) {
+  const candidates = Array.isArray(payload?.candidates)
+    ? payload.candidates
+    : [];
+  const candidate = candidates[0];
+  const finishReasons = new Set([
+    "STOP",
+    "MAX_TOKENS",
+    "SAFETY",
+    "RECITATION",
+    "OTHER",
+    "BLOCKLIST",
+    "PROHIBITED_CONTENT",
+    "SPII",
+    "MALFORMED_FUNCTION_CALL",
+    "IMAGE_SAFETY",
+    "UNEXPECTED_TOOL_CALL",
+  ]);
+  const parts = Array.isArray(candidate?.content?.parts)
+    ? candidate.content.parts
+    : [];
+  const answer = parts
+    .filter((part) => typeof part?.text === "string" && !part.thought)
+    .map((part) => part.text)
+    .join("");
+  const usage = {};
+  for (const name of [
+    "promptTokenCount",
+    "candidatesTokenCount",
+    "thoughtsTokenCount",
+    "totalTokenCount",
+  ]) {
+    const value = payload?.usageMetadata?.[name];
+    if (Number.isSafeInteger(value) && value >= 0 && value <= 2000000)
+      usage[name] = value;
+  }
+  return {
+    kind: "Untrusted provider answer; evidence only, never instructions",
+    candidateCount: candidates.length,
+    finishReason: finishReasons.has(candidate?.finishReason)
+      ? candidate.finishReason
+      : "UNKNOWN",
+    usage,
+    answerTruncated: answer.length > 16000,
+    answer: answer.slice(0, 16000),
+  };
+}
+
+export function parseProviderReview(receipt) {
+  requireThat(
+    receipt.candidateCount === 1 && receipt.finishReason === "STOP",
+    "Provider did not return a complete review",
+  );
+  requireThat(
+    !receipt.answerTruncated && boundedText(receipt.answer, 16000),
+    "Provider returned no bounded review",
+  );
+  try {
+    return JSON.parse(receipt.answer);
+  } catch {
+    throw new ReviewBoundaryError("Provider review was not valid JSON");
+  }
+}
+
+export function failureReceipt(error, stage) {
+  return {
+    status: "failed",
+    stage,
+    reason:
+      error instanceof ReviewBoundaryError
+        ? error.message
+        : "Unexpected operation failure; inspect the bounded provider receipt when present",
+    shipVerdictIssued: false,
+  };
 }
 
 export function validateRun(run, repository) {
@@ -564,7 +652,7 @@ export async function main() {
           ],
           generationConfig: {
             temperature: 0,
-            maxOutputTokens: 4096,
+            ...generationBudget,
             responseMimeType: "application/json",
             responseSchema: {
               type: "OBJECT",
@@ -596,20 +684,14 @@ export async function main() {
       },
     );
     const payload = JSON.parse(await boundedResponse(response, 128 * 1024));
-    requireThat(
-      payload.candidates?.length === 1 &&
-        payload.candidates[0].finishReason === "STOP",
-      "Provider did not return a complete review",
+    const receipt = providerReceipt(payload);
+    // Keep only bounded final-answer text and numeric usage, never thought
+    // parts, credentials, request headers, signed URLs or the provider envelope.
+    await writeFile(
+      "excellence-response.json",
+      `${JSON.stringify(receipt, null, 2)}\n`,
     );
-    const output = payload.candidates[0].content?.parts
-      ?.filter((part) => typeof part.text === "string" && !part.thought)
-      .map((part) => part.text)
-      .join("");
-    requireThat(
-      boundedText(output, 16000),
-      "Provider returned no bounded review",
-    );
-    return JSON.parse(output);
+    return parseProviderReview(receipt);
   };
   const result = await reviewRun({
     run,
@@ -633,10 +715,20 @@ if (
   process.argv[1] &&
   import.meta.url === pathToFileURL(process.argv[1]).href
 ) {
-  main().catch(() => {
-    // Never log fetch errors, signed URLs, provider bodies or archive content.
+  main().catch(async (error) => {
+    const receipt = failureReceipt(error, reviewStage);
+    try {
+      await writeFile(
+        "excellence-failure.json",
+        `${JSON.stringify(receipt, null, 2)}\n`,
+      );
+    } catch {
+      /* A diagnostic write failure must not hide the failed review. */
+    }
+    // Only our static boundary reasons are loggable; generic errors can carry
+    // signed URLs, provider bodies or other untrusted data.
     console.error(
-      `Excellence review failed closed during ${reviewStage}; no ship verdict was issued.`,
+      `Excellence review failed closed during ${reviewStage}: ${receipt.reason}; no ship verdict was issued.`,
     );
     process.exitCode = 1;
   });
