@@ -149,6 +149,9 @@ arcanea-opencode-fork/
 .claude/skills/*/
 !.claude/skills/arco/
 !.claude/skills/arcanea-orchestra/
+# Keep references for these already tracked public skills discoverable.
+!.claude/skills/arcanea-nft-pfp/
+!.claude/skills/einui/
 # web-excellence pack — committed so it travels to cloud sessions
 !.claude/skills/animation-vocabulary/
 !.claude/skills/apple-design/

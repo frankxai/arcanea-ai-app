@@ -1,5 +1,11 @@
 # Taste Engineering — Deep Reference
 
+> Historical research notes, retained for provenance. Numerical claims, named
+> collection observations and proposed pipeline thresholds below were not
+> revalidated by the skill-delivery repair. They are not measured guarantees or
+> an implemented scorer. Use the current skill's visual review procedure and
+> establish any quantitative threshold from a real, calibrated implementation.
+
 ## The 10 Principles (Extended)
 
 ### Principle 1: Constraint Is Quality
