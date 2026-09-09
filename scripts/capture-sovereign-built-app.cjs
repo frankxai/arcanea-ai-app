@@ -85,6 +85,7 @@ const typographyReport = async (page) =>
   assert.ok(ready, "Built Next app did not start successfully");
   const browser = await chromium.launch();
   const captures = [];
+  const wonderReports = [];
   const capture = async (page, state, name) => {
     const path = `screenshots/${name}-${state.name}.png`;
     await page.screenshot({ path, fullPage: false, type: "png" });
@@ -149,6 +150,7 @@ const typographyReport = async (page) =>
           base,
           state: state.name,
         });
+        wonderReports.push(wonderReport);
         await capture(page, state, "weight-of-wonders-encounter-desk");
         for (const slug of ["orvess", "vesrane"]) {
           const dossier = await page.goto(
@@ -328,6 +330,26 @@ const typographyReport = async (page) =>
       2,
     ) + "\n",
   );
+  const failedInteractionGate = wonderReports.find(
+    (report) => !report.performance.dossier.gate.passed,
+  );
+  if (failedInteractionGate) {
+    console.error(
+      "Weight of Wonders interaction latency diagnostic:\n" +
+        JSON.stringify(
+          {
+            state: failedInteractionGate.state,
+            url: failedInteractionGate.url,
+            performance: failedInteractionGate.performance.dossier,
+          },
+          null,
+          2,
+        ),
+    );
+    assert.fail(
+      `Lab interaction latency exceeds 200ms in ${failedInteractionGate.state}: ${failedInteractionGate.performance.dossier.inp.valueMs}ms`,
+    );
+  }
   console.log(
     `Verified both real gallery collections, private gateway protection, 42 delivered image hashes and ${captures.length} PNG desktop/mobile/reduced-motion captures.`,
   );

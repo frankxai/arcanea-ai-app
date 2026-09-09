@@ -24,6 +24,8 @@ module.exports.verifyWeightOfWondersPreview = async ({
       inp: 0,
       eventCount: 0,
       interactionCount: 0,
+      interactionEventCount: 0,
+      events: [],
       lcp: 0,
     };
     document.addEventListener(
@@ -43,13 +45,39 @@ module.exports.verifyWeightOfWondersPreview = async ({
       window.__weightOfWondersLab.lcp = entries.at(-1)?.startTime ?? 0;
     }).observe({ type: "largest-contentful-paint", buffered: true });
     new PerformanceObserver((list) => {
-      for (const entry of list.getEntries())
+      for (const entry of list.getEntries()) {
         window.__weightOfWondersLab.eventCount += 1;
-      for (const entry of list.getEntries())
+        const target = entry.target;
+        const targetText =
+          target instanceof Element
+            ? target.getAttribute("aria-label") ||
+              target.closest("label")?.textContent ||
+              target.textContent ||
+              target.getAttribute("value") ||
+              ""
+            : "";
+        window.__weightOfWondersLab.events.push({
+          name: entry.name,
+          interactionId: entry.interactionId,
+          startTime: entry.startTime,
+          duration: entry.duration,
+          target:
+            target instanceof Element
+              ? {
+                  tag: target.tagName.toLowerCase(),
+                  id: target.id || null,
+                  type: target.getAttribute("type"),
+                  text: targetText.trim().replace(/\s+/gu, " ").slice(0, 120),
+                }
+              : null,
+        });
+        if (!(entry.interactionId > 0)) continue;
+        window.__weightOfWondersLab.interactionEventCount += 1;
         window.__weightOfWondersLab.inp = Math.max(
           window.__weightOfWondersLab.inp,
           entry.duration,
         );
+      }
     }).observe({ type: "event", buffered: true, durationThreshold: 16 });
   });
 
@@ -290,24 +318,43 @@ module.exports.verifyWeightOfWondersPreview = async ({
       dossierPerformance.interactionCount > 0,
       "Lab observation includes real interactions",
     );
+    const interactionGroups = [];
+    for (const event of dossierPerformance.events) {
+      if (!(event.interactionId > 0)) continue;
+      let group = interactionGroups.find(
+        (candidate) => candidate.interactionId === event.interactionId,
+      );
+      if (!group) {
+        group = {
+          interactionId: event.interactionId,
+          valueMs: 0,
+          events: [],
+        };
+        interactionGroups.push(group);
+      }
+      group.valueMs = Math.max(group.valueMs, event.duration);
+      group.events.push(event);
+    }
+    interactionGroups.sort((left, right) => right.valueMs - left.valueMs);
     const inpObservation =
-      dossierPerformance.eventCount > 0
+      interactionGroups.length > 0
         ? {
             status: "measured",
-            valueMs: dossierPerformance.inp,
-            eventCount: dossierPerformance.eventCount,
+            valueMs: interactionGroups[0].valueMs,
+            eventCount: dossierPerformance.interactionEventCount,
+            interactionCount: interactionGroups.length,
+            slowestInteraction: interactionGroups[0],
           }
         : {
             status: "below-observer-threshold",
             valueMs: null,
             upperBoundMs: 16,
             eventCount: 0,
+            interactionCount: 0,
+            slowestInteraction: null,
           };
-    if (inpObservation.valueMs !== null)
-      assert.ok(
-        inpObservation.valueMs <= 200,
-        "Lab interaction latency stays within 200ms",
-      );
+    const interactionLatencyWithinBudget =
+      inpObservation.valueMs === null || inpObservation.valueMs <= 200;
     const report = {
       state,
       url: page.url(),
@@ -329,10 +376,19 @@ module.exports.verifyWeightOfWondersPreview = async ({
         scope: "Local built-app lab observation; not field data",
         collection: collectionPerformance,
         dossier: {
+          measurementScope:
+            "Gallery discovery, collection-to-dossier navigation, and Orvess phase, keyboard outcome, manual selection, clipboard and outcome-reset interactions",
           cls: dossierPerformance.cls,
           lcp: dossierPerformance.lcp,
-          interactionCount: dossierPerformance.interactionCount,
+          clickCount: dossierPerformance.interactionCount,
           inp: inpObservation,
+          gate: {
+            thresholdMs: 200,
+            passed: interactionLatencyWithinBudget,
+          },
+          rawEventCount: dossierPerformance.eventCount,
+          interactionEventCount: dossierPerformance.interactionEventCount,
+          events: dossierPerformance.events,
         },
       },
     };
