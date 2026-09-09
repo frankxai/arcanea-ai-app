@@ -2,7 +2,7 @@
   "name": "@arcanea/mcp-server",
   "version": "1.0.0",
   "private": false,
-  "description": "Arcanea worldbuilding tools plus an isolated, authenticated World Context Gateway boundary.",
+  "description": "Local Arcanea worldbuilding MCP tools, saved world graphs, creative planning, and a separate World Context Gateway API.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,7 +27,11 @@
     "start": "node dist/cli.js",
     "clean": "rm -rf dist",
     "test:gateway": "pnpm run build && node --test tests/world-context-gateway.test.mjs",
-    "prepublishOnly": "pnpm run build"
+    "test": "node --test tests/*.test.mjs",
+    "test:delivery": "node --test tests/runtime-delivery.test.mjs tests/http-transport.test.mjs tests/world-persistence.test.mjs tests/package-contract.test.mjs",
+    "verify:package": "node scripts/verify-package.mjs",
+    "prepack": "tsc && node scripts/verify-package.mjs",
+    "prepublishOnly": "tsc && node --test tests/runtime-delivery.test.mjs tests/http-transport.test.mjs tests/world-persistence.test.mjs tests/package-contract.test.mjs && node scripts/verify-package.mjs"
   },
   "keywords": [
     "mcp",
