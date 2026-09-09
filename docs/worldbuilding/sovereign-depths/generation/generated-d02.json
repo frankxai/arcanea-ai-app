@@ -1,0 +1,10 @@
+{
+  "id": "d02",
+  "path": "/workspace/scratch/375074c86086/generated_images/exec-238f5c1e-e2b1-46b2-a3c4-233d3ea7e350.png",
+  "interface": "image_gen",
+  "model": "not exposed by tool",
+  "generatedAt": "2026-09-09T00:37:32.143Z",
+  "status": "independently-reviewed-key-art",
+  "promptId": "benchmark-repair-d02",
+  "sourcePromptFile": "benchmark-repair-prompts.json"
+}

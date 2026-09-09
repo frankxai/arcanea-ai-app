@@ -1,0 +1,10 @@
+{
+  "id": "b17",
+  "path": "/workspace/scratch/375074c86086/generated_images/exec-8440d787-5510-432c-b123-4723cd267514.png",
+  "interface": "image_gen",
+  "model": "not exposed by tool",
+  "generatedAt": "2026-09-09T00:37:31.712Z",
+  "status": "independently-reviewed-key-art",
+  "promptId": "benchmark-repair-b17",
+  "sourcePromptFile": "benchmark-repair-prompts.json"
+}

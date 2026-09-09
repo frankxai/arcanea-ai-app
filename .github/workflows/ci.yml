@@ -258,6 +258,11 @@ jobs:
       - name: Run package tests
         run: pnpm test:quick
 
+      - name: Verify Sovereign Depths assets and proposal relationships
+        run: |
+          node scripts/verify-sovereign-depths.mjs
+          pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/sovereign-depths.test.ts
+
       - name: Build summary
         if: always()
         run: |
