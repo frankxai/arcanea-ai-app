@@ -251,6 +251,7 @@ export function IllustratedNovellaReader({
       </div>
 
       <dialog
+        aria-label="Full illustration"
         ref={dialogRef}
         className={styles.gallery}
         onClose={() => setGalleryImage(null)}
