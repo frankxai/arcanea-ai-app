@@ -55,6 +55,9 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: excellence-review-${{ github.run_id }}
-          path: excellence-review.json
+          path: |
+            excellence-review.json
+            excellence-response.json
+            excellence-failure.json
           if-no-files-found: warn
           retention-days: 14
