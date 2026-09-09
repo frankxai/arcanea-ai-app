@@ -1,0 +1,89 @@
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr);
+  grid-template-areas: "title cover" "invitation invitation" "excerpt excerpt";
+  gap: 2rem 1.5rem;
+  max-width: 80rem;
+  margin: 2rem auto 0;
+  align-items: center;
+}
+
+.title {
+  grid-area: title;
+}
+.title h1 {
+  font-size: clamp(2rem, 7vw, 3.75rem);
+}
+.cover {
+  grid-area: cover;
+  width: 100%;
+  max-width: 19rem;
+  justify-self: center;
+}
+.invitation {
+  grid-area: invitation;
+}
+.excerpt {
+  grid-area: excerpt;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--arc-cosmic-border);
+  background: var(--arc-cosmic-deep);
+  box-shadow: var(--arc-shadow-elevation-2);
+}
+
+.opening p {
+  font-family: inherit;
+  line-height: inherit;
+}
+
+.primaryAction,
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--arc-radius-full);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.primaryAction {
+  background: var(--arc-gold-light);
+  color: var(--arc-cosmic-void);
+  font-weight: 600;
+}
+.primaryAction:hover {
+  background: var(--arc-text-primary);
+}
+.secondaryAction {
+  border: 1px solid var(--arc-cosmic-border-bright);
+  color: var(--arc-text-primary);
+}
+.secondaryAction:hover {
+  border-color: var(--arc-text-secondary);
+}
+.primaryAction:focus-visible,
+.secondaryAction:focus-visible {
+  outline: 2px solid var(--arc-brand-atlantean-teal);
+  outline-offset: 4px;
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    min-height: 78svh;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 0.65fr) minmax(0, 1.05fr);
+    grid-template-areas: "title cover excerpt" "invitation cover excerpt";
+    grid-template-rows: auto auto;
+    column-gap: 2.5rem;
+    row-gap: 1.5rem;
+  }
+  .title {
+    align-self: end;
+  }
+  .title h1 {
+    font-size: clamp(3.5rem, 4.5vw, 5.5rem);
+  }
+  .invitation {
+    align-self: start;
+  }
+}

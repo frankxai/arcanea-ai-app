@@ -2,6 +2,7 @@
 import { MetadataRoute } from "next";
 import { COLLECTIONS, getAllTexts } from "@/lib/content";
 import { BLOG_POSTS } from "@/lib/blog-data";
+import { CINEMATIC_FREE_CHAPTER_IDS } from "@/lib/books/cinematic-public-contract";
 import {
   CINEMATIC_BOOK_ID,
   isCinematicEditionReleased,
@@ -466,12 +467,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           changeFrequency: "weekly",
           priority: 0.9,
         },
-        ...[
-          "01-the-house-that-leaned",
-          "02-the-voice-removed-from-rain",
-          "03-the-instrument-that-passed",
-          "04-a-vessel-at-the-gate",
-        ].map((chapterId) => ({
+        ...CINEMATIC_FREE_CHAPTER_IDS.map((chapterId) => ({
           url: `${baseUrl}/books/${CINEMATIC_BOOK_ID}/${chapterId}`,
           lastModified: new Date(),
           changeFrequency: "monthly" as const,

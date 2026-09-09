@@ -1,31 +1,34 @@
-import 'server-only';
+import "server-only";
 
-import { readdir, readFile } from 'fs/promises';
-import { join } from 'path';
-import matter from 'gray-matter';
-import { getBookRoot } from '@/lib/content/book-path';
-import { countChapterWords, isChapterMarkdown } from '@/lib/saga/chapter-files';
+import { readdir, readFile } from "fs/promises";
+import { join } from "path";
+import matter from "gray-matter";
+import { getBookRoot } from "@/lib/content/book-path";
+import { countChapterWords, isChapterMarkdown } from "@/lib/saga/chapter-files";
+import { cinematicChapterAccess } from "./cinematic-public-contract";
+export {
+  CINEMATIC_BOOK_ID,
+  FREE_CHAPTER_COUNT,
+} from "./cinematic-public-contract";
 
-export const CINEMATIC_BOOK_ID = 'the-last-free-path';
-export const CINEMATIC_BOOK_TITLE = 'The Last Free Path';
-export const CINEMATIC_BOOK_SERIES = 'Chronicles of Arcanea';
-export const CINEMATIC_EDITION_ID = 'book-01-founding-cinematic';
-export const CINEMATIC_EDITION_PRICE = '€17';
-export const FREE_CHAPTER_COUNT = 4;
+export const CINEMATIC_BOOK_TITLE = "The Last Free Path";
+export const CINEMATIC_BOOK_SERIES = "Chronicles of Arcanea";
+export const CINEMATIC_EDITION_ID = "book-01-founding-cinematic";
+export const CINEMATIC_EDITION_PRICE = "€17";
 
 export function isCinematicEditionReleased(): boolean {
-  return process.env.CINEMATIC_BOOK_PUBLICATION_STATE === 'released';
+  return process.env.CINEMATIC_BOOK_PUBLICATION_STATE === "released";
 }
 
 export const CINEMATIC_BOOK_DESCRIPTION =
-  'After one impossible act saves a street and breaks the trust beneath it, a young mason is taken into a joint Academy inquiry where every lesson is also a claim on his future. Arion, Mera, and Emilia must decide whether power can be taught without becoming property.';
+  "After one impossible act saves a street and breaks the trust beneath it, a young mason is taken into a joint Academy inquiry where every lesson is also a claim on his future. Arion, Mera, and Emilia must decide whether power can be taught without becoming property.";
 
 export const CINEMATIC_CHAPTER_DIR = join(
   getBookRoot(),
-  'chronicles-of-arcanea',
-  'book-01-the-three-academies',
-  'cinematic-edition',
-  'chapters',
+  "chronicles-of-arcanea",
+  "book-01-the-three-academies",
+  "cinematic-edition",
+  "chapters",
 );
 
 export interface CinematicChapterSummary {
@@ -35,7 +38,7 @@ export interface CinematicChapterSummary {
   title: string;
   pov: string | null;
   movement: string | null;
-  access: 'free' | 'paid';
+  access: "free" | "paid";
   wordCount: number;
   readTime: number;
 }
@@ -48,9 +51,7 @@ export interface CinematicChapter extends CinematicChapterSummary {
 }
 
 function chapterId(filename: string): string {
-  return filename
-    .replace(/\.md$/i, '')
-    .replace(/^chapter-/i, '');
+  return filename.replace(/\.md$/i, "").replace(/^chapter-/i, "");
 }
 
 function chapterNumber(filename: string, fallback: number): number {
@@ -60,19 +61,24 @@ function chapterNumber(filename: string, fallback: number): number {
 
 function fallbackTitle(id: string): string {
   return id
-    .replace(/^\d+-/, '')
-    .replace(/-/g, ' ')
+    .replace(/^\d+-/, "")
+    .replace(/-/g, " ")
     .replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
-export async function getCinematicChapterSummaries(): Promise<CinematicChapterSummary[]> {
+export async function getCinematicChapterSummaries(): Promise<
+  CinematicChapterSummary[]
+> {
   const files = (await readdir(CINEMATIC_CHAPTER_DIR))
     .filter(isChapterMarkdown)
     .sort();
 
   const chapters = await Promise.all(
     files.map(async (filename, index) => {
-      const raw = await readFile(join(CINEMATIC_CHAPTER_DIR, filename), 'utf-8');
+      const raw = await readFile(
+        join(CINEMATIC_CHAPTER_DIR, filename),
+        "utf-8",
+      );
       const { data } = matter(raw);
       const number = chapterNumber(filename, index + 1);
       const words = countChapterWords(raw);
@@ -82,12 +88,13 @@ export async function getCinematicChapterSummaries(): Promise<CinematicChapterSu
         id,
         filename,
         number,
-        title: typeof data.title === 'string' && data.title.trim()
-          ? data.title.trim()
-          : fallbackTitle(id),
-        pov: typeof data.pov === 'string' ? data.pov : null,
-        movement: typeof data.movement === 'string' ? data.movement : null,
-        access: number <= FREE_CHAPTER_COUNT ? 'free' as const : 'paid' as const,
+        title:
+          typeof data.title === "string" && data.title.trim()
+            ? data.title.trim()
+            : fallbackTitle(id),
+        pov: typeof data.pov === "string" ? data.pov : null,
+        movement: typeof data.movement === "string" ? data.movement : null,
+        access: cinematicChapterAccess(number),
         wordCount: words,
         readTime: Math.max(1, Math.ceil(words / 250)),
       };
@@ -107,22 +114,26 @@ export async function getCinematicChapter(
 
   const chapter = chapters[index];
   const raw = includeContent
-    ? await readFile(join(CINEMATIC_CHAPTER_DIR, chapter.filename), 'utf-8')
-    : '';
+    ? await readFile(join(CINEMATIC_CHAPTER_DIR, chapter.filename), "utf-8")
+    : "";
   const content = includeContent
-    ? matter(raw).content.trimStart().replace(/^#\s+.+\r?\n+/, '')
-    : '';
+    ? matter(raw)
+        .content.trimStart()
+        .replace(/^#\s+.+\r?\n+/, "")
+    : "";
 
   return {
     ...chapter,
     content,
     totalChapters: chapters.length,
-    prev: index > 0
-      ? { id: chapters[index - 1].id, title: chapters[index - 1].title }
-      : null,
-    next: index < chapters.length - 1
-      ? { id: chapters[index + 1].id, title: chapters[index + 1].title }
-      : null,
+    prev:
+      index > 0
+        ? { id: chapters[index - 1].id, title: chapters[index - 1].title }
+        : null,
+    next:
+      index < chapters.length - 1
+        ? { id: chapters[index + 1].id, title: chapters[index + 1].title }
+        : null,
   };
 }
 
@@ -131,7 +142,10 @@ export async function getCinematicBookStats() {
   return {
     chapters,
     chapterCount: chapters.length,
-    wordCount: chapters.reduce((total, chapter) => total + chapter.wordCount, 0),
+    wordCount: chapters.reduce(
+      (total, chapter) => total + chapter.wordCount,
+      0,
+    ),
     readTime: chapters.reduce((total, chapter) => total + chapter.readTime, 0),
   };
 }

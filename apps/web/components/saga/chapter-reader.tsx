@@ -7,6 +7,25 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { ReadingToolbar } from "./reading-toolbar";
 import proseStyles from "./chapter-prose.module.css";
+import {
+  defaultReaderPrefs,
+  parseReaderPrefs,
+  FONT_SIZE_CLASSES,
+  FONT_SIZES,
+  THEME_CYCLE,
+  LINE_HEIGHT_CYCLE,
+  type ReaderPrefs,
+  type ReadingTheme,
+  type FontSize,
+  type FontFamily,
+  type LineHeight,
+} from "./reader-preferences";
+export type {
+  ReadingTheme,
+  FontSize,
+  FontFamily,
+  LineHeight,
+} from "./reader-preferences";
 
 const ChatMarkdown = dynamic(() => import("@/components/chat/chat-markdown"), {
   loading: () => (
@@ -17,15 +36,6 @@ const ChatMarkdown = dynamic(() => import("@/components/chat/chat-markdown"), {
 /* ------------------------------------------------------------------ */
 /*  Types                                                               */
 /* ------------------------------------------------------------------ */
-
-export type ReadingTheme = "dark" | "light" | "sepia" | "cosmic";
-export type FontSize = 14 | 18 | 22 | 26 | 30;
-export type FontFamily = "serif" | "sans";
-export type LineHeight = "compact" | "normal" | "relaxed";
-
-const THEME_CYCLE: ReadingTheme[] = ["dark", "light", "sepia", "cosmic"];
-const FONT_SIZES: FontSize[] = [14, 18, 22, 26, 30];
-const LINE_HEIGHT_CYCLE: LineHeight[] = ["compact", "normal", "relaxed"];
 
 interface TocHeading {
   id: string;
@@ -127,18 +137,7 @@ function getThemeStyles(theme: ReadingTheme) {
 }
 
 function getFontSizeClass(size: FontSize): string {
-  switch (size) {
-    case 14:
-      return "text-sm";
-    case 18:
-      return "text-lg";
-    case 22:
-      return "text-xl";
-    case 26:
-      return "text-2xl";
-    case 30:
-      return "text-3xl";
-  }
+  return FONT_SIZE_CLASSES[size];
 }
 
 function getLineHeightClass(lh: LineHeight): string {
@@ -193,26 +192,13 @@ function extractHeadings(content: string): TocHeading[] {
 
 const STORAGE_KEY = "arcanea-reader-prefs";
 
-interface ReaderPrefs {
-  theme: ReadingTheme;
-  fontSize: FontSize;
-  fontFamily: FontFamily;
-  lineHeight: LineHeight;
-}
-
 function loadPrefs(): ReaderPrefs {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as ReaderPrefs;
+    return parseReaderPrefs(localStorage.getItem(STORAGE_KEY));
   } catch {
     /* ignore */
   }
-  return {
-    theme: "dark",
-    fontSize: 18,
-    fontFamily: "serif",
-    lineHeight: "normal",
-  };
+  return defaultReaderPrefs();
 }
 
 function savePrefs(prefs: ReaderPrefs) {
@@ -704,7 +690,7 @@ export function ChapterReader({
       </nav>
 
       {/* Notes section */}
-      <div className="max-w-[680px] mx-auto px-6 pb-24">
+      <div className="max-w-[680px] mx-auto px-6 pb-36 sm:pb-24">
         <button
           onClick={() => setShowNotes(!showNotes)}
           className={`w-full py-3 text-sm ${s.noteBtn} rounded-xl transition-all`}
