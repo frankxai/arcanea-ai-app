@@ -91,7 +91,8 @@
             "consequence": "Warn the lower districts and move whoever the surviving routes can carry. Orvess remains unstable, homes are abandoned, and returning requires a second operation."
           }
         ]
-      }
+      },
+      "artNote": "The image establishes the colossus’s weight and working conduit. Exact scale, movement and hydraulic behavior remain design proposals."
     },
     {
       "id": "wow-d01",
@@ -143,7 +144,8 @@
           "A memorial stands above homes that were occupied during the last sacrifice."
         ],
         "consequence": "Flooding the salvage level opens a ferry shortcut and destroys recoverable evidence. Draining it preserves records but exposes the party to maintenance sweeps."
-      }
+      },
+      "artNote": "The banners are incidental details in the artwork, not approved faction emblems. Routes described here would need spatial testing in a playable adaptation."
     },
     {
       "id": "wow-b02",
@@ -214,7 +216,8 @@
             "consequence": "Secure the requested name with its bearer’s consent while preserving other refugees’ cover. The wider coercive system remains, and the party must explain whose freedom it postponed."
           }
         ]
-      }
+      },
+      "artNote": "The portrait establishes Vesrane’s face, coat, mask and thread. The proposed face-omitting reflection is a story direction, not a clearly visible event in this image."
     },
     {
       "id": "wow-d02",
@@ -267,7 +270,8 @@
           "New masonry blocks an older exit: confinement came from a policy change."
         ],
         "consequence": "Restoring recognition changes whose testimony can travel safely. Treat consent and the possibility of renewed persecution as consequences of the route chosen."
-      }
+      },
+      "artNote": "The distant route can read as a reflection or submerged stone. A playable adaptation would need a tested visual cue; the rules below describe the intended encounter."
     },
     {
       "id": "wow-b03",
@@ -338,7 +342,8 @@
             "consequence": "The immediate route becomes safer, but water distribution and scavenger ecology deteriorate. The next season tests whether the settlement can replace the functions it destroyed."
           }
         ]
-      }
+      },
+      "artNote": "The near wing extends beyond the frame. The image does not establish an exact wingspan; full proportions and flight behavior remain to be developed."
     },
     {
       "id": "wow-d03",
@@ -390,7 +395,8 @@
           "A thick broken eggshell establishes the nesting scale without exposing a hatchling."
         ],
         "consequence": "Rebalancing water helps deprived terraces but costs the richest gardens yield. Ask who owns the crop and who is paid only when it is harvested."
-      }
+      },
+      "artNote": "The image shows a working, cultivated landscape. The dry-channel discovery and unequal water allocation belong to the story proposal, rather than facts proved by the painting."
     }
   ]
 }

@@ -175,11 +175,11 @@ Reference-only principles, not copied assets:
 
 Three complementary visual directions share the already established Arcanean identity:
 
-| Direction | First read | Materials and light | Signature | Rejected alternative |
-|---|---|---|---|---|
-| Mechanical sublime | A protector holding back catastrophe | Rain-dark bronze, pale ceramic, sediment water, local amber | A river passing through a working torso | Ornamental giant knight |
-| Intimate uncanny | A person offering something consequential | Human skin, worn black cloth, porous limestone, porcelain | One taut thread and one borrowed face | Youthful sorceress with a cloud of effects |
-| Luminous ecological danger | A living landscape disturbed by an animal's passage | Feather structure, cultivated foliage, warm rock, distant storm | A coherent wake moving petals, cloth and cloud | Generic glowing paradise |
+| Direction                  | First read                                          | Materials and light                                             | Signature                                      | Rejected alternative                       |
+| -------------------------- | --------------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------ |
+| Mechanical sublime         | A protector holding back catastrophe                | Rain-dark bronze, pale ceramic, sediment water, local amber     | A river passing through a working torso        | Ornamental giant knight                    |
+| Intimate uncanny           | A person offering something consequential           | Human skin, worn black cloth, porous limestone, porcelain       | One taut thread and one borrowed face          | Youthful sorceress with a cloud of effects |
+| Luminous ecological danger | A living landscape disturbed by an animal's passage | Feather structure, cultivated foliage, warm rock, distant storm | A coherent wake moving petals, cloth and cloud | Generic glowing paradise                   |
 
 No typography is embedded in final artwork. Future gallery presentation should retain Arcanea's existing accessible web typography and show the full images in dossiers. Portrait and landscape are chosen for their subjects; no claim is made that a single crop serves every mobile surface.
 
@@ -258,11 +258,11 @@ Create ONE breathtaking finished original Arcanea premium adult high-fantasy env
 
 Measured from the six generated PNG masters. Tool: built-in image_gen; model version not exposed. No external reference images supplied.
 
-| Asset | Pixels | Bytes | SHA-256 |
-|---|---|---|---|
-| orvess | 1536 × 1024 | 3,212,750 | 24072f1e328dd9f34ea650e176fba41de85fac3851f7906d01a1ad62642c2875 |
-| vesrane | 1024 × 1536 | 2,492,645 | 35cac2fe7351686de2f240131cacf2bd908955ddc5b6af9ea6b8bea1cdc180fe |
-| qorath | 1536 × 1024 | 3,223,016 | e01c9558c38bb0c3c72217480bd35e60ea6f797d3e1f412b35b57643b7571288 |
-| breathing-city | 1672 × 941 | 2,888,495 | 1a9abb8cefd1b13825813be4aa3f9ab36e9b26292741e3ef70e7e549c11f50de |
-| unreturned-names | 1672 × 941 | 2,334,530 | 7bafa576d0c48359fedbb1113a3a5aa9b59e14f244f4bec09c2ea1256f03392a |
-| storm-orchard | 1672 × 941 | 3,154,688 | 352cd07f476e6971efd5694cb460ae41375a44242a782661fb0961fbcfabfdb1 |
+| Asset            | Pixels      | Bytes     | SHA-256                                                          |
+| ---------------- | ----------- | --------- | ---------------------------------------------------------------- |
+| orvess           | 1536 × 1024 | 3,212,750 | 24072f1e328dd9f34ea650e176fba41de85fac3851f7906d01a1ad62642c2875 |
+| vesrane          | 1024 × 1536 | 2,492,645 | 35cac2fe7351686de2f240131cacf2bd908955ddc5b6af9ea6b8bea1cdc180fe |
+| qorath           | 1536 × 1024 | 3,223,016 | e01c9558c38bb0c3c72217480bd35e60ea6f797d3e1f412b35b57643b7571288 |
+| breathing-city   | 1672 × 941  | 2,888,495 | 1a9abb8cefd1b13825813be4aa3f9ab36e9b26292741e3ef70e7e549c11f50de |
+| unreturned-names | 1672 × 941  | 2,334,530 | 7bafa576d0c48359fedbb1113a3a5aa9b59e14f244f4bec09c2ea1256f03392a |
+| storm-orchard    | 1672 × 941  | 3,154,688 | 352cd07f476e6971efd5694cb460ae41375a44242a782661fb0961fbcfabfdb1 |
