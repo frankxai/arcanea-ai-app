@@ -73,7 +73,7 @@ export async function getCinematicChapterSummaries(): Promise<CinematicChapterSu
   const chapters = await Promise.all(
     files.map(async (filename, index) => {
       const raw = await readFile(join(CINEMATIC_CHAPTER_DIR, filename), 'utf-8');
-      const { data, content } = matter(raw);
+      const { data } = matter(raw);
       const number = chapterNumber(filename, index + 1);
       const words = countChapterWords(raw);
       const id = chapterId(filename);
@@ -110,7 +110,7 @@ export async function getCinematicChapter(
     ? await readFile(join(CINEMATIC_CHAPTER_DIR, chapter.filename), 'utf-8')
     : '';
   const content = includeContent
-    ? matter(raw).content.replace(/^#\s+.+\r?\n+/, '')
+    ? matter(raw).content.trimStart().replace(/^#\s+.+\r?\n+/, '')
     : '';
 
   return {
