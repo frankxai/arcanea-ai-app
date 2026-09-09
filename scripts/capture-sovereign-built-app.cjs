@@ -43,10 +43,14 @@ const commitEvidence = () => {
   };
 };
 
-const typographyReport = async (page) =>
-  page.evaluate(async () => {
-    await document.fonts.ready;
-    const sample = (element) => {
+const typographyReport = async (page) => {
+  await page.evaluate(() => document.fonts.ready);
+  const specimen = page.locator("main [data-type-specimen]:visible");
+  const heading = page.locator("main h1:visible");
+  assert.equal(await specimen.count(), 1, "One visible typography specimen");
+  assert.equal(await heading.count(), 1, "One visible dossier heading");
+  const sample = (locator) =>
+    locator.evaluate((element) => {
       const style = getComputedStyle(element);
       let declaredFontAvailable = null;
       try {
@@ -59,15 +63,15 @@ const typographyReport = async (page) =>
         lineHeight: style.lineHeight,
         declaredFontAvailable,
       };
-    };
-    return {
-      documentFontsStatus: document.fonts.status,
-      heading: sample(document.querySelector("h1")),
-      body: sample(document.body),
-      control: sample(document.querySelector("[aria-pressed]")),
-      manualBrief: sample(document.querySelector("textarea[readonly]")),
-    };
-  });
+    });
+  return {
+    documentFontsStatus: await page.evaluate(() => document.fonts.status),
+    heading: await sample(heading),
+    body: await sample(page.locator("body")),
+    control: await sample(specimen.locator("[aria-pressed]:visible").first()),
+    manualBrief: await sample(specimen.locator("textarea[readonly]:visible")),
+  };
+};
 
 (async () => {
   fs.mkdirSync("screenshots", { recursive: true });
@@ -212,7 +216,8 @@ const typographyReport = async (page) =>
           });
           await settlePaint(page);
           await hideSpecimenChrome(page);
-          const specimen = page.locator("[data-type-specimen]");
+          const specimen = page.locator("main [data-type-specimen]:visible");
+          assert.equal(await specimen.count(), 1, "One visible type specimen");
           await specimen.screenshot({
             path: "screenshots/weight-of-wonders-type-specimen-mobile-375.png",
             type: "png",
@@ -307,18 +312,25 @@ const typographyReport = async (page) =>
       await fallbackPage
         .getByRole("heading", { name: "Orvess", exact: true, level: 1 })
         .waitFor();
+      await settlePaint(fallbackPage);
       const fallbackReflow = await fallbackPage.evaluate(
         () => document.documentElement.scrollWidth <= window.innerWidth + 1,
       );
       assert.ok(fallbackReflow, "Font fallback retains 375px reflow");
       const fallbackTypography = await typographyReport(fallbackPage);
-      const fallbackSpecimen = fallbackPage.locator("[data-type-specimen]");
+      const fallbackSpecimen = fallbackPage.locator(
+        "main [data-type-specimen]:visible",
+      );
+      assert.equal(
+        await fallbackSpecimen.count(),
+        1,
+        "One visible fallback type specimen",
+      );
       const specimenBox = await fallbackSpecimen.boundingBox();
       assert.ok(
         specimenBox && specimenBox.width <= 375,
         "Fallback specimen does not clip horizontally",
       );
-      await settlePaint(fallbackPage);
       await hideSpecimenChrome(fallbackPage);
       await fallbackSpecimen.screenshot({
         path: "screenshots/weight-of-wonders-type-specimen-fallback-375.png",

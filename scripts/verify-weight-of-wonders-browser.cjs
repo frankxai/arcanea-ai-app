@@ -288,9 +288,21 @@ module.exports.verifyWeightOfWondersPreview = async ({
       await rejectionPage.close();
     }
 
-    const typography = await page.evaluate(async () => {
-      await document.fonts.ready;
-      const sample = (element) => {
+    await settleVisiblePage();
+    const currentSpecimen = page.locator("main [data-type-specimen]:visible");
+    const currentHeading = page.locator("main h1:visible");
+    assert.equal(
+      await currentSpecimen.count(),
+      1,
+      "One visible typography specimen",
+    );
+    assert.equal(
+      await currentHeading.count(),
+      1,
+      "One visible dossier heading",
+    );
+    const sampleTypography = (locator) =>
+      locator.evaluate((element) => {
         const style = getComputedStyle(element);
         return {
           family: style.fontFamily,
@@ -298,15 +310,18 @@ module.exports.verifyWeightOfWondersPreview = async ({
           size: style.fontSize,
           lineHeight: style.lineHeight,
         };
-      };
-      return {
-        documentFontsStatus: document.fonts.status,
-        heading: sample(document.querySelector("h1")),
-        body: sample(document.body),
-        control: sample(document.querySelector("[aria-pressed]")),
-        manualBrief: sample(document.querySelector("textarea[readonly]")),
-      };
-    });
+      });
+    const typography = {
+      documentFontsStatus: await page.evaluate(() => document.fonts.status),
+      heading: await sampleTypography(currentHeading),
+      body: await sampleTypography(page.locator("body")),
+      control: await sampleTypography(
+        currentSpecimen.locator("[aria-pressed]:visible").first(),
+      ),
+      manualBrief: await sampleTypography(
+        currentSpecimen.locator("textarea[readonly]:visible"),
+      ),
+    };
     assert.doesNotMatch(
       `${typography.heading.family} ${typography.body.family}`,
       /Arial|Inter|Space Grotesk|Cinzel/iu,
