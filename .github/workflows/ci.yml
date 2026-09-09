@@ -258,6 +258,31 @@ jobs:
       - name: Run package tests
         run: pnpm test:quick
 
+      - name: Verify Sovereign Depths assets and proposal relationships
+        run: |
+          node scripts/verify-sovereign-depths.mjs
+          pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/sovereign-depths.test.ts
+
+      - name: Verify Sovereign Depths rendered desktop and 375px mobile
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+        run: |
+          pnpm --dir apps/web exec playwright install --with-deps chromium
+          pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/sovereign-next.log" 2>&1 &
+          sovereign_server_pid=$!
+          trap 'kill "$sovereign_server_pid" 2>/dev/null || true' EXIT
+          node scripts/capture-sovereign-built-app.cjs
+
+      - name: Upload Sovereign Depths rendered evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: sovereign-depths-built-app-${{ github.sha }}
+          path: screenshots/
+          retention-days: 14
+          if-no-files-found: warn
+
       - name: Build summary
         if: always()
         run: |
