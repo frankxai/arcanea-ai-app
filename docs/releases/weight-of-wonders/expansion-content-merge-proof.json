@@ -1,0 +1,129 @@
+{
+  "pr": 376,
+  "head": "7de0c429fc8be5cb1b4f3a7134237573d4ebbe3c",
+  "merge": "f3524a8c947d6ed7a54dea90e7496ec726590156",
+  "checks": [
+    {
+      "conclusion": "success",
+      "details_url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34357431776/job/102489226464",
+      "name": "CI Status",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "details_url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34357431776/job/102487273028",
+      "name": "Build",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "details_url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34357431776/job/102486422865",
+      "name": "TypeScript",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "details_url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34357431776/job/102486422771",
+      "name": "Lint",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "details_url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34357431776/job/102486070667",
+      "name": "Install",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "details_url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34357431693/job/102485743961",
+      "name": "Analyze (javascript-typescript)",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "details_url": "https://vercel.com/github",
+      "name": "Vercel Preview Comments",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "details_url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34357431728/job/102485565693",
+      "name": "No committed conflict markers",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "details_url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34357429330/job/102485557824",
+      "name": "AI Exact-Head Review",
+      "status": "completed"
+    },
+    {
+      "conclusion": "skipped",
+      "details_url": "https://supabase.com/dashboard/project/hcfhyssdzphudaqatxbk/branches",
+      "name": "Supabase Preview",
+      "status": "completed"
+    }
+  ],
+  "scope": [
+    {
+      "filename": "apps/web/public/images/weight-of-wonders/brine-tribunal.webp",
+      "patchChars": 0,
+      "sha": "6d9e9f66b650071371e570ebbfbba26a57c89ed2",
+      "status": "added"
+    },
+    {
+      "filename": "apps/web/public/images/weight-of-wonders/glassroot-hunger.webp",
+      "patchChars": 0,
+      "sha": "1b115f0ba238bdfb813bbb39ea17fadaeaf323ec",
+      "status": "added"
+    },
+    {
+      "filename": "apps/web/public/images/weight-of-wonders/glassroot-sepulchre.webp",
+      "patchChars": 0,
+      "sha": "b0a1e36746d1024dfc373426c71dfbca1fde972b",
+      "status": "added"
+    },
+    {
+      "filename": "apps/web/public/images/weight-of-wonders/othrek.webp",
+      "patchChars": 0,
+      "sha": "0926c6758f10d5771a6a25def0b474729394fd40",
+      "status": "added"
+    },
+    {
+      "filename": "apps/web/public/images/weight-of-wonders/spawning-stair.webp",
+      "patchChars": 0,
+      "sha": "142359f75423d599585f8c1d9f71bbe28330be9a",
+      "status": "added"
+    },
+    {
+      "filename": "apps/web/public/images/weight-of-wonders/tharvoss.webp",
+      "patchChars": 0,
+      "sha": "e2aa40d9b35cba72add72b90101c2f82338231f5",
+      "status": "added"
+    },
+    {
+      "filename": "docs/worldbuilding/weight-of-wonders/living-crucibles-entries.json",
+      "patchChars": 40638,
+      "sha": "c71fd6d6735b000b832d1ddc361a4bdb370cacf5",
+      "status": "added"
+    },
+    {
+      "filename": "docs/worldbuilding/weight-of-wonders/living-crucibles-provenance.json",
+      "patchChars": 19663,
+      "sha": "fbfdaa9fde7523d624fce48437d424df02614593",
+      "status": "added"
+    },
+    {
+      "filename": "docs/worldbuilding/weight-of-wonders/living-crucibles.md",
+      "patchChars": 8959,
+      "sha": "802429f1fdf5142b801202921d465c68381d46a0",
+      "status": "added"
+    }
+  ],
+  "verdict": "Content approved; all required checks passed. No active runtime change.",
+  "previousFailedCI": {
+    "run": 34356782316,
+    "reason": "Markdown table formatting",
+    "fix": "7de0c429fc8be5cb1b4f3a7134237573d4ebbe3c"
+  }
+}

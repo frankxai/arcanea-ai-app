@@ -1,0 +1,9 @@
+{
+  "scope": "Pre-release failures retained as provenance; none count as passing browser evidence",
+  "iterations": [
+    {"head":"c05936343370b76fffeb95122852c8d7ede0a1dc","run":34348789409,"result":"failed","cause":"Ambiguous text locator matched phase paragraph and manual-copy textarea","fix":"Scope locator to paragraph"},
+    {"head":"ca642a74381a3097655dd793160adc081f70de58","run":34350023037,"result":"cancelled","cause":"Root review caught regex ending after first sentence while paragraph contains three sentences","fix":"Keep paragraph scope and remove end anchor"},
+    {"head":"b2b1378f9fe8d16df5fa16a4e957e8256933a697","run":34350661443,"result":"failed","cause":"Lab interaction latency exceeded 200ms; old report aborted before recording value; observer incorrectly included non-interaction EventTiming entries","fix":"Pending grounded instrumentation correction and new run"},
+    {"head":"b2b1378f9fe8d16df5fa16a4e957e8256933a697","run":34350659688,"result":"passed on native retry","cause":"First attempt received Gemini HTTP503 without review verdict; unchanged-head retry succeeded"}
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "pr": 374,
+  "head": "a7bf5639e69b5ff5509a1e1a6971a994882d9fb2",
+  "files": [
+    {
+      "path": "apps/web/lib/visual-encyclopedia/weight-of-wonders.json",
+      "sha": "e1e2a6cff6ac8fddc7814c55a66267bfb2401579",
+      "status": "added",
+      "expectedSha": "e1e2a6cff6ac8fddc7814c55a66267bfb2401579",
+      "match": true
+    },
+    {
+      "path": "apps/web/public/images/weight-of-wonders/breathing-city.webp",
+      "sha": "02fcd91aef071ce5341b13a263f0b1a0dad0e29a",
+      "status": "added",
+      "expectedSha": "02fcd91aef071ce5341b13a263f0b1a0dad0e29a",
+      "match": true
+    },
+    {
+      "path": "apps/web/public/images/weight-of-wonders/orvess.webp",
+      "sha": "731b2ae34b4891c8778d6d1c17b56109af467313",
+      "status": "added",
+      "expectedSha": "731b2ae34b4891c8778d6d1c17b56109af467313",
+      "match": true
+    },
+    {
+      "path": "apps/web/public/images/weight-of-wonders/qorath.webp",
+      "sha": "5f1defbc2b2d28ebb690a58fd9f7321fa4656aad",
+      "status": "added",
+      "expectedSha": "5f1defbc2b2d28ebb690a58fd9f7321fa4656aad",
+      "match": true
+    },
+    {
+      "path": "apps/web/public/images/weight-of-wonders/storm-orchard.webp",
+      "sha": "05d477526f6d56d198e63f7dbbcd255472eb0ded",
+      "status": "added",
+      "expectedSha": "05d477526f6d56d198e63f7dbbcd255472eb0ded",
+      "match": true
+    },
+    {
+      "path": "apps/web/public/images/weight-of-wonders/unreturned-names.webp",
+      "sha": "f4c3f444b2cb1706f5664709fab8a1a3fcf8a97f",
+      "status": "added",
+      "expectedSha": "f4c3f444b2cb1706f5664709fab8a1a3fcf8a97f",
+      "match": true
+    },
+    {
+      "path": "apps/web/public/images/weight-of-wonders/vesrane.webp",
+      "sha": "a4778968fca38744d5ce6aefdfe7abe1f3bbe3bd",
+      "status": "added",
+      "expectedSha": "a4778968fca38744d5ce6aefdfe7abe1f3bbe3bd",
+      "match": true
+    },
+    {
+      "path": "docs/worldbuilding/weight-of-wonders/art-provenance.json",
+      "sha": "3df664159170486d1d65a297f6c8727a9b426316",
+      "status": "added",
+      "expectedSha": "3df664159170486d1d65a297f6c8727a9b426316",
+      "match": true
+    },
+    {
+      "path": "docs/worldbuilding/weight-of-wonders/creative-packet.md",
+      "sha": "8296fbe703575552011212339706011663cde92a",
+      "status": "added",
+      "expectedSha": "8296fbe703575552011212339706011663cde92a",
+      "match": true
+    },
+    {
+      "path": "docs/worldbuilding/weight-of-wonders/creator-guide.md",
+      "sha": "b91ec2969bbd2c052be8e16169f9f10a7a6b0804",
+      "status": "added",
+      "expectedSha": "b91ec2969bbd2c052be8e16169f9f10a7a6b0804",
+      "match": true
+    },
+    {
+      "path": "docs/worldbuilding/weight-of-wonders/directions/a-museum.md",
+      "sha": "ce79c9d3ecb786e89105e8729bc0d7789d4e8e1a",
+      "status": "added",
+      "expectedSha": "ce79c9d3ecb786e89105e8729bc0d7789d4e8e1a",
+      "match": true
+    },
+    {
+      "path": "docs/worldbuilding/weight-of-wonders/directions/b-river-book.md",
+      "sha": "21c4f284c1cdf1fee864c715de2d8d2b4cd8ce96",
+      "status": "added",
+      "expectedSha": "21c4f284c1cdf1fee864c715de2d8d2b4cd8ce96",
+      "match": true
+    },
+    {
+      "path": "docs/worldbuilding/weight-of-wonders/directions/c-atlas-desk.md",
+      "sha": "b168f565ace468c5a90b9a234ccdd258a48b8719",
+      "status": "added",
+      "expectedSha": "b168f565ace468c5a90b9a234ccdd258a48b8719",
+      "match": true
+    },
+    {
+      "path": "planning-with-files/CURRENT_STATE_2026-09-09_WEIGHT_OF_WONDERS.md",
+      "sha": "b9bfb9c00f049421627d41e95dbae910962da2d1",
+      "status": "added",
+      "expectedSha": "b9bfb9c00f049421627d41e95dbae910962da2d1",
+      "match": true
+    }
+  ],
+  "textDiffCharacters": 101861
+}

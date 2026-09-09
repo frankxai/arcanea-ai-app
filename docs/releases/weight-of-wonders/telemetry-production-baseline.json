@@ -1,0 +1,18 @@
+{
+  "scope": "Existing production telemetry endpoint baseline before runtime merge",
+  "verifiedAt": "2026-09-09T12:49:14.861512+00:00",
+  "endpoints": [
+    {
+      "url": "https://www.arcanea.ai/_vercel/speed-insights/script.js",
+      "status": 200,
+      "mime": "application/javascript; charset=utf-8",
+      "bytes": 12567
+    },
+    {
+      "url": "https://www.arcanea.ai/_vercel/insights/script.js",
+      "status": 200,
+      "mime": "application/javascript; charset=utf-8",
+      "bytes": 3106
+    }
+  ]
+}

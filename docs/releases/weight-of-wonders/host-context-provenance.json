@@ -1,0 +1,23 @@
+{
+  "status": "host context only; not a new production-state claim",
+  "items": [
+    {
+      "artifact": "artifacts/host-context/host-live-desktop.png",
+      "source": "work/wow-reference/host-live-desktop.jpg",
+      "sourceSha256": "4b1505cecc7b2800a31ba01ad1ebd5b311cf4c632c904bf8f7f8774ca397771e",
+      "sourceBytes": 161335,
+      "transformation": "Decoded supplied JPEG capture and losslessly encoded decoded pixels as PNG; no crop, resize, retouch, or content edit.",
+      "width": 1348,
+      "height": 926
+    },
+    {
+      "artifact": "artifacts/host-context/host-mobile-375.png",
+      "source": "work/wow-reference/collection-hero-mobile-375.jpg",
+      "sourceSha256": "02fbecdf5bd2b93737e6db9326b781f951f11bfe1f540da25fcc1476c8d5dab9",
+      "sourceBytes": 88680,
+      "transformation": "Decoded supplied JPEG capture and losslessly encoded decoded pixels as PNG; no crop, resize, retouch, or content edit.",
+      "width": 375,
+      "height": 812
+    }
+  ]
+}

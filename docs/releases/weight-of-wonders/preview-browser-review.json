@@ -1,0 +1,24 @@
+{
+  "url": "https://arcanea-ai-qcl86k3nx-starlight-intelligence.vercel.app/gallery/weight-of-wonders",
+  "sourceHead": "c05936343370b76fffeb95122852c8d7ede0a1dc",
+  "deployment": "dpl_GpdVua7DKGC1sboUpPRhiHpKat8y",
+  "state": "READY",
+  "access": "Vercel native authorized share; token omitted",
+  "browser": "control-browser cloud desktop",
+  "width": 1348,
+  "height": 926,
+  "observations": [
+    "Collection hero and connected atlas visually inspected",
+    "Opened Orvess via visible CTA",
+    "Phase 2 changed displayed encounter paragraph",
+    "Destroy Orvess changed selected outcome in manual brief",
+    "Copy brief reached Copied to clipboard",
+    "Changing to Repair the protector reset Ready to copy"
+  ],
+  "screenshot": {
+    "path": "artifacts/preview/wow-preview-c059-desktop.jpg",
+    "bytes": 222423,
+    "sha256": "e6a5c368307c373b3ba19e01ddc8af6fc81c577499f168e4f855315073959fe6"
+  },
+  "limit": "Source head subsequently changes only browser harness. Does not replace new-head complete CI or production verification."
+}

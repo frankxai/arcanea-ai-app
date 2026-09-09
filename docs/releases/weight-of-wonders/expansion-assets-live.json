@@ -1,0 +1,56 @@
+{
+  "verifiedAt": "2026-09-09T13:44:47.200340+00:00",
+  "productionCommit": "f3524a8c947d6ed7a54dea90e7496ec726590156",
+  "assets": [
+    {
+      "slug": "tharvoss",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/tharvoss.webp",
+      "status": 200,
+      "bytes": 547198,
+      "sha256": "4c9acd3d4dfcf5f5822e73dcb7aedb8f882cbb96dbdafaeb8f729e3a82fd4f07",
+      "pass": true
+    },
+    {
+      "slug": "spawning-stair",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/spawning-stair.webp",
+      "status": 200,
+      "bytes": 576552,
+      "sha256": "4b8f70b9b8d14aa333386242eb86aa613c2caacdfa05d52d3541e5695ebb0763",
+      "pass": true
+    },
+    {
+      "slug": "glassroot-hunger",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/glassroot-hunger.webp",
+      "status": 200,
+      "bytes": 425766,
+      "sha256": "560dcefda1cbf30ff2c9441aa57e3c636535021f495c12b9799f5ef1a3e407bd",
+      "pass": true
+    },
+    {
+      "slug": "glassroot-sepulchre",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/glassroot-sepulchre.webp",
+      "status": 200,
+      "bytes": 591192,
+      "sha256": "d18d5a09a40321bd3f1bc4982e47bd3231101860037350c7f697f9318cfaa7ce",
+      "pass": true
+    },
+    {
+      "slug": "othrek",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/othrek.webp",
+      "status": 200,
+      "bytes": 438248,
+      "sha256": "cb5bc8a8877a638d596b8eb84715fde58118a4dfa51b8b673004bf0ed9f37480",
+      "pass": true
+    },
+    {
+      "slug": "brine-tribunal",
+      "url": "https://www.arcanea.ai/images/weight-of-wonders/brine-tribunal.webp",
+      "status": 200,
+      "bytes": 464064,
+      "sha256": "e24a8c03f940b68e33162c504dcdf82b0c4c2bbb8dccdd6ceb9ebf6c787f07a1",
+      "pass": true
+    }
+  ],
+  "runtimeStatus": "Not yet activated in gallery",
+  "pass": true
+}

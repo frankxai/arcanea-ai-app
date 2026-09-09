@@ -1,0 +1,97 @@
+{
+  "head": "b2b1378f9fe8d16df5fa16a4e957e8256933a697",
+  "tree": "31e9e9c34731d7b0d10c7b172ef8cbb0af663a80",
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha": "80d7d4355b36e3f7eaad76298c926e6e989741ca",
+      "status": "modified"
+    },
+    {
+      "path": "apps/web/app/api/lore/weight-of-wonders/route.ts",
+      "sha": "7b83b47c17c22cb5fbd7892ddf8360c68974048b",
+      "status": "added"
+    },
+    {
+      "path": "apps/web/app/gallery/page.tsx",
+      "sha": "b0d4fec44e7bee6b939397c339f7c3c5009e2853",
+      "status": "modified"
+    },
+    {
+      "path": "apps/web/app/gallery/weight-of-wonders/[entry]/page.tsx",
+      "sha": "84f0a1540ca5b057c3bfe0732622ad9ecb759a46",
+      "status": "added"
+    },
+    {
+      "path": "apps/web/app/gallery/weight-of-wonders/authoring-desk.tsx",
+      "sha": "474b7d11355563570ce9bb8cc99a036b1b511999",
+      "status": "added"
+    },
+    {
+      "path": "apps/web/app/gallery/weight-of-wonders/page.tsx",
+      "sha": "6d34799e30647f241f10a67fa901b09eadcf8615",
+      "status": "added"
+    },
+    {
+      "path": "apps/web/app/gallery/weight-of-wonders/weight-of-wonders.module.css",
+      "sha": "da647de35d0801f765c898d57d332a8edfaa35d9",
+      "status": "added"
+    },
+    {
+      "path": "apps/web/lib/visual-encyclopedia/weight-of-wonders-schema.ts",
+      "sha": "731b3762290769e9e2ad075407309044736dfb6a",
+      "status": "added"
+    },
+    {
+      "path": "apps/web/lib/visual-encyclopedia/weight-of-wonders.json",
+      "sha": "1de3b0680f96a565ad6abc4721fe0544eccb4788",
+      "status": "modified"
+    },
+    {
+      "path": "apps/web/lib/visual-encyclopedia/weight-of-wonders.test.ts",
+      "sha": "360c36b39eaa8c2b6c4359e31b91e3172404b743",
+      "status": "added"
+    },
+    {
+      "path": "apps/web/lib/visual-encyclopedia/weight-of-wonders.ts",
+      "sha": "22cff93a7493afdb62dd17b8a0297e55cf2c4acb",
+      "status": "added"
+    },
+    {
+      "path": "apps/web/middleware.ts",
+      "sha": "e253e8ab7f6618b6aab87d76eff131ab954e7056",
+      "status": "modified"
+    },
+    {
+      "path": "packages/arcanea-mcp/src/cli.ts",
+      "sha": "6645182afa4e0767e8a34c355e7f82261a8c2998",
+      "status": "modified"
+    },
+    {
+      "path": "packages/arcanea-mcp/src/tools/weight-of-wonders.ts",
+      "sha": "c02dc88e5d05032fcfb24214a18b473629414b56",
+      "status": "added"
+    },
+    {
+      "path": "packages/arcanea-mcp/tests/weight-of-wonders.test.mjs",
+      "sha": "9ffc90a5fade70ff12b6d91c1917a89c043d5a54",
+      "status": "added"
+    },
+    {
+      "path": "scripts/capture-sovereign-built-app.cjs",
+      "sha": "dd32cbcbf9986f3ce639f5befdf1dce84f370422",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/verify-weight-of-wonders-browser.cjs",
+      "sha": "8d2c43a5ca44d9874d4e7a5e88282378803f53db",
+      "status": "added"
+    },
+    {
+      "path": "scripts/verify-weight-of-wonders.mjs",
+      "sha": "e76bd486d8422eb13c323d51f5dd9c8f558ee5b0",
+      "status": "added"
+    }
+  ],
+  "textDiffChars": 87646
+}

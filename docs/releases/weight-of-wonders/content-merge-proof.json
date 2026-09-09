@@ -1,0 +1,76 @@
+{
+  "base": "c31212ea58b97f2c07da0033ad40c4321d6aefb6",
+  "checks": [
+    {
+      "conclusion": "success",
+      "name": "CI Status",
+      "status": "completed",
+      "url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34346412867/job/102451585670"
+    },
+    {
+      "conclusion": "success",
+      "name": "Build",
+      "status": "completed",
+      "url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34346412867/job/102449985311"
+    },
+    {
+      "conclusion": "success",
+      "name": "Vercel Preview Comments",
+      "status": "completed",
+      "url": "https://github.com/frankxai/arcanea-ai-app/runs/102449742257"
+    },
+    {
+      "conclusion": "success",
+      "name": "TypeScript",
+      "status": "completed",
+      "url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34346412867/job/102449365842"
+    },
+    {
+      "conclusion": "success",
+      "name": "Lint",
+      "status": "completed",
+      "url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34346412867/job/102449365830"
+    },
+    {
+      "conclusion": "success",
+      "name": "Analyze (javascript-typescript)",
+      "status": "completed",
+      "url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34346412855/job/102449124976"
+    },
+    {
+      "conclusion": "success",
+      "name": "Install",
+      "status": "completed",
+      "url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34346412867/job/102449047732"
+    },
+    {
+      "conclusion": "success",
+      "name": "No committed conflict markers",
+      "status": "completed",
+      "url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34346412831/job/102448940915"
+    },
+    {
+      "conclusion": "success",
+      "name": "AI Exact-Head Review",
+      "status": "completed",
+      "url": "https://github.com/frankxai/arcanea-ai-app/actions/runs/34346410973/job/102448934982"
+    },
+    {
+      "conclusion": "skipped",
+      "name": "Supabase Preview",
+      "status": "completed",
+      "url": "https://github.com/frankxai/arcanea-ai-app/runs/102448921151"
+    }
+  ],
+  "head": "a7bf5639e69b5ff5509a1e1a6971a994882d9fb2",
+  "mergeable": true,
+  "pr": 374,
+  "state": "clean",
+  "statuses": [
+    {
+      "context": "Vercel",
+      "state": "success",
+      "target_url": "https://vercel.com/starlight-intelligence/arcanea-ai-app/7iz5j3fHvwXKsM356pdNHYsJZEXd"
+    }
+  ]
+}

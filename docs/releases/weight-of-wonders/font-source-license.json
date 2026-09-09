@@ -1,0 +1,23 @@
+{
+  "scope": "Inherited host typography; this release adds no font files or dependencies.",
+  "reviewedAt": "2026-09-09",
+  "families": [
+    {
+      "family": "Instrument Serif",
+      "use": "Editorial headings, weight 400",
+      "source": "RootLayout Instrument_Serif from next/font/google",
+      "license": "SIL Open Font License 1.1",
+      "licenseSource": "https://github.com/google/fonts/blob/main/ofl/instrumentserif/OFL.txt",
+      "verification": "Official Google Fonts source opened and read."
+    },
+    {
+      "family": "Geist / Geist Mono",
+      "use": "Inherited body/interface and code stacks",
+      "source": "RootLayout geist/font/sans and geist/font/mono",
+      "license": "SIL Open Font License 1.1",
+      "licenseSource": "https://github.com/vercel/geist-font/blob/main/OFL.txt",
+      "verification": "Official Vercel repository OFL.txt and LICENSE.txt read through GitHub connector."
+    }
+  ],
+  "limits": "Source and license identification does not prove which face rendered; actual computed typography and fallback captures are separate CI artifacts."
+}
