@@ -309,10 +309,9 @@ module.exports.verifyWeightOfWondersPreview = async ({
       "No decorative control motion",
     );
     if (state === "reduced-motion")
-      assert.equal(
-        controlMotion.transitionDuration,
-        "0s",
-        "Reduced-motion controls are static",
+      assert.ok(
+        Number.parseFloat(controlMotion.transitionDuration) <= 0.00001,
+        "Reduced-motion controls use the global 0.01ms cutoff",
       );
 
     const dossierPerformance = await page.evaluate(
