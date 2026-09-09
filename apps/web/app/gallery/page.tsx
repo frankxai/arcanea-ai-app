@@ -26,6 +26,7 @@ export default async function GalleryPage() {
           alt={SOVEREIGN_DEPTHS.dungeons[1].image.alt}
           fill
           priority
+          unoptimized
           sizes="100vw"
         />
         <div className={styles.wrap}>

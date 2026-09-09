@@ -32,6 +32,7 @@ export default function SovereignDepthsPage() {
           alt={hero.image.alt}
           fill
           priority
+          unoptimized
           sizes="100vw"
         />
         <div className={styles.wrap}>
