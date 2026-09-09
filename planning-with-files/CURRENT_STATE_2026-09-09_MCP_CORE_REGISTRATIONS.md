@@ -7,7 +7,7 @@ Base: registration preparation `72bb0bfb612d0590b1ba77b573707b8481126412`.
 Scope: Complete the extraction of registration groups from the MCP entrypoint.
 Owner: capability-delivery coordinator, one writer. Files: entrypoint, generator,
 world graph, world intelligence, persistence and visual-prompt registration
-modules, plus this record. No runtime behavior, dependencies, canon, review policy,
+modules, planning orchestrator and graph formatting, plus this record. No runtime behavior, dependencies, canon, review policy,
 installation, publication or production settings change.
 
 The entrypoint now composes twelve registration functions in 65 lines. Five
@@ -33,3 +33,8 @@ entrypoint prevents factory indentation from overwhelming the semantic review.
 Preserve prior candidate commits and immutable archives throughout integration.
 
 Rollback: revert this extraction commit. No data migration is needed.
+
+The planning orchestrator and graph implementation also receive formatting-only
+normalization here. Their syntax trees are unchanged. Keeping their existing
+formatting debt in this preparation allows the integrated runtime patch to remain
+within the standard review context limit. No review bounds are changed.

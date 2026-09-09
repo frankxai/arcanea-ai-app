@@ -36,7 +36,7 @@ export type RelationshipType =
   | "part_of" // Belongs to larger entity
   | "same_element" // Shares elemental affinity
   | "same_house" // Same Academy house
-  | "same_gate" // Same Gate level;
+  | "same_gate"; // Same Gate level;
 
 interface CreationGraph {
   nodes: Map<string, CreationNode>;
@@ -69,7 +69,7 @@ export function getGraphEdges(sessionId: string): CreationEdge[] {
 export function addCreationToGraph(
   sessionId: string,
   creation: CreationRef,
-  metadata: Record<string, any> = {}
+  metadata: Record<string, any> = {},
 ): CreationNode {
   const graph = getOrCreateGraph(sessionId);
 
@@ -79,9 +79,10 @@ export function addCreationToGraph(
     name: creation.name,
     element: creation.element,
     gate: creation.gate,
-    createdAt: creation.createdAt instanceof Date
-      ? creation.createdAt.toISOString()
-      : creation.createdAt ?? new Date().toISOString(),
+    createdAt:
+      creation.createdAt instanceof Date
+        ? creation.createdAt.toISOString()
+        : (creation.createdAt ?? new Date().toISOString()),
     metadata,
   };
 
@@ -100,7 +101,7 @@ export function linkCreations(
   targetId: string,
   relationship: RelationshipType,
   strength: number = 0.5,
-  metadata?: Record<string, any>
+  metadata?: Record<string, any>,
 ): CreationEdge | null {
   const graph = getOrCreateGraph(sessionId);
 
@@ -122,7 +123,7 @@ export function linkCreations(
     (e) =>
       e.sourceId === sourceId &&
       e.targetId === targetId &&
-      e.relationship === relationship
+      e.relationship === relationship,
   );
 
   if (existingIdx >= 0) {
@@ -163,8 +164,12 @@ function autoLinkByGate(sessionId: string, newNode: CreationNode): void {
 export function getRelatedCreations(
   sessionId: string,
   creationId: string,
-  relationshipFilter?: RelationshipType
-): Array<{ node: CreationNode; relationship: RelationshipType; strength: number }> {
+  relationshipFilter?: RelationshipType,
+): Array<{
+  node: CreationNode;
+  relationship: RelationshipType;
+  strength: number;
+}> {
   const graph = getOrCreateGraph(sessionId);
   const results: Array<{
     node: CreationNode;
@@ -173,7 +178,8 @@ export function getRelatedCreations(
   }> = [];
 
   for (const edge of graph.edges) {
-    if (relationshipFilter && edge.relationship !== relationshipFilter) continue;
+    if (relationshipFilter && edge.relationship !== relationshipFilter)
+      continue;
 
     if (edge.sourceId === creationId && graph.nodes.has(edge.targetId)) {
       results.push({
@@ -196,7 +202,7 @@ export function getRelatedCreations(
 
 export function suggestConnections(
   sessionId: string,
-  creationId: string
+  creationId: string,
 ): Array<{
   target: CreationNode;
   suggestedRelationship: RelationshipType;
@@ -217,7 +223,7 @@ export function suggestConnections(
   const existingConnections = new Set(
     graph.edges
       .filter((e) => e.sourceId === creationId || e.targetId === creationId)
-      .flatMap((e) => [e.sourceId, e.targetId])
+      .flatMap((e) => [e.sourceId, e.targetId]),
   );
 
   for (const [id, target] of graph.nodes) {
@@ -284,11 +290,11 @@ export function getGraphSummary(sessionId: string): {
   for (const edge of graph.edges) {
     connectionCounts.set(
       edge.sourceId,
-      (connectionCounts.get(edge.sourceId) || 0) + 1
+      (connectionCounts.get(edge.sourceId) || 0) + 1,
     );
     connectionCounts.set(
       edge.targetId,
-      (connectionCounts.get(edge.targetId) || 0) + 1
+      (connectionCounts.get(edge.targetId) || 0) + 1,
     );
   }
 
@@ -326,7 +332,7 @@ export function findPath(
   sessionId: string,
   sourceId: string,
   targetId: string,
-  maxDepth: number = 5
+  maxDepth: number = 5,
 ): Array<{ nodeId: string; relationship: RelationshipType }> | null {
   const graph = getOrCreateGraph(sessionId);
 
@@ -364,7 +370,10 @@ export function findPath(
       if (nextId && !visited.has(nextId)) {
         queue.push({
           nodeId: nextId,
-          path: [...current.path, { nodeId: nextId, relationship: edge.relationship }],
+          path: [
+            ...current.path,
+            { nodeId: nextId, relationship: edge.relationship },
+          ],
         });
       }
     }

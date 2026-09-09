@@ -83,13 +83,15 @@ export function intentGate(request: string): OrchestratorDecision | null {
  */
 export function assessRequest(
   request: string,
-  worldState: WorldState
+  worldState: WorldState,
 ): OrchestratorDecision {
   const lower = request.toLowerCase();
 
   // Determine primary intent
   const isGeneration = /generat|creat|design|make|build|forge/.test(lower);
-  const isCoaching = /stuck|block|help|can't|overwhelm|fear|perfect/.test(lower);
+  const isCoaching = /stuck|block|help|can't|overwhelm|fear|perfect/.test(
+    lower,
+  );
   const isResearch = /find|search|connect|relat|path|explore/.test(lower);
   const isNarrative = /story|narrative|write|expand|tell/.test(lower);
 
@@ -149,7 +151,7 @@ export function assessRequest(
 export function createAgentTasks(
   decision: OrchestratorDecision,
   request: string,
-  sessionId: string
+  sessionId: string,
 ): AgentTask[] {
   const tasks: AgentTask[] = [];
 
@@ -205,7 +207,7 @@ export async function executeAgentTask(task: AgentTask): Promise<AgentTask> {
       model: agent.model,
       action: task.type,
       message: `[${agent.displayName}] would process: "${task.input.request}"`,
-      capabilities: agent.capabilities.map(c => c.name),
+      capabilities: agent.capabilities.map((c) => c.name),
       wouldDelegate: agent.role === "orchestrator",
     };
 
@@ -226,10 +228,10 @@ export async function executeAgentTask(task: AgentTask): Promise<AgentTask> {
  */
 export async function executeTasks(
   tasks: AgentTask[],
-  parallel: boolean
+  parallel: boolean,
 ): Promise<AgentTask[]> {
   if (parallel) {
-    return Promise.all(tasks.map(t => executeAgentTask(t)));
+    return Promise.all(tasks.map((t) => executeAgentTask(t)));
   } else {
     const results: AgentTask[] = [];
     for (const task of tasks) {
@@ -245,17 +247,17 @@ export async function executeTasks(
  */
 export function synthesizeResults(
   tasks: AgentTask[],
-  worldState: WorldState
+  worldState: WorldState,
 ): {
   success: boolean;
   results: any[];
   synthesis: string;
   suggestions: string[];
 } {
-  const completedTasks = tasks.filter(t => t.status === "completed");
-  const failedTasks = tasks.filter(t => t.status === "failed");
+  const completedTasks = tasks.filter((t) => t.status === "completed");
+  const failedTasks = tasks.filter((t) => t.status === "failed");
 
-  const results = completedTasks.map(t => t.result);
+  const results = completedTasks.map((t) => t.result);
 
   // Generate synthesis based on what was accomplished
   let synthesis = "";
@@ -270,19 +272,29 @@ export function synthesizeResults(
   // Add world-state aware suggestions
   switch (worldState.maturity) {
     case WorldMaturity.VIRGIN:
-      suggestions.push("Your world is just beginning. Consider creating a founding character and their home.");
+      suggestions.push(
+        "Your world is just beginning. Consider creating a founding character and their home.",
+      );
       break;
     case WorldMaturity.EMERGING:
-      suggestions.push("Your world is growing. Try connecting your creations with relationships.");
+      suggestions.push(
+        "Your world is growing. Try connecting your creations with relationships.",
+      );
       break;
     case WorldMaturity.DEVELOPING:
-      suggestions.push("Your world has depth. Consider developing narrative threads between characters.");
+      suggestions.push(
+        "Your world has depth. Consider developing narrative threads between characters.",
+      );
       break;
     case WorldMaturity.RICH:
-      suggestions.push("Your world is rich. Look for patterns and emergent stories in your Creation Graph.");
+      suggestions.push(
+        "Your world is rich. Look for patterns and emergent stories in your Creation Graph.",
+      );
       break;
     case WorldMaturity.EPIC:
-      suggestions.push("Your world is epic. Consider documenting its history and major events.");
+      suggestions.push(
+        "Your world is epic. Consider documenting its history and major events.",
+      );
       break;
   }
 
@@ -300,7 +312,7 @@ export function synthesizeResults(
  */
 export async function orchestrateCreativeSession(
   request: string,
-  sessionId: string = "default"
+  sessionId: string = "default",
 ): Promise<{
   session: CreativeSession;
   result: any;
@@ -376,7 +388,9 @@ export async function orchestrateCreativeSession(
 /**
  * Get status of a running session
  */
-export function getSessionStatus(sessionId: string): CreativeSession | undefined {
+export function getSessionStatus(
+  sessionId: string,
+): CreativeSession | undefined {
   return activeSessions.get(sessionId);
 }
 
@@ -385,7 +399,7 @@ export function getSessionStatus(sessionId: string): CreativeSession | undefined
  */
 export function getActiveSessions(): CreativeSession[] {
   return Array.from(activeSessions.values()).filter(
-    s => s.state !== "complete" && s.state !== "failed"
+    (s) => s.state !== "complete" && s.state !== "failed",
   );
 }
 
