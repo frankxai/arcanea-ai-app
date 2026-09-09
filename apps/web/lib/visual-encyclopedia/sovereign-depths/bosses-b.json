@@ -1,0 +1,903 @@
+[
+  {
+    "id": "b13",
+    "slug": "hroven",
+    "name": "Hroven",
+    "title": "The Rimebound King",
+    "summary": "A scarred mountain predator whose immense forequarters can break the floor it stands on.",
+    "dungeonId": "d07",
+    "faction": "Unaffiliated mountain fauna.",
+    "ecology": "Uses a warm channel for winter shelter and hunts fish concentrated beneath thinning ice. Its forelimbs deliver weight-driven blows; its short hindquarters make steep retreat slower than a forward lunge.",
+    "history": "Old restraint scars suggest a failed hauling programme recorded in monastery fragments. This history explains human caution but does not make the animal a moral victim who must forgive anyone.",
+    "rivalry": "Kethrane’s warming route attracts it to the seed bridge. She can keep it away with noise only by risking the fragile vault floor.",
+    "movement": "Shoulders rise before a forepaw slam, then body weight shifts across the ice. A low head and compressed hindquarters announce the shorter but faster lunge.",
+    "entrance": "Fish scatter under a clear floor panel. A dark nose presses through the ice, followed by a forepaw wider than a person’s chest.",
+    "encounter": {
+      "objective": "Redirect Hroven towards an unoccupied warm outlet or defeat it while preserving the controlled seed-warming route.",
+      "arena": "An ice nave with timber load mats, a visible thaw channel and two manually divertible warm outlets.",
+      "phases": [
+        {
+          "name": "Claimed warmth",
+          "trigger": "The party enters the occupied channel span.",
+          "action": "It strikes the floor with a raised forepaw, sending visible whitening cracks towards the nearest heavy footing.",
+          "counterplay": "Spread weight, move onto a timber mat and avoid the widening fracture rather than only the paw."
+        },
+        {
+          "name": "Broken surface",
+          "trigger": "Two ice panels fail or a warm outlet is changed.",
+          "action": "It lunges between exposed water edges and uses the current to climb back onto ice.",
+          "counterplay": "Read its compressed hindquarters, sidestep onto anchored timber and open the unoccupied outlet during the climb."
+        },
+        {
+          "name": "New shelter",
+          "trigger": "The alternate outlet warms sufficiently.",
+          "action": "It follows fish into the new channel, stopping to test any pursuit behind it.",
+          "counterplay": "Keep the bridge quiet and withdraw along the marked timber route; continued attacks convert the retreat into a final defensive fight."
+        }
+      ],
+      "failure": "Heavy impacts collapse the warming antechamber, reducing the viable seed stock and forcing an immediate evacuation.",
+      "aftermath": "A redirected animal occupies a separated outlet. The monastery can retain a limited cold store, with a documented closure zone rather than a tame guardian."
+    },
+    "anatomy": "Enormous pale mountain ursid with elongated powerful forequarters, short heavy hindquarters, narrow small-eyed head, ice-caked dark nose, long frost-matted guard hair and old iron restraint scars; no crown or jewellery.",
+    "materials": "Coarse damp ivory fur, ice crystals, dark skin and breath vapour.",
+    "story": {
+      "series": "The Passage Compact",
+      "book": "A Winter Held in Glass",
+      "role": "Makes Brigid’s salvage ambitions contend with the physical requirements of keeping living cargo alive.",
+      "canonStatus": "STAGING"
+    },
+    "image": {
+      "src": "/images/sovereign-depths/b13.webp",
+      "alt": "Hroven crushes thin ice beneath one enormous forepaw inside a blue glacial monastery, its coarse pale fur heavy with frost.",
+      "width": 1024,
+      "height": 1536,
+      "promptId": "sovereign-depths-b13-v1",
+      "sourceSha256": "aea5c7b7ae719395d6348d0b0bbc497fb6984924a7a9d83a298f77924a68c341",
+      "renditionSha256": "c5e95cec213e43cccad64194f14830587b66e48cad558f053f3bb29b6bc82c26",
+      "generatedAt": "2026-09-09T00:46:44.312Z",
+      "generationInterface": "image_gen",
+      "model": "not exposed by tool",
+      "rendition": "WebP quality 90; original dimensions; no creative alteration"
+    },
+    "canonStatus": "STAGING",
+    "claimKind": "proposed-entity-and-encounter",
+    "touchesLocked": false,
+    "sourceOfNewClaims": "local-proposal",
+    "provenance": {
+      "sourceOfNewClaims": "local-proposal",
+      "baselineRepository": "frankxai/arcanea",
+      "baselineCommit": "fc1d1c00b2819c7514ce9061caae20c7a2d24fc1",
+      "baselinePurpose": "Canon compatibility reference only; these new records are not asserted to exist at this commit.",
+      "authoredAt": "2026-09-09",
+      "approval": "Not promoted to canon"
+    },
+    "implementationStatus": "Authored encounter design; no playable implementation claimed",
+    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate."
+  },
+  {
+    "id": "b14",
+    "slug": "kethrane",
+    "name": "Kethrane",
+    "title": "The White Vigil",
+    "summary": "A disciplined expedition protector who has already paid for the route another party intends to claim.",
+    "dungeonId": "d07",
+    "faction": "Independent White Vigil expedition; Academy-trained mortal.",
+    "ecology": "A human fighter constrained by footing, breath and the need to keep the seed bridge intact. Training enables deliberate control, not immunity to cold or steel.",
+    "history": "Kethrane’s crew discovered the viable stock and spent weeks warming it. Their sponsor claims exclusive custody; she doubts that claim but will not abandon the people who made extraction possible.",
+    "rivalry": "Hroven occupies the channel her crew needs. She can repel it but cannot both fight on the ice and regulate the vault temperature.",
+    "movement": "Low lateral guards become sliding countersteps on prepared frost. Her leading heel sets before a committed cut; on bare timber she loses the long glide but gains a faster stop.",
+    "entrance": "Beyond the thaw water, a woman scrapes ice from the edge of her blade and tells the approaching party exactly how many people are still behind her.",
+    "encounter": {
+      "objective": "Earn shared custody by a controlled duel or agreement while keeping both expedition crews and the viable stock safe.",
+      "arena": "A narrow bridge with two timber passing platforms, a marked surrender recess and a fragile warming chamber below.",
+      "phases": [
+        {
+          "name": "The bridge is held",
+          "trigger": "An armed challenger crosses the agreed mark.",
+          "action": "She makes two measured lateral cuts, then a sliding counterstep that punishes an immediate chase.",
+          "counterplay": "Watch the leading heel, wait for the glide to end and use the passing platform to change the angle."
+        },
+        {
+          "name": "Ground changed",
+          "trigger": "A timber mat is placed or ice is broken.",
+          "action": "She shortens her stance and switches to close binds and shoulder checks.",
+          "counterplay": "Use blade control and a clean disarm; do not retreat through the warming controls with a weapon raised."
+        },
+        {
+          "name": "Custody decision",
+          "trigger": "A clean disarm, agreed touch score or mutual withdrawal occurs.",
+          "action": "She lowers the point but keeps her crew’s exit open while terms are stated.",
+          "counterplay": "Honor the surrender recess and commit to a verifiable division of transport, seed stock and labour."
+        }
+      ],
+      "failure": "A strike into the warming machinery kills part of the stock and ends the controlled duel. Losing fairly costs priority and transport capacity rather than life.",
+      "aftermath": "Kethrane can become a recurring equal whose support depends on honoured agreements. She retains her crew and the right to refuse later requests."
+    },
+    "anatomy": "Mature human warrior woman with shaved dark hair, damaged pale lamellar armour over heavy grey wool, exposed serious face, long two-handed straight blade with an ordinary dark hilt; one asymmetric ice-crusted shoulder cloak.",
+    "materials": "Scratched steel, felted wool, frost, human weathered skin.",
+    "story": {
+      "series": "The Passage Compact",
+      "book": "A Winter Held in Glass",
+      "role": "A sustained rivalry that makes cooperation an earned political achievement rather than a reward for violence.",
+      "canonStatus": "STAGING"
+    },
+    "image": {
+      "src": "/images/sovereign-depths/b14.webp",
+      "alt": "Kethrane holds a long sword across a glacial walkway, wearing battered lamellar and a frost-covered cloak as a challenger approaches.",
+      "width": 1024,
+      "height": 1536,
+      "promptId": "sovereign-depths-b14-v1",
+      "sourceSha256": "03dd6474db085a386aa7967d275437b569fabbab42b07361654d270065f3e719",
+      "renditionSha256": "9d73de5829d5fc2daf7513f5cb30d0a0a536d6c4dafeeb1394a6a54afd766f12",
+      "generatedAt": "2026-09-09T00:49:48.132Z",
+      "generationInterface": "image_gen",
+      "model": "not exposed by tool",
+      "rendition": "WebP quality 90; original dimensions; no creative alteration"
+    },
+    "canonStatus": "STAGING",
+    "claimKind": "proposed-entity-and-encounter",
+    "touchesLocked": false,
+    "sourceOfNewClaims": "local-proposal",
+    "provenance": {
+      "sourceOfNewClaims": "local-proposal",
+      "baselineRepository": "frankxai/arcanea",
+      "baselineCommit": "fc1d1c00b2819c7514ce9061caae20c7a2d24fc1",
+      "baselinePurpose": "Canon compatibility reference only; these new records are not asserted to exist at this commit.",
+      "authoredAt": "2026-09-09",
+      "approval": "Not promoted to canon"
+    },
+    "implementationStatus": "Authored encounter design; no playable implementation claimed",
+    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate."
+  },
+  {
+    "id": "b15",
+    "slug": "the-verdigris-monarch",
+    "name": "The Verdigris Monarch",
+    "title": "Heart of the Living Seam",
+    "summary": "An immense root-and-mineral organism that holds a wet crater together by continuously moving through it.",
+    "dungeonId": "d08",
+    "faction": "Unaffiliated proposed harmonic mutation; no divine identity.",
+    "ecology": "Transports mineral-rich water through root channels and sheds stone leaves that shelter smaller organisms. Its movement opens sinkholes while closing older ones; stability is dynamic, not a frozen ideal.",
+    "history": "The living seam arose in altered crater soil and was later cultivated by researchers. The current organism exceeds their records. Its exact emergence remains a local research question, not a replacement for Arcanea’s creation history.",
+    "rivalry": "Small Khaross colonies prune blocked channels; the present infestation strips live conduits faster than the Monarch can reroute them. Attacking all parasites indiscriminately can also block drainage.",
+    "movement": "Root legs lift one at a time, leaving three supports. A brightening seam precedes a mineral extrusion; a dimming seam precedes subsidence.",
+    "entrance": "The causeway descends without breaking. Across the crater, a root rises from beneath a laboratory and lifts a terrace into the sunlight.",
+    "encounter": {
+      "objective": "Stabilise an extraction route and reduce the destructive infestation without severing the living water network.",
+      "arena": "Four terraced levels linked by causeways, active root conduits and visible breathing sinkholes.",
+      "phases": [
+        {
+          "name": "Displaced terrace",
+          "trigger": "The extraction crew cuts a living conduit.",
+          "action": "The Monarch lifts a root and the connected terrace begins to sink; light drains from the exposed seam first.",
+          "counterplay": "Leave the dimming route, move onto an independent stone footing and close the extraction valve."
+        },
+        {
+          "name": "Crystal defence",
+          "trigger": "Live roots are repeatedly damaged or the parasite enters a main channel.",
+          "action": "A seam brightens before blunt mineral leaves extrude across a chosen route.",
+          "counterplay": "Read the bright channel, move across rather than along it and use dead mineral cover while clearing the parasite from the junction."
+        },
+        {
+          "name": "New circulation",
+          "trigger": "Two main channels are cleared and extraction stops.",
+          "action": "Water returns along an altered route, lifting one terrace and draining another.",
+          "counterplay": "Reposition the transport line to the new stable causeway and allow the root leg to settle before loading it."
+        }
+      ],
+      "failure": "Severing the main network drains the wet terraces and collapses the high-yield route. Killing the Monarch provides immediate ore at a lasting ecological and settlement cost.",
+      "aftermath": "A stabilised crater supports limited dry-seam work and repeated observation. The creature stays wild and its growth continues beyond the expedition’s needs."
+    },
+    "anatomy": "Huge plant-mineral organism with a hollow cylindrical trunk torso and four thick root legs, a low asymmetric crown of broad stone leaves, no face or deer antlers; luminous jade channels only where bark has split.",
+    "materials": "Rough bark, malachite-like living crystal, wet soil, stone leaf surfaces.",
+    "story": {
+      "series": "The Living Meridian",
+      "book": "The Forest in the Stone",
+      "role": "Forces Fenwick Darr to replace an extraction forecast with a binding lower-yield contract.",
+      "canonStatus": "STAGING"
+    },
+    "image": {
+      "src": "/images/sovereign-depths/b15.webp",
+      "alt": "The Verdigris Monarch lifts a vast root limb from botanical terraces, revealing jade channels beneath a hollow trunk and mineral leaves.",
+      "width": 1024,
+      "height": 1536,
+      "promptId": "sovereign-depths-b15-v1",
+      "sourceSha256": "f0f45905e4be32d992580711852f6921f9993d328dec7bf6f7807964aeb4a7f7",
+      "renditionSha256": "16477ad344f2f978c81610bfd508905b4a408980c2d5aa513e63fde7f57938c1",
+      "generatedAt": "2026-09-09T00:50:33.513Z",
+      "generationInterface": "image_gen",
+      "model": "not exposed by tool",
+      "rendition": "WebP quality 90; original dimensions; no creative alteration"
+    },
+    "canonStatus": "STAGING",
+    "claimKind": "proposed-entity-and-encounter",
+    "touchesLocked": false,
+    "sourceOfNewClaims": "local-proposal",
+    "provenance": {
+      "sourceOfNewClaims": "local-proposal",
+      "baselineRepository": "frankxai/arcanea",
+      "baselineCommit": "fc1d1c00b2819c7514ce9061caae20c7a2d24fc1",
+      "baselinePurpose": "Canon compatibility reference only; these new records are not asserted to exist at this commit.",
+      "authoredAt": "2026-09-09",
+      "approval": "Not promoted to canon"
+    },
+    "implementationStatus": "Authored encounter design; no playable implementation claimed",
+    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate."
+  },
+  {
+    "id": "b16",
+    "slug": "khaross",
+    "name": "Khaross",
+    "title": "The Gilded Parasite",
+    "summary": "A mineral-feeding parasite whose beautiful shell records the channels it has stolen.",
+    "dungeonId": "d08",
+    "faction": "Unaffiliated local parasite; outbreak amplified by extraction.",
+    "ecology": "Rasps living mineral conduits and stores conductive sap under metallic biological shell plates. Small populations clear blocked growth; the large individual thrives on newly cut surfaces and warm laboratory drains.",
+    "history": "Old casings appear in the earliest research beds. The present outbreak follows recent trench cuts, making it a consequence of altered feeding access rather than a newly invented evil species.",
+    "rivalry": "Feeds on the Monarch yet depends on its continued circulation. When a main root dies, Khaross abandons it and seeks the next live channel, exposing an exploitable migration route.",
+    "movement": "A wave of short legs carries the long body around narrow roots. The head can reverse along its own track faster than the whole shell can turn.",
+    "entrance": "A gold-coloured seam peels away from a root. Dozens of legs unfold underneath, and the stolen jade light continues moving inside the shell.",
+    "encounter": {
+      "objective": "Separate the outbreak individual from the main water network and contain or kill it without poisoning the crater.",
+      "arena": "A ring of mineral roots around a dry laboratory terrace, with controllable warm drains and dead-channel traps.",
+      "phases": [
+        {
+          "name": "Rasping circuit",
+          "trigger": "The party approaches an occupied root junction.",
+          "action": "Its antennae touch a live seam before the head follows with a short rasping rush.",
+          "counterplay": "Watch the antenna contact, cross onto a dead stone surface and strike the exposed underside during the root transfer."
+        },
+        {
+          "name": "Stolen charge",
+          "trigger": "Two shell conduits are damaged.",
+          "action": "Stored sap brightens under a segment before it is expelled in a narrow corrosive jet.",
+          "counterplay": "Move away from the bright segment’s vents, use the dry terrace’s stone lip and wait for that shell plate to empty."
+        },
+        {
+          "name": "False feeding route",
+          "trigger": "A warm drain leads into the dead-channel trap.",
+          "action": "It leaves the main root and accelerates along the prepared path, reversing if the temperature drops.",
+          "counterplay": "Maintain the drain until the tail clears, close both isolation wedges and choose containment or a focused final fight on dead stone."
+        }
+      ],
+      "failure": "Breaking a sap reservoir over a living junction kills that conduit and redirects the outbreak into another terrace.",
+      "aftermath": "A contained individual enables controlled study; indiscriminate eradication is not framed as automatically beneficial. The visible outbreak and ordinary small colonies remain distinct."
+    },
+    "anatomy": "Long predatory centipede-like organism with thin hammered-gold-coloured natural shell plates and dark flexible belly, dozens of short functional legs, forked sensory antennae and a blunt rasping mouth; no human face.",
+    "materials": "Matte metallic biological shell, black wet chitin, jade sap; gold is ecological colour not ornament.",
+    "story": {
+      "series": "The Living Meridian",
+      "book": "The Forest in the Stone",
+      "role": "Exposes the difference between a useful ecosystem role and an intolerable local population event.",
+      "canonStatus": "STAGING"
+    },
+    "image": {
+      "src": "/images/sovereign-depths/b16.webp",
+      "alt": "Khaross crawls down a living jade seam, its long golden segmented shell and dark jointed legs suspended above overgrown terraces.",
+      "width": 1024,
+      "height": 1536,
+      "promptId": "sovereign-depths-b16-v1",
+      "sourceSha256": "a58f504a112979aefba7a2c184bc379dd49542647a2a406cd795ef2763a7e6e8",
+      "renditionSha256": "3d6af43cda9402f4ae67cf82c9f109ff5d09a81f4784c1e065460de7ed94d338",
+      "generatedAt": "2026-09-09T00:51:05.099Z",
+      "generationInterface": "image_gen",
+      "model": "not exposed by tool",
+      "rendition": "WebP quality 90; original dimensions; no creative alteration"
+    },
+    "canonStatus": "STAGING",
+    "claimKind": "proposed-entity-and-encounter",
+    "touchesLocked": false,
+    "sourceOfNewClaims": "local-proposal",
+    "provenance": {
+      "sourceOfNewClaims": "local-proposal",
+      "baselineRepository": "frankxai/arcanea",
+      "baselineCommit": "fc1d1c00b2819c7514ce9061caae20c7a2d24fc1",
+      "baselinePurpose": "Canon compatibility reference only; these new records are not asserted to exist at this commit.",
+      "authoredAt": "2026-09-09",
+      "approval": "Not promoted to canon"
+    },
+    "implementationStatus": "Authored encounter design; no playable implementation claimed",
+    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate."
+  },
+  {
+    "id": "b17",
+    "slug": "avarra",
+    "name": "Avarra",
+    "title": "The Glass Sovereign",
+    "summary": "A Celestial duelist who makes every inch of an almost empty court matter. Her authority is a proposed local appointment, not a new Gate.",
+    "dungeonId": "d09",
+    "faction": "Court of the Unbroken Light; proposed Celestial presider.",
+    "ecology": "Uses three substantial quartz blades whose paths remain visible. She redirects light within the court’s optical architecture; the blades retain weight, collision and recovery constraints.",
+    "history": "Avarra accepted the court’s revised nonlethal charter and has honoured it despite petitions to restore blood judgement. The older Warden cannot interpret every revision, so her fidelity to the terms is tested by the machinery beside her.",
+    "rivalry": "The Prism Warden sometimes marks a surrendered entrant as an unauthorised occupant. Avarra will interrupt her own advantage to uphold the stated charter, without automatically disabling a mechanism she cannot safely reach.",
+    "movement": "Measured footwork assigns one blade to pressure, one to guard and one to recovery. A blade rotated edge-on briefly disappears against the light but its shadow and sound remain legible.",
+    "entrance": "Three quartz blades descend separately to the court. Avarra follows at walking pace, reads the chosen terms aloud and leaves the first attack to the challenger.",
+    "encounter": {
+      "objective": "Win the declared passage trial by clean touches, boundary control or disarm; protect a surrendered entrant when the old protocol intervenes.",
+      "arena": "An open duel court with quartz fins, a marked boundary, two surrender recesses and rotating spectator shutters.",
+      "phases": [
+        {
+          "name": "Three measures",
+          "trigger": "The challenger confirms the trial conditions.",
+          "action": "One blade advances, one guards her flank and one returns through a fixed recovery arc.",
+          "counterplay": "Track the returning blade rather than chasing the attacker; cross its completed arc to reach her open side."
+        },
+        {
+          "name": "Light divided",
+          "trigger": "The challenger scores two clean measures or controls the central mark.",
+          "action": "She rotates a blade into a visible light band before a long lateral sweep.",
+          "counterplay": "Read the blade’s bright edge and floor shadow, pass under the near end or move beyond the marked terminating fin."
+        },
+        {
+          "name": "Terms upheld",
+          "trigger": "The Warden flags a surrendering entrant.",
+          "action": "Avarra diverts a blade to protect the recess, leaving her own scoring defence incomplete.",
+          "counterplay": "Pause scoring to help contain the Warden, or finish the agreed measure without striking the protected entrant; the charter records the choice."
+        }
+      ],
+      "failure": "Leaving the boundary concedes a measure. Attacking a surrender recess ends the trial and closes lawful passage until restitution is adjudicated.",
+      "aftermath": "A victory grants passage under stated terms, not ownership of the court or Avarra’s service. The charter discrepancy becomes a repair obligation shared by the two valleys."
+    },
+    "anatomy": "3.2-metre adult female celestial duelist with mature angular face, deep-set dark eyes, severe smoke-grey silk and white mineral chest mantle; three substantial floating smoky-quartz blades, no crown or wings.",
+    "materials": "Natural mature skin, weighted silk, chipped translucent quartz, worn ivory stone.",
+    "story": {
+      "series": "The Passage Compact",
+      "book": "The Measure of Passage",
+      "role": "Makes a fair victory more demanding than killing, and gives Brigid a lasting public obligation alongside the route she wins.",
+      "canonStatus": "STAGING"
+    },
+    "image": {
+      "src": "/images/sovereign-depths/b17.webp",
+      "alt": "Avarra stands in a severe mountain court, her pale mantle and smoky quartz blades catching the light above the challengers.",
+      "width": 1024,
+      "height": 1536,
+      "promptId": "sovereign-depths-b17-r1",
+      "sourceSha256": "62c2ba4e0786293a1d6685b2ed7298c327d06781abc1bd6b7ebf617d3f84532c",
+      "renditionSha256": "6d622f281f2343ca0e645fbc69cd6b84c048a724121b948f09507b57981cfeb7",
+      "generatedAt": "2026-09-09T00:37:31.712Z",
+      "generationInterface": "image_gen",
+      "model": "not exposed by tool",
+      "rendition": "WebP quality 90; original dimensions; no creative alteration"
+    },
+    "canonStatus": "STAGING",
+    "claimKind": "proposed-entity-and-encounter",
+    "touchesLocked": false,
+    "sourceOfNewClaims": "local-proposal",
+    "provenance": {
+      "sourceOfNewClaims": "local-proposal",
+      "baselineRepository": "frankxai/arcanea",
+      "baselineCommit": "fc1d1c00b2819c7514ce9061caae20c7a2d24fc1",
+      "baselinePurpose": "Canon compatibility reference only; these new records are not asserted to exist at this commit.",
+      "authoredAt": "2026-09-09",
+      "approval": "Not promoted to canon"
+    },
+    "implementationStatus": "Authored encounter design; no playable implementation claimed",
+    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate."
+  },
+  {
+    "id": "b18",
+    "slug": "the-prism-warden",
+    "name": "The Prism Warden",
+    "title": "Measure of the Court",
+    "summary": "An optical sentinel that can divide a beam accurately and apply an obsolete rule disastrously.",
+    "dungeonId": "d09",
+    "faction": "Court of the Unbroken Light; bounded Forged apparatus.",
+    "ecology": "Requires incident light and clear quartz paths. Mineral inclusions scatter energy, so each active beam has a visible source and ending; occlusion works physically.",
+    "history": "Its defence programme predates the court’s latest surrender charter. Previous presiders added manual pauses instead of replacing its core measure, leaving a documented conflict between law and machinery.",
+    "rivalry": "Avarra’s commitment to the revised charter interrupts its original programme. It treats her protective blade as an obstruction to route around, not as a divine enemy.",
+    "movement": "Four tapered feet reposition around a rotating prism. Horizontal vanes align before a split beam; thick crystal limits the speed of a complete reversal.",
+    "entrance": "A single ray enters an empty court. The sentinel turns once, and two narrow lines of light stop precisely at the feet of a surrendered petitioner.",
+    "encounter": {
+      "objective": "Place the sentinel into a verifiable maintenance hold and prevent it firing into a surrender recess.",
+      "arena": "The trial court’s side lane, with three shutters, two ground sockets and one accessible mechanical pause linkage.",
+      "phases": [
+        {
+          "name": "Measure occupied",
+          "trigger": "An entrant remains in a surrender recess after the old countdown.",
+          "action": "The prism aligns, then divides one ray into two marked firing lanes.",
+          "counterplay": "Move a shutter to occlude the source and approach from the unlit side while the vanes remain aligned."
+        },
+        {
+          "name": "Route around",
+          "trigger": "The first firing path is blocked.",
+          "action": "It steps to a second socket and sweeps a glass vane through the maintenance lane.",
+          "counterplay": "Watch the lifting foot, leave the vane’s horizontal plane and pin the vacated socket before it can return."
+        },
+        {
+          "name": "Maintenance hold",
+          "trigger": "Both operating sockets are pinned.",
+          "action": "The prism slows but attempts one final alignment using diffuse storm light.",
+          "counterplay": "Close the remaining shutter and pull the mechanical pause linkage; verify that the vanes settle before entering the recess."
+        }
+      ],
+      "failure": "A failed hold injures the protected petitioner and invalidates the active trial. Avarra survives as an independent witness who will report exactly what occurred.",
+      "aftermath": "The apparatus remains paused until its rule set is reconciled with the charter. Restarting it without that change is explicitly not a successful restoration."
+    },
+    "anatomy": "Tall narrow four-legged crystalline sentinel with a single vertical rotating prism torso, tapered stone footings and two long horizontal glass vanes; no face, bodybuilder torso or angel wings.",
+    "materials": "Clear thick optical crystal, mineral inclusions, worn dark stone joints.",
+    "story": {
+      "series": "The Passage Compact",
+      "book": "The Measure of Passage",
+      "role": "Provides a specific institutional conflict with a concrete repair, without making every Arcanean authority secretly malevolent.",
+      "canonStatus": "STAGING"
+    },
+    "image": {
+      "src": "/images/sovereign-depths/b18.webp",
+      "alt": "The Prism Warden stands on pointed articulated supports, a vertical crystal and two horizontal vanes splitting light across the court.",
+      "width": 1024,
+      "height": 1536,
+      "promptId": "sovereign-depths-b18-v1",
+      "sourceSha256": "60683c7fee5ba697fc9f75564990b95bbc38a7027e785d1c6c9c569dffb499bb",
+      "renditionSha256": "1a707cefcdbdbd84940bbaccf06002c0d81159b2afa0d2eb2242608c217ad9d9",
+      "generatedAt": "2026-09-09T00:51:35.668Z",
+      "generationInterface": "image_gen",
+      "model": "not exposed by tool",
+      "rendition": "WebP quality 90; original dimensions; no creative alteration"
+    },
+    "canonStatus": "STAGING",
+    "claimKind": "proposed-entity-and-encounter",
+    "touchesLocked": false,
+    "sourceOfNewClaims": "local-proposal",
+    "provenance": {
+      "sourceOfNewClaims": "local-proposal",
+      "baselineRepository": "frankxai/arcanea",
+      "baselineCommit": "fc1d1c00b2819c7514ce9061caae20c7a2d24fc1",
+      "baselinePurpose": "Canon compatibility reference only; these new records are not asserted to exist at this commit.",
+      "authoredAt": "2026-09-09",
+      "approval": "Not promoted to canon"
+    },
+    "implementationStatus": "Authored encounter design; no playable implementation claimed",
+    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate."
+  },
+  {
+    "id": "b19",
+    "slug": "draeven",
+    "name": "Draeven",
+    "title": "The Chain Admiral",
+    "summary": "A naval aggressor who uses chains, tide and labour schedules with the same deliberate violence.",
+    "dungeonId": "d10",
+    "faction": "Void Ascendants, Blackwake occupation fleet.",
+    "ecology": "Depends on pressed shipwrights, tide tables and sound hulls. His grapnels redirect existing loads; he cannot conjure infinite chains or command the harbour animal.",
+    "history": "Draeven occupied a refuge harbour to build a blockade that will isolate the frontier. He punishes sabotage by sounding feeding alarms near escape boats, a cruelty his own work crews have learned to document and exploit.",
+    "rivalry": "The Keelbreaker destroys hulls when launch work grows loud. Draeven uses that danger against captives but cannot keep the predator away from his flagship’s resonant keel.",
+    "movement": "Wide braced stances support two different grapnel lines. A slack chain signals a swing; a fully tensioned line signals a pull that changes the arena load.",
+    "entrance": "A capstan stops turning, though the men pushing it do not. At the far end of the chain, the admiral tightens one gloved hand and asks which shipwright cut the brake.",
+    "encounter": {
+      "objective": "Break the launch timetable, free the pressed crews and defeat or capture the occupying commander.",
+      "arena": "A wet launch deck around a suspended keel, three capstans, two evacuation gantries and tidal sea gates.",
+      "phases": [
+        {
+          "name": "Two anchors",
+          "trigger": "The challenger reaches the launch deck.",
+          "action": "One grapnel sweeps low while the other anchors a pull; chain tension reveals which attack is active.",
+          "counterplay": "Step over the slack low sweep, stay clear of the taut line and close on the hand committed to the capstan."
+        },
+        {
+          "name": "Load released",
+          "trigger": "A launch brake is sabotaged or the first capstan is seized.",
+          "action": "He releases a suspended brace to split the deck, then swings to the surviving gantry.",
+          "counterplay": "Watch the brake pin and load shadow, secure the evacuation side first and follow only after the brace stops moving."
+        },
+        {
+          "name": "No fleet to command",
+          "trigger": "The premature launch blocks the fleet channel.",
+          "action": "He attempts to seize an evacuation boat with both grapnels, abandoning his stable stance.",
+          "counterplay": "Cut or unhook the exposed lines, use the tide to pull him off the boat route and resolve the final close fight on the pinned gangway."
+        }
+      ],
+      "failure": "A completed launch establishes the blockade and strands part of the frontier convoy. The campaign continues through a harder land route rather than resetting the fleet.",
+      "aftermath": "Freed crews retain the arsenal and testify to the occupation. Seized orders identify the exterior bridge interdiction as the second half of the same campaign."
+    },
+    "anatomy": "Tall heavily built middle-aged human man with close-cut dark beard, storm-black long coat, salt-white sash, one long chain with a grapnel in each gloved hand, practical weathered shoulder protection.",
+    "materials": "Wet wool, blackened steel chain, rough leather and sea salt.",
+    "story": {
+      "series": "The Kiln and the Keel",
+      "book": "The Harbour That Refused",
+      "role": "The first trilogy’s strategic antagonist, whose defeat depends on choices made at the furnace and citadel.",
+      "canonStatus": "STAGING"
+    },
+    "image": {
+      "src": "/images/sovereign-depths/b19.webp",
+      "alt": "Draeven pulls a taut chain around a harbour capstan while holding a hanging grapnel beneath a suspended ship.",
+      "width": 1024,
+      "height": 1536,
+      "promptId": "sovereign-depths-b19-v1",
+      "sourceSha256": "3834d8374560c423665986ed72be7bdcae76be58ecd25c4386242cc7f3017821",
+      "renditionSha256": "eb5c8e3b901573dd391a7708ef72f7b75714f0114b3ab90fdda501914bb21d1b",
+      "generatedAt": "2026-09-09T00:52:21.126Z",
+      "generationInterface": "image_gen",
+      "model": "not exposed by tool",
+      "rendition": "WebP quality 90; original dimensions; no creative alteration"
+    },
+    "canonStatus": "STAGING",
+    "claimKind": "proposed-entity-and-encounter",
+    "touchesLocked": false,
+    "sourceOfNewClaims": "local-proposal",
+    "provenance": {
+      "sourceOfNewClaims": "local-proposal",
+      "baselineRepository": "frankxai/arcanea",
+      "baselineCommit": "fc1d1c00b2819c7514ce9061caae20c7a2d24fc1",
+      "baselinePurpose": "Canon compatibility reference only; these new records are not asserted to exist at this commit.",
+      "authoredAt": "2026-09-09",
+      "approval": "Not promoted to canon"
+    },
+    "implementationStatus": "Authored encounter design; no playable implementation claimed",
+    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate."
+  },
+  {
+    "id": "b20",
+    "slug": "the-keelbreaker",
+    "name": "The Keelbreaker",
+    "title": "Hunger Beneath the Arsenal",
+    "summary": "A flat-armoured harbour predator that discovers ships by the sounds their builders cannot avoid making.",
+    "dungeonId": "d10",
+    "faction": "Unaffiliated marine crustacean.",
+    "ecology": "Locates prey and hollow shelter through low waterborne vibration. Its broad claw lifts and crushes; its smaller claw blocks openings and handles prey. It cannot pursue a party up a dry cliff.",
+    "history": "The animal used tidal caves before the arsenal expanded. Heavy pile-driving and suspended hollow hulls now concentrate its feeding attempts beneath occupied docks.",
+    "rivalry": "Draeven’s alarm system repeatedly lures it into the launch basin. It threatens his fleet more than his own fighters because the flagship’s keel produces the strongest resonance.",
+    "movement": "Low lateral scuttles fit beneath keels. Before a major lift, six legs spread and the broad claw seats beneath the load, creating an unmistakable commitment.",
+    "entrance": "A ship keel rises against its hanging chains. Beneath it, a claw larger than the launch gate closes slowly around the timber.",
+    "encounter": {
+      "objective": "Open an unoccupied tidal exit and remove the feeding alarm, or defeat the predator without collapsing the evacuation gantries.",
+      "arena": "A flooded dock beneath the launch deck, with stone caissons, hanging hulls and two tide-controlled exits.",
+      "phases": [
+        {
+          "name": "Hollow timber",
+          "trigger": "Hammering or an alarm vibrates through a hull.",
+          "action": "It seats the broad claw beneath the resonant load, then lifts while the small claw blocks the nearest ladder.",
+          "counterplay": "Leave the load’s vertical shadow, use the stone caisson ladder and disable the alarm during the wide-leg lift."
+        },
+        {
+          "name": "Dock trapped",
+          "trigger": "The first sea gate is opened.",
+          "action": "The tide turns it sideways and it sweeps the smaller claw across the lower catwalk.",
+          "counterplay": "Read the current through floating debris, climb above the sweep and clear the second gate’s jam from the dry mechanism."
+        },
+        {
+          "name": "Open tide",
+          "trigger": "Both the quiet exit and the alarm shutdown are complete.",
+          "action": "It follows the current into the outer cave, stopping when a hollow hull vibrates behind it.",
+          "counterplay": "Keep evacuation work quiet until the shell clears; secure loose timbers before restarting capstans."
+        }
+      ],
+      "failure": "A falling keel destroys a gantry and closes one evacuation lane. Continued alarm use drives the animal back into the inhabited basin.",
+      "aftermath": "The harbour resumes with quiet work intervals and a protected outer tide route. The predator remains a serious operational hazard rather than a domesticated trophy."
+    },
+    "anatomy": "Massive low flat marine crustacean with two unequal broad crushing claws, six walking legs, tiny protected stalk eyes and a thick ridged shell shaped to wedge beneath hulls; no smiling crab face.",
+    "materials": "Dark blue-black weathered shell, pale scrape marks, barnacles, streaming water.",
+    "story": {
+      "series": "The Kiln and the Keel",
+      "book": "The Harbour That Refused",
+      "role": "Makes the liberation plan respect a nonhuman danger that military victory alone cannot remove.",
+      "canonStatus": "STAGING"
+    },
+    "image": {
+      "src": "/images/sovereign-depths/b20.webp",
+      "alt": "The Keelbreaker lifts a wooden ship with one immense claw while its smaller claw blocks a ladder in the storm-flooded arsenal.",
+      "width": 1024,
+      "height": 1536,
+      "promptId": "sovereign-depths-b20-v1",
+      "sourceSha256": "31dcb36d09adcb79d9dd1fdbcaf2694c2767321c602c8a390c2851c9d01f74d0",
+      "renditionSha256": "242fabe6b83ff0e67e2eb655fdcbaf3f2607b49a485563c79083a84462e3cc8e",
+      "generatedAt": "2026-09-09T00:52:55.477Z",
+      "generationInterface": "image_gen",
+      "model": "not exposed by tool",
+      "rendition": "WebP quality 90; original dimensions; no creative alteration"
+    },
+    "canonStatus": "STAGING",
+    "claimKind": "proposed-entity-and-encounter",
+    "touchesLocked": false,
+    "sourceOfNewClaims": "local-proposal",
+    "provenance": {
+      "sourceOfNewClaims": "local-proposal",
+      "baselineRepository": "frankxai/arcanea",
+      "baselineCommit": "fc1d1c00b2819c7514ce9061caae20c7a2d24fc1",
+      "baselinePurpose": "Canon compatibility reference only; these new records are not asserted to exist at this commit.",
+      "authoredAt": "2026-09-09",
+      "approval": "Not promoted to canon"
+    },
+    "implementationStatus": "Authored encounter design; no playable implementation claimed",
+    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate."
+  },
+  {
+    "id": "b21",
+    "slug": "the-ashen-astronomer",
+    "name": "The Ashen Astronomer",
+    "title": "Witness of the Eclipsed Meridian",
+    "summary": "A scholar willing to make public survival depend on his private observation. His weapon is precise, portable and constrained by the sky.",
+    "dungeonId": "d11",
+    "faction": "Independent claimant of the Ash Meridian observation; proposed Gate-Touched mortal.",
+    "ecology": "Needs an aligned crescent instrument, clear sight marks and the short eclipse window. His cloth blindfold filters painful glare rather than granting universal sight.",
+    "history": "Years of failed funding and stolen credit hardened into a plan to sell the only accurate water-route measurement. His deliberate coercion is a proposed independent mortal wrongdoing and therefore EXPERIMENTAL under the present antagonist rule.",
+    "rivalry": "Veyrath’s migration both reveals the lens well he needs and shifts the causeway holding his instrument. He cannot secure the observation by simply killing the animal without burying the well again.",
+    "movement": "Shuffles along inscribed sight marks with the crescent braced on one shoulder. A long tilt precedes a narrow cutting reflection; lowering the instrument leaves a vulnerable but faster human fighter.",
+    "entrance": "The desert darkens at midday. On a thin causeway, the scholar lifts a bronze crescent and a white line appears across every approach except his own.",
+    "encounter": {
+      "objective": "Secure an independently usable water-route observation and stop the scholar coercing the waiting caravans.",
+      "arena": "A central sighting ring, two lower observation stations and a buried lens well exposed during the migration.",
+      "phases": [
+        {
+          "name": "Claim of sight",
+          "trigger": "The challenger enters the ring before totality.",
+          "action": "He tilts the crescent through a broad reflection until a narrow line fixes along one causeway.",
+          "counterplay": "Leave the brightening line during the slow tilt and approach along a station outside its fixed sight marks."
+        },
+        {
+          "name": "Moving ground",
+          "trigger": "Veyrath passes beneath the outer ring.",
+          "action": "He abandons a shifting mark and throws sand to conceal his next instrument brace.",
+          "counterplay": "Read the instrument’s silhouette against the corona, use the stable lower station and preserve the second observer’s line of sight."
+        },
+        {
+          "name": "Shared sky",
+          "trigger": "The two lower stations establish an independent measurement.",
+          "action": "He must choose between finishing his observation and attacking the observers with ordinary close weapon work.",
+          "counterplay": "Protect the observer during the final count, then disarm, capture or force him to yield the central record."
+        }
+      ],
+      "failure": "A missed measurement increases route uncertainty and water cost. Killing the scholar too early can destroy the only correctly aligned central reading without cancelling the need to save the caravans.",
+      "aftermath": "Two independent records prevent monopoly. The scholar can survive to dispute credit or face custody; his knowledge remains useful without excusing his coercion."
+    },
+    "anatomy": "Emaciated tall human scholar with mature dark face, blindfold of thin pale cloth, long rust-red weathered mantle and a large portable crescent instrument supported against one shoulder; no floating astrology symbols.",
+    "materials": "Sand-worn bronze, dry linen, dark skin, chalk sight marks.",
+    "story": {
+      "series": "The Living Meridian",
+      "book": "The Water Under Stars",
+      "role": "Gives Corvin and Fenwick a conflict where the answer is public verifiability rather than a stronger spell.",
+      "canonStatus": "EXPERIMENTAL"
+    },
+    "image": {
+      "src": "/images/sovereign-depths/b21.webp",
+      "alt": "The blindfolded Ashen Astronomer grips a large crescent optical instrument, directing a thin beam across an observatory under an eclipse.",
+      "width": 1024,
+      "height": 1536,
+      "promptId": "sovereign-depths-b21-v1",
+      "sourceSha256": "8fda216d59abbe06a1c2774030760fee6bd6bc10818006f2fc66e3e93f125382",
+      "renditionSha256": "571ca23b8e1f30f762c293767dbc68677f33e65047e4a947e1d9bc62193b09ba",
+      "generatedAt": "2026-09-09T00:53:08.544Z",
+      "generationInterface": "image_gen",
+      "model": "not exposed by tool",
+      "rendition": "WebP quality 90; original dimensions; no creative alteration"
+    },
+    "canonStatus": "EXPERIMENTAL",
+    "claimKind": "proposed-entity-and-encounter",
+    "touchesLocked": false,
+    "sourceOfNewClaims": "local-proposal",
+    "provenance": {
+      "sourceOfNewClaims": "local-proposal",
+      "baselineRepository": "frankxai/arcanea",
+      "baselineCommit": "fc1d1c00b2819c7514ce9061caae20c7a2d24fc1",
+      "baselinePurpose": "Canon compatibility reference only; these new records are not asserted to exist at this commit.",
+      "authoredAt": "2026-09-09",
+      "approval": "Not promoted to canon"
+    },
+    "implementationStatus": "Authored encounter design; no playable implementation claimed",
+    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate.",
+    "experimentalReason": "Independent deliberate mortal coercion requires an explicit interpretation or amendment of the current sole-true-antagonist rule."
+  },
+  {
+    "id": "b22",
+    "slug": "veyrath",
+    "name": "Veyrath",
+    "title": "The Dune Cathedral",
+    "summary": "A migrating desert mollusc whose shell moves the horizon and whose path exposes the water beneath it.",
+    "dungeonId": "d11",
+    "faction": "Unaffiliated desert fauna.",
+    "ecology": "Follows buried brine and scrapes mineral films with a low feeding slit. A broad muscular foot distributes weight over sand; shell sails shade moisture-retaining channels rather than functioning as ornamental towers.",
+    "history": "Repeated shell scars correspond to observatory rings from earlier desert routes. Caravan lore describes several such organisms; Veyrath is the expedition’s label for this individual, not a primordial singularity.",
+    "rivalry": "The Astronomer’s buried lens covers a brine channel in its path. He needs its passage to uncover that lens but attempts to hurry it with vibrations that threaten his own causeway.",
+    "movement": "Slow lateral gliding produces huge pressure changes at the edges of the foot. Shell ribs shed sand before the next turn, and a contracting lower mantle announces a defensive surge.",
+    "entrance": "Three apparent ridgelines move against the eclipse. Sand pours from their edges until the low dark foot becomes visible beneath them.",
+    "encounter": {
+      "objective": "Cross the moving ring and reach the revealed lens well without forcing the animal into the waiting caravans.",
+      "arena": "A partly buried observation ring beside a broad migration channel, with shell-side ledges and two stable salt outcrops.",
+      "phases": [
+        {
+          "name": "Passing mass",
+          "trigger": "The animal meets the buried observatory ring.",
+          "action": "Its foot lifts the outer causeway and sand pours from the leading shell ribs.",
+          "counterplay": "Move towards a stable outcrop, avoid the compressed sand edge and cross a shell-side ledge only after its load settles."
+        },
+        {
+          "name": "Defensive surge",
+          "trigger": "Artificial vibration or repeated attacks strike the shell.",
+          "action": "The lower mantle contracts, then the body shifts laterally across the nearest trench.",
+          "counterplay": "Read the mantle contraction, leave the trench and silence the vibration source before a second surge."
+        },
+        {
+          "name": "Exposed well",
+          "trigger": "The rear shell clears the ring.",
+          "action": "Sand drains into a wake channel and the lens well opens briefly before settling.",
+          "counterplay": "Anchor a line from the salt outcrop, descend outside the drain funnel and secure the well lip before the next sand fall."
+        }
+      ],
+      "failure": "A forced diversion sends pressure towards the caravan basin and buries a lower observation station. Killing the animal leaves an immense carcass obstructing the water route.",
+      "aftermath": "The completed chart includes a seasonal migration interval and an accessible lens well. Wonder survives the encounter because the organism continues beyond the human plot."
+    },
+    "anatomy": "Enormous desert mollusc with a long low muscular foot and an asymmetrical ribbed shell rising like three joined wind-eroded sails, narrow feeding slit, no eyes or dragon head.",
+    "materials": "Chalky shell, dry orange grit, dark leathery foot, mineral scars.",
+    "story": {
+      "series": "The Living Meridian",
+      "book": "The Water Under Stars",
+      "role": "Changes the expedition’s map through a living event rather than a convenient treasure-room reveal.",
+      "canonStatus": "EXPERIMENTAL"
+    },
+    "image": {
+      "src": "/images/sovereign-depths/b22.webp",
+      "alt": "Veyrath carries three ribbed shell sails over a low muscular body, spilling desert sand across an observatory as explorers flee.",
+      "width": 1024,
+      "height": 1536,
+      "promptId": "sovereign-depths-b22-v1",
+      "sourceSha256": "e5b38bc8e52080b4fb407773460da3226bf47112dadfd31aff340282c8334bd0",
+      "renditionSha256": "7603d4f895024f0d07c46b81fdd8f3d84d65464c7caa20cd65ff45748b5234be",
+      "generatedAt": "2026-09-09T00:53:41.628Z",
+      "generationInterface": "image_gen",
+      "model": "not exposed by tool",
+      "rendition": "WebP quality 90; original dimensions; no creative alteration"
+    },
+    "canonStatus": "STAGING",
+    "claimKind": "proposed-entity-and-encounter",
+    "touchesLocked": false,
+    "sourceOfNewClaims": "local-proposal",
+    "provenance": {
+      "sourceOfNewClaims": "local-proposal",
+      "baselineRepository": "frankxai/arcanea",
+      "baselineCommit": "fc1d1c00b2819c7514ce9061caae20c7a2d24fc1",
+      "baselinePurpose": "Canon compatibility reference only; these new records are not asserted to exist at this commit.",
+      "authoredAt": "2026-09-09",
+      "approval": "Not promoted to canon"
+    },
+    "implementationStatus": "Authored encounter design; no playable implementation claimed",
+    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate."
+  },
+  {
+    "id": "b23",
+    "slug": "the-sable-testament",
+    "name": "The Sable Testament",
+    "title": "Voice of the Outer Wound",
+    "summary": "An exterior siege construction whose hanging stone weights translate tension into the destruction of a frontier bridge.",
+    "dungeonId": "d12",
+    "faction": "Void Ascendants, outer-road interdiction working.",
+    "ecology": "A bounded root-fibre apparatus powered through existing Shadow-tainted components. Its effect follows six physical anchor lines within the ravine; it has no remote access to Malachar’s prison.",
+    "history": "The working was assembled from local roots and prepared basalt weights to complete the blockade campaign by land. Its title is an operator’s theatrical designation, not a sacred text or new cosmic speaker.",
+    "rivalry": "Mordren protects the lines but must cross them to reach intruders. His reflection feint is disrupted whenever a weight drops silt into the water, briefly making their tactics interfere.",
+    "movement": "The suspended knot tightens before lifting a weight. Only the causeway section connected to that line fractures; inactive lines remain slack and readable.",
+    "entrance": "One basalt weight rises out of black water. Far above it, a matching section of the causeway breaks while the hanging root knot turns without a face.",
+    "encounter": {
+      "objective": "Stop the local bridge-destruction sequence, secure the convoy and preserve an alternate crossing.",
+      "arena": "The exterior ravine only: six weighted lines, three surviving causeway sections, two anchor platforms and an identified downstream ford.",
+      "phases": [
+        {
+          "name": "Tension named",
+          "trigger": "The convoy enters the exterior road approach.",
+          "action": "One line pulls taut, its weight rises and the matching causeway joint sheds stone before fracturing.",
+          "counterplay": "Trace the visible line, clear that section and pin the active weight from its remote anchor platform."
+        },
+        {
+          "name": "Paired loads",
+          "trigger": "Two weights are pinned or unloaded.",
+          "action": "The knot alternates between two remaining lines, forcing a choice of crossing and repair order.",
+          "counterplay": "Use the previously pinned line as a stable route, unload the heavier visible weight first and move the convoy only after the second line goes slack."
+        },
+        {
+          "name": "Working isolated",
+          "trigger": "All six lines are unloaded or severed at their local anchors.",
+          "action": "The central knot contracts into a short final pull confined to its own supports.",
+          "counterplay": "Withdraw from those supports, secure the last convoy line and contain the inert Shadow-tainted components without approaching the distant fissure."
+        }
+      ],
+      "failure": "A lost causeway section increases evacuation time and may cost wagons. The failure state concerns the local convoy and road; Malachar’s sealed condition never changes.",
+      "aftermath": "Stopping the apparatus exposes the downstream ford and preserves evidence of the land blockade. The prison remains sealed and outside the encounter."
+    },
+    "anatomy": "A huge suspended mass of tightly woven black root fibres shaped into a long vertical knot with six heavy hanging stone seals; no humanoid head, tentacles or winged demon silhouette.",
+    "materials": "Wet black root fibre, rough basalt seal weights, a thin deep red inner light.",
+    "story": {
+      "series": "The Unfinished Road",
+      "book": "The Road at the Edge",
+      "role": "The material climax of the evidence trilogy, linking recovered records to an immediate rescue without escalating into a canon-breaking cosmic release.",
+      "canonStatus": "STAGING"
+    },
+    "image": {
+      "src": "/images/sovereign-depths/b23.webp",
+      "alt": "The Sable Testament hangs above a dark ravine, six stone weights suspended from black roots as one tears a causeway apart.",
+      "width": 1024,
+      "height": 1536,
+      "promptId": "sovereign-depths-b23-v1",
+      "sourceSha256": "07e3ffbf714089249726d380b223aace6b7083b3ab9d7100fbe0ae2e5c5cd0aa",
+      "renditionSha256": "d42ba986ad2443033e0d1b6b89031b02c248289fde1ec20cde6762e3edc9c9d2",
+      "generatedAt": "2026-09-09T00:54:10.295Z",
+      "generationInterface": "image_gen",
+      "model": "not exposed by tool",
+      "rendition": "WebP quality 90; original dimensions; no creative alteration"
+    },
+    "canonStatus": "STAGING",
+    "claimKind": "proposed-entity-and-encounter",
+    "touchesLocked": false,
+    "sourceOfNewClaims": "local-proposal",
+    "provenance": {
+      "sourceOfNewClaims": "local-proposal",
+      "baselineRepository": "frankxai/arcanea",
+      "baselineCommit": "fc1d1c00b2819c7514ce9061caae20c7a2d24fc1",
+      "baselinePurpose": "Canon compatibility reference only; these new records are not asserted to exist at this commit.",
+      "authoredAt": "2026-09-09",
+      "approval": "Not promoted to canon"
+    },
+    "implementationStatus": "Authored encounter design; no playable implementation claimed",
+    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate."
+  },
+  {
+    "id": "b24",
+    "slug": "mordren",
+    "name": "Mordren",
+    "title": "The Last Duskblade",
+    "summary": "A swordmaster whose delayed draw and water reflection make one restrained blade feel impossibly early.",
+    "dungeonId": "d12",
+    "faction": "Voidtouched duelist attached to the exterior Void Ascendant operation.",
+    "ecology": "The reflection feint requires a calm connected surface of water within the ravine. Disturbed or obscured water breaks its visual alignment; the real blade remains the source of physical injury.",
+    "history": "Mordren accepted Shadow corruption to win duels he could otherwise lose, then committed himself to the blockade’s exterior operation. This proposal does not establish a new primordial, replace Malachar or extend the sealed antagonist’s reach.",
+    "rivalry": "The Sable Testament’s falling weights disturb the reflective water and interrupt his best feint. He protects its anchors despite that disadvantage because completing the interdiction matters more to him than a beautiful duel.",
+    "movement": "A narrow side-on stance conceals the draw length. The stone scabbard turns before each committed cut; half-draws can become short thrusts but cannot instantly become full sweeps without another shoulder rotation.",
+    "entrance": "A plain blade is drawn halfway above the severed causeway. In the water below, its reflection appears fully extended before the hand moves again.",
+    "encounter": {
+      "objective": "Break the duelist’s defence of the outer anchors and keep the convoy crossing open.",
+      "arena": "A severed causeway over calm black water, two low silt-release sluices and three dry stone islands within the exterior route.",
+      "phases": [
+        {
+          "name": "Half a blade",
+          "trigger": "The challenger reaches the first defended anchor.",
+          "action": "A half-draw threatens a thrust while the reflected image suggests a wider cut.",
+          "counterplay": "Track the real scabbard and shoulder, hold outside thrust range and punish the full draw’s committed recovery."
+        },
+        {
+          "name": "Water broken",
+          "trigger": "A siege weight falls or a silt sluice opens.",
+          "action": "The reflection feint fails; Mordren shifts to fast direct combinations and a scabbard check.",
+          "counterplay": "Keep the water disturbed, read the three-beat footwork and counter after the scabbard hand crosses his body."
+        },
+        {
+          "name": "Anchor abandoned",
+          "trigger": "The last convoy line reaches safety or the working is isolated.",
+          "action": "He leaves the anchor to pursue the bearer of the recovered operation record.",
+          "counterplay": "Choose the dry island for the final duel, protect the record carrier and defeat, capture or force him off the exterior road."
+        }
+      ],
+      "failure": "An exposed record carrier can be wounded and the operation evidence lost while the convoy still survives. Pursuit never opens a route to the canonical prison.",
+      "aftermath": "His defeat ends this exterior protection detail. Surviving corruption is contained locally; no final line claims Shadow itself has ended."
+    },
+    "anatomy": "Adult androgynous human swordmaster with severe weathered face and close-cropped white hair, plain black layered warcloth, one unadorned long narrow blade and a broken dark stone scabbard, visible Shadow veins restrained to left hand.",
+    "materials": "Matte warcloth, worn steel, black stone, human skin and restrained Shadow absorption.",
+    "story": {
+      "series": "The Unfinished Road",
+      "book": "The Road at the Edge",
+      "role": "A dangerous chosen enemy whose tactical commitment gives the final duel a specific purpose beyond spectacle.",
+      "canonStatus": "STAGING"
+    },
+    "image": {
+      "src": "/images/sovereign-depths/b24.webp",
+      "alt": "Mordren waits beside a broken causeway with a partly drawn sword; the still water reflects the blade fully unsheathed.",
+      "width": 1024,
+      "height": 1536,
+      "promptId": "sovereign-depths-b24-v1",
+      "sourceSha256": "a749927aa1d648815ae2324dc1fdf977cf7946196c8054a7219add1e4592a886",
+      "renditionSha256": "6dd143ebf488fba8390615ddd5bb19c5f307fa00ca5aa2c013d2d2da5e588d63",
+      "generatedAt": "2026-09-09T00:54:38.299Z",
+      "generationInterface": "image_gen",
+      "model": "not exposed by tool",
+      "rendition": "WebP quality 90; original dimensions; no creative alteration"
+    },
+    "canonStatus": "STAGING",
+    "claimKind": "proposed-entity-and-encounter",
+    "touchesLocked": false,
+    "sourceOfNewClaims": "local-proposal",
+    "provenance": {
+      "sourceOfNewClaims": "local-proposal",
+      "baselineRepository": "frankxai/arcanea",
+      "baselineCommit": "fc1d1c00b2819c7514ce9061caae20c7a2d24fc1",
+      "baselinePurpose": "Canon compatibility reference only; these new records are not asserted to exist at this commit.",
+      "authoredAt": "2026-09-09",
+      "approval": "Not promoted to canon"
+    },
+    "implementationStatus": "Authored encounter design; no playable implementation claimed",
+    "nameNote": "Original working name or translated expedition epithet. No asserted derivation from an established divine name; naming review remains a promotion gate."
+  }
+]
