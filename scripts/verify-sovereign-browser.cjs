@@ -36,8 +36,15 @@ module.exports.verifySovereignPreview = async ({
     .locator("#collection a")
     .filter({ hasText: "The Pelagic Cathedral" })
     .click();
+  await page.waitForURL(
+    `${base}/gallery/sovereign-depths/the-pelagic-cathedral`,
+  );
   await page
-    .getByRole("heading", { name: "The Pelagic Cathedral", exact: true })
+    .getByRole("heading", {
+      name: "The Pelagic Cathedral",
+      exact: true,
+      level: 1,
+    })
     .waitFor();
   assert.ok(
     new URL(page.url()).pathname.startsWith("/gallery/sovereign-depths/"),
