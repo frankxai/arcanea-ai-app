@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { ReadingToolbar } from './reading-toolbar';
+import proseStyles from './chapter-prose.module.css';
 
 const ChatMarkdown = dynamic(() => import('@/components/chat/chat-markdown'), {
   loading: () => <div className="animate-pulse h-4 bg-white/[0.04] rounded w-3/4" />,
@@ -508,7 +509,7 @@ export function ChapterReader({
       <div className="max-w-[680px] mx-auto flex gap-0">
         <article className="flex-1 px-6 py-10 min-w-0">
           <div
-            className={`${s.prose} ${fontSizeClass} ${lineHeightClass} ${fontFamilyClass}`}
+            className={`${proseStyles.prose} ${s.prose} ${fontSizeClass} ${lineHeightClass} ${fontFamilyClass}`}
           >
             <ChatMarkdown content={content} />
           </div>

@@ -93,8 +93,9 @@ test.describe('chapter reader', () => {
   }) => {
     await gotoChapter(page, BOOK_ID, CHAPTER_ID);
 
-    // The prose container carries the text-size class
-    const prose = page.locator('article > div').first();
+    // Measure the rendered text: container styles can be overridden below it.
+    const prose = page.locator('article p').first();
+    await expect(prose).toBeVisible();
     const initialSize = await prose.evaluate(
       (el) => window.getComputedStyle(el).fontSize,
     );
@@ -110,6 +111,24 @@ test.describe('chapter reader', () => {
         { timeout: 5_000 },
       )
       .toBeGreaterThan(parseFloat(initialSize));
+  });
+
+  test('font and line spacing preferences reach the rendered paragraphs', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await gotoChapter(page, BOOK_ID, CHAPTER_ID);
+    const paragraph = page.locator('article p').first();
+    await expect(paragraph).toBeVisible();
+
+    const initialFont = await paragraph.evaluate((el) => getComputedStyle(el).fontFamily);
+    await page.getByRole('button', { name: 'Font: serif', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Font: sans', exact: true })).toBeVisible();
+    await expect.poll(() => paragraph.evaluate((el) => getComputedStyle(el).fontFamily))
+      .not.toBe(initialFont);
+
+    const initialSpacing = await paragraph.evaluate((el) => parseFloat(getComputedStyle(el).lineHeight));
+    await page.getByRole('button', { name: 'Line spacing: normal', exact: true }).click();
+    await expect.poll(() => paragraph.evaluate((el) => parseFloat(getComputedStyle(el).lineHeight)))
+      .toBeGreaterThan(initialSpacing);
   });
 
   test('ArrowRight keyboard navigation advances to the next chapter', async ({

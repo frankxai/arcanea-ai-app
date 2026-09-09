@@ -1,0 +1,10 @@
+/* Reader preferences must reach the text, not only its outer container.
+   Shared chat styles and the site-wide article rule otherwise override them. */
+.prose p {
+  font-family: inherit;
+  line-height: inherit;
+}
+
+.prose li {
+  line-height: inherit;
+}
