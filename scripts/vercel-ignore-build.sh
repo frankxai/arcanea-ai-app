@@ -11,6 +11,14 @@
 
 set -euo pipefail
 
+# Both the repository root and apps/web configure this command. Git pathspecs
+# must have the same meaning from either working directory.
+if ! BUILD_REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+  echo "✅ build: repository history unavailable"
+  exit 1
+fi
+cd "$BUILD_REPO_ROOT"
+
 BRANCH="${VERCEL_GIT_COMMIT_REF:-${GITHUB_REF_NAME:-unknown}}"
 
 # Always build production (main → arcanea.ai)
@@ -43,6 +51,15 @@ case "$BRANCH" in
   changeset-release/*)  echo "⏭️  skip: changeset release ($BRANCH)"; exit 0 ;;
   docs/*)               echo "⏭️  skip: docs-only branch ($BRANCH)"; exit 0 ;;
 esac
+
+# These Markdown files are runtime inputs to getCinematicChapterSummaries and
+# getCinematicChapter, not documentation. Keep private packets/ledger notes in
+# the cheaper docs-only path. Missing parent history also defaults to building.
+if ! git diff --quiet HEAD^ HEAD -- \
+  ':(top)book/chronicles-of-arcanea/book-01-the-three-academies/cinematic-edition/chapters' 2>/dev/null; then
+  echo "✅ build: cinematic chapter content changed"
+  exit 1
+fi
 
 # Skip if HEAD only touches docs/markdown (preview deploy adds no value)
 if git diff --quiet HEAD^ HEAD -- ':!*.md' ':!docs/**' ':!planning-with-files/**' ':!book/**' ':!wiki/**' 2>/dev/null; then

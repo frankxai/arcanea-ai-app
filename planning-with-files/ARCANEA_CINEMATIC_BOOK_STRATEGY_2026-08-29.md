@@ -62,6 +62,13 @@ Next actions: obtain an owned integration lane for the shared waitlist and close
 
 Next manuscript action: independent review of the revised teaching/attachment balance when admitted, then apply the same reader-experience scrutiny to Mera's memory lesson and Emilia's maker practicum. Keep the shared waitlist, final cover/artbook, commerce rehearsal and production release as unfinished parts of the original goal.
 
+### Manuscript deployment filter repair
+
+- Chapter 13 revision `c0600ddcf710c1f82b167123165b0d674532d814` is committed and pushed. Vercel deployment `dpl_EpVFcLALYbtYVd1MezPooTBHXDaS` reached CANCELED, not READY. Its build log explicitly reports `skip: docs-only commit` from `scripts/vercel-ignore-build.sh`; this was a deliberate ignore result, not a crash or observation timeout.
+- The filter excluded the entire book tree and all Markdown, including the runtime chapter inputs read by `getCinematicChapterSummaries` and `getCinematicChapter`. It also interpreted exclusions differently when invoked through the `apps/web` shim. The repair normalizes the Git root and checks this edition's chapter directory before documentation exclusions. Private packets/ledger notes still take the docs-only path; existing production, WIP and branch-filter policies remain intact. This is a book-delivery correction, not an expansion into unrelated publishing pipelines.
+- Eleven integration tests use small temporary Git fixtures and the actual shell script/shim. They cover edits from both roots, docs/packets from both roots, application code from both roots, chapter addition/deletion, explicit WIP, coherent-after-WIP, production override and missing-parent history. Four tests failed on the original filter; all eleven pass after repair. Bash syntax, test formatting and scoped whitespace checks pass. Fixture cleanup is limited to validated task-created temporary directories.
+- No local web build/server or public release was started. The next exact-head Vercel deployment must be inspected; the canceled deployment is not a current preview. Previous READY URLs remain historical until that check succeeds.
+
 ## Task contract
 
 **Scope**
