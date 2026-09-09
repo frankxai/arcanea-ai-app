@@ -1,0 +1,19 @@
+# Status: STAGING — reviewable companion edition.
+# Book II source remains under evolution/manuscript until the strict edition build passes.
+title: The Orchard of Unspoken Names
+subtitle: Selene & Brío — Book II
+author: Arcanea
+license: CC-BY-NC-SA-4.0
+ai_transparency:
+  method: Human-directed story development with AI-assisted prose and generated illustrations.
+status: staging
+visibility: public
+edition: illustrated-companion
+language: en
+series: Selene & Brío
+series_number: 2
+route: /books/selene-y-brio-orchard
+cover: /images/books/selene-y-brio-orchard/cover.webp
+chapters: 14
+new_illustrations_minimum: 4
+new_illustrations_maximum: 8
