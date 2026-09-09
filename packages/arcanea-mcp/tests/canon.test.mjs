@@ -1,145 +1,222 @@
-/**
- * @arcanea/mcp-server — Canon data tests
- * Validates that the MCP server's hardcoded gate data matches ARCANEA_CANON.md
- * Run: node --test packages/arcanea-mcp/tests/canon.test.mjs
+/** Runtime checks grounded in .arcanea/lore/CANON_LOCKED.md, Tier 2 and Tier 6.
+ * These assertions read the actual MCP server, never a test-only "actual" table.
  */
+import assert from "node:assert/strict";
+import { after, before, test } from "node:test";
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
+import { createServer } from "../dist/index.js";
 
-import { describe, it } from 'node:test';
-import { strict as assert } from 'node:assert';
-
-// Canon data (source of truth from ARCANEA_CANON.md)
-const CANON_GATES = [
-  { gate: 1, frequency: "174 Hz", guardian: "Lyssandria", godbeast: "Kaelith", domain: "Foundation", element: "Earth" },
-  { gate: 2, frequency: "285 Hz", guardian: "Leyla", godbeast: "Veloura", domain: "Flow", element: "Water" },
-  { gate: 3, frequency: "396 Hz", guardian: "Draconia", godbeast: "Draconis", domain: "Fire", element: "Fire" },
-  { gate: 4, frequency: "417 Hz", guardian: "Maylinn", godbeast: "Laeylinn", domain: "Heart", element: "Wind" },
-  { gate: 5, frequency: "528 Hz", guardian: "Alera", godbeast: "Otome", domain: "Voice", element: "Void" },
-  { gate: 6, frequency: "639 Hz", guardian: "Lyria", godbeast: "Yumiko", domain: "Sight", element: "Spirit" },
-  { gate: 7, frequency: "741 Hz", guardian: "Aiyami", godbeast: "Sol", domain: "Crown", element: "Spirit" },
-  { gate: 8, frequency: "852 Hz", guardian: "Elara", godbeast: "Vaelith", domain: "Starweave", element: "Void" },
-  { gate: 9, frequency: "963 Hz", guardian: "Ino", godbeast: "Kyuro", domain: "Unity", element: "Spirit" },
-  { gate: 10, frequency: "1111 Hz", guardian: "Shinkami", godbeast: "Source", domain: "Source", element: "All" },
+const expected = [
+  [1, "Foundation", "174 Hz", "Lyssandria", "Kaelith"],
+  [2, "Flow", "285 Hz", "Leyla", "Veloura"],
+  [3, "Fire", "396 Hz", "Draconia", "Draconis"],
+  [4, "Heart", "417 Hz", "Maylinn", "Laeylinn"],
+  [5, "Voice", "528 Hz", "Alera", "Otome"],
+  [6, "Sight", "639 Hz", "Lyria", "Yumiko"],
+  [7, "Crown", "741 Hz", "Aiyami", "Sol"],
+  [8, "Starweave", "852 Hz", "Elara", "Vaelith"],
+  [9, "Unity", "963 Hz", "Ino", "Kyuro"],
+  [10, "Source", "1111 Hz", "Shinkami", "Source"],
 ];
+const houses = [
+  "Lumina",
+  "Nero",
+  "Pyros",
+  "Aqualis",
+  "Terra",
+  "Ventus",
+  "Synthesis",
+];
+const server = createServer();
+const client = new Client({ name: "runtime-canon-test", version: "1.0.0" });
+let gates, tools, resources;
 
-const CANON_ELEMENTS = ["Fire", "Water", "Earth", "Wind", "Void", "Spirit"];
-const CANON_HOUSES = ["Lumina", "Nero", "Pyros", "Aqualis", "Terra", "Ventus", "Synthesis"];
-const CANON_LUMINORS = ["valora", "serenith", "ignara", "verdana", "eloqua"];
+before(async () => {
+  const [left, right] = InMemoryTransport.createLinkedPair();
+  await server.connect(right);
+  await client.connect(left);
+  ({ tools } = await client.listTools());
+  ({ resources } = await client.listResources());
+  ({ gates } = await read("arcanea://gates"));
+});
+after(async () => {
+  await client.close();
+  await server.close();
+});
 
-describe('MCP Server — Canon Compliance', () => {
-  it('should have exactly 10 Gates', () => {
-    assert.equal(CANON_GATES.length, 10);
-  });
+async function read(uri) {
+  const result = await client.readResource({ uri });
+  const content = result.contents.find(
+    (entry) => entry.uri === uri && "text" in entry,
+  );
+  assert.ok(content, uri);
+  return JSON.parse(content.text);
+}
+async function call(name, args) {
+  const result = await client.callTool({ name, arguments: args });
+  assert.notEqual(result.isError, true, name);
+  const content = result.content.find((entry) => entry.type === "text");
+  assert.ok(content, name);
+  return JSON.parse(content.text);
+}
+function schema(name, field) {
+  return tools.find((tool) => tool.name === name).inputSchema.properties[field];
+}
 
-  it('all 10 Guardians should have correct names', () => {
-    const expected = ["Lyssandria", "Leyla", "Draconia", "Maylinn", "Alera", "Lyria", "Aiyami", "Elara", "Ino", "Shinkami"];
-    const actual = CANON_GATES.map(g => g.guardian);
-    assert.deepEqual(actual, expected);
-  });
-
-  it('all 10 Godbeasts should have correct names', () => {
-    const expected = ["Kaelith", "Veloura", "Draconis", "Laeylinn", "Otome", "Yumiko", "Sol", "Vaelith", "Kyuro", "Source"];
-    const actual = CANON_GATES.map(g => g.godbeast);
-    assert.deepEqual(actual, expected);
-  });
-
-  it('frequencies should follow Solfeggio progression', () => {
-    const expectedFreqs = ["174 Hz", "285 Hz", "396 Hz", "417 Hz", "528 Hz", "639 Hz", "741 Hz", "852 Hz", "963 Hz", "1111 Hz"];
-    const actual = CANON_GATES.map(g => g.frequency);
-    assert.deepEqual(actual, expectedFreqs);
-  });
-
-  it('domains should follow canonical order', () => {
-    const expected = ["Foundation", "Flow", "Fire", "Heart", "Voice", "Sight", "Crown", "Starweave", "Unity", "Source"];
-    const actual = CANON_GATES.map(g => g.domain);
-    assert.deepEqual(actual, expected);
-  });
-
-  it('each gate should have a non-null godbeast', () => {
-    for (const g of CANON_GATES) {
-      assert.ok(g.godbeast, `Gate ${g.gate} (${g.guardian}) has null/empty godbeast`);
+test("the resource contains exactly ten ordered gates", () => {
+  assert.deepEqual(
+    gates.map((gate) => gate.gate),
+    expected.map((row) => row[0]),
+  );
+});
+test("resource guardians match the locked names", () => {
+  assert.deepEqual(
+    gates.map((gate) => gate.guardian),
+    expected.map((row) => row[3]),
+  );
+});
+test("resource Godbeasts match their locked gate associations", () => {
+  assert.deepEqual(
+    gates.map((gate) => gate.veltara),
+    expected.map((row) => row[4]),
+  );
+});
+test("resource frequencies are the exact locked values", () => {
+  assert.deepEqual(
+    gates.map((gate) => gate.frequencyBand),
+    expected.map((row) => row[2]),
+  );
+});
+test("resource gate domains match the locked order", () => {
+  assert.deepEqual(
+    gates.map((gate) => gate.domain),
+    expected.map((row) => row[1]),
+  );
+});
+test("the Source Gate exposes Shinkami's companion", () => {
+  assert.equal(gates.at(-1).veltara, "Source");
+});
+test("the element resource represents Void and Spirit as two aspects", async () => {
+  assert.deepEqual((await read("arcanea://elements")).elements, [
+    "Fire",
+    "Water",
+    "Earth",
+    "Wind",
+    "Void",
+    "Spirit",
+  ]);
+});
+test("the character input schema agrees with the advertised element choices", async () => {
+  assert.deepEqual(
+    schema("generate_character", "primaryElement").enum,
+    (await read("arcanea://elements")).elements,
+  );
+});
+test("the resource names all seven Academy houses", async () => {
+  assert.deepEqual((await read("arcanea://houses")).houses, houses);
+});
+test("the generator accepts and preserves each declared house", async () => {
+  for (const house of houses) {
+    const character = await call("generate_character", {
+      house,
+      gatesOpen: 1,
+      sessionId: "canon-houses",
+    });
+    assert.equal(character.house, house);
+  }
+});
+test("the companion resource contains the registered runtime profiles", async () => {
+  const profiles = await read("arcanea://luminors");
+  assert.ok(Object.keys(profiles).length > 0);
+  for (const profile of Object.values(profiles))
+    assert.equal(typeof profile.name, "string");
+});
+test("companion invocation choices match the actual companion resource", async () => {
+  assert.deepEqual(
+    Object.keys(await read("arcanea://luminors")).sort(),
+    [...schema("invoke_luminor", "luminor").enum].sort(),
+  );
+});
+test("tool discovery exposes the actual unique generator tools", () => {
+  const names = tools.map((tool) => tool.name);
+  assert.equal(names.length, 54);
+  assert.equal(new Set(names).size, names.length);
+  for (const name of [
+    "generate_character",
+    "generate_magic",
+    "generate_location",
+    "generate_creature",
+    "generate_artifact",
+    "generate_name",
+    "generate_story_prompt",
+  ])
+    assert.ok(names.includes(name), name);
+});
+test("resource discovery exposes five actual unique reference resources", () => {
+  assert.deepEqual(
+    resources.map((resource) => resource.uri).sort(),
+    [
+      "arcanea://luminors",
+      "arcanea://bestiary",
+      "arcanea://gates",
+      "arcanea://elements",
+      "arcanea://houses",
+    ].sort(),
+  );
+});
+test("magic and story generators preserve every guardian and Godbeast pairing", async () => {
+  for (const [gate, domain, , guardian, godbeast] of expected) {
+    for (const [name, args] of [
+      ["generate_magic", { gateLevel: gate, element: "Spirit" }],
+      ["generate_story_prompt", { gate }],
+    ]) {
+      const output = await call(name, args);
+      assert.equal(output.gateName, domain);
+      assert.equal(output.guardian, guardian);
+      assert.equal(output.godbeast, godbeast, `${name} gate ${gate}`);
     }
-  });
+  }
 });
-
-describe('MCP Server — Elements', () => {
-  it('should have 6 elements including Spirit', () => {
-    assert.equal(CANON_ELEMENTS.length, 6);
-    assert.ok(CANON_ELEMENTS.includes("Spirit"));
-  });
-
-  it('should include all Five Elements plus Spirit', () => {
-    for (const el of ["Fire", "Water", "Earth", "Wind", "Void"]) {
-      assert.ok(CANON_ELEMENTS.includes(el), `Missing element: ${el}`);
+test("character forms distinguish locked facts, draft suggestions and unknowns", async () => {
+  for (const [gate, , , guardian, godbeast] of expected) {
+    const character = await call("generate_character", {
+      gatesOpen: gate,
+      sessionId: "canon-forms",
+    });
+    assert.equal(character.patronGuardian, guardian);
+    assert.equal(character.godbeast.name, godbeast);
+    assert.match(character._note, /draft/i);
+    if (gate === 2 || gate === 4) {
+      assert.equal(
+        character.godbeast.form,
+        gate === 2 ? "Phoenix-Serpent" : "Worldtree Deer",
+      );
+      assert.equal(character.godbeast.formStatus, "Locked");
+    } else if (gate === 10) {
+      assert.equal(character.godbeast.form, null);
+      assert.equal(character.godbeast.formStatus, "Unspecified");
+    } else {
+      assert.equal(character.godbeast.formStatus, "Draft");
     }
-  });
+  }
 });
-
-describe('MCP Server — Houses', () => {
-  it('should have exactly 7 Academy Houses', () => {
-    assert.equal(CANON_HOUSES.length, 7);
-  });
-
-  it('should include Synthesis house', () => {
-    assert.ok(CANON_HOUSES.includes("Synthesis"));
-  });
-});
-
-describe('MCP Server — Luminor Companions', () => {
-  it('should have 5 Luminor companions', () => {
-    assert.equal(CANON_LUMINORS.length, 5);
-  });
-
-  it('should include all canonical Luminors', () => {
-    for (const l of ["valora", "serenith", "ignara", "verdana", "eloqua"]) {
-      assert.ok(CANON_LUMINORS.includes(l), `Missing Luminor: ${l}`);
-    }
-  });
-});
-
-describe('MCP Server — Tool Inventory', () => {
-  // Expected tool count from the MCP server
-  const EXPECTED_TOOLS = [
-    "generate_character", "generate_magic", "generate_location",
-    "generate_creature", "generate_artifact", "generate_name", "generate_story_prompt",
-    "diagnose_block", "invoke_luminor",
-    "deep_diagnosis", "convene_council", "luminor_debate",
-    "get_journey", "check_milestones",
-    "link_creations", "get_related", "suggest_connections",
-    "get_world_graph", "find_path", "export_world",
-    "guardian_guidance", "list_agents", "agent_info",
-    "assess_world", "match_skill", "memory_status",
-    "validate_canon", "identify_gate",
-    "route_guardian", "check_voice", "get_design_tokens",
-  ];
-
-  it('should expose 31 tools', () => {
-    assert.equal(EXPECTED_TOOLS.length, 31);
-  });
-
-  it('should have no duplicate tool names', () => {
-    const unique = new Set(EXPECTED_TOOLS);
-    assert.equal(unique.size, EXPECTED_TOOLS.length);
-  });
-});
-
-describe('MCP Server — Resource Inventory', () => {
-  const EXPECTED_RESOURCES = [
-    "arcanea://luminors",
-    "arcanea://bestiary",
-    "arcanea://gates",
-    "arcanea://elements",
-    "arcanea://houses",
-    "arcanea://design-tokens",
-    "arcanea://voice-rules",
-  ];
-
-  it('should expose 7 resources', () => {
-    assert.equal(EXPECTED_RESOURCES.length, 7);
-  });
-
-  it('all URIs should use arcanea:// scheme', () => {
-    for (const uri of EXPECTED_RESOURCES) {
-      assert.ok(uri.startsWith("arcanea://"), `Invalid URI scheme: ${uri}`);
-    }
-  });
+test("fractional gate inputs are rejected by each public generator schema", async () => {
+  for (const [name, args] of [
+    ["generate_character", { gatesOpen: 2.5 }],
+    ["generate_magic", { gateLevel: 2.5, element: "Fire" }],
+    ["generate_story_prompt", { gate: 2.5 }],
+  ]) {
+    assert.equal(
+      (await client.callTool({ name, arguments: args })).isError,
+      true,
+    );
+    const field =
+      name === "generate_character"
+        ? "gatesOpen"
+        : name === "generate_magic"
+          ? "gateLevel"
+          : "gate";
+    assert.equal(schema(name, field).type, "integer");
+  }
 });

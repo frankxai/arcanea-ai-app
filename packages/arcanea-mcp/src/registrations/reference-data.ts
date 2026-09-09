@@ -1,8 +1,11 @@
-/** Existing runtime reference data; canonical corrections are separate work. */
+/** Gate names, frequencies, guardians and companions follow CANON_LOCKED.md Tier 2.
+ * The legacy `frequencyBand` and `veltara` keys remain for client compatibility.
+ * Other contextual fields below are legacy creative reference metadata, not new canon.
+ */
 export const gates = [
   {
     gate: 1,
-    frequencyBand: "174–285 Hz",
+    frequencyBand: "174 Hz",
     guardian: "Lyssandria",
     veltara: "Kaelith",
     domain: "Foundation",
@@ -14,7 +17,7 @@ export const gates = [
   },
   {
     gate: 2,
-    frequencyBand: "285–396 Hz",
+    frequencyBand: "285 Hz",
     guardian: "Leyla",
     veltara: "Veloura",
     domain: "Flow",
@@ -26,7 +29,7 @@ export const gates = [
   },
   {
     gate: 3,
-    frequencyBand: "396–417 Hz",
+    frequencyBand: "396 Hz",
     guardian: "Draconia",
     veltara: "Draconis",
     domain: "Fire",
@@ -38,7 +41,7 @@ export const gates = [
   },
   {
     gate: 4,
-    frequencyBand: "417–528 Hz",
+    frequencyBand: "417 Hz",
     guardian: "Maylinn",
     veltara: "Laeylinn",
     domain: "Heart",
@@ -50,7 +53,7 @@ export const gates = [
   },
   {
     gate: 5,
-    frequencyBand: "432–528 Hz",
+    frequencyBand: "528 Hz",
     guardian: "Alera",
     veltara: "Otome",
     domain: "Voice",
@@ -62,7 +65,7 @@ export const gates = [
   },
   {
     gate: 6,
-    frequencyBand: "639–741 Hz",
+    frequencyBand: "639 Hz",
     guardian: "Lyria",
     veltara: "Yumiko",
     domain: "Sight",
@@ -74,7 +77,7 @@ export const gates = [
   },
   {
     gate: 7,
-    frequencyBand: "741–852 Hz",
+    frequencyBand: "741 Hz",
     guardian: "Aiyami",
     veltara: "Sol",
     domain: "Crown",
@@ -86,7 +89,7 @@ export const gates = [
   },
   {
     gate: 8,
-    frequencyBand: "852–963 Hz",
+    frequencyBand: "852 Hz",
     guardian: "Elara",
     veltara: "Vaelith",
     domain: "Starweave",
@@ -98,7 +101,7 @@ export const gates = [
   },
   {
     gate: 9,
-    frequencyBand: "963–999 Hz",
+    frequencyBand: "963 Hz",
     guardian: "Ino",
     veltara: "Kyuro",
     domain: "Unity",
@@ -110,9 +113,9 @@ export const gates = [
   },
   {
     gate: 10,
-    frequencyBand: "999–1111 Hz",
+    frequencyBand: "1111 Hz",
     guardian: "Shinkami",
-    veltara: null,
+    veltara: "Source",
     domain: "Source",
     element: "Pure Consciousness",
     chakra: "Ultimate",

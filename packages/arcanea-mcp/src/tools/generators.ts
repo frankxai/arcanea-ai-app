@@ -1,7 +1,15 @@
 // Worldbuilding Generator Tools
 
 const elements = ["Fire", "Water", "Earth", "Wind", "Void", "Spirit"] as const;
-const houses = ["Lumina", "Nero", "Pyros", "Aqualis", "Terra", "Ventus", "Synthesis"] as const;
+const houses = [
+  "Lumina",
+  "Nero",
+  "Pyros",
+  "Aqualis",
+  "Terra",
+  "Ventus",
+  "Synthesis",
+] as const;
 
 const guardians = [
   { name: "Lyssandria", gate: 1, domain: "Foundation", element: "Earth" },
@@ -18,14 +26,16 @@ const guardians = [
 
 const godbeasts = [
   { name: "Kaelith", gate: 1, form: "Great Serpent of Stone" },
-  { name: "Veloura", gate: 2, form: "Shapeshifting Water Dragon" },
+  { name: "Veloura", gate: 2, form: "Phoenix-Serpent" },
   { name: "Draconis", gate: 3, form: "Eternal Flame Dragon" },
-  { name: "Laeylinn", gate: 4, form: "Healing Phoenix" },
+  { name: "Laeylinn", gate: 4, form: "Worldtree Deer" },
   { name: "Otome", gate: 5, form: "Thunderbird of Truth" },
   { name: "Yumiko", gate: 6, form: "Dream Fox with Nine Tails" },
   { name: "Sol", gate: 7, form: "Radiant Lion of Dawn" },
   { name: "Vaelith", gate: 8, form: "Dimensional Serpent" },
   { name: "Kyuro", gate: 9, form: "Twin-Headed Unity Beast" },
+  // The Source profile explicitly leaves its physical form unspecified.
+  { name: "Source", gate: 10, form: null },
 ];
 
 const nameRoots: Record<string, string[]> = {
@@ -70,9 +80,11 @@ export async function generateCharacter(options: {
   nameGender?: "masculine" | "feminine" | "neutral";
 }): Promise<ToolResult> {
   const gatesOpen = options.gatesOpen ?? Math.floor(Math.random() * 8) + 1;
-  const primaryElement = options.primaryElement ?? pick(elements.filter(e => e !== "Spirit"));
+  const primaryElement =
+    options.primaryElement ?? pick(elements.filter((e) => e !== "Spirit"));
   const house = options.house ?? pick(houses);
-  const nameGender = options.nameGender ?? pick(["masculine", "feminine", "neutral"] as const);
+  const nameGender =
+    options.nameGender ?? pick(["masculine", "feminine", "neutral"] as const);
 
   const elementKey = primaryElement.toLowerCase();
   const root = pick(nameRoots[elementKey] || nameRoots.noble);
@@ -80,21 +92,31 @@ export async function generateCharacter(options: {
   const name = root + suffix;
 
   const patronGuardian = guardians[gatesOpen - 1];
-  const abilities = guardians.slice(0, gatesOpen).map(g => `${g.domain} Attunement (Gate ${g.gate})`);
+  const abilities = guardians
+    .slice(0, gatesOpen)
+    .map((g) => `${g.domain} Attunement (Gate ${g.gate})`);
 
   const elementTraits: Record<string, string[]> = {
     Fire: ["passionate", "driven", "quick to act", "transformative"],
     Water: ["adaptive", "intuitive", "emotionally deep", "healing"],
     Earth: ["steadfast", "patient", "nurturing", "grounded"],
     Wind: ["free-spirited", "changeable", "swift-thinking", "communicative"],
-    Void: ["mysterious", "contemplative", "potential-seeing", "boundary-crossing"],
+    Void: [
+      "mysterious",
+      "contemplative",
+      "potential-seeing",
+      "boundary-crossing",
+    ],
     Spirit: ["transcendent", "wise", "connecting", "luminous"],
   };
 
   // Canonical constraints the LLM must respect
-  const godbeast = gatesOpen <= 9 ? godbeasts[gatesOpen - 1] : null;
-  const secondaryElement = pick(elements.filter(e => e !== primaryElement));
-  const traits = pickMultiple(elementTraits[primaryElement] || elementTraits.Fire, 3);
+  const godbeast = godbeasts[gatesOpen - 1];
+  const secondaryElement = pick(elements.filter((e) => e !== primaryElement));
+  const traits = pickMultiple(
+    elementTraits[primaryElement] || elementTraits.Fire,
+    3,
+  );
   const flaw = pick([
     "fears losing control of their power",
     "cannot forgive a betrayal from their past",
@@ -131,45 +153,90 @@ export async function generateCharacter(options: {
         : "The path narrows; only discipline and sacrifice reveal the next threshold.";
 
   return {
-    content: [{
-      type: "text",
-      text: JSON.stringify({
-        _type: "character_blueprint",
-        _note: "This is a canonical scaffolding. Use these constraints as foundation — then add depth, contradictions, secrets, and a voice that makes this person unforgettable.",
-        name,
-        primaryElement,
-        secondaryElement,
-        house,
-        gatesOpen,
-        rank: getRankFromGates(gatesOpen),
-        /** @deprecated Use patronGuardianProfile — kept string form for MCP/tool contracts */
-        patronGuardian: patronGuardian.name,
-        patronGuardianProfile: {
-          name: patronGuardian.name,
-          gate: patronGuardian.gate,
-          domain: patronGuardian.domain,
-          element: patronGuardian.element,
-          relationship: pick(["devoted student", "reluctant ward", "rebellious apprentice", "chosen champion", "abandoned protege"]),
-        },
-        godbeast: godbeast ? { name: godbeast.name, form: godbeast.form, bond: pick(["bonded at birth", "earned through trial", "accidental encounter", "inherited from mentor", "not yet bonded — yearning"]) } : null,
-        abilities,
-        traits,
-        personality: {
-          traits,
-          flaw,
-          desire,
-          fear: pick(["losing their element", "becoming like Malachar", "failing the people who believe in them", "never being enough", "the Void consuming what they love"]),
-          secret: pick(["has touched the Void and survived", "can hear a Gate that shouldn't exist", "is related to a villain", "has already opened a Gate no one knows about", "was rejected by another house first"]),
-        },
-        backstory: backstoryObj,
-        magicStyle: `Channels ${primaryElement} through ${patronGuardian.domain} attunement, with ${secondaryElement} undertones`,
-        potentialArc,
-        narrativeHooks: [
-          gatesOpen < 10 ? `Next Gate: ${guardians[gatesOpen].domain} — but the cost may be ${pick(["a memory they treasure", "their relationship with " + patronGuardian.name, "their connection to " + primaryElement, "something they can't get back"])}` : "Luminor — but at what price?",
-          `Conflict seed: ${name}'s ${flaw} will clash with ${pick(["the Academy's expectations", "a new ally who sees through them", "a crisis that demands exactly what they're afraid of"])}`,
-        ],
-      }, null, 2),
-    }],
+    content: [
+      {
+        type: "text",
+        text: JSON.stringify(
+          {
+            _type: "character_blueprint",
+            _note:
+              "Generated character draft. Gate names and companion associations are reference constraints; relationships and biography require review. Use this as a foundation — then add depth, contradictions, secrets, and a voice that makes this person unforgettable.",
+            name,
+            primaryElement,
+            secondaryElement,
+            house,
+            gatesOpen,
+            rank: getRankFromGates(gatesOpen),
+            /** @deprecated Use patronGuardianProfile — kept string form for MCP/tool contracts */
+            patronGuardian: patronGuardian.name,
+            patronGuardianProfile: {
+              name: patronGuardian.name,
+              gate: patronGuardian.gate,
+              domain: patronGuardian.domain,
+              element: patronGuardian.element,
+              relationship: pick([
+                "devoted student",
+                "reluctant ward",
+                "rebellious apprentice",
+                "chosen champion",
+                "abandoned protege",
+              ]),
+            },
+            godbeast: godbeast
+              ? {
+                  name: godbeast.name,
+                  form: godbeast.form,
+                  formStatus:
+                    godbeast.form === null
+                      ? "Unspecified"
+                      : ["Veloura", "Laeylinn"].includes(godbeast.name)
+                        ? "Locked"
+                        : "Draft",
+                  bond: pick([
+                    "bonded at birth",
+                    "earned through trial",
+                    "accidental encounter",
+                    "inherited from mentor",
+                    "not yet bonded — yearning",
+                  ]),
+                }
+              : null,
+            abilities,
+            traits,
+            personality: {
+              traits,
+              flaw,
+              desire,
+              fear: pick([
+                "losing their element",
+                "becoming like Malachar",
+                "failing the people who believe in them",
+                "never being enough",
+                "the Void consuming what they love",
+              ]),
+              secret: pick([
+                "has touched the Void and survived",
+                "can hear a Gate that shouldn't exist",
+                "is related to a villain",
+                "has already opened a Gate no one knows about",
+                "was rejected by another house first",
+              ]),
+            },
+            backstory: backstoryObj,
+            magicStyle: `Channels ${primaryElement} through ${patronGuardian.domain} attunement, with ${secondaryElement} undertones`,
+            potentialArc,
+            narrativeHooks: [
+              gatesOpen < 10
+                ? `Next Gate: ${guardians[gatesOpen].domain} — but the cost may be ${pick(["a memory they treasure", "their relationship with " + patronGuardian.name, "their connection to " + primaryElement, "something they can't get back"])}`
+                : "Luminor — but at what price?",
+              `Conflict seed: ${name}'s ${flaw} will clash with ${pick(["the Academy's expectations", "a new ally who sees through them", "a crisis that demands exactly what they're afraid of"])}`,
+            ],
+          },
+          null,
+          2,
+        ),
+      },
+    ],
   };
 }
 
@@ -180,7 +247,7 @@ export async function generateMagicAbility(options: {
 }): Promise<ToolResult> {
   const { element, gateLevel, purpose } = options;
   const gate = guardians[Math.min(gateLevel - 1, 9)];
-  const godbeast = godbeasts[Math.min(gateLevel - 1, 8)];
+  const godbeast = godbeasts[gateLevel - 1];
 
   const prefixes: Record<string, string[]> = {
     Fire: ["Blazing", "Ember", "Phoenix", "Inferno", "Solar"],
@@ -201,68 +268,91 @@ export async function generateMagicAbility(options: {
 
   const prefix = pick(prefixes[element] || prefixes.Fire);
   const purposeKey = purpose?.toLowerCase() || pick(Object.keys(suffixes));
-  const suffix = pick(suffixes[purposeKey as keyof typeof suffixes] || suffixes.utility);
+  const suffix = pick(
+    suffixes[purposeKey as keyof typeof suffixes] || suffixes.utility,
+  );
 
   const abilityName = `${prefix} ${suffix}`;
   const manaCost = gateLevel * 10 + Math.floor(Math.random() * 20);
   const animaCost = gateLevel > 5 ? Math.floor(gateLevel / 2) : undefined;
-  const costFlat = { mana: manaCost, ...(animaCost !== undefined ? { anima: animaCost } : {}) };
+  const costFlat = {
+    mana: manaCost,
+    ...(animaCost !== undefined ? { anima: animaCost } : {}),
+  };
   const castingFlat = {
     gesture: `Invoke the sigil of ${gate.name}`,
     incantation: `"By ${gate.name}'s ${gate.domain}, let ${element} flow!"`,
-    castTime: gateLevel <= 3 ? "instant" : gateLevel <= 6 ? "3 seconds" : "requires preparation",
+    castTime:
+      gateLevel <= 3
+        ? "instant"
+        : gateLevel <= 6
+          ? "3 seconds"
+          : "requires preparation",
   };
   const masteryRank = getRankFromGates(gateLevel);
 
   return {
-    content: [{
-      type: "text",
-      text: JSON.stringify({
-        _type: "magic_blueprint",
-        _note: "Canonical magic scaffolding. Add visual spectacle, emotional resonance, and narrative cost. Great magic has consequences.",
-        name: abilityName,
-        element,
-        gateRequired: gateLevel,
-        gateName: gate.domain,
-        guardian: gate.name,
-        godbeast: godbeast?.name,
-        description: `${element}-aligned ability channeled through the ${gate.domain} Gate`,
-        cost: costFlat,
-        casting: castingFlat,
-        mastery: masteryRank,
-        mechanics: {
-          cost: { mana: manaCost, anima: animaCost },
-          casting: castingFlat,
-          mastery: masteryRank,
-        },
-        flavor: {
-          visual: pick([
-            `${element} erupts from the caster's hands in spiraling patterns`,
-            `The air shimmers with ${element.toLowerCase()} energy as reality bends`,
-            `${gate.name}'s sigil blazes in the air, visible only to those who've opened this Gate`,
-            `The caster's eyes glow with ${element.toLowerCase()} light as the spell takes form`,
-          ]),
-          sensation: pick([
-            "feels like holding lightning in your veins",
-            "the world goes quiet, then everything happens at once",
-            "tastes like copper and starlight",
-            "your bones hum at a frequency that makes your teeth ache",
-            "time stretches — you can see each particle of energy move",
-          ]),
-          sideEffect: pick([
-            "leaves the caster trembling for a full minute",
-            "nearby plants grow or wilt depending on the caster's intent",
-            "the caster temporarily cannot hear their own element",
-            "scars glow faintly where the energy channeled through the body",
-            "dreams that night will replay the casting in surreal detail",
-          ]),
-        },
-        narrativeHooks: [
-          pick(["What happens when this ability is used in desperation?", "Who taught the caster this — and what did learning it cost?", "There's a version of this spell that was banned. Why?"]),
-          purpose ? `Designed for ${purpose} — but every tool can be misused` : "The line between creation and destruction is intention",
-        ],
-      }, null, 2),
-    }],
+    content: [
+      {
+        type: "text",
+        text: JSON.stringify(
+          {
+            _type: "magic_blueprint",
+            _note:
+              "Generated magic draft. Add visual spectacle, emotional resonance, and narrative cost. Great magic has consequences.",
+            name: abilityName,
+            element,
+            gateRequired: gateLevel,
+            gateName: gate.domain,
+            guardian: gate.name,
+            godbeast: godbeast?.name,
+            description: `${element}-aligned ability channeled through the ${gate.domain} Gate`,
+            cost: costFlat,
+            casting: castingFlat,
+            mastery: masteryRank,
+            mechanics: {
+              cost: { mana: manaCost, anima: animaCost },
+              casting: castingFlat,
+              mastery: masteryRank,
+            },
+            flavor: {
+              visual: pick([
+                `${element} erupts from the caster's hands in spiraling patterns`,
+                `The air shimmers with ${element.toLowerCase()} energy as reality bends`,
+                `${gate.name}'s sigil blazes in the air, visible only to those who've opened this Gate`,
+                `The caster's eyes glow with ${element.toLowerCase()} light as the spell takes form`,
+              ]),
+              sensation: pick([
+                "feels like holding lightning in your veins",
+                "the world goes quiet, then everything happens at once",
+                "tastes like copper and starlight",
+                "your bones hum at a frequency that makes your teeth ache",
+                "time stretches — you can see each particle of energy move",
+              ]),
+              sideEffect: pick([
+                "leaves the caster trembling for a full minute",
+                "nearby plants grow or wilt depending on the caster's intent",
+                "the caster temporarily cannot hear their own element",
+                "scars glow faintly where the energy channeled through the body",
+                "dreams that night will replay the casting in surreal detail",
+              ]),
+            },
+            narrativeHooks: [
+              pick([
+                "What happens when this ability is used in desperation?",
+                "Who taught the caster this — and what did learning it cost?",
+                "There's a version of this spell that was banned. Why?",
+              ]),
+              purpose
+                ? `Designed for ${purpose} — but every tool can be misused`
+                : "The line between creation and destruction is intention",
+            ],
+          },
+          null,
+          2,
+        ),
+      },
+    ],
   };
 }
 
@@ -271,9 +361,24 @@ export async function generateLocation(options: {
   dominantElement?: string;
   alignment?: "light" | "dark" | "balanced";
 }): Promise<ToolResult> {
-  const locationType = options.type ?? pick(["academy", "sanctuary", "ruins", "village", "fortress", "grove", "temple", "marketplace", "library", "nexus"]);
-  const dominantElement = options.dominantElement ?? pick(elements.filter(e => e !== "Spirit"));
-  const alignment = options.alignment ?? pick(["light", "dark", "balanced"] as const);
+  const locationType =
+    options.type ??
+    pick([
+      "academy",
+      "sanctuary",
+      "ruins",
+      "village",
+      "fortress",
+      "grove",
+      "temple",
+      "marketplace",
+      "library",
+      "nexus",
+    ]);
+  const dominantElement =
+    options.dominantElement ?? pick(elements.filter((e) => e !== "Spirit"));
+  const alignment =
+    options.alignment ?? pick(["light", "dark", "balanced"] as const);
 
   const prefixes: Record<string, string[]> = {
     Fire: ["Ember", "Flame", "Solar", "Burning", "Radiant"],
@@ -285,14 +390,22 @@ export async function generateLocation(options: {
   };
 
   const locationSuffixes: Record<string, string> = {
-    academy: "Academy", sanctuary: "Sanctuary", ruins: "Ruins", village: "Haven",
-    fortress: "Citadel", grove: "Grove", temple: "Temple", marketplace: "Bazaar",
-    library: "Archives", nexus: "Nexus",
+    academy: "Academy",
+    sanctuary: "Sanctuary",
+    ruins: "Ruins",
+    village: "Haven",
+    fortress: "Citadel",
+    grove: "Grove",
+    temple: "Temple",
+    marketplace: "Bazaar",
+    library: "Archives",
+    nexus: "Nexus",
   };
 
   const prefix = pick(prefixes[dominantElement] || prefixes.Fire);
   const suffix = locationSuffixes[locationType] || "Place";
-  const relatedGuardian = guardians.find(g => g.element === dominantElement) || pick(guardians);
+  const relatedGuardian =
+    guardians.find((g) => g.element === dominantElement) || pick(guardians);
 
   const locationName = `The ${prefix} ${suffix}`;
   const gateNum = relatedGuardian.gate;
@@ -315,42 +428,87 @@ export async function generateLocation(options: {
   ]);
 
   const featuresBase: string[] = [
-    pick(["A central courtyard where element practice is visible", "A library with texts that rewrite themselves", "Training grounds scarred by centuries of combat", "Gardens where plants respond to emotional state"]),
+    pick([
+      "A central courtyard where element practice is visible",
+      "A library with texts that rewrite themselves",
+      "Training grounds scarred by centuries of combat",
+      "Gardens where plants respond to emotional state",
+    ]),
     alignment === "light"
       ? `Shrine to ${relatedGuardian.name} — pilgrims leave elemental offerings at dusk`
-      : pick([`A shrine to ${relatedGuardian.name} that glows during Gate hours`, "An observation tower overlooking the Gate network", "Dormitories where roommates are paired by opposing elements", "A forge that only lights for those who need it"]),
-    pick(["A restricted wing that students whisper about", "An ancient tree growing through the center of the building", "A map room showing Gate connections in real time", "A mess hall where the food changes based on the dominant element of those present"]),
+      : pick([
+          `A shrine to ${relatedGuardian.name} that glows during Gate hours`,
+          "An observation tower overlooking the Gate network",
+          "Dormitories where roommates are paired by opposing elements",
+          "A forge that only lights for those who need it",
+        ]),
+    pick([
+      "A restricted wing that students whisper about",
+      "An ancient tree growing through the center of the building",
+      "A map room showing Gate connections in real time",
+      "A mess hall where the food changes based on the dominant element of those present",
+    ]),
   ];
 
   return {
-    content: [{
-      type: "text",
-      text: JSON.stringify({
-        _type: "location_blueprint",
-        _note: "Canonical scaffolding. Add sensory detail, history, and the feeling of being there. Great places have personality.",
-        name: locationName,
-        type: locationType,
-        dominantElement,
-        alignment,
-        guardian: relatedGuardian.name,
-        guardianProfile: { name: relatedGuardian.name, domain: relatedGuardian.domain, gate: relatedGuardian.gate },
-        gate: gateNum,
-        description,
-        features: featuresBase,
-        atmosphere: {
-          visual: alignment === "light" ? `Warm ${dominantElement.toLowerCase()} light filters through everything` : alignment === "dark" ? `Shadows move with purpose, ${dominantElement.toLowerCase()} energy pulses beneath the surface` : `${dominantElement} energy shifts between light and shadow like breathing`,
-          sound: pick(["Constant low hum of elemental energy", "Wind carries whispered voices", "Water flows in patterns that sound like speech", "Absolute silence broken only by Gate resonance", "Distant rumbling from deep below"]),
-          smell: pick(["Ozone and old stone", "Incense and growing things", "Cold metal and starlight", "Warm earth after rain", "Something electric, like the air before a storm"]),
-        },
-        history,
-        secret,
-        narrativeHooks: [
-          `What happens when the ${dominantElement} energy here suddenly inverts?`,
-          `Someone important vanished from this place. Their belongings are still here.`,
-          alignment === "dark" ? "Not everyone who enters comes back unchanged" : "This place heals wounds that magic cannot — but it takes something in return",
-        ],
-      }, null, 2),
-    }],
+    content: [
+      {
+        type: "text",
+        text: JSON.stringify(
+          {
+            _type: "location_blueprint",
+            _note:
+              "Generated draft. Add sensory detail, history, and the feeling of being there. Great places have personality.",
+            name: locationName,
+            type: locationType,
+            dominantElement,
+            alignment,
+            guardian: relatedGuardian.name,
+            guardianProfile: {
+              name: relatedGuardian.name,
+              domain: relatedGuardian.domain,
+              gate: relatedGuardian.gate,
+            },
+            gate: gateNum,
+            description,
+            features: featuresBase,
+            atmosphere: {
+              visual:
+                alignment === "light"
+                  ? `Warm ${dominantElement.toLowerCase()} light filters through everything`
+                  : alignment === "dark"
+                    ? `Shadows move with purpose, ${dominantElement.toLowerCase()} energy pulses beneath the surface`
+                    : `${dominantElement} energy shifts between light and shadow like breathing`,
+              sound: pick([
+                "Constant low hum of elemental energy",
+                "Wind carries whispered voices",
+                "Water flows in patterns that sound like speech",
+                "Absolute silence broken only by Gate resonance",
+                "Distant rumbling from deep below",
+              ]),
+              smell: pick([
+                "Ozone and old stone",
+                "Incense and growing things",
+                "Cold metal and starlight",
+                "Warm earth after rain",
+                "Something electric, like the air before a storm",
+              ]),
+            },
+            history,
+            secret,
+            narrativeHooks: [
+              `What happens when the ${dominantElement} energy here suddenly inverts?`,
+              `Someone important vanished from this place. Their belongings are still here.`,
+              alignment === "dark"
+                ? "Not everyone who enters comes back unchanged"
+                : "This place heals wounds that magic cannot — but it takes something in return",
+            ],
+          },
+          null,
+          2,
+        ),
+      },
+    ],
   };
 }
 
@@ -359,19 +517,29 @@ export async function generateCreature(options: {
   size?: "tiny" | "small" | "medium" | "large" | "massive";
   temperament?: "hostile" | "neutral" | "friendly" | "sacred";
 }): Promise<ToolResult> {
-  const element = options.element ?? pick(elements.filter(e => e !== "Spirit"));
-  const size = options.size ?? pick(["tiny", "small", "medium", "large", "massive"] as const);
-  const temperament = options.temperament ?? pick(["hostile", "neutral", "friendly", "sacred"] as const);
+  const element =
+    options.element ?? pick(elements.filter((e) => e !== "Spirit"));
+  const size =
+    options.size ??
+    pick(["tiny", "small", "medium", "large", "massive"] as const);
+  const temperament =
+    options.temperament ??
+    pick(["hostile", "neutral", "friendly", "sacred"] as const);
 
   const prefixes: Record<string, string[]> = {
-    Fire: ["Ember", "Flame", "Ash", "Scorch"], Water: ["Tide", "Frost", "Mist", "Coral"],
-    Earth: ["Stone", "Root", "Crystal", "Iron"], Wind: ["Gale", "Feather", "Cloud", "Storm"],
-    Void: ["Shadow", "Night", "Void", "Shade"], Spirit: ["Light", "Soul", "Aether", "Dawn"],
+    Fire: ["Ember", "Flame", "Ash", "Scorch"],
+    Water: ["Tide", "Frost", "Mist", "Coral"],
+    Earth: ["Stone", "Root", "Crystal", "Iron"],
+    Wind: ["Gale", "Feather", "Cloud", "Storm"],
+    Void: ["Shadow", "Night", "Void", "Shade"],
+    Spirit: ["Light", "Soul", "Aether", "Dawn"],
   };
 
   const types: Record<string, string[]> = {
-    tiny: ["sprite", "wisp", "mote"], small: ["fox", "cat", "owl"],
-    medium: ["wolf", "stag", "hawk"], large: ["drake", "wyvern", "lion"],
+    tiny: ["sprite", "wisp", "mote"],
+    small: ["fox", "cat", "owl"],
+    medium: ["wolf", "stag", "hawk"],
+    large: ["drake", "wyvern", "lion"],
     massive: ["dragon", "leviathan", "titan"],
   };
 
@@ -380,54 +548,138 @@ export async function generateCreature(options: {
   const name = `${prefix}${type.charAt(0).toUpperCase() + type.slice(1)}`;
   const speciesLabel = `${prefix} ${type}`;
 
-  const relatedGuardian = guardians.find(g => g.element === element) || pick(guardians);
-  const relatedGodbeast = godbeasts.find(g => g.gate === relatedGuardian.gate);
+  const relatedGuardian =
+    guardians.find((g) => g.element === element) || pick(guardians);
+  const relatedGodbeast = godbeasts.find(
+    (g) => g.gate === relatedGuardian.gate,
+  );
 
-  const habitatLocation = pick([`Deep ${element.toLowerCase()} zones where few mages venture`, `Near the ${relatedGuardian.domain} Gate's earthly anchor`, "The boundary between two elemental territories", "Ancient ruins predating the Academy system"]);
-  const habitatBehavior = pick(["Solitary — encounters another of its kind only to mate", "Small packs of 3-5, led by the eldest", "Migratory — follows elemental tides", "Stationary guardian of a specific location"]);
-  const description =
-    `A ${size}, ${temperament} ${element} ${speciesLabel} (${type}) creature — ${temperament === "hostile" ? "territorial and dangerous" : temperament === "sacred" ? "rarely seen except during Gate resonance" : "observable but unpredictable"} — linked to ${relatedGuardian.name}'s ${relatedGuardian.domain} influence.`;
+  const habitatLocation = pick([
+    `Deep ${element.toLowerCase()} zones where few mages venture`,
+    `Near the ${relatedGuardian.domain} Gate's earthly anchor`,
+    "The boundary between two elemental territories",
+    "Ancient ruins predating the Academy system",
+  ]);
+  const habitatBehavior = pick([
+    "Solitary — encounters another of its kind only to mate",
+    "Small packs of 3-5, led by the eldest",
+    "Migratory — follows elemental tides",
+    "Stationary guardian of a specific location",
+  ]);
+  const description = `A ${size}, ${temperament} ${element} ${speciesLabel} (${type}) creature — ${temperament === "hostile" ? "territorial and dangerous" : temperament === "sacred" ? "rarely seen except during Gate resonance" : "observable but unpredictable"} — linked to ${relatedGuardian.name}'s ${relatedGuardian.domain} influence.`;
 
   return {
-    content: [{
-      type: "text",
-      text: JSON.stringify({
-        _type: "creature_blueprint",
-        _note: "Canonical scaffolding. Add behavior patterns, sounds, movement, and the feeling of encountering this creature. Great creatures feel alive.",
-        name,
-        species: speciesLabel,
-        element,
-        size,
-        temperament,
-        description,
-        appearance: {
-          body: pick([`Sleek ${element.toLowerCase()}-infused form`, `Armored hide that shifts like ${element.toLowerCase()}`, `Semi-transparent body revealing inner ${element.toLowerCase()} energy`, `Muscular build with ${element.toLowerCase()} markings`]),
-          eyes: pick(["Ember-bright and intelligent", "Reflective silver, seeing more than the visible spectrum", "Deep black with swirling inner light", "Constantly shifting color based on mood"]),
-          distinctFeature: pick(["Leaves ${element.toLowerCase()} traces in the air when it moves", "Its shadow moves independently", "Surrounding plants/water/air respond to its presence", `Scars from a fight with a ${pick(["shadow creature", "rival elemental", "Gate guardian"])}`]),
-        },
-        behavior: {
-          temperamentDetail: temperament === "hostile" ? pick(["Territorial — attacks anything within its domain", "Hunting pack mentality — never truly alone", "Wounded and desperate — more dangerous than natural hostility"]) : temperament === "friendly" ? pick(["Bonds with those who share its element", "Playful but unpredictable — its games can be dangerous", "Protective of the weak — will adopt lost travelers"]) : temperament === "sacred" ? pick(["Appears only during Gate Resonance Events", "Its presence indicates a major shift in elemental balance", "Ancient beyond counting — may be as old as the Gates themselves"]) : pick(["Observes before acting — patience is its weapon", "Will trade favors for the right offering", "Neither ally nor enemy — responds to intent, not identity"]),
-          sound: pick(["Low rumbling purr that vibrates elemental frequencies", "Clicks and whistles that other creatures respond to", "Completely silent — absence of sound follows it", `Howl that resonates with the ${relatedGuardian.domain} Gate`]),
-          diet: pick(["Pure elemental energy — draws from nearby sources", "Other creatures of opposing elements", "Crystallized mana deposits", "Emotion — feeds on the feelings of nearby beings"]),
-        },
-        abilities: [
-          `Control ${element.toLowerCase()} energy in a ${size === "massive" ? "devastating" : size === "large" ? "wide" : "precise"} radius`,
-          pick(["Phase through solid matter briefly", "Sense intent before action", "Heal wounds by channeling its element", "Create temporary elemental barriers", "Communicate telepathically with bonded mages"]),
-        ],
-        habitat: {
-          location: habitatLocation,
-          behavior: habitatBehavior,
-        },
-        lore: {
-          godBeastConnection: relatedGodbeast ? `Scholars debate whether ${name} species are distant descendants of ${relatedGodbeast.name} (${relatedGodbeast.form})` : "No known divine lineage",
-          culturalSignificance: pick(["Academy students consider sighting one a good omen", "Hunters prize its core for alchemical uses — ethically controversial", "Ancient pact forbids harming them near Gate sites", "Some believe they carry messages from the Guardians"]),
-        },
-        narrativeHooks: [
-          pick(["This creature has been following a specific character. Why?", "A clutch of eggs was found in an impossible location", "This species is going extinct — and the elemental balance is shifting because of it"]),
-          `What happens when a ${element} ${type} encounters its elemental opposite?`,
-        ],
-      }, null, 2),
-    }],
+    content: [
+      {
+        type: "text",
+        text: JSON.stringify(
+          {
+            _type: "creature_blueprint",
+            _note:
+              "Generated draft. Add behavior patterns, sounds, movement, and the feeling of encountering this creature. Great creatures feel alive.",
+            name,
+            species: speciesLabel,
+            element,
+            size,
+            temperament,
+            description,
+            appearance: {
+              body: pick([
+                `Sleek ${element.toLowerCase()}-infused form`,
+                `Armored hide that shifts like ${element.toLowerCase()}`,
+                `Semi-transparent body revealing inner ${element.toLowerCase()} energy`,
+                `Muscular build with ${element.toLowerCase()} markings`,
+              ]),
+              eyes: pick([
+                "Ember-bright and intelligent",
+                "Reflective silver, seeing more than the visible spectrum",
+                "Deep black with swirling inner light",
+                "Constantly shifting color based on mood",
+              ]),
+              distinctFeature: pick([
+                "Leaves ${element.toLowerCase()} traces in the air when it moves",
+                "Its shadow moves independently",
+                "Surrounding plants/water/air respond to its presence",
+                `Scars from a fight with a ${pick(["shadow creature", "rival elemental", "Gate guardian"])}`,
+              ]),
+            },
+            behavior: {
+              temperamentDetail:
+                temperament === "hostile"
+                  ? pick([
+                      "Territorial — attacks anything within its domain",
+                      "Hunting pack mentality — never truly alone",
+                      "Wounded and desperate — more dangerous than natural hostility",
+                    ])
+                  : temperament === "friendly"
+                    ? pick([
+                        "Bonds with those who share its element",
+                        "Playful but unpredictable — its games can be dangerous",
+                        "Protective of the weak — will adopt lost travelers",
+                      ])
+                    : temperament === "sacred"
+                      ? pick([
+                          "Appears only during Gate Resonance Events",
+                          "Its presence indicates a major shift in elemental balance",
+                          "Ancient beyond counting — may be as old as the Gates themselves",
+                        ])
+                      : pick([
+                          "Observes before acting — patience is its weapon",
+                          "Will trade favors for the right offering",
+                          "Neither ally nor enemy — responds to intent, not identity",
+                        ]),
+              sound: pick([
+                "Low rumbling purr that vibrates elemental frequencies",
+                "Clicks and whistles that other creatures respond to",
+                "Completely silent — absence of sound follows it",
+                `Howl that resonates with the ${relatedGuardian.domain} Gate`,
+              ]),
+              diet: pick([
+                "Pure elemental energy — draws from nearby sources",
+                "Other creatures of opposing elements",
+                "Crystallized mana deposits",
+                "Emotion — feeds on the feelings of nearby beings",
+              ]),
+            },
+            abilities: [
+              `Control ${element.toLowerCase()} energy in a ${size === "massive" ? "devastating" : size === "large" ? "wide" : "precise"} radius`,
+              pick([
+                "Phase through solid matter briefly",
+                "Sense intent before action",
+                "Heal wounds by channeling its element",
+                "Create temporary elemental barriers",
+                "Communicate telepathically with bonded mages",
+              ]),
+            ],
+            habitat: {
+              location: habitatLocation,
+              behavior: habitatBehavior,
+            },
+            lore: {
+              godBeastConnection: relatedGodbeast
+                ? `Scholars debate whether ${name} species are distant descendants of ${relatedGodbeast.name} (${relatedGodbeast.form})`
+                : "No known divine lineage",
+              culturalSignificance: pick([
+                "Academy students consider sighting one a good omen",
+                "Hunters prize its core for alchemical uses — ethically controversial",
+                "Ancient pact forbids harming them near Gate sites",
+                "Some believe they carry messages from the Guardians",
+              ]),
+            },
+            narrativeHooks: [
+              pick([
+                "This creature has been following a specific character. Why?",
+                "A clutch of eggs was found in an impossible location",
+                "This species is going extinct — and the elemental balance is shifting because of it",
+              ]),
+              `What happens when a ${element} ${type} encounters its elemental opposite?`,
+            ],
+          },
+          null,
+          2,
+        ),
+      },
+    ],
   };
 }
 
@@ -436,59 +688,157 @@ export async function generateArtifact(options: {
   element?: string;
   power?: "minor" | "moderate" | "major" | "legendary";
 }): Promise<ToolResult> {
-  const artifactTypes = ["ring", "amulet", "staff", "tome", "blade", "crown", "orb", "cloak"];
+  const artifactTypes = [
+    "ring",
+    "amulet",
+    "staff",
+    "tome",
+    "blade",
+    "crown",
+    "orb",
+    "cloak",
+  ];
   const type = options.type ?? pick(artifactTypes);
-  const element = options.element ?? pick(elements.filter(e => e !== "Spirit"));
-  const power = options.power ?? pick(["minor", "moderate", "major", "legendary"] as const);
+  const element =
+    options.element ?? pick(elements.filter((e) => e !== "Spirit"));
+  const power =
+    options.power ?? pick(["minor", "moderate", "major", "legendary"] as const);
 
   const prefixes: Record<string, string[]> = {
-    Fire: ["Blazing", "Infernal", "Phoenix"], Water: ["Tidal", "Frozen", "Crystal"],
-    Earth: ["Ancient", "Stone", "Mountain"], Wind: ["Stormborn", "Skyforged", "Zephyr"],
-    Void: ["Shadowbound", "Twilight", "Void"], Spirit: ["Radiant", "Divine", "Sacred"],
+    Fire: ["Blazing", "Infernal", "Phoenix"],
+    Water: ["Tidal", "Frozen", "Crystal"],
+    Earth: ["Ancient", "Stone", "Mountain"],
+    Wind: ["Stormborn", "Skyforged", "Zephyr"],
+    Void: ["Shadowbound", "Twilight", "Void"],
+    Spirit: ["Radiant", "Divine", "Sacred"],
   };
 
   const prefix = pick(prefixes[element] || prefixes.Fire);
-  const relatedGuardian = guardians.find(g => g.element === element) || pick(guardians);
-  const name = power === "legendary" ? `${relatedGuardian.name}'s ${prefix} ${type.charAt(0).toUpperCase() + type.slice(1)}` : `${prefix} ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+  const relatedGuardian =
+    guardians.find((g) => g.element === element) || pick(guardians);
+  const name =
+    power === "legendary"
+      ? `${relatedGuardian.name}'s ${prefix} ${type.charAt(0).toUpperCase() + type.slice(1)}`
+      : `${prefix} ${type.charAt(0).toUpperCase() + type.slice(1)}`;
 
-  const age = pick(["Pre-Fall (before Malachar)", "Academy Era (current)", "Ancient — predates the Gates", "Recently forged by a living Luminor"]);
-  const creator = power === "legendary"
-    ? pick([`Forged by ${relatedGuardian.name} personally`, "Created by the First Luminor before the Fall", "Formed spontaneously during a Gate Resonance Event", "Made by Malachar before his corruption — still pure"])
-    : pick(["Crafted by an unknown Academy smith", "Grown from elemental crystal over centuries", "Assembled from fragments of a greater artifact", "A student project that exceeded all expectations"]);
+  const age = pick([
+    "Pre-Fall (before Malachar)",
+    "Academy Era (current)",
+    "Ancient — predates the Gates",
+    "Recently forged by a living Luminor",
+  ]);
+  const creator =
+    power === "legendary"
+      ? pick([
+          `Forged by ${relatedGuardian.name} personally`,
+          "Created by the First Luminor before the Fall",
+          "Formed spontaneously during a Gate Resonance Event",
+          "Made by Malachar before his corruption — still pure",
+        ])
+      : pick([
+          "Crafted by an unknown Academy smith",
+          "Grown from elemental crystal over centuries",
+          "Assembled from fragments of a greater artifact",
+          "A student project that exceeded all expectations",
+        ]);
 
   return {
-    content: [{
-      type: "text",
-      text: JSON.stringify({
-        _type: "artifact_blueprint",
-        _note: "Canonical scaffolding. Add weight, texture, the feeling of holding it, and the moral cost of using it. Great artifacts change their wielder.",
-        name,
-        type,
-        element,
-        powerLevel: power,
-        guardian: { name: relatedGuardian.name, domain: relatedGuardian.domain },
-        origin: { creator, age, location: pick(["Lost for centuries, recently unearthed", "Kept in the Academy vault under guard", "Passed down through a bloodline", "Hidden in plain sight — disguised as something mundane"]) },
-        appearance: {
-          form: pick([`${type} that seems to breathe with ${element.toLowerCase()} energy`, `Deceptively simple ${type} — power reveals itself only to the worthy`, `Ornate ${type} covered in Gate sigils that glow when held`, `${type} that changes appearance based on the wielder's emotional state`]),
-          material: pick(["Condensed elemental force given physical form", `${element}-infused metal that's warm to the touch`, "Living crystal that grows imperceptibly", "Material that doesn't exist in any catalogue"]),
-          telltale: pick(["Hums at a specific frequency when danger approaches", "Casts no shadow", "Weighs nothing to the worthy, immovable to others", "Leaves a faint trail of elemental particles"]),
-        },
-        abilities: {
-          primary: power === "legendary" ? `Can temporarily open the ${relatedGuardian.domain} Gate for the unworthy — at a cost` : `Enhances ${relatedGuardian.domain} attunement by ${power === "major" ? "2" : "1"} Gate level(s)`,
-          secondary: pick(["Protects the wielder from their element's opposite", "Stores memories that can be replayed", "Translates the language of creatures", "Reveals hidden truths when held to the eye"]),
-          cost: pick(["Drains the wielder's stamina with each use", "Feeds on a specific emotion — the wielder feels less of it over time", "Shortens the wielder's connection to one Gate each time its full power is unleashed", "Attracts attention from entities that should not be disturbed"]),
-        },
-        requirement: power === "legendary" ? `Only those who opened the ${relatedGuardian.domain} Gate` : `${getRankFromGates(power === "major" ? 5 : power === "moderate" ? 3 : 1)} rank minimum`,
-        lore: {
-          previousWielders: pick(["Three known wielders — all died differently, all at the peak of their power", "One wielder, who refused to give it up and became something other than human", "Nobody has used it in living memory — the last wielder sealed it and disappeared", "A long line of wielders, each adding an inscription to the surface"]),
-          legend: pick(["Said to be one piece of a set — the others are lost", "Prophecy says it will choose its final wielder when the Gates begin to close", "The Academy Council has debated destroying it for decades", "It's sentient — or at least, it dreams"]),
-        },
-        narrativeHooks: [
-          pick(["The artifact has started behaving differently since last Tuesday. Why?", "Someone is forging counterfeits. The fakes work — but differently.", "The artifact's creator left instructions that contradict everything known about it"]),
-          `What does the wielder become if they rely on ${name} too much?`,
-        ],
-      }, null, 2),
-    }],
+    content: [
+      {
+        type: "text",
+        text: JSON.stringify(
+          {
+            _type: "artifact_blueprint",
+            _note:
+              "Generated draft. Add weight, texture, the feeling of holding it, and the moral cost of using it. Great artifacts change their wielder.",
+            name,
+            type,
+            element,
+            powerLevel: power,
+            guardian: {
+              name: relatedGuardian.name,
+              domain: relatedGuardian.domain,
+            },
+            origin: {
+              creator,
+              age,
+              location: pick([
+                "Lost for centuries, recently unearthed",
+                "Kept in the Academy vault under guard",
+                "Passed down through a bloodline",
+                "Hidden in plain sight — disguised as something mundane",
+              ]),
+            },
+            appearance: {
+              form: pick([
+                `${type} that seems to breathe with ${element.toLowerCase()} energy`,
+                `Deceptively simple ${type} — power reveals itself only to the worthy`,
+                `Ornate ${type} covered in Gate sigils that glow when held`,
+                `${type} that changes appearance based on the wielder's emotional state`,
+              ]),
+              material: pick([
+                "Condensed elemental force given physical form",
+                `${element}-infused metal that's warm to the touch`,
+                "Living crystal that grows imperceptibly",
+                "Material that doesn't exist in any catalogue",
+              ]),
+              telltale: pick([
+                "Hums at a specific frequency when danger approaches",
+                "Casts no shadow",
+                "Weighs nothing to the worthy, immovable to others",
+                "Leaves a faint trail of elemental particles",
+              ]),
+            },
+            abilities: {
+              primary:
+                power === "legendary"
+                  ? `Can temporarily open the ${relatedGuardian.domain} Gate for the unworthy — at a cost`
+                  : `Enhances ${relatedGuardian.domain} attunement by ${power === "major" ? "2" : "1"} Gate level(s)`,
+              secondary: pick([
+                "Protects the wielder from their element's opposite",
+                "Stores memories that can be replayed",
+                "Translates the language of creatures",
+                "Reveals hidden truths when held to the eye",
+              ]),
+              cost: pick([
+                "Drains the wielder's stamina with each use",
+                "Feeds on a specific emotion — the wielder feels less of it over time",
+                "Shortens the wielder's connection to one Gate each time its full power is unleashed",
+                "Attracts attention from entities that should not be disturbed",
+              ]),
+            },
+            requirement:
+              power === "legendary"
+                ? `Only those who opened the ${relatedGuardian.domain} Gate`
+                : `${getRankFromGates(power === "major" ? 5 : power === "moderate" ? 3 : 1)} rank minimum`,
+            lore: {
+              previousWielders: pick([
+                "Three known wielders — all died differently, all at the peak of their power",
+                "One wielder, who refused to give it up and became something other than human",
+                "Nobody has used it in living memory — the last wielder sealed it and disappeared",
+                "A long line of wielders, each adding an inscription to the surface",
+              ]),
+              legend: pick([
+                "Said to be one piece of a set — the others are lost",
+                "Prophecy says it will choose its final wielder when the Gates begin to close",
+                "The Academy Council has debated destroying it for decades",
+                "It's sentient — or at least, it dreams",
+              ]),
+            },
+            narrativeHooks: [
+              pick([
+                "The artifact has started behaving differently since last Tuesday. Why?",
+                "Someone is forging counterfeits. The fakes work — but differently.",
+                "The artifact's creator left instructions that contradict everything known about it",
+              ]),
+              `What does the wielder become if they rely on ${name} too much?`,
+            ],
+          },
+          null,
+          2,
+        ),
+      },
+    ],
   };
 }
 
@@ -499,7 +849,8 @@ export async function generateName(options: {
   count?: number;
 }): Promise<ToolResult> {
   const element = options.element ?? pick(Object.keys(nameRoots));
-  const gender = options.gender ?? pick(["masculine", "feminine", "neutral"] as const);
+  const gender =
+    options.gender ?? pick(["masculine", "feminine", "neutral"] as const);
   const type = options.type ?? "character";
   const count = Math.min(options.count ?? 5, 20);
 
@@ -510,12 +861,20 @@ export async function generateName(options: {
   for (let i = 0; i < count; i++) {
     const root = pick(roots);
     const suffix = pick(suffixes);
-    if (type === "place") names.push(root + pick(["heim", "garde", "haven", "reach", "vale"]));
-    else if (type === "artifact") names.push(root + suffix + "'s " + pick(["Edge", "Heart", "Eye", "Voice"]));
+    if (type === "place")
+      names.push(root + pick(["heim", "garde", "haven", "reach", "vale"]));
+    else if (type === "artifact")
+      names.push(
+        root + suffix + "'s " + pick(["Edge", "Heart", "Eye", "Voice"]),
+      );
     else names.push(root + suffix);
   }
 
-  return { content: [{ type: "text", text: JSON.stringify({ element, type, names }, null, 2) }] };
+  return {
+    content: [
+      { type: "text", text: JSON.stringify({ element, type, names }, null, 2) },
+    ],
+  };
 }
 
 export async function generateStoryPrompt(options: {
@@ -523,14 +882,23 @@ export async function generateStoryPrompt(options: {
   gate?: number;
   includeConflict?: boolean;
 }): Promise<ToolResult> {
-  const themes = ["discovery", "redemption", "courage", "loss", "growth", "sacrifice", "unity", "transformation"];
+  const themes = [
+    "discovery",
+    "redemption",
+    "courage",
+    "loss",
+    "growth",
+    "sacrifice",
+    "unity",
+    "transformation",
+  ];
   const theme = options.theme ?? pick(themes);
   const gate = options.gate ?? Math.floor(Math.random() * 10) + 1;
   const includeConflict = options.includeConflict ?? true;
 
   const guardian = guardians[gate - 1];
-  const godbeast = godbeasts[Math.min(gate - 1, 8)];
-  const protagonistElement = pick(elements.filter(e => e !== "Spirit"));
+  const godbeast = godbeasts[gate - 1];
+  const protagonistElement = pick(elements.filter((e) => e !== "Spirit"));
 
   const conflicts = [
     `Malachar's shadow cultists seek to corrupt the ${guardian.domain} Gate`,
@@ -539,18 +907,27 @@ export async function generateStoryPrompt(options: {
   ];
 
   return {
-    content: [{
-      type: "text",
-      text: JSON.stringify({
-        theme,
-        gate: guardian.gate,
-        gateName: guardian.domain,
-        guardian: guardian.name,
-        godbeast: godbeast?.name,
-        protagonist: { element: protagonistElement, challenge: `Must confront ${theme}` },
-        conflict: includeConflict ? pick(conflicts) : undefined,
-        storyPrompt: `A creator of ${protagonistElement} must learn ${theme} on the path to the ${guardian.domain} Gate.`,
-      }, null, 2),
-    }],
+    content: [
+      {
+        type: "text",
+        text: JSON.stringify(
+          {
+            theme,
+            gate: guardian.gate,
+            gateName: guardian.domain,
+            guardian: guardian.name,
+            godbeast: godbeast?.name,
+            protagonist: {
+              element: protagonistElement,
+              challenge: `Must confront ${theme}`,
+            },
+            conflict: includeConflict ? pick(conflicts) : undefined,
+            storyPrompt: `A creator of ${protagonistElement} must learn ${theme} on the path to the ${guardian.domain} Gate.`,
+          },
+          null,
+          2,
+        ),
+      },
+    ],
   };
 }

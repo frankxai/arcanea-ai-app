@@ -39,7 +39,7 @@ export function registerGeneratorTools(server: McpServer) {
       inputSchema: {
         archetype: z.string().optional(),
         primaryElement: z.enum(ELEMENTS).optional(),
-        gatesOpen: z.number().min(1).max(10).optional(),
+        gatesOpen: z.number().int().min(1).max(10).optional(),
         house: z.enum(HOUSES).optional(),
         nameGender: z.enum(["masculine", "feminine", "neutral"]).optional(),
         sessionId: z.string().optional(),
@@ -70,7 +70,7 @@ export function registerGeneratorTools(server: McpServer) {
       description: "Design a magical ability based on the Arcanea magic system",
       inputSchema: {
         element: z.enum(ELEMENTS),
-        gateLevel: z.number().min(1).max(10),
+        gateLevel: z.number().int().min(1).max(10),
         purpose: z.string().optional(),
       },
     },
@@ -188,7 +188,7 @@ export function registerGeneratorTools(server: McpServer) {
       description: "Create an inspiring story prompt set in Arcanea",
       inputSchema: {
         theme: z.string().optional(),
-        gate: z.number().min(1).max(10).optional(),
+        gate: z.number().int().min(1).max(10).optional(),
         includeConflict: z.boolean().optional(),
       },
     },
