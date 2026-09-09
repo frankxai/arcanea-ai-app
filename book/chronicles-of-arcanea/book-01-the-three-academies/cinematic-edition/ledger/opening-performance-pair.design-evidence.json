@@ -1,0 +1,136 @@
+{
+  "version": "2026-06-23",
+  "task": "Mera and Emilia opening performance frame studies",
+  "surface": "Private landscape and approximately 4:5 portrait editorial review; no public page placement",
+  "audience": "Adult fantasy readers and the Arcanea editorial team",
+  "first_read": "A skilled person stops when physical evidence changes what they can responsibly do.",
+  "standards": [
+    "design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "design-agent-standards/OUTCOMES.md",
+    "design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "starlight-design-intelligence/brand-image-system/standards/PREMIUM_IMAGE_PROMPT_STANDARD.md",
+    "cinematic-edition/ART_DIRECTION.md"
+  ],
+  "references": [
+    {
+      "label": "Mera wider reference",
+      "source": "../art/plates/plate-02-rain-record.webp",
+      "reason": "Adult casting and rain material; do not copy excess vessels or later sealed-bottle state."
+    },
+    {
+      "label": "Emilia wider reference",
+      "source": "../art/plates/plate-03-correct-instrument.webp",
+      "reason": "Adult casting only; replace large machine and premature yellow cuff with Chapter 3 relay."
+    },
+    {
+      "label": "Exact briefs and provenance",
+      "source": "opening-performance-proof-2026-09-09.md",
+      "reason": "Story sources, hashes, prompts, privacy and approval constraints."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Staged adult identities",
+      "Tactile ordinary materials",
+      "Readable faces and functional hands"
+    ],
+    "avoid": [
+      "Glowing generic magic",
+      "Anatomy artifacts",
+      "Premature injury/costume changes",
+      "Large cabinet in place of forearm relay"
+    ],
+    "signature": "Physical hesitation carries the character decision.",
+    "system": [
+      "3:2 landscape sources and portrait reframing, no generated text",
+      "Mera: cool harbor light, small warm lamp bounce",
+      "Emilia: neutral work light and warm brass",
+      "No motion, sound, new UI tokens or public placement"
+    ]
+  },
+  "asset_quality": {
+    "tier": "B",
+    "source_method": "generated-media",
+    "provenance": "generated",
+    "why_premium": "Specific early-story actions, reference-led casting, independent source checks and a critique/edit loop.",
+    "shortcut_risk": "low",
+    "context_tested": false
+  },
+  "artifacts": [
+    {
+      "path_or_url": "../art/studies/mera-rain-performance-r01.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "Landscape 1536x1024; correct three vessels, open bottle and separate collector hand; hair silhouette clipped."
+    },
+    {
+      "path_or_url": "../art/studies/mera-rain-performance-r02.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "Portrait 1122x1402; headroom restored; both hands, three vessels and full witness glass retained."
+    },
+    {
+      "path_or_url": "../art/studies/emilia-relay-performance-r01.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "Landscape 1536x1024; forearm relay and uninjured wrists replace earlier cabinet/yellow-cuff mismatch."
+    },
+    {
+      "path_or_url": "../art/studies/emilia-relay-performance-r02.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "Portrait 1122x1402; full relay, both hands, file, brass tab and face remain visible."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Tier B story illustrations, grounded in prose and existing production casting."
+    },
+    {
+      "name": "source-integrity",
+      "status": "pass",
+      "evidence": "PNG signatures, intrinsic dimensions and byte-for-byte copied source hashes verified; exact receipts in adjacent ledger."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "evidence": "All four source images visually inspected. This is not compressed delivery-size or print proof."
+    },
+    {
+      "name": "portrait-composition",
+      "status": "pass",
+      "evidence": "Approximately 4:5 portrait edits retain the face, hands and necessary props; actual output is 1122x1402, not the requested 1024x1280."
+    },
+    {
+      "name": "visual-qa",
+      "status": "blocked",
+      "evidence": "Maker diagnostics: Mera 25/30, Emilia 24/30. Independent critique, actual reader-width inspection and print proof remain pending."
+    },
+    {
+      "name": "motion",
+      "status": "not_applicable",
+      "evidence": "Static illustrations; no animation or audio was created."
+    },
+    {
+      "name": "release",
+      "status": "blocked",
+      "evidence": "No public references were added. Casting, rights, model attribution, independent critique, delivery and human release approvals remain open."
+    }
+  ],
+  "score": {
+    "total": 24,
+    "max": 30,
+    "notes": "Conservative pair score uses the lower individual maker score: Mera 25/30, Emilia 24/30. Diagnostic only, not independent approval."
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "Tool backend model not surfaced; never claim GPT Image 2.5 without a receipt.",
+    "Shared native-imagegen prompt-packet schema only admits final-native-infographic; full packet retained honestly in adjacent ledger.",
+    "No final print or mobile crop/context approval.",
+    "Portrait requests returned approximately 4:5, not the exact requested dimensions.",
+    "Generated portrait reframing altered texture and spacing; not a pixel-identical crop.",
+    "Existing wider plates have early-story prop/costume mismatches; do not silently substitute either old or new studies into release."
+  ]
+}
