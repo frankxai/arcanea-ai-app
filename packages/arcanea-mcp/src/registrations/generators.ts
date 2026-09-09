@@ -1,3 +1,4 @@
+import { createRuntimeIdentifier } from "../runtime-identifiers.js";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import {
@@ -49,7 +50,7 @@ export function registerGeneratorTools(server: McpServer) {
       const result = await generateCharacter(args as any);
       const parsed = JSON.parse(result.content[0].text);
       const creation = {
-        id: Date.now().toString(),
+        id: createRuntimeIdentifier("creation"),
         type: "character" as const,
         name: parsed.name,
         element: parsed.primaryElement,
@@ -92,7 +93,7 @@ export function registerGeneratorTools(server: McpServer) {
       const result = await generateLocation(args as any);
       const parsed = JSON.parse(result.content[0].text);
       const creation = {
-        id: Date.now().toString(),
+        id: createRuntimeIdentifier("creation"),
         type: "location" as const,
         name: parsed.name,
         element: parsed.dominantElement,
@@ -125,7 +126,7 @@ export function registerGeneratorTools(server: McpServer) {
       const result = await generateCreature(args as any);
       const parsed = JSON.parse(result.content[0].text);
       const creation = {
-        id: Date.now().toString(),
+        id: createRuntimeIdentifier("creation"),
         type: "creature" as const,
         name: parsed.name,
         element: parsed.element,
@@ -154,7 +155,7 @@ export function registerGeneratorTools(server: McpServer) {
       const result = await generateArtifact(args as any);
       const parsed = JSON.parse(result.content[0].text);
       const creation = {
-        id: Date.now().toString(),
+        id: createRuntimeIdentifier("creation"),
         type: "artifact" as const,
         name: parsed.name,
         element: parsed.element,

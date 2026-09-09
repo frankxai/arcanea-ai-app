@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Arcanea MCP Server v3
+ * Arcanea worldbuilding MCP server
  * A worldbuilding toolkit for the Arcanea universe.
  * Making magic through AI-human co-creation.
  *
@@ -8,7 +8,7 @@
  * - Worldbuilding generators (characters, magic, locations, creatures, artifacts)
  * - Luminor AI companions with Council mode
  * - Bestiary of creative blocks with deep diagnosis
- * - Memory layer for persistent creative journeys
+ * - In-process creative journeys and explicitly saved world graphs
  * - Canon validation and Ten Gates system
  * - Agent orchestration system (inspired by oh-my-opencode)
  * - Multi-agent parallel execution
@@ -30,36 +30,24 @@ import { registerWorldGraphTools } from "./registrations/world-graph.js";
 import { registerWorldIntelligenceTools } from "./registrations/world-intelligence.js";
 import { registerWorldPersistenceTools } from "./registrations/world-persistence.js";
 import { registerVisualPromptTools } from "./registrations/visual-prompts.js";
+import { RUNTIME_INFO } from "./runtime-info.js";
 
-const server = new McpServer({ name: "arcanea-mcp", version: "0.3.0" });
-registerGeneratorTools(server);
-
-registerGuidanceTools(server);
-registerWorldGraphTools(server);
-
-registerOrchestrationTools(server);
-
-registerCanonTools(server);
-
-registerVisualStyleTools(server);
-registerWorldIntelligenceTools(server);
-
-registerWorldPersistenceTools(server);
-
-registerVisualPromptTools(server);
-
-registerProductionTools(server);
-
-registerReferences(server);
-
-registerWebVaultTools(server);
-
-// =========================================================================
-// EXPORTS
-// =========================================================================
-
-export { server };
-
-export function createServer() {
+export function createServer(): McpServer {
+  const server = new McpServer(RUNTIME_INFO);
+  registerGeneratorTools(server);
+  registerGuidanceTools(server);
+  registerWorldGraphTools(server);
+  registerOrchestrationTools(server);
+  registerCanonTools(server);
+  registerVisualStyleTools(server);
+  registerWorldIntelligenceTools(server);
+  registerWorldPersistenceTools(server);
+  registerVisualPromptTools(server);
+  registerProductionTools(server);
+  registerReferences(server);
+  registerWebVaultTools(server);
   return server;
 }
+
+/** Backwards-compatible library instance. New transports should use createServer(). */
+export const server = createServer();
