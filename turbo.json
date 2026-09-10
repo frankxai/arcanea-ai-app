@@ -87,5 +87,5 @@
     "packages/arcanea-creator-starters/**",
     "scripts/build-creator-starters.mjs"
   ],
-  "globalEnv": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL", "CI"]
+  "globalEnv": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "CI"]
 }
