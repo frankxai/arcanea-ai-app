@@ -11,3 +11,5 @@ Acceptance: 15 Node 22 tests, compatible portable metadata, zero output drift, e
 Evidence: package design-loop-evidence.json and CI gallery artifacts. Authenticated Chrome inspected Session, Margin, Patch and gallery interactions before a subsequent memory HOLD. The current head still needs fresh full CI and independent review. Automated captures are not a self-assigned premium score.
 
 Boundaries: original examples, not published v0 templates. No v0 generation, marketplace submission, fresh-task plugin installation, paid checkout or commerce-release certification. Never promote the static-only preview over the full app. Roll back only the bounded package, generator, layout and integration changes; preserve the separate commerce work.
+
+Formatter ownership: pnpm-lock.yaml retains pnpm's native generated format. Prettier excludes only that file; the unchanged Lockfile Drift Check and frozen dependency installs still validate it. Prettier's default rewrite produced over one million diff characters without changing dependency meaning. Authored-file formatting, dependency validation, security and browser checks remain required.
