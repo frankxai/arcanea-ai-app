@@ -48,6 +48,10 @@ const output = "screenshots/creator-starters";
           response.headers.get("content-security-policy"),
           /connect-src 'none'/,
         );
+        assert.match(
+          response.headers.get("content-security-policy"),
+          /(?:^|;\s*)script-src 'sha256-[A-Za-z0-9+/]+='(?:;|$)/,
+        );
         assert.deepEqual(
           Buffer.from(await response.arrayBuffer()),
           await fs.readFile(`apps/web/public/creator-starters/${file}`),
@@ -96,6 +100,20 @@ const output = "screenshots/creator-starters";
       .press("Enter");
     await expect(page.locator("[data-category]:visible")).toHaveCount(9);
     await expect(page.getByRole("searchbox")).toBeFocused();
+    assert.equal(
+      await page.evaluate(() => {
+        const injected = document.createElement("script");
+        injected.textContent = "window.__starterInjectionExecuted = true";
+        document.body.append(injected);
+        injected.remove();
+        return window.__starterInjectionExecuted === true;
+      }),
+      false,
+      "CSP must reject an unrecognized inline script",
+    );
+    evidence.interactions.push(
+      "hash-pinned script policy rejects script injection",
+    );
     evidence.interactions.push(
       "shared gallery filter, empty recovery and keyboard focus",
     );

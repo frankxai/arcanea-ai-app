@@ -14,6 +14,15 @@ const slugs = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
 const normalize = (text) =>
   text.replace(/\r\n/g, "\n").replace(/[ \t]+$/gm, "");
 
+// The standalone shell embeds this same normalized script in every page.
+// Compute the policy from source so builds never depend on a stale hash literal.
+export async function scriptHash() {
+  const script = normalize(
+    await readFile(path.join(pluginRoot, "src/interactions.js"), "utf8"),
+  );
+  return `sha256-${createHash("sha256").update(script, "utf8").digest("base64")}`;
+}
+
 export function validateCatalog(catalog) {
   if (
     catalog.version !== 1 ||

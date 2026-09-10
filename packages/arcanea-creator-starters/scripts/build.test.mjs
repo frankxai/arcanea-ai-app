@@ -3,12 +3,14 @@ import assert from "node:assert/strict";
 import { mkdtemp, readFile, writeFile, mkdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { createHash } from "node:crypto";
 import {
   artifacts,
   build,
   validateCatalog,
   compatibilityManifest,
   pluginRoot,
+  scriptHash,
 } from "./build.mjs";
 import { escapeHtml, renderTemplate, createBrief } from "../src/render.mjs";
 
@@ -32,6 +34,21 @@ test("catalog provides three examples per requested audience", () => {
   assert.equal(rows.length, 9);
   for (const category of ["music", "labs", "tools"])
     assert.equal(rows.filter((t) => t.category === category).length, 3);
+});
+test("CSP hash matches the exact inline script in all ten generated pages", async () => {
+  const expected = await scriptHash();
+  let pages = 0;
+  for (const [name, html] of await artifacts()) {
+    if (!name.endsWith(".html")) continue;
+    const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+    assert.equal(scripts.length, 1, name);
+    const hash = (script) =>
+      `sha256-${createHash("sha256").update(script, "utf8").digest("base64")}`;
+    assert.equal(hash(scripts[0][1]), expected, name);
+    assert.notEqual(hash(scripts[0][1] + "\nalert(1)"), expected, name);
+    pages++;
+  }
+  assert.equal(pages, 10);
 });
 test("catalog rejects traversal, duplicates, unknown templates and Windows device paths", () => {
   for (const badId of [

@@ -109,6 +109,8 @@ const nextConfig = {
   },
   // eslint config moved to eslint.config.js (Next.js 16+)
   async headers() {
+    const { scriptHash } = await import('../../packages/arcanea-creator-starters/scripts/build.mjs');
+    const starterScriptHash = await scriptHash();
     return [
       {
         source: '/(.*)',
@@ -143,7 +145,7 @@ const nextConfig = {
           key: 'Content-Security-Policy',
           value: [
             "default-src 'none'",
-            "script-src 'unsafe-inline'",
+            `script-src '${starterScriptHash}'`,
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "font-src 'self' data: https://fonts.gstatic.com",
             "img-src 'self' data:",
