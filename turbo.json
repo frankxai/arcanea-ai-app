@@ -112,7 +112,6 @@
     "NODE_ENV",
     "VERCEL",
     "VERCEL_ENV",
-    "VERCEL_URL",
     "CI"
   ]
 }
