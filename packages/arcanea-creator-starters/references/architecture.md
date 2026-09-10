@@ -2,7 +2,7 @@
 
 Verified against [OpenAI's packaging documentation](https://developers.openai.com/plugins/build/plugins) on 2026-09-10. Root `plugin.json` is canonical for new portable packages. `extensions.com.openai` holds platform presentation. When that object exists it replaces the compatibility overlay; the two are not merged. Fixed `skills/` and optional `mcp.json` paths provide portable components.
 
-This package deliberately uses one skill. The user's job is selecting and adapting a page; six independent agents, six databases or six MCP servers would duplicate the same workflow. The HTML has three composition families and six catalog records. The build command produces the gallery, pages, briefs and file-hash receipt. Node built-ins are sufficient. No new package manager dependency or root build-system mutation is needed.
+This package deliberately uses one skill. The user's job is selecting and adapting a page; separate agents, databases or MCP servers for each example would duplicate the same workflow. The HTML has six composition families and nine catalog records. The build command produces the gallery, pages, briefs, registry bundles and file-hash receipt. Node built-ins are sufficient. No new package manager dependency or root build-system mutation is needed.
 
 ```text
 plugin.json → generated .codex-plugin/plugin.json
@@ -17,3 +17,7 @@ Integrations are optional adapters added only for a real requirement. Browser in
 Build artifacts are portable. A Next.js app can serve the generated static directory; a v0 chat can consume one HTML and its brief; an agent can use the skill and the same source. Converting a page to React is an explicit implementation step, not a claim about the current HTML files.
 
 The original commercial-truth audit concerns the wider app. This package does not prove its hosted checkout, waitlist storage, model routing or entitlements. Keep those gates and the existing user data boundaries separate.
+
+## Extension contract
+
+Add a catalog entry for content changes. Add a composition only for a different user job. `render.mjs` owns the common shell; `compositions.mjs` owns the three new artifacts; `registry.mjs` owns import packaging. There is one catalog, one shared browser script and one build entry point. Registry bundles carry source files with namespaced destinations, never hidden install-time execution. Metadata and generated output drift are checked before release.

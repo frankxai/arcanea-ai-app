@@ -1,4 +1,6 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Editable Arcanea creator starter: Creator starters"><meta name="referrer" content="no-referrer"><title>Creator starters · Arcanea creator starters</title><style>/* Original creator-page tokens. Components consume these roles across all themes. */
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Editable Arcanea creator starter: Creator starters"><meta name="referrer" content="no-referrer"><title>Creator starters · Arcanea creator starters</title><style>@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;450;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap");
+
+/* Original creator-page tokens. Components consume these roles across all themes. */
 :root {
   --bg: #0b1010;
   --panel: #141c1b;
@@ -89,6 +91,16 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
+/* Quiet paper grain is secondary texture, never the main visual artifact. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.024;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23808080' filter='url(%23grain)' d='M0 0h160v160H0z'/%3E%3C/svg%3E");
+}
 button,
 input,
 textarea {
@@ -173,6 +185,417 @@ a:hover {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* Search and export are part of the collection, not a separate application. */
+.collection-search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 30px;
+}
+.collection-search label {
+  font-size: 13px;
+  color: var(--muted);
+}
+.collection-search input {
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  min-height: 46px;
+  padding: 10px 14px;
+  width: min(360px, 100%);
+  min-width: 0;
+}
+.collection-search input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+.collection-search input:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+.collection-search [role="status"] {
+  margin-left: auto;
+}
+.card-actions {
+  flex-wrap: wrap;
+}
+.card-actions button {
+  border: 0;
+  padding: 0;
+  min-height: 44px;
+  background: none;
+  color: var(--text);
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.card-actions button:hover {
+  color: var(--accent);
+}
+.card-actions a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.template-card [data-copy-status]:empty {
+  display: none;
+}
+.empty-state {
+  padding: 50px 20px;
+  border-block: 1px solid var(--line);
+  text-align: center;
+}
+.empty-state p {
+  color: var(--muted);
+  margin: 12px 0 22px;
+}
+
+/* Tier C: readable system artifacts; no decorative research diagrams. */
+.evidence-heading {
+  padding: 30px 0 24px;
+}
+.evidence-heading > span {
+  display: block;
+  max-width: 320px;
+  font: 36px/1.05 var(--serif);
+}
+.evidence-heading p {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 15px;
+}
+.evidence-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 24px;
+  font-size: 11px;
+  text-align: left;
+  table-layout: fixed;
+}
+.evidence-table caption {
+  text-align: left;
+  font: 10px/1.5 var(--mono);
+  color: var(--muted);
+  padding: 0 0 15px;
+}
+.evidence-table th,
+.evidence-table td {
+  border-top: 1px solid var(--line);
+  padding: 15px 8px 15px 0;
+  overflow-wrap: anywhere;
+}
+.evidence-table thead th {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+}
+.evidence-table tbody th {
+  font-weight: 500;
+}
+.evidence-table td:last-child {
+  color: var(--accent);
+  font-size: 10px;
+}
+.mini-evidence,
+.mini-session {
+  width: 150px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  display: grid;
+  align-content: center;
+}
+.mini-evidence span,
+.mini-session span {
+  border-bottom: 1px solid var(--line);
+  padding: 12px 0;
+  font: 10px var(--mono);
+  color: var(--text);
+}
+.mini-paper {
+  background: var(--panel);
+  padding: 18px;
+  width: 150px;
+  border-top: 3px solid var(--text);
+  transform: rotate(-4deg);
+}
+.mini-paper span {
+  font: 9px var(--mono);
+  color: var(--muted);
+}
+.mini-paper b {
+  display: block;
+  margin-top: 22px;
+  font: 24px/1.05 var(--serif);
+}
+.mini-request {
+  background: var(--panel);
+  width: 160px;
+  padding: 18px;
+  font: 20px var(--mono);
+  color: var(--accent);
+}
+.mini-request code {
+  display: block;
+  font: 10px/2 var(--mono);
+  color: var(--text);
+  margin: 10px 0;
+}
+.session-console,
+.paper-art,
+.request-art {
+  border: 1px solid var(--line);
+  padding: clamp(20px, 3vw, 36px);
+  background: var(--panel);
+}
+.session-hero {
+  grid-template-columns: 0.9fr 1.1fr;
+}
+.session-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 28px 0;
+}
+.session-title > span {
+  font: 34px/1.1 var(--serif);
+}
+.session-title i {
+  font: 64px/1 var(--mono);
+  color: var(--accent);
+  font-style: normal;
+  letter-spacing: -0.08em;
+}
+.session-takes {
+  border-block: 1px solid var(--line);
+  margin-bottom: 16px;
+}
+.session-takes button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 28px 1fr 20px;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 10px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  text-align: left;
+}
+.session-takes button:last-child {
+  border-bottom: 0;
+}
+.session-takes button:hover,
+.session-takes button[aria-pressed="true"] {
+  background: var(--bg);
+  color: var(--accent);
+}
+.take-number {
+  font: 11px var(--mono);
+  color: var(--muted);
+}
+.session-takes b {
+  display: block;
+  font-weight: 500;
+  font-size: 15px;
+}
+.session-takes small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 5px;
+}
+.session-note {
+  padding: 26px 0 0;
+}
+.session-note > span {
+  font: 10px var(--mono);
+  color: var(--muted);
+}
+.session-note p {
+  font: 28px/1.2 var(--serif);
+  margin: 12px 0 20px;
+}
+.publication-hero {
+  align-items: start;
+}
+.paper-art {
+  border-top: 4px solid var(--text);
+}
+.paper-series {
+  font: 11px var(--mono);
+  color: var(--accent);
+  margin: 32px 0 14px;
+}
+.paper-art h2 {
+  font: 46px/1.04 var(--serif);
+  letter-spacing: -0.025em;
+}
+.paper-byline {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 18px 0 26px;
+}
+.paper-abstract {
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+.paper-art h3 {
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+.paper-abstract p,
+.paper-art details p {
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--muted);
+}
+.paper-margin {
+  border-left: 2px solid var(--accent);
+  margin: 26px 0;
+  padding: 3px 0 3px 18px;
+}
+.paper-margin span {
+  font: 10px var(--mono);
+  color: var(--accent);
+}
+.paper-margin p {
+  font: 25px/1.2 var(--serif);
+  margin-top: 10px;
+}
+.paper-art details {
+  border-top: 1px solid var(--line);
+  padding-block: 15px;
+}
+.paper-art summary {
+  cursor: pointer;
+  font-size: 13px;
+  min-height: 30px;
+  padding: 5px 0;
+}
+.paper-art details p {
+  margin-top: 10px;
+}
+.paper-art [data-paper-status] {
+  margin-top: 12px;
+}
+.request-art {
+  min-width: 0;
+}
+.request-address {
+  display: flex;
+  gap: 18px;
+  font: 11px var(--mono);
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+}
+.request-address > span {
+  color: var(--accent);
+}
+.request-art label {
+  display: block;
+  margin: 24px 0 12px;
+  font-size: 12px;
+}
+.request-art textarea {
+  display: block;
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--text);
+  font: 12px/1.85 var(--mono);
+  padding: 16px;
+  resize: vertical;
+  min-height: 190px;
+}
+.request-art textarea[aria-invalid="true"] {
+  border-color: var(--accent);
+  border-style: dashed;
+}
+.request-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 16px 0 26px;
+}
+.request-actions .button {
+  font-size: 12px;
+  padding: 12px 16px;
+}
+.request-response {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+.request-response pre {
+  font: 11px/1.85 var(--mono);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: var(--bg);
+  padding: 16px;
+  max-height: 360px;
+  overflow-y: auto;
+}
+.request-response pre:focus-visible {
+  outline: 2px solid var(--accent);
+}
+.request-art [role="status"] {
+  margin-top: 15px;
+}
+.text-button:disabled {
+  opacity: 0.55;
+  text-decoration: none;
+}
+@media (max-width: 1000px) {
+  .session-hero {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 720px) {
+  .collection-search {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .collection-search input {
+    width: 100%;
+  }
+  .collection-search [role="status"] {
+    margin-left: 0;
+  }
+  .session-hero {
+    grid-template-columns: 1fr;
+  }
+  .session-title > span {
+    font-size: 29px;
+  }
+  .session-title i {
+    font-size: 54px;
+  }
+  .paper-art h2 {
+    font-size: 38px;
+  }
+  .mini-evidence,
+  .mini-session,
+  .mini-paper,
+  .mini-request {
+    width: 110px;
+    padding: 12px;
+  }
+  .mini-paper b {
+    font-size: 22px;
+  }
+  .evidence-table {
+    font-size: 10px;
+  }
+  .evidence-heading > span {
+    font-size: 32px;
+  }
 }
 .button {
   display: inline-flex;
@@ -455,34 +878,6 @@ a:hover {
 }
 .mini-pads > i:nth-child(3) {
   opacity: 0.5;
-}
-.mini-orbit {
-  width: 170px;
-  height: 170px;
-  position: relative;
-  background: radial-gradient(var(--line) 0.8px, transparent 1px) 0 0/12px 12px;
-}
-.mini-orbit:before,
-.mini-orbit:after,
-.mini-orbit > i {
-  content: "";
-  position: absolute;
-  border: 1px solid var(--muted);
-  border-radius: 50%;
-  inset: 20px 0;
-  transform: rotate(40deg);
-}
-.mini-orbit:after {
-  transform: rotate(-40deg);
-}
-.mini-orbit > i {
-  transform: rotate(90deg);
-}
-.mini-orbit > b {
-  position: absolute;
-  inset: 70px;
-  background: var(--accent);
-  border-radius: 50%;
 }
 .mini-tool {
   padding: 19px;
@@ -1021,15 +1416,6 @@ a:hover {
   border-bottom: 1px solid var(--line);
   padding-bottom: 17px;
 }
-.research-figure {
-  padding: 16px 0 8px;
-  color: var(--text);
-}
-.research-figure svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
 .figure-caption {
   display: flex;
   align-items: center;
@@ -1278,10 +1664,6 @@ a:hover {
   .mini-record {
     height: 190px;
   }
-  .mini-orbit {
-    width: 190px;
-    height: 190px;
-  }
 }
 @media (max-width: 1000px) {
   .gallery-hero {
@@ -1317,13 +1699,6 @@ a:hover {
   }
   .mini-record {
     height: 135px;
-  }
-  .mini-orbit {
-    width: 140px;
-    height: 140px;
-  }
-  .mini-orbit > b {
-    inset: 58px;
   }
   .gallery-hero h1 {
     font-size: 68px;
@@ -1414,13 +1789,6 @@ a:hover {
   }
   .mini-record {
     height: 150px;
-  }
-  .mini-orbit {
-    width: 155px;
-    height: 155px;
-  }
-  .mini-orbit > b {
-    inset: 64px;
   }
   .card-heading h3 {
     font-size: 22px;
@@ -1627,13 +1995,6 @@ a:hover {
   .mini-record {
     height: 123px;
   }
-  .mini-orbit {
-    width: 123px;
-    height: 123px;
-  }
-  .mini-orbit > b {
-    inset: 50px;
-  }
   .card-actions {
     gap: 14px;
   }
@@ -1678,13 +2039,6 @@ a:hover {
   .mini-record {
     height: 125px;
   }
-  .mini-orbit {
-    width: 125px;
-    height: 125px;
-  }
-  .mini-orbit > b {
-    inset: 51px;
-  }
   .mini-tool {
     padding: 12px;
   }
@@ -1705,25 +2059,150 @@ a:hover {
   padding: 3px 6px;
   color: var(--on-accent);
 }
-</style></head><body class="gallery"><a class="skip" href="#main">Skip to content</a><div class="gallery-wrap"><header class="gallery-header"><a class="gallery-brand" href="#main"> Arcanea <span>/ Creator starters</span></a><nav aria-label="Library navigation"><a href="#collection">The collection</a><a href="#workflow">How to use</a><a href="README.md">Read the guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></nav></header><main id="main"><section class="gallery-hero"><div><p class="eyebrow"><span class="small-line"></span>For people making their own thing</p><h1>A good place<br>to make it <em>yours.</em></h1></div><div class="gallery-intro"><p>Six considered starting points for the sounds, research and tools you are putting into the world.</p><a class="button solid" href="#collection">Find your starting point <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><span>Editable source · Local demos · v0 briefs</span></div></section><section id="collection" aria-labelledby="collection-heading"><div class="collection-bar"><h2 id="collection-heading">The collection <span>06</span></h2><div class="filters" role="group" aria-label="Filter templates"><button data-filter="all" aria-pressed="true">All starters</button><button data-filter="music" aria-pressed="false">Music producers</button><button data-filter="labs" aria-pressed="false">AI labs</button><button data-filter="tools" aria-pressed="false">AI tools</button></div></div><p class="sr-only" role="status" data-filter-status>6 starters shown</p><div class="template-grid"><article class="template-card" data-category="music"><a class="preview-link" href="resonant.html" aria-label="Preview Resonant"><div class="thumb theme-ember" aria-hidden="true"><span class="thumb-name">Resonant</span><div class="thumb-layout"><b>Make a little<br>room for sound.</b><div class="mini-record "><i>r.</i></div></div><div class="thumb-line"><span>Producer portfolio</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Resonant</h3><span>Producer portfolio</span></div><p>An editorial artist page with a playable record sleeve, track selector and release notes.</p><div class="card-actions"><a href="resonant.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="resonant.html.txt" download="resonant.html">Download HTML</a><a href="resonant.md" download>v0 brief</a></div></article><article class="template-card" data-category="music"><a class="preview-link" href="crate.html" aria-label="Preview Crate"><div class="thumb theme-paper" aria-hidden="true"><span class="thumb-name">Crate</span><div class="thumb-layout"><b>Find the texture.<br>Start something.</b><div class="mini-record mini-pads"><i></i><i></i><i></i></div></div><div class="thumb-line"><span>Sample collection</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Crate</h3><span>Sample collection</span></div><p>A sample-pack page with a tactile pad instrument, three playable textures and an honest contents panel.</p><div class="card-actions"><a href="crate.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="crate.html.txt" download="crate.html">Download HTML</a><a href="crate.md" download>v0 brief</a></div></article><article class="template-card" data-category="labs"><a class="preview-link" href="fieldwork.html" aria-label="Preview Fieldwork"><div class="thumb theme-sage" aria-hidden="true"><span class="thumb-name">Fieldwork</span><div class="thumb-layout"><b>Better questions.<br>Visible evidence.</b><div class="mini-orbit"><i></i><b></b></div></div><div class="thumb-line"><span>Research lab</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Fieldwork</h3><span>Research lab</span></div><p>An evidence-led lab page with a local retrieval experiment, research notes and explicit limitations.</p><div class="card-actions"><a href="fieldwork.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="fieldwork.html.txt" download="fieldwork.html">Download HTML</a><a href="fieldwork.md" download>v0 brief</a></div></article><article class="template-card" data-category="labs"><a class="preview-link" href="open-model.html" aria-label="Preview Open model"><div class="thumb theme-ink" aria-hidden="true"><span class="thumb-name">Open model</span><div class="thumb-layout"><b>Show your work.<br>Then your model.</b><div class="mini-orbit"><i></i><b></b></div></div><div class="thumb-line"><span>Model release</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Open model</h3><span>Model release</span></div><p>A model-release page with inspectable evaluation fixtures, model-card sections and provenance prompts.</p><div class="card-actions"><a href="open-model.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="open-model.html.txt" download="open-model.html">Download HTML</a><a href="open-model.md" download>v0 brief</a></div></article><article class="template-card" data-category="tools"><a class="preview-link" href="forma.html" aria-label="Preview Forma"><div class="thumb theme-peach" aria-hidden="true"><span class="thumb-name">Forma</span><div class="thumb-layout"><b>A rough thought.<br>A clearer brief.</b><div class="mini-tool"><i></i><i></i><i></i><span>Input → output</span></div></div><div class="thumb-line"><span>Creative AI tool</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Forma</h3><span>Creative AI tool</span></div><p>A creative-tool page with an editable idea-to-brief demo, copy export and a clear privacy boundary.</p><div class="card-actions"><a href="forma.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="forma.html.txt" download="forma.html">Download HTML</a><a href="forma.md" download>v0 brief</a></div></article><article class="template-card" data-category="tools"><a class="preview-link" href="relay.html" aria-label="Preview Relay"><div class="thumb theme-midnight" aria-hidden="true"><span class="thumb-name">Relay</span><div class="thumb-layout"><b>An idea in.<br>A plan you can inspect.</b><div class="mini-tool"><i></i><i></i><i></i><span>Input → output</span></div></div><div class="thumb-line"><span>Agent workflow tool</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Relay</h3><span>Agent workflow tool</span></div><p>An agent-tool page with an inspectable local plan builder, execution boundaries and Markdown export.</p><div class="card-actions"><a href="relay.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="relay.html.txt" download="relay.html">Download HTML</a><a href="relay.md" download>v0 brief</a></div></article></div></section><section id="workflow" class="workflow"><div><p class="eyebrow">Your source. Your direction.</p><h2>Keep the craft.<br>Change the story.</h2><p>Start in your browser, bring it into v0, or hand the source to your coding agent. There is no required backend.</p></div><ol><li><span>01</span><div><h3>Find a page with your kind of job.</h3><p>Listen to the sound demo, inspect the research example, or try the local brief builder.</p></div></li><li><span>02</span><div><h3>Take the source and the brief.</h3><p>Attach both to a new <a href="https://v0.app" target="_blank" rel="noopener noreferrer">v0 chat</a> to adapt the design to Next.js. Generation uses your v0 account.</p></div></li><li><span>03</span><div><h3>Make the facts and the finish yours.</h3><p>Replace sample content, connect only what you need, and check the page on a phone before publishing.</p></div></li></ol></section><aside class="library-note"><span class="status-dot">What is included</span><p>Six standalone HTML examples, six v0 briefs and a portable Codex skill in the source package. These are original demo designs. They have not been generated or published in the v0 marketplace; no paid product or provider service is included.</p></aside></main><footer class="gallery-footer"><span>Arcanea / Made to be made your own.</span><a href="README.md">Source and usage notes <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></footer></div><script>(() => {
+</style></head><body class="gallery"><a class="skip" href="#main">Skip to content</a><div class="gallery-wrap"><header class="gallery-header"><a class="gallery-brand" href="#main"> Arcanea <span>/ Creator starters</span></a><nav aria-label="Library navigation"><a href="#collection">The collection</a><a href="#workflow">How to use</a><a href="README.md">Read the guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></nav></header><main id="main"><section class="gallery-hero"><div><p class="eyebrow"><span class="small-line"></span>For people making their own thing</p><h1>A good place<br>to make it <em>yours.</em></h1></div><div class="gallery-intro"><p>9 considered starting points for the sounds, research and tools you are putting into the world.</p><a class="button solid" href="#collection">Find your starting point <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><span>Editable source · Local demos · v0 briefs</span></div></section><section id="collection" aria-labelledby="collection-heading"><div class="collection-bar"><h2 id="collection-heading">The collection <span>09</span></h2><div class="filters" role="group" aria-label="Filter templates"><button data-filter="all" aria-pressed="true">All starters</button><button data-filter="music" aria-pressed="false">Music producers</button><button data-filter="labs" aria-pressed="false">AI labs</button><button data-filter="tools" aria-pressed="false">AI tools</button></div></div><div class="collection-search"><label for="starter-search">Find your starting point</label><input id="starter-search" type="search" maxlength="100" placeholder="Try release, research, developer…" data-search><p class="fine" role="status" data-filter-status>9 starters shown</p></div><div class="template-grid"><article class="template-card" data-category="music" data-search-text="resonant producer portfolio an editorial artist page with a playable record sleeve, track selector and release notes."><a class="preview-link" href="resonant.html" aria-label="Preview Resonant"><div class="thumb theme-ember" aria-hidden="true"><span class="thumb-name">Resonant</span><div class="thumb-layout"><b>Make a little<br>room for sound.</b><div class="mini-record "><i>r.</i></div></div><div class="thumb-line"><span>Producer portfolio</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Resonant</h3><span>Producer portfolio</span></div><p>An editorial artist page with a playable record sleeve, track selector and release notes.</p><div class="card-actions"><a href="resonant.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="resonant.html.txt" download="resonant.html">Download HTML</a><a href="resonant.md" download>v0 brief</a><a href="resonant.registry.json" download>v0 bundle</a><button type="button" data-copy-brief data-prompt="Adapt the attached resonant.html and its v0 brief to my project. Build a music producer portfolio with an asymmetric record-sleeve hero, generous editorial typography, three-track player, release notes and artist statement. Keep track ownership and download permissions explicit. The built-in audio is synthesized demo sound, not a commercial catalog. Replace it with owner-provided licensed tracks before launch. Use Next.js App Router and strict TypeScript only if compatible with my project. Preserve honest demo boundaries; inspect and refine at desktop and mobile widths.">Copy v0 prompt</button></div><p class="fine" data-copy-status role="status"></p></article><article class="template-card" data-category="music" data-search-text="crate sample collection a sample-pack page with a tactile pad instrument, three playable textures and an honest contents panel."><a class="preview-link" href="crate.html" aria-label="Preview Crate"><div class="thumb theme-paper" aria-hidden="true"><span class="thumb-name">Crate</span><div class="thumb-layout"><b>Find the texture.<br>Start something.</b><div class="mini-record mini-pads"><i></i><i></i><i></i></div></div><div class="thumb-line"><span>Sample collection</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Crate</h3><span>Sample collection</span></div><p>A sample-pack page with a tactile pad instrument, three playable textures and an honest contents panel.</p><div class="card-actions"><a href="crate.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="crate.html.txt" download="crate.html">Download HTML</a><a href="crate.md" download>v0 brief</a><a href="crate.registry.json" download>v0 bundle</a><button type="button" data-copy-brief data-prompt="Adapt the attached crate.html and its v0 brief to my project. Build a sample-collection page with a tactile three-pad audition instrument, a compact contents panel, audio metadata and a clear usage-rights section. Use an ivory editorial palette with orange accents. Do not invent a price, download size, pack count, rights grant or endorsement. Wire demand capture only after a real product ID and provider are supplied; keep checkout absent until release approval. Use Next.js App Router and strict TypeScript only if compatible with my project. Preserve honest demo boundaries; inspect and refine at desktop and mobile widths.">Copy v0 prompt</button></div><p class="fine" data-copy-status role="status"></p></article><article class="template-card" data-category="labs" data-search-text="fieldwork research lab an evidence-led lab page with a local retrieval experiment, research notes and explicit limitations."><a class="preview-link" href="fieldwork.html" aria-label="Preview Fieldwork"><div class="thumb theme-sage" aria-hidden="true"><span class="thumb-name">Fieldwork</span><div class="thumb-layout"><b>Better questions.<br>Visible evidence.</b><div class="mini-evidence"><span>Question</span><span>Source</span><span>Review</span></div></div><div class="thumb-line"><span>Research lab</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Fieldwork</h3><span>Research lab</span></div><p>An evidence-led lab page with a local retrieval experiment, research notes and explicit limitations.</p><div class="card-actions"><a href="fieldwork.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="fieldwork.html.txt" download="fieldwork.html">Download HTML</a><a href="fieldwork.md" download>v0 brief</a><a href="fieldwork.registry.json" download>v0 bundle</a><button type="button" data-copy-brief data-prompt="Adapt the attached fieldwork.html and its v0 brief to my project. Build an AI research lab homepage around one inspectable research artifact. Use paper, forest-green ink and a restrained orange signal. Include a question/evidence/review experiment, expandable research notes, methodology and limitations. All fixture results must be labelled illustrative, never benchmark evidence. Require source links, dates and reproduction instructions for real research claims. Use Next.js App Router and strict TypeScript only if compatible with my project. Preserve honest demo boundaries; inspect and refine at desktop and mobile widths.">Copy v0 prompt</button></div><p class="fine" data-copy-status role="status"></p></article><article class="template-card" data-category="labs" data-search-text="open model model release a model-release page with inspectable evaluation fixtures, model-card sections and provenance prompts."><a class="preview-link" href="open-model.html" aria-label="Preview Open model"><div class="thumb theme-ink" aria-hidden="true"><span class="thumb-name">Open model</span><div class="thumb-layout"><b>Show your work.<br>Then your model.</b><div class="mini-evidence"><span>Question</span><span>Source</span><span>Review</span></div></div><div class="thumb-line"><span>Model release</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Open model</h3><span>Model release</span></div><p>A model-release page with inspectable evaluation fixtures, model-card sections and provenance prompts.</p><div class="card-actions"><a href="open-model.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="open-model.html.txt" download="open-model.html">Download HTML</a><a href="open-model.md" download>v0 brief</a><a href="open-model.registry.json" download>v0 bundle</a><button type="button" data-copy-brief data-prompt="Adapt the attached open-model.html and its v0 brief to my project. Build an open-model release page with the model card as the main artifact. Use charcoal, warm white and mint; include intended use, evaluation context, limitations, training-data provenance, license and version history. Do not fabricate parameters, scores, openness, download counts or weights. Links to code and weights require verified destinations. Distinguish a local fixture walkthrough from actual inference. Use Next.js App Router and strict TypeScript only if compatible with my project. Preserve honest demo boundaries; inspect and refine at desktop and mobile widths.">Copy v0 prompt</button></div><p class="fine" data-copy-status role="status"></p></article><article class="template-card" data-category="tools" data-search-text="forma creative ai tool a creative-tool page with an editable idea-to-brief demo, copy export and a clear privacy boundary."><a class="preview-link" href="forma.html" aria-label="Preview Forma"><div class="thumb theme-peach" aria-hidden="true"><span class="thumb-name">Forma</span><div class="thumb-layout"><b>A rough thought.<br>A clearer brief.</b><div class="mini-tool"><i></i><i></i><i></i><span>Input → output</span></div></div><div class="thumb-line"><span>Creative AI tool</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Forma</h3><span>Creative AI tool</span></div><p>A creative-tool page with an editable idea-to-brief demo, copy export and a clear privacy boundary.</p><div class="card-actions"><a href="forma.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="forma.html.txt" download="forma.html">Download HTML</a><a href="forma.md" download>v0 brief</a><a href="forma.registry.json" download>v0 bundle</a><button type="button" data-copy-brief data-prompt="Adapt the attached forma.html and its v0 brief to my project. Build a creative AI-tool landing page around an editable input/output demonstration, not a dashboard screenshot. Use warm peach, charcoal and editorial type. The supplied demo formats text locally and must say so. An actual model adapter requires a server-only provider key, explicit cost owner, cancellation, rate limits and user-visible failure states. Never silently upgrade the demo to paid inference. Use Next.js App Router and strict TypeScript only if compatible with my project. Preserve honest demo boundaries; inspect and refine at desktop and mobile widths.">Copy v0 prompt</button></div><p class="fine" data-copy-status role="status"></p></article><article class="template-card" data-category="tools" data-search-text="relay agent workflow tool an agent-tool page with an inspectable local plan builder, execution boundaries and markdown export."><a class="preview-link" href="relay.html" aria-label="Preview Relay"><div class="thumb theme-midnight" aria-hidden="true"><span class="thumb-name">Relay</span><div class="thumb-layout"><b>An idea in.<br>A plan you can inspect.</b><div class="mini-tool"><i></i><i></i><i></i><span>Input → output</span></div></div><div class="thumb-line"><span>Agent workflow tool</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Relay</h3><span>Agent workflow tool</span></div><p>An agent-tool page with an inspectable local plan builder, execution boundaries and Markdown export.</p><div class="card-actions"><a href="relay.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="relay.html.txt" download="relay.html">Download HTML</a><a href="relay.md" download>v0 brief</a><a href="relay.registry.json" download>v0 bundle</a><button type="button" data-copy-brief data-prompt="Adapt the attached relay.html and its v0 brief to my project. Build an agent-tool landing page with a task-to-plan walkthrough, explicit tool permissions, human approval boundaries, cancellation and export. Use midnight blue, ivory and mint with technical typography. The demo creates a local deterministic plan; do not imply it executed agents, sent messages or verified results. Connect real tools only for a specific authorized workflow; no background daemons by default. Use Next.js App Router and strict TypeScript only if compatible with my project. Preserve honest demo boundaries; inspect and refine at desktop and mobile widths.">Copy v0 prompt</button></div><p class="fine" data-copy-status role="status"></p></article><article class="template-card" data-category="music" data-search-text="session release listening room a release-first listening room with a three-take console, synchronized audio controls and liner notes."><a class="preview-link" href="session.html" aria-label="Preview Session"><div class="thumb theme-ember" aria-hidden="true"><span class="thumb-name">Session</span><div class="thumb-layout"><b>Let the record<br>tell the story.</b><div class="mini-session"><span>01 — Opening</span><span>02 — Middle</span><span>03 — Closing</span></div></div><div class="thumb-line"><span>Release listening room</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Session</h3><span>Release listening room</span></div><p>A release-first listening room with a three-take console, synchronized audio controls and liner notes.</p><div class="card-actions"><a href="session.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="session.html.txt" download="session.html">Download HTML</a><a href="session.md" download>v0 brief</a><a href="session.registry.json" download>v0 bundle</a><button type="button" data-copy-brief data-prompt="Adapt the attached session.html and its v0 brief to my project. Build a release listening room with a wide three-take console and an editorial liner-notes section. Lead with the record title and a user-initiated listen action. Use warm charcoal, amber and a quiet serif accent. On mobile keep track names, playback state and credits visible without hover. No autoplay, fake streaming counts or unverified music license. Preserve the three synthesized demos until owned release files arrive. Use Next.js App Router and strict TypeScript only if compatible with my project. Preserve honest demo boundaries; inspect and refine at desktop and mobile widths.">Copy v0 prompt</button></div><p class="fine" data-copy-status role="status"></p></article><article class="template-card" data-category="labs" data-search-text="margin research publication a publication-led lab page with a readable paper specimen, expandable methods and an exportable research outline."><a class="preview-link" href="margin.html" aria-label="Preview Margin"><div class="thumb theme-sage" aria-hidden="true"><span class="thumb-name">Margin</span><div class="thumb-layout"><b>A question worth<br>leaving open.</b><div class="mini-paper"><span>Working paper</span><b>Question.<br>Method.<br>Limitations.</b></div></div><div class="thumb-line"><span>Research publication</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Margin</h3><span>Research publication</span></div><p>A publication-led lab page with a readable paper specimen, expandable methods and an exportable research outline.</p><div class="card-actions"><a href="margin.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="margin.html.txt" download="margin.html">Download HTML</a><a href="margin.md" download>v0 brief</a><a href="margin.registry.json" download>v0 bundle</a><button type="button" data-copy-brief data-prompt="Adapt the attached margin.html and its v0 brief to my project. Build a research publication landing page around an actual readable paper excerpt, not a decorative diagram. Use an ivory page, green ink, editorial serif headline, marginal annotations and ruled metadata. Keep abstract, methods, source artifacts and limitations accessible. The sample is not a real paper or citation: replace it with author-approved content and verified publication links. Provide an accessible research-outline export without inventing authors, identifiers, empirical results or acceptance status. Use Next.js App Router and strict TypeScript only if compatible with my project. Preserve honest demo boundaries; inspect and refine at desktop and mobile widths.">Copy v0 prompt</button></div><p class="fine" data-copy-status role="status"></p></article><article class="template-card" data-category="tools" data-search-text="patch developer ai tool a developer-tool landing page with a working json formatter, useful error states and copyable output."><a class="preview-link" href="patch.html" aria-label="Preview Patch"><div class="thumb theme-midnight" aria-hidden="true"><span class="thumb-name">Patch</span><div class="thumb-layout"><b>An interface you<br>can reason about.</b><div class="mini-request"><span>{</span><code>"project":<br>"your next idea"</code><span>}</span></div></div><div class="thumb-line"><span>Developer AI tool</span><span>Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div></div></a><div class="card-heading"><h3>Patch</h3><span>Developer AI tool</span></div><p>A developer-tool landing page with a working JSON formatter, useful error states and copyable output.</p><div class="card-actions"><a href="patch.html">Live demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a><a href="patch.html.txt" download="patch.html">Download HTML</a><a href="patch.md" download>v0 brief</a><a href="patch.registry.json" download>v0 bundle</a><button type="button" data-copy-brief data-prompt="Adapt the attached patch.html and its v0 brief to my project. Build a developer AI-tool landing page with a real editable request workbench. Use restrained navy, mint, monospaced code and a clear split between product copy and input/output. The local demo validates JSON syntax only; label it precisely and do not show a fake HTTP success or generated model response. A real endpoint requires server validation, provider-key isolation, cost ownership, error states and cancellation. Keep code scrollable, preserve invalid user input and make parse feedback accessible. Use Next.js App Router and strict TypeScript only if compatible with my project. Preserve honest demo boundaries; inspect and refine at desktop and mobile widths.">Copy v0 prompt</button></div><p class="fine" data-copy-status role="status"></p></article></div><div class="empty-state" data-empty hidden><h3>No matching starters.</h3><p>Try a broader search or another audience.</p><button class="button" type="button" data-reset-search>Show all starters</button></div></section><section id="workflow" class="workflow"><div><p class="eyebrow">Your source. Your direction.</p><h2>Keep the craft.<br>Change the story.</h2><p>Start in your browser, bring it into v0, or hand the source to your coding agent. There is no required backend.</p></div><ol><li><span>01</span><div><h3>Find a page with your kind of job.</h3><p>Listen to the sound demo, inspect the research example, or try the local brief builder.</p></div></li><li><span>02</span><div><h3>Take the source and the brief.</h3><p>Download the source and brief, or take the v0 registry bundle. Bring the files into a new <a href="https://v0.app" target="_blank" rel="noopener noreferrer">v0 chat</a> to adapt the design to Next.js. Generation uses your v0 account.</p></div></li><li><span>03</span><div><h3>Make the facts and the finish yours.</h3><p>Replace sample content, connect only what you need, and check the page on a phone before publishing.</p></div></li></ol></section><aside class="library-note"><span class="status-dot">What is included</span><p>9 standalone HTML examples, matching v0 briefs and import bundles and a portable Codex skill in the source package. These are original demo designs. They have not been generated or published in the v0 marketplace; no paid product or provider service is included.</p></aside></main><footer class="gallery-footer"><span>Arcanea / Made to be made your own.</span><a href="README.md">Source and usage notes <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></footer></div><script>(() => {
   "use strict";
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => [...document.querySelectorAll(s)];
-  $$("[data-filter]").forEach((button) =>
-    button.addEventListener("click", () => {
+  const search = $("[data-search]");
+  if (search) {
+    const params = new URLSearchParams(location.search);
+    let category = ["music", "labs", "tools"].includes(params.get("category"))
+      ? params.get("category")
+      : "all";
+    search.value = (params.get("q") || "").slice(0, 100);
+    const filter = (persist = true) => {
+      const query = search.value.trim().toLowerCase();
       $$("[data-filter]").forEach((b) =>
-        b.setAttribute("aria-pressed", String(b === button)),
+        b.setAttribute("aria-pressed", String(b.dataset.filter === category)),
       );
       let count = 0;
       $$("[data-category]").forEach((card) => {
         card.hidden =
-          button.dataset.filter !== "all" &&
-          card.dataset.category !== button.dataset.filter;
+          (category !== "all" && card.dataset.category !== category) ||
+          !card.dataset.searchText.includes(query);
         if (!card.hidden) count++;
       });
-      $("[data-filter-status]").textContent = `${count} starters shown`;
-    }),
+      $("[data-filter-status]").textContent =
+        `${count} ${count === 1 ? "starter" : "starters"} shown`;
+      $("[data-empty]").hidden = count !== 0;
+      if (persist) {
+        const url = new URL(location.href);
+        category === "all"
+          ? url.searchParams.delete("category")
+          : url.searchParams.set("category", category);
+        query
+          ? url.searchParams.set("q", search.value.trim())
+          : url.searchParams.delete("q");
+        try {
+          history.replaceState(null, "", url);
+        } catch {
+          /* file URLs can refuse history updates */
+        }
+      }
+    };
+    $$("[data-filter]").forEach((button) =>
+      button.addEventListener("click", () => {
+        category = button.dataset.filter;
+        filter();
+      }),
+    );
+    search.addEventListener("input", () => filter());
+    $("[data-reset-search]").addEventListener("click", () => {
+      category = "all";
+      search.value = "";
+      filter();
+      search.focus();
+    });
+    filter(false);
+  }
+
+  async function copyText(text, status, filename) {
+    try {
+      if (!navigator.clipboard?.writeText)
+        throw new Error("Clipboard unavailable");
+      await navigator.clipboard.writeText(text);
+      status.textContent = "Copied to your clipboard.";
+    } catch {
+      const url = URL.createObjectURL(
+        new Blob([text], { type: "text/plain;charset=utf-8" }),
+      );
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      status.textContent =
+        "Clipboard unavailable. A file download was requested instead.";
+    }
+  }
+  $$("[data-copy-brief]").forEach((button) =>
+    button.addEventListener("click", () =>
+      copyText(
+        button.dataset.prompt,
+        button.closest("article").querySelector("[data-copy-status]"),
+        "v0-prompt.txt",
+      ),
+    ),
   );
+  $("[data-copy-paper]")?.addEventListener("click", () =>
+    copyText(
+      "# Research outline\n\n## Question\nWhat would let a reader check the claim?\n\n## Method\nDefine the task, source versions and protocol.\n\n## Evidence\nAttach real artifacts. No empirical results are supplied by this template.\n\n## Limitations\nRecord failures, uncertainty and open questions.\n",
+      $("[data-paper-status]"),
+      "research-outline.md",
+    ),
+  );
+
+  const jsonForm = $("[data-json-form]");
+  if (jsonForm) {
+    const input = $("#json-input"),
+      output = $("[data-json-output]"),
+      status = $("[data-json-status]");
+    const example = input.value;
+    let formatted = output.textContent;
+    const copy = $("[data-copy-json]");
+    const markStale = () => {
+      copy.disabled = true;
+      $("[data-json-state]").textContent = "Input changed";
+      status.textContent = "Validate the edited input to update the output.";
+      input.removeAttribute("aria-invalid");
+    };
+    input.addEventListener("input", markStale);
+    jsonForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      try {
+        if (input.value.length > 8000)
+          throw new Error("Input exceeds 8,000 characters.");
+        formatted = JSON.stringify(JSON.parse(input.value), null, 2);
+        output.textContent = formatted;
+        input.removeAttribute("aria-invalid");
+        $("[data-json-state]").textContent = "Valid JSON";
+        status.textContent =
+          "Valid JSON syntax. No schema check, API request or model call was made.";
+        copy.disabled = false;
+      } catch {
+        formatted = "";
+        output.textContent =
+          "No formatted output. Fix the request and validate again.";
+        input.setAttribute("aria-invalid", "true");
+        input.setAttribute("aria-describedby", "json-feedback");
+        status.id = "json-feedback";
+        $("[data-json-state]").textContent = "Check the input";
+        status.textContent =
+          "Invalid JSON. Check double quotes, commas and matching brackets. Your input is preserved.";
+        copy.disabled = true;
+      }
+    });
+    $("[data-json-example]").addEventListener("click", () => {
+      input.value = example;
+      markStale();
+      input.focus();
+    });
+    copy.addEventListener("click", () => {
+      if (!copy.disabled) copyText(formatted, status, "request.json");
+    });
+  }
 
   const steps = document.body.classList.contains("template-open-model")
     ? [
@@ -1809,29 +2288,9 @@ a:hover {
       $("[data-builder-status]").textContent =
         "Ready to copy. No model was called and no text was sent.";
     });
-    $("[data-copy-result]").addEventListener("click", async () => {
-      try {
-        if (!navigator.clipboard?.writeText)
-          throw new Error("Clipboard unavailable");
-        await navigator.clipboard.writeText(exported);
-        $("[data-builder-status]").textContent =
-          "Markdown copied to your clipboard.";
-      } catch {
-        const blob = new Blob([exported], {
-          type: "text/markdown;charset=utf-8",
-        });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "creator-draft.md";
-        document.body.append(a);
-        a.click();
-        a.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
-        $("[data-builder-status]").textContent =
-          "Clipboard unavailable. A Markdown download was requested instead.";
-      }
-    });
+    $("[data-copy-result]").addEventListener("click", () =>
+      copyText(exported, $("[data-builder-status]"), "creator-draft.md"),
+    );
   }
 
   let audioContext,
