@@ -1,0 +1,19 @@
+# One source, portable delivery
+
+Verified against [OpenAI's packaging documentation](https://developers.openai.com/plugins/build/plugins) on 2026-09-10. Root `plugin.json` is canonical for new portable packages. `extensions.com.openai` holds platform presentation. When that object exists it replaces the compatibility overlay; the two are not merged. Fixed `skills/` and optional `mcp.json` paths provide portable components.
+
+This package deliberately uses one skill. The user's job is selecting and adapting a page; six independent agents, six databases or six MCP servers would duplicate the same workflow. The HTML has three composition families and six catalog records. The build command produces the gallery, pages, briefs and file-hash receipt. Node built-ins are sufficient. No new package manager dependency or root build-system mutation is needed.
+
+```text
+plugin.json → generated .codex-plugin/plugin.json
+catalog.json + src/ → HTML previews + v0 briefs + gallery
+skills/build-creator-page/ → select, adapt, verify, deliver
+```
+
+The fallback manifest exists for legacy Codex hosts. Regenerate it with `node scripts/build.mjs --compat`; check it before review. Never maintain identity in both files manually. Root license metadata is omitted until the owner chooses a distribution license; no public license grant is implied.
+
+Integrations are optional adapters added only for a real requirement. Browser interaction stays local. A paid model call belongs behind a server boundary with validated input, an explicit cost owner, cancellation, rate limits and errors. A customer's credential must not enter client source, URL, logs or localStorage. Provider adapters do not belong in plugin metadata.
+
+Build artifacts are portable. A Next.js app can serve the generated static directory; a v0 chat can consume one HTML and its brief; an agent can use the skill and the same source. Converting a page to React is an explicit implementation step, not a claim about the current HTML files.
+
+The original commercial-truth audit concerns the wider app. This package does not prove its hosted checkout, waitlist storage, model routing or entitlements. Keep those gates and the existing user data boundaries separate.

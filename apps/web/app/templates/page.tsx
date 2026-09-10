@@ -193,6 +193,12 @@ export default function BlueprintsPage() {
       </div>
 
       <main className="max-w-6xl mx-auto px-6">
+        <section className="mt-12 rounded-xl border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-6 sm:p-8" aria-labelledby="creator-starters-heading">
+          <p className="text-sm text-[var(--arc-text-secondary)]">Made for music producers, AI labs and AI-tool builders</p>
+          <h2 id="creator-starters-heading" className="mt-3 text-3xl font-display tracking-tight text-[var(--arc-text-primary)]">Find your next starting point.</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--arc-text-secondary)]">Six editable page designs with working local demos, downloadable HTML and tailored v0 briefs. Explore the design before connecting a service.</p>
+          <a href="/creator-starters/index.html" className="mt-6 inline-flex min-h-12 items-center rounded-lg bg-[var(--arc-brand-atlantean-teal)] px-5 py-3 text-sm font-semibold text-[var(--arc-cosmic-void)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4">Explore creator starters</a>
+        </section>
         {/* ── Hero ── */}
         <section className="pt-24 pb-16 text-center">
           <Reveal y={12} blur>
