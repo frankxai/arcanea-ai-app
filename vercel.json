@@ -99,9 +99,7 @@
       "permanent": true
     }
   ],
-  "regions": [
-    "iad1"
-  ],
+  "regions": ["iad1"],
   "git": {
     "deploymentEnabled": {
       "backup/claude-snapshots": false
