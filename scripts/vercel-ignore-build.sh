@@ -66,29 +66,12 @@ if [[ ! "$PREVIOUS_SHA" =~ ^([0-9a-fA-F]{40}|[0-9a-fA-F]{64})$ ]] ||
   exit 1
 fi
 
-# In this monorepo, only changes to apps/web, workspace packages, dependency configs,
-# or root build manifests affect the Vercel web deployment. Changes to .arcanea/lore,
-# book/, docs/, scripts/, etc. do NOT require rebuilding the web app.
-RELEVANT_PATHS=(
-  apps/web
-  packages/design-system
-  packages/mcp-server
-  packages/orchestrator
-  packages/publishing-house
-  packages/world-engine
-  packages/multilingual
-  package.json
-  pnpm-lock.yaml
-  pnpm-workspace.yaml
-  turbo.json
-  vercel.json
-)
-
-if git diff --quiet "$PREVIOUS_SHA" HEAD -- "${RELEVANT_PATHS[@]}" 2>/dev/null; then
-  echo "⏭️  skip: no changes in apps/web or web-dependent packages since last deploy"
+# Missing/shallow history and Git errors must build, never look like no changes.
+if git diff --quiet "$PREVIOUS_SHA" HEAD -- ':!*.md' ':!docs/**' ':!planning-with-files/**' ':!book/**' ':!wiki/**' 2>/dev/null; then
+  echo "⏭️  skip: docs-only changes since previous successful deployment"
   exit 0
 fi
 
-echo "✅ build: relevant web changes detected for $BRANCH"
+echo "✅ build: $BRANCH"
 exit 1
 
