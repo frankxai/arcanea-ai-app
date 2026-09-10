@@ -29,9 +29,11 @@ const output = "screenshots/creator-starters";
     const page = await context.newPage();
     page.on("pageerror", (error) => errors.push(error.message));
     page.setDefaultTimeout(10000);
-    assert.equal(
-      (await page.goto("http://127.0.0.1:3001/templates")).status(),
-      200,
+    const appResponse = await page.goto("http://127.0.0.1:3001/templates");
+    assert.equal(appResponse.status(), 200);
+    assert.doesNotMatch(
+      appResponse.headers()["content-security-policy"],
+      /fonts\.googleapis\.com/,
     );
     await expect(
       page.getByRole("link", { name: "Explore nine starters" }),
@@ -42,6 +44,10 @@ const output = "screenshots/creator-starters";
         const file = template.id + suffix;
         const response = await fetch(base + file);
         assert.equal(response.status, 200, file);
+        assert.match(
+          response.headers.get("content-security-policy"),
+          /connect-src 'none'/,
+        );
         assert.deepEqual(
           Buffer.from(await response.arrayBuffer()),
           await fs.readFile(`apps/web/public/creator-starters/${file}`),
@@ -56,6 +62,15 @@ const output = "screenshots/creator-starters";
         assert.equal((await page.goto(base + id + ".html")).status(), 200, id);
         await expect(page.locator("h1")).toHaveCount(1);
         await page.evaluate(() => document.fonts.ready);
+        assert.ok(
+          await page.evaluate(() =>
+            [...document.fonts].some(
+              (font) =>
+                font.family.includes("Geist") && font.status === "loaded",
+            ),
+          ),
+          `${id}: Geist font did not load`,
+        );
         assert.ok(
           await page.evaluate(
             () =>
@@ -94,6 +109,9 @@ const output = "screenshots/creator-starters";
     evidence.interactions.push("Session user-triggered synthesis and stop");
     await page.goto(base + "margin.html");
     const note = page.locator("details").first();
+    await expect(note).toHaveAttribute("open", "");
+    await note.locator("summary").press("Enter");
+    assert.equal(await note.getAttribute("open"), null);
     await note.locator("summary").press("Enter");
     await expect(note).toHaveAttribute("open", "");
     await page

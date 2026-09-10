@@ -114,6 +114,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@arcanea/creator-starters": "workspace:*",
     "@playwright/test": "1.62.1",
     "@types/three": "^0.185.4",
     "eslint": "10.2.0",

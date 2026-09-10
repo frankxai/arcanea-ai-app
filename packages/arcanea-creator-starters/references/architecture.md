@@ -25,3 +25,5 @@ Add a catalog entry for content changes. Add a composition only for a different 
 ## App delivery
 
 Only source is committed. `scripts/build-creator-starters.mjs` resolves the app output directory from its own URL, so root and app working directories produce the same result on Windows and Linux. `pnpm --dir apps/web build` and `dev` generate `/creator-starters/` before starting Next.js. The generated public directory is ignored by Git; it is still shipped by Next.js and retained in Turbo build outputs. CI verifies the emitter, interactions, compatibility manifest and exact generated downloads after the production build. A clean checkout therefore has the same nine pages as a cached build. Do not copy generated pages between branches or edit their downloaded outputs to change the source.
+
+The app declares the generator as a private workspace development dependency. The portable plugin manifest remains the only version authority; no registry package is published. The standalone route has its own restrictive CSP with explicit Google Fonts origins, and browser CI verifies the font actually loads.

@@ -135,6 +135,25 @@ const nextConfig = {
           },
         ],
       },
+      // Standalone examples use Google Fonts but no provider or network form.
+      // This final route-specific policy leaves the app-wide policy unchanged.
+      {
+        source: '/creator-starters/:path*',
+        headers: [{
+          key: 'Content-Security-Policy',
+          value: [
+            "default-src 'none'",
+            "script-src 'unsafe-inline'",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "font-src 'self' data: https://fonts.gstatic.com",
+            "img-src 'self' data:",
+            "connect-src 'none'",
+            "frame-ancestors 'none'",
+            "base-uri 'none'",
+            "form-action 'none'",
+          ].join('; '),
+        }],
+      },
     ];
   },
 }
