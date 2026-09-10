@@ -29,6 +29,14 @@ const output = "screenshots/creator-starters";
     const page = await context.newPage();
     page.on("pageerror", (error) => errors.push(error.message));
     page.setDefaultTimeout(10000);
+    assert.equal(
+      (await page.goto("http://127.0.0.1:3001/templates")).status(),
+      200,
+    );
+    await expect(
+      page.getByRole("link", { name: "Explore nine starters" }),
+    ).toHaveAttribute("href", "/creator-starters/index.html");
+    evidence.interactions.push("full-app template discovery link");
     for (const template of templates) {
       for (const suffix of [".html.txt", ".md", ".registry.json"]) {
         const file = template.id + suffix;
