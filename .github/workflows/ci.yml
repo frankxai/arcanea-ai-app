@@ -238,6 +238,12 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
 
+      - name: Verify creator starter source, interactions and generated downloads
+        run: |
+          node --test packages/arcanea-creator-starters/scripts/build.test.mjs packages/arcanea-creator-starters/scripts/interactions.test.mjs
+          node packages/arcanea-creator-starters/scripts/build.mjs --compat --check
+          node scripts/build-creator-starters.mjs --check
+
       - name: Verify registry public-read boundary
         run: node --test scripts/tests/registry-public-read-contract.test.mjs
 

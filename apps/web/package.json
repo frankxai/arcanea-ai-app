@@ -7,8 +7,8 @@
     "node": ">=20.18.1 <21 || >=22.0.0"
   },
   "scripts": {
-    "dev": "next dev -p 3001",
-    "build": "next build",
+    "dev": "node ../../scripts/build-creator-starters.mjs && next dev -p 3001",
+    "build": "node ../../scripts/build-creator-starters.mjs && next build",
     "build:check": "pnpm run check:env && pnpm run type-check && pnpm run build",
     "start": "next start -p 3001",
     "test:e2e": "playwright test",

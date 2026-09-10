@@ -3,17 +3,14 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env.production",
-        ".env.local"
-      ],
+      "inputs": ["$TURBO_DEFAULT$", ".env.production", ".env.local"],
       "outputs": [
         ".next/**",
         "!.next/cache/**",
         "dist/**",
         "build/**",
-        ".expo/**"
+        ".expo/**",
+        "public/creator-starters/**"
       ],
       "env": [
         "NEXT_PUBLIC_SUPABASE_URL",
@@ -39,28 +36,14 @@
     },
     "type-check": {
       "dependsOn": ["^build"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "tsconfig.json"
-      ],
-      "outputs": [
-        "*.tsbuildinfo"
-      ]
+      "inputs": ["$TURBO_DEFAULT$", "tsconfig.json"],
+      "outputs": ["*.tsbuildinfo"]
     },
     "test": {
       "dependsOn": ["^build"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "jest.config.js",
-        "vitest.config.ts"
-      ],
-      "outputs": [
-        "coverage/**"
-      ],
-      "env": [
-        "DATABASE_URL",
-        "NEXT_PUBLIC_SUPABASE_URL"
-      ]
+      "inputs": ["$TURBO_DEFAULT$", "jest.config.js", "vitest.config.ts"],
+      "outputs": ["coverage/**"],
+      "env": ["DATABASE_URL", "NEXT_PUBLIC_SUPABASE_URL"]
     },
     "test:watch": {
       "cache": false,
@@ -71,12 +54,8 @@
     },
     "db:generate": {
       "cache": false,
-      "inputs": [
-        "prisma/schema.prisma"
-      ],
-      "outputs": [
-        "generated/**"
-      ]
+      "inputs": ["prisma/schema.prisma"],
+      "outputs": ["generated/**"]
     },
     "db:push": {
       "cache": false
@@ -94,9 +73,7 @@
     },
     "format": {
       "outputs": [],
-      "inputs": [
-        "**/*.{js,jsx,ts,tsx,json,md,mdx,css,html,yml,yaml}"
-      ]
+      "inputs": ["**/*.{js,jsx,ts,tsx,json,md,mdx,css,html,yml,yaml}"]
     },
     "format:check": {
       "outputs": []
@@ -106,13 +83,9 @@
     "**/.env.*local",
     ".env",
     "tsconfig.json",
-    "package.json"
+    "package.json",
+    "packages/arcanea-creator-starters/**",
+    "scripts/build-creator-starters.mjs"
   ],
-  "globalEnv": [
-    "NODE_ENV",
-    "VERCEL",
-    "VERCEL_ENV",
-    "VERCEL_URL",
-    "CI"
-  ]
+  "globalEnv": ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL", "CI"]
 }

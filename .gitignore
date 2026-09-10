@@ -324,3 +324,6 @@ link-checker-report.txt
 .lighthouse.json
 .extract-design-system/
 .claude/skills/.replaced/
+
+# Rebuilt from packages/arcanea-creator-starters before web dev/build.
+/apps/web/public/creator-starters/

@@ -5,13 +5,7 @@
   "author": {
     "name": "Arcanea"
   },
-  "keywords": [
-    "web-design",
-    "music",
-    "ai-labs",
-    "v0",
-    "templates"
-  ],
+  "keywords": ["web-design", "music", "ai-labs", "v0", "templates"],
   "skills": "./skills/",
   "interface": {
     "displayName": "Arcanea creator starters",
@@ -19,10 +13,7 @@
     "longDescription": "Choose a music, research or tool example. Adapt its source and v0 brief, verify the result, and deliver an editable page with honest product boundaries.",
     "developerName": "Arcanea",
     "category": "Productivity",
-    "capabilities": [
-      "Read",
-      "Write"
-    ],
+    "capabilities": ["Read", "Write"],
     "defaultPrompt": [
       "Build a page for my music project.",
       "Create an evidence-led AI lab landing page.",

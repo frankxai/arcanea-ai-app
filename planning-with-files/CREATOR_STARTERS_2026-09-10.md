@@ -20,7 +20,6 @@ Verification: Node build and regression tests, compatibility and portable-schema
 
 Rollback: remove the bounded template link and named new package/output files; preserve all commercial-truth work. No data migration or external state is involved in the templates themselves.
 
-
 ## Verification and delivery
 
 - Refined preview: https://arcanea-ai-d35685zgz-starlight-intelligence.vercel.app
@@ -42,7 +41,6 @@ Residual gates: independent provider review, plugin installation in a fresh task
 
 Next bounded action: restore an independent reviewer session and review this exact package, then validate the template link in the full-app preview. Adapt the selected starter to a real owner-provided brief and evidence before considering a live product launch.
 
-
 ## v0.2.0 continuation — nine starters
 
 Source: Frank continued the linked task on 2026-09-10, requesting stronger music-producer, AI-lab and AI-tool templates and simpler current Codex plugin architecture. Owner: current Codex task, sequential continuation of this worktree. The earlier six-starter checkpoint and audit remain preserved above.
@@ -62,3 +60,11 @@ Release decision: **candidate only; visual and independent-review gates remain o
 Next bounded action: after machine admission permits it, inspect all nine pages at desktop/mobile and run keyboard, font, contrast and reduced-motion QA; obtain independent provider critique; verify a signed-in v0 import and a fresh-task plugin install. Then integrate the full-app preview and consider release. Pricing, waitlist, billing and entitlement delivery remain separate unfinished work from the source task.
 
 Rollback: revert only this template refinement checkpoint. Earlier commercial-truth files and customer data are unaffected. This continuation is a local checkpoint; draft PR #394 still represents the earlier pushed revision until an intentional later push.
+
+## Integration continuation — 2026-09-10
+
+Frank explicitly requested committing and reconciling the v0/template branches into their canonical main branches, including separate template repositories. The Arcanea lane remains `codex/arcanea-commercial-truth-20260910`, PR #394, based on `02ba41c5b`. The two starter commits are `90c5dbd61` and `ae0fd3d45`; no unique starter commits were found on another Arcanea branch. Pricing and commerce audit edits remain separately preserved in this worktree.
+
+The earlier draft CI run 34429971972 passed ESLint, TypeScript and production compilation but failed generated-file formatting and a Sovereign Depths gallery interaction latency check. The integration replaces checked-in generated files with deterministic generation before web dev/build, preserves all nine examples and 39 outputs, adds cache input/output tracking and runs starter tests plus output checks in existing CI. Required checks are preserved. The obsolete generated copies remain recoverable in the two source commits.
+
+The independent reviewer on protected main has a 50-file/120,000-character limit. Source-only delivery avoids sending duplicate generated HTML and JSON to the reviewer. Ready-for-review and merge require fresh checks and actual visual evidence; a successful static deployment alone does not prove either.

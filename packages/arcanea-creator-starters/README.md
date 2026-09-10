@@ -67,3 +67,7 @@ The gallery supports category plus text search, shareable query URLs, visible em
 For a verified publicly accessible HTTPS host, [Open in v0](https://ui.shadcn.com/docs/registry/open-in-v0) accepts a URL-encoded registry URL through `https://v0.dev/chat/api/open?url=...`. A protected Vercel preview may not be readable by v0; use the downloaded HTML and brief in that case. Never put a preview bypass token or other credential into the shared URL. End-to-end import in a signed-in v0 session remains a separate check; this package does not claim that check passed.
 
 Version 0.2.0 adds Session, Margin and Patch, replaces decorative lab diagrams with readable evidence requirements, loads the declared typography, and generates all deliveries from the same catalog. JSON validation is syntax-only and clears stale output after invalid input; it is not an API response or model evaluation. The root portable plugin manifest stays canonical, with compatibility metadata generated for older Codex hosts.
+
+## Inside the Arcanea app
+
+The app generates all pages and downloads before `pnpm --dir apps/web dev` or `pnpm --dir apps/web build`. Only this source package is tracked in Git; generated files under `apps/web/public/creator-starters/` are ignored. Run `node scripts/build-creator-starters.mjs` from the repository root to generate them without starting a server, or add `--check` to verify exact output. Turbo caches the generated directory and invalidates it when the source package changes.

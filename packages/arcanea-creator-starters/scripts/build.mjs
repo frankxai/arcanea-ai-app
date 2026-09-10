@@ -237,7 +237,10 @@ if (
       const expected =
         JSON.stringify(compatibilityManifest(manifest), null, 2) + "\n";
       if (args.includes("--check")) {
-        if ((await readFile(dest, "utf8")) !== expected)
+        if (
+          JSON.stringify(JSON.parse(await readFile(dest, "utf8"))) !==
+          JSON.stringify(compatibilityManifest(manifest))
+        )
           throw new Error("Compatibility manifest drift");
       } else {
         await mkdir(path.dirname(dest), { recursive: true });
