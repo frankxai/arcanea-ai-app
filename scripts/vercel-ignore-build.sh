@@ -49,17 +49,46 @@ esac
 # Vercel supplies this variable to the Ignored Build Step:
 # https://vercel.com/docs/environment-variables/system-environment-variables#vercel_git_previous_sha
 PREVIOUS_SHA="${VERCEL_GIT_PREVIOUS_SHA:-}"
+
+# Check if triggering PR is a draft (unauthenticated GitHub API check)
+if [[ -n "${VERCEL_GIT_PULL_REQUEST_ID:-}" && -n "${VERCEL_GIT_REPO_OWNER:-}" && -n "${VERCEL_GIT_REPO_SLUG:-}" ]]; then
+  PR_JSON=$(curl -sf --max-time 5 \
+    "https://api.github.com/repos/${VERCEL_GIT_REPO_OWNER}/${VERCEL_GIT_REPO_SLUG}/pulls/${VERCEL_GIT_PULL_REQUEST_ID}" 2>/dev/null || true)
+  if [[ -n "$PR_JSON" ]] && echo "$PR_JSON" | grep -q '"draft"[[:space:]]*:[[:space:]]*true'; then
+    echo "⏭️  skip: PR #${VERCEL_GIT_PULL_REQUEST_ID} is a draft"
+    exit 0
+  fi
+fi
+
 if [[ ! "$PREVIOUS_SHA" =~ ^([0-9a-fA-F]{40}|[0-9a-fA-F]{64})$ ]] ||
    ! git cat-file -e "${PREVIOUS_SHA}^{commit}" 2>/dev/null; then
   echo "✅ build: previous successful deployment commit unavailable"
   exit 1
 fi
 
-# Missing/shallow history and Git errors must build, never look like no changes.
-if git diff --quiet "$PREVIOUS_SHA" HEAD -- ':!*.md' ':!docs/**' ':!planning-with-files/**' ':!book/**' ':!wiki/**' 2>/dev/null; then
-  echo "⏭️  skip: docs-only changes since previous successful deployment"
+# In this monorepo, only changes to apps/web, workspace packages, dependency configs,
+# or root build manifests affect the Vercel web deployment. Changes to .arcanea/lore,
+# book/, docs/, scripts/, etc. do NOT require rebuilding the web app.
+RELEVANT_PATHS=(
+  apps/web
+  packages/design-system
+  packages/mcp-server
+  packages/orchestrator
+  packages/publishing-house
+  packages/world-engine
+  packages/multilingual
+  package.json
+  pnpm-lock.yaml
+  pnpm-workspace.yaml
+  turbo.json
+  vercel.json
+)
+
+if git diff --quiet "$PREVIOUS_SHA" HEAD -- "${RELEVANT_PATHS[@]}" 2>/dev/null; then
+  echo "⏭️  skip: no changes in apps/web or web-dependent packages since last deploy"
   exit 0
 fi
 
-echo "✅ build: $BRANCH"
+echo "✅ build: relevant web changes detected for $BRANCH"
 exit 1
+
