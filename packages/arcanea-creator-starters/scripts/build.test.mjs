@@ -3,12 +3,14 @@ import assert from "node:assert/strict";
 import { mkdtemp, readFile, writeFile, mkdir, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { createHash } from "node:crypto";
 import {
   artifacts,
   build,
   validateCatalog,
   compatibilityManifest,
   pluginRoot,
+  scriptHash,
 } from "./build.mjs";
 import { escapeHtml, renderTemplate, createBrief } from "../src/render.mjs";
 
@@ -27,11 +29,26 @@ async function withOutput(fn) {
     await rm(resolved, { recursive: true, force: true });
   }
 }
-test("catalog provides two real examples per requested audience", () => {
+test("catalog provides three examples per requested audience", () => {
   const rows = validateCatalog(catalog);
-  assert.equal(rows.length, 6);
+  assert.equal(rows.length, 9);
   for (const category of ["music", "labs", "tools"])
-    assert.equal(rows.filter((t) => t.category === category).length, 2);
+    assert.equal(rows.filter((t) => t.category === category).length, 3);
+});
+test("CSP hash matches the exact inline script in all ten generated pages", async () => {
+  const expected = await scriptHash();
+  let pages = 0;
+  for (const [name, html] of await artifacts()) {
+    if (!name.endsWith(".html")) continue;
+    const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+    assert.equal(scripts.length, 1, name);
+    const hash = (script) =>
+      `sha256-${createHash("sha256").update(script, "utf8").digest("base64")}`;
+    assert.equal(hash(scripts[0][1]), expected, name);
+    assert.notEqual(hash(scripts[0][1] + "\nalert(1)"), expected, name);
+    pages++;
+  }
+  assert.equal(pages, 10);
 });
 test("catalog rejects traversal, duplicates, unknown templates and Windows device paths", () => {
   for (const badId of [
@@ -63,7 +80,7 @@ test("HTML escapes content and brief uses the matching source file", () => {
 });
 test("every local destination and anchor resolves in generated output", async () => {
   const files = await artifacts();
-  assert.equal(files.size, 21);
+  assert.equal(files.size, 3 + catalog.templates.length * 4);
   for (const [name, html] of files)
     if (name.endsWith(".html")) {
       for (const [, href] of html.matchAll(/href="([^"]+)"/g)) {
@@ -145,4 +162,49 @@ test("download source is byte-identical to its standalone HTML", async () => {
 test("generated files have no trailing whitespace", async () => {
   for (const [name, content] of await artifacts())
     assert.ok(!/[ \t]+$/m.test(content), name);
+});
+
+test("v0 bundles carry exact source and brief under bounded import targets", async () => {
+  const files = await artifacts();
+  const targets = new Set();
+  for (const t of catalog.templates) {
+    const item = JSON.parse(files.get(`${t.id}.registry.json`));
+    assert.equal(item.type, "registry:block");
+    assert.equal(item.files.length, 2);
+    assert.equal(item.files[0].content, files.get(`${t.id}.html`));
+    assert.equal(item.files[1].content, files.get(`${t.id}.md`));
+    for (const f of item.files) {
+      assert.equal(f.type, "registry:file");
+      assert.ok(f.target.startsWith(`~/creator-starters/${t.id}/`));
+      assert.ok(!f.target.includes(".."));
+      assert.ok(!targets.has(f.target));
+      targets.add(f.target);
+    }
+    for (const key of [
+      "dependencies",
+      "registryDependencies",
+      "envVars",
+      "css",
+      "cssVars",
+    ])
+      assert.equal(item[key], undefined);
+  }
+});
+
+test("extended artifacts render native controls and research evidence without orbit filler", async () => {
+  const files = await artifacts();
+  for (const id of ["fieldwork", "open-model"]) {
+    const html = files.get(`${id}.html`);
+    assert.match(html, /<table class="evidence-table"/);
+    assert.match(html, /<caption>/);
+    assert.doesNotMatch(html, /<ellipse|mini-orbit|class="research-figure"/);
+  }
+  assert.match(files.get("session.html"), /data-audio="2"/);
+  assert.match(files.get("margin.html"), /data-copy-paper/);
+  assert.match(files.get("patch.html"), /data-json-form/);
+  for (const id of ["session", "margin", "patch"]) {
+    const html = files.get(`${id}.html`);
+    const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]);
+    assert.equal(new Set(ids).size, ids.length, `${id}: duplicate element ids`);
+  }
 });

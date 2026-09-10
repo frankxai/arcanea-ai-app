@@ -2,21 +2,146 @@
   "use strict";
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => [...document.querySelectorAll(s)];
-  $$("[data-filter]").forEach((button) =>
-    button.addEventListener("click", () => {
+  const search = $("[data-search]");
+  if (search) {
+    const params = new URLSearchParams(location.search);
+    let category = ["music", "labs", "tools"].includes(params.get("category"))
+      ? params.get("category")
+      : "all";
+    search.value = (params.get("q") || "").slice(0, 100);
+    const filter = (persist = true) => {
+      const query = search.value.trim().toLowerCase();
       $$("[data-filter]").forEach((b) =>
-        b.setAttribute("aria-pressed", String(b === button)),
+        b.setAttribute("aria-pressed", String(b.dataset.filter === category)),
       );
       let count = 0;
       $$("[data-category]").forEach((card) => {
         card.hidden =
-          button.dataset.filter !== "all" &&
-          card.dataset.category !== button.dataset.filter;
+          (category !== "all" && card.dataset.category !== category) ||
+          !card.dataset.searchText.includes(query);
         if (!card.hidden) count++;
       });
-      $("[data-filter-status]").textContent = `${count} starters shown`;
-    }),
+      $("[data-filter-status]").textContent =
+        `${count} ${count === 1 ? "starter" : "starters"} shown`;
+      $("[data-empty]").hidden = count !== 0;
+      if (persist) {
+        const url = new URL(location.href);
+        category === "all"
+          ? url.searchParams.delete("category")
+          : url.searchParams.set("category", category);
+        query
+          ? url.searchParams.set("q", search.value.trim())
+          : url.searchParams.delete("q");
+        try {
+          history.replaceState(null, "", url);
+        } catch {
+          /* file URLs can refuse history updates */
+        }
+      }
+    };
+    $$("[data-filter]").forEach((button) =>
+      button.addEventListener("click", () => {
+        category = button.dataset.filter;
+        filter();
+      }),
+    );
+    search.addEventListener("input", () => filter());
+    $("[data-reset-search]").addEventListener("click", () => {
+      category = "all";
+      search.value = "";
+      filter();
+      search.focus();
+    });
+    filter(false);
+  }
+
+  async function copyText(text, status, filename) {
+    try {
+      if (!navigator.clipboard?.writeText)
+        throw new Error("Clipboard unavailable");
+      await navigator.clipboard.writeText(text);
+      status.textContent = "Copied to your clipboard.";
+    } catch {
+      const url = URL.createObjectURL(
+        new Blob([text], { type: "text/plain;charset=utf-8" }),
+      );
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      status.textContent =
+        "Clipboard unavailable. A file download was requested instead.";
+    }
+  }
+  $$("[data-copy-brief]").forEach((button) =>
+    button.addEventListener("click", () =>
+      copyText(
+        button.dataset.prompt,
+        button.closest("article").querySelector("[data-copy-status]"),
+        "v0-prompt.txt",
+      ),
+    ),
   );
+  $("[data-copy-paper]")?.addEventListener("click", () =>
+    copyText(
+      "# Research outline\n\n## Question\nWhat would let a reader check the claim?\n\n## Method\nDefine the task, source versions and protocol.\n\n## Evidence\nAttach real artifacts. No empirical results are supplied by this template.\n\n## Limitations\nRecord failures, uncertainty and open questions.\n",
+      $("[data-paper-status]"),
+      "research-outline.md",
+    ),
+  );
+
+  const jsonForm = $("[data-json-form]");
+  if (jsonForm) {
+    const input = $("#json-input"),
+      output = $("[data-json-output]"),
+      status = $("[data-json-status]");
+    const example = input.value;
+    let formatted = output.textContent;
+    const copy = $("[data-copy-json]");
+    const markStale = () => {
+      copy.disabled = true;
+      $("[data-json-state]").textContent = "Input changed";
+      status.textContent = "Validate the edited input to update the output.";
+      input.removeAttribute("aria-invalid");
+    };
+    input.addEventListener("input", markStale);
+    jsonForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      try {
+        if (input.value.length > 8000)
+          throw new Error("Input exceeds 8,000 characters.");
+        formatted = JSON.stringify(JSON.parse(input.value), null, 2);
+        output.textContent = formatted;
+        input.removeAttribute("aria-invalid");
+        $("[data-json-state]").textContent = "Valid JSON";
+        status.textContent =
+          "Valid JSON syntax. No schema check, API request or model call was made.";
+        copy.disabled = false;
+      } catch {
+        formatted = "";
+        output.textContent =
+          "No formatted output. Fix the request and validate again.";
+        input.setAttribute("aria-invalid", "true");
+        input.setAttribute("aria-describedby", "json-feedback");
+        status.id = "json-feedback";
+        $("[data-json-state]").textContent = "Check the input";
+        status.textContent =
+          "Invalid JSON. Check double quotes, commas and matching brackets. Your input is preserved.";
+        copy.disabled = true;
+      }
+    });
+    $("[data-json-example]").addEventListener("click", () => {
+      input.value = example;
+      markStale();
+      input.focus();
+    });
+    copy.addEventListener("click", () => {
+      if (!copy.disabled) copyText(formatted, status, "request.json");
+    });
+  }
 
   const steps = document.body.classList.contains("template-open-model")
     ? [
@@ -102,29 +227,9 @@
       $("[data-builder-status]").textContent =
         "Ready to copy. No model was called and no text was sent.";
     });
-    $("[data-copy-result]").addEventListener("click", async () => {
-      try {
-        if (!navigator.clipboard?.writeText)
-          throw new Error("Clipboard unavailable");
-        await navigator.clipboard.writeText(exported);
-        $("[data-builder-status]").textContent =
-          "Markdown copied to your clipboard.";
-      } catch {
-        const blob = new Blob([exported], {
-          type: "text/markdown;charset=utf-8",
-        });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "creator-draft.md";
-        document.body.append(a);
-        a.click();
-        a.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
-        $("[data-builder-status]").textContent =
-          "Clipboard unavailable. A Markdown download was requested instead.";
-      }
-    });
+    $("[data-copy-result]").addEventListener("click", () =>
+      copyText(exported, $("[data-builder-status]"), "creator-draft.md"),
+    );
   }
 
   let audioContext,

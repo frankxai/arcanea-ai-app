@@ -1,7 +1,7 @@
 {
   "name": "arcanea-creator-starters",
-  "version": "0.1.0",
-  "description": "Build distinctive music, AI lab and AI tool pages from six editable examples and focused v0 briefs.",
+  "version": "0.2.0",
+  "description": "Build distinctive music, AI lab and AI tool pages from nine editable examples and focused v0 briefs.",
   "author": {
     "name": "Arcanea"
   },
@@ -9,7 +9,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Arcanea creator starters",
-    "shortDescription": "Six page starters, one focused design workflow",
+    "shortDescription": "Nine page starters, one focused design workflow",
     "longDescription": "Choose a music, research or tool example. Adapt its source and v0 brief, verify the result, and deliver an editable page with honest product boundaries.",
     "developerName": "Arcanea",
     "category": "Productivity",

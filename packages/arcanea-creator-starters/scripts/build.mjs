@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { createBrief, renderTemplate, renderGallery } from "../src/render.mjs";
+import { registryItem } from "../src/registry.mjs";
 
 export const pluginRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -10,6 +11,17 @@ export const pluginRoot = path.resolve(
 );
 const marker = ".creator-starters-output.json";
 const slugs = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
+const normalize = (text) =>
+  text.replace(/\r\n/g, "\n").replace(/[ \t]+$/gm, "");
+
+// The standalone shell embeds this same normalized script in every page.
+// Compute the policy from source so builds never depend on a stale hash literal.
+export async function scriptHash() {
+  const script = normalize(
+    await readFile(path.join(pluginRoot, "src/interactions.js"), "utf8"),
+  );
+  return `sha256-${createHash("sha256").update(script, "utf8").digest("base64")}`;
+}
 
 export function validateCatalog(catalog) {
   if (
@@ -29,7 +41,14 @@ export function validateCatalog(catalog) {
     ids.add(t.id);
     if (
       !["music", "labs", "tools"].includes(t.category) ||
-      !["record", "research", "tool"].includes(t.layout) ||
+      ![
+        "record",
+        "research",
+        "tool",
+        "session",
+        "publication",
+        "developer",
+      ].includes(t.layout) ||
       !["ember", "paper", "sage", "ink", "peach", "midnight"].includes(t.theme)
     )
       throw new Error(`Unknown composition for ${t.id}`);
@@ -88,12 +107,26 @@ export async function artifacts() {
     ["README.md", guide],
   ]);
   for (const template of templates) {
-    files.set(`${template.id}.html`, renderTemplate(template, styles, script));
+    files.set(
+      `${template.id}.html`,
+      normalize(renderTemplate(template, styles, script)),
+    );
     files.set(`${template.id}.html.txt`, files.get(`${template.id}.html`));
-    files.set(`${template.id}.md`, createBrief(template));
+    files.set(`${template.id}.md`, normalize(createBrief(template)));
+    files.set(
+      `${template.id}.registry.json`,
+      JSON.stringify(
+        registryItem(
+          template,
+          files.get(`${template.id}.html`),
+          files.get(`${template.id}.md`),
+        ),
+        null,
+        2,
+      ) + "\n",
+    );
   }
-  for (const [name, content] of files)
-    files.set(name, content.replace(/[ \t]+$/gm, ""));
+  for (const [name, content] of files) files.set(name, normalize(content));
   const hashes = Object.fromEntries(
     [...files].map(([name, content]) => [
       name,
