@@ -287,6 +287,7 @@ jobs:
           sovereign_server_pid=$!
           trap 'kill "$sovereign_server_pid" 2>/dev/null || true' EXIT
           node scripts/capture-sovereign-built-app.cjs
+          node scripts/verify-creator-starters-browser.cjs
 
       - name: Upload gallery rendered evidence
         if: always()

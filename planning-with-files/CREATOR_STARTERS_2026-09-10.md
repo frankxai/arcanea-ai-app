@@ -68,3 +68,11 @@ Frank explicitly requested committing and reconciling the v0/template branches i
 The earlier draft CI run 34429971972 passed ESLint, TypeScript and production compilation but failed generated-file formatting and a Sovereign Depths gallery interaction latency check. The integration replaces checked-in generated files with deterministic generation before web dev/build, preserves all nine examples and 39 outputs, adds cache input/output tracking and runs starter tests plus output checks in existing CI. Required checks are preserved. The obsolete generated copies remain recoverable in the two source commits.
 
 The independent reviewer on protected main has a 50-file/120,000-character limit. Source-only delivery avoids sending duplicate generated HTML and JSON to the reviewer. Ready-for-review and merge require fresh checks and actual visual evidence; a successful static deployment alone does not prove either.
+
+## Main reconciliation and complete-app gate
+
+The independently reviewed source foundation merged through PR #397 as `6c0818797` on 2026-09-10. The source was split into this complete six-starter package and the nine-starter integration to fit the protected review limit; generated output is built rather than committed. Main's intervening SEO changes are preserved. Add/add conflicts were resolved only within the starter package by keeping its reviewed continuation to nine; no global ours strategy or force push was used.
+
+The full-app CI now runs the 15 starter tests, verifies all 39 generated outputs and uses the existing Chromium/server lifetime to verify 27 download byte identities, twenty desktop/mobile page exports, Session synthesis, Margin keyboard/clipboard, Patch invalid-input/script-text/clipboard handling, gallery search recovery, reduced motion and no-script readability. Evidence is uploaded inside the existing gallery artifact. Fresh CI and exact-head review remain required for this integration; the foundation pass alone does not certify it.
+
+Authenticated Chrome subsequently inspected Session, Margin and Patch at desktop and phone sizes plus the gallery. Its screenshots are retained in the private task evidence directory. No independent visual score, v0 marketplace publication, fresh-task plugin installation, or completed commerce release is claimed.

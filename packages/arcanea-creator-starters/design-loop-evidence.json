@@ -57,8 +57,8 @@
     {
       "path_or_url": "https://arcanea-ai-f8o9615kh-starlight-intelligence.vercel.app",
       "kind": "web",
-      "inspected": false,
-      "notes": "Vercel READY, protected preview; no new visual inspection."
+      "inspected": true,
+      "notes": "Authenticated Chrome inspected Session, Margin and Patch at desktop and phone widths plus the gallery. Gallery filter/search/reset and Patch invalid/valid JSON recovery were exercised. This is partial current visual evidence; full built-app CI now captures all nine and verifies downloads and interactions."
     }
   ],
   "checks": [
@@ -69,13 +69,13 @@
     },
     {
       "name": "export-inspection",
-      "status": "blocked",
-      "evidence": "Peak Performance holds browser QA: 5993 MB free vs 8192 MB required, 13 tasks vs 8 budget."
+      "status": "partial",
+      "evidence": "Session, Margin and Patch desktop/mobile exports inspected in authenticated Chrome. Local screenshots retained privately. Fresh browser loops later hit PP memory HOLD; full-app Chromium verification now runs in existing CI."
     },
     {
       "name": "regressions",
       "status": "pass",
-      "evidence": "15 Node 20 tests, including preservation, matching bundle bytes, search state and JSON error recovery."
+      "evidence": "15 tests pass on the verified Node 22 executable; nine templates and 39 generated artifacts have zero drift. Source/brief/registry equality and preservation guards pass."
     },
     {
       "name": "schemas",
@@ -85,7 +85,7 @@
     {
       "name": "independent-review",
       "status": "blocked",
-      "evidence": "Claude auth status rechecked: loggedIn false. No independent PASS; no new parallel reviewer started."
+      "evidence": "Foundation PR #397 passed exact-head Gemini 2.5 Flash review, lint, TypeScript, CodeQL and full build and merged as 6c0818797. The nine-starter integration still requires its own exact-head review and fresh build/browser gates."
     },
     {
       "name": "deployment",
@@ -110,7 +110,7 @@
   },
   "decision": "blocked",
   "known_risks": [
-    "No fresh desktop/mobile, keyboard, reduced-motion or browser font inspection.",
+    "Current manual inspection covers the three new compositions and gallery; CI capture covers all nine in the full built app. An automated pass is not an independent premium visual score.",
     "No signed-in v0 import or fresh-task plugin installation.",
     "Static preview must never be promoted over the full Arcanea app."
   ]
