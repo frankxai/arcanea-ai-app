@@ -71,6 +71,11 @@ const PAGES = [
     internalPath: '/gallery',
   },
   {
+    title: 'Living Constellation',
+    description: 'Public-safe agent blueprints, identity dossiers, and visual campaign contracts',
+    internalPath: '/constellation',
+  },
+  {
     title: 'Create',
     description: 'Start-building hub for new work',
     internalPath: '/create',

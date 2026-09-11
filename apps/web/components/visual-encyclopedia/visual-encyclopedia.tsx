@@ -103,7 +103,13 @@ export function VisualEncyclopedia({ entries, graphEdges, cinema }: VisualEncycl
               <span className="rounded-full border border-[var(--arc-brand-atlantean-teal)]/25 bg-[var(--arc-brand-atlantean-teal)]/[0.06] px-3 py-1.5 text-[var(--arc-brand-atlantean-teal)]">
                 Proposal encyclopedia
               </span>
-              <span>Living production ledger · Wave 02</span>
+              <span>
+                Historical visual evidence · {entries.length} proposal records ·
+                separate from the current campaign
+              </span>
+              <Link href="/constellation" className="rounded-full border border-white/[0.1] px-3 py-1.5 text-white/55 transition hover:border-[var(--arc-brand-atlantean-teal)]/40 hover:text-white">
+                Meet the Living Constellation
+              </Link>
             </div>
             <div>
               <p className="mb-4 font-mono text-sm text-[var(--arc-brand-atlantean-teal)]">ARCANEA / VISUAL INTELLIGENCE</p>
@@ -182,7 +188,7 @@ function Stat({ value, label }: { value: number; label: string }) {
 }
 
 function ViewButton({ active, onClick, icon: Icon, label }: { active: boolean; onClick: () => void; icon: typeof PhGridFour; label: string }) {
-  return <button type="button" onClick={onClick} className={`flex items-center gap-2 rounded-lg px-3 py-2 text-xs transition ${active ? 'bg-white/[0.09] text-white shadow-sm' : 'text-white/38 hover:text-white/70'}`}><Icon className="h-4 w-4" /><span className="hidden sm:inline">{label}</span></button>;
+  return <button type="button" aria-label={label} aria-pressed={active} onClick={onClick} className={`flex items-center gap-2 rounded-lg px-3 py-2 text-xs transition ${active ? 'bg-white/[0.09] text-white shadow-sm' : 'text-white/38 hover:text-white/70'}`}><Icon className="h-4 w-4" /><span className="hidden sm:inline">{label}</span></button>;
 }
 
 function SelectFilter({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (value: string) => void }) {

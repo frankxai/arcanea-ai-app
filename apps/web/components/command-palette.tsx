@@ -26,6 +26,7 @@ const NAV_ITEMS = [
   { name: 'Canvas', href: '/canvas', group: 'Create' },
   { name: 'Forge', href: '/forge', group: 'Create' },
   { name: 'Gallery', href: '/gallery', group: 'Explore' },
+  { name: 'Living Constellation', href: '/constellation', group: 'Explore' },
   { name: 'Library', href: '/library', shortcut: 'L', group: 'Explore' },
   { name: 'Luminors', href: '/luminors', group: 'Explore' },
   { name: 'Lore', href: '/lore', group: 'Explore' },

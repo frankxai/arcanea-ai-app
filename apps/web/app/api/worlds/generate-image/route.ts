@@ -70,10 +70,13 @@ export async function POST(request: NextRequest) {
 
     // Gemini Imagen API call
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=${apiKey}`,
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey,
+        },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: {
@@ -138,7 +141,7 @@ function buildLocationPrompt(blueprint: {
     `It is a ${blueprint.type} aligned with ${blueprint.dominantElement} energy.`,
     `Mood: ${blueprint.alignment === "dark" ? "ominous and ancient" : blueprint.alignment === "light" ? "sacred and welcoming" : "mysterious twilight balance"}.`,
     `Color palette: ${artDir.palette}.`,
-    `Reference: ${artDir.reference} landscape style.`,
+    `Rendering language: ${artDir.reference}, adapted for a landscape composition.`,
     "Wide shot, epic scale, no characters, painterly fantasy art.",
     "No text, no watermarks.",
   ].join(" ");

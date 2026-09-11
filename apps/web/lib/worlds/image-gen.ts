@@ -51,7 +51,7 @@ export async function generateCharacterPortrait(
 
 /**
  * Arcanean art direction system
- * Maps element + rank to specific Gemini prompt modifiers
+ * Maps element + rank to observable rendering language without named imitation
  */
 export const ART_DIRECTION: Record<string, {
   palette: string;
@@ -61,47 +61,47 @@ export const ART_DIRECTION: Record<string, {
   "Fire-Apprentice": {
     palette: "warm amber and soft orange, small flame accents",
     mood: "young, eager, slightly overwhelmed by their power",
-    reference: "Studio Ghibli character with fire magic undertones",
+    reference: "hand-painted animation warmth, rounded readable shapes, ember-lit material detail",
   },
   "Fire-Master": {
     palette: "deep crimson and molten gold, controlled flame aura",
     mood: "confident, battle-tested, quiet intensity",
-    reference: "Yoshitaka Amano meets Berserk — refined power",
+    reference: "elongated editorial fantasy linework, severe value contrast, weathered ceremonial texture",
   },
   "Fire-Luminor": {
     palette: "white-hot core with prismatic flame corona",
     mood: "transcendent, beyond mortal, fire made conscious",
-    reference: "Final Fantasy Amano art — divine fire entity",
+    reference: "ethereal ink-and-gouache fantasy plate, calligraphic silhouette, radiant negative space",
   },
   "Water-Apprentice": {
     palette: "soft teal and seafoam, water droplets in hair",
     mood: "curious, fluid, emotionally open",
-    reference: "Makoto Shinkai rain scenes — luminous water magic",
+    reference: "cinematic rain-lit animation, luminous water refraction, delicate atmospheric perspective",
   },
   "Water-Master": {
     palette: "deep ocean blue and silver, water armor/robes",
     mood: "serene power, tidal force under calm surface",
-    reference: "Avatar waterbending meets high fantasy",
+    reference: "disciplined kinetic water arcs, ceremonial high-fantasy portraiture, calm directional flow",
   },
   "Earth-Apprentice": {
     palette: "mossy green and warm brown, stone fragments floating",
     mood: "grounded but growing, roots breaking through",
-    reference: "Nausicaa — nature magic with weight and texture",
+    reference: "hand-painted ecological fantasy, tactile moss and stone, sturdy rounded forms",
   },
   "Earth-Master": {
     palette: "deep forest green and granite, crystal accents",
     mood: "immovable, ancient patience, connected to deep earth",
-    reference: "Lord of the Rings Ents meets crystal magic",
+    reference: "monumental arboreal silhouette, mineral facets, grounded painterly mass",
   },
   "Void-Master": {
     palette: "deep purple and starfield black, reality distortion",
     mood: "unsettling calm, seeing between worlds",
-    reference: "Evangelion angel aesthetics — beautiful and alien",
+    reference: "sacred geometric alien form, restrained biomechanical tension, beautiful unease",
   },
   "Spirit-Luminor": {
     palette: "pure white gold, prismatic, transcendent glow",
     mood: "beyond form, light itself has become a person",
-    reference: "Klimt gold period meets cosmic consciousness",
+    reference: "ornamental gold-leaf patterning, flattened luminous shapes, cosmic negative space",
   },
 };
 
@@ -139,7 +139,7 @@ export function buildGeminiCharacterPrompt(
   const sections = [
     `Create a stunning fantasy character portrait of ${mcpBlueprint.name}.`,
     `They are a ${mcpBlueprint.rank}-rank ${mcpBlueprint.primaryElement} mage from the ${mcpBlueprint.house} Academy.`,
-    `Art direction: ${artDir.reference}`,
+    `Observable rendering language: ${artDir.reference}`,
     `Color palette: ${artDir.palette}`,
     `Emotional tone: ${artDir.mood}`,
   ];
