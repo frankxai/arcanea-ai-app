@@ -36,7 +36,9 @@
     "coding-agent",
     "luminor"
   ],
-  "activationEvents": ["onStartupFinished"],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "viewsContainers": {
@@ -321,7 +323,13 @@
         "arcanea.element": {
           "type": "string",
           "default": "void",
-          "enum": ["fire", "water", "earth", "wind", "void"],
+          "enum": [
+            "fire",
+            "water",
+            "earth",
+            "wind",
+            "void"
+          ],
           "enumDescriptions": [
             "Fire — Energy, transformation, will",
             "Water — Flow, healing, memory",
