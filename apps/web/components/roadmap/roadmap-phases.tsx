@@ -1,8 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import { gsap, ScrollTrigger, useGSAP, registerGsap, prefersReducedMotion, revealOnScroll } from '@/lib/design/gsap';
+import { useRef } from "react";
+import {
+  gsap,
+  ScrollTrigger,
+  useGSAP,
+  registerGsap,
+  prefersReducedMotion,
+  revealOnScroll,
+} from "@/lib/design/gsap";
 
 registerGsap();
 
@@ -13,7 +20,7 @@ interface Phase {
   name: string;
   subtitle: string;
   period: string;
-  status: 'COMPLETE' | 'IN PROGRESS' | 'PLANNED';
+  status: "COMPLETE" | "IN PROGRESS" | "PLANNED";
   description: string;
   features: string[];
   accent: string;
@@ -24,129 +31,129 @@ interface Phase {
 
 const PHASES: Phase[] = [
   {
-    number: '01',
-    name: 'Foundation',
-    subtitle: 'Graph & Auth',
-    period: 'Q1 2026',
-    status: 'COMPLETE',
+    number: "01",
+    name: "Foundation",
+    subtitle: "Graph & Auth",
+    period: "Q1 2026",
+    status: "COMPLETE",
     description:
-      'The bedrock of Arcanea. Authentication, the project graph, and the platform architecture that everything else builds upon.',
+      "The bedrock of Arcanea. Authentication, the project graph, and the platform architecture that everything else builds upon.",
     features: [
-      'Supabase auth with OAuth providers',
-      'Project graph — 190+ interconnected pages',
-      'MCP server with 30+ tools',
-      'Intelligence OS with 9 core packages',
+      "Supabase auth with OAuth providers",
+      "Project graph — 190+ interconnected pages",
+      "MCP server with 54 tools",
+      "Intelligence OS with 9 core packages",
     ],
-    accent: 'hsl(165 60% 50%)',
-    accentGlow: 'rgba(80, 200, 160, 0.18)',
+    accent: "hsl(165 60% 50%)",
+    accentGlow: "rgba(80, 200, 160, 0.18)",
   },
   {
-    number: '02',
-    name: 'Intelligence',
-    subtitle: 'Notes & Docs',
-    period: 'Q2 2026',
-    status: 'IN PROGRESS',
+    number: "02",
+    name: "Intelligence",
+    subtitle: "Notes & Docs",
+    period: "Q2 2026",
+    status: "IN PROGRESS",
     description:
-      'The thinking layer. Rich text editing, AI-powered summarization, and a living document system scoped to every project.',
+      "The thinking layer. Rich text editing, AI-powered summarization, and a living document system scoped to every project.",
     features: [
-      'Novel editor with slash commands',
-      'Project-scoped documentation',
-      'AI summarization and rewriting',
-      'Version history and diff viewer',
+      "Novel editor with slash commands",
+      "Project-scoped documentation",
+      "AI summarization and rewriting",
+      "Version history and diff viewer",
     ],
-    accent: 'hsl(160 100% 75%)',
-    accentGlow: 'rgba(127, 255, 212, 0.18)',
+    accent: "hsl(160 100% 75%)",
+    accentGlow: "rgba(127, 255, 212, 0.18)",
   },
   {
-    number: '03',
-    name: 'Vision',
-    subtitle: 'Board & Canvas',
-    period: 'Q2 2026',
-    status: 'PLANNED',
+    number: "03",
+    name: "Vision",
+    subtitle: "Board & Canvas",
+    period: "Q2 2026",
+    status: "PLANNED",
     description:
-      'The visual layer. Spatial thinking, moodboards, and story-webs that let creators see how their ideas connect.',
+      "The visual layer. Spatial thinking, moodboards, and story-webs that let creators see how their ideas connect.",
     features: [
-      'Infinite canvas with spatial clustering',
-      'Reference boards and moodboards',
-      'Story web visualization',
-      'Export to PDF and image',
+      "Infinite canvas with spatial clustering",
+      "Reference boards and moodboards",
+      "Story web visualization",
+      "Export to PDF and image",
     ],
-    accent: 'hsl(195 80% 55%)',
-    accentGlow: 'rgba(56, 182, 255, 0.18)',
+    accent: "hsl(195 80% 55%)",
+    accentGlow: "rgba(56, 182, 255, 0.18)",
   },
   {
-    number: '04',
-    name: 'Creation',
-    subtitle: 'Studio & Generation',
-    period: 'Q3 2026',
-    status: 'PLANNED',
+    number: "04",
+    name: "Creation",
+    subtitle: "Studio & Generation",
+    period: "Q3 2026",
+    status: "PLANNED",
     description:
-      'The generative layer. Images, video, text, and music — all tied to your project graph and stylized to your world.',
+      "The generative layer. Images, video, text, and music — all tied to your project graph and stylized to your world.",
     features: [
-      'Image and video generation pipelines',
-      'Music and audio generation',
-      'Style Packs for consistent aesthetics',
-      'Creator workflow automation',
+      "Image and video generation pipelines",
+      "Music and audio generation",
+      "Style Packs for consistent aesthetics",
+      "Creator workflow automation",
     ],
-    accent: 'hsl(48 100% 60%)',
-    accentGlow: 'rgba(255, 215, 0, 0.15)',
+    accent: "hsl(48 100% 60%)",
+    accentGlow: "rgba(255, 215, 0, 0.15)",
   },
   {
-    number: '05',
-    name: 'Connection',
-    subtitle: 'Social & Community',
-    period: 'Q3 2026',
-    status: 'PLANNED',
+    number: "05",
+    name: "Connection",
+    subtitle: "Social & Community",
+    period: "Q3 2026",
+    status: "PLANNED",
     description:
-      'The social layer. Share what you build, follow other creators, and join challenges that push your craft forward.',
+      "The social layer. Share what you build, follow other creators, and join challenges that push your craft forward.",
     features: [
-      'Collections and public portfolios',
-      'Creator follows and feed',
-      'Prompt books and shared workflows',
-      'Community challenges and leaderboards',
+      "Collections and public portfolios",
+      "Creator follows and feed",
+      "Prompt books and shared workflows",
+      "Community challenges and leaderboards",
     ],
-    accent: 'hsl(265 55% 62%)',
-    accentGlow: 'rgba(168, 85, 247, 0.15)',
+    accent: "hsl(265 55% 62%)",
+    accentGlow: "rgba(168, 85, 247, 0.15)",
   },
   {
-    number: '06',
-    name: 'Expansion',
-    subtitle: 'Agent Crews & Marketplace',
-    period: 'Q4 2026',
-    status: 'PLANNED',
+    number: "06",
+    name: "Expansion",
+    subtitle: "Agent Crews & Marketplace",
+    period: "Q4 2026",
+    status: "PLANNED",
     description:
-      'The intelligence layer, fully unleashed. Autonomous agents that know your world, a marketplace for skills, and team workspaces.',
+      "The intelligence layer, fully unleashed. Autonomous agents that know your world, a marketplace for skills, and team workspaces.",
     features: [
-      'Style-aware agent crews',
-      'Lore architect for world continuity',
-      'Skill and style pack marketplace',
-      'Team workspaces and shared graphs',
+      "Style-aware agent crews",
+      "Lore architect for world continuity",
+      "Skill and style pack marketplace",
+      "Team workspaces and shared graphs",
     ],
-    accent: 'hsl(25 95% 60%)',
-    accentGlow: 'rgba(251, 146, 60, 0.15)',
+    accent: "hsl(25 95% 60%)",
+    accentGlow: "rgba(251, 146, 60, 0.15)",
   },
 ];
 
 // ─── Status badge ─────────────────────────────────────────────────────────────
 
-const STATUS_STYLES: Record<Phase['status'], string> = {
-  COMPLETE: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-  'IN PROGRESS': 'bg-aquamarine/10 text-aquamarine border-aquamarine/20',
-  PLANNED: 'bg-white/[0.04] text-text-muted border-white/[0.06]',
+const STATUS_STYLES: Record<Phase["status"], string> = {
+  COMPLETE: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+  "IN PROGRESS": "bg-aquamarine/10 text-aquamarine border-aquamarine/20",
+  PLANNED: "bg-white/[0.04] text-text-muted border-white/[0.06]",
 };
 
-function StatusBadge({ status }: { status: Phase['status'] }) {
+function StatusBadge({ status }: { status: Phase["status"] }) {
   return (
     <span
       className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono tracking-wider border ${STATUS_STYLES[status]}`}
     >
       <span
         className={`w-1.5 h-1.5 rounded-full ${
-          status === 'COMPLETE'
-            ? 'bg-emerald-400'
-            : status === 'IN PROGRESS'
-            ? 'bg-aquamarine animate-pulse'
-            : 'bg-text-muted'
+          status === "COMPLETE"
+            ? "bg-emerald-400"
+            : status === "IN PROGRESS"
+              ? "bg-aquamarine animate-pulse"
+              : "bg-text-muted"
         }`}
         aria-hidden="true"
       />
@@ -159,10 +166,7 @@ function StatusBadge({ status }: { status: Phase['status'] }) {
 
 function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
   return (
-    <div
-      className="phase-card relative flex gap-6 md:gap-8"
-      data-index={index}
-    >
+    <div className="phase-card relative flex gap-6 md:gap-8" data-index={index}>
       {/* Left timeline connector */}
       <div className="hidden md:flex flex-col items-center shrink-0 w-5">
         <div
@@ -188,10 +192,10 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
       <div
         className="flex-1 mb-6 rounded-2xl overflow-hidden"
         style={{
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.06)',
-          backdropFilter: 'blur(40px)',
-          WebkitBackdropFilter: 'blur(40px)',
+          background: "rgba(255,255,255,0.03)",
+          border: "1px solid rgba(255,255,255,0.06)",
+          backdropFilter: "blur(40px)",
+          WebkitBackdropFilter: "blur(40px)",
           boxShadow: `0 0 40px ${phase.accentGlow}, 0 16px 48px rgba(0,0,0,0.3)`,
         }}
       >
@@ -235,14 +239,24 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
           {/* Feature list */}
           <ul className="grid sm:grid-cols-2 gap-2.5">
             {phase.features.map((feature) => (
-              <li key={feature} className="flex items-start gap-2.5 text-sm font-body text-text-secondary">
+              <li
+                key={feature}
+                className="flex items-start gap-2.5 text-sm font-body text-text-secondary"
+              >
                 <svg
                   className="w-4 h-4 shrink-0 mt-0.5"
                   viewBox="0 0 16 16"
                   fill="none"
                   aria-hidden="true"
                 >
-                  <circle cx="8" cy="8" r="7" stroke={phase.accent} strokeOpacity="0.4" strokeWidth="1" />
+                  <circle
+                    cx="8"
+                    cy="8"
+                    r="7"
+                    stroke={phase.accent}
+                    strokeOpacity="0.4"
+                    strokeWidth="1"
+                  />
                   <path
                     d="M5 8l2 2 4-4"
                     stroke={phase.accent}
@@ -270,11 +284,11 @@ function ScrollProgressBar() {
     if (!barRef.current || prefersReducedMotion()) return;
     gsap.to(barRef.current, {
       scaleX: 1,
-      ease: 'none',
+      ease: "none",
       scrollTrigger: {
-        trigger: '#phases-section',
-        start: 'top 80%',
-        end: 'bottom 20%',
+        trigger: "#phases-section",
+        start: "top 80%",
+        end: "bottom 20%",
         scrub: 0.4,
       },
     });
@@ -290,7 +304,7 @@ function ScrollProgressBar() {
         className="h-full origin-left scale-x-0"
         style={{
           background:
-            'linear-gradient(90deg, hsl(160 100% 75%), hsl(195 80% 55%), hsl(265 60% 65%))',
+            "linear-gradient(90deg, hsl(160 100% 75%), hsl(195 80% 55%), hsl(265 60% 65%))",
         }}
       />
     </div>
@@ -304,14 +318,14 @@ export function RoadmapPhases() {
 
   useGSAP(
     () => {
-      revealOnScroll('.phase-card', {
+      revealOnScroll(".phase-card", {
         y: 48,
         duration: 0.7,
-        start: 'top 88%',
-        end: 'top 40%',
+        start: "top 88%",
+        end: "top 40%",
       });
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
