@@ -82,6 +82,14 @@ const draft = {
         acceptDownloads: true,
       });
       const page = await context.newPage();
+      const button = (name) => page.getByRole("button", { name, exact: true });
+      const worldTitle = page.getByRole("heading", {
+        name: draft.world.name,
+        exact: true,
+      });
+      const choice = page.getByRole("region", { name: "Choose your draft" });
+      const readStorage = (key) =>
+        page.evaluate((key) => sessionStorage.getItem(key), key);
       page.setDefaultTimeout(15000);
       page.on("pageerror", (error) => errors.push(error.message));
       let modelRequests = 0;
@@ -105,12 +113,8 @@ const draft = {
         { currentKey, conceptKey, draft },
       );
       await page.reload();
-      await expect(
-        page.getByRole("heading", { name: draft.world.name, exact: true }),
-      ).toBeVisible();
-      await expect(
-        page.getByRole("region", { name: "Choose your draft" }),
-      ).toBeVisible();
+      await expect(worldTitle).toBeVisible();
+      await expect(choice).toBeVisible();
       await expect(
         page.getByRole("heading", { name: "Archivist 4", exact: true }),
       ).toBeVisible();
@@ -129,58 +133,31 @@ const draft = {
         `${mode.name}: horizontal overflow`,
       );
       const downloadPromise = page.waitForEvent("download");
-      await page
-        .getByRole("button", { name: "Export draft", exact: true })
-        .click();
+      await button("Export draft").click();
       const download = await downloadPromise;
       assert.deepEqual(
         JSON.parse(await fs.readFile(await download.path(), "utf8")),
         draft.world,
       );
-      await page
-        .getByRole("button", { name: "Keep this draft", exact: true })
-        .click();
-      await expect(
-        page.getByRole("region", { name: "Choose your draft" }),
-      ).toHaveCount(0);
-      assert.equal(
-        await page.evaluate((key) => sessionStorage.getItem(key), conceptKey),
-        null,
-      );
+      await button("Keep this draft").click();
+      await expect(choice).toHaveCount(0);
+      assert.equal(await readStorage(conceptKey), null);
       page.once("dialog", (dialog) => dialog.dismiss());
-      await page
-        .getByRole("button", { name: "Start over", exact: true })
-        .click();
-      await expect(
-        page.getByRole("heading", { name: draft.world.name, exact: true }),
-      ).toBeVisible();
+      await button("Start over").click();
+      await expect(worldTitle).toBeVisible();
       page.once("dialog", (dialog) => dialog.accept());
-      await page
-        .getByRole("button", { name: "Start over", exact: true })
-        .click();
+      await button("Start over").click();
       await expect(
         page.getByRole("textbox", { name: "Describe your world" }),
       ).toBeVisible();
+      assert.equal(await readStorage(currentKey), null);
       assert.equal(
-        await page.evaluate((key) => sessionStorage.getItem(key), currentKey),
-        null,
-      );
-      assert.equal(
-        JSON.parse(
-          await page.evaluate(
-            (key) => sessionStorage.getItem(key),
-            previousKey,
-          ),
-        ).draft_id,
+        JSON.parse(await readStorage(previousKey)).draft_id,
         draft.draft_id,
       );
       await page.reload();
-      await page
-        .getByRole("button", { name: "Restore previous draft", exact: true })
-        .click();
-      await expect(
-        page.getByRole("heading", { name: draft.world.name, exact: true }),
-      ).toBeVisible();
+      await button("Restore previous draft").click();
+      await expect(worldTitle).toBeVisible();
       await page.screenshot({
         path: `${output}/${mode.name}-restored.png`,
         fullPage: true,
@@ -192,17 +169,13 @@ const draft = {
       );
       await page.reload();
       page.once("dialog", (dialog) => dialog.accept());
-      await page
-        .getByRole("button", { name: "Use new concept", exact: true })
-        .click();
+      await button("Use new concept").click();
       const input = page.getByRole("textbox", { name: "Describe your world" });
       await expect(input).toHaveValue("A new city beneath the sea");
       await input.press("End");
       await input.press("Enter");
       await expect(input).toHaveValue("A new city beneath the sea\n");
-      await page
-        .getByRole("button", { name: "Restore previous draft", exact: true })
-        .click();
+      await button("Restore previous draft").click();
       await page.evaluate(() => {
         Storage.prototype.setItem = function () {
           throw new DOMException(
@@ -212,15 +185,11 @@ const draft = {
         };
       });
       page.once("dialog", (dialog) => dialog.accept());
-      await page
-        .getByRole("button", { name: "Start over", exact: true })
-        .click();
+      await button("Start over").click();
       await expect(page.getByRole("alert")).toContainText(
         "A recovery copy could not be stored",
       );
-      await expect(
-        page.getByRole("heading", { name: draft.world.name, exact: true }),
-      ).toBeVisible();
+      await expect(worldTitle).toBeVisible();
       assert.equal(
         modelRequests,
         0,
