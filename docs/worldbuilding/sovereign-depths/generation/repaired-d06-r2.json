@@ -1,0 +1,11 @@
+{
+  "id": "d06",
+  "path": "/workspace/scratch/375074c86086/generated_images/exec-23c83c03-b6a4-4b80-86f2-e8a8f02b4e5e.png",
+  "previousPath": "/workspace/scratch/375074c86086/generated_images/exec-43bcb673-9e06-42e3-bb20-bb91cc4f312b.png",
+  "prompt": "Replace the entire lower-right corner region (rightmost 20 percent of image width, bottom 12 percent of image height) with plain dark wet slate paving, broad worn slabs and a few natural rubble stones. This region must contain absolutely no pale outlined shape, no symbol, no logo, no signature, no writing. The little pale interlocking rectangular mark currently at extreme bottom right must disappear completely. Blend this new paving naturally into the foreground ledge. Preserve everything outside that rectangular lower-right corner region: monumental impossible stairs, figures, architecture, framing, light and all other details. Photoreal cinematic quality.",
+  "interface": "image_gen",
+  "model": "not exposed by tool",
+  "generatedAt": "2026-09-09T01:06:44.260Z",
+  "status": "repair-pending-review",
+  "revision": 2
+}

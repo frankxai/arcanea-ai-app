@@ -1,0 +1,421 @@
+.page {
+  color: var(--arc-text-primary);
+  background: var(--arc-cosmic-void);
+}
+.wrap {
+  width: min(100% - 2.5rem, 90rem);
+  margin-inline: auto;
+}
+.hero {
+  position: relative;
+  min-height: min(56rem, 88svh);
+  display: flex;
+  align-items: end;
+  isolation: isolate;
+}
+.heroImage {
+  object-fit: cover;
+  object-position: center;
+  z-index: -2;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, var(--arc-cosmic-void), transparent 85%);
+}
+.heroContent {
+  padding-block: 5rem 3rem;
+  max-width: 56rem;
+}
+.eyebrow {
+  color: var(--arc-text-secondary);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.hero .eyebrow {
+  color: var(--arc-text-primary);
+}
+.title {
+  font-family: var(--arc-font-editorial);
+  font-weight: 400;
+  font-size: clamp(3.4rem, 8vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  margin-block: 1.5rem;
+  text-wrap: balance;
+}
+.lede {
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  max-width: 42rem;
+  line-height: 1.65;
+  color: var(--arc-text-secondary);
+}
+.hero .lede {
+  color: var(--arc-text-primary);
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+  align-items: center;
+}
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.7rem 1.2rem;
+  border: 1px solid var(--arc-cosmic-border-bright);
+  border-radius: var(--arc-radius-sm);
+  text-decoration: none;
+  font-size: 0.875rem;
+  background: var(--arc-cosmic-deep);
+  color: var(--arc-text-primary);
+}
+.primary {
+  background: var(--arc-text-primary);
+  color: var(--arc-cosmic-void);
+}
+.action:hover {
+  border-color: var(--arc-text-secondary);
+}
+.action:focus-visible,
+.card:focus-visible,
+.search:focus-visible,
+.filter:focus-visible {
+  outline: 2px solid var(--arc-brand-atlantean-teal);
+  outline-offset: 4px;
+}
+.intro {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  padding-block: 4rem;
+  border-bottom: 1px solid var(--arc-cosmic-border);
+}
+.intro p {
+  margin: 0;
+  max-width: 55rem;
+  color: var(--arc-text-secondary);
+  line-height: 1.8;
+}
+.section {
+  padding-block: 3rem 5rem;
+  scroll-margin-top: 5rem;
+}
+.sectionHeading {
+  font-family: var(--arc-font-editorial);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  margin-block: 0 1.5rem;
+}
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.filters {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+.filter {
+  min-height: 2.75rem;
+  padding: 0.6rem 1rem;
+  border-radius: var(--arc-radius-sm);
+  border: 1px solid var(--arc-cosmic-border);
+  background: transparent;
+  color: var(--arc-text-secondary);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+.filter[aria-pressed="true"] {
+  background: var(--arc-cosmic-raised);
+  color: var(--arc-text-primary);
+  border-color: var(--arc-cosmic-border-bright);
+}
+.searchLabel {
+  flex: 0 1 23rem;
+  position: relative;
+}
+.search {
+  min-height: 2.75rem;
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  color: var(--arc-text-primary);
+  background: var(--arc-cosmic-deep);
+  border: 1px solid var(--arc-cosmic-border-bright);
+  border-radius: var(--arc-radius-sm);
+  font: inherit;
+  font-size: 0.875rem;
+}
+.count {
+  font-size: 0.8rem;
+  color: var(--arc-text-secondary);
+  margin-block: 0 1.5rem;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.5rem 1.25rem;
+}
+.card {
+  min-width: 0;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.cardArt {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--arc-cosmic-deep);
+  border-radius: var(--arc-radius-sm);
+}
+.cardArt[data-kind="dungeon"] {
+  aspect-ratio: 16 / 9;
+}
+.cardImage {
+  object-fit: cover;
+  transition: transform var(--arc-duration-base) var(--arc-ease-expo-out);
+}
+.card:hover .cardImage {
+  transform: scale(1.025);
+}
+.card h3 {
+  font-family: var(--arc-font-editorial);
+  font-size: 1.85rem;
+  line-height: 1.12;
+  font-weight: 400;
+  margin-block: 0.5rem;
+}
+.card p {
+  color: var(--arc-text-secondary);
+  line-height: 1.65;
+  font-size: 0.875rem;
+  margin: 0;
+}
+.card .eyebrow {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.65rem;
+}
+.empty {
+  padding-block: 4rem;
+  color: var(--arc-text-secondary);
+}
+.footer {
+  border-top: 1px solid var(--arc-cosmic-border);
+  padding-block: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--arc-text-secondary);
+}
+.footer a,
+.prose a,
+.breadcrumb a {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  padding-block: 1.75rem;
+  font-size: 0.8rem;
+  color: var(--arc-text-secondary);
+}
+.detailArt {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--arc-cosmic-deep);
+}
+.detailImage {
+  object-fit: contain;
+}
+.detailTitle {
+  max-width: 62rem;
+  padding-block: 3.5rem 1rem;
+}
+.detailTitle .title {
+  font-size: clamp(3rem, 6vw, 6rem);
+}
+.detailColumns {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(14rem, 1fr);
+  gap: 5rem;
+  padding-block: 3rem 5rem;
+}
+.prose {
+  min-width: 0;
+}
+.prose section {
+  margin-bottom: 3rem;
+}
+.prose h2,
+.aside h2 {
+  font-family: var(--arc-font-editorial);
+  font-size: 2rem;
+  font-weight: 400;
+  margin-block: 0 1rem;
+}
+.prose h3 {
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin-block: 1.5rem 0.5rem;
+}
+.prose p,
+.prose li,
+.aside p {
+  line-height: 1.8;
+  color: var(--arc-text-secondary);
+}
+.prose ul {
+  padding-left: 1.2rem;
+}
+.aside {
+  border-left: 1px solid var(--arc-cosmic-border);
+  padding-left: 2rem;
+}
+.aside section {
+  margin-bottom: 2rem;
+}
+.phase {
+  border-top: 1px solid var(--arc-cosmic-border);
+  padding-top: 1rem;
+  margin-top: 1.5rem;
+}
+.phase dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--arc-text-primary);
+  margin-top: 1rem;
+}
+.phase dd {
+  color: var(--arc-text-secondary);
+  line-height: 1.75;
+  margin: 0.4rem 0 0;
+}
+.related {
+  display: grid;
+  gap: 1.5rem;
+}
+.related .cardArt {
+  aspect-ratio: 16 / 10;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (max-width: 64rem) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .detailColumns {
+    gap: 2rem;
+  }
+}
+@media (max-width: 40rem) {
+  .wrap {
+    width: calc(100% - 2rem);
+  }
+  .hero {
+    min-height: 46rem;
+    max-height: 90svh;
+  }
+  .heroImage {
+    object-position: 20% center;
+  }
+  .heroContent {
+    padding-bottom: 2rem;
+  }
+  .intro {
+    grid-template-columns: 1fr;
+    padding-block: 2.5rem;
+    gap: 1rem;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .cardArt {
+    aspect-ratio: 4 / 5;
+  }
+  .searchLabel {
+    flex-basis: 100%;
+  }
+  .detailColumns {
+    grid-template-columns: 1fr;
+    padding-top: 1rem;
+  }
+  .aside {
+    border-left: 0;
+    border-top: 1px solid var(--arc-cosmic-border);
+    padding: 2rem 0 0;
+  }
+  .detailArt {
+    aspect-ratio: 4 / 5;
+  }
+  .detailTitle {
+    padding-top: 2rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cardImage {
+    transition: none;
+  }
+  .card:hover .cardImage {
+    transform: none;
+  }
+}
+
+.stories {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3rem;
+}
+.stories details {
+  border-top: 1px solid var(--arc-cosmic-border);
+}
+.stories summary {
+  cursor: pointer;
+  padding-block: 1rem;
+  min-height: 2.75rem;
+}
+.stories summary:focus-visible {
+  outline: 2px solid var(--arc-brand-atlantean-teal);
+  outline-offset: 4px;
+}
+@media (max-width: 40rem) {
+  .stories {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.featured {
+  min-height: 32rem;
+}
+.featuredTitle {
+  font-size: clamp(3.25rem, 6vw, 6rem);
+}

@@ -15,6 +15,9 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 env:
   NODE_VERSION: "22"
   PNPM_VERSION: "8.15.0"
@@ -42,6 +45,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -65,7 +70,7 @@ jobs:
             node_modules
             apps/*/node_modules
             packages/*/node_modules
-          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
 
   # ============================================
   # LINT — fast feedback
@@ -83,6 +88,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          # The formatter needs the PR base or previous push commit. Fetch
+          # history inside checkout while its scoped token is available.
+          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -101,7 +111,7 @@ jobs:
             node_modules
             apps/*/node_modules
             packages/*/node_modules
-          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Reject npm usage in scripts
         run: |
@@ -124,6 +134,15 @@ jobs:
             fi
           fi
 
+      - name: Verify changed-file formatting failure handling
+        run: node --test scripts/tests/changed-format.test.mjs
+
+      - name: Verify visual-review trust and evidence boundaries
+        run: node --test scripts/excellence-review.test.mjs
+
+      - name: Verify preview deployment history handling
+        run: node --test scripts/tests/vercel-ignore-build.test.mjs
+
       - name: ESLint
         run: pnpm --dir apps/web run lint
 
@@ -132,34 +151,10 @@ jobs:
       # or forcing an unsafe whole-repository rewrite.
       - name: Prettier check (changed files)
         shell: bash
+        env:
+          FORMAT_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            BASE_SHA="${{ github.event.pull_request.base.sha }}"
-          else
-            BASE_SHA="${{ github.event.before }}"
-          fi
-
-          git fetch --no-tags --depth=1 origin "$BASE_SHA"
-          mapfile -d '' CHANGED_FILES < <(
-            git diff --name-only --diff-filter=ACMRT -z "$BASE_SHA" "$GITHUB_SHA"
-          )
-
-          FORMATTABLE_FILES=()
-          for file in "${CHANGED_FILES[@]}"; do
-            case "$file" in
-              *.css|*.graphql|*.html|*.js|*.json|*.jsx|*.md|*.mdx|*.mjs|*.scss|*.ts|*.tsx|*.yaml|*.yml)
-                [ -f "$file" ] && FORMATTABLE_FILES+=("$file")
-                ;;
-            esac
-          done
-
-          if [ "${#FORMATTABLE_FILES[@]}" -eq 0 ]; then
-            echo "No changed files supported by Prettier."
-            exit 0
-          fi
-
-          printf 'Checking %s changed file(s) with Prettier.\n' "${#FORMATTABLE_FILES[@]}"
-          pnpm exec prettier --check --ignore-unknown "${FORMATTABLE_FILES[@]}"
+          bash scripts/check-changed-format.sh "$FORMAT_BASE_SHA" "$GITHUB_SHA"
 
   # ============================================
   # TYPECHECK — blocking. Exits 1 on any TS error, and TypeScript is a required
@@ -175,6 +170,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -193,18 +190,12 @@ jobs:
             node_modules
             apps/*/node_modules
             packages/*/node_modules
-          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: TypeScript check (via turbo — builds workspace deps first)
-        run: |
-          pnpm turbo run type-check --filter=@arcanea/web 2>&1 | tee /tmp/tsc-output.txt
-          ERROR_COUNT=$(grep -c "error TS" /tmp/tsc-output.txt || echo "0")
-          echo "## TypeScript Report" >> $GITHUB_STEP_SUMMARY
-          echo "**Errors**: ${ERROR_COUNT}" >> $GITHUB_STEP_SUMMARY
-          if [ "$ERROR_COUNT" -gt 0 ]; then
-            echo "::error::TypeScript has ${ERROR_COUNT} errors"
-            exit 1
-          fi
+        # Preserve Turbo's exit code directly, including crashes without an
+        # "error TS" diagnostic. A log match is not a typecheck verdict.
+        run: pnpm turbo run type-check --filter=@arcanea/web
 
   # ============================================
   # BUILD — production build verification
@@ -219,6 +210,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -237,13 +230,19 @@ jobs:
             node_modules
             apps/*/node_modules
             packages/*/node_modules
-          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
+          key: modules-${{ runner.os }}-${{ runner.arch }}-node${{ env.NODE_VERSION }}-pnpm${{ env.PNPM_VERSION }}-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Build web app (via turbo — builds workspace deps first)
         run: pnpm turbo run build --filter=@arcanea/web
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
+
+      - name: Verify creator starter source, interactions and generated downloads
+        run: |
+          node --test packages/arcanea-creator-starters/scripts/build.test.mjs packages/arcanea-creator-starters/scripts/interactions.test.mjs
+          node packages/arcanea-creator-starters/scripts/build.mjs --compat --check
+          node scripts/build-creator-starters.mjs --check
 
       - name: Verify registry public-read boundary
         run: node --test scripts/tests/registry-public-read-contract.test.mjs
@@ -274,6 +273,40 @@ jobs:
       - name: Run package tests
         run: pnpm test:quick
 
+      - name: Verify public collection assets and proposal relationships
+        run: |
+          node scripts/verify-sovereign-depths.mjs
+          pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/sovereign-depths.test.ts
+          node scripts/verify-weight-of-wonders.mjs
+          pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/weight-of-wonders.test.ts
+
+      - name: Verify galleries rendered desktop, 375px mobile and reduced motion
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+        run: |
+          pnpm --dir apps/web exec playwright install --with-deps chromium
+          pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/sovereign-next.log" 2>&1 &
+          sovereign_server_pid=$!
+          trap 'kill "$sovereign_server_pid" 2>/dev/null || true' EXIT
+          # Collect both suites' evidence even if one fails; either failure blocks merge.
+          gallery_status=0
+          starter_status=0
+          node scripts/capture-sovereign-built-app.cjs || gallery_status=$?
+          node scripts/verify-creator-starters-browser.cjs || starter_status=$?
+          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Upload gallery rendered evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: galleries-built-app-${{ github.sha }}
+          path: screenshots/
+          retention-days: 14
+          if-no-files-found: warn
+
       - name: Build summary
         if: always()
         run: |
@@ -285,12 +318,13 @@ jobs:
   # ============================================
   # STATUS — the merge gate. It is the only job here that cannot skip under any
   # event, so it is the only context whose green is unconditionally earned.
-  # Gates on Lint + TypeScript + Build; an install failure surfaces through them.
+  # Gates on Install + Lint + TypeScript + Build. A restored cache can let a
+  # downstream job pass after install fails, so install must be checked directly.
   # ============================================
   ci-status:
     name: CI Status
     runs-on: ubuntu-latest
-    needs: [lint, typecheck, build]
+    needs: [install, lint, typecheck, build]
     # always() and nothing else: this job must run even when an upstream job fails
     # or is cancelled, so it reports a real verdict. Any condition that can make it
     # skip reads as a passing required check.
@@ -302,11 +336,16 @@ jobs:
           echo "## CI Results" >> $GITHUB_STEP_SUMMARY
           echo "| Job | Status | Blocking |" >> $GITHUB_STEP_SUMMARY
           echo "|-----|--------|----------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Install | ${{ needs.install.result }} | yes |" >> $GITHUB_STEP_SUMMARY
           echo "| Lint | ${{ needs.lint.result }} | yes |" >> $GITHUB_STEP_SUMMARY
           echo "| TypeScript | ${{ needs.typecheck.result }} | yes |" >> $GITHUB_STEP_SUMMARY
           echo "| Build | ${{ needs.build.result }} | yes |" >> $GITHUB_STEP_SUMMARY
 
           PASS=true
+          if [ "${{ needs.install.result }}" != "success" ]; then
+            echo "::error::Install failed — blocks merge"
+            PASS=false
+          fi
           if [ "${{ needs.lint.result }}" != "success" ]; then
             echo "::error::Lint failed — blocks merge"
             PASS=false
@@ -321,7 +360,7 @@ jobs:
           fi
 
           if [ "$PASS" = true ]; then
-            echo "CI passed — safe to merge (lint + typecheck + build green)"
+            echo "CI checks passed (install + lint + typecheck + build green); other release gates still apply"
           else
             exit 1
           fi

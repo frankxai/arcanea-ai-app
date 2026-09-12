@@ -60,20 +60,20 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
-    "@supabase/ssr": "^0.12.5",
-    "@supabase/supabase-js": "^2.112.4",
+    "@supabase/ssr": "^0.12.6",
+    "@supabase/supabase-js": "^2.116.0",
     "dotenv": "^16.4.5",
     "glob": "^11.0.0",
     "stripe": "^20.4.1"
   },
   "devDependencies": {
-    "@changesets/cli": "^3.0.1",
+    "@changesets/cli": "^3.0.2",
     "@tailwindcss/typography": "^0.5.20",
     "@turbo/gen": "^2.10.12",
-    "autoprefixer": "^10.5.4",
+    "autoprefixer": "^10.5.5",
     "eslint": "^9.39.4",
-    "next": "16.3.3",
-    "postcss": "^8.5.26",
+    "next": "16.3.4",
+    "postcss": "^8.5.28",
     "prettier": "^3.9.6",
     "semver": "^7.8.5",
     "tailwindcss": "^3.4.9",
@@ -116,7 +116,7 @@
   "homepage": "https://arcanea.ai",
   "pnpm": {
     "overrides": {
-      "next": "16.3.3",
+      "next": "16.3.4",
       "@types/react": "^19.0.0",
       "@types/react-dom": "^19.0.0",
       "eslint": "9.39.4",
