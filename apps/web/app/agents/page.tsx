@@ -6,7 +6,6 @@ import { m, LazyMotion, domAnimation } from "framer-motion";
 import { AgentCard, type AgentCardProps } from "@/components/agents/agent-card";
 import { CreditBadge } from "@/components/agents/credit-badge";
 import { PremiumCard, PREMIUM_PRODUCTS } from "@/components/agents/premium-card";
-import { FACTS } from "@/lib/facts";
 import {
   SectionShell,
   SectionHeader,
@@ -488,7 +487,7 @@ export default function AgentsMarketplacePage() {
               transition={{ duration: 0.6, delay: 0.18 }}
               className="text-center text-base md:text-xl text-white/50 max-w-2xl mx-auto mb-14 leading-relaxed font-body"
             >
-              {FACTS.luminors} named specialists, each with its own craft, memory, and voice.
+              Named specialists, each with its own craft, memory, and voice.
               Pick the one whose work is closest to yours.
             </m.p>
 
@@ -497,11 +496,10 @@ export default function AgentsMarketplacePage() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.26 }}
-              className="grid grid-cols-3 gap-6 max-w-xl mx-auto"
+              className="grid grid-cols-2 gap-6 max-w-xl mx-auto"
             >
-              <StatCard value={String(FACTS.luminors)} label="Luminors" color="var(--arc-brand-atlantean-teal)" delay={0.3} />
-              <StatCard value={String(AGENT_DOMAIN_COUNT)} label="Domains" color="var(--arc-brand-atlantean-teal)" delay={0.36} />
-              <StatCard value={String(AGENTS_CATALOG.length)} label="Agents live" color="var(--arc-brand-cosmic-blue)" delay={0.42} />
+              <StatCard value={String(AGENT_DOMAIN_COUNT)} label="Domains" color="var(--arc-brand-atlantean-teal)" delay={0.3} />
+              <StatCard value={String(AGENTS_CATALOG.length)} label="Agents live" color="var(--arc-brand-cosmic-blue)" delay={0.36} />
             </m.div>
           </div>
         </section>
