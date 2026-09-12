@@ -1,0 +1,118 @@
+{
+  "reviewer": "/root/cinematic_research",
+  "reviewedAt": "2026-09-09",
+  "revision": "r1",
+  "method": "Direct inspection of all three revised files using view_image, with benchmark repair prompts. Scores are editorial judgments, not objective equivalence to studio productions. No motion or audio scoring.",
+  "overallDecision": "PASS_THREE_IMAGE_ART_DIRECTION_GATE; proceed with remaining images and review each individually. This does not approve ungenerated assets, final canon status, game rigs, encounter balance or deployment.",
+  "weights": {
+    "identity": 20,
+    "story": 20,
+    "layout": 20,
+    "anatomyMaterials": 20,
+    "lightFinish": 15,
+    "provenance": 5
+  },
+  "images": [
+    {
+      "id": "b01",
+      "name": "Vorrak, the Cinder Maw",
+      "file": "generated_images/exec-584cfc9e-2fff-4a6d-8d78-1b08b7378457.png",
+      "scores": {
+        "identity": 16,
+        "story": 18,
+        "layout": 17,
+        "anatomyMaterials": 17,
+        "lightFinish": 14,
+        "provenance": 5
+      },
+      "decision": "PASS_KEY_ART_BENCHMARK_WITH_ANATOMY_NOTES",
+      "changesObserved": [
+        "Skull now has a short, blunt tunneling profile and three broad crushing ridges instead of a conventional crocodile tooth row. This materially improves original identity.",
+        "The lower mouth presents two substantial divided mineral masses interacting with fractured stone. It reads as a crushing/shoving apparatus more readily than the previous bite.",
+        "Three near-side legs have separate visible feet and their successive root positions are clearer. This is sufficient to communicate the three-pair body concept in key art; far-side anatomy remains partially occluded.",
+        "Mass, furnace-depth staging, scout-scale relation and restrained heat are preserved."
+      ],
+      "remainingNotes": [
+        "The lower grinding plates and slab share nearly identical material values, so their exact boundary is ambiguous. A rig reference must distinguish moving jaw from carried rubble; this is not grounds to discard the finished key art.",
+        "Do not claim that all six complete limbs or exact numerical dimensions have been visually verified. The final key art is a cinematic view, not an orthographic anatomy sheet."
+      ],
+      "hardGates": {
+        "adultRegister": "PASS",
+        "originalIdentity": "PASS_WITH_OCCLUSION_LIMIT",
+        "physicalCredibility": "PASS_STILL_IMAGE",
+        "provenance": "PASS"
+      },
+      "total": 87,
+      "sha256": "80793559d27902b5d9f26e0dceeb5dcd08133495ebfa1e988a0235240b369293"
+    },
+    {
+      "id": "b17",
+      "name": "Avarra, the Glass Sovereign",
+      "file": "generated_images/exec-8440d787-5510-432c-b123-4723cd267514.png",
+      "scores": {
+        "identity": 18,
+        "story": 18,
+        "layout": 18,
+        "anatomyMaterials": 17,
+        "lightFinish": 14,
+        "provenance": 5
+      },
+      "decision": "PASS_KEY_ART_BENCHMARK_WITH_SCALE_NOTE",
+      "changesObserved": [
+        "Both characters now occupy a shared landing, and Avarra reads as a tall embodied duelist rather than an architectural giant. The previous principal scale failure is resolved at cinematic-concept level.",
+        "Three complete blades are visible; the horizontal blade and extended hand create a specific readable threat.",
+        "Her adult face remains recognizable and controlled. The challenger responds to the encounter rather than functioning only as a miniature scale token.",
+        "Framing has room for the action and weapons; the new staging improves dramatic exchange without making the scene darker."
+      ],
+      "remainingNotes": [
+        "The exact 3.2-to-1.8-metre relationship remains approximate because of perspective. Establish exact dimensions in a model sheet before a game rig; do not infer centimetre precision from this image.",
+        "The costume still reads as substantial patterned cloth, while the chest mantle is not entirely distinguishable from folded fabric. Preserve this approved image identity or resolve the materials explicitly when producing close-up model references."
+      ],
+      "hardGates": {
+        "adultRegister": "PASS",
+        "originalIdentity": "PASS",
+        "physicalCredibility": "PASS_STILL_IMAGE",
+        "provenance": "PASS"
+      },
+      "total": 90,
+      "sha256": "62c2ba4e0786293a1d6685b2ed7298c327d06781abc1bd6b7ebf617d3f84532c"
+    },
+    {
+      "id": "d02",
+      "name": "The Pelagic Cathedral",
+      "file": "generated_images/exec-238f5c1e-e2b1-46b2-a3c4-233d3ea7e350.png",
+      "scores": {
+        "identity": 18,
+        "story": 18,
+        "layout": 19,
+        "anatomyMaterials": 18,
+        "lightFinish": 14,
+        "provenance": 5
+      },
+      "decision": "PASS_KEY_ART_BENCHMARK",
+      "changesObserved": [
+        "Blue-green attenuation now extends across the entire vault; distant architecture loses contrast and the scene is more convincingly submerged.",
+        "Bubble trails and fish reinforce aquatic depth without burying the architecture in effects.",
+        "The broken bridge, lower platform, guide ropes and upper balconies remain legible.",
+        "The closed shell valve and sparse warm polyps preserve the original sense of an inhabited luminous abyss."
+      ],
+      "remainingNotes": [
+        "The deeper water is slightly more uniform in value than before, but the exploration hierarchy survives. Avoid further global fog passes.",
+        "The production lead confirms pressure-diving equipment is compatible with the selected Eighth Age setting; the prior technology note is therefore resolved for this scope, without implying a canon amendment."
+      ],
+      "hardGates": {
+        "adultRegister": "PASS",
+        "originalIdentity": "PASS",
+        "physicalCredibility": "PASS_STILL_IMAGE",
+        "provenance": "PASS"
+      },
+      "total": 92,
+      "sha256": "0b146fecf75255aa74179a9eed69c3ae8c00e7652a788085f5ccb882bb54a53f"
+    }
+  ],
+  "seriesAdvice": [
+    "Do not let the successful slate/ivory palette become the only palette. Future regions can be sunlit, verdant, volcanic or richly colored while retaining physical material response.",
+    "Maintain body-plan and scale diversity. A human rival, aerial predator and distributed organism should not all inherit the same low-angle giant staging.",
+    "Record visible, occluded and absent identity features separately. Key art does not replace the later model-sheet and implemented-encounter checks."
+  ]
+}

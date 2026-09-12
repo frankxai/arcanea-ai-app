@@ -7,6 +7,7 @@ import matter from 'gray-matter';
 import { ChapterReader } from '@/components/saga/chapter-reader';
 import { getBookRoot } from '@/lib/content/book-path';
 import { countChapterWords, isChapterMarkdown } from '@/lib/saga/chapter-files';
+import { isBookPublic } from '@/lib/content/book-visibility';
 const BOOK_ROOT = getBookRoot();
 
 export const dynamic = 'force-dynamic';
@@ -166,6 +167,7 @@ function extractTitle(content: string, fallbackId: string): string {
 async function loadChapter(bookId: string, chapterId: string) {
   const bookMeta = BOOK_META[bookId];
   if (!bookMeta) return null;
+  if (!(await isBookPublic(bookMeta.dir))) return null;
 
   const chapters = await getChapterFiles(bookMeta.dir);
   const match = chapters.find((ch) => ch.id === chapterId);
