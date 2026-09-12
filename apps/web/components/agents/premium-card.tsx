@@ -57,7 +57,8 @@ export const PREMIUM_PRODUCTS: PremiumCardProps[] = [
     accentColor: "var(--arc-brand-cosmic-blue)",
     backgroundGradient:
       "linear-gradient(135deg, rgba(120,166,255,0.07) 0%, rgba(80,120,220,0.03) 40%, rgba(9,9,11,0.85) 100%)",
-    glowShadow: "0 0 40px rgba(120,166,255,0.18), 0 0 80px rgba(80,120,220,0.08)",
+    glowShadow:
+      "0 0 40px rgba(120,166,255,0.18), 0 0 80px rgba(80,120,220,0.08)",
   },
   {
     id: "license",
@@ -71,7 +72,8 @@ export const PREMIUM_PRODUCTS: PremiumCardProps[] = [
     accentColor: "var(--arc-brand-atlantean-teal)",
     backgroundGradient:
       "linear-gradient(135deg, rgba(127,255,212,0.07) 0%, rgba(0,188,180,0.03) 40%, rgba(9,9,11,0.85) 100%)",
-    glowShadow: "0 0 40px rgba(127,255,212,0.18), 0 0 80px rgba(0,188,180,0.08)",
+    glowShadow:
+      "0 0 40px rgba(127,255,212,0.18), 0 0 80px rgba(0,188,180,0.08)",
   },
 ];
 
