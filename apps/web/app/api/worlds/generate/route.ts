@@ -89,17 +89,17 @@ function resolveModel() {
   if (openrouterKey) {
     const openrouter = createOpenAI({
       apiKey: openrouterKey,
-      baseURL: 'https://openrouter.ai/api/v1',
+      baseURL: "https://openrouter.ai/api/v1",
     });
-    return openrouter('google/gemini-2.5-flash');
+    return openrouter("google/gemini-2.5-flash");
   }
   return null;
 }
 
 function parseJsonResponse(text: string): Record<string, unknown> | null {
   let cleaned = text.trim();
-  if (cleaned.startsWith('```')) {
-    cleaned = cleaned.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
+  if (cleaned.startsWith("```")) {
+    cleaned = cleaned.replace(/^```(?:json)?\s*/, "").replace(/\s*```$/, "");
   }
   try {
     return JSON.parse(cleaned);
@@ -124,16 +124,20 @@ export async function POST(req: NextRequest) {
         ? body.description.trim()
         : "";
 
-    if (!description || typeof description !== 'string' || description.length < 5) {
+    if (
+      !description ||
+      typeof description !== "string" ||
+      description.length < 5
+    ) {
       return NextResponse.json(
-        { error: 'Describe your world in at least a few words.' },
+        { error: "Describe your world in at least a few words." },
         { status: 400 },
       );
     }
 
     if (description.length > 500) {
       return NextResponse.json(
-        { error: 'Description too long. Keep it under 500 characters.' },
+        { error: "Description too long. Keep it under 500 characters." },
         { status: 400 },
       );
     }
