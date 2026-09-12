@@ -5,11 +5,11 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Arcanea MCP — Developer Docs",
   description:
-    "Connect any MCP-compatible AI coding tool to Arcanea's creative production layer: 43 tools, 5 resources, 6 prompts. Works with Claude Code, Codex, Cursor, Windsurf, and Cline.",
+    "Connect any MCP-compatible AI coding tool to Arcanea's creative production layer: 54 tools, 5 resources, 6 prompts. Works with Claude Code, Codex, Cursor, Windsurf, and Cline.",
   openGraph: {
     title: "Arcanea MCP — Model Context Protocol Server",
     description:
-      "43 tools, 5 resources, 6 prompts. Connect Claude Code, Codex, Cursor, or Windsurf to Arcanea world intelligence and production workflows.",
+      "54 tools, 5 resources, 6 prompts. Connect Claude Code, Codex, Cursor, or Windsurf to Arcanea world intelligence and production workflows.",
   },
   alternates: { canonical: "/docs/mcp" },
 };
@@ -146,7 +146,10 @@ export default function McpOverviewPage() {
         <nav className="pt-8 pb-2">
           <ol className="flex items-center gap-2 text-sm text-zinc-500">
             <li>
-              <Link href="/docs" className="hover:text-zinc-300 transition-colors">
+              <Link
+                href="/docs"
+                className="hover:text-zinc-300 transition-colors"
+              >
                 Docs
               </Link>
             </li>
@@ -189,17 +192,23 @@ export default function McpOverviewPage() {
                 <span className="text-zinc-500">Claude Code</span>
               </div>
               <div className="flex items-start gap-3">
-                <span className="shrink-0 text-[var(--arc-brand-atlantean-teal)]">$</span>
+                <span className="shrink-0 text-[var(--arc-brand-atlantean-teal)]">
+                  $
+                </span>
                 <code className="text-zinc-200">
                   claude mcp add arcanea npx @arcanea/mcp-server
                 </code>
               </div>
               <div className="mt-4 flex items-start gap-3">
                 <span className="shrink-0 text-zinc-600">#</span>
-                <span className="text-zinc-500">Cursor / Windsurf (mcp.json)</span>
+                <span className="text-zinc-500">
+                  Cursor / Windsurf (mcp.json)
+                </span>
               </div>
               <div className="flex items-start gap-3">
-                <span className="shrink-0 text-[var(--arc-brand-atlantean-teal)]">{">"}</span>
+                <span className="shrink-0 text-[var(--arc-brand-atlantean-teal)]">
+                  {">"}
+                </span>
                 <code className="text-zinc-200 break-all">
                   {
                     '{ "arcanea": { "command": "npx", "args": ["@arcanea/mcp-server"] } }'
@@ -326,7 +335,7 @@ export default function McpOverviewPage() {
                 Tool Reference
               </p>
               <p className="mt-1.5 text-sm text-zinc-400">
-                All 43 tools with parameters and usage examples.
+                All 54 tools with parameters and usage examples.
               </p>
             </Link>
             <Link
