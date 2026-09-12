@@ -3,7 +3,7 @@
 
 import { LazyMotion, domAnimation, m, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { PhCheck, PhSparkle, PhArrowRight } from '@/lib/phosphor-icons';
+import { PhCheck, PhSparkle, PhArrowRight } from "@/lib/phosphor-icons";
 import Link from "next/link";
 
 const plans = [
@@ -155,93 +155,96 @@ export function PricingPremium() {
 
   return (
     <LazyMotion features={domAnimation}>
-    <section className="relative py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-cosmic-deep" />
+      <section className="relative py-32 overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-cosmic-deep" />
 
-        {/* Animated gradient orbs */}
-        <m.div
-          className="absolute w-[600px] h-[600px] rounded-full blur-[120px]"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(0,188,212,0.1) 0%, transparent 70%)",
-            left: "10%",
-            top: "20%",
-          }}
-          animate={{
-            x: [0, 50, 0],
-            y: [0, -30, 0],
-          }}
-          transition={{ duration: 20, repeat: Infinity }}
-        />
-        <m.div
-          className="absolute w-[500px] h-[500px] rounded-full blur-[120px]"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(13,71,161,0.1) 0%, transparent 70%)",
-            right: "10%",
-            bottom: "20%",
-          }}
-          animate={{
-            x: [0, -30, 0],
-            y: [0, 50, 0],
-          }}
-          transition={{ duration: 25, repeat: Infinity }}
-        />
-      </div>
-
-      <div ref={containerRef} className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <m.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
-        >
-          <m.span
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-block px-4 py-2 rounded-full liquid-glass border border-brand-primary/20 text-brand-primary font-medium text-sm mb-6"
-          >
-            Access Preview
-          </m.span>
-
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            Open Now, Hosted Later
-            <br />
-            <span className="text-gradient-brand">Availability Before Promises</span>
-          </h2>
-
-          <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-            The public Library and open-core source are available now. Hosted
-            tiers remain waitlist-only, with no published quota or SLA guarantee.
-          </p>
-        </m.div>
-
-        {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {plans.map((plan, index) => (
-            <PricingCard key={plan.name} plan={plan} index={index} />
-          ))}
+          {/* Animated gradient orbs */}
+          <m.div
+            className="absolute w-[600px] h-[600px] rounded-full blur-[120px]"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(0,188,212,0.1) 0%, transparent 70%)",
+              left: "10%",
+              top: "20%",
+            }}
+            animate={{
+              x: [0, 50, 0],
+              y: [0, -30, 0],
+            }}
+            transition={{ duration: 20, repeat: Infinity }}
+          />
+          <m.div
+            className="absolute w-[500px] h-[500px] rounded-full blur-[120px]"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(13,71,161,0.1) 0%, transparent 70%)",
+              right: "10%",
+              bottom: "20%",
+            }}
+            animate={{
+              x: [0, -30, 0],
+              y: [0, 50, 0],
+            }}
+            transition={{ duration: 25, repeat: Infinity }}
+          />
         </div>
 
-        {/* Bottom note */}
-        <m.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center mt-12 text-text-muted"
-        >
-          <p>
-            Hosted tiers remain waitlist-only. Verify current availability before
-            relying on Arcanea for production workloads.
-          </p>
-        </m.div>
-      </div>
-    </section>
+        <div ref={containerRef} className="max-w-7xl mx-auto px-6">
+          {/* Header */}
+          <m.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-20"
+          >
+            <m.span
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="inline-block px-4 py-2 rounded-full liquid-glass border border-brand-primary/20 text-brand-primary font-medium text-sm mb-6"
+            >
+              Access Preview
+            </m.span>
+
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
+              Open Now, Hosted Later
+              <br />
+              <span className="text-gradient-brand">
+                Availability Before Promises
+              </span>
+            </h2>
+
+            <p className="text-lg text-text-secondary max-w-2xl mx-auto">
+              The public Library and open-core source are available now. Hosted
+              tiers remain waitlist-only, with no published quota or SLA
+              guarantee.
+            </p>
+          </m.div>
+
+          {/* Pricing Cards */}
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {plans.map((plan, index) => (
+              <PricingCard key={plan.name} plan={plan} index={index} />
+            ))}
+          </div>
+
+          {/* Bottom note */}
+          <m.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mt-12 text-text-muted"
+          >
+            <p>
+              Hosted tiers remain waitlist-only. Verify current availability
+              before relying on Arcanea for production workloads.
+            </p>
+          </m.div>
+        </div>
+      </section>
     </LazyMotion>
   );
 }
