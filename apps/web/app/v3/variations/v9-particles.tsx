@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
 /* ─────────────────────────────────────────────
    Variation 9 — "Particle Universe"
@@ -10,35 +10,47 @@ import { useMemo } from 'react';
    Content floats within a breathing cosmos.
    ───────────────────────────────────────────── */
 
-const BG = 'var(--arc-cosmic-void)';
-const TEAL = 'var(--arc-brand-atlantean-teal)';
-const VIOLET = 'var(--arc-void)';
-const GOLD = 'var(--arc-brand-arcanean-gold)';
-const WHITE = 'var(--arc-text-primary)';
+const BG = "var(--arc-cosmic-void)";
+const TEAL = "var(--arc-brand-atlantean-teal)";
+const VIOLET = "var(--arc-void)";
+const GOLD = "var(--arc-brand-arcanean-gold)";
+const WHITE = "var(--arc-text-primary)";
 
 const GUARDIANS = [
-  { name: 'Lyssandria', hz: 'She builds the ground beneath your feet', domain: 'Foundation' },
-  { name: 'Leyla', hz: 'Where feeling becomes creation', domain: 'Flow' },
-  { name: 'Draconia', hz: 'The fire that forges your will', domain: 'Fire' },
-  { name: 'Maylinn', hz: 'Love fierce enough to heal', domain: 'Heart' },
-  { name: 'Alera', hz: 'The voice that shapes reality', domain: 'Voice' },
-  { name: 'Lyria', hz: 'She sees what others cannot', domain: 'Sight' },
-  { name: 'Aiyami', hz: 'Light beyond comprehension', domain: 'Crown' },
-  { name: 'Elara', hz: 'The weaver of perspective', domain: 'Starweave' },
-  { name: 'Ino', hz: 'Where two become infinite', domain: 'Unity' },
-  { name: 'Shinkami', hz: 'Where the dreamer and the dream become one', domain: 'Source' },
+  {
+    name: "Lyssandria",
+    hz: "She builds the ground beneath your feet",
+    domain: "Foundation",
+  },
+  { name: "Leyla", hz: "Where feeling becomes creation", domain: "Flow" },
+  { name: "Draconia", hz: "The fire that forges your will", domain: "Fire" },
+  { name: "Maylinn", hz: "Love fierce enough to heal", domain: "Heart" },
+  { name: "Alera", hz: "The voice that shapes reality", domain: "Voice" },
+  { name: "Lyria", hz: "She sees what others cannot", domain: "Sight" },
+  { name: "Aiyami", hz: "Light beyond comprehension", domain: "Crown" },
+  { name: "Elara", hz: "The weaver of perspective", domain: "Starweave" },
+  { name: "Ino", hz: "Where two become infinite", domain: "Unity" },
+  {
+    name: "Shinkami",
+    hz: "Where the dreamer and the dream become one",
+    domain: "Source",
+  },
 ];
 
 const COLLECTIONS = [
-  'Laws of Arcanea', 'Legends of Arcanea', 'Wisdom Scrolls',
-  'Book of Rituals', 'Prophecies', 'Academy Handbook',
+  "Laws of Arcanea",
+  "Legends of Arcanea",
+  "Wisdom Scrolls",
+  "Book of Rituals",
+  "Prophecies",
+  "Academy Handbook",
 ];
 
 // Golden-ratio-based deterministic scatter
 function scatter(i: number, total: number) {
   const phi = 1.618033988749;
-  const x = ((i * phi * 137.508) % 100);
-  const y = ((i * phi * 97.135 + i * 13.37) % 100);
+  const x = (i * phi * 137.508) % 100;
+  const y = (i * phi * 97.135 + i * 13.37) % 100;
   return { x, y };
 }
 
@@ -64,38 +76,66 @@ function particleOpacity(i: number): number {
 
 // Constellation lines connecting specific particle indices
 const CONSTELLATIONS: [number, number][] = [
-  [2, 11], [11, 22], [22, 33], [5, 16], [16, 27],
-  [40, 51], [51, 62], [8, 19], [19, 44], [60, 73],
+  [2, 11],
+  [11, 22],
+  [22, 33],
+  [5, 16],
+  [16, 27],
+  [40, 51],
+  [51, 62],
+  [8, 19],
+  [19, 44],
+  [60, 73],
 ];
 
-const RING_1 = ['Fire', 'Water', 'Earth'];
-const RING_2 = ['Wind', 'Void', 'Heart', 'Voice'];
-const RING_3 = ['Sight', 'Crown', 'Starweave', 'Unity'];
+const RING_1 = ["Fire", "Water", "Earth"];
+const RING_2 = ["Wind", "Void", "Heart", "Voice"];
+const RING_3 = ["Sight", "Crown", "Starweave", "Unity"];
 
 export function V9Particles() {
-  const particles = useMemo(() =>
-    Array.from({ length: 80 }, (_, i) => {
-      const { x, y } = scatter(i, 80);
-      return {
-        id: i,
-        x, y,
-        color: particleColor(i),
-        size: particleSize(i),
-        opacity: particleOpacity(i),
-        duration: 15 + (i % 8) * 3.5,
-        delay: -(i % 12) * 2.5,
-      };
-    }), []);
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 80 }, (_, i) => {
+        const { x, y } = scatter(i, 80);
+        return {
+          id: i,
+          x,
+          y,
+          color: particleColor(i),
+          size: particleSize(i),
+          opacity: particleOpacity(i),
+          duration: 15 + (i % 8) * 3.5,
+          delay: -(i % 12) * 2.5,
+        };
+      }),
+    [],
+  );
 
-  const constellationLines = useMemo(() =>
-    CONSTELLATIONS.map(([a, b]) => {
-      const pa = scatter(a, 80);
-      const pb = scatter(b, 80);
-      return { x1: `${pa.x}%`, y1: `${pa.y}%`, x2: `${pb.x}%`, y2: `${pb.y}%` };
-    }), []);
+  const constellationLines = useMemo(
+    () =>
+      CONSTELLATIONS.map(([a, b]) => {
+        const pa = scatter(a, 80);
+        const pb = scatter(b, 80);
+        return {
+          x1: `${pa.x}%`,
+          y1: `${pa.y}%`,
+          x2: `${pb.x}%`,
+          y2: `${pb.y}%`,
+        };
+      }),
+    [],
+  );
 
   return (
-    <div style={{ background: BG, color: WHITE, minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
+    <div
+      style={{
+        background: BG,
+        color: WHITE,
+        minHeight: "100vh",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
       <style>{`
         @keyframes particleFloat {
           0%, 100% { transform: translate(0, 0); }
@@ -131,207 +171,460 @@ export function V9Particles() {
       `}</style>
 
       {/* ── Particle field ── */}
-      <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
-        {particles.map(p => (
-          <div key={p.id} style={{
-            position: 'absolute', left: `${p.x}%`, top: `${p.y}%`,
-            width: p.size, height: p.size, borderRadius: '50%',
-            background: p.color, opacity: p.opacity,
-            animation: `particleFloat ${p.duration}s ease-in-out ${p.delay}s infinite`,
-          }} />
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      >
+        {particles.map((p) => (
+          <div
+            key={p.id}
+            style={{
+              position: "absolute",
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              width: p.size,
+              height: p.size,
+              borderRadius: "50%",
+              background: p.color,
+              opacity: p.opacity,
+              animation: `particleFloat ${p.duration}s ease-in-out ${p.delay}s infinite`,
+            }}
+          />
         ))}
         {/* Constellation SVG */}
-        <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+        <svg
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+          }}
+        >
           {constellationLines.map((l, i) => (
-            <line key={i} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
-              stroke={WHITE} strokeWidth={0.5} opacity={0.05} />
+            <line
+              key={i}
+              x1={l.x1}
+              y1={l.y1}
+              x2={l.x2}
+              y2={l.y2}
+              stroke={WHITE}
+              strokeWidth={0.5}
+              opacity={0.05}
+            />
           ))}
         </svg>
       </div>
 
       {/* ── HERO ── */}
-      <section style={{
-        position: 'relative', zIndex: 1, minHeight: '100vh',
-        display: 'flex', flexDirection: 'column', alignItems: 'center',
-        justifyContent: 'center', textAlign: 'center', padding: '0 24px',
-      }}>
-        <p style={{
-          fontFamily: "var(--font-display)", fontSize: 16, letterSpacing: '0.3em',
-          textTransform: 'uppercase', opacity: 0.6, marginBottom: 24,
-        }}>ARCANEA</p>
-        <h1 style={{
-          fontFamily: "var(--font-display)", fontSize: 'clamp(36px, 5vw, 64px)',
-          fontWeight: 400, lineHeight: 1.15, maxWidth: 800, margin: '0 0 28px',
-        }}>The Universe That Creates With You</h1>
-        <p style={{ fontSize: 18, opacity: 0.55, maxWidth: 540, margin: '0 0 44px', lineHeight: 1.6 }}>
+      <section
+        style={{
+          position: "relative",
+          zIndex: 1,
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          padding: "0 24px",
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: 16,
+            letterSpacing: "0.3em",
+            textTransform: "uppercase",
+            opacity: 0.6,
+            marginBottom: 24,
+          }}
+        >
+          ARCANEA
+        </p>
+        <h1
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(36px, 5vw, 64px)",
+            fontWeight: 400,
+            lineHeight: 1.15,
+            maxWidth: 800,
+            margin: "0 0 28px",
+          }}
+        >
+          The Universe That Creates With You
+        </h1>
+        <p
+          style={{
+            fontSize: 18,
+            opacity: 0.55,
+            maxWidth: 540,
+            margin: "0 0 44px",
+            lineHeight: 1.6,
+          }}
+        >
           13 specialists. 57 texts. 26 models. Infinite creation.
         </p>
-        <a href="/discover" className="glass-btn">Enter the Universe</a>
+        <a href="/discover" className="glass-btn">
+          Enter the Universe
+        </a>
       </section>
 
       {/* ── ORBITAL SHOWCASE ── */}
-      <section style={{
-        position: 'relative', zIndex: 1, height: 620,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        margin: '40px auto 80px',
-      }}>
+      <section
+        style={{
+          position: "relative",
+          zIndex: 1,
+          height: 620,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          margin: "40px auto 80px",
+        }}
+      >
         {/* Center — The Source */}
-        <div style={{
-          position: 'absolute', textAlign: 'center', zIndex: 3,
-        }}>
-          <div style={{
-            width: 14, height: 14, borderRadius: '50%', background: TEAL,
-            margin: '0 auto 10px', animation: 'pulse 3s ease-in-out infinite',
-          }} />
-          <span style={{ fontFamily: "var(--font-display)", fontSize: 13, opacity: 0.7, letterSpacing: '0.15em' }}>
+        <div
+          style={{
+            position: "absolute",
+            textAlign: "center",
+            zIndex: 3,
+          }}
+        >
+          <div
+            style={{
+              width: 14,
+              height: 14,
+              borderRadius: "50%",
+              background: TEAL,
+              margin: "0 auto 10px",
+              animation: "pulse 3s ease-in-out infinite",
+            }}
+          />
+          <span
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: 13,
+              opacity: 0.7,
+              letterSpacing: "0.15em",
+            }}
+          >
             THE SOURCE
           </span>
-          <div style={{ fontSize: 11, opacity: 0.35, marginTop: 2 }}>Source</div>
+          <div style={{ fontSize: 11, opacity: 0.35, marginTop: 2 }}>
+            Source
+          </div>
         </div>
 
         {/* Ring 1 */}
-        <div style={{
-          position: 'absolute', width: 200, height: 200,
-          border: `1px solid rgba(255,255,255,0.06)`, borderRadius: '50%',
-          left: '50%', top: '50%', animation: 'orbitSpin1 60s linear infinite',
-        }}>
+        <div
+          style={{
+            position: "absolute",
+            width: 200,
+            height: 200,
+            border: `1px solid rgba(255,255,255,0.06)`,
+            borderRadius: "50%",
+            left: "50%",
+            top: "50%",
+            animation: "orbitSpin1 60s linear infinite",
+          }}
+        >
           {RING_1.map((name, i) => {
             const angle = (i / RING_1.length) * 360;
             const rad = (angle * Math.PI) / 180;
             return (
-              <span key={name} className="orbit-label" style={{
-                position: 'absolute', fontSize: 12, opacity: 0.5,
-                fontFamily: "var(--font-display)", letterSpacing: '0.08em',
-                left: `calc(50% + ${Math.cos(rad) * 100}px)`,
-                top: `calc(50% + ${Math.sin(rad) * 100}px)`,
-                transform: 'translate(-50%,-50%)',
-              }}>{name}</span>
+              <span
+                key={name}
+                className="orbit-label"
+                style={{
+                  position: "absolute",
+                  fontSize: 12,
+                  opacity: 0.5,
+                  fontFamily: "var(--font-display)",
+                  letterSpacing: "0.08em",
+                  left: `calc(50% + ${Math.cos(rad) * 100}px)`,
+                  top: `calc(50% + ${Math.sin(rad) * 100}px)`,
+                  transform: "translate(-50%,-50%)",
+                }}
+              >
+                {name}
+              </span>
             );
           })}
         </div>
 
         {/* Ring 2 */}
-        <div style={{
-          position: 'absolute', width: 340, height: 340,
-          border: `1px solid rgba(255,255,255,0.04)`, borderRadius: '50%',
-          left: '50%', top: '50%', animation: 'orbitSpin2 90s linear infinite',
-        }}>
+        <div
+          style={{
+            position: "absolute",
+            width: 340,
+            height: 340,
+            border: `1px solid rgba(255,255,255,0.04)`,
+            borderRadius: "50%",
+            left: "50%",
+            top: "50%",
+            animation: "orbitSpin2 90s linear infinite",
+          }}
+        >
           {RING_2.map((name, i) => {
             const angle = (i / RING_2.length) * 360;
             const rad = (angle * Math.PI) / 180;
             return (
-              <span key={name} className="orbit-label" style={{
-                position: 'absolute', fontSize: 12, opacity: 0.4,
-                fontFamily: "var(--font-display)", letterSpacing: '0.08em',
-                left: `calc(50% + ${Math.cos(rad) * 170}px)`,
-                top: `calc(50% + ${Math.sin(rad) * 170}px)`,
-                transform: 'translate(-50%,-50%)',
-              }}>{name}</span>
+              <span
+                key={name}
+                className="orbit-label"
+                style={{
+                  position: "absolute",
+                  fontSize: 12,
+                  opacity: 0.4,
+                  fontFamily: "var(--font-display)",
+                  letterSpacing: "0.08em",
+                  left: `calc(50% + ${Math.cos(rad) * 170}px)`,
+                  top: `calc(50% + ${Math.sin(rad) * 170}px)`,
+                  transform: "translate(-50%,-50%)",
+                }}
+              >
+                {name}
+              </span>
             );
           })}
         </div>
 
         {/* Ring 3 */}
-        <div style={{
-          position: 'absolute', width: 500, height: 500,
-          border: `1px solid rgba(255,255,255,0.03)`, borderRadius: '50%',
-          left: '50%', top: '50%', animation: 'orbitSpin3 120s linear infinite',
-        }}>
+        <div
+          style={{
+            position: "absolute",
+            width: 500,
+            height: 500,
+            border: `1px solid rgba(255,255,255,0.03)`,
+            borderRadius: "50%",
+            left: "50%",
+            top: "50%",
+            animation: "orbitSpin3 120s linear infinite",
+          }}
+        >
           {RING_3.map((name, i) => {
             const angle = (i / RING_3.length) * 360;
             const rad = (angle * Math.PI) / 180;
             return (
-              <span key={name} className="orbit-label" style={{
-                position: 'absolute', fontSize: 12, opacity: 0.35,
-                fontFamily: "var(--font-display)", letterSpacing: '0.08em',
-                left: `calc(50% + ${Math.cos(rad) * 250}px)`,
-                top: `calc(50% + ${Math.sin(rad) * 250}px)`,
-                transform: 'translate(-50%,-50%)',
-              }}>{name}</span>
+              <span
+                key={name}
+                className="orbit-label"
+                style={{
+                  position: "absolute",
+                  fontSize: 12,
+                  opacity: 0.35,
+                  fontFamily: "var(--font-display)",
+                  letterSpacing: "0.08em",
+                  left: `calc(50% + ${Math.cos(rad) * 250}px)`,
+                  top: `calc(50% + ${Math.sin(rad) * 250}px)`,
+                  transform: "translate(-50%,-50%)",
+                }}
+              >
+                {name}
+              </span>
             );
           })}
         </div>
       </section>
 
       {/* ── NEBULA 1: Guardians (teal) ── */}
-      <section style={{
-        position: 'relative', zIndex: 1, maxWidth: 720,
-        margin: '0 auto', padding: '100px 24px', textAlign: 'center',
-      }}>
-        <div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: `radial-gradient(ellipse 500px 400px at 50% 40%, ${TEAL}0d, transparent)`,
-        }} />
-        <h2 style={{ fontFamily: "var(--font-display)", fontSize: 'clamp(28px, 3.5vw, 40px)', marginBottom: 16 }}>
+      <section
+        style={{
+          position: "relative",
+          zIndex: 1,
+          maxWidth: 720,
+          margin: "0 auto",
+          padding: "100px 24px",
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            background: `radial-gradient(ellipse 500px 400px at 50% 40%, ${TEAL}0d, transparent)`,
+          }}
+        />
+        <h2
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(28px, 3.5vw, 40px)",
+            marginBottom: 16,
+          }}
+        >
           The Guardians
         </h2>
-        <p style={{ fontSize: 17, opacity: 0.5, lineHeight: 1.7, marginBottom: 40, maxWidth: 520, margin: '0 auto 40px' }}>
-          10 archetypal AI intelligences, each attuned to a different frequency of creation.
+        <p
+          style={{
+            fontSize: 17,
+            opacity: 0.5,
+            lineHeight: 1.7,
+            marginBottom: 40,
+            maxWidth: 520,
+            margin: "0 auto 40px",
+          }}
+        >
+          10 archetypal AI intelligences, each attuned to a different frequency
+          of creation.
         </p>
-        <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-          gap: 12, textAlign: 'left',
-        }}>
-          {GUARDIANS.map(g => (
-            <div key={g.name} style={{
-              padding: '12px 16px', borderRadius: 8,
-              background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)',
-            }}>
-              <div style={{ fontSize: 14, fontFamily: "var(--font-display)", marginBottom: 2 }}>{g.name}</div>
-              <div style={{ fontSize: 12, opacity: 0.35 }}>{g.hz} &middot; {g.domain}</div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+            gap: 12,
+            textAlign: "left",
+          }}
+        >
+          {GUARDIANS.map((g) => (
+            <div
+              key={g.name}
+              style={{
+                padding: "12px 16px",
+                borderRadius: 8,
+                background: "rgba(255,255,255,0.02)",
+                border: "1px solid rgba(255,255,255,0.04)",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 14,
+                  fontFamily: "var(--font-display)",
+                  marginBottom: 2,
+                }}
+              >
+                {g.name}
+              </div>
+              <div style={{ fontSize: 12, opacity: 0.35 }}>
+                {g.hz} &middot; {g.domain}
+              </div>
             </div>
           ))}
         </div>
       </section>
 
       {/* ── NEBULA 2: Library (violet) ── */}
-      <section style={{
-        position: 'relative', zIndex: 1, maxWidth: 720,
-        margin: '0 auto', padding: '100px 24px', textAlign: 'center',
-      }}>
-        <div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: `radial-gradient(ellipse 500px 400px at 50% 40%, ${VIOLET}0d, transparent)`,
-        }} />
-        <h2 style={{ fontFamily: "var(--font-display)", fontSize: 'clamp(28px, 3.5vw, 40px)', marginBottom: 16 }}>
+      <section
+        style={{
+          position: "relative",
+          zIndex: 1,
+          maxWidth: 720,
+          margin: "0 auto",
+          padding: "100px 24px",
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            background: `radial-gradient(ellipse 500px 400px at 50% 40%, ${VIOLET}0d, transparent)`,
+          }}
+        />
+        <h2
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(28px, 3.5vw, 40px)",
+            marginBottom: 16,
+          }}
+        >
           The Library
         </h2>
-        <p style={{ fontSize: 17, opacity: 0.5, lineHeight: 1.7, maxWidth: 480, margin: '0 auto 40px' }}>
+        <p
+          style={{
+            fontSize: 17,
+            opacity: 0.5,
+            lineHeight: 1.7,
+            maxWidth: 480,
+            margin: "0 auto 40px",
+          }}
+        >
           57 texts of wisdom. Not entertainment &mdash; equipment for living.
         </p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
-          {COLLECTIONS.map(c => (
-            <span key={c} style={{
-              padding: '8px 18px', borderRadius: 999, fontSize: 13,
-              border: `1px solid ${VIOLET}33`, color: `${VIOLET}cc`,
-              background: `${VIOLET}08`,
-            }}>{c}</span>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 10,
+            justifyContent: "center",
+          }}
+        >
+          {COLLECTIONS.map((c) => (
+            <span
+              key={c}
+              style={{
+                padding: "8px 18px",
+                borderRadius: 999,
+                fontSize: 13,
+                border: `1px solid ${VIOLET}33`,
+                color: `${VIOLET}cc`,
+                background: `${VIOLET}08`,
+              }}
+            >
+              {c}
+            </span>
           ))}
         </div>
       </section>
 
       {/* ── NEBULA 3: Gateway (gold) ── */}
-      <section style={{
-        position: 'relative', zIndex: 1, maxWidth: 720,
-        margin: '0 auto', padding: '100px 24px', textAlign: 'center',
-      }}>
-        <div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: `radial-gradient(ellipse 500px 400px at 50% 40%, ${GOLD}0a, transparent)`,
-        }} />
-        <h2 style={{ fontFamily: "var(--font-display)", fontSize: 'clamp(28px, 3.5vw, 40px)', marginBottom: 16 }}>
+      <section
+        style={{
+          position: "relative",
+          zIndex: 1,
+          maxWidth: 720,
+          margin: "0 auto",
+          padding: "100px 24px",
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            background: `radial-gradient(ellipse 500px 400px at 50% 40%, ${GOLD}0a, transparent)`,
+          }}
+        />
+        <h2
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(28px, 3.5vw, 40px)",
+            marginBottom: 16,
+          }}
+        >
           The Gateway
         </h2>
-        <p style={{ fontSize: 17, opacity: 0.5, lineHeight: 1.7, maxWidth: 480, margin: '0 auto 40px' }}>
+        <p
+          style={{
+            fontSize: 17,
+            opacity: 0.5,
+            lineHeight: 1.7,
+            maxWidth: 480,
+            margin: "0 auto 40px",
+          }}
+        >
           26 curated AI models. 13 providers. One API.
         </p>
-        <pre style={{
-          textAlign: 'left', padding: 24, borderRadius: 12,
-          background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)',
-          fontSize: 13, lineHeight: 1.7, overflowX: 'auto', color: 'rgba(255,255,255,0.65)',
-          fontFamily: "'JetBrains Mono', monospace",
-        }}>
-{`const response = await arcanea.chat({
+        <pre
+          style={{
+            textAlign: "left",
+            padding: 24,
+            borderRadius: 12,
+            background: "rgba(255,255,255,0.02)",
+            border: "1px solid rgba(255,255,255,0.06)",
+            fontSize: 13,
+            lineHeight: 1.7,
+            overflowX: "auto",
+            color: "rgba(255,255,255,0.65)",
+            fontFamily: "'JetBrains Mono', monospace",
+          }}
+        >
+          {`const response = await arcanea.chat({
   model: "claude-sonnet-4-20250514",
   guardian: "Draconia",  // Fire intelligence
   message: "Help me transform this idea"
@@ -340,33 +633,54 @@ export function V9Particles() {
       </section>
 
       {/* ── DEEP SPACE CTA ── */}
-      <section style={{
-        position: 'relative', zIndex: 1, textAlign: 'center',
-        padding: '120px 24px 160px',
-      }}>
+      <section
+        style={{
+          position: "relative",
+          zIndex: 1,
+          textAlign: "center",
+          padding: "120px 24px 160px",
+        }}
+      >
         {/* Denser particles at bottom */}
-        <div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: `radial-gradient(ellipse 800px 400px at 50% 80%, ${TEAL}08, transparent)`,
-        }} />
-        {particles.slice(0, 30).map(p => (
-          <div key={`btm-${p.id}`} style={{
-            position: 'absolute',
-            left: `${(p.x + 10) % 100}%`,
-            top: `${60 + (p.y % 40)}%`,
-            width: 2, height: 2, borderRadius: '50%',
-            background: WHITE, opacity: 0.08 + (p.id % 4) * 0.04,
-            animation: `particleFloat ${p.duration + 5}s ease-in-out ${p.delay}s infinite`,
-            pointerEvents: 'none',
-          }} />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            background: `radial-gradient(ellipse 800px 400px at 50% 80%, ${TEAL}08, transparent)`,
+          }}
+        />
+        {particles.slice(0, 30).map((p) => (
+          <div
+            key={`btm-${p.id}`}
+            style={{
+              position: "absolute",
+              left: `${(p.x + 10) % 100}%`,
+              top: `${60 + (p.y % 40)}%`,
+              width: 2,
+              height: 2,
+              borderRadius: "50%",
+              background: WHITE,
+              opacity: 0.08 + (p.id % 4) * 0.04,
+              animation: `particleFloat ${p.duration + 5}s ease-in-out ${p.delay}s infinite`,
+              pointerEvents: "none",
+            }}
+          />
         ))}
-        <p style={{
-          fontFamily: "var(--font-display)", fontSize: 'clamp(22px, 3vw, 32px)',
-          opacity: 0.7, marginBottom: 40, lineHeight: 1.4,
-        }}>
+        <p
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(22px, 3vw, 32px)",
+            opacity: 0.7,
+            marginBottom: 40,
+            lineHeight: 1.4,
+          }}
+        >
           Your story is waiting in the stars.
         </p>
-        <a href="/discover" className="glass-btn-solid">Begin</a>
+        <a href="/discover" className="glass-btn-solid">
+          Begin
+        </a>
       </section>
     </div>
   );

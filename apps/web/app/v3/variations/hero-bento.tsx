@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { motion, useInView } from 'framer-motion';
-import Image from 'next/image';
-import { useRef, type CSSProperties } from 'react';
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
+import { useRef, type CSSProperties } from "react";
 import {
   PhArrowRight,
   PhBooks,
@@ -12,8 +12,8 @@ import {
   PhPaintBrush,
   PhCode,
   PhMusicNote,
-} from '@/lib/phosphor-icons';
-import heroImage from '@/assets/brand/arcanea-hero.jpg';
+} from "@/lib/phosphor-icons";
+import heroImage from "@/assets/brand/arcanea-hero.jpg";
 
 /* ─────────────────────────────────────────────
    Variation 8 — "Bento Grid"
@@ -21,41 +21,45 @@ import heroImage from '@/assets/brand/arcanea-hero.jpg';
    Flat cards, micro-borders, tight gap.
    ───────────────────────────────────────────── */
 
-const CYAN = 'var(--arc-brand-atlantean-teal)';
-const BG = 'var(--arc-cosmic-void)';
+const CYAN = "var(--arc-brand-atlantean-teal)";
+const BG = "var(--arc-cosmic-void)";
 
 const CARD_BASE =
-  'rounded-2xl border border-white/[0.06] bg-white/[0.03] transition-all duration-300 hover:border-white/[0.12]';
+  "rounded-2xl border border-white/[0.06] bg-white/[0.03] transition-all duration-300 hover:border-white/[0.12]";
 
 const capabilities: {
   label: string;
   icon: React.ComponentType<{
     size: number;
-    weight?: 'bold' | 'duotone' | 'fill' | 'light' | 'thin' | 'regular';
+    weight?: "bold" | "duotone" | "fill" | "light" | "thin" | "regular";
     className?: string;
     style?: CSSProperties;
   }>;
   gradient: string;
 }[] = [
   {
-    label: 'Writing',
+    label: "Writing",
     icon: PhPen,
-    gradient: 'linear-gradient(135deg, rgba(0,188,212,0.08) 0%, transparent 60%)',
+    gradient:
+      "linear-gradient(135deg, rgba(0,188,212,0.08) 0%, transparent 60%)",
   },
   {
-    label: 'Design',
+    label: "Design",
     icon: PhPaintBrush,
-    gradient: 'linear-gradient(135deg, rgba(139,92,246,0.08) 0%, transparent 60%)',
+    gradient:
+      "linear-gradient(135deg, rgba(139,92,246,0.08) 0%, transparent 60%)",
   },
   {
-    label: 'Code',
+    label: "Code",
     icon: PhCode,
-    gradient: 'linear-gradient(135deg, rgba(16,185,129,0.08) 0%, transparent 60%)',
+    gradient:
+      "linear-gradient(135deg, rgba(16,185,129,0.08) 0%, transparent 60%)",
   },
   {
-    label: 'Music',
+    label: "Music",
     icon: PhMusicNote,
-    gradient: 'linear-gradient(135deg, rgba(245,158,11,0.08) 0%, transparent 60%)',
+    gradient:
+      "linear-gradient(135deg, rgba(245,158,11,0.08) 0%, transparent 60%)",
   },
 ];
 
@@ -65,7 +69,7 @@ const cardVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      type: 'spring' as const,
+      type: "spring" as const,
       stiffness: 260,
       damping: 24,
       delay: i * 0.08,
@@ -91,18 +95,16 @@ export function HeroBento() {
             className={`${CARD_BASE} col-span-1 flex flex-col justify-between p-8 sm:col-span-2 lg:col-span-4 lg:p-10`}
             style={{
               backgroundImage:
-                'linear-gradient(135deg, rgba(0,188,212,0.04) 0%, transparent 40%)',
+                "linear-gradient(135deg, rgba(0,188,212,0.04) 0%, transparent 40%)",
             }}
             custom={0}
             initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
+            animate={isInView ? "visible" : "hidden"}
             variants={cardVariants}
           >
             <div>
-              <h1
-                className="font-display text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl"
-              >
-                Creative intelligence,{' '}
+              <h1 className="font-display text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+                Creative intelligence,{" "}
                 <span
                   className="bg-clip-text text-transparent"
                   style={{
@@ -114,10 +116,10 @@ export function HeroBento() {
               </h1>
               <p
                 className="mt-4 max-w-xl text-lg leading-relaxed"
-                style={{ color: 'rgba(255, 255, 255, 0.55)' }}
+                style={{ color: "rgba(255, 255, 255, 0.55)" }}
               >
-                12 Luminors for writing, design, code, music, and research
-                — backed by an original library of philosophical wisdom.
+                12 Luminors for writing, design, code, music, and research —
+                backed by an original library of philosophical wisdom.
               </p>
             </div>
             <div className="mt-8">
@@ -141,7 +143,7 @@ export function HeroBento() {
             className={`${CARD_BASE} relative col-span-1 row-span-1 min-h-[280px] overflow-hidden sm:col-span-1 lg:col-span-2 lg:row-span-2`}
             custom={1}
             initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
+            animate={isInView ? "visible" : "hidden"}
             variants={cardVariants}
           >
             <Image
@@ -158,7 +160,7 @@ export function HeroBento() {
                 className="text-xs font-medium uppercase"
                 style={{
                   color: CYAN,
-                  letterSpacing: '0.25em',
+                  letterSpacing: "0.25em",
                 }}
               >
                 Luminors
@@ -168,7 +170,7 @@ export function HeroBento() {
               </p>
               <p
                 className="mt-1 text-sm"
-                style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+                style={{ color: "rgba(255, 255, 255, 0.5)" }}
               >
                 Specialized minds for every creative discipline
               </p>
@@ -180,24 +182,24 @@ export function HeroBento() {
             className={`${CARD_BASE} col-span-1 flex flex-col justify-between p-6 sm:col-span-1 lg:col-span-2 lg:p-8`}
             style={{
               backgroundImage:
-                'linear-gradient(135deg, rgba(139,92,246,0.06) 0%, transparent 50%)',
+                "linear-gradient(135deg, rgba(139,92,246,0.06) 0%, transparent 50%)",
             }}
             custom={2}
             initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
+            animate={isInView ? "visible" : "hidden"}
             variants={cardVariants}
           >
             <PhBooks
               size={32}
               weight="duotone"
-              style={{ color: 'rgba(255, 255, 255, 0.35)' }}
+              style={{ color: "rgba(255, 255, 255, 0.35)" }}
             />
             <div className="mt-6">
               <p
                 className="text-xs font-medium uppercase"
                 style={{
-                  color: 'rgba(255, 255, 255, 0.4)',
-                  letterSpacing: '0.2em',
+                  color: "rgba(255, 255, 255, 0.4)",
+                  letterSpacing: "0.2em",
                 }}
               >
                 Philosophy Library
@@ -207,7 +209,7 @@ export function HeroBento() {
               </p>
               <p
                 className="mt-2 text-sm leading-relaxed"
-                style={{ color: 'rgba(255, 255, 255, 0.45)' }}
+                style={{ color: "rgba(255, 255, 255, 0.45)" }}
               >
                 Original wisdom across 20 collections for the creative journey.
               </p>
@@ -219,24 +221,24 @@ export function HeroBento() {
             className={`${CARD_BASE} col-span-1 flex flex-col justify-between p-6 sm:col-span-1 lg:col-span-2 lg:p-8`}
             style={{
               backgroundImage:
-                'linear-gradient(135deg, rgba(0,137,123,0.06) 0%, transparent 50%)',
+                "linear-gradient(135deg, rgba(0,137,123,0.06) 0%, transparent 50%)",
             }}
             custom={3}
             initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
+            animate={isInView ? "visible" : "hidden"}
             variants={cardVariants}
           >
             <PhCompass
               size={32}
               weight="duotone"
-              style={{ color: 'rgba(255, 255, 255, 0.35)' }}
+              style={{ color: "rgba(255, 255, 255, 0.35)" }}
             />
             <div className="mt-6">
               <p
                 className="text-xs font-medium uppercase"
                 style={{
-                  color: 'rgba(255, 255, 255, 0.4)',
-                  letterSpacing: '0.2em',
+                  color: "rgba(255, 255, 255, 0.4)",
+                  letterSpacing: "0.2em",
                 }}
               >
                 Open Platform
@@ -269,13 +271,13 @@ export function HeroBento() {
                 style={{ backgroundImage: cap.gradient }}
                 custom={4 + i}
                 initial="hidden"
-                animate={isInView ? 'visible' : 'hidden'}
+                animate={isInView ? "visible" : "hidden"}
                 variants={cardVariants}
               >
                 <Icon
                   size={28}
                   weight="duotone"
-                  style={{ color: 'rgba(255, 255, 255, 0.5)' }}
+                  style={{ color: "rgba(255, 255, 255, 0.5)" }}
                 />
                 <p className="mt-4 text-sm font-semibold text-white">
                   {cap.label}

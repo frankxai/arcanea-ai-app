@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { motion, useInView } from 'framer-motion';
-import Image from 'next/image';
-import { useRef } from 'react';
-import { PhArrowRight } from '@/lib/phosphor-icons';
-import heroImage from '@/assets/brand/arcanea-hero.jpg';
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
+import { useRef } from "react";
+import { PhArrowRight } from "@/lib/phosphor-icons";
+import heroImage from "@/assets/brand/arcanea-hero.jpg";
 
 /* ─────────────────────────────────────────────
    Variation 7 — "Editorial Magazine"
@@ -14,10 +14,10 @@ import heroImage from '@/assets/brand/arcanea-hero.jpg';
    Monochrome except one accent link.
    ───────────────────────────────────────────── */
 
-const CYAN = 'var(--arc-brand-atlantean-teal)';
-const BG = 'var(--arc-cosmic-void)';
+const CYAN = "var(--arc-brand-atlantean-teal)";
+const BG = "var(--arc-cosmic-void)";
 
-const headlineWords = ['Arcanea'];
+const headlineWords = ["Arcanea"];
 
 const wordVariants = {
   hidden: { opacity: 0, y: 60 },
@@ -46,7 +46,7 @@ const fadeIn = {
 };
 
 const DESCRIPTION =
-  'A creative intelligence platform housing 10 specialized AI minds and an original library of 34 philosophical texts.';
+  "A creative intelligence platform housing 10 specialized AI minds and an original library of 34 philosophical texts.";
 
 export function HeroEditorial() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -65,12 +65,12 @@ export function HeroEditorial() {
           <motion.p
             className="mb-6 text-xs font-medium uppercase md:mb-8"
             style={{
-              color: 'rgba(255, 255, 255, 0.35)',
-              letterSpacing: '0.5em',
+              color: "rgba(255, 255, 255, 0.35)",
+              letterSpacing: "0.5em",
             }}
             custom={0}
             initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
+            animate={isInView ? "visible" : "hidden"}
             variants={fadeIn}
           >
             EST. 2024 &middot; Creative Intelligence
@@ -83,12 +83,12 @@ export function HeroEditorial() {
                 key={word}
                 className="font-display font-bold leading-none text-white"
                 style={{
-                  fontSize: 'clamp(5rem, 12vw, 14rem)',
+                  fontSize: "clamp(5rem, 12vw, 14rem)",
                   lineHeight: 0.9,
                 }}
                 custom={i}
                 initial="hidden"
-                animate={isInView ? 'visible' : 'hidden'}
+                animate={isInView ? "visible" : "hidden"}
                 variants={wordVariants}
               >
                 {word}
@@ -101,16 +101,16 @@ export function HeroEditorial() {
             className="mt-8 max-w-lg md:mt-10 lg:mt-12"
             custom={0}
             initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
+            animate={isInView ? "visible" : "hidden"}
             variants={fadeIn}
           >
             <p
               className="text-xl leading-relaxed"
-              style={{ color: 'rgba(255, 255, 255, 0.64)' }}
+              style={{ color: "rgba(255, 255, 255, 0.64)" }}
             >
               <span
                 className="float-left mr-2 font-display text-5xl font-bold leading-[0.85] md:text-6xl"
-                style={{ color: 'rgba(255, 255, 255, 0.93)' }}
+                style={{ color: "rgba(255, 255, 255, 0.93)" }}
               >
                 {DESCRIPTION.charAt(0)}
               </span>
@@ -123,7 +123,7 @@ export function HeroEditorial() {
             className="mt-10 md:mt-14"
             custom={1}
             initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
+            animate={isInView ? "visible" : "hidden"}
             variants={fadeIn}
           >
             <a
@@ -131,7 +131,7 @@ export function HeroEditorial() {
               className="group inline-flex items-center gap-2 text-xs font-medium uppercase transition-colors hover:opacity-80"
               style={{
                 color: CYAN,
-                letterSpacing: '0.3em',
+                letterSpacing: "0.3em",
               }}
             >
               Enter Arcanea
@@ -147,12 +147,12 @@ export function HeroEditorial() {
           <motion.p
             className="mt-4 text-[11px] uppercase"
             style={{
-              color: 'rgba(255, 255, 255, 0.22)',
-              letterSpacing: '0.2em',
+              color: "rgba(255, 255, 255, 0.22)",
+              letterSpacing: "0.2em",
             }}
             custom={2}
             initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
+            animate={isInView ? "visible" : "hidden"}
             variants={fadeIn}
           >
             Free to start &middot; 12 Luminors &middot; 57 texts
@@ -162,14 +162,16 @@ export function HeroEditorial() {
         {/* ── Vertical Divider ── */}
         <motion.div
           className="my-8 h-px w-full md:my-0 md:h-auto md:w-px"
-          style={{ backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.08)" }}
           initial={{ scaleY: 0, opacity: 0 }}
           animate={
-            isInView
-              ? { scaleY: 1, opacity: 1 }
-              : { scaleY: 0, opacity: 0 }
+            isInView ? { scaleY: 1, opacity: 1 } : { scaleY: 0, opacity: 0 }
           }
-          transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.5 }}
+          transition={{
+            duration: 1.2,
+            ease: [0.25, 0.46, 0.45, 0.94],
+            delay: 0.5,
+          }}
         />
 
         {/* ── Right Column: 40% ── */}
@@ -177,17 +179,21 @@ export function HeroEditorial() {
           className="relative flex items-end justify-center overflow-hidden md:w-[40%] md:pl-12 lg:pl-16"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 1.4, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.6 }}
+          transition={{
+            duration: 1.4,
+            ease: [0.25, 0.46, 0.45, 0.94],
+            delay: 0.6,
+          }}
         >
           <div
             className="relative aspect-[3/4] w-full max-w-md overflow-hidden rounded-sm md:aspect-auto md:h-full md:max-w-none"
             style={{
               WebkitMaskImage:
-                'linear-gradient(to right, transparent 0%, black 8%, black 85%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 8%, black 85%, transparent 100%)',
-              WebkitMaskComposite: 'intersect',
+                "linear-gradient(to right, transparent 0%, black 8%, black 85%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 8%, black 85%, transparent 100%)",
+              WebkitMaskComposite: "intersect",
               maskImage:
-                'linear-gradient(to right, transparent 0%, black 8%, black 85%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 8%, black 85%, transparent 100%)',
-              maskComposite: 'intersect',
+                "linear-gradient(to right, transparent 0%, black 8%, black 85%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 8%, black 85%, transparent 100%)",
+              maskComposite: "intersect",
             }}
           >
             <Image
