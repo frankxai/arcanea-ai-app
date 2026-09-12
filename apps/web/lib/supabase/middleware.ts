@@ -7,8 +7,8 @@
  */
 
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
-import { NextResponse, type NextRequest } from 'next/server';
-import { getSupabaseEnv } from '@/lib/supabase/env';
+import { NextResponse, type NextRequest } from "next/server";
+import { getSupabaseEnv } from "@/lib/supabase/env";
 
 interface UpdateSessionOptions {
   protectedPrefixes?: string[];
@@ -23,6 +23,19 @@ function matchesPrefix(pathname: string, prefixes: string[] = []) {
   return prefixes.some((prefix) =>
     pathname === prefix || pathname.startsWith(`${prefix}/`)
   );
+}
+
+/** Preserve only the approved world draft return destination on auth pages. */
+export function authenticatedRedirectUrl(
+  request: NextRequest,
+  fallback = "/chat",
+) {
+  const url = request.nextUrl.clone();
+  const resumeWorld =
+    url.searchParams.get("next") === "/worlds/create?resume=1";
+  url.pathname = resumeWorld ? "/worlds/create" : fallback;
+  url.search = resumeWorld ? "?resume=1" : "";
+  return url;
 }
 
 /** Wraps getUser() with a timeout so slow Supabase responses degrade gracefully. */
@@ -45,13 +58,13 @@ async function getUserWithTimeout(
 
 export async function updateSession(
   request: NextRequest,
-  options: UpdateSessionOptions = {}
+  options: UpdateSessionOptions = {},
 ) {
   // --- Route classification first (no network calls) ---
   const pathname = request.nextUrl.pathname;
   const isProtectedRoute = matchesPrefix(pathname, options.protectedPrefixes);
   const isAuthRoute = matchesPrefix(pathname, options.authPrefixes);
-  const isApiRoute = pathname.startsWith('/api/');
+  const isApiRoute = pathname.startsWith("/api/");
   const isPublicApi = isApiRoute && matchesPrefix(pathname, options.publicApiPrefixes);
 
   // If the route doesn't need auth, skip Supabase entirely
@@ -119,7 +132,7 @@ export async function updateSession(
   // Refresh session with timeout — degrades to unauthenticated on failure
   const user = await getUserWithTimeout(supabase);
 
-  const loginPath = options.loginPath ?? '/auth/login';
+  const loginPath = options.loginPath ?? "/auth/login";
   const authenticatedRedirectPath = options.authenticatedRedirectPath ?? '/chat';
 
   // API route auth: block unauthenticated access to protected API routes
@@ -144,10 +157,9 @@ export async function updateSession(
   }
 
   if (isAuthRoute && user) {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = authenticatedRedirectPath;
-    redirectUrl.search = '';
-    return NextResponse.redirect(redirectUrl);
+    return NextResponse.redirect(
+      authenticatedRedirectUrl(request, authenticatedRedirectPath),
+    );
   }
 
   return response;

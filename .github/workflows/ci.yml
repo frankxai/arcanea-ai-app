@@ -143,6 +143,9 @@ jobs:
       - name: Verify preview deployment history handling
         run: node --test scripts/tests/vercel-ignore-build.test.mjs
 
+      - name: Verify exact world drafts and account return paths
+        run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
+
       - name: ESLint
         run: pnpm --dir apps/web run lint
 
@@ -294,10 +297,12 @@ jobs:
           trap 'kill "$sovereign_server_pid" 2>/dev/null || true' EXIT
           # Collect both suites' evidence even if one fails; either failure blocks merge.
           gallery_status=0
-          starter_status=0
+            starter_status=0
+            draft_status=0
           node scripts/capture-sovereign-built-app.cjs || gallery_status=$?
-          node scripts/verify-creator-starters-browser.cjs || starter_status=$?
-          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ]; then
+            node scripts/verify-creator-starters-browser.cjs || starter_status=$?
+            node scripts/verify-world-draft-browser.cjs || draft_status=$?
+            if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ]; then
             exit 1
           fi
 

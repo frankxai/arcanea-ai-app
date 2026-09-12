@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { MotionProvider, m } from "@/lib/motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import {
   PhEnvelope,
@@ -44,6 +44,11 @@ function GoogleLogo() {
 
 export default function SignupPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextPath =
+    searchParams.get("next") === "/worlds/create?resume=1"
+      ? "/worlds/create?resume=1"
+      : "/onboarding";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -87,7 +92,7 @@ export default function SignupPage() {
       const supabase = createClient();
       const origin = window.location.origin;
       const emailRedirectTo = new URL("/auth/callback", origin);
-      emailRedirectTo.searchParams.set("next", "/onboarding");
+      emailRedirectTo.searchParams.set("next", nextPath);
 
       const { error } = await supabase.auth.signUp({
         email: email.trim(),
@@ -106,7 +111,9 @@ export default function SignupPage() {
         return;
       }
 
-      router.push("/auth/login?message=check_email");
+      router.push(
+        `/auth/login?message=check_email&next=${encodeURIComponent(nextPath)}`,
+      );
       router.refresh();
     } catch {
       setError("Something went wrong. Please try again.");
@@ -133,7 +140,7 @@ export default function SignupPage() {
       const supabase = createClient();
       const origin = window.location.origin;
       const callbackUrl = new URL("/auth/callback", origin);
-      callbackUrl.searchParams.set("next", "/onboarding");
+      callbackUrl.searchParams.set("next", nextPath);
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
@@ -163,20 +170,20 @@ export default function SignupPage() {
 
   return (
     <MotionProvider>
-    <div className="relative flex items-center justify-center min-h-[calc(100dvh-4rem)] px-4 py-12">
-      {/* Background radial glow */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+      <div className="relative flex items-center justify-center min-h-[calc(100dvh-4rem)] px-4 py-12">
+        {/* Background radial glow */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
         <div className="w-[600px] h-[600px] rounded-full bg-atlantean-teal-aqua/[0.04] blur-[120px]" />
       </div>
 
-      <m.div
+        <m.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="relative w-full max-w-md"
       >
-        {/* Header */}
-        <div className="text-center mb-10">
+          {/* Header */}
+          <div className="text-center mb-10">
           <Link href="/" className="inline-block mb-8">
             <span className="font-display text-2xl font-bold text-text-primary drop-shadow-[0_0_12px_rgba(0,188,212,0.3)]">
               Arcanea
@@ -190,8 +197,8 @@ export default function SignupPage() {
           </p>
         </div>
 
-        {/* Signup card */}
-        <GlowCard glass="none" className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
+          {/* Signup card */}
+          <GlowCard glass="none" className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
           {/* Google sign-up — primary action */}
           <button
             type="button"
@@ -383,18 +390,22 @@ export default function SignupPage() {
           </form>
         </GlowCard>
 
-        {/* Login link */}
-        <p className="text-center mt-8 font-body text-text-secondary text-sm">
-          Already have an account?{" "}
-          <Link
-            href="/auth/login"
-            className="text-atlantean-teal-aqua hover:text-atlantean-teal-aqua/80 transition-colors font-semibold"
-          >
-            Sign in
-          </Link>
-        </p>
-      </m.div>
-    </div>
+          {/* Login link */}
+          <p className="text-center mt-8 font-body text-text-secondary text-sm">
+            Already have an account?{" "}
+            <Link
+              href={
+                nextPath === "/worlds/create?resume=1"
+                  ? "/auth/login?next=%2Fworlds%2Fcreate%3Fresume%3D1"
+                  : "/auth/login"
+              }
+              className="text-atlantean-teal-aqua hover:text-atlantean-teal-aqua/80 transition-colors font-semibold"
+            >
+              Sign in
+            </Link>
+          </p>
+        </m.div>
+      </div>
     </MotionProvider>
   );
 }

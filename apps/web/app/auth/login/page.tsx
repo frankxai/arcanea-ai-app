@@ -270,9 +270,9 @@ export default function LoginPage() {
 
   return (
     <MotionProvider>
-    <div className="relative flex items-center justify-center min-h-[calc(100dvh-4rem)] px-4 py-12">
-      {/* Background — cosmic depth with aurora */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="relative flex items-center justify-center min-h-[calc(100dvh-4rem)] px-4 py-12">
+        {/* Background — cosmic depth with aurora */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-[var(--arc-cosmic-void)]" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(0,188,212,0.06)_0%,rgba(13,71,161,0.03)_40%,transparent_70%)] blur-[80px]" />
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[radial-gradient(ellipse,rgba(168,85,247,0.04)_0%,transparent_70%)] blur-[60px]" />
@@ -287,14 +287,14 @@ export default function LoginPage() {
         />
       </div>
 
-      <m.div
+        <m.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="relative w-full max-w-md"
       >
-        {/* Header — branded with gate symbol */}
-        <div className="text-center mb-10">
+          {/* Header — branded with gate symbol */}
+          <div className="text-center mb-10">
           <Link href="/" className="inline-block mb-6 group">
             {/* Gate symbol with teal glow */}
             <div className="relative mx-auto w-14 h-14 flex items-center justify-center">
@@ -315,8 +315,8 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Login card */}
-        <GlowCard glass="none" className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
+          {/* Login card */}
+          <GlowCard glass="none" className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
           {authMessage === "check_email" && (
             <m.p
               initial={{ opacity: 0, y: -8 }}
@@ -411,27 +411,31 @@ export default function LoginPage() {
           </form>
         </GlowCard>
 
-        {/* Sign up link */}
-        <p className="text-center mt-8 font-body text-text-secondary text-sm">
-          New to the multiverse?{" "}
-          <Link
-            href="/auth/signup"
-            className="text-atlantean-teal-aqua hover:text-atlantean-teal-aqua/80 transition-colors font-semibold"
-          >
-            Enter Arcanea
-          </Link>
-        </p>
+          {/* Sign up link */}
+          <p className="text-center mt-8 font-body text-text-secondary text-sm">
+            New to the multiverse?{" "}
+            <Link
+              href={
+                nextPath === "/worlds/create?resume=1"
+                  ? "/auth/signup?next=%2Fworlds%2Fcreate%3Fresume%3D1"
+                  : "/auth/signup"
+              }
+              className="text-atlantean-teal-aqua hover:text-atlantean-teal-aqua/80 transition-colors font-semibold"
+            >
+              Enter Arcanea
+            </Link>
+          </p>
 
-        {/* Trust signals */}
-        <div className="flex items-center justify-center gap-4 mt-6 text-[11px] text-text-muted/50 font-mono">
+          {/* Trust signals */}
+          <div className="flex items-center justify-center gap-4 mt-6 text-[11px] text-text-muted/50 font-mono">
           <span>Ten Gates</span>
           <span className="w-1 h-1 rounded-full bg-white/10" />
           <span>{FACTS.luminors} Luminors</span>
           <span className="w-1 h-1 rounded-full bg-white/10" />
           <span>Open source</span>
         </div>
-      </m.div>
-    </div>
+        </m.div>
+      </div>
     </MotionProvider>
   );
 }
