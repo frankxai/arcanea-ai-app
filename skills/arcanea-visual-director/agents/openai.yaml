@@ -1,0 +1,6 @@
+interface:
+  display_name: "Arcanea Visual Director"
+  short_description: "Govern Arcanea visual identity and image runs"
+  default_prompt: "Use $arcanea-visual-director to compile, test, and review an Arcanea visual campaign."
+policy:
+  allow_implicit_invocation: true
