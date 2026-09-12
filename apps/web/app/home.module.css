@@ -224,8 +224,17 @@
   border-color: var(--arc-brand-atlantean-teal);
 }
 .dossierBody {
+  display: grid;
   padding: 26px;
   min-height: 336px;
+}
+.viewPanel {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+.viewPanel[aria-hidden="true"] {
+  visibility: hidden;
+  pointer-events: none;
 }
 .ruleHeading {
   display: flex;
@@ -433,7 +442,7 @@
   justify-content: space-between;
   gap: 20px;
 }
-.destinations h3 > span {
+.destinations h3 > svg {
   color: var(--arc-brand-atlantean-teal);
 }
 .destinations p {

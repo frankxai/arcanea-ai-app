@@ -172,7 +172,7 @@ function GenrePreview({ description }: { description: string }) {
           style={{ backgroundColor: match.color }}
         />
       </span>
-      <span className="text-xs text-white/70">{match.genre} World</span>
+      <span className="text-xs text-white/70">{match.genre} world</span>
     </m.div>
   );
 }
@@ -257,9 +257,9 @@ function HeroSection({
         <p className="text-[var(--arc-brand-atlantean-teal)] font-mono text-xs tracking-widest mb-3">
           Your world
         </p>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-3 text-center drop-shadow-lg">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-3 text-center drop-shadow-lg">
           {world.name}
-        </h2>
+        </h1>
         {world.tagline && (
           <p className="text-lg text-white/60 max-w-xl text-center">
             {world.tagline}
@@ -417,7 +417,7 @@ function FoundingEvent({
       <div className="pl-8">
         <div className="flex items-center gap-3 mb-3">
           <p className="text-xs text-[var(--arc-brand-arcanean-gold)]/50 tracking-wider">
-            Founding Event
+            Founding event
           </p>
           {event.era && (
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--arc-brand-arcanean-gold)]/10 text-[var(--arc-brand-arcanean-gold)]/60 border border-[var(--arc-brand-arcanean-gold)]/20">
@@ -553,8 +553,30 @@ export default function CreateWorldPage() {
     }
   }, []);
 
+  const continueToSignIn = useCallback(
+    (concept?: string) => {
+      try {
+        // Existing drafts already have their own recovery record. A pending
+        // concept is only needed before the first generation.
+        if (concept && !result)
+          sessionStorage.setItem("arcanea.world-concept", concept);
+      } catch {
+        setError(
+          "Copy your concept before signing in; browser storage is unavailable.",
+        );
+        return;
+      }
+      router.push("/auth/login?next=%2Fworlds%2Fcreate%3Fresume%3D1");
+    },
+    [result, router],
+  );
+
   const generateHeroImage = useCallback(
     async (imagePrompt: string, worldName: string) => {
+      if (!isAuthenticated) {
+        continueToSignIn();
+        return;
+      }
       setImageLoading(true);
       try {
         const res = await fetch("/api/worlds/generate-image", {
@@ -577,13 +599,23 @@ export default function CreateWorldPage() {
         setImageLoading(false);
       }
     },
-    [],
+    [isAuthenticated, continueToSignIn],
   );
 
   const generate = useCallback(
     async (desc?: string) => {
       const trimmed = (desc || description).trim();
-      if (!trimmed || trimmed.length < 5 || generating.current) return;
+      if (
+        !trimmed ||
+        trimmed.length < 5 ||
+        generating.current ||
+        isAuthenticated === null
+      )
+        return;
+      if (!isAuthenticated) {
+        continueToSignIn(trimmed);
+        return;
+      }
       generating.current = true;
 
       setError(null);
@@ -598,7 +630,17 @@ export default function CreateWorldPage() {
 
         if (!res.ok) {
           const body = await res.json().catch(() => ({}));
-          throw new Error(body.error || `Generation failed (${res.status})`);
+          if (res.status === 401) {
+            setIsAuthenticated(false);
+            throw new Error(
+              "Your session ended. Sign in again to create a draft.",
+            );
+          }
+          throw new Error(
+            typeof body.error === "string"
+              ? body.error
+              : `Generation failed (${res.status})`,
+          );
         }
 
         const data: GenerateResult = await res.json();
@@ -616,7 +658,7 @@ export default function CreateWorldPage() {
         generating.current = false;
       }
     },
-    [description, rememberDraft, result],
+    [description, rememberDraft, result, isAuthenticated, continueToSignIn],
   );
 
   const saveWorld = useCallback(async () => {
@@ -639,6 +681,12 @@ export default function CreateWorldPage() {
       });
 
       const data = await res.json();
+      if (res.status === 401) {
+        setIsAuthenticated(false);
+        throw new Error(
+          "Sign in again to save this draft. Your draft is still here.",
+        );
+      }
       if (!res.ok || data.saved !== true || !data.slug)
         throw new Error(
           data.error ||
@@ -727,7 +775,7 @@ export default function CreateWorldPage() {
   return (
     <MotionConfig reducedMotion="user">
       <LazyMotion features={domAnimation}>
-        <main className="min-h-screen bg-[var(--arc-cosmic-void)] text-white relative">
+        <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white relative">
           <AuroraBackground />
 
           {/* Back nav */}
@@ -781,7 +829,7 @@ export default function CreateWorldPage() {
                           "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-void), var(--arc-brand-arcanean-gold))",
                       }}
                     >
-                      World
+                      world
                     </span>
                   </h1>
 
@@ -791,8 +839,9 @@ export default function CreateWorldPage() {
                   </p>
 
                   <p className="text-sm text-white/70 max-w-lg mb-8">
-                    This uses hosted AI. Drafts stay in this tab until you save
-                    privately to your account. Avoid confidential material.
+                    Sign in to generate with hosted AI. Drafts stay in this tab
+                    until you save privately to your account. Avoid confidential
+                    material.
                   </p>
                   <div className="w-full max-w-2xl mb-6">
                     <div className="relative rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_4px_24px_rgba(0,0,0,0.4)] focus-within:shadow-[0_0_0_1px_rgba(0,188,212,0.3),0_8px_40px_rgba(0,0,0,0.4),0_0_80px_rgba(0,188,212,0.08)] transition-colors duration-300">
@@ -835,14 +884,20 @@ export default function CreateWorldPage() {
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                     onClick={() => generate()}
-                    disabled={description.trim().length < 5}
+                    disabled={
+                      description.trim().length < 5 || isAuthenticated === null
+                    }
                     className={`px-10 py-4 rounded-xl font-bold text-base transition-colors duration-200 ${
                       description.trim().length >= 5
                         ? "bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40"
                         : "bg-white/[0.04] text-white/70 cursor-not-allowed"
                     }`}
                   >
-                    Create world
+                    {isAuthenticated === null
+                      ? "Checking your session…"
+                      : isAuthenticated
+                        ? "Create world"
+                        : "Sign in to create your world"}
                   </m.button>
 
                   <div className="mt-10 w-full max-w-2xl">
@@ -1129,7 +1184,7 @@ export default function CreateWorldPage() {
               )}
             </AnimatePresence>
           </div>
-        </main>
+        </div>
       </LazyMotion>
     </MotionConfig>
   );

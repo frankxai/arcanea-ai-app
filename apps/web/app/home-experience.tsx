@@ -26,8 +26,7 @@ export function HomeExperience() {
         <div>
           <p className={styles.eyebrow}>From a sentence to a world</p>
           <h2 id="workflow-title">
-            Something you can
-            <br />
+            Something you can <br />
             build on.
           </h2>
           <p>
@@ -41,8 +40,8 @@ export function HomeExperience() {
             <div>
               <h3>Describe the idea</h3>
               <p>
-                A strange rule, a place, a conflict. Give the generator
-                something specific to work with.
+                A strange rule, a place, a conflict. Bring your concept, then
+                sign in to generate a world draft.
               </p>
             </div>
           </li>
@@ -79,8 +78,7 @@ export function HomeExperience() {
           <div>
             <p className={styles.eyebrow}>The Arcanea multiverse</p>
             <h2 id="explore-title">
-              Enter a world
-              <br />
+              Enter a world <br />
               already in motion.
             </h2>
             <Link href="/worlds">
@@ -125,9 +123,9 @@ export function HomeExperience() {
         </div>
         <div>
           <p>
-            The web world creator uses hosted AI. Unsaved drafts stay in this
-            browser tab; saving stores the world privately in your Arcanea
-            account. Export a copy whenever you need one.
+            The web world creator requires sign-in and uses hosted AI. Unsaved
+            drafts stay in this browser tab; saving stores the world privately
+            in your Arcanea account. Export a copy whenever you need one.
           </p>
           <Link href="/privacy">
             Read the privacy policy <DirectionArrow />

@@ -144,7 +144,7 @@ jobs:
         run: node --test scripts/tests/vercel-ignore-build.test.mjs
 
       - name: Verify exact world drafts and durable waitlist results
-        run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/waitlist.test.ts
+        run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/waitlist.test.ts lib/worlds/__tests__/entry-access.test.ts
 
       - name: ESLint
         run: pnpm --dir apps/web run lint
