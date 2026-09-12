@@ -4,15 +4,15 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - 'supabase/migrations/**'
-      - 'supabase/tests/world-policy-recursion.sql'
-      - '.github/workflows/world-access-policy.yml'
+      - "supabase/migrations/**"
+      - "supabase/tests/world-policy-recursion.sql"
+      - ".github/workflows/world-access-policy.yml"
   push:
     branches: [main]
     paths:
-      - 'supabase/migrations/**'
-      - 'supabase/tests/world-policy-recursion.sql'
-      - '.github/workflows/world-access-policy.yml'
+      - "supabase/migrations/**"
+      - "supabase/tests/world-policy-recursion.sql"
+      - ".github/workflows/world-access-policy.yml"
 
 permissions:
   contents: read
