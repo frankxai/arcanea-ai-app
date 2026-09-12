@@ -156,6 +156,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const refinement =
+      typeof body === "object" && body && "refinement" in body
+        ? body.refinement
+        : undefined;
+    if (
+      refinement !== undefined &&
+      !WORLD_REFINEMENTS.some((choice) => choice === refinement)
+    ) {
+      return NextResponse.json(
+        { error: "Choose a listed refinement direction." },
+        { status: 400 },
+      );
+    }
+
     // --- Resolve AI model ---
     const model = resolveModel();
     if (!model) {
