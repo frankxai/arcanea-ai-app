@@ -935,7 +935,7 @@ export default function CreateWorldPage() {
                 </div>
               </section>
             )}
-            {previousDraft && (
+            {previousDraft && previousDraft.draft_id !== result?.draft_id && (
               <button
                 onClick={restorePrevious}
                 disabled={saving || imageLoading || phase === "generating"}
@@ -1238,7 +1238,9 @@ export default function CreateWorldPage() {
                       >
                         {imageLoading
                           ? "Creating concept art…"
-                          : "Generate concept art"}
+                          : isAuthenticated
+                            ? "Generate concept art"
+                            : "Sign in to create concept art"}
                       </button>
                     )}
                   </div>
