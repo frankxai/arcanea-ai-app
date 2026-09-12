@@ -106,3 +106,29 @@ Related existing work: #307 (environment binding), #333 (public Supabase boundar
 Rollback: revert the bounded build-gate commit if faulty; restore the last verified
 deployment for a release regression. Removing the missing-binding repair restores
 the reported auth outage. No database rollback is involved.
+
+## Dashboard correction and successful direct return
+
+The dashboard became accessible during the continuation. Observed Site URL:
+`https://arcanea.ai`; 13 allowed redirects included the non-www callback and older
+Vercel deployment patterns, but no canonical www callback.
+Added only `https://www.arcanea.ai/auth/callback` and
+`https://www.arcanea.ai/auth/callback?next=**`. The second entry is needed for the
+current login page's return-destination query. Existing entries and Site URL were
+preserved. The dashboard now shows 15 entries.
+
+Verification: sign out through the account menu; navigate to
+`https://www.arcanea.ai/settings/providers`; observe
+`/auth/login?next=%2Fsettings%2Fproviders`; choose Google; land directly on the
+protected `/settings/providers` page. This fixes the lost destination confirmed
+in earlier attempts. No database policies or billing settings changed.
+
+The live Vercel alias now resolves to deployment `dpl_Dxvp3ygiUNJnjQoMK8goiwuhJ1cD`,
+source `93478bc52399f7cdda6d7b766d4c6986748de273`, READY. Other tasks deployed newer
+main revisions after the original recovery; do not redeploy the earlier revision
+or claim this continuation deployed that main change.
+
+Two attempts to open the mobile navigation menu in the original settings tab
+produced a browser load-error page. A fresh desktop chat tab supported account
+menu, sign-out and repeat login. This is a separate unresolved navigation finding,
+not evidence that Google sign-in still fails.

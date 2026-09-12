@@ -26,9 +26,9 @@ database migrations, replacing the Academy or overlapping other agents' branches
 - [x] Verify production protected settings, sign-out, fresh route protection and repeat Google sign-in.
 - [x] Implement same-origin callback recovery and return-path validation; 16 tests pass.
 - [x] Independently review callback recovery and return-path validation.
-- [ ] In progress: publish the final review branch and verify its Vercel preview/CI.
+- [x] Publish auth foundation PR #404; verify READY preview and passing required CI.
 - [ ] Merge/deploy the prevention changes after release checks and approval; retest full callback flow.
-- [ ] Correct Supabase redirect allowlist after dashboard access is available.
+- [x] Correct production Supabase callback allowlist; fresh Google sign-in now returns to protected provider settings.
 - [ ] Complete second-provider buyer critique before a commercial release.
 
 ## Next implementation slices
@@ -57,3 +57,25 @@ Verification: `node --test scripts/tests/auth-env.test.mjs scripts/tests/auth-re
 `node scripts/model-creator-economics.mjs`; source diff and secret scan; Vercel preview;
 independent critique. Rollback: bounded code revert, previous verified deployment;
 no database migration in this slice.
+
+## Provider trust continuation
+
+Owner: root; reuse the task-owned worktree with stacked branches
+`codex/arcanea-provider-routing-20260912` (parent: auth foundation), then
+`codex/arcanea-provider-experience-20260912` (parent: provider routing).
+Routing and UI changes are split to remain inside the repository's diff review budget.
+No new worktree, dependency, database migration or billing activation.
+
+- [x] Reproduce fake key test and connected badge; trace key/content through server.
+- [x] Implement matching-provider credential resolution, null legacy model compatibility,
+      explicit customer-key precedence, storage validation, failed-write recovery and stale-save protection.
+- [x] Independent review found two storage synchronization problems; address both and add regression.
+- [x] Implement focused, labeled provider form with truthful save status, data flow and charges.
+- [x] Clarify plugin/storefront/IP/data strategy using current official provider guidance.
+- [ ] Reverify the refined frozen code and responsive preview; full CI and exact-head release review.
+- [ ] Remove residual contradictory BYOK copy in chat/homepage through the commercial-truth lane.
+- [ ] Fix the observed mobile menu navigation failure if reproducible outside a stale tab.
+- [ ] Exercise paid provider generation only with a dedicated authorized test credential/budget.
+
+Rollback: revert the provider UI slice, then routing if required; auth recovery is independent.
+Keep production model credentials out of test output. Unit fixtures use invented dummy keys.

@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
+    # Validate stacked PRs too; each proposed merge needs its own checks.
     # 'edited' is required: it is the only pull_request activity type that fires
     # when the base branch is retargeted, and required-check verdicts are recorded
     # against the head SHA. Without it a green earned against one base survives a
