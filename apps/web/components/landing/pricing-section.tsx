@@ -23,7 +23,7 @@ const PLANS = [
     features: [
       "3 companions — writing, research, brainstorming",
       "100 messages per month",
-      "Browse the full Library (17 collections)",
+      "Browse the full Library (20 collections)",
       "Academy access through Gate 2",
       "Export to PDF",
     ],

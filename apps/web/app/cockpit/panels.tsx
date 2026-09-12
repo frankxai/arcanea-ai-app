@@ -5,7 +5,7 @@
  *
  * Aesthetic: dark holographic bridge. Asymmetric grid. Instrument Serif
  * italic wordmark, JetBrains Mono for data, Geist for body. Atlantean Teal
- * (#00bcd4) pulse on live signals; Gold (#ffd700) for success / merged states.
+ * design-token pulse on live signals; Arcanean Gold for success / merged states.
  * No purple-gradient AI-slop. No icy cyan everywhere — restraint.
  *
  * Each panel is a self-contained client component that fetches its own data.
@@ -14,6 +14,7 @@
 
 import { useEffect, useState, type ReactNode } from 'react';
 import Link from 'next/link';
+import { ambient, brand, elementNameAccents, gold, semantic, text as textToken } from '@arcanea/design-system/tokens';
 
 // ---------------------------------------------------------------------------
 // Shared types
@@ -55,9 +56,9 @@ interface SignalCardProps {
 }
 
 const ACCENT_STYLES: Record<NonNullable<SignalCardProps['accent']>, { dot: string; glow: string; text: string }> = {
-  teal:    { dot: '#00bcd4', glow: 'rgba(0,188,212,0.18)', text: '#7feaff' },
-  gold:    { dot: '#ffd700', glow: 'rgba(255,215,0,0.16)', text: '#ffe675' },
-  rose:    { dot: '#ef4444', glow: 'rgba(239,68,68,0.16)', text: '#fda4af' },
+  teal:    { dot: brand.atlanteanTeal, glow: 'rgba(0,188,212,0.18)', text: brand.aquamarine },
+  gold:    { dot: brand.arcaneanGold, glow: 'rgba(255,215,0,0.16)', text: gold.light },
+  rose:    { dot: semantic.error, glow: 'rgba(239,68,68,0.16)', text: ambient.pink },
   neutral: { dot: 'rgba(255,255,255,0.5)', glow: 'transparent', text: 'rgba(255,255,255,0.65)' },
 };
 
@@ -194,7 +195,7 @@ function Stat({
   mono?: boolean;
   accent?: 'teal' | 'gold' | 'rose';
 }) {
-  const accentColor = accent === 'teal' ? '#7feaff' : accent === 'gold' ? '#ffe675' : accent === 'rose' ? '#fda4af' : 'rgba(255,255,255,0.92)';
+  const accentColor = accent ? ACCENT_STYLES[accent].text : 'rgba(255,255,255,0.92)';
   return (
     <div>
       <div
@@ -224,7 +225,7 @@ function Stat({
 
 export function HeroPanel() {
   return (
-    <section className="relative md:col-span-4 rounded-2xl overflow-hidden border border-white/[0.06] bg-gradient-to-br from-[#00bcd4]/[0.10] via-[#7dd3fc]/[0.04] to-transparent backdrop-blur-md p-8 min-h-[260px] flex flex-col justify-between">
+    <section className="relative md:col-span-4 rounded-2xl overflow-hidden border border-white/[0.06] bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/[0.10] via-[var(--arc-crystal)]/[0.04] to-transparent backdrop-blur-md p-8 min-h-[260px] flex flex-col justify-between">
       <div
         aria-hidden
         className="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-3xl opacity-50"
@@ -232,7 +233,7 @@ export function HeroPanel() {
       />
       <div className="relative">
         <p
-          className="text-[10px] tracking-[0.36em] uppercase text-[#7feaff]/70 mb-3"
+          className="text-[10px] tracking-[0.36em] uppercase text-[var(--arc-crystal)]/70 mb-3"
           style={{ fontFamily: 'var(--font-mono, var(--font-display))' }}
         >
           Voice Operator
@@ -260,13 +261,13 @@ export function HeroPanel() {
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[11px] tracking-[0.28em] uppercase transition-all"
           style={{
             fontFamily: 'var(--font-mono, var(--font-display))',
-            color: '#7feaff',
+            color: brand.aquamarine,
             background: 'rgba(0,188,212,0.14)',
             border: '1px solid rgba(0,188,212,0.32)',
             boxShadow: '0 0 30px rgba(0,188,212,0.18)',
           }}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--arc-brand-atlantean-teal)] animate-pulse" />
           Enter the Room
         </Link>
         <span
@@ -321,7 +322,7 @@ export function PRsCard() {
           {prs!.slice(0, 6).map((pr) => (
             <li key={pr.number} className="flex items-baseline gap-3 group">
               <span
-                className="shrink-0 text-[11px] text-[#ffe675]/80"
+                className="shrink-0 text-[11px] text-[var(--arc-gold-light)]/80"
                 style={{ fontFamily: 'var(--font-mono, monospace)', letterSpacing: '0.04em' }}
               >
                 #{pr.number}
@@ -380,7 +381,7 @@ export function CommitsCard() {
           {data.slice(0, 7).map((c) => (
             <li key={c.hash} className="flex items-baseline gap-3">
               <span
-                className="shrink-0 text-[11px] text-[#7feaff]/80"
+                className="shrink-0 text-[11px] text-[var(--arc-crystal)]/80"
                 style={{ fontFamily: 'var(--font-mono, monospace)', letterSpacing: '0.04em' }}
               >
                 {c.hash}
@@ -405,13 +406,13 @@ export function CommitsCard() {
 // ---------------------------------------------------------------------------
 
 const PERSONA_ROSTER: Array<{ id: string; name: string; tag: string; color: string }> = [
-  { id: 'jarvis',   name: 'Jarvis',    tag: 'Voice Operator',   color: '#7dd3fc' },
-  { id: 'lumina',   name: 'Lumina',    tag: 'First Light',       color: '#ffd700' },
-  { id: 'draconia', name: 'Draconia',  tag: 'Guardian of Fire',  color: '#ef4444' },
-  { id: 'lyria',    name: 'Lyria',     tag: 'Guardian of Sight', color: '#a78bfa' },
-  { id: 'alera',    name: 'Alera',     tag: 'Guardian of Voice', color: '#00bcd4' },
-  { id: 'shinkami', name: 'Shinkami',  tag: 'The Source',        color: '#e0e0e0' },
-  { id: 'nero',     name: 'Nero',      tag: 'Primordial Dark',   color: '#6366f1' },
+  { id: 'jarvis',   name: 'Jarvis',    tag: 'Voice Operator',   color: brand.aquamarine },
+  { id: 'lumina',   name: 'Lumina',    tag: 'First Light',       color: brand.arcaneanGold },
+  { id: 'draconia', name: 'Draconia',  tag: 'Guardian of Fire',  color: semantic.error },
+  { id: 'lyria',    name: 'Lyria',     tag: 'Guardian of Sight', color: elementNameAccents.WindCompanion },
+  { id: 'alera',    name: 'Alera',     tag: 'Guardian of Voice', color: brand.atlanteanTeal },
+  { id: 'shinkami', name: 'Shinkami',  tag: 'The Source',        color: textToken.primary },
+  { id: 'nero',     name: 'Nero',      tag: 'Primordial Dark',   color: elementNameAccents.VoidDeep },
 ];
 
 export function PersonaRail() {

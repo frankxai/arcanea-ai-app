@@ -1,26 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public";
+import { withAbortDeadline } from "@/lib/async-deadline";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const sb = (await createClient()) as any;
-  const { data: world } = await sb.from("worlds").select("name, description, element").eq("slug", slug).single();
-  if (!world) return { title: "World Not Found — Arcanea" };
-  return {
-    title: `${world.name} — Arcanea Worlds`,
-    description: world.description?.slice(0, 160) || `Explore ${world.name}, a ${world.element || ""} world on Arcanea.`,
-    openGraph: {
-      title: `${world.name} — Arcanea Worlds`,
-      description: world.description?.slice(0, 160) || `Explore ${world.name} on Arcanea.`,
-      url: `https://www.arcanea.ai/worlds/${slug}`,
-    },
-  };
-}
 import { getCachedUser } from "@/lib/supabase/cached-auth";
 import { ElementBadge } from "@/components/worlds/ElementBadge";
 import { WorldActions } from "@/components/worlds/WorldActions";
@@ -37,7 +22,8 @@ export const maxDuration = 20;
 // request, and the RLS policy on these tables re-evaluates `can_read_world()`
 // per row — so cost grows with world size and could reach the 300s ceiling.
 const CHILD_ROW_LIMIT = 200;
-const QUERY_TIMEOUT_MS = 8000;
+const CLIENT_INIT_TIMEOUT_MS = 1_000;
+const QUERY_TIMEOUT_MS = 3_500;
 
 /**
  * Resolve a child query to rows, degrading to an empty section rather than
@@ -46,10 +32,16 @@ const QUERY_TIMEOUT_MS = 8000;
  */
 async function safeRows<T>(
   label: string,
-  query: PromiseLike<{ data: T[] | null; error: unknown }>
+  query: (
+    signal: AbortSignal
+  ) => PromiseLike<{ data: T[] | null; error: unknown }>
 ): Promise<T[]> {
   try {
-    const { data, error } = await query;
+    const { data, error } = await withAbortDeadline(
+      `${label} query`,
+      QUERY_TIMEOUT_MS,
+      query
+    );
     if (error) {
       console.error(`[worlds/[slug]] ${label} query failed:`, error);
       return [];
@@ -61,49 +53,115 @@ async function safeRows<T>(
   }
 }
 
+async function getCurrentUserWithinDeadline() {
+  try {
+    return await withAbortDeadline(
+      "world auth lookup",
+      QUERY_TIMEOUT_MS,
+      () => getCachedUser()
+    );
+  } catch (error) {
+    console.error("[worlds/[slug]] auth lookup failed or timed out", {
+      errorName: error instanceof Error ? error.name : "UnknownError",
+    });
+    return null;
+  }
+}
+
+async function fetchWorldRoot(sb: any, slug: string) {
+  try {
+    const result = await withAbortDeadline(
+      "world root query",
+      QUERY_TIMEOUT_MS,
+      (signal) =>
+        sb
+          .from("worlds")
+          .select("*")
+          .eq("slug", slug)
+          .abortSignal(signal)
+          .single()
+    );
+
+    if (result.error) {
+      console.error("[worlds/[slug]] world query failed", {
+        errorName:
+          result.error instanceof Error ? result.error.name : "SupabaseError",
+      });
+      return null;
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error("[worlds/[slug]] world query aborted or threw", {
+      errorName: error instanceof Error ? error.name : "UnknownError",
+    });
+    return null;
+  }
+}
+
 async function getWorld(slug: string) {
-  const [sbClient, user] = await Promise.all([createClient(), getCachedUser()]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const sb = sbClient as any;
-
-  const { data: world, error } = await sb
-    .from("worlds")
-    .select("*")
-    .eq("slug", slug)
-    .single();
-
-  if (error || !world) return null;
-
-  if (world.visibility !== "public" && world.creator_id !== user?.id) {
+  // Public world discovery must not initialize request cookies. The
+  // publishable/anon client remains governed by the existing table grants and
+  // RLS policies; a cookie-bound session client is only a private-owner
+  // fallback after the public read returns no visible row.
+  let sb: any = createPublicClient();
+  if (!sb) {
+    console.error("[worlds/[slug]] public Supabase binding unavailable");
     return null;
   }
 
+  let world: any = await fetchWorldRoot(sb, slug);
+
+  if (!world) {
+    try {
+      sb = (await withAbortDeadline(
+        "world client init",
+        CLIENT_INIT_TIMEOUT_MS,
+        () => createClient()
+      )) as any;
+    } catch (error) {
+      console.error("[worlds/[slug]] private client init failed or timed out", {
+        errorName: error instanceof Error ? error.name : "UnknownError",
+      });
+      return null;
+    }
+
+    world = await fetchWorldRoot(sb, slug);
+  }
+
+  if (!world) return null;
+
+  if (world.visibility !== "public") {
+    const user = await getCurrentUserWithinDeadline();
+    if (world.creator_id !== user?.id) return null;
+  }
+
   const [characters, factions, locations, events] = await Promise.all([
-    safeRows("characters", sb
+    safeRows("characters", (signal) => sb
       .from("world_characters")
       .select("id, name, element, gate, origin_class, title, backstory, portrait_url, motivation, is_agent")
       .eq("world_id", world.id)
       .limit(CHILD_ROW_LIMIT)
-      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))),
-    safeRows("factions", sb
+      .abortSignal(signal)),
+    safeRows("factions", (signal) => sb
       .from("world_factions")
       .select("id, name, history, philosophy, territory")
       .eq("world_id", world.id)
       .limit(CHILD_ROW_LIMIT)
-      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))),
-    safeRows("locations", sb
+      .abortSignal(signal)),
+    safeRows("locations", (signal) => sb
       .from("world_locations")
       .select("id, name, description, region, significance, image_url")
       .eq("world_id", world.id)
       .limit(CHILD_ROW_LIMIT)
-      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))),
-    safeRows("events", sb
+      .abortSignal(signal)),
+    safeRows("events", (signal) => sb
       .from("world_events")
       .select("id, title, description, era, characters_involved, sort_order, consequences, date_in_world")
       .eq("world_id", world.id)
       .order("sort_order")
       .limit(CHILD_ROW_LIMIT)
-      .abortSignal(AbortSignal.timeout(QUERY_TIMEOUT_MS))),
+      .abortSignal(signal)),
   ]);
 
   return {
