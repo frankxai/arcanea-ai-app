@@ -186,9 +186,11 @@ const draft = {
       });
       page.once("dialog", (dialog) => dialog.accept());
       await button("Start over").click();
-      await expect(page.getByRole("alert")).toContainText(
-        "A recovery copy could not be stored",
-      );
+      await expect(
+        page
+          .getByRole("alert")
+          .filter({ hasText: "A recovery copy could not be stored" }),
+      ).toContainText("A recovery copy could not be stored");
       await expect(worldTitle).toBeVisible();
       assert.equal(
         modelRequests,
