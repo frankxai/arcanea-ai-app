@@ -11,10 +11,7 @@
     "preserve identity across variants",
     "record critique and revision evidence"
   ],
-  "skillRefs": [
-    "$arcanea-formis",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-formis", "$arcanea-canon-director"],
   "stopConditions": [
     "Brand identity approval is pending",
     "A component hides status or action",

@@ -11,10 +11,7 @@
     "preserve identity across variants",
     "record critique and revision evidence"
   ],
-  "skillRefs": [
-    "$arcanea-melodia",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-melodia", "$arcanea-canon-director"],
   "stopConditions": [
     "A frequency is framed as medicine",
     "Rights for a reference recording are unclear",

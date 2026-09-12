@@ -11,10 +11,7 @@
     "shape distinct language",
     "record canon impact"
   ],
-  "skillRefs": [
-    "$arcanea-poetica",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-poetica", "$arcanea-canon-director"],
   "stopConditions": [
     "The line overclaims canon",
     "Borrowed language is too close to a living source",

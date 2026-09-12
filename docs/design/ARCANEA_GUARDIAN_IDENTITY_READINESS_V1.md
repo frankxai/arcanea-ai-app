@@ -8,26 +8,26 @@ No reviewed source currently locks Guardian faces, bodies, apparent ages, garmen
 
 ## Portfolio state
 
-| State | Count | Meaning |
-|---|---:|---|
-| Discovery only | 10 | The campaign may test behavior, posture, silhouette, and style internally. Approval, public staging, and identity-master language are technically denied until the physical identity is locked. |
-| Source complete | 0 | No Guardian currently has a source-complete physical identity record. |
-| Blocked | 0 | Guardian-only studies are executable; separate Godbeast conflicts still block Sol and Source dyad jobs. |
+| State           | Count | Meaning                                                                                                                                                                                         |
+| --------------- | ----: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Discovery only  |    10 | The campaign may test behavior, posture, silhouette, and style internally. Approval, public staging, and identity-master language are technically denied until the physical identity is locked. |
+| Source complete |     0 | No Guardian currently has a source-complete physical identity record.                                                                                                                           |
+| Blocked         |     0 | Guardian-only studies are executable; separate Godbeast conflicts still block Sol and Source dyad jobs.                                                                                         |
 
 ## Guardian index
 
-| Guardian | Gate | Bond | Identity study | Dyad study | Public eligibility |
-|---|---|---|---|---|---|
-| [Lyssandria](#lyssandria) | 1 · Foundation | Kaelith · 1 Chord | ACV-011 / Round 02 | ACV-031 / Round 04 | internal only until identity lock |
-| [Leyla](#leyla) | 2 · Flow | Veloura · 2 Chords | ACV-012 / Round 02 | ACV-032 / Round 04 | internal only until identity lock |
-| [Draconia](#draconia) | 3 · Fire | Draconis · 3 Chords | ACV-013 / Round 02 | ACV-033 / Round 04 | internal only until identity lock |
-| [Maylinn](#maylinn) | 4 · Heart | Laeylinn · 4 Chords | ACV-014 / Round 02 | ACV-034 / Round 04 | internal only until identity lock |
-| [Alera](#alera) | 5 · Voice | Otome · 5 Chords | ACV-015 / Round 02 | ACV-035 / Round 04 | internal only until identity lock |
-| [Lyria](#lyria) | 6 · Sight | Yumiko · 6 Chords | ACV-016 / Round 02 | ACV-036 / Round 04 | internal only until identity lock |
-| [Aiyami](#aiyami) | 7 · Crown | Sol · 7 Chords | ACV-017 / Round 02 | ACV-037 / Round 04 | internal only until identity lock |
-| [Elara](#elara) | 8 · Starweave | Vaelith · 8 Chords | ACV-018 / Round 02 | ACV-038 / Round 04 | internal only until identity lock |
-| [Ino](#ino) | 9 · Unity | Kyuro · 9 Chords | ACV-019 / Round 02 | ACV-039 / Round 04 | internal only until identity lock |
-| [Shinkami](#shinkami) | 10 · Source | Source / Ten-Chorded · 10 Chords | ACV-020 / Round 02 | ACV-040 / Round 04 | internal only until identity lock |
+| Guardian                  | Gate           | Bond                             | Identity study     | Dyad study         | Public eligibility                |
+| ------------------------- | -------------- | -------------------------------- | ------------------ | ------------------ | --------------------------------- |
+| [Lyssandria](#lyssandria) | 1 · Foundation | Kaelith · 1 Chord                | ACV-011 / Round 02 | ACV-031 / Round 04 | internal only until identity lock |
+| [Leyla](#leyla)           | 2 · Flow       | Veloura · 2 Chords               | ACV-012 / Round 02 | ACV-032 / Round 04 | internal only until identity lock |
+| [Draconia](#draconia)     | 3 · Fire       | Draconis · 3 Chords              | ACV-013 / Round 02 | ACV-033 / Round 04 | internal only until identity lock |
+| [Maylinn](#maylinn)       | 4 · Heart      | Laeylinn · 4 Chords              | ACV-014 / Round 02 | ACV-034 / Round 04 | internal only until identity lock |
+| [Alera](#alera)           | 5 · Voice      | Otome · 5 Chords                 | ACV-015 / Round 02 | ACV-035 / Round 04 | internal only until identity lock |
+| [Lyria](#lyria)           | 6 · Sight      | Yumiko · 6 Chords                | ACV-016 / Round 02 | ACV-036 / Round 04 | internal only until identity lock |
+| [Aiyami](#aiyami)         | 7 · Crown      | Sol · 7 Chords                   | ACV-017 / Round 02 | ACV-037 / Round 04 | internal only until identity lock |
+| [Elara](#elara)           | 8 · Starweave  | Vaelith · 8 Chords               | ACV-018 / Round 02 | ACV-038 / Round 04 | internal only until identity lock |
+| [Ino](#ino)               | 9 · Unity      | Kyuro · 9 Chords                 | ACV-019 / Round 02 | ACV-039 / Round 04 | internal only until identity lock |
+| [Shinkami](#shinkami)     | 10 · Source    | Source / Ten-Chorded · 10 Chords | ACV-020 / Round 02 | ACV-040 / Round 04 | internal only until identity lock |
 
 ## Lyssandria
 

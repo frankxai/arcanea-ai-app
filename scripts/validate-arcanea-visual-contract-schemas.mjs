@@ -204,7 +204,9 @@ const authorityRoot = join(
   "planning-with-files/arcanea-visual-authority",
 );
 const preflightFiles = existsSync(authorityRoot)
-  ? readdirSync(authorityRoot).filter((name) => /preflight.*\.json$/i.test(name))
+  ? readdirSync(authorityRoot).filter((name) =>
+      /preflight.*\.json$/i.test(name),
+    )
   : [];
 let currentPreflightCount = 0;
 for (const file of preflightFiles) {

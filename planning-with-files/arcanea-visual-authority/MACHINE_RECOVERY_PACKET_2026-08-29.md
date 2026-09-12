@@ -70,4 +70,3 @@ It may not reuse an expired receipt, regenerate an existing job, infer rights, i
 ## Pending human evidence
 
 The current request explicitly asks for image generation, but the campaign contract requires a named statement for both spend and rights/likeness. Do not manufacture that attestation from project ownership or general intent. Once supplied in this task, bind it to each narrow grant.
-

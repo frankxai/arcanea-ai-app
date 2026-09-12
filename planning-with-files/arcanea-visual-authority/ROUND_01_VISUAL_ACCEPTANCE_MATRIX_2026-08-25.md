@@ -12,13 +12,13 @@ Round 01 does not choose the most spectacular isolated picture. It asks which vi
 
 Each style receives a paired test:
 
-| Style system | Draconis | Kael | Primary stress test |
-| --- | --- | --- | --- |
-| Living Codex | ACV-001 | ACV-002 | field-plate restraint without parchment cosplay |
-| Prism Realism | ACV-003 | ACV-004 | cinematic naturalism without poster spectacle |
-| Luminous Atelier | ACV-005 | ACV-006 | painterly intelligence without decorative sameness |
-| Ritual Brutalism | ACV-007 | ACV-008 | monumentality without unreadable anatomy or oppressive fantasy |
-| Mature Feature | ACV-009 | ACV-010 | stylized 3D maturity without toy, mascot, or house-style drift |
+| Style system     | Draconis | Kael    | Primary stress test                                            |
+| ---------------- | -------- | ------- | -------------------------------------------------------------- |
+| Living Codex     | ACV-001  | ACV-002 | field-plate restraint without parchment cosplay                |
+| Prism Realism    | ACV-003  | ACV-004 | cinematic naturalism without poster spectacle                  |
+| Luminous Atelier | ACV-005  | ACV-006 | painterly intelligence without decorative sameness             |
+| Ritual Brutalism | ACV-007  | ACV-008 | monumentality without unreadable anatomy or oppressive fantasy |
+| Mature Feature   | ACV-009  | ACV-010 | stylized 3D maturity without toy, mascot, or house-style drift |
 
 A style is ineligible to win if either paired anchor fails its entity gate, style gate, identity floor, canon floor, or human review. This prevents creature-only or human-only performance from masquerading as an Arcanea-wide system.
 
@@ -34,18 +34,18 @@ The current immutable Codex manifest is `planning-with-files/arcanea-visual-camp
 
 Every value below is a prepared snapshot. The current manifest index and readiness report outrank this matrix. Any hash drift requires a new matrix; do not patch a live provider prompt with review feedback.
 
-| Job | Subject / style | Contract hash | Execution-prompt hash | Release boundary |
-| --- | --- | --- | --- | --- |
-| ACV-001 | Draconis / Living Codex | `54d45c53f641a486eab97a067892184f69f86ef4dbee81bfde75d1692bc5b803` | `58a18b1c633e739b88ebd12c94aac8c3ade969d01caf36fdb4193ac201a79bac` | internal identity discovery |
-| ACV-002 | Kael / Living Codex | `0780fb9cae5163a89981ec20822807bd405910795071550efcc6177978491cdf` | `b6b8b421ff3b60bc0a80864112f35432b695e9ffe03216705c0288e14206c1dd` | candidate after human gates |
-| ACV-003 | Draconis / Prism Realism | `3ca00f0af4cc2325b28c6f5d34fc5ec5557b2d1be1ae4c29fa0795e152bde0d7` | `70ac0160fb2a11dd7d02c3cc71412b777361bb3fa89295d6dce2216b657605e3` | internal identity discovery |
-| ACV-004 | Kael / Prism Realism | `8d2f2b46a1fee8861441c853f31dfa1f524817910ffd620907ca4ebed1e70a70` | `d723d69825db5d75abcf8005fb7b12834279fcc5d01482011167dff882ee0194` | candidate after human gates |
+| Job     | Subject / style             | Contract hash                                                      | Execution-prompt hash                                              | Release boundary            |
+| ------- | --------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------ | --------------------------- |
+| ACV-001 | Draconis / Living Codex     | `54d45c53f641a486eab97a067892184f69f86ef4dbee81bfde75d1692bc5b803` | `58a18b1c633e739b88ebd12c94aac8c3ade969d01caf36fdb4193ac201a79bac` | internal identity discovery |
+| ACV-002 | Kael / Living Codex         | `0780fb9cae5163a89981ec20822807bd405910795071550efcc6177978491cdf` | `b6b8b421ff3b60bc0a80864112f35432b695e9ffe03216705c0288e14206c1dd` | candidate after human gates |
+| ACV-003 | Draconis / Prism Realism    | `3ca00f0af4cc2325b28c6f5d34fc5ec5557b2d1be1ae4c29fa0795e152bde0d7` | `70ac0160fb2a11dd7d02c3cc71412b777361bb3fa89295d6dce2216b657605e3` | internal identity discovery |
+| ACV-004 | Kael / Prism Realism        | `8d2f2b46a1fee8861441c853f31dfa1f524817910ffd620907ca4ebed1e70a70` | `d723d69825db5d75abcf8005fb7b12834279fcc5d01482011167dff882ee0194` | candidate after human gates |
 | ACV-005 | Draconis / Luminous Atelier | `48a7df8258cd5f8f312d7eb02cde825ff05a1a16c1ef663f4ec94abbb4426313` | `d4c727af5af8043d1c4891c5aacad9db1b48b226c35c21338d8484b3edb4feb7` | internal identity discovery |
-| ACV-006 | Kael / Luminous Atelier | `a45803914cb4acaed9e1b4289accc93c97ed02eb554d7609db5efaa4f69f2aac` | `d7c92045b9af853f1bbe222f65400e44774c6d2c33656b38f41de05a19bac09f` | candidate after human gates |
+| ACV-006 | Kael / Luminous Atelier     | `a45803914cb4acaed9e1b4289accc93c97ed02eb554d7609db5efaa4f69f2aac` | `d7c92045b9af853f1bbe222f65400e44774c6d2c33656b38f41de05a19bac09f` | candidate after human gates |
 | ACV-007 | Draconis / Ritual Brutalism | `d91ac9cebcbe339a2c3d6c72bd6750c4ecb4d71be7fb2c60b7a878ae42eb2570` | `94e1dd58a55356fc41c1f4933d7bb5fda944e1278bb2a579b2c8e459bf760279` | internal identity discovery |
-| ACV-008 | Kael / Ritual Brutalism | `42f9a7d99cbf1bcac66f1bf4ad222c2afdd95dac9f5936e93fefa5f5a411ce8d` | `0e49e89013d32635755319b69b9fd4e5ee692cae4136afc8147bbcd4dc4941eb` | candidate after human gates |
-| ACV-009 | Draconis / Mature Feature | `9c4cd76c353d9869ba9beb75ac3a22fb6270dbdf5c47e608c127a6597dd92be6` | `0439a4b44a701101e41edb4fbb65cfda270d3d8afd0a09dfa91bc0b14b75212a` | internal identity discovery |
-| ACV-010 | Kael / Mature Feature | `b43abff9532de78ad39580e9ab7c1acfb9f5868552e077618dcf2d32147d7955` | `040da8ee9c89b5df97f20ea7b3645aecb03ea419648d4d271fddb9f6c965926f` | candidate after human gates |
+| ACV-008 | Kael / Ritual Brutalism     | `42f9a7d99cbf1bcac66f1bf4ad222c2afdd95dac9f5936e93fefa5f5a411ce8d` | `0e49e89013d32635755319b69b9fd4e5ee692cae4136afc8147bbcd4dc4941eb` | candidate after human gates |
+| ACV-009 | Draconis / Mature Feature   | `9c4cd76c353d9869ba9beb75ac3a22fb6270dbdf5c47e608c127a6597dd92be6` | `0439a4b44a701101e41edb4fbb65cfda270d3d8afd0a09dfa91bc0b14b75212a` | internal identity discovery |
+| ACV-010 | Kael / Mature Feature       | `b43abff9532de78ad39580e9ab7c1acfb9f5868552e077618dcf2d32147d7955` | `040da8ee9c89b5df97f20ea7b3645aecb03ea419648d4d271fddb9f6c965926f` | candidate after human gates |
 
 ## Stage 1 — deterministic admission for every call
 
@@ -178,16 +178,16 @@ These checks measure whether the style hypothesis is actually present without vi
 
 ## Known non-blocking risks to observe, not pre-fix
 
-| Risk | Jobs | Honest treatment |
-| --- | --- | --- |
-| full-body framing makes Kael's thumb scar too small | 002/004/006/008/010 | record and reject; later create a dedicated hand-detail plate |
-| vellum becomes parchment cosplay | 001/002 | fail Living Codex style gate |
-| cinematic light becomes poster bloom/spectacle | 003/004 | fail Prism Realism style gate |
-| painterly edges dissolve identity details | 005/006 | fail Luminous Atelier style and identity gates |
-| brutalist materials bleed into Kael's body/clothing or hide Draconis anatomy | 007/008 | fail entity/material gate; clarify environment scope only in a future contract |
-| stylized 3D softens into toy/mascot language | 009/010 | fail Mature Feature style gate |
-| Draconis vanes become extra limbs or duplicated terminals | 001/003/005/007/009 | fail anatomy gate; never reinterpret the output to make the count fit |
-| Draconis breath appears to break/attack the blade | 001/003/005/007/009 | fail story-law gate; the prior flaw must be diagnosed, not caused |
+| Risk                                                                         | Jobs                | Honest treatment                                                               |
+| ---------------------------------------------------------------------------- | ------------------- | ------------------------------------------------------------------------------ |
+| full-body framing makes Kael's thumb scar too small                          | 002/004/006/008/010 | record and reject; later create a dedicated hand-detail plate                  |
+| vellum becomes parchment cosplay                                             | 001/002             | fail Living Codex style gate                                                   |
+| cinematic light becomes poster bloom/spectacle                               | 003/004             | fail Prism Realism style gate                                                  |
+| painterly edges dissolve identity details                                    | 005/006             | fail Luminous Atelier style and identity gates                                 |
+| brutalist materials bleed into Kael's body/clothing or hide Draconis anatomy | 007/008             | fail entity/material gate; clarify environment scope only in a future contract |
+| stylized 3D softens into toy/mascot language                                 | 009/010             | fail Mature Feature style gate                                                 |
+| Draconis vanes become extra limbs or duplicated terminals                    | 001/003/005/007/009 | fail anatomy gate; never reinterpret the output to make the count fit          |
+| Draconis breath appears to break/attack the blade                            | 001/003/005/007/009 | fail story-law gate; the prior flaw must be diagnosed, not caused              |
 
 ## Machine and authority boundary
 

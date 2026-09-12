@@ -1,11 +1,8 @@
 import { createHash } from "node:crypto";
 
-export const MACHINE_PREFLIGHT_SCHEMA =
-  "arcanea.machine_preflight_receipt.v2";
-export const STORAGE_EVIDENCE_SCHEMA =
-  "arcanea.storage_preflight_evidence.v1";
-export const STORAGE_POLICY =
-  "starlight-machine-performance-contract-v1.1";
+export const MACHINE_PREFLIGHT_SCHEMA = "arcanea.machine_preflight_receipt.v2";
+export const STORAGE_EVIDENCE_SCHEMA = "arcanea.storage_preflight_evidence.v1";
+export const STORAGE_POLICY = "starlight-machine-performance-contract-v1.1";
 export const STORAGE_HARD_FLOOR_PERCENT = 8;
 export const STORAGE_MEDIA_ADMISSION_PERCENT = 15;
 
@@ -115,7 +112,7 @@ export function validateMachinePreflightReceipt(
     storageEvidence?.mediaAdmissionPercent !==
       STORAGE_MEDIA_ADMISSION_PERCENT ||
     storageEvidence?.mediaGenerationAllowed !==
-      (storageEvidence?.freePercent >= STORAGE_MEDIA_ADMISSION_PERCENT) ||
+      storageEvidence?.freePercent >= STORAGE_MEDIA_ADMISSION_PERCENT ||
     !Number.isFinite(storageEvidence?.freeGiB) ||
     storageEvidence.freeGiB < 0 ||
     !Number.isFinite(storageEvidence?.freePercent) ||

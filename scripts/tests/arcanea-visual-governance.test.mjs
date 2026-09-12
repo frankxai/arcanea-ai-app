@@ -1426,7 +1426,10 @@ test("readiness reconstructs the resume point and accepts only a current narrow 
     root,
   );
   assert.equal(deniedByStorage.status, 2);
-  assert.match(deniedByStorage.stderr, /held by performance or storage policy/i);
+  assert.match(
+    deniedByStorage.stderr,
+    /held by performance or storage policy/i,
+  );
   assert.equal(existsSync(blockedGrantPath), false);
 
   const historicalIndexBody = {

@@ -11,10 +11,7 @@
     "preserve identity across variants",
     "record critique and revision evidence"
   ],
-  "skillRefs": [
-    "$arcanea-motio",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-motio", "$arcanea-canon-director"],
   "stopConditions": [
     "Essential meaning depends on animation",
     "No reduced-motion path exists",

@@ -18,45 +18,25 @@
     {
       "id": "development",
       "name": "Development",
-      "agentIds": [
-        "logicus",
-        "synthra",
-        "debugon",
-        "nexus"
-      ],
+      "agentIds": ["logicus", "synthra", "debugon", "nexus"],
       "operatingRule": "Activate only the smallest capable set; every route ends at an inspectable human decision surface."
     },
     {
       "id": "creative",
       "name": "Creative",
-      "agentIds": [
-        "prismatic",
-        "melodia",
-        "motio",
-        "formis"
-      ],
+      "agentIds": ["prismatic", "melodia", "motio", "formis"],
       "operatingRule": "Activate only the smallest capable set; every route ends at an inspectable human decision surface."
     },
     {
       "id": "writing",
       "name": "Writing",
-      "agentIds": [
-        "chronica",
-        "veritas",
-        "lexicon",
-        "poetica"
-      ],
+      "agentIds": ["chronica", "veritas", "lexicon", "poetica"],
       "operatingRule": "Activate only the smallest capable set; every route ends at an inspectable human decision surface."
     },
     {
       "id": "research",
       "name": "Research",
-      "agentIds": [
-        "oracle",
-        "analytica",
-        "memoria",
-        "futura"
-      ],
+      "agentIds": ["oracle", "analytica", "memoria", "futura"],
       "operatingRule": "Activate only the smallest capable set; every route ends at an inspectable human decision surface."
     }
   ],
@@ -86,10 +66,7 @@
         "produce inspectable artifacts",
         "verify acceptance conditions"
       ],
-      "skillRefs": [
-        "$arcanea-logicus",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-logicus", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -168,10 +145,7 @@
         "produce inspectable artifacts",
         "verify acceptance conditions"
       ],
-      "skillRefs": [
-        "$arcanea-synthra",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-synthra", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -250,10 +224,7 @@
         "produce inspectable artifacts",
         "verify acceptance conditions"
       ],
-      "skillRefs": [
-        "$arcanea-debugon",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-debugon", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -322,20 +293,13 @@
         "approved source material",
         "explicit constraints and release state"
       ],
-      "outputs": [
-        "route plans",
-        "handoff packets",
-        "runtime receipts"
-      ],
+      "outputs": ["route plans", "handoff packets", "runtime receipts"],
       "capabilities": [
         "define executable boundaries",
         "produce inspectable artifacts",
         "verify acceptance conditions"
       ],
-      "skillRefs": [
-        "$arcanea-nexus",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-nexus", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -404,11 +368,7 @@
         "approved source material",
         "explicit constraints and release state"
       ],
-      "outputs": [
-        "identity records",
-        "prompt contracts",
-        "review ledgers"
-      ],
+      "outputs": ["identity records", "prompt contracts", "review ledgers"],
       "capabilities": [
         "translate narrative intent into a medium-specific contract",
         "preserve identity across variants",
@@ -487,20 +447,13 @@
         "approved source material",
         "explicit constraints and release state"
       ],
-      "outputs": [
-        "motif maps",
-        "music briefs",
-        "sonic continuity notes"
-      ],
+      "outputs": ["motif maps", "music briefs", "sonic continuity notes"],
       "capabilities": [
         "translate narrative intent into a medium-specific contract",
         "preserve identity across variants",
         "record critique and revision evidence"
       ],
-      "skillRefs": [
-        "$arcanea-melodia",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-melodia", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -579,10 +532,7 @@
         "preserve identity across variants",
         "record critique and revision evidence"
       ],
-      "skillRefs": [
-        "$arcanea-motio",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-motio", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -651,20 +601,13 @@
         "approved source material",
         "explicit constraints and release state"
       ],
-      "outputs": [
-        "design tokens",
-        "component patterns",
-        "template families"
-      ],
+      "outputs": ["design tokens", "component patterns", "template families"],
       "capabilities": [
         "translate narrative intent into a medium-specific contract",
         "preserve identity across variants",
         "record critique and revision evidence"
       ],
-      "skillRefs": [
-        "$arcanea-formis",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-formis", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -743,10 +686,7 @@
         "shape distinct language",
         "record canon impact"
       ],
-      "skillRefs": [
-        "$arcanea-chronica",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-chronica", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -815,20 +755,13 @@
         "approved source material",
         "explicit constraints and release state"
       ],
-      "outputs": [
-        "claim ledgers",
-        "editorial reviews",
-        "source annotations"
-      ],
+      "outputs": ["claim ledgers", "editorial reviews", "source annotations"],
       "capabilities": [
         "protect character and claim integrity",
         "shape distinct language",
         "record canon impact"
       ],
-      "skillRefs": [
-        "$arcanea-veritas",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-veritas", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -897,20 +830,13 @@
         "approved source material",
         "explicit constraints and release state"
       ],
-      "outputs": [
-        "terminology maps",
-        "naming audits",
-        "voice contracts"
-      ],
+      "outputs": ["terminology maps", "naming audits", "voice contracts"],
       "capabilities": [
         "protect character and claim integrity",
         "shape distinct language",
         "record canon impact"
       ],
-      "skillRefs": [
-        "$arcanea-lexicon",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-lexicon", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -979,20 +905,13 @@
         "approved source material",
         "explicit constraints and release state"
       ],
-      "outputs": [
-        "tagline fields",
-        "ritual language",
-        "emotional refrains"
-      ],
+      "outputs": ["tagline fields", "ritual language", "emotional refrains"],
       "capabilities": [
         "protect character and claim integrity",
         "shape distinct language",
         "record canon impact"
       ],
-      "skillRefs": [
-        "$arcanea-poetica",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-poetica", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -1061,20 +980,13 @@
         "approved source material",
         "explicit constraints and release state"
       ],
-      "outputs": [
-        "source maps",
-        "research briefs",
-        "open-question registers"
-      ],
+      "outputs": ["source maps", "research briefs", "open-question registers"],
       "capabilities": [
         "gather evidence",
         "state uncertainty",
         "turn findings into a decision instrument"
       ],
-      "skillRefs": [
-        "$arcanea-oracle",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-oracle", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -1153,10 +1065,7 @@
         "state uncertainty",
         "turn findings into a decision instrument"
       ],
-      "skillRefs": [
-        "$arcanea-analytica",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-analytica", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -1235,10 +1144,7 @@
         "state uncertainty",
         "turn findings into a decision instrument"
       ],
-      "skillRefs": [
-        "$arcanea-memoria",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-memoria", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -1317,10 +1223,7 @@
         "state uncertainty",
         "turn findings into a decision instrument"
       ],
-      "skillRefs": [
-        "$arcanea-futura",
-        "$arcanea-canon-director"
-      ],
+      "skillRefs": ["$arcanea-futura", "$arcanea-canon-director"],
       "routes": [
         "intake",
         "source-check",
@@ -1376,12 +1279,7 @@
     }
   ],
   "routing": {
-    "defaultCouncil": [
-      "prismatic",
-      "chronica",
-      "analytica",
-      "memoria"
-    ],
+    "defaultCouncil": ["prismatic", "chronica", "analytica", "memoria"],
     "optionalSpecialist": "Add at most one medium or story specialist when the campaign requires it.",
     "approvalPath": [
       "source check",

@@ -46,10 +46,10 @@ The inventory below is the earlier 03:05 snapshot, not a claim about current tas
 
 The Codex app returned 13 pinned tasks and the 50 most recent non-pinned tasks:
 
-| Set | Active | Idle | Not loaded |
-| --- | ---: | ---: | ---: |
-| Pinned | 0 | 6 | 7 |
-| Recent non-pinned | 2 | 31 | 17 |
+| Set               | Active | Idle | Not loaded |
+| ----------------- | -----: | ---: | ---------: |
+| Pinned            |      0 |    6 |          7 |
+| Recent non-pinned |      2 |   31 |         17 |
 
 The two active tasks were:
 
@@ -62,10 +62,10 @@ Do not archive either active task. Do not mass-archive pinned or idle work from 
 
 The read-only listener check found:
 
-| Port | Process | Observed command | Ownership conclusion |
-| ---: | --- | --- | --- |
+| Port | Process        | Observed command                                                                                           | Ownership conclusion                                                                                                                             |
+| ---: | -------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 4321 | Node / Next.js | `next start -H 127.0.0.1 -p 4321` from `.hermes-worktrees/queen-mission-control-20260810/apps/observatory` | Not created by this task. Likely related to the pinned `Codex Control Center` task, but ownership is not proven. Do not stop from this campaign. |
-| 5200 | Node | Starlight Intelligence System gateway daemon | Control-plane service, not the identified Next server. Do not stop. |
+| 5200 | Node           | Starlight Intelligence System gateway daemon                                                               | Control-plane service, not the identified Next server. Do not stop.                                                                              |
 
 The 4321 server began on 2026-08-24 at approximately 13:58 Europe/Amsterdam. Age alone does not prove that it is abandoned. The earlier 03:05 preflight classified zero dev servers, but the fresh 18:09 PP plan classified one; the server therefore remains a current pressure signal whose ownership is still external to this campaign. No process was stopped.
 

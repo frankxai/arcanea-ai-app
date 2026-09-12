@@ -46,9 +46,7 @@
       "explicitModelReserveRecommended": false,
       "strictMcpRecommended": false
     },
-    "hardBlocks": [
-      "17 Codex task runtimes exceed the overnight budget of 6."
-    ],
+    "hardBlocks": ["17 Codex task runtimes exceed the overnight budget of 6."],
     "constraints": [
       "PP posture is constrain; run one bounded workload with no new parallel agents.",
       "1 dev-server processes are active; stop completed servers before this workload."

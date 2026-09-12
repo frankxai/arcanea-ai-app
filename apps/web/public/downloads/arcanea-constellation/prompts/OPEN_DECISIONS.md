@@ -12,14 +12,14 @@ This register turns every generation blocker into a bounded human decision or ev
 - Decision or maturity gates: **6**
 - Silent substitutions allowed: **0**
 
-| Gate | Type | Held by | Affected jobs |
-|---|---|---|---|
-| AVD-001 — Resolve Sol's countable body plan | canon-and-identity-decision | Creator with canon and identity review | [ACV-027](/constellation/prompts/acv-027), [ACV-037](/constellation/prompts/acv-037) |
-| AVD-002 — Resolve Source's ontology | locked-canon-reconciliation | Creator with locked-canon guardian | [ACV-030](/constellation/prompts/acv-030), [ACV-040](/constellation/prompts/acv-040) |
-| AVD-003 — Reconcile Korvash's identity and lived-experience framing | continuity-and-specialist-review-gate | Creator and continuity editor, followed by a qualified disability or neurodivergence lived-experience reviewer | [ACV-077](/constellation/prompts/acv-077) |
-| AVD-004 — Complete the Song of Van Linh qualified-reader gate | non-bypassable-cultural-review-gate | Creator with two paid Vietnamese women readers; add relevant Indigenous-Vietnamese review if Central Highlands material appears | [ACV-080](/constellation/prompts/acv-080), [ACV-084](/constellation/prompts/acv-084) |
-| AVD-005 — Decide whether Aurevalde's absence may be spent | canon-resource-and-campaign-decision | Creator with lore review | [ACV-089](/constellation/prompts/acv-089) |
-| AVD-006 — Earn the ten-Guardian ensemble prerequisite | identity-maturity-gate | Creator and identity council after all ten individual lineages mature | [ACV-099](/constellation/prompts/acv-099) |
+| Gate                                                                | Type                                  | Held by                                                                                                                         | Affected jobs                                                                        |
+| ------------------------------------------------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| AVD-001 — Resolve Sol's countable body plan                         | canon-and-identity-decision           | Creator with canon and identity review                                                                                          | [ACV-027](/constellation/prompts/acv-027), [ACV-037](/constellation/prompts/acv-037) |
+| AVD-002 — Resolve Source's ontology                                 | locked-canon-reconciliation           | Creator with locked-canon guardian                                                                                              | [ACV-030](/constellation/prompts/acv-030), [ACV-040](/constellation/prompts/acv-040) |
+| AVD-003 — Reconcile Korvash's identity and lived-experience framing | continuity-and-specialist-review-gate | Creator and continuity editor, followed by a qualified disability or neurodivergence lived-experience reviewer                  | [ACV-077](/constellation/prompts/acv-077)                                            |
+| AVD-004 — Complete the Song of Van Linh qualified-reader gate       | non-bypassable-cultural-review-gate   | Creator with two paid Vietnamese women readers; add relevant Indigenous-Vietnamese review if Central Highlands material appears | [ACV-080](/constellation/prompts/acv-080), [ACV-084](/constellation/prompts/acv-084) |
+| AVD-005 — Decide whether Aurevalde's absence may be spent           | canon-resource-and-campaign-decision  | Creator with lore review                                                                                                        | [ACV-089](/constellation/prompts/acv-089)                                            |
+| AVD-006 — Earn the ten-Guardian ensemble prerequisite               | identity-maturity-gate                | Creator and identity council after all ten individual lineages mature                                                           | [ACV-099](/constellation/prompts/acv-099)                                            |
 
 ## AVD-001 — Resolve Sol's countable body plan
 
@@ -212,7 +212,6 @@ These are neutral paths for a human-held decision, not recommendations or implie
 ### Safe work while open
 
 Advance individual Guardian studies and reference maturity; do not generate an ensemble that would silently cast ten open bodies.
-
 
 ## Reopening procedure
 

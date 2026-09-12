@@ -8,27 +8,27 @@ A source-complete plate has enough cited geography, material economy, ecology, a
 
 ## Portfolio state
 
-| State | Count | Meaning |
-|---|---:|---|
-| Source complete | 5 | One bounded source-defined system plate may become a candidate after all human gates; this does not lock the whole world. |
-| Source complete, specialist review required | 1 | Internal exploration is possible; named cultural review evidence is mandatory before approval. |
-| Discovery only | 2 | Open world variables must stay visible and the release system keeps the result internal. |
-| Blocked | 2 | Generation is denied until the named cultural or canon-resource decision is complete. |
+| State                                       | Count | Meaning                                                                                                                   |
+| ------------------------------------------- | ----: | ------------------------------------------------------------------------------------------------------------------------- |
+| Source complete                             |     5 | One bounded source-defined system plate may become a candidate after all human gates; this does not lock the whole world. |
+| Source complete, specialist review required |     1 | Internal exploration is possible; named cultural review evidence is mandatory before approval.                            |
+| Discovery only                              |     2 | Open world variables must stay visible and the release system keeps the result internal.                                  |
+| Blocked                                     |     2 | Generation is denied until the named cultural or canon-resource decision is complete.                                     |
 
 ## World index
 
-| World | Readiness | Campaign | Release eligibility |
-|---|---|---|---|
-| [Crystalpeak](#crystalpeak) | source complete | ACV-081 / Round 09 | candidate after human gates |
-| [Avilara](#avilara) | source complete review required | ACV-082 / Round 09 | candidate after human gates |
-| [Pyrathis](#pyrathis) | source complete | ACV-083 / Round 09 | candidate after human gates |
-| [Van Linh](#van-linh) | blocked | ACV-084 / Round 09 | internal only until identity lock |
-| [The Hall of White](#the-hall-of-white) | source complete | ACV-085 / Round 09 | candidate after human gates |
-| [The Unnamed Forge Realm](#the-unnamed-forge-realm) | discovery only | ACV-086 / Round 09 | internal only until identity lock |
-| [Mar Arcano](#mar-arcano) | source complete | ACV-087 / Round 09 | candidate after human gates |
-| [Veldoria](#veldoria) | source complete | ACV-088 / Round 09 | candidate after human gates |
-| [Aurevalde](#aurevalde) | blocked | ACV-089 / Round 09 | internal only until identity lock |
-| [The Ultraworld](#the-ultraworld) | discovery only | ACV-090 / Round 09 | internal only until identity lock |
+| World                                               | Readiness                       | Campaign           | Release eligibility               |
+| --------------------------------------------------- | ------------------------------- | ------------------ | --------------------------------- |
+| [Crystalpeak](#crystalpeak)                         | source complete                 | ACV-081 / Round 09 | candidate after human gates       |
+| [Avilara](#avilara)                                 | source complete review required | ACV-082 / Round 09 | candidate after human gates       |
+| [Pyrathis](#pyrathis)                               | source complete                 | ACV-083 / Round 09 | candidate after human gates       |
+| [Van Linh](#van-linh)                               | blocked                         | ACV-084 / Round 09 | internal only until identity lock |
+| [The Hall of White](#the-hall-of-white)             | source complete                 | ACV-085 / Round 09 | candidate after human gates       |
+| [The Unnamed Forge Realm](#the-unnamed-forge-realm) | discovery only                  | ACV-086 / Round 09 | internal only until identity lock |
+| [Mar Arcano](#mar-arcano)                           | source complete                 | ACV-087 / Round 09 | candidate after human gates       |
+| [Veldoria](#veldoria)                               | source complete                 | ACV-088 / Round 09 | candidate after human gates       |
+| [Aurevalde](#aurevalde)                             | blocked                         | ACV-089 / Round 09 | internal only until identity lock |
+| [The Ultraworld](#the-ultraworld)                   | discovery only                  | ACV-090 / Round 09 | internal only until identity lock |
 
 ## Crystalpeak
 

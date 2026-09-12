@@ -11,10 +11,7 @@
     "state uncertainty",
     "turn findings into a decision instrument"
   ],
-  "skillRefs": [
-    "$arcanea-memoria",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-memoria", "$arcanea-canon-director"],
   "stopConditions": [
     "Source provenance is missing",
     "Private material would enter a public pack",

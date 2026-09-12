@@ -33,14 +33,14 @@ The fixture at `C:\Users\frank\starlight\repos\starlight-agent-config\core\tools
 
 ## What is and is not actionable
 
-| Candidate | Current evidence | Authority state | Arcanea action |
-| --- | --- | --- | --- |
-| July rebuildable packet | 0 / 11 targets present | Invalid and stale | Do not reuse |
-| Current rebuildable outputs | No fresh exact-path packet | Unknown | Require a new census with same-minute Git and process checks |
-| Idle Codex tasks and non-owned dev server | Historical ownership evidence only | User/owning-task decision | Close only through the owning task or UI |
-| Installed applications | Historical aggregate only | Named-human, vendor-specific | Fresh per-product audit before keep/uninstall decision |
-| Hibernation reserve | Historical 12.57 GiB estimate | Named-human power-policy decision | Consider only as one bounded contribution, not a complete fix |
-| Package stores, AppData, agent state, OneDrive, restic | Mixed active, protected, or backup state | No cleanup authority | Never blanket-delete, dehydrate, or prune |
+| Candidate                                              | Current evidence                         | Authority state                   | Arcanea action                                                |
+| ------------------------------------------------------ | ---------------------------------------- | --------------------------------- | ------------------------------------------------------------- |
+| July rebuildable packet                                | 0 / 11 targets present                   | Invalid and stale                 | Do not reuse                                                  |
+| Current rebuildable outputs                            | No fresh exact-path packet               | Unknown                           | Require a new census with same-minute Git and process checks  |
+| Idle Codex tasks and non-owned dev server              | Historical ownership evidence only       | User/owning-task decision         | Close only through the owning task or UI                      |
+| Installed applications                                 | Historical aggregate only                | Named-human, vendor-specific      | Fresh per-product audit before keep/uninstall decision        |
+| Hibernation reserve                                    | Historical 12.57 GiB estimate            | Named-human power-policy decision | Consider only as one bounded contribution, not a complete fix |
+| Package stores, AppData, agent state, OneDrive, restic | Mixed active, protected, or backup state | No cleanup authority              | Never blanket-delete, dehydrate, or prune                     |
 
 ## Required recovery path
 

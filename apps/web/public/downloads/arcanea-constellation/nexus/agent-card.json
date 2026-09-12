@@ -11,10 +11,7 @@
     "produce inspectable artifacts",
     "verify acceptance conditions"
   ],
-  "skillRefs": [
-    "$arcanea-nexus",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-nexus", "$arcanea-canon-director"],
   "stopConditions": [
     "Human approval is required",
     "Machine capacity gate is HOLD",

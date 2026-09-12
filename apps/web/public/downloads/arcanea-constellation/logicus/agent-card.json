@@ -11,10 +11,7 @@
     "produce inspectable artifacts",
     "verify acceptance conditions"
   ],
-  "skillRefs": [
-    "$arcanea-logicus",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-logicus", "$arcanea-canon-director"],
   "stopConditions": [
     "Unresolved product boundary",
     "Irreversible architecture choice",

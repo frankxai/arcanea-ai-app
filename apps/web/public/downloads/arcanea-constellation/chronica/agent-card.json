@@ -11,10 +11,7 @@
     "shape distinct language",
     "record canon impact"
   ],
-  "skillRefs": [
-    "$arcanea-chronica",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-chronica", "$arcanea-canon-director"],
   "stopConditions": [
     "Two sources claim incompatible canon",
     "A retcon lacks creator approval",

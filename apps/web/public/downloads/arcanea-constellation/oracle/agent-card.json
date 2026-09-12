@@ -11,10 +11,7 @@
     "state uncertainty",
     "turn findings into a decision instrument"
   ],
-  "skillRefs": [
-    "$arcanea-oracle",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-oracle", "$arcanea-canon-director"],
   "stopConditions": [
     "Only secondary evidence is available for a high-stakes claim",
     "The requested source is private or inaccessible",

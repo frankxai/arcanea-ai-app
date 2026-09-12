@@ -19,7 +19,9 @@ export function verifyExternalSourceBytes(bytes, evidence) {
     !Number.isSafeInteger(evidence.bytes) ||
     evidence.bytes < 1
   ) {
-    throw new Error("External source evidence record is incomplete or invalid.");
+    throw new Error(
+      "External source evidence record is incomplete or invalid.",
+    );
   }
   const observed = inspectExternalSourceBytes(bytes);
   if (observed.bytes !== evidence.bytes) {

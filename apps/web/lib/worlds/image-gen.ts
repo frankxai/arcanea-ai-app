@@ -29,7 +29,7 @@ export async function generateCharacterPortrait(
   options?: {
     style?: "realistic" | "anime" | "painterly" | "concept-art";
     aspectRatio?: "portrait" | "square" | "landscape";
-  }
+  },
 ): Promise<{ imageUrl: string; prompt: string }> {
   const style = options?.style || "concept-art";
   const aspectRatio = options?.aspectRatio || "portrait";
@@ -53,88 +53,106 @@ export async function generateCharacterPortrait(
  * Arcanean art direction system
  * Maps element + rank to observable rendering language without named imitation
  */
-export const ART_DIRECTION: Record<string, {
-  palette: string;
-  mood: string;
-  reference: string;
-}> = {
+export const ART_DIRECTION: Record<
+  string,
+  {
+    palette: string;
+    mood: string;
+    reference: string;
+  }
+> = {
   "Fire-Apprentice": {
     palette: "warm amber and soft orange, small flame accents",
     mood: "young, eager, slightly overwhelmed by their power",
-    reference: "hand-painted animation warmth, rounded readable shapes, ember-lit material detail",
+    reference:
+      "hand-painted animation warmth, rounded readable shapes, ember-lit material detail",
   },
   "Fire-Master": {
     palette: "deep crimson and molten gold, controlled flame aura",
     mood: "confident, battle-tested, quiet intensity",
-    reference: "elongated editorial fantasy linework, severe value contrast, weathered ceremonial texture",
+    reference:
+      "elongated editorial fantasy linework, severe value contrast, weathered ceremonial texture",
   },
   "Fire-Luminor": {
     palette: "white-hot core with prismatic flame corona",
     mood: "transcendent, beyond mortal, fire made conscious",
-    reference: "ethereal ink-and-gouache fantasy plate, calligraphic silhouette, radiant negative space",
+    reference:
+      "ethereal ink-and-gouache fantasy plate, calligraphic silhouette, radiant negative space",
   },
   "Water-Apprentice": {
     palette: "soft teal and seafoam, water droplets in hair",
     mood: "curious, fluid, emotionally open",
-    reference: "cinematic rain-lit animation, luminous water refraction, delicate atmospheric perspective",
+    reference:
+      "cinematic rain-lit animation, luminous water refraction, delicate atmospheric perspective",
   },
   "Water-Master": {
     palette: "deep ocean blue and silver, water armor/robes",
     mood: "serene power, tidal force under calm surface",
-    reference: "disciplined kinetic water arcs, ceremonial high-fantasy portraiture, calm directional flow",
+    reference:
+      "disciplined kinetic water arcs, ceremonial high-fantasy portraiture, calm directional flow",
   },
   "Earth-Apprentice": {
     palette: "mossy green and warm brown, stone fragments floating",
     mood: "grounded but growing, roots breaking through",
-    reference: "hand-painted ecological fantasy, tactile moss and stone, sturdy rounded forms",
+    reference:
+      "hand-painted ecological fantasy, tactile moss and stone, sturdy rounded forms",
   },
   "Earth-Master": {
     palette: "deep forest green and granite, crystal accents",
     mood: "immovable, ancient patience, connected to deep earth",
-    reference: "monumental arboreal silhouette, mineral facets, grounded painterly mass",
+    reference:
+      "monumental arboreal silhouette, mineral facets, grounded painterly mass",
   },
   "Void-Master": {
     palette: "deep purple and starfield black, reality distortion",
     mood: "unsettling calm, seeing between worlds",
-    reference: "sacred geometric alien form, restrained biomechanical tension, beautiful unease",
+    reference:
+      "sacred geometric alien form, restrained biomechanical tension, beautiful unease",
   },
   "Spirit-Luminor": {
     palette: "pure white gold, prismatic, transcendent glow",
     mood: "beyond form, light itself has become a person",
-    reference: "ornamental gold-leaf patterning, flattened luminous shapes, cosmic negative space",
+    reference:
+      "ornamental gold-leaf patterning, flattened luminous shapes, cosmic negative space",
   },
 };
 
 /**
  * Get art direction for a character based on element + rank
  */
-export function getArtDirection(element: string, rank: string): {
+export function getArtDirection(
+  element: string,
+  rank: string,
+): {
   palette: string;
   mood: string;
   reference: string;
 } {
   const key = `${element}-${rank}`;
-  return ART_DIRECTION[key] || {
-    palette: "elemental colors appropriate to the character",
-    mood: "determined, growing, on a journey",
-    reference: "high fantasy concept art, painterly style",
-  };
+  return (
+    ART_DIRECTION[key] || {
+      palette: "elemental colors appropriate to the character",
+      mood: "determined, growing, on a journey",
+      reference: "high fantasy concept art, painterly style",
+    }
+  );
 }
 
 /**
  * Build the complete Gemini prompt for character portrait generation
  */
-export function buildGeminiCharacterPrompt(
-  mcpBlueprint: {
-    name: string;
-    primaryElement: string;
-    rank: string;
-    house: string;
-    personality?: { traits?: string[]; flaw?: string };
-    godbeast?: { name: string; form: string };
-  }
-): string {
-  const artDir = getArtDirection(mcpBlueprint.primaryElement, mcpBlueprint.rank);
+export function buildGeminiCharacterPrompt(mcpBlueprint: {
+  name: string;
+  primaryElement: string;
+  rank: string;
+  house: string;
+  personality?: { traits?: string[]; flaw?: string };
+  godbeast?: { name: string; form: string };
+}): string {
+  const artDir = getArtDirection(
+    mcpBlueprint.primaryElement,
+    mcpBlueprint.rank,
+  );
 
   const sections = [
     `Create a stunning fantasy character portrait of ${mcpBlueprint.name}.`,
@@ -145,15 +163,21 @@ export function buildGeminiCharacterPrompt(
   ];
 
   if (mcpBlueprint.personality?.traits) {
-    sections.push(`Their expression shows: ${mcpBlueprint.personality.traits.join(", ")}`);
+    sections.push(
+      `Their expression shows: ${mcpBlueprint.personality.traits.join(", ")}`,
+    );
   }
 
   if (mcpBlueprint.personality?.flaw) {
-    sections.push(`Subtle hint of their inner conflict: ${mcpBlueprint.personality.flaw}`);
+    sections.push(
+      `Subtle hint of their inner conflict: ${mcpBlueprint.personality.flaw}`,
+    );
   }
 
   if (mcpBlueprint.godbeast) {
-    sections.push(`Their companion, ${mcpBlueprint.godbeast.name} (a ${mcpBlueprint.godbeast.form}), is faintly visible in the background.`);
+    sections.push(
+      `Their companion, ${mcpBlueprint.godbeast.name} (a ${mcpBlueprint.godbeast.form}), is faintly visible in the background.`,
+    );
   }
 
   sections.push(

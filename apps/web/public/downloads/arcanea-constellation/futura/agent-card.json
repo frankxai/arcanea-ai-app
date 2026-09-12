@@ -11,10 +11,7 @@
     "state uncertainty",
     "turn findings into a decision instrument"
   ],
-  "skillRefs": [
-    "$arcanea-futura",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-futura", "$arcanea-canon-director"],
   "stopConditions": [
     "A scenario is presented as certainty",
     "A decision closes an unapproved strategic option",

@@ -9,7 +9,10 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { buildGeminiCharacterPrompt, getArtDirection } from "@/lib/worlds/image-gen";
+import {
+  buildGeminiCharacterPrompt,
+  getArtDirection,
+} from "@/lib/worlds/image-gen";
 import type { GeminiResponsePart } from "@/lib/database/types/world-graph-types";
 
 export async function POST(request: NextRequest) {
@@ -20,7 +23,7 @@ export async function POST(request: NextRequest) {
     if (!type || !blueprint) {
       return NextResponse.json(
         { error: "Missing type or blueprint" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -38,12 +41,16 @@ export async function POST(request: NextRequest) {
         break;
       case "world":
         // Accept a pre-built prompt (e.g. from world generation's image_prompt field)
-        prompt = blueprint.prompt || `Create a breathtaking fantasy concept art panorama of a world called "${blueprint.name || 'Unknown'}". Epic landscape, cinematic lighting, no text, no watermarks.`;
+        prompt =
+          blueprint.prompt ||
+          `Create a breathtaking fantasy concept art panorama of a world called "${blueprint.name || "Unknown"}". Epic landscape, cinematic lighting, no text, no watermarks.`;
         break;
       default:
         return NextResponse.json(
-          { error: `Unknown type: ${type}. Use character, location, creature, or world.` },
-          { status: 400 }
+          {
+            error: `Unknown type: ${type}. Use character, location, creature, or world.`,
+          },
+          { status: 400 },
         );
     }
 
@@ -61,10 +68,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         generated: false,
         prompt,
-        message: "No GOOGLE_AI_API_KEY configured. Use this prompt with Gemini, Midjourney, or any image gen tool.",
-        artDirection: type === "character"
-          ? getArtDirection(blueprint.primaryElement, blueprint.rank)
-          : undefined,
+        message:
+          "No GOOGLE_AI_API_KEY configured. Use this prompt with Gemini, Midjourney, or any image gen tool.",
+        artDirection:
+          type === "character"
+            ? getArtDirection(blueprint.primaryElement, blueprint.rank)
+            : undefined,
       });
     }
 
@@ -83,28 +92,37 @@ export async function POST(request: NextRequest) {
             responseModalities: ["TEXT", "IMAGE"],
           },
         }),
-      }
+      },
     );
 
     if (!response.ok) {
       const error = await response.text();
       return NextResponse.json(
-        { generated: false, prompt, error: `Gemini API error: ${response.status}`, detail: error },
-        { status: 502 }
+        {
+          generated: false,
+          prompt,
+          error: `Gemini API error: ${response.status}`,
+          detail: error,
+        },
+        { status: 502 },
       );
     }
 
     const data = await response.json();
 
     // Extract image from Gemini response
-    const parts: GeminiResponsePart[] = data.candidates?.[0]?.content?.parts || [];
-    const imagePart = parts.find((p) => p.inlineData?.mimeType?.startsWith("image/"));
+    const parts: GeminiResponsePart[] =
+      data.candidates?.[0]?.content?.parts || [];
+    const imagePart = parts.find((p) =>
+      p.inlineData?.mimeType?.startsWith("image/"),
+    );
 
     if (!imagePart) {
       return NextResponse.json({
         generated: false,
         prompt,
-        message: "Gemini returned text but no image. The prompt may need adjustment.",
+        message:
+          "Gemini returned text but no image. The prompt may need adjustment.",
         textResponse: parts.find((p) => p.text)?.text,
       });
     }
@@ -114,15 +132,15 @@ export async function POST(request: NextRequest) {
       imageData: imagePart.inlineData!.data, // base64 — guaranteed by find() above
       mimeType: imagePart.inlineData!.mimeType,
       prompt,
-      artDirection: type === "character"
-        ? getArtDirection(blueprint.primaryElement, blueprint.rank)
-        : undefined,
+      artDirection:
+        type === "character"
+          ? getArtDirection(blueprint.primaryElement, blueprint.rank)
+          : undefined,
     });
-
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to generate image", detail: String(error) },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -164,5 +182,7 @@ function buildCreaturePrompt(blueprint: {
     "Detailed fantasy biology, believable anatomy, magical aura.",
     "Dark background, dramatic lighting, concept art style.",
     "No text, no watermarks.",
-  ].filter(Boolean).join(" ");
+  ]
+    .filter(Boolean)
+    .join(" ");
 }

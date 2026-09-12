@@ -22,15 +22,15 @@ non_goals:
 
 ## Task contract
 
-| Field | Record |
-|---|---|
-| **Scope** | Develop a repeatable Kaelith encounter grammar and one human-scale scene in which survival is distinguished from obedience. |
-| **Owner** | Hermes scheduled daily expansion. Creator review is required before incorporation, promotion, visual lock, or publication. |
-| **Files** | This single STAGING packet only. |
-| **Non-goals** | No change to `CANON_LOCKED.md`; no new lore tier, creature, location, relic, named cast member, or fixed Godbeast appearance. |
+| Field                   | Record                                                                                                                                                                                                           |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Scope**               | Develop a repeatable Kaelith encounter grammar and one human-scale scene in which survival is distinguished from obedience.                                                                                      |
+| **Owner**               | Hermes scheduled daily expansion. Creator review is required before incorporation, promotion, visual lock, or publication.                                                                                       |
+| **Files**               | This single STAGING packet only.                                                                                                                                                                                 |
+| **Non-goals**           | No change to `CANON_LOCKED.md`; no new lore tier, creature, location, relic, named cast member, or fixed Godbeast appearance.                                                                                    |
 | **Acceptance criteria** | Kaelith remains Lyssandria's Earth-bound Foundation Godbeast at 174 Hz; its gravity, endurance, and Kaelith Stone correspondence remain the existing anchors. Foundation never becomes a command to endure harm. |
-| **Verification** | Canon-anchor/status review; explicit non-promotion and alternate-foundation scrub; exact-file whitespace check; scoped Git status. |
-| **Rollback** | Delete this one untracked file from the isolated `main-clean` worktree. No locked source or index is changed. |
+| **Verification**        | Canon-anchor/status review; explicit non-promotion and alternate-foundation scrub; exact-file whitespace check; scoped Git status.                                                                               |
+| **Rollback**            | Delete this one untracked file from the isolated `main-clean` worktree. No locked source or index is changed.                                                                                                    |
 
 ## Locked anchors held unchanged
 
@@ -50,7 +50,7 @@ Kaelith does not reward whoever stays longest. It reveals what a person is actua
 
 Kaelith's unusual restraint is that it refuses the romance of collapse. Its presence is immense, but the encounter becomes intimate at the instant a person stops calling self-erasure “strength.”
 
-## Scene seed: *The Beam That Was Not a Vow*
+## Scene seed: _The Beam That Was Not a Vow_
 
 The roof had been down for three days, though no one used that word.
 
@@ -119,6 +119,6 @@ This weight, they could share.
 
 ## Update log
 
-| Date | Change | Status |
-|---|---|---|
+| Date       | Change                                                                                                                                                                                               | Status  |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | 2026-08-10 | Created draft-only Kaelith encounter grammar, scene seed, and text-only visual direction. Locked canon untouched; no image generation, publication, paid generation, or external delivery performed. | STAGING |

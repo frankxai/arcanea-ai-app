@@ -11,10 +11,7 @@
     "shape distinct language",
     "record canon impact"
   ],
-  "skillRefs": [
-    "$arcanea-lexicon",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-lexicon", "$arcanea-canon-director"],
   "stopConditions": [
     "A new entity violates the expansion law",
     "A sacred cultural marker is used as shorthand",

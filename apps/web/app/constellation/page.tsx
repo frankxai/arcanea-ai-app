@@ -774,8 +774,8 @@ export default function ConstellationPage() {
           {campaign.meta.previousWave.name} documents{" "}
           {campaign.meta.previousWave.inspectedImages} inspected images and{" "}
           {campaign.meta.previousWave.totalPublicationPacketAssets} intake
-          records. This campaign learns from that collection without counting
-          it as new output. {campaign.meta.previousWave.releaseBoundary}
+          records. This campaign learns from that collection without counting it
+          as new output. {campaign.meta.previousWave.releaseBoundary}
         </p>
         <div className={styles.downloadActions}>
           <a

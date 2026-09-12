@@ -8,37 +8,37 @@ A source-complete record is still a candidate until human identity approval. A d
 
 ## Portfolio state
 
-| State | Count | Meaning |
-|---|---:|---|
-| Source complete | 5 | Physical and story evidence can support an internal identity-master candidate; human identity and release gates still apply. |
-| Source complete, review required | 1 | The identity record is specific enough to explore, but named cultural or lived-experience review must be evidenced before approval. |
-| Discovery only | 12 | Known facts may guide internal exploration; open physical variables remain provisional and public approval is technically denied. |
-| Blocked | 2 | Generation is denied until the named source, identity, or sensitivity conflict is resolved. |
+| State                            | Count | Meaning                                                                                                                             |
+| -------------------------------- | ----: | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Source complete                  |     5 | Physical and story evidence can support an internal identity-master candidate; human identity and release gates still apply.        |
+| Source complete, review required |     1 | The identity record is specific enough to explore, but named cultural or lived-experience review must be evidenced before approval. |
+| Discovery only                   |    12 | Known facts may guide internal exploration; open physical variables remain provisional and public approval is technically denied.   |
+| Blocked                          |     2 | Generation is denied until the named source, identity, or sensitivity conflict is resolved.                                         |
 
 ## Character index
 
-| Character | Series | State | Campaign job | Public eligibility |
-|---|---|---|---|---|
-| [Kael Thornfield](#kael-thornfield) | Chronicles of Arcanea | source complete | ACV-061 / Round 07 | candidate after human gates |
-| [Mira Tidecrest](#mira-tidecrest) | Chronicles of Arcanea | source complete | ACV-062 / Round 07 | candidate after human gates |
-| [Ash](#ash) | Chronicles of Arcanea | source complete | ACV-063 / Round 07 | candidate after human gates |
-| [Sable Luminaire](#sable-luminaire) | Chronicles of Arcanea | source complete | ACV-064 / Round 07 | candidate after human gates |
-| [Elio Songwright](#elio-songwright) | Chronicles of Arcanea | source complete | ACV-065 / Round 07 | candidate after human gates |
-| [Selene Velara](#selene-velara) | Las Tierras de Luz | source complete review required | ACV-066 / Round 07 | candidate after human gates |
-| [Lysara Sablecourt](#lysara-sablecourt) | The Hall of White | discovery only | ACV-067 / Round 07 | internal only until identity lock |
-| [Reni Voss](#reni-voss) | The Hall of White | discovery only | ACV-068 / Round 07 | internal only until identity lock |
-| [Aranya](#aranya) | The Hall of White | discovery only | ACV-069 / Round 07 | internal only until identity lock |
-| [Veyl Stoneshade](#veyl-stoneshade) | The Hall of White | discovery only | ACV-070 / Round 07 | internal only until identity lock |
-| [Tezerin Halevant](#tezerin-halevant) | The Hall of White | discovery only | ACV-071 / Round 08 | internal only until identity lock |
-| [Erivar](#erivar) | Forge of Ruin | discovery only | ACV-072 / Round 08 | internal only until identity lock |
-| [Bryda](#bryda) | Forge of Ruin | discovery only | ACV-073 / Round 08 | internal only until identity lock |
-| [Sigveld](#sigveld) | Forge of Ruin | discovery only | ACV-074 / Round 08 | internal only until identity lock |
-| [Raskvorn](#raskvorn) | Forge of Ruin | discovery only | ACV-075 / Round 08 | internal only until identity lock |
-| [Odre](#odre) | Forge of Ruin | discovery only | ACV-076 / Round 08 | internal only until identity lock |
-| [Korvash](#korvash) | Heart of Pyrathis | blocked | ACV-077 / Round 08 | internal only until identity lock |
-| [Solenne](#solenne) | Heart of Pyrathis | discovery only | ACV-078 / Round 08 | internal only until identity lock |
-| [Pyrrik](#pyrrik) | Heart of Pyrathis | discovery only | ACV-079 / Round 08 | internal only until identity lock |
-| [An](#an) | Song of Van Linh | blocked | ACV-080 / Round 08 | internal only until identity lock |
+| Character                               | Series                | State                           | Campaign job       | Public eligibility                |
+| --------------------------------------- | --------------------- | ------------------------------- | ------------------ | --------------------------------- |
+| [Kael Thornfield](#kael-thornfield)     | Chronicles of Arcanea | source complete                 | ACV-061 / Round 07 | candidate after human gates       |
+| [Mira Tidecrest](#mira-tidecrest)       | Chronicles of Arcanea | source complete                 | ACV-062 / Round 07 | candidate after human gates       |
+| [Ash](#ash)                             | Chronicles of Arcanea | source complete                 | ACV-063 / Round 07 | candidate after human gates       |
+| [Sable Luminaire](#sable-luminaire)     | Chronicles of Arcanea | source complete                 | ACV-064 / Round 07 | candidate after human gates       |
+| [Elio Songwright](#elio-songwright)     | Chronicles of Arcanea | source complete                 | ACV-065 / Round 07 | candidate after human gates       |
+| [Selene Velara](#selene-velara)         | Las Tierras de Luz    | source complete review required | ACV-066 / Round 07 | candidate after human gates       |
+| [Lysara Sablecourt](#lysara-sablecourt) | The Hall of White     | discovery only                  | ACV-067 / Round 07 | internal only until identity lock |
+| [Reni Voss](#reni-voss)                 | The Hall of White     | discovery only                  | ACV-068 / Round 07 | internal only until identity lock |
+| [Aranya](#aranya)                       | The Hall of White     | discovery only                  | ACV-069 / Round 07 | internal only until identity lock |
+| [Veyl Stoneshade](#veyl-stoneshade)     | The Hall of White     | discovery only                  | ACV-070 / Round 07 | internal only until identity lock |
+| [Tezerin Halevant](#tezerin-halevant)   | The Hall of White     | discovery only                  | ACV-071 / Round 08 | internal only until identity lock |
+| [Erivar](#erivar)                       | Forge of Ruin         | discovery only                  | ACV-072 / Round 08 | internal only until identity lock |
+| [Bryda](#bryda)                         | Forge of Ruin         | discovery only                  | ACV-073 / Round 08 | internal only until identity lock |
+| [Sigveld](#sigveld)                     | Forge of Ruin         | discovery only                  | ACV-074 / Round 08 | internal only until identity lock |
+| [Raskvorn](#raskvorn)                   | Forge of Ruin         | discovery only                  | ACV-075 / Round 08 | internal only until identity lock |
+| [Odre](#odre)                           | Forge of Ruin         | discovery only                  | ACV-076 / Round 08 | internal only until identity lock |
+| [Korvash](#korvash)                     | Heart of Pyrathis     | blocked                         | ACV-077 / Round 08 | internal only until identity lock |
+| [Solenne](#solenne)                     | Heart of Pyrathis     | discovery only                  | ACV-078 / Round 08 | internal only until identity lock |
+| [Pyrrik](#pyrrik)                       | Heart of Pyrathis     | discovery only                  | ACV-079 / Round 08 | internal only until identity lock |
+| [An](#an)                               | Song of Van Linh      | blocked                         | ACV-080 / Round 08 | internal only until identity lock |
 
 ## Kael Thornfield
 

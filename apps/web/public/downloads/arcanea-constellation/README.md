@@ -39,23 +39,23 @@ A generated image is not an approved image. One approved image is one bounded vi
 
 ## Blueprint index
 
-| Identity | Domain | Purpose | Files |
-|---|---|---|---|
-| Logicus | Development | Makes structure legible before implementation begins. | [AGENT.md](./logicus/AGENT.md) · [SKILL.md](./logicus/SKILL.md) · [agent-card.json](./logicus/agent-card.json) |
-| Synthra | Development | Turns approved structures into coherent working systems. | [AGENT.md](./synthra/AGENT.md) · [SKILL.md](./synthra/SKILL.md) · [agent-card.json](./synthra/agent-card.json) |
-| Debugon | Development | Finds the smallest truthful explanation for a failure. | [AGENT.md](./debugon/AGENT.md) · [SKILL.md](./debugon/SKILL.md) · [agent-card.json](./debugon/agent-card.json) |
-| Nexus | Development | Routes bounded work across agents while keeping authority human-held. | [AGENT.md](./nexus/AGENT.md) · [SKILL.md](./nexus/SKILL.md) · [agent-card.json](./nexus/agent-card.json) |
-| Prismatic | Creative | Governs Arcanea visual identity from source contract to release receipt. | [AGENT.md](./prismatic/AGENT.md) · [SKILL.md](./prismatic/SKILL.md) · [agent-card.json](./prismatic/agent-card.json) |
-| Melodia | Creative | Builds memorable sound systems without making medical claims. | [AGENT.md](./melodia/AGENT.md) · [SKILL.md](./melodia/SKILL.md) · [agent-card.json](./melodia/agent-card.json) |
-| Motio | Creative | Uses motion to reveal state, hierarchy, and consequence. | [AGENT.md](./motio/AGENT.md) · [SKILL.md](./motio/SKILL.md) · [agent-card.json](./motio/agent-card.json) |
-| Formis | Creative | Turns aesthetic judgment into reusable forms and constraints. | [AGENT.md](./formis/AGENT.md) · [SKILL.md](./formis/SKILL.md) · [agent-card.json](./formis/agent-card.json) |
-| Chronica | Writing | Keeps character, timeline, and consequence coherent across stories. | [AGENT.md](./chronica/AGENT.md) · [SKILL.md](./chronica/SKILL.md) · [agent-card.json](./chronica/agent-card.json) |
-| Veritas | Writing | Separates sourced fact, inference, proposal, and invention. | [AGENT.md](./veritas/AGENT.md) · [SKILL.md](./veritas/SKILL.md) · [agent-card.json](./veritas/agent-card.json) |
-| Lexicon | Writing | Maintains naming, terminology, and voice as a living linguistic system. | [AGENT.md](./lexicon/AGENT.md) · [SKILL.md](./lexicon/SKILL.md) · [agent-card.json](./lexicon/agent-card.json) |
-| Poetica | Writing | Finds the line that makes a system emotionally inhabitable. | [AGENT.md](./poetica/AGENT.md) · [SKILL.md](./poetica/SKILL.md) · [agent-card.json](./poetica/agent-card.json) |
-| Oracle | Research | Finds the strongest available evidence and the questions it cannot answer. | [AGENT.md](./oracle/AGENT.md) · [SKILL.md](./oracle/SKILL.md) · [agent-card.json](./oracle/agent-card.json) |
-| Analytica | Research | Designs tests that distinguish preference from repeatable quality. | [AGENT.md](./analytica/AGENT.md) · [SKILL.md](./analytica/SKILL.md) · [agent-card.json](./analytica/agent-card.json) |
-| Memoria | Research | Keeps evidence, decisions, and identity records findable and versioned. | [AGENT.md](./memoria/AGENT.md) · [SKILL.md](./memoria/SKILL.md) · [agent-card.json](./memoria/agent-card.json) |
-| Futura | Research | Explores futures without disguising scenarios as forecasts. | [AGENT.md](./futura/AGENT.md) · [SKILL.md](./futura/SKILL.md) · [agent-card.json](./futura/agent-card.json) |
+| Identity  | Domain      | Purpose                                                                    | Files                                                                                                                |
+| --------- | ----------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Logicus   | Development | Makes structure legible before implementation begins.                      | [AGENT.md](./logicus/AGENT.md) · [SKILL.md](./logicus/SKILL.md) · [agent-card.json](./logicus/agent-card.json)       |
+| Synthra   | Development | Turns approved structures into coherent working systems.                   | [AGENT.md](./synthra/AGENT.md) · [SKILL.md](./synthra/SKILL.md) · [agent-card.json](./synthra/agent-card.json)       |
+| Debugon   | Development | Finds the smallest truthful explanation for a failure.                     | [AGENT.md](./debugon/AGENT.md) · [SKILL.md](./debugon/SKILL.md) · [agent-card.json](./debugon/agent-card.json)       |
+| Nexus     | Development | Routes bounded work across agents while keeping authority human-held.      | [AGENT.md](./nexus/AGENT.md) · [SKILL.md](./nexus/SKILL.md) · [agent-card.json](./nexus/agent-card.json)             |
+| Prismatic | Creative    | Governs Arcanea visual identity from source contract to release receipt.   | [AGENT.md](./prismatic/AGENT.md) · [SKILL.md](./prismatic/SKILL.md) · [agent-card.json](./prismatic/agent-card.json) |
+| Melodia   | Creative    | Builds memorable sound systems without making medical claims.              | [AGENT.md](./melodia/AGENT.md) · [SKILL.md](./melodia/SKILL.md) · [agent-card.json](./melodia/agent-card.json)       |
+| Motio     | Creative    | Uses motion to reveal state, hierarchy, and consequence.                   | [AGENT.md](./motio/AGENT.md) · [SKILL.md](./motio/SKILL.md) · [agent-card.json](./motio/agent-card.json)             |
+| Formis    | Creative    | Turns aesthetic judgment into reusable forms and constraints.              | [AGENT.md](./formis/AGENT.md) · [SKILL.md](./formis/SKILL.md) · [agent-card.json](./formis/agent-card.json)          |
+| Chronica  | Writing     | Keeps character, timeline, and consequence coherent across stories.        | [AGENT.md](./chronica/AGENT.md) · [SKILL.md](./chronica/SKILL.md) · [agent-card.json](./chronica/agent-card.json)    |
+| Veritas   | Writing     | Separates sourced fact, inference, proposal, and invention.                | [AGENT.md](./veritas/AGENT.md) · [SKILL.md](./veritas/SKILL.md) · [agent-card.json](./veritas/agent-card.json)       |
+| Lexicon   | Writing     | Maintains naming, terminology, and voice as a living linguistic system.    | [AGENT.md](./lexicon/AGENT.md) · [SKILL.md](./lexicon/SKILL.md) · [agent-card.json](./lexicon/agent-card.json)       |
+| Poetica   | Writing     | Finds the line that makes a system emotionally inhabitable.                | [AGENT.md](./poetica/AGENT.md) · [SKILL.md](./poetica/SKILL.md) · [agent-card.json](./poetica/agent-card.json)       |
+| Oracle    | Research    | Finds the strongest available evidence and the questions it cannot answer. | [AGENT.md](./oracle/AGENT.md) · [SKILL.md](./oracle/SKILL.md) · [agent-card.json](./oracle/agent-card.json)          |
+| Analytica | Research    | Designs tests that distinguish preference from repeatable quality.         | [AGENT.md](./analytica/AGENT.md) · [SKILL.md](./analytica/SKILL.md) · [agent-card.json](./analytica/agent-card.json) |
+| Memoria   | Research    | Keeps evidence, decisions, and identity records findable and versioned.    | [AGENT.md](./memoria/AGENT.md) · [SKILL.md](./memoria/SKILL.md) · [agent-card.json](./memoria/agent-card.json)       |
+| Futura    | Research    | Explores futures without disguising scenarios as forecasts.                | [AGENT.md](./futura/AGENT.md) · [SKILL.md](./futura/SKILL.md) · [agent-card.json](./futura/agent-card.json)          |
 
 Every pack states its stop conditions and human gates. The sixteen names are existing public product identities; these operating dossiers and visual forms remain proposals until approved.

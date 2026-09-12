@@ -8,26 +8,26 @@ The local records explicitly leave eight physical forms canon-pending and ground
 
 ## Portfolio state
 
-| State | Count | Meaning |
-|---|---:|---|
-| Discovery only | 8 | A controlled candidate morphology may be tested internally. It is not canon, an identity master, or public-release eligible. |
-| Blocked | 2 | Generation is denied until the named canon or proposal contradiction is resolved. |
-| Source complete | 0 | No Godbeast has a complete, human-approved physical identity contract in the reviewed local sources. |
+| State           | Count | Meaning                                                                                                                      |
+| --------------- | ----: | ---------------------------------------------------------------------------------------------------------------------------- |
+| Discovery only  |     8 | A controlled candidate morphology may be tested internally. It is not canon, an identity master, or public-release eligible. |
+| Blocked         |     2 | Generation is denied until the named canon or proposal contradiction is resolved.                                            |
+| Source complete |     0 | No Godbeast has a complete, human-approved physical identity contract in the reviewed local sources.                         |
 
 ## Godbeast index
 
-| Godbeast | Gate | Chords | Bond | Morphology study | Dyad study | Readiness |
-|---|---|---:|---|---|---|---|
-| [Kaelith](#kaelith) | 1 · Foundation | 1 | Lyssandria | ACV-021 / Round 03 | ACV-031 / Round 04 | discovery only |
-| [Veloura](#veloura) | 2 · Flow | 2 | Leyla | ACV-022 / Round 03 | ACV-032 / Round 04 | discovery only |
-| [Draconis](#draconis) | 3 · Fire | 3 | Draconia | ACV-023 / Round 03 | ACV-033 / Round 04 | discovery only |
-| [Laeylinn](#laeylinn) | 4 · Heart | 4 | Maylinn | ACV-024 / Round 03 | ACV-034 / Round 04 | discovery only |
-| [Otome](#otome) | 5 · Voice | 5 | Alera | ACV-025 / Round 03 | ACV-035 / Round 04 | discovery only |
-| [Yumiko](#yumiko) | 6 · Sight | 6 | Lyria | ACV-026 / Round 03 | ACV-036 / Round 04 | discovery only |
-| [Sol](#sol) | 7 · Crown | 7 | Aiyami | ACV-027 / Round 03 | ACV-037 / Round 04 | blocked |
-| [Vaelith](#vaelith) | 8 · Starweave | 8 | Elara | ACV-028 / Round 03 | ACV-038 / Round 04 | discovery only |
-| [Kyuro](#kyuro) | 9 · Unity | 9 | Ino | ACV-029 / Round 03 | ACV-039 / Round 04 | discovery only |
-| [Source / Ten-Chorded](#source-ten-chorded) | 10 · Source | 10 | Shinkami | ACV-030 / Round 03 | ACV-040 / Round 04 | blocked |
+| Godbeast                                    | Gate           | Chords | Bond       | Morphology study   | Dyad study         | Readiness      |
+| ------------------------------------------- | -------------- | -----: | ---------- | ------------------ | ------------------ | -------------- |
+| [Kaelith](#kaelith)                         | 1 · Foundation |      1 | Lyssandria | ACV-021 / Round 03 | ACV-031 / Round 04 | discovery only |
+| [Veloura](#veloura)                         | 2 · Flow       |      2 | Leyla      | ACV-022 / Round 03 | ACV-032 / Round 04 | discovery only |
+| [Draconis](#draconis)                       | 3 · Fire       |      3 | Draconia   | ACV-023 / Round 03 | ACV-033 / Round 04 | discovery only |
+| [Laeylinn](#laeylinn)                       | 4 · Heart      |      4 | Maylinn    | ACV-024 / Round 03 | ACV-034 / Round 04 | discovery only |
+| [Otome](#otome)                             | 5 · Voice      |      5 | Alera      | ACV-025 / Round 03 | ACV-035 / Round 04 | discovery only |
+| [Yumiko](#yumiko)                           | 6 · Sight      |      6 | Lyria      | ACV-026 / Round 03 | ACV-036 / Round 04 | discovery only |
+| [Sol](#sol)                                 | 7 · Crown      |      7 | Aiyami     | ACV-027 / Round 03 | ACV-037 / Round 04 | blocked        |
+| [Vaelith](#vaelith)                         | 8 · Starweave  |      8 | Elara      | ACV-028 / Round 03 | ACV-038 / Round 04 | discovery only |
+| [Kyuro](#kyuro)                             | 9 · Unity      |      9 | Ino        | ACV-029 / Round 03 | ACV-039 / Round 04 | discovery only |
+| [Source / Ten-Chorded](#source-ten-chorded) | 10 · Source    |     10 | Shinkami   | ACV-030 / Round 03 | ACV-040 / Round 04 | blocked        |
 
 ## Kaelith
 

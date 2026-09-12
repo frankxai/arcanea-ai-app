@@ -11,10 +11,7 @@
     "shape distinct language",
     "record canon impact"
   ],
-  "skillRefs": [
-    "$arcanea-veritas",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-veritas", "$arcanea-canon-director"],
   "stopConditions": [
     "A claim lacks a source",
     "A generated suggestion is presented as outcome",

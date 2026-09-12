@@ -57,8 +57,7 @@ const meaningfulVisualTokens = (agent) =>
       .toLowerCase()
       .match(/[a-z0-9]+/g)
       ?.filter(
-        (token) =>
-          token.length > 2 && !visualSimilarityStopWords.has(token),
+        (token) => token.length > 2 && !visualSimilarityStopWords.has(token),
       ) ?? [],
   );
 const visualJaccard = (left, right) => {
@@ -2527,10 +2526,8 @@ check(
   "public teaching surface exposes the machine contract suite and prompt/governance partition",
 );
 const { receiptHash: holdPreflightHash, ...holdPreflightBody } = holdPreflight;
-const {
-  evidenceHash: holdStorageEvidenceHash,
-  ...holdStorageEvidenceBody
-} = holdPreflight.storageEvidence;
+const { evidenceHash: holdStorageEvidenceHash, ...holdStorageEvidenceBody } =
+  holdPreflight.storageEvidence;
 check(
   holdPreflight.schema === "arcanea.machine_preflight_receipt.v2" &&
     holdPreflightHash === sha(holdPreflightBody) &&
@@ -2553,9 +2550,7 @@ check(
 );
 check(
   storageEvidenceCorrection.includes("0 / 11 targets present") &&
-    storageEvidenceCorrection.includes(
-      "0 GiB of currently verified reclaim",
-    ) &&
+    storageEvidenceCorrection.includes("0 GiB of currently verified reclaim") &&
     storageEvidenceCorrection.includes("64.14 GiB gap") &&
     storageEvidenceCorrection.includes(
       "No storage candidate or user artifact was deleted, moved, dehydrated, uninstalled, pruned, or overwritten",

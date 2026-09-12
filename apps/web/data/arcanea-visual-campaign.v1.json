@@ -8260,9 +8260,7 @@
           "name": "The Visual Council",
           "subjectKind": "workflow",
           "deliverable": "identity master candidate",
-          "sourceRefs": [
-            "skills/arcanea-visual-director/SKILL.md"
-          ],
+          "sourceRefs": ["skills/arcanea-visual-director/SKILL.md"],
           "canonState": "operational_system_proposal",
           "identityState": "proposal_requires_human_identity_lock",
           "evidenceState": "source-defined",
@@ -8374,9 +8372,7 @@
           "name": "The Human Approval Gate",
           "subjectKind": "workflow",
           "deliverable": "identity master candidate",
-          "sourceRefs": [
-            "skills/arcanea-visual-director/SKILL.md"
-          ],
+          "sourceRefs": ["skills/arcanea-visual-director/SKILL.md"],
           "canonState": "operational_system_proposal",
           "identityState": "proposal_requires_human_identity_lock",
           "evidenceState": "source-defined",
@@ -8488,9 +8484,7 @@
           "name": "The Identity Continuity Test",
           "subjectKind": "workflow",
           "deliverable": "identity master candidate",
-          "sourceRefs": [
-            "skills/arcanea-visual-director/SKILL.md"
-          ],
+          "sourceRefs": ["skills/arcanea-visual-director/SKILL.md"],
           "canonState": "operational_system_proposal",
           "identityState": "proposal_requires_human_identity_lock",
           "evidenceState": "source-defined",
@@ -8602,9 +8596,7 @@
           "name": "The Release and Provenance Desk",
           "subjectKind": "workflow",
           "deliverable": "identity master candidate",
-          "sourceRefs": [
-            "skills/arcanea-visual-director/SKILL.md"
-          ],
+          "sourceRefs": ["skills/arcanea-visual-director/SKILL.md"],
           "canonState": "operational_system_proposal",
           "identityState": "proposal_requires_human_identity_lock",
           "evidenceState": "source-defined",
@@ -9440,9 +9432,7 @@
           "name": "Lysara Sablecourt",
           "subjectKind": "book-character",
           "deliverable": "identity discovery study — not identity master",
-          "sourceRefs": [
-            "book/the-hall-of-white/BIBLE.md#lysara-sablecourt"
-          ],
+          "sourceRefs": ["book/the-hall-of-white/BIBLE.md#lysara-sablecourt"],
           "canonState": "manuscript_identity_evidence_partial",
           "identityState": "source_partial_exploratory_only",
           "evidenceState": "source-partial",
@@ -9570,9 +9560,7 @@
           "name": "Reni Voss",
           "subjectKind": "book-character",
           "deliverable": "identity discovery study — not identity master",
-          "sourceRefs": [
-            "book/the-hall-of-white/BIBLE.md#aspirant-reni-voss"
-          ],
+          "sourceRefs": ["book/the-hall-of-white/BIBLE.md#aspirant-reni-voss"],
           "canonState": "manuscript_identity_evidence_partial",
           "identityState": "source_partial_exploratory_only",
           "evidenceState": "source-partial",
@@ -9700,9 +9688,7 @@
           "name": "Aranya",
           "subjectKind": "book-character",
           "deliverable": "identity discovery study — not identity master",
-          "sourceRefs": [
-            "book/the-hall-of-white/BIBLE.md#wellkeeper-aranya"
-          ],
+          "sourceRefs": ["book/the-hall-of-white/BIBLE.md#wellkeeper-aranya"],
           "canonState": "manuscript_identity_evidence_partial",
           "identityState": "source_partial_exploratory_only",
           "evidenceState": "source-partial",
@@ -9832,9 +9818,7 @@
           "name": "Veyl Stoneshade",
           "subjectKind": "book-character",
           "deliverable": "identity discovery study — not identity master",
-          "sourceRefs": [
-            "book/the-hall-of-white/BIBLE.md#veyl-stoneshade"
-          ],
+          "sourceRefs": ["book/the-hall-of-white/BIBLE.md#veyl-stoneshade"],
           "canonState": "manuscript_identity_evidence_partial",
           "identityState": "source_partial_exploratory_only",
           "evidenceState": "source-partial",
@@ -10102,9 +10086,7 @@
           "name": "Erivar",
           "subjectKind": "book-character",
           "deliverable": "identity discovery study — not identity master",
-          "sourceRefs": [
-            "book/forge-of-ruin/BIBLE.md#erivar-skaldson"
-          ],
+          "sourceRefs": ["book/forge-of-ruin/BIBLE.md#erivar-skaldson"],
           "canonState": "manuscript_identity_evidence_partial",
           "identityState": "source_partial_exploratory_only",
           "evidenceState": "source-partial",
@@ -10232,9 +10214,7 @@
           "name": "Bryda",
           "subjectKind": "book-character",
           "deliverable": "identity discovery study — not identity master",
-          "sourceRefs": [
-            "book/forge-of-ruin/BIBLE.md#bryda-halfmourning"
-          ],
+          "sourceRefs": ["book/forge-of-ruin/BIBLE.md#bryda-halfmourning"],
           "canonState": "manuscript_identity_evidence_partial",
           "identityState": "source_partial_exploratory_only",
           "evidenceState": "source-partial",
@@ -10362,9 +10342,7 @@
           "name": "Sigveld",
           "subjectKind": "book-character",
           "deliverable": "identity discovery study — not identity master",
-          "sourceRefs": [
-            "book/forge-of-ruin/BIBLE.md#sigveld-the-architect"
-          ],
+          "sourceRefs": ["book/forge-of-ruin/BIBLE.md#sigveld-the-architect"],
           "canonState": "manuscript_identity_evidence_partial",
           "identityState": "source_partial_exploratory_only",
           "evidenceState": "source-partial",
@@ -10490,9 +10468,7 @@
           "name": "Raskvorn",
           "subjectKind": "book-character",
           "deliverable": "identity discovery study — not identity master",
-          "sourceRefs": [
-            "book/forge-of-ruin/BIBLE.md#raskvorn-the-hollow"
-          ],
+          "sourceRefs": ["book/forge-of-ruin/BIBLE.md#raskvorn-the-hollow"],
           "canonState": "manuscript_identity_evidence_partial",
           "identityState": "source_partial_exploratory_only",
           "evidenceState": "source-partial",
@@ -10620,9 +10596,7 @@
           "name": "Odre",
           "subjectKind": "book-character",
           "deliverable": "identity discovery study — not identity master",
-          "sourceRefs": [
-            "book/forge-of-ruin/BIBLE.md#odre-flachmark"
-          ],
+          "sourceRefs": ["book/forge-of-ruin/BIBLE.md#odre-flachmark"],
           "canonState": "manuscript_identity_evidence_partial",
           "identityState": "source_partial_exploratory_only",
           "evidenceState": "source-partial",
@@ -12090,9 +12064,7 @@
           "name": "Mar Arcano",
           "subjectKind": "world",
           "deliverable": "world system identity candidate plate",
-          "sourceRefs": [
-            ".arcanea/lore/realms/mar-arcano.md"
-          ],
+          "sourceRefs": [".arcanea/lore/realms/mar-arcano.md"],
           "canonState": "staging_canon_source_defined_plate",
           "identityState": "source-defined-world-visual-candidate-requires-human-gates",
           "evidenceState": "source-complete",
@@ -12334,9 +12306,7 @@
           "name": "Aurevalde",
           "subjectKind": "world",
           "deliverable": "world visual identity discovery plate",
-          "sourceRefs": [
-            ".arcanea/lore/realms/aurevalde.md"
-          ],
+          "sourceRefs": [".arcanea/lore/realms/aurevalde.md"],
           "canonState": "staging_pure_absence_canon_creator_decision_required",
           "identityState": "blocked-world-reconciliation-required",
           "evidenceState": "blocked",

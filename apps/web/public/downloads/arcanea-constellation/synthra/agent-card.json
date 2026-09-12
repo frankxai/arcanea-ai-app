@@ -11,10 +11,7 @@
     "produce inspectable artifacts",
     "verify acceptance conditions"
   ],
-  "skillRefs": [
-    "$arcanea-synthra",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-synthra", "$arcanea-canon-director"],
   "stopConditions": [
     "Missing acceptance contract",
     "Cross-repo mutation is not authorized",

@@ -11,10 +11,7 @@
     "state uncertainty",
     "turn findings into a decision instrument"
   ],
-  "skillRefs": [
-    "$arcanea-analytica",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-analytica", "$arcanea-canon-director"],
   "stopConditions": [
     "The sample cannot answer the stated question",
     "Judges are not independent enough",

@@ -17,31 +17,31 @@ This audit measures the complete engine-neutral contract set before provider exe
 
 ## Round portfolio
 
-| Round | Subject mix | Executable | Gated | Median story chars | Median constraints | Open variables |
-|---:|---|---:|---:|---:|---:|---:|
-| 01 | godbeast + book-character | 10 | 0 | 223 | 10 | 25 |
-| 02 | guardian | 10 | 0 | 149 | 9 | 50 |
-| 03 | godbeast | 8 | 2 | 255 | 9 | 50 |
-| 04 | dyad | 8 | 2 | 149 | 10 | 100 |
-| 05 | agent | 10 | 0 | 126 | 8 | 0 |
-| 06 | agent + workflow | 10 | 0 | 131 | 8 | 0 |
-| 07 | book-character | 10 | 0 | 189 | 6 | 18 |
-| 08 | book-character | 8 | 2 | 185 | 8 | 40 |
-| 09 | world | 8 | 2 | 310 | 7 | 20 |
-| 10 | regression | 9 | 1 | 170 | 6 | 20 |
+| Round | Subject mix               | Executable | Gated | Median story chars | Median constraints | Open variables |
+| ----: | ------------------------- | ---------: | ----: | -----------------: | -----------------: | -------------: |
+|    01 | godbeast + book-character |         10 |     0 |                223 |                 10 |             25 |
+|    02 | guardian                  |         10 |     0 |                149 |                  9 |             50 |
+|    03 | godbeast                  |          8 |     2 |                255 |                  9 |             50 |
+|    04 | dyad                      |          8 |     2 |                149 |                 10 |            100 |
+|    05 | agent                     |         10 |     0 |                126 |                  8 |              0 |
+|    06 | agent + workflow          |         10 |     0 |                131 |                  8 |              0 |
+|    07 | book-character            |         10 |     0 |                189 |                  6 |             18 |
+|    08 | book-character            |          8 |     2 |                185 |                  8 |             40 |
+|    09 | world                     |          8 |     2 |                310 |                  7 |             20 |
+|    10 | regression                |          9 |     1 |                170 |                  6 |             20 |
 
 ## Subject portfolio
 
-| Subject kind | Jobs | Gated | Median identity-lock chars | Median story chars | Median constraints | Named review requirements |
-|---|---:|---:|---:|---:|---:|---:|
-| agent | 16 | 0 | 626 | 124 | 8 | 0 |
-| book-character | 25 | 2 | 341 | 180 | 8 | 6 |
-| dyad | 10 | 2 | 721 | 149 | 10 | 60 |
-| godbeast | 15 | 2 | 373 | 265 | 9 | 45 |
-| guardian | 10 | 0 | 96 | 149 | 9 | 30 |
-| regression | 10 | 1 | 330 | 170 | 6 | 12 |
-| workflow | 4 | 0 | 175 | 273 | 4 | 0 |
-| world | 10 | 2 | 452 | 310 | 7 | 10 |
+| Subject kind   | Jobs | Gated | Median identity-lock chars | Median story chars | Median constraints | Named review requirements |
+| -------------- | ---: | ----: | -------------------------: | -----------------: | -----------------: | ------------------------: |
+| agent          |   16 |     0 |                        626 |                124 |                  8 |                         0 |
+| book-character |   25 |     2 |                        341 |                180 |                  8 |                         6 |
+| dyad           |   10 |     2 |                        721 |                149 |                 10 |                        60 |
+| godbeast       |   15 |     2 |                        373 |                265 |                  9 |                        45 |
+| guardian       |   10 |     0 |                         96 |                149 |                  9 |                        30 |
+| regression     |   10 |     1 |                        330 |                170 |                  6 |                        12 |
+| workflow       |    4 |     0 |                        175 |                273 |                  4 |                         0 |
+| world          |   10 |     2 |                        452 |                310 |                  7 |                        10 |
 
 ## Non-negotiable lint contract
 

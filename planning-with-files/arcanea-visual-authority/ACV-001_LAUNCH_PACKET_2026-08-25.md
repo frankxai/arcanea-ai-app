@@ -19,42 +19,42 @@ Do not call an image provider from this packet unless all of the following are t
 
 The latest audit receipt is evidence of a stop, not authority to execute:
 
-| Field | Latest evidence |
-| --- | --- |
-| Receipt | `planning-with-files/arcanea-visual-authority/round-01-preflight-user-resume-2-2026-08-25.json` |
-| Receipt hash | `6edd0df24ac87e96790fb28c934df6035b36a75f667bfa9bba6cceedb7fa90cf` |
-| Verdict | `hold` |
-| Expired | 2026-08-25 18:59 Europe/Amsterdam |
-| Storage in receipt | 78.2 GiB / 8.2% free; approximately 64.5 GiB below the 15% media-admission boundary |
+| Field                          | Latest evidence                                                                                                                                  |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Receipt                        | `planning-with-files/arcanea-visual-authority/round-01-preflight-user-resume-2-2026-08-25.json`                                                  |
+| Receipt hash                   | `6edd0df24ac87e96790fb28c934df6035b36a75f667bfa9bba6cceedb7fa90cf`                                                                               |
+| Verdict                        | `hold`                                                                                                                                           |
+| Expired                        | 2026-08-25 18:59 Europe/Amsterdam                                                                                                                |
+| Storage in receipt             | 78.2 GiB / 8.2% free; approximately 64.5 GiB below the 15% media-admission boundary                                                              |
 | Newer storage-only observation | plan `storage_20260825_190704_c2e32d83`: 77.7 GiB / 8.2% free at 19:07; approximately 65.0 GiB below the boundary; still not execution authority |
-| Other blockers | 7,130 MB free RAM versus 10,240 MB required; 23 Codex runtimes versus 6 allowed; one dev server |
+| Other blockers                 | 7,130 MB free RAM versus 10,240 MB required; 23 Codex runtimes versus 6 allowed; one dev server                                                  |
 
 ## Immutable execution identity
 
-| Field | Required value |
-| --- | --- |
-| Campaign | `arcanea-living-constellation-100` |
-| Campaign version | `1.10.0` |
-| Round / job | `1` / `ACV-001` |
-| Provider profile | `codex-imagegen` |
-| Provider | `codex-imagegen-tool` |
-| Model policy | `tool-managed-model-selection` |
-| Runtime parameters | `{}` |
-| Runtime-parameters hash | `44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a` |
-| Contract | `apps/web/public/downloads/arcanea-constellation/prompts/acv-001.json` |
-| Contract hash | `54d45c53f641a486eab97a067892184f69f86ef4dbee81bfde75d1692bc5b803` |
-| Provider packet | `planning-with-files/arcanea-visual-campaign/round-01-codex-imagegen-provider-pack.json` |
-| Provider-packet hash | `4d3b2c5747cf8c813f1b0982fc37a411fa00c9a9a6165640e8dabb92d9cf7c5d` |
-| Manifest | `planning-with-files/arcanea-visual-campaign/execution-manifests/round-01-codex-imagegen-2f1084f77ec50413.json` |
-| Manifest hash | `2f1084f77ec50413d4d6b94f5d0863c6810638a3fc65d3fad54238e881e78fdb` |
-| Manifest-index hash when prepared | `6d99a5537e0b3232f001f430fb0e9e0b5810d27ff7ff1ff94dc9007b74bcde4e` |
-| Contract-set hash | `be2c4504bbc0366d717658b9993021ca6f49dee6e815c6ec29b0beaf2aa41e13` |
-| Execution-prompt hash | `58a18b1c633e739b88ebd12c94aac8c3ade969d01caf36fdb4193ac201a79bac` |
-| Output geometry | one 4:5 vertical image |
-| Reference plan | text-only; no image references |
-| Governed output | `planning-with-files/arcanea-visual-assets/v1/round-01/acv-001-r1.<decoded-extension>` |
-| Governed receipt | `planning-with-files/arcanea-visual-results/acv-001-r1.json` |
-| Rights/release state | internal draft; source review and creator identity decision required |
+| Field                             | Required value                                                                                                  |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Campaign                          | `arcanea-living-constellation-100`                                                                              |
+| Campaign version                  | `1.10.0`                                                                                                        |
+| Round / job                       | `1` / `ACV-001`                                                                                                 |
+| Provider profile                  | `codex-imagegen`                                                                                                |
+| Provider                          | `codex-imagegen-tool`                                                                                           |
+| Model policy                      | `tool-managed-model-selection`                                                                                  |
+| Runtime parameters                | `{}`                                                                                                            |
+| Runtime-parameters hash           | `44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a`                                              |
+| Contract                          | `apps/web/public/downloads/arcanea-constellation/prompts/acv-001.json`                                          |
+| Contract hash                     | `54d45c53f641a486eab97a067892184f69f86ef4dbee81bfde75d1692bc5b803`                                              |
+| Provider packet                   | `planning-with-files/arcanea-visual-campaign/round-01-codex-imagegen-provider-pack.json`                        |
+| Provider-packet hash              | `4d3b2c5747cf8c813f1b0982fc37a411fa00c9a9a6165640e8dabb92d9cf7c5d`                                              |
+| Manifest                          | `planning-with-files/arcanea-visual-campaign/execution-manifests/round-01-codex-imagegen-2f1084f77ec50413.json` |
+| Manifest hash                     | `2f1084f77ec50413d4d6b94f5d0863c6810638a3fc65d3fad54238e881e78fdb`                                              |
+| Manifest-index hash when prepared | `6d99a5537e0b3232f001f430fb0e9e0b5810d27ff7ff1ff94dc9007b74bcde4e`                                              |
+| Contract-set hash                 | `be2c4504bbc0366d717658b9993021ca6f49dee6e815c6ec29b0beaf2aa41e13`                                              |
+| Execution-prompt hash             | `58a18b1c633e739b88ebd12c94aac8c3ade969d01caf36fdb4193ac201a79bac`                                              |
+| Output geometry                   | one 4:5 vertical image                                                                                          |
+| Reference plan                    | text-only; no image references                                                                                  |
+| Governed output                   | `planning-with-files/arcanea-visual-assets/v1/round-01/acv-001-r1.<decoded-extension>`                          |
+| Governed receipt                  | `planning-with-files/arcanea-visual-results/acv-001-r1.json`                                                    |
+| Rights/release state              | internal draft; source review and creator identity decision required                                            |
 
 The immutable execution manifest and its current-active entry in the manifest index are authoritative. Every value in this packet is a prepared snapshot. If a rebuild changes any current hash, or the index no longer names this manifest as current, stop and regenerate this packet before making a provider call.
 

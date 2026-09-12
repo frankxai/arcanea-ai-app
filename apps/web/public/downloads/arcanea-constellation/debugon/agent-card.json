@@ -11,10 +11,7 @@
     "produce inspectable artifacts",
     "verify acceptance conditions"
   ],
-  "skillRefs": [
-    "$arcanea-debugon",
-    "$arcanea-canon-director"
-  ],
+  "skillRefs": ["$arcanea-debugon", "$arcanea-canon-director"],
   "stopConditions": [
     "No reproducible signal after bounded diagnostics",
     "The proposed repair risks data loss",

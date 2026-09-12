@@ -25,9 +25,14 @@ try {
     (item) => item.id === evidenceId,
   );
   if (!evidence) {
-    throw new Error(`No campaign external-source evidence exists for ${evidenceId}.`);
+    throw new Error(
+      `No campaign external-source evidence exists for ${evidenceId}.`,
+    );
   }
-  const observed = verifyExternalSourceFile(resolve(root, sourcePath), evidence);
+  const observed = verifyExternalSourceFile(
+    resolve(root, sourcePath),
+    evidence,
+  );
   console.log(
     `External visual source verified: ${evidence.id}, ${observed.bytes} bytes, sha256 ${observed.sha256}.`,
   );
