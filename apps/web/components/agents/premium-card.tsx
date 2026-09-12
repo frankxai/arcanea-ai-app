@@ -63,7 +63,7 @@ export const PREMIUM_PRODUCTS: PremiumCardProps[] = [
     id: "license",
     title: "Intelligence License",
     subtitle: "Full Creative Access",
-    pitch: "All 10 Guardians. Monthly Emanation drops. The complete creative system.",
+    pitch: "Monthly Emanation drops. The complete creative system.",
     price: "$29/month",
     ctaLabel: "Subscribe",
     href: "/agents/license",

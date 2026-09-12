@@ -21,7 +21,6 @@ import {
   type PublicRepoGroup,
   type PublicRepoStatus,
 } from "@/lib/public-repo-registry";
-import { FACTS } from "@/lib/facts";
 
 // ─── Inline SVG Icons ─────────────────────────────────────────────────────────
 
@@ -123,7 +122,6 @@ const STATS = [
     value: String(PUBLIC_REPO_SUMMARY.unresolved),
     label: "Needs Verification",
   },
-  { value: String(FACTS.skills), label: "Agent Skills" },
 ];
 
 const LAYERS = [
@@ -332,7 +330,7 @@ export default function EcosystemHubPage() {
                 verification before we link them.
               </p>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mb-10 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
                 {STATS.map((s, i) => (
                   <StatCard
                     key={s.label}
