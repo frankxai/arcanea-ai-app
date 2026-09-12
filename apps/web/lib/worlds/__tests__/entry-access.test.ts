@@ -3,6 +3,40 @@ import assert from "node:assert/strict";
 import { NextRequest } from "next/server";
 import { middleware } from "../../../middleware";
 import { authenticatedRedirectUrl } from "../../supabase/middleware";
+import { safeAuthNextPath } from "../../auth/safe-next-path";
+
+test("login, signup and callbacks reject external and encoded redirect targets", () => {
+  for (const next of [
+    null,
+    "",
+    "https://other.invalid",
+    "//other.invalid",
+    "/\\other.invalid",
+    "javascript:alert(1)",
+    "/%2fother.invalid",
+    "/%5cother.invalid",
+    "/%252fother.invalid",
+    "/%0a/other.invalid",
+    " /chat",
+    "/chat\t",
+    "/%zz",
+  ]) {
+    assert.equal(
+      safeAuthNextPath(next, "/dashboard"),
+      "/dashboard",
+      String(next),
+    );
+  }
+  for (const next of [
+    "/worlds/create?resume=1",
+    "/chat",
+    "/settings/providers",
+    "/worlds/a-world?tab=characters",
+    "/search?q=memory%20library",
+  ]) {
+    assert.equal(safeAuthNextPath(next, "/dashboard"), next);
+  }
+});
 
 // No cookies, no real project and no network. Missing Supabase sessions must
 // be rejected locally; public waitlist submissions must reach their handler.

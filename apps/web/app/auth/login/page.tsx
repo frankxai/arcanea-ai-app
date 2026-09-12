@@ -7,6 +7,7 @@ import { MotionProvider, m } from "@/lib/motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { safeAuthNextPath } from "@/lib/auth/safe-next-path";
 
 import {
   PhEnvelope,
@@ -141,7 +142,7 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const callbackError = searchParams.get("error");
   const authMessage = searchParams.get("message");
-  const nextPath = searchParams.get("next") || "/dashboard";
+  const nextPath = safeAuthNextPath(searchParams.get("next"), "/dashboard");
 
   const callbackErrorMessage =
     callbackError === "callback_failed"
