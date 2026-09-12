@@ -14,11 +14,11 @@
     "lint": "eslint src/"
   },
   "dependencies": {
-    "dexie": "^4.4.4",
-    "preact": "^10.29.7"
+    "dexie": "^4.4.5",
+    "preact": "^10.29.8"
   },
   "devDependencies": {
-    "@types/chrome": "^0.2.7",
+    "@types/chrome": "^0.2.9",
     "esbuild": "^0.28.2",
     "typescript": "~5.9.3",
     "vitest": "^4.1.11"

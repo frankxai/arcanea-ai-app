@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import { LazyMotion, domAnimation, m } from 'framer-motion';
+import { cosmic } from '@arcanea/design-system/tokens';
 import { CaretLeft } from '@/lib/phosphor-icons';
 import {
   DISCIPLINES, TIERS, ELEMENT_META, type SpellData,
@@ -38,7 +39,7 @@ export function SpellDetail({ spell }: { spell: SpellData }) {
             </Link>
             <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
               <span className="mb-5 inline-flex h-16 w-16 items-center justify-center rounded-2xl" style={{ background: accent }}>
-                <EIcon size={34} weight="duotone" color="#0a0a12" />
+                <EIcon size={34} weight="duotone" color={cosmic.void} />
               </span>
               <h1 className="text-4xl font-semibold text-white">{spell.name}</h1>
               <p className="mt-2 font-mono text-lg italic text-white/70">"{spell.incantation}"</p>

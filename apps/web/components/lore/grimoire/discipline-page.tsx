@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import { LazyMotion, domAnimation, m } from 'framer-motion';
+import { cosmic } from '@arcanea/design-system/tokens';
 import { CaretLeft } from '@/lib/phosphor-icons';
 import {
   DISCIPLINES, TIERS, TIER_ORDER, ELEMENT_META, getMatrix, type Discipline,
@@ -27,7 +28,7 @@ export function DisciplinePage({ discipline }: { discipline: Discipline }) {
             </Link>
             <div className="flex items-center gap-4">
               <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl" style={{ background: d.color }}>
-                <Icon size={30} weight="duotone" color="#0a0a12" />
+                <Icon size={30} weight="duotone" color={cosmic.void} />
               </span>
               <div>
                 <h1 className="text-3xl font-semibold text-white sm:text-4xl">{d.name}</h1>
@@ -63,7 +64,7 @@ export function DisciplinePage({ discipline }: { discipline: Discipline }) {
                         >
                           <div className="flex items-center gap-3">
                             <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg" style={{ background: spell.color ?? ELEMENT_META[spell.element].color, opacity: 0.9 }}>
-                              <EIcon size={18} weight="duotone" color="#0a0a12" />
+                              <EIcon size={18} weight="duotone" color={cosmic.void} />
                             </span>
                             <div className="min-w-0">
                               <span className="block font-medium text-white">{spell.name}</span>

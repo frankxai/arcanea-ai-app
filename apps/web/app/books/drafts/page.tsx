@@ -6,6 +6,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import matter from 'gray-matter';
 import { getBookRoot } from '@/lib/content/book-path';
+import { isBookPublic } from '@/lib/content/book-visibility';
 
 export const dynamic = 'force-dynamic';
 
@@ -72,6 +73,8 @@ async function loadDraftBooks(): Promise<DraftBook[]> {
     const bookDirs = entries.filter((e) => e.isDirectory()).map((e) => e.name).sort();
 
     for (const dir of bookDirs) {
+      if (!(await isBookPublic(join(BOOK_ROOT, dir)))) continue;
+
       const yamlPath = join(BOOK_ROOT, dir, 'book.yaml');
       if (!(await exists(yamlPath))) continue;
 

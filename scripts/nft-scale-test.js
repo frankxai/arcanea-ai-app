@@ -5,7 +5,11 @@
  */
 
 const fs = require('fs');
-const API_KEY = 'AIzaSyC9-kKPkeHh9dZ831O9M3gTp6mjAi-EWdc';
+const API_KEY = process.env.GEMINI_API_KEY?.trim();
+if (!API_KEY) {
+  console.error('GEMINI_API_KEY is required');
+  process.exit(1);
+}
 const OUT = 'C:/Users/frank/Arcanea/output/nft-scale-test';
 fs.mkdirSync(OUT, { recursive: true });
 
@@ -51,10 +55,10 @@ Flat solid ${char.bg} background.`;
   try {
     const start = Date.now();
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': API_KEY },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: { responseModalities: ['TEXT', 'IMAGE'] },
