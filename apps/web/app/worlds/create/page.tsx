@@ -578,6 +578,7 @@ export default function CreateWorldPage() {
         return;
       }
       setImageLoading(true);
+      setError(null);
       try {
         const res = await fetch("/api/worlds/generate-image", {
           method: "POST",
@@ -588,13 +589,30 @@ export default function CreateWorldPage() {
           }),
         });
 
-        if (!res.ok) return;
+        if (res.status === 401) {
+          setIsAuthenticated(false);
+          throw new Error(
+            "Sign in again to create concept art. Your world draft is still here.",
+          );
+        }
+        if (!res.ok)
+          throw new Error(
+            "Concept art could not be generated. Your world draft is unchanged.",
+          );
         const data = await res.json();
         if (data.generated && data.imageData && data.mimeType) {
           setHeroImage(`data:${data.mimeType};base64,${data.imageData}`);
+        } else {
+          throw new Error(
+            "Concept art is unavailable. Your world draft is unchanged.",
+          );
         }
-      } catch {
-        // Non-blocking — silently continue without image
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Concept art is unavailable. Your world draft is unchanged.",
+        );
       } finally {
         setImageLoading(false);
       }
