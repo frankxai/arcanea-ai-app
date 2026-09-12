@@ -233,11 +233,11 @@ function ProviderSettings() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--arc-cosmic-void)] px-5 pb-20 pt-24 text-[var(--arc-text-primary)] sm:px-8">
+    <div className="min-h-screen bg-[var(--arc-cosmic-void)] px-5 pb-20 pt-8 text-[var(--arc-text-primary)] sm:px-8 sm:pt-12">
       <div className="mx-auto max-w-2xl">
         <Link
           href="/settings"
-          className="mb-8 inline-flex min-h-11 items-center gap-2 text-sm text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-primary)]"
+          className="mb-4 inline-flex min-h-11 items-center gap-2 text-sm text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-primary)]"
         >
           <PhArrowLeft className="size-4" aria-hidden="true" />
           Settings
@@ -255,22 +255,6 @@ function ProviderSettings() {
             for your usage.
           </p>
         </div>
-        <div
-          id="provider-data-flow"
-          className="mb-8 border-l-2 border-[var(--arc-brand-atlantean-teal)] pl-4 text-sm leading-relaxed text-[var(--arc-text-secondary)]"
-        >
-          <p>
-            Saving keeps keys in this browser. When you send a request,
-            Arcanea’s server receives your key and content and forwards them to
-            the selected provider.
-          </p>
-          <p className="mt-2">
-            Keys are not encrypted in browser storage. Use a personal device and
-            remove keys before sharing it. Your provider’s data and billing
-            terms apply.
-          </p>
-        </div>
-
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -315,6 +299,22 @@ function ProviderSettings() {
                 ? "Key saved locally · access not verified"
                 : "No key saved for this provider"}
           </p>
+
+          <div
+            id="provider-data-flow"
+            className="border-l-2 border-[var(--arc-brand-atlantean-teal)] pl-4 text-sm leading-relaxed text-[var(--arc-text-secondary)]"
+          >
+            <p>
+              Saving keeps keys in this browser. When you send a request,
+              Arcanea’s server receives your key and content and forwards them
+              to the selected provider.
+            </p>
+            <p className="mt-2">
+              Keys are not encrypted in browser storage. Use a personal device
+              and remove keys before sharing it. Your provider’s data and
+              billing terms apply.
+            </p>
+          </div>
 
           <details className="border-y border-[var(--arc-cosmic-border-bright)] py-4">
             <summary className="min-h-11 cursor-pointer py-2 text-sm font-medium">

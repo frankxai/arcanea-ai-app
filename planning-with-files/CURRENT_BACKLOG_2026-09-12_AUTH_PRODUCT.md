@@ -74,7 +74,10 @@ No new worktree, dependency, database migration or billing activation.
 - [x] Clarify plugin/storefront/IP/data strategy using current official provider guidance.
 - [ ] Reverify the refined frozen code and responsive preview; full CI and exact-head release review.
 - [ ] Remove residual contradictory BYOK copy in chat/homepage through the commercial-truth lane.
-- [ ] Fix the observed mobile menu navigation failure if reproducible outside a stale tab.
+- [x] Reproduce mobile menu failure in a fresh preview: duplicate notification bells
+      reuse an already-subscribed Supabase channel. Isolate subscriptions with owned
+      cleanup and recipient filters; add concurrent-mount and rapid-remount regressions.
+- [ ] Verify repeated mobile menu open/close on the final preview with no Realtime error.
 - [ ] Exercise paid provider generation only with a dedicated authorized test credential/budget.
 
 Rollback: revert the provider UI slice, then routing if required; auth recovery is independent.

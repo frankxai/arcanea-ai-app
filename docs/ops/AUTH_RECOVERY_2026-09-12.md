@@ -132,3 +132,13 @@ Two attempts to open the mobile navigation menu in the original settings tab
 produced a browser load-error page. A fresh desktop chat tab supported account
 menu, sign-out and repeat login. This is a separate unresolved navigation finding,
 not evidence that Google sign-in still fails.
+
+### Mobile navigation continuation
+
+The menu failure reproduced in a fresh, authenticated Vercel preview at 375px.
+The browser console identified `cannot add postgres_changes callbacks ... after
+subscribe()`: desktop and mobile `NotificationBell` instances reused the same
+Supabase channel topic. The continuation assigns a fresh topic per subscription,
+filters inserts by recipient, and removes only the instance's own channel. Two
+regressions cover concurrent mounts and remount during pending cleanup. This is
+independent of the Google redirect repair and requires final preview verification.
