@@ -2,6 +2,13 @@
 import { MetadataRoute } from 'next';
 import { COLLECTIONS, getAllTexts } from '@/lib/content';
 import { BLOG_POSTS } from '@/lib/blog-data';
+import { VISUAL_ENCYCLOPEDIA_ENTRIES } from '@/lib/visual-encyclopedia';
+import constellationData from '@/data/arcanea-constellation.v1.json';
+import characterData from '@/data/arcanea-character-identities.v1.json';
+import campaignData from '@/data/arcanea-visual-campaign.v1.json';
+import godbeastData from '@/data/arcanea-godbeast-identities.v1.json';
+import guardianData from '@/data/arcanea-guardian-identities.v1.json';
+import worldData from '@/data/arcanea-world-identities.v1.json';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://arcanea.ai';
@@ -22,6 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/luminors`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${baseUrl}/companions`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/agents`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/constellation`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.92 },
 
     // ── Library & Knowledge ────────────────────────────────
     { url: `${baseUrl}/library`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
@@ -115,6 +123,45 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
+  const constellationPages: MetadataRoute.Sitemap = constellationData.agents.map((agent) => ({
+    url: `${baseUrl}/constellation/${agent.id}`,
+    lastModified: new Date(constellationData.meta.generatedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.78,
+  }));
+  const characterIdentityPages: MetadataRoute.Sitemap = characterData.characters.map((character) => ({
+    url: `${baseUrl}/constellation/characters/${character.id}`,
+    lastModified: new Date(characterData.meta.generatedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.74,
+  }));
+  const guardianIdentityPages: MetadataRoute.Sitemap = guardianData.guardians.map((guardian) => ({
+    url: `${baseUrl}/constellation/guardians/${guardian.id}`,
+    lastModified: new Date(guardianData.meta.generatedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.76,
+  }));
+  const godbeastIdentityPages: MetadataRoute.Sitemap = godbeastData.godbeasts.map((godbeast) => ({
+    url: `${baseUrl}/constellation/godbeasts/${godbeast.id}`,
+    lastModified: new Date(godbeastData.meta.generatedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.76,
+  }));
+  const worldIdentityPages: MetadataRoute.Sitemap = worldData.worlds.map((world) => ({
+    url: `${baseUrl}/constellation/worlds/${world.id}`,
+    lastModified: new Date(worldData.meta.generatedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.76,
+  }));
+  const promptContractPages: MetadataRoute.Sitemap = campaignData.rounds.flatMap((round) =>
+    round.jobs.map((job) => ({
+      url: `${baseUrl}/constellation/prompts/${job.id.toLowerCase()}`,
+      lastModified: new Date(campaignData.meta.createdAt),
+      changeFrequency: 'monthly' as const,
+      priority: 0.64,
+    })),
+  );
+
   // Library collections (17)
   const libraryCollectionPages: MetadataRoute.Sitemap = COLLECTIONS.map((c) => ({
     url: `${baseUrl}/library/${c.slug}`,
@@ -184,9 +231,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Supabase not available at build
   }
 
+  // Visual Encyclopedia Dossiers (130)
+  const galleryDossierPages: MetadataRoute.Sitemap = VISUAL_ENCYCLOPEDIA_ENTRIES.map((entry) => ({
+    url: `${baseUrl}/gallery/${entry.id}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.82,
+  }));
+
   return [
     ...staticPages,
+    ...constellationPages,
+    ...guardianIdentityPages,
+    ...godbeastIdentityPages,
+    ...worldIdentityPages,
+    ...characterIdentityPages,
+    ...promptContractPages,
     ...guardianPages,
+    ...galleryDossierPages,
     ...libraryCollectionPages,
     ...libraryTextPages,
     ...gatePages,

@@ -56,7 +56,7 @@ const navLinks: NavLink[] = [
   {
     href: "/gallery",
     label: "Explore",
-    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/showcase", "/models"],
+    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/constellation", "/showcase", "/models"],
     mega: [
       {
         title: "Discover",
@@ -64,6 +64,7 @@ const navLinks: NavLink[] = [
           { href: "/gallery", label: "Gallery", desc: "Community creations" },
           { href: "/discover/pages", label: "Pages", desc: "Published from conversations" },
           { href: "/worlds", label: "Worlds", desc: "Browse the multiverse" },
+          { href: "/constellation", label: "Constellation", desc: "Agent blueprints and visual campaign" },
           { href: "/luminors", label: "Luminors", desc: "Meet the AI minds" },
           { href: "/models", label: "Model Arena", desc: "AI benchmarks" },
         ],

@@ -59,6 +59,9 @@ temp/
 # Asset uploads (development only)
 public/shared-assets/temp-uploads/
 apps/web/public/brand/temp/
+planning-with-files/arcanea-visual-assets/
+planning-with-files/arcanea-visual-blind-review/
+planning-with-files/arcanea-visual-workbench/index.html
 
 # Turbo
 .turbo/

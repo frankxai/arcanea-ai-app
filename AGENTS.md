@@ -116,6 +116,20 @@ Use `planning-with-files/` as the execution control plane:
 
 Agents must update these files when materially changing repo direction, promotion posture, or shared operating rules.
 
+## Visual Intelligence Director
+
+Arcanea visual identity, image generation, character consistency, visual campaigns, and the Living Constellation route through one governed operational owner:
+
+- Operator contract: `skills/arcanea-visual-director/AGENT.md`
+- Execution skill: `skills/arcanea-visual-director/SKILL.md`
+- Public face: Prismatic; this is an operating role, not a seventeenth mythic or product identity.
+- Default council: Prismatic for visual grammar, Chronica for story continuity, Analytica for controlled evaluation, and Memoria for hashes and lineage. A named specialist joins only when the evidence contract requires one.
+- Public teaching surface: `/constellation`, 66 identity dossiers, 100 prompt-contract pages, and `/downloads/arcanea-constellation/`.
+- Current campaign truth: `planning-with-files/ARCANEA_LIVING_CONSTELLATION_STATE_2026-08-24.md`.
+- Tooling boundary: `docs/design/ARCANEA_VISUAL_TOOLING_MIGRATION_V1.md` and `docs/design/arcanea-visual-tooling-surface-registry.v1.json`. A registered legacy or product route is classified inventory, not an alternative authorization path.
+
+Activate the Visual Director for any Arcanea character, Guardian, Godbeast, world, agent image, cover, gallery, visual bible, style comparison, provider prompt, or release packet. It may maintain contracts and prepare drafts continuously, but image calls require a fresh allowed PP preflight and a narrow human grant. It freezes after each ten-image round and may not act as its own independent critic, canon authority, identity approver, spend approver, rights approver, or release authority.
+
 ## Research Agent Team
 
 Research agents use the Luminor Engineering Kernel + Research Specialization Module.
