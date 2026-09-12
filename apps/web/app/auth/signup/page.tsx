@@ -6,6 +6,7 @@ import { MotionProvider, m } from "@/lib/motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { safeAuthNextPath } from "@/lib/auth/safe-next-path";
 import {
   PhEnvelope,
   PhLock,
@@ -45,10 +46,7 @@ function GoogleLogo() {
 export default function SignupPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const nextPath =
-    searchParams.get("next") === "/worlds/create?resume=1"
-      ? "/worlds/create?resume=1"
-      : "/onboarding";
+  const nextPath = safeAuthNextPath(searchParams.get("next"), "/onboarding");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
