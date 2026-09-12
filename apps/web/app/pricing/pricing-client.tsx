@@ -140,7 +140,12 @@ export function PricingClient() {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim() }),
+        body: JSON.stringify({
+          email: email.trim(),
+          program: "arcanea-founding-circle",
+          source: "pricing_founding_circle",
+          page_path: "/pricing",
+        }),
       });
 
       const data = await res.json();

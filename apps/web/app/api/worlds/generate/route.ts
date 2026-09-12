@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 /**
  * World Generator API — "Describe your world in one sentence"
  *
@@ -8,15 +7,15 @@
  * back a complete World — name, characters, locations, lore, and concept art
  * prompt. Powered by Gemini via Vercel AI SDK.
  *
- * Auth: optional. Guests get a preview; authenticated users get it saved to DB.
+ * Generation returns an unsaved draft for every user. Saving is a separate action.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createGoogleGenerativeAI } from '@ai-sdk/google';
-import { createOpenAI } from '@ai-sdk/openai';
-import { generateText } from 'ai';
-import { createClient } from '@/lib/supabase/server';
-import type { Json } from '@/lib/database/types/world-graph-types';
+import { NextRequest, NextResponse } from "next/server";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { createOpenAI } from "@ai-sdk/openai";
+import { generateText } from "ai";
+import { randomUUID } from "node:crypto";
+import { worldDraftSchema, draftResult } from "@/lib/worlds/draft";
 
 export const maxDuration = 30;
 
@@ -81,22 +80,22 @@ function resolveModel() {
 
   if (googleKey) {
     const google = createGoogleGenerativeAI({ apiKey: googleKey });
-    return google('gemini-2.0-flash');
+    return google("gemini-2.5-flash");
   }
   if (openrouterKey) {
     const openrouter = createOpenAI({
       apiKey: openrouterKey,
-      baseURL: 'https://openrouter.ai/api/v1',
+      baseURL: "https://openrouter.ai/api/v1",
     });
-    return openrouter('google/gemini-2.5-flash');
+    return openrouter("google/gemini-2.5-flash");
   }
   return null;
 }
 
 function parseJsonResponse(text: string): Record<string, unknown> | null {
   let cleaned = text.trim();
-  if (cleaned.startsWith('```')) {
-    cleaned = cleaned.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
+  if (cleaned.startsWith("```")) {
+    cleaned = cleaned.replace(/^```(?:json)?\s*/, "").replace(/\s*```$/, "");
   }
   try {
     return JSON.parse(cleaned);
@@ -107,18 +106,34 @@ function parseJsonResponse(text: string): Record<string, unknown> | null {
 
 export async function POST(req: NextRequest) {
   try {
-    const { description } = await req.json();
+    let body: unknown;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+    }
+    const description =
+      body &&
+      typeof body === "object" &&
+      "description" in body &&
+      typeof body.description === "string"
+        ? body.description.trim()
+        : "";
 
-    if (!description || typeof description !== 'string' || description.length < 5) {
+    if (
+      !description ||
+      typeof description !== "string" ||
+      description.length < 5
+    ) {
       return NextResponse.json(
-        { error: 'Describe your world in at least a few words.' },
+        { error: "Describe your world in at least a few words." },
         { status: 400 },
       );
     }
 
     if (description.length > 500) {
       return NextResponse.json(
-        { error: 'Description too long. Keep it under 500 characters.' },
+        { error: "Description too long. Keep it under 500 characters." },
         { status: 400 },
       );
     }
@@ -127,13 +142,19 @@ export async function POST(req: NextRequest) {
     const model = resolveModel();
     if (!model) {
       return NextResponse.json(
-        { error: 'No AI provider configured. Set GOOGLE_GENERATIVE_AI_API_KEY on Vercel.' },
+        {
+          error:
+            "World generation is temporarily unavailable. Please try again later.",
+        },
         { status: 503 },
       );
     }
 
     // --- Generate world ---
-    const systemPrompt = WORLD_FORGE_PROMPT.replace('{DESCRIPTION}', description);
+    const systemPrompt = WORLD_FORGE_PROMPT.replace(
+      "{DESCRIPTION}",
+      description,
+    );
 
     const result = await generateText({
       model,
@@ -141,115 +162,29 @@ export async function POST(req: NextRequest) {
       prompt: `Create a world based on: "${description}"`,
       temperature: 0.9,
       maxOutputTokens: 4096,
+      maxRetries: 0,
+      abortSignal: AbortSignal.timeout(25000),
+      providerOptions: { google: { thinkingConfig: { thinkingBudget: 0 } } },
     });
 
-    const worldData = parseJsonResponse(result.text);
-    if (!worldData || !worldData.name || !worldData.slug) {
+    const parsed = worldDraftSchema.safeParse(parseJsonResponse(result.text));
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: 'World generation produced invalid data. Try a more descriptive sentence.' },
-        { status: 500 },
+        {
+          error:
+            "The generated draft was incomplete. Your concept is still here; please try again.",
+        },
+        { status: 502 },
       );
     }
-
-    // Extract structured pieces from the generated data
-    const characters = Array.isArray(worldData.characters)
-      ? (worldData.characters as Record<string, unknown>[])
-      : [];
-    const locations = Array.isArray(worldData.locations)
-      ? (worldData.locations as Record<string, unknown>[])
-      : [];
-    const event = (worldData.first_event as Record<string, unknown>) ?? null;
-    const imagePrompt = typeof worldData.image_prompt === 'string' ? worldData.image_prompt : '';
-
-    // --- Auth check: save to DB if authenticated ---
-    let saved = false;
-    let savedWorldId: string | null = null;
-
-    try {
-      const supabase = await createClient();
-      const { data: { user } } = await supabase.auth.getUser();
-
-      if (user) {
-        // Ensure unique slug
-        const baseSlug = worldData.slug as string;
-        const { count } = await supabase
-          .from('worlds')
-          .select('id', { count: 'exact', head: true })
-          .eq('slug', baseSlug);
-
-        const slug = count && count > 0 ? `${baseSlug}-${Date.now()}` : baseSlug;
-
-        // Insert world (image_prompt / first_event are not DB columns — kept in response only)
-        const { data: insertedWorld, error: worldErr } = await supabase
-          .from('worlds')
-          .insert({
-            name: worldData.name as string,
-            slug,
-            tagline: (worldData.tagline as string) ?? null,
-            description: (worldData.description as string) ?? null,
-            mood: (worldData.mood as string) ?? null,
-            elements: (worldData.elements as Json) ?? null,
-            laws: (worldData.laws as Json) ?? null,
-            systems: (worldData.systems as Json) ?? null,
-            palette: (worldData.palette as Json) ?? null,
-            creator_id: user.id,
-            visibility: 'private',
-          })
-          .select('id')
-          .single();
-
-        if (!worldErr && insertedWorld) {
-          savedWorldId = insertedWorld.id;
-
-          // Insert characters and locations in parallel
-          const wid = savedWorldId!; // safe — we just inserted and checked
-          await Promise.all([
-            characters.length > 0
-              ? supabase.from('world_characters').insert(
-                  characters.map((c) => ({
-                    world_id: wid,
-                    name: c.name as string,
-                    title: (c.title as string) ?? null,
-                    personality: (c.personality as Json) ?? {},
-                    backstory: (c.backstory as string) ?? null,
-                    element: (c.element as string) ?? null,
-                    origin_class: (c.origin_class as string) ?? null,
-                  })),
-                )
-              : null,
-            locations.length > 0
-              ? supabase.from('world_locations').insert(
-                  locations.map((l) => ({
-                    world_id: wid,
-                    name: l.name as string,
-                    region: (l.region as string) ?? null,
-                    description: (l.description as string) ?? null,
-                    significance: (l.significance as string) ?? null,
-                  })),
-                )
-              : null,
-          ]);
-
-          saved = true;
-        }
-      }
-    } catch {
-      // Non-fatal: return generated data even if save fails
-    }
-
-    return NextResponse.json({
-      world: worldData,
-      characters,
-      locations,
-      event,
-      image_prompt: imagePrompt,
-      saved,
-      ...(savedWorldId ? { world_id: savedWorldId } : {}),
-    });
-  } catch (error) {
-    console.error('World generate API error:', error);
+    return NextResponse.json(draftResult(parsed.data, randomUUID()));
+  } catch {
+    console.error("World generation failed.");
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'World generation failed' },
+      {
+        error:
+          "World generation failed. Your concept is still here; please try again.",
+      },
       { status: 500 },
     );
   }
