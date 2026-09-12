@@ -18,6 +18,8 @@ import {
   draftResult,
   readStoredWorldDraft,
   WORLD_DRAFT_KEY,
+  WORLD_PREVIOUS_DRAFT_KEY,
+  WORLD_REFINEMENTS,
   worldDraftSchema,
   type WorldDraft,
 } from "@/lib/worlds/draft";
@@ -26,13 +28,7 @@ import {
 // Types
 // ---------------------------------------------------------------------------
 
-interface GeneratedCharacter {
-  name: string;
-  title?: string;
-  backstory?: string;
-  element?: string;
-  origin_class?: string;
-}
+type GeneratedCharacter = WorldDraft["characters"][number];
 
 interface GeneratedLocation {
   name: string;
@@ -67,13 +63,7 @@ const EXAMPLES = [
   "A dying star that holds the last library of the universe",
 ];
 
-const REFINE_SUFFIXES = [
-  "more dramatic and epic",
-  "darker and more mysterious",
-  "more whimsical and playful",
-  "grittier and more realistic",
-  "more ancient and mythological",
-];
+const REFINE_SUFFIXES = WORLD_REFINEMENTS;
 
 const EL_GLOW: Record<string, string> = {
   fire: "shadow-red-500/30",
@@ -164,7 +154,7 @@ function GenrePreview({ description }: { description: string }) {
     >
       <span className="relative flex h-2 w-2">
         <span
-          className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
+          className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
           style={{ backgroundColor: match.color }}
         />
         <span
@@ -187,7 +177,7 @@ function AuroraBackground() {
       className="fixed inset-0 pointer-events-none overflow-hidden"
       aria-hidden="true"
     >
-      <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-[var(--arc-brand-atlantean-teal)]/[0.04] rounded-full blur-[120px] animate-pulse" />
+      <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-[var(--arc-brand-atlantean-teal)]/[0.04] rounded-full blur-[120px] motion-safe:animate-pulse" />
       <div
         className="absolute bottom-1/4 -right-32 w-[500px] h-[500px] bg-[var(--arc-void)]/[0.04] rounded-full blur-[120px]"
         style={{ animationDelay: "2s" }}
@@ -295,7 +285,7 @@ function ElementOrbs({
             style={{ backgroundColor: el.color }}
           >
             <div
-              className="absolute inset-0 rounded-full animate-pulse"
+              className="absolute inset-0 rounded-full motion-safe:animate-pulse"
               style={{
                 boxShadow: `0 0 20px ${el.color}40, 0 0 40px ${el.color}20`,
               }}
@@ -355,8 +345,18 @@ function CharacterCard({
           </span>
         )}
         {char.backstory && (
-          <p className="text-sm text-white/50 leading-relaxed line-clamp-3">
+          <p className="text-sm text-white/50 leading-relaxed">
             {char.backstory}
+          </p>
+        )}
+        {!!char.personality?.traits.length && (
+          <p className="mt-3 text-sm text-white/70">
+            Traits: {char.personality.traits.join(", ")}
+          </p>
+        )}
+        {char.personality?.voice_style && (
+          <p className="mt-2 text-sm text-white/70">
+            Voice: {char.personality.voice_style}
           </p>
         )}
       </div>
@@ -385,14 +385,12 @@ function LocationCard({
       )}
       <h4 className="font-display font-semibold text-white mb-1">{loc.name}</h4>
       {loc.description && (
-        <p className="text-sm text-white/50 leading-relaxed line-clamp-3 mb-2">
+        <p className="text-sm text-white/50 leading-relaxed mb-2">
           {loc.description}
         </p>
       )}
       {loc.significance && (
-        <p className="text-xs text-white/70 italic line-clamp-2">
-          {loc.significance}
-        </p>
+        <p className="text-xs text-white/70 italic">{loc.significance}</p>
       )}
     </m.div>
   );
@@ -492,6 +490,12 @@ export default function CreateWorldPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [saving, setSaving] = useState(false);
   const [refining, setRefining] = useState(false);
+  const [pendingConcept, setPendingConcept] = useState<string | null>(null);
+  const [previousDraft, setPreviousDraft] =
+    useState<ReturnType<typeof readStoredWorldDraft>>(null);
+  const [previousHeroImage, setPreviousHeroImage] = useState<string | null>(
+    null,
+  );
 
   useEffect(() => {
     const supabase = createClient();
@@ -513,14 +517,18 @@ export default function CreateWorldPage() {
       const stored = readStoredWorldDraft(
         sessionStorage.getItem(WORLD_DRAFT_KEY),
       );
-      if (concept) {
-        setDescription(concept.slice(0, 500));
-        window.history.replaceState(null, "", "/worlds/create");
-      } else if (stored) {
+      setPreviousDraft(
+        readStoredWorldDraft(sessionStorage.getItem(WORLD_PREVIOUS_DRAFT_KEY)),
+      );
+      if (stored) {
         setDescription(stored.description);
         setResult(draftResult(stored.world, stored.draft_id));
         setPhase("result");
         setStorageNote("Draft restored from this browser tab.");
+        if (concept) setPendingConcept(concept.slice(0, 500));
+      } else if (concept) {
+        setDescription(concept.slice(0, 500));
+        window.history.replaceState(null, "", "/worlds/create");
       } else if (params.get("prompt"))
         setDescription(params.get("prompt")!.slice(0, 500));
     } catch {
@@ -531,27 +539,41 @@ export default function CreateWorldPage() {
     return () => subscription.unsubscribe();
   }, []);
 
-  const rememberDraft = useCallback((data: GenerateResult, concept: string) => {
-    try {
-      sessionStorage.setItem(
-        WORLD_DRAFT_KEY,
-        JSON.stringify({
-          version: 1,
-          description: concept,
-          draft_id: data.draft_id,
-          world: data.world,
-        }),
-      );
-      sessionStorage.removeItem("arcanea.world-concept");
-      setStorageNote(
-        "Draft kept in this browser tab. Save to your account or export a copy before closing it.",
-      );
-    } catch {
-      setStorageNote(
-        "Browser storage is unavailable. Export your draft before leaving this page.",
-      );
-    }
-  }, []);
+  const rememberDraft = useCallback(
+    (data: GenerateResult, concept: string) => {
+      try {
+        const current = readStoredWorldDraft(
+          sessionStorage.getItem(WORLD_DRAFT_KEY),
+        );
+        if (current && current.draft_id !== data.draft_id) {
+          setPreviousDraft(current);
+          setPreviousHeroImage(heroImage);
+          sessionStorage.setItem(
+            WORLD_PREVIOUS_DRAFT_KEY,
+            JSON.stringify(current),
+          );
+        }
+        sessionStorage.setItem(
+          WORLD_DRAFT_KEY,
+          JSON.stringify({
+            version: 1,
+            description: concept,
+            draft_id: data.draft_id,
+            world: data.world,
+          }),
+        );
+        sessionStorage.removeItem("arcanea.world-concept");
+        setStorageNote(
+          "Draft kept in this browser tab. Save to your account or export a copy before closing it.",
+        );
+      } catch {
+        setStorageNote(
+          "Browser storage is unavailable. Export your draft before leaving this page.",
+        );
+      }
+    },
+    [heroImage],
+  );
 
   const continueToSignIn = useCallback(
     (concept?: string) => {
@@ -621,7 +643,7 @@ export default function CreateWorldPage() {
   );
 
   const generate = useCallback(
-    async (desc?: string) => {
+    async (desc?: string, refinement?: string) => {
       const trimmed = (desc || description).trim();
       if (
         !trimmed ||
@@ -637,13 +659,12 @@ export default function CreateWorldPage() {
       generating.current = true;
 
       setError(null);
-      setHeroImage(null);
       setPhase("generating");
       try {
         const res = await fetch("/api/worlds/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ description: trimmed }),
+          body: JSON.stringify({ description: trimmed, refinement }),
         });
 
         if (!res.ok) {
@@ -662,12 +683,17 @@ export default function CreateWorldPage() {
         }
 
         const data: GenerateResult = await res.json();
-        if (!data.draft_id || !worldDraftSchema.safeParse(data.world).success)
+        const parsed = worldDraftSchema.safeParse(data.world);
+        if (!data.draft_id || !parsed.success)
           throw new Error(
             "The draft could not be validated. Please try again.",
           );
-        setResult(data);
-        rememberDraft(data, trimmed);
+        const normalized = draftResult(parsed.data, data.draft_id);
+        rememberDraft(normalized, trimmed);
+        setResult(normalized);
+        setDescription(trimmed);
+        setHeroImage(null);
+        setPendingConcept(null);
         setPhase("result");
       } catch (err) {
         setError(err instanceof Error ? err.message : "Something went wrong.");
@@ -682,6 +708,7 @@ export default function CreateWorldPage() {
   const saveWorld = useCallback(async () => {
     if (!result || saving) return;
     setSaving(true);
+    setError(null);
 
     try {
       if (result.saved && result.world?.slug) {
@@ -738,10 +765,8 @@ export default function CreateWorldPage() {
   };
 
   const handleRefine = (suffix: string) => {
-    const newDesc = `${description} -- but make it ${suffix}`;
-    setDescription(newDesc.slice(0, 500));
     setRefining(false);
-    generate(newDesc.slice(0, 500));
+    generate(description, suffix);
   };
 
   const exportDraft = () => {
@@ -759,10 +784,34 @@ export default function CreateWorldPage() {
   };
 
   const reset = () => {
+    if (saving || imageLoading) return false;
+    if (
+      result &&
+      !result.saved &&
+      !window.confirm(
+        "Start a new concept? Save or export this draft first if you need a lasting copy. You can restore the previous text draft in this tab.",
+      )
+    )
+      return false;
     try {
+      const current = readStoredWorldDraft(
+        sessionStorage.getItem(WORLD_DRAFT_KEY),
+      );
+      if (current) {
+        sessionStorage.setItem(
+          WORLD_PREVIOUS_DRAFT_KEY,
+          JSON.stringify(current),
+        );
+        setPreviousDraft(current);
+        setPreviousHeroImage(heroImage);
+      }
       sessionStorage.removeItem(WORLD_DRAFT_KEY);
+      sessionStorage.removeItem("arcanea.world-concept");
     } catch {
-      /* Already unavailable. */
+      setError(
+        "Export your draft before starting over. A recovery copy could not be stored.",
+      );
+      return false;
     }
     setStorageNote(null);
     setPhase("input");
@@ -771,6 +820,22 @@ export default function CreateWorldPage() {
     setHeroImage(null);
     setError(null);
     setRefining(false);
+    setPendingConcept(null);
+    return true;
+  };
+
+  const restorePrevious = () => {
+    if (!previousDraft || saving || imageLoading || phase === "generating")
+      return;
+    const restored = draftResult(previousDraft.world, previousDraft.draft_id);
+    const restoredImage = previousHeroImage;
+    rememberDraft(restored, previousDraft.description);
+    setDescription(previousDraft.description);
+    setResult(restored);
+    setHeroImage(restoredImage);
+    setPhase("result");
+    setError(null);
+    setPendingConcept(null);
   };
 
   // Preserve native Tab navigation and IME composition.
@@ -800,7 +865,7 @@ export default function CreateWorldPage() {
           <div className="relative z-10 max-w-4xl mx-auto px-6 pt-8">
             <Link
               href="/worlds"
-              className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white/60 transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white/90 transition-colors"
             >
               <svg
                 className="w-4 h-4"
@@ -820,6 +885,53 @@ export default function CreateWorldPage() {
           </div>
 
           <div className="relative z-10 max-w-4xl mx-auto px-6 pt-8 pb-24">
+            {pendingConcept && (
+              <section
+                aria-label="Choose your draft"
+                className="mb-8 rounded-xl border border-white/20 p-5"
+              >
+                <h2 className="text-lg font-medium">
+                  Your unsaved draft is still here
+                </h2>
+                <p className="mt-2 text-sm text-white/70">
+                  You also brought a new concept. Keep this draft or start the
+                  new idea with a recoverable copy of the previous text.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <button
+                    className="rounded-lg border border-white/30 px-4 py-3"
+                    onClick={() => {
+                      setPendingConcept(null);
+                      try {
+                        sessionStorage.removeItem("arcanea.world-concept");
+                      } catch {
+                        /* The current draft remains visible. */
+                      }
+                    }}
+                  >
+                    Keep this draft
+                  </button>
+                  <button
+                    className="rounded-lg border border-white/30 px-4 py-3"
+                    onClick={() => {
+                      const concept = pendingConcept;
+                      if (reset()) setDescription(concept);
+                    }}
+                  >
+                    Use new concept
+                  </button>
+                </div>
+              </section>
+            )}
+            {previousDraft && (
+              <button
+                onClick={restorePrevious}
+                disabled={saving || imageLoading || phase === "generating"}
+                className="mb-6 rounded-lg border border-white/20 px-4 py-3 text-sm disabled:opacity-50"
+              >
+                Restore previous draft
+              </button>
+            )}
             <AnimatePresence mode="wait">
               {/* -- Phase: Input ----------------------------------------- */}
               {phase === "input" && (
@@ -873,16 +985,18 @@ export default function CreateWorldPage() {
                         onKeyDown={(e) => {
                           if (
                             e.key === "Enter" &&
+                            (e.ctrlKey || e.metaKey) &&
                             !e.shiftKey &&
                             !e.nativeEvent.isComposing
                           ) {
                             e.preventDefault();
+                            e.stopPropagation();
                             generate();
                           }
                         }}
                         placeholder="A floating archipelago where gravity is controlled by ancient crystals..."
                         rows={3}
-                        className="relative w-full px-6 py-5 bg-transparent text-white/90 placeholder-white/20 resize-none focus:outline-none font-body text-[15px] leading-relaxed"
+                        className="relative w-full px-6 py-5 bg-transparent text-white/90 placeholder-white/60 resize-none focus:outline-none font-body text-[15px] leading-relaxed"
                       />
                     </div>
                     <div className="flex items-center justify-between mt-2 px-1">
@@ -890,7 +1004,9 @@ export default function CreateWorldPage() {
                         {description.length}/500
                       </span>
                       {error && (
-                        <span className="text-xs text-red-400">{error}</span>
+                        <span role="alert" className="text-xs text-red-400">
+                          {error}
+                        </span>
                       )}
                     </div>
                     <AnimatePresence>
@@ -907,7 +1023,7 @@ export default function CreateWorldPage() {
                     }
                     className={`px-10 py-4 rounded-xl font-bold text-base transition-colors duration-200 ${
                       description.trim().length >= 5
-                        ? "bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40"
+                        ? "bg-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40"
                         : "bg-white/[0.04] text-white/70 cursor-not-allowed"
                     }`}
                   >
@@ -927,7 +1043,7 @@ export default function CreateWorldPage() {
                         <button
                           key={ex}
                           onClick={() => setDescription(ex)}
-                          className="px-4 py-2 rounded-full text-[13px] text-white/70 hover:text-white/65 bg-white/[0.02] hover:bg-[var(--arc-brand-atlantean-teal)]/[0.06] border border-white/[0.04] hover:border-[var(--arc-brand-atlantean-teal)]/20 transition-colors duration-300"
+                          className="px-4 py-2 rounded-full text-[13px] text-white/70 hover:text-white/90 bg-white/[0.02] hover:bg-[var(--arc-brand-atlantean-teal)]/[0.06] border border-white/[0.04] hover:border-[var(--arc-brand-atlantean-teal)]/20 transition-colors duration-300"
                         >
                           {ex}
                         </button>
@@ -960,7 +1076,7 @@ export default function CreateWorldPage() {
                       className="text-center mb-8"
                     >
                       <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06]">
-                        <div className="w-2 h-2 rounded-full bg-[var(--arc-brand-atlantean-teal)] animate-pulse" />
+                        <div className="w-2 h-2 rounded-full bg-[var(--arc-brand-atlantean-teal)] motion-safe:animate-pulse" />
                         <span className="text-xs text-white/70">
                           Generating concept art...
                         </span>
@@ -998,7 +1114,7 @@ export default function CreateWorldPage() {
                         Characters
                       </m.h3>
                       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {result.characters.slice(0, 3).map((c, i) => (
+                        {result.characters.map((c, i) => (
                           <CharacterCard key={c.name} char={c} index={i} />
                         ))}
                       </div>
@@ -1017,7 +1133,7 @@ export default function CreateWorldPage() {
                         Locations
                       </m.h3>
                       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {result.locations.slice(0, 3).map((l, i) => (
+                        {result.locations.map((l, i) => (
                           <LocationCard key={l.name} loc={l} index={i} />
                         ))}
                       </div>
@@ -1053,6 +1169,27 @@ export default function CreateWorldPage() {
                           </li>
                         ))}
                       </ul>
+                    </section>
+                  )}
+                  {result.world.systems.length > 0 && (
+                    <section className="my-10">
+                      <h2 className="text-lg mb-4">World systems</h2>
+                      <div className="space-y-5">
+                        {result.world.systems.map((system, index) => (
+                          <article
+                            key={`${system.name}-${index}`}
+                            className="border-l-2 border-[var(--arc-brand-atlantean-teal)] pl-4"
+                          >
+                            <h3 className="font-medium">{system.name}</h3>
+                            <p className="text-sm text-white/70 mt-1">
+                              {system.type}
+                            </p>
+                            <p className="text-sm text-white/80 mt-2 whitespace-pre-wrap">
+                              {system.rules}
+                            </p>
+                          </article>
+                        ))}
+                      </div>
                     </section>
                   )}
                   <p
@@ -1115,7 +1252,7 @@ export default function CreateWorldPage() {
                           whileTap={{ scale: 0.97 }}
                           onClick={saveWorld}
                           disabled={saving}
-                          className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow disabled:opacity-50"
+                          className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow disabled:opacity-50"
                         >
                           {saving ? "Saving..." : "Save this world"}
                           {!saving && (
@@ -1137,7 +1274,7 @@ export default function CreateWorldPage() {
                       ) : (
                         <Link
                           href="/auth/login?next=%2Fworlds%2Fcreate%3Fresume%3D1"
-                          className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow"
+                          className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow"
                         >
                           Sign in to save this draft
                           <svg
@@ -1158,6 +1295,7 @@ export default function CreateWorldPage() {
 
                       <button
                         onClick={startRefine}
+                        disabled={saving || imageLoading}
                         className="inline-flex items-center gap-2 px-8 py-4 border border-[var(--arc-brand-arcanean-gold)]/20 text-[var(--arc-brand-arcanean-gold)]/60 font-bold rounded-xl hover:bg-[var(--arc-brand-arcanean-gold)]/[0.04] hover:text-[var(--arc-brand-arcanean-gold)]/80 transition-colors"
                       >
                         Refine
@@ -1165,6 +1303,7 @@ export default function CreateWorldPage() {
 
                       <button
                         onClick={reset}
+                        disabled={saving || imageLoading}
                         className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/60 font-bold rounded-xl hover:bg-white/[0.04] transition-colors"
                       >
                         Start over
@@ -1181,7 +1320,8 @@ export default function CreateWorldPage() {
                           className="mt-6 overflow-hidden"
                         >
                           <p className="text-xs text-white/70 mb-3">
-                            Make it...
+                            Generate a new version. The previous text draft
+                            stays available to restore.
                           </p>
                           <div className="flex flex-wrap justify-center gap-2">
                             {REFINE_SUFFIXES.map((suffix) => (

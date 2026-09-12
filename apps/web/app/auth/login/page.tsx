@@ -38,9 +38,7 @@ function ErrorMessage({ message }: { message: string }) {
       role="alert"
     >
       <PhWarningCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-      <p className="text-red-400 text-sm font-body leading-relaxed">
-        {message}
-      </p>
+      <p className="text-red-400 text-sm font-body leading-relaxed">{message}</p>
     </m.div>
   );
 }
@@ -185,30 +183,29 @@ export default function LoginPage() {
 
       // If the caller already specified a next path (e.g. middleware redirect),
       // honour it. Otherwise check the profile to decide where to send the user.
-      if (nextPath !== "/dashboard") {
+      if (nextPath !== '/dashboard') {
         router.push(nextPath);
         router.refresh();
         return;
       }
 
       try {
-        const {
-          data: { user: signedInUser },
-        } = await supabase.auth.getUser();
+        const { data: { user: signedInUser } } = await supabase.auth.getUser();
         if (signedInUser) {
           const { data: profile } = await supabase
-            .from("profiles")
-            .select("gates_open, metadata")
-            .eq("id", signedInUser.id)
+            .from('profiles')
+            .select('gates_open, metadata')
+            .eq('id', signedInUser.id)
             .single();
 
           const onboardingComplete =
             profile &&
-            ((profile.gates_open ?? 0) >= 1 ||
-              (profile.metadata as Record<string, unknown> | null)
-                ?.onboardingComplete === true);
+            (
+              (profile.gates_open ?? 0) >= 1 ||
+              (profile.metadata as Record<string, unknown> | null)?.onboardingComplete === true
+            );
 
-          router.push(onboardingComplete ? "/dashboard" : "/onboarding");
+          router.push(onboardingComplete ? '/dashboard' : '/onboarding');
           router.refresh();
           return;
         }
@@ -276,146 +273,143 @@ export default function LoginPage() {
       <div className="relative flex items-center justify-center min-h-[calc(100dvh-4rem)] px-4 py-12">
         {/* Background — cosmic depth with aurora */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 bg-[var(--arc-cosmic-void)]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(0,188,212,0.06)_0%,rgba(13,71,161,0.03)_40%,transparent_70%)] blur-[80px]" />
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[radial-gradient(ellipse,rgba(168,85,247,0.04)_0%,transparent_70%)] blur-[60px]" />
-          {/* Subtle grid texture */}
-          <div
-            className="absolute inset-0 opacity-[0.012]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)",
-              backgroundSize: "80px 80px",
-            }}
-          />
-        </div>
+        <div className="absolute inset-0 bg-[var(--arc-cosmic-void)]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(0,188,212,0.06)_0%,rgba(13,71,161,0.03)_40%,transparent_70%)] blur-[80px]" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[radial-gradient(ellipse,rgba(168,85,247,0.04)_0%,transparent_70%)] blur-[60px]" />
+        {/* Subtle grid texture */}
+        <div
+          className="absolute inset-0 opacity-[0.012]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
+          }}
+        />
+      </div>
 
         <m.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="relative w-full max-w-md"
-        >
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="relative w-full max-w-md"
+      >
           {/* Header — branded with gate symbol */}
           <div className="text-center mb-10">
-            <Link href="/" className="inline-block mb-6 group">
-              {/* Gate symbol with teal glow */}
-              <div className="relative mx-auto w-14 h-14 flex items-center justify-center">
-                <div className="absolute inset-[-4px] rounded-xl bg-[radial-gradient(circle,rgba(0,188,212,0.2)_0%,transparent_70%)] blur-sm group-hover:blur-md transition-all duration-500" />
-                <div className="relative w-12 h-12 rounded-xl border border-white/[0.1] bg-white/[0.03] flex items-center justify-center shadow-[0_4px_24px_rgba(0,188,212,0.15)]">
-                  <span className="font-display text-lg font-bold bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-arcanean-gold)] bg-clip-text text-transparent">
-                    A
-                  </span>
-                </div>
-              </div>
-            </Link>
-
-            <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary mb-2">
-              Welcome back
-            </h1>
-            <p className="text-text-secondary font-body text-sm">
-              The gate awaits
-            </p>
-          </div>
-
-          {/* Login card */}
-          <GlowCard
-            glass="none"
-            className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8"
-          >
-            {authMessage === "check_email" && (
-              <m.p
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-5 rounded-xl border border-atlantean-teal-aqua/20 bg-atlantean-teal-aqua/5 px-4 py-3 text-sm font-body text-text-primary"
-              >
-                Check your email for the confirmation link to complete sign-up.
-              </m.p>
-            )}
-
-            {callbackErrorMessage && (
-              <div className="mb-5">
-                <ErrorMessage message={callbackErrorMessage} />
-              </div>
-            )}
-
-            {/* Google sign-in — primary action */}
-            <button
-              type="button"
-              onClick={handleGoogleLogin}
-              disabled={isLoading}
-              className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl border border-white/[0.12] bg-white/[0.05] hover:border-white/[0.20] hover:bg-white/[0.08] transition-all duration-300 font-body font-medium text-text-primary text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-              aria-label="Continue with Google"
-            >
-              <GoogleLogo />
-              Continue with Google
-            </button>
-
-            {/* Divider */}
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/[0.06]" />
-              </div>
-              <div className="relative flex justify-center">
-                <span className="px-4 bg-cosmic-void font-body text-xs text-text-muted">
-                  or sign in with email
+          <Link href="/" className="inline-block mb-6 group">
+            {/* Gate symbol with teal glow */}
+            <div className="relative mx-auto w-14 h-14 flex items-center justify-center">
+              <div className="absolute inset-[-4px] rounded-xl bg-[radial-gradient(circle,rgba(0,188,212,0.2)_0%,transparent_70%)] blur-sm group-hover:blur-md transition-all duration-500" />
+              <div className="relative w-12 h-12 rounded-xl border border-white/[0.1] bg-white/[0.03] flex items-center justify-center shadow-[0_4px_24px_rgba(0,188,212,0.15)]">
+                <span className="font-display text-lg font-bold bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-arcanean-gold)] bg-clip-text text-transparent">
+                  A
                 </span>
               </div>
             </div>
+          </Link>
 
-            <form onSubmit={handleLogin} className="space-y-5">
-              <InputField
-                id="email"
-                label="Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                icon={PhEnvelope}
-                required
-              />
+          <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary mb-2">
+            Welcome back
+          </h1>
+          <p className="text-text-secondary font-body text-sm">
+            The gate awaits
+          </p>
+        </div>
 
-              <InputField
-                id="password"
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                icon={PhLock}
-                showToggle
-                toggleVisible={showPassword}
-                onToggle={() => setShowPassword(!showPassword)}
-                required
-              />
+          {/* Login card */}
+          <GlowCard glass="none" className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
+          {authMessage === "check_email" && (
+            <m.p
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-5 rounded-xl border border-atlantean-teal-aqua/20 bg-atlantean-teal-aqua/5 px-4 py-3 text-sm font-body text-text-primary"
+            >
+              Check your email for the confirmation link to complete sign-up.
+            </m.p>
+          )}
 
-              {error && <ErrorMessage message={error} />}
+          {callbackErrorMessage && (
+            <div className="mb-5">
+              <ErrorMessage message={callbackErrorMessage} />
+            </div>
+          )}
 
-              <div className="flex items-center justify-end">
-                <Link
-                  href="/auth/forgot-password"
-                  className="font-body text-sm text-atlantean-teal-aqua/70 hover:text-atlantean-teal-aqua transition-colors"
-                >
-                  Forgot password?
-                </Link>
-              </div>
+          {/* Google sign-in — primary action */}
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            disabled={isLoading}
+            className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl border border-white/[0.12] bg-white/[0.05] hover:border-white/[0.20] hover:bg-white/[0.08] transition-all duration-300 font-body font-medium text-text-primary text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Continue with Google"
+          >
+            <GoogleLogo />
+            Continue with Google
+          </button>
 
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-aqua/80 text-cosmic-deep font-semibold text-sm shadow-[0_0_20px_rgba(0,188,212,0.1)] hover:shadow-[0_0_30px_rgba(0,188,212,0.25)] hover:scale-[1.01] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-white/[0.06]" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="px-4 bg-cosmic-void font-body text-xs text-text-muted">
+                or sign in with email
+              </span>
+            </div>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-5">
+            <InputField
+              id="email"
+              label="Email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              icon={PhEnvelope}
+              required
+            />
+
+            <InputField
+              id="password"
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              icon={PhLock}
+              showToggle
+              toggleVisible={showPassword}
+              onToggle={() => setShowPassword(!showPassword)}
+              required
+            />
+
+            {error && <ErrorMessage message={error} />}
+
+            <div className="flex items-center justify-end">
+              <Link
+                href="/auth/forgot-password"
+                className="font-body text-sm text-atlantean-teal-aqua/70 hover:text-atlantean-teal-aqua transition-colors"
               >
-                {isLoading ? (
-                  <LoadingSpinner text="Signing in..." />
-                ) : (
-                  <>
-                    <span>Sign In</span>
-                    <PhArrowRight className="w-4 h-4" />
-                  </>
-                )}
-              </button>
-            </form>
-          </GlowCard>
+                Forgot password?
+              </Link>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-aqua/80 text-cosmic-deep font-semibold text-sm shadow-[0_0_20px_rgba(0,188,212,0.1)] hover:shadow-[0_0_30px_rgba(0,188,212,0.25)] hover:scale-[1.01] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            >
+              {isLoading ? (
+                <LoadingSpinner text="Signing in..." />
+              ) : (
+                <>
+                  <span>Sign In</span>
+                  <PhArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          </form>
+        </GlowCard>
 
           {/* Sign up link */}
           <p className="text-center mt-8 font-body text-text-secondary text-sm">
@@ -434,12 +428,12 @@ export default function LoginPage() {
 
           {/* Trust signals */}
           <div className="flex items-center justify-center gap-4 mt-6 text-[11px] text-text-muted/50 font-mono">
-            <span>Ten Gates</span>
-            <span className="w-1 h-1 rounded-full bg-white/10" />
-            <span>{FACTS.luminors} Luminors</span>
-            <span className="w-1 h-1 rounded-full bg-white/10" />
-            <span>Open source</span>
-          </div>
+          <span>Ten Gates</span>
+          <span className="w-1 h-1 rounded-full bg-white/10" />
+          <span>{FACTS.luminors} Luminors</span>
+          <span className="w-1 h-1 rounded-full bg-white/10" />
+          <span>Open source</span>
+        </div>
         </m.div>
       </div>
     </MotionProvider>

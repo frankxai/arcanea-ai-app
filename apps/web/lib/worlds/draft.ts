@@ -89,6 +89,14 @@ export function draftResult(world: WorldDraft, draft_id: string) {
 }
 
 export const WORLD_DRAFT_KEY = "arcanea.world-draft.v1";
+export const WORLD_PREVIOUS_DRAFT_KEY = "arcanea.world-draft.previous.v1";
+export const WORLD_REFINEMENTS = [
+  "more dramatic and epic",
+  "darker and more mysterious",
+  "more whimsical and playful",
+  "grittier and more realistic",
+  "more ancient and mythological",
+] as const;
 export const storedWorldDraftSchema = z.object({
   version: z.literal(1),
   description: z.string().max(500),

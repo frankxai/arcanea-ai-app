@@ -43,3 +43,16 @@ Approvals: no public release requested by this packet; none performed. Departmen
 Rollback: this additive documentation/concept slice has no runtime effect. Remove only its named files or revert its eventual bounded commit, preserving all other work.
 
 Next bounded action: implement and test exact-draft persistence, child-write failure handling and canonical slug return; then connect the selected homepage concept to the verified first-session workflow. Browser and independent review must pass before release.
+
+
+## Production continuation - 2026-09-12
+
+Frank explicitly requested v-swarm review, improvement and production release. The owned worktree remains this task's one-writer lane. Latest production/main `0dd9a2d122e7944b9c0f5a3268c1001214a24c96` was integrated in local merge `0f390b40558359c5548ec572b163b0bacc7ed028`; incoming routes and other agents' work are preserved.
+
+Grok 4.6 supplied a source-based skeptical-buyer review. Findings drive recoverable start-over, previous text draft restoration, explicit resume/new-concept choice, full preview content, canonical response normalization, preserved art/concept on failed refinement and reduced-motion/contrast refinements. The current draft is unchanged by a failed request. Auth-only formatting noise was reduced with a canonical-formatter equality check.
+
+A rollback-only test on live Supabase found SQLSTATE 42P17: worlds collaborator SELECT policy and membership policies recurse. No synthetic user or world persisted (both verified zero). This is an existing production blocker. Prepare a separate migration and PostgreSQL regression test, preserve current owner/collaborator/public access, obtain independent review and the migration approval required by estate rules before application. Do not disable RLS.
+
+Release plan: policy repair first; complete world workflow next; homepage and waitlist integration after their dependency is verified. Keep each independent review within the repository's real diff-size limit. The user was asked to sign in to the preview for a genuine private synthetic save/reopen test. No password or account credential is requested in chat.
+
+Admission: PP bounded; no additional parallel agents; one writer; 90-minute workload ceiling from approximately 11:10 UTC. Browser loop bounded to 30 minutes from approximately 11:30 UTC, with user sign-in tab retained only as a handoff. Cloud runners provide fresh build/browser evidence.

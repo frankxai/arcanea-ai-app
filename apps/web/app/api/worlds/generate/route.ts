@@ -15,7 +15,11 @@ import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { randomUUID } from "node:crypto";
-import { worldDraftSchema, draftResult } from "@/lib/worlds/draft";
+import {
+  worldDraftSchema,
+  draftResult,
+  WORLD_REFINEMENTS,
+} from "@/lib/worlds/draft";
 
 export const maxDuration = 30;
 
@@ -138,6 +142,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const refinement =
+      typeof body === "object" && body && "refinement" in body
+        ? body.refinement
+        : undefined;
+    if (
+      refinement !== undefined &&
+      !WORLD_REFINEMENTS.some((choice) => choice === refinement)
+    ) {
+      return NextResponse.json(
+        { error: "Choose a listed refinement direction." },
+        { status: 400 },
+      );
+    }
+
     // --- Resolve AI model ---
     const model = resolveModel();
     if (!model) {
@@ -159,7 +177,7 @@ export async function POST(req: NextRequest) {
     const result = await generateText({
       model,
       system: systemPrompt,
-      prompt: `Create a world based on: "${description}"`,
+      prompt: `Create a world based on: "${description}"${refinement ? `\nRefinement direction: ${refinement}. Preserve the original concept.` : ""}`,
       temperature: 0.9,
       maxOutputTokens: 4096,
       maxRetries: 0,

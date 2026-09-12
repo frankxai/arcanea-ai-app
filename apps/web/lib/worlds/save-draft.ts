@@ -13,7 +13,7 @@ export function draftRecordId(value: string) {
 export class DraftSaveError extends Error {
   constructor() {
     super(
-      "We could not finish saving. Your draft is still available here. Retry to complete the same world.",
+      "Saving is incomplete. A private partial world may exist in your account. Your full draft is still here; retry to finish saving the same world.",
     );
   }
 }

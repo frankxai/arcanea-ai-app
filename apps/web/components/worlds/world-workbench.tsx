@@ -250,7 +250,8 @@ export function WorldWorkbench() {
           </div>
         </div>
         <div className={styles.dossierFoot}>
-          Authored example · explore the connections, then create your own.
+          Authored example. The creator generates complete drafts; this rule
+          interaction is a demonstration.
         </div>
       </div>
     </section>
