@@ -262,6 +262,12 @@ jobs:
       - name: Verify Luminor public-read timeout
         run: pnpm test:luminor-read-timeout
 
+      - name: Verify health and media readiness
+        run: pnpm test:health-media-readiness
+
+      - name: Verify Worlds accessibility boundary
+        run: pnpm test:worlds-accessibility
+
       - name: Verify World detail read deadlines
         run: |
           node --test scripts/tests/world-detail-read-contract.test.mjs
