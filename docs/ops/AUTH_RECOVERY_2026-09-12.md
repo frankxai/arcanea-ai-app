@@ -36,20 +36,58 @@ placeholder/insecure URLs, privileged keys, malformed keys and mismatched legacy
 project references. This is a configuration check, not cryptographic validation.
 It prints variable names and errors only. Offline builds remain possible; opt a
 Preview into the gate with `CHECK_AUTH_ENV=1`. Turbo includes both gate selectors
-in its environment and cache key. The app build invokes the gate before Next.js.
+in its environment and cache key. Vercel invokes the gate before Turbo, so a cached
+build cannot bypass it. The package manifest and dependency graph are unchanged.
 
 ## Acceptance and release
 
 - Regression: `node --test scripts/tests/auth-env.test.mjs` (red observed, then 8 pass).
-- Preview: build READY; login button reaches Google's account selection/consent;
-  callback stays on the approved origin and establishes an authenticated session.
+- Preview `dpl_3zp3iMH5i7puzNrp1ph3TGCySeM4`, revision `12122547f`, is READY:
+  https://arcanea-ai-awkdfox8f-starlight-intelligence.vercel.app . In the browser,
+  Continue with Google reaches Google's email/account sign-in page with the expected
+  Supabase callback and requested settings return path. The full authenticated
+  callback/session remains unverified because it requires the user's Google login.
+- Follow-up moves the guard before Turbo and fixes formatting. Verify final CI and
+  preview for that revision before merging the prevention change.
 - Production: same public binding, new build, repeat original login path, refresh,
   protected settings, sign out and sign in again. Record what actually passed.
 - No new billing, provider compute keys, RLS changes or migrations in this repair.
 
-Promotion remains pending until the preview is inspected and the required production
-approval is supplied. An account/consent prompt requiring the user's action is a
-handoff; reaching Google is not proof of a completed session.
+The user approved production auth recovery. The two public values were restored and
+the existing production revision `42611939e679f336c0f59e543373fe07b29edcd1` rebuilt as
+`dpl_BEg7F73UWfwrRo2AWnKx3zNsEspN` (READY), serving www.arcanea.ai:
+https://arcanea-ai-axcbr9c5p-starlight-intelligence.vercel.app . No source merge,
+database migration or billing activation was part of that deployment.
+
+Full Google consent exposed a second routing problem: Supabase returned to the site's
+root with a code instead of `/auth/callback`. A fresh check confirmed that the client
+completed authentication after hydration: the protected providers page opened and a
+new login-page request was redirected to authenticated chat. Sign-out followed by a
+fresh protected-page request correctly required login; Google sign-in then succeeded
+again. The production environment repair restores login. The remaining issue is the
+indirect callback handoff and lost requested destination. This matches the documented
+[redirect allowlist fallback](https://supabase.com/docs/guides/auth/redirect-urls);
+the actual dashboard allowlist remains uninspected because dashboard login is needed.
+
+The reviewed follow-up recovers only GET requests to `/` with a nonempty code before
+rendering the homepage. It redirects within the same origin to `/auth/callback`,
+copies only the code and sanitized return path, and sends `private, no-store`.
+The existing PKCE/session exchange remains authoritative; no validation is bypassed.
+If Supabase dropped the requested destination, recovery defaults to `/dashboard`.
+The shared return-path validator also rejects backslashes, control characters,
+external and normalized protocol-relative destinations in both login and callback.
+Four new regression tests cover this second failure, safe routing and loop avoidance.
+
+Correct the dashboard's canonical production callback allowlist when access is
+available, preserving existing valid entries and supporting its `next` query.
+No broad wildcard over unrelated Vercel projects should be added. The existing-code
+production session and repeat-login checks above passed. Verify server callback,
+session persistence and routing again if the follow-up code is deployed.
+
+Independent same-provider review passed both the initial guard/model/design and the
+follow-up auth routing in the staged index. Second-provider buyer critique remains unavailable:
+Claude is signed out and Gemini rejects this client as unsupported. This blocks a
+commercial launch, not preparation of an explicitly proposed design.
 
 ## Data and billing follow-up
 
