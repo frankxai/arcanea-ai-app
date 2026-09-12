@@ -1,4 +1,22 @@
-# Current execution status · 2026-09-12
+# Release candidate snapshot · 2026-09-12, 12:31 UTC
+
+Frank authorized reviewed application changes to reach production. Production database migrations remain separately human-gated under the supplied repository contract; approval for the concrete repair has been requested. Do not infer approval from elapsed time.
+
+The release is divided into [database access #412](https://github.com/frankxai/arcanea-ai-app/pull/412), [account return #414](https://github.com/frankxai/arcanea-ai-app/pull/414), [complete creator drafts #413](https://github.com/frankxai/arcanea-ai-app/pull/413) and [homepage/capture #403](https://github.com/frankxai/arcanea-ai-app/pull/403). Each must receive its own exact-head review within the existing review-size cap. No gate is waived. This snapshot is not a production-release receipt.
+
+The combined candidate passes 25 local behavior checks. Grok's skeptical-buyer critique drove draft recovery, complete inspection, canonical response handling and refinement improvements. Gemini approved the policy repair and corrected auth code; fresh final creator/homepage review remains required after their dependencies land. The corrected account return validates password-login, signup and OAuth callback destinations. Regression cases include external schemes, network-path URLs, backslashes and encoded separators.
+
+The policy repair reproduced production SQLSTATE 42P17, then passed real PostgreSQL owner/member/outsider/anonymous/revocation tests against both the existing recursive policy shape and a fresh missing-membership-table shape. Supabase preview and all PR #412 checks passed at this snapshot. No production migration has been applied. The initial rollback-only live test left zero synthetic users and zero synthetic worlds.
+
+Fresh Supabase previews replay an older world schema: several columns differ and world_creations is absent. Their migration PASS proves the policy can apply; it does not establish application schema parity or a complete save/reopen journey. The full app integration check must use the verified target schema. Broader schema reconciliation remains open and is not hidden by a green preview label.
+
+Cloud browser evidence verified complete desktop draft rendering, exact JSON export, start-over cancellation/recovery and full-storage protection. The first run stopped at an ambiguous alert selector; the selector now targets the storage message rather than Next.js's route announcer. Desktop/mobile/reduced-motion checks are running again on the combined candidate. A genuine signed-in save/reopen test remains pending user sign-in and the approved production policy repair.
+
+All earlier research, route inventories and implementation snapshots below are retained as historical provenance. Their older authorization and verification statements are superseded by this dated release snapshot.
+
+---
+
+# Earlier implementation snapshot · 2026-09-12
 
 Frank authorized continued implementation with Premium Web OS in the original task. This supersedes the audit-only scope below. The referenced ChatGPT conversation was subsequently retrieved; its earlier unavailable status is historical.
 
@@ -43,7 +61,6 @@ Approvals: no public release requested by this packet; none performed. Departmen
 Rollback: this additive documentation/concept slice has no runtime effect. Remove only its named files or revert its eventual bounded commit, preserving all other work.
 
 Next bounded action: implement and test exact-draft persistence, child-write failure handling and canonical slug return; then connect the selected homepage concept to the verified first-session workflow. Browser and independent review must pass before release.
-
 
 ## Production continuation - 2026-09-12
 
