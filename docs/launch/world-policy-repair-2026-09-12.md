@@ -13,10 +13,18 @@ no user ID, returns no world content, pins an empty search path and is owned by 
 It preserves owner management, public reads, member reads and membership revocation.
 RLS stays enabled. Do not add `arcanea_world_access` to exposed API schemas.
 
+The first Supabase preview exposed a second issue: the live collaborator table was
+absent from migration history. The repair now conditionally reconstructs its verified
+columns, constraints, index and policies on fresh databases. Existing production
+tables, rows and grants are untouched. New tables receive only SELECT for anon,
+SELECT/INSERT/UPDATE/DELETE for authenticated and ALL for service_role, with RLS enabled.
+
 The PostgreSQL 16 CI fixture reproduces the original error before applying the real
 migration. It then checks owner writes, collaborator reads without edits, forbidden
 ownership changes, outsider/anonymous isolation, unlisted isolation and revocation.
 The fixture is disposable and must never be run on an application database.
+CI runs it twice: against the recursive production policy shape and against a fresh
+database missing the collaborator table. Both must pass the same access assertions.
 
 After approval, apply only `20260912120000_world_policy_recursion.sql` to the verified
 Arcanea app Supabase project. Repeat the rollback-only five-table save/reopen test,

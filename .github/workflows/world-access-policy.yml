@@ -40,4 +40,6 @@ jobs:
       - name: Reproduce recursion and verify every access boundary
         env:
           PGPASSWORD: local-test-only
-        run: psql -h 127.0.0.1 -U postgres -d postgres --set ON_ERROR_STOP=1 -f supabase/tests/world-policy-recursion.sql
+        run: |
+          psql -h 127.0.0.1 -U postgres -d postgres --set ON_ERROR_STOP=1 -f supabase/tests/world-policy-recursion.sql
+          psql -h 127.0.0.1 -U postgres -d postgres --set ON_ERROR_STOP=1 --set missing_membership=true -f supabase/tests/world-policy-recursion.sql

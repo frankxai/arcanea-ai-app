@@ -1,8 +1,13 @@
 -- Disposable PostgreSQL fixture only. Never run against an application database.
 \set ON_ERROR_STOP on
+\if :{?missing_membership}
+\else
+\set missing_membership false
+\endif
 begin;
 create role anon;
 create role authenticated;
+create role service_role bypassrls;
 create schema auth;
 create table auth.users (id uuid primary key);
 create function auth.uid() returns uuid language sql stable as $$
@@ -15,19 +20,26 @@ create table public.worlds (
   name text not null,
   visibility text not null check (visibility in ('private', 'unlisted', 'public'))
 );
+\if :missing_membership
+\else
 create table public.world_collaborators (
   world_id uuid references public.worlds(id),
   user_id uuid references auth.users(id),
   primary key (world_id, user_id)
 );
-alter table public.worlds enable row level security;
 alter table public.world_collaborators enable row level security;
-grant select, insert, update, delete on public.worlds, public.world_collaborators to authenticated;
-grant select on public.worlds, public.world_collaborators to anon;
+grant select, insert, update, delete on public.world_collaborators to authenticated;
+grant select on public.world_collaborators to anon;
+\endif
+alter table public.worlds enable row level security;
+grant select, insert, update, delete on public.worlds to authenticated;
+grant select on public.worlds to anon;
 
 -- Exact logical policies observed in production on 2026-09-12.
 create policy "Creators manage own worlds" on public.worlds for all using (auth.uid() = creator_id);
 create policy "Public worlds are viewable" on public.worlds for select using (visibility = 'public');
+\if :missing_membership
+\else
 create policy "Collaborators can view worlds" on public.worlds for select using (
   exists (select 1 from public.world_collaborators wc where wc.world_id = worlds.id and wc.user_id = auth.uid())
 );
@@ -48,6 +60,7 @@ do $$ begin
   end;
 end $$;
 reset role;
+\endif
 
 \ir ../migrations/20260912120000_world_policy_recursion.sql
 
@@ -61,7 +74,7 @@ insert into public.worlds values
   ('10000000-0000-4000-8000-000000000001', auth.uid(), 'Private draft', 'private'),
   ('10000000-0000-4000-8000-000000000002', auth.uid(), 'Public world', 'public'),
   ('10000000-0000-4000-8000-000000000003', auth.uid(), 'Unlisted world', 'unlisted');
-insert into public.world_collaborators values
+insert into public.world_collaborators (world_id, user_id) values
   ('10000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000002');
 do $$ begin
   assert (select count(*) from public.worlds) = 3, 'Owner must read every own world';
@@ -85,7 +98,7 @@ do $$ begin
   delete from public.world_collaborators;
   assert not found, 'Member must not manage membership';
   begin
-    insert into public.world_collaborators values ('10000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000003');
+    insert into public.world_collaborators (world_id, user_id) values ('10000000-0000-4000-8000-000000000001', '00000000-0000-4000-8000-000000000003');
     raise exception 'Member granted access to outsider';
   exception when insufficient_privilege then null;
   end;
@@ -102,7 +115,7 @@ do $$ begin
   assert (select count(*) from public.world_collaborators) = 0, 'Outsider sees no membership';
   assert not arcanea_world_access.current_user_collaborates_on_world('10000000-0000-4000-8000-000000000001'), 'Helper must not disclose another caller membership';
   begin
-    insert into public.world_collaborators values ('10000000-0000-4000-8000-000000000001', auth.uid());
+    insert into public.world_collaborators (world_id, user_id) values ('10000000-0000-4000-8000-000000000001', auth.uid());
     raise exception 'Outsider added own membership';
   exception when insufficient_privilege then null;
   end;
@@ -131,4 +144,4 @@ do $$ begin
   assert not has_schema_privilege('authenticated', 'arcanea_world_access', 'CREATE'), 'API roles must not create helper objects';
 end $$;
 rollback;
-\echo 'PASS: recursion reproduced; owner, member, stranger, anonymous, revocation and RLS boundaries verified'
+\echo 'PASS: owner, member, stranger, anonymous, revocation and RLS boundaries verified'
