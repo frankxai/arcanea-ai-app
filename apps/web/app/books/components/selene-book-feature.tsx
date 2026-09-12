@@ -40,9 +40,6 @@ export async function SeleneBookFeature() {
             the Ávila, a horse who refuses to obey becomes the companion she
             needs.
           </p>
-          <p className="mt-5 text-sm text-white/50">
-            Twelve chapters · Twenty-four illustrations
-          </p>
           <span className="mt-8 text-sm font-medium text-teal-200 underline-offset-4 group-hover:underline">
             Begin the journey <span aria-hidden="true">→</span>
           </span>
