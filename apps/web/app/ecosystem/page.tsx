@@ -133,12 +133,7 @@ const LAYERS = [
     accent: "var(--arc-brand-atlantean-teal)",
     description:
       "Next.js 16, React 19, Vercel. The creative surface where users chat, imagine, build worlds, and publish.",
-    stats: [
-      "Chat & Imagine",
-      "Studio & Worlds",
-      "Gallery & Feed",
-      "Academy & Library",
-    ],
+    stats: [],
     features: [
       "Chat & Imagine",
       "Studio & Worlds",
@@ -172,7 +167,6 @@ const LAYERS = [
     description:
       "The public repos are forkable. Private production and unresolved historical entries are labeled instead of linked.",
     stats: [
-      `${PUBLIC_REPO_SUMMARY.public} public repos`,
       `${PUBLIC_REPO_SUMMARY.private} private repo`,
       `${PUBLIC_REPO_SUMMARY.unresolved} unresolved`,
       `${PUBLIC_REPO_SUMMARY.upstream} upstream dependency`,
