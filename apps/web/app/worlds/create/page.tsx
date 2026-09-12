@@ -880,18 +880,18 @@ export default function CreateWorldPage() {
               className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white/90 transition-colors"
             >
               <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
               Worlds
             </Link>
           </div>
@@ -935,7 +935,7 @@ export default function CreateWorldPage() {
                 </div>
               </section>
             )}
-            {previousDraft && (
+            {previousDraft && previousDraft.draft_id !== result?.draft_id && (
               <button
                 onClick={restorePrevious}
                 disabled={saving || imageLoading || phase === "generating"}
@@ -965,12 +965,12 @@ export default function CreateWorldPage() {
                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 leading-tight">
                     <span className="text-white">Create a </span>
                     <span
-                    className="bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-void), var(--arc-brand-arcanean-gold))",
-                    }}
-                  >
+                      className="bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage:
+                          "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-void), var(--arc-brand-arcanean-gold))",
+                      }}
+                    >
                       world
                     </span>
                   </h1>
@@ -992,8 +992,8 @@ export default function CreateWorldPage() {
                         aria-label="Describe your world"
                         value={description}
                         onChange={(e) =>
-                        setDescription(e.target.value.slice(0, 500))
-                      }
+                          setDescription(e.target.value.slice(0, 500))
+                        }
                         onKeyDown={(e) => {
                           if (
                             e.key === "Enter" &&
@@ -1022,8 +1022,8 @@ export default function CreateWorldPage() {
                       )}
                     </div>
                     <AnimatePresence>
-                    <GenrePreview description={description} />
-                  </AnimatePresence>
+                      <GenrePreview description={description} />
+                    </AnimatePresence>
                   </div>
 
                   <m.button
@@ -1109,9 +1109,10 @@ export default function CreateWorldPage() {
                   )}
 
                   {/* Element orbs */}
-                  {result.world.elements && result.world.elements.length > 0 && (
-                  <ElementOrbs elements={result.world.elements} />
-                )}
+                  {result.world.elements &&
+                    result.world.elements.length > 0 && (
+                      <ElementOrbs elements={result.world.elements} />
+                    )}
 
                   {/* Characters */}
                   {result.characters.length > 0 && (
@@ -1126,8 +1127,8 @@ export default function CreateWorldPage() {
                       </m.h3>
                       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {result.characters.map((c, i) => (
-                        <CharacterCard key={c.name} char={c} index={i} />
-                      ))}
+                          <CharacterCard key={c.name} char={c} index={i} />
+                        ))}
                       </div>
                     </div>
                   )}
@@ -1145,24 +1146,24 @@ export default function CreateWorldPage() {
                       </m.h3>
                       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {result.locations.map((l, i) => (
-                        <LocationCard key={l.name} loc={l} index={i} />
-                      ))}
+                          <LocationCard key={l.name} loc={l} index={i} />
+                        ))}
                       </div>
                     </div>
                   )}
 
                   {/* Founding event */}
                   {result.event && (
-                  <FoundingEvent
-                    event={result.event}
-                    worldName={result.world.name}
-                  />
-                )}
+                    <FoundingEvent
+                      event={result.event}
+                      worldName={result.world.name}
+                    />
+                  )}
 
                   {/* Palette */}
                   {result.world.palette && (
-                  <PaletteSection palette={result.world.palette} />
-                )}
+                    <PaletteSection palette={result.world.palette} />
+                  )}
 
                   {result.world.laws.length > 0 && (
                     <section className="my-10">
@@ -1237,7 +1238,9 @@ export default function CreateWorldPage() {
                       >
                         {imageLoading
                           ? "Creating concept art…"
-                          : "Generate concept art"}
+                          : isAuthenticated
+                            ? "Generate concept art"
+                            : "Sign in to create concept art"}
                       </button>
                     )}
                   </div>
@@ -1267,20 +1270,20 @@ export default function CreateWorldPage() {
                         >
                           {saving ? "Saving..." : "Save this world"}
                           {!saving && (
-                          <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                          />
-                        </svg>
-                        )}
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                              />
+                            </svg>
+                          )}
                         </m.button>
                       ) : (
                         <Link
@@ -1289,18 +1292,18 @@ export default function CreateWorldPage() {
                         >
                           Sign in to save this draft
                           <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                          />
-                        </svg>
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M17 8l4 4m0 0l-4 4m4-4H3"
+                            />
+                          </svg>
                         </Link>
                       )}
 
@@ -1325,11 +1328,11 @@ export default function CreateWorldPage() {
                     <AnimatePresence>
                       {refining && (
                         <m.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="mt-6 overflow-hidden"
-                      >
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="mt-6 overflow-hidden"
+                        >
                           <p className="text-xs text-white/70 mb-3">
                             Generate a new version. The previous text draft
                             stays available to restore.
