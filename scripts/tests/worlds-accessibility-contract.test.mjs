@@ -17,7 +17,7 @@ test("Worlds onboarding uses the governed modal boundary", async () => {
   const source = await read("apps/web/components/worlds/WorldsOnboarding.tsx");
 
   for (const contract of [
-    "import * as Dialog from \"@radix-ui/react-dialog\"",
+    'import * as Dialog from "@radix-ui/react-dialog"',
     "<Dialog.Overlay asChild>",
     "<Dialog.Content",
     "<Dialog.Title asChild>",
