@@ -11,7 +11,6 @@
  * - In-process creative journeys and explicitly saved world graphs
  * - Canon validation and Ten Gates system
  * - Agent orchestration system (inspired by oh-my-opencode)
- * - Multi-agent parallel execution
  * - Creation graph with relationship network
  */
 
