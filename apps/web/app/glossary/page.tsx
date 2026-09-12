@@ -555,8 +555,8 @@ export default function GlossaryPage() {
                 <Icons.ChevronRight className="text-brand-primary opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <p className="text-sm text-text-muted">
-                Explore the Ten Gates of Creation. Take the assessment to
-                find your path.
+                Explore the Ten Gates of Creation. Take the assessment to find
+                your path.
               </p>
             </Link>
           </div>

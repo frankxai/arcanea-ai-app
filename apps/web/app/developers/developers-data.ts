@@ -84,7 +84,10 @@ export const TOOLS = [
   {
     category: "Infrastructure",
     items: [
-      { name: "IntelligenceRouter", description: "Request routing to AI models" },
+      {
+        name: "IntelligenceRouter",
+        description: "Request routing to AI models",
+      },
       { name: "VoiceEnforcer", description: "Output validation" },
       { name: "Token Optimizer", description: "Context window management" },
       { name: "MCP Server", description: "54 tools with skill-rules" },
@@ -130,7 +133,8 @@ export const CREDITS_ENDPOINTS = [
     path: "/api/credits/balance",
     description:
       "Returns the authenticated user\u2019s credit balance including purchased credits, daily free credits, and Forge subscription status.",
-    response: '{ "purchased": 100, "dailyRemaining": 5, "forgeActive": false, "total": 105 }',
+    response:
+      '{ "purchased": 100, "dailyRemaining": 5, "forgeActive": false, "total": 105 }',
   },
   {
     method: "POST",

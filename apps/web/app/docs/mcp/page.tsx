@@ -146,7 +146,10 @@ export default function McpOverviewPage() {
         <nav className="pt-8 pb-2">
           <ol className="flex items-center gap-2 text-sm text-zinc-500">
             <li>
-              <Link href="/docs" className="hover:text-zinc-300 transition-colors">
+              <Link
+                href="/docs"
+                className="hover:text-zinc-300 transition-colors"
+              >
                 Docs
               </Link>
             </li>
@@ -189,17 +192,23 @@ export default function McpOverviewPage() {
                 <span className="text-zinc-500">Claude Code</span>
               </div>
               <div className="flex items-start gap-3">
-                <span className="shrink-0 text-[var(--arc-brand-atlantean-teal)]">$</span>
+                <span className="shrink-0 text-[var(--arc-brand-atlantean-teal)]">
+                  $
+                </span>
                 <code className="text-zinc-200">
                   claude mcp add arcanea npx @arcanea/mcp-server
                 </code>
               </div>
               <div className="mt-4 flex items-start gap-3">
                 <span className="shrink-0 text-zinc-600">#</span>
-                <span className="text-zinc-500">Cursor / Windsurf (mcp.json)</span>
+                <span className="text-zinc-500">
+                  Cursor / Windsurf (mcp.json)
+                </span>
               </div>
               <div className="flex items-start gap-3">
-                <span className="shrink-0 text-[var(--arc-brand-atlantean-teal)]">{">"}</span>
+                <span className="shrink-0 text-[var(--arc-brand-atlantean-teal)]">
+                  {">"}
+                </span>
                 <code className="text-zinc-200 break-all">
                   {
                     '{ "arcanea": { "command": "npx", "args": ["@arcanea/mcp-server"] } }'
