@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { PhArrowLeft, PhEye, PhEyeSlash, PhKey } from "@/lib/phosphor-icons";
 import {
@@ -49,27 +49,44 @@ const SEARCH_PROVIDERS = [
 const control =
   "min-h-11 rounded-xl border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-deep)] px-4 py-3 text-sm text-[var(--arc-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]";
 
+const subscribeToHydration = () => () => {};
+
 export default function ProvidersPage() {
-  const [keys, setKeys] = useState<ProviderKeys>({});
-  const [activeId, setActiveId] = useState("google");
-  const [savedState, setSavedState] = useState("");
-  const [visible, setVisible] = useState<Record<string, boolean>>({});
-  const [ready, setReady] = useState(false);
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
-  useEffect(() => {
+  const hydrated = useSyncExternalStore(
+    subscribeToHydration,
+    () => true,
+    () => false,
+  );
+  return hydrated ? (
+    <ProviderSettings />
+  ) : (
+    <p role="status" className="px-5 pb-20 pt-24">
+      Loading saved settings…
+    </p>
+  );
+}
+
+function ProviderSettings() {
+  const [initial] = useState(() => {
     try {
-      const preferences = readProviderPreferences(localStorage);
-      setKeys(preferences.keys);
-      setActiveId(preferences.activeId);
-      setSavedState(JSON.stringify(preferences));
+      return { ...readProviderPreferences(localStorage), error: "" };
     } catch {
-      setError(
-        "This browser is blocking site storage. Allow storage to save a provider.",
-      );
+      return {
+        keys: {} as ProviderKeys,
+        activeId: "google",
+        error:
+          "This browser is blocking site storage. Allow storage to save a provider.",
+      };
     }
-    setReady(true);
-  }, []);
+  });
+  const [keys, setKeys] = useState<ProviderKeys>(initial.keys);
+  const [activeId, setActiveId] = useState(initial.activeId);
+  const [savedState, setSavedState] = useState(
+    JSON.stringify({ keys: initial.keys, activeId: initial.activeId }),
+  );
+  const [visible, setVisible] = useState<Record<string, boolean>>({});
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(initial.error);
 
   const selected =
     PROVIDERS.find((provider) => provider.id === activeId) || PROVIDERS[0];
@@ -180,12 +197,11 @@ export default function ProvidersPage() {
             spellCheck={false}
             placeholder="Paste your API key"
             aria-describedby="provider-data-flow"
-            disabled={!ready}
             className={`${control} min-w-0 flex-1 font-mono`}
           />
           <button
             type="button"
-            disabled={!ready || !keys[provider.id]}
+            disabled={!keys[provider.id]}
             aria-label={`${visible[provider.id] ? "Hide" : "Show"} ${provider.name} key`}
             aria-pressed={Boolean(visible[provider.id])}
             onClick={() =>
@@ -272,7 +288,6 @@ export default function ProvidersPage() {
             <select
               id="active-provider"
               value={activeId}
-              disabled={!ready}
               onChange={(event) => {
                 setActiveId(event.target.value);
                 setMessage("");
@@ -294,13 +309,11 @@ export default function ProvidersPage() {
           </div>
           {keyField(selected)}
           <p className="text-sm text-[var(--arc-text-secondary)]">
-            {!ready
-              ? "Loading saved settings…"
-              : dirty
-                ? "Unsaved changes"
-                : savedKey
-                  ? "Key saved locally · access not verified"
-                  : "No key saved for this provider"}
+            {dirty
+              ? "Unsaved changes"
+              : savedKey
+                ? "Key saved locally · access not verified"
+                : "No key saved for this provider"}
           </p>
 
           <details className="border-y border-[var(--arc-cosmic-border-bright)] py-4">
@@ -318,7 +331,7 @@ export default function ProvidersPage() {
           <div className="flex flex-col gap-3 sm:flex-row">
             <button
               type="submit"
-              disabled={!ready || !dirty}
+              disabled={!dirty}
               className="min-h-11 rounded-xl bg-[var(--arc-brand-atlantean-teal)] px-5 py-3 text-sm font-semibold text-[var(--arc-cosmic-void)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               Save connection
