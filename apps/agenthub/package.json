@@ -13,7 +13,7 @@
     "postprocessing": "^6.39.4",
     "tailwind-merge": "^2.6.0",
     "theatre": "^0.2.3",
-    "three": "^0.185.1",
+    "three": "^0.186.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
