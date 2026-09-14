@@ -14,7 +14,7 @@
     "lint": "eslint src/"
   },
   "dependencies": {
-    "dexie": "^4.4.5",
+    "dexie": "^4.4.6",
     "preact": "^10.29.8"
   },
   "devDependencies": {
