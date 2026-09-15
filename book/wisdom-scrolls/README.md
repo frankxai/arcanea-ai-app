@@ -142,4 +142,3 @@ Wisdom follows the Arc:
 *From the Archives of the Academy of Eternal Creation*
 
 *"Read. Reflect. Return. Wisdom is not absorbed in one reading. Trust the Arc."*
-

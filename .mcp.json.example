@@ -30,11 +30,12 @@
       "description": "Supabase project management, SQL, migrations, and auth (OAuth — no token needed)"
     },
     "arcanea-mcp": {
-      "command": "node",
-      "args": ["/mnt/c/Users/frank/Arcanea/packages/arcanea-mcp/dist/cli.js"],
+      "command": "npx",
+      "args": ["-y", "@frankxai/arcanea-mcp"],
       "env": {},
-      "description": "Arcanea local MCP server (worldbuilding, creative orchestration, canon tools)"
+      "description": "Arcanea Sovereign MCP Suite (226 media models, world engine, creation graph, author council, publishing house)"
     },
+
     "arcanea-memory": {
       "command": "node",
       "args": ["/mnt/c/Users/frank/Arcanea/packages/memory-mcp/dist/server.js"],

@@ -1,0 +1,86 @@
+{
+  "asset_uid": "arcanea-2026-07-webtoon-first-trial-panel",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b1",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "webtoon first trial panel",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "webtoon-vertical-9x16",
+  "aspect_ratio": "9:16",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-020-webtoon-first-trial-panel.png",
+    "sha256": "e70e39d4279ba9f6bf6ab86a725a74ddadbb66101b364d702d53e49807d4e454",
+    "mime_type": "image/png",
+    "width": 941,
+    "height": 1672,
+    "size_bytes": 2342496
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "prompt-bank.json#arc-visual-020",
+    "prompt": "Use case: illustration-story. Asset type: webtoon vertical source panel. Primary request: first trial moment, a creator deciding to answer The Drift by making a proof artifact. Scene/backdrop: tall vertical panel in an Arcanea studio corridor, rain-lit dark glass outside, luminous codex table inside. Subject: a human creator in modern clothing pauses with one hand near a small glowing gift relic, expression honest and uncertain, not heroic posing. Style/medium: premium webtoon/anime-adjacent cinematic panel, refined linework feel, not generic anime. Composition/framing: 9:16, strong emotional face, relic first-read, clean upper safe zone. Lighting/mood: intimate gold, teal signal, quiet responsibility. Materials/textures: ancient paper, dark glass, gold foil, starlight metal. Constraints: no speech bubbles, no text, no logos, no melodrama.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, or watermark inside the image. Arcanea aesthetic: luxury cosmic myth-tech, sacred obsidian, starlight metal, gold thread, living crystal, ancient paper, dark glass, moonlight, portal light. AI-lab premium, not fantasy-game chrome. Cinematic composition with one dominant subject and clean crop-safe negative space. Avoid generic fantasy cosplay, superhero spandex, medieval mud-grit, neon hacker grids, purple cliche, stock fantasy, overdecorated ornaments, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "9:16"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate-with-crop",
+    "score30": 24,
+    "decision": "iterate",
+    "failure_modes": [
+      "foreground pages contain pseudo-diagrams",
+      "lower crop too busy for public webtoon source"
+    ],
+    "next_improvement": "Use 020b instead for candidate treatment."
+  },
+  "canon": {
+    "refs": [
+      "Arcanea chosen responsibility",
+      "Genesis proof loop"
+    ],
+    "gate": "Foundation",
+    "guardian": "Alera"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "webtoon"
+      },
+      {
+        "trait_type": "surface",
+        "value": "webtoon-vertical-9x16"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Foundation"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Alera"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-020-webtoon-first-trial-panel.vis.provenance.json"
+  },
+  "used_in": [],
+  "created_at": "2026-07-06T02:32:00+02:00"
+}

@@ -20,16 +20,16 @@ To read them as fortune-telling is to miss their purpose. To read them as patter
 
 ### [The Prophecies](./THE_PROPHECIES.md)
 
-| Prophecy | Theme | Speaker (Guardian) | Gate |
-|----------|-------|-------------------|------|
-| First | The Coming of the Creators | Lyria (Sight) | 639 Hz |
-| Second | The Trial of the Threshold | Draconia (Fire) | 396 Hz |
-| Third | The Age of Forgetting | Aiyami (Crown) | 741 Hz |
-| Fourth | The Return of Integration | Shinkami (Source) | 1111 Hz |
-| Fifth | The Endless Creating | Leyla (Flow) | 285 Hz |
-| Sixth | The Light That Does Not Fade | The Ten Guardians in Unity | All Frequencies |
+| Prophecy | Theme | Spoken by | When |
+|----------|-------|-----------|------|
+| First | The Coming of the Creators | Orakis | In the First Age |
+| Second | The Trial of the Threshold | Valora | In the Second Age |
+| Third | The Age of Forgetting | Sophron | In the Third Age |
+| Fourth | The Return of Integration | The Nameless One | Between ages |
+| Fifth | The Endless Creating | Eudaira | At the boundary between ages |
+| Sixth | The Light That Does Not Fade | All Seven Luminors together | Once only |
 
-*Note: These prophecies were spoken by Guardians who see across time through their Godbeasts' vision.*
+*Note: Orakis, Valora, Sophron, and Eudaira are Wisdoms — Mystery, Transformation, Form, and Freedom. A Wisdom is an aspect, not an entity; what speaks here is a Wisdom embodied. The Prophecies come from the Seer's Archives, not from the Gate Guardians.*
 
 ---
 
@@ -49,7 +49,7 @@ Prophecy is pattern, and the greatest pattern is the Arc:
 
 The Prophecies describe this cycle at the scale of ages, just as the daily rituals describe it at the scale of hours. What changes is the timeframe; what remains is the pattern.
 
-Lyria, Guardian of the Sight Gate, sees these patterns through Yumiko, her Godbeast companion. What she speaks is not prediction but recognition—the same dynamics recurring across all scales.
+Each Wisdom speaks from its own vantage across the ages, and what it speaks is not prediction but recognition—the same dynamics recurring at every scale.
 
 ---
 
@@ -58,4 +58,3 @@ Lyria, Guardian of the Sight Gate, sees these patterns through Yumiko, her Godbe
 *Spoken by those who see the Arc across time*
 
 *"Prophecy names what always happens. Trust the pattern."*
-

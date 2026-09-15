@@ -5,14 +5,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { CosmicParticles } from "@/components/magic/particles";
-import {
-  MagnifyingGlass,
-  Star,
-  GitBranch,
-  Users,
-  ArrowRight,
-  Plus,
-} from "@/lib/phosphor-icons";
+import { MagnifyingGlass, Star, GitBranch, Users, ArrowRight, Plus } from "@/lib/phosphor-icons";
 import { WorldsOnboarding } from "@/components/worlds/WorldsOnboarding";
 import { SplitText } from "@/components/motion/split-text";
 import { TiltCard } from "@/components/motion/tilt-card";
@@ -24,8 +17,7 @@ import { GradientMesh } from "@/components/motion/gradient-mesh";
 // Types
 // ---------------------------------------------------------------------------
 
-type WorldMood =
-  "all" | "fantasy" | "sci-fi" | "horror" | "steampunk" | "mythological";
+type WorldMood = "all" | "fantasy" | "sci-fi" | "horror" | "steampunk" | "mythological";
 type SortOption = "stars" | "recent" | "forks";
 
 interface WorldElement {
@@ -80,10 +72,7 @@ function SearchInput({
 }) {
   return (
     <div className="relative max-w-lg mx-auto">
-      <MagnifyingGlass
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 pointer-events-none"
-        aria-hidden="true"
-      />
+      <MagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 pointer-events-none" aria-hidden="true" />
       <input
         type="text"
         value={value}
@@ -99,134 +88,129 @@ function SearchInput({
 // Icons now imported from @/lib/phosphor-icons: Star, GitBranch, Users
 
 function WorldCardComponent({ world }: { world: WorldCard }) {
-  const href = world.isTemplate ? "/lore" : `/worlds/${world.slug || world.id}`;
+  const href = world.isTemplate
+    ? "/lore"
+    : `/worlds/${world.slug || world.id}`;
 
-  const primaryColor =
-    world.elements[0]?.color ?? "var(--arc-brand-atlantean-teal)";
+  const primaryColor = world.elements[0]?.color ?? 'var(--arc-brand-atlantean-teal)';
 
   return (
     <TiltCard intensity={5}>
-      <LiquidGlass
-        intensity="standard"
-        tint={primaryColor}
-        className="group relative rounded-2xl border border-white/[0.06] hover:border-white/[0.14] transition-colors duration-500"
+    <LiquidGlass intensity="standard" tint={primaryColor} className="group relative rounded-2xl border border-white/[0.06] hover:border-white/[0.14] transition-colors duration-300">
+      {/* Hero image / gradient */}
+      <div
+        className="relative overflow-hidden"
+        style={{ background: world.gradient, height: 160 }}
       >
-        {/* Hero image / gradient */}
+        {/* Shimmer overlay */}
         <div
-          className="relative overflow-hidden"
-          style={{ background: world.gradient, height: 160 }}
-        >
-          {/* Noise overlay */}
-          <div
-            className="absolute inset-0 opacity-15 group-hover:opacity-25 transition-opacity duration-500"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 30% 40%, rgba(255,255,255,0.2) 0%, transparent 60%)",
-            }}
-          />
-          {world.isTemplate && (
-            <div className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-black/40 backdrop-blur-md text-[10px] font-semibold uppercase tracking-wider text-[var(--arc-brand-arcanean-gold)] border border-[var(--arc-brand-arcanean-gold)]/20">
-              Template
-            </div>
-          )}
-          {/* Active indicator for template worlds */}
-          {world.isTemplate && (
-            <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded-full bg-black/40 backdrop-blur-md">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-              </span>
-              <span className="text-[10px] text-emerald-300 font-medium">
-                Active
-              </span>
-            </div>
-          )}
-          {/* Hover glow — enhanced */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] via-transparent to-transparent opacity-70 group-hover:opacity-40 transition-opacity duration-500" />
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+          style={{
+            background:
+              "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.13) 50%, rgba(255,255,255,0.08) 55%, transparent 60%)",
+            backgroundSize: "200% 100%",
+            animation: "shimmer 2s infinite",
+          }}
+        />
+        {/* Noise overlay */}
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 30% 40%, rgba(255,255,255,0.15) 0%, transparent 60%)",
+          }}
+        />
+        {world.isTemplate && (
+          <div className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-black/40 backdrop-blur-md text-[10px] font-semibold uppercase tracking-wider text-[var(--arc-brand-arcanean-gold)] border border-[var(--arc-brand-arcanean-gold)]/20">
+            Template
+          </div>
+        )}
+        {/* Active indicator for template worlds */}
+        {world.isTemplate && (
+          <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded-full bg-black/40 backdrop-blur-md">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+            </span>
+            <span className="text-[10px] text-emerald-300 font-medium">Active</span>
+          </div>
+        )}
+        {/* Hover glow */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] via-transparent to-transparent opacity-60 group-hover:opacity-50 transition-opacity" />
+      </div>
+
+      {/* Content */}
+      <div className="p-5">
+        {/* Title + tagline */}
+        <h3 className="text-lg font-display font-semibold text-white group-hover:text-[var(--arc-brand-atlantean-teal)] transition-colors mb-1 truncate">
+          {world.name}
+        </h3>
+        <p className="text-sm text-white/45 line-clamp-2 mb-3 leading-relaxed">
+          {world.tagline}
+        </p>
+
+        {/* Element orbs */}
+        <div className="flex items-center gap-2 mb-4">
+          {world.elements.map((el) => (
+            <span
+              key={el.name}
+              className="w-3.5 h-3.5 rounded-full ring-1 ring-white/10 relative"
+              style={{ backgroundColor: el.color, boxShadow: `0 0 8px ${el.color}60, 0 0 16px ${el.color}25` }}
+              title={el.name}
+            />
+          ))}
+          <span className="text-[11px] text-white/25 ml-1">
+            {world.elements.map((e) => e.name).join(" / ")}
+          </span>
         </div>
 
-        {/* Content */}
-        <div className="p-5">
-          {/* Title + tagline */}
-          <h3 className="text-lg font-display font-semibold text-white group-hover:text-[var(--arc-brand-atlantean-teal)] transition-colors mb-1 truncate">
-            {world.name}
-          </h3>
-          <p className="text-sm text-white/45 line-clamp-2 mb-3 leading-relaxed">
-            {world.tagline}
-          </p>
+        {/* Stats row */}
+        <div className="flex items-center gap-4 text-xs text-white/35 mb-4">
+          <span className="flex items-center gap-1">
+            <Star className="w-3.5 h-3.5 text-[var(--arc-brand-arcanean-gold)]/70" weight="fill" />
+            {world.stars.toLocaleString()}
+          </span>
+          <span className="flex items-center gap-1">
+            <GitBranch className="w-3.5 h-3.5" />
+            {world.forks}
+          </span>
+          <span className="flex items-center gap-1">
+            <Users className="w-3.5 h-3.5" />
+            {world.characters}
+          </span>
+        </div>
 
-          {/* Element orbs */}
-          <div className="flex items-center gap-2 mb-4">
-            {world.elements.map((el) => (
-              <span
-                key={el.name}
-                className="w-3.5 h-3.5 rounded-full ring-1 ring-white/10 relative"
-                style={{
-                  backgroundColor: el.color,
-                  boxShadow: `0 0 8px ${el.color}60, 0 0 16px ${el.color}25`,
-                }}
-                title={el.name}
-              />
-            ))}
-            <span className="text-[11px] text-white/25 ml-1">
-              {world.elements.map((e) => e.name).join(" / ")}
+        {/* Creator + actions */}
+        <div className="flex items-center justify-between pt-3 border-t border-white/[0.06]">
+          <span className="flex items-center gap-2 text-xs text-white/40">
+            <span
+              className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white/80 shrink-0"
+              style={{ backgroundColor: world.elements[0]?.color ?? "var(--arc-brand-atlantean-teal)" }}
+            >
+              {world.creator.charAt(0).toUpperCase()}
             </span>
-          </div>
-
-          {/* Stats row */}
-          <div className="flex items-center gap-4 text-xs text-white/35 mb-4">
-            <span className="flex items-center gap-1">
-              <Star
-                className="w-3.5 h-3.5 text-[var(--arc-brand-arcanean-gold)]/70"
-                weight="fill"
-              />
-              {world.stars.toLocaleString()}
-            </span>
-            <span className="flex items-center gap-1">
-              <GitBranch className="w-3.5 h-3.5" />
-              {world.forks}
-            </span>
-            <span className="flex items-center gap-1">
-              <Users className="w-3.5 h-3.5" />
-              {world.characters}
-            </span>
-          </div>
-
-          {/* Creator + actions */}
-          <div className="flex items-center justify-between pt-3 border-t border-white/[0.06]">
-            <span className="flex items-center gap-2 text-xs text-white/40">
-              <span
-                className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white/80 shrink-0"
-                style={{
-                  backgroundColor:
-                    world.elements[0]?.color ??
-                    "var(--arc-brand-atlantean-teal)",
-                }}
-              >
-                {world.creator.charAt(0).toUpperCase()}
-              </span>
-              by{" "}
-              <span className="text-white/60 font-medium">{world.creator}</span>
-            </span>
-            <div className="flex items-center gap-2">
-              <button
-                className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium border border-white/[0.08] text-white/50 hover:text-[var(--arc-brand-arcanean-gold)] hover:border-[var(--arc-brand-arcanean-gold)]/30 hover:bg-[var(--arc-brand-arcanean-gold)]/5 transition-all"
-                aria-label={`Star ${world.name}`}
-              >
-                <Star className="w-3.5 h-3.5" weight="fill" />
-                Star
-              </button>
-              <Link
-                href={href}
-                className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-all"
-              >
-                Explore
-                <ArrowRight className="w-3 h-3" />
-              </Link>
-            </div>
+            by{" "}
+            <span className="text-white/60 font-medium">{world.creator}</span>
+          </span>
+          <div className="flex items-center gap-2">
+            <button
+              className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium border border-white/[0.08] text-white/50 hover:text-[var(--arc-brand-arcanean-gold)] hover:border-[var(--arc-brand-arcanean-gold)]/30 hover:bg-[var(--arc-brand-arcanean-gold)]/5 transition-all"
+              aria-label={`Star ${world.name}`}
+            >
+              <Star className="w-3.5 h-3.5" weight="fill" />
+              Star
+            </button>
+            <Link
+              href={href}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-all"
+            >
+              Explore
+              <ArrowRight className="w-3 h-3" />
+            </Link>
           </div>
         </div>
-      </LiquidGlass>
+      </div>
+    </LiquidGlass>
     </TiltCard>
   );
 }
@@ -240,30 +224,19 @@ function MultiverseStats({ worlds }: { worlds: WorldCard[] }) {
   const totalCharacters = worlds.reduce((s, w) => s + w.characters, 0);
   const totalForks = worlds.reduce((s, w) => s + w.forks, 0);
   const totalStars = worlds.reduce((s, w) => s + w.stars, 0);
-  // Never print zero social proof — a young multiverse shows what exists, not what doesn't.
   const stats = [
     { value: totalWorlds, label: "Worlds" },
     { value: totalCharacters, label: "Characters" },
     { value: totalForks, label: "Forks" },
     { value: totalStars.toLocaleString(), label: "Stars" },
-  ].filter((s) => Number(String(s.value).replace(/,/g, "")) > 0);
+  ];
   return (
     <div className="flex items-center justify-center gap-3 flex-wrap py-6">
       {stats.map(({ value, label }, i) => (
         <span key={label} className="flex items-center gap-1.5 text-sm">
-          <span
-            className="font-display font-bold text-white"
-            style={{
-              textShadow:
-                "0 0 12px color-mix(in srgb, var(--arc-brand-atlantean-teal) 40%, transparent)",
-            }}
-          >
-            {value}
-          </span>
+          <span className="font-display font-bold text-white" style={{ textShadow: "0 0 12px rgba(0,188,212,0.4)" }}>{value}</span>
           <span className="text-white/35">{label}</span>
-          {i < stats.length - 1 && (
-            <span className="text-white/10 ml-2">·</span>
-          )}
+          {i < stats.length - 1 && <span className="text-white/10 ml-2">·</span>}
         </span>
       ))}
     </div>
@@ -289,7 +262,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
           w.name.toLowerCase().includes(q) ||
           w.tagline.toLowerCase().includes(q) ||
           w.creator.toLowerCase().includes(q) ||
-          w.mood.toLowerCase().includes(q),
+          w.mood.toLowerCase().includes(q)
       );
     }
 
@@ -304,6 +277,8 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
 
   return (
     <LazyMotion features={domAnimation}>
+      {/* Shimmer keyframe for card hover */}
+      <style dangerouslySetInnerHTML={{ __html: `@keyframes shimmer{0%{background-position:200% 0}to{background-position:-200% 0}}` }} />
       <main className="min-h-screen bg-[var(--arc-cosmic-void)] text-white">
         {/* ── Hero ──────────────────────────────────────────────── */}
         <section className="relative pt-32 pb-16 overflow-hidden">
@@ -334,14 +309,8 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
               <div className="h-px w-10 bg-gradient-to-l from-transparent to-[var(--arc-brand-atlantean-teal)]/60" />
             </m.div>
 
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 tracking-tight">
-              <SplitText
-                as="span"
-                text="Explore "
-                className="text-white"
-                delay={0.05}
-                stagger={0.03}
-              />
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 tracking-tight">
+              <SplitText as="span" text="Explore " className="text-white" delay={0.05} stagger={0.03} />
               <span
                 className="bg-clip-text text-transparent"
                 style={{
@@ -351,7 +320,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
               >
                 Worlds
               </span>
-            </h2>
+            </h1>
 
             <m.p
               initial={{ opacity: 0, y: 20 }}
@@ -412,7 +381,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  className="bg-white/[0.05] border border-white/[0.08] rounded-lg px-3 py-2 min-h-[44px] text-sm text-white/60 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/40 transition-colors appearance-none cursor-pointer"
+                  className="bg-white/[0.05] border border-white/[0.08] rounded-lg px-3 py-1.5 text-sm text-white/60 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/40 transition-all appearance-none cursor-pointer"
                   aria-label="Sort worlds"
                 >
                   {SORT_OPTIONS.map((opt) => (
@@ -432,9 +401,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
 
         {/* ── Pulse of the Multiverse ──────────────────────────── */}
         <section className="max-w-7xl mx-auto px-6">
-          <MultiverseStats
-            worlds={filteredWorlds.length > 0 ? filteredWorlds : worlds}
-          />
+          <MultiverseStats worlds={filteredWorlds.length > 0 ? filteredWorlds : worlds} />
         </section>
 
         {/* ── World Grid ────────────────────────────────────────── */}
@@ -446,12 +413,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                   key={world.id}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 280,
-                    damping: 24,
-                    delay: Math.min(i * 0.08, 0.3),
-                  }}
+                  transition={{ duration: 0.4, delay: Math.min(i * 0.08, 0.3) }}
                   className="h-full"
                 >
                   <WorldCardComponent world={world} />
@@ -464,9 +426,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
               animate={{ opacity: 1 }}
               className="text-center py-16"
             >
-              <p className="text-white/40 text-lg mb-4">
-                No worlds match your search.
-              </p>
+              <p className="text-white/40 text-lg mb-4">No worlds match your search.</p>
               <button
                 onClick={() => {
                   setSearchQuery("");
@@ -486,7 +446,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                "radial-gradient(ellipse 80% 60% at 50% 50%, color-mix(in srgb, var(--arc-brand-atlantean-teal) 4%, transparent) 0%, transparent 70%)",
+                "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,188,212,0.04) 0%, transparent 70%)",
             }}
             aria-hidden="true"
           />
@@ -509,34 +469,32 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                 <p className="text-[var(--arc-brand-atlantean-teal)] font-mono text-xs tracking-widest uppercase mb-4">
                   The Multiverse Awaits
                 </p>
-                <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white">
+                <h2
+                  className="text-3xl md:text-4xl font-display font-bold mb-4 text-white"
+                >
                   {worlds.length > 0
                     ? "Your world is next."
                     : "Be the first to create a world in the multiverse."}
                 </h2>
                 <p className="text-white/45 max-w-xl mx-auto mb-8 leading-relaxed">
                   Every universe begins with a single idea. Create yours with
-                  intelligent world-building — define elements, characters,
-                  gates, and lore. Then share it for others to explore and fork.
+                  intelligent world-building — define elements, characters, gates,
+                  and lore. Then share it for others to explore and fork.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Magnetic strength={0.4} radius={120}>
+                  <m.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
                     <Link
                       href="/worlds/create"
-                      className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
+                      className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
                     >
                       Create a World
                       <Plus className="w-4 h-4" />
                     </Link>
-                  </Magnetic>
-                  <m.div
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  >
+                  </m.div>
+                  <m.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
                     <Link
                       href="/lore"
-                      className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/70 font-bold rounded-xl hover:bg-white/[0.04] hover:border-white/[0.15] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
+                      className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/70 font-bold rounded-xl hover:bg-white/[0.04] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
                     >
                       Explore Arcanea Lore
                       <ArrowRight className="w-4 h-4" />

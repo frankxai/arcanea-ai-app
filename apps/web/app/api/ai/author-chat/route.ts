@@ -13,7 +13,7 @@ import { streamText, tool } from 'ai';
 import { z } from 'zod';
 import { readFile, readdir, access } from 'fs/promises';
 import { join } from 'path';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import { scoreTASTE } from '@arcanea/publishing-house/quality/taste-gate';
 import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
 import { getBookRoot } from '@/lib/content/book-path';

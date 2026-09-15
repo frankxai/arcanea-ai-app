@@ -2,10 +2,10 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Academy',
+  title: 'Academy — Arcanea',
   description: 'Master the Ten Gates of creation through guided courses and challenges',
   openGraph: {
-    title: 'Academy',
+    title: 'Academy — Arcanea',
     description: 'Master the Ten Gates of creation through guided courses and challenges',
     url: 'https://www.arcanea.ai/academy/courses',
   },

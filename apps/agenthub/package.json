@@ -1,25 +1,44 @@
 {
+  "name": "agenthub-temp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
   "dependencies": {
-    "@react-three/drei": "^10.7.8",
-    "@react-three/fiber": "^9.7.0",
-    "@react-three/postprocessing": "^3.1.1",
+    "@arcanea/core": "workspace:^",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@react-three/postprocessing": "^3.0.4",
     "@theatre/core": "^0.7.2",
     "@theatre/studio": "^0.7.2",
-    "@types/three": "^0.185.4",
-    "@xyflow/react": "^12.11.6",
+    "@types/three": "^0.183.1",
+    "@xyflow/react": "^12.10.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.15.0",
-    "inngest": "^4.20.0",
-    "postprocessing": "^6.39.4",
+    "inngest": "^4.4.0",
+    "next": "16.2.10",
+    "postprocessing": "^6.39.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "tailwind-merge": "^2.6.0",
     "theatre": "^0.2.3",
-    "three": "^0.185.1",
+    "three": "^0.184.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.3",
-    "autoprefixer": "^10.5.5",
-    "postcss": "^8.5.28",
-    "tailwindcss": "^4.0.0"
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.10",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

@@ -1,13 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "pnpm run build",
-  "installCommand": "cd ../.. && pnpm install --no-frozen-lockfile",
+  "installCommand": "cd ../.. && corepack enable && pnpm install --prod=false --frozen-lockfile",
   "outputDirectory": ".next",
   "framework": "nextjs",
-  "ignoreCommand": "bash scripts/vercel-ignore-build.sh",
-  "regions": [
-    "iad1"
-  ],
+  "regions": ["iad1"],
   "headers": [
     {
       "source": "/(.*)",
@@ -38,10 +35,5 @@
       "destination": "https://discord.gg/arcanea",
       "permanent": false
     }
-  ],
-  "git": {
-    "deploymentEnabled": {
-      "backup/claude-snapshots": false
-    }
-  }
+  ]
 }

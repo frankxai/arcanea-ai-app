@@ -17,8 +17,6 @@ When Lumina breathed upon the Void, she brought forth Five Elements—the fundam
 
 ## The Five Elements
 
-### [The Meditations](./THE_ELEMENTS.md)
-
 | Element | Principle | Color | Feel | Associated Gate |
 |---------|-----------|-------|------|-----------------|
 | **Fire** | Transformation | Red, orange, gold | Heat, urgency | Fire (396 Hz) |
@@ -36,6 +34,10 @@ Together they form the complete fifth element, mirroring the cosmic duality at t
 ---
 
 ## Contents
+
+The collection holds two texts: one that walks all five elements in turn, and one that goes deep on the dual fifth.
+
+### [The Meditations](./THE_ELEMENTS.md)
 
 **Part One: Fire**
 - Meditation I: The Nature of Fire
@@ -67,6 +69,19 @@ Together they form the complete fifth element, mirroring the cosmic duality at t
 - The Elemental Inventory
 - The Elemental Invocation
 - The Cycle of Elements
+
+### [Meditation on Void and Spirit](./MEDITATION_VOID_AND_SPIRIT.md)
+
+The dual fifth element at length, in eight movements:
+
+- I. The Nature of Void and Spirit
+- II. The Void Within
+- III. The Spirit Within
+- IV. Invoking Void
+- V. Invoking Spirit
+- VI. The Union of Void and Spirit
+- VII. The Shadow Warning
+- VIII. Void and Spirit in the Creative Life
 
 ---
 
@@ -115,4 +130,3 @@ When stuck, find where you are in the cycle and move to the next element.
 *From the Elemental Teachings of the Academy*
 
 *"The elements are not outside you. They are you—shaped from Lumina's breath, held in Nero's potential, aware through Spirit, infinite in Void."*
-

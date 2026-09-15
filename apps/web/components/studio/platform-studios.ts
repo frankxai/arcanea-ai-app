@@ -40,20 +40,13 @@ export const STUDIO_MODES: StudioMode[] = [
     href: "/worlds",
     cost: 8,
     accent: "var(--arc-brand-atlantean-teal)",
-    gradient:
-      "from-[var(--arc-brand-cosmic-blue)]/45 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-arcanean-gold)]/35",
+    gradient: "from-[var(--arc-brand-cosmic-blue)]/45 via-[var(--arc-brand-atlantean-teal)]/25 to-[var(--arc-brand-arcanean-gold)]/35",
     prompt: "A drowned moon academy where music changes gravity",
     assetHint: "@atlas @characters @lore",
-    output:
-      "World bible, factions, locations, character seeds, timeline, visual style",
+    output: "World bible, factions, locations, character seeds, timeline, visual style",
     proof: "Best for writers, RPG teams, lore studios, and IP builders.",
     presets: ["Mythic academy", "Dark fantasy", "Solar punk", "Studio bible"],
-    workflow: [
-      "Seed premise",
-      "Generate canon",
-      "Connect graph",
-      "Export bible",
-    ],
+    workflow: ["Seed premise", "Generate canon", "Connect graph", "Export bible"],
     commands: ["plan_world", "world_report", "export_project_context"],
     media: {
       poster: "/images/forge/sea/006-storm-galleon.png",
@@ -70,32 +63,19 @@ export const STUDIO_MODES: StudioMode[] = [
     href: "/books/drafts",
     cost: 12,
     accent: "var(--arc-brand-arcanean-gold)",
-    gradient:
-      "from-[var(--arc-brand-arcanean-gold)]/45 via-[var(--arc-fire)]/20 to-[var(--arc-cosmic-void)]/35",
+    gradient: "from-[var(--arc-brand-arcanean-gold)]/45 via-[var(--arc-fire)]/20 to-[var(--arc-cosmic-void)]/35",
     prompt: "A 12-chapter romantasy about a cartographer of forbidden stars",
     assetHint: "@world @voice @outline",
-    output:
-      "Book bible, chapter spine, sample scene, cover brief, publishing checklist",
-    proof:
-      "Best for novelists, nonfiction authors, editors, and publishing teams.",
-    presets: [
-      "Novel bible",
-      "Memoir engine",
-      "Serial fiction",
-      "Launch packet",
-    ],
+    output: "Book bible, chapter spine, sample scene, cover brief, publishing checklist",
+    proof: "Best for novelists, nonfiction authors, editors, and publishing teams.",
+    presets: ["Novel bible", "Memoir engine", "Serial fiction", "Launch packet"],
     workflow: ["Inception", "Outline", "Draft scenes", "Package release"],
     commands: ["plan_book", "generate_asset_brief", "save_to_arcanea_vault"],
     media: {
       poster: "/images/books/forge-of-ruin-cover.png",
       secondary: "/images/books/las-tierras-de-luz-ch01.png",
       label: "Book trailer",
-      frames: [
-        "Reader promise",
-        "Chapter spine",
-        "Sample scene",
-        "Cover brief",
-      ],
+      frames: ["Reader promise", "Chapter spine", "Sample scene", "Cover brief"],
     },
     stats: ["12 chapters", "1 cover brief", "5 launch assets"],
   },
@@ -106,12 +86,10 @@ export const STUDIO_MODES: StudioMode[] = [
     href: "/games",
     cost: 18,
     accent: "var(--arc-fire)",
-    gradient:
-      "from-[var(--arc-fire)]/45 via-[var(--arc-brand-cosmic-blue)]/25 to-[var(--arc-brand-atlantean-teal)]/25",
+    gradient: "from-[var(--arc-fire)]/45 via-[var(--arc-brand-cosmic-blue)]/25 to-[var(--arc-brand-atlantean-teal)]/25",
     prompt: "A cozy multiplayer relic-hunting game set inside a living library",
     assetHint: "@world @sprites @mechanics",
-    output:
-      "Game design doc, loop, levels, asset list, prototype plan, engine export",
+    output: "Game design doc, loop, levels, asset list, prototype plan, engine export",
     proof: "Best for indie teams, Roblox/Godot/Unity studios, and game jams.",
     presets: ["Browser game", "Roblox world", "Unity prototype", "Godot scene"],
     workflow: ["Core loop", "Playable spec", "Asset kit", "Build handoff"],
@@ -131,31 +109,14 @@ export const STUDIO_MODES: StudioMode[] = [
     href: "/music-studio",
     cost: 10,
     accent: "var(--arc-void)",
-    gradient:
-      "from-[var(--arc-void)]/45 via-[var(--arc-brand-cosmic-blue)]/25 to-[var(--arc-brand-arcanean-gold)]/25",
-    prompt:
-      "An AI artist whose songs are field recordings from other timelines",
+    gradient: "from-[var(--arc-void)]/45 via-[var(--arc-brand-cosmic-blue)]/25 to-[var(--arc-brand-arcanean-gold)]/25",
+    prompt: "An AI artist whose songs are field recordings from other timelines",
     assetHint: "@artist @lyrics @cover",
-    output:
-      "Artist lore, song brief, album world, cover art brief, visualizer plan",
+    output: "Artist lore, song brief, album world, cover art brief, visualizer plan",
     proof: "Best for musicians, labels, AI artist projects, and release teams.",
-    presets: [
-      "Artist bible",
-      "Single rollout",
-      "Album world",
-      "Visualizer pack",
-    ],
-    workflow: [
-      "Artist identity",
-      "Track brief",
-      "Visual assets",
-      "Release kit",
-    ],
-    commands: [
-      "plan_music_project",
-      "generate_asset_brief",
-      "get_workflow_recipe",
-    ],
+    presets: ["Artist bible", "Single rollout", "Album world", "Visualizer pack"],
+    workflow: ["Artist identity", "Track brief", "Visual assets", "Release kit"],
+    commands: ["plan_music_project", "generate_asset_brief", "get_workflow_recipe"],
     media: {
       poster: "/images/luminors/11-aletheia-truth-singer.webp",
       secondary: "/guardians/v3/alera-hero-v3.webp",
@@ -171,21 +132,14 @@ export const STUDIO_MODES: StudioMode[] = [
     href: "/cinema-studio",
     cost: 16,
     accent: "var(--arc-brand-cosmic-blue)",
-    gradient:
-      "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-cosmic-void)]/35 to-[var(--arc-brand-atlantean-teal)]/25",
-    prompt:
-      "A 20-second trailer for a world where dreams are traded as currency",
+    gradient: "from-[var(--arc-brand-cosmic-blue)]/50 via-[var(--arc-cosmic-void)]/35 to-[var(--arc-brand-atlantean-teal)]/25",
+    prompt: "A 20-second trailer for a world where dreams are traded as currency",
     assetHint: "@character @shotlist @music",
-    output:
-      "Scene plan, shot list, camera presets, character references, render prompts",
+    output: "Scene plan, shot list, camera presets, character references, render prompts",
     proof: "Best for filmmakers, trailer teams, social video, and pitch decks.",
     presets: ["Trailer", "Character scene", "Music video", "Pitch animatic"],
     workflow: ["Scene intent", "Shot design", "Asset refs", "Render handoff"],
-    commands: [
-      "plan_cinematic_scene",
-      "generate_asset_brief",
-      "export_project_context",
-    ],
+    commands: ["plan_cinematic_scene", "generate_asset_brief", "export_project_context"],
     media: {
       poster: "/brand/arcanea-hero.jpg",
       secondary: "/images/forge/space/004-dreadnought-nebula.png",
@@ -201,21 +155,14 @@ export const STUDIO_MODES: StudioMode[] = [
     href: "/create#campaign",
     cost: 14,
     accent: "var(--arc-brand-atlantean-teal)",
-    gradient:
-      "from-[var(--arc-brand-atlantean-teal)]/45 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-fire)]/25",
-    prompt:
-      "Launch a creator tool for fantasy authors who want finished worlds",
+    gradient: "from-[var(--arc-brand-atlantean-teal)]/45 via-[var(--arc-brand-arcanean-gold)]/20 to-[var(--arc-fire)]/25",
+    prompt: "Launch a creator tool for fantasy authors who want finished worlds",
     assetHint: "@brand @product @audience",
-    output:
-      "Audience map, ad angles, creator content pack, landing sections, hooks",
+    output: "Audience map, ad angles, creator content pack, landing sections, hooks",
     proof: "Best for founders, creators, agencies, and product launches.",
     presets: ["DTC launch", "Creator funnel", "Social pack", "Affiliate kit"],
     workflow: ["Offer", "Angles", "Creative matrix", "Publish pack"],
-    commands: [
-      "get_workflow_recipe",
-      "generate_asset_brief",
-      "export_project_context",
-    ],
+    commands: ["get_workflow_recipe", "generate_asset_brief", "export_project_context"],
     media: {
       poster: "/images/blog/publishing/10-ecosystem-overview.png",
       secondary: "/brand/arcanea-og.jpg",
@@ -231,20 +178,14 @@ export const STUDIO_MODES: StudioMode[] = [
     href: "/canvas",
     cost: 6,
     accent: "var(--arc-brand-atlantean-teal)",
-    gradient:
-      "from-[var(--arc-brand-atlantean-teal)]/35 via-[var(--arc-cosmic-void)]/35 to-[var(--arc-void)]/25",
-    prompt:
-      "Chain a world bible into a game spec, trailer, soundtrack, and landing page",
+    gradient: "from-[var(--arc-brand-atlantean-teal)]/35 via-[var(--arc-cosmic-void)]/35 to-[var(--arc-void)]/25",
+    prompt: "Chain a world bible into a game spec, trailer, soundtrack, and landing page",
     assetHint: "@world @brief @repo",
     output: "Node graph, reusable workflow, handoff packets, agent context",
     proof: "Best for teams that want repeatable creative production systems.",
     presets: ["World to game", "Book launch", "Music video", "Agent sprint"],
     workflow: ["Drop node", "Chain tools", "Run agents", "Export context"],
-    commands: [
-      "list_arcanea_studios",
-      "get_workflow_recipe",
-      "export_project_context",
-    ],
+    commands: ["list_arcanea_studios", "get_workflow_recipe", "export_project_context"],
     media: {
       poster: "/images/books/open-library-architecture.png",
       secondary: "/images/blog/publishing/02-publishing-pipeline.png",
@@ -260,29 +201,21 @@ export const STUDIO_MODES: StudioMode[] = [
     href: "/mcp",
     cost: 4,
     accent: "var(--arc-brand-arcanean-gold)",
-    gradient:
-      "from-[var(--arc-brand-arcanean-gold)]/40 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-atlantean-teal)]/25",
-    prompt:
-      "Give Claude and Codex the full context to build this universe with me",
+    gradient: "from-[var(--arc-brand-arcanean-gold)]/40 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-atlantean-teal)]/25",
+    prompt: "Give Claude and Codex the full context to build this universe with me",
     assetHint: "@repo @world @vault",
-    output:
-      "MCP install, tool plan, agent rules, repo handoff, workflow recipes",
-    proof:
-      "Best for agent-native creators and studios that build with AI teammates.",
+    output: "MCP install, tool plan, agent rules, repo handoff, workflow recipes",
+    proof: "Best for agent-native creators and studios that build with AI teammates.",
     presets: ["Claude Code", "Codex", "Cursor", "Local MCP"],
     workflow: ["Install MCP", "Load context", "Run recipe", "Ship artifact"],
-    commands: [
-      "list_arcanea_studios",
-      "get_workflow_recipe",
-      "export_project_context",
-    ],
+    commands: ["list_arcanea_studios", "get_workflow_recipe", "export_project_context"],
     media: {
       poster: "/guardians/v3/draconia-hero-v3.webp",
       secondary: "/images/blog/publishing/10-ecosystem-overview.png",
       label: "Agent handoff",
       frames: ["Install MCP", "List tools", "Run recipe", "Commit output"],
     },
-    stats: ["4 agent hosts"],
+    stats: ["43+ tools", "5 recipes", "4 agent hosts"],
   },
 ];
 

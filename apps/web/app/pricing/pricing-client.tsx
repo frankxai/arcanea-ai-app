@@ -1,6 +1,5 @@
 "use client";
 
-import { FACTS } from "@/lib/facts";
 import Image from "next/image";
 import React, { useState } from "react";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
@@ -10,12 +9,20 @@ import {
   ImageSquare,
   PencilSimple,
   Globe,
+  Code,
   GitBranch,
   BookOpen,
+  Users,
+  Lightning,
   Crown,
+  Star,
+  ArrowRight,
   Brain,
+  Sparkle,
   MusicNote,
   Cat,
+  Diamond,
+  Coins,
   Envelope,
   Check,
   Warning,
@@ -33,7 +40,7 @@ const TIERS = [
     features: [
       "Bring Your Own Key (BYOK)",
       "Local Markdown / JSONML storage",
-      `Core AI chat with ${FACTS.luminors} Luminors`,
+      "Core AI chat with 13 Luminors",
       "Standard local zip exports",
       "54 open-source CLI tools & skills",
     ],
@@ -49,7 +56,7 @@ const TIERS = [
     features: [
       "Everything in Sovereign",
       "Encrypted cloud sync & backups",
-      "Semantic search across your worlds",
+      "pgvector semantic query database",
       "Multiplayer Canvas collaboration",
       "500 monthly Cloud Bench credits",
     ],
@@ -87,7 +94,7 @@ const FREE_CAPABILITIES = [
   {
     Icon: BookOpen,
     name: "The Library",
-    desc: "Twenty collections of mythology, philosophy, and creative frameworks",
+    desc: "486,000+ words of mythology, philosophy, and creative frameworks",
     accent: "var(--arc-brand-atlantean-teal)",
   },
   {
@@ -124,9 +131,7 @@ const FREE_CAPABILITIES = [
 
 export function PricingClient() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
@@ -151,7 +156,7 @@ export function PricingClient() {
         setStatus("error");
         setErrorMessage(data.error || "Failed to join waitlist.");
       }
-    } catch {
+    } catch (err) {
       setStatus("error");
       setErrorMessage("Something went wrong. Please check your connection.");
     }
@@ -175,14 +180,11 @@ export function PricingClient() {
                 className="object-contain drop-shadow-[0_0_30px_rgba(127,255,212,0.15)] animate-[mascot-float_3.5s_ease-in-out_infinite]"
               />
             </div>
-
+            
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--arc-brand-atlantean-teal)]/20 bg-[var(--arc-brand-atlantean-teal)]/6 mb-6">
-              <GitBranch
-                size={12}
-                className="text-[var(--arc-brand-atlantean-teal)]"
-              />
+              <GitBranch size={12} className="text-[var(--arc-brand-atlantean-teal)]" />
               <span className="text-[10px] font-mono text-[var(--arc-brand-atlantean-teal)] uppercase tracking-widest">
-                Sovereign core · optional cloud
+                Path C Hybrid Architecture
               </span>
             </div>
 
@@ -194,10 +196,7 @@ export function PricingClient() {
             </h1>
 
             <p className="text-base md:text-lg text-white/50 max-w-2xl mx-auto leading-relaxed font-body">
-              Your API keys remain in your browser. Your world graphs, lore
-              bibles, and files remain on your disk. Free and open. Pay only
-              when you want the convenience of encrypted cloud sync, semantic
-              search, and multiplayer bench runs.
+              Your API keys remain in your browser. Your world graphs, lore bibles, and files remain on your disk. Free and open. Pay only when you want the convenience of encrypted cloud synchronization, pgvector semantic search, and multiplayer bench runs.
             </p>
           </section>
 
@@ -218,27 +217,16 @@ export function PricingClient() {
                   </span>
                 )}
                 <div>
-                  <h3 className="font-display text-lg font-bold text-white/90">
-                    {tier.name}
-                  </h3>
+                  <h3 className="font-display text-lg font-bold text-white/90">{tier.name}</h3>
                   <div className="flex items-baseline gap-2 mt-4 mb-2">
-                    <span className="text-4xl font-display font-bold text-white">
-                      {tier.price}
-                    </span>
-                    <span className="text-xs text-white/40 font-mono lowercase">
-                      {tier.period}
-                    </span>
+                    <span className="text-4xl font-display font-bold text-white">{tier.price}</span>
+                    <span className="text-xs text-white/40 font-mono lowercase">{tier.period}</span>
                   </div>
-                  <p className="text-xs text-white/50 leading-relaxed font-body mb-6">
-                    {tier.desc}
-                  </p>
-
+                  <p className="text-xs text-white/50 leading-relaxed font-body mb-6">{tier.desc}</p>
+                  
                   <ul className="space-y-3 border-t border-white/[0.04] pt-6 mb-8">
                     {tier.features.map((feat) => (
-                      <li
-                        key={feat}
-                        className="flex items-start gap-2.5 text-xs text-white/70"
-                      >
+                      <li key={feat} className="flex items-start gap-2.5 text-xs text-white/70">
                         <Check className="w-4 h-4 text-white/40 shrink-0 mt-0.5" />
                         <span>{feat}</span>
                       </li>
@@ -259,10 +247,7 @@ export function PricingClient() {
               <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                 <div className="max-w-md">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--arc-brand-arcanean-gold)]/10 border border-[var(--arc-brand-arcanean-gold)]/20 mb-4">
-                    <Crown
-                      size={12}
-                      className="text-[var(--arc-brand-arcanean-gold)]"
-                    />
+                    <Crown size={12} className="text-[var(--arc-brand-arcanean-gold)]" />
                     <span className="text-[9px] font-mono text-[var(--arc-brand-arcanean-gold)] uppercase tracking-wider font-bold">
                       Limited Pre-Launch
                     </span>
@@ -271,22 +256,15 @@ export function PricingClient() {
                     Join the Founding Circle
                   </h3>
                   <p className="text-xs text-white/50 leading-relaxed font-body mb-4">
-                    The first 100 creators to join the waitlist secure a
-                    permanent **40% lifetime discount** on all sync plans,
-                    direct advisory access to the developer, and priority beta
-                    access.
+                    The first 100 creators to join the waitlist secure a permanent **40% lifetime discount** on all sync plans, direct advisory access to the developer, and priority beta access.
                   </p>
                   <ul className="space-y-2 text-[11px] text-white/60 font-mono">
                     <li className="flex items-center gap-2">
-                      <span className="text-[var(--arc-brand-arcanean-gold)]">
-                        ✦
-                      </span>
+                      <span className="text-[var(--arc-brand-arcanean-gold)]">✦</span>
                       Permanent lifetime discount
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-[var(--arc-brand-arcanean-gold)]">
-                        ✦
-                      </span>
+                      <span className="text-[var(--arc-brand-arcanean-gold)]">✦</span>
                       Private Discord channels
                     </li>
                   </ul>
@@ -304,12 +282,9 @@ export function PricingClient() {
                         <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center border border-green-500/30">
                           <Check className="w-6 h-6 text-green-400" />
                         </div>
-                        <h4 className="font-semibold text-sm">
-                          Welcome aboard!
-                        </h4>
+                        <h4 className="font-semibold text-sm">Welcome aboard!</h4>
                         <p className="text-[11px] text-green-300/70 font-body">
-                          You are locked into the Founding waitlist. Watch your
-                          inbox for access details.
+                          You are locked into the Founding waitlist. Watch your inbox for access details.
                         </p>
                       </m.div>
                     ) : (
@@ -385,12 +360,8 @@ export function PricingClient() {
                     style={{ color: accent, flexShrink: 0, marginTop: 2 }}
                   />
                   <div>
-                    <h3 className="font-semibold text-sm mb-1 text-white/90">
-                      {name}
-                    </h3>
-                    <p className="text-white/40 text-xs leading-relaxed font-body">
-                      {desc}
-                    </p>
+                    <h3 className="font-semibold text-sm mb-1 text-white/90">{name}</h3>
+                    <p className="text-white/40 text-xs leading-relaxed font-body">{desc}</p>
                   </div>
                 </div>
               ))}
@@ -404,8 +375,7 @@ export function PricingClient() {
                 Fully Open Source Foundation
               </h2>
               <p className="text-sm text-white/45 max-w-lg mx-auto font-body">
-                Extend, modify, or run your own instance. Every layer is built
-                on open standards.
+                Extend, modify, or run your own instance. Every layer is built on open standards.
               </p>
             </div>
 
@@ -419,12 +389,8 @@ export function PricingClient() {
                   key={label}
                   className="text-center p-6 rounded-2xl bg-white/[0.015] border border-white/[0.06]"
                 >
-                  <div className="text-3xl font-display font-bold text-[var(--arc-brand-atlantean-teal)] mb-1">
-                    {num}
-                  </div>
-                  <div className="text-xs font-mono text-white/40 uppercase tracking-widest mt-1">
-                    {label}
-                  </div>
+                  <div className="text-3xl font-display font-bold text-[var(--arc-brand-atlantean-teal)] mb-1">{num}</div>
+                  <div className="text-xs font-mono text-white/40 uppercase tracking-widest mt-1">{label}</div>
                 </div>
               ))}
             </div>

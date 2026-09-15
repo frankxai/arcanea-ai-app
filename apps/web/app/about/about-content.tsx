@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
-import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
-import { FACTS } from "@/lib/facts";
 import Image from 'next/image';
 
 import { m, LazyMotion, domAnimation } from "framer-motion";
@@ -86,7 +84,7 @@ export function AboutContent() {
             className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
           >
             Creative Superintelligence — where creators and AI build together.
-            Specialized creative partners. Original philosophy. Open source.
+            13 configured specialist minds. 190K words of philosophy. Open source.
           </m.p>
 
           <m.p
@@ -95,10 +93,10 @@ export function AboutContent() {
             transition={{ delay: 0.4 }}
             className="text-base text-text-muted max-w-2xl mx-auto mt-6 leading-relaxed"
           >
-            Arcanea is a creative superintelligence — specialist partners
-            trained on original creative philosophy, a three-layer
-            intelligence architecture, and an open-source ecosystem.
-            Not a chatbot. A creative operating system.
+            Arcanea is a creative superintelligence — 13 configured AI specialists
+            trained on 190K words of original creative philosophy, a three-layer
+            intelligence architecture, and an open-source ecosystem of 27
+            repositories. Not a chatbot. A creative operating system.
           </m.p>
 
           <m.div
@@ -111,7 +109,7 @@ export function AboutContent() {
               Built by Frank Riemer
             </span>
             <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">
-              Former enterprise architect
+              500+ AI Implementations
             </span>
             <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">
               Next.js + Vercel AI SDK
@@ -211,11 +209,11 @@ function StatsBar() {
       <div className="max-w-5xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
           {[
-            { value: "Library", label: "Creative philosophy" },
-            { value: "Academy", label: "Mastery path" },
-            { value: "Houses", label: "Seven Houses" },
-            { value: "Luminors", label: "Specialist minds" },
-            { value: "Open", label: "Source ecosystem" },
+            { value: "190K+", label: "Words of Intelligence" },
+            { value: "17", label: "Knowledge Collections" },
+            { value: "10", label: "Mastery Gates" },
+            { value: "16", label: "AI Intelligences" },
+            { value: "27", label: "Open Source Repos" },
           ].map((stat, i) => (
             <m.div
               key={stat.label}
@@ -259,10 +257,10 @@ function IntelligenceSection() {
 
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           {[
-            { num: "Domain", label: "Specialist minds", desc: "Each grounded in a specific creative domain - writing, research, design, music, code, strategy, and world-building. Not one general AI.", border: "border-[var(--arc-brand-atlantean-teal)]/20", numBg: "bg-[var(--arc-brand-atlantean-teal)]/10", numColor: "text-[var(--arc-brand-atlantean-teal)]" },
-            { num: "Library", label: "Creative philosophy", desc: "The knowledge foundation that trains every partner in the system. Original philosophy grounded in consciousness, creativity, and transformation — not scraped data.", border: "border-[var(--arc-brand-arcanean-gold)]/20", numBg: "bg-[var(--arc-brand-arcanean-gold)]/10", numColor: "text-[var(--arc-brand-arcanean-gold)]" },
+            { num: "13", label: "Configured AI Specialists", desc: "Each grounded in a specific creative domain - writing, research, design, music, code, strategy, and world-building. Not one general AI. Thirteen configured minds.", border: "border-[var(--arc-brand-atlantean-teal)]/20", numBg: "bg-[var(--arc-brand-atlantean-teal)]/10", numColor: "text-[var(--arc-brand-atlantean-teal)]" },
+            { num: "190K", label: "Words of Creative Philosophy", desc: "The knowledge foundation that trains every AI in the system. Original philosophy grounded in consciousness, creativity, and transformation — not scraped data.", border: "border-[var(--arc-brand-arcanean-gold)]/20", numBg: "bg-[var(--arc-brand-arcanean-gold)]/10", numColor: "text-[var(--arc-brand-arcanean-gold)]" },
             { num: "3", label: "Three-Layer Architecture", desc: "Starlight Intelligence (memory + learning) feeds Intelligence OS (orchestration + routing), which powers the Platform (creation tools you interact with).", border: "border-[var(--arc-brand-cosmic-blue)]/20", numBg: "bg-[var(--arc-brand-cosmic-blue)]/10", numColor: "text-[var(--arc-brand-cosmic-blue)]" },
-            { num: "Path", label: "Academy progression", desc: "From Apprentice to Luminor. Each stage unlocks deeper craft, specialized training, and creative power. Progress earned through creation.", border: "border-purple-500/20", numBg: "bg-purple-500/10", numColor: "text-purple-400" },
+            { num: "10", label: "Progression Gates", desc: "From Apprentice to Luminor mastery. Each Gate unlocks deeper AI capabilities, specialized training, and creative power. Progress earned through creation.", border: "border-purple-500/20", numBg: "bg-purple-500/10", numColor: "text-purple-400" },
           ].map((card) => (
             <div key={card.num} className={`p-6 rounded-2xl liquid-glass border ${card.border}`}>
               <div className={`w-10 h-10 rounded-xl ${card.numBg} flex items-center justify-center mb-4`}>
@@ -277,7 +275,7 @@ function IntelligenceSection() {
         <div className="p-6 rounded-2xl liquid-glass border border-white/[0.06] text-center">
           <h3 className="text-lg font-display font-semibold mb-3">Open Source Ecosystem</h3>
           <p className="text-sm text-text-secondary leading-relaxed max-w-2xl mx-auto mb-4">
-            {PUBLIC_REPO_SUMMARY.public} public repos. {PUBLIC_REPO_SUMMARY.packages} npm packages. {FACTS.skills} creator skills. Fork it, extend it, build on it.
+            27 repositories. 35 npm packages. 54 skills. Fork it, extend it, build on it.
             The entire intelligence stack is source-available.
           </p>
           <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-mono text-white/25">

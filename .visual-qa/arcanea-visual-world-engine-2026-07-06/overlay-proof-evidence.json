@@ -1,0 +1,116 @@
+{
+  "version": "1.0",
+  "task": "Deterministic social overlay proof pack for Arcanea Visual World Engine candidates",
+  "surface": "Instagram 4:5, social album square, OG/YouTube/X 16:9, and 9:16 storyboard proof",
+  "audience": "Arcanea creators, fantasy/anime/webtoon audiences, and AI-native creative learners",
+  "standards": [
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/planning-with-files/ARCANEA_VISUAL_WORLD_CONDUCTOR_2026-07-06.md"
+  ],
+  "references": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/review.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/ledger.csv",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/overlay-ledger.csv"
+  ],
+  "direction": {
+    "keep": [
+      "exact deterministic text overlays",
+      "Arcanea proof language",
+      "clear social crop hierarchy",
+      "non-dragon megascale when possible",
+      "Luminor as earned mastery rank"
+    ],
+    "avoid": [
+      "generated text",
+      "hardcoded app code changes",
+      "public promotion without human approval",
+      "Mamoru canon promotion",
+      "crowding storyboard panels with oversized CTA"
+    ],
+    "signature": "Arcanea proof-world hooks: beautiful worlds, exact text, and a clear path from wonder to creation proof.",
+    "system": "PIL-rendered deterministic overlays using Arcanea gold, ivory, dark gradient panels, and exact platform crops over provenance-tracked generated masters."
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "image-edit",
+    "provenance": "generated",
+    "why_premium": "The overlays convert high-scoring generated masters into exact-text social proofs while keeping provenance and public-use gates explicit.",
+    "shortcut_risk": "low",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/arc-overlay-028-heart-realm-living-ark-4x5.png",
+      "kind": "4:5 social overlay",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/arc-overlay-027-portal-bloom-album-square.png",
+      "kind": "1:1 album/social overlay",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/arc-overlay-024b-proof-against-drift-og.png",
+      "kind": "16:9 OG/social overlay",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/arc-overlay-031-luminor-rank-og.png",
+      "kind": "16:9 Luminor explainer overlay",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/arc-overlay-029-gate-descent-storyboard-9x16.png",
+      "kind": "9:16 storyboard overlay",
+      "inspected": true
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/overlay-proof-contact-sheet.jpg",
+      "kind": "overlay proof contact sheet",
+      "inspected": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "notes": "Tier C deterministic overlays over Tier B generated masters."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "notes": "Contact sheet and selected full-size overlays inspected."
+    },
+    {
+      "name": "visual-qa",
+      "status": "pass",
+      "notes": "028, 027, and corrected 024b pass as proof candidates; 031 passes with caution; 029 remains iterate."
+    },
+    {
+      "name": "canon-status",
+      "status": "pass",
+      "notes": "No Mamoru promotion. Luminor copy explicitly frames Luminor as a rank."
+    },
+    {
+      "name": "publication",
+      "status": "blocked",
+      "notes": "No public publish or scheduler action. Human approval still required."
+    }
+  ],
+  "score": {
+    "total": 27,
+    "max": 30,
+    "breakdown": {
+      "first_read": 5,
+      "brand_fit": 5,
+      "craft": 4,
+      "accessibility_crop": 4,
+      "provenance_accuracy": 5,
+      "surface_usefulness": 4
+    }
+  },
+  "decision": "iterate"
+}

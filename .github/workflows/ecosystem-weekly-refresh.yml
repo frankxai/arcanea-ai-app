@@ -12,9 +12,9 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v5
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v7
+      - uses: actions/setup-node@v5
         with:
           node-version-file: '.nvmrc'
           cache: pnpm
@@ -29,7 +29,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Open PR with diff
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@v6
         with:
           commit-message: 'chore(ecosystem): weekly auto-refresh of derived.ts'
           title: 'chore(ecosystem): weekly auto-refresh'

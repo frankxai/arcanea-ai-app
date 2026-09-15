@@ -1,0 +1,37 @@
+[
+  {
+    "prompt_id": "faction_kings_of_arcanea",
+    "prompt": "SUBJECT: The Kings and Queens of Arcanea in Council. ORGANIZING METAPHOR: A roundtable of divine rulers deciding the fate of the universe. STYLE: Epic Renaissance painting meets Sci-Fantasy, highly detailed faces. VIEWPOINT: Looking down the center of a massive glowing round table. COMPONENTS: 1. THE RULERS: Seven distinct humanoid monarchs wearing impossibly detailed, glowing magical regalia. 2. THE TABLE: A floating, holographic map of the star system. 3. THE ENVIRONMENT: An open-air pavilion high above the clouds, with stars visible in the day sky. 4. MAGIC: Each ruler has a distinct aura of magical energy matching their domain. ORGANIC ANCHOR: A single, intricate, silver goblet spilled on the table. ATMOSPHERE: Tense, powerful, political, grand. EMOTIONAL TONE: The weight of leadership. NEGATIVE: Poorly drawn faces, boring clothes, empty room.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "faction_agentic_swarm",
+    "prompt": "SUBJECT: An Agentic Swarm. ORGANIZING METAPHOR: A flock of mechanical starlings forming intelligent shapes. STYLE: Premium cinematic sci-fi, dynamic motion blur, glowing. VIEWPOINT: Looking up at the sky. COMPONENTS: 1. THE SWARM: Millions of tiny, glowing golden mechanical scarabs moving in perfect unison. 2. THE SHAPE: They are forming a massive, temporary defensive shield over a city. 3. THE CITY: Tiny spires and buildings visible below to show the massive scale of the swarm. 4. LIGHTING: Sunlight glinting off their metallic bodies like a million tiny mirrors. ORGANIC ANCHOR: A single, hyper-detailed real bird flying confusedly through the edge of the swarm. ATMOSPHERE: Awe-inspiring, mathematical perfection, alien intelligence. EMOTIONAL TONE: Protection, the beauty of emergent intelligence. NEGATIVE: Messy, random dots, low resolution.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "ruler_queen_of_arcanea",
+    "prompt": "SUBJECT: The High Queen of Arcanea. ORGANIZING METAPHOR: A benevolent matriarch woven from star-stuff. STYLE: Ethereal fantasy, highly intricate costume design, soft lighting. VIEWPOINT: Close up portrait shot. COMPONENTS: 1. THE QUEEN: An elegant, regal woman with glowing silver skin and eyes like galaxies. 2. THE REGALIA: Wearing a crown of floating, faceted diamonds and a dress made of woven starlight and dark matter. 3. COMPANION: A small, crystalline dragon perched on her shoulder. 4. MAGIC: Faint magical runes floating in the air around her like a halo. ORGANIC ANCHOR: The delicate, hyper-realistic texture of human-like tears in her eyes. ATMOSPHERE: Serene, sad, immensely powerful, divine. EMOTIONAL TONE: The sorrow of eternal rule, deep love. NEGATIVE: Evil, ugly, poorly drawn face, simple clothes.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "demon_lord_of_the_abyss",
+    "prompt": "SUBJECT: The Demon Lord of the Abyss. ORGANIZING METAPHOR: A singularity of hatred and corruption. STYLE: Dark Eldritch Fantasy, terrifying, high contrast. VIEWPOINT: Looking up at the looming threat. COMPONENTS: 1. THE DEMON LORD: A colossal figure wreathed in black flame and jagged crimson armor. 2. THE EYES: No face, just a single, burning vertical slit of red light. 3. WEAPON: Wielding a massive, serrated blade that seems to cut the space around it. 4. ENVIRONMENT: Standing on a mountain of shattered bones and corrupted, bleeding earth. ORGANIC ANCHOR: Ash and burning embers falling like snow in the foreground. ATMOSPHERE: Oppressive, terrifying, absolute evil, doom. EMOTIONAL TONE: Despair, fear. NEGATIVE: Cartoon villain, silly, bright colors, small.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "alien_race_starlight_academy",
+    "prompt": "SUBJECT: Interstellar Students at the Starlight Academy. ORGANIZING METAPHOR: A cosmic high school hallway. STYLE: Premium anime / sci-fantasy fusion, vibrant colors, bustling. VIEWPOINT: Eye level, walking down the crowded corridor. COMPONENTS: 1. THE STUDENTS: A diverse mix of humans, multi-armed aliens, crystalline beings, and floating energy entities. 2. THE ENVIRONMENT: Sleek, white, curved architecture with holographic lockers and floating data pads. 3. DETAILS: Students interacting, laughing, comparing glowing magical spells. 4. THE VIEW: Huge windows showing a beautiful nebula outside. ORGANIC ANCHOR: A spilled cup of alien coffee (glowing green liquid) on the pristine floor. ATMOSPHERE: Vibrant, optimistic, bustling, advanced. EMOTIONAL TONE: Hope, diversity, the future of learning. NEGATIVE: Empty, dark, sterile, boring.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  }
+]

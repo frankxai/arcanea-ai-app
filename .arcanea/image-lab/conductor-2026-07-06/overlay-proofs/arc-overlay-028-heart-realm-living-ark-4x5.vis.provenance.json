@@ -1,0 +1,20 @@
+{
+  "schema": "visual-intelligence-provenance.v0",
+  "assetId": "arc-overlay-028-heart-realm-living-ark-4x5",
+  "visualUri": "visual://asset/arcanea/arc-overlay-028-heart-realm-living-ark-4x5",
+  "brandId": "arcanea",
+  "operatingUnit": "arcanea-product-ip",
+  "sourceMethod": "designed-media-over-generated-media",
+  "engine": "pil-deterministic-overlay",
+  "sourceImage": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/outputs/images/arc-visual-028-heart-realm-living-ark-non-dragon.png",
+  "workspacePath": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/arc-overlay-028-heart-realm-living-ark-4x5.png",
+  "promptPath": "deterministic overlay proof generated from conductor heartbeat 2026-07-06T04:48+02:00",
+  "rightsStatus": "owned-generated-derivative",
+  "license": "arcanea-original",
+  "score30": 28,
+  "verdict": "overlay-proof-pass",
+  "surface": "instagram-feed-4x5",
+  "publicationStatus": "unpublished",
+  "createdAt": "2026-07-06T04:48:13+02:00",
+  "notes": "Exact text overlay proof. Not a public publish asset until human approval and route-specific QA."
+}

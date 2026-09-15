@@ -1,0 +1,159 @@
+{
+  "version": "1.0",
+  "task": "Arcanea Visual World Conductor Batch 12 VIS quality-score audit",
+  "surface": "Local VIS readiness score and blocker audit for the Batch 12 Witness Bridge 9:16 proof",
+  "audience": "Frank as human canon and launch approver, Arcanea visual-world operators, internal social review",
+  "first_read": "The primary Batch 12 proof resolves in VIS and has a captured readiness score, but public use still remains blocked by rights, approval, usage, and missing VIS eval metadata.",
+  "standards": [
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/visual-intelligence/README.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/VISUAL_DOCTRINE.md"
+  ],
+  "references": [
+    {
+      "label": "Primary Batch 12 VIS URI",
+      "source": "visual://asset/asset_70c54fb51619e220e2d9f2c9",
+      "reason": "The local VIS identity for the 9:16 Witness Bridge overlay proof."
+    },
+    {
+      "label": "Primary Batch 12 overlay proof",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/arc-overlay-b12-005-witness-bridge-9x16.png",
+      "reason": "Asset scored by VIS for readiness and curation blockers."
+    },
+    {
+      "label": "VIS score capture",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-visual-world-engine-2026-07-06/batch12-vis-primary-score.txt",
+      "reason": "Stores the exact output from node bin/vis.mjs score visual://asset/asset_70c54fb51619e220e2d9f2c9."
+    },
+    {
+      "label": "VIS packet capture",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-visual-world-engine-2026-07-06/batch12-vis-primary-packet.md",
+      "reason": "Records the public-use blocker state before quality-score audit."
+    },
+    {
+      "label": "Conductor mirror",
+      "source": "C:/Users/frank/brands/image-system/arcanea/2026-07-06-conductor",
+      "reason": "Local mirror for generated-asset loop evidence and handoff files."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Keep Batch 12 as an internal-review candidate only.",
+      "Preserve the VIS readiness result: score 57, verdict needs-curation.",
+      "Preserve public-use blockers: rights unknown, approval candidate, no route/social/collection usage, and no VIS eval record.",
+      "Keep Mamoru marked STAGING and absent from this Batch 12 proof.",
+      "Avoid gallery, app, package, public image, campaign, canon, and social launch writes from this conductor lap."
+    ],
+    "avoid": [
+      "Do not set rights status or approval status without Frank approval.",
+      "Do not insert unsupported eval rows directly into VIS SQLite.",
+      "Do not promote this asset into canon, public gallery, social queues, web3, or external publication.",
+      "Do not treat a local VIS score as a human approval gate."
+    ],
+    "signature": "The Witness Bridge proof is indexed and scored, with the blocker state kept explicit instead of papered over.",
+    "system": [
+      "VIS score command succeeded for visual://asset/asset_70c54fb51619e220e2d9f2c9.",
+      "VIS readiness score: 57.",
+      "VIS verdict: needs-curation.",
+      "VIS flags: rights status needs review; approval is candidate; no route/social/collection usage recorded; no visual quality eval recorded.",
+      "No supported VIS CLI command for writing eval_record was used; direct DB insertion was intentionally avoided."
+    ]
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "generated-media",
+    "provenance": "generated",
+    "why_premium": "The proof asset already passed prior human visual inspection at 27/30 for internal review; this lap adds traceable VIS readiness scoring while preserving the unresolved blockers.",
+    "shortcut_risk": "low",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-visual-world-engine-2026-07-06/batch12-vis-primary-score.txt",
+      "kind": "VIS readiness score capture",
+      "inspected": true,
+      "notes": "VIS score output: score 57, verdict needs-curation, next action set rights status before public use."
+    },
+    {
+      "path_or_url": "visual://asset/asset_70c54fb51619e220e2d9f2c9",
+      "kind": "VIS asset URI",
+      "inspected": true,
+      "notes": "Primary 9:16 Witness Bridge overlay proof."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/arc-overlay-b12-005-witness-bridge-9x16.png",
+      "kind": "internal social proof image",
+      "inspected": true,
+      "notes": "Generated-media proof remains internal-review only."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-visual-world-engine-2026-07-06/batch12-vis-primary-packet.md",
+      "kind": "VIS packet evidence",
+      "inspected": true,
+      "notes": "Packet blocks public use because rights are unknown, approval is candidate, and quality evaluation is missing."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Tier C is appropriate for deterministic overlay/internal proof assets; not approved for public use."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "evidence": "The referenced 9:16 proof was inspected in the previous overlay lap and remains the selected primary proof."
+    },
+    {
+      "name": "vis-score",
+      "status": "pass",
+      "evidence": "node bin/vis.mjs score visual://asset/asset_70c54fb51619e220e2d9f2c9 returned score 57 and verdict needs-curation."
+    },
+    {
+      "name": "vis-public-use-gate",
+      "status": "blocked",
+      "evidence": "VIS flags rights status needs review, approval is candidate, no route/social/collection usage recorded, and no visual quality eval recorded."
+    },
+    {
+      "name": "vis-eval-record",
+      "status": "blocked",
+      "evidence": "VIS has eval_record schema but no supported CLI writer in the current surface; direct SQLite insertion was not performed."
+    },
+    {
+      "name": "mamoru-staging",
+      "status": "pass",
+      "evidence": "Mamoru remains STAGING; Batch 12 proof is Mamoru-free."
+    },
+    {
+      "name": "dirty-gallery-collision",
+      "status": "pass",
+      "evidence": "Existing dirty gallery/app/canon/package files were observed and intentionally left untouched."
+    },
+    {
+      "name": "external-actions",
+      "status": "pass",
+      "evidence": "No deploy, push, external publish, spend, external message, web3 action, or canon promotion was performed."
+    }
+  ],
+  "score": {
+    "total": 24,
+    "max": 30,
+    "breakdown": {
+      "visual_internal_quality": 9,
+      "vis_traceability": 8,
+      "governance_safety": 7
+    },
+    "notes": "Internal proof remains strong, but release readiness is reduced by unresolved VIS rights, approval, usage, and eval-record blockers."
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "VIS readiness score is 57/100 with needs-curation verdict.",
+    "Public-use gate remains blocked until rights status and approval status are explicitly resolved by Frank or a governed review.",
+    "Quality eval metadata remains missing in VIS because the current CLI lacks a supported eval writer.",
+    "No gallery or launch wiring happened; this is evidence-only work."
+  ]
+}

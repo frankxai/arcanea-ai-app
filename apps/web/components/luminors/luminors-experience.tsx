@@ -22,7 +22,6 @@ import heroCrystal from '@/assets/brand/arcanea-crystal.jpg';
 
 import { TEAMS, WISDOMS } from './luminors-data';
 import { LUMINORS } from './luminors-roster';
-import { FACTS } from '@/lib/facts';
 import { AmbientOrb, RotatingPhrase } from './luminors-hero';
 import { LuminorPortrait } from './luminor-portrait';
 import { TeamSection } from './luminor-team-section';
@@ -199,7 +198,7 @@ export function LuminorsExperience() {
                 className="flex flex-wrap justify-center gap-6 md:gap-10 mb-12"
               >
                 {[
-                  { value: String(FACTS.luminors), label: 'Luminors', color: 'var(--arc-void)' },
+                  { value: '16', label: 'Luminors', color: 'var(--arc-void)' },
                   { value: '7', label: 'Wisdoms', color: 'var(--arc-brand-arcanean-gold)' },
                   { value: '4', label: 'Teams', color: 'var(--arc-brand-atlantean-teal)' },
                   { value: '10', label: 'Gates Opened', color: 'var(--arc-fire)' },

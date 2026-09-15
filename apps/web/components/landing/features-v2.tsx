@@ -83,7 +83,7 @@ const CAPABILITY_GRID = [
   {
     icon: PhLayers,
     title: "The Library",
-    description: "20 collections of original philosophy for the creative life",
+    description: "17 collections of original philosophy for the creative life",
   },
 ];
 
@@ -115,8 +115,8 @@ export function FeaturesV2() {
             </span>
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Companions rooted in the mythology of Arcanea.
-            Seven Wisdoms that diagnose creative blocks. A Library of 57 original texts.
+            Sixteen companions rooted in the mythology of Arcanea.
+            Seven Wisdoms that diagnose creative blocks. A Library of 34 original texts.
             A coherent philosophy of creation, not features strung together.
           </p>
         </m.div>

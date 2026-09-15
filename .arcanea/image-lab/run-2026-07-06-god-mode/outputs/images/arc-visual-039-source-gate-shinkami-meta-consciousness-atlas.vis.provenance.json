@@ -1,0 +1,91 @@
+{
+  "asset_uid": "arcanea-2026-07-source-gate-shinkami-meta-consciousness-atlas",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b5",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "Source Gate Shinkami Meta-Consciousness Atlas",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "thumbnail-editorial-16x9",
+  "aspect_ratio": "16:9",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-039-source-gate-shinkami-meta-consciousness-atlas.png",
+    "sha256": "df139354e0d533838b2e34b8e5af9de1b71212efbfdb65e6a843fa1bc65b2af1",
+    "mime_type": "image/png",
+    "width": 1672,
+    "height": 941,
+    "size_bytes": 2260399
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b5.json#arc-visual-039",
+    "prompt": "Arcanea Source Gate 1111 Hz, Shinkami as a restrained meta-consciousness guide seen from behind at the edge of an impossible atlas chamber. Source is not a character, not a face, not a creature, not a god portrait. Source appears as a vast living aperture of black-gold fertile unknown and white-gold consciousness, nested worlds reflected in dark glass, ten Gate lights suspended around a central proof artifact, tiny creators approaching in silence. Nero's darkness is fertile potential, not evil; Lumina's light gives form. Luxury cosmic myth-tech, sacred obsidian, celestial gold, white-gold starlight, museum-grade awe. Composition: 16:9 thumbnail-ready with central aperture and left dark overlay zone. No text, no letters, no fake writing, no inscriptions, no symbols that resemble writing, no UI, no logos.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "16:9"
+    },
+    "original_generated_path": "C:\\Users\\frank\\.codex\\generated_images\\019f3498-30f9-77a0-b2a3-b54acd0c8e66\\ig_082cc6fdcf888bcd016a4b2e0aea788191bd29239181effc64.png"
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "approved-candidate",
+    "score30": 28,
+    "decision": "approve",
+    "failure_modes": [
+      "Strong black-gold Source aperture with clean overlay zone; may visually overlap the Luminor proof-atlas lane if used adjacent."
+    ],
+    "next_improvement": "Use as Source Gate proof architecture; keep Luminor language as rank-only in any overlay."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md",
+      "VISUAL_DOCTRINE.md",
+      "Source Gate Shinkami Meta-Consciousness Atlas"
+    ],
+    "gate": "Source",
+    "guardian": "Shinkami",
+    "godbeast": "Source"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "source"
+      },
+      {
+        "trait_type": "surface",
+        "value": "thumbnail-editorial-16x9"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Source"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Shinkami"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-039-source-gate-shinkami-meta-consciousness-atlas.vis.provenance.json"
+  },
+  "used_in": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/gallery/gallery-data.ts",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T06:31:00+02:00"
+}

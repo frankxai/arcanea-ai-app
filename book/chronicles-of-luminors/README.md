@@ -15,6 +15,8 @@ The Chronicles reveal what the Legends only hint at: the inner lives of the Ten 
 
 Where the Legends present the Guardians as archetypal protectors, the Chronicles present them as beings who learned—who were not born wise but became so through the same struggles seekers face today.
 
+The collection holds a single text carrying all ten Chronicles and the Epilogue.
+
 ---
 
 ## The Chronicles
@@ -32,9 +34,11 @@ Where the Legends present the Guardians as archetypal protectors, the Chronicles
 | **V: Alera's Silence** | Voice (Otome) | Fear of truth's power to harm |
 | **VI: Lyria's Overwhelm** | Sight (Yumiko) | Paralysis from infinite vision |
 | **VII: Aiyami's Pride** | Crown (Sol) | Identification with being superior |
-| **VIII: Elara's Instability** | Shift (Vaelith) | Inability to find center in multiplicity |
+| **VIII: Elara's Instability** | Starweave (Vaelith) | Inability to find center in multiplicity |
 | **IX: Ino & Kyuro's Division** | Unity | Belief that opposites cannot unite |
 | **X: Shinkami's Waiting** | Source | The longing for seekers to reach the tenth Gate |
+
+Closing the sequence: **Epilogue: The Guardians Complete**.
 
 ---
 
@@ -74,9 +78,9 @@ Read all ten. See the pattern. Understand that every gift carries a shadow, and 
 | Voice | 528 Hz | Alera | Otome | Truth with wisdom |
 | Sight | 639 Hz | Lyria | Yumiko | Acting despite uncertainty |
 | Crown | 741 Hz | Aiyami | Sol | Release of identification |
-| Shift | 852 Hz | Elara | Vaelith | Stability within change |
+| Starweave | 852 Hz | Elara | Vaelith | Stability within change |
 | Unity | 963 Hz | Ino | Kyuro | Recognizing inherent oneness |
-| Source | 1111 Hz | Shinkami | — | Welcoming home |
+| Source | 1111 Hz | Shinkami | Source | Welcoming home |
 
 ---
 
@@ -87,3 +91,6 @@ Read all ten. See the pattern. Understand that every gift carries a shadow, and 
 *"We are not above you. We walked before you. That is all."*
 — The Guardians' Greeting
 
+---
+
+*A note on the directory name: this collection is served under the legacy slug `chronicles-of-luminors`. Its subjects are the Ten Arcanean Gods in their Guardian role. Luminor is a rank — the attainment of all ten Gates — not an entity type.*

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { strict as assert } from 'node:assert';
-import { analytics } from '../events';
+import { analytics, promptLengthBucket } from '../events';
 
 let passed = 0;
 let failed = 0;
@@ -31,9 +31,15 @@ class PosthogStub {
 }
 
 const posthog = new PosthogStub();
+const vercelEvents: Array<[string, unknown?]> = [];
 
 Object.defineProperty(globalThis, 'window', {
-  value: { posthog },
+  value: {
+    posthog,
+    va: (event: string, properties?: unknown) => {
+      vercelEvents.push([event, properties]);
+    },
+  },
   configurable: true,
 });
 
@@ -58,6 +64,100 @@ test('analytics identify keeps the helper wired', () => {
   assert.deepEqual(posthog.identities, [
     { userId: 'user_1', traits: { tier: 'creator' } },
   ]);
+});
+
+test('prompt length buckets avoid raw prompt telemetry', () => {
+  assert.equal(promptLengthBucket(0), 'empty');
+  assert.equal(promptLengthBucket(12), 'short');
+  assert.equal(promptLengthBucket(120), 'medium');
+  assert.equal(promptLengthBucket(400), 'long');
+});
+
+test('activation funnel events emit safe payloads', () => {
+  posthog.captures = [];
+  vercelEvents.length = 0;
+
+  analytics.homepageGenesisCtaClick('hero_send', {
+    promptLength: 128,
+    destination: '/genesis',
+  });
+  analytics.genesisPromptPrefillUsed({ source: 'hero_send', promptLength: 128 });
+  analytics.genesisProofExport('brief_downloaded', {
+    driftFace: 'synthetic-confusion',
+    missionLane: 'world',
+    repoFileCount: 4,
+  });
+  analytics.atlasCreaturePromptCopy({
+    slug: 'aeralith-sky-grazer',
+    promptKind: 'positive',
+    rightsTier: 'original',
+    generationPolicy: 'approved',
+  });
+  analytics.studioStorePackageClick('buy_with_credits', {
+    packageId: 'cinematic-web-lab',
+    packageType: 'Frontend',
+    priceCredits: 120,
+    tab: 'marketplace',
+  });
+
+  assert.deepEqual(posthog.captures, [
+    {
+      event: 'homepage_genesis_cta_click',
+      properties: {
+        source: 'hero_send',
+        hasPrompt: true,
+        promptLengthBucket: 'medium',
+        starterLabel: undefined,
+        destination: '/genesis',
+      },
+    },
+    {
+      event: 'genesis_prompt_prefill_used',
+      properties: {
+        source: 'hero_send',
+        promptLengthBucket: 'medium',
+      },
+    },
+    {
+      event: 'genesis_proof_export',
+      properties: {
+        action: 'brief_downloaded',
+        driftFace: 'synthetic-confusion',
+        missionLane: 'world',
+        repoFileCount: 4,
+        status: 'success',
+      },
+    },
+    {
+      event: 'atlas_creature_prompt_copy',
+      properties: {
+        slug: 'aeralith-sky-grazer',
+        promptKind: 'positive',
+        rightsTier: 'original',
+        generationPolicy: 'approved',
+      },
+    },
+    {
+      event: 'studio_store_package_click',
+      properties: {
+        action: 'buy_with_credits',
+        packageId: 'cinematic-web-lab',
+        packageType: 'Frontend',
+        priceCredits: 120,
+        priceUsd: undefined,
+        tab: 'marketplace',
+      },
+    },
+  ]);
+
+  assert.deepEqual(
+    vercelEvents.map((event) => event[1]),
+    posthog.captures.map((capture) => ({
+      name: capture.event,
+      data: capture.properties,
+      options: undefined,
+    })),
+  );
 });
 
 if (failed > 0) {

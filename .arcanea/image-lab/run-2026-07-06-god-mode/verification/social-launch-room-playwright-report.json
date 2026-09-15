@@ -1,0 +1,148 @@
+{
+  "ok": true,
+  "checkedAt": "2026-07-06T07:12:11.697Z",
+  "desktopPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\verification\\social-launch-room-desktop.png",
+  "mobilePath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\verification\\social-launch-room-mobile.png",
+  "desktopBytes": 2259666,
+  "mobileBytes": 501870,
+  "desktop": {
+    "innerWidth": 1440,
+    "clientWidth": 1440,
+    "scrollWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "offenders": [
+      {
+        "tag": "DIV",
+        "className": "absolute -top-48 left-1/2 -translate-x-1/2 h-[70vh] w-[140vw] rounded-full opacity-30 blur-[120px]",
+        "text": "",
+        "left": -288,
+        "right": 1728,
+        "width": 2016
+      },
+      {
+        "tag": "DIV",
+        "className": "absolute bottom-0 left-1/2 -translate-x-1/2 h-[40vh] w-[120vw] rounded-full opacity-20 blur-[100px]",
+        "text": "",
+        "left": -144,
+        "right": 1584,
+        "width": 1728
+      },
+      {
+        "tag": "DIV",
+        "className": "absolute w-[600px] h-[600px] rounded-full",
+        "text": "",
+        "left": -300,
+        "right": 300,
+        "width": 600
+      }
+    ],
+    "p0Images": [
+      {
+        "src": "/images/arcanea-world-engine/god-run-2026-07-06/social-overlays/vertical-9x16/arc-social-040-unity-cooperation-lattice-vertical-9x16.png",
+        "complete": true,
+        "naturalWidth": 1080,
+        "naturalHeight": 1920,
+        "rect": {
+          "left": 81,
+          "top": 1191,
+          "width": 411,
+          "height": 731
+        }
+      },
+      {
+        "src": "/images/arcanea-world-engine/god-run-2026-07-06/social-overlays/vertical-9x16/arc-social-041-webtoon-gate-choice-vertical-9x16.png",
+        "complete": true,
+        "naturalWidth": 1080,
+        "naturalHeight": 1920,
+        "rect": {
+          "left": 514,
+          "top": 1191,
+          "width": 411,
+          "height": 731
+        }
+      },
+      {
+        "src": "/images/arcanea-world-engine/god-run-2026-07-06/social-overlays/vertical-9x16/arc-social-042-music-resonance-proof-vertical-9x16.png",
+        "complete": true,
+        "naturalWidth": 1080,
+        "naturalHeight": 1920,
+        "rect": {
+          "left": 948,
+          "top": 1191,
+          "width": 411,
+          "height": 731
+        }
+      }
+    ]
+  },
+  "mobile": {
+    "innerWidth": 390,
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "offenders": [
+      {
+        "tag": "DIV",
+        "className": "absolute -top-48 left-1/2 -translate-x-1/2 h-[70vh] w-[140vw] rounded-full opacity-30 blur-[120px]",
+        "text": "",
+        "left": -78,
+        "right": 468,
+        "width": 546
+      },
+      {
+        "tag": "DIV",
+        "className": "absolute bottom-0 left-1/2 -translate-x-1/2 h-[40vh] w-[120vw] rounded-full opacity-20 blur-[100px]",
+        "text": "",
+        "left": -39,
+        "right": 429,
+        "width": 468
+      },
+      {
+        "tag": "DIV",
+        "className": "absolute w-[600px] h-[600px] rounded-full",
+        "text": "",
+        "left": -300,
+        "right": 300,
+        "width": 600
+      }
+    ],
+    "p0Images": [
+      {
+        "src": "/images/arcanea-world-engine/god-run-2026-07-06/social-overlays/vertical-9x16/arc-social-040-unity-cooperation-lattice-vertical-9x16.png",
+        "complete": true,
+        "naturalWidth": 1080,
+        "naturalHeight": 1920,
+        "rect": {
+          "left": 17,
+          "top": 2388,
+          "width": 356,
+          "height": 633
+        }
+      },
+      {
+        "src": "/images/arcanea-world-engine/god-run-2026-07-06/social-overlays/vertical-9x16/arc-social-041-webtoon-gate-choice-vertical-9x16.png",
+        "complete": true,
+        "naturalWidth": 1080,
+        "naturalHeight": 1920,
+        "rect": {
+          "left": 17,
+          "top": 3223,
+          "width": 356,
+          "height": 633
+        }
+      },
+      {
+        "src": "/images/arcanea-world-engine/god-run-2026-07-06/social-overlays/vertical-9x16/arc-social-042-music-resonance-proof-vertical-9x16.png",
+        "complete": true,
+        "naturalWidth": 1080,
+        "naturalHeight": 1920,
+        "rect": {
+          "left": 17,
+          "top": 4034,
+          "width": 356,
+          "height": 633
+        }
+      }
+    ]
+  }
+}

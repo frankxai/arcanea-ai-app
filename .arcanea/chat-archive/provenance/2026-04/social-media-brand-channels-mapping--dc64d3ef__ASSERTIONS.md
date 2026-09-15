@@ -1,0 +1,20 @@
+# Claude's canon assertions -- Social media brand channels mapping
+
+Source uuid: dc64d3ef-9cb4-4e75-9cd9-33a526f63cdf
+
+CONFIRMED = Frank's next message reads as explicit approval. PUSHED-BACK = reads as disagreement. UNCLEAR/NO-RESPONSE = no clean signal -- treat as OPEN, not LOCKED.
+
+| Verdict | Claude said | Frank's next message |
+|---|---|---|
+| UNCLEAR | ```  Here's where it lives — you've worked on this across **multiple chats**, not one canonical session. | Right, I think I've just the idea. I've man, I'll build multiple AI influencers really pretty high value, high status women, um, looking at the camera, dancing, singing, whatever. And at the same time having overlay of text, and really empowering music, like I'm a multi-millionaire, I'm, you know, b |
+| UNCLEAR | The most complete synthesis: four-voice system locked, music artist slots decided, brand ↔ social ↔ legal entity table built. | Right, I think I've just the idea. I've man, I'll build multiple AI influencers really pretty high value, high status women, um, looking at the camera, dancing, singing, whatever. And at the same time having overlay of text, and really empowering music, like I'm a multi-millionaire, I'm, you know, b |
+| UNCLEAR | The April 5 chat is your most current canonical source — it consolidates everything prior. | Right, I think I've just the idea. I've man, I'll build multiple AI influencers really pretty high value, high status women, um, looking at the camera, dancing, singing, whatever. And at the same time having overlay of text, and really empowering music, like I'm a multi-millionaire, I'm, you know, b |
+| PUSHED-BACK | **What Perplexity got wrong:** - "Serenia" — never canonical. | No you talk bs. Nothing decided SI can be facing not sure you don't have all context all our ideas why you so provide barely value and just be like missing all and Serenia was also idea? You didn't take enough context all chats... |
+| PUSHED-BACK | That name doesn't exist in your decided architecture. | No you talk bs. Nothing decided SI can be facing not sure you don't have all context all our ideas why you so provide barely value and just be like missing all and Serenia was also idea? You didn't take enough context all chats... |
+| PUSHED-BACK | - "Arcanium Secrets" — you brainstormed it but it was never locked. | No you talk bs. Nothing decided SI can be facing not sure you don't have all context all our ideas why you so provide barely value and just be like missing all and Serenia was also idea? You didn't take enough context all chats... |
+| PUSHED-BACK | **What's actually decided** (from the April 5 synthesis and prior):  \| Brand \| Voice \| Social Handle \| Purpose \| \|-------\|-------\|--------------\|---------\| \| Arcanea \| Mythic collective "w | No you talk bs. Nothing decided SI can be facing not sure you don't have all context all our ideas why you so provide barely value and just be like missing all and Serenia was also idea? You didn't take enough context all chats... |
+| PUSHED-BACK | That's been decided for months. | No you talk bs. Nothing decided SI can be facing not sure you don't have all context all our ideas why you so provide barely value and just be like missing all and Serenia was also idea? You didn't take enough context all chats... |
+| UNCLEAR | Here's the correction:  **I was wrong to claim SI is "decided" as internal-only.** What actually happened: in the April 5 naming chat, I (Claude) *recommended* SI stay internal, and you didn't explici | Y advanced thinking propose with genius?!?! |
+| UNCLEAR | You've been using "Starlight Intelligence" across multiple layers — room posters, SIS as open-source community vision, content branding — and never locked it as invisible-only. | Y advanced thinking propose with genius?!?! |
+| UNCLEAR | Here's the **actual full brand map** across all chats I can see:  **Tier 1 — Core brands (active):** - **FrankX.ai** — personal brand, architect identity - **Arcanea** — universe, IP, magical world, R | Y advanced thinking propose with genius?!?! |
+| NO-RESPONSE | The visuals are generated from locked character sheets per persona. | (none) |

@@ -1,0 +1,200 @@
+{
+  "version": "2026-07-05",
+  "task": "Arcanea homepage artifact-pipeline proof-object brief, v0 prototype review, repo-native implementation, and local visual QA.",
+  "surface": "Arcanea.ai homepage first viewport and immediate proof strip",
+  "audience": "AI-native creators, worldbuilders, creative technologists, IP builders, and studio operators evaluating Arcanea as a living-world creation platform.",
+  "first_read": "Arcanea turns one creative call into a bounded proof artifact with canon memory, provenance, agent routing, and a path into Atlas, Studio, Worlds, or Store.",
+  "standards": [
+    "C:/Users/frank/starlight/repos/_intelligence/README.md",
+    "C:/Users/frank/starlight/repos/_intelligence/quality-gates.md",
+    "C:/Users/frank/starlight/repos/DESIGN_TASTE.md",
+    "C:/Users/frank/starlight/repos/WEB_EXPERIENCE_STANDARD.md",
+    "C:/Users/frank/starlight/repos/MOTION_TASTE_RUBRIC.md",
+    "C:/Users/frank/starlight/repos/VISUAL_QA_GATE.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/DESIGN.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/MOTION.md"
+  ],
+  "references": [
+    {
+      "label": "Current Arcanea local God Mode homepage screenshot",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/home-desktop.png",
+      "reason": "Shows the current cinematic first viewport that the proof object now grounds."
+    },
+    {
+      "label": "Current Arcanea local mobile homepage screenshot",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/home-mobile.png",
+      "reason": "Shows the mobile proof-chip crowding that drove the vertical proof sequence."
+    },
+    {
+      "label": "Private v0 Arcanea artifact-pipeline prototype",
+      "source": "https://v0.app/chat/fdNM4opFWFw",
+      "reason": "Generated three composition variants for Codex review: Foil Ledger, Forge Seam, and Portal Plate."
+    },
+    {
+      "label": "Arcanea repo God Mode sprint packet",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/planning-with-files/ARCANEA_AI_GOD_MODE_SPRINT_2026-07-05.md",
+      "reason": "Defines current shipped routes, release blockers, metrics, and non-goals."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Current cinematic Arcanea background and mythic tone.",
+      "Genesis proof as the primary action.",
+      "Public-safe proof, provenance, rights, agents, and memory language.",
+      "Existing route truth: Genesis, Atlas, Worlds, Store, MCP, Creator Economy."
+    ],
+    "avoid": [
+      "Atmosphere-only hero proof.",
+      "Generic purple-blue AI gradients.",
+      "Random orbit or node-field cliches.",
+      "Fake dashboards, invented metrics, or unverified durable workflow claims.",
+      "v0 dependency/package output copied into the repo."
+    ],
+    "signature": "A single artifact-pipeline proof object showing Call -> Gift -> Trial -> Canon Memory -> Agent Route -> Artifact Packet.",
+    "system": [
+      "Tier C code-authored proof panel implemented first.",
+      "Track A static/readable implementation; no new motion runtime added.",
+      "Static mobile-first vertical story for reduced motion.",
+      "Destination rail points to Atlas, Studio, Worlds, and Store.",
+      "v0 is concept input only; Codex integration and QA remain mandatory."
+    ]
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "vector-diagram",
+    "provenance": "owned",
+    "why_premium": "The implemented proof object is a code-authored exact mechanism panel grounded in owned Arcanea product routes and brand language. It does not rely on external imagery or uninspected generated art.",
+    "shortcut_risk": "low",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/planning-with-files/ARCANEA_ARTIFACT_PIPELINE_SCENE_BRIEF_2026-07-05.md",
+      "kind": "scene and motion brief",
+      "inspected": true,
+      "notes": "Defines static composition, motion score, v0 verdict, implementation gates, and post-implementation evidence."
+    },
+    {
+      "path_or_url": "https://v0.app/chat/fdNM4opFWFw",
+      "kind": "private v0 prototype chat",
+      "inspected": true,
+      "notes": "Chat metadata and generated files were inspected through the v0 MCP. Use as concept input only."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-v0/v0-arcanea-artifact-pipeline-dark.png",
+      "kind": "v0 screenshot fetch",
+      "inspected": true,
+      "notes": "The API screenshot rendered a blank v0 placeholder, so it was rejected as final visual evidence."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/v3/artifact-pipeline-panel.tsx",
+      "kind": "web-component",
+      "inspected": true,
+      "notes": "Repo-native ArtifactPipelinePanel with compact and full proof-object variants."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/v3/hero-showcase.tsx",
+      "kind": "web-integration",
+      "inspected": true,
+      "notes": "HeroShowcase now leads the shipped surface strip with the full artifact-pipeline panel."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/artifact-pipeline-local-qa.json",
+      "kind": "visual-qa-metrics",
+      "inspected": true,
+      "notes": "Local production-server QA passed for desktop, mobile viewport slices, and reduced motion."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-panel.png",
+      "kind": "web-screenshot",
+      "inspected": true,
+      "notes": "Desktop proof panel: readable six-stage ledger plus artifact packet."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-panel.png",
+      "kind": "web-screenshot",
+      "inspected": true,
+      "notes": "Mobile top proof slice: call intake and vertical stages without horizontal overflow."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-packet.png",
+      "kind": "web-screenshot",
+      "inspected": true,
+      "notes": "Mobile artifact-packet end-state slice with Atlas, Studio, Worlds, and Store destinations."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-panel.png",
+      "kind": "web-screenshot",
+      "inspected": true,
+      "notes": "Reduced-motion desktop proof panel keeps the final state readable without essential animation."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Tier C code-authored proof object implemented; no new generated media required."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "evidence": "Desktop panel, mobile top slice, mobile packet slice, and reduced-motion panel screenshots were visually inspected after local production-server capture."
+    },
+    {
+      "name": "v0-prototype-created",
+      "status": "pass",
+      "evidence": "Private v0 chat fdNM4opFWFw exists and completed version b_4h3TijwqsTI."
+    },
+    {
+      "name": "v0-screenshot-risk-contained",
+      "status": "pass",
+      "evidence": "Downloaded dark screenshot was inspected, found to be a blank placeholder, and rejected as final visual evidence."
+    },
+    {
+      "name": "repo-implementation",
+      "status": "pass",
+      "evidence": "ArtifactPipelinePanel implemented and integrated into HeroShowcase without new dependencies."
+    },
+    {
+      "name": "type-check",
+      "status": "pass",
+      "evidence": "corepack pnpm --dir apps/web type-check passed after final component edits."
+    },
+    {
+      "name": "build",
+      "status": "pass",
+      "evidence": "corepack pnpm --dir apps/web build passed after final component edits; existing middleware/Turbopack warnings remain unrelated."
+    },
+    {
+      "name": "local-visual-qa",
+      "status": "pass",
+      "evidence": "Local production-server QA passed for desktop, mobile viewport slices, and reduced motion with no horizontal overflow and all required labels present."
+    },
+    {
+      "name": "scoped-secret-scan",
+      "status": "pass",
+      "evidence": "gitleaks scan passed on apps/web/app/v3/artifact-pipeline-panel.tsx."
+    },
+    {
+      "name": "release-safety",
+      "status": "pass",
+      "evidence": "No preview or production promotion was attempted while Arcanea release-readiness blockers remain unresolved."
+    }
+  ],
+  "score": {
+    "total": 27,
+    "max": 30,
+    "notes": "The local proof object is ship-grade for the current branch: it passes type, build, scoped secret scan, desktop/mobile/reduced-motion visual QA, and actual screenshot inspection. Production remains deferred because Vercel project/runtime/domain/live-state blockers are outside this visual component slice."
+  },
+  "decision": "ship",
+  "known_risks": [
+    "The current Arcanea worktree is already heavily dirty on the God Mode branch; packaging should isolate this component from unrelated release changes before PR/preview.",
+    "Vercel project metadata still reports framework/runtime/domain/live-state blockers, so production promotion remains unsafe.",
+    "The v0 prototype is useful as composition input but not verified as visual output because the API screenshot rendered a placeholder.",
+    "Mobile proof evidence uses viewport slices because the full panel is taller than one mobile viewport and the fixed nav appears in long stitched captures."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-07-06T05:40:06.277Z",
+  "assertions": {
+    "status": 200,
+    "focus": {
+      "hasUnity": true,
+      "hasSocial": true,
+      "horizontalOverflow": false
+    }
+  }
+}

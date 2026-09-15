@@ -1,0 +1,13 @@
+# Claude's canon assertions -- 19 May Ikigai workshop chat history
+
+Source uuid: 30f7e666-15ca-49d9-9894-972c505a8852
+
+CONFIRMED = Frank's next message reads as explicit approval. PUSHED-BACK = reads as disagreement. UNCLEAR/NO-RESPONSE = no clean signal -- treat as OPEN, not LOCKED.
+
+| Verdict | Claude said | Frank's next message |
+|---|---|---|
+| UNCLEAR | → https://claude.ai/chat/58c9425c-beed-4e68-85e4-925f1eb3695d  **Gap worth flagging:** no chat has the *finalized* May 19 deck, agenda flow, or live-demo script locked. | Bro not sure I can already adverstise my own brands we still in stealth till June or? so need better phrasing, maybe also hint at the layoffs or that I hold workshops showing people how to build AI Agents, and build Agent Harnesses and powerful Creator Setups and intelligence systems or so without n |
+| UNCLEAR | One thing worth deciding *tonight*, not tomorrow at 3 PM: do you want the deck locked or are you still refining? | Bro not sure I can already adverstise my own brands we still in stealth till June or? so need better phrasing, maybe also hint at the layoffs or that I hold workshops showing people how to build AI Agents, and build Agent Harnesses and powerful Creator Setups and intelligence systems or so without n |
+| UNCLEAR | He's already made his position clear on what he wants, so I should just produce the final variant. | Should we ask her to hint more that he is open to follow up with each company and make deeper dives for them and that they can help me to get my journey started or so?  And more meaningful why they wanted me to show up, I think its because also I am unfaced by the restructuing and build my own Ikiga |
+| UNCLEAR | The strongest hook comes last — that "Stop sounding impressive" framework hits hardest when it's the final frame. | Less being like for people too confused they might be awesome, uplifting them make more a room where we focus on refining our inner alignment and explore how most powerful technology in the worl can help us amplify our mission snd support each other by being honest with ourselces or something snd be |
+| UNCLEAR | What he's really asking for is the final post formatted and ready to see, so I need to show him exactly how it'll look when assembled. | Less being like for people too confused they might be awesome, uplifting them make more a room where we focus on refining our inner alignment and explore how most powerful technology in the worl can help us amplify our mission snd support each other by being honest with ourselces or something snd be |

@@ -1,3 +1,0 @@
-# Publication gate for /books. Records the already-live public state of this work;
-# it was reachable unauthenticated before this file existed. Set to private to withdraw it.
-visibility: public

@@ -1,0 +1,101 @@
+{
+  "version": "2026-06-23",
+  "task": "Implement the Arcanea Creature Atlas as a rights-aware encyclopedia, prompt library, contribution surface, and visual atlas UI.",
+  "surface": "Next.js atlas pages at /atlas/creatures and /atlas/creatures/[slug]",
+  "audience": "Arcanea creators, worldbuilders, contributors, and internal canon/review operators.",
+  "first_read": "Creature Atlas is a searchable, rights-aware creature library with Arcanea-original visual variants and prompt packs.",
+  "standards": [
+    "DESIGN_TASTE.md",
+    "WEB_EXPERIENCE_STANDARD.md",
+    "VISUAL_QA_GATE.md",
+    "design-agent-standards/OUTCOMES.md",
+    "design-agent-standards/AGENTIC_DESIGN_LOOP.md"
+  ],
+  "references": [
+    {
+      "label": "Arcanea TASTE.md",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/TASTE.md",
+      "reason": "AI-lab premium interface, restrained mythology, no emoji icons, no fantasy-game chrome."
+    },
+    {
+      "label": "Arcanea World Repo Standard",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ecosystem/docs/WORLD_REPO_STANDARD.md",
+      "reason": "Repo-canonical content with derived app indexes."
+    },
+    {
+      "label": "U.S. Copyright fair use and derivative work guidance",
+      "source": "https://www.copyright.gov/fair-use/",
+      "reason": "Protected-source entries must remain factual/reference-first and avoid exact generated likenesses."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Search-first atlas utility",
+      "Clear rights tiers and provenance",
+      "Arcanea-original variant prompt packs",
+      "Dense but calm information layout"
+    ],
+    "avoid": [
+      "Official franchise art uploads",
+      "Exact protected creature image prompts",
+      "Emoji creature cards",
+      "Marketing-page hero treatment"
+    ],
+    "signature": "A rights-aware creature graph where factual references produce distinct Arcanea visual variants.",
+    "system": [
+      "Dark Arcanea AI-lab surface",
+      "Lucide icons for controls and labels",
+      "Abstract visual plates for prompt-ready entries",
+      "Generated bitmap creature assets remain blocked until QA approval"
+    ]
+  },
+  "artifacts": [
+    {
+      "path_or_url": ".visual-qa/creature-atlas-2026-06-26/atlas-desktop.png",
+      "kind": "ui",
+      "inspected": true,
+      "notes": "Desktop overview is readable, search-first, and shows the first atlas cards without overlap."
+    },
+    {
+      "path_or_url": ".visual-qa/creature-atlas-2026-06-26/atlas-mobile.png",
+      "kind": "ui",
+      "inspected": true,
+      "notes": "Mobile overview stacks cleanly with usable search controls and no text clipping in the first viewport."
+    },
+    {
+      "path_or_url": ".visual-qa/creature-atlas-2026-06-26/aeralith-detail-desktop.png",
+      "kind": "ui",
+      "inspected": true,
+      "notes": "Desktop detail separates reference, Arcanea variant, graph, provenance, and prompt sections clearly."
+    },
+    {
+      "path_or_url": ".visual-qa/creature-atlas-2026-06-26/aeralith-detail-mobile.png",
+      "kind": "ui",
+      "inspected": true,
+      "notes": "Mobile detail fits the header, metrics, and visual plate without incoherent overlap."
+    }
+  ],
+  "checks": [
+    {
+      "name": "visual-qa",
+      "status": "pass",
+      "evidence": "Inspected desktop and mobile screenshots for overview and detail routes."
+    },
+    {
+      "name": "generated-asset-gate",
+      "status": "not_applicable",
+      "evidence": "No generated bitmap creature art was approved in this slice; entries are prompt-ready only."
+    }
+  ],
+  "score": {
+    "total": 26,
+    "max": 30,
+    "notes": "Strong utility, hierarchy, and rights clarity. Weakest element is that visual plates are abstract placeholders until generated creature assets pass QA."
+  },
+  "decision": "ship",
+  "known_risks": [
+    "Approved generated creature images still need the full L99 generation, critic, and visual QA loop.",
+    "Global app typecheck is currently blocked by unrelated Genesis route errors.",
+    "The seed corpus contains 12 entries; Genesis 100 expansion remains backlog."
+  ]
+}

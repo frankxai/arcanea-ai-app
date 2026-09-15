@@ -7,7 +7,17 @@
 ## 1 · Brand & Audience
 - **Brand Identity:** Arcanea (Creative-platform SaaS).
 - **Target Audience:** Digital world-builders, AI creators, game directors, musicians, lore authors.
-- **Key Emotions:** Wonder, sovereignty, magic, luxury.
+- **Key Emotions:** Wonder, sovereignty, responsibility, useful magic, luxury.
+
+### Chosen Responsibility Layer
+
+Arcanea can make the user feel called, but never superior. The identity frame is "chosen by responsibility": creators answer The Drift by building source-grounded, rights-aware, memory-preserving artifacts. For public UI, The Drift means passivity, synthetic confusion, creative amnesia, isolation, rights fog, and dependency on rented tools.
+
+Design implications:
+- First-session surfaces should make the Call, Gift, Trial, Proof, and Stewardship visible.
+- Crisis language must be concrete and source-grounded.
+- The UI must return agency: clear consent, clear data use, clear pricing, exportable artifacts, and no shame loops.
+- Mythic visuals belong in artifacts, worlds, and ceremonial moments; product chrome remains AI-lab premium.
 
 ---
 
@@ -30,7 +40,7 @@ Existing candidate assets:
 
 ## 3 · Visual Rules & Forbidden Aesthetics
 - **Rules:** Layered depth, parallax planes, deep shadows. Apply the Arcanea Color Spectrum (bg `#05070f` / gold `#c5a26f` / indigo `#3f2a6b` / crimson `#6b2a2a` / teal `#2a5c5c`).
-- **Forbidden:** No flat vectors, no saturated primary colors (pure red, green, blue), and no standard modern flat UI frames.
+- **Forbidden:** No flat vectors, no saturated primary colors (pure red, green, blue), no standard modern flat UI frames, no cultic in-group language, and no dehumanized enemies.
 
 ---
 
@@ -41,3 +51,10 @@ To generate the Dashboard Hero:
 3. Preflight any video, 4K, or batch job with `get_cost:true`.
 4. Upscale selected stills to 4K using `upscale_image`.
 5. Log preflight, generation, analysis, result URL, and next action in the global [ledger.jsonl](file:///C:/Users/frank/starlight/higgsfield/ledger.jsonl).
+
+<!-- STARLIGHT-REPO-CONTRACT:START -->
+## Starlight repository contract
+
+Contract: `starlight.repo_profile.v2` · Team: `arcanea-creative-worlds-team` · Priority: `tier-0`
+Use the Premium Intelligence Web OS and the repo's brand pack. Build static hierarchy first; add motion only after composition works. Require real product/proof or high-fidelity assets, provenance, desktop/mobile/reduced-motion inspection, accessibility, performance, and a minimum 26/30 visual quality score.
+<!-- STARLIGHT-REPO-CONTRACT:END -->

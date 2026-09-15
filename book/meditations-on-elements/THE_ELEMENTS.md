@@ -444,4 +444,3 @@ Create with all of yourself.
 
 *"The elements are not outside you. They are you—shaped from Lumina's breath, held in Nero's potential. Master them within, and you master creation."*
 — The Elemental Master, First Academy
-

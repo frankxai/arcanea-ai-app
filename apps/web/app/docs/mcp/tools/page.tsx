@@ -47,261 +47,94 @@ const CATEGORIES: Category[] = [
     tools: [
       {
         name: "plan_world",
-        description:
-          "Turn an idea into a world production packet with canon, factions, locations, visuals, audio palette, and agent next actions.",
+        description: "Turn an idea into a world production packet with canon, factions, locations, visuals, audio palette, and agent next actions.",
         params: [
-          {
-            name: "idea",
-            type: "string",
-            required: true,
-            description: "Seed idea or world premise",
-          },
-          {
-            name: "audience",
-            type: "string",
-            required: false,
-            description: "Who the world is for",
-          },
-          {
-            name: "tone",
-            type: "string",
-            required: false,
-            description: "Visual and narrative tone",
-          },
-          {
-            name: "scope",
-            type: "string",
-            required: false,
-            description: "Project scale or bible depth",
-          },
+          { name: "idea", type: "string", required: true, description: "Seed idea or world premise" },
+          { name: "audience", type: "string", required: false, description: "Who the world is for" },
+          { name: "tone", type: "string", required: false, description: "Visual and narrative tone" },
+          { name: "scope", type: "string", required: false, description: "Project scale or bible depth" },
         ],
         example: `plan_world({ idea: "a drowned moon academy where music changes gravity" })`,
       },
       {
         name: "plan_book",
-        description:
-          "Create a book packet with reader promise, bible, chapter spine, sample direction, cover brief, and publishing checklist.",
+        description: "Create a book packet with reader promise, bible, chapter spine, sample direction, cover brief, and publishing checklist.",
         params: [
-          {
-            name: "idea",
-            type: "string",
-            required: true,
-            description: "Book idea or nonfiction thesis",
-          },
-          {
-            name: "audience",
-            type: "string",
-            required: false,
-            description: "Target reader",
-          },
-          {
-            name: "format",
-            type: "string",
-            required: false,
-            description: "Novel, serial, guide, memoir, or other format",
-          },
-          {
-            name: "voice",
-            type: "string",
-            required: false,
-            description: "Desired narrative voice",
-          },
+          { name: "idea", type: "string", required: true, description: "Book idea or nonfiction thesis" },
+          { name: "audience", type: "string", required: false, description: "Target reader" },
+          { name: "format", type: "string", required: false, description: "Novel, serial, guide, memoir, or other format" },
+          { name: "voice", type: "string", required: false, description: "Desired narrative voice" },
         ],
         example: `plan_book({ idea: "a 12-chapter romantasy about a cartographer of forbidden stars" })`,
       },
       {
         name: "plan_game",
-        description:
-          "Create a game design packet with player promise, core loop, mechanics, levels, asset kit, and prototype handoff.",
+        description: "Create a game design packet with player promise, core loop, mechanics, levels, asset kit, and prototype handoff.",
         params: [
-          {
-            name: "idea",
-            type: "string",
-            required: true,
-            description: "Game or world premise",
-          },
-          {
-            name: "audience",
-            type: "string",
-            required: false,
-            description: "Player segment",
-          },
-          {
-            name: "engine",
-            type: "string",
-            required: false,
-            description:
-              "Browser, Godot, Unity, Roblox, Unreal, or custom target",
-          },
-          {
-            name: "playStyle",
-            type: "string",
-            required: false,
-            description: "Genre, core loop, or desired feel",
-          },
+          { name: "idea", type: "string", required: true, description: "Game or world premise" },
+          { name: "audience", type: "string", required: false, description: "Player segment" },
+          { name: "engine", type: "string", required: false, description: "Browser, Godot, Unity, Roblox, Unreal, or custom target" },
+          { name: "playStyle", type: "string", required: false, description: "Genre, core loop, or desired feel" },
         ],
         example: `plan_game({ idea: "a cozy multiplayer relic-hunting game set inside a living library", engine: "Godot" })`,
       },
       {
         name: "plan_music_project",
-        description:
-          "Create an artist or release packet with lore, sonic motifs, cover brief, visualizer plan, and release copy.",
+        description: "Create an artist or release packet with lore, sonic motifs, cover brief, visualizer plan, and release copy.",
         params: [
-          {
-            name: "idea",
-            type: "string",
-            required: true,
-            description: "Artist, song, album, or label idea",
-          },
-          {
-            name: "audience",
-            type: "string",
-            required: false,
-            description: "Listeners or community",
-          },
-          {
-            name: "genre",
-            type: "string",
-            required: false,
-            description: "Genre or hybrid sound",
-          },
-          {
-            name: "releaseType",
-            type: "string",
-            required: false,
-            description: "Single, EP, album, video, or AI artist launch",
-          },
+          { name: "idea", type: "string", required: true, description: "Artist, song, album, or label idea" },
+          { name: "audience", type: "string", required: false, description: "Listeners or community" },
+          { name: "genre", type: "string", required: false, description: "Genre or hybrid sound" },
+          { name: "releaseType", type: "string", required: false, description: "Single, EP, album, video, or AI artist launch" },
         ],
         example: `plan_music_project({ idea: "an AI artist whose songs are field recordings from other timelines" })`,
       },
       {
         name: "plan_cinematic_scene",
-        description:
-          "Create a cinematic packet with hook frame, shot list, camera language, references, audio direction, and render prompts.",
+        description: "Create a cinematic packet with hook frame, shot list, camera language, references, audio direction, and render prompts.",
         params: [
-          {
-            name: "idea",
-            type: "string",
-            required: true,
-            description: "Scene, trailer, or video concept",
-          },
-          {
-            name: "audience",
-            type: "string",
-            required: false,
-            description: "Viewer or use case",
-          },
-          {
-            name: "duration",
-            type: "string",
-            required: false,
-            description: "Target duration",
-          },
-          {
-            name: "format",
-            type: "string",
-            required: false,
-            description: "Trailer, scene, animatic, or social format",
-          },
+          { name: "idea", type: "string", required: true, description: "Scene, trailer, or video concept" },
+          { name: "audience", type: "string", required: false, description: "Viewer or use case" },
+          { name: "duration", type: "string", required: false, description: "Target duration" },
+          { name: "format", type: "string", required: false, description: "Trailer, scene, animatic, or social format" },
         ],
         example: `plan_cinematic_scene({ idea: "a 20-second trailer where dreams are traded as currency" })`,
       },
       {
         name: "generate_asset_brief",
-        description:
-          "Create a portable visual or media asset brief with style, references, aspect ratio, prompt, and production notes.",
+        description: "Create a portable visual or media asset brief with style, references, aspect ratio, prompt, and production notes.",
         params: [
-          {
-            name: "kind",
-            type: "string",
-            required: true,
-            description:
-              "character, location, cover, poster, trailer, sprite, album_art, brand_pack, or ui",
-          },
-          {
-            name: "subject",
-            type: "string",
-            required: true,
-            description: "Asset subject",
-          },
-          {
-            name: "style",
-            type: "string",
-            required: false,
-            description: "Visual or production style",
-          },
-          {
-            name: "references",
-            type: "string[]",
-            required: false,
-            description: "Reference asset ids or URLs",
-          },
-          {
-            name: "aspectRatio",
-            type: "string",
-            required: false,
-            description: "Target aspect ratio",
-          },
+          { name: "kind", type: "string", required: true, description: "character, location, cover, poster, trailer, sprite, album_art, brand_pack, or ui" },
+          { name: "subject", type: "string", required: true, description: "Asset subject" },
+          { name: "style", type: "string", required: false, description: "Visual or production style" },
+          { name: "references", type: "string[]", required: false, description: "Reference asset ids or URLs" },
+          { name: "aspectRatio", type: "string", required: false, description: "Target aspect ratio" },
         ],
         example: `generate_asset_brief({ kind: "cover", subject: "moon academy novel" })`,
       },
       {
         name: "export_project_context",
-        description:
-          "Package an Arcanea project into a Claude, Codex, Cursor, or generic agent handoff with assets, constraints, and acceptance criteria.",
+        description: "Package an Arcanea project into a Claude, Codex, Cursor, or generic agent handoff with assets, constraints, and acceptance criteria.",
         params: [
-          {
-            name: "projectName",
-            type: "string",
-            required: true,
-            description: "Project name",
-          },
-          {
-            name: "goal",
-            type: "string",
-            required: true,
-            description: "What the receiving agent should accomplish",
-          },
-          {
-            name: "targetAgent",
-            type: "string",
-            required: false,
-            description: "claude, codex, cursor, or generic",
-          },
-          {
-            name: "assets",
-            type: "string[]",
-            required: false,
-            description: "Relevant assets or files",
-          },
-          {
-            name: "constraints",
-            type: "string[]",
-            required: false,
-            description: "Rules the receiving agent must honor",
-          },
+          { name: "projectName", type: "string", required: true, description: "Project name" },
+          { name: "goal", type: "string", required: true, description: "What the receiving agent should accomplish" },
+          { name: "targetAgent", type: "string", required: false, description: "claude, codex, cursor, or generic" },
+          { name: "assets", type: "string[]", required: false, description: "Relevant assets or files" },
+          { name: "constraints", type: "string[]", required: false, description: "Rules the receiving agent must honor" },
         ],
         example: `export_project_context({ projectName: "Relic Library", goal: "build the first playable slice", targetAgent: "codex" })`,
       },
       {
         name: "list_arcanea_studios",
-        description:
-          "List Arcanea studio surfaces, routes, outcomes, and recommended MCP tools.",
+        description: "List Arcanea studio surfaces, routes, outcomes, and recommended MCP tools.",
         params: [],
         example: `list_arcanea_studios({})`,
       },
       {
         name: "get_workflow_recipe",
-        description:
-          "Return reusable workflows such as book-to-publish, world-to-game, artist-release, cinematic-trailer, and campaign-pack.",
+        description: "Return reusable workflows such as book-to-publish, world-to-game, artist-release, cinematic-trailer, and campaign-pack.",
         params: [
-          {
-            name: "recipe",
-            type: "string",
-            required: true,
-            description:
-              "book_to_publish, world_to_game, artist_release, cinematic_trailer, or campaign_pack",
-          },
+          { name: "recipe", type: "string", required: true, description: "book_to_publish, world_to_game, artist_release, cinematic_trailer, or campaign_pack" },
         ],
         example: `get_workflow_recipe({ recipe: "world_to_game" })`,
       },
@@ -318,31 +151,10 @@ const CATEGORIES: Category[] = [
         description:
           "Generate a fully realized character with archetype, element affinity, backstory, and hooks.",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: false,
-            description: "Target world context",
-          },
-          {
-            name: "archetype",
-            type: "string",
-            required: false,
-            description: "Character archetype (mage, guardian, wanderer, etc.)",
-          },
-          {
-            name: "element",
-            type: "string",
-            required: false,
-            description:
-              "Element affinity: fire, water, earth, wind, void, spirit",
-          },
-          {
-            name: "gatesOpen",
-            type: "number",
-            required: false,
-            description: "Gates opened — determines magic rank (0–10)",
-          },
+          { name: "worldId", type: "string", required: false, description: "Target world context" },
+          { name: "archetype", type: "string", required: false, description: "Character archetype (mage, guardian, wanderer, etc.)" },
+          { name: "element", type: "string", required: false, description: "Element affinity: fire, water, earth, wind, void, spirit" },
+          { name: "gatesOpen", type: "number", required: false, description: "Gates opened — determines magic rank (0–10)" },
         ],
         example: `generate_character({ archetype: "guardian", element: "void", gatesOpen: 7 })`,
       },
@@ -351,50 +163,19 @@ const CATEGORIES: Category[] = [
         description:
           "Design a magic system for a world, including source, mechanics, costs, and limitations.",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: false,
-            description: "World to scope the magic system to",
-          },
-          {
-            name: "element",
-            type: "string",
-            required: false,
-            description: "Primary elemental basis",
-          },
-          {
-            name: "style",
-            type: "string",
-            required: false,
-            description: "Hard / soft / structured system style",
-          },
+          { name: "worldId", type: "string", required: false, description: "World to scope the magic system to" },
+          { name: "element", type: "string", required: false, description: "Primary elemental basis" },
+          { name: "style", type: "string", required: false, description: "Hard / soft / structured system style" },
         ],
         example: `generate_magic({ element: "fire", style: "hard" })`,
       },
       {
         name: "generate_creature",
-        description:
-          "Create a creature with natural history, abilities, and narrative role.",
+        description: "Create a creature with natural history, abilities, and narrative role.",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: false,
-            description: "World context",
-          },
-          {
-            name: "element",
-            type: "string",
-            required: false,
-            description: "Element association",
-          },
-          {
-            name: "role",
-            type: "string",
-            required: false,
-            description: "Narrative role: companion, antagonist, neutral",
-          },
+          { name: "worldId", type: "string", required: false, description: "World context" },
+          { name: "element", type: "string", required: false, description: "Element association" },
+          { name: "role", type: "string", required: false, description: "Narrative role: companion, antagonist, neutral" },
         ],
         example: `generate_creature({ element: "water", role: "companion" })`,
       },
@@ -403,77 +184,29 @@ const CATEGORIES: Category[] = [
         description:
           "Generate a location with geography, atmosphere, history, and narrative hooks.",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: false,
-            description: "World context",
-          },
-          {
-            name: "biome",
-            type: "string",
-            required: false,
-            description: "Biome or environment type",
-          },
-          {
-            name: "gateAffinity",
-            type: "string",
-            required: false,
-            description: "Gate the location resonates with",
-          },
+          { name: "worldId", type: "string", required: false, description: "World context" },
+          { name: "biome", type: "string", required: false, description: "Biome or environment type" },
+          { name: "gateAffinity", type: "string", required: false, description: "Gate the location resonates with" },
         ],
         example: `generate_location({ biome: "forest", gateAffinity: "heart" })`,
       },
       {
         name: "generate_artifact",
-        description:
-          "Design a named artifact with origin, powers, and lore implications.",
+        description: "Design a named artifact with origin, powers, and lore implications.",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: false,
-            description: "World context",
-          },
-          {
-            name: "element",
-            type: "string",
-            required: false,
-            description: "Element the artifact channels",
-          },
-          {
-            name: "tier",
-            type: "string",
-            required: false,
-            description: "Power tier: common, rare, legendary, mythic",
-          },
+          { name: "worldId", type: "string", required: false, description: "World context" },
+          { name: "element", type: "string", required: false, description: "Element the artifact channels" },
+          { name: "tier", type: "string", required: false, description: "Power tier: common, rare, legendary, mythic" },
         ],
         example: `generate_artifact({ element: "spirit", tier: "legendary" })`,
       },
       {
         name: "generate_name",
-        description:
-          "Generate culturally coherent names for characters, places, or organizations.",
+        description: "Generate culturally coherent names for characters, places, or organizations.",
         params: [
-          {
-            name: "type",
-            type: "string",
-            required: true,
-            description:
-              "Name type: character, location, organization, artifact",
-          },
-          {
-            name: "culture",
-            type: "string",
-            required: false,
-            description: "Cultural or elemental aesthetic",
-          },
-          {
-            name: "count",
-            type: "number",
-            required: false,
-            description: "Number of names to generate (default 5)",
-          },
+          { name: "type", type: "string", required: true, description: "Name type: character, location, organization, artifact" },
+          { name: "culture", type: "string", required: false, description: "Cultural or elemental aesthetic" },
+          { name: "count", type: "number", required: false, description: "Number of names to generate (default 5)" },
         ],
         example: `generate_name({ type: "character", culture: "eldrian", count: 3 })`,
       },
@@ -482,24 +215,9 @@ const CATEGORIES: Category[] = [
         description:
           "Generate a story prompt or scene seed rooted in Arcanean narrative structure.",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: false,
-            description: "World context",
-          },
-          {
-            name: "gate",
-            type: "string",
-            required: false,
-            description: "Gate frequency the story passes through",
-          },
-          {
-            name: "tone",
-            type: "string",
-            required: false,
-            description: "Tone: epic, intimate, tragic, comedic",
-          },
+          { name: "worldId", type: "string", required: false, description: "World context" },
+          { name: "gate", type: "string", required: false, description: "Gate frequency the story passes through" },
+          { name: "tone", type: "string", required: false, description: "Tone: epic, intimate, tragic, comedic" },
         ],
         example: `generate_story_prompt({ gate: "voice", tone: "intimate" })`,
       },
@@ -516,18 +234,8 @@ const CATEGORIES: Category[] = [
         description:
           "Identify what is causing a creative block and return a structured diagnosis with suggested actions.",
         params: [
-          {
-            name: "situation",
-            type: "string",
-            required: true,
-            description: "Description of the creative situation or block",
-          },
-          {
-            name: "gate",
-            type: "string",
-            required: false,
-            description: "Gate the work is connected to",
-          },
+          { name: "situation", type: "string", required: true, description: "Description of the creative situation or block" },
+          { name: "gate", type: "string", required: false, description: "Gate the work is connected to" },
         ],
         example: `diagnose_block({ situation: "I keep rewriting the opening chapter and nothing feels right" })`,
       },
@@ -536,18 +244,8 @@ const CATEGORIES: Category[] = [
         description:
           "Invoke a specific Luminor (named creative archetype) to provide guidance on a question.",
         params: [
-          {
-            name: "luminor",
-            type: "string",
-            required: true,
-            description: "Luminor name or archetype to invoke",
-          },
-          {
-            name: "question",
-            type: "string",
-            required: true,
-            description: "The question or challenge to bring to this Luminor",
-          },
+          { name: "luminor", type: "string", required: true, description: "Luminor name or archetype to invoke" },
+          { name: "question", type: "string", required: true, description: "The question or challenge to bring to this Luminor" },
         ],
         example: `invoke_luminor({ luminor: "Alera", question: "How do I find my authentic voice for this story?" })`,
       },
@@ -556,18 +254,8 @@ const CATEGORIES: Category[] = [
         description:
           "Multi-layer diagnosis that examines structure, emotion, theme, and craft simultaneously.",
         params: [
-          {
-            name: "content",
-            type: "string",
-            required: true,
-            description: "The work, passage, or creative problem to diagnose",
-          },
-          {
-            name: "intent",
-            type: "string",
-            required: false,
-            description: "What you intended the work to achieve",
-          },
+          { name: "content", type: "string", required: true, description: "The work, passage, or creative problem to diagnose" },
+          { name: "intent", type: "string", required: false, description: "What you intended the work to achieve" },
         ],
         example: `deep_diagnosis({ content: "<passage>", intent: "evoke profound loss without melodrama" })`,
       },
@@ -576,19 +264,8 @@ const CATEGORIES: Category[] = [
         description:
           "Assemble a council of diverse creative perspectives to evaluate a decision or work.",
         params: [
-          {
-            name: "question",
-            type: "string",
-            required: true,
-            description: "The question or work to bring before the council",
-          },
-          {
-            name: "perspectives",
-            type: "string[]",
-            required: false,
-            description:
-              "Specific perspectives to include (default: auto-selected)",
-          },
+          { name: "question", type: "string", required: true, description: "The question or work to bring before the council" },
+          { name: "perspectives", type: "string[]", required: false, description: "Specific perspectives to include (default: auto-selected)" },
         ],
         example: `convene_council({ question: "Should this world have a morally ambiguous magic system?" })`,
       },
@@ -597,24 +274,9 @@ const CATEGORIES: Category[] = [
         description:
           "Stage a structured debate between two or more Luminors on a creative or philosophical question.",
         params: [
-          {
-            name: "topic",
-            type: "string",
-            required: true,
-            description: "Topic or proposition to debate",
-          },
-          {
-            name: "luminors",
-            type: "string[]",
-            required: false,
-            description: "Luminors to include in the debate (2–4)",
-          },
-          {
-            name: "rounds",
-            type: "number",
-            required: false,
-            description: "Number of exchange rounds (default 2)",
-          },
+          { name: "topic", type: "string", required: true, description: "Topic or proposition to debate" },
+          { name: "luminors", type: "string[]", required: false, description: "Luminors to include in the debate (2–4)" },
+          { name: "rounds", type: "number", required: false, description: "Number of exchange rounds (default 2)" },
         ],
         example: `luminor_debate({ topic: "Should antagonists believe they are right?", luminors: ["Maylinn", "Draconia"] })`,
       },
@@ -631,19 +293,8 @@ const CATEGORIES: Category[] = [
         description:
           "Generate a structured report on a world's current state: factions, tensions, active arcs, and gaps.",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: true,
-            description: "World to analyze",
-          },
-          {
-            name: "focus",
-            type: "string",
-            required: false,
-            description:
-              "Analysis focus: political, magical, narrative, social",
-          },
+          { name: "worldId", type: "string", required: true, description: "World to analyze" },
+          { name: "focus", type: "string", required: false, description: "Analysis focus: political, magical, narrative, social" },
         ],
         example: `world_report({ worldId: "arcanea", focus: "political" })`,
       },
@@ -652,25 +303,9 @@ const CATEGORIES: Category[] = [
         description:
           "Generate a narratively grounded conflict rooted in the world's existing factions, characters, or history.",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: true,
-            description: "World context",
-          },
-          {
-            name: "scale",
-            type: "string",
-            required: false,
-            description: "Scale: interpersonal, local, regional, cosmic",
-          },
-          {
-            name: "type",
-            type: "string",
-            required: false,
-            description:
-              "Conflict type: ideological, resource, identity, power",
-          },
+          { name: "worldId", type: "string", required: true, description: "World context" },
+          { name: "scale", type: "string", required: false, description: "Scale: interpersonal, local, regional, cosmic" },
+          { name: "type", type: "string", required: false, description: "Conflict type: ideological, resource, identity, power" },
         ],
         example: `generate_conflict({ worldId: "arcanea", scale: "regional", type: "ideological" })`,
       },
@@ -679,24 +314,9 @@ const CATEGORIES: Category[] = [
         description:
           "Weave existing world elements into a coherent narrative thread or episode structure.",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: true,
-            description: "World context",
-          },
-          {
-            name: "elements",
-            type: "string[]",
-            required: true,
-            description: "IDs or names of world elements to weave together",
-          },
-          {
-            name: "format",
-            type: "string",
-            required: false,
-            description: "Output format: summary, scene, outline",
-          },
+          { name: "worldId", type: "string", required: true, description: "World context" },
+          { name: "elements", type: "string[]", required: true, description: "IDs or names of world elements to weave together" },
+          { name: "format", type: "string", required: false, description: "Output format: summary, scene, outline" },
         ],
         example: `weave_narrative({ worldId: "arcanea", elements: ["Shinkami", "Source Gate", "Malachar"], format: "outline" })`,
       },
@@ -712,25 +332,9 @@ const CATEGORIES: Category[] = [
         name: "link_creations",
         description: "Create a typed relationship between two world elements.",
         params: [
-          {
-            name: "sourceId",
-            type: "string",
-            required: true,
-            description: "Source element ID",
-          },
-          {
-            name: "targetId",
-            type: "string",
-            required: true,
-            description: "Target element ID",
-          },
-          {
-            name: "relationship",
-            type: "string",
-            required: true,
-            description:
-              "Relationship type: guards, created, opposes, descended_from, etc.",
-          },
+          { name: "sourceId", type: "string", required: true, description: "Source element ID" },
+          { name: "targetId", type: "string", required: true, description: "Target element ID" },
+          { name: "relationship", type: "string", required: true, description: "Relationship type: guards, created, opposes, descended_from, etc." },
         ],
         example: `link_creations({ sourceId: "shinkami", targetId: "source-gate", relationship: "guards" })`,
       },
@@ -738,24 +342,9 @@ const CATEGORIES: Category[] = [
         name: "get_related",
         description: "Return all elements related to a given world element.",
         params: [
-          {
-            name: "elementId",
-            type: "string",
-            required: true,
-            description: "Element to find relations for",
-          },
-          {
-            name: "depth",
-            type: "number",
-            required: false,
-            description: "Graph traversal depth (default 1, max 3)",
-          },
-          {
-            name: "types",
-            type: "string[]",
-            required: false,
-            description: "Filter by relationship types",
-          },
+          { name: "elementId", type: "string", required: true, description: "Element to find relations for" },
+          { name: "depth", type: "number", required: false, description: "Graph traversal depth (default 1, max 3)" },
+          { name: "types", type: "string[]", required: false, description: "Filter by relationship types" },
         ],
         example: `get_related({ elementId: "draconia", depth: 2 })`,
       },
@@ -764,79 +353,35 @@ const CATEGORIES: Category[] = [
         description:
           "Suggest narratively meaningful connections between existing world elements that are not yet linked.",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: true,
-            description: "World to analyze",
-          },
-          {
-            name: "limit",
-            type: "number",
-            required: false,
-            description: "Max suggestions (default 5)",
-          },
+          { name: "worldId", type: "string", required: true, description: "World to analyze" },
+          { name: "limit", type: "number", required: false, description: "Max suggestions (default 5)" },
         ],
         example: `suggest_connections({ worldId: "arcanea", limit: 5 })`,
       },
       {
         name: "get_world_graph",
-        description:
-          "Return the full creation graph for a world as structured data.",
+        description: "Return the full creation graph for a world as structured data.",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: true,
-            description: "World to retrieve the graph for",
-          },
-          {
-            name: "format",
-            type: "string",
-            required: false,
-            description: "Output format: json, dot, summary",
-          },
+          { name: "worldId", type: "string", required: true, description: "World to retrieve the graph for" },
+          { name: "format", type: "string", required: false, description: "Output format: json, dot, summary" },
         ],
         example: `get_world_graph({ worldId: "arcanea", format: "summary" })`,
       },
       {
         name: "find_path",
-        description:
-          "Find the shortest narrative path between two world elements.",
+        description: "Find the shortest narrative path between two world elements.",
         params: [
-          {
-            name: "fromId",
-            type: "string",
-            required: true,
-            description: "Starting element",
-          },
-          {
-            name: "toId",
-            type: "string",
-            required: true,
-            description: "Destination element",
-          },
+          { name: "fromId", type: "string", required: true, description: "Starting element" },
+          { name: "toId", type: "string", required: true, description: "Destination element" },
         ],
         example: `find_path({ fromId: "malachar", toId: "shinkami" })`,
       },
       {
         name: "export_world",
-        description:
-          "Export a world's complete data as a portable JSON bundle.",
+        description: "Export a world's complete data as a portable JSON bundle.",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: true,
-            description: "World to export",
-          },
-          {
-            name: "include",
-            type: "string[]",
-            required: false,
-            description:
-              "Sections to include: graph, lore, characters, locations, all",
-          },
+          { name: "worldId", type: "string", required: true, description: "World to export" },
+          { name: "include", type: "string[]", required: false, description: "Sections to include: graph, lore, characters, locations, all" },
         ],
         example: `export_world({ worldId: "arcanea", include: ["graph", "characters"] })`,
       },
@@ -853,39 +398,17 @@ const CATEGORIES: Category[] = [
         description:
           "Spawn and coordinate one or more specialized agents to complete a multi-step creative task.",
         params: [
-          {
-            name: "task",
-            type: "string",
-            required: true,
-            description: "Task description for the orchestrated agents",
-          },
-          {
-            name: "agents",
-            type: "string[]",
-            required: false,
-            description: "Specific agent types to include",
-          },
-          {
-            name: "worldId",
-            type: "string",
-            required: false,
-            description: "World context to scope the task",
-          },
+          { name: "task", type: "string", required: true, description: "Task description for the orchestrated agents" },
+          { name: "agents", type: "string[]", required: false, description: "Specific agent types to include" },
+          { name: "worldId", type: "string", required: false, description: "World context to scope the task" },
         ],
         example: `orchestrate({ task: "Build out the political factions of the northern territories", worldId: "arcanea" })`,
       },
       {
         name: "list_agents",
-        description:
-          "List available agent types with their capabilities and current status.",
+        description: "List available agent types with their capabilities and current status.",
         params: [
-          {
-            name: "filter",
-            type: "string",
-            required: false,
-            description:
-              "Filter by capability: worldbuilding, coaching, writing, analysis",
-          },
+          { name: "filter", type: "string", required: false, description: "Filter by capability: worldbuilding, coaching, writing, analysis" },
         ],
         example: `list_agents({ filter: "worldbuilding" })`,
       },
@@ -894,18 +417,8 @@ const CATEGORIES: Category[] = [
         description:
           "Assess a world's readiness for a specific type of work (writing, game, publication, etc.).",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: true,
-            description: "World to assess",
-          },
-          {
-            name: "purpose",
-            type: "string",
-            required: true,
-            description: "Intended purpose: novel, game, visual, campaign",
-          },
+          { name: "worldId", type: "string", required: true, description: "World to assess" },
+          { name: "purpose", type: "string", required: true, description: "Intended purpose: novel, game, visual, campaign" },
         ],
         example: `assess_world({ worldId: "arcanea", purpose: "novel" })`,
       },
@@ -913,40 +426,23 @@ const CATEGORIES: Category[] = [
         name: "active_sessions",
         description: "Return all currently active agent sessions.",
         params: [
-          {
-            name: "worldId",
-            type: "string",
-            required: false,
-            description: "Filter by world context",
-          },
+          { name: "worldId", type: "string", required: false, description: "Filter by world context" },
         ],
         example: `active_sessions({})`,
       },
       {
         name: "agent_info",
-        description:
-          "Get detailed information about a specific agent type or active agent instance.",
+        description: "Get detailed information about a specific agent type or active agent instance.",
         params: [
-          {
-            name: "agentId",
-            type: "string",
-            required: true,
-            description: "Agent type name or session ID",
-          },
+          { name: "agentId", type: "string", required: true, description: "Agent type name or session ID" },
         ],
         example: `agent_info({ agentId: "character-forge" })`,
       },
       {
         name: "match_skill",
-        description:
-          "Find the best-matching agent skill for a given creative need.",
+        description: "Find the best-matching agent skill for a given creative need.",
         params: [
-          {
-            name: "need",
-            type: "string",
-            required: true,
-            description: "Description of what you need to accomplish",
-          },
+          { name: "need", type: "string", required: true, description: "Description of what you need to accomplish" },
         ],
         example: `match_skill({ need: "I need to write convincing villain dialogue" })`,
       },
@@ -963,37 +459,18 @@ const CATEGORIES: Category[] = [
         description:
           "Return the current state of a creator's journey: gates opened, rank, active challenges, and recent progress.",
         params: [
-          {
-            name: "userId",
-            type: "string",
-            required: false,
-            description: "User ID (defaults to authenticated user)",
-          },
+          { name: "userId", type: "string", required: false, description: "User ID (defaults to authenticated user)" },
         ],
         example: `get_journey({})`,
       },
       {
         name: "check_milestones",
-        description: "Check milestone completion status for a user or world.",
+        description:
+          "Check milestone completion status for a user or world.",
         params: [
-          {
-            name: "userId",
-            type: "string",
-            required: false,
-            description: "User to check milestones for",
-          },
-          {
-            name: "worldId",
-            type: "string",
-            required: false,
-            description: "World to check milestones for",
-          },
-          {
-            name: "gate",
-            type: "string",
-            required: false,
-            description: "Filter by specific gate",
-          },
+          { name: "userId", type: "string", required: false, description: "User to check milestones for" },
+          { name: "worldId", type: "string", required: false, description: "World to check milestones for" },
+          { name: "gate", type: "string", required: false, description: "Filter by specific gate" },
         ],
         example: `check_milestones({ gate: "voice" })`,
       },
@@ -1010,19 +487,8 @@ const CATEGORIES: Category[] = [
         description:
           "Check whether a piece of content is consistent with established Arcanean canon. Returns issues and suggestions.",
         params: [
-          {
-            name: "content",
-            type: "string",
-            required: true,
-            description: "Text or structured data to validate",
-          },
-          {
-            name: "strict",
-            type: "boolean",
-            required: false,
-            description:
-              "Strict mode checks minor inconsistencies (default false)",
-          },
+          { name: "content", type: "string", required: true, description: "Text or structured data to validate" },
+          { name: "strict", type: "boolean", required: false, description: "Strict mode checks minor inconsistencies (default false)" },
         ],
         example: `validate_canon({ content: "Shinkami was created by Nero", strict: true })`,
       },
@@ -1031,12 +497,7 @@ const CATEGORIES: Category[] = [
         description:
           "Identify which of the Ten Gates a theme, character, or work most resonates with.",
         params: [
-          {
-            name: "input",
-            type: "string",
-            required: true,
-            description: "Theme, character description, or passage to analyze",
-          },
+          { name: "input", type: "string", required: true, description: "Theme, character description, or passage to analyze" },
         ],
         example: `identify_gate({ input: "A story about breaking free from inherited beliefs to speak your own truth" })`,
       },
@@ -1053,19 +514,8 @@ const CATEGORIES: Category[] = [
         description:
           "Enhance a prompt using APL principles: sharpen specificity, add sensory grounding, and inject creative tension.",
         params: [
-          {
-            name: "prompt",
-            type: "string",
-            required: true,
-            description: "Prompt to enhance",
-          },
-          {
-            name: "mode",
-            type: "string",
-            required: false,
-            description:
-              "Enhancement mode: subtle, moderate, full (default moderate)",
-          },
+          { name: "prompt", type: "string", required: true, description: "Prompt to enhance" },
+          { name: "mode", type: "string", required: false, description: "Enhancement mode: subtle, moderate, full (default moderate)" },
         ],
         example: `apl_enhance({ prompt: "Write a dark fantasy scene", mode: "full" })`,
       },
@@ -1074,19 +524,8 @@ const CATEGORIES: Category[] = [
         description:
           "Analyze a prompt or output for generic, overused, or low-signal language. Returns specific replacements.",
         params: [
-          {
-            name: "content",
-            type: "string",
-            required: true,
-            description: "Prompt or generated content to audit",
-          },
-          {
-            name: "domain",
-            type: "string",
-            required: false,
-            description:
-              "Domain context: fantasy, literary, dialogue, description",
-          },
+          { name: "content", type: "string", required: true, description: "Prompt or generated content to audit" },
+          { name: "domain", type: "string", required: false, description: "Domain context: fantasy, literary, dialogue, description" },
         ],
         example: `apl_anti_slop({ content: "The ancient wizard with piercing eyes spoke in a gravelly voice" })`,
       },
@@ -1095,18 +534,8 @@ const CATEGORIES: Category[] = [
         description:
           "Format a prompt for optimal performance with a specific AI model or provider.",
         params: [
-          {
-            name: "prompt",
-            type: "string",
-            required: true,
-            description: "Prompt to format",
-          },
-          {
-            name: "model",
-            type: "string",
-            required: true,
-            description: "Target model: claude, gpt, gemini, llama",
-          },
+          { name: "prompt", type: "string", required: true, description: "Prompt to format" },
+          { name: "model", type: "string", required: true, description: "Target model: claude, gpt, gemini, llama" },
         ],
         example: `apl_format({ prompt: "Write a character origin story", model: "claude" })`,
       },
@@ -1148,19 +577,13 @@ export default function McpToolsPage() {
         <nav className="pt-8 pb-2">
           <ol className="flex items-center gap-2 text-sm text-zinc-500">
             <li>
-              <Link
-                href="/docs"
-                className="hover:text-zinc-300 transition-colors"
-              >
+              <Link href="/docs" className="hover:text-zinc-300 transition-colors">
                 Docs
               </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li>
-              <Link
-                href="/docs/mcp"
-                className="hover:text-zinc-300 transition-colors"
-              >
+              <Link href="/docs/mcp" className="hover:text-zinc-300 transition-colors">
                 MCP
               </Link>
             </li>
@@ -1178,7 +601,7 @@ export default function McpToolsPage() {
             </span>
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-400">
-            All 54 tools across 9 categories. Each tool is available via any
+            All 43 tools across 9 categories. Each tool is available via any
             MCP-compatible client once the server is configured.
           </p>
 

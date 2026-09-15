@@ -4,7 +4,6 @@
 import { m } from "framer-motion";
 import { Check, X } from "@/lib/phosphor-icons";
 import { brand, competitorAccent } from "@arcanea/design-system";
-import { FACTS } from "@/lib/facts";
 
 // ---------------------------------------------------------------------------
 // ComparisonMatrix — "Why Arcanea" differentiator table.
@@ -38,7 +37,7 @@ const FEATURES: Feature[] = [
     chatgpt: "partial",
     claude: false,
     character: "partial",
-    note: `${FACTS.luminors} configured specialist agents, not one generic chatbot`,
+    note: "13 configured specialist agents, not one generic chatbot",
   },
   {
     label: "Text + image + music integrated",
@@ -148,13 +147,6 @@ export function ComparisonMatrix() {
               </span>
             </div>
           ))}
-        </div>
-
-        {/* Legend */}
-        <div className="flex items-center gap-5 px-6 py-2.5 border-b border-white/[0.04] text-[11px] text-white/40">
-          <span className="inline-flex items-center gap-1.5"><CellIcon value={true} /> Built in</span>
-          <span className="inline-flex items-center gap-1.5"><CellIcon value={"partial"} /> Partial</span>
-          <span className="inline-flex items-center gap-1.5"><CellIcon value={false} /> Not offered</span>
         </div>
 
         {/* Rows */}

@@ -73,7 +73,7 @@ export default async function BooksPage() {
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <p className="mb-6 font-mono text-[11px] uppercase tracking-[0.35em] text-[var(--arc-brand-atlantean-teal)]/70">The Arcanea Universe</p>
           <h1 className="font-display text-5xl font-bold tracking-tight text-white/95 md:text-6xl lg:text-7xl leading-[1.05]">The Library of Arcanea</h1>
-          <p className="mt-5 font-mono text-sm text-white/60 tracking-wide">Twenty-two works in draft. Nothing finished, everything readable.</p>
+          <p className="mt-5 font-mono text-sm text-white/60 tracking-wide">486,000+ words across the Arcanean multiverse</p>
           <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">Enter seeking. Leave transformed. Return whenever needed.</p>
 
           <div className="mx-auto mt-10 flex w-48 items-center gap-3 text-[var(--arc-brand-atlantean-teal)]/20" aria-hidden="true">
@@ -87,9 +87,6 @@ export default async function BooksPage() {
               Begin Reading
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
             </a>
-            <Link href="/story" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-3.5 text-sm font-medium text-white/65 transition-all hover:border-white/30 hover:text-white/85">
-              The First Light
-            </Link>
             <Link href="/books/docs/founding-myths" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-3.5 text-sm font-medium text-white/65 transition-all hover:border-white/30 hover:text-white/85">
               Read the Myths
             </Link>

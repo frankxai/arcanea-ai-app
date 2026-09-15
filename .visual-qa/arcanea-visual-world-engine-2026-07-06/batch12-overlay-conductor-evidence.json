@@ -1,0 +1,186 @@
+{
+  "version": "1.0",
+  "task": "Arcanea Visual World Conductor Batch 12 overlay and crop proof",
+  "surface": "Deterministic 9:16 and 4:5 social proof exports for arc-conductor-005 Witness Bridge",
+  "audience": "Frank as human canon and launch approver, Arcanea social reviewers, anime/webtoon viewers, internal visual-world operators",
+  "first_read": "The Mamoru-free Witness Bridge candidate works as a 9:16 social proof and has a usable 4:5 feed proof with crop caution.",
+  "standards": [
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/VISUAL_DOCTRINE.md"
+  ],
+  "references": [
+    {
+      "label": "Batch 12 selected source",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-005-witness-bridge-dungeon-divers.png",
+      "reason": "Mamoru-free source frame selected for internal review."
+    },
+    {
+      "label": "9:16 overlay proof",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/arc-overlay-b12-005-witness-bridge-9x16.png",
+      "reason": "Primary social crop proof for Reels/TikTok/Shorts."
+    },
+    {
+      "label": "4:5 overlay proof",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/arc-overlay-b12-005-witness-bridge-4x5.png",
+      "reason": "Feed crop proof for Instagram/X style review."
+    },
+    {
+      "label": "Overlay contact sheet",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/overlay-b12-contact-sheet.jpg",
+      "reason": "Quick side-by-side review evidence."
+    },
+    {
+      "label": "Conductor mirror",
+      "source": "C:/Users/frank/brands/image-system/arcanea/2026-07-06-conductor",
+      "reason": "Canonical local mirror for generated-asset loop evidence and handoff files."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Use arc-conductor-005 as the Mamoru-free Witness Bridge source for internal review.",
+      "Use the 9:16 overlay as the strongest social proof because it preserves the full tower scale and clean trio read.",
+      "Keep the 4:5 feed proof as usable with crop caution because it trims some vertical scale.",
+      "Keep deterministic text outside the generated image source; no baked model text was introduced.",
+      "Keep Mamoru marked STAGING and absent from this Batch 12 proof."
+    ],
+    "avoid": [
+      "Treating overlay proof as external publishing approval.",
+      "Wiring the proof into gallery or social launch data while gallery/app files are dirty from other lanes.",
+      "Claiming VIS ingestion until a fresh VIS rescan includes the new Batch 12 proof sidecars.",
+      "Using the 4:5 crop as the primary hero when 9:16 preserves more of the world-tower scale."
+    ],
+    "signature": "The Witness Bridge becomes a phone-readable social promise: keep the proof true when the tower moves.",
+    "system": [
+      "C-over-B deterministic overlay proof: generated source frame plus code-authored typography.",
+      "9:16 proof: 1080x1920, primary social candidate.",
+      "4:5 proof: 1080x1350, feed candidate with crop caution.",
+      "Both outputs have VIS provenance sidecars, metadata JSONL, ledger CSV, and contact sheet."
+    ]
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "image-edit",
+    "provenance": "generated",
+    "why_premium": "The proof uses a previously inspected Tier B generated source frame and deterministic code overlays to create readable, platform-specific social crops without baking model text into the art.",
+    "shortcut_risk": "low",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/arc-overlay-b12-005-witness-bridge-9x16.png",
+      "kind": "9:16 deterministic overlay proof",
+      "inspected": true,
+      "notes": "Pass. Text is readable, trio is unobstructed, and Guardian/tower scale remains visible."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/arc-overlay-b12-005-witness-bridge-9x16.vis.provenance.json",
+      "kind": "VIS provenance sidecar",
+      "inspected": true,
+      "notes": "Records deterministic overlay method, crop, score, hash, and Mamoru-not-present status."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/arc-overlay-b12-005-witness-bridge-4x5.png",
+      "kind": "4:5 deterministic overlay proof",
+      "inspected": true,
+      "notes": "Pass with caution. Text is readable after stronger gradient; crop trims some vertical scale."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/arc-overlay-b12-005-witness-bridge-4x5.vis.provenance.json",
+      "kind": "VIS provenance sidecar",
+      "inspected": true,
+      "notes": "Records deterministic overlay method, crop, score, hash, and Mamoru-not-present status."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/overlay-b12-contact-sheet.jpg",
+      "kind": "contact sheet",
+      "inspected": true,
+      "notes": "Side-by-side proof sheet for 9:16 and 4:5 review."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/overlay-b12-metadata.jsonl",
+      "kind": "overlay metadata",
+      "inspected": true,
+      "notes": "JSONL metadata records both proof outputs."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b12-2026-07-06T1355/overlay-b12-ledger.csv",
+      "kind": "overlay ledger",
+      "inspected": true,
+      "notes": "CSV ledger records output path, crop, score, decision, Mamoru status, hash, and dimensions."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "C-over-B deterministic overlay proof is appropriate for social proof exports."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "evidence": "Both 9:16 and 4:5 PNG exports were opened and inspected."
+    },
+    {
+      "name": "9x16-crop-readability",
+      "status": "pass",
+      "evidence": "9:16 proof keeps the trio unobstructed, title readable, and Guardian/tower scale visible."
+    },
+    {
+      "name": "4x5-crop-readability",
+      "status": "pass",
+      "evidence": "4:5 proof was revised with a stronger top gradient; text is readable."
+    },
+    {
+      "name": "4x5-scale-retention",
+      "status": "fail",
+      "evidence": "4:5 crop necessarily trims some vertical world-tower scale; use 9:16 as primary."
+    },
+    {
+      "name": "mamoru-staging",
+      "status": "pass",
+      "evidence": "Both overlay sidecars mark Mamoru not-present; no staging material was promoted."
+    },
+    {
+      "name": "vis-provenance-sidecars",
+      "status": "pass",
+      "evidence": "Both proof exports have .vis.provenance.json sidecars plus JSONL and CSV records."
+    },
+    {
+      "name": "gallery-file-collision",
+      "status": "pass",
+      "evidence": "No gallery, app, public image, package, or campaign data files were modified."
+    },
+    {
+      "name": "fresh-vis-rescan",
+      "status": "blocked",
+      "evidence": "New proof sidecars exist but have not been included in a fresh VIS rescan."
+    },
+    {
+      "name": "external-actions",
+      "status": "pass",
+      "evidence": "No deploy, push, external publish, spend, external message, DB registry write, web3 action, or canon promotion was performed."
+    }
+  ],
+  "score": {
+    "total": 26,
+    "max": 30,
+    "breakdown": {
+      "social_crop_strength": 9,
+      "overlay_craft": 8,
+      "governance_readiness": 9
+    },
+    "notes": "The overlay proof package is internally shippable, but the conductor decision remains iterate because VIS rescan, rights/human approval, and route/gallery wiring are still blocked."
+  },
+  "decision": "iterate",
+  "known_risks": [
+    "9:16 should be treated as primary; 4:5 trims too much vertical scale for first-wave use.",
+    "No public route or gallery integration was attempted.",
+    "The proof package is not rights or human launch approval.",
+    "Fresh VIS rescan is still required before registry/count claims.",
+    "Mamoru remains STAGING and absent from this proof."
+  ]
+}

@@ -1,0 +1,5 @@
+# .vercelignore for apps/web
+# Exclude local test logs and scratch
+/.agent/
+/.claude/
+/.worktrees/

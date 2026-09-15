@@ -8,7 +8,7 @@ import { CategoryFilter } from '@/components/registry/CategoryFilter';
 import { RegistryHero } from '@/components/registry/RegistryHero';
 
 export const metadata: Metadata = {
-  title: 'Agent Registry Beta',
+  title: 'Agent Registry Beta — Arcanea',
   description:
     'Beta, Supabase-backed agent registry for published Arcanea agents. Empty states are shown honestly when no public agents are available.',
   openGraph: {

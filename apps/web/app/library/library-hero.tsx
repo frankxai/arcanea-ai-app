@@ -18,6 +18,7 @@ export function LibraryHero({ collectionsCount, textsCount }: LibraryHeroProps) 
   const stats = [
     { value: String(collectionsCount), label: "Collections", color: "var(--arc-brand-atlantean-teal)" },
     { value: String(textsCount), label: "Texts", color: "var(--arc-brand-atlantean-teal)" },
+    { value: "190K+", label: "Words", color: "var(--arc-brand-arcanean-gold)" },
     { value: "Free", label: "Always open", color: "var(--arc-void)" },
   ];
 
@@ -87,8 +88,8 @@ export function LibraryHero({ collectionsCount, textsCount }: LibraryHeroProps) 
             transition={{ duration: 0.6, delay: 0.13 }}
             className="text-base md:text-xl text-white/45 max-w-2xl mx-auto leading-relaxed mb-12 font-body"
           >
-            Original philosophy, poetry, legend, and practice for the creative
-            soul. Laws, meditations, parables. Equipment for living.
+            190,000+ words of original philosophy, poetry, legend, and practice
+            for the creative soul. Laws. Meditations. Parables. Equipment for living.
           </m.p>
 
           {/* Stat row */}
@@ -96,7 +97,7 @@ export function LibraryHero({ collectionsCount, textsCount }: LibraryHeroProps) 
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="grid grid-cols-3 gap-6 max-w-xl mx-auto"
+            className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl mx-auto"
           >
             {stats.map(({ value, label, color }, i) => (
               <StatCard key={label} value={value} label={label} color={color} delay={0.24 + i * 0.06} />

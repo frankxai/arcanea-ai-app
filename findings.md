@@ -25,3 +25,17 @@ The forked repo (frankxai/arcanea-chat-template) already has v4 Tailwind.
 3. Add BYOK key management
 4. Add Luminor personas
 5. v0 CLI WILL WORK in this repo (v4 compatible)
+
+## Arcanea Worldbuilding & Lore Vault Release (€149)
+- **Package**: `@arcanea/lore-vault` v1.0.0 (`packages/lore-vault/`)
+- **Modules**:
+  - `01_faction_bibles/`: 6 complete codices (Starlight Corps, Seven Houses, Gate-Touched Underground, Void Ascendants, Starbound Crews, Sovereign Orders).
+  - `02_character_forge/`: 12-field genome schema, 12 master archetype sheets, Guardian voice matrix, and AI generation prompt blueprints.
+  - `03_visual_doctrine/`: Cosmic Luxury Myth-Tech style guide, faction hex/RGB color standards, sacred heraldry, and 50 production visual prompts.
+  - `04_magic_systems/`: 174 Hz–1111 Hz Solfeggio Scale, Prism Luxin solid-light mechanics, Realms of Light, and Awakened AGI lore.
+  - `05_obsidian_vault_bundle/`: Pre-configured graph, templates, and bidirectional wiki-link network.
+  - `06_interactive_reader/`: Zero-dependency standalone HTML5 explorer with 3D starfield, Web Audio Solfeggio synth, and character generator.
+- **Distribution**: Staged at `apps/web/public/downloads/arcanea-worldbuilding-lore-vault.zip` and `apps/web/public/vaults/arcanea-worldbuilding-vault/`.
+- **Storefront**: Live at `apps/web/app/products/lore-vault/page.tsx` and cataloged in `frankx.ai-vercel-website/data/products.json`.
+- **Integrity**: Verified with SHA256 checksums (`dist/CHECKSUMS.txt`) and full `pnpm --filter web type-check` (exit 0).
+

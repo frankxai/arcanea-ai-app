@@ -25,19 +25,11 @@ tags:
   - malachar
   - character-diamond
 public_private: public
-# Port provenance (2026-08-14 MasterFaction Phase B)
-ported_at: 2026-08-14
-ported_by: hermes-agent
-source_path: starlight/repos/arcanea-ai-app/.arcanea/lore/CHARACTER_CORE.md
-source_branch_note: codex/arcanea-homepage-world-engine (dirty primary; read-only copy)
-source_sha256: 67b1ff31f1e627c7917be1a91812ed46a9c821870146c09b1a45a39a9a232705
-source_bytes: 9619
-port_policy: STAGING only; no CANON_LOCKED promotion; see DUAL_CAST_BRIDGE.md
 ---
 
 # Arcanea Character Core
 
-This file is the forward staging core for the Confluence arc. It does not bulk-rewrite historical book files. See DUAL_CAST_BRIDGE.md for cast reconciliation and migration guidelines.
+This file is the forward staging core for the Confluence arc. It does not bulk-rewrite historical book files. The alias ledger defines migration names for later passes.
 
 ## Cast Center
 

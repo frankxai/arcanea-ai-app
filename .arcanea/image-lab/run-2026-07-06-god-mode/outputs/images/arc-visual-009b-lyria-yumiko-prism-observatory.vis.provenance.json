@@ -1,0 +1,88 @@
+{
+  "asset_uid": "arcanea-2026-07-lyria-yumiko-prism-observatory",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b2",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "lyria yumiko prism observatory",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "vertical-social-9x16",
+  "aspect_ratio": "9:16",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-009b-lyria-yumiko-prism-observatory.png",
+    "sha256": "3f898631bf3e0059193e4fd53ce6e58d9423f80108f138eb844a65c8ac7d3a56",
+    "mime_type": "image/png",
+    "width": 941,
+    "height": 1672,
+    "size_bytes": 2775689
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b2.json#arc-visual-009b",
+    "prompt": "Use case: illustration-story. Asset type: vertical social poster. Primary request: Lyria, Arcanean Goddess of the Sight Gate, with bonded Godbeast Yumiko as a clean prismatic guardian. Scene/backdrop: prismatic observatory above folded neural-cosmos terrain used only as metaphor, with smoked glass platforms and clean light planes. Subject: Lyria studies a blank prism relic that reveals hidden structure as pure light, while Yumiko appears as a vast guardian silhouette woven into the lens architecture, not an animal mount. Style/medium: cinematic Arcanea concept art, neural-cosmos inspired, premium, not scientific diagram. Composition/framing: 9:16, face, prism, and guardian silhouette readable in one second; clean upper caption-safe zone. Lighting/mood: silver, prismatic teal, restrained gold, visionary and composed. Materials/textures: Yumiko Prism, smoked glass, starlight metal, spectral microscopy grain. Constraints: no text, no logos, no rainbow clutter, no medical stock imagery, no fake diagrams, no tiny marks.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "9:16"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "style-frame",
+    "score30": 25,
+    "decision": "iterate",
+    "failure_modes": [
+      "Yumiko reads as a prismatic fox or wolf silhouette rather than a canon-specific Sight Gate Godbeast",
+      "Character portrait is still too generic prestige fantasy/anime"
+    ],
+    "next_improvement": "Regenerate Yumiko as lens-field guardian woven into observatory optics, with less animal portrait and more perception infrastructure."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md Ten Gates",
+      "Lyria",
+      "Yumiko",
+      "Sight Gate"
+    ],
+    "gate": "Sight",
+    "guardian": "Lyria"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "guardian-godbeast"
+      },
+      {
+        "trait_type": "surface",
+        "value": "vertical-social-9x16"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Sight"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Lyria"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-009b-lyria-yumiko-prism-observatory.vis.provenance.json"
+  },
+  "used_in": [],
+  "created_at": "2026-07-06T03:18:30+02:00"
+}

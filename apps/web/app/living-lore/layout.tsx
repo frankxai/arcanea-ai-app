@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     'Follow the crew on an interactive journey through the Ten Gates of Arcanea. Read, interact, and experience the mythology firsthand.',
   openGraph: {
-    title: 'The Living Lore',
+    title: 'The Living Lore — Arcanea',
     description:
       'An interactive narrative experience through the Ten Gates of Arcanea.',
     type: 'website',

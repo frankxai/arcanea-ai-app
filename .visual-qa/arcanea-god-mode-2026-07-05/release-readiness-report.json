@@ -1,0 +1,1384 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-07-05T07:14:14.267Z",
+  "repo": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app",
+  "summary": {
+    "productionReady": false,
+    "previewReady": false,
+    "durableWorkflowReady": false,
+    "pass": 18,
+    "warn": 4,
+    "blockers": 4
+  },
+  "decision": "blocked",
+  "inputs": {
+    "nvmrc": "22",
+    "packageManager": "pnpm@8.15.0",
+    "localVercelProject": ".vercel/project.json",
+    "remoteSnapshot": "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
+    "releaseScope": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
+    "releasePackagePlan": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.json",
+    "remediationPacket": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json",
+    "remediationRunner": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.json",
+    "domainAudit": "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json",
+    "projectSelection": "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.json",
+    "successMetricsReport": ".visual-qa/arcanea-god-mode-2026-07-05/success-metrics-report.json",
+    "durableWorkflowReadinessReport": ".visual-qa/arcanea-god-mode-2026-07-05/durable-workflow-readiness-report.json",
+    "evidenceManifest": ".visual-qa/design-loop-evidence-arcanea-god-mode-2026-07-05.json",
+    "currentGitHead": "97093bf51ee9944ad9ea68d1fa81492d1b35e08f",
+    "packageManifestCount": 68
+  },
+  "checks": [
+    {
+      "status": "pass",
+      "lane": "vercel-release",
+      "id": "vercel-project-linked",
+      "summary": "Vercel project link exists.",
+      "evidence": ".vercel/project.json",
+      "projectId": "prj_90OIWsAmfeswv8IG8WxqEAFefTOV",
+      "orgId": "team_q6LNT6rnFRlqlcjBJ2Wxz6PE"
+    },
+    {
+      "status": "pass",
+      "lane": "vercel-release",
+      "id": "local-vercel-framework",
+      "summary": "Local Vercel project framework is Next.js."
+    },
+    {
+      "status": "blocker",
+      "lane": "vercel-release",
+      "id": "remote-vercel-framework",
+      "summary": "Remote Vercel project framework is services, expected nextjs.",
+      "evidence": "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
+      "action": "Set the Vercel project framework preset to Next.js before production promotion."
+    },
+    {
+      "status": "pass",
+      "lane": "vercel-release",
+      "id": "local-node-version",
+      "summary": "Local Vercel Node 22.x matches .nvmrc 22."
+    },
+    {
+      "status": "blocker",
+      "lane": "vercel-release",
+      "id": "remote-node-version",
+      "summary": "Remote Vercel Node 24.x does not match .nvmrc 22.",
+      "evidence": "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
+      "action": "Resolve Node runtime drift before production promotion."
+    },
+    {
+      "status": "blocker",
+      "lane": "vercel-release",
+      "id": "production-domain",
+      "summary": "arcanea.ai is not attached to the inspected Vercel project.",
+      "evidence": "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
+      "domains": [
+        "arcanea-ai-app.vercel.app",
+        "arcanea-ai-app-starlight-intelligence.vercel.app",
+        "arcanea-ai-app-frankx-eth-starlight-intelligence.vercel.app"
+      ],
+      "action": "Do not claim the production domain until project/domain mapping is resolved."
+    },
+    {
+      "status": "blocker",
+      "lane": "vercel-release",
+      "id": "remote-live-state",
+      "summary": "Remote Vercel project reports live=false.",
+      "evidence": "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
+      "action": "Verify preview and production mapping before promotion."
+    },
+    {
+      "status": "pass",
+      "lane": "vercel-release",
+      "id": "vercel-remediation-packet",
+      "summary": "Vercel remediation packet exists for the remaining external project blockers.",
+      "evidence": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json",
+      "actions": [
+        "confirm-release-project-selection",
+        "patch-project-framework-and-node",
+        "attach-production-domain",
+        "separate-backup-branch-noise-from-release-candidate",
+        "refresh-and-verify-project-state",
+        "preview-then-promote"
+      ]
+    },
+    {
+      "status": "pass",
+      "lane": "vercel-release",
+      "id": "vercel-remediation-runner",
+      "summary": "Guarded Vercel remediation runner is dry-run ready and non-mutating by default.",
+      "evidence": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.json",
+      "pass": 6,
+      "warn": 1,
+      "blockers": 0,
+      "tokenPresent": false,
+      "operatorCommands": {
+        "dryRun": "node scripts/arcanea-vercel-remediation-runner.mjs --write --strict",
+        "verifyRemote": "node scripts/arcanea-vercel-remediation-runner.mjs --verify-remote --confirm-project=arcanea-ai-app --write --strict",
+        "applyProjectSettings": "node scripts/arcanea-vercel-remediation-runner.mjs --apply-project-settings --confirm-project=arcanea-ai-app --write --strict",
+        "applyDomain": "node scripts/arcanea-vercel-remediation-runner.mjs --apply-domain --confirm-project=arcanea-ai-app --confirm-domain=arcanea.ai --write --strict"
+      }
+    },
+    {
+      "status": "pass",
+      "lane": "vercel-release",
+      "id": "vercel-domain-ownership-audit",
+      "summary": "arcanea.ai ownership/routing audit confirms the domain is under the Starlight Vercel team and served by Vercel, but not assigned to the current release project.",
+      "evidence": "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json",
+      "decision": "domain-owned-but-release-project-unassigned",
+      "releaseProjectHasDomain": false,
+      "knownAssociatedProject": "arcanea-lobechat-labs",
+      "nameserversMatchVercelDns": false
+    },
+    {
+      "status": "pass",
+      "lane": "vercel-release",
+      "id": "vercel-project-selection-audit",
+      "summary": "Vercel project selection audit recommends fixing the current linked release project before relinking to alternates.",
+      "evidence": "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.json",
+      "decision": "fix-current-linked-project-first",
+      "recommendedProject": "arcanea-ai-app",
+      "alternateProject": "arcanea-ai-appx",
+      "selectedScore": "7/14",
+      "rationale": [
+        "arcanea-ai-app is the current linked project and has recorded God Mode branch preview evidence.",
+        "arcanea-ai-app needs framework/node/domain/live-state repair, but those are direct project-setting/domain actions.",
+        "arcanea-ai-appx has better framework/node/root posture, but it is not linked to the current worktree and still has npm-based project commands.",
+        "No inspected Arcanea candidate currently owns arcanea.ai/www.arcanea.ai, so domain movement requires explicit production-owner and rollback approval either way."
+      ]
+    },
+    {
+      "status": "warn",
+      "lane": "vercel-release",
+      "id": "latest-deployment-ready",
+      "summary": "Latest Vercel deployment is BLOCKED on backup/claude-snapshots; the latest recorded God Mode candidate preview is READY, so this is tracked as backup-branch release noise.",
+      "evidence": "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
+      "latestDeployment": "dpl_5uA8PAXkJFqYkpDuG39L11gq9a1Q",
+      "candidateDeployment": "dpl_3ufoFcuwU9HnEpNeGNxZVZPuvdKT",
+      "action": "Keep backup snapshot deployments out of the release decision path, and create a fresh God Mode preview after packaging the current worktree."
+    },
+    {
+      "status": "warn",
+      "lane": "vercel-release",
+      "id": "candidate-preview-current",
+      "summary": "Latest recorded God Mode candidate preview matches current HEAD, but the worktree has included God Mode changes that are not deployed yet.",
+      "evidence": "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
+      "deployment": "dpl_3ufoFcuwU9HnEpNeGNxZVZPuvdKT",
+      "gitSha": "97093bf51ee9944ad9ea68d1fa81492d1b35e08f",
+      "includedDirtyCount": 103,
+      "action": "After packaging the God Mode slice, create one fresh preview from the staged/committed change set and visually verify it."
+    },
+    {
+      "status": "pass",
+      "lane": "vercel-release",
+      "id": "root-vercel-config",
+      "summary": "Root vercel.json is configured for the apps/web Next.js build."
+    },
+    {
+      "status": "pass",
+      "lane": "vercel-release",
+      "id": "root-frozen-install",
+      "summary": "vercel.json uses pnpm --frozen-lockfile.",
+      "evidence": "vercel.json"
+    },
+    {
+      "status": "pass",
+      "lane": "vercel-release",
+      "id": "web-frozen-install",
+      "summary": "apps/web/vercel.json uses pnpm --frozen-lockfile.",
+      "evidence": "apps/web/vercel.json"
+    },
+    {
+      "status": "pass",
+      "lane": "engineering",
+      "id": "web-required-scripts",
+      "summary": "Web app has build/start/type-check/test:projects scripts.",
+      "evidence": "apps/web/package.json"
+    },
+    {
+      "status": "pass",
+      "lane": "ux-growth",
+      "id": "analytics-sinks",
+      "summary": "Vercel Analytics and Speed Insights dependencies are installed.",
+      "evidence": "apps/web/package.json"
+    },
+    {
+      "status": "pass",
+      "lane": "product-doctrine",
+      "id": "proof-loop-routes",
+      "summary": "Public proof-loop routes exist for status, method, Genesis, Atlas, and Store.",
+      "evidence": [
+        "apps/web/app/status/page.tsx",
+        "apps/web/app/method/page.tsx",
+        "apps/web/app/genesis/page.tsx",
+        "apps/web/app/atlas/creatures/page.tsx",
+        "apps/web/app/studio/store/page.tsx"
+      ]
+    },
+    {
+      "status": "pass",
+      "lane": "ux-growth",
+      "id": "success-metrics-audit",
+      "summary": "Success metrics audit is clean for activation events, tests, docs, privacy, dashboard views, and competitive pressure mapping.",
+      "evidence": ".visual-qa/arcanea-god-mode-2026-07-05/success-metrics-report.json",
+      "pass": 6,
+      "warn": 0,
+      "blockers": 0
+    },
+    {
+      "status": "pass",
+      "lane": "premium-qa",
+      "id": "visual-evidence",
+      "summary": "Activation, status, and method visual QA reports are recorded.",
+      "evidence": ".visual-qa/design-loop-evidence-arcanea-god-mode-2026-07-05.json"
+    },
+    {
+      "status": "warn",
+      "lane": "ai-engineering",
+      "id": "durable-runtime-docs",
+      "summary": "Eve/Vercel Workflow runtime is intentionally not ready: dependencies or bundled docs are absent.",
+      "dependencies": [],
+      "docs": {
+        "eveDocs": false,
+        "workflowDocs": false
+      },
+      "action": "Do not write or claim durable Eve/workflow runtime code until dependencies are intentionally added and bundled docs are read."
+    },
+    {
+      "status": "pass",
+      "lane": "ai-engineering",
+      "id": "durable-workflow-readiness-packet",
+      "summary": "Durable Workflow/Eve readiness packet is present, blocker-free, and keeps runtime implementation behind docs/dependency gates.",
+      "evidence": ".visual-qa/arcanea-god-mode-2026-07-05/durable-workflow-readiness-report.json",
+      "decision": "runtime-blocked-packet-ready",
+      "pass": 2,
+      "warn": 4,
+      "blockers": 0
+    },
+    {
+      "status": "warn",
+      "lane": "safety",
+      "id": "git-clean-release-packaging",
+      "summary": "Dirty worktree is classified by the release scope manifest: 103 included paths, 5 excluded paths, 0 unknown paths.",
+      "dirty": {
+        "count": 108,
+        "scopeManifest": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
+        "included": [
+          ".gitignore",
+          ".visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-desktop.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-mobile.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/activation-genesis-prefill-desktop.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/activation-metrics-playwright-report.json",
+          ".visual-qa/arcanea-god-mode-2026-07-05/activation-store-desktop.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/activation-store-mobile.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/activation-studio-image-desktop.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/artifact-pipeline-local-qa.json",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-hero-panel.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-panel.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-showcase-panel.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-top.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-hero-panel.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-packet.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-panel.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-showcase-panel.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-top.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-hero-panel.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-panel.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-showcase-panel.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-top.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-v0/design-loop-evidence-arcanea-artifact-pipeline-v0-2026-07-05.json",
+          ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-v0/v0-arcanea-artifact-pipeline-dark.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/atlas-desktop.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/atlas-detail-desktop.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/atlas-detail-mobile.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/atlas-mobile.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/durable-workflow-readiness-report.json",
+          ".visual-qa/arcanea-god-mode-2026-07-05/genesis-desktop.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/genesis-mobile.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/gitleaks-docs-redacted.json",
+          ".visual-qa/arcanea-god-mode-2026-07-05/gitleaks-scripts-redacted.json",
+          ".visual-qa/arcanea-god-mode-2026-07-05/home-desktop.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/home-mobile.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/method-desktop.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/method-mobile.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/method-playwright-report.json",
+          ".visual-qa/arcanea-god-mode-2026-07-05/method-tablet.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/playwright-report.json",
+          ".visual-qa/arcanea-god-mode-2026-07-05/release-package-plan.json",
+          ".visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json",
+          ".visual-qa/arcanea-god-mode-2026-07-05/status-desktop.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/status-mobile.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/status-playwright-report.json",
+          ".visual-qa/arcanea-god-mode-2026-07-05/status-tablet-width-check.json",
+          ".visual-qa/arcanea-god-mode-2026-07-05/status-tablet.png",
+          ".visual-qa/arcanea-god-mode-2026-07-05/success-metrics-report.json",
+          ".visual-qa/arcanea-god-mode-2026-07-05/vercel-remediation-runner-report.json",
+          ".visual-qa/design-loop-evidence-arcanea-god-mode-2026-07-05.json",
+          "apps/web/app/atlas/creatures/[slug]/page.tsx",
+          "apps/web/app/atlas/creatures/[slug]/prompt-actions.tsx",
+          "apps/web/app/atlas/creatures/page.tsx",
+          "apps/web/app/genesis/genesis-session.tsx",
+          "apps/web/app/layout.tsx",
+          "apps/web/app/method/page.tsx",
+          "apps/web/app/status/page.tsx",
+          "apps/web/app/studio/image/page.tsx",
+          "apps/web/app/studio/store/page.tsx",
+          "apps/web/app/v3/artifact-pipeline-panel.tsx",
+          "apps/web/app/v3/hero-chat-box.tsx",
+          "apps/web/app/v3/hero-showcase.tsx",
+          "apps/web/app/v3/v3-content.tsx",
+          "apps/web/components/landing/cta-section.tsx",
+          "apps/web/components/navigation/footer.tsx",
+          "apps/web/components/navigation/navbar.tsx",
+          "apps/web/lib/analytics/__tests__/events-projects.test.ts",
+          "apps/web/lib/analytics/events.ts",
+          "apps/web/lib/arcanea/activation.ts",
+          "apps/web/lib/genesis/__tests__/workflow-contract.test.ts",
+          "apps/web/lib/genesis/proof.ts",
+          "apps/web/lib/genesis/workflow-contract.ts",
+          "apps/web/vercel.json",
+          "docs/ARCANEA_FIRST_SESSION_PRD.md",
+          "docs/ARCANEA_GROWTH_METRICS.md",
+          "planning-with-files/ARCANEA_AI_GOD_MODE_SPRINT_2026-07-05.md",
+          "planning-with-files/ARCANEA_ARTIFACT_PIPELINE_SCENE_BRIEF_2026-07-05.md",
+          "planning-with-files/ARCANEA_COMPETITIVE_SCORECARD_2026-07-05.json",
+          "planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.json",
+          "planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.md",
+          "planning-with-files/ARCANEA_DURABLE_WORKFLOW_RELEASE_BRIEF_2026-07-05.md",
+          "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.json",
+          "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.md",
+          "planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
+          "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json",
+          "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.md",
+          "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.json",
+          "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.md",
+          "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json",
+          "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.md",
+          "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.json",
+          "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.md",
+          "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
+          "scripts/arcanea-durable-workflow-readiness.mjs",
+          "scripts/arcanea-release-package-plan.mjs",
+          "scripts/arcanea-release-readiness.mjs",
+          "scripts/arcanea-success-metrics-audit.mjs",
+          "scripts/arcanea-vercel-project-selection.mjs",
+          "scripts/arcanea-vercel-remediation-runner.mjs",
+          "scripts/arcanea-vercel-remediation.mjs",
+          "scripts/nft-scale-test.js",
+          "scripts/nft-v5-sacred-gear.js",
+          "vercel.json"
+        ],
+        "excluded": [
+          "data/campaign-loop-state.json",
+          "package.json",
+          "packages/arc-protocol/package.json",
+          "pnpm-lock.yaml",
+          "docs/strategy/ARCANEA_BUSINESS_STRATEGY.md"
+        ],
+        "unknown": [],
+        "entries": [
+          {
+            "raw": "M  .gitignore",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": ".gitignore",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-mobile.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-mobile.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-genesis-prefill-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-genesis-prefill-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-metrics-playwright-report.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-metrics-playwright-report.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-store-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-store-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-store-mobile.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-store-mobile.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-studio-image-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-studio-image-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/artifact-pipeline-local-qa.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/artifact-pipeline-local-qa.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-hero-panel.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-hero-panel.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-panel.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-panel.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-showcase-panel.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-showcase-panel.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-top.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-top.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-hero-panel.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-hero-panel.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-packet.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-packet.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-panel.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-panel.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-showcase-panel.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-showcase-panel.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-top.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-top.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-hero-panel.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-hero-panel.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-panel.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-panel.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-showcase-panel.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-showcase-panel.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-top.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-top.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-v0/design-loop-evidence-arcanea-artifact-pipeline-v0-2026-07-05.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-v0/design-loop-evidence-arcanea-artifact-pipeline-v0-2026-07-05.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-v0/v0-arcanea-artifact-pipeline-dark.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-v0/v0-arcanea-artifact-pipeline-dark.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/atlas-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/atlas-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/atlas-detail-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/atlas-detail-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/atlas-detail-mobile.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/atlas-detail-mobile.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/atlas-mobile.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/atlas-mobile.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/durable-workflow-readiness-report.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/durable-workflow-readiness-report.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/genesis-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/genesis-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/genesis-mobile.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/genesis-mobile.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/gitleaks-docs-redacted.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/gitleaks-docs-redacted.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/gitleaks-scripts-redacted.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/gitleaks-scripts-redacted.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/home-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/home-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/home-mobile.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/home-mobile.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/method-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/method-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/method-mobile.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/method-mobile.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/method-playwright-report.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/method-playwright-report.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/method-tablet.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/method-tablet.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/playwright-report.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/playwright-report.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/release-package-plan.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/release-package-plan.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/status-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/status-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/status-mobile.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/status-mobile.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/status-playwright-report.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/status-playwright-report.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/status-tablet-width-check.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/status-tablet-width-check.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/status-tablet.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/status-tablet.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/success-metrics-report.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/success-metrics-report.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/vercel-remediation-runner-report.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/vercel-remediation-runner-report.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/design-loop-evidence-arcanea-god-mode-2026-07-05.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/design-loop-evidence-arcanea-god-mode-2026-07-05.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/app/atlas/creatures/[slug]/page.tsx",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/app/atlas/creatures/[slug]/page.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  apps/web/app/atlas/creatures/[slug]/prompt-actions.tsx",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "apps/web/app/atlas/creatures/[slug]/prompt-actions.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/app/atlas/creatures/page.tsx",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/app/atlas/creatures/page.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/app/genesis/genesis-session.tsx",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/app/genesis/genesis-session.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/app/layout.tsx",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/app/layout.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  apps/web/app/method/page.tsx",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "apps/web/app/method/page.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  apps/web/app/status/page.tsx",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "apps/web/app/status/page.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/app/studio/image/page.tsx",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/app/studio/image/page.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/app/studio/store/page.tsx",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/app/studio/store/page.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  apps/web/app/v3/artifact-pipeline-panel.tsx",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "apps/web/app/v3/artifact-pipeline-panel.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/app/v3/hero-chat-box.tsx",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/app/v3/hero-chat-box.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/app/v3/hero-showcase.tsx",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/app/v3/hero-showcase.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/app/v3/v3-content.tsx",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/app/v3/v3-content.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/components/landing/cta-section.tsx",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/components/landing/cta-section.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/components/navigation/footer.tsx",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/components/navigation/footer.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/components/navigation/navbar.tsx",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/components/navigation/navbar.tsx",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/lib/analytics/__tests__/events-projects.test.ts",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/lib/analytics/__tests__/events-projects.test.ts",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/lib/analytics/events.ts",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/lib/analytics/events.ts",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/lib/arcanea/activation.ts",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/lib/arcanea/activation.ts",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  apps/web/lib/genesis/__tests__/workflow-contract.test.ts",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "apps/web/lib/genesis/__tests__/workflow-contract.test.ts",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/lib/genesis/proof.ts",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/lib/genesis/proof.ts",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  apps/web/lib/genesis/workflow-contract.ts",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "apps/web/lib/genesis/workflow-contract.ts",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  apps/web/vercel.json",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "apps/web/vercel.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": " M data/campaign-loop-state.json",
+            "rawStatus": " M",
+            "status": "M",
+            "file": "data/campaign-loop-state.json",
+            "included": false,
+            "excluded": true
+          },
+          {
+            "raw": "M  docs/ARCANEA_FIRST_SESSION_PRD.md",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "docs/ARCANEA_FIRST_SESSION_PRD.md",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  docs/ARCANEA_GROWTH_METRICS.md",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "docs/ARCANEA_GROWTH_METRICS.md",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": " M package.json",
+            "rawStatus": " M",
+            "status": "M",
+            "file": "package.json",
+            "included": false,
+            "excluded": true
+          },
+          {
+            "raw": " M packages/arc-protocol/package.json",
+            "rawStatus": " M",
+            "status": "M",
+            "file": "packages/arc-protocol/package.json",
+            "included": false,
+            "excluded": true
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_AI_GOD_MODE_SPRINT_2026-07-05.md",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_AI_GOD_MODE_SPRINT_2026-07-05.md",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_ARTIFACT_PIPELINE_SCENE_BRIEF_2026-07-05.md",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_ARTIFACT_PIPELINE_SCENE_BRIEF_2026-07-05.md",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_COMPETITIVE_SCORECARD_2026-07-05.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_COMPETITIVE_SCORECARD_2026-07-05.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.md",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.md",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_DURABLE_WORKFLOW_RELEASE_BRIEF_2026-07-05.md",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_DURABLE_WORKFLOW_RELEASE_BRIEF_2026-07-05.md",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.md",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.md",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.md",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.md",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.md",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.md",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.md",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.md",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.md",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.md",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": " M pnpm-lock.yaml",
+            "rawStatus": " M",
+            "status": "M",
+            "file": "pnpm-lock.yaml",
+            "included": false,
+            "excluded": true
+          },
+          {
+            "raw": "A  scripts/arcanea-durable-workflow-readiness.mjs",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "scripts/arcanea-durable-workflow-readiness.mjs",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  scripts/arcanea-release-package-plan.mjs",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "scripts/arcanea-release-package-plan.mjs",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  scripts/arcanea-release-readiness.mjs",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "scripts/arcanea-release-readiness.mjs",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  scripts/arcanea-success-metrics-audit.mjs",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "scripts/arcanea-success-metrics-audit.mjs",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  scripts/arcanea-vercel-project-selection.mjs",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "scripts/arcanea-vercel-project-selection.mjs",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  scripts/arcanea-vercel-remediation-runner.mjs",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "scripts/arcanea-vercel-remediation-runner.mjs",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  scripts/arcanea-vercel-remediation.mjs",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": "scripts/arcanea-vercel-remediation.mjs",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  scripts/nft-scale-test.js",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "scripts/nft-scale-test.js",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  scripts/nft-v5-sacred-gear.js",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "scripts/nft-v5-sacred-gear.js",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "M  vercel.json",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": "vercel.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "?? docs/strategy/ARCANEA_BUSINESS_STRATEGY.md",
+            "rawStatus": "??",
+            "status": "??",
+            "file": "docs/strategy/ARCANEA_BUSINESS_STRATEGY.md",
+            "included": false,
+            "excluded": true
+          }
+        ],
+        "sample": [
+          {
+            "raw": "M  .gitignore",
+            "rawStatus": "M ",
+            "status": "M",
+            "file": ".gitignore",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-mobile.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-mobile.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-genesis-prefill-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-genesis-prefill-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-metrics-playwright-report.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-metrics-playwright-report.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-store-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-store-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-store-mobile.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-store-mobile.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/activation-studio-image-desktop.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/activation-studio-image-desktop.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/artifact-pipeline-local-qa.json",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/artifact-pipeline-local-qa.json",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-hero-panel.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-hero-panel.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-panel.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-panel.png",
+            "included": true,
+            "excluded": false
+          },
+          {
+            "raw": "A  .visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-showcase-panel.png",
+            "rawStatus": "A ",
+            "status": "A",
+            "file": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-showcase-panel.png",
+            "included": true,
+            "excluded": false
+          }
+        ]
+      },
+      "evidence": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
+      "action": "Stage only included paths and leave excluded dirty paths out of the God Mode release."
+    },
+    {
+      "status": "pass",
+      "lane": "safety",
+      "id": "release-package-plan",
+      "summary": "Release package plan has been applied cleanly: 103 included paths staged, no excluded paths staged.",
+      "evidence": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.json",
+      "decision": "stage-plan-ready",
+      "countsMatch": false,
+      "packagedClean": true,
+      "stagedIncludedCount": 103,
+      "unstagedIncluded": [],
+      "includedWithExtraWorktreeChanges": [],
+      "stagedExcluded": [],
+      "stagedUnknown": [],
+      "planSummary": {
+        "pass": 5,
+        "warn": 2,
+        "blockers": 0,
+        "dirtyCount": 61,
+        "includedDirtyCount": 56,
+        "excludedDirtyCount": 5,
+        "unknownDirtyCount": 0,
+        "stageTargetCount": 56,
+        "readyForStaging": true,
+        "readyForPreview": false,
+        "readyForProduction": false
+      },
+      "action": "Commit the staged God Mode package only after local gates remain green; do not push/deploy until Vercel blockers are resolved or a preview-only exception is approved."
+    },
+    {
+      "status": "pass",
+      "lane": "engineering",
+      "id": "package-manager",
+      "summary": "Repo package manager is pnpm@8.15.0.",
+      "evidence": "package.json"
+    }
+  ]
+}

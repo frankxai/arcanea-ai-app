@@ -42,3 +42,28 @@ export { parseWeight, formatWeight, extractWeights, applyWeight, stripWeights } 
 
 // Sync
 export { PromptBooksSync } from './sync'
+
+// Public Registry
+export {
+  PUBLIC_PROMPT_REGISTRY,
+  PROMPT_REGISTRY_SCOPES,
+  listPublicRegistryPrompts,
+  listPublicRegistryBooks,
+  getPublicRegistryPrompt,
+  getPublicRegistryBook,
+  getPublicRegistryScopeCounts,
+  searchPublicRegistry,
+  publicRegistryPromptToCreatePromptInput,
+  publicRegistryBookToCreateCollectionInput,
+  formatPublicRegistryPromptMarkdown,
+  formatPublicRegistryBookMarkdown,
+} from './public-registry'
+export type {
+  PromptRegistryScope,
+  PublicPromptRegistry,
+  PublicRegistryPrompt,
+  PublicRegistryBook,
+  PublicRegistryScopeCount,
+  PublicRegistryScopeCounts,
+  PublicRegistrySearchResults,
+} from './public-registry'

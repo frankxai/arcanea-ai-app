@@ -1,0 +1,37 @@
+[
+  {
+    "prompt_id": "titan_of_earth",
+    "prompt": "SUBJECT: The Earth Titan of Arcanea. ORGANIZING METAPHOR: A moving mountain range. STYLE: Epic High Fantasy, cinematic lighting, extreme scale. VIEWPOINT: Ground level, looking up at the colossal being from a vast distance. COMPONENTS: 1. THE TITAN: A massive humanoid figure made of bedrock, tectonic plates, and overgrown forests. 2. SCALE: Clouds wrap around its waist; tiny birds fly around its knees. 3. DETAILS: Entire ecosystems, waterfalls, and ancient ruins exist on its shoulders. 4. MAGIC: Glowing orange magma veins pulse across its stony skin. ORGANIC ANCHOR: A tiny village at the very base of the image to establish scale. ATMOSPHERE: Awe-inspiring, ancient, slow-moving power. EMOTIONAL TONE: Insignificance of man, majesty of nature. NEGATIVE: Small, cartoon, human-sized, low detail.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "titan_of_sky",
+    "prompt": "SUBJECT: The Sky Titan, Sovereign of the Winds. ORGANIZING METAPHOR: A living hurricane shaped like a divine bird. STYLE: Cinematic fantasy, highly dynamic, volumetric lighting. VIEWPOINT: From a high mountain peak looking into the storm. COMPONENTS: 1. THE TITAN: A colossal avian entity made of swirling storm clouds, lightning, and prismatic light. 2. THE WINGS: Spanning miles, generating massive supercells. 3. LIGHTNING: Brilliant arcs of blue and purple lightning illuminating its form from within. 4. SCALE: A large airship looks like a tiny speck near its talons. ORGANIC ANCHOR: The rocky, snow-capped peak in the foreground being blasted by wind. ATMOSPHERE: Violent, majestic, chaotic energy, deafening power. EMOTIONAL TONE: Sublime terror, awe. NEGATIVE: Small bird, cute, sunny day, clear sky.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "titan_of_deep_sea",
+    "prompt": "SUBJECT: The Abyssal Leviathan, Titan of the Deep. ORGANIZING METAPHOR: The terror of the uncharted ocean depths. STYLE: Deep sea horror/fantasy, bioluminescent, moody. VIEWPOINT: Underwater, looking into the crushing dark. COMPONENTS: 1. THE TITAN: A colossal serpentine/whale-like entity, its true size hidden by the murky water. 2. EYES: Dozens of massive, glowing blue and green bioluminescent eyes piercing the dark. 3. SCALE: A massive sunken galleon resting on one of its scales. 4. ENVIRONMENT: Deep ocean trenches, geothermal vents spewing black smoke. ORGANIC ANCHOR: A small school of glowing jellyfish in the foreground. ATMOSPHERE: Crushing pressure, terrifying, mysterious, dark. EMOTIONAL TONE: Thalassophobia, ancient mystery. NEGATIVE: Bright, shallow water, cute fish, small size.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "colossal_ancient_machine",
+    "prompt": "SUBJECT: The Dormant World-Engine. ORGANIZING METAPHOR: A forgotten god-machine buried in the earth. STYLE: Sci-Fantasy, Solarpunk ruins, highly detailed concept art. VIEWPOINT: Wide shot of a massive crater. COMPONENTS: 1. THE MACHINE: A colossal, rusted mechanical titan, half-buried, covered in millennia of overgrowth. 2. DESIGN: Intricate gears, glowing blue energy cores that still pulse faintly, and massive metallic limbs. 3. ENVIRONMENT: A lush jungle that has reclaimed the metal, with waterfalls flowing from its joints. 4. SCALE: Explorers standing on a single rusted gear the size of a building. ORGANIC ANCHOR: Bright tropical birds nesting in the giant metallic eye socket. ATMOSPHERE: Melancholic, peaceful, mysterious, ancient. EMOTIONAL TONE: Wonder about the past, fallen empires. NEGATIVE: Shiny, brand new, small, clean metal.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "sleeping_god_mountain",
+    "prompt": "SUBJECT: The Slumbering God. ORGANIZING METAPHOR: A mountain range that is actually the sleeping face and body of a cosmic entity. STYLE: Epic landscape fantasy, optical illusion, hyper-realistic. VIEWPOINT: High aerial shot at sunrise. COMPONENTS: 1. THE MOUNTAIN: At first glance, a rugged, snow-capped mountain range. On second glance, clearly the profile of a majestic, sleeping giant. 2. LIGHTING: The golden hour sunrise perfectly highlighting the features of the face. 3. DETAILS: Forests making up the beard/hair, a massive frozen lake over the closed eye. 4. ATMOSPHERE: Low hanging mist in the valleys to emphasize scale. ORGANIC ANCHOR: A flock of eagles flying past the \"nose\" peak. ATMOSPHERE: Serene, epic, mythical, ancient. EMOTIONAL TONE: Hidden magic, peace, awe. NEGATIVE: Obvious statue, small scale, bad lighting, plain mountain.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  }
+]

@@ -43,7 +43,7 @@ export function StorageHero() {
               transition={{ duration: 0.5, ease: EASE }}
             >
               <SovereigntyBadge />
-              <StatusBadge level="beta" note="Supabase live · more landing" />
+              <StatusBadge level="beta" note="Supabase live · rest Q2 2026" />
             </m.div>
 
             <m.div
@@ -55,7 +55,7 @@ export function StorageHero() {
               <StatusNotice
                 level="beta"
                 title="Supabase + pgvector are live. Rest is planned."
-                body="Markdown, JSONML, and semantic search work today inside Arcanea. Arweave, S3, Google Drive, Syncthing, and Obsidian export are next in line."
+                body="Markdown + JSONML + pgvector HNSW work today inside Arcanea. Arweave, S3, Google Drive, Syncthing, and Obsidian export arrive through Q2 2026 as part of the ingestion workstream."
               />
             </m.div>
 

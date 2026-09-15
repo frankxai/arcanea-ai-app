@@ -1,0 +1,24 @@
+{
+  "name": "@arcanea/lore-vault",
+  "version": "1.0.0",
+  "description": "The Arcanea Worldbuilding & Lore Vault — Complete Faction Bibles, Character Forge Sheets, and Visual Style Guides (€149 Digital Download Edition)",
+  "author": "Arcanea Creative Intelligence & FrankX",
+  "license": "Commercial / Arcanea Ecosystem License",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "node ../../scripts/package-lore-vault.mjs",
+    "validate": "node ../../scripts/package-lore-vault.mjs --validate-only"
+  },
+  "keywords": [
+    "arcanea",
+    "worldbuilding",
+    "lore",
+    "faction-bibles",
+    "character-forge",
+    "visual-doctrine",
+    "magic-systems",
+    "obsidian-vault"
+  ]
+}

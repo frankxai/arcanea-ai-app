@@ -2,11 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "framework": "nextjs",
-  "buildCommand": "pnpm turbo run build --filter=@arcanea/web",
-  "installCommand": "corepack enable && pnpm install --prod=false --no-frozen-lockfile",
+  "buildCommand": "pnpm --filter @arcanea/web... --workspace-concurrency=1 build",
+  "installCommand": "corepack enable && pnpm install --prod=false --frozen-lockfile",
   "outputDirectory": "apps/web/.next",
   "devCommand": "pnpm dev:web",
-  "ignoreCommand": "bash scripts/vercel-ignore-build.sh",
+
   "build": {
     "env": {
       "NEXT_PUBLIC_APP_NAME": "Arcanea",
@@ -14,6 +14,7 @@
       "NODE_OPTIONS": "--max-old-space-size=4096"
     }
   },
+
   "headers": [
     {
       "source": "/api/(.*)",
@@ -82,6 +83,7 @@
       ]
     }
   ],
+
   "rewrites": [
     {
       "source": "/api/:path*",
@@ -92,6 +94,7 @@
       "destination": "/api/health"
     }
   ],
+
   "redirects": [
     {
       "source": "/home",
@@ -99,10 +102,6 @@
       "permanent": true
     }
   ],
-  "regions": ["iad1"],
-  "git": {
-    "deploymentEnabled": {
-      "backup/claude-snapshots": false
-    }
-  }
+
+  "regions": ["iad1"]
 }

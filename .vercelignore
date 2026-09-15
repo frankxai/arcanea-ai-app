@@ -1,0 +1,25 @@
+# .vercelignore — exclude paths from Vercel build context & file tracing graph.
+# Keeps builds fast and prevents multi-gigabyte build payloads.
+# Anchored with leading slashes to prevent accidental deep subfolder matches.
+
+# Dev & agent scratch
+/.agent/
+/.claude/
+/.claude-flow/
+/.worktrees/
+/.asph-wip/
+/.visual-qa/
+
+# Arcanea generative labs & chat dumps (non-runtime)
+/.arcanea/image-lab/
+/.arcanea/chat-archive/
+/.arcanea/sessions/
+/.arcanea/voice/recordings/
+/.arcanea/runtime/
+
+# Content, documentation & reference books (managed in packages or SSOT)
+/book/
+/docs/
+/experiments/
+/archive/
+/_archive/

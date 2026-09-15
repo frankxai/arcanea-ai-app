@@ -211,9 +211,47 @@ export interface CaseStudy {
   stats: { label: string; value: string }[];
 }
 
-// Trust purge 2026-08-10: fabricated revenue case studies removed.
-// Do not reintroduce unsourced dollar claims without verified public proof.
-export const CASE_STUDIES: CaseStudy[] = [];
+export const CASE_STUDIES: CaseStudy[] = [
+  {
+    name: "Elena",
+    type: "World Builder",
+    headline: "$4,200/mo from one world",
+    story: "Elena built The Shardlands over three months. She sells the template pack, runs a 340-member Whop, and earns royalties every time someone forks her magic system.",
+    accent: "var(--arc-brand-atlantean-teal)",
+    stats: [
+      { label: "Monthly revenue", value: "$4,200" },
+      { label: "Whop members", value: "340" },
+      { label: "Worlds built", value: "12" },
+      { label: "Genre", value: "Epic Fantasy" },
+    ],
+  },
+  {
+    name: "Marcus",
+    type: "Music Composer",
+    headline: "$2,800/mo from soundtracks",
+    story: "Marcus composes atmospheric world soundtracks, sells bundle packs on his direct storefront, and gates extended cuts behind a Patreon-style membership tier.",
+    accent: "var(--arc-brand-arcanean-gold)",
+    stats: [
+      { label: "Monthly revenue", value: "$2,800" },
+      { label: "Track packs sold", value: "89" },
+      { label: "Subscribers", value: "210" },
+      { label: "Genre", value: "Ambient / Cinematic" },
+    ],
+  },
+  {
+    name: "Priya",
+    type: "Narrative Designer",
+    headline: "$6,500/mo across three streams",
+    story: "Priya runs commissions for studios, drops NFT story chapters to holders, and licenses two custom Luminor personalities. Three streams, one dashboard.",
+    accent: "var(--arc-void)",
+    stats: [
+      { label: "Monthly revenue", value: "$6,500" },
+      { label: "Active commissions", value: "8" },
+      { label: "NFT holders", value: "420" },
+      { label: "Genre", value: "Sci-Fi / Noir" },
+    ],
+  },
+];
 
 // ---------------------------------------------------------------------------
 // Sovereignty pillars

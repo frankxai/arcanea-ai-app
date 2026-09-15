@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-"use client";
+'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import Link from 'next/link';
+import { AnimatePresence, motion, type Variants } from 'framer-motion';
 import {
   type ClapDetector,
   type MicSession,
@@ -15,18 +14,18 @@ import {
   openMic,
   readRms,
   readSessionLog,
-} from "./audio-utils";
-import { emit, subscribe } from "./lib/intent-bus";
-import { AgentVisualizer } from "./components/agent-visualizer";
-import { RuntimeLauncher } from "./components/runtime-launcher";
-import { WorkflowGrid } from "./components/workflow-grid";
-import { LogicStream } from "./components/logic-stream";
-import { CommandPalette } from "./components/command-palette";
-import { EmbeddedViewer } from "./components/embedded-viewer";
-import { VoiceControl } from "./components/voice-control";
-import { WORKFLOWS } from "./lib/workflows";
-import { RUNTIMES } from "./lib/runtimes";
-import { getTenant, type TenantId } from "@/lib/tenants";
+} from './audio-utils';
+import { emit, subscribe } from './lib/intent-bus';
+import { AgentVisualizer } from './components/agent-visualizer';
+import { RuntimeLauncher } from './components/runtime-launcher';
+import { WorkflowGrid } from './components/workflow-grid';
+import { LogicStream } from './components/logic-stream';
+import { CommandPalette } from './components/command-palette';
+import { EmbeddedViewer } from './components/embedded-viewer';
+import { VoiceControl } from './components/voice-control';
+import { WORKFLOWS } from './lib/workflows';
+import { RUNTIMES } from './lib/runtimes';
+import { getTenant, type TenantId } from '@/lib/tenants';
 
 /* ------------------------------------------------------------------ */
 /*  Personas                                                           */
@@ -40,83 +39,25 @@ interface Persona {
   accent: string;
 }
 
-type PersonaId =
-  | "jarvis"
-  | "lumina"
-  | "draconia"
-  | "lyria"
-  | "alera"
-  | "shinkami"
-  | "nero";
+type PersonaId = 'jarvis' | 'lumina' | 'draconia' | 'lyria' | 'alera' | 'shinkami' | 'nero';
 
 const PERSONAS: Persona[] = [
-  {
-    id: "lumina",
-    name: "Lumina",
-    tagline: "The First Light",
-    color: "var(--arc-brand-arcanean-gold)",
-    accent: "var(--arc-brand-atlantean-teal)",
-  },
-  {
-    id: "jarvis",
-    name: "JARVIS",
-    tagline: "Concise systems agent",
-    color: "var(--arc-text-primary)",
-    accent: "var(--arc-text-primary)",
-  },
-  {
-    id: "draconia",
-    name: "Draconia",
-    tagline: "Guardian of Fire",
-    color: "var(--arc-fire)",
-    accent: "var(--arc-brand-arcanean-gold)",
-  },
-  {
-    id: "lyria",
-    name: "Lyria",
-    tagline: "Guardian of Sight",
-    color: "var(--arc-void)",
-    accent: "var(--arc-text-primary)",
-  },
-  {
-    id: "alera",
-    name: "Alera",
-    tagline: "Guardian of Voice",
-    color: "var(--arc-brand-atlantean-teal)",
-    accent: "var(--arc-text-primary)",
-  },
-  {
-    id: "shinkami",
-    name: "Shinkami",
-    tagline: "The Source",
-    color: "var(--arc-text-primary)",
-    accent: "var(--arc-brand-arcanean-gold)",
-  },
-  {
-    id: "nero",
-    name: "Nero",
-    tagline: "The Primordial Darkness",
-    color: "var(--arc-void)",
-    accent: "var(--arc-void)",
-  },
+  { id: 'lumina', name: 'Lumina', tagline: 'The First Light', color: 'var(--arc-brand-arcanean-gold)', accent: 'var(--arc-brand-atlantean-teal)' },
+  { id: 'jarvis', name: 'JARVIS', tagline: 'Concise systems agent', color: 'var(--arc-text-primary)', accent: 'var(--arc-text-primary)' },
+  { id: 'draconia', name: 'Draconia', tagline: 'Guardian of Fire', color: 'var(--arc-fire)', accent: 'var(--arc-brand-arcanean-gold)' },
+  { id: 'lyria', name: 'Lyria', tagline: 'Guardian of Sight', color: 'var(--arc-void)', accent: 'var(--arc-text-primary)' },
+  { id: 'alera', name: 'Alera', tagline: 'Guardian of Voice', color: 'var(--arc-brand-atlantean-teal)', accent: 'var(--arc-text-primary)' },
+  { id: 'shinkami', name: 'Shinkami', tagline: 'The Source', color: 'var(--arc-text-primary)', accent: 'var(--arc-brand-arcanean-gold)' },
+  { id: 'nero', name: 'Nero', tagline: 'The Primordial Darkness', color: 'var(--arc-void)', accent: 'var(--arc-void)' },
 ];
 
-type ActivationMode = "click" | "voice" | "clap";
+type ActivationMode = 'click' | 'voice' | 'clap';
 
-const ACTIVATION_MODES: { id: ActivationMode; label: string; hint: string }[] =
-  [
-    { id: "click", label: "Click", hint: "Click a persona to summon" },
-    {
-      id: "voice",
-      label: "Voice activation",
-      hint: "Mic on, sustained voice triggers summon",
-    },
-    {
-      id: "clap",
-      label: "Double clap",
-      hint: "Two claps within 600ms summons the selected persona",
-    },
-  ];
+const ACTIVATION_MODES: { id: ActivationMode; label: string; hint: string }[] = [
+  { id: 'click', label: 'Click', hint: 'Click a persona to summon' },
+  { id: 'voice', label: 'Voice activation', hint: 'Mic on, sustained voice triggers summon' },
+  { id: 'clap', label: 'Double clap', hint: 'Two claps within 600ms summons the selected persona' },
+];
 
 /* Choreographed entry — expoOut over 60ms stagger. */
 const stageVariants: Variants = {
@@ -144,20 +85,13 @@ interface VoiceDashboardClientProps {
   tenantId?: TenantId;
 }
 
-export default function VoiceDashboardClient({
-  tenantId: tenantOverride,
-}: VoiceDashboardClientProps = {}) {
-  const router = useRouter();
+export default function VoiceDashboardClient({ tenantId: tenantOverride }: VoiceDashboardClientProps = {}) {
   // Resolve tenant: prop wins, then ?tenant=, then default.
-  const [tenantId, setTenantId] = useState<TenantId>(
-    tenantOverride ?? "arcanea",
-  );
+  const [tenantId, setTenantId] = useState<TenantId>(tenantOverride ?? 'arcanea');
   const tenant = getTenant(tenantId);
-  const [selectedPersona, setSelectedPersona] = useState<PersonaId>(
-    tenant.defaultPersona,
-  );
-  const [activation, setActivation] = useState<ActivationMode>("click");
-  const [micDeviceId, setMicDeviceId] = useState<string>("");
+  const [selectedPersona, setSelectedPersona] = useState<PersonaId>(tenant.defaultPersona);
+  const [activation, setActivation] = useState<ActivationMode>('click');
+  const [micDeviceId, setMicDeviceId] = useState<string>('');
   const [inputDevices, setInputDevices] = useState<MediaDeviceInfo[]>([]);
   const [outputDevices, setOutputDevices] = useState<MediaDeviceInfo[]>([]);
   const [audioLevel, setAudioLevel] = useState(0);
@@ -180,7 +114,7 @@ export default function VoiceDashboardClient({
   const sessionRef = useRef<MicSession | null>(null);
   const detectorRef = useRef<ClapDetector | null>(null);
   const rafRef = useRef<number | null>(null);
-  const selectedRef = useRef<PersonaId>("lumina");
+  const selectedRef = useRef<PersonaId>('lumina');
   const lastVoiceTrigRef = useRef<number>(0);
 
   useEffect(() => {
@@ -192,26 +126,24 @@ export default function VoiceDashboardClient({
    * mode. Otherwise stay in v2 (clipboard) mode. Workflows fall back
    * gracefully so the dashboard stays useful when the agent is offline. */
   const discoverAgent = useCallback(async () => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
     // Only discover when running locally — Vercel-hosted /voice/dashboard
     // can't talk to a user's localhost without a desktop wrapper.
     const host = window.location.hostname;
-    if (host !== "localhost" && host !== "127.0.0.1") return;
+    if (host !== 'localhost' && host !== '127.0.0.1') return;
     try {
       // Resolve port (may be 7777+).
       let port = 7777;
       try {
-        const portRes = await fetch("/api/voice/agent-port");
+        const portRes = await fetch('/api/voice/agent-port');
         if (portRes.ok) {
           const data = await portRes.json();
-          if (typeof data.port === "number") port = data.port;
+          if (typeof data.port === 'number') port = data.port;
         }
       } catch {}
       const ctl = new AbortController();
       const timer = window.setTimeout(() => ctl.abort(), 250);
-      const r = await fetch(`http://127.0.0.1:${port}/health`, {
-        signal: ctl.signal,
-      });
+      const r = await fetch(`http://127.0.0.1:${port}/health`, { signal: ctl.signal });
       window.clearTimeout(timer);
       if (!r.ok) return;
       const body = await r.json();
@@ -220,7 +152,7 @@ export default function VoiceDashboardClient({
       setAgentPort(port);
       // Pull token (local-only route).
       try {
-        const tokRes = await fetch("/api/voice/agent-token");
+        const tokRes = await fetch('/api/voice/agent-token');
         if (tokRes.ok) {
           const td = await tokRes.json();
           if (td.token) agentTokenRef.current = td.token;
@@ -229,29 +161,22 @@ export default function VoiceDashboardClient({
       // Open WS for events.
       if (agentTokenRef.current) {
         try {
-          const ws = new WebSocket(
-            `ws://127.0.0.1:${port}/events?token=${encodeURIComponent(agentTokenRef.current)}`,
-          );
+          const ws = new WebSocket(`ws://127.0.0.1:${port}/events?token=${encodeURIComponent(agentTokenRef.current)}`);
           ws.onmessage = (e) => {
             try {
               const evt = JSON.parse(e.data);
-              if (
-                evt.kind === "memory" &&
-                typeof evt.payload?.rss === "number"
-              ) {
+              if (evt.kind === 'memory' && typeof evt.payload?.rss === 'number') {
                 setAgentMemoryMb(evt.payload.rss);
               }
               emit({
-                kind: "workflow",
+                kind: 'workflow',
                 workflowId: evt.kind,
-                trigger: "click",
+                trigger: 'click',
                 summary: `Agent → ${evt.kind}`,
               });
             } catch {}
           };
-          ws.onclose = () => {
-            agentWsRef.current = null;
-          };
+          ws.onclose = () => { agentWsRef.current = null; };
           agentWsRef.current = ws;
         } catch {}
       }
@@ -263,9 +188,7 @@ export default function VoiceDashboardClient({
   useEffect(() => {
     void discoverAgent();
     return () => {
-      try {
-        agentWsRef.current?.close();
-      } catch {}
+      try { agentWsRef.current?.close(); } catch {}
       agentWsRef.current = null;
     };
   }, [discoverAgent]);
@@ -273,10 +196,10 @@ export default function VoiceDashboardClient({
   /* Read ?tenant= on mount (only when no explicit prop override) */
   useEffect(() => {
     if (tenantOverride) return;
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
     const params = new URLSearchParams(window.location.search);
-    const t = params.get("tenant");
-    if (t === "arcanea" || t === "sis" || t === "frankx") {
+    const t = params.get('tenant');
+    if (t === 'arcanea' || t === 'sis' || t === 'frankx') {
       setTenantId(t);
       const next = getTenant(t);
       setSelectedPersona(next.defaultPersona);
@@ -287,10 +210,7 @@ export default function VoiceDashboardClient({
   const visiblePersonas = useMemo(() => {
     return PERSONAS.filter((p) => tenant.personaAllowlist.includes(p.id));
   }, [tenant]);
-  const allowedWorkflowIds = useMemo(
-    () => new Set(tenant.workflowAllowlist),
-    [tenant],
-  );
+  const allowedWorkflowIds = useMemo(() => new Set(tenant.workflowAllowlist), [tenant]);
   const visibleWorkflows = useMemo(() => {
     if (allowedWorkflowIds.size === 0) return WORKFLOWS;
     return WORKFLOWS.filter((w) => allowedWorkflowIds.has(w.id));
@@ -308,32 +228,28 @@ export default function VoiceDashboardClient({
   }, []);
 
   const launchPersona = useCallback(
-    (id: PersonaId, trigger: "click" | "clap" | "voice") => {
-      const entry: SessionLogEntry = {
-        persona: id,
-        startedAt: Date.now(),
-        trigger,
-      };
+    (id: PersonaId, trigger: 'click' | 'clap' | 'voice') => {
+      const entry: SessionLogEntry = { persona: id, startedAt: Date.now(), trigger };
       appendSessionLog(entry);
       setSessionLog((prev) => [entry, ...prev].slice(0, 20));
       const persona = PERSONAS.find((p) => p.id === id);
       emit({
-        kind: "summon",
+        kind: 'summon',
         persona: id,
         trigger,
         summary: `Summon ${persona?.name ?? id}`,
       });
       // Brief delay so the Logic Stream renders before navigation
       setTimeout(() => {
-        router.push(`/room/${id}?tenant=${tenantId}`);
+        window.location.href = `/room/${id}?tenant=${tenantId}`;
       }, 250);
     },
-    [router, tenantId],
+    [tenantId],
   );
 
   /* Mic + clap detection lifecycle */
   useEffect(() => {
-    const wantsMic = activation === "clap" || activation === "voice";
+    const wantsMic = activation === 'clap' || activation === 'voice';
 
     if (!wantsMic) {
       sessionRef.current?.stop();
@@ -369,20 +285,14 @@ export default function VoiceDashboardClient({
           onClap: () => {
             setClapCount((c) => c + 1);
             setLastClapAt(Date.now());
-            emit({
-              kind: "clap",
-              trigger: "clap",
-              summary: "Single clap detected",
-            });
+            emit({ kind: 'clap', trigger: 'clap', summary: 'Single clap detected' });
           },
           onDoubleClap: () => {
-            launchPersona(selectedRef.current, "clap");
+            launchPersona(selectedRef.current, 'clap');
           },
         });
 
-        const buffer = new Uint8Array(
-          new ArrayBuffer(session.analyser.fftSize),
-        );
+        const buffer = new Uint8Array(new ArrayBuffer(session.analyser.fftSize));
         let voiceSustain: number[] = [];
 
         const loop = () => {
@@ -390,11 +300,11 @@ export default function VoiceDashboardClient({
           const rms = readRms(session.analyser, buffer);
           setAudioLevel(rms);
 
-          if (activation === "clap") {
+          if (activation === 'clap') {
             detectorRef.current?.tick();
             const floor = detectorRef.current?.getNoiseFloor() ?? 0.01;
             setNoiseFloor(floor);
-          } else if (activation === "voice") {
+          } else if (activation === 'voice') {
             // Simple voice-activation: sustained energy above 0.08 RMS
             // for 400ms triggers a summon. Debounced to once per 4s.
             const now = performance.now();
@@ -404,7 +314,7 @@ export default function VoiceDashboardClient({
               if (voiceSustain.length >= 18) {
                 lastVoiceTrigRef.current = now;
                 voiceSustain = [];
-                launchPersona(selectedRef.current, "voice");
+                launchPersona(selectedRef.current, 'voice');
               }
             }
           }
@@ -413,8 +323,7 @@ export default function VoiceDashboardClient({
         };
         rafRef.current = requestAnimationFrame(loop);
       } catch (err) {
-        const msg =
-          err instanceof Error ? err.message : "Microphone unavailable.";
+        const msg = err instanceof Error ? err.message : 'Microphone unavailable.';
         setError(msg);
         setMicActive(false);
       }
@@ -434,11 +343,9 @@ export default function VoiceDashboardClient({
   /* Output device sink (Chromium) */
   const setSinkId = useCallback(async (sinkId: string) => {
     try {
-      const els = document.querySelectorAll("audio, video");
+      const els = document.querySelectorAll('audio, video');
       for (const el of Array.from(els)) {
-        const elAny = el as HTMLMediaElement & {
-          setSinkId?: (id: string) => Promise<void>;
-        };
+        const elAny = el as HTMLMediaElement & { setSinkId?: (id: string) => Promise<void> };
         if (elAny.setSinkId) await elAny.setSinkId(sinkId);
       }
     } catch {}
@@ -447,93 +354,85 @@ export default function VoiceDashboardClient({
   /* Listen on intent bus for embed routes */
   useEffect(() => {
     return subscribe((intent) => {
-      if (intent.kind === "embed") setEmbedUrl(intent.url);
+      if (intent.kind === 'embed') setEmbedUrl(intent.url);
     });
   }, []);
 
   /* Daemon-launched URL: /voice/dashboard?summon=<persona> auto-fires on mount */
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
     const params = new URLSearchParams(window.location.search);
-    const summonId = params.get("summon");
+    const summonId = params.get('summon');
     if (!summonId) return;
     const valid = PERSONAS.find((p) => p.id === summonId);
     if (!valid) return;
     // Defer one tick so the intent bus subscribers are mounted first
-    const trigger =
-      (params.get("trigger") as "click" | "clap" | "voice" | null) ?? "clap";
+    const trigger = (params.get('trigger') as 'click' | 'clap' | 'voice' | null) ?? 'clap';
     setSelectedPersona(summonId as PersonaId);
     setTimeout(() => {
-      launchPersona(
-        summonId as PersonaId,
-        trigger === "voice" ? "voice" : "clap",
-      );
+      launchPersona(summonId as PersonaId, trigger === 'voice' ? 'voice' : 'clap');
     }, 120);
     // Clean the URL so a refresh doesn't re-fire
     const cleanUrl = window.location.pathname;
-    window.history.replaceState({}, "", cleanUrl);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    window.history.replaceState({}, '', cleanUrl);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /* Voice intent handler — bridges classifier output to dashboard actions */
   const handleVoiceIntent = useCallback(
     (
       result: {
-        kind: "summon" | "workflow" | "runtime" | "embed" | "unknown";
+        kind: 'summon' | 'workflow' | 'runtime' | 'embed' | 'unknown';
         targetId: string | null;
         summary: string;
       },
       transcript: string,
     ) => {
       if (!result.targetId) return;
-      if (result.kind === "summon") {
+      if (result.kind === 'summon') {
         const personaId = result.targetId as PersonaId;
         if (PERSONAS.find((p) => p.id === personaId)) {
           setSelectedPersona(personaId);
-          launchPersona(personaId, "voice");
+          launchPersona(personaId, 'voice');
         }
-      } else if (result.kind === "workflow") {
+      } else if (result.kind === 'workflow') {
         const w = WORKFLOWS.find((wf) => wf.id === result.targetId);
         if (!w) return;
         emit({
-          kind: "workflow",
+          kind: 'workflow',
           workflowId: w.id,
-          trigger: "voice",
+          trigger: 'voice',
           summary: `Voice → ${w.label}`,
         });
-        if (w.action.kind === "route") {
+        if (w.action.kind === 'route') {
           window.location.href = w.action.href;
-        } else if (w.action.kind === "cli") {
+        } else if (w.action.kind === 'cli') {
           navigator.clipboard?.writeText(w.action.command).catch(() => {});
-        } else if (w.action.kind === "external") {
-          if (
-            /^https:\/\/(www\.)?(youtube|github|vercel|figma)\./.test(
-              w.action.url,
-            )
-          ) {
+        } else if (w.action.kind === 'external') {
+          if (/^https:\/\/(www\.)?(youtube|github|vercel|figma)\./.test(w.action.url)) {
             setEmbedUrl(w.action.url);
           } else {
-            window.open(w.action.url, "_blank", "noopener,noreferrer");
+            window.open(w.action.url, '_blank', 'noopener,noreferrer');
           }
         }
-      } else if (result.kind === "runtime") {
+      } else if (result.kind === 'runtime') {
         const r = RUNTIMES.find((rt) => rt.id === result.targetId);
         if (!r) return;
         emit({
-          kind: "runtime",
+          kind: 'runtime',
           runtimeId: r.id,
           command: r.command,
-          trigger: "voice",
+          trigger: 'voice',
           summary: `Voice → ${r.name}`,
         });
         navigator.clipboard?.writeText(r.command).catch(() => {});
-      } else if (result.kind === "embed" && result.targetId) {
+      } else if (result.kind === 'embed' && result.targetId) {
         setEmbedUrl(result.targetId);
         emit({
-          kind: "embed",
+          kind: 'embed',
           url: result.targetId,
-          surface: /youtube/.test(result.targetId) ? "youtube" : "web",
-          trigger: "voice",
+          surface: /youtube/.test(result.targetId) ? 'youtube' : 'web',
+          trigger: 'voice',
           summary: `Voice embed → "${transcript.slice(0, 40)}"`,
         });
       }
@@ -541,10 +440,7 @@ export default function VoiceDashboardClient({
     [launchPersona],
   );
 
-  const selected =
-    visiblePersonas.find((p) => p.id === selectedPersona) ??
-    visiblePersonas[0] ??
-    PERSONAS[0];
+  const selected = visiblePersonas.find((p) => p.id === selectedPersona) ?? visiblePersonas[0] ?? PERSONAS[0];
 
   /* Clap visual pulse */
   const clapPulse = useMemo(() => {
@@ -563,11 +459,9 @@ export default function VoiceDashboardClient({
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.18 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
             className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[1400px] h-[700px] rounded-full blur-[160px]"
-            style={{
-              background: `radial-gradient(circle, ${selected.color}, transparent 70%)`,
-            }}
+            style={{ background: `radial-gradient(circle, ${selected.color}, transparent 70%)` }}
           />
         </AnimatePresence>
         {/* Subtle film-grain noise — adds materiality, kills banding */}
@@ -604,7 +498,7 @@ export default function VoiceDashboardClient({
               type="button"
               onClick={() => void discoverAgent()}
               className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/15 transition-colors cursor-pointer"
-              title={`Local agent on :${agentPort}${agentMemoryMb != null ? ` · ${agentMemoryMb} MB` : ""}`}
+              title={`Local agent on :${agentPort}${agentMemoryMb != null ? ` · ${agentMemoryMb} MB` : ''}`}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span className="tracking-[0.22em] uppercase">Agent</span>
@@ -632,14 +526,11 @@ export default function VoiceDashboardClient({
       {/* Hero strip */}
       <div className="relative px-6 lg:px-10 pt-6 pb-8 max-w-[1600px] mx-auto">
         <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-tight">
-          {tenant.shortName === "Arcanea"
-            ? "Voice Dashboard"
-            : `${tenant.shortName} Voice`}
+          {tenant.shortName === 'Arcanea' ? 'Voice Dashboard' : `${tenant.shortName} Voice`}
         </h1>
         <p className="text-white/40 max-w-2xl mt-2 text-sm">
-          The clap, the click, the voice — all equivalent paths to the same
-          Guardian. Multi-agent visibility, workflow quick-launch, embedded
-          media, and runtime routing in one room.
+          The clap, the click, the voice — all equivalent paths to the same Guardian.
+          Multi-agent visibility, workflow quick-launch, embedded media, and runtime routing in one room.
         </p>
       </div>
 
@@ -651,20 +542,14 @@ export default function VoiceDashboardClient({
         className="relative px-6 lg:px-10 pb-20 max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[320px_minmax(0,1fr)_380px] gap-6"
       >
         {/* LEFT — Voice Control + Agents + Runtimes */}
-        <motion.div
-          variants={panelVariants}
-          className="space-y-6 order-2 lg:order-1"
-        >
+        <motion.div variants={panelVariants} className="space-y-6 order-2 lg:order-1">
           <VoiceControl onIntent={handleVoiceIntent} />
           <AgentVisualizer />
           <RuntimeLauncher />
         </motion.div>
 
         {/* CENTER — Stage */}
-        <motion.div
-          variants={panelVariants}
-          className="space-y-6 order-1 lg:order-2 min-w-0"
-        >
+        <motion.div variants={panelVariants} className="space-y-6 order-1 lg:order-2 min-w-0">
           <div className="grid sm:grid-cols-2 gap-6">
             <PersonaOrb
               persona={selected}
@@ -690,7 +575,7 @@ export default function VoiceDashboardClient({
             personas={visiblePersonas}
             selected={selectedPersona}
             onSelect={setSelectedPersona}
-            onLaunch={(id) => launchPersona(id, "click")}
+            onLaunch={(id) => launchPersona(id, 'click')}
             activation={activation}
           />
 
@@ -725,15 +610,14 @@ export default function VoiceDashboardClient({
 
       {/* Footer */}
       <div className="px-6 lg:px-10 pb-12 max-w-[1600px] mx-auto text-[11px] text-white/25 leading-relaxed">
-        Browser-only by design. Mic listens while this tab is open and you have
-        granted permission. Always-on system-wide trigger via{" "}
-        <code className="text-white/40">arcanea-voice daemon</code> is the next
-        track.
+        Browser-only by design. Mic listens while this tab is open and you have granted permission.
+        Always-on system-wide trigger via{' '}
+        <code className="text-white/40">arcanea-voice daemon</code> is the next track.
       </div>
 
       {/* Cmd+K palette */}
       <CommandPalette
-        onSummon={(id) => launchPersona(id as PersonaId, "click")}
+        onSummon={(id) => launchPersona(id as PersonaId, 'click')}
         onEmbed={setEmbedUrl}
       />
     </div>
@@ -763,15 +647,16 @@ function PersonaOrb({
 }) {
   const orbScale = 1 + Math.min(0.18, level * 1.4);
   const ringOpacity = clapPulse;
-  const subtitle = error
-    ? error
-    : activation === "click"
-      ? "Idle. Click a persona below or press ⌘K."
+  const subtitle =
+    error
+      ? error
+      : activation === 'click'
+      ? 'Idle. Click a persona below or press ⌘K.'
       : active
-        ? activation === "clap"
-          ? `Listening for claps · floor ${(noiseFloor * 100).toFixed(1)}%`
-          : "Listening for voice"
-        : "Mic initializing…";
+      ? activation === 'clap'
+        ? `Listening for claps · floor ${(noiseFloor * 100).toFixed(1)}%`
+        : 'Listening for voice'
+      : 'Mic initializing…';
 
   return (
     <div className="rounded-2xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md p-6 flex flex-col items-center text-center">
@@ -785,11 +670,11 @@ function PersonaOrb({
           className="absolute inset-[-6px] rounded-full pointer-events-none"
           style={{
             background: `conic-gradient(from 0deg, transparent 0deg, ${persona.color}88 60deg, transparent 140deg, transparent 220deg, ${persona.accent}66 280deg, transparent 360deg)`,
-            filter: "blur(3px)",
+            filter: 'blur(3px)',
             opacity: 0.55,
           }}
           animate={{ rotate: 360 }}
-          transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
         />
         <span
           aria-hidden
@@ -802,7 +687,7 @@ function PersonaOrb({
               key={`ring-${clapPulse}`}
               initial={{ scale: 0.6, opacity: 0.8 }}
               animate={{ scale: 1.6, opacity: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
               className="absolute inset-0 rounded-full border-2"
               style={{ borderColor: persona.color }}
             />
@@ -819,7 +704,7 @@ function PersonaOrb({
         {/* Inner orb */}
         <motion.span
           animate={{ scale: orbScale }}
-          transition={{ type: "spring", stiffness: 360, damping: 28 }}
+          transition={{ type: 'spring', stiffness: 360, damping: 28 }}
           className="relative w-32 h-32 rounded-full"
           style={{
             background: `radial-gradient(circle at 30% 30%, ${persona.color}, ${persona.accent}55 60%, transparent)`,
@@ -831,18 +716,11 @@ function PersonaOrb({
           className="absolute w-32 h-32 rounded-full pointer-events-none"
           style={{
             background:
-              "radial-gradient(circle at 35% 25%, rgba(255,255,255,0.25), transparent 40%)",
+              'radial-gradient(circle at 35% 25%, rgba(255,255,255,0.25), transparent 40%)',
           }}
         />
       </div>
-      <p
-        className="text-2xl font-bold tracking-tight"
-        style={{
-          fontFamily:
-            "var(--font-instrument-serif), var(--font-display), serif",
-          color: persona.color,
-        }}
-      >
+      <p className="text-2xl font-bold tracking-tight" style={{ fontFamily: 'var(--font-instrument-serif), var(--font-display), serif', color: persona.color }}>
         {persona.name}
       </p>
       <p className="text-[11px] text-white/45 italic">{persona.tagline}</p>
@@ -883,9 +761,7 @@ function ActivationCard({
 }) {
   return (
     <div className="rounded-2xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md p-6">
-      <p className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-3">
-        Activation
-      </p>
+      <p className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-3">Activation</p>
       <div className="flex flex-col gap-2 mb-4">
         {ACTIVATION_MODES.map((m) => (
           <button
@@ -894,8 +770,8 @@ function ActivationCard({
             onClick={() => onChange(m.id)}
             className={`text-left rounded-lg px-3 py-2 transition-colors text-sm ${
               mode === m.id
-                ? "bg-[var(--arc-brand-atlantean-teal)]/15 border border-[var(--arc-brand-atlantean-teal)]/40 text-white"
-                : "bg-white/[0.02] border border-white/[0.05] text-white/60 hover:bg-white/[0.04]"
+                ? 'bg-[var(--arc-brand-atlantean-teal)]/15 border border-[var(--arc-brand-atlantean-teal)]/40 text-white'
+                : 'bg-white/[0.02] border border-white/[0.05] text-white/60 hover:bg-white/[0.04]'
             }`}
           >
             <div className="flex items-center justify-between">
@@ -910,7 +786,7 @@ function ActivationCard({
           </button>
         ))}
       </div>
-      {mode === "clap" ? (
+      {mode === 'clap' ? (
         <div className="space-y-2 pt-4 border-t border-white/[0.06]">
           <label className="block text-[10px] uppercase tracking-widest text-white/40">
             Sensitivity ({sensitivity.toFixed(1)}× over noise floor)
@@ -930,19 +806,14 @@ function ActivationCard({
           </div>
           <div className="text-xs text-white/55 pt-2 flex items-center justify-between">
             <span>
-              Claps:{" "}
-              <span className="text-[var(--arc-brand-atlantean-teal)]">
-                {clapCount}
-              </span>
+              Claps: <span className="text-[var(--arc-brand-atlantean-teal)]">{clapCount}</span>
             </span>
             <span className="text-white/35 text-[10px]">
               Floor {(noiseFloor * 100).toFixed(1)}%
             </span>
           </div>
           {!micActive ? (
-            <p className="text-[10px] text-amber-400/70">
-              Waiting for mic permission…
-            </p>
+            <p className="text-[10px] text-amber-400/70">Waiting for mic permission…</p>
           ) : null}
         </div>
       ) : null}
@@ -1009,7 +880,7 @@ function PersonaTile({
       tabIndex={0}
       onClick={onSelect}
       onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
+        if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           onSelect();
         }
@@ -1021,11 +892,11 @@ function PersonaTile({
       onMouseLeave={() => setSpot(null)}
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring", stiffness: 400, damping: 28 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 28 }}
       className={`group relative rounded-xl p-4 text-left transition-colors border overflow-hidden ${
         isSelected
-          ? "bg-white/[0.05] border-white/25"
-          : "bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.14]"
+          ? 'bg-white/[0.05] border-white/25'
+          : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.14]'
       }`}
       style={isSelected ? { boxShadow: `0 0 32px -8px ${p.color}` } : undefined}
     >
@@ -1034,8 +905,8 @@ function PersonaTile({
         aria-hidden
         className="absolute pointer-events-none transition-opacity duration-300 rounded-full blur-2xl"
         style={{
-          left: spot ? spot.x - 90 : "50%",
-          top: spot ? spot.y - 90 : "50%",
+          left: spot ? spot.x - 90 : '50%',
+          top: spot ? spot.y - 90 : '50%',
           width: 180,
           height: 180,
           background: `radial-gradient(circle, ${p.color}38, transparent 70%)`,
@@ -1048,7 +919,7 @@ function PersonaTile({
         className="absolute inset-x-0 top-0 h-px pointer-events-none"
         style={{
           background:
-            "linear-gradient(to right, transparent, rgba(255,255,255,0.18), transparent)",
+            'linear-gradient(to right, transparent, rgba(255,255,255,0.18), transparent)',
         }}
       />
       <div className="relative">
@@ -1059,10 +930,8 @@ function PersonaTile({
           />
           <h3 className="text-sm font-semibold tracking-wide">{p.name}</h3>
         </div>
-        <p className="text-[11px] text-white/45 leading-snug mb-3">
-          {p.tagline}
-        </p>
-        {isSelected && activation === "click" ? (
+        <p className="text-[11px] text-white/45 leading-snug mb-3">{p.tagline}</p>
+        {isSelected && activation === 'click' ? (
           <Link
             href={`/room/${p.id}`}
             onClick={(e) => {
@@ -1075,7 +944,7 @@ function PersonaTile({
           </Link>
         ) : (
           <div className="text-[10px] uppercase tracking-widest text-white/30 text-center py-1.5">
-            {isSelected ? "Selected" : "Tap to select"}
+            {isSelected ? 'Selected' : 'Tap to select'}
           </div>
         )}
       </div>
@@ -1100,9 +969,7 @@ function DeviceCard({
 }) {
   return (
     <div className="rounded-2xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md p-5">
-      <p className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-3">
-        {label}
-      </p>
+      <p className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-3">{label}</p>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -1124,18 +991,14 @@ function SessionLogCard({ log }: { log: SessionLogEntry[] }) {
   if (log.length === 0) {
     return (
       <div className="rounded-2xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md p-5">
-        <p className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-3">
-          Recent sessions
-        </p>
+        <p className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-3">Recent sessions</p>
         <p className="text-xs text-white/30">No sessions yet.</p>
       </div>
     );
   }
   return (
     <div className="rounded-2xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md p-5">
-      <p className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-3">
-        Recent sessions
-      </p>
+      <p className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-3">Recent sessions</p>
       <div className="space-y-1.5">
         {log.slice(0, 8).map((s, i) => (
           <div
@@ -1144,9 +1007,7 @@ function SessionLogCard({ log }: { log: SessionLogEntry[] }) {
           >
             <span className="capitalize">{s.persona}</span>
             <span className="text-white/30">
-              <span className="uppercase tracking-widest text-[10px] mr-2">
-                {s.trigger}
-              </span>
+              <span className="uppercase tracking-widest text-[10px] mr-2">{s.trigger}</span>
               {timeAgo(s.startedAt)}
             </span>
           </div>

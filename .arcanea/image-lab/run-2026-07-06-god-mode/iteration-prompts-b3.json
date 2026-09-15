@@ -1,0 +1,77 @@
+{
+  "version": "2026-07-06",
+  "run": "run-2026-07-06-god-mode",
+  "batch": "b3",
+  "assetTier": "B",
+  "sourceMethod": "generated-media",
+  "globalNegative": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+  "strategy": "Batch 3 prioritizes object-first and infrastructure-first compositions, stronger non-dragon scale, and character lanes that read as Arcanea operators rather than fantasy portraits.",
+  "items": [
+    {
+      "id": "arc-visual-008c",
+      "slug": "alera-otome-resonance-lattice",
+      "category": "guardian-godbeast",
+      "surface": "square-gallery-1x1",
+      "aspectRatio": "1:1",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Alera", "Otome", "Voice Gate"],
+      "gate": "Voice",
+      "guardian": "Alera",
+      "prompt": "Use case: illustration-story. Asset type: square Guardian/Godbeast correction frame. Primary request: Alera, Arcanean Goddess of the Voice Gate, with Otome redesigned as resonance infrastructure, not a dragon, not a pet, not an animal portrait. Scene/backdrop: a silent Voice Gate chamber built from dark glass, smooth gold foil, suspended crystal tuning ribs, and warm teal air-pressure light. Subject: Alera is an operator in restrained myth-tech clothing, standing at a blank resonance console with one hand over a smooth creation-frequency crystal; Otome manifests around the room as a vast protective vocal-lattice presence made of translucent harmonic ribs, pearl glass, and warm living light, like an architectural creature woven through the chamber. Style/medium: cinematic luxury cosmic myth-tech, Arcanea AI-lab mythology, premium social-ready concept art. Composition/framing: 1:1, strong circular emblem read, Alera small but clear, Otome as environment-scale intelligence, no clutter. Lighting/mood: truthful, calm, gold and teal, clean black glass depth. Materials/textures: Otome Resonite, polished starlight metal, blank gold foil, dark glass, pearl crystal. Constraints: no text, no glyphs, no visible music notes, no waveforms, no dragon wings, no horns, no reptile body, no fantasy gown, no ornate crown, no fake script."
+    },
+    {
+      "id": "arc-visual-009c",
+      "slug": "lyria-yumiko-lens-field",
+      "category": "guardian-godbeast",
+      "surface": "vertical-social-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Lyria", "Yumiko", "Sight Gate"],
+      "gate": "Sight",
+      "guardian": "Lyria",
+      "prompt": "Use case: illustration-story. Asset type: vertical Guardian/Godbeast correction frame. Primary request: Lyria, Arcanean Goddess of the Sight Gate, with Yumiko as lens-field perception infrastructure, not a fox, not a wolf, not a mount, not an animal portrait. Scene/backdrop: a high prismatic observatory above folded cloud terrain, built from smoked glass platforms, clean lens arrays, and silver-gold perception mirrors. Subject: Lyria is a focused operator in restrained myth-tech clothing, holding a blank prism relic; Yumiko appears as a kilometer-scale guardian woven through the observatory optics: overlapping lens wings, transparent field arcs, intelligent light-pressure silhouette, more sacred instrument than animal. Style/medium: cinematic Arcanea concept art, neural-cosmos inspired only as metaphor, premium and original. Composition/framing: 9:16, one-second read of face, blank prism, and vast lens-field guardian; generous upper safe zone for later deterministic text overlay. Lighting/mood: clear vision, silver, restrained prismatic teal, pale gold, calm awe. Materials/textures: Yumiko Prism, smoked glass, starlight metal, spectral dust, clean crystal. Constraints: no text, no fake diagrams, no medical imagery, no rainbow clutter, no fox face, no wolf silhouette, no animal mount, no fantasy robe, no symbols."
+    },
+    {
+      "id": "arc-visual-028",
+      "slug": "heart-realm-living-ark-non-dragon",
+      "category": "mega-scale-world",
+      "surface": "instagram-tiktok-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["Arcanea visual doctrine", "Heart Gate", "non-dragon scale world"],
+      "gate": "Heart",
+      "guardian": "Maylinn",
+      "prompt": "Use case: illustration-story. Asset type: 4:5 social source frame. Primary request: a non-dragon Arcanea megastructure world so vast it competes with the strongest fantasy/social scale images without using a dragon. Scene/backdrop: a living ark-city grown from an ancient worldtree and cliffside crystal ribs, kilometers tall, carrying gardens, waterfalls, woven fabric markets, and tiny creator bridges through bright clouds. Subject: an immense peaceful Godbeast-scale presence shaped like a moss-lit stone manta or floating root-whale shelters the city as habitat infrastructure; tiny human creators cross a gold-and-teal fabric bridge for scale. Style/medium: Arcanea luxury cosmic myth-tech, healthy living worldbuilding, cinematic bright social hook. Composition/framing: 4:5, massive ark silhouette first, tiny creators second, open upper-left caption-safe sky, clear depth. Lighting/mood: sunrise gold, jade life, teal water, alive and hopeful. Materials/textures: living stone, root-wood, sacred obsidian, vibrant fabric, crystal terraces, moss light. Constraints: no dragon, no wings like a dragon, no destruction, no grimdark, no generic medieval castle, no text, no logos, no cluttered city noise."
+    },
+    {
+      "id": "arc-visual-029",
+      "slug": "webtoon-trial-four-beats-diverse",
+      "category": "webtoon",
+      "surface": "webtoon-vertical-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["Arcanea chosen responsibility", "Genesis proof loop", "The Drift"],
+      "gate": "Voice",
+      "guardian": "Alera",
+      "prompt": "Use case: illustration-story. Asset type: vertical webtoon sequence continuation. Primary request: four clean cinematic webtoon beats showing diverse creators choosing proof over The Drift, continuing after the first trial. Scene/backdrop: Arcanea studio night corridor and dark-glass maker room, rain reflections outside, warm forge light inside. Subject: four stacked visual beats without speech bubbles: beat one a Black woman creator notices a passive gray fog at the studio window; beat two an older Asian musician places a blank resonance object on a black-glass table; beat three a brown-skinned nonbinary designer steadies a glowing proof artifact; beat four a small group sees the artifact light a clean doorway. Style/medium: premium webtoon/anime-adjacent cinematic frame, refined linework feel, Arcanea AI-lab premium, not generic anime. Composition/framing: 9:16, four clear beats, clean separators, readable emotion, no tiny clutter. Lighting/mood: intimate gold, teal signal, quiet courage, human warmth. Materials/textures: dark glass, smooth gold foil with no engravings, starlight metal, rain reflections, blank obsidian table. Constraints: no speech bubbles, no text, no letters, no symbols, no books, no papers, no diagrams, no melodrama, no exaggerated anime faces."
+    },
+    {
+      "id": "arc-visual-030",
+      "slug": "storybook-first-proof-living-library",
+      "category": "storybook-book",
+      "surface": "storybook-cover-source-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["Arcanea books", "Genesis proof loop", "living lore"],
+      "gate": "Source",
+      "guardian": "Shinkami",
+      "prompt": "Use case: illustration-story. Asset type: storybook/book cover source without text. Primary request: Arcanea storybook source art for The First Proof, showing a creator child and mentor entering a living lore library where proof artifacts become gentle worlds. Scene/backdrop: luminous living library carved into a worldtree interior, shelves are blank crystal slabs and warm dark glass, no written pages, no labels. Subject: a young creator and an elder mentor stand at the threshold; a small blank proof artifact floats between them, opening a tiny healthy world of water, roots, and gold light. Style/medium: premium storybook illustration with cinematic Arcanea myth-tech, warm, alive, not childish clipart. Composition/framing: 4:5, cover-like central doorway, safe top space for later deterministic title overlay outside the image. Lighting/mood: wonder, safety, responsibility, warm gold and teal. Materials/textures: ancient wood, living crystal, dark glass, soft starlight metal, moss glow. Constraints: no text, no letters, no book pages with writing, no symbols, no logos, no scary darkness, no generic fairy tale castle."
+    },
+    {
+      "id": "arc-visual-031",
+      "slug": "luminor-rank-proof-atlas",
+      "category": "luminor-artifact",
+      "surface": "x-youtube-og-16x9",
+      "aspectRatio": "16:9",
+      "canonRefs": ["CANON_LOCKED.md Magic Ranks", "Luminor is a rank", "Ten Gates"],
+      "gate": "Source",
+      "guardian": "Shinkami",
+      "prompt": "Use case: stylized-concept. Asset type: 16:9 article, X, and YouTube source frame. Primary request: visualize Luminor as a highest rank of mastery, not a species, through a clean proof-atlas artifact that shows ten opened Gates as light architecture without using text. Scene/backdrop: black-glass Arcanea command table under a vast quiet observatory, no UI, no labels, no inscriptions. Subject: a single smooth atlas artifact floats above the table, ten distinct light portals arranged as pure color and material fields around it; a human creator silhouette stands nearby to show that Luminor is an attained rank. Style/medium: premium cinematic object poster, luxury cosmic myth-tech, not infographic, not game UI. Composition/framing: 16:9, artifact left-center, calm negative space on right for deterministic overlay later, readable at YouTube thumbnail size. Lighting/mood: serious, aspirational, gold/teal/white with restrained elemental accents. Materials/textures: sacred obsidian, starlight metal, living crystal, smooth blank gold foil, dark glass. Constraints: no text, no numerals, no letters, no diagrams, no glyphs, no fake UI, no logos, no humanoid species lineup, no fantasy spell circle."
+    }
+  ]
+}

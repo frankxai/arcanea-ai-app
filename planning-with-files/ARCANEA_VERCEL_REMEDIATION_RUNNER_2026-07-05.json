@@ -1,0 +1,131 @@
+{
+  "version": "1.0.0",
+  "id": "arcanea-vercel-remediation-runner-2026-07-05",
+  "generatedAt": "2026-07-05T07:01:17.048Z",
+  "repo": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app",
+  "mode": "dry-run",
+  "decision": "dry-run-ready",
+  "nonMutating": true,
+  "inputs": {
+    "remediationPacket": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json",
+    "releaseReadinessReport": ".visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json",
+    "officialDocsVerified": [
+      "https://vercel.com/docs/rest-api/projects/update-an-existing-project",
+      "https://vercel.com/docs/rest-api/projects/add-a-domain-to-a-project",
+      "https://vercel.com/docs/functions/runtimes/node-js/node-js-versions"
+    ]
+  },
+  "summary": {
+    "pass": 6,
+    "warn": 1,
+    "blockers": 0,
+    "tokenPresent": false,
+    "applyProjectSettings": false,
+    "applyDomain": false,
+    "verifyRemote": false,
+    "expectedProjectName": "arcanea-ai-app",
+    "targetDomain": "arcanea.ai"
+  },
+  "operations": [
+    {
+      "id": "patch-project-framework-and-node",
+      "mode": "dry-run",
+      "status": "pass",
+      "endpoint": "https://api.vercel.com/v9/projects/prj_90OIWsAmfeswv8IG8WxqEAFefTOV?teamId=<redacted>",
+      "body": {
+        "framework": "nextjs",
+        "nodeVersion": "22.x"
+      }
+    },
+    {
+      "id": "attach-production-domain",
+      "mode": "dry-run",
+      "status": "pass",
+      "endpoint": "https://api.vercel.com/v10/projects/prj_90OIWsAmfeswv8IG8WxqEAFefTOV/domains?teamId=<redacted>",
+      "body": {
+        "name": "arcanea.ai"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "status": "pass",
+      "lane": "safety",
+      "id": "remediation-packet-loaded",
+      "summary": "Vercel remediation packet loaded.",
+      "evidence": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json",
+      "currentGate": {
+        "decision": "blocked",
+        "pass": 17,
+        "warn": 4,
+        "blockers": 4,
+        "productionReady": false,
+        "previewReady": false
+      }
+    },
+    {
+      "status": "pass",
+      "lane": "vercel-release",
+      "id": "project-settings-operation-ready",
+      "summary": "Project framework/node patch operation is defined.",
+      "endpoint": "https://api.vercel.com/v9/projects/prj_90OIWsAmfeswv8IG8WxqEAFefTOV?teamId=<redacted>",
+      "body": {
+        "framework": "nextjs",
+        "nodeVersion": "22.x"
+      }
+    },
+    {
+      "status": "pass",
+      "lane": "vercel-release",
+      "id": "domain-operation-ready",
+      "summary": "Domain attachment operation is defined but requires explicit domain confirmation.",
+      "endpoint": "https://api.vercel.com/v10/projects/prj_90OIWsAmfeswv8IG8WxqEAFefTOV/domains?teamId=<redacted>",
+      "body": {
+        "name": "arcanea.ai"
+      }
+    },
+    {
+      "status": "warn",
+      "lane": "safety",
+      "id": "vercel-token-present",
+      "summary": "VERCEL_TOKEN is not present. Dry-run evidence can still be generated.",
+      "action": "Set VERCEL_TOKEN only in the shell environment when an approved operator is ready to apply remote changes."
+    },
+    {
+      "status": "pass",
+      "lane": "safety",
+      "id": "project-confirmation",
+      "summary": "No remote mutation requested; project confirmation not required."
+    },
+    {
+      "status": "pass",
+      "lane": "safety",
+      "id": "domain-confirmation",
+      "summary": "Domain attachment not requested."
+    },
+    {
+      "status": "pass",
+      "lane": "vercel-release",
+      "id": "remote-verification",
+      "summary": "Remote verification not requested."
+    }
+  ],
+  "operatorCommands": {
+    "dryRun": "node scripts/arcanea-vercel-remediation-runner.mjs --write --strict",
+    "verifyRemote": "node scripts/arcanea-vercel-remediation-runner.mjs --verify-remote --confirm-project=arcanea-ai-app --write --strict",
+    "applyProjectSettings": "node scripts/arcanea-vercel-remediation-runner.mjs --apply-project-settings --confirm-project=arcanea-ai-app --write --strict",
+    "applyDomain": "node scripts/arcanea-vercel-remediation-runner.mjs --apply-domain --confirm-project=arcanea-ai-app --confirm-domain=arcanea.ai --write --strict"
+  },
+  "guardrails": [
+    "Dry-run mode is the default and performs no remote mutation.",
+    "Remote mutation requires VERCEL_TOKEN in the process environment; token values are never printed.",
+    "Project settings mutation requires --apply-project-settings and --confirm-project=arcanea-ai-app.",
+    "Domain attachment requires --apply-domain, --confirm-project=arcanea-ai-app, and --confirm-domain=arcanea.ai.",
+    "Do not promote production until node scripts/arcanea-release-readiness.mjs --strict exits 0 after connector evidence refresh."
+  ],
+  "flags": {
+    "jsonOnly": false,
+    "write": true,
+    "strict": true
+  }
+}

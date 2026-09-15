@@ -264,7 +264,7 @@ export default async function AuthorStudioPage() {
 
                 {/* Actions */}
                 {book.firstChapterSlug && (
-                  <div className="flex gap-2 mt-4">
+                  <div className="flex flex-wrap gap-2 mt-4">
                     <Link
                       href={`/studio/author/${book.slug}/${book.firstChapterSlug}`}
                       className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] text-xs font-sans font-medium hover:bg-[var(--arc-brand-atlantean-teal)]/5 transition-colors"
@@ -272,8 +272,26 @@ export default async function AuthorStudioPage() {
                       Continue Writing
                     </Link>
                     <Link
+                      href={`/studio/author/${book.slug}/graph`}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/[0.08] text-white/70 text-xs font-sans font-medium hover:bg-white/[0.04] transition-colors"
+                    >
+                      Entity Graph
+                    </Link>
+                    <Link
+                      href={`/studio/author/${book.slug}/media`}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/[0.08] text-white/70 text-xs font-sans font-medium hover:bg-white/[0.04] transition-colors"
+                    >
+                      Visual Studio
+                    </Link>
+                    <Link
+                      href={`/studio/author/${book.slug}/publish`}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--arc-brand-arcanean-gold)]/20 text-[var(--arc-brand-arcanean-gold)] text-xs font-sans font-medium hover:bg-[var(--arc-brand-arcanean-gold)]/5 transition-colors"
+                    >
+                      Publish Hub
+                    </Link>
+                    <Link
                       href={`/books/drafts/${book.slug}`}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/[0.08] text-white/50 text-xs font-sans font-medium hover:bg-white/[0.04] transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/[0.08] text-white/40 text-xs font-sans font-medium hover:bg-white/[0.04] transition-colors"
                     >
                       View Draft
                     </Link>

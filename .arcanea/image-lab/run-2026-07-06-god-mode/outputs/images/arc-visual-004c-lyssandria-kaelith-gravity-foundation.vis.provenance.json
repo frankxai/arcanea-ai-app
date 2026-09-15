@@ -1,0 +1,88 @@
+{
+  "asset_uid": "arcanea-2026-07-lyssandria-kaelith-gravity-foundation",
+  "source_asset_uid": "arcanea-2026-07-lyssandria-kaelith-mythtech",
+  "batch_id": "2026-07-arcanea-visual-world-engine-b2",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 3,
+  "title": "lyssandria kaelith gravity foundation",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "character-portal-4x5",
+  "aspect_ratio": "4:5",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-004c-lyssandria-kaelith-gravity-foundation.png",
+    "sha256": "78eea026f995ee574d774aa58bea207e9ea9077f9f8fff365db6faafa1be88a1",
+    "mime_type": "image/png",
+    "width": 1122,
+    "height": 1402,
+    "size_bytes": 2852213
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b2.json#arc-visual-004c",
+    "prompt": "Use case: illustration-story. Asset type: revised Guardian portal portrait. Primary request: Lyssandria, Arcanean God of the Foundation Gate, with bonded Godbeast Kaelith redesigned as a Foundation-specific mountain-root gravity beast, not a dragon. Scene/backdrop: sacred engineering observatory grown into a mountain root system, gravity terraces bending around a living-stone sanctuary. Subject: Lyssandria stands calmly in a simple architect mantle and light starlight armor; behind and below the observatory, Kaelith is an immense mountain-tortoise/root-stone/gravity Godbeast with moss-lit shell plates, crystal root limbs, and a quiet protective presence. Style/medium: cinematic luxury cosmic myth-tech, Arcanea AI-lab mythology, museum-grade. Composition/framing: 4:5, Lyssandria foreground, Kaelith as enormous terrain-presence, clear scale anchor, quiet uncluttered geometry. Lighting/mood: earth green, stone gray, warm gold foundation glow, calm authority. Materials/textures: living stone, Kaelith Stone, starlight metal, root-wood, moss light, clean glass instruments. Constraints: no text, no letters, no logos, no fantasy gown, no crown, no medieval armor, no dragon wings, no horns, no reptile-dragon silhouette, no aggressive monster pose.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "4:5"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 27,
+    "decision": "approve-with-style-caution",
+    "failure_modes": [
+      "Lyssandria still reads as ornate fantasy regalia",
+      "Kaelith is finally de-dragoned but needs more sacred-engineering restraint"
+    ],
+    "next_improvement": "Create a more product-world portal version with Lyssandria as architect-operator and Kaelith as terrain-scale gravity infrastructure."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md Ten Gates",
+      "Lyssandria",
+      "Kaelith",
+      "Foundation Gate"
+    ],
+    "gate": "Foundation",
+    "guardian": "Lyssandria"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 3,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "guardian-godbeast"
+      },
+      {
+        "trait_type": "surface",
+        "value": "character-portal-4x5"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Foundation"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Lyssandria"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-004c-lyssandria-kaelith-gravity-foundation.vis.provenance.json"
+  },
+  "used_in": [],
+  "created_at": "2026-07-06T03:18:30+02:00"
+}

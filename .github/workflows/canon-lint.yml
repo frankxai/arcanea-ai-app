@@ -1,19 +1,87 @@
 name: Canon Lint
 
 on:
-  # No paths filter. A path-filtered workflow produces no check run at all, which
-  # leaves a required context permanently Pending and blocks the merge; keeping the
-  # trigger unconditional is what makes this guard safe to promote to required.
-  # File scoping lives in the changed-files step below, where it is an input to the
-  # check rather than a condition on whether the check reports.
   pull_request:
     branches: [main]
+    # Deliberately unfiltered. The conflict-marker job below scans every tracked
+    # file, and a path filter would defeat it — unresolved markers land in files
+    # nobody was editing (16 shipped this way on 2026-08-08). The canon-lint job
+    # keeps its own book/.arcanea/content filter via changed-files and no-ops on
+    # PRs that touch nothing canonical.
 
 concurrency:
   group: canon-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  conflict-markers:
+    name: Merge Conflict Marker Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Detect unresolved merge conflict markers
+        run: |
+          echo "## Conflict Marker Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          ERRORS=0
+          WARNINGS=0
+
+          # Git writes markers as EXACTLY seven characters at column 0, optionally
+          # followed by a space and a branch/commit label. Anchoring on exactly seven
+          # plus space-or-end-of-line keeps nested blockquotes and long rules out.
+          # A bare seven-equals line is intentionally NOT in this pattern: it is
+          # indistinguishable from a setext heading underline. It is escalated to an
+          # error only inside a file that already carries a real marker (below).
+          MARKER_RE='^(<{7}|\|{7}|>{7})( .*)?$'
+          SEPARATOR_RE='^={7}$'
+
+          MARKER_HITS=$(git grep -I -n -E "$MARKER_RE" -- . || true)
+          SEPARATOR_HITS=$(git grep -I -n -E "$SEPARATOR_RE" -- . || true)
+
+          CONFLICTED_FILES=""
+          if [ -n "$MARKER_HITS" ]; then
+            CONFLICTED_FILES=$(printf '%s\n' "$MARKER_HITS" | cut -d: -f1 | sort -u)
+            while IFS= read -r hit; do
+              HIT_FILE=$(echo "$hit" | cut -d: -f1)
+              HIT_LINE=$(echo "$hit" | cut -d: -f2)
+              echo "::error file=${HIT_FILE},line=${HIT_LINE}::Unresolved merge conflict marker. Finish the merge before pushing — never commit a '<<<<<<<', '=======' or '>>>>>>>' line."
+              echo "- \`${HIT_FILE}\`:${HIT_LINE} — conflict marker" >> $GITHUB_STEP_SUMMARY
+              ERRORS=$((ERRORS + 1))
+            done <<< "$MARKER_HITS"
+          fi
+
+          if [ -n "$SEPARATOR_HITS" ]; then
+            while IFS= read -r hit; do
+              HIT_FILE=$(echo "$hit" | cut -d: -f1)
+              HIT_LINE=$(echo "$hit" | cut -d: -f2)
+              if [ -n "$CONFLICTED_FILES" ] && printf '%s\n' "$CONFLICTED_FILES" | grep -Fxq "$HIT_FILE"; then
+                echo "::error file=${HIT_FILE},line=${HIT_LINE}::Conflict separator in a file that already carries merge markers — this is the '=======' divider, not a heading underline."
+                echo "- \`${HIT_FILE}\`:${HIT_LINE} — conflict separator" >> $GITHUB_STEP_SUMMARY
+                ERRORS=$((ERRORS + 1))
+              else
+                echo "::warning file=${HIT_FILE},line=${HIT_LINE}::Seven-equals line — a setext heading underline here, but the same shape as an orphaned conflict separator. Confirm it is intentional."
+                WARNINGS=$((WARNINGS + 1))
+              fi
+            done <<< "$SEPARATOR_HITS"
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Errors**: ${ERRORS}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Warnings**: ${WARNINGS}" >> $GITHUB_STEP_SUMMARY
+
+          if [ $ERRORS -gt 0 ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Conflict markers MUST be resolved before merge." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+          echo "No unresolved conflict markers in tracked files."
+
   canon-lint:
     name: Canon Consistency Check
     runs-on: ubuntu-latest
@@ -21,14 +89,11 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v6
 
       - name: Get changed files
         id: changed
-        # Pinned to a commit SHA, not a tag: this action supplies the file list the
-        # canon verdict is computed over, and a mutable tag lets that code change
-        # under the guard. Dependabot's github-actions ecosystem keeps the pin fresh.
-        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
+        uses: tj-actions/changed-files@v47
         with:
           files: |
             book/**
@@ -36,10 +101,7 @@ jobs:
             apps/web/content/**
 
       - name: Validate Guardian names
-        # Unconditional. A step-level condition here skips the only assertion in the
-        # job while the job still reports success -- a green nothing earned. With the
-        # paths filter gone, an empty changed-file set is the honest 'this PR touched
-        # no canon' case and reporting zero violations for it is true.
+        if: steps.changed.outputs.any_changed == 'true'
         run: |
           echo "## Canon Lint Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY

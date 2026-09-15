@@ -24,10 +24,7 @@ max_client_conn = 100
 
 [realtime]
 enabled = true
-# Case-sensitive enum: the CLI accepts exactly "IPv4" or "IPv6". Lowercase "ipv4"
-# fails config parsing outright, which takes down the whole preview branch before
-# any migration runs.
-ip_version = "IPv4"
+ip_version = "ipv4"
 
 [studio]
 enabled = true

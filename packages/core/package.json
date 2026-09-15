@@ -50,7 +50,7 @@
     "directory": "packages/core"
   },
   "devDependencies": {
-    "@types/node": "^20.19.43",
+    "@types/node": "^20.19.41",
     "typescript": "^5.9.3"
   },
   "publishConfig": {

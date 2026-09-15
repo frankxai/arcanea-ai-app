@@ -488,4 +488,3 @@ Create what you need. The rituals in this book are not exhaustive—they are exa
 
 *"Ritual is not superstition. Ritual is structure aligned with the Arc of existence. It holds the creative life in shape when willpower cannot. Trust the Arc."*
 — The First Ritual Keeper, speaking at the Foundation Gate
-

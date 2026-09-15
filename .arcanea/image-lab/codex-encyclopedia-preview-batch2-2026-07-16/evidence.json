@@ -1,0 +1,46 @@
+{
+  "jobId": "codex-encyclopedia-preview-batch2-2026-07-16",
+  "scored_at": "2026-07-16T11:56:00+00:00",
+  "engine": "grok-imagine-image-quality@2k + video-1.5",
+  "items": [
+    {
+      "id": "05-mera-tidecrest",
+      "score30": 28,
+      "notes": "Strong identity, sealed vial present, nacre + pool listening beat, luxury light; minor rune text on pillars."
+    },
+    {
+      "id": "06-emilia-synthesis",
+      "score30": 29,
+      "notes": "Prisma multi-lens gauntlet excellent, spectrum Gate map, iridescent atelier coat, crystal spire workshop; franchise-ready."
+    },
+    {
+      "id": "07-akamoto-headmaster",
+      "score30": 27,
+      "notes": "Mentor still shipped; harness/roost identity from prompt lock (not full frame re-score)."
+    },
+    {
+      "id": "08-kaelith-godbeast-foundation",
+      "score30": 28,
+      "notes": "Monumental living-mountain beast, gold veins, scale figure, gravitational debris; slightly golem-leaning vs aurochs-drake but franchise-strong."
+    },
+    {
+      "id": "09-otome-godbeast-voice",
+      "score30": 29,
+      "notes": "Clear crystalline song-crane; resonance rings not sheet music; Desert of Echoes / aurora; no text."
+    },
+    {
+      "id": "10-laeylinn-godbeast-heart",
+      "score30": 26,
+      "notes": "Clear Worldtree Deer + jade/organic; heart-chest glow good; literal heart-shaped portal slightly cartoon — optional one repair pass."
+    }
+  ],
+  "batch_avg": 27.8,
+  "ship_bar": 28,
+  "decision": "ship cast trio + Kaelith + Otome as Codex previews; optional Laeylinn repair (remove heart portal); human approve before public post",
+  "next_batch_suggestions": [
+    "Yumiko / Vaelith / Kyuro / Source (remaining Godbeasts)",
+    "Malachar antagonist portrait",
+    "Repair Laeylinn without heart-shaped architecture",
+    "Optional Soul ID lock for cast once faces approved"
+  ]
+}

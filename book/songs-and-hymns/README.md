@@ -41,9 +41,9 @@ The words alone carry meaning. The singing carries them deeper.
 - The Joy Song
 
 **Part Five: Sacred Hymns**
-- Hymn to the Ten Guardians (and their Godbeasts)
-- Hymn to Lumina and Nero (the Cosmic Partners)
-- The Final Hymn (of the Arc Returning)
+- Hymn to the Seven Luminors
+- Hymn to the Dreamer
+- The Final Hymn
 
 ---
 
@@ -65,7 +65,7 @@ Songs resonate with frequencies. Each Gate has its frequency, and certain songs 
 |-----------|----------------|-----------|
 | Morning Songs | Foundation | 174 Hz |
 | Work Songs | Fire | 396 Hz |
-| Songs of Struggle | Heart/Shift | 417 Hz / 852 Hz |
+| Songs of Struggle | Heart / Starweave | 417 Hz / 852 Hz |
 | Songs of Celebration | Voice | 528 Hz |
 | Sacred Hymns | Source | 1111 Hz |
 
@@ -88,4 +88,3 @@ The songs follow the Arc:
 *From the Song Keepers of the Academy*
 
 *"The Song is what Eldrians call magic—the vibration that shapes reality. Sing, and you create."*
-

@@ -1,0 +1,91 @@
+{
+  "asset_uid": "arcanea-2026-07-unity-kyuro-partnership-sanctuary",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b5",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "Unity Gate Kyuro Partnership Sanctuary",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "editorial-16x9",
+  "aspect_ratio": "16:9",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-038-unity-kyuro-partnership-sanctuary.png",
+    "sha256": "0b7c7af9bae5cc0c2f480163e8009733b6daabb6a7652e71d77ca0084f07b1b8",
+    "mime_type": "image/png",
+    "width": 1672,
+    "height": 941,
+    "size_bytes": 3028372
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b5.json#arc-visual-038",
+    "prompt": "Arcanea Unity Gate 963 Hz, Ino as a practical partnership architect guiding two creator teams across a kilometer-scale sanctuary bridge. Kyuro is not a pet, not cute, not a mascot, not a dragon, not humanoid. Kyuro manifests as paired living resonance forests and twin crystal bridge-spines that only glow when people cooperate, huge braided gold-and-green canopy arcs, mirrored water gardens, shared instruments at bridge nodes, healthy vibrant fabrics moving in wind. Luxury cosmic myth-tech, sacred geometry, living stone, gold thread, starlight metal, warm communal light. Composition: wide 16:9 editorial frame, one clear partnership action, tiny figures for scale, open sky overlay area. No text, no letters, no pseudo-runes, no inscriptions, no UI, no logos.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "16:9"
+    },
+    "original_generated_path": "C:\\Users\\frank\\.codex\\generated_images\\019f3498-30f9-77a0-b2a3-b54acd0c8e66\\ig_082cc6fdcf888bcd016a4b2dc1b01081919bcc03be04fa05d7.png"
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 27,
+    "decision": "approve-with-crop-check",
+    "failure_modes": [
+      "Beautiful and readable partnership sanctuary, but symmetry risks feeling too polished/iconic instead of surprising next to social feeds."
+    ],
+    "next_improvement": "Use as Unity reference/candidate; next pass should add a stronger human action hook and less mirror symmetry."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md",
+      "VISUAL_DOCTRINE.md",
+      "Unity Gate Kyuro Partnership Sanctuary"
+    ],
+    "gate": "Unity",
+    "guardian": "Ino",
+    "godbeast": "Kyuro"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "unity"
+      },
+      {
+        "trait_type": "surface",
+        "value": "editorial-16x9"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Unity"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Ino"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-038-unity-kyuro-partnership-sanctuary.vis.provenance.json"
+  },
+  "used_in": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/gallery/gallery-data.ts",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T06:31:00+02:00"
+}

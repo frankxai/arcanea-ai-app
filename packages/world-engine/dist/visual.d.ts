@@ -7,7 +7,7 @@
  * Returns typed objects — no JSON.stringify here, so callers can decide how
  * to serialize (the MCP server wraps in content, the web app uses directly).
  */
-import type { CharacterBlueprint, LocationBlueprint, CreatureBlueprint, ImagePromptResult, ElementAesthetics, RankVisual } from "./types.js";
+import type { CharacterBlueprint, LocationBlueprint, CreatureBlueprint, CreatureAtlasEntry, CreaturePromptPack, ImagePromptResult, ElementAesthetics, RankVisual } from "./types.js";
 export declare const ELEMENT_AESTHETICS: Readonly<Record<string, ElementAesthetics>>;
 export declare const RANK_VISUAL: Readonly<Record<string, RankVisual>>;
 /** Art direction constants for downstream prompting pipelines */
@@ -35,4 +35,7 @@ export declare function locationToImagePrompt(loc: LocationBlueprint, style?: st
  * Build an image-generation prompt for a creature.
  */
 export declare function creatureToImagePrompt(creature: CreatureBlueprint, style?: string): ImagePromptResult;
+export declare function canGenerateCreatureImage(entry: CreatureAtlasEntry): boolean;
+export declare function getCreatureAtlasSafetyNotes(entry: CreatureAtlasEntry): string[];
+export declare function creatureAtlasEntryToPromptPack(entry: CreatureAtlasEntry): CreaturePromptPack;
 //# sourceMappingURL=visual.d.ts.map

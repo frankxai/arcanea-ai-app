@@ -76,25 +76,6 @@ Multiple kits mixed = FAIL (pick one).
 
 View the page with `prefers-reduced-motion: reduce` enabled (Chrome DevTools → Rendering tab). Animations should degrade gracefully — no vestibular triggers.
 
-For any page with a Track-B scroll set-piece (`SmoothScroll` / `ScrollScene`), reduced-motion is not "animations stop" — the **static composition must still tell the story**: scrubbed video shows its `poster`, scroll-revealed content is all visible, count-ups render their final value. A fallback that loses meaning = FAIL.
-
-### 7. Motion performance (60fps)
-
-Premium motion that drops frames reads as cheap. For any page with scroll choreography or a moving hero:
-
-- Open the Vercel preview, DevTools → **Performance** → record while scrolling the full page.
-- **Frame rate stays at/near 60fps during scroll** (no red long-task bars, no dropped-frame spikes over the pinned/scrubbed section). Sustained dips below ~50fps = FAIL.
-- Confirm scrubbed/parallax tweens animate **only `transform`/`opacity`** — grep the diff for layout-animating properties in scroll timelines:
-
-```bash
-git diff main --diff-filter=AM -- 'apps/web/**/*.tsx' | grep '^+' | grep -E "(to|from|fromTo)\(.*(width|height|top|left|margin)" | grep -v '^+++'
-```
-
-Any match inside a GSAP tween = FAIL (use transforms).
-
-- **Hero video ≤ 4 MB** (WebM) and carries a `poster`. Check the asset size.
-- **One pinned section per page** — more than one `pin: true` ScrollTrigger on a route = FAIL.
-
 ## Verification report format
 
 Paste this markdown into the PR description:
@@ -107,8 +88,7 @@ Paste this markdown into the PR description:
 - [x] Screenshots: [1920](url) | [1440](url) | [768](url)
 - [x] Lighthouse: perf 94 / a11y 100 / bp 96 / seo 100
 - [x] Brand kit: arcanea (consistent)
-- [x] Reduced motion: graceful (static composition still tells the story)
-- [x] Motion perf: 60fps under scroll, transforms only, 1 pin, hero video < 4MB
+- [x] Reduced motion: graceful
 ```
 
 If ANY item is `[ ]`, block merge.

@@ -2,11 +2,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "API Reference",
+  title: "API Reference — Arcanea",
   description:
     "Complete API documentation for Arcanea — Memory, Creative, Agent, and Ops endpoints with examples in cURL and TypeScript.",
   openGraph: {
-    title: "API Reference",
+    title: "API Reference | Arcanea",
     description:
       "Complete API documentation for Memory, Creative, Agent, and Ops endpoints. Interactive examples in cURL and TypeScript.",
     type: "website",

@@ -3,50 +3,56 @@
 
 import { LazyMotion, domAnimation, m, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { PhCheck, PhSparkle, PhArrowRight } from "@/lib/phosphor-icons";
+import { PhCheck, PhSparkle, PhArrowRight } from '@/lib/phosphor-icons';
 import Link from "next/link";
 
 const plans = [
   {
-    name: "Open Core",
-    price: "Available",
-    description: "Public source and Library access",
+    name: "Spark",
+    price: "Free",
+    description: "A real starting point, not a demo",
     features: [
-      "Browse the public Library (20 collections)",
-      "Read twenty-two draft works chapter by chapter",
-      "Use the public open-core repositories",
-      "Hosted usage quotas are not guaranteed",
+      "3 companions — writing, research, brainstorming",
+      "100 messages per month",
+      "Browse the full Library (17 collections)",
+      "Academy access through Gate 2",
+      "Community Discord",
     ],
-    cta: "View Availability",
-    href: "/pricing",
+    cta: "Start Free",
     popular: false,
   },
   {
-    name: "Cloud Sync",
-    price: "Waitlist",
-    description: "Hosted access is not generally released",
+    name: "Creator",
+    price: "$19",
+    period: "/month",
+    description: "The full creative toolkit",
     features: [
-      "Cloud Sync remains waitlist-only",
-      "Final quotas and entitlements are not published",
-      "No SLA or support-time promise",
-      "Confirm availability before production use",
+      "All creative partners — writing, code, design, music, research",
+      "5,000 messages per month",
+      "Full Library with reading progress",
+      "The Studio — image, music, and code generation",
+      "Custom prompt templates",
+      "Academy progression through all 10 Gates",
+      "Direct support within 24 hours",
     ],
-    cta: "Join Waitlist",
-    href: "/pricing#waitlist",
-    popular: false,
+    cta: "Upgrade",
+    popular: true,
   },
   {
-    name: "Studio Bench",
-    price: "Waitlist",
-    description: "Team access is not generally released",
+    name: "Studio",
+    price: "$49",
+    period: "/month",
+    description: "For teams and professional workflows",
     features: [
-      "Studio Bench remains waitlist-only",
-      "Team, API, and analytics terms are not published",
-      "No seat count or export entitlement is guaranteed",
-      "Confirm availability before production use",
+      "Everything in Creator",
+      "5 team seats with shared workspace",
+      "API access (REST + streaming)",
+      "Train custom companions on your content",
+      "Direct support within 4 hours",
+      "Export without Arcanea branding",
+      "Usage analytics dashboard",
     ],
-    cta: "Join Waitlist",
-    href: "/pricing#waitlist",
+    cta: "Contact Us",
     popular: false,
   },
 ];
@@ -103,6 +109,9 @@ function PricingCard({
             >
               {plan.price}
             </span>
+            {plan.period && (
+              <span className="text-text-muted">{plan.period}</span>
+            )}
           </div>
           <p className="text-sm text-text-secondary mt-2">{plan.description}</p>
         </div>
@@ -134,7 +143,7 @@ function PricingCard({
 
         {/* CTA */}
         <Link
-          href={plan.href}
+          href={plan.price === "Free" ? "/auth/signup" : plan.popular ? "/auth/signup?plan=creator" : "/contact"}
           className={`block w-full py-4 rounded-2xl text-center font-display font-semibold transition-all ${
             plan.popular
               ? "bg-gradient-to-r from-crystal to-brand-primary text-cosmic-deep hover:shadow-glow-md"
@@ -155,96 +164,99 @@ export function PricingPremium() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <section className="relative py-32 overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-cosmic-deep" />
+    <section className="relative py-32 overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-cosmic-deep" />
 
-          {/* Animated gradient orbs */}
-          <m.div
-            className="absolute w-[600px] h-[600px] rounded-full blur-[120px]"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(0,188,212,0.1) 0%, transparent 70%)",
-              left: "10%",
-              top: "20%",
-            }}
-            animate={{
-              x: [0, 50, 0],
-              y: [0, -30, 0],
-            }}
-            transition={{ duration: 20, repeat: Infinity }}
-          />
-          <m.div
-            className="absolute w-[500px] h-[500px] rounded-full blur-[120px]"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(13,71,161,0.1) 0%, transparent 70%)",
-              right: "10%",
-              bottom: "20%",
-            }}
-            animate={{
-              x: [0, -30, 0],
-              y: [0, 50, 0],
-            }}
-            transition={{ duration: 25, repeat: Infinity }}
-          />
+        {/* Animated gradient orbs */}
+        <m.div
+          className="absolute w-[600px] h-[600px] rounded-full blur-[120px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(0,188,212,0.1) 0%, transparent 70%)",
+            left: "10%",
+            top: "20%",
+          }}
+          animate={{
+            x: [0, 50, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{ duration: 20, repeat: Infinity }}
+        />
+        <m.div
+          className="absolute w-[500px] h-[500px] rounded-full blur-[120px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(13,71,161,0.1) 0%, transparent 70%)",
+            right: "10%",
+            bottom: "20%",
+          }}
+          animate={{
+            x: [0, -30, 0],
+            y: [0, 50, 0],
+          }}
+          transition={{ duration: 25, repeat: Infinity }}
+        />
+      </div>
+
+      <div ref={containerRef} className="max-w-7xl mx-auto px-6">
+        {/* Header */}
+        <m.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-20"
+        >
+          <m.span
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-block px-4 py-2 rounded-full liquid-glass border border-brand-primary/20 text-brand-primary font-medium text-sm mb-6"
+          >
+            Simple Pricing
+          </m.span>
+
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
+            Start Free, Upgrade
+            <br />
+            <span className="text-gradient-brand">When You're Ready</span>
+          </h2>
+
+          <p className="text-lg text-text-secondary max-w-2xl mx-auto">
+            Choose the plan that fits your creative journey. Upgrade anytime as
+            your needs grow.
+          </p>
+        </m.div>
+
+        {/* Pricing Cards */}
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {plans.map((plan, index) => (
+            <PricingCard key={plan.name} plan={plan} index={index} />
+          ))}
         </div>
 
-        <div ref={containerRef} className="max-w-7xl mx-auto px-6">
-          {/* Header */}
-          <m.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-20"
-          >
-            <m.span
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="inline-block px-4 py-2 rounded-full liquid-glass border border-brand-primary/20 text-brand-primary font-medium text-sm mb-6"
+        {/* Bottom note */}
+        <m.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center mt-12 text-text-muted"
+        >
+          <p>Start free. Upgrade when you need more. No credit card required.</p>
+          <p className="mt-2">
+            Need more than 5 seats or custom integrations?{" "}
+            <a
+              href="mailto:enterprise@arcanea.ai"
+              className="text-crystal hover:underline"
             >
-              Access Preview
-            </m.span>
-
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-              Open Now, Hosted Later
-              <br />
-              <span className="text-gradient-brand">
-                Availability Before Promises
-              </span>
-            </h2>
-
-            <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              The public Library and open-core source are available now. Hosted
-              tiers remain waitlist-only, with no published quota or SLA
-              guarantee.
-            </p>
-          </m.div>
-
-          {/* Pricing Cards */}
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {plans.map((plan, index) => (
-              <PricingCard key={plan.name} plan={plan} index={index} />
-            ))}
-          </div>
-
-          {/* Bottom note */}
-          <m.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mt-12 text-text-muted"
-          >
-            <p>
-              Hosted tiers remain waitlist-only. Verify current availability
-              before relying on Arcanea for production workloads.
-            </p>
-          </m.div>
-        </div>
-      </section>
+              Contact us
+            </a>
+          </p>
+        </m.div>
+      </div>
+    </section>
     </LazyMotion>
   );
 }

@@ -1,0 +1,43 @@
+phase_id,milestone_id,phase_name,milestone,owner_lane,deliverable,success_criteria,value_provided,target_window_days,priority,status,human_gate
+0,M0.1,Production honesty,Vercel identity decision,Platform + Frank,Single canonical project owns arcanea.ai,Domain on reviewed project; duplicates non-canonical,Trust / no deploy chaos,0-14,P0,pending,yes
+0,M0.2,Production honesty,Reviewed production promote,Product Loop,Green build promote,Live commit SHA == release candidate,Users see real product,0-14,P0,pending,yes
+0,M0.3,Production honesty,Soft-404 purge,Product Loop,Core activation routes,0 soft-404s on core path,Activation unblocked,0-14,P0,pending,no
+0,M0.4,Production honesty,Waitlist fail-closed,Product Loop,DB + API error handling,Forced DB error non-200,Lead capture integrity,0-14,P0,pending,no
+0,M0.5,Production honesty,Legal baseline,Legal + Frank,Terms Privacy AUP live,Footer links present,Headache reduction,0-14,P0,pending,yes
+0,M0.6,Production honesty,Honest counters,GTM,Remove fake stats,No false vanity metrics,Brand trust,0-14,P0,pending,no
+0,M0.7,Production honesty,CI cost gates,Platform,Draft PR heavy job skips,Concurrency paths draft gates,CI bill control,0-14,P1,pending,no
+1,M1.1,Activation loop,Genesis UX,Product Loop,Guided first world,Median time measured target <=10m stretch <=3m,Core JTBD,7-35,P0,pending,no
+1,M1.2,Activation loop,Proof artifact,Product Loop,Keepable card/export,proof_created and proof_kept events,NSM live,7-35,P0,pending,no
+1,M1.3,Activation loop,Instrumentation,Platform,Consented analytics,Funnel visit-genesis-keep reportable,Evidence-led decisions,7-35,P0,pending,no
+1,M1.4,Activation loop,BYOK vault UX,Product Loop,Settings + provider deep links,Guided key setup no dead-end,Power user convert,7-35,P0,pending,no
+1,M1.5,Activation loop,Hosted lite path,Product + Frank,Capped free gens or demo,Proof without API keys,Mainstream UX,7-35,P0,pending,yes
+1,M1.6,Activation loop,Taste dual-rail QA,Fable 5,Chrome vs world media,No world art as chrome; gates pass,Premium feel,7-35,P1,pending,no
+2,M2.1,First revenue,MoR choice,Frank,Polar or LS/Paddle decision,Written decision in strategy pack,Tax/legal simplicity,21-50,P0,pending,yes
+2,M2.2,First revenue,MoR integration,Platform,Products webhooks entitlements,Test purchase entitles user,First $ path,21-50,P0,pending,yes
+2,M2.3,First revenue,World Packs offer,GTM + Product,$9-19 pack/premium Genesis,>=10 purchases/preorders in 14d,Demand signal,21-50,P0,pending,yes
+2,M2.4,First revenue,Founding Circle,GTM,Waitlist + lifetime discount,>=100 verified emails or set target,Audience asset,21-50,P1,pending,no
+2,M2.5,First revenue,Pricing page honesty,GTM,Single price table,Matches goals OS no fake Upgrade,Trust,21-50,P0,pending,no
+2,M2.6,First revenue,Self-serve support,Ops,FAQ status email,Top 20 FAQ; no 24/7 chat promise,Low support load,21-50,P1,pending,no
+3,M3.1,Continuity moat,World entities UI,Product,CRUD characters locations rules,User manages >=5 entities,Moat vs chat-only,35-75,P0,pending,no
+3,M3.2,Continuity moat,Canon inject on gen,Product + Canon,Prompts pull entity DNA,Drift down on sample of 10,Quality,35-75,P0,pending,no
+3,M3.3,Continuity moat,Registry + alias ledger,Canon Steward,Machine-readable registry,CI fails forbidden aliases,Agent safety,35-75,P0,pending,no
+3,M3.4,Continuity moat,Write-gate on LOCKED,Canon Steward,PR/CI rules,No silent LOCKED edits,IP integrity,35-75,P0,pending,no
+3,M3.5,Continuity moat,Cloud Sync tier,Platform,~12/mo entitlement,Cross-device restore 3 test accounts,Recurring revenue,35-75,P1,pending,yes
+3,M3.6,Continuity moat,Provenance records,Product,Asset/job metadata,Rights + prompt ref on ship,Legal + brand,35-75,P1,pending,no
+4,M4.1,Media OS,Style packs SSOT,Media OS,House + secondary rails,100% Codex gens use packs,Brand consistency,40-90,P0,pending,no
+4,M4.2,Media OS,Multi-provider router,Media OS,Fal Gemini Grok Higgsfield,Failover + cost logged,Reliability,40-90,P0,pending,no
+4,M4.3,Media OS,Studio Bench tier,Product,~39/mo + hard credit caps,No unlimited surprise bills,Margin protection,40-90,P1,pending,yes
+4,M4.4,Media OS,Portal dashboard,Product,Worlds characters assets jobs,Single dashboard IA,Interconnection,40-90,P1,pending,no
+4,M4.5,Media OS,Codex weekly cadence,Creative + GTM,Still to I2V to crops,>=1 approved ship/week,Distribution,40-90,P1,pending,yes
+4,M4.6,Media OS,Encyclopedia surfaces,Creative,Flagship Codex pages,Quality bar public pages,Franchise proof,40-90,P2,pending,no
+5,M5.1,Open core,world-mcp rename/publish,Open Core,@arcanea/world-mcp,Tests green release,Clarity,50-100,P1,pending,no
+5,M5.2,Open core,gen-mcp publish,Open Core,@arcanea/gen-mcp,External install > 0,Adoption wedge,50-100,P1,pending,no
+5,M5.3,Open core,arcanea.dev docs,Open Core,Docs or /docs,Quickstart < 5 min,Dev UX,50-100,P2,pending,no
+5,M5.4,Open core,Pattern Codex v0,Legal-safe Open,Public domain + patterns,No franchise character dumps,Safe innovation,50-100,P1,pending,yes
+5,M5.5,Open core,Skill portfolio prune,Agents,Free vs gated packs,Audit pass rate >=0.9,Quality signal,50-100,P2,pending,no
+5,M5.6,Open core,Harness adapters,Agents,Shared MCP + kernel,One tool surface three harnesses,Ops leverage,50-100,P2,pending,no
+6,M6.1,Academy light,Proof Lab course 1,Academy,One complete course,Completions > 0,Human education,75-120,P2,pending,no
+6,M6.2,Academy light,Domain decision,Frank,academy/community DNS,Only if content ready,Brand clarity,75-120,P2,pending,yes
+6,M6.3,Academy light,Gallery community v0,Product,Share + light follow,No full social network,Cheap network effects,75-120,P2,pending,no
+6,M6.4,Academy light,Origin quiz optional,GTM,Identity viral loop,Share rate measured,Top-of-funnel,75-120,P3,pending,no
+6,M6.5,Academy light,Guided contrib rails,Community,Staging to review,Zero open cosmology rewrites,Canon safety,75-120,P2,pending,no

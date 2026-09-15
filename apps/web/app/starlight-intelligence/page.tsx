@@ -4,7 +4,7 @@ import { SisContent } from './sis-content';
 import { GradientMesh } from '@/components/motion/gradient-mesh';
 
 export const metadata: Metadata = {
-  title: 'Starlight Intelligence — Persistent memory for AI agents',
+  title: 'Starlight Intelligence — Persistent memory for AI agents | Arcanea',
   description: 'A 5-layer cognitive architecture with 6 semantic vaults and adapters for every AI tool. Local-first. Portable. Yours.',
   openGraph: {
     title: 'Starlight Intelligence System',

@@ -6,12 +6,11 @@ import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Stars, Float } from '@react-three/drei';
 import * as THREE from 'three';
-import { brand, elements } from '@arcanea/design-system/tokens';
 
 const THREE_COLORS = {
-  atlanteanTeal: brand.atlanteanTeal,
-  cosmicBlue: brand.cosmicBlue,
-  void: elements.void.base,
+  atlanteanTeal: '#00bcd4',
+  cosmicBlue: '#0d47a1',
+  void: '#a78bfa',
 } as const;
 
 // ─── Floating orb geometry ───────────────────────────────────────────────────

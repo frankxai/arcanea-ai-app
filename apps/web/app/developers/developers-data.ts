@@ -84,13 +84,10 @@ export const TOOLS = [
   {
     category: "Infrastructure",
     items: [
-      {
-        name: "IntelligenceRouter",
-        description: "Request routing to AI models",
-      },
+      { name: "IntelligenceRouter", description: "Request routing to AI models" },
       { name: "VoiceEnforcer", description: "Output validation" },
       { name: "Token Optimizer", description: "Context window management" },
-      { name: "MCP Server", description: "54 tools with skill-rules" },
+      { name: "MCP Server", description: "42 tools with skill-rules" },
     ],
     color: "var(--arc-brand-atlantean-teal)",
   },
@@ -133,8 +130,7 @@ export const CREDITS_ENDPOINTS = [
     path: "/api/credits/balance",
     description:
       "Returns the authenticated user\u2019s credit balance including purchased credits, daily free credits, and Forge subscription status.",
-    response:
-      '{ "purchased": 100, "dailyRemaining": 5, "forgeActive": false, "total": 105 }',
+    response: '{ "purchased": 100, "dailyRemaining": 5, "forgeActive": false, "total": 105 }',
   },
   {
     method: "POST",
@@ -166,7 +162,7 @@ export const MCP_SERVERS = [
   {
     name: "arcanea-mcp",
     description:
-      "The core MCP server with 54 tools: world-building, canon validation, Luminor companions, story generation, agent orchestration.",
+      "The core MCP server with 42 tools: world-building, canon validation, Luminor companions, story generation, agent orchestration.",
     install: "npx @arcanea/mcp-server",
     color: "var(--arc-brand-atlantean-teal)",
   },
@@ -190,7 +186,7 @@ export const OPEN_SOURCE_REPOS = [
   {
     name: "frankxai/arcanea",
     description:
-      "Main monorepo. Web app, intelligence packages, MCP servers, creative pipeline, and the published packages.",
+      "Main monorepo. Web app, intelligence packages, MCP servers, creative pipeline, and 49 npm packages.",
     href: "https://github.com/frankxai/arcanea",
     color: "var(--arc-brand-atlantean-teal)",
   },

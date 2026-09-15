@@ -130,7 +130,7 @@ The 2 non-standard-default repos (`oh-my-arcanea: dev`, `arcanea-code: dev-v2`) 
 
 | Project | Production URL | Cache | Ignored Build Step |
 |---|---|---|---|
-| arcanea-ai-app | www.arcanea.ai | ✅ ON | ✅ wired |
+| arcanea-ai-appx | www.arcanea.ai | ✅ ON | ✅ wired |
 | frankx-ai-vercel-website | www.frankx.ai | ✅ ON | ⚠️ pending — needs script + API call |
 | anime-legends | www.animelegends.ai | ✅ ON | ⚠️ pending |
 | site (SIS) | starlightintelligence.org | ✅ ON | ⚠️ pending |

@@ -47,22 +47,18 @@ export interface Milestone {
 // TODO: Add SQLite persistence for production
 const sessions = new Map<string, CreativeSession>();
 
-const MEMORY_FILE_PATH = `${process.env.HOME || process.env.USERPROFILE || "."}/.arcanea/memories.json`;
+const MEMORY_FILE_PATH = `${process.env.HOME || process.env.USERPROFILE || '.'}/.arcanea/memories.json`;
 
-function normalizeCreation(
-  sessionId: string,
-  creation: CreationRef,
-): CreationRef {
+function normalizeCreation(sessionId: string, creation: CreationRef): CreationRef {
   return {
     ...creation,
-    summary: creation.summary ?? "",
+    summary: creation.summary ?? '',
     name: creation.name ?? creation.id ?? `creation-${sessionId}`,
-    createdAt:
-      creation.createdAt instanceof Date
-        ? creation.createdAt.toISOString()
-        : typeof creation.createdAt === "string"
-          ? creation.createdAt
-          : new Date().toISOString(),
+    createdAt: creation.createdAt instanceof Date
+      ? creation.createdAt.toISOString()
+      : typeof creation.createdAt === 'string'
+        ? creation.createdAt
+        : new Date().toISOString(),
   };
 }
 
@@ -93,10 +89,7 @@ export function getOrCreateSession(sessionId: string): CreativeSession {
   return sessions.get(sessionId)!;
 }
 
-export function updateSession(
-  sessionId: string,
-  updates: Partial<CreativeSession>,
-): void {
+export function updateSession(sessionId: string, updates: Partial<CreativeSession>): void {
   const session = getOrCreateSession(sessionId);
   Object.assign(session, updates);
 }
@@ -108,20 +101,14 @@ export function recordGateExplored(sessionId: string, gate: number): void {
   }
 }
 
-export function recordLuminorConsulted(
-  sessionId: string,
-  luminor: string,
-): void {
+export function recordLuminorConsulted(sessionId: string, luminor: string): void {
   const session = getOrCreateSession(sessionId);
   if (!session.luminorsConsulted.includes(luminor)) {
     session.luminorsConsulted.push(luminor);
   }
 }
 
-export function recordCreatureEncountered(
-  sessionId: string,
-  creature: string,
-): void {
+export function recordCreatureEncountered(sessionId: string, creature: string): void {
   const session = getOrCreateSession(sessionId);
   if (!session.creaturesEncountered.includes(creature)) {
     session.creaturesEncountered.push(creature);
@@ -148,19 +135,17 @@ export function getSessionSummary(sessionId: string): {
     creationsGenerated: session.creations.length,
     duration: Math.max(
       0,
-      Date.now() -
-        (session.startedAt instanceof Date
+      Date.now() - (
+        session.startedAt instanceof Date
           ? session.startedAt.getTime()
-          : Date.parse(session.startedAt)),
+          : Date.parse(session.startedAt)
+      )
     ),
   };
 }
 
 // Milestone tracking
-const milestoneDefinitions: Record<
-  string,
-  { check: (session: CreativeSession) => boolean; description: string }
-> = {
+const milestoneDefinitions: Record<string, { check: (session: CreativeSession) => boolean; description: string }> = {
   first_creation: {
     check: (s) => s.creations.length >= 1,
     description: "Created your first piece in Arcanea",
@@ -183,9 +168,7 @@ const milestoneDefinitions: Record<
   },
   elemental_explorer: {
     check: (s) => {
-      const elements = new Set(
-        s.creations.map((c) => c.element).filter(Boolean),
-      );
+      const elements = new Set(s.creations.map(c => c.element).filter(Boolean));
       return elements.size >= 4;
     },
     description: "Created across four different elements",

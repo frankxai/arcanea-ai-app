@@ -1,0 +1,754 @@
+{
+  "version": "1.0.0",
+  "id": "arcanea-god-mode-proof-loop-2026-07-05",
+  "task": "Arcanea.ai God Mode proof-loop sprint: clarify the first-session product journey, route the homepage toward Genesis proof creation, expose the Creature Atlas, add public status and method maps, and verify the premium experience across desktop, tablet, and mobile.",
+  "repo": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app",
+  "createdAt": "2026-07-05T01:38:10Z",
+  "surface": "Arcanea.ai homepage, Genesis, Creature Atlas, Status, Method, navigation, footer, metadata",
+  "audience": "Modern creative operators, founders, lore builders, AI-native studios, and technically ambitious users evaluating Arcanea against ChatGPT Canvas/GPTs, Claude Artifacts/Projects, Runway, and World Anvil.",
+  "brandUnit": "Arcanea",
+  "standards": [
+    "C:\\Users\\frank\\starlight\\repos\\DESIGN_TASTE.md",
+    "C:\\Users\\frank\\starlight\\repos\\WEB_EXPERIENCE_STANDARD.md",
+    "C:\\Users\\frank\\starlight\\repos\\VISUAL_QA_GATE.md",
+    "C:\\Users\\frank\\starlight\\repos\\design-agent-standards\\PREMIUM_ASSET_STANDARD.md",
+    "C:\\Users\\frank\\starlight\\repos\\design-agent-standards\\AGENTIC_DESIGN_LOOP.md"
+  ],
+  "references": [
+    "https://help.openai.com/en/articles/9930697-what-is-the-canvas-feature-in-chatgpt-and-how-do-i-use-it",
+    "https://support.anthropic.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them",
+    "https://www.anthropic.com/news/projects",
+    "https://runwayml.com/research/introducing-runway-gen-4",
+    "https://www.worldanvil.com/"
+  ],
+  "direction": {
+    "keep": "Cinematic Arcanea world tone, premium dark interface, clear first-session proof path, rights/provenance language, and sovereign creative intelligence positioning.",
+    "avoid": "Abstract filler, cultic phrasing, unverifiable persistence claims, fake product screenshots, generic fantasy copy, and unlabeled placeholder art.",
+    "signature": "A user arrives, names a Drift, receives a Gift, sets Right Use, creates a Genesis proof packet, and can branch into Atlas, Forge, agents, and commerce.",
+    "system": "Homepage prompt box routes into Genesis; Genesis emits proof packets; Atlas schematics are explicitly labeled; navigation/footer expose the product graph."
+  },
+  "asset_quality": {
+    "tier": "A",
+    "source_method": "browser-capture",
+    "provenance": "owned",
+    "why_premium": "The sprint uses inspected in-product Arcanea surfaces and existing owned brand media rather than unreviewed generated art. Schematic visuals are labeled as schematics so users understand their role.",
+    "shortcut_risk": "low",
+    "context_tested": true
+  },
+  "assetTier": "Tier A/C",
+  "assetRationale": "Reused existing shipped Arcanea brand media and code-rendered schematic plates. No new generated visual was accepted as final in this slice.",
+  "primaryAssets": [
+    {
+      "path": "apps/web/public/brand/arcanea-dashboard-hero-premium.png",
+      "provenance": "existing inspected brand asset"
+    },
+    {
+      "path": "apps/web/public/brand/arcanea-genesis-proof-relic.png",
+      "provenance": "existing inspected Genesis proof relic asset"
+    },
+    {
+      "path": "apps/web/public/brand/arcanea-collectible-reliquary-premium.png",
+      "provenance": "existing inspected collectible/reliquary asset"
+    },
+    {
+      "path": "apps/web/app/atlas/creatures/page.tsx",
+      "provenance": "code-rendered schematic, explicitly labeled as schematic"
+    }
+  ],
+  "screenshots": [
+    ".visual-qa/arcanea-god-mode-2026-07-05/home-desktop.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/home-mobile.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/genesis-desktop.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/genesis-mobile.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/atlas-desktop.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/atlas-mobile.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/atlas-detail-desktop.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/atlas-detail-mobile.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/activation-genesis-prefill-desktop.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/activation-studio-image-desktop.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-desktop.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-mobile.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/activation-store-desktop.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/activation-store-mobile.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/status-desktop.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/status-tablet.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/status-mobile.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/method-desktop.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/method-tablet.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/method-mobile.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-top.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-hero-panel.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-showcase-panel.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-top.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-hero-panel.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-showcase-panel.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-top.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-hero-panel.png",
+    ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-showcase-panel.png"
+  ],
+  "automatedReport": ".visual-qa/arcanea-god-mode-2026-07-05/playwright-report.json",
+  "activationReport": ".visual-qa/arcanea-god-mode-2026-07-05/activation-metrics-playwright-report.json",
+  "statusReport": ".visual-qa/arcanea-god-mode-2026-07-05/status-playwright-report.json",
+  "methodReport": ".visual-qa/arcanea-god-mode-2026-07-05/method-playwright-report.json",
+  "releaseReadinessReport": ".visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json",
+  "releaseScopeManifest": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
+  "releasePackagePlan": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.md",
+  "vercelRemediationPacket": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.md",
+  "vercelRemediationRunner": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.md",
+  "vercelDomainAudit": "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.md",
+  "vercelProjectSelection": "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.md",
+  "successMetricsReport": ".visual-qa/arcanea-god-mode-2026-07-05/success-metrics-report.json",
+  "durableWorkflowReadinessReport": ".visual-qa/arcanea-god-mode-2026-07-05/durable-workflow-readiness-report.json",
+  "artifacts": [
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/home-desktop.png",
+      "kind": "desktop homepage screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/home-mobile.png",
+      "kind": "mobile homepage screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/genesis-desktop.png",
+      "kind": "desktop Genesis screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/genesis-mobile.png",
+      "kind": "mobile Genesis screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/atlas-desktop.png",
+      "kind": "desktop Creature Atlas screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/atlas-mobile.png",
+      "kind": "mobile Creature Atlas screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/atlas-detail-desktop.png",
+      "kind": "desktop Creature Atlas detail screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/atlas-detail-mobile.png",
+      "kind": "mobile Creature Atlas detail screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/playwright-report.json",
+      "kind": "automated visual QA report",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/activation-metrics-playwright-report.json",
+      "kind": "activation analytics browser QA report",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/activation-genesis-prefill-desktop.png",
+      "kind": "desktop Genesis private prompt handoff screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/activation-studio-image-desktop.png",
+      "kind": "desktop Image Studio session handoff screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-desktop.png",
+      "kind": "desktop Atlas prompt copy screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/activation-atlas-detail-mobile.png",
+      "kind": "mobile Atlas prompt copy screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/activation-store-desktop.png",
+      "kind": "desktop Studio Store metric screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/activation-store-mobile.png",
+      "kind": "mobile Studio Store metric screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/status-desktop.png",
+      "kind": "desktop public status map screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/status-tablet.png",
+      "kind": "tablet public status map screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/status-mobile.png",
+      "kind": "mobile public status map screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/status-playwright-report.json",
+      "kind": "automated status map visual QA report",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/method-desktop.png",
+      "kind": "desktop Arcanea Method screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/method-tablet.png",
+      "kind": "tablet Arcanea Method screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/method-mobile.png",
+      "kind": "mobile Arcanea Method screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/method-playwright-report.json",
+      "kind": "automated Arcanea Method visual QA report",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json",
+      "kind": "automated Arcanea Vercel/Eve release-readiness report",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
+      "kind": "machine-readable God Mode release scope manifest",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.md",
+      "kind": "human-readable God Mode release package plan",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.json",
+      "kind": "machine-readable God Mode release package plan",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/release-package-plan.json",
+      "kind": "release package plan evidence report",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.md",
+      "kind": "human-readable Vercel remediation packet",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json",
+      "kind": "machine-readable Vercel remediation packet",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.md",
+      "kind": "human-readable guarded Vercel remediation runner report",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.json",
+      "kind": "machine-readable guarded Vercel remediation runner report",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/vercel-remediation-runner-report.json",
+      "kind": "visual-QA evidence copy of guarded Vercel remediation runner report",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.md",
+      "kind": "human-readable Vercel production domain ownership audit",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json",
+      "kind": "machine-readable Vercel production domain ownership audit",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.md",
+      "kind": "human-readable Vercel release project selection audit",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.json",
+      "kind": "machine-readable Vercel release project selection audit",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/success-metrics-report.json",
+      "kind": "automated Arcanea success metrics audit report",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_COMPETITIVE_SCORECARD_2026-07-05.json",
+      "kind": "machine-readable competitor pressure and measurement scorecard",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_ARTIFACT_PIPELINE_SCENE_BRIEF_2026-07-05.md",
+      "kind": "next-slice artifact pipeline scene brief",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/durable-workflow-readiness-report.json",
+      "kind": "automated durable Workflow/Eve readiness report",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.md",
+      "kind": "human-readable durable Workflow/Eve implementation packet",
+      "inspected": true
+    },
+    {
+      "path_or_url": "planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.json",
+      "kind": "machine-readable durable Workflow/Eve implementation packet",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/gitleaks-scripts-redacted.json",
+      "kind": "redacted broad scripts secret scan report",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/artifact-pipeline-local-qa.json",
+      "kind": "artifact pipeline local Playwright QA report",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-top.png",
+      "kind": "artifact pipeline desktop-top screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-hero-panel.png",
+      "kind": "artifact pipeline desktop-hero-panel screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/desktop-showcase-panel.png",
+      "kind": "artifact pipeline desktop-showcase-panel screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-top.png",
+      "kind": "artifact pipeline mobile-top screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-hero-panel.png",
+      "kind": "artifact pipeline mobile-hero-panel screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/mobile-showcase-panel.png",
+      "kind": "artifact pipeline mobile-showcase-panel screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-top.png",
+      "kind": "artifact pipeline reduced-motion-top screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-hero-panel.png",
+      "kind": "artifact pipeline reduced-motion-hero-panel screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/reduced-motion-showcase-panel.png",
+      "kind": "artifact pipeline reduced-motion-showcase-panel screenshot",
+      "inspected": true
+    },
+    {
+      "path_or_url": "apps/web/lib/genesis/workflow-contract.ts",
+      "kind": "dependency-free Genesis proof workflow contract source",
+      "inspected": true
+    },
+    {
+      "path_or_url": "apps/web/lib/genesis/__tests__/workflow-contract.test.ts",
+      "kind": "Genesis proof workflow contract redaction test",
+      "inspected": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "notes": "Owned in-product captures and existing Arcanea media; no Tier D primary asset."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "notes": "Desktop and mobile captures inspected for homepage, Genesis, Atlas listing, Atlas detail, status, method, and the artifact pipeline hero/showcase proof panels."
+    },
+    {
+      "name": "visual-qa",
+      "status": "pass",
+      "notes": "Playwright screenshots passed with no blocking page errors; artifact pipeline proof-object QA is recorded in artifact-pipeline-local/artifact-pipeline-local-qa.json."
+    },
+    {
+      "name": "activation-browser-qa",
+      "status": "pass",
+      "notes": "Homepage to Genesis, starter card to Image Studio, Atlas prompt copy, and Studio Store intent metrics passed. Raw prompts stayed out of URL and analytics payloads."
+    },
+    {
+      "name": "status-map-visual-qa",
+      "status": "pass",
+      "notes": "Public /status map passed desktop, tablet, and mobile Playwright checks with no horizontal overflow or blocking browser errors. Local-only Vercel analytics/speed-insights script 404s were ignored under next start."
+    },
+    {
+      "name": "method-map-visual-qa",
+      "status": "pass",
+      "notes": "Public /method page passed desktop, tablet, and mobile Playwright checks with required product links, no named competitor ad copy, no horizontal overflow, and no blocking browser errors."
+    },
+    {
+      "name": "release-readiness-gate",
+      "status": "not_applicable",
+      "notes": "This is not a visual-asset scoring gate. node scripts/arcanea-release-readiness.mjs reports 18 passes, 4 warnings, and 4 blockers after local Vercel metadata was aligned to Next.js and Node 22.x and the guarded remediation runner became dry-run ready. Dirty release packaging is classified as 56 included paths, 5 excluded paths, and 0 unknown paths. Remote Vercel framework/runtime/domain/live-state drift still blocks preview/production promotion."
+    },
+    {
+      "name": "release-package-plan",
+      "status": "pass",
+      "notes": "node scripts/arcanea-release-package-plan.mjs --strict reports stage-plan-ready with 56 scoped git add targets, 5 excluded dirty paths preserved, and 0 unknown paths. The script is non-mutating and writes Queen handoff evidence only with --write."
+    },
+    {
+      "name": "vercel-remediation-runner",
+      "status": "pass",
+      "notes": "node scripts/arcanea-vercel-remediation-runner.mjs --write --strict reports dry-run-ready with 6 passes, 1 warning, and 0 blockers. It does not mutate remotely by default and requires VERCEL_TOKEN plus explicit project/domain confirmation flags before remote settings or domain requests."
+    },
+    {
+      "name": "vercel-domain-ownership-audit",
+      "status": "pass",
+      "notes": "Read-only Vercel connector, Vercel CLI, DNS, and HTTPS checks confirm arcanea.ai is registered under the Starlight Vercel team and served by Vercel, but not attached to the current arcanea-ai-app release project."
+    },
+    {
+      "name": "vercel-project-selection-audit",
+      "status": "pass",
+      "notes": "Project selection audit recommends repairing the current linked arcanea-ai-app project first. arcanea-ai-app now scores 7/14 versus arcanea-ai-appx at 4/14 because it is linked, has pnpm/frozen commands, and has recorded God Mode preview evidence."
+    },
+    {
+      "name": "success-metrics-audit",
+      "status": "pass",
+      "notes": "node scripts/arcanea-success-metrics-audit.mjs reports metrics-ready with 6 passes, 0 warnings, and 0 blockers across implementation, tests, docs, privacy, dashboards, and competitor pressure mapping."
+    },
+    {
+      "name": "durable-workflow-readiness",
+      "status": "pass",
+      "notes": "node scripts/arcanea-durable-workflow-readiness.mjs reports runtime-blocked-packet-ready with 2 passes, 4 warnings, and 0 blockers. A dependency-free Genesis proof workflow contract and redaction test now exist; Vercel Workflow and Eve runtime code remains blocked until dependencies are intentionally added and bundled docs are read."
+    },
+    {
+      "name": "type-check",
+      "status": "pass",
+      "notes": "corepack pnpm --dir apps/web type-check passed after the artifact pipeline component refactor."
+    },
+    {
+      "name": "build",
+      "status": "pass",
+      "notes": "corepack pnpm --dir apps/web build passed after the mobile proof-grid adjustment with existing non-blocking Next/Turbopack warnings."
+    },
+    {
+      "name": "scoped-secret-scan",
+      "status": "pass",
+      "notes": "Scoped gitleaks checks for apps/web/lib/genesis, planning-with-files, .visual-qa, and scripts passed after the Genesis workflow contract addition and legacy NFT script key redaction."
+    },
+    {
+      "name": "artifact-pipeline-visual-qa",
+      "status": "pass",
+      "notes": "Local next-start Playwright QA passed on desktop, mobile, and reduced motion. The compact hero proof pipeline is visible in the first viewport, the full proof-ledger panel renders below the hero, required labels are present, and no horizontal overflow or blocking browser errors were detected. Final mobile hero panel bottom: 819.375px in an 844px viewport."
+    },
+    {
+      "name": "genesis-workflow-contract",
+      "status": "pass",
+      "notes": "apps/web/lib/genesis/workflow-contract.ts creates a serializable Genesis proof workflow packet, redacted metrics, six-step boundary, and closed runtime gate without importing Workflow or Eve runtime packages."
+    }
+  ],
+  "score": {
+    "total": 28,
+    "max": 30
+  },
+  "decision": "ship",
+  "score30": {
+    "total": 28,
+    "breakdown": {
+      "firstViewportClarity": 5,
+      "productTruth": 5,
+      "premiumAssetDiscipline": 4,
+      "routeCoherence": 5,
+      "mobileDesktopFit": 5,
+      "verificationEvidence": 4
+    },
+    "decision": "ship-preview",
+    "notes": [
+      "Homepage first viewport remains visually premium and CTA path now routes to Genesis proof.",
+      "Genesis wording no longer implies unverified persistence.",
+      "Atlas abstract plates are labeled schematic/provenance schematic to avoid placeholder-art confusion.",
+      "Further polish should normalize Vercel runtime/project config before production promotion.",
+      "Artifact pipeline now exposes the Call-to-Artifact proof mechanism in the first viewport on desktop and mobile, with a reduced-motion-stable render."
+    ]
+  },
+  "verification": [
+    {
+      "command": "C:\\Users\\frank\\starlight\\repos\\security\\Invoke-RepoSecurityScan.ps1 -Path C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app -SkipDependencyScan",
+      "result": "repo-wide scan failed on existing findings in generated caches/worktrees; scoped source scans below were clean"
+    },
+    {
+      "command": "gitleaks dir apps/web/app --redact --no-banner --max-target-megabytes 5 --exit-code 1",
+      "result": "passed"
+    },
+    {
+      "command": "gitleaks dir apps/web/components --redact --no-banner --max-target-megabytes 5 --exit-code 1",
+      "result": "passed"
+    },
+    {
+      "command": "gitleaks dir apps/web/lib --redact --no-banner --max-target-megabytes 5 --exit-code 1",
+      "result": "passed"
+    },
+    {
+      "command": "gitleaks dir planning-with-files --redact --no-banner --max-target-megabytes 5 --exit-code 1",
+      "result": "passed"
+    },
+    {
+      "command": "gitleaks dir docs/ARCANEA_FIRST_SESSION_PRD.md --redact --no-banner --max-target-megabytes 5 --exit-code 1",
+      "result": "passed"
+    },
+    {
+      "command": "gitleaks dir .visual-qa --redact --no-banner --max-target-megabytes 5 --exit-code 1",
+      "result": "passed"
+    },
+    {
+      "command": "gitleaks dir touched Arcanea readiness/remediation/audit scripts --redact --no-banner --max-target-megabytes 5 --exit-code 1",
+      "result": "passed for scripts/arcanea-durable-workflow-readiness.mjs, scripts/arcanea-release-readiness.mjs, scripts/arcanea-success-metrics-audit.mjs, scripts/arcanea-vercel-project-selection.mjs, scripts/arcanea-vercel-remediation.mjs, and scripts/arcanea-vercel-remediation-runner.mjs"
+    },
+    {
+      "command": "gitleaks dir scripts --redact --no-banner --max-target-megabytes 5 --exit-code 0 --report-format json --report-path .visual-qa/arcanea-god-mode-2026-07-05/gitleaks-scripts-redacted.json",
+      "result": "passed after replacing legacy NFT script hardcoded API keys with GOOGLE_GENERATIVE_AI_API_KEY / GEMINI_API_KEY environment-variable guards"
+    },
+    {
+      "command": "gitleaks dir docs --redact --no-banner --max-target-megabytes 5 --exit-code 0 --report-format json --report-path .visual-qa/arcanea-god-mode-2026-07-05/gitleaks-docs-redacted.json",
+      "result": "existing redacted findings in docs/deploy/DEPLOYMENT_CHECKLIST.md, docs/guides/ENVIRONMENT_SETUP.md, and docs/plans/NEXT_STEPS.md; touched PRD passed"
+    },
+    {
+      "command": "corepack pnpm --dir apps/web type-check",
+      "result": "passed"
+    },
+    {
+      "command": "corepack pnpm --dir apps/web test:projects",
+      "result": "passed"
+    },
+    {
+      "command": "corepack pnpm --dir apps/web build",
+      "result": "passed with existing warnings: deprecated middleware convention, NFT trace from next.config.js through saga loader, edge runtime static-generation warning"
+    },
+    {
+      "command": "Playwright screenshot pass against local next start on http://localhost:3001",
+      "result": "passed for /, /genesis, /atlas/creatures, and /atlas/creatures/aeralith-sky-grazer at desktop and mobile"
+    },
+    {
+      "command": "Playwright activation metrics pass against local next start on http://127.0.0.1:3001",
+      "result": "passed for private prompt handoff, Image Studio handoff, Atlas prompt copy, Studio Store package click, and mobile screenshots; local-only Vercel analytics script 404s ignored"
+    },
+    {
+      "command": "Playwright status map pass against local next start on http://127.0.0.1:3001/status",
+      "result": "passed for desktop 1440px, tablet 1024px, and mobile 390px screenshots, required sections/links, and document width checks; local-only Vercel analytics/speed-insights script 404s ignored"
+    },
+    {
+      "command": "Playwright method page pass against local next start on http://127.0.0.1:3001/method",
+      "result": "passed for desktop 1440px, tablet 1024px, and mobile 390px screenshots, required product links, public competitor-name exclusion, /status back-link check, and document width checks; local-only Vercel analytics/speed-insights script 404s ignored"
+    },
+    {
+      "command": "node --check scripts/arcanea-release-readiness.mjs",
+      "result": "passed"
+    },
+    {
+      "command": "node --check scripts/arcanea-release-package-plan.mjs",
+      "result": "passed"
+    },
+    {
+      "command": "node --check scripts/arcanea-vercel-remediation-runner.mjs",
+      "result": "passed"
+    },
+    {
+      "command": "node --check scripts/arcanea-vercel-project-selection.mjs",
+      "result": "passed"
+    },
+    {
+      "command": "node scripts/arcanea-vercel-project-selection.mjs --write",
+      "result": "passed and generated planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.json plus .md"
+    },
+    {
+      "command": "node scripts/arcanea-release-readiness.mjs --json > .visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json",
+      "result": "passed and generated a blocked release-readiness report: 18 pass, 4 warn, 4 blockers"
+    },
+    {
+      "command": "node --check scripts/arcanea-vercel-remediation.mjs",
+      "result": "passed"
+    },
+    {
+      "command": "node scripts/arcanea-vercel-remediation.mjs --write",
+      "result": "passed and generated planning-with-files/ARCANEA_VERCEL_REMEDIATION_PACKET_2026-07-05.json plus .md"
+    },
+    {
+      "command": "Read-only Vercel domain audit for arcanea.ai",
+      "result": "passed and recorded planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json plus .md"
+    },
+    {
+      "command": "node --check scripts/arcanea-success-metrics-audit.mjs",
+      "result": "passed"
+    },
+    {
+      "command": "node scripts/arcanea-success-metrics-audit.mjs --json > .visual-qa/arcanea-god-mode-2026-07-05/success-metrics-report.json",
+      "result": "passed and generated a metrics-ready report: 6 pass, 0 warn, 0 blockers"
+    },
+    {
+      "command": "node --check scripts/arcanea-durable-workflow-readiness.mjs",
+      "result": "passed"
+    },
+    {
+      "command": "node scripts/arcanea-durable-workflow-readiness.mjs --write",
+      "result": "passed and generated planning-with-files/ARCANEA_DURABLE_WORKFLOW_READINESS_PACKET_2026-07-05.json plus .md"
+    },
+    {
+      "command": "node scripts/arcanea-durable-workflow-readiness.mjs --json > .visual-qa/arcanea-god-mode-2026-07-05/durable-workflow-readiness-report.json",
+      "result": "passed and generated a runtime-blocked-packet-ready report: 1 pass, 4 warn, 0 blockers"
+    },
+    {
+      "command": "node scripts/arcanea-release-readiness.mjs --strict",
+      "result": "failed as expected because release blockers remain"
+    },
+    {
+      "command": "python C:/Users/frank/starlight/repos/design-agent-standards/scripts/validate_design_evidence.py .visual-qa/design-loop-evidence-arcanea-god-mode-2026-07-05.json",
+      "result": "passed"
+    },
+    {
+      "command": "corepack pnpm --dir apps/web type-check",
+      "result": "passed after artifact pipeline component refactor"
+    },
+    {
+      "command": "corepack pnpm --dir apps/web build",
+      "result": "passed after mobile proof-grid adjustment; existing middleware, Turbopack NFT, and edge-runtime warnings remain non-blocking"
+    },
+    {
+      "command": "Local next-start Playwright artifact pipeline QA on /",
+      "result": "passed for desktop, mobile, and reduced motion; hero proof panel visible in first viewport, showcase proof-ledger captured, no horizontal overflow, local Vercel analytics/speed-insights 404s classified as next-start-only noise"
+    },
+    {
+      "command": "Get-NetTCPConnection -LocalPort 3001",
+      "result": "no listener remains after local QA cleanup"
+    },
+    {
+      "command": "node scripts/arcanea-release-readiness.mjs --json > .visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json",
+      "result": "passed and regenerated blocked release report: 18 pass, 4 warn, 4 blockers"
+    },
+    {
+      "command": "node scripts/arcanea-vercel-remediation.mjs --write",
+      "result": "passed and refreshed remediation packet JSON/Markdown"
+    },
+    {
+      "command": "node scripts/arcanea-release-readiness.mjs --strict",
+      "result": "failed as expected: preview and production remain blocked by 4 remote Vercel release blockers"
+    },
+    {
+      "command": "gitleaks dir apps/web/app/v3 --redact --no-banner --max-target-megabytes 5 --exit-code 1",
+      "result": "passed with no leaks found"
+    },
+    {
+      "command": "gitleaks dir planning-with-files --redact --no-banner --max-target-megabytes 5 --exit-code 1",
+      "result": "passed with no leaks found"
+    },
+    {
+      "command": "gitleaks dir .visual-qa --redact --no-banner --max-target-megabytes 5 --exit-code 1",
+      "result": "passed with no leaks found"
+    },
+    {
+      "command": "Local next-start Playwright artifact pipeline QA on /",
+      "result": "passed after final mobile spacing trim; mobile hero panel bottom 819.375px within 844px viewport"
+    },
+    {
+      "command": "Get-NetTCPConnection -LocalPort 3001",
+      "result": "no listener remains after final artifact pipeline QA cleanup"
+    },
+    {
+      "command": "corepack pnpm --dir apps/web exec tsx lib/genesis/__tests__/workflow-contract.test.ts",
+      "result": "passed"
+    },
+    {
+      "command": "corepack pnpm --dir apps/web type-check",
+      "result": "passed after Genesis workflow contract addition"
+    },
+    {
+      "command": "node scripts/arcanea-durable-workflow-readiness.mjs --write",
+      "result": "passed and regenerated durable packet with 2 pass, 4 warn, 0 blockers"
+    },
+    {
+      "command": "node scripts/arcanea-durable-workflow-readiness.mjs --json > .visual-qa/arcanea-god-mode-2026-07-05/durable-workflow-readiness-report.json",
+      "result": "passed and generated runtime-blocked-packet-ready report with contract-ready evidence"
+    },
+    {
+      "command": "node scripts/arcanea-release-package-plan.mjs --write",
+      "result": "passed and generated stage-plan-ready package plan with 56 scoped git add targets, 5 excluded paths, and 0 unknown paths"
+    },
+    {
+      "command": "node scripts/arcanea-vercel-remediation-runner.mjs --write --strict",
+      "result": "passed and generated dry-run-ready Vercel remediation runner evidence with 6 pass, 1 warn, 0 blockers; no remote mutation was performed"
+    },
+    {
+      "command": "node scripts/arcanea-release-package-plan.mjs --strict",
+      "result": "passed with stage-plan-ready: 5 pass, 2 warn, 0 blockers"
+    },
+    {
+      "command": "node scripts/arcanea-release-readiness.mjs --json > .visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json",
+      "result": "passed and regenerated blocked release report with 56 included, 5 excluded, 0 unknown paths, a current package-plan pass, and a dry-run-ready remediation-runner pass"
+    },
+    {
+      "command": "node scripts/arcanea-durable-workflow-readiness.mjs --strict",
+      "result": "passed with runtime-blocked-packet-ready: 2 pass, 4 warn, 0 blockers"
+    },
+    {
+      "command": "node scripts/arcanea-release-readiness.mjs --strict",
+      "result": "failed as expected: preview and production remain blocked by 4 remote Vercel release blockers; release packaging is 56 included, 5 excluded, 0 unknown"
+    },
+    {
+      "command": "gitleaks dir apps/web/lib/genesis --redact --no-banner --max-target-megabytes 5 --exit-code 1",
+      "result": "passed with no leaks found"
+    },
+    {
+      "command": "gitleaks dir planning-with-files --redact --no-banner --max-target-megabytes 5 --exit-code 1",
+      "result": "passed with no leaks found after release package plan update"
+    },
+    {
+      "command": "gitleaks dir .visual-qa --redact --no-banner --max-target-megabytes 5 --exit-code 1",
+      "result": "passed with no leaks found after package plan and release report update"
+    },
+    {
+      "command": "Get-NetTCPConnection -LocalPort 3001",
+      "result": "no listener remains after this continuation"
+    }
+  ],
+  "knownRisks": [
+    "Vercel connector reports remote project framework 'services', Node 24.x, and no arcanea.ai domain on this project, while local Vercel metadata and repo config now point at Next.js and .nvmrc 22.",
+    "arcanea.ai is registered under the Starlight Vercel team and served by Vercel, but current inspection does not attach arcanea.ai/www.arcanea.ai to arcanea-ai-app; only lobe.arcanea.ai is visibly associated with arcanea-lobechat-labs.",
+    "Latest Vercel deployment is BLOCKED on backup/claude-snapshots with no build log events returned; the release gate treats this as backup-branch warning noise because the recorded God Mode branch candidate is READY, but current God Mode worktree changes are not deployed yet.",
+    "Release-readiness gate now records Vercel blockers, the intentionally blocked durable runtime, the stage-ready package plan, the legacy script key redaction, and the dry-run-ready remediation runner in .visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json; dirty release packaging is classified by planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json with zero unknown paths, exact non-mutating staging commands are captured in planning-with-files/ARCANEA_GOD_MODE_RELEASE_PACKAGE_PLAN_2026-07-05.md, and guarded Vercel apply/verify commands are captured in planning-with-files/ARCANEA_VERCEL_REMEDIATION_RUNNER_2026-07-05.md. Do not promote until the gate is rerun clean or a human explicitly accepts a preview-only exception.",
+    "Durable Workflow/Eve implementation is packet-ready but not runtime-ready. The God Mode slice does not install workflow or Eve dependencies and does not write runtime code until bundled docs are present.",
+    "Root/package/lock/campaign files were already dirty and unrelated to this slice.",
+    "Repo-wide gitleaks finds existing findings in generated caches and nested worktrees; broad docs scan also finds redacted example-token patterns outside this slice. Broad scripts scan now passes after replacing hardcoded API keys in scripts/nft-v5-sacred-gear.js and scripts/nft-scale-test.js with environment-variable guards. This patch's source paths, touched scripts, touched PRD, planning docs, and visual evidence scanned clean."
+  ],
+  "nextRecommendedGate": "Create a draft PR or preview deployment only after deciding whether to include or isolate the unrelated package/lockfile changes.",
+  "artifactPipelineReport": ".visual-qa/arcanea-god-mode-2026-07-05/artifact-pipeline-local/artifact-pipeline-local-qa.json"
+}

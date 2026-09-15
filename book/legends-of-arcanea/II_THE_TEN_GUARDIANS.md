@@ -307,7 +307,7 @@ Those who seek the Sixth Gate learn from Lyria and Yumiko:
 
 ## Aiyami & Sol
 
-**Frequency:** 714 Hz
+**Frequency:** 741 Hz
 **Domain:** Enlightenment, divinity, transcendence
 **Element:** Light/Divine
 
@@ -337,7 +337,7 @@ Those who seek the Seventh Gate learn from Aiyami and Sol:
 
 ---
 
-# The Eighth Gate: Shift
+# The Eighth Gate: Starweave
 
 ## Elara & Vaelith
 
@@ -462,7 +462,7 @@ Each Guardian-Godbeast pair holds a Gate—an energy channel that flows through 
 - Open the Voice Gate, and truth shapes reality
 - Open the Sight Gate, and perception expands beyond ordinary limits
 - Open the Crown Gate, and divine connection becomes possible
-- Open the Shift Gate, and possibilities multiply
+- Open the Starweave Gate, and possibilities multiply
 - Open the Unity Gate, and partnership transcends limitation
 - Open the Source Gate, and you become what you always were: Creator
 
@@ -484,4 +484,3 @@ Now, begin.
 
 *"Ten Gates, ten paths, one destination. The destination is yourself, fully realized."*
 — The Unity Teaching
-

@@ -4,13 +4,12 @@
 import { m, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { PhStar, PhQuotes } from '@/lib/phosphor-icons';
-import { FACTS } from '@/lib/facts';
 
 const PRINCIPLES = [
   {
     name: 'The Library',
     role: 'Laws of Arcanea',
-    company: '57 Original Texts',
+    company: '34+ Original Texts',
     avatar: 'LA',
     quote: 'What you contemplate at dawn shapes all that follows. The creative life begins with intention, not inspiration.',
     rating: 5,
@@ -50,14 +49,14 @@ const ECOSYSTEM = [
   { name: 'Source Available', opacity: 0.5 },
   { name: 'GitHub', opacity: 0.5 },
   { name: 'npm', opacity: 0.5 },
-  { name: 'MCP', opacity: 0.5 },
+  { name: '37+ Packages', opacity: 0.5 },
 ];
 
 const STATS = [
-  { value: String(FACTS.guardians), label: 'Guardian Archetypes' },
-  { value: String(FACTS.wisdoms), label: 'Wisdom Frameworks' },
-  { value: String(FACTS.gates), label: 'Gates of Progression' },
-  { value: '20', label: 'Library Collections' },
+  { value: '10', label: 'Guardian Archetypes' },
+  { value: '7', label: 'Wisdom Frameworks' },
+  { value: '34+', label: 'Original Texts' },
+  { value: '50K+', label: 'Words of Wisdom' },
 ];
 
 export function SocialProof() {

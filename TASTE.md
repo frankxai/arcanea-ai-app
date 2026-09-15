@@ -12,7 +12,7 @@
 
 The bar is Anthropic, Linear, Vercel, Apple — companies whose interfaces feel inevitable, restrained, expensive. Arcanea is *about* a creative multiverse; the chrome around it must feel like a research lab where mythology is computed, not LARPed. Cosmic mythology stays in the *content*, not the *chrome*.
 
-The seven gates that follow are non-negotiable. A page passes all seven before it ships.
+The eight gates that follow are non-negotiable. A page passes all eight before it ships.
 
 ---
 
@@ -84,6 +84,17 @@ The interface must serve the business reality, not aesthetic ambition.
 - **Honest status badges.** Live · Beta · Soon · Roadmap. Faking shipped state is a credibility loss worse than missing a deadline.
 - **Revenue surfaces drive layout priority.** GenCreator, Whop tiers, marketplace — these get the prime real estate, not vanity features.
 
+## Gate 8 — Chosen Responsibility
+
+Arcanea can use mythic identity only when it returns agency, craft, and responsibility to the user. People should feel called to useful work, not superior to others.
+
+- **Chosen means responsible.** The approved line is "You are not chosen because you are special. You are chosen because you choose the work."
+- **The common enemy is The Drift.** Fight passivity, synthetic confusion, creative amnesia, isolation, rights fog, and tool dependency. Never frame people, nations, cultures, religions, or political outgroups as enemies.
+- **Retention means returning to the mission.** Daily trials, weekly campaigns, proof ledgers, and council reviews are valid only when they create real artifacts and protect user agency.
+- **No cult mechanics.** No shame streaks, coercive urgency, forced disclosure, superiority framing, hidden pricing, buried cancellation, or opaque data use.
+- **Source the crisis.** Public claims about misinformation, climate, loneliness, AI risk, or social instability need credible references or must be removed.
+- **Use the doctrine.** See `docs/ARCANEA_CHOSEN_RESPONSIBILITY.md` before building onboarding, Academy, community, AgentHub, or mission-pack surfaces.
+
 ---
 
 ## Motion Canon
@@ -112,19 +123,6 @@ Gate 3 says "animation is rare and intentional." This section names the *specifi
 - **Particle systems** with bloom shaders for atmospheric depth.
 - **Depth parallax** with camera pan on mouse position.
 - **Gradient mesh backgrounds** (Shadertoy-style) for premium hero canvases.
-
-### Earned scroll set-piece (Track B — the carve-out)
-
-The patterns above are mostly **Track A** (Framer Motion: mount, hover, `whileInView`, spring). Gate 3's "rare and intentional" also permits **Track B** — one *choreographed scroll set-piece per flagship page* driven by GSAP `ScrollTrigger` + Lenis (a pinned section, parallax depth, or scroll-scrubbed video/3D). This is the move that separates a premium product page from a competent one. It is governed, not free.
-
-A Track-B set-piece ships only when it clears **all four**:
-
-1. **Demonstrates, not decorates.** It shows the product/idea unfolding (a feature loop, a system assembling, a narrative beat) — never motion for its own sake.
-2. **Holds the performance budget.** 60fps under scroll, transform/opacity only, LCP < 2.5s, hero video ≤ 4 MB. Verified, not assumed.
-3. **Degrades deliberately.** Under `prefers-reduced-motion: reduce` the static composition still tells the whole story (video → poster, reveal → all content visible).
-4. **Exactly one per page.** One pinned/scrubbed scene. A second is a tech demo, not a product.
-
-Miss any of the four → it is slop, cut it. Operators: the `motion-system` skill holds the patterns; `<SmoothScroll>` / `<ScrollScene>` (`apps/web/components/motion`) hold the code; the `design-motion` agent runs the two tracks; `design-verifier` enforces the 60fps + fallback gate.
 
 ### Easing curves — never the default
 
@@ -187,12 +185,13 @@ A non-exhaustive list of things that immediately fail Gate 3:
 | "Coming soon" with no date or Linear ticket | Credibility leak | Roadmap badge with linked issue, or omit until ready |
 | Background videos auto-playing | Bandwidth waste, accessibility hostile | Static hero with CSS gradient + subtle motion |
 | Skeleton loading screens longer than 1s | The site looks broken | Optimize the underlying load; skeletons are bandages, not features |
+| Chosen-one superiority or cultic in-group language | Breaks trust and turns responsibility into status theater | Chosen by responsibility, proof through service, open stewardship |
 
 ---
 
 ## How TASTE.md is Used
 
-- **Before any new page:** read this file end-to-end. Confirm the page hits all 7 gates before you start building.
+- **Before any new page:** read this file end-to-end. Confirm the page hits all 8 gates before you start building.
 - **During code review:** each Gate is a section reviewers check. PR description must answer "which gates does this strengthen?"
 - **By design subagents:** `design-architect` reads TASTE.md as priority-2 input (after the user brief, before tokens). `design-verifier` blocks merge on any banned-pattern hit.
 - **By writing voice:** the Voice gate (#2) is enforced by the `brand-voice` skill and `Line Editor & Voice Alchemist` agent. Both consume this file.

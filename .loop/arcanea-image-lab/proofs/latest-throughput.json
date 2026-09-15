@@ -1,0 +1,117 @@
+﻿{
+    "checked_at":  "2026-06-26T21:54:59",
+    "target_images":  100,
+    "tracked_prompts":  34,
+    "generated_images":  34,
+    "generated_with_source_files":  34,
+    "remaining_to_target":  66,
+    "active_minutes_observed":  49,
+    "observed_active_images_per_hour":  41.6,
+    "estimated_active_minutes_to_target":  95.2,
+    "approved_with_notes":  12,
+    "iterate":  20,
+    "restart":  2,
+    "approval_rate_percent":  35.3,
+    "near_or_approved_percent":  52.9,
+    "batches":  [
+                    {
+                        "batch_id":  "batch-000",
+                        "images":  4,
+                        "first":  "\/Date(1782438641327)\/",
+                        "last":  "\/Date(1782439095412)\/",
+                        "active_minutes":  8,
+                        "images_per_hour":  30,
+                        "approved_with_notes":  0,
+                        "iterate":  3,
+                        "restart":  1
+                    },
+                    {
+                        "batch_id":  "batch-001",
+                        "images":  4,
+                        "first":  "\/Date(1782439968683)\/",
+                        "last":  "\/Date(1782440225541)\/",
+                        "active_minutes":  4,
+                        "images_per_hour":  60,
+                        "approved_with_notes":  0,
+                        "iterate":  4,
+                        "restart":  0
+                    },
+                    {
+                        "batch_id":  "batch-002",
+                        "images":  4,
+                        "first":  "\/Date(1782441146914)\/",
+                        "last":  "\/Date(1782441526480)\/",
+                        "active_minutes":  6,
+                        "images_per_hour":  40,
+                        "approved_with_notes":  0,
+                        "iterate":  3,
+                        "restart":  1
+                    },
+                    {
+                        "batch_id":  "batch-003",
+                        "images":  4,
+                        "first":  "\/Date(1782474361939)\/",
+                        "last":  "\/Date(1782474635293)\/",
+                        "active_minutes":  5,
+                        "images_per_hour":  48,
+                        "approved_with_notes":  1,
+                        "iterate":  3,
+                        "restart":  0
+                    },
+                    {
+                        "batch_id":  "batch-004",
+                        "images":  4,
+                        "first":  "\/Date(1782474777071)\/",
+                        "last":  "\/Date(1782475134541)\/",
+                        "active_minutes":  6,
+                        "images_per_hour":  40,
+                        "approved_with_notes":  0,
+                        "iterate":  4,
+                        "restart":  0
+                    },
+                    {
+                        "batch_id":  "batch-005",
+                        "images":  2,
+                        "first":  "\/Date(1782475292657)\/",
+                        "last":  "\/Date(1782475386916)\/",
+                        "active_minutes":  2,
+                        "images_per_hour":  60,
+                        "approved_with_notes":  1,
+                        "iterate":  1,
+                        "restart":  0
+                    },
+                    {
+                        "batch_id":  "batch-006",
+                        "images":  4,
+                        "first":  "\/Date(1782485526392)\/",
+                        "last":  "\/Date(1782485867860)\/",
+                        "active_minutes":  6,
+                        "images_per_hour":  40,
+                        "approved_with_notes":  2,
+                        "iterate":  2,
+                        "restart":  0
+                    },
+                    {
+                        "batch_id":  "batch-007",
+                        "images":  4,
+                        "first":  "\/Date(1782502030716)\/",
+                        "last":  "\/Date(1782502324090)\/",
+                        "active_minutes":  5,
+                        "images_per_hour":  48,
+                        "approved_with_notes":  4,
+                        "iterate":  0,
+                        "restart":  0
+                    },
+                    {
+                        "batch_id":  "batch-008",
+                        "images":  4,
+                        "first":  "\/Date(1782502812330)\/",
+                        "last":  "\/Date(1782503220521)\/",
+                        "active_minutes":  7,
+                        "images_per_hour":  34.3,
+                        "approved_with_notes":  4,
+                        "iterate":  0,
+                        "restart":  0
+                    }
+                ]
+}

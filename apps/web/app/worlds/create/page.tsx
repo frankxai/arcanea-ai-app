@@ -5,7 +5,6 @@ import { useState, useEffect, useCallback } from "react";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 // ---------------------------------------------------------------------------
@@ -77,22 +76,14 @@ const REFINE_SUFFIXES = [
 ];
 
 const EL_GLOW: Record<string, string> = {
-  fire: "shadow-red-500/30",
-  water: "shadow-blue-400/30",
-  earth: "shadow-emerald-500/30",
-  wind: "shadow-slate-300/30",
-  void: "shadow-purple-500/30",
-  spirit: "shadow-amber-400/30",
-  light: "shadow-yellow-300/30",
-  shadow: "shadow-violet-600/30",
+  fire: "shadow-red-500/30", water: "shadow-blue-400/30", earth: "shadow-emerald-500/30",
+  wind: "shadow-slate-300/30", void: "shadow-purple-500/30", spirit: "shadow-amber-400/30",
+  light: "shadow-yellow-300/30", shadow: "shadow-violet-600/30",
 };
 
 function elGlow(n: string) {
   const k = n.toLowerCase();
-  return (
-    Object.entries(EL_GLOW).find(([x]) => k.includes(x))?.[1] ??
-    "shadow-[var(--arc-brand-atlantean-teal)]/30"
-  );
+  return Object.entries(EL_GLOW).find(([x]) => k.includes(x))?.[1] ?? "shadow-[var(--arc-brand-atlantean-teal)]/30";
 }
 
 // ---------------------------------------------------------------------------
@@ -100,78 +91,24 @@ function elGlow(n: string) {
 // ---------------------------------------------------------------------------
 
 const GENRE_RULES: { keywords: string[]; genre: string; color: string }[] = [
-  {
-    keywords: [
-      "magic",
-      "wizard",
-      "spell",
-      "enchant",
-      "sorcery",
-      "fantasy",
-      "dragon",
-      "elf",
-    ],
-    genre: "Fantasy",
-    color: "var(--arc-void)",
-  },
-  {
-    keywords: ["cyber", "neon", "hack", "android", "augment", "neural"],
-    genre: "Cyberpunk",
-    color: "var(--arc-brand-atlantean-teal)",
-  },
-  {
-    keywords: ["underwater", "ocean", "sea", "coral", "abyss", "depth"],
-    genre: "Aquatic",
-    color: "var(--arc-brand-cosmic-blue)",
-  },
-  {
-    keywords: [
-      "space",
-      "star",
-      "galaxy",
-      "nebula",
-      "cosmic",
-      "planet",
-      "orbit",
-    ],
-    genre: "Cosmic",
-    color: "var(--arc-brand-arcanean-gold)",
-  },
-  {
-    keywords: ["medieval", "knight", "castle", "kingdom", "feudal", "sword"],
-    genre: "Medieval",
-    color: "var(--arc-earth)",
-  },
-  {
-    keywords: ["horror", "dark", "death", "haunt", "shadow", "dread", "fear"],
-    genre: "Horror",
-    color: "var(--arc-fire)",
-  },
+  { keywords: ["magic", "wizard", "spell", "enchant", "sorcery", "fantasy", "dragon", "elf"], genre: "Fantasy", color: "var(--arc-void)" },
+  { keywords: ["cyber", "neon", "hack", "android", "augment", "neural"], genre: "Cyberpunk", color: "var(--arc-brand-atlantean-teal)" },
+  { keywords: ["underwater", "ocean", "sea", "coral", "abyss", "depth"], genre: "Aquatic", color: "var(--arc-brand-cosmic-blue)" },
+  { keywords: ["space", "star", "galaxy", "nebula", "cosmic", "planet", "orbit"], genre: "Cosmic", color: "var(--arc-brand-arcanean-gold)" },
+  { keywords: ["medieval", "knight", "castle", "kingdom", "feudal", "sword"], genre: "Medieval", color: "var(--arc-earth)" },
+  { keywords: ["horror", "dark", "death", "haunt", "shadow", "dread", "fear"], genre: "Horror", color: "var(--arc-fire)" },
 ];
 
 function GenrePreview({ description }: { description: string }) {
   if (description.length < 20) return null;
   const lower = description.toLowerCase();
-  const match = GENRE_RULES.find((r) =>
-    r.keywords.some((k) => lower.includes(k)),
-  );
+  const match = GENRE_RULES.find((r) => r.keywords.some((k) => lower.includes(k)));
   if (!match) return null;
   return (
-    <m.div
-      initial={{ opacity: 0, y: 4 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 4 }}
-      className="flex items-center gap-2 mt-2 px-1"
-    >
+    <m.div initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 4 }} className="flex items-center gap-2 mt-2 px-1">
       <span className="relative flex h-2 w-2">
-        <span
-          className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
-          style={{ backgroundColor: match.color }}
-        />
-        <span
-          className="relative inline-flex rounded-full h-2 w-2"
-          style={{ backgroundColor: match.color }}
-        />
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50" style={{ backgroundColor: match.color }} />
+        <span className="relative inline-flex rounded-full h-2 w-2" style={{ backgroundColor: match.color }} />
       </span>
       <span className="text-xs text-white/40">{match.genre} World</span>
     </m.div>
@@ -184,52 +121,29 @@ function GenrePreview({ description }: { description: string }) {
 
 function AuroraBackground() {
   return (
-    <div
-      className="fixed inset-0 pointer-events-none overflow-hidden"
-      aria-hidden="true"
-    >
-      <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-[var(--arc-brand-atlantean-teal)]/[0.04] rounded-full blur-[120px] animate-pulse" />
-      <div
-        className="absolute bottom-1/4 -right-32 w-[500px] h-[500px] bg-[var(--arc-void)]/[0.04] rounded-full blur-[120px]"
-        style={{ animationDelay: "2s" }}
-      />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[var(--arc-brand-arcanean-gold)]/[0.02] rounded-full blur-[150px]" />
+    <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-[var(--arc-brand-atlantean-teal)]/[0.04] rounded-full blur-[120px] animate-pulse" /><div className="absolute bottom-1/4 -right-32 w-[500px] h-[500px] bg-[var(--arc-void)]/[0.04] rounded-full blur-[120px]" style={{ animationDelay: "2s" }} /><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[var(--arc-brand-arcanean-gold)]/[0.02] rounded-full blur-[150px]" />
     </div>
   );
 }
 
 function GeneratingOverlay({ step }: { step: number }) {
   return (
-    <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6"
-    >
+    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6">
       <div className="relative w-28 h-28 mb-10">
-        <div
-          className="absolute inset-0 rounded-full bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/30 via-[var(--arc-void)]/20 to-[var(--arc-brand-arcanean-gold)]/20 animate-ping"
-          style={{ animationDuration: "2s" }}
-        />
+        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/30 via-[var(--arc-void)]/20 to-[var(--arc-brand-arcanean-gold)]/20 animate-ping" style={{ animationDuration: "2s" }} />
         <div className="absolute inset-3 rounded-full bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/40 via-[var(--arc-void)]/30 to-[var(--arc-brand-arcanean-gold)]/30 animate-pulse" />
         <div className="absolute inset-6 rounded-full bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-void)] to-[var(--arc-brand-arcanean-gold)] opacity-50 blur-sm" />
         <div className="absolute inset-8 rounded-full bg-[var(--arc-cosmic-void)]" />
       </div>
-      <p className="text-white/60 text-lg font-display mb-8">
-        Weaving the fabric of your universe...
-      </p>
+      <p className="text-white/60 text-lg font-display mb-8">Weaving the fabric of your universe...</p>
       <div className="space-y-3 max-w-xs">
         {PROGRESS_STEPS.map((label, i) => (
-          <m.div
-            key={label}
-            initial={{ opacity: 0, x: -12 }}
-            animate={i <= step ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: i * 0.15, duration: 0.4 }}
-            className={`flex items-center gap-3 text-sm ${i <= step ? "text-white/70" : "text-white/10"}`}
-          >
-            <span
-              className={`w-2 h-2 rounded-full ${i < step ? "bg-[var(--arc-brand-atlantean-teal)]" : i === step ? "bg-[var(--arc-brand-atlantean-teal)] animate-pulse" : "bg-white/10"}`}
-            />
+          <m.div key={label} initial={{ opacity: 0, x: -12 }}
+            animate={i <= step ? { opacity: 1, x: 0 } : {}} transition={{ delay: i * 0.15, duration: 0.4 }}
+            className={`flex items-center gap-3 text-sm ${i <= step ? "text-white/70" : "text-white/10"}`}>
+            <span className={`w-2 h-2 rounded-full ${i < step ? "bg-[var(--arc-brand-atlantean-teal)]" : i === step ? "bg-[var(--arc-brand-atlantean-teal)] animate-pulse" : "bg-white/10"}`} />
             {label}
           </m.div>
         ))}
@@ -238,90 +152,34 @@ function GeneratingOverlay({ step }: { step: number }) {
   );
 }
 
-function HeroSection({
-  world,
-  heroImage,
-}: {
-  world: GeneratedWorld;
-  heroImage: string | null;
-}) {
+function HeroSection({ world, heroImage }: { world: GeneratedWorld; heroImage: string | null }) {
   const from = world.palette?.primary || "var(--arc-brand-atlantean-teal)";
   const to = world.palette?.secondary || "var(--arc-void)";
   const h = heroImage ? 320 : 200;
   return (
-    <m.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.1 }}
-      className="relative w-full rounded-2xl overflow-hidden mb-12"
-      style={{ minHeight: h }}
-    >
-      <div
-        className="absolute inset-0"
-        style={{
-          background: `linear-gradient(135deg, ${from}22, ${to}22, var(--arc-cosmic-void))`,
-        }}
-      />
-      {heroImage && (
-        <Image
-          src={heroImage}
-          alt={`Concept art for ${world.name}`}
-          fill
-          className="absolute inset-0 object-cover opacity-60"
-          sizes="100vw"
-        />
-      )}
+    <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+      className="relative w-full rounded-2xl overflow-hidden mb-12" style={{ minHeight: h }}>
+      <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${from}22, ${to}22, var(--arc-cosmic-void))` }} />
+      {heroImage && <Image src={heroImage} alt={`Concept art for ${world.name}`} fill className="absolute inset-0 object-cover opacity-60" sizes="100vw" />}
       <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] via-[var(--arc-cosmic-void)]/60 to-transparent" />
-      <div
-        className="relative z-10 flex flex-col items-center justify-end h-full px-6 py-10"
-        style={{ minHeight: h }}
-      >
-        <p className="text-[var(--arc-brand-atlantean-teal)] font-mono text-xs tracking-widest uppercase mb-3">
-          Your World
-        </p>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-3 text-center drop-shadow-lg">
-          {world.name}
-        </h2>
-        {world.tagline && (
-          <p className="text-lg text-white/60 max-w-xl text-center">
-            {world.tagline}
-          </p>
-        )}
+      <div className="relative z-10 flex flex-col items-center justify-end h-full px-6 py-10" style={{ minHeight: h }}>
+        <p className="text-[var(--arc-brand-atlantean-teal)] font-mono text-xs tracking-widest uppercase mb-3">Your World</p>
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-3 text-center drop-shadow-lg">{world.name}</h2>
+        {world.tagline && <p className="text-lg text-white/60 max-w-xl text-center">{world.tagline}</p>}
       </div>
     </m.div>
   );
 }
 
-function ElementOrbs({
-  elements,
-}: {
-  elements: { name: string; domain: string; color: string }[];
-}) {
+function ElementOrbs({ elements }: { elements: { name: string; domain: string; color: string }[] }) {
   return (
-    <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.4 }}
-      className="flex flex-wrap items-center justify-center gap-5 mb-12"
-    >
+    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
+      className="flex flex-wrap items-center justify-center gap-5 mb-12">
       {elements.map((el, i) => (
-        <m.div
-          key={el.name}
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4 + i * 0.1 }}
-          className="flex flex-col items-center gap-2"
-        >
-          <div
-            className={`w-10 h-10 rounded-full shadow-lg ${elGlow(el.name)} relative`}
-            style={{ backgroundColor: el.color }}
-          >
-            <div
-              className="absolute inset-0 rounded-full animate-pulse"
-              style={{
-                boxShadow: `0 0 20px ${el.color}40, 0 0 40px ${el.color}20`,
-              }}
-            />
+        <m.div key={el.name} initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4 + i * 0.1 }} className="flex flex-col items-center gap-2">
+          <div className={`w-10 h-10 rounded-full shadow-lg ${elGlow(el.name)} relative`} style={{ backgroundColor: el.color }}>
+            <div className="absolute inset-0 rounded-full animate-pulse" style={{ boxShadow: `0 0 20px ${el.color}40, 0 0 40px ${el.color}20` }} />
           </div>
           <span className="text-xs text-white/50 font-medium">{el.name}</span>
           <span className="text-[10px] text-white/25">{el.domain}</span>
@@ -332,162 +190,69 @@ function ElementOrbs({
 }
 
 const EL_STRIPE: Record<string, string> = {
-  fire: "var(--arc-fire)",
-  water: "var(--arc-brand-cosmic-blue)",
-  earth: "var(--arc-wind)",
-  wind: "var(--arc-void)",
-  void: "var(--arc-void)",
-  spirit: "var(--arc-brand-arcanean-gold)",
+  fire: "var(--arc-fire)", water: "var(--arc-brand-cosmic-blue)", earth: "var(--arc-wind)", wind: "var(--arc-void)", void: "var(--arc-void)", spirit: "var(--arc-brand-arcanean-gold)",
 };
 
-function CharacterCard({
-  char,
-  index,
-}: {
-  char: GeneratedCharacter;
-  index: number;
-}) {
+function CharacterCard({ char, index }: { char: GeneratedCharacter; index: number }) {
   const el = char.element?.toLowerCase() || "";
-  const stripe =
-    Object.entries(EL_STRIPE).find(([k]) => el.includes(k))?.[1] ??
-    "var(--arc-brand-atlantean-teal)";
+  const stripe = Object.entries(EL_STRIPE).find(([k]) => el.includes(k))?.[1] ?? "var(--arc-brand-atlantean-teal)";
   return (
-    <m.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6 + index * 0.15 }}
-      className="rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.12] transition-all overflow-hidden flex"
-    >
+    <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 + index * 0.15 }}
+      className="rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.12] transition-all overflow-hidden flex">
       <div className="w-1 shrink-0" style={{ backgroundColor: stripe }} />
       <div className="p-5 flex-1">
         <div className="flex items-start justify-between mb-2">
           <h4 className="font-display font-semibold text-white">{char.name}</h4>
-          {char.element && (
-            <span className="text-[11px] px-2 py-0.5 rounded-full bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20">
-              {char.element}
-            </span>
-          )}
+          {char.element && <span className="text-[11px] px-2 py-0.5 rounded-full bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)] border border-[var(--arc-brand-atlantean-teal)]/20">{char.element}</span>}
         </div>
-        {char.title && (
-          <p className="text-xs text-white/40 mb-1">{char.title}</p>
-        )}
-        {char.origin_class && (
-          <span className="inline-block text-[10px] px-2 py-0.5 rounded bg-[var(--arc-void)]/10 text-[var(--arc-void)]/70 border border-[var(--arc-void)]/20 mb-2">
-            {char.origin_class}
-          </span>
-        )}
-        {char.backstory && (
-          <p className="text-sm text-white/50 leading-relaxed line-clamp-3">
-            {char.backstory}
-          </p>
-        )}
+        {char.title && <p className="text-xs text-white/40 mb-1">{char.title}</p>}
+        {char.origin_class && <span className="inline-block text-[10px] px-2 py-0.5 rounded bg-[var(--arc-void)]/10 text-[var(--arc-void)]/70 border border-[var(--arc-void)]/20 mb-2">{char.origin_class}</span>}
+        {char.backstory && <p className="text-sm text-white/50 leading-relaxed line-clamp-3">{char.backstory}</p>}
       </div>
     </m.div>
   );
 }
 
-function LocationCard({
-  loc,
-  index,
-}: {
-  loc: GeneratedLocation;
-  index: number;
-}) {
+function LocationCard({ loc, index }: { loc: GeneratedLocation; index: number }) {
   return (
-    <m.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.9 + index * 0.15 }}
-      className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 hover:border-white/[0.12] transition-all"
-    >
-      {loc.region && (
-        <p className="text-[10px] text-[var(--arc-void)]/50 uppercase tracking-widest mb-2">
-          {loc.region}
-        </p>
-      )}
+    <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 + index * 0.15 }}
+      className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 hover:border-white/[0.12] transition-all">
+      {loc.region && <p className="text-[10px] text-[var(--arc-void)]/50 uppercase tracking-widest mb-2">{loc.region}</p>}
       <h4 className="font-display font-semibold text-white mb-1">{loc.name}</h4>
-      {loc.description && (
-        <p className="text-sm text-white/50 leading-relaxed line-clamp-3 mb-2">
-          {loc.description}
-        </p>
-      )}
-      {loc.significance && (
-        <p className="text-xs text-white/30 italic line-clamp-2">
-          {loc.significance}
-        </p>
-      )}
+      {loc.description && <p className="text-sm text-white/50 leading-relaxed line-clamp-3 mb-2">{loc.description}</p>}
+      {loc.significance && <p className="text-xs text-white/30 italic line-clamp-2">{loc.significance}</p>}
     </m.div>
   );
 }
 
-function FoundingEvent({
-  event,
-  worldName,
-}: {
-  event: { title: string; description: string; era?: string };
-  worldName: string;
-}) {
+function FoundingEvent({ event, worldName }: { event: { title: string; description: string; era?: string }; worldName: string }) {
   return (
-    <m.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.1 }}
-      className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-6 mb-10 relative overflow-hidden"
-    >
+    <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }}
+      className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-6 mb-10 relative overflow-hidden">
       <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-[var(--arc-brand-arcanean-gold)]/30 via-[var(--arc-brand-arcanean-gold)]/10 to-transparent" />
       <div className="absolute left-[19px] top-6 w-3 h-3 rounded-full bg-[var(--arc-brand-arcanean-gold)]/60 ring-2 ring-[var(--arc-brand-arcanean-gold)]/20" />
       <div className="pl-8">
         <div className="flex items-center gap-3 mb-3">
-          <p className="text-xs text-[var(--arc-brand-arcanean-gold)]/50 uppercase tracking-wider">
-            Founding Event
-          </p>
-          {event.era && (
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--arc-brand-arcanean-gold)]/10 text-[var(--arc-brand-arcanean-gold)]/60 border border-[var(--arc-brand-arcanean-gold)]/20">
-              {event.era}
-            </span>
-          )}
+          <p className="text-xs text-[var(--arc-brand-arcanean-gold)]/50 uppercase tracking-wider">Founding Event</p>
+          {event.era && <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--arc-brand-arcanean-gold)]/10 text-[var(--arc-brand-arcanean-gold)]/60 border border-[var(--arc-brand-arcanean-gold)]/20">{event.era}</span>}
         </div>
-        <p className="text-xs text-white/25 mb-2">
-          The beginning of {worldName}
-        </p>
-        <h4 className="font-display font-semibold text-white mb-2">
-          {event.title}
-        </h4>
-        <p className="text-sm text-white/45 leading-relaxed">
-          {event.description}
-        </p>
+        <p className="text-xs text-white/25 mb-2">The beginning of {worldName}</p>
+        <h4 className="font-display font-semibold text-white mb-2">{event.title}</h4>
+        <p className="text-sm text-white/45 leading-relaxed">{event.description}</p>
       </div>
     </m.div>
   );
 }
 
-function PaletteSection({
-  palette,
-}: {
-  palette: { primary: string; secondary: string; accent: string };
-}) {
-  const swatches = [
-    ["Primary", palette.primary],
-    ["Secondary", palette.secondary],
-    ["Accent", palette.accent],
-  ] as const;
+function PaletteSection({ palette }: { palette: { primary: string; secondary: string; accent: string } }) {
+  const swatches = [["Primary", palette.primary], ["Secondary", palette.secondary], ["Accent", palette.accent]] as const;
   return (
-    <m.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.2 }}
-      className="mb-10"
-    >
-      <p className="text-sm font-mono text-white/30 uppercase tracking-wider mb-4">
-        Palette
-      </p>
+    <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="mb-10">
+      <p className="text-sm font-mono text-white/30 uppercase tracking-wider mb-4">Palette</p>
       <div className="flex gap-4">
         {swatches.map(([label, color]) => (
           <div key={label} className="flex flex-col items-center gap-2">
-            <div
-              className="w-20 h-14 rounded-xl border border-white/10 shadow-lg"
-              style={{ backgroundColor: color }}
-            />
+            <div className="w-20 h-14 rounded-xl border border-white/10 shadow-lg" style={{ backgroundColor: color }} />
             <span className="text-[10px] text-white/30">{label}</span>
             <span className="text-[11px] text-white/50 font-mono">{color}</span>
           </div>
@@ -502,7 +267,6 @@ function PaletteSection({
 // ---------------------------------------------------------------------------
 
 export default function CreateWorldPage() {
-  const router = useRouter();
   const [phase, setPhase] = useState<Phase>("input");
   const [description, setDescription] = useState("");
   const [result, setResult] = useState<GenerateResult | null>(null);
@@ -535,68 +299,62 @@ export default function CreateWorldPage() {
     return () => clearInterval(interval);
   }, [phase]);
 
-  const generateHeroImage = useCallback(
-    async (imagePrompt: string, worldName: string) => {
-      setImageLoading(true);
-      try {
-        const res = await fetch("/api/worlds/generate-image", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            type: "world",
-            blueprint: { prompt: imagePrompt, name: worldName },
-          }),
-        });
+  const generateHeroImage = useCallback(async (imagePrompt: string, worldName: string) => {
+    setImageLoading(true);
+    try {
+      const res = await fetch("/api/worlds/generate-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "world",
+          blueprint: { prompt: imagePrompt, name: worldName },
+        }),
+      });
 
-        if (!res.ok) return;
-        const data = await res.json();
-        if (data.generated && data.imageData && data.mimeType) {
-          setHeroImage(`data:${data.mimeType};base64,${data.imageData}`);
-        }
-      } catch {
-        // Non-blocking — silently continue without image
-      } finally {
-        setImageLoading(false);
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.generated && data.imageData && data.mimeType) {
+        setHeroImage(`data:${data.mimeType};base64,${data.imageData}`);
       }
-    },
-    [],
-  );
+    } catch {
+      // Non-blocking — silently continue without image
+    } finally {
+      setImageLoading(false);
+    }
+  }, []);
 
-  const generate = useCallback(
-    async (desc?: string) => {
-      const trimmed = (desc || description).trim();
-      if (!trimmed || trimmed.length < 5) return;
+  const generate = useCallback(async (desc?: string) => {
+    const trimmed = (desc || description).trim();
+    if (!trimmed || trimmed.length < 5) return;
 
-      setError(null);
-      setHeroImage(null);
-      setPhase("generating");
-      try {
-        const res = await fetch("/api/worlds/generate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ description: trimmed }),
-        });
+    setError(null);
+    setHeroImage(null);
+    setPhase("generating");
+    try {
+      const res = await fetch("/api/worlds/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ description: trimmed }),
+      });
 
-        if (!res.ok) {
-          const body = await res.json().catch(() => ({}));
-          throw new Error(body.error || `Generation failed (${res.status})`);
-        }
-
-        const data: GenerateResult = await res.json();
-        setResult(data);
-        setPhase("result");
-
-        // Phase 2: generate hero image in background
-        if (data.image_prompt) {
-          generateHeroImage(data.image_prompt, data.world.name);
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Something went wrong.");
-        setPhase("input");
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || `Generation failed (${res.status})`);
       }
-    },
-    [description, generateHeroImage],
-  );
+
+      const data: GenerateResult = await res.json();
+      setResult(data);
+      setPhase("result");
+
+      // Phase 2: generate hero image in background
+      if (data.image_prompt) {
+        generateHeroImage(data.image_prompt, data.world.name);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong.");
+      setPhase("input");
+    }
+  }, [description, generateHeroImage]);
 
   const saveWorld = useCallback(async () => {
     if (!result || saving) return;
@@ -604,7 +362,7 @@ export default function CreateWorldPage() {
 
     try {
       if (result.saved && result.world?.slug) {
-        router.push(`/worlds/${result.world.slug}`);
+        window.location.href = `/worlds/${result.world.slug}`;
         return;
       }
 
@@ -617,14 +375,14 @@ export default function CreateWorldPage() {
       if (!res.ok) throw new Error("Failed to save world");
       const data: GenerateResult = await res.json();
       if (data.world?.slug) {
-        router.push(`/worlds/${data.world.slug}`);
+        window.location.href = `/worlds/${data.world.slug}`;
       }
     } catch {
       setError("Failed to save. Please try again.");
     } finally {
       setSaving(false);
     }
-  }, [result, saving, description, router]);
+  }, [result, saving, description]);
 
   const startRefine = () => {
     setRefining(true);
@@ -649,25 +407,14 @@ export default function CreateWorldPage() {
   // Keyboard shortcuts: Cmd/Ctrl+Enter to generate, Escape to reset, Tab to cycle examples
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (phase === "input" && e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        generate();
-      }
-      if (
-        phase === "input" &&
-        e.key === "Tab" &&
-        !e.shiftKey &&
-        document.activeElement?.tagName !== "TEXTAREA"
-      ) {
+      if (phase === "input" && e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); generate(); }
+      if (phase === "input" && e.key === "Tab" && !e.shiftKey && document.activeElement?.tagName !== "TEXTAREA") {
         e.preventDefault();
         const next = (exampleIdx + 1) % EXAMPLES.length;
         setExampleIdx(next);
         setDescription(EXAMPLES[next]);
       }
-      if (phase === "result" && e.key === "Escape") {
-        e.preventDefault();
-        reset();
-      }
+      if (phase === "result" && e.key === "Escape") { e.preventDefault(); reset(); }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
@@ -684,18 +431,8 @@ export default function CreateWorldPage() {
             href="/worlds"
             className="inline-flex items-center gap-2 text-sm text-white/30 hover:text-white/60 transition-colors"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Worlds
           </Link>
@@ -715,82 +452,35 @@ export default function CreateWorldPage() {
               >
                 <div className="inline-flex items-center gap-2 mb-6">
                   <div className="h-px w-8 bg-gradient-to-r from-transparent to-[var(--arc-brand-atlantean-teal)]/60" />
-                  <span className="text-[var(--arc-brand-atlantean-teal)] font-mono text-xs tracking-widest uppercase">
-                    World Forge
-                  </span>
+                  <span className="text-[var(--arc-brand-atlantean-teal)] font-mono text-xs tracking-widest uppercase">World Forge</span>
                   <div className="h-px w-8 bg-gradient-to-l from-transparent to-[var(--arc-brand-atlantean-teal)]/60" />
                 </div>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 leading-tight">
                   <span className="text-white">Create a </span>
-                  <span
-                    className="bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-void), var(--arc-brand-arcanean-gold))",
-                    }}
-                  >
-                    World
-                  </span>
+                  <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-void), var(--arc-brand-arcanean-gold))" }}>World</span>
                 </h1>
 
                 <p className="text-lg text-white/40 max-w-lg mb-8">
-                  Describe your world in one sentence. AI will generate
-                  characters, locations, lore, and a color palette.
+                  Describe your world in one sentence. AI will generate characters, locations, lore, and a color palette.
                 </p>
 
                 {/* Showcase examples */}
                 <div className="w-full max-w-2xl mb-10">
-                  <p className="text-xs text-white/25 uppercase tracking-wider mb-3 text-center">
-                    See what&apos;s possible
-                  </p>
+                  <p className="text-xs text-white/25 uppercase tracking-wider mb-3 text-center">See what&apos;s possible</p>
                   <div className="flex justify-center gap-3 flex-wrap">
                     {[
-                      {
-                        name: "Arcanea Prime",
-                        tagline: "10 Gates, 5 Elements, one living mythology",
-                        chars: 28,
-                        gradient:
-                          "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold))",
-                        href: "/lore",
-                      },
-                      {
-                        name: "The Shadowfen",
-                        tagline: "Horror bleeds through fractured reality",
-                        chars: 12,
-                        gradient:
-                          "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-cosmic-void), var(--arc-earth))",
-                        href: "/lore",
-                      },
-                      {
-                        name: "Starweave Academy",
-                        tagline: "Seven houses and a thousand untold stories",
-                        chars: 19,
-                        gradient:
-                          "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold), var(--arc-brand-atlantean-teal))",
-                        href: "/lore",
-                      },
+                      { name: "Arcanea Prime", tagline: "10 Gates, 5 Elements, one living mythology", chars: 28, gradient: "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold))", href: "/lore" },
+                      { name: "The Shadowfen", tagline: "Horror bleeds through fractured reality", chars: 12, gradient: "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-cosmic-void), var(--arc-earth))", href: "/lore" },
+                      { name: "Starweave Academy", tagline: "Seven houses and a thousand untold stories", chars: 19, gradient: "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold), var(--arc-brand-atlantean-teal))", href: "/lore" },
                     ].map((w) => (
-                      <Link
-                        key={w.name}
-                        href={w.href}
-                        className="group/card w-[180px] rounded-xl overflow-hidden border border-white/[0.06] hover:border-white/[0.15] transition-all hover:-translate-y-0.5"
-                      >
-                        <div
-                          className="h-[80px] relative"
-                          style={{ background: w.gradient }}
-                        >
+                      <Link key={w.name} href={w.href} className="group/card w-[180px] rounded-xl overflow-hidden border border-white/[0.06] hover:border-white/[0.15] transition-all hover:-translate-y-0.5">
+                        <div className="h-[80px] relative" style={{ background: w.gradient }}>
                           <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] to-transparent opacity-70" />
                         </div>
                         <div className="p-3 bg-white/[0.02]">
-                          <p className="text-sm font-display font-semibold text-white group-hover/card:text-[var(--arc-brand-atlantean-teal)] transition-colors truncate">
-                            {w.name}
-                          </p>
-                          <p className="text-[11px] text-white/35 truncate mt-0.5">
-                            {w.tagline}
-                          </p>
-                          <span className="inline-block mt-1.5 text-[10px] px-1.5 py-0.5 rounded bg-white/[0.04] text-white/30 border border-white/[0.06]">
-                            {w.chars} characters
-                          </span>
+                          <p className="text-sm font-display font-semibold text-white group-hover/card:text-[var(--arc-brand-atlantean-teal)] transition-colors truncate">{w.name}</p>
+                          <p className="text-[11px] text-white/35 truncate mt-0.5">{w.tagline}</p>
+                          <span className="inline-block mt-1.5 text-[10px] px-1.5 py-0.5 rounded bg-white/[0.04] text-white/30 border border-white/[0.06]">{w.chars} characters</span>
                         </div>
                       </Link>
                     ))}
@@ -802,14 +492,9 @@ export default function CreateWorldPage() {
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.035] via-white/[0.02] to-white/[0.025] backdrop-blur-2xl" />
                     <textarea
                       value={description}
-                      onChange={(e) =>
-                        setDescription(e.target.value.slice(0, 500))
-                      }
+                      onChange={(e) => setDescription(e.target.value.slice(0, 500))}
                       onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                          e.preventDefault();
-                          generate();
-                        }
+                        if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); generate(); }
                       }}
                       placeholder="A floating archipelago where gravity is controlled by ancient crystals..."
                       rows={3}
@@ -817,12 +502,8 @@ export default function CreateWorldPage() {
                     />
                   </div>
                   <div className="flex items-center justify-between mt-2 px-1">
-                    <span className="text-xs text-white/20">
-                      {description.length}/500
-                    </span>
-                    {error && (
-                      <span className="text-xs text-red-400">{error}</span>
-                    )}
+                    <span className="text-xs text-white/20">{description.length}/500</span>
+                    {error && <span className="text-xs text-red-400">{error}</span>}
                   </div>
                   <AnimatePresence>
                     <GenrePreview description={description} />
@@ -844,9 +525,7 @@ export default function CreateWorldPage() {
                 </m.button>
 
                 <div className="mt-10 w-full max-w-2xl">
-                  <p className="text-xs text-white/20 mb-3 uppercase tracking-wider">
-                    Try one of these
-                  </p>
+                  <p className="text-xs text-white/20 mb-3 uppercase tracking-wider">Try one of these</p>
                   <div className="flex flex-wrap justify-center gap-2">
                     {EXAMPLES.map((ex) => (
                       <button
@@ -888,9 +567,7 @@ export default function CreateWorldPage() {
                   >
                     <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06]">
                       <div className="w-2 h-2 rounded-full bg-[var(--arc-brand-atlantean-teal)] animate-pulse" />
-                      <span className="text-xs text-white/40">
-                        Generating concept art...
-                      </span>
+                      <span className="text-xs text-white/40">Generating concept art...</span>
                     </div>
                   </m.div>
                 )}
@@ -952,16 +629,11 @@ export default function CreateWorldPage() {
 
                 {/* Founding event */}
                 {result.event && (
-                  <FoundingEvent
-                    event={result.event}
-                    worldName={result.world.name}
-                  />
+                  <FoundingEvent event={result.event} worldName={result.world.name} />
                 )}
 
                 {/* Palette */}
-                {result.world.palette && (
-                  <PaletteSection palette={result.world.palette} />
-                )}
+                {result.world.palette && <PaletteSection palette={result.world.palette} />}
 
                 {/* CTA */}
                 <m.div
@@ -985,18 +657,8 @@ export default function CreateWorldPage() {
                       >
                         {saving ? "Saving..." : "Enter This World"}
                         {!saving && (
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M17 8l4 4m0 0l-4 4m4-4H3"
-                            />
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                           </svg>
                         )}
                       </m.button>
@@ -1006,18 +668,8 @@ export default function CreateWorldPage() {
                         className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow"
                       >
                         Sign up to save
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                          />
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                       </Link>
                     )}

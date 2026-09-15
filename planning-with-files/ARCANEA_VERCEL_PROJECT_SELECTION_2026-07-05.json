@@ -1,0 +1,169 @@
+{
+  "version": "1.0.0",
+  "id": "arcanea-vercel-project-selection-2026-07-05",
+  "generatedAt": "2026-07-05T06:39:31.756Z",
+  "repo": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app",
+  "sourceInputs": {
+    "projectLink": ".vercel/project.json",
+    "rootVercel": "vercel.json",
+    "appVercel": "apps/web/vercel.json",
+    "packageManager": "pnpm@8.15.0",
+    "domainAudit": "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json",
+    "remoteSnapshot": "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json"
+  },
+  "summary": {
+    "decision": "fix-current-linked-project-first",
+    "recommendedProject": "arcanea-ai-app",
+    "alternateProject": "arcanea-ai-appx",
+    "rationale": [
+      "arcanea-ai-app is the current linked project and has recorded God Mode branch preview evidence.",
+      "arcanea-ai-app needs framework/node/domain/live-state repair, but those are direct project-setting/domain actions.",
+      "arcanea-ai-appx has better framework/node/root posture, but it is not linked to the current worktree and still has npm-based project commands.",
+      "No inspected Arcanea candidate currently owns arcanea.ai/www.arcanea.ai, so domain movement requires explicit production-owner and rollback approval either way."
+    ]
+  },
+  "projects": [
+    {
+      "id": "prj_90OIWsAmfeswv8IG8WxqEAFefTOV",
+      "name": "arcanea-ai-app",
+      "role": "current-linked-release-project",
+      "linkedCurrentWorktree": true,
+      "framework": "services",
+      "nodeVersion": "24.x",
+      "rootDirectory": ".",
+      "configuredBuildCommand": "pnpm --filter @arcanea/web... --workspace-concurrency=1 build",
+      "configuredInstallCommand": "corepack enable && pnpm install --prod=false --frozen-lockfile",
+      "configuredOutputDirectory": "apps/web/.next",
+      "pnpmBuildInstall": true,
+      "hasProductionDomain": false,
+      "hasCandidatePreview": true,
+      "primaryFixes": [
+        "Patch Vercel project framework to nextjs.",
+        "Patch Vercel project Node runtime to 22.x.",
+        "Keep rootDirectory \".\" and root vercel.json outputDirectory apps/web/.next unless a human chooses apps/web root.",
+        "Attach arcanea.ai/www.arcanea.ai only after domain owner and rollback path are explicit.",
+        "Create a fresh preview from the packaged God Mode branch."
+      ],
+      "risk": "Lowest repo-continuity risk because the current worktree and recorded God Mode preview already point here.",
+      "readiness": {
+        "score": 7,
+        "max": 14,
+        "checks": [
+          {
+            "id": "linked-current-worktree",
+            "pass": true,
+            "weight": 3,
+            "summary": "Project is linked from .vercel/project.json."
+          },
+          {
+            "id": "framework-nextjs",
+            "pass": false,
+            "weight": 2,
+            "summary": "Framework is services."
+          },
+          {
+            "id": "node-22",
+            "pass": false,
+            "weight": 2,
+            "summary": "Node version is 24.x."
+          },
+          {
+            "id": "pnpm-build-install",
+            "pass": true,
+            "weight": 2,
+            "summary": "Build/install commands are pnpm-aligned."
+          },
+          {
+            "id": "domain-attached",
+            "pass": false,
+            "weight": 3,
+            "summary": "Production domain is not attached."
+          },
+          {
+            "id": "candidate-preview",
+            "pass": true,
+            "weight": 2,
+            "summary": "A recorded God Mode branch preview exists."
+          }
+        ]
+      }
+    },
+    {
+      "id": "prj_bg70JJwiuYTOyP1oX2ddiatX1O95",
+      "name": "arcanea-ai-appx",
+      "role": "nearby-alternate-web-project",
+      "linkedCurrentWorktree": false,
+      "framework": "nextjs",
+      "nodeVersion": "22.x",
+      "rootDirectory": "apps/web",
+      "configuredBuildCommand": "npm run build",
+      "configuredInstallCommand": "npm install",
+      "configuredOutputDirectory": ".next",
+      "pnpmBuildInstall": false,
+      "hasProductionDomain": false,
+      "hasCandidatePreview": false,
+      "primaryFixes": [
+        "Relink current worktree to this project only after human selection.",
+        "Replace npm install/build commands with pnpm/frozen-lockfile commands.",
+        "Confirm branch/deployment history for the God Mode app before attaching production domain.",
+        "Attach arcanea.ai/www.arcanea.ai only after rollback path is explicit."
+      ],
+      "risk": "Better framework/runtime/root posture, but higher continuity risk because this worktree is not linked here and command settings are npm-based.",
+      "readiness": {
+        "score": 4,
+        "max": 14,
+        "checks": [
+          {
+            "id": "linked-current-worktree",
+            "pass": false,
+            "weight": 3,
+            "summary": "Project is not linked from the current worktree."
+          },
+          {
+            "id": "framework-nextjs",
+            "pass": true,
+            "weight": 2,
+            "summary": "Framework is nextjs."
+          },
+          {
+            "id": "node-22",
+            "pass": true,
+            "weight": 2,
+            "summary": "Node version is 22.x."
+          },
+          {
+            "id": "pnpm-build-install",
+            "pass": false,
+            "weight": 2,
+            "summary": "Build/install commands need pnpm/frozen-lockfile correction."
+          },
+          {
+            "id": "domain-attached",
+            "pass": false,
+            "weight": 3,
+            "summary": "Production domain is not attached."
+          },
+          {
+            "id": "candidate-preview",
+            "pass": false,
+            "weight": 2,
+            "summary": "No recorded God Mode branch preview exists."
+          }
+        ]
+      }
+    }
+  ],
+  "decisionRules": [
+    "Prefer the linked project when it has current branch/deployment evidence and can be repaired with settings changes.",
+    "Prefer a relink only when the alternate project has correct build commands, confirmed current branch previews, and explicit domain ownership.",
+    "Do not force attach arcanea.ai while any existing production owner or rollback path is unclear.",
+    "Do not promote until release-readiness strict mode passes and a fresh God Mode preview is visually verified."
+  ],
+  "nextActions": [
+    "Patch arcanea-ai-app framework/node settings through the approved Vercel remediation packet.",
+    "Refresh Vercel connector snapshot and release-readiness report.",
+    "Package/stage only included God Mode paths, leaving excluded dirty paths out.",
+    "Create one fresh preview from the packaged branch or draft PR.",
+    "Attach arcanea.ai/www.arcanea.ai to the selected release project only after confirming current production owner and rollback path."
+  ]
+}

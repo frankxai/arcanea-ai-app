@@ -1,0 +1,46 @@
+{
+  "asset_id": "arc-conductor-102",
+  "title": "Mamoru Gate Shield",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-conductor-2026-07-15",
+  "workflow": "built-in-image-gen",
+  "created_at": "2026-07-15T10:29:15+02:00",
+  "source_method": "generated-media",
+  "asset_tier": "B",
+  "provenance": "generated",
+  "rights_status": "generated-owned-source",
+  "approval_status": "internal-review-candidate",
+  "decision": "ship-internal-review",
+  "score30": 27,
+  "surface": "showcase-hero-frame",
+  "dimensions": {
+    "width": 1024,
+    "height": 1024
+  },
+  "file": {
+    "path": "apps/web/public/images/arcanea-world-engine/god-run-2026-07-15/arc-conductor-102-mamoru-gate-shield.png",
+    "mime_type": "image/png"
+  },
+  "characters": [
+    "Mamoru"
+  ],
+  "canon_status": {
+    "mamoru": "present-staging",
+    "staging_promotion": "none",
+    "luminor_usage": "not-used-as-species"
+  },
+  "prompt_summary": "Mamoru holding exit gate with starlight shield, styled in Dark Premium Glass.",
+  "inspection": {
+    "strengths": [
+      "strong shield visual presence",
+      "rich contrast between starlight and void storm",
+      "clear character-led action posture"
+    ],
+    "risks": [
+      "Mamoru is STAGING, requires approval"
+    ],
+    "next_action": "Verify gallery rendering."
+  },
+  "notes": "Generated during 2026-07-15 visual loop."
+}

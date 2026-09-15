@@ -1,0 +1,28 @@
+{
+  "id": "arc-social-035-music-proof-stage-instagram-feed-4x5",
+  "campaignId": "arc-social-035-music-proof-stage",
+  "sourceAssetId": "arc-visual-035",
+  "channelKey": "instagram-feed-4x5",
+  "platforms": [
+    "Instagram Feed",
+    "Instagram Carousel"
+  ],
+  "ratio": "4:5",
+  "width": 1080,
+  "height": 1350,
+  "sizeBytes": 1571081,
+  "sha256": "114a27e37fbda98e741d89e035f61738874a422fb66000438d70fa55d62eb88d",
+  "headline": "Turn Performance Into Proof",
+  "subhead": "A creator shapes resonance in public.",
+  "cta": "Make the ritual useful.",
+  "proof": "Music/social vertical source",
+  "gate": "Voice",
+  "guardian": "Alera",
+  "score30": 27,
+  "sourceImage": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-035-arcanea-music-proof-stage-no-text.png",
+  "outputPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\social-overlays\\exports\\instagram-feed-4x5\\arc-social-035-music-proof-stage-instagram-feed-4x5.png",
+  "sourceMethod": "code-rendered deterministic overlays on inspected generated media",
+  "rightsStatus": "generated-owned-derived",
+  "approvalGate": "social-approvals",
+  "createdAt": "2026-07-06T07:49:20+02:00"
+}

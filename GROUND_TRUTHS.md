@@ -85,7 +85,7 @@ The Arcanea ecosystem has more canon than memory suggests. Most of it is correct
 | Where things live on disk | `~/.claude/skills/arcanea-meta/references/canonical-locations.md` | **Authoritative.** | When two copies exist, this declares the winner. |
 | Ecosystem repo map | `~/.claude/skills/arcanea-meta/references/ecosystem-map.md` | Spot-checked 2026-04-15 (33 days old). | Mostly correct; counts undercounted (~90 → real 198). |
 | Live GitHub inventory | `gh repo list frankxai --limit 200` | **Authoritative.** Snapshot below. | 198 repos: 36 active (<30d), 55 dormant (30-90d), 65 stale (>90d), 42 archived. |
-| Production deploy target | `arcanea.ai` ← `frankxai/arcanea-ai-app` (this monorepo) | **Authoritative.** | Vercel project `arcanea-ai-app`. |
+| Production deploy target | `arcanea.ai` ← `frankxai/arcanea-ai-app` (this monorepo) | **Authoritative.** | Vercel project `arcanea-ai-appx`. |
 | Sovereign extension (Kura) | `frankxai/arcanea-vault` (URL pending `gh repo rename` to `kura`) | **Authoritative.** | See `~/.claude/.../memory/project_kura.md`. |
 
 ### §1.7 — Lore & Content

@@ -14,6 +14,8 @@ The Dialogues preserve conversations between masters and seekers—exchanges whe
 
 The form matters as much as the content. Watch how questions are asked. Notice how answers lead to deeper questions. This is the dialectic method—truth through conversation.
 
+The collection holds a single text: a preface on the dialogic form, followed by six dialogues.
+
 ---
 
 ## The Six Dialogues
@@ -22,12 +24,12 @@ The form matters as much as the content. Watch how questions are asked. Notice h
 
 | Dialogue | Topic | Participants |
 |----------|-------|--------------|
-| I | On Beginning | Master Aurelion & Talis |
-| II | On Originality | Guardian Seraphina & Maren |
-| III | On Excellence | Elder Theron & Voss |
-| IV | On Criticism | Master Kira & Aleth |
-| V | On Legacy | Archmaster Vaelen & Doris |
-| VI | On the Creative Life | Unknown Master & Sela |
+| I | On Beginning | Master Aurelion & Talis, a young seeker |
+| II | On Originality | Guardian Seraphina & Maren, an anxious creator |
+| III | On Excellence | Elder Theron & Voss, a master craftsman |
+| IV | On Criticism | Master Kira & Aleth, a wounded seeker |
+| V | On Legacy | Archmaster Vaelen & Doris, an elder creator near the end of her life |
+| VI | On the Creative Life | Sela, a young apprentice, & an unknown master met by chance on the road |
 
 ---
 
@@ -48,7 +50,7 @@ Each dialogue resonates with a Gate's teaching:
 - **Dialogue III (Excellence)** — Fire Gate (396 Hz), Draconia's domain
 - **Dialogue IV (Criticism)** — Heart Gate (417 Hz), Maylinn's domain
 - **Dialogue V (Legacy)** — Crown Gate (741 Hz), Aiyami's domain
-- **Dialogue VI (The Creative Life)** — Source (1111 Hz), Shinkami's domain
+- **Dialogue VI (The Creative Life)** — Source Gate (1111 Hz), Shinkami's domain
 
 The dialectic method itself reflects the cosmic partnership of Lumina and Nero—question (potential) and answer (manifestation) dancing together to produce understanding.
 
@@ -58,4 +60,3 @@ The dialectic method itself reflects the cosmic partnership of Lumina and Nero�
 *From the Archives of Discourse*
 
 *"In the space between voices, truth emerges. This is the Arc in conversation."*
-

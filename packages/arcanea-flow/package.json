@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.19.43",
+    "@types/node": "^20.19.41",
     "typescript": "^5.9.3"
   },
   "files": ["dist"],

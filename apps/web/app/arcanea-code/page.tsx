@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
-import { FACTS } from '@/lib/facts';
 import Image from 'next/image';
 
 import Link from "next/link";
@@ -174,7 +173,7 @@ export default function ArcaneaCodePage() {
               <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
                 A complete developer platform for building with the Arcanea
                 intelligence layer. TypeScript
-                SDK, an MCP server with {FACTS.mcpTools} tools, intelligent AI agents, and a VS Code
+                SDK, 30+ MCP tools, intelligent AI agents, and a VS Code
                 extension that puts intelligence inside your editor.
               </p>
 
@@ -430,7 +429,7 @@ export default function ArcaneaCodePage() {
                 Production Ready
               </h3>
               <p className="text-text-secondary text-sm font-body">
-                3,000+ tests passing across 26 packages{/* facts-ok: arcanea-code's own suite */}. Tested against
+                3,000+ tests passing across 26 packages. Tested against
                 Vercel, Supabase, and Google Gemini in production.
               </p>
             </div>

@@ -1,0 +1,29 @@
+{
+  "id": "arc-social-040-unity-cooperation-lattice-wide-16x9",
+  "campaignId": "arc-social-040-unity-cooperation-lattice",
+  "sourceAssetId": "arc-visual-040",
+  "channelKey": "wide-16x9",
+  "platforms": [
+    "YouTube Thumbnail",
+    "X Link Visual",
+    "Article Header"
+  ],
+  "ratio": "16:9",
+  "width": 1280,
+  "height": 720,
+  "sizeBytes": 1282996,
+  "sha256": "baa52576c427591bb83bc2400a45b5facc6d78d72cbd1858080d97190f76db70",
+  "headline": "Proof Needs People",
+  "subhead": "Kyuro wakes when the team holds together.",
+  "cta": "Build the bridge together.",
+  "proof": "Unity Gate / cooperation lattice",
+  "gate": "Unity",
+  "guardian": "Ino",
+  "score30": 29,
+  "sourceImage": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-040-unity-kyuro-cooperation-lattice.png",
+  "outputPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\social-overlays\\exports\\wide-16x9\\arc-social-040-unity-cooperation-lattice-wide-16x9.png",
+  "sourceMethod": "code-rendered deterministic overlays on inspected generated media",
+  "rightsStatus": "generated-owned-derived",
+  "approvalGate": "social-approvals",
+  "createdAt": "2026-07-06T07:49:20+02:00"
+}

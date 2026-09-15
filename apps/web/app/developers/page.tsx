@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { FACTS } from "@/lib/facts";
 import { Metadata } from "next";
 import Link from "next/link";
 import { Icons } from "./developers-icons";
@@ -16,11 +15,11 @@ import {
 export const metadata: Metadata = {
   title: "Developers — Build on Arcanea",
   description:
-    `Build on the Arcanea platform. Open-source packages, an MCP server with ${FACTS.mcpTools} tools, and comprehensive APIs.`,
+    "Build on the Arcanea platform. 27 repos, 35 npm packages, MCP server with 42 tools, and comprehensive APIs.",
   openGraph: {
     title: "Developers — Build on Arcanea",
     description:
-      `Build on the Arcanea platform. Open-source packages, an MCP server with ${FACTS.mcpTools} tools, and comprehensive APIs.`,
+      "Build on the Arcanea platform. 27 repos, 35 npm packages, MCP server with 42 tools, and comprehensive APIs.",
   },
   alternates: { canonical: "/developers" },
 };
@@ -52,7 +51,7 @@ export default function DevelopersPage() {
               </div>
 
               <h1 className="text-fluid-3xl font-display font-bold mb-4">
-                Build on{" "}
+                Build on
                 <span className="block text-gradient-brand">Arcanea</span>
               </h1>
 

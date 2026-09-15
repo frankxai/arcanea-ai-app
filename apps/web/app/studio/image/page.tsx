@@ -5,6 +5,7 @@ import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import {
   ArrowLeft,
@@ -110,7 +111,10 @@ interface GeneratedImage {
   timestamp: Date;
 }
 
+const STUDIO_IMAGE_PROMPT_KEY = "arcanea:studio-image-prompt";
+
 export default function ImageForgePage() {
+  const searchParams = useSearchParams();
   const [prompt, setPrompt] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("fantasy");
   const [selectedRatio, setSelectedRatio] = useState("1:1");
@@ -127,6 +131,22 @@ export default function ImageForgePage() {
   const [activeDropdown, setActiveDropdown] = useState<"style" | "ratio" | "count" | null>(null);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const promptConsumed = useRef(false);
+
+  useEffect(() => {
+    if (promptConsumed.current) return;
+    const seededPrompt = searchParams.get("prompt") ?? window.sessionStorage.getItem(STUDIO_IMAGE_PROMPT_KEY);
+    if (seededPrompt && seededPrompt.trim()) {
+      promptConsumed.current = true;
+      setPrompt(seededPrompt.trim());
+      window.sessionStorage.removeItem(STUDIO_IMAGE_PROMPT_KEY);
+      const scrubbedParams = new URLSearchParams();
+      const source = searchParams.get("source");
+      if (source) scrubbedParams.set("source", source);
+      const scrubbedUrl = scrubbedParams.size > 0 ? `/studio/image?${scrubbedParams.toString()}` : "/studio/image";
+      window.history.replaceState(null, "", scrubbedUrl);
+    }
+  }, [searchParams]);
 
   const simulateLogs = async () => {
     const logs = [

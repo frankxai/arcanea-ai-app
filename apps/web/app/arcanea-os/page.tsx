@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import Link from "next/link";
-import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
-import { FACTS } from "@/lib/facts";
 
 // ─── Icons ─────────────────────────────────────────────────────────────────────
 const Icons = {
@@ -300,10 +298,10 @@ export default function ArcaneaOSPage() {
             <section className="mb-16">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { value: String(PUBLIC_REPO_SUMMARY.public), label: "Public repos" },
-                  { value: String(FACTS.mcpTools), label: "MCP tools" },
-                  { value: String(FACTS.skills), label: "Creator skills" },
-                  { value: "BYOK", label: "Your own keys" },
+                  { value: "10M+", label: "Requests/day" },
+                  { value: "99.9%", label: "Uptime" },
+                  { value: "<50ms", label: "Response Time" },
+                  { value: "150+", label: "Countries" },
                 ].map((stat) => (
                   <div
                     key={stat.label}

@@ -1,0 +1,651 @@
+{
+  "route": "/arcanea",
+  "url": "http://127.0.0.1:3001/arcanea",
+  "capturedAt": "2026-06-27T16:29:54.444Z",
+  "checks": {
+    "typeCheck": "passed",
+    "build": "passed",
+    "visualInspection": "agent-inspected",
+    "marketplaceGate": "closed until rights review"
+  },
+  "results": [
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1300
+      },
+      "status": 200,
+      "screenshotPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.visual-qa\\arcanea-activation-desktop-2026-06-27.png",
+      "screenshotBytes": 1203776,
+      "consoleMessages": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        },
+        {
+          "type": "error",
+          "text": "Refused to execute script from 'http://127.0.0.1:3001/_vercel/speed-insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled."
+        },
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        },
+        {
+          "type": "error",
+          "text": "Refused to execute script from 'http://127.0.0.1:3001/_vercel/insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled."
+        }
+      ],
+      "pageErrors": [],
+      "metrics": {
+        "title": "Arcanea Activation Console | Arcanea | Arcanea",
+        "h1": "Arcanea, from living canon to creator proof.",
+        "bodyTextLength": 8228,
+        "articleCount": 32,
+        "linkCount": 59,
+        "links": [
+          {
+            "text": "Skip to main content",
+            "href": "http://127.0.0.1:3001/arcanea#main-content"
+          },
+          {
+            "text": "Arcanea™",
+            "href": "http://127.0.0.1:3001/"
+          },
+          {
+            "text": "Create",
+            "href": "http://127.0.0.1:3001/chat"
+          },
+          {
+            "text": "Explore",
+            "href": "http://127.0.0.1:3001/gallery"
+          },
+          {
+            "text": "Learn",
+            "href": "http://127.0.0.1:3001/academy"
+          },
+          {
+            "text": "Blog",
+            "href": "http://127.0.0.1:3001/blog"
+          },
+          {
+            "text": "Pricing",
+            "href": "http://127.0.0.1:3001/pricing"
+          },
+          {
+            "text": "Answer the call",
+            "href": "http://127.0.0.1:3001/genesis?prompt=Activate%20Arcanea%20as%20a%20creator-owned%20living%20world%3A%20turn%20the%20Arion%20and%20Mamoru%20Confluence%20seed%20into%20a%20Genesis%20proof%2C%20storybook%20packet%2C%20world%20graph%2C%20author-team%20queue%2C%20visual%20canon%20review%2C%20and%20rights-gated%20marketplace%20plan."
+          },
+          {
+            "text": "Open worlds",
+            "href": "http://127.0.0.1:3001/worlds"
+          },
+          {
+            "text": "Author studio",
+            "href": "http://127.0.0.1:3001/studio/author"
+          },
+          {
+            "text": "Answer the call",
+            "href": "http://127.0.0.1:3001/genesis?prompt=Activate%20Arcanea%20as%20a%20creator-owned%20living%20world%3A%20turn%20the%20Arion%20and%20Mamoru%20Confluence%20seed%20into%20a%20Genesis%20proof%2C%20storybook%20packet%2C%20world%20graph%2C%20author-team%20queue%2C%20visual%20canon%20review%2C%20and%20rights-gated%20marketplace%20plan."
+          },
+          {
+            "text": "Open worlds",
+            "href": "http://127.0.0.1:3001/worlds"
+          },
+          {
+            "text": "Open author studio",
+            "href": "http://127.0.0.1:3001/studio/author"
+          },
+          {
+            "text": "Open design lab",
+            "href": "http://127.0.0.1:3001/design-lab"
+          },
+          {
+            "text": "Open living lore",
+            "href": "http://127.0.0.1:3001/living-lore"
+          },
+          {
+            "text": "Review protocol",
+            "href": "http://127.0.0.1:3001/protocol"
+          },
+          {
+            "text": "Open living lore",
+            "href": "http://127.0.0.1:3001/living-lore"
+          },
+          {
+            "text": "Review protocol",
+            "href": "http://127.0.0.1:3001/protocol"
+          },
+          {
+            "text": "Arcanea™",
+            "href": "http://127.0.0.1:3001/"
+          },
+          {
+            "text": "Create Hub",
+            "href": "http://127.0.0.1:3001/create"
+          },
+          {
+            "text": "Chat",
+            "href": "http://127.0.0.1:3001/chat"
+          },
+          {
+            "text": "Imagine",
+            "href": "http://127.0.0.1:3001/imagine"
+          },
+          {
+            "text": "Studio",
+            "href": "http://127.0.0.1:3001/studio"
+          },
+          {
+            "text": "Worlds",
+            "href": "http://127.0.0.1:3001/worlds"
+          },
+          {
+            "text": "Game Studio",
+            "href": "http://127.0.0.1:3001/games"
+          },
+          {
+            "text": "Music Studio",
+            "href": "http://127.0.0.1:3001/music-studio"
+          },
+          {
+            "text": "Cinema Studio",
+            "href": "http://127.0.0.1:3001/cinema-studio"
+          },
+          {
+            "text": "Canvas",
+            "href": "http://127.0.0.1:3001/canvas"
+          },
+          {
+            "text": "Forge",
+            "href": "http://127.0.0.1:3001/forge"
+          },
+          {
+            "text": "Agents",
+            "href": "http://127.0.0.1:3001/agents"
+          },
+          {
+            "text": "Gallery",
+            "href": "http://127.0.0.1:3001/gallery"
+          },
+          {
+            "text": "Library",
+            "href": "http://127.0.0.1:3001/library"
+          },
+          {
+            "text": "Lore",
+            "href": "http://127.0.0.1:3001/lore"
+          },
+          {
+            "text": "Factions",
+            "href": "http://127.0.0.1:3001/factions"
+          },
+          {
+            "text": "Showcase",
+            "href": "http://127.0.0.1:3001/showcase"
+          },
+          {
+            "text": "Community Hub",
+            "href": "http://127.0.0.1:3001/community-hub"
+          },
+          {
+            "text": "Templates",
+            "href": "http://127.0.0.1:3001/templates"
+          },
+          {
+            "text": "Protocol",
+            "href": "http://127.0.0.1:3001/protocol"
+          },
+          {
+            "text": "Repo Registry",
+            "href": "http://127.0.0.1:3001/ecosystem"
+          },
+          {
+            "text": "MCP & CLI",
+            "href": "http://127.0.0.1:3001/mcp"
+          },
+          {
+            "text": "Apps",
+            "href": "http://127.0.0.1:3001/apps"
+          },
+          {
+            "text": "Integrations",
+            "href": "http://127.0.0.1:3001/integrations"
+          },
+          {
+            "text": "Storage",
+            "href": "http://127.0.0.1:3001/storage"
+          },
+          {
+            "text": "Distribute",
+            "href": "http://127.0.0.1:3001/distribute"
+          },
+          {
+            "text": "Teams",
+            "href": "http://127.0.0.1:3001/teams"
+          },
+          {
+            "text": "Developers",
+            "href": "http://127.0.0.1:3001/developers"
+          },
+          {
+            "text": "GitHub Public Profile&nearr;",
+            "href": "https://github.com/frankxai"
+          },
+          {
+            "text": "Academy",
+            "href": "http://127.0.0.1:3001/academy"
+          },
+          {
+            "text": "Courses",
+            "href": "http://127.0.0.1:3001/academy/courses"
+          },
+          {
+            "text": "Model Arena",
+            "href": "http://127.0.0.1:3001/models"
+          },
+          {
+            "text": "Starlight Intelligence",
+            "href": "http://127.0.0.1:3001/starlight-intelligence"
+          },
+          {
+            "text": "Blog",
+            "href": "http://127.0.0.1:3001/blog"
+          },
+          {
+            "text": "About",
+            "href": "http://127.0.0.1:3001/about"
+          },
+          {
+            "text": "Pricing",
+            "href": "http://127.0.0.1:3001/pricing"
+          },
+          {
+            "text": "Roadmap",
+            "href": "http://127.0.0.1:3001/roadmap"
+          },
+          {
+            "text": "Contact",
+            "href": "http://127.0.0.1:3001/contact"
+          },
+          {
+            "text": "Terms",
+            "href": "http://127.0.0.1:3001/terms"
+          },
+          {
+            "text": "Privacy",
+            "href": "http://127.0.0.1:3001/privacy"
+          },
+          {
+            "text": "FrankX.ai",
+            "href": "https://frankx.ai/"
+          }
+        ],
+        "images": [
+          {
+            "src": "http://127.0.0.1:3001/_next/static/media/arcanea-mark.0v2_po5psc939.jpg",
+            "complete": true,
+            "naturalWidth": 784,
+            "naturalHeight": 1168,
+            "clientWidth": 22,
+            "clientHeight": 22
+          },
+          {
+            "src": "http://127.0.0.1:3001/_next/image?url=%2Fbrand%2Farcanea-dashboard-hero-premium.png&w=1920&q=75",
+            "complete": true,
+            "naturalWidth": 1032,
+            "naturalHeight": 576,
+            "clientWidth": 1440,
+            "clientHeight": 4194
+          },
+          {
+            "src": "http://127.0.0.1:3001/_next/image?url=%2Fbrand%2Farcanea-genesis-proof-relic.png&w=750&q=75",
+            "complete": true,
+            "naturalWidth": 662,
+            "naturalHeight": 372,
+            "clientWidth": 626,
+            "clientHeight": 469
+          },
+          {
+            "src": "http://127.0.0.1:3001/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Farcanea-mark.0v2_po5psc939.jpg&w=64&q=75",
+            "complete": false,
+            "naturalWidth": 0,
+            "naturalHeight": 0,
+            "clientWidth": 28,
+            "clientHeight": 28
+          },
+          {
+            "src": "http://127.0.0.1:3001/_next/image?url=%2Fimages%2Fmascot%2Farcanea-primary.png&w=64&q=75",
+            "complete": true,
+            "naturalWidth": 64,
+            "naturalHeight": 35,
+            "clientWidth": 56,
+            "clientHeight": 31
+          }
+        ],
+        "viewportWidth": 1440,
+        "scrollWidth": 1440,
+        "overflowX": 0
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 1200
+      },
+      "status": 200,
+      "screenshotPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.visual-qa\\arcanea-activation-mobile-2026-06-27.png",
+      "screenshotBytes": 990945,
+      "consoleMessages": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        },
+        {
+          "type": "error",
+          "text": "Refused to execute script from 'http://127.0.0.1:3001/_vercel/speed-insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled."
+        },
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+        },
+        {
+          "type": "error",
+          "text": "Refused to execute script from 'http://127.0.0.1:3001/_vercel/insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled."
+        }
+      ],
+      "pageErrors": [],
+      "metrics": {
+        "title": "Arcanea Activation Console | Arcanea | Arcanea",
+        "h1": "Arcanea, from living canon to creator proof.",
+        "bodyTextLength": 8174,
+        "articleCount": 32,
+        "linkCount": 59,
+        "links": [
+          {
+            "text": "Skip to main content",
+            "href": "http://127.0.0.1:3001/arcanea#main-content"
+          },
+          {
+            "text": "Arcanea™",
+            "href": "http://127.0.0.1:3001/"
+          },
+          {
+            "text": "Create",
+            "href": "http://127.0.0.1:3001/chat"
+          },
+          {
+            "text": "Explore",
+            "href": "http://127.0.0.1:3001/gallery"
+          },
+          {
+            "text": "Learn",
+            "href": "http://127.0.0.1:3001/academy"
+          },
+          {
+            "text": "Blog",
+            "href": "http://127.0.0.1:3001/blog"
+          },
+          {
+            "text": "Pricing",
+            "href": "http://127.0.0.1:3001/pricing"
+          },
+          {
+            "text": "Answer the call",
+            "href": "http://127.0.0.1:3001/genesis?prompt=Activate%20Arcanea%20as%20a%20creator-owned%20living%20world%3A%20turn%20the%20Arion%20and%20Mamoru%20Confluence%20seed%20into%20a%20Genesis%20proof%2C%20storybook%20packet%2C%20world%20graph%2C%20author-team%20queue%2C%20visual%20canon%20review%2C%20and%20rights-gated%20marketplace%20plan."
+          },
+          {
+            "text": "Open worlds",
+            "href": "http://127.0.0.1:3001/worlds"
+          },
+          {
+            "text": "Author studio",
+            "href": "http://127.0.0.1:3001/studio/author"
+          },
+          {
+            "text": "Answer the call",
+            "href": "http://127.0.0.1:3001/genesis?prompt=Activate%20Arcanea%20as%20a%20creator-owned%20living%20world%3A%20turn%20the%20Arion%20and%20Mamoru%20Confluence%20seed%20into%20a%20Genesis%20proof%2C%20storybook%20packet%2C%20world%20graph%2C%20author-team%20queue%2C%20visual%20canon%20review%2C%20and%20rights-gated%20marketplace%20plan."
+          },
+          {
+            "text": "Open worlds",
+            "href": "http://127.0.0.1:3001/worlds"
+          },
+          {
+            "text": "Open author studio",
+            "href": "http://127.0.0.1:3001/studio/author"
+          },
+          {
+            "text": "Open design lab",
+            "href": "http://127.0.0.1:3001/design-lab"
+          },
+          {
+            "text": "Open living lore",
+            "href": "http://127.0.0.1:3001/living-lore"
+          },
+          {
+            "text": "Review protocol",
+            "href": "http://127.0.0.1:3001/protocol"
+          },
+          {
+            "text": "Open living lore",
+            "href": "http://127.0.0.1:3001/living-lore"
+          },
+          {
+            "text": "Review protocol",
+            "href": "http://127.0.0.1:3001/protocol"
+          },
+          {
+            "text": "Arcanea™",
+            "href": "http://127.0.0.1:3001/"
+          },
+          {
+            "text": "Create Hub",
+            "href": "http://127.0.0.1:3001/create"
+          },
+          {
+            "text": "Chat",
+            "href": "http://127.0.0.1:3001/chat"
+          },
+          {
+            "text": "Imagine",
+            "href": "http://127.0.0.1:3001/imagine"
+          },
+          {
+            "text": "Studio",
+            "href": "http://127.0.0.1:3001/studio"
+          },
+          {
+            "text": "Worlds",
+            "href": "http://127.0.0.1:3001/worlds"
+          },
+          {
+            "text": "Game Studio",
+            "href": "http://127.0.0.1:3001/games"
+          },
+          {
+            "text": "Music Studio",
+            "href": "http://127.0.0.1:3001/music-studio"
+          },
+          {
+            "text": "Cinema Studio",
+            "href": "http://127.0.0.1:3001/cinema-studio"
+          },
+          {
+            "text": "Canvas",
+            "href": "http://127.0.0.1:3001/canvas"
+          },
+          {
+            "text": "Forge",
+            "href": "http://127.0.0.1:3001/forge"
+          },
+          {
+            "text": "Agents",
+            "href": "http://127.0.0.1:3001/agents"
+          },
+          {
+            "text": "Gallery",
+            "href": "http://127.0.0.1:3001/gallery"
+          },
+          {
+            "text": "Library",
+            "href": "http://127.0.0.1:3001/library"
+          },
+          {
+            "text": "Lore",
+            "href": "http://127.0.0.1:3001/lore"
+          },
+          {
+            "text": "Factions",
+            "href": "http://127.0.0.1:3001/factions"
+          },
+          {
+            "text": "Showcase",
+            "href": "http://127.0.0.1:3001/showcase"
+          },
+          {
+            "text": "Community Hub",
+            "href": "http://127.0.0.1:3001/community-hub"
+          },
+          {
+            "text": "Templates",
+            "href": "http://127.0.0.1:3001/templates"
+          },
+          {
+            "text": "Protocol",
+            "href": "http://127.0.0.1:3001/protocol"
+          },
+          {
+            "text": "Repo Registry",
+            "href": "http://127.0.0.1:3001/ecosystem"
+          },
+          {
+            "text": "MCP & CLI",
+            "href": "http://127.0.0.1:3001/mcp"
+          },
+          {
+            "text": "Apps",
+            "href": "http://127.0.0.1:3001/apps"
+          },
+          {
+            "text": "Integrations",
+            "href": "http://127.0.0.1:3001/integrations"
+          },
+          {
+            "text": "Storage",
+            "href": "http://127.0.0.1:3001/storage"
+          },
+          {
+            "text": "Distribute",
+            "href": "http://127.0.0.1:3001/distribute"
+          },
+          {
+            "text": "Teams",
+            "href": "http://127.0.0.1:3001/teams"
+          },
+          {
+            "text": "Developers",
+            "href": "http://127.0.0.1:3001/developers"
+          },
+          {
+            "text": "GitHub Public Profile&nearr;",
+            "href": "https://github.com/frankxai"
+          },
+          {
+            "text": "Academy",
+            "href": "http://127.0.0.1:3001/academy"
+          },
+          {
+            "text": "Courses",
+            "href": "http://127.0.0.1:3001/academy/courses"
+          },
+          {
+            "text": "Model Arena",
+            "href": "http://127.0.0.1:3001/models"
+          },
+          {
+            "text": "Starlight Intelligence",
+            "href": "http://127.0.0.1:3001/starlight-intelligence"
+          },
+          {
+            "text": "Blog",
+            "href": "http://127.0.0.1:3001/blog"
+          },
+          {
+            "text": "About",
+            "href": "http://127.0.0.1:3001/about"
+          },
+          {
+            "text": "Pricing",
+            "href": "http://127.0.0.1:3001/pricing"
+          },
+          {
+            "text": "Roadmap",
+            "href": "http://127.0.0.1:3001/roadmap"
+          },
+          {
+            "text": "Contact",
+            "href": "http://127.0.0.1:3001/contact"
+          },
+          {
+            "text": "Terms",
+            "href": "http://127.0.0.1:3001/terms"
+          },
+          {
+            "text": "Privacy",
+            "href": "http://127.0.0.1:3001/privacy"
+          },
+          {
+            "text": "FrankX.ai",
+            "href": "https://frankx.ai/"
+          }
+        ],
+        "images": [
+          {
+            "src": "http://127.0.0.1:3001/_next/static/media/arcanea-mark.0v2_po5psc939.jpg",
+            "complete": true,
+            "naturalWidth": 784,
+            "naturalHeight": 1168,
+            "clientWidth": 22,
+            "clientHeight": 22
+          },
+          {
+            "src": "http://127.0.0.1:3001/_next/image?url=%2Fbrand%2Farcanea-dashboard-hero-premium.png&w=640&q=75",
+            "complete": true,
+            "naturalWidth": 390,
+            "naturalHeight": 217,
+            "clientWidth": 390,
+            "clientHeight": 10188
+          },
+          {
+            "src": "http://127.0.0.1:3001/_next/image?url=%2Fbrand%2Farcanea-genesis-proof-relic.png&w=512&q=75",
+            "complete": true,
+            "naturalWidth": 390,
+            "naturalHeight": 219,
+            "clientWidth": 427,
+            "clientHeight": 320
+          },
+          {
+            "src": "http://127.0.0.1:3001/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Farcanea-mark.0v2_po5psc939.jpg&w=64&q=75",
+            "complete": false,
+            "naturalWidth": 0,
+            "naturalHeight": 0,
+            "clientWidth": 28,
+            "clientHeight": 28
+          },
+          {
+            "src": "http://127.0.0.1:3001/_next/image?url=%2Fimages%2Fmascot%2Farcanea-primary.png&w=64&q=75",
+            "complete": true,
+            "naturalWidth": 64,
+            "naturalHeight": 35,
+            "clientWidth": 54,
+            "clientHeight": 30
+          }
+        ],
+        "viewportWidth": 390,
+        "scrollWidth": 390,
+        "overflowX": 0
+      }
+    }
+  ]
+}

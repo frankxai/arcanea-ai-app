@@ -14,6 +14,8 @@ These are the stories of creators who transcended ordinary achievement to change
 
 Their stories are preserved not for worship but for instruction. What they did, others can do. The specific form will differ, but the principles endure.
 
+The collection holds two works: a set of five short tales, and a novella that follows one creator through her first five Gates.
+
 ---
 
 ## The Five Legendary Creators
@@ -27,6 +29,19 @@ Their stories are preserved not for worship but for instruction. What they did, 
 | **The Nameless Mason** | Built on impossible ground | Cooperation succeeds where conquest fails |
 | **Brennan Who Burned** | Created from destruction | Loss can become transformation |
 | **The Collective of Ten Thousand** | Created as unified consciousness | Individual and collective can merge |
+
+---
+
+## Kael's Ascent: Tales from the Ten Gates
+
+A novella by FrankX — one creator, Kael, carried through her first five Gates. Read in order.
+
+- [Front Matter](./00_FRONT_MATTER.md)
+- [I. The Weight of Standing](./01_THE_WEIGHT_OF_STANDING.md) — *Gate of Foundation*
+- [II. The Thaw](./02_THE_THAW.md) — *Gate of Flow*
+- [III. The Claiming](./03_THE_CLAIMING.md) — *Gate of Fire*
+- [IV. The Open Wound](./THE_OPEN_WOUND.md) — *Gate of Heart*
+- [V. The Silent Song](./THE_SILENT_SONG.md) — *Gate of Voice*
 
 ---
 
@@ -71,4 +86,3 @@ Every legendary creator follows the Arc:
 *From the Archive of Extraordinary Lives*
 
 *"What they did, others can do. The Arc turns for all."*
-

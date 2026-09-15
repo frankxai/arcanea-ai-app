@@ -12,6 +12,8 @@
 
 The Atlas maps the psychological landscape every creator traverses. Each territory has its own character, challenges, and gifts. Understanding where you are helps you navigate forward.
 
+The collection holds a single text — the Atlas entire.
+
 ---
 
 ## Contents
@@ -19,18 +21,23 @@ The Atlas maps the psychological landscape every creator traverses. Each territo
 ### [The Atlas](./THE_ATLAS.md)
 
 **The Seven Regions**
-- Region I: The Borderlands
-- Region II: The Plains of Learning
-- Region III: The Forest of the Unconscious
-- Region IV: The Mountains of Resistance
-- Region V: The Valley of Making
-- Region VI: The Desert of the Dark Night
-- Region VII: The Highlands of Mastery
+- Region I: The Borderlands — between ordinary life and creative life
+- Region II: The Plains of Learning — where skills are acquired and tested
+- Region III: The Forest of the Unconscious — the wild territory of dreams and depths
+- Region IV: The Mountains of Resistance — obstacles and opposition
+- Region V: The Valley of Making — where work is actually done
+- Region VI: The Desert of the Dark Night — where meaning is lost and found
+- Region VII: The Highlands of Mastery — where the long journey culminates
 
 **Special Territories**
-- The Islands of Flow
-- The Shadowlands
-- The Threshold Between Worlds
+- The Islands of Flow — temporary territories of effortless creation
+- The Shadowlands — creativity's underside
+- The Threshold Between Worlds — where creation meets the world
+
+**The Journey's Wisdom**
+- Reading Your Location
+- The Territories Revisited
+- Your Own Map
 
 ---
 
@@ -43,7 +50,7 @@ The Atlas maps the psychological landscape every creator traverses. Each territo
 | Forest of Unconscious | Dreams and depths | The darkness | Raw material | Void/Spirit |
 | Mountains of Resistance | Opposition | Daily crossing | Strength | Fire (396 Hz) |
 | Valley of Making | Actual creation | Consistent effort | Completed work | Heart (417 Hz) |
-| Desert of Dark Night | Meaning lost | Endurance | Renewal | Shift (852 Hz) |
+| Desert of Dark Night | Meaning lost | Endurance | Renewal | Starweave (852 Hz) |
 | Highlands of Mastery | Long journey's culmination | Continued growth | Wisdom | Source (1111 Hz) |
 
 ## The Seven Regions and the Arc
@@ -75,7 +82,7 @@ Each Guardian can serve as guide through specific territories:
 - **Leyla** guides through the Plains of Learning (Flow)
 - **Draconia** guides through the Mountains (Fire)
 - **Maylinn** guides through the Valley of Making (Heart)
-- **Elara** guides through the Desert (Shift)
+- **Elara** guides through the Desert (Starweave)
 - **Shinkami** waits in the Highlands (Source)
 
 The Guardians have traversed these territories. They know the way. Seek them in meditation when you are lost.
@@ -86,4 +93,3 @@ The Guardians have traversed these territories. They know the way. Seek them in 
 *From the Cartographers of the Academy*
 
 *"Know the map, and you will not be lost. Trust the Guardians who have walked before."*
-

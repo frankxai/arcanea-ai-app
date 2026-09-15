@@ -11,7 +11,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   return {
-    title: 'Book Map — Coming Soon',
+    title: 'Book Map — Coming Soon — Arcanea',
     description:
       'A living mindmap of every character, location, and arc in this book — coming soon.',
     alternates: { canonical: `/books/drafts/${slug}/map` },

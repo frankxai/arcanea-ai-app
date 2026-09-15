@@ -11,9 +11,9 @@
  */
 
 const fs = require('fs');
-const API_KEY = process.env.GEMINI_API_KEY?.trim();
+const API_KEY = process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GEMINI_API_KEY;
 if (!API_KEY) {
-  console.error('GEMINI_API_KEY is required');
+  console.error('Missing GOOGLE_GENERATIVE_AI_API_KEY or GEMINI_API_KEY.');
   process.exit(1);
 }
 const OUT = 'C:/Users/frank/Arcanea/output/nft-v5';
@@ -87,10 +87,10 @@ async function gen(char, index) {
   try {
     const start = Date.now();
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${API_KEY}`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': API_KEY },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: { responseModalities: ['TEXT', 'IMAGE'] },

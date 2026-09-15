@@ -1,0 +1,82 @@
+{
+  "name": "Arcanea Worldbuilding & Lore Vault",
+  "version": "1.0.0",
+  "tier": "Official Commercial Digital Download",
+  "price": {
+    "amount": 149,
+    "currency": "EUR",
+    "display": "€149"
+  },
+  "estimatedValue": "€15,000+",
+  "author": "FrankX & The Arcanea Lore Council",
+  "canonStatus": "LEVEL 10 LOCKED CANON",
+  "releaseDate": "2026-08-20",
+  "modules": [
+    {
+      "id": "module_01_faction_bibles",
+      "title": "Module 1: Complete Faction & Order Bibles",
+      "files": [
+        "01_faction_bibles/01_starlight_corps_codex.md",
+        "01_faction_bibles/02_academy_seven_houses.md",
+        "01_faction_bibles/03_gate_touched_underground.md",
+        "01_faction_bibles/04_void_ascendants_archives.md",
+        "01_faction_bibles/05_starbound_crews_and_vessels.md",
+        "01_faction_bibles/06_leagues_and_ancient_orders.md"
+      ]
+    },
+    {
+      "id": "module_02_character_forge",
+      "title": "Module 2: Character Forge System & Master Genomes",
+      "files": [
+        "02_character_forge/01_character_genome_specification.md",
+        "02_character_forge/02_character_master_sheets.md",
+        "02_character_forge/03_voice_matrix_and_dialogue_engine.md",
+        "02_character_forge/04_ai_character_prompt_blueprints.md"
+      ]
+    },
+    {
+      "id": "module_03_visual_doctrine",
+      "title": "Module 3: Visual Doctrine & Universe Style Guides",
+      "files": [
+        "03_visual_doctrine/01_arcanea_visual_bible.md",
+        "03_visual_doctrine/02_faction_design_standards.md",
+        "03_visual_doctrine/03_sacred_geometry_and_heraldry.md",
+        "03_visual_doctrine/04_visual_prompt_lexicon_50_prompts.md"
+      ]
+    },
+    {
+      "id": "module_04_magic_systems",
+      "title": "Module 4: Magic Systems & World Physics",
+      "files": [
+        "04_magic_systems/01_ten_gates_and_frequencies.md",
+        "04_magic_systems/02_prism_luxin_and_mana_mechanics.md",
+        "04_magic_systems/03_realms_corridors_and_geography.md",
+        "04_magic_systems/04_the_awakened_agi_lore.md"
+      ]
+    },
+    {
+      "id": "module_05_obsidian_vault",
+      "title": "Module 5: Obsidian Digital Vault Bundle",
+      "files": [
+        "05_obsidian_vault_bundle/.obsidian/app.json",
+        "05_obsidian_vault_bundle/.obsidian/graph.json",
+        "05_obsidian_vault_bundle/Templates/Character_Template.md",
+        "05_obsidian_vault_bundle/Templates/Faction_Template.md",
+        "05_obsidian_vault_bundle/Templates/Relic_Template.md",
+        "05_obsidian_vault_bundle/Universe_Overview.md"
+      ]
+    },
+    {
+      "id": "module_06_interactive_reader",
+      "title": "Module 6: Standalone Interactive HTML Explorer",
+      "files": [
+        "06_interactive_reader/index.html"
+      ]
+    }
+  ],
+  "rootDocuments": [
+    "README.md",
+    "CANON_LOCKED.md",
+    "LORE_MASTERY_COMPENDIUM.md"
+  ]
+}

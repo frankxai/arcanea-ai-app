@@ -11,7 +11,7 @@ const STEPS = [
     number: "01",
     title: "Imagine",
     description:
-      "Type one sentence. Configured Luminors help you write, paint, compose, and build - each grounded in creative philosophy.",
+      "Type one sentence. Thirteen configured Luminors help you write, paint, compose, and build - each grounded in 190K words of creative philosophy.",
     accent: stepAccents.imagine,
     href: "/chat",
   },
@@ -35,7 +35,7 @@ const STEPS = [
     number: "04",
     title: "Grow",
     description:
-      "Progress through the Academy. Earn recognition through creation, not consumption. From Apprentice to Luminor, the path is the product.",
+      "Progress through the Ten Gates. Earn recognition through creation, not consumption. From Apprentice to Luminor, the path is the product.",
     accent: stepAccents.grow,
     href: "/academy",
   },

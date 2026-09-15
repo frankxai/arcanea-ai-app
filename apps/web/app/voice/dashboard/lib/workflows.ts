@@ -117,7 +117,7 @@ export const WORKFLOWS: Workflow[] = [
     category: 'ops',
     action: {
       kind: 'external',
-      url: 'https://vercel.com/starlight-intelligence/arcanea-ai-app',
+      url: 'https://vercel.com/starlight-intelligence/arcanea-ai-appx',
     },
     color: 'var(--arc-text-primary)',
   },

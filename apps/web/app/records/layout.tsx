@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "Arcanea Records — AI-generated music, soundscapes, and elemental compositions. Listen to the sounds of the creative multiverse.",
   openGraph: {
-    title: "Records",
+    title: "Records | Arcanea",
     description:
       "Arcanea Records — AI-generated music, soundscapes, and elemental compositions. Listen to the sounds of the creative multiverse.",
   },

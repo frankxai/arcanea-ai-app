@@ -1,0 +1,28 @@
+{
+  "id": "arc-social-040-unity-cooperation-lattice-instagram-feed-4x5",
+  "campaignId": "arc-social-040-unity-cooperation-lattice",
+  "sourceAssetId": "arc-visual-040",
+  "channelKey": "instagram-feed-4x5",
+  "platforms": [
+    "Instagram Feed",
+    "Instagram Carousel"
+  ],
+  "ratio": "4:5",
+  "width": 1080,
+  "height": 1350,
+  "sizeBytes": 2025155,
+  "sha256": "e48fcead6ae5eec9515a1836c195a670413c3c694fc111de4e8c990a21d2eb01",
+  "headline": "Proof Needs People",
+  "subhead": "Kyuro wakes when the team holds together.",
+  "cta": "Build the bridge together.",
+  "proof": "Unity Gate / cooperation lattice",
+  "gate": "Unity",
+  "guardian": "Ino",
+  "score30": 29,
+  "sourceImage": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-040-unity-kyuro-cooperation-lattice.png",
+  "outputPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\social-overlays\\exports\\instagram-feed-4x5\\arc-social-040-unity-cooperation-lattice-instagram-feed-4x5.png",
+  "sourceMethod": "code-rendered deterministic overlays on inspected generated media",
+  "rightsStatus": "generated-owned-derived",
+  "approvalGate": "social-approvals",
+  "createdAt": "2026-07-06T07:49:20+02:00"
+}

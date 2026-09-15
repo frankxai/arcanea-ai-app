@@ -62,8 +62,8 @@
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
-    "@types/node": "^20.19.43",
-    "esbuild": "^0.28.2",
+    "@types/node": "^20.19.41",
+    "esbuild": "^0.24.0",
     "typescript": "^5.9.3"
   },
   "engines": {

@@ -1,0 +1,34 @@
+{
+  "url": "http://127.0.0.1:3008/visual-world-engine",
+  "galleryUrl": "http://127.0.0.1:3008/gallery",
+  "checkedAt": "2026-07-06T05:09:13.207Z",
+  "screenshots": [
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\verification\\visual-world-engine-desktop.png",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\verification\\visual-world-engine-mobile.png",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\verification\\visual-world-engine-gallery-entry.png"
+  ],
+  "assertions": {
+    "portalStatus": 200,
+    "desktop": {
+      "title": "Visual World Engine - Arcanea | Arcanea",
+      "bodyHasRoute": true,
+      "bodyHasCampaign": true,
+      "bodyHasProof": true,
+      "imageCount": 13,
+      "loadedImageCount": 13,
+      "socialImageCount": 6,
+      "horizontalOverflow": false
+    },
+    "mobileStatus": 200,
+    "mobile": {
+      "bodyHasCampaign": true,
+      "horizontalOverflow": false,
+      "heroVisible": true
+    },
+    "galleryStatus": 200,
+    "galleryEntry": {
+      "hasPortalLink": true,
+      "linkText": "World Engine"
+    }
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "version": "1.0.0",
+  "id": "arcanea-vercel-remediation-packet-2026-07-05",
+  "generatedAt": "2026-07-05T06:39:31.860Z",
+  "repo": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app",
+  "sourceInputs": {
+    "projectLink": ".vercel/project.json",
+    "remoteSnapshot": "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_2026-07-05.json",
+    "domainAudit": "planning-with-files/ARCANEA_VERCEL_DOMAIN_AUDIT_2026-07-05.json",
+    "projectSelection": "planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.json",
+    "readinessReport": ".visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json",
+    "releaseScope": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
+    "rootVercelConfig": "vercel.json",
+    "nvmrc": ".nvmrc"
+  },
+  "project": {
+    "projectId": "prj_90OIWsAmfeswv8IG8WxqEAFefTOV",
+    "teamId": "team_q6LNT6rnFRlqlcjBJ2Wxz6PE",
+    "projectName": "arcanea-ai-app",
+    "targetDomain": "arcanea.ai",
+    "currentRemoteFramework": "services",
+    "targetFramework": "nextjs",
+    "currentRemoteNodeVersion": "24.x",
+    "targetNodeVersion": "22.x",
+    "currentRemoteLive": false,
+    "currentRemoteDomains": [
+      "arcanea-ai-app.vercel.app",
+      "arcanea-ai-app-starlight-intelligence.vercel.app",
+      "arcanea-ai-app-frankx-eth-starlight-intelligence.vercel.app"
+    ],
+    "domainAudit": {
+      "decision": "domain-owned-but-release-project-unassigned",
+      "domainRegisteredInTeam": true,
+      "servedByVercel": true,
+      "releaseProjectHasDomain": false,
+      "candidateReleaseProject": "arcanea-ai-app",
+      "knownAssociatedProject": "arcanea-lobechat-labs",
+      "knownAssociatedDomain": "lobe.arcanea.ai",
+      "nameserversMatchVercelDns": false
+    },
+    "projectSelection": {
+      "decision": "fix-current-linked-project-first",
+      "recommendedProject": "arcanea-ai-app",
+      "alternateProject": "arcanea-ai-appx",
+      "selectedScore": "7/14"
+    },
+    "latestDeployment": {
+      "id": "dpl_5uA8PAXkJFqYkpDuG39L11gq9a1Q",
+      "state": "BLOCKED",
+      "gitRef": "backup/claude-snapshots",
+      "gitSha": "8817c510c3af20708c160bb22c44db8a3ff878c1"
+    },
+    "candidateDeployment": {
+      "id": "dpl_3ufoFcuwU9HnEpNeGNxZVZPuvdKT",
+      "state": "READY",
+      "gitRef": "codex/arcanea-homepage-world-engine",
+      "gitSha": "97093bf51ee9944ad9ea68d1fa81492d1b35e08f"
+    }
+  },
+  "currentGate": {
+    "decision": "blocked",
+    "pass": 17,
+    "warn": 4,
+    "blockers": 4,
+    "productionReady": false,
+    "previewReady": false
+  },
+  "officialSources": [
+    {
+      "label": "Vercel project configuration: framework/build/output settings",
+      "url": "https://vercel.com/docs/project-configuration/vercel-json"
+    },
+    {
+      "label": "Vercel REST API: update an existing project",
+      "url": "https://vercel.com/docs/rest-api/reference/endpoints/projects/update-an-existing-project"
+    },
+    {
+      "label": "Vercel Node.js versions",
+      "url": "https://vercel.com/docs/functions/runtimes/node-js/node-js-versions"
+    },
+    {
+      "label": "Vercel CLI domains",
+      "url": "https://vercel.com/docs/cli/domains"
+    },
+    {
+      "label": "Vercel REST API: add a domain to a project",
+      "url": "https://vercel.com/docs/rest-api/reference/endpoints/projects/add-a-domain-to-a-project"
+    },
+    {
+      "label": "Vercel preview promotion flow",
+      "url": "https://vercel.com/docs/deployments/promote-preview-to-production"
+    }
+  ],
+  "actions": [
+    {
+      "id": "confirm-release-project-selection",
+      "owner": "Vercel release operator",
+      "purpose": "Confirm the remediation should repair the current linked arcanea-ai-app project instead of relinking to a nearby alternate.",
+      "whyBlocked": [
+        "Project selection audit decision is fix-current-linked-project-first.",
+        "Recommended project is arcanea-ai-app; alternate is arcanea-ai-appx.",
+        "Lowest repo-continuity risk because the current worktree and recorded God Mode preview already point here."
+      ],
+      "preconditions": [
+        "Review planning-with-files/ARCANEA_VERCEL_PROJECT_SELECTION_2026-07-05.md.",
+        "Confirm arcanea-ai-app remains the intended release project for this God Mode slice.",
+        "Only choose arcanea-ai-appx if a human accepts relinking, command migration, preview-history, and domain-risk work."
+      ],
+      "successEvidence": [
+        "Release-readiness report includes a passing vercel-project-selection-audit check.",
+        "Vercel remediation actions target the selected release project only."
+      ]
+    },
+    {
+      "id": "patch-project-framework-and-node",
+      "owner": "Vercel release operator",
+      "purpose": "Align the remote Vercel project with the repo Next.js and Node posture.",
+      "whyBlocked": [
+        "Project selection audit recommends repairing arcanea-ai-app first.",
+        "Remote framework is services, expected nextjs.",
+        "Remote Node version is 24.x, expected 22.x."
+      ],
+      "api": {
+        "method": "PATCH",
+        "endpoint": "https://api.vercel.com/v9/projects/prj_90OIWsAmfeswv8IG8WxqEAFefTOV?teamId=team_q6LNT6rnFRlqlcjBJ2Wxz6PE",
+        "body": {
+          "framework": "nextjs",
+          "nodeVersion": "22.x"
+        }
+      },
+      "commands": {
+        "powershell": "$body = @'\n{\n  \"framework\": \"nextjs\",\n  \"nodeVersion\": \"22.x\"\n}\n'@\nInvoke-RestMethod -Method Patch -Uri \"https://api.vercel.com/v9/projects/prj_90OIWsAmfeswv8IG8WxqEAFefTOV?teamId=team_q6LNT6rnFRlqlcjBJ2Wxz6PE\" -Headers @{ Authorization = \"Bearer $env:VERCEL_TOKEN\"; \"Content-Type\" = \"application/json\" } -Body $body"
+      },
+      "successEvidence": [
+        "Vercel connector _get_project reports framework nextjs.",
+        "Vercel connector _get_project reports nodeVersion 22.x.",
+        "node scripts/arcanea-release-readiness.mjs --json no longer reports remote-vercel-framework or remote-node-version blockers."
+      ]
+    },
+    {
+      "id": "attach-production-domain",
+      "owner": "Vercel release operator",
+      "purpose": "Attach arcanea.ai to this Vercel project or confirm the correct production project is different.",
+      "whyBlocked": [
+        "The inspected Vercel project does not list arcanea.ai among its domains.",
+        "The project record reports live=false.",
+        "Domain audit confirms arcanea.ai is owned under the Starlight Vercel team and served by Vercel.",
+        "Known domain association currently visible: arcanea-lobechat-labs / lobe.arcanea.ai."
+      ],
+      "cli": {
+        "command": "vercel domains add arcanea.ai arcanea-ai-app",
+        "note": "Use --force only after confirming arcanea.ai should move away from any existing project."
+      },
+      "api": {
+        "method": "POST",
+        "endpoint": "https://api.vercel.com/v10/projects/prj_90OIWsAmfeswv8IG8WxqEAFefTOV/domains?teamId=team_q6LNT6rnFRlqlcjBJ2Wxz6PE",
+        "body": {
+          "name": "arcanea.ai"
+        }
+      },
+      "commands": {
+        "powershell": "$body = @'\n{\n  \"name\": \"arcanea.ai\"\n}\n'@\nInvoke-RestMethod -Method Post -Uri \"https://api.vercel.com/v10/projects/prj_90OIWsAmfeswv8IG8WxqEAFefTOV/domains?teamId=team_q6LNT6rnFRlqlcjBJ2Wxz6PE\" -Headers @{ Authorization = \"Bearer $env:VERCEL_TOKEN\"; \"Content-Type\" = \"application/json\" } -Body $body"
+      },
+      "successEvidence": [
+        "Vercel connector _get_project lists arcanea.ai in domains.",
+        "Vercel connector _get_project or CLI domain inspect lists www.arcanea.ai on the selected release project when www is used.",
+        "Any returned domain verification records are satisfied in DNS.",
+        "node scripts/arcanea-release-readiness.mjs --json no longer reports production-domain blocker."
+      ]
+    },
+    {
+      "id": "separate-backup-branch-noise-from-release-candidate",
+      "owner": "Vercel release operator",
+      "purpose": "Keep blocked backup snapshot deployments from being mistaken for the God Mode release candidate, while still requiring a fresh preview for the current package.",
+      "whyBlocked": [
+        "Latest deployment is BLOCKED on backup/claude-snapshots.",
+        "Latest recorded God Mode candidate is READY on 97093bf51ee9944ad9ea68d1fa81492d1b35e08f."
+      ],
+      "commands": {
+        "shell": [
+          "Use the Vercel connector _list_deployments tool to confirm the latest branch/ref state.",
+          "Use the Vercel connector _get_deployment_build_logs tool on any BLOCKED/ERROR deployment before assigning release blame.",
+          "After staging and committing the God Mode slice, create one preview deployment from the release branch or draft PR."
+        ]
+      },
+      "successEvidence": [
+        "Release-readiness report keeps backup/claude-snapshots BLOCKED state as a warning, not a production blocker.",
+        "A fresh READY preview exists for the committed God Mode release branch.",
+        "node scripts/arcanea-release-readiness.mjs --json no longer warns that current God Mode changes are undeployed."
+      ]
+    },
+    {
+      "id": "refresh-and-verify-project-state",
+      "owner": "Vercel release operator",
+      "purpose": "Refresh local/remote evidence after external Vercel changes.",
+      "commands": {
+        "shell": [
+          "node scripts/arcanea-release-readiness.mjs --json",
+          "node scripts/arcanea-release-readiness.mjs --strict"
+        ]
+      },
+      "successEvidence": [
+        "Release-readiness report is regenerated under .visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json.",
+        "Strict mode exits 0 before any preview promotion.",
+        "planning-with-files/ARCANEA_VERCEL_REMOTE_SNAPSHOT_*.json is refreshed from the Vercel connector after settings changes."
+      ]
+    },
+    {
+      "id": "preview-then-promote",
+      "owner": "Vercel release operator",
+      "purpose": "Use Vercel preview promotion flow only after the release gate is clean.",
+      "preconditions": [
+        "Release scope has zero unknown dirty paths.",
+        "Strict release-readiness gate passes.",
+        "A READY preview deployment exists for the God Mode branch or PR."
+      ],
+      "commands": {
+        "cli": [
+          "vercel list --status READY",
+          "vercel inspect <deployment-url>",
+          "vercel curl /api/health --deployment <deployment-url>",
+          "vercel httpstat / --deployment <deployment-url>",
+          "vercel logs --deployment <deployment-url> --level error --limit 50",
+          "vercel promote <deployment-url> --yes",
+          "vercel promote status",
+          "vercel logs --environment production --level error --since 5m",
+          "vercel httpstat /"
+        ]
+      },
+      "successEvidence": [
+        "Preview URL visually verified for /, /genesis, /status, /method, /atlas/creatures, and /studio/store.",
+        "Production logs show no recent errors after promotion.",
+        "Vercel connector reports a production target for the promoted deployment."
+      ]
+    }
+  ],
+  "guardrails": [
+    "Do not run mutation commands without an approved Vercel token and explicit operator intent.",
+    "Do not paste token values into docs, reports, commands, or chat.",
+    "Do not run vercel promote until node scripts/arcanea-release-readiness.mjs --strict passes.",
+    "Do not stage paths excluded by the God Mode release scope manifest unless Frank explicitly expands scope."
+  ]
+}

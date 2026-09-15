@@ -33,7 +33,7 @@ import { EmptyState } from '@/components/dashboard/EmptyState';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Dashboard',
+  title: 'Dashboard — Arcanea',
   description: 'Your Open Library dashboard — books, reviews, and Guardian feedback.',
   robots: { index: false, follow: false },
   alternates: { canonical: '/dashboard' },

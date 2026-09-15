@@ -1,0 +1,33 @@
+{
+  "jobId": "2026-07-06-arcanea-visual-world-conductor",
+  "brandId": "arcanea",
+  "operatingUnit": "arcanea-product-ip",
+  "workflowId": "social-static|gallery|story-portal|genesis-proof",
+  "surface": "Arcanea Academy visual-world campaign",
+  "audience": "AI-native creators, fantasy/anime/webtoon audiences, worldbuilding fans, and creative learners who want agency against The Drift",
+  "brief": "Create and gate a premium visual spine for Arion, Mamoru, Mera, and Emilia at Arcanea Academy during their first Dungeon Diver / Gate-Descent story arc.",
+  "assetTier": "B",
+  "sourceMethod": "generated-media",
+  "promptLog": ".arcanea/image-lab/conductor-2026-07-06/prompts.jsonl",
+  "paths": {
+    "jobRoot": ".arcanea/image-lab/conductor-2026-07-06",
+    "source": [
+      "C:/Users/frank/.codex/generated_images/019f3498-d4e0-7351-8464-c2ab293192a5"
+    ],
+    "outputs": [
+      ".arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-001-academy-gate-descent-ensemble.png",
+      ".arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-002-gate-must-stay-open.png",
+      ".arcanea/image-lab/conductor-2026-07-06/images/arc-conductor-003-aftermath-garden-proof.png"
+    ],
+    "mirror": "C:/Users/frank/brands/image-system/arcanea/2026-07-06-conductor",
+    "evidence": ".visual-qa/arcanea-visual-world-engine-2026-07-06/conductor-design-loop-evidence.json"
+  },
+  "qa": {
+    "inspected": true,
+    "score30": 26,
+    "socialConfidence100": 86,
+    "notes": "Two new plates are approved-staging because Mamoru appears. Horizontal ensemble remains iterate due teal dominance and anatomy risk."
+  },
+  "decision": "iterate",
+  "updatedAt": "2026-07-06"
+}

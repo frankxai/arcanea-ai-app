@@ -277,7 +277,7 @@ function EmptyState({ onPick }: { onPick: (s: string) => void }) {
         ))}
       </ul>
       <p className="mt-4 text-[11px] text-white/30">
-        Swarm decides solo vs multi. Max 5 Luminors per request.{/* facts-ok: per-request cap */}
+        Swarm decides solo vs multi. Max 5 Luminors per request.
       </p>
     </section>
   );

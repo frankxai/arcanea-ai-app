@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
-import { FACTS } from '@/lib/facts';
 import Image from 'next/image';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -41,7 +40,7 @@ const CREATIVE_STARTERS = [
 
 const SUBTITLES = [
   "Stories, code, worlds, music \u2014 type a prompt or pick a starter below.",
-  `${FACTS.luminors} specialist agents. Pick one or let Auto route your message.`,
+  "13 specialist agents. Pick one or let Auto route your message.",
   "Better at the second draft. Paste what you\u2019ve got so far.",
   "Images take ~10s. Stories are instant. Worlds take a conversation.",
   "Attach images, use @mentions for agents, or just type.",

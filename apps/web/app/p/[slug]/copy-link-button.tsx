@@ -21,7 +21,7 @@ export function CopyLinkButton() {
     <button
       type="button"
       onClick={copy}
-      className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-2.5 py-2 min-h-[44px] text-[11px] font-medium text-white/55 backdrop-blur-sm transition-colors hover:border-white/[0.16] hover:text-white/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40"
+      className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 text-[11px] font-medium text-white/55 backdrop-blur-sm transition-colors hover:border-white/[0.16] hover:text-white/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/40"
       aria-label="Copy link to this page"
     >
       {copied ? (

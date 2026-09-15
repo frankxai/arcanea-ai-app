@@ -233,7 +233,7 @@ But those who release—who allow the dissolution, who trust the emptiness—dis
 
 # Tale VIII: Elara and Vaelith
 
-## The Guardians of Shift
+## The Guardians of Starweave
 
 ### The Eighth Gate (852 Hz)
 
@@ -241,7 +241,7 @@ But those who release—who allow the dissolution, who trust the emptiness—dis
 
 Her Godbeast is **Vaelith**, the Shapeshifter—a creature with no fixed form, able to become anything, understand everything by becoming it. Vaelith has been stone and water, fire and wind, Eldrian and Dwarf, god and insect. Every perspective exists within Vaelith's memory.
 
-Together, they guard the Gate of Shift—the threshold where seekers learn to move between perspectives at will.
+Together, they guard the Gate of Starweave—the threshold where seekers learn to move between perspectives at will.
 
 ### The Teaching
 
@@ -347,4 +347,3 @@ Are you ready?
 
 *"The Guardians do not judge. They reveal. What you are, they show you. What you might become, they teach you. What you must transcend, they embody. Approach with humility, and they will raise you. Approach with arrogance, and they will humble you. Either way, you will grow."*
 — From the Teachings of the Path
-

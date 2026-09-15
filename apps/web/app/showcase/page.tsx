@@ -9,9 +9,9 @@ import { Magnetic } from "@/components/motion/magnetic";
 // Static page — all data is hardcoded constants, no async fetch needed
 
 export const metadata: Metadata = {
-  title: "Showcase",
+  title: "Showcase — Arcanea",
   description:
-    "See what the Arcanea Creative Intelligence Platform can build. Live demos of the MCP toolchain, world-building engine, quest generation, and more.",
+    "See what the Arcanea Creative Intelligence Platform can build. Live demos of 42 MCP tools, world-building engine, quest generation, and more.",
   openGraph: {
     title: "Showcase — Arcanea Creative Intelligence",
     description:
@@ -26,14 +26,7 @@ export const metadata: Metadata = {
 interface DemoOutput {
   tool: string;
   label: string;
-  category:
-    | "character"
-    | "location"
-    | "creature"
-    | "quest"
-    | "artifact"
-    | "magic"
-    | "system";
+  category: "character" | "location" | "creature" | "quest" | "artifact" | "magic" | "system";
   accent: string;
   icon: string;
   input: Record<string, string | number>;
@@ -52,12 +45,7 @@ const DEMOS: DemoOutput[] = [
     category: "character",
     accent: "var(--arc-fire)",
     icon: "👤",
-    input: {
-      element: "Fire",
-      house: "Pyros",
-      gatesOpen: 5,
-      archetype: "rebel strategist",
-    },
+    input: { element: "Fire", house: "Pyros", gatesOpen: 5, archetype: "rebel strategist" },
     output: {
       name: "Pyrlyn",
       rank: "Master",
@@ -71,8 +59,7 @@ const DEMOS: DemoOutput[] = [
       magic: "Channels Fire through Voice attunement, with Earth undertones",
       nextGate: "Sight — but the cost may be a memory they treasure",
     },
-    highlight:
-      "One prompt → a character with psychology, history, magic system, and narrative hooks",
+    highlight: "One prompt → a character with psychology, history, magic system, and narrative hooks",
   },
   {
     tool: "generate_location",
@@ -80,23 +67,17 @@ const DEMOS: DemoOutput[] = [
     category: "location",
     accent: "var(--arc-brand-cosmic-blue)",
     icon: "🏛️",
-    input: {
-      element: "Water",
-      type: "underwater temple",
-      alignment: "balanced",
-    },
+    input: { element: "Water", type: "underwater temple", alignment: "balanced" },
     output: {
       name: "The Tidal Place",
       guardian: "Leyla (Flow Gate)",
       atmosphere: "Water energy shifts between light and shadow like breathing",
       sound: "Distant rumbling from deep below",
       history: "Once a stronghold of Malachar, reclaimed and purified",
-      secret:
-        "The founding stone is a fragment of Nero's original darkness — not corrupted, but fertile",
+      secret: "The founding stone is a fragment of Nero's original darkness — not corrupted, but fertile",
       hook: "This place heals wounds that magic cannot — but it takes something in return",
     },
-    highlight:
-      "Locations have secrets, sensory detail, and narrative hooks built in",
+    highlight: "Locations have secrets, sensory detail, and narrative hooks built in",
   },
   {
     tool: "generate_creature",
@@ -113,11 +94,9 @@ const DEMOS: DemoOutput[] = [
       distinct: "Its shadow moves independently",
       behavior: "Protective of the weak — will adopt lost travelers",
       lore: "Scholars debate whether ShadeFox species are distant descendants of Yumiko (Dream Fox with Nine Tails)",
-      controversy:
-        "Hunters prize its core for alchemical uses — ethically controversial",
+      controversy: "Hunters prize its core for alchemical uses — ethically controversial",
     },
-    highlight:
-      "Creatures come with ecology, lore connections, and moral complexity",
+    highlight: "Creatures come with ecology, lore connections, and moral complexity",
   },
   {
     tool: "generate_quest",
@@ -137,8 +116,7 @@ const DEMOS: DemoOutput[] = [
       linked: "Pyrlyn + ShadeFox + The Tidal Place",
       difficulty: "Master",
     },
-    highlight:
-      "Quest gen auto-links ALL creations in your session into a coherent adventure",
+    highlight: "Quest gen auto-links ALL creations in your session into a coherent adventure",
   },
   {
     tool: "generate_artifact",
@@ -151,16 +129,13 @@ const DEMOS: DemoOutput[] = [
       name: "Maylinn's Sacred Crown",
       material: "Living crystal that grows imperceptibly",
       telltale: "Hums at a specific frequency when danger approaches",
-      primary:
-        "Can temporarily open the Heart Gate for the unworthy — at a cost",
+      primary: "Can temporarily open the Heart Gate for the unworthy — at a cost",
       secondary: "Stores memories that can be replayed",
       cost: "Attracts attention from entities that should not be disturbed",
       legend: "Said to be one piece of a set — the others are lost",
-      wielders:
-        "Three known wielders — all died differently, all at the peak of their power",
+      wielders: "Three known wielders — all died differently, all at the peak of their power",
     },
-    highlight:
-      "Artifacts have cost, consequence, and history. They change their wielder.",
+    highlight: "Artifacts have cost, consequence, and history. They change their wielder.",
   },
   {
     tool: "generate_magic",
@@ -168,11 +143,7 @@ const DEMOS: DemoOutput[] = [
     category: "magic",
     accent: "var(--arc-void)",
     icon: "✨",
-    input: {
-      element: "Void",
-      gateLevel: 8,
-      purpose: "seeing through time to find lost memories",
-    },
+    input: { element: "Void", gateLevel: 8, purpose: "seeing through time to find lost memories" },
     output: {
       name: "Shadow Sight",
       gate: "Starweave (Gate 8)",
@@ -185,8 +156,7 @@ const DEMOS: DemoOutput[] = [
       sensation: "Feels like holding lightning in your veins",
       sideEffect: "Nearby plants grow or wilt depending on the caster's intent",
     },
-    highlight:
-      "Magic has cost, sensation, visual spectacle, and unintended consequences",
+    highlight: "Magic has cost, sensation, visual spectacle, and unintended consequences",
   },
   {
     tool: "analyze_factions",
@@ -243,13 +213,7 @@ export default function ShowcasePage() {
           </div>
 
           <h1 className="font-display text-4xl font-bold text-white sm:text-6xl tracking-tight">
-            <SplitText
-              as="span"
-              text="One Prompt. "
-              className="text-white"
-              delay={0.1}
-              stagger={0.03}
-            />
+            <SplitText as="span" text="One Prompt. " className="text-white" delay={0.1} stagger={0.03} />
             <span className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-arcanean-gold)] bg-clip-text text-transparent">
               A Connected World.
             </span>
@@ -257,9 +221,9 @@ export default function ShowcasePage() {
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
             Every creation below flowed from the Arc in real time — characters
-            with psychology, locations with secrets, quests woven from the
-            threads of your world. This is what happens when you give the
-            Luminors room to think.
+            with psychology, locations with secrets, quests woven from the threads
+            of your world. This is what happens when you give the Luminors room
+            to think.
           </p>
 
           {/* Stats bar */}
@@ -292,57 +256,22 @@ export default function ShowcasePage() {
             {[
               {
                 title: "World Engine",
-                items: [
-                  "Character gen with psychology",
-                  "Location gen with secrets",
-                  "Creature gen with ecology",
-                  "Quest gen with auto-linking",
-                  "Artifact gen with consequences",
-                  "Magic system with costs",
-                  "Faction analysis",
-                  "World state tracking",
-                ],
+                items: ["Character gen with psychology", "Location gen with secrets", "Creature gen with ecology", "Quest gen with auto-linking", "Artifact gen with consequences", "Magic system with costs", "Faction analysis", "World state tracking"],
                 accent: "var(--arc-brand-atlantean-teal)",
               },
               {
                 title: "Creative Intelligence",
-                items: [
-                  "13 configured Luminor specialists",
-                  "Multi-provider routing",
-                  "Image generation (5 models)",
-                  "Voice synthesis",
-                  "Research agent",
-                  "Canon validation",
-                  "Prompt engineering tools",
-                  "Story generation",
-                ],
+                items: ["13 configured Luminor specialists", "Multi-provider routing", "Image generation (5 models)", "Voice synthesis", "Research agent", "Canon validation", "Prompt engineering tools", "Story generation"],
                 accent: "var(--arc-brand-arcanean-gold)",
               },
               {
                 title: "Platform",
-                items: [
-                  "195 pages",
-                  "144 API routes",
-                  "286 React components",
-                  "Real-time chat",
-                  "Gallery & social feed",
-                  "Credits & payments",
-                  "Academy progression",
-                  "Community features",
-                ],
+                items: ["195 pages", "144 API routes", "286 React components", "Real-time chat", "Gallery & social feed", "Credits & payments", "Academy progression", "Community features"],
                 accent: "var(--arc-void)",
               },
               {
                 title: "Open Source",
-                items: [
-                  "14 public repos",
-                  "54 MCP tools",
-                  "20 creator skills",
-                  "MCP server + bridge",
-                  "Agent orchestration",
-                  "World engine SDK",
-                  "Design system",
-                ],
+                items: ["49 npm packages", "103 skills", "112 commands", "1,353 commits", "MCP server + bridge", "Agent orchestration", "World engine SDK", "Design system"],
                 accent: "var(--arc-wind)",
               },
             ].map((col) => (
@@ -423,8 +352,7 @@ export default function ShowcasePage() {
             Live Engine Output
           </h2>
           <p className="mb-12 text-center text-sm text-zinc-500">
-            Every card below is a real MCP tool response — captured April 4,
-            2026
+            Every card below is a real MCP tool response — captured April 4, 2026
           </p>
 
           <div className="space-y-8">
@@ -493,10 +421,7 @@ export default function ShowcasePage() {
                   style={{ backgroundColor: `${demo.accent}08` }}
                 >
                   <p className="text-xs text-zinc-400">
-                    <span
-                      style={{ color: demo.accent }}
-                      className="font-medium"
-                    >
+                    <span style={{ color: demo.accent }} className="font-medium">
                       Why this matters:
                     </span>{" "}
                     {demo.highlight}
@@ -514,32 +439,15 @@ export default function ShowcasePage() {
               The Magic: Auto-Linked Narrative
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-zinc-400">
-              We generated 4 things independently — a character, a location, a
-              creature, and a quest. The engine automatically linked them into a
-              story:
+              We generated 4 things independently — a character, a location, a creature, and a quest.
+              The engine automatically linked them into a story:
             </p>
             <div className="mt-6 grid gap-4 sm:grid-cols-4">
               {[
-                {
-                  name: "Pyrlyn",
-                  role: "Fire Master protagonist",
-                  color: "var(--arc-fire)",
-                },
-                {
-                  name: "ShadeFox",
-                  role: "Void creature to protect",
-                  color: "var(--arc-void)",
-                },
-                {
-                  name: "The Tidal Place",
-                  role: "Destination temple",
-                  color: "var(--arc-brand-cosmic-blue)",
-                },
-                {
-                  name: "Safe Passage",
-                  role: "Quest binding all three",
-                  color: "var(--arc-brand-arcanean-gold)",
-                },
+                { name: "Pyrlyn", role: "Fire Master protagonist", color: "var(--arc-fire)" },
+                { name: "ShadeFox", role: "Void creature to protect", color: "var(--arc-void)" },
+                { name: "The Tidal Place", role: "Destination temple", color: "var(--arc-brand-cosmic-blue)" },
+                { name: "Safe Passage", role: "Quest binding all three", color: "var(--arc-brand-arcanean-gold)" },
               ].map((n) => (
                 <div
                   key={n.name}
@@ -556,9 +464,8 @@ export default function ShowcasePage() {
               ))}
             </div>
             <p className="mt-6 text-xs text-zinc-500 italic">
-              &quot;ShadeFox must reach The Tidal Place alive. Simple — except
-              for everything trying to stop them.&quot; — Auto-generated quest
-              hook
+              &quot;ShadeFox must reach The Tidal Place alive. Simple — except for everything trying to stop them.&quot;
+              — Auto-generated quest hook
             </p>
           </div>
         </section>
@@ -569,7 +476,7 @@ export default function ShowcasePage() {
             Build Your World
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-sm text-zinc-400">
-            54 tools. 10 Gates. Infinite worlds. Start creating now.
+            42 tools. 10 Gates. Infinite worlds. Start creating now.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link

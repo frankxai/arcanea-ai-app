@@ -10,7 +10,7 @@
     "test": "node --test tests/hooks.test.mjs"
   },
   "dependencies": {
-    "minimatch": "^10.2.6"
+    "minimatch": "^9.0.6"
   },
   "files": [
     "dist",
@@ -28,7 +28,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^20.19.43",
+    "@types/node": "^20.19.41",
     "typescript": "^5.9.3"
   }
 }

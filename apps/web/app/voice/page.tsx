@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import VoicePage from './voice-client';
 
 export const metadata: Metadata = {
-  title: 'Voice',
+  title: 'Voice — Arcanea',
   description:
     'Speak your creations into existence. Six Guardian voices, real-time transcription, and voice-first workflows for the creative multiverse.',
   openGraph: {

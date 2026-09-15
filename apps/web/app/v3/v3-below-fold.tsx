@@ -38,7 +38,6 @@ import { SplitText } from "@/components/motion/split-text";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal } from "@/components/motion/reveal";
 import { NumberTicker } from "@/components/motion/number-ticker";
-import { FACTS } from "@/lib/facts";
 import { Marquee } from "@/components/motion/marquee";
 import { FeatureCard, FeatureIcon } from "@/components/premium/feature-card";
 import { SectionShell, SectionHeader } from "@/components/premium/section-shell";
@@ -65,15 +64,15 @@ const FAQ_ITEMS = [
   },
   {
     q: "How do the Luminors work?",
-    a: "Each agent is equipped with domain-specific toolkits and system prompts grounded in Arcanea's codebase and philosophy. Runtimes hand off context using structured schemas, passing a cinematic scene from a storyteller to a composer or visual builder without forcing the creator to restart from a blank chat.",
+    a: "Each agent is equipped with domain-specific toolkits and system prompts grounded in Arcanea's 190K+ word codebase and philosophy. Runtimes hand off context using structured schemas, passing a cinematic scene from a storyteller to a composer or visual builder without forcing the creator to restart from a blank chat.",
   },
   {
     q: "What is the Library of Arcanea?",
-    a: "Original creative theory, laws, meditations, and dialogues across collections. This serves as the grounding database for all agent personas, providing a consistent structural and thematic foundation across the platform.",
+    a: "190K+ words of original creative theory, laws, meditations, and dialogues across 17 collections. This serves as the grounding database for all agent personas, providing a consistent structural and thematic foundation across the platform.",
   },
   {
-    q: "What is the Gates system?",
-    a: "Our leveling system for creators and builders. You start as an Apprentice and rank up to Master world-builder. You unlock developer permissions, advanced model routing, and specialized agents by shipping code, writing canon, and completing creation quests.",
+    q: "What is the Ten Gates system?",
+    a: "Our leveling system for creators and builders. You start as an Apprentice at Gate 1 and rank up to a Master world-builder at Gate 10. You unlock developer permissions, advanced model routing, and specialized agents by shipping code, writing canon, and completing creation quests.",
   },
   {
     q: "How does BYOK work?",
@@ -286,8 +285,8 @@ const FLOW_LANES: Array<{
   links: Array<{ label: string; href: string }>;
 }> = [
   {
-    title: "Start creating now",
-    body: "Chat, world creation, and the shared gallery are live. Start here and make something real in minutes.",
+    title: "Guide people here now",
+    body: "These routes let a creator do meaningful work today without pretending the full economy is finished.",
     status: "Live",
     links: [
       { label: "Chat", href: "/chat" },
@@ -296,8 +295,8 @@ const FLOW_LANES: Array<{
     ],
   },
   {
-    title: "For builders, in preview",
-    body: "MCP, install, and the studios are hands-on previews — powerful today, tightened weekly. Expect sharp edges.",
+    title: "Frame as builder preview",
+    body: "Useful and exciting, but should be sold as hands-on preview until setup, export, and generation are fully tight.",
     status: "Preview",
     links: [
       { label: "MCP", href: "/mcp" },
@@ -306,10 +305,11 @@ const FLOW_LANES: Array<{
     ],
   },
   {
-    title: "On the roadmap",
-    body: "Storefronts, royalties, memberships, and gated drops open once the creation loop is proven. Join the waitlist to hear the moment they are real.",
+    title: "Keep as roadmap",
+    body: "Monetization, storefronts, royalties, memberships, and token-gated drops need honest waitlist language.",
     status: "Roadmap",
     links: [
+      { label: "Creator Economy", href: "/creator-economy" },
       { label: "Pricing", href: "/pricing" },
       { label: "Roadmap", href: "/roadmap" },
     ],
@@ -404,10 +404,10 @@ function CreatorFlowBoard() {
 
         <div className="border-t border-white/[0.07] bg-black/[0.18] p-5 sm:p-7 md:p-9 lg:border-l lg:border-t-0 lg:p-10">
           <p className="font-editorial text-xl italic leading-none text-white/50">
-            Every door tells you what is behind it
+            Where each door should point
           </p>
           <p className="mt-3 text-sm leading-relaxed text-white/42">
-            Live means you can create with it right now. Preview means builders can get hands-on while we tighten it. Roadmap means it ships when it is real — no mystery doors.
+            The homepage now treats readiness as part of the product experience. Creators get a working next step; builders get preview doors; future commerce stays framed as roadmap.
           </p>
 
           <div className="mt-8 space-y-4">
@@ -456,7 +456,7 @@ function LivingWorldSection() {
         <SectionHeader
           label="The Living Worlds Engine"
           title="Compile a world that remembers."
-          subtitle={<>A persistent graph for canon, locations, rules, and agent handoffs. Stop scattering your work across stateless chats. Build inside a <span className="font-editorial italic font-normal text-lg md:text-xl" style={{ color: brand.aquamarine }}>stateful universe</span> where every path is live today or clearly marked preview.</>}
+          subtitle={<>A persistent graph for canon, locations, rules, and agent handoffs. Stop scattering work across stateless chats; guide creators into a <span className="font-editorial italic font-normal text-lg md:text-xl" style={{ color: brand.aquamarine }}>stateful universe</span> with working paths today and preview doors marked honestly.</>}
           accent="teal"
         />
         <CreatorFlowBoard />
@@ -804,7 +804,7 @@ function LuminorTeamSection() {
       <div className="max-w-5xl mx-auto px-6">
         <SectionHeader
           label="Luminor Specialists"
-          title="Specialized AI agents"
+          title="13 specialized AI agents"
           subtitle={<>Start with one specialist or route work across the council. From Systems Architects to Composers, Storytellers, and Motion Designers, each agent carries its own <span className="font-editorial italic text-[var(--arc-brand-arcanean-gold)] font-normal text-lg md:text-xl">project context, toolset</span>, and distinct creative voice.</>}
           accent="teal"
         />
@@ -984,7 +984,7 @@ function VoicePresenceSection() {
         <Reveal y={12} delay={0.4}>
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {[
-              { label: "Audio-reactive orb", body: "A living particle orb that glows and moves with your agent's voice in real time.", color: brand.aquamarine, Icon: Waveform },
+              { label: "Audio-reactive orb", body: "Custom GLSL · 4096-particle shell · subsurface glow · sticky-mounted WebGL.", color: brand.aquamarine, Icon: Waveform },
               { label: "BYOK presence room", body: "Groq Whisper STT · ElevenLabs TTS · keys live in your browser, never our servers.", color: brand.atlanteanTeal, Icon: Microphone },
               { label: "Local agent CLI", body: "voice jarvis · voice lumina · multi-round tool chaining · open URL · launch Claude Code.", color: brand.arcaneanGold, Icon: Brain },
             ].map(({ label, body, color, Icon }, i) => (
@@ -1045,7 +1045,7 @@ function StackTeaserSection() {
         <SectionHeader
           label="The Creator Stack"
           title="Built to connect everywhere"
-          subtitle={<>Every integration below is labeled by what it is today — live, beta, or planned. Follow <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">clear status paths</span> instead of mystery doors.</>}
+          subtitle={<>The stack map shows what is ready, preview, and planned across local agents, Supabase, Vercel, GitHub, and studio workflows. The homepage should send builders into <span className="font-editorial italic text-[var(--arc-brand-atlantean-teal)] font-normal text-lg md:text-xl">clear status paths</span>, not mystery doors.</>}
           accent="teal"
         />
         <Reveal y={16}>
@@ -1138,10 +1138,10 @@ function EarnTeaserSection() {
           <div className="mt-10 text-center">
             <Magnetic>
               <Link
-                href="/roadmap"
+                href="/creator-economy"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[var(--arc-brand-arcanean-gold)]/15 to-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-arcanean-gold)]/25 text-sm font-medium text-[var(--arc-brand-arcanean-gold)] hover:from-[var(--arc-brand-arcanean-gold)]/25 hover:to-[var(--arc-brand-atlantean-teal)]/15 transition-colors"
               >
-                See product roadmap
+                See creator economy roadmap
                 <span className="text-xs">&rarr;</span>
               </Link>
             </Magnetic>
@@ -1389,8 +1389,8 @@ export function V3BelowFold({
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-8 max-w-2xl mx-auto mb-12">
                 {[
                   { value: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", fixed: false },
-                  { value: PUBLIC_REPO_SUMMARY.packages, suffix: "", label: "npm packages", fixed: false },
-                  { value: FACTS.skills, suffix: "", label: "creator skills", fixed: false },
+                  { value: PUBLIC_REPO_SUMMARY.packages, suffix: "", label: "published refs", fixed: false },
+                  { value: 160, suffix: "+", label: "skills", fixed: false },
                   { value: 0, suffix: "", label: "license", fixed: true },
                 ].map(({ value, suffix, label, fixed }, i) => (
                   <div key={label} className="text-center px-3 py-4 rounded-xl bg-white/[0.02] border border-white/[0.05]">

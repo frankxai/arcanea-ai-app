@@ -3,7 +3,6 @@ import { ImageResponse } from 'next/og'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { brand, cosmic, elements, text } from '@arcanea/design-system'
-import { FACTS } from '@/lib/facts'
 
 export const runtime = 'nodejs'
 export const alt = 'Arcanea — Living Intelligence for Creators'
@@ -124,9 +123,9 @@ export default function OGImage() {
         >
           <span>arcanea.ai</span>
           <span style={{ color: elements.earth.deep }}>|</span>
-          <span>{FACTS.luminors} Intelligences</span>
+          <span>16 Intelligences</span>
           <span style={{ color: elements.earth.deep }}>|</span>
-          <span>20 Library Collections</span>
+          <span>34+ Original Texts</span>
           <span style={{ color: elements.earth.deep }}>|</span>
           <span>Free to Start</span>
         </div>

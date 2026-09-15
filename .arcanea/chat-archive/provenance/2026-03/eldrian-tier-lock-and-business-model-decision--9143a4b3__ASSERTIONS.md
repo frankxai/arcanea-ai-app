@@ -1,0 +1,14 @@
+# Claude's canon assertions -- Eldrian tier lock and business model decision
+
+Source uuid: 9143a4b3-5e3b-4afa-9dbb-7bd7ae0f71f8
+
+CONFIRMED = Frank's next message reads as explicit approval. PUSHED-BACK = reads as disagreement. UNCLEAR/NO-RESPONSE = no clean signal -- treat as OPEN, not LOCKED.
+
+| Verdict | Claude said | Frank's next message |
+|---|---|---|
+| UNCLEAR | Don't let canon governance block product decisions. | Extract all it said explain, review all our chats this truly going in right direction and ensure fits rest of strateg and update as status |
+| UNCLEAR | Key verdict:  **Claude Code is correct on the diagnosis.** You have real moats — world-state system, ACOS ecosystem, canonical lore — none of which competitors can replicate. | but than labs.arcanea.ai we probably do really labs. we do arcanea.ai/lobe better or lobe.arcanea.ai/ and then our arcanean bring their own key or get from me with subscription whats allowed? And why lobe works on vercel opencode not needs railway? should i put together with openwebui and my world s |
+| UNCLEAR | Across all your sessions, the consistent differentiator is the *dual-layer* — infrastructure that is simultaneously cosmological canon. | but than labs.arcanea.ai we probably do really labs. we do arcanea.ai/lobe better or lobe.arcanea.ai/ and then our arcanean bring their own key or get from me with subscription whats allowed? And why lobe works on vercel opencode not needs railway? should i put together with openwebui and my world s |
+| UNCLEAR | **The Eldrian tier fits the canon cleanly.** Zyranthis's "completion percentage" archetype is particularly elegant — an Eldrian who tracked how close they were to Harmonic Terminus and couldn't stop. | but than labs.arcanea.ai we probably do really labs. we do arcanea.ai/lobe better or lobe.arcanea.ai/ and then our arcanean bring their own key or get from me with subscription whats allowed? And why lobe works on vercel opencode not needs railway? should i put together with openwebui and my world s |
+| UNCLEAR | "Eldrians approved" → lore locked 2. | but than labs.arcanea.ai we probably do really labs. we do arcanea.ai/lobe better or lobe.arcanea.ai/ and then our arcanean bring their own key or get from me with subscription whats allowed? And why lobe works on vercel opencode not needs railway? should i put together with openwebui and my world s |
+| NO-RESPONSE | ---  ## The Three-Layer Stack  **Layer 1 — Open Source (Discovery)** - `arcanea-opencode` CLI, free community skills, base MCP server - Arcanean design system (Figma + tokens), language system, lore c | (none) |

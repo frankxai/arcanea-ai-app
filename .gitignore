@@ -33,6 +33,7 @@ Thumbs.db
 # Logs
 *.log
 logs/
+*.pid
 
 # Runtime
 .pnpm-debug.log*
@@ -59,9 +60,6 @@ temp/
 # Asset uploads (development only)
 public/shared-assets/temp-uploads/
 apps/web/public/brand/temp/
-planning-with-files/arcanea-visual-assets/
-planning-with-files/arcanea-visual-blind-review/
-planning-with-files/arcanea-visual-workbench/index.html
 
 # Turbo
 .turbo/
@@ -147,26 +145,9 @@ arcanea-opencode-fork/
 !.claude/hooks/
 .claude/hooks/*
 !.claude/hooks/excellence-*.sh
-!.claude/hooks/web-excellence-*.py
-!.claude/ci/
 .claude/skills/*/
 !.claude/skills/arco/
 !.claude/skills/arcanea-orchestra/
-# web-excellence pack — committed so it travels to cloud sessions
-!.claude/skills/animation-vocabulary/
-!.claude/skills/apple-design/
-!.claude/skills/brandkit/
-!.claude/skills/core-web-vitals/
-!.claude/skills/emil-design-eng/
-!.claude/skills/extract-design-system/
-!.claude/skills/find-animation-opportunities/
-!.claude/skills/image-to-code/
-!.claude/skills/improve-animations/
-!.claude/skills/review-animations/
-!.claude/skills/ui-ux-pro-max/
-!.claude/skills/visual-proof/
-!.claude/skills/web-design-guidelines/
-!.claude/skills/web-release-gate/
 .codex/
 .codacy/
 .cursor/
@@ -245,6 +226,8 @@ generated/
 # planning-with-files/ is un-ignored; see tracked contents. Unanchored rule removed 2026-04-17.
 tasks/
 status/
+!apps/web/app/status/
+!apps/web/app/status/**
 findings.md
 progress.md
 task_plan.md
@@ -272,7 +255,6 @@ book-de/
 /CONTRIBUTING.md
 /CODE_OF_CONDUCT.md
 /LICENSE
-/SECURITY.md
 SECURITY_FIXES/
 .changeset/
 .github/instructions/
@@ -316,17 +298,5 @@ link-checker-report.txt
 
 # Starlight/ACOS temporary files
 .starlight/
-!.starlight/
-.starlight/*
-!.starlight/design-contract.json
-!.starlight/release-evidence/
-!.starlight/release-evidence/**
-
-# web-excellence pack — local evidence, not repo artifacts
-.visual-proof/
-.lighthouse.json
-.extract-design-system/
-.claude/skills/.replaced/
-
-# Rebuilt from packages/arcanea-creator-starters before web dev/build.
-/apps/web/public/creator-starters/
+.asph-wip/
+*.patch

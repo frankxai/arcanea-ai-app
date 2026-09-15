@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "Developer documentation for the Arcanea platform — SDK quickstart, API reference, Luminor integration, and deployment guides.",
   openGraph: {
-    title: "Documentation",
+    title: "Documentation | Arcanea",
     description:
       "Developer documentation for the Arcanea platform — SDK quickstart, API reference, Luminor integration, and deployment guides.",
   },

@@ -4,11 +4,11 @@ import { redirect } from "next/navigation";
 import { ProfileShowcase } from "./profile-showcase";
 
 export const metadata: Metadata = {
-  title: "Profile",
+  title: "Profile — Arcanea",
   description:
     "Creator identity page — linked Custom GPTs, Suno profile, websites, agents, and on-chain identity. Verified, signed, portable.",
   openGraph: {
-    title: "Profile",
+    title: "Profile — Arcanea",
     description:
       "Creator identity page — linked Custom GPTs, Suno profile, websites, agents, and on-chain identity.",
   },

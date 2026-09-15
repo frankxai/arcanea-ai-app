@@ -1,0 +1,90 @@
+{
+  "asset_uid": "arcanea-2026-07-arcanea-music-proof-stage-no-text",
+  "source_asset_uid": "arcanea-2026-07-music-portal-bloom-clean",
+  "batch_id": "2026-07-arcanea-visual-world-engine-b4",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 2,
+  "title": "arcanea music proof stage no text",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "vertical-social-9x16",
+  "aspect_ratio": "9:16",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-035-arcanea-music-proof-stage-no-text.png",
+    "sha256": "370d75d6284e7403abae6904619385a4c3efbda3bd30d092b511adc15b6b7eca",
+    "mime_type": "image/png",
+    "width": 941,
+    "height": 1672,
+    "size_bytes": 2135183
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b4.json#arc-visual-035",
+    "prompt": "Use case: illustration-story. Asset type: vertical music/social source frame for TikTok, Shorts, and Reels. Primary request: a no-text Arcanea music performance hook where a creator turns sound into a proof artifact on stage. Scene/backdrop: intimate black-glass studio stage with warm gold lights, teal resonance mist, and an audience suggested only as soft silhouettes. Subject: a diverse musician creator stands at a clean instrument-console, not holding a microphone, creating a floating portal-bloom proof artifact from sound; translucent resonance ribbons rise into a circular doorway behind them. Style/medium: premium cinematic music poster, Arcanea AI-lab myth-tech, not EDM visualizer, not generic concert photo. Composition/framing: 9:16, musician lower third, portal-bloom center, large clean dark negative space above for later deterministic hook text. Lighting/mood: intimate, aspirational, gold teal black, emotional lift. Materials/textures: Otome Resonite, dark glass, blank gold foil, living crystal, starlight metal, soft fabric. Constraints: no text, no lyrics, no logos, no waveform UI, no equalizer bars, no microphone cliche, no stage branding, no fake letters, no symbols.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "9:16"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 27,
+    "decision": "approve",
+    "failure_modes": [
+      "Darker upper field is excellent for overlays but needs phone brightness test",
+      "Musician-console hand details should not be used as a close crop"
+    ],
+    "next_improvement": "Promote as music/social proof-stage source; pair with deterministic hook text and audio/motion pass."
+  },
+  "canon": {
+    "refs": [
+      "Arcanea music lane",
+      "Voice Gate",
+      "creator proof performance"
+    ],
+    "gate": "Voice",
+    "guardian": "Alera"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 2,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "music"
+      },
+      {
+        "trait_type": "surface",
+        "value": "vertical-social-9x16"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Voice"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Alera"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-035-arcanea-music-proof-stage-no-text.vis.provenance.json"
+  },
+  "used_in": [
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\app\\gallery\\gallery-data.ts",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T05:20:30+02:00"
+}

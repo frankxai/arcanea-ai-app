@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "name": "arcanea-image-engines",
+  "slug": "arcanea-image-engines",
+  "goal": "Every queued Arcanea creation brief is generated on its correct engine lane, ledgered, gated at 30 points, and approved assets are promoted with gallery-ready sidecars",
+  "createdAt": "2026-07-05T21:34:30Z",
+  "owner": "Luminor",
+  "cadence": "manual or scheduled night-run",
+  "verdict": "GO",
+  "stateMode": "global",
+  "ci": "none",
+  "packageManager": "unknown",
+  "maxIterations": 12,
+  "stopAfterSameFailure": 2,
+  "verificationCommands": [
+    "node .loop/arcanea-image-engines/verify.mjs"
+  ],
+  "forbiddenScope": [
+    "credentials",
+    "billing",
+    "production mutation",
+    "destructive file operations",
+    "external sends",
+    "gate weakening",
+    "force pushes",
+    "unapproved dependency upgrades"
+  ],
+  "files": {
+    "loop": "LOOP.md",
+    "gate": "GATE.md",
+    "worker": "WORKER.md",
+    "verifier": "VERIFIER.md",
+    "state": "STATE.md",
+    "signs": "SIGNS.md",
+    "runs": "RUNS.md",
+    "machineRuns": "runs.jsonl",
+    "proofs": "proofs/",
+    "lock": "loop.lock",
+    "abort": "ABORT"
+  }
+}
