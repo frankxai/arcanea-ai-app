@@ -12,6 +12,7 @@
 // This script is the gate that makes that impossible to repeat.
 
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import {
   appendFileSync,
   existsSync,
@@ -118,10 +119,28 @@ try {
     if (!tools.some((t) => t.name === name))
       fail(`${name} missing from tools/list`);
 
-  const fixture = readFileSync(
-    resolve(pkgRoot, "../world-pack/fixtures/slow-chart.worldpack.json"),
-    "utf8",
+  const shippedCanon = readFileSync(
+    join(installed, "dist/vendor/canon/CANON_LOCKED.md"),
   );
+  if (shippedCanon.toString("utf8").includes("What is NOT a Sister-World"))
+    fail("the installed package carries private-only canon");
+  const { packDigest } = await import(
+    pathToFileURL(join(installed, "dist/vendor/world-pack/pack.mjs")).href
+  );
+  const canonHash = `sha256:${createHash("sha256").update(shippedCanon).digest("hex")}`;
+  // The fixture was cleared against the repo canon; rebind it to the canon this
+  // package ships and reseal, as a creator re-exporting it would.
+  const fixturePack = () => {
+    const pack = JSON.parse(
+      readFileSync(
+        resolve(pkgRoot, "../world-pack/fixtures/slow-chart.worldpack.json"),
+        "utf8",
+      ),
+    );
+    pack.canon.sourceHash = canonHash;
+    pack.digest = packDigest(pack);
+    return pack;
+  };
   const check = async (pack) => {
     const result = await client.callTool({
       name: "worldpack_check",
@@ -130,11 +149,11 @@ try {
     return JSON.parse(result.content[0].text);
   };
 
-  const clean = await check(JSON.parse(fixture));
+  const clean = await check(fixturePack());
   if (clean.verdict !== "pass")
     fail(`clean pack: expected pass, got ${clean.headline}`);
 
-  const forged = JSON.parse(fixture);
+  const forged = fixturePack();
   const gov = forged.nodes.find((n) => n.type === "World").governance;
   forged.nodes.push({
     id: "chr_forged",

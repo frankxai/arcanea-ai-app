@@ -47,6 +47,9 @@ jobs:
       - name: Install MCP server dependencies
         run: pnpm install --frozen-lockfile --filter @arcanea/mcp-server
 
+      - name: Vendored canon is the pinned public mirror
+        run: node packages/arcanea-mcp/scripts/verify-public-canon.mjs --remote
+
       - name: WorldPack engine tests
         run: node --test packages/world-pack/tests/*.test.mjs
 

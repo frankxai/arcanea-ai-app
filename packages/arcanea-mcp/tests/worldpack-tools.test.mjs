@@ -3,13 +3,16 @@
 // Run: pnpm --dir packages/arcanea-mcp test:worldpack
 
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, resolve } from "node:path";
 import { after, before, test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { RULES } from "../dist/vendor/world-pack/conflict.mjs";
+import { packDigest } from "../dist/vendor/world-pack/pack.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const CLI = resolve(here, "../dist/cli.js");
@@ -24,7 +27,18 @@ const CUSTOM_CANON = readFileSync(
 const PKG = JSON.parse(readFileSync(resolve(here, "../package.json"), "utf8"));
 const README = readFileSync(resolve(here, "../README.md"), "utf8");
 
-const golden = () => JSON.parse(readFileSync(FIXTURE, "utf8"));
+const SHIPPED_CANON_HASH = `sha256:${createHash("sha256")
+  .update(readFileSync(resolve(here, "../dist/vendor/canon/CANON_LOCKED.md")))
+  .digest("hex")}`;
+
+// The golden fixture was cleared against the repo's canon; the server ships the
+// public mirror. Rebind and reseal it the way its creator would re-export it.
+const golden = () => {
+  const pack = JSON.parse(readFileSync(FIXTURE, "utf8"));
+  pack.canon.sourceHash = SHIPPED_CANON_HASH;
+  pack.digest = packDigest(pack);
+  return pack;
+};
 const worldGovernance = (pack) =>
   pack.nodes.find((n) => n.type === "World").governance;
 
@@ -153,8 +167,10 @@ test("a clean pack passes with zero findings against the bundled canon", async (
 });
 
 test("path is read over stdio; bad inputs are tool errors, not crashes", async () => {
+  const packFile = resolve(tmpdir(), `worldpack-path-${process.pid}.json`);
+  writeFileSync(packFile, JSON.stringify(golden()));
   assert.equal(
-    (await call("worldpack_check", { path: FIXTURE })).body.verdict,
+    (await call("worldpack_check", { path: packFile })).body.verdict,
     "pass",
   );
 

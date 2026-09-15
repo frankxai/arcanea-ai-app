@@ -27,7 +27,7 @@
     "start": "node dist/cli.js",
     "clean": "rm -rf dist",
     "test:gateway": "pnpm run build && node --test tests/world-context-gateway.test.mjs",
-    "test:worldpack": "pnpm run build && node --test tests/worldpack-tools.test.mjs",
+    "test:worldpack": "pnpm run build && node --test tests/worldpack-tools.test.mjs tests/hardening.test.mjs tests/public-canon.test.mjs",
     "smoke:consumer": "node scripts/consumer-smoke.mjs",
     "prepublishOnly": "pnpm run build"
   },
