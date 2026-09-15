@@ -4,11 +4,11 @@ on:
   pull_request:
     branches: [main]
     paths-ignore:
-      - 'book/**'
-      - 'docs/**'
-      - '*.md'
-      - '.arcanea/lore/**'
-      - '.arcanea/projects/log/**'
+      - "book/**"
+      - "docs/**"
+      - "*.md"
+      - ".arcanea/lore/**"
+      - ".arcanea/projects/log/**"
     # Heavy E2E/Lighthouse/security suite runs once at the review boundary.
     # Required CI continues to validate every review-ready head update.
     types: [opened, ready_for_review]
@@ -19,8 +19,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: '22'
-  PNPM_VERSION: '8.15.0'
+  NODE_VERSION: "22"
+  PNPM_VERSION: "8.15.0"
 
 jobs:
   # ============================================
@@ -49,7 +49,7 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
       - name: Install dependencies
@@ -277,7 +277,7 @@ jobs:
       - name: Lighthouse CI
         uses: treosh/lighthouse-ci-action@v12
         with:
-          configPath: './lighthouserc.json'
+          configPath: "./lighthouserc.json"
           uploadArtifacts: true
         continue-on-error: true
 
@@ -349,10 +349,21 @@ jobs:
           echo "| Build | ${{ needs.build.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Security | ${{ needs.security.result }} (warn only) |" >> $GITHUB_STEP_SUMMARY
           echo "| E2E Smoke | ${{ needs.e2e-smoke.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Release Integrity | ${{ needs.release-integrity.result }} |" >> $GITHUB_STEP_SUMMARY
 
           # Build MUST pass; lint is informational until ajv hoisting is resolved
           if [ "${{ needs.build.result }}" != "success" ]; then
             echo "::error::Build failed — this is a blocking gate"
+            exit 1
+          fi
+          # E2E smoke and release integrity were printed above but never tested,
+          # so a failing smoke run or a split-brain publish still reported "passed".
+          if [ "${{ needs.e2e-smoke.result }}" != "success" ]; then
+            echo "::error::E2E smoke failed — this is a blocking gate"
+            exit 1
+          fi
+          if [ "${{ needs.release-integrity.result }}" != "success" ]; then
+            echo "::error::Release integrity failed — this is a blocking gate"
             exit 1
           fi
           if [ "${{ needs.lint.result }}" != "success" ]; then
