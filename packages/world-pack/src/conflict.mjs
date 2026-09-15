@@ -14,6 +14,7 @@ import {
   contradictionsIn,
   deriveLayer,
   gateByIndex,
+  nameCandidates,
   rankForGates,
 } from "./canon-index.mjs";
 import { verifyAgentRoles } from "./guardians.mjs";
@@ -103,19 +104,6 @@ export function proseOf(node) {
     walk(value);
   }
   return parts.join(" \n ");
-}
-
-/** Names a node offers for itself. An alias of a locked name is still that name. */
-function nameCandidates(node) {
-  const attrs = node.attributes || {};
-  const raw = [
-    node.name,
-    ...(Array.isArray(attrs.aliases) ? attrs.aliases : []),
-    ...(Array.isArray(attrs.alsoKnownAs) ? attrs.alsoKnownAs : []),
-    attrs.alias,
-    attrs.trueName,
-  ];
-  return raw.filter((n) => typeof n === "string" && n.trim().length > 0);
 }
 
 /**
@@ -344,13 +332,14 @@ export function detectConflicts(pack, canon, options = {}) {
     }
 
     // — canon name collisions —
-    // The locked-name rule applies to every node whatever it declares. Only a node
-    // that actually resolves as canon is exempt, and then only for its own entry.
-    if (!attestation.attested) {
+    // The locked-name rule applies to every node whatever it declares, attested
+    // canon included. An attested node is exempt only for its own entry.
+    {
       const claimed = new Map();
       for (const candidate of nameCandidates(node)) {
         const loose = canonNameLoose(canon, candidate);
         if (!loose) continue;
+        if (attestation.attested && loose.entry === attestation.entry) continue;
         const isNodeName = candidate === node.name;
         const key = loose.entry.name;
         const prior = claimed.get(key);

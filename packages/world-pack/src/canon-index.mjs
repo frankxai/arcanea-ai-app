@@ -123,10 +123,12 @@ function col(table, name) {
 export function buildCanonIndex(md) {
   const tables = parseTables(md);
   const names = new Map(); // lowercased name -> { name, kind, status, note }
-  const register = (name, kind, status, note) => {
+  // `attributes` is what canon itself says about the entry; a canon-layer node
+  // claiming the entry must agree with it field for field.
+  const register = (name, kind, status, note, attributes) => {
     const key = String(name).toLowerCase();
     if (!name || names.has(key)) return;
-    names.set(key, { name, kind, status, note });
+    names.set(key, { name, kind, status, note, attributes });
   };
 
   // Primordial duality
@@ -177,9 +179,21 @@ export function buildCanonIndex(md) {
         domain: r[iDomain],
       };
       gates.push(gate);
-      register(gate.name, "gate", "locked");
-      register(gate.god, "god", "locked", `Gate ${gate.index}`);
-      register(gate.godbeast, "godbeast", "locked", `bonded to ${gate.god}`);
+      register(gate.name, "gate", "locked", undefined, {
+        gate: gate.index,
+        frequencyHz: gate.frequencyHz,
+        guardian: gate.god,
+        godbeast: gate.godbeast,
+      });
+      register(gate.god, "god", "locked", `Gate ${gate.index}`, {
+        gate: gate.index,
+        frequencyHz: gate.frequencyHz,
+        godbeast: gate.godbeast,
+      });
+      register(gate.godbeast, "godbeast", "locked", `bonded to ${gate.god}`, {
+        gate: gate.index,
+        guardian: gate.god,
+      });
     });
   }
 
@@ -373,15 +387,46 @@ export function canonNameLoose(index, candidate) {
   return null;
 }
 
+/** Entity types that can legitimately BE a canon entry of each kind. */
+const KIND_TYPES = Object.freeze({
+  universe: ["Universe"],
+  primordial: ["Character"],
+  god: ["Character"],
+  figure: ["Character"],
+  godbeast: ["Creature"],
+  house: ["Faction"],
+  gate: ["Law", "Location", "Power"],
+  element: ["Power", "Law"],
+  rank: ["Law"],
+  wisdom: ["Law", "Power"],
+  "origin-class": ["Law", "Faction"],
+  term: ["Law", "Power", "Object", "Event", "Location", "Faction", "Creature"],
+});
+
+/** Names a node offers for itself. An alias of a locked name is still that name. */
+export function nameCandidates(node) {
+  const attrs = node?.attributes || {};
+  const raw = [
+    node?.name,
+    ...(Array.isArray(attrs.aliases) ? attrs.aliases : []),
+    ...(Array.isArray(attrs.alsoKnownAs) ? attrs.alsoKnownAs : []),
+    attrs.alias,
+    attrs.trueName,
+  ];
+  return raw.filter((n) => typeof n === "string" && n.trim().length > 0);
+}
+
 /**
  * The layer a node ACTUALLY has, as opposed to the one it declares.
  *
- * `layer:"canon"` is not self-declarable. A node is canon only if its name (or
- * id) resolves to a LOCKED entry in the index built from the canon document, and
- * it is owned by that document's owner. Anything else claiming canon is treated
- * as the ordinary user claim it is — and reported.
+ * `layer:"canon"` is not self-declarable. Canon identity is rebuilt from the
+ * canon document and compared field by field: the node's NAME must resolve to a
+ * LOCKED entry (an id is a label the pack chose, never evidence), its type must be
+ * one that entry can be, every attribute canon fixes must agree, no alias may be
+ * a different canon name, and the owner must be the canon owner. Any mismatch
+ * demotes the node and is reported.
  *
- * @returns {{layer:string, declared:string, attested:boolean, entry:object|null, reason:string|null}}
+ * @returns {{layer:string, declared:string, attested:boolean, entry:object|null, reason:string|null, problems:string[]}}
  */
 export function deriveLayer(index, node) {
   const declared = node?.layer ?? null;
@@ -392,22 +437,65 @@ export function deriveLayer(index, node) {
       attested: false,
       entry: null,
       reason: null,
+      problems: [],
     };
 
-  const entry = canonName(index, node?.name) || canonName(index, node?.id);
+  const entry = canonName(index, node?.name);
+  const problems = [];
+  if (!entry) {
+    problems.push(
+      `'${node?.name}' does not resolve in the canon index for ${index?.universeName ?? "this canon"}`,
+    );
+  } else {
+    if (entry.status !== "locked")
+      problems.push(`'${entry.name}' is ${entry.status} in canon, not locked`);
+    const types = KIND_TYPES[entry.kind];
+    if (types && !types.includes(node?.type))
+      problems.push(
+        `'${entry.name}' is a canon ${entry.kind}; a ${node?.type} node cannot be it (expected ${types.join(" or ")})`,
+      );
+    for (const [key, expected] of Object.entries(entry.attributes || {})) {
+      const actual = node?.attributes?.[key];
+      if (actual != null && String(actual) !== String(expected))
+        problems.push(
+          `attributes.${key} is '${actual}', canon says '${expected}'`,
+        );
+    }
+    for (const alias of nameCandidates(node)) {
+      if (alias === node.name) continue;
+      const hit = canonNameLoose(index, alias);
+      if (hit && hit.entry !== entry)
+        problems.push(
+          `alias '${alias}' is the canon name '${hit.entry.name}', not '${entry.name}'`,
+        );
+    }
+  }
   const owner = node?.governance?.owner ?? null;
   const ownerOk =
     Boolean(index?.canonOwner) &&
     normalizeName(owner) === normalizeName(index.canonOwner);
-  if (entry && entry.status === "locked" && ownerOk)
-    return { layer: "canon", declared, attested: true, entry, reason: null };
+  if (!ownerOk)
+    problems.push(
+      `owner '${owner ?? "(none)"}' is not the canon owner '${index?.canonOwner}'`,
+    );
 
-  const reason = !entry
-    ? `'${node?.name}' does not resolve in the canon index for ${index?.universeName ?? "this canon"}`
-    : entry.status !== "locked"
-      ? `'${entry.name}' is ${entry.status} in canon, not locked`
-      : `owner '${owner ?? "(none)"}' is not the canon owner '${index.canonOwner}'`;
-  return { layer: "user", declared, attested: false, entry, reason };
+  if (!problems.length)
+    return {
+      layer: "canon",
+      declared,
+      attested: true,
+      entry,
+      reason: null,
+      problems,
+    };
+  return {
+    layer: "user",
+    declared,
+    attested: false,
+    entry,
+    reason: problems.join("; "),
+    problems,
+  };
 }
 
 const NEGATORS = new Set([
