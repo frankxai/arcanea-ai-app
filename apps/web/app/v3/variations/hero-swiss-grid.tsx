@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { PhArrowRight } from '@/lib/phosphor-icons';
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { PhArrowRight } from "@/lib/phosphor-icons";
 
 /* ─────────────────────────────────────────────
    Variation 4 — "Swiss Grid Precision"
@@ -12,7 +12,7 @@ import { PhArrowRight } from '@/lib/phosphor-icons';
    Monochrome until interaction. Generous whitespace.
    ───────────────────────────────────────────── */
 
-const CYAN = 'var(--arc-brand-atlantean-teal)';
+const CYAN = "var(--arc-brand-atlantean-teal)";
 
 interface FeatureItem {
   number: string;
@@ -22,22 +22,22 @@ interface FeatureItem {
 
 const FEATURES: FeatureItem[] = [
   {
-    number: '01',
-    title: 'Specialized Intelligence',
+    number: "01",
+    title: "Specialized Intelligence",
     description:
-      '12 Luminors, each trained for a distinct creative discipline.',
+      "12 Luminors, each trained for a distinct creative discipline.",
   },
   {
-    number: '02',
-    title: 'Philosophy Library',
+    number: "02",
+    title: "Philosophy Library",
     description:
-      '34 original texts on creativity, ritual, and the practice of making.',
+      "34 original texts on creativity, ritual, and the practice of making.",
   },
   {
-    number: '03',
-    title: 'Unified Platform',
+    number: "03",
+    title: "Unified Platform",
     description:
-      'Writing, design, code, music, and research in a single workspace.',
+      "Writing, design, code, music, and research in a single workspace.",
   },
 ];
 
@@ -54,22 +54,16 @@ const fadeUp = {
   }),
 };
 
-function FeatureRow({
-  item,
-  index,
-}: {
-  item: FeatureItem;
-  index: number;
-}) {
+function FeatureRow({ item, index }: { item: FeatureItem; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <motion.div
       ref={ref}
       className="group relative border-t border-white/[0.06] py-8 pl-0 transition-colors duration-300 hover:border-l-2 md:py-10"
       style={{
-        borderLeftColor: 'transparent',
+        borderLeftColor: "transparent",
       }}
       initial={{ opacity: 0, y: 16 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
@@ -88,7 +82,7 @@ function FeatureRow({
         <div className="md:col-span-2">
           <span
             className="font-mono text-xs tracking-widest"
-            style={{ color: 'rgba(255, 255, 255, 0.25)' }}
+            style={{ color: "rgba(255, 255, 255, 0.25)" }}
           >
             {item.number}
           </span>
@@ -105,7 +99,7 @@ function FeatureRow({
         <div className="md:col-span-6">
           <p
             className="text-sm leading-relaxed"
-            style={{ color: 'rgba(255, 255, 255, 0.45)' }}
+            style={{ color: "rgba(255, 255, 255, 0.45)" }}
           >
             {item.description}
           </p>
@@ -117,13 +111,13 @@ function FeatureRow({
 
 export function HeroSwissGrid() {
   const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: '-40px' });
+  const isInView = useInView(sectionRef, { once: true, margin: "-40px" });
 
   return (
     <section
       ref={sectionRef}
       className="relative flex min-h-[100dvh] w-full flex-col justify-center overflow-hidden"
-      style={{ backgroundColor: 'var(--arc-cosmic-void)' }}
+      style={{ backgroundColor: "var(--arc-cosmic-void)" }}
     >
       {/* ── Subtle grid pattern ── */}
       <div
@@ -133,7 +127,7 @@ export function HeroSwissGrid() {
           backgroundImage: `
             radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px)
           `,
-          backgroundSize: '48px 48px',
+          backgroundSize: "48px 48px",
         }}
       />
 
@@ -144,15 +138,15 @@ export function HeroSwissGrid() {
           className="mb-20 md:mb-28"
           custom={0}
           initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
+          animate={isInView ? "visible" : "hidden"}
           variants={fadeUp}
         >
           {/* Headline */}
           <h1
             className="font-display font-light leading-[0.92] text-white/90"
             style={{
-              fontSize: 'clamp(4rem, 10vw, 12rem)',
-              letterSpacing: '-0.06em',
+              fontSize: "clamp(4rem, 10vw, 12rem)",
+              letterSpacing: "-0.06em",
             }}
           >
             Arcanea
@@ -161,10 +155,10 @@ export function HeroSwissGrid() {
           {/* Descriptor */}
           <motion.p
             className="mt-5 font-mono text-xs uppercase tracking-[0.5em] md:mt-6"
-            style={{ color: 'rgba(255, 255, 255, 0.30)' }}
+            style={{ color: "rgba(255, 255, 255, 0.30)" }}
             custom={1}
             initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
+            animate={isInView ? "visible" : "hidden"}
             variants={fadeUp}
           >
             Creative Intelligence Platform
@@ -175,7 +169,7 @@ export function HeroSwissGrid() {
             className="mt-10 md:mt-14"
             custom={2}
             initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
+            animate={isInView ? "visible" : "hidden"}
             variants={fadeUp}
           >
             <a
@@ -206,14 +200,14 @@ export function HeroSwissGrid() {
           className="mt-16 flex flex-col items-start justify-between gap-4 md:mt-20 md:flex-row md:items-center"
           custom={5}
           initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
+          animate={isInView ? "visible" : "hidden"}
           variants={fadeUp}
         >
           {/* Horizontal rule + stats */}
           <div />
           <p
             className="font-mono text-xs tracking-wider"
-            style={{ color: 'rgba(255, 255, 255, 0.20)' }}
+            style={{ color: "rgba(255, 255, 255, 0.20)" }}
           >
             12 Luminors &middot; 34 texts &middot; Free to start
           </p>

@@ -22,6 +22,15 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
+  // Newsletter and founding-circle forms are public. Keep this exception exact:
+  // other methods, nested paths and all world generation/save APIs still require auth.
+  if (
+    request.nextUrl.pathname === "/api/waitlist" &&
+    request.method === "POST"
+  ) {
+    return NextResponse.next({ request: { headers: request.headers } });
+  }
+
   return updateSession(request, {
     protectedPrefixes: [
       "/profile",
