@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
+import { FACTS } from "@/lib/facts";
+
 /* ------------------------------------------------------------------ */
 /*  Developers Page Data — no 'use client'                             */
 /* ------------------------------------------------------------------ */
@@ -90,7 +92,10 @@ export const TOOLS = [
       },
       { name: "VoiceEnforcer", description: "Output validation" },
       { name: "Token Optimizer", description: "Context window management" },
-      { name: "MCP Server", description: "54 tools with skill-rules" },
+      {
+        name: "MCP Server",
+        description: `${FACTS.mcpTools} tools with skill-rules`,
+      },
     ],
     color: "var(--arc-brand-atlantean-teal)",
   },
@@ -165,8 +170,7 @@ export const CREDITS_ENDPOINTS = [
 export const MCP_SERVERS = [
   {
     name: "arcanea-mcp",
-    description:
-      "The core MCP server with 59 tools: WorldPack canon audit, world-building, Luminor companions, story generation, agent orchestration.",
+    description: `The core MCP server with ${FACTS.mcpTools} tools: WorldPack canon audit, world-building, Luminor companions, story generation, agent orchestration.`,
     install: "npx -y @arcanea/mcp-server@1",
     color: "var(--arc-brand-atlantean-teal)",
   },
