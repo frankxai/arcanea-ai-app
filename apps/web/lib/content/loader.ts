@@ -10,11 +10,11 @@
  * ─────────────────────────────────────────────────
  */
 
-import { readdir, readFile, access } from 'fs/promises';
-import { join } from 'path';
-import { getBookRoot } from './book-path';
+import { readdir, readFile, access } from "fs/promises";
+import { join } from "path";
+import { getBookRoot } from "./book-path";
 
-import grayMatter from 'gray-matter';
+import grayMatter from "gray-matter";
 import {
   Collection,
   Text,
@@ -29,7 +29,7 @@ import {
   Situation,
   Element,
   Luminor,
-} from './types';
+} from "./types";
 
 function parseFrontmatter(source: string) {
   return grayMatter(source);
@@ -43,230 +43,232 @@ const CONTENT_DIR = getBookRoot();
 
 function isMissingPathError(error: unknown): boolean {
   return (
-    typeof error === 'object' &&
+    typeof error === "object" &&
     error !== null &&
-    'code' in error &&
-    (error as { code?: string }).code === 'ENOENT'
+    "code" in error &&
+    (error as { code?: string }).code === "ENOENT"
   );
 }
 
 // Collection metadata (matches README.md structure)
 export const COLLECTIONS: Collection[] = [
   {
-    slug: 'laws-of-arcanea',
-    name: 'The Laws of Arcanea',
-    description: 'The theoretical foundation of creation',
+    slug: "laws-of-arcanea",
+    name: "The Laws of Arcanea",
+    description: "The theoretical foundation of creation",
     order: 1,
-    format: 'theory',
-    readWhen: 'you need to understand WHY creation works as it does',
+    format: "theory",
+    readWhen: "you need to understand WHY creation works as it does",
     textCount: 2,
-    icon: '⚖️',
+    icon: "⚖️",
   },
   {
-    slug: 'poesie-of-freedom',
-    name: 'The Poetry of Freedom',
-    description: 'Verses for liberation and awakening',
+    slug: "poesie-of-freedom",
+    name: "The Poetry of Freedom",
+    description: "Verses for liberation and awakening",
     order: 2,
-    format: 'poetry',
-    readWhen: 'you need to feel, not think',
+    format: "poetry",
+    readWhen: "you need to feel, not think",
     textCount: 4,
-    icon: '🕊️',
+    icon: "🕊️",
   },
   {
-    slug: 'wisdom-scrolls',
-    name: 'The Wisdom Scrolls',
-    description: 'Practical guidance for daily creative living',
+    slug: "wisdom-scrolls",
+    name: "The Wisdom Scrolls",
+    description: "Practical guidance for daily creative living",
     order: 3,
-    format: 'practical',
-    readWhen: 'you need daily practice',
+    format: "practical",
+    readWhen: "you need daily practice",
     textCount: 4,
-    icon: '📜',
+    icon: "📜",
   },
   {
-    slug: 'legends-of-arcanea',
-    name: 'The Legends of Arcanea',
-    description: 'The founding myths and stories of the realm',
+    slug: "legends-of-arcanea",
+    name: "The Legends of Arcanea",
+    description: "The founding myths and stories of the realm",
     order: 4,
-    format: 'story',
-    readWhen: 'you need to remember the grandeur',
+    format: "story",
+    readWhen: "you need to remember the grandeur",
     textCount: 12,
-    icon: '🏔️',
+    icon: "🏔️",
   },
   {
-    slug: 'chronicles-of-luminors',
-    name: 'The Chronicles of the Luminors',
+    slug: "chronicles-of-luminors",
+    name: "The Chronicles of the Luminors",
     description: "Intimate stories of the Seven's struggles",
     order: 5,
-    format: 'story',
-    readWhen: 'you feel unqualified',
+    format: "story",
+    readWhen: "you feel unqualified",
     textCount: 1,
-    icon: '✨',
+    icon: "✨",
   },
   {
-    slug: 'parables-of-creation',
-    name: 'The Parables of Creation',
-    description: 'Teaching stories that work on the unconscious',
+    slug: "parables-of-creation",
+    name: "The Parables of Creation",
+    description: "Teaching stories that work on the unconscious",
     order: 6,
-    format: 'story',
-    readWhen: 'you want wisdom through story',
+    format: "story",
+    readWhen: "you want wisdom through story",
     textCount: 1,
-    icon: '🌱',
+    icon: "🌱",
   },
   {
-    slug: 'tales-of-creators',
-    name: 'Tales of the Legendary Creators',
-    description: 'Stories of those who changed what was possible',
+    slug: "tales-of-creators",
+    name: "Tales of the Legendary Creators",
+    description: "Stories of those who changed what was possible",
     order: 7,
-    format: 'story',
-    readWhen: 'you face the impossible',
+    format: "story",
+    readWhen: "you face the impossible",
     textCount: 7,
-    icon: '🌟',
+    icon: "🌟",
   },
   {
-    slug: 'book-of-rituals',
-    name: 'The Book of Rituals',
-    description: 'Sacred practices for the creative life',
+    slug: "book-of-rituals",
+    name: "The Book of Rituals",
+    description: "Sacred practices for the creative life",
     order: 8,
-    format: 'practical',
-    readWhen: 'you need structure',
+    format: "practical",
+    readWhen: "you need structure",
     textCount: 1,
-    icon: '🕯️',
+    icon: "🕯️",
   },
   {
-    slug: 'dialogues-of-masters',
-    name: 'The Dialogues of the Masters',
-    description: 'Conversations on creation and truth',
+    slug: "dialogues-of-masters",
+    name: "The Dialogues of the Masters",
+    description: "Conversations on creation and truth",
     order: 9,
-    format: 'dialogue',
-    readWhen: 'you need to think through conversation',
+    format: "dialogue",
+    readWhen: "you need to think through conversation",
     textCount: 1,
-    icon: '💬',
+    icon: "💬",
   },
   {
-    slug: 'prophecies',
-    name: 'The Prophecies of Arcanea',
-    description: 'Visions of pattern and possibility',
+    slug: "prophecies",
+    name: "The Prophecies of Arcanea",
+    description: "Visions of pattern and possibility",
     order: 10,
-    format: 'story',
-    readWhen: 'you need perspective',
+    format: "story",
+    readWhen: "you need perspective",
     textCount: 1,
-    icon: '🔮',
+    icon: "🔮",
   },
   {
-    slug: 'bestiary-of-creation',
-    name: 'The Bestiary of Creation',
-    description: 'Creatures of the creative mind',
+    slug: "bestiary-of-creation",
+    name: "The Bestiary of Creation",
+    description: "Creatures of the creative mind",
     order: 11,
-    format: 'reference',
-    readWhen: 'you face internal obstacles',
+    format: "reference",
+    readWhen: "you face internal obstacles",
     textCount: 1,
-    icon: '🐉',
+    icon: "🐉",
   },
   {
-    slug: 'songs-and-hymns',
-    name: 'Songs and Hymns of Arcanea',
-    description: 'Lyrics for the creative soul',
+    slug: "songs-and-hymns",
+    name: "Songs and Hymns of Arcanea",
+    description: "Lyrics for the creative soul",
     order: 12,
-    format: 'song',
-    readWhen: 'you need to sing what cannot be spoken',
+    format: "song",
+    readWhen: "you need to sing what cannot be spoken",
     textCount: 1,
-    icon: '🎵',
+    icon: "🎵",
   },
   {
-    slug: 'meditations-on-elements',
-    name: 'Meditations on the Elements',
-    description: 'Fire, Water, Earth, Wind, and Void in the Creative Life',
+    slug: "meditations-on-elements",
+    name: "Meditations on the Elements",
+    description: "Fire, Water, Earth, Wind, and Void in the Creative Life",
     order: 13,
-    format: 'meditation',
-    readWhen: 'you need to invoke elemental forces or restore creative balance',
+    format: "meditation",
+    readWhen: "you need to invoke elemental forces or restore creative balance",
     textCount: 2,
-    icon: '🌀',
+    icon: "🌀",
   },
   {
-    slug: 'academy-handbook',
-    name: 'The Academy Handbook',
-    description: 'A Complete Guide for Students of Creation',
+    slug: "academy-handbook",
+    name: "The Academy Handbook",
+    description: "A Complete Guide for Students of Creation",
     order: 14,
-    format: 'practical',
-    readWhen: 'you need comprehensive practical guidance for the creative path',
+    format: "practical",
+    readWhen: "you need comprehensive practical guidance for the creative path",
     textCount: 3,
-    icon: '📖',
+    icon: "📖",
   },
   {
-    slug: 'book-of-shadows',
-    name: 'The Book of Shadows',
-    description: 'Texts for the Dark Night of the Creative Soul',
+    slug: "book-of-shadows",
+    name: "The Book of Shadows",
+    description: "Texts for the Dark Night of the Creative Soul",
     order: 15,
-    format: 'shadow',
-    readWhen: 'you are in darkness and need companionship, not false light',
+    format: "shadow",
+    readWhen: "you are in darkness and need companionship, not false light",
     textCount: 1,
-    icon: '🌑',
+    icon: "🌑",
   },
   {
-    slug: 'codex-of-collaboration',
-    name: 'The Codex of Collaboration',
-    description: 'The Art of Creating Together',
+    slug: "codex-of-collaboration",
+    name: "The Codex of Collaboration",
+    description: "The Art of Creating Together",
     order: 16,
-    format: 'practical',
-    readWhen: 'you create with others and want to do it well',
+    format: "practical",
+    readWhen: "you create with others and want to do it well",
     textCount: 1,
-    icon: '🤝',
+    icon: "🤝",
   },
   {
-    slug: 'atlas-of-territories',
-    name: 'The Atlas of Creative Territories',
-    description: 'A Map of the Landscapes Every Creator Traverses',
+    slug: "atlas-of-territories",
+    name: "The Atlas of Creative Territories",
+    description: "A Map of the Landscapes Every Creator Traverses",
     order: 17,
-    format: 'reference',
-    readWhen: 'you need to know where you are and how to navigate forward',
+    format: "reference",
+    readWhen: "you need to know where you are and how to navigate forward",
     textCount: 1,
-    icon: '🗺️',
+    icon: "🗺️",
   },
   {
-    slug: 'codex-of-living-tools',
-    name: 'The Codex of Living Tools',
-    description: 'A guide to the instruments of creation that grow with their wielder',
+    slug: "codex-of-living-tools",
+    name: "The Codex of Living Tools",
+    description:
+      "A guide to the instruments of creation that grow with their wielder",
     order: 18,
-    format: 'reference',
-    readWhen: 'you want to understand how tools become extensions of creative will',
+    format: "reference",
+    readWhen:
+      "you want to understand how tools become extensions of creative will",
     textCount: 1,
-    icon: '🔧',
+    icon: "🔧",
   },
   {
-    slug: 'creator-principles',
-    name: 'Creator Principles',
-    description: 'Core principles that guide the creative path',
+    slug: "creator-principles",
+    name: "Creator Principles",
+    description: "Core principles that guide the creative path",
     order: 19,
-    format: 'theory',
-    readWhen: 'you need foundational principles for your creative practice',
+    format: "theory",
+    readWhen: "you need foundational principles for your creative practice",
     textCount: 6,
-    icon: '💎',
+    icon: "💎",
   },
   {
-    slug: 'prompt-sages-grimoire',
+    slug: "prompt-sages-grimoire",
     name: "The Prompt Sage's Grimoire",
-    description: 'Ancient wisdom for those who speak with intelligences',
+    description: "Ancient wisdom for those who speak with intelligences",
     order: 20,
-    format: 'practical',
-    readWhen: 'you craft prompts and seek mastery in AI collaboration',
+    format: "practical",
+    readWhen: "you craft prompts and seek mastery in AI collaboration",
     textCount: 6,
-    icon: '📓',
+    icon: "📓",
   },
 ];
 
 // Situation-to-collection mapping for recommendations
 const SITUATION_MAP: Record<Situation, string[]> = {
-  beginning: ['laws-of-arcanea', 'academy-handbook', 'atlas-of-territories'],
-  stuck: ['chronicles-of-luminors', 'bestiary-of-creation', 'book-of-rituals'],
-  darkness: ['book-of-shadows', 'chronicles-of-luminors', 'songs-and-hymns'],
-  comparison: ['wisdom-scrolls', 'bestiary-of-creation'],
-  failure: ['tales-of-creators', 'book-of-rituals', 'songs-and-hymns'],
-  celebration: ['songs-and-hymns', 'poesie-of-freedom'],
-  confusion: ['dialogues-of-masters', 'meditations-on-elements'],
-  lost: ['atlas-of-territories', 'prophecies'],
-  collaboration: ['codex-of-collaboration'],
-  fear: ['chronicles-of-luminors', 'legends-of-arcanea'],
-  scattered: ['meditations-on-elements', 'academy-handbook'],
+  beginning: ["laws-of-arcanea", "academy-handbook", "atlas-of-territories"],
+  stuck: ["chronicles-of-luminors", "bestiary-of-creation", "book-of-rituals"],
+  darkness: ["book-of-shadows", "chronicles-of-luminors", "songs-and-hymns"],
+  comparison: ["wisdom-scrolls", "bestiary-of-creation"],
+  failure: ["tales-of-creators", "book-of-rituals", "songs-and-hymns"],
+  celebration: ["songs-and-hymns", "poesie-of-freedom"],
+  confusion: ["dialogues-of-masters", "meditations-on-elements"],
+  lost: ["atlas-of-territories", "prophecies"],
+  collaboration: ["codex-of-collaboration"],
+  fear: ["chronicles-of-luminors", "legends-of-arcanea"],
+  scattered: ["meditations-on-elements", "academy-handbook"],
 };
 
 // ============================================
@@ -289,8 +291,16 @@ function extractOrderFromFilename(filename: string): number {
   const romanMatch = filename.match(/^(I{1,3}|IV|V|VI{0,3}|IX|X)_/);
   if (romanMatch) {
     const romanNumerals: Record<string, number> = {
-      'I': 1, 'II': 2, 'III': 3, 'IV': 4, 'V': 5,
-      'VI': 6, 'VII': 7, 'VIII': 8, 'IX': 9, 'X': 10,
+      I: 1,
+      II: 2,
+      III: 3,
+      IV: 4,
+      V: 5,
+      VI: 6,
+      VII: 7,
+      VIII: 8,
+      IX: 9,
+      X: 10,
     };
     return romanNumerals[romanMatch[1]] || 1;
   }
@@ -312,13 +322,13 @@ function extractOrderFromFilename(filename: string): number {
  */
 function extractTitleFromFilename(filename: string): string {
   return filename
-    .replace(/\.md$/, '') // Remove .md extension
-    .replace(/^(I{1,3}|IV|V|VI{0,3}|IX|X)_/, '') // Remove Roman numeral prefix
-    .replace(/^THE_/, 'The ') // Preserve "The" as first word
-    .replace(/_/g, ' ') // Replace underscores with spaces
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
+    .replace(/\.md$/, "") // Remove .md extension
+    .replace(/^(I{1,3}|IV|V|VI{0,3}|IX|X)_/, "") // Remove Roman numeral prefix
+    .replace(/^THE_/, "The ") // Preserve "The" as first word
+    .replace(/_/g, " ") // Replace underscores with spaces
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
 }
 
 /**
@@ -334,8 +344,8 @@ function extractHeadings(content: string): Heading[] {
     const text = match[2].trim();
     const slug = text
       .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-');
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-");
 
     headings.push({ level, text, slug });
   }
@@ -359,38 +369,41 @@ function inferSituations(content: string, collection: string): Situation[] {
   const lowerContent = content.toLowerCase();
 
   // Check for situation keywords
-  if (lowerContent.includes('begin') || lowerContent.includes('start')) {
-    situations.push('beginning');
+  if (lowerContent.includes("begin") || lowerContent.includes("start")) {
+    situations.push("beginning");
   }
-  if (lowerContent.includes('stuck') || lowerContent.includes('block')) {
-    situations.push('stuck');
+  if (lowerContent.includes("stuck") || lowerContent.includes("block")) {
+    situations.push("stuck");
   }
-  if (lowerContent.includes('dark') || lowerContent.includes('shadow')) {
-    situations.push('darkness');
+  if (lowerContent.includes("dark") || lowerContent.includes("shadow")) {
+    situations.push("darkness");
   }
-  if (lowerContent.includes('compar') || lowerContent.includes('envy')) {
-    situations.push('comparison');
+  if (lowerContent.includes("compar") || lowerContent.includes("envy")) {
+    situations.push("comparison");
   }
-  if (lowerContent.includes('fail') || lowerContent.includes('reject')) {
-    situations.push('failure');
+  if (lowerContent.includes("fail") || lowerContent.includes("reject")) {
+    situations.push("failure");
   }
-  if (lowerContent.includes('celebrat') || lowerContent.includes('triumph')) {
-    situations.push('celebration');
+  if (lowerContent.includes("celebrat") || lowerContent.includes("triumph")) {
+    situations.push("celebration");
   }
-  if (lowerContent.includes('confus') || lowerContent.includes('uncertain')) {
-    situations.push('confusion');
+  if (lowerContent.includes("confus") || lowerContent.includes("uncertain")) {
+    situations.push("confusion");
   }
-  if (lowerContent.includes('lost') || lowerContent.includes('wander')) {
-    situations.push('lost');
+  if (lowerContent.includes("lost") || lowerContent.includes("wander")) {
+    situations.push("lost");
   }
-  if (lowerContent.includes('together') || lowerContent.includes('collaborat')) {
-    situations.push('collaboration');
+  if (
+    lowerContent.includes("together") ||
+    lowerContent.includes("collaborat")
+  ) {
+    situations.push("collaboration");
   }
-  if (lowerContent.includes('fear') || lowerContent.includes('afraid')) {
-    situations.push('fear');
+  if (lowerContent.includes("fear") || lowerContent.includes("afraid")) {
+    situations.push("fear");
   }
-  if (lowerContent.includes('scatter') || lowerContent.includes('distract')) {
-    situations.push('scattered');
+  if (lowerContent.includes("scatter") || lowerContent.includes("distract")) {
+    situations.push("scattered");
   }
 
   return situations;
@@ -403,23 +416,39 @@ function inferElements(content: string): Element[] {
   const elements: Element[] = [];
   const lowerContent = content.toLowerCase();
 
-  if (lowerContent.includes('fire') || lowerContent.includes('flame') || lowerContent.includes('burn')) {
-    elements.push('fire');
+  if (
+    lowerContent.includes("fire") ||
+    lowerContent.includes("flame") ||
+    lowerContent.includes("burn")
+  ) {
+    elements.push("fire");
   }
-  if (lowerContent.includes('water') || lowerContent.includes('flow') || lowerContent.includes('ocean')) {
-    elements.push('water');
+  if (
+    lowerContent.includes("water") ||
+    lowerContent.includes("flow") ||
+    lowerContent.includes("ocean")
+  ) {
+    elements.push("water");
   }
-  if (lowerContent.includes('earth') || lowerContent.includes('ground') || lowerContent.includes('stone')) {
-    elements.push('earth');
+  if (
+    lowerContent.includes("earth") ||
+    lowerContent.includes("ground") ||
+    lowerContent.includes("stone")
+  ) {
+    elements.push("earth");
   }
-  if (lowerContent.includes('air') || lowerContent.includes('wind') || lowerContent.includes('breath')) {
-    elements.push('air');
+  if (
+    lowerContent.includes("air") ||
+    lowerContent.includes("wind") ||
+    lowerContent.includes("breath")
+  ) {
+    elements.push("air");
   }
-  if (lowerContent.includes('void') || lowerContent.includes('emptiness')) {
-    elements.push('void');
+  if (lowerContent.includes("void") || lowerContent.includes("emptiness")) {
+    elements.push("void");
   }
 
-  return elements.length > 0 ? elements : ['all'];
+  return elements.length > 0 ? elements : ["all"];
 }
 
 /**
@@ -430,17 +459,17 @@ function inferLuminors(content: string): Luminor[] {
   const lowerContent = content.toLowerCase();
 
   const luminorKeywords: Record<Luminor, string[]> = {
-    valora: ['valora', 'courage', 'bravery', 'bold'],
-    sophron: ['sophron', 'wisdom', 'knowledge', 'understanding'],
-    kardia: ['kardia', 'heart', 'love', 'compassion'],
-    poiesis: ['poiesis', 'creation', 'craft', 'making'],
-    enduran: ['enduran', 'endurance', 'persistence', 'patience'],
-    orakis: ['orakis', 'vision', 'sight', 'prophecy'],
-    eudaira: ['eudaira', 'joy', 'happiness', 'delight'],
+    valora: ["valora", "courage", "bravery", "bold"],
+    sophron: ["sophron", "wisdom", "knowledge", "understanding"],
+    kardia: ["kardia", "heart", "love", "compassion"],
+    poiesis: ["poiesis", "creation", "craft", "making"],
+    enduran: ["enduran", "endurance", "persistence", "patience"],
+    orakis: ["orakis", "vision", "sight", "prophecy"],
+    eudaira: ["eudaira", "joy", "happiness", "delight"],
   };
 
   for (const [luminor, keywords] of Object.entries(luminorKeywords)) {
-    if (keywords.some(keyword => lowerContent.includes(keyword))) {
+    if (keywords.some((keyword) => lowerContent.includes(keyword))) {
       luminors.push(luminor as Luminor);
     }
   }
@@ -463,34 +492,43 @@ export async function getCollections(): Promise<Collection[]> {
  * Get a single collection by slug
  */
 export async function getCollection(slug: string): Promise<Collection | null> {
-  return COLLECTIONS.find(c => c.slug === slug) || null;
+  return COLLECTIONS.find((c) => c.slug === slug) || null;
 }
 
 /**
  * Get all texts in a collection
  */
-export async function getTextsInCollection(collectionSlug: string): Promise<Text[]> {
+export async function getTextsInCollection(
+  collectionSlug: string,
+): Promise<Text[]> {
   const collectionPath = join(CONTENT_DIR, collectionSlug);
 
   try {
     // Check directory exists before reading (book/ may not exist on Vercel)
     await access(collectionPath);
     const files = await readdir(collectionPath);
-    const mdFiles = files.filter(f => f.endsWith('.md') && f !== 'README.md' && f !== 'CLAUDE.md');
+    const mdFiles = files.filter(
+      (f) => f.endsWith(".md") && f !== "README.md" && f !== "CLAUDE.md",
+    );
 
     // Check for chapters/ subdirectory
-    const chaptersPath = join(collectionPath, 'chapters');
+    const chaptersPath = join(collectionPath, "chapters");
     let chapterFiles: string[] = [];
     try {
       await access(chaptersPath);
       const chaptersDir = await readdir(chaptersPath);
       chapterFiles = chaptersDir
-        .filter(f => f.endsWith('.md') && f !== 'README.md' && f !== 'CLAUDE.md')
-        .map(f => join('chapters', f));
+        .filter(
+          (f) => f.endsWith(".md") && f !== "README.md" && f !== "CLAUDE.md",
+        )
+        .map((f) => join("chapters", f));
     } catch (error) {
       // No chapters/ directory or not accessible, skip
       if (!isMissingPathError(error)) {
-        console.error(`Error reading chapters directory for ${collectionSlug}:`, error);
+        console.error(
+          `Error reading chapters directory for ${collectionSlug}:`,
+          error,
+        );
       }
     }
 
@@ -501,7 +539,7 @@ export async function getTextsInCollection(collectionSlug: string): Promise<Text
       allMdFiles.map(async (filename) => {
         const filePath = join(collectionPath, filename);
         return loadText(filePath, collectionSlug, filename);
-      })
+      }),
     );
 
     return texts.sort((a, b) => a.frontmatter.order - b.frontmatter.order);
@@ -515,11 +553,15 @@ export async function getTextsInCollection(collectionSlug: string): Promise<Text
 /**
  * Load a single text from file
  */
-async function loadText(filePath: string, collectionSlug: string, filename: string): Promise<Text> {
-  const fileContent = await readFile(filePath, 'utf-8');
+async function loadText(
+  filePath: string,
+  collectionSlug: string,
+  filename: string,
+): Promise<Text> {
+  const fileContent = await readFile(filePath, "utf-8");
   const { data: frontmatter, content } = parseFrontmatter(fileContent);
 
-  const collection = COLLECTIONS.find(c => c.slug === collectionSlug);
+  const collection = COLLECTIONS.find((c) => c.slug === collectionSlug);
   const headings = extractHeadings(content);
   const wordCount = content.split(/\s+/).length;
 
@@ -529,10 +571,12 @@ async function loadText(filePath: string, collectionSlug: string, filename: stri
     title: frontmatter.title || extractTitleFromFilename(filename),
     collection: collectionSlug,
     order: frontmatter.order || extractOrderFromFilename(filename),
-    status: (frontmatter.status as ContentStatus) || 'published',
-    format: (frontmatter.format as ContentFormat) || collection?.format || 'story',
+    status: (frontmatter.status as ContentStatus) || "published",
+    format:
+      (frontmatter.format as ContentFormat) || collection?.format || "story",
     tags: frontmatter.tags || [],
-    situations: frontmatter.situations || inferSituations(content, collectionSlug),
+    situations:
+      frontmatter.situations || inferSituations(content, collectionSlug),
 
     // Optional fields
     publishedAt: frontmatter.publishedAt,
@@ -542,7 +586,12 @@ async function loadText(filePath: string, collectionSlug: string, filename: stri
     relatedTexts: frontmatter.relatedTexts || [],
     prerequisites: frontmatter.prerequisites || [],
     nextReading: frontmatter.nextReading || [],
-    excerpt: frontmatter.excerpt || content.slice(0, 200).replace(/[#*>\-\n]/g, ' ').trim() + '...',
+    excerpt:
+      frontmatter.excerpt ||
+      content
+        .slice(0, 200)
+        .replace(/[#*>\-\n]/g, " ")
+        .trim() + "...",
     readingTime: frontmatter.readingTime || estimateReadingTime(content),
     wordCount,
     difficulty: frontmatter.difficulty,
@@ -551,7 +600,9 @@ async function loadText(filePath: string, collectionSlug: string, filename: stri
   };
 
   return {
-    slug: `${collectionSlug}/${filename.replace('.md', '')}`.toLowerCase().replace(/_/g, '-'),
+    slug: `${collectionSlug}/${filename.replace(".md", "")}`
+      .toLowerCase()
+      .replace(/_/g, "-"),
     filename,
     frontmatter: textFrontmatter,
     content,
@@ -563,8 +614,8 @@ async function loadText(filePath: string, collectionSlug: string, filename: stri
  * Get a single text by slug
  */
 export async function getText(slug: string): Promise<Text | null> {
-  const [collectionSlug, ...textParts] = slug.split('/');
-  const textSlug = textParts.join('/');
+  const [collectionSlug, ...textParts] = slug.split("/");
+  const textSlug = textParts.join("/");
 
   const collectionPath = join(CONTENT_DIR, collectionSlug);
 
@@ -573,28 +624,37 @@ export async function getText(slug: string): Promise<Text | null> {
     const files = await readdir(collectionPath);
 
     // Find matching file (slug could be lowercase with dashes)
-    let filename = files.find(f => {
-      const normalizedFilename = f.replace('.md', '').toLowerCase().replace(/_/g, '-');
+    let filename = files.find((f) => {
+      const normalizedFilename = f
+        .replace(".md", "")
+        .toLowerCase()
+        .replace(/_/g, "-");
       return normalizedFilename === textSlug;
     });
 
     // If not found in root, check chapters/ subdirectory
     if (!filename) {
-      const chaptersPath = join(collectionPath, 'chapters');
+      const chaptersPath = join(collectionPath, "chapters");
       try {
         await access(chaptersPath);
         const chapterFiles = await readdir(chaptersPath);
-        const chapterFilename = chapterFiles.find(f => {
-          const normalizedFilename = f.replace('.md', '').toLowerCase().replace(/_/g, '-');
+        const chapterFilename = chapterFiles.find((f) => {
+          const normalizedFilename = f
+            .replace(".md", "")
+            .toLowerCase()
+            .replace(/_/g, "-");
           return normalizedFilename === textSlug;
         });
         if (chapterFilename) {
-          filename = join('chapters', chapterFilename);
+          filename = join("chapters", chapterFilename);
         }
       } catch (error) {
         // No chapters/ directory, continue
         if (!isMissingPathError(error)) {
-          console.error(`Error reading chapters directory for ${collectionSlug}:`, error);
+          console.error(
+            `Error reading chapters directory for ${collectionSlug}:`,
+            error,
+          );
         }
       }
     }
@@ -631,39 +691,40 @@ export async function queryTexts(query: ContentQuery): Promise<Text[]> {
 
   // Apply filters
   if (query.collection) {
-    texts = texts.filter(t => t.frontmatter.collection === query.collection);
+    texts = texts.filter((t) => t.frontmatter.collection === query.collection);
   }
   if (query.format) {
-    texts = texts.filter(t => t.frontmatter.format === query.format);
+    texts = texts.filter((t) => t.frontmatter.format === query.format);
   }
   if (query.status) {
-    texts = texts.filter(t => t.frontmatter.status === query.status);
+    texts = texts.filter((t) => t.frontmatter.status === query.status);
   }
   if (query.tags?.length) {
-    texts = texts.filter(t =>
-      query.tags!.some(tag => t.frontmatter.tags.includes(tag))
+    texts = texts.filter((t) =>
+      query.tags!.some((tag) => t.frontmatter.tags.includes(tag)),
     );
   }
   if (query.situations?.length) {
-    texts = texts.filter(t =>
-      query.situations!.some(sit => t.frontmatter.situations.includes(sit))
+    texts = texts.filter((t) =>
+      query.situations!.some((sit) => t.frontmatter.situations.includes(sit)),
     );
   }
   if (query.elements?.length) {
-    texts = texts.filter(t =>
-      query.elements!.some(el => t.frontmatter.elements?.includes(el))
+    texts = texts.filter((t) =>
+      query.elements!.some((el) => t.frontmatter.elements?.includes(el)),
     );
   }
   if (query.luminors?.length) {
-    texts = texts.filter(t =>
-      query.luminors!.some(lum => t.frontmatter.luminors?.includes(lum))
+    texts = texts.filter((t) =>
+      query.luminors!.some((lum) => t.frontmatter.luminors?.includes(lum)),
     );
   }
   if (query.search) {
     const searchLower = query.search.toLowerCase();
-    texts = texts.filter(t =>
-      t.frontmatter.title.toLowerCase().includes(searchLower) ||
-      t.content.toLowerCase().includes(searchLower)
+    texts = texts.filter(
+      (t) =>
+        t.frontmatter.title.toLowerCase().includes(searchLower) ||
+        t.content.toLowerCase().includes(searchLower),
     );
   }
 
@@ -681,20 +742,27 @@ export async function queryTexts(query: ContentQuery): Promise<Text[]> {
 /**
  * Get texts for a situation (smart recommendation)
  */
-export async function getTextsForSituation(situation: Situation): Promise<Text[]> {
+export async function getTextsForSituation(
+  situation: Situation,
+): Promise<Text[]> {
   const recommendedCollections = SITUATION_MAP[situation] || [];
   const allTexts = await getAllTexts();
 
   // Score texts by relevance
   return allTexts
-    .filter(t =>
-      recommendedCollections.includes(t.frontmatter.collection) ||
-      t.frontmatter.situations.includes(situation)
+    .filter(
+      (t) =>
+        recommendedCollections.includes(t.frontmatter.collection) ||
+        t.frontmatter.situations.includes(situation),
     )
     .sort((a, b) => {
       // Prioritize explicit situation matches
-      const aHasSituation = a.frontmatter.situations.includes(situation) ? 1 : 0;
-      const bHasSituation = b.frontmatter.situations.includes(situation) ? 1 : 0;
+      const aHasSituation = a.frontmatter.situations.includes(situation)
+        ? 1
+        : 0;
+      const bHasSituation = b.frontmatter.situations.includes(situation)
+        ? 1
+        : 0;
       return bHasSituation - aHasSituation;
     });
 }
@@ -730,7 +798,7 @@ export async function buildContentGraph(): Promise<ContentGraph> {
       edges.push({
         source: text.slug,
         target: relatedSlug,
-        type: 'related',
+        type: "related",
         weight: 1,
       });
     }
@@ -740,7 +808,7 @@ export async function buildContentGraph(): Promise<ContentGraph> {
       edges.push({
         source: prereqSlug,
         target: text.slug,
-        type: 'prerequisite',
+        type: "prerequisite",
         weight: 0.8,
       });
     }
@@ -750,7 +818,7 @@ export async function buildContentGraph(): Promise<ContentGraph> {
       edges.push({
         source: text.slug,
         target: nextSlug,
-        type: 'next',
+        type: "next",
         weight: 0.9,
       });
     }
@@ -763,27 +831,27 @@ export async function buildContentGraph(): Promise<ContentGraph> {
       const textB = texts[j];
 
       // Shared tags
-      const sharedTags = textA.frontmatter.tags.filter(t =>
-        textB.frontmatter.tags.includes(t)
+      const sharedTags = textA.frontmatter.tags.filter((t) =>
+        textB.frontmatter.tags.includes(t),
       );
       if (sharedTags.length > 0) {
         edges.push({
           source: textA.slug,
           target: textB.slug,
-          type: 'shared-tag',
+          type: "shared-tag",
           weight: 0.3 * sharedTags.length,
         });
       }
 
       // Shared situations
-      const sharedSituations = textA.frontmatter.situations.filter(s =>
-        textB.frontmatter.situations.includes(s)
+      const sharedSituations = textA.frontmatter.situations.filter((s) =>
+        textB.frontmatter.situations.includes(s),
       );
       if (sharedSituations.length > 0) {
         edges.push({
           source: textA.slug,
           target: textB.slug,
-          type: 'shared-situation',
+          type: "shared-situation",
           weight: 0.5 * sharedSituations.length,
         });
       }
@@ -796,14 +864,17 @@ export async function buildContentGraph(): Promise<ContentGraph> {
 /**
  * Get related texts for a given text
  */
-export async function getRelatedTexts(slug: string, limit = 5): Promise<Text[]> {
+export async function getRelatedTexts(
+  slug: string,
+  limit = 5,
+): Promise<Text[]> {
   const graph = await buildContentGraph();
   const texts = await getAllTexts();
 
   // Find all edges involving this text
   const relevantEdges = graph.edges
-    .filter(e => e.source === slug || e.target === slug)
-    .map(e => ({
+    .filter((e) => e.source === slug || e.target === slug)
+    .map((e) => ({
       targetSlug: e.source === slug ? e.target : e.source,
       weight: e.weight || 0.5,
     }));
@@ -821,7 +892,7 @@ export async function getRelatedTexts(slug: string, limit = 5): Promise<Text[]> 
     .slice(0, limit)
     .map(([slug]) => slug);
 
-  return texts.filter(t => sortedSlugs.includes(t.slug));
+  return texts.filter((t) => sortedSlugs.includes(t.slug));
 }
 
 // ============================================
@@ -833,7 +904,7 @@ export async function getRelatedTexts(slug: string, limit = 5): Promise<Text[]> 
  */
 export async function generateReadingPath(
   situation: Situation,
-  maxTexts = 7
+  maxTexts = 7,
 ): Promise<Text[]> {
   const situationTexts = await getTextsForSituation(situation);
 
@@ -848,10 +919,10 @@ export async function generateReadingPath(
     const lastText = path[path.length - 1];
     const relatedTexts = await getRelatedTexts(lastText.slug, 3);
 
-    const nextText = relatedTexts.find(t => !usedSlugs.has(t.slug));
+    const nextText = relatedTexts.find((t) => !usedSlugs.has(t.slug));
     if (!nextText) {
       // Fall back to situation texts
-      const fallback = situationTexts.find(t => !usedSlugs.has(t.slug));
+      const fallback = situationTexts.find((t) => !usedSlugs.has(t.slug));
       if (!fallback) break;
       path.push(fallback);
       usedSlugs.add(fallback.slug);
