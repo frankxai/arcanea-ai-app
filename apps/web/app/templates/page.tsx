@@ -123,10 +123,7 @@ const BLUEPRINTS: Blueprint[] = [
     desc: "6 semantic vaults with confidence scoring, Guardian routing, Mem0 adapter, and WebGL constellation visualization.",
     audience: "Agent builders",
     loc: "4,600",
-    files: [
-      "packages/memory-system/src/",
-      "packages/memory-mcp/",
-    ],
+    files: ["packages/memory-system/src/", "packages/memory-mcp/"],
     stack: ["TypeScript", "MCP SDK", "JSONL", "React Three Fiber"],
     github: "https://github.com/frankxai/Starlight-Intelligence-System",
     demo: "/starlight-intelligence",

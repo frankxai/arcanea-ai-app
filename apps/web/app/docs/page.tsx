@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import Link from 'next/link';
+import Link from "next/link";
 import {
   PhBook,
   PhCode,
@@ -19,146 +19,195 @@ import {
   PhLightning,
   PhGear,
   PhChatCircleDots,
-} from '@/lib/phosphor-icons';
-import { MotionProvider, m } from '@/lib/motion';
+} from "@/lib/phosphor-icons";
+import { MotionProvider, m } from "@/lib/motion";
 
 const QUICK_START_STEPS = [
   {
-    step: '01',
-    title: 'Install the SDK',
-    description: 'Add the Arcanea AI provider to your project with a single command.',
-    code: 'npm install @arcanea/ai-provider',
+    step: "01",
+    title: "Install the SDK",
+    description:
+      "Add the Arcanea AI provider to your project with a single command.",
+    code: "npm install @arcanea/ai-provider",
     icon: PhTerminal,
-    color: 'var(--arc-brand-atlantean-teal)',
+    color: "var(--arc-brand-atlantean-teal)",
   },
   {
-    step: '02',
-    title: 'Configure Your Keys',
-    description: 'Set up your provider API keys. Arcanea routes to 13 providers through one interface.',
-    code: 'ANTHROPIC_API_KEY=sk-ant-xxx\nGROQ_API_KEY=gsk_xxx',
+    step: "02",
+    title: "Configure Your Keys",
+    description:
+      "Set up your provider API keys. Arcanea routes to 13 providers through one interface.",
+    code: "ANTHROPIC_API_KEY=sk-ant-xxx\nGROQ_API_KEY=gsk_xxx",
     icon: PhGear,
-    color: 'var(--arc-brand-cosmic-blue)',
+    color: "var(--arc-brand-cosmic-blue)",
   },
   {
-    step: '03',
-    title: 'Start Creating',
-    description: 'Use the unified API to generate text, images, music, and more with any model.',
+    step: "03",
+    title: "Start Creating",
+    description:
+      "Use the unified API to generate text, images, music, and more with any model.",
     code: `import { createArcanea } from '@arcanea/ai-provider';\nconst arcanea = createArcanea();`,
     icon: PhRocket,
-    color: 'var(--arc-brand-arcanean-gold)',
+    color: "var(--arc-brand-arcanean-gold)",
   },
 ];
 
 const API_SECTIONS = [
   {
-    title: 'Chat Completions',
-    description: 'OpenAI-compatible chat API with smart model routing across 26 models.',
-    href: '/developers/api',
+    title: "Chat Completions",
+    description:
+      "OpenAI-compatible chat API with smart model routing across 26 models.",
+    href: "/developers/api",
     icon: PhChatCircleDots,
-    color: 'var(--arc-brand-atlantean-teal)',
+    color: "var(--arc-brand-atlantean-teal)",
   },
   {
-    title: 'Image Generation',
-    description: 'Generate images with Flux 2, DALL-E 3, Imagen 4, and more.',
-    href: '/developers/api',
+    title: "Image Generation",
+    description: "Generate images with Flux 2, DALL-E 3, Imagen 4, and more.",
+    href: "/developers/api",
     icon: PhSparkle,
-    color: 'var(--arc-void)',
+    color: "var(--arc-void)",
   },
   {
-    title: 'Luminor Intelligence',
-    description: 'Access the 13 configured Luminor specialists for domain-specific creative guidance.',
-    href: '/luminors',
+    title: "Luminor Intelligence",
+    description:
+      "Access the 13 configured Luminor specialists for domain-specific creative guidance.",
+    href: "/luminors",
     icon: PhCompass,
-    color: 'var(--arc-brand-arcanean-gold)',
+    color: "var(--arc-brand-arcanean-gold)",
   },
   {
-    title: 'Library API',
-    description: 'Programmatic access to the twenty collections of the Library of Arcanea.',
-    href: '/library',
+    title: "Library API",
+    description:
+      "Programmatic access to the twenty collections of the Library of Arcanea.",
+    href: "/library",
     icon: PhBookOpen,
-    color: 'var(--arc-brand-cosmic-blue)',
+    color: "var(--arc-brand-cosmic-blue)",
   },
 ];
 
 const SDK_PACKAGES = [
-  { name: '@arcanea/ai-provider', description: 'Vercel AI SDK provider for 26 models', version: '0.4.0' },
-  { name: '@arcanea/mcp-server', description: 'Model Context Protocol server for coding agents', version: '1.2.0' },
-  { name: '@arcanea/luminors', description: 'Luminor companion system for AI chat', version: '0.3.0' },
-  { name: '@arcanea/content-loader', description: 'Library content system for wisdom texts', version: '0.2.0' },
+  {
+    name: "@arcanea/ai-provider",
+    description: "Vercel AI SDK provider for 26 models",
+    version: "0.4.0",
+  },
+  {
+    name: "@arcanea/mcp-server",
+    description: "Model Context Protocol server for coding agents",
+    version: "1.2.0",
+  },
+  {
+    name: "@arcanea/luminors",
+    description: "Luminor companion system for AI chat",
+    version: "0.3.0",
+  },
+  {
+    name: "@arcanea/content-loader",
+    description: "Library content system for wisdom texts",
+    version: "0.2.0",
+  },
 ];
 
 const COMMUNITY_LINKS = [
-  { name: 'GitHub', description: '14 public repositories, source-available ecosystem', href: 'https://github.com/arcanea-ai', icon: PhGithubLogo, color: 'var(--arc-text-primary)' },
-  { name: 'Discord', description: 'Join the creator community', href: 'https://discord.gg/arcanea', icon: PhUsers, color: 'var(--arc-void)' },
-  { name: 'Documentation', description: 'Full API reference and guides', href: '/developers/api', icon: PhBook, color: 'var(--arc-brand-atlantean-teal)' },
-  { name: 'npm Packages', description: 'Packages published from the Arcanea repos', href: 'https://www.npmjs.com/org/arcanea', icon: PhPackage, color: 'var(--arc-fire)' },
+  {
+    name: "GitHub",
+    description: "14 public repositories, source-available ecosystem",
+    href: "https://github.com/arcanea-ai",
+    icon: PhGithubLogo,
+    color: "var(--arc-text-primary)",
+  },
+  {
+    name: "Discord",
+    description: "Join the creator community",
+    href: "https://discord.gg/arcanea",
+    icon: PhUsers,
+    color: "var(--arc-void)",
+  },
+  {
+    name: "Documentation",
+    description: "Full API reference and guides",
+    href: "/developers/api",
+    icon: PhBook,
+    color: "var(--arc-brand-atlantean-teal)",
+  },
+  {
+    name: "npm Packages",
+    description: "Packages published from the Arcanea repos",
+    href: "https://www.npmjs.com/org/arcanea",
+    icon: PhPackage,
+    color: "var(--arc-fire)",
+  },
 ];
 
 const DOC_CATEGORIES = [
   {
-    title: 'Getting Started',
-    description: 'Installation, setup, and your first creation.',
+    title: "Getting Started",
+    description: "Installation, setup, and your first creation.",
     icon: PhRocket,
-    accent: 'var(--arc-brand-atlantean-teal)',
+    accent: "var(--arc-brand-atlantean-teal)",
     links: [
-      { label: 'Quick Start Guide', href: '/welcome' },
-      { label: 'Installation', href: '/install' },
-      { label: 'First Project', href: '/academy' },
+      { label: "Quick Start Guide", href: "/welcome" },
+      { label: "Installation", href: "/install" },
+      { label: "First Project", href: "/academy" },
     ],
   },
   {
-    title: 'The Framework',
-    description: 'Ten Gates, Five Elements, Seven Houses.',
+    title: "The Framework",
+    description: "Ten Gates, Five Elements, Seven Houses.",
     icon: PhCompass,
-    accent: 'var(--arc-brand-arcanean-gold)',
+    accent: "var(--arc-brand-arcanean-gold)",
     links: [
-      { label: 'Ten Gates System', href: '/lore/gates' },
-      { label: 'Five Elements', href: '/lore' },
-      { label: 'Academy Houses', href: '/academy' },
+      { label: "Ten Gates System", href: "/lore/gates" },
+      { label: "Five Elements", href: "/lore" },
+      { label: "Academy Houses", href: "/academy" },
     ],
   },
   {
-    title: 'Creation Tools',
-    description: 'AI chat, image generation, world-building.',
+    title: "Creation Tools",
+    description: "AI chat, image generation, world-building.",
     icon: PhSparkle,
-    accent: 'var(--arc-void)',
+    accent: "var(--arc-void)",
     links: [
-      { label: 'AI Chat & Luminors', href: '/chat' },
-      { label: 'Vision Generator', href: '/imagine' },
-      { label: 'World Builder', href: '/worlds/create' },
+      { label: "AI Chat & Luminors", href: "/chat" },
+      { label: "Vision Generator", href: "/imagine" },
+      { label: "World Builder", href: "/worlds/create" },
     ],
   },
   {
-    title: 'The Library',
-    description: '20 collections of practical creative wisdom.',
+    title: "The Library",
+    description: "20 collections of practical creative wisdom.",
     icon: PhBookOpen,
-    accent: 'var(--arc-brand-cosmic-blue)',
+    accent: "var(--arc-brand-cosmic-blue)",
     links: [
-      { label: 'Browse Collections', href: '/library' },
-      { label: 'The Codex', href: '/library/codex' },
-      { label: 'Daily Readings', href: '/library' },
+      { label: "Browse Collections", href: "/library" },
+      { label: "The Codex", href: "/library/codex" },
+      { label: "Daily Readings", href: "/library" },
     ],
   },
   {
-    title: 'Developer API',
-    description: 'REST API, SDKs, and integrations.',
+    title: "Developer API",
+    description: "REST API, SDKs, and integrations.",
     icon: PhCode,
-    accent: 'var(--arc-brand-atlantean-teal)',
+    accent: "var(--arc-brand-atlantean-teal)",
     links: [
-      { label: 'API Reference', href: '/developers/api' },
-      { label: 'Authentication', href: '/developers/api' },
-      { label: 'Rate Limits', href: '/developers/api' },
+      { label: "API Reference", href: "/developers/api" },
+      { label: "Authentication", href: "/developers/api" },
+      { label: "Rate Limits", href: "/developers/api" },
     ],
   },
   {
-    title: 'Community',
-    description: 'Contribute, connect, co-create.',
+    title: "Community",
+    description: "Contribute, connect, co-create.",
     icon: PhUsers,
-    accent: 'var(--arc-fire)',
+    accent: "var(--arc-fire)",
     links: [
-      { label: 'GitHub Repos', href: 'https://github.com/arcanea-ai' },
-      { label: 'Discord Server', href: 'https://discord.gg/arcanea' },
-      { label: 'Contributing Guide', href: 'https://github.com/arcanea-ai/arcanea' },
+      { label: "GitHub Repos", href: "https://github.com/arcanea-ai" },
+      { label: "Discord Server", href: "https://discord.gg/arcanea" },
+      {
+        label: "Contributing Guide",
+        href: "https://github.com/arcanea-ai/arcanea",
+      },
     ],
   },
 ];
@@ -195,15 +244,16 @@ export default function DocsPage() {
                 </div>
 
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 tracking-tight">
-                  Arcanea{' '}
+                  Arcanea{" "}
                   <span className="bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] bg-clip-text text-transparent">
                     Documentation
                   </span>
                 </h1>
 
                 <p className="text-lg text-neutral-400 leading-relaxed max-w-2xl mb-8">
-                  Everything you need to build with the Creative Superintelligence.
-                  From your first creation to advanced API integrations.
+                  Everything you need to build with the Creative
+                  Superintelligence. From your first creation to advanced API
+                  integrations.
                 </p>
 
                 <div className="flex flex-wrap gap-4">
@@ -233,7 +283,9 @@ export default function DocsPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            <h2 className="text-2xl font-display font-bold mb-8">Explore the Docs</h2>
+            <h2 className="text-2xl font-display font-bold mb-8">
+              Explore the Docs
+            </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {DOC_CATEGORIES.map((cat) => {
                 const Icon = cat.icon;
@@ -248,8 +300,12 @@ export default function DocsPage() {
                     >
                       <Icon className="w-5 h-5" style={{ color: cat.accent }} />
                     </div>
-                    <h3 className="font-display font-semibold text-lg mb-1">{cat.title}</h3>
-                    <p className="text-sm text-neutral-400 mb-4">{cat.description}</p>
+                    <h3 className="font-display font-semibold text-lg mb-1">
+                      {cat.title}
+                    </h3>
+                    <p className="text-sm text-neutral-400 mb-4">
+                      {cat.description}
+                    </p>
                     <div className="space-y-2">
                       {cat.links.map((link) => (
                         <Link
@@ -276,7 +332,9 @@ export default function DocsPage() {
                 Quick Start
               </span>
             </div>
-            <h2 className="text-2xl font-display font-bold mb-8">Up and running in 3 steps</h2>
+            <h2 className="text-2xl font-display font-bold mb-8">
+              Up and running in 3 steps
+            </h2>
             <div className="grid md:grid-cols-3 gap-6">
               {QUICK_START_STEPS.map((step) => {
                 const Icon = step.icon;
@@ -294,8 +352,12 @@ export default function DocsPage() {
                     >
                       <Icon className="w-4 h-4" style={{ color: step.color }} />
                     </div>
-                    <h3 className="font-display font-semibold mb-2">{step.title}</h3>
-                    <p className="text-sm text-neutral-400 mb-4">{step.description}</p>
+                    <h3 className="font-display font-semibold mb-2">
+                      {step.title}
+                    </h3>
+                    <p className="text-sm text-neutral-400 mb-4">
+                      {step.description}
+                    </p>
                     <pre className="bg-black/50 border border-white/5 rounded-lg p-3 text-xs font-mono text-[var(--arc-brand-atlantean-teal)] overflow-x-auto">
                       {step.code}
                     </pre>
@@ -328,13 +390,18 @@ export default function DocsPage() {
                         className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
                         style={{ backgroundColor: `${api.color}15` }}
                       >
-                        <Icon className="w-5 h-5" style={{ color: api.color }} />
+                        <Icon
+                          className="w-5 h-5"
+                          style={{ color: api.color }}
+                        />
                       </div>
                       <div>
                         <h3 className="font-display font-semibold mb-1 group-hover:text-[var(--arc-brand-atlantean-teal)] transition-colors">
                           {api.title}
                         </h3>
-                        <p className="text-sm text-neutral-400">{api.description}</p>
+                        <p className="text-sm text-neutral-400">
+                          {api.description}
+                        </p>
                       </div>
                     </div>
                     <div className="mt-4 flex items-center gap-2 text-sm text-[var(--arc-brand-atlantean-teal)] opacity-0 group-hover:opacity-100 transition-opacity">
@@ -355,7 +422,9 @@ export default function DocsPage() {
                 SDK
               </span>
             </div>
-            <h2 className="text-2xl font-display font-bold mb-8">npm Packages</h2>
+            <h2 className="text-2xl font-display font-bold mb-8">
+              npm Packages
+            </h2>
             <div className="space-y-3">
               {SDK_PACKAGES.map((pkg) => (
                 <div
@@ -363,12 +432,18 @@ export default function DocsPage() {
                   className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-3"
                 >
                   <div className="flex-1">
-                    <span className="font-mono text-sm text-[var(--arc-brand-atlantean-teal)]">{pkg.name}</span>
-                    <p className="text-xs text-neutral-400 mt-0.5">{pkg.description}</p>
+                    <span className="font-mono text-sm text-[var(--arc-brand-atlantean-teal)]">
+                      {pkg.name}
+                    </span>
+                    <p className="text-xs text-neutral-400 mt-0.5">
+                      {pkg.description}
+                    </p>
                   </div>
                   <div className="flex items-center gap-4 text-xs font-mono text-neutral-500">
                     <span>v{pkg.version}</span>
-                    <span className="text-xs px-2 py-1 rounded-md bg-white/5 text-neutral-400">npm</span>
+                    <span className="text-xs px-2 py-1 rounded-md bg-white/5 text-neutral-400">
+                      npm
+                    </span>
                   </div>
                 </div>
               ))}
@@ -383,7 +458,9 @@ export default function DocsPage() {
                 Community
               </span>
             </div>
-            <h2 className="text-2xl font-display font-bold mb-8">Join the Ecosystem</h2>
+            <h2 className="text-2xl font-display font-bold mb-8">
+              Join the Ecosystem
+            </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {COMMUNITY_LINKS.map((link) => {
                 const Icon = link.icon;
@@ -391,15 +468,24 @@ export default function DocsPage() {
                   <a
                     key={link.name}
                     href={link.href}
-                    target={link.href.startsWith('http') ? '_blank' : undefined}
-                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    target={link.href.startsWith("http") ? "_blank" : undefined}
+                    rel={
+                      link.href.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
                     className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-all"
                   >
-                    <Icon className="w-6 h-6 mb-3" style={{ color: link.color }} />
+                    <Icon
+                      className="w-6 h-6 mb-3"
+                      style={{ color: link.color }}
+                    />
                     <h3 className="font-display font-semibold mb-1 group-hover:text-[var(--arc-brand-atlantean-teal)] transition-colors">
                       {link.name}
                     </h3>
-                    <p className="text-xs text-neutral-400">{link.description}</p>
+                    <p className="text-xs text-neutral-400">
+                      {link.description}
+                    </p>
                   </a>
                 );
               })}
@@ -409,10 +495,13 @@ export default function DocsPage() {
             <div className="mt-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 flex items-start gap-4">
               <PhShield className="w-6 h-6 text-[var(--arc-brand-atlantean-teal)] shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-display font-semibold mb-1">Security First</h3>
+                <h3 className="font-display font-semibold mb-1">
+                  Security First
+                </h3>
                 <p className="text-sm text-neutral-400">
-                  Arcanea never stores your API keys. All provider keys are passed through as headers
-                  and used only for the duration of the request. Your data stays yours.
+                  Arcanea never stores your API keys. All provider keys are
+                  passed through as headers and used only for the duration of
+                  the request. Your data stays yours.
                 </p>
               </div>
             </div>

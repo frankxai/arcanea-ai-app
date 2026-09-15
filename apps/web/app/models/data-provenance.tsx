@@ -67,10 +67,13 @@ export function DataProvenance({
               <code className="text-white/70 bg-white/[0.04] px-1 py-0.5 rounded">
                 openrouter.ai/api/v1/models
               </code>
-              . Powers live pricing, context window lengths, token limits, and free tier status.
+              . Powers live pricing, context window lengths, token limits, and
+              free tier status.
             </p>
             <div className="text-[11px] text-[var(--arc-brand-atlantean-teal)] font-mono">
-              {liveModelCount ? `Live: ${liveModelCount} models tracked` : "Live feed unavailable — showing curated list"}
+              {liveModelCount
+                ? `Live: ${liveModelCount} models tracked`
+                : "Live feed unavailable — showing curated list"}
             </div>
           </div>
 
@@ -82,7 +85,9 @@ export function DataProvenance({
               2. LMSYS Creative Arena
             </h3>
             <p className="text-xs text-white/50 leading-relaxed mb-4">
-              Human blind double-blind evaluation from the Chatbot Arena Creative Writing & Storytelling category. Measures subjective prose charm, cadence, and emotional connection.
+              Human blind double-blind evaluation from the Chatbot Arena
+              Creative Writing & Storytelling category. Measures subjective
+              prose charm, cadence, and emotional connection.
             </p>
             <div className="text-[11px] text-[var(--arc-brand-arcanean-gold)] font-mono">
               Elo scale: 1150 – 1400+
@@ -97,7 +102,9 @@ export function DataProvenance({
               3. IFEval & RULER Recall
             </h3>
             <p className="text-xs text-white/50 leading-relaxed mb-4">
-              Instruction Following Evaluation (IFEval) for strict negative constraint execution (e.g. banning clichés) plus RULER benchmark for needle-in-haystack recall across 1M tokens.
+              Instruction Following Evaluation (IFEval) for strict negative
+              constraint execution (e.g. banning clichés) plus RULER benchmark
+              for needle-in-haystack recall across 1M tokens.
             </p>
             <div className="text-[11px] text-[var(--arc-brand-cosmic-blue)] font-mono">
               Public leaderboard reference
@@ -112,7 +119,9 @@ export function DataProvenance({
               4. Arcanea WorldCraft Lab
             </h3>
             <p className="text-xs text-white/50 leading-relaxed mb-4">
-              Editorial ratings for canon consistency, magic-system logic, and anti-slop prose. Assigned by hand from model use, not produced by an automated test run.
+              Editorial ratings for canon consistency, magic-system logic, and
+              anti-slop prose. Assigned by hand from model use, not produced by
+              an automated test run.
             </p>
             <div className="text-[11px] text-[var(--arc-void)] font-mono">
               Scores: 0 – 100 editorial rating
@@ -177,13 +186,17 @@ export function DataProvenance({
 
           <div className="text-xs text-white/60 space-y-2 leading-relaxed">
             <p>
-              • <strong>Prompt & Completion Pricing:</strong> Sourced directly from provider rate sheets normalized to USD per million tokens.
+              • <strong>Prompt & Completion Pricing:</strong> Sourced directly
+              from provider rate sheets normalized to USD per million tokens.
             </p>
             <p>
-              • <strong>Context Window:</strong> Verified context length metadata reported by the top provider for each model architecture.
+              • <strong>Context Window:</strong> Verified context length
+              metadata reported by the top provider for each model architecture.
             </p>
             <p>
-              • <strong>Free Tier Detection:</strong> Models with prompt and completion rates set to $0.00 are dynamically grouped into our Zen Free Tier radar.
+              • <strong>Free Tier Detection:</strong> Models with prompt and
+              completion rates set to $0.00 are dynamically grouped into our Zen
+              Free Tier radar.
             </p>
           </div>
         </div>
@@ -197,7 +210,8 @@ export function DataProvenance({
                 LMSYS Chatbot Arena — Creative Writing Category
               </h3>
               <p className="text-xs text-white/50 mt-1">
-                Crowdsourced human double-blind evaluations specifically for prose style and storytelling.
+                Crowdsourced human double-blind evaluations specifically for
+                prose style and storytelling.
               </p>
             </div>
             <a
@@ -212,7 +226,11 @@ export function DataProvenance({
 
           <div className="space-y-4 text-xs text-white/60 leading-relaxed">
             <p>
-              Traditional benchmarks (like MMLU or HumanEval) score models on multiple choice trivia or Python scripts. For high fantasy fiction, raw math ability tells you very little about whether a model writes gripping, atmospheric prose or flat corporate summaries.
+              Traditional benchmarks (like MMLU or HumanEval) score models on
+              multiple choice trivia or Python scripts. For high fantasy
+              fiction, raw math ability tells you very little about whether a
+              model writes gripping, atmospheric prose or flat corporate
+              summaries.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 my-4">
               <div className="bg-white/[0.02] border border-white/[0.04] rounded-xl p-4">
@@ -220,7 +238,10 @@ export function DataProvenance({
                   How Elo is Calculated
                 </h4>
                 <p className="text-[11px] text-white/50 leading-relaxed">
-                  Anonymous side-by-side human votes, published by LMArena. Users submit creative prompts (e.g. &ldquo;Write the dying speech of an ancient dragon&rdquo;) and vote on which model sounds more natural, evocative, and compelling.
+                  Anonymous side-by-side human votes, published by LMArena.
+                  Users submit creative prompts (e.g. &ldquo;Write the dying
+                  speech of an ancient dragon&rdquo;) and vote on which model
+                  sounds more natural, evocative, and compelling.
                 </p>
               </div>
               <div className="bg-white/[0.02] border border-white/[0.04] rounded-xl p-4">
@@ -228,7 +249,9 @@ export function DataProvenance({
                   Read the Live Leaderboard
                 </h4>
                 <p className="text-[11px] text-white/50 leading-relaxed">
-                  Rankings move with every model release. Check the current creative-writing standings on the leaderboard itself rather than relying on a snapshot here.
+                  Rankings move with every model release. Check the current
+                  creative-writing standings on the leaderboard itself rather
+                  than relying on a snapshot here.
                 </p>
               </div>
             </div>
@@ -244,34 +267,51 @@ export function DataProvenance({
                 The Arcanea WorldCraft Rating
               </h3>
               <p className="text-xs text-white/50 mt-1">
-                Editorial criteria for epic worldbuilding. These are judgments, not measured benchmark results.
+                Editorial criteria for epic worldbuilding. These are judgments,
+                not measured benchmark results.
               </p>
             </div>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <div className="p-4 bg-white/[0.02] border border-white/[0.04] rounded-xl">
-              <div className="text-xs font-bold text-white mb-1">1. Canon Continuity</div>
+              <div className="text-xs font-bold text-white mb-1">
+                1. Canon Continuity
+              </div>
               <p className="text-[11px] text-white/50">
-                Feeding a 100K-word universe bible and testing if model remembers minor sibling lineages in Book 3 without contradictions.
+                Feeding a 100K-word universe bible and testing if model
+                remembers minor sibling lineages in Book 3 without
+                contradictions.
               </p>
             </div>
             <div className="p-4 bg-white/[0.02] border border-white/[0.04] rounded-xl">
-              <div className="text-xs font-bold text-white mb-1">2. Magic System Logic</div>
+              <div className="text-xs font-bold text-white mb-1">
+                2. Magic System Logic
+              </div>
               <p className="text-[11px] text-white/50">
-                Applying Sanderson-style hard limitations (energy costs, material components, Solfeggio frequencies) and auditing for exploit loopholes.
+                Applying Sanderson-style hard limitations (energy costs,
+                material components, Solfeggio frequencies) and auditing for
+                exploit loopholes.
               </p>
             </div>
             <div className="p-4 bg-white/[0.02] border border-white/[0.04] rounded-xl">
-              <div className="text-xs font-bold text-white mb-1">3. Anti-Slop Grade</div>
+              <div className="text-xs font-bold text-white mb-1">
+                3. Anti-Slop Grade
+              </div>
               <p className="text-[11px] text-white/50">
-                Detecting banned generic verbal tics (&ldquo;tapestry&rdquo;, &ldquo;delve&rdquo;, &ldquo;testament to&rdquo;, &ldquo;nestled&rdquo;) using regex scans.
+                Detecting banned generic verbal tics (&ldquo;tapestry&rdquo;,
+                &ldquo;delve&rdquo;, &ldquo;testament to&rdquo;,
+                &ldquo;nestled&rdquo;) using regex scans.
               </p>
             </div>
             <div className="p-4 bg-white/[0.02] border border-white/[0.04] rounded-xl">
-              <div className="text-xs font-bold text-white mb-1">4. Polyphonic Dialogue</div>
+              <div className="text-xs font-bold text-white mb-1">
+                4. Polyphonic Dialogue
+              </div>
               <p className="text-[11px] text-white/50">
-                Evaluating if distinct characters (an ancient god vs a cynical thief) maintain unique vocabulary, rhythm, and sentence structures.
+                Evaluating if distinct characters (an ancient god vs a cynical
+                thief) maintain unique vocabulary, rhythm, and sentence
+                structures.
               </p>
             </div>
           </div>
@@ -279,7 +319,8 @@ export function DataProvenance({
           <div className="p-4 bg-[var(--arc-void)]/10 border border-[var(--arc-void)]/20 rounded-xl text-xs text-white/70 leading-relaxed">
             <strong>Formula:</strong>{" "}
             <code className="text-white bg-black/40 px-2 py-0.5 rounded font-mono">
-              WorldCraft Index = (0.35 × Lore Memory) + (0.30 × Prose Quality) + (0.20 × Magic Logic) + (0.15 × Character Voice)
+              WorldCraft Index = (0.35 × Lore Memory) + (0.30 × Prose Quality) +
+              (0.20 × Magic Logic) + (0.15 × Character Voice)
             </code>
           </div>
         </div>
@@ -293,7 +334,8 @@ export function DataProvenance({
                 Direct BYOK (Bring Your Own Key) Gateway
               </h3>
               <p className="text-xs text-white/50 mt-1">
-                Zero middleman markup. Plug your personal provider keys directly into Arcanea Studio.
+                Zero middleman markup. Plug your personal provider keys directly
+                into Arcanea Studio.
               </p>
             </div>
             <Link
@@ -305,27 +347,40 @@ export function DataProvenance({
           </div>
 
           <p className="text-xs text-white/60 mb-6 leading-relaxed">
-            Arcanea operates on a true sovereign creator ethos: your unpublished high fantasy manuscripts and lore are never trained on by us, never logged to third parties, and never marked up. You pay standard raw wholesale token rates directly to the provider:
+            Arcanea operates on a true sovereign creator ethos: your unpublished
+            high fantasy manuscripts and lore are never trained on by us, never
+            logged to third parties, and never marked up. You pay standard raw
+            wholesale token rates directly to the provider:
           </p>
 
           <div className="grid sm:grid-cols-3 gap-4">
             <div className="p-4 bg-white/[0.02] border border-white/[0.04] rounded-xl text-xs">
-              <div className="font-semibold text-white mb-1">Anthropic (Claude)</div>
-              <div className="text-[11px] text-white/40 mb-2">Direct api.anthropic.com</div>
+              <div className="font-semibold text-white mb-1">
+                Anthropic (Claude)
+              </div>
+              <div className="text-[11px] text-white/40 mb-2">
+                Direct api.anthropic.com
+              </div>
               <div className="text-[10px] text-[var(--arc-brand-atlantean-teal)] font-mono">
                 Sonnet 3.7: $3 / $15 per Mtok
               </div>
             </div>
             <div className="p-4 bg-white/[0.02] border border-white/[0.04] rounded-xl text-xs">
-              <div className="font-semibold text-white mb-1">Google (Gemini)</div>
-              <div className="text-[11px] text-white/40 mb-2">Direct generativelanguage.googleapis.com</div>
+              <div className="font-semibold text-white mb-1">
+                Google (Gemini)
+              </div>
+              <div className="text-[11px] text-white/40 mb-2">
+                Direct generativelanguage.googleapis.com
+              </div>
               <div className="text-[10px] text-[var(--arc-brand-atlantean-teal)] font-mono">
                 Gemini 2.0 Pro: $1.25 / $5 per Mtok
               </div>
             </div>
             <div className="p-4 bg-white/[0.02] border border-white/[0.04] rounded-xl text-xs">
               <div className="font-semibold text-white mb-1">DeepSeek</div>
-              <div className="text-[11px] text-white/40 mb-2">Direct api.deepseek.com</div>
+              <div className="text-[11px] text-white/40 mb-2">
+                Direct api.deepseek.com
+              </div>
               <div className="text-[10px] text-[var(--arc-brand-atlantean-teal)] font-mono">
                 DeepSeek R1: $0.55 / $2.19 per Mtok
               </div>
