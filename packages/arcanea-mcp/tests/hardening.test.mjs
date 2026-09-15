@@ -5,6 +5,7 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import http from "node:http";
+import net from "node:net";
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { after, before, test } from "node:test";
@@ -172,6 +173,34 @@ function post(port, { bytes, declareLength }) {
   });
 }
 
+// Sends only the request head, claiming a body that never arrives. The server has
+// to answer from the header alone, so a 413 here proves nothing was buffered, and
+// there is no upload racing the response on any platform.
+function headersOnly(port, declaredBytes) {
+  return new Promise((resolveStatus, reject) => {
+    const socket = net.connect(port, "127.0.0.1", () => {
+      socket.write(
+        `POST /mcp HTTP/1.1\r\nHost: 127.0.0.1\r\nContent-Type: application/json\r\nContent-Length: ${declaredBytes}\r\n\r\n`,
+      );
+    });
+    let head = "";
+    socket.setEncoding("utf8");
+    socket.on("data", (chunk) => {
+      head += chunk;
+      const status = head.match(/^HTTP\/1\.1 (\d{3})/);
+      if (status) {
+        socket.destroy();
+        resolveStatus(Number(status[1]));
+      }
+    });
+    socket.on("error", reject);
+    socket.setTimeout(5000, () => {
+      socket.destroy();
+      reject(new Error("no response to an oversized Content-Length"));
+    });
+  });
+}
+
 function health(port) {
   return new Promise((resolveHealth) => {
     http
@@ -187,8 +216,11 @@ test("P1-4 HTTP rejects an oversized body with 413 instead of buffering it", asy
   const port = 40000 + Math.floor(Math.random() * 20000);
   const child = await startHttp(port);
   try {
-    const declared = await post(port, { bytes: 8 * MiB, declareLength: true });
-    assert.equal(declared.status, 413, JSON.stringify(declared));
+    assert.equal(
+      await headersOnly(port, 8 * MiB),
+      413,
+      "an oversized Content-Length is refused before any body byte is read",
+    );
 
     const streamed = await post(port, { bytes: 8 * MiB, declareLength: false });
     assert.ok(

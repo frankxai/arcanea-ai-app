@@ -56,10 +56,9 @@ function rejectOversized(
   res: http.ServerResponse,
 ): void {
   if (!res.headersSent) {
-    res.writeHead(413, {
-      "Content-Type": "application/json",
-      Connection: "close",
-    });
+    // No "Connection: close": closing while the client is still uploading makes
+    // it see EPIPE instead of this 413. The rest of the body is drained and dropped.
+    res.writeHead(413, { "Content-Type": "application/json" });
     res.end(
       JSON.stringify({
         error: `Request body exceeds ${MAX_HTTP_BODY_BYTES} bytes`,
