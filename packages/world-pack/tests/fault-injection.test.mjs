@@ -174,3 +174,75 @@ test("P1-2 every ledger family is covered, and an ambiguous pack is never hashed
     );
   }
 });
+
+// ── P1-3 unicode evasion of locked names ─────────────────────────────────────
+
+function userNode(pack, id, name, attributes = {}) {
+  return {
+    id,
+    type: "Character",
+    name,
+    layer: "user",
+    attributes,
+    governance: { ...worldGov(pack) },
+  };
+}
+
+test("P1-3 zero-width, bidi, full-width and homoglyph spellings are still the locked name", async () => {
+  const { canon, pack } = await seed();
+  const disguises = {
+    "zero-width space": "Ly​ria",
+    "zero-width joiner": "Lyr‍ia",
+    "bidi override": "Ly‮ria",
+    "full-width": "Ｌｙｒｉａ",
+    "cyrillic u": "Lуria",
+    "greek alpha + cyrillic i": "Lyrіα",
+  };
+  for (const [label, name] of Object.entries(disguises)) {
+    const report = detectConflicts(
+      addNode(pack, userNode(pack, "chr_disguise", name)),
+      canon,
+    );
+    const hit = report.findings.find(
+      (f) =>
+        f.ruleId === "canon.locked-name-taken" ||
+        f.ruleId === "canon.alias-of-locked-name",
+    );
+    assert.ok(
+      hit,
+      `${label} (${JSON.stringify(name)}) walked past the locked name`,
+    );
+    assert.equal(hit.evidence.canonName, "Lyria", label);
+  }
+});
+
+test("P1-3 a homoglyph alias is caught, and ordinary non-Latin names are left alone", async () => {
+  const { canon, pack } = await seed();
+  const aliased = detectConflicts(
+    addNode(
+      pack,
+      userNode(pack, "chr_alias", "Veyra Coldwater", {
+        aliases: ["Nеrο"],
+      }),
+    ),
+    canon,
+  );
+  assert.ok(
+    aliased.findings.some(
+      (f) =>
+        f.ruleId === "canon.alias-of-locked-name" &&
+        f.evidence.canonName === "Nero",
+    ),
+    aliased.findings.map((f) => f.ruleId).join(", "),
+  );
+
+  const honest = detectConflicts(
+    addNode(pack, userNode(pack, "chr_mirea", "Мирея Ольховская")),
+    canon,
+  );
+  assert.deepEqual(
+    rulesOf(honest),
+    [],
+    "a Cyrillic name that is not canon stays clean",
+  );
+});

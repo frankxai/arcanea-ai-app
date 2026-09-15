@@ -25,17 +25,70 @@ function stripCell(cell) {
     .trim();
 }
 
+// Zero-width, joiner, soft-hyphen and bidi-control characters render as nothing,
+// so "Ly​ria" displays as "Lyria". They are removed, never treated as a break.
+const INVISIBLE = /[­͏؜ᅟᅠ឴឵᠎​-‏‪-‮⁠-⁯﻿ㅤﾠ]/g;
+
+// Lowercase Cyrillic and Greek letters that are visually interchangeable with a
+// Latin letter. A confusable skeleton, not a transliteration: its only job is to
+// stop "Lуria" (Cyrillic u) from being a different key than "Lyria".
+const CONFUSABLES = new Map(
+  Object.entries({
+    а: "a",
+    б: "b",
+    в: "b",
+    е: "e",
+    ё: "e",
+    і: "i",
+    ї: "i",
+    ј: "j",
+    к: "k",
+    м: "m",
+    н: "h",
+    о: "o",
+    р: "p",
+    с: "c",
+    т: "t",
+    у: "y",
+    х: "x",
+    ѕ: "s",
+    ԁ: "d",
+    ԛ: "q",
+    ԝ: "w",
+    һ: "h",
+    ɡ: "g",
+    α: "a",
+    β: "b",
+    ε: "e",
+    η: "n",
+    ι: "i",
+    κ: "k",
+    ν: "v",
+    ο: "o",
+    ρ: "p",
+    τ: "t",
+    υ: "u",
+    χ: "x",
+    γ: "y",
+    ω: "w",
+  }),
+);
+
 /**
- * Case, punctuation and diacritics are not a way around a locked name.
- * "Lyría!" and "lyria" normalize to the same key.
+ * Case, punctuation, diacritics, width, invisible characters and look-alike
+ * letters are not a way around a locked name. "Lyría!", "Ｌｙｒｉａ", "Ly​ria" and
+ * "Lуria" all normalize to "lyria".
  */
 export function normalizeName(name) {
-  return String(name ?? "")
+  const folded = String(name ?? "")
+    .normalize("NFKC")
+    .replace(INVISIBLE, "")
     .normalize("NFD")
     .replace(/\p{M}/gu, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
+    .toLowerCase();
+  let skeleton = "";
+  for (const ch of folded) skeleton += CONFUSABLES.get(ch) ?? ch;
+  return skeleton.replace(/[^\p{L}\p{N}]+/gu, " ").trim();
 }
 
 const ARTICLE = /^(?:an?|the)\s+/i;
