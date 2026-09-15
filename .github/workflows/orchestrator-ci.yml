@@ -4,14 +4,14 @@ on:
   push:
     branches: [main]
     paths:
-      - 'packages/orchestrator/**'
-      - 'packages/router-spec/**'
-      - '.github/workflows/orchestrator-ci.yml'
+      - "packages/orchestrator/**"
+      - "packages/router-spec/**"
+      - ".github/workflows/orchestrator-ci.yml"
   pull_request:
     paths:
-      - 'packages/orchestrator/**'
-      - 'packages/router-spec/**'
-      - '.github/workflows/orchestrator-ci.yml'
+      - "packages/orchestrator/**"
+      - "packages/router-spec/**"
+      - ".github/workflows/orchestrator-ci.yml"
 
 # Scoped to the two orchestrator packages. Does NOT gate the whole monorepo.
 # Failure here only blocks orchestrator-touching PRs.
@@ -35,8 +35,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: '20'
-          cache: 'pnpm'
+          node-version-file: .nvmrc
+          cache: "pnpm"
 
       - name: Install deps for orchestrator packages only
         run: pnpm install --filter "@arcanea/router-spec" --filter "@arcanea/orchestrator" --frozen-lockfile=false
