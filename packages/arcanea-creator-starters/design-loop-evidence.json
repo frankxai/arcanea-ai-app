@@ -1,0 +1,117 @@
+{
+  "version": "2026-09-10",
+  "task": "Creator starters v0.2.0 refinement",
+  "surface": "Static creator library and nine editable template previews",
+  "audience": "Music producers, AI research teams and AI tool builders",
+  "first_read": "Choose a useful page by audience, inspect its working artifact and take editable source.",
+  "standards": [
+    "PREMIUM_ASSET_STANDARD.md",
+    "AGENTIC_DESIGN_LOOP.md",
+    "OUTCOMES.md",
+    "VISUAL_QA_GATE.md"
+  ],
+  "references": [
+    {
+      "label": "OpenAI portable plugins",
+      "source": "https://developers.openai.com/plugins/build/plugins",
+      "reason": "Canonical root manifest plus generated compatibility overlay."
+    },
+    {
+      "label": "shadcn registry",
+      "source": "https://ui.shadcn.com/docs/registry/open-in-v0",
+      "reason": "Source bundles with explicit file targets."
+    },
+    {
+      "label": "v0 template collection",
+      "source": "https://v0.app/templates",
+      "reason": "Reference bar: Pointer AI landing page; original compositions rather than copied template code."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Editable artifacts, clear first action, quiet editorial typography"
+    ],
+    "avoid": [
+      "Decorative lab diagrams, invented performance, fake API responses"
+    ],
+    "signature": "A working artifact tailored to each audience: listening sequence, paper specimen or request workbench.",
+    "system": [
+      "Shared semantic tokens; Geist and Instrument Serif; native inputs; motion only for interaction; no new runtime dependencies"
+    ]
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "unknown",
+    "provenance": "owned",
+    "why_premium": "Exact system-authored interfaces for inspectable local behavior; actual visual quality awaits export inspection. The validator has no code-authored-UI source enum.",
+    "shortcut_risk": "medium",
+    "context_tested": false
+  },
+  "artifacts": [
+    {
+      "path_or_url": "apps/web/public/creator-starters/index.html",
+      "kind": "web",
+      "inspected": false,
+      "notes": "Source and interaction fixtures inspected; no current browser visual QA."
+    },
+    {
+      "path_or_url": "https://arcanea-ai-f8o9615kh-starlight-intelligence.vercel.app",
+      "kind": "web",
+      "inspected": true,
+      "notes": "Authenticated Chrome inspected Session, Margin and Patch at desktop and phone widths plus the gallery. Gallery filter/search/reset and Patch invalid/valid JSON recovery were exercised. This is partial current visual evidence; full built-app CI now captures all nine and verifies downloads and interactions."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Native code-authored UI is appropriate Tier C. Lab orbit illustrations removed."
+    },
+    {
+      "name": "export-inspection",
+      "status": "partial",
+      "evidence": "Session, Margin and Patch desktop/mobile exports inspected in authenticated Chrome. Local screenshots retained privately. Fresh browser loops later hit PP memory HOLD; full-app Chromium verification now runs in existing CI."
+    },
+    {
+      "name": "regressions",
+      "status": "pass",
+      "evidence": "15 tests pass on the verified Node 22 executable; nine templates and 39 generated artifacts have zero drift. Source/brief/registry equality and preservation guards pass."
+    },
+    {
+      "name": "schemas",
+      "status": "pass",
+      "evidence": "Current portable plugin schema, Codex compatibility validator, skill validator and nine shadcn registry-item schemas pass."
+    },
+    {
+      "name": "independent-review",
+      "status": "blocked",
+      "evidence": "Foundation PR #397 passed exact-head Gemini 2.5 Flash review, lint, TypeScript, CodeQL and full build and merged as 6c0818797. The nine-starter integration still requires its own exact-head review and fresh build/browser gates."
+    },
+    {
+      "name": "deployment",
+      "status": "pass",
+      "evidence": "Vercel dpl_Bj2FHxr6FNUVTEKCqmWr7n8NE3RT is READY, target preview, no production aliases."
+    },
+    {
+      "name": "public-download-verification",
+      "status": "blocked",
+      "evidence": "Unauthenticated fetches returned Vercel Login; connector returned SSO redirect. Local byte identity is tested."
+    },
+    {
+      "name": "static-design-heuristic",
+      "status": "pass",
+      "evidence": "90/100; font loading, grain and micro-interactions detected. No visual certification is inferred."
+    }
+  ],
+  "score": {
+    "total": 0,
+    "max": 30,
+    "notes": "Unscored until actual export inspection. Source checks do not substitute for the visual gate."
+  },
+  "decision": "blocked",
+  "known_risks": [
+    "Current manual inspection covers the three new compositions and gallery; CI capture covers all nine in the full built app. An automated pass is not an independent premium visual score.",
+    "No signed-in v0 import or fresh-task plugin installation.",
+    "Static preview must never be promoted over the full Arcanea app."
+  ]
+}

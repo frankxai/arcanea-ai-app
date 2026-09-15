@@ -1,0 +1,106 @@
+{
+  "schema": "arcanea.visual_prompt_contract.v1",
+  "intent": "Create an internal identity-discovery study of The Ultraworld; do not present provisional traits as canonical.",
+  "subject": {
+    "stableId": "ultraworld",
+    "displayName": "The Ultraworld",
+    "kind": "world",
+    "identityLock": "The locked repo identifies the Ultraworld only as staging: an AI-native meta-Realm where human imagination and machine intelligence meet. Its current public product system has sixteen named agent identities and a human-held approval boundary, so any older throne, deity, portal, or autonomous-consciousness imagery is non-authoritative evidence. The visual problem is to make co-creation, dissent, provenance, reversible choice, and authorship spatially teachable without turning a chat interface into a cosmic religion.",
+    "evidenceState": "discovery-only",
+    "openIdentityVariables": [
+      "spatial ontology and whether the meta-Realm is place, interface, archive, or relational state",
+      "canonical relationship between the Ultraworld and the sixteen public product-agent identities",
+      "architecture, material system, scale, navigation, and persistence across conversations",
+      "how human authorship, agent dissent, provenance, privacy, and reversible choice become visible",
+      "which legacy Ultraworld concepts are retained, superseded, or excluded from public identity"
+    ],
+    "allowedVariation": "This is an identity-discovery study, not an identity master. The following variables are deliberately provisional and may be explored without being treated as canon: spatial ontology and whether the meta-Realm is place, interface, archive, or relational state; canonical relationship between the Ultraworld and the sixteen public product-agent identities; architecture, material system, scale, navigation, and persistence across conversations; how human authorship, agent dissent, provenance, privacy, and reversible choice become visible; which legacy Ultraworld concepts are retained, superseded, or excluded from public identity. Only source-defined traits, role or Gate relation, evidence objects, relationship, and story beat may not drift; every variable named as open above must remain visibly provisional."
+  },
+  "storyBeat": "A human changes one consequential choice at a physical evidence table while distinct agent instruments expose source, alternative, dissent, and lineage; the surrounding archive reorganizes only after that choice, making partnership and human sovereignty visible without a pilot throne, holographic dashboard, or generic cyber portal.",
+  "composition": "16:9 inhabitable environmental plate with foreground work, midground social system, and distant ecological consequence; no empty establishing shot.",
+  "output": {
+    "assetCount": 1,
+    "aspectRatio": "16:9",
+    "intendedSurface": "world-dossier-and-environment-atlas",
+    "deliveryRole": "world visual identity discovery plate",
+    "cropSafety": "Protect the foreground action and midground causal evidence inside the central field; distant context may not become the sole story carrier, and no alternate crop is authorized.",
+    "generatedTextPolicy": "no-generated-text"
+  },
+  "designSystem": {
+    "styleMode": "adaptive-primary-pending",
+    "direction": "ADAPTIVE_STYLE_PRIMARY_PENDING_AFTER_ROUND_01",
+    "colorLaw": "70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent.",
+    "escalation": "resonant: one localized impossible behavior; environment remains physically legible",
+    "materialLaw": "Tactile, specific materials with wear, weight, construction, and local environmental response.",
+    "typography": "No text, letters, logos, watermarks, borders, captions, or pseudo-glyphs inside the generated image."
+  },
+  "light": "Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.",
+  "references": {
+    "sourceRefs": [
+      ".arcanea/lore/CANON_LOCKED.md#the-ultraworld-staging [sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f]",
+      "apps/web/content/blog/luminor-intelligence-system.mdx [sha256:661f6d21c9b358bbd112ceeca186ec84278e97f6c4226a2cf249aa9fb1f6305b]",
+      "skills/arcanea-visual-director/SKILL.md [sha256:bc999e52736e24e8867836118349d6f9472da465ce2e3430cb6fdae6c63223e7]"
+    ],
+    "imageRefs": [],
+    "imageReferencePolicy": "Use only owned or licensed references. Record file hash and role: identity, composition, material, or lighting. Never use a reference as permission to imitate its creator."
+  },
+  "constraints": [
+    "grayscale silhouette remains identifiable",
+    "perspective, inhabitable scale, ecology, architecture, labor, and material economy remain coherent",
+    "visible phenomenon serves one story law",
+    "adult premium editorial finish; no mascot energy",
+    "provisional physical choices remain visibly reviewable and must never be described as locked canon",
+    "foreground labor or maintained evidence, midground social system, and distant ecological consequence all derive from cited sources",
+    "geography remains navigable and material economy remains physically plausible",
+    "architecture, ecology, climate, labor, and active phenomenon belong to one causal world system",
+    "provisional world choices remain visibly reviewable and cannot be promoted as locked canon"
+  ],
+  "avoid": [
+    "generic fantasy concept art",
+    "rainbow galaxy effects",
+    "permanent flame crystal or waterfall hair",
+    "franchise or living-artist style imitation",
+    "appropriated sacred clothing symbols gestures or shrine architecture",
+    "illegible pseudo-text",
+    "sexualized or childlike treatment",
+    "color as the only identity signal",
+    "empty skyline postcard",
+    "decorative fantasy megacity without food labor water waste transport or maintenance",
+    "portal as the only evidence of a world",
+    "monoculture represented by one costume one temple or one color"
+  ],
+  "provider": {
+    "adapter": "runtime-discovered",
+    "preferredCapabilities": [
+      "high-fidelity reference input",
+      "iterative editing",
+      "consistent identity",
+      "generation receipt"
+    ],
+    "model": null,
+    "seed": null,
+    "providerParameters": {}
+  },
+  "verification": {
+    "deterministicChecks": [
+      "declared aspect ratio within 1.5% provider-rounding tolerance",
+      "file decodes",
+      "no embedded prompt text",
+      "receipt and output hash recorded"
+    ],
+    "rubric": "arcanea_visual_quality_v1_10x5",
+    "passThreshold": 42,
+    "identityFloor": 4,
+    "canonFloor": 4,
+    "humanApprovalRequired": true
+  },
+  "governance": {
+    "releaseEligibility": "internal-only-until-identity-lock",
+    "sensitivityReviewRequired": false,
+    "reviewRequirements": [
+      "Product and lore owners reconcile the staging meta-Realm with the current sixteen-agent system before a public visual identity is approved.",
+      "Human-sovereignty review confirms that the composition teaches assistance and inspectability without implying autonomous authority or spiritual fact."
+    ]
+  },
+  "contractHash": "71b40be105a2cc5927baf48a2c4ed339e484bf3b6a66c738c7b63f63dcd9c4c8"
+}
