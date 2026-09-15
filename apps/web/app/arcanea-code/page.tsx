@@ -39,7 +39,7 @@ const FEATURES: CodeFeature[] = [
   {
     title: "MCP Server",
     description:
-      "Model Context Protocol server exposing 30+ specialized tools — memory search, AI invocation, lore queries, and intelligence routing.",
+      `Model Context Protocol server exposing ${FACTS.mcpTools} tools — memory search, AI invocation, lore queries, and intelligence routing.`,
     icon: <PhPackage weight="thin" size={24} />,
     accent: "var(--color-atlantean-teal-aqua)",
   },
@@ -60,7 +60,7 @@ const FEATURES: CodeFeature[] = [
   {
     title: "Intelligence Packages",
     description:
-      "9 published packages for council, evolution, memory, rituals, creative-pipeline, and more. Each one battle-tested with 3,000+ passing tests.",
+      "Workspace packages for memory, orchestration, the creative pipeline, and more, each with its own test suite in the monorepo.",
     icon: <PhLightning weight="thin" size={24} />,
     accent: "var(--color-cosmic-blue)",
   },
@@ -95,7 +95,7 @@ const QUICK_START = [
 ];
 
 const VSCODE_FEATURES = [
-  "AI assistant panel — invoke any of the 16 companions inline",
+  `AI assistant panel — invoke any of the ${FACTS.luminors} Luminors inline`,
   "`.arcanea` project config support — per-workspace AI presets",
   "Inline lore lookups — hover a Gate name to see its frequency and domain",
   "AI-powered code explanations — right-click any function",
@@ -423,8 +423,8 @@ export default function ArcaneaCodePage() {
                 Production Ready
               </h3>
               <p className="text-text-secondary text-sm font-body">
-                3,000+ tests passing across 26 packages{/* facts-ok: arcanea-code's own suite */}. Tested against
-                Vercel, Supabase, and Google Gemini in production.
+                Runs the same code paths that serve arcanea.ai on Vercel, Supabase,
+                and Google Gemini.
               </p>
             </div>
           </div>

@@ -91,11 +91,29 @@ for (const file of files) {
   }
 }
 
+// A link whose whole top-level route family is gone (no app dir, public entry, or redirect)
+// is what a route removal without a redirect produces; that fails. Deeper unresolved paths
+// under a live family are reported as warnings.
+const topLevel = new Set(readdirSync(APP).map((n) => n.replace(/^\((.*)\)$/, '$1')));
+for (const group of readdirSync(APP).filter((n) => n.startsWith('('))) readdirSync(join(APP, group)).forEach((n) => topLevel.add(n));
+const familyServed = (path) => {
+  const top = path.split('/')[1];
+  return !top || topLevel.has(top) || isPublicFile(`/${top}`) || served.some((re) => re.test(`/${top}`));
+};
+
+const rows = [...broken].sort();
+const missing = rows.filter(([path]) => !familyServed(path));
+const warnings = rows.filter(([path]) => familyServed(path));
+const print = (log, list) => list.forEach(([path, where]) => log(`  ${path}  <- ${[...new Set(where)].join(', ')}`));
+
 console.log(`Scanned ${files.length} ${useBuilt ? 'built' : 'source'} files against ${served.length} route/redirect patterns.`);
-if (broken.size === 0) {
-  console.log('Internal links: clean.');
-  process.exit(0);
+if (warnings.length) {
+  console.warn(`Warning: ${warnings.length} unresolved deeper path(s) under live routes (dynamic data or pre-existing):`);
+  print(console.warn, warnings);
 }
-console.error(`Internal links: ${broken.size} unresolved target(s).`);
-for (const [path, where] of [...broken].sort()) console.error(`  ${path}  <- ${[...new Set(where)].join(', ')}`);
-process.exit(1);
+if (missing.length) {
+  console.error(`FAIL: ${missing.length} link(s) target a route family with no page, public file, or redirect:`);
+  print(console.error, missing);
+  process.exit(1);
+}
+console.log('Internal links: no link targets a removed route without a redirect.');

@@ -25,7 +25,7 @@ export function DataProvenance({
       <SectionHeading
         tag="Data Transparency & Provenance"
         title="Where We Get Our Data"
-        subtitle="Transparent empirical data pipelines. We cross-reference real-time provider APIs, public benchmark leaderboards, and Arcanea's proprietary high fantasy evaluation lab."
+        subtitle="Pricing and context data come live from provider APIs. Public leaderboards are cited where they exist. WorldCraft scores are editorial ratings, not a published benchmark run."
       />
 
       {/* Quick Source Pill Nav */}
@@ -70,7 +70,7 @@ export function DataProvenance({
               . Powers live pricing, context window lengths, token limits, and free tier status.
             </p>
             <div className="text-[11px] text-[var(--arc-brand-atlantean-teal)] font-mono">
-              Live: {liveModelCount ?? 200}+ models tracked
+              {liveModelCount ? `Live: ${liveModelCount} models tracked` : "Live feed unavailable — showing curated list"}
             </div>
           </div>
 
@@ -100,7 +100,7 @@ export function DataProvenance({
               Instruction Following Evaluation (IFEval) for strict negative constraint execution (e.g. banning clichés) plus RULER benchmark for needle-in-haystack recall across 1M tokens.
             </p>
             <div className="text-[11px] text-[var(--arc-brand-cosmic-blue)] font-mono">
-              Verified Constraint Adherence
+              Public leaderboard reference
             </div>
           </div>
 
@@ -112,10 +112,10 @@ export function DataProvenance({
               4. Arcanea WorldCraft Lab
             </h3>
             <p className="text-xs text-white/50 leading-relaxed mb-4">
-              Proprietary benchmark battery of 500+ high fantasy worldbuilding prompts. Evaluates canon consistency, Solfeggio gate resonance, and anti-slop verbal tic resistance.
+              Editorial ratings for canon consistency, magic-system logic, and anti-slop prose. Assigned by hand from model use, not produced by an automated test run.
             </p>
             <div className="text-[11px] text-[var(--arc-void)] font-mono">
-              Scores: 0 – 100 WorldCraft Index
+              Scores: 0 – 100 editorial rating
             </div>
           </div>
         </div>
@@ -220,15 +220,15 @@ export function DataProvenance({
                   How Elo is Calculated
                 </h4>
                 <p className="text-[11px] text-white/50 leading-relaxed">
-                  Over 1,000,000+ anonymous side-by-side human blind battles. Users submit creative prompts (e.g. &ldquo;Write the dying speech of an ancient dragon&rdquo;) and vote on which model sounds more natural, evocative, and compelling.
+                  Anonymous side-by-side human votes, published by LMArena. Users submit creative prompts (e.g. &ldquo;Write the dying speech of an ancient dragon&rdquo;) and vote on which model sounds more natural, evocative, and compelling.
                 </p>
               </div>
               <div className="bg-white/[0.02] border border-white/[0.04] rounded-xl p-4">
                 <h4 className="text-xs font-semibold text-[var(--arc-brand-atlantean-teal)] mb-1">
-                  Why Claude & Mistral Lead
+                  Read the Live Leaderboard
                 </h4>
                 <p className="text-[11px] text-white/50 leading-relaxed">
-                  Claude 3.7 / 3.5 Sonnet and Opus consistently top creative categories because their training rewards narrative cadence, subtext in character dialogue, and avoidance of robotic summary endings.
+                  Rankings move with every model release. Check the current creative-writing standings on the leaderboard itself rather than relying on a snapshot here.
                 </p>
               </div>
             </div>
@@ -241,15 +241,12 @@ export function DataProvenance({
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-6 border-b border-white/[0.06]">
             <div>
               <h3 className="text-lg font-bold text-white font-[family-name:var(--font-display)]">
-                The Arcanea WorldCraft Benchmark Lab
+                The Arcanea WorldCraft Rating
               </h3>
               <p className="text-xs text-white/50 mt-1">
-                Proprietary 500+ prompt test battery tailored specifically for epic worldbuilding.
+                Editorial criteria for epic worldbuilding. These are judgments, not measured benchmark results.
               </p>
             </div>
-            <span className="text-xs font-mono text-[var(--arc-void)] bg-[var(--arc-void)]/10 px-3 py-1.5 rounded-lg border border-[var(--arc-void)]/20">
-              Lab Standard v2.4 (2026)
-            </span>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">

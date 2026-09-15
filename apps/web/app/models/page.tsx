@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   title:
     "AI Model Arena | Arcanea — Worldbuilding & High Fantasy Writing Intelligence",
   description:
-    "Evaluate, benchmark, and compare AI models dedicated for worldbuilding, high fantasy fiction, 1M canon memory, hard magic logic, and anti-slop prose. Live OpenRouter pricing, favorites, and Arcanea WorldCraft lab scores.",
+    "Compare AI models for worldbuilding, high fantasy fiction, long canon memory, hard magic logic, and anti-slop prose. Live OpenRouter pricing, favorites, and Arcanea WorldCraft editorial ratings.",
   keywords: [
     "AI models for world building",
     "best AI for fantasy writing",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title:
       "AI Model Arena | Arcanea — Worldbuilding & High Fantasy Intelligence",
     description:
-      "Empirical benchmarks, 1M lore vault tracking, anti-slop prose evaluations, and side-by-side fantasy model comparison. Updated hourly.",
+      "Editorial worldbuilding ratings, live OpenRouter pricing refreshed hourly, and side-by-side fantasy model comparison.",
     type: "website",
   },
 };
@@ -69,7 +69,7 @@ function ArenaJsonLd() {
     url: "https://www.arcanea.ai/models",
     name: "Arcanea Worldcraft AI Model Arena",
     description:
-      "Empirical benchmarks, rankings, and analysis of AI models dedicated to worldbuilding, high fantasy writing, and universe continuity.",
+      "Editorial rankings and analysis of AI models for worldbuilding, high fantasy writing, and universe continuity.",
     publisher: {
       "@type": "Organization",
       name: "Arcanea",

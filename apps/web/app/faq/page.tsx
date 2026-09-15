@@ -24,7 +24,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "How do I get started?",
-        a: "Simply create a free account at arcanea.ai. You'll immediately have access to 3 companions and 100 messages per month. From there, you can explore the Library, start Academy training, or upgrade for access to the full creative team.",
+        a: "Create a free account at arcanea.ai and start a chat. From there you can explore the Library, begin Academy training, or build a world. Paid tiers are waitlist-only for now — see the Pricing page.",
       },
       {
         q: "How are Arcanea's companions different from regular AI?",
@@ -54,7 +54,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "How do companions learn and improve?",
-        a: "Companions improve through the SONA learning system, which records trajectories of successful creative sessions and identifies patterns that lead to better outcomes. They also learn from your feedback — every interaction helps them better understand your creative style and preferences.",
+        a: "Companions work from the context you give them in a conversation and the world material you save. They do not silently retrain on your work.",
       },
     ],
   },
@@ -64,19 +64,15 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What's included in the free plan?",
-        a: "The Spark (free) plan includes 3 creative companions, 100 messages per month, full Library access, and Gallery browsing. It's everything you need to explore the platform and see if Arcanea fits your creative workflow.",
+        a: "The free plan covers chat, full Library access, and Gallery browsing. The Pricing page lists exactly what is included today.",
       },
       {
         q: "What do the paid plans include?",
-        a: "The Creator plan ($19/month) unlocks all creative partners with 5,000 messages per month, full Studio creation tools, complete Academy access, and custom prompt templates. The Studio plan ($49/month) adds API access, priority support, custom partner training, and team collaboration features.",
-      },
-      {
-        q: "Can I switch plans later?",
-        a: "Yes. You can upgrade or downgrade at any time. Changes take effect immediately, and we prorate any payments. Your conversations and progress are always preserved.",
+        a: "Paid tiers are waitlist-only. Their scope and price are not final, and nothing is charged until they launch. Join the waitlist on the Pricing page to hear first.",
       },
       {
         q: "Do you offer team or enterprise plans?",
-        a: "Yes. The enterprise plan ($99/month) includes team collaboration, custom companion deployment, dedicated support, SLA guarantees, custom integrations, and white-label options. Contact us for custom solutions.",
+        a: "Not yet. There is no team plan, support-time promise, or SLA today. If you need one, tell us through the Contact page so we can gauge demand.",
       },
     ],
   },
@@ -86,19 +82,19 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What technologies power Arcanea?",
-        a: "Arcanea is built on a modern stack: Next.js 16 for the frontend, TypeScript throughout, Supabase for data, and Vercel AI SDK for AI integration. The platform uses advanced consensus algorithms, vector search, and reinforcement learning for the intelligence layer.",
+        a: "Arcanea is built on a modern stack: Next.js 16 for the frontend, TypeScript throughout, Supabase for data, and Vercel AI SDK for model access.",
       },
       {
         q: "Is my data secure?",
-        a: "Security is paramount. All conversations are encrypted at rest and in transit. We never use your conversations to train public models. Your creative work remains yours, and you can delete it at any time.",
+        a: "Data travels over HTTPS and is stored with Supabase. We do not use your conversations to train models, your creative work remains yours, and the Privacy page describes how to delete it.",
       },
       {
         q: "Can I use Arcanea via API?",
-        a: "Yes. Studio and Enterprise plans include API access. You can integrate Arcanea's companions into your own applications, workflows, and tools. See the Developers page for details.",
+        a: "The Developers page documents what is available today, including the MCP server for coding agents.",
       },
       {
         q: "Do you offer self-hosting?",
-        a: "Arcanea is available as a CLI tool that you can run locally. Enterprise customers can also explore custom deployment options. Contact us for details.",
+        a: "The open-source packages and the MCP server run locally. There is no managed private deployment offering.",
       },
     ],
   },

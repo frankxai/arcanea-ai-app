@@ -10,7 +10,7 @@
  * - Live OpenRouter API (real-time hourly sync)
  * - LMSYS Chatbot Arena Creative Writing Category (Human double-blind Elo)
  * - Hugging Face IFEval (Negative constraint & instruction adherence)
- * - Arcanea WorldCraft Benchmark Lab (500+ high fantasy canon & anti-slop tests)
+ * - Arcanea WorldCraft ratings (hand-assigned editorial scores; no automated test run backs them)
  * - Direct BYOK Provider APIs (Anthropic, OpenAI, Google, DeepSeek, Mistral, xAI)
  */
 

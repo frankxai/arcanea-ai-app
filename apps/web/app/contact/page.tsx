@@ -197,7 +197,7 @@ const FAQS: FaqItem[] = [
   {
     question: "Is Arcanea free to use?",
     answer:
-      "Yes. The Spark plan is free and includes 3 companions, Library browsing, and Academy access. Creator ($19/mo) and Studio ($49/mo) plans unlock all 16 companions and full creation tools.",
+      "Yes. The free plan includes chat, Library browsing, and Academy access. Paid tiers are waitlist-only for now; the Pricing page shows what is live.",
   },
   {
     question: "Can I build on Arcanea?",

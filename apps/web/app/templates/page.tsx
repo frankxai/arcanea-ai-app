@@ -7,15 +7,16 @@ import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal, StaggerReveal } from "@/components/motion/reveal";
 import { GradientMesh } from "@/components/motion/gradient-mesh";
 import { NumberTicker } from "@/components/motion/number-ticker";
+import { FACTS } from "@/lib/facts";
 
 export const metadata: Metadata = {
   title: "Blueprints — Open Source Production Code",
   description:
-    "Nine production blueprints for AI startups, authors, game studios, and design engineers. Fork the code running arcanea.ai.",
+    "Production blueprints for AI startups, authors, game studios, and design engineers. Fork the code running arcanea.ai.",
   openGraph: {
     title: "Arcanea Blueprints — Fork the code behind arcanea.ai",
     description:
-      "Nine production blueprints. Multi-model chat, world engine, publishing house, MCP server. Fork the code running arcanea.ai.",
+      "Production blueprints: multi-model chat, world engine, publishing house, MCP server. Fork the code running arcanea.ai.",
     type: "website",
   },
   alternates: { canonical: "/templates" },
@@ -149,7 +150,7 @@ const BLUEPRINTS: Blueprint[] = [
   {
     id: "mcp",
     name: "MCP Server",
-    desc: "54 tools: world intelligence, vault memory, media generation, canon validation — one server, any AI client.",
+    desc: `${FACTS.mcpTools} tools: world intelligence, vault memory, media generation, canon validation — one server, any AI client.`,
     audience: "Claude developers · Agent builders",
     loc: "8,500",
     files: [
@@ -205,10 +206,8 @@ const USE_CASES = [
 // ── Stats ───────────────────────────────────────────────────────────────────
 
 const STATS = [
-  { value: 7, suffix: "", label: "Blueprints" },
-  { value: 33, suffix: "K+", label: "Lines of code" },
-  { value: 42, suffix: "", label: "MCP tools" },
-  { value: 12, suffix: "", label: "Motion primitives" },
+  { value: BLUEPRINTS.length, suffix: "", label: "Blueprints" },
+  { value: FACTS.mcpTools, suffix: "", label: "MCP tools" },
 ];
 
 // ── Page ────────────────────────────────────────────────────────────────────
