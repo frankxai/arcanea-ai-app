@@ -20,7 +20,8 @@ const audienceFor = (productId: string) =>
 
 const key = (productId: string, suffix: string) => `waitlist:${productId}:${suffix}`
 
-async function kv(command: unknown[]): Promise<unknown> {
+/** Exported locally (not upstream) so the rate limiter shares the waitlist's KV and fails with it. */
+export async function kv(command: unknown[]): Promise<unknown> {
   if (!KV_URL || !KV_TOKEN) throw new Error('KV not configured')
   const res = await fetch(KV_URL, {
     method: 'POST',

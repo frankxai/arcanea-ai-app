@@ -7,6 +7,6 @@ export async function POST(req: Request) {
   } catch {
     return Response.json({ error: "Invalid request" }, { status: 400 });
   }
-  const { status, body: out } = await joinWaitlist(body, req);
-  return Response.json(out, { status, headers: { "Cache-Control": "no-store" } });
+  const { status, body: out, headers } = await joinWaitlist(body, req);
+  return Response.json(out, { status, headers: { "Cache-Control": "no-store", ...headers } });
 }
