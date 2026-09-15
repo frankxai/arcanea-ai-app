@@ -4,11 +4,11 @@ on:
   pull_request:
     branches: [main]
     paths-ignore:
-      - 'book/**'
-      - 'docs/**'
-      - '*.md'
-      - '.arcanea/lore/**'
-      - '.arcanea/projects/log/**'
+      - "book/**"
+      - "docs/**"
+      - "*.md"
+      - ".arcanea/lore/**"
+      - ".arcanea/projects/log/**"
     # Heavy E2E/Lighthouse/security suite runs once at the review boundary.
     # Required CI continues to validate every review-ready head update.
     types: [opened, ready_for_review]
@@ -19,8 +19,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: '22'
-  PNPM_VERSION: '8.15.0'
+  NODE_VERSION: "22"
+  PNPM_VERSION: "8.15.0"
 
 jobs:
   # ============================================
@@ -49,7 +49,7 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
       - name: Install dependencies
@@ -277,7 +277,7 @@ jobs:
       - name: Lighthouse CI
         uses: treosh/lighthouse-ci-action@v12
         with:
-          configPath: './lighthouserc.json'
+          configPath: "./lighthouserc.json"
           uploadArtifacts: true
         continue-on-error: true
 
