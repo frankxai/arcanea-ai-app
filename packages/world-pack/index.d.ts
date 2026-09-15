@@ -275,6 +275,12 @@ export function detectConflicts(
 /** Run the same rules against a creator's own canon document. */
 export function checkAgainst(pack: WorldPack, canonDocument: string): { canon: CanonIndex; report: ConflictReport };
 export function proseOf(node: Partial<EntityNode>): string;
+/** Every rule id the conflict detector can emit, with its severity. */
+export const RULES: Readonly<Record<string, Severity>>;
+export const SEVERITIES: readonly Severity[];
+
+/** Structure only; canon legality is detectConflicts' job. */
+export function validatePack(pack: unknown): { valid: boolean; errors: string[] };
 
 export function diffPacks(base: WorldPack, head: WorldPack): {
   added: EntityNode[];

@@ -1,0 +1,57 @@
+name: MCP Server
+
+# Guards what npm users receive: the WorldPack engine, the MCP tools over a real
+# stdio handshake, and a clean-room install of the packed tarball.
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'packages/arcanea-mcp/**'
+      - 'packages/world-pack/**'
+      - '.arcanea/lore/CANON_LOCKED.md'
+      - '.github/workflows/mcp-server.yml'
+      - '.github/workflows/publish-mcp-server.yml'
+
+concurrency:
+  group: mcp-server-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: "22"
+  PNPM_VERSION: "8.15.0"
+
+jobs:
+  consumer-smoke:
+    name: WorldPack tools + consumer install
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install MCP server dependencies
+        run: pnpm install --frozen-lockfile --filter @arcanea/mcp-server
+
+      - name: WorldPack engine tests
+        run: node --test packages/world-pack/tests/*.test.mjs
+
+      - name: WorldPack tools over stdio
+        run: pnpm --dir packages/arcanea-mcp test:worldpack
+
+      - name: Consumer install smoke
+        run: node packages/arcanea-mcp/scripts/consumer-smoke.mjs --no-build

@@ -11,9 +11,16 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { randomUUID } from "node:crypto";
+import { SERVER_VERSION } from "./version.js";
 
-const SERVER_VERSION = "0.3.0";
-const TOOL_COUNT = 54;
+// The SDK exposes no public tool count; reading the registry keeps /health from
+// advertising a number nobody measured.
+function toolCount(server: McpServer): number {
+  return Object.keys(
+    (server as unknown as { _registeredTools: Record<string, unknown> })
+      ._registeredTools,
+  ).length;
+}
 
 // -------------------------------------------------------------------------
 // Stdio transport — default, backward compatible
@@ -55,7 +62,7 @@ export async function runHttp(server: McpServer, port: number): Promise<void> {
     if (url.pathname === "/health" && req.method === "GET") {
       const body = JSON.stringify({
         status: "ok",
-        tools: TOOL_COUNT,
+        tools: toolCount(server),
         version: SERVER_VERSION,
         transport: "http",
         sessions: sessions.size,
@@ -76,7 +83,7 @@ export async function runHttp(server: McpServer, port: number): Promise<void> {
           mcp: "/mcp",
           health: "/health",
         },
-        tools: TOOL_COUNT,
+        tools: toolCount(server),
       });
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(body);

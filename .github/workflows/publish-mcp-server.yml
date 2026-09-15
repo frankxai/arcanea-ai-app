@@ -1,0 +1,86 @@
+name: Publish @arcanea/mcp-server
+
+# Manual only. Authenticates to npm with trusted publishing (OIDC): no NPM_TOKEN
+# secret exists or is needed. The tarball that passes the consumer smoke is the
+# exact file that gets published.
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run every gate and npm publish --dry-run, without publishing"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish-mcp-server
+  cancel-in-progress: false
+
+env:
+  PNPM_VERSION: "8.15.0"
+
+jobs:
+  publish:
+    name: Smoke, then publish
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment: npm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      # Trusted publishing requires Node >= 22.14 and npm >= 11.5.1.
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Upgrade npm for trusted publishing
+        run: npm install -g npm@^11.5.1
+
+      - name: Install MCP server dependencies
+        run: pnpm install --frozen-lockfile --filter @arcanea/mcp-server
+
+      - name: WorldPack engine tests
+        run: node --test packages/world-pack/tests/*.test.mjs
+
+      - name: WorldPack tools over stdio
+        run: pnpm --dir packages/arcanea-mcp test:worldpack
+
+      - name: Refuse a version that is already on npm
+        run: |
+          VERSION=$(node -p "require('./packages/arcanea-mcp/package.json').version")
+          if npm view "@arcanea/mcp-server@$VERSION" version >/dev/null 2>&1; then
+            echo "::error::@arcanea/mcp-server@$VERSION is already published. Bump the version first."
+            exit 1
+          fi
+
+      - name: Consumer install smoke
+        id: smoke
+        run: node packages/arcanea-mcp/scripts/consumer-smoke.mjs --no-build --pack-destination "$RUNNER_TEMP/mcp-tarball"
+
+      - name: Publish
+        env:
+          TARBALL: ${{ steps.smoke.outputs.tarball }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          REPO_PRIVATE: ${{ github.event.repository.private }}
+        run: |
+          flags=(--access public)
+          # npm refuses provenance from private repositories, even for public packages.
+          if [ "$REPO_PRIVATE" = "false" ]; then
+            flags+=(--provenance)
+          else
+            echo "::warning::Repository is private; npm cannot attach provenance. Publishing via OIDC without it."
+          fi
+          if [ "$DRY_RUN" = "true" ]; then flags+=(--dry-run); fi
+          npm publish "$TARBALL" "${flags[@]}"
