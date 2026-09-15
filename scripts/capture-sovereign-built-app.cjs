@@ -3,10 +3,13 @@ const crypto = require("node:crypto");
 const fs = require("node:fs");
 const { createRequire } = require("node:module");
 const { resolve } = require("node:path");
-const { chromium } = createRequire(resolve("apps/web/package.json"))(
+const { chromium, expect } = createRequire(resolve("apps/web/package.json"))(
   "@playwright/test",
 );
 const { verifySovereignPreview } = require("./verify-sovereign-browser.cjs");
+const {
+  verifyWorldWorkbench,
+} = require("./verify-world-workbench-browser.cjs");
 const {
   verifyWeightOfWondersPreview,
 } = require("./verify-weight-of-wonders-browser.cjs");
@@ -90,6 +93,7 @@ const typographyReport = async (page) => {
   const browser = await chromium.launch();
   const captures = [];
   const wonderReports = [];
+  const workbenchReports = [];
   const settlePaint = (page) =>
     page.evaluate(async () => {
       await document.fonts.ready;
@@ -140,6 +144,17 @@ const typographyReport = async (page) => {
       });
       try {
         const page = await context.newPage();
+        workbenchReports.push(
+          await verifyWorldWorkbench({ page, context, base, state, capture }),
+        );
+        fs.writeFileSync(
+          "screenshots/world-workbench-report.json",
+          JSON.stringify(
+            { ...commitEvidence(), reports: workbenchReports },
+            null,
+            2,
+          ) + "\n",
+        );
         const response = await page.goto(`${base}/gallery/sovereign-depths`, {
           waitUntil: "domcontentloaded",
         });
@@ -214,9 +229,13 @@ const typographyReport = async (page) => {
             { waitUntil: "domcontentloaded" },
           );
           assert.equal(dossier.status(), 200);
-          await page
-            .locator("[data-orientation] img")
-            .evaluate((image) => image.decode());
+          // Streaming HTML can briefly retain a hidden copy. Require exactly
+          // one visible image, rather than matching that transient duplicate.
+          const dossierImage = page.locator(
+            "main [data-orientation] img:visible",
+          );
+          await expect(dossierImage).toHaveCount(1);
+          await dossierImage.evaluate((image) => image.decode());
           await capture(page, state, `weight-of-wonders-${slug}-dossier`);
         }
         if (state.name === "mobile-375") {
