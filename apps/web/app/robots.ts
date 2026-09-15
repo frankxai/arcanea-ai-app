@@ -17,7 +17,6 @@ export default function robots(): MetadataRoute.Robots {
           '/dashboard/',
           '/settings/',
           '/onboarding/',
-          '/command/',
           '/profile/edit/',
         ],
       },

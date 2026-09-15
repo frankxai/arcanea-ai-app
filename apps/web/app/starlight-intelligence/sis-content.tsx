@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
-import Link from 'next/link';
 import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { VAULT_CONFIG, VAULT_CATEGORIES, type VaultCategory } from '@/lib/vault-data';
 import { EASE, VIEWPORT } from '@/lib/motion';
@@ -134,10 +133,7 @@ export function SisContent() {
                   }}
                 >
                   <TiltCard intensity={6}>
-                    <Link
-                      href={`/vault/${cat}`}
-                      className="group block p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm hover:bg-white/[0.05] hover:border-white/[0.1] transition-all"
-                    >
+                    <div className="block p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm">
                       <div className="flex items-center gap-2 mb-2">
                         <div
                           className="w-2 h-2 rounded-full"
@@ -149,7 +145,7 @@ export function SisContent() {
                         </span>
                       </div>
                       <p className="text-xs text-[var(--arc-text-muted)]">{config.tagline}</p>
-                    </Link>
+                    </div>
                   </TiltCard>
                 </m.div>
               );
@@ -311,14 +307,6 @@ export function SisContent() {
               >
                 Deploy your vault
               </a>
-            </Magnetic>
-            <Magnetic>
-              <Link
-                href="/arcanea-vault"
-                className="inline-block px-8 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-[var(--arc-text-primary)] hover:bg-white/[0.08] transition-colors"
-              >
-                Explore the constellation
-              </Link>
             </Magnetic>
             <Magnetic>
               <a

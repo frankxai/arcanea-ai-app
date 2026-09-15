@@ -124,7 +124,7 @@ const DOC_CATEGORIES = [
     accent: 'var(--arc-void)',
     links: [
       { label: 'AI Chat & Luminors', href: '/chat' },
-      { label: 'Vision Generator', href: '/design-lab' },
+      { label: 'Vision Generator', href: '/imagine' },
       { label: 'World Builder', href: '/worlds/create' },
     ],
   },

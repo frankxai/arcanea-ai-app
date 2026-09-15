@@ -440,10 +440,10 @@ export default function BookOfArcaneaPage() {
               Explore the Library
             </Link>
             <Link
-              href="/council"
+              href="/luminors"
               className="rounded-lg border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10 px-5 py-2.5 text-sm text-[var(--arc-brand-atlantean-teal)] transition-all hover:bg-[var(--arc-brand-atlantean-teal)]/20"
             >
-              Meet the Council
+              Meet the Luminors
             </Link>
           </div>
         </div>

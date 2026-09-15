@@ -303,14 +303,13 @@ export default function ArenaOfCompetitionPage() {
       {/* CTA */}
       <section className="border border-[var(--arc-brand-atlantean-teal)]/30 rounded-2xl p-8 bg-[var(--arc-brand-atlantean-teal)]/5 text-center">
         <h2 className="font-display text-2xl font-bold text-text-primary mb-3">
-          See the Arena in Action
+          See What Survived the Arena
         </h2>
         <p className="text-lg text-text-secondary mb-6">
-          Browse all 10 competing homepage designs — each a production-quality variation
-          representing a distinct design philosophy.
+          The competing variations have been retired. The direction that won runs on the homepage.
         </p>
         <Link
-          href="/v3/variations"
+          href="/"
           className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-[var(--arc-brand-cosmic-blue)] via-[var(--arc-brand-cosmic-blue)] to-[var(--arc-brand-atlantean-teal)] text-white font-semibold text-lg transition-all duration-200 hover:shadow-[0_0_30px_rgba(0,188,212,0.3)]"
         >
           View All 10 Competing Designs

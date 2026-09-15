@@ -99,7 +99,6 @@ const BLUEPRINTS: Blueprint[] = [
     ],
     stack: ["React 19", "Framer Motion 11", "Tailwind", "Radix UI"],
     github: "https://github.com/frankxai/cosmic-landing-template",
-    demo: "/arcanea-vault",
     deploy:
       "https://vercel.com/new/clone?repository-url=https://github.com/frankxai/cosmic-landing-template",
     color: "var(--arc-brand-atlantean-teal)",
@@ -126,11 +125,10 @@ const BLUEPRINTS: Blueprint[] = [
     files: [
       "packages/memory-system/src/",
       "packages/memory-mcp/",
-      "app/arcanea-vault/",
     ],
     stack: ["TypeScript", "MCP SDK", "JSONL", "React Three Fiber"],
     github: "https://github.com/frankxai/Starlight-Intelligence-System",
-    demo: "/arcanea-vault",
+    demo: "/starlight-intelligence",
     color: "var(--arc-void)",
   },
   {
@@ -199,7 +197,7 @@ const USE_CASES = [
     title: "Need a premium dark UI?",
     desc: "The Motion + UI Kit gives you 12 physics-based primitives (SplitText, LiquidGlass, TiltCard, Magnetic) and 40 production components. Works with any Next.js project — just copy the files.",
     blueprints: ["motion"],
-    cta: { label: "See it in action", href: "/arcanea-vault" },
+    cta: { label: "See it on the homepage", href: "/" },
     color: "var(--arc-brand-atlantean-teal)",
   },
 ];

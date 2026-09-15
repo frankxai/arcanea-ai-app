@@ -347,13 +347,6 @@ export default function ArcaneaCodePage() {
                     Install from Marketplace
                     <PhArrowRight weight="thin" size={14} />
                   </Link>
-                  <Link
-                    href="/arcanea-vault"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold text-sm hover:border-atlantean-teal-aqua/30 transition-all"
-                  >
-                    Download .vsix
-                    <PhChevronRight weight="thin" size={16} />
-                  </Link>
                 </div>
               </div>
 
