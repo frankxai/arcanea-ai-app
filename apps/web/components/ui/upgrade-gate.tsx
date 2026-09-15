@@ -54,14 +54,14 @@ export function UpgradeGate({ feature, tier, children, fallback }: UpgradeGatePr
       </div>
 
       <p className="mb-4 text-sm text-neutral-400">
-        {message ?? 'This feature requires a higher plan.'}
+        {message ?? 'This feature is not available on your account yet.'}
       </p>
 
       <Link
         href="/pricing"
         className="inline-flex items-center gap-2 rounded-lg bg-[var(--arc-brand-atlantean-teal)] px-4 py-2 text-sm font-semibold text-[var(--arc-cosmic-void)] transition-all hover:shadow-[0_0_20px_rgba(0,188,212,0.4)]"
       >
-        Upgrade
+        See availability
         <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>

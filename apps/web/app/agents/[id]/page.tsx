@@ -323,7 +323,7 @@ function TaskInputCard({
           <p className="mt-2 text-center text-xs text-red-400">
             Insufficient credits.{" "}
             <Link href="/pricing" className="underline hover:text-red-300">
-              Get more credits
+              Credits are not on sale yet
             </Link>
           </p>
         )}

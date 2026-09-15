@@ -146,6 +146,9 @@ jobs:
       - name: Verify account return and public entry boundaries
         run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/entry-access.test.ts
 
+      - name: Verify waitlist capture fails closed
+        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts
+
       - name: ESLint
         run: pnpm --dir apps/web run lint
 

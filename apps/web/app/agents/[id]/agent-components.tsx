@@ -219,7 +219,7 @@ export function AgentSidebar({
           href="/pricing"
           className="mt-4 block text-center text-xs text-[var(--arc-brand-arcanean-gold)]/70 hover:text-[var(--arc-brand-arcanean-gold)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-arcanean-gold)]/60 rounded"
         >
-          Get more credits
+          Credits are not on sale yet
         </Link>
       </m.div>
     </div>
