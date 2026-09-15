@@ -1,0 +1,13 @@
+# Claude's canon assertions -- Arcanea requirements
+
+Source uuid: bbb90535-38b5-43a8-9d21-36deba9dd0db
+
+CONFIRMED = Frank's next message reads as explicit approval. PUSHED-BACK = reads as disagreement. UNCLEAR/NO-RESPONSE = no clean signal -- treat as OPEN, not LOCKED.
+
+| Verdict | Claude said | Frank's next message |
+|---|---|---|
+| UNCLEAR | Push your canonical lore docs to a public GitHub commit or use a blockchain timestamping service. | name squatting dispute and stuff when would it even matter? do i even need it? Bitcoin doesnt? ethereum not? we want to build dual strategy. think bigger, better, lower my cost, increase capabilities, protection for me and community, but not this old and expensive laws, we govern web, metaverse, pot |
+| UNCLEAR | If available at any price under €5K, grab it - **Git timestamp your lore** — push guardians.json, the canonical lore docs, and all character designs to a public commit on the frankxai org. | name squatting dispute and stuff when would it even matter? do i even need it? Bitcoin doesnt? ethereum not? we want to build dual strategy. think bigger, better, lower my cost, increase capabilities, protection for me and community, but not this old and expensive laws, we govern web, metaverse, pot |
+| UNCLEAR | Push all canonical lore, guardians.json, character designs, Hz mappings to a **public** repo commit on frankxai org. | What perplexity said and did I need to build system and dont want to pay all these but all arcanean creations to be free and web3 or any web law accepts and can scale, do i even need these terms? all and so many? but yes we build AI and aracnea.ai will be so much more and the agent harness design an |
+| PUSHED-BACK | Here's my final recommendation:  **File Arcanea — 3 classes — ~€432**  Class 9 (AI software, downloadable music, digital art), Class 41 (education, events, music publishing, entertainment), Class 42 ( | No why or? it can help structure and give us focus and community protection and guidance and more? how we can use different products and markets and class 28 and 36 and  42 and all suggestions you made, execute lets make this massive and we can earn massive and plan for making 100x back you think we |
+| PUSHED-BACK | **Git-timestamp all IP this week** — push guardians.json, canonical lore, character designs, Hz mappings to public repo. | No why or? it can help structure and give us focus and community protection and guidance and more? how we can use different products and markets and class 28 and 36 and  42 and all suggestions you made, execute lets make this massive and we can earn massive and plan for making 100x back you think we |

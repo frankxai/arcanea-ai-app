@@ -12,6 +12,10 @@ import type {
   CharacterBlueprint,
   LocationBlueprint,
   CreatureBlueprint,
+  CreatureAtlasEntry,
+  CreatureImageGenerationPolicy,
+  CreatureRightsTier,
+  CreaturePromptPack,
   ImagePromptResult,
   ElementAesthetics,
   RankVisual,
@@ -225,5 +229,109 @@ export function creatureToImagePrompt(
     suggestedSize: "1024x1024",
     suggestedSteps: 30,
     tags: [creature.element.toLowerCase(), creature.size, creature.temperament, "creature"],
+  };
+}
+
+// ── Creature Atlas prompt safety ─────────────────────────────────────────────
+
+const ATLAS_MODELS = [
+  "Codex Image Generation",
+  "OpenAI gpt-image-2",
+  "Grok Imagine",
+  "Gemini Image",
+  "Flux",
+];
+
+const RIGHTS_NOTES: Record<CreatureRightsTier, string> = {
+  original_arcanea: "Original Arcanea creature. Generation can use the full entry.",
+  public_domain: "Public-domain or folklore source. Keep attribution and avoid modern franchise styling.",
+  licensed: "Licensed source. Generate only inside the licensed usage boundary.",
+  factual_reference_only:
+    "Protected source reference. Use factual metadata only and generate an original Arcanea variant.",
+  blocked: "Blocked for generation or publication until reviewed.",
+};
+
+const POLICY_NOTES: Record<CreatureImageGenerationPolicy, string> = {
+  allowed_original_variant: "Allowed as an original Arcanea variant.",
+  prompt_only: "Prompt is safe to display; image generation requires operator review.",
+  licensed_only: "Requires a license before image generation or publication.",
+  blocked: "Do not generate images.",
+};
+
+export function canGenerateCreatureImage(entry: CreatureAtlasEntry): boolean {
+  return (
+    entry.rightsTier !== "blocked" &&
+    entry.arcaneaVariant.generationPolicy !== "blocked" &&
+    entry.arcaneaVariant.generationPolicy !== "licensed_only"
+  );
+}
+
+export function getCreatureAtlasSafetyNotes(entry: CreatureAtlasEntry): string[] {
+  const notes = [
+    RIGHTS_NOTES[entry.rightsTier],
+    POLICY_NOTES[entry.arcaneaVariant.generationPolicy],
+    "Do not upload or imitate official franchise art, logos, symbols, costumes, or exact creature markings.",
+  ];
+
+  if (entry.source.referenceMode === "factual_reference") {
+    notes.push(
+      `Reference source is ${entry.source.sourceWork}; keep names and citations in metadata, not in the generated image prompt.`,
+    );
+  }
+
+  return notes;
+}
+
+export function creatureAtlasEntryToPromptPack(
+  entry: CreatureAtlasEntry,
+): CreaturePromptPack {
+  const variant = entry.arcaneaVariant;
+  const factualSource =
+    entry.source.referenceMode === "factual_reference"
+      ? "inspired by a protected-source creature archetype, transformed into a distinct original design"
+      : `drawing from ${entry.source.referenceMode.replaceAll("_", " ")} material`;
+
+  const prompt = [
+    "Original Arcanea creature design",
+    "not a replica of any existing film, game, comic, animated, or literary character",
+    `${variant.name}, ${variant.archetype}`,
+    factualSource,
+    `${variant.element}-aligned ecology`,
+    `world context: ${variant.arcaneaWorld}`,
+    `visual DNA: ${variant.visualDna.join(", ")}`,
+    `behavior: ${variant.behavior.join(", ")}`,
+    `prompt focus: ${variant.promptFocus}`,
+    `scale: ${entry.scale}`,
+    `habitat: ${entry.habitats.join(", ")}`,
+    "believable fantasy biology, cinematic creature concept art, premium AI-lab restraint",
+    "no text, no watermark, no UI",
+  ].join(", ");
+
+  const negativePrompt = [
+    "official franchise art",
+    "recognizable copyrighted character likeness",
+    "logo",
+    "trademark symbol",
+    "text",
+    "watermark",
+    "toy render",
+    "chibi",
+    "flat cartoon",
+    ...variant.negativeConstraints,
+  ].join(", ");
+
+  return {
+    prompt,
+    negativePrompt,
+    aspectRatio: "1:1",
+    suggestedModels: [...ATLAS_MODELS],
+    safetyNotes: getCreatureAtlasSafetyNotes(entry),
+    tags: [
+      "creature-atlas",
+      variant.element.toLowerCase(),
+      entry.rightsTier,
+      entry.source.referenceMode,
+      ...entry.taxonomy.slice(0, 4),
+    ],
   };
 }

@@ -157,7 +157,7 @@ export default function AgentHubPage() {
               <p className="text-sm text-white/40">
                 {activeGate
                   ? `Showing skills from the ${activeGate} Gate`
-                  : "All 50 skills across the Ten Gates"}{/* facts-ok: skill-tree nodes */}
+                  : "All 50 skills across the Ten Gates"}
               </p>
             </TextReveal>
 
@@ -255,7 +255,7 @@ export default function AgentHubPage() {
             </div>
 
             <p className="text-center text-sm text-white/30 mt-8">
-              Showing {filteredSkills.length} of 50 skills{/* facts-ok: skill-tree nodes */}
+              Showing {filteredSkills.length} of 50 skills
             </p>
           </div>
         </section>

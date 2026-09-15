@@ -190,12 +190,12 @@ Core packages (install via npm/pnpm):
 - @arcanea/flow-engine — Agent orchestration
 - @arcanea/peak-performance — Development productivity system
 
-## Platform Statistics (August 2026)
-Counted from the repository at the time of writing; regenerate before quoting.
-- 235 pages
-- 195 API routes
-- 380 React components
-- 54 MCP tools
-- 20 creator skills
-- 14 public repos
-- 20 Library collections of canon content
+## Platform Statistics (April 2026)
+- 195 pages
+- 144 API routes
+- 286 React components
+- 49 npm packages
+- 42 MCP tools
+- 103 skills
+- 1,353 commits
+- 190,000+ words of canon content

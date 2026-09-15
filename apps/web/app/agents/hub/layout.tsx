@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 export const metadata: Metadata = {
   title: "AgentHub — Master the Gates, Command the Agents",
   description:
-    "Interactive skill tree with 10 Gate branches and 50 skills to unlock. Navigate the star-map, track your mastery, and activate the creative intelligence of Arcanea.", // facts-ok: Academy skill-tree nodes
+    "Interactive skill tree with 10 Gate branches and 50 skills to unlock. Navigate the star-map, track your mastery, and activate the creative intelligence of Arcanea.",
   openGraph: {
     title: "Arcanea AgentHub — Skyrim-Style Skill Tree",
     description:

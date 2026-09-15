@@ -1,0 +1,91 @@
+{
+  "asset_uid": "arcanea-2026-07-lyria-yumiko-nonhumanoid-perception-field",
+  "source_asset_uid": "arcanea-2026-07-lyria-yumiko-lens-field",
+  "batch_id": "2026-07-arcanea-visual-world-engine-b4",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 4,
+  "title": "lyria yumiko nonhumanoid perception field",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "vertical-social-9x16",
+  "aspect_ratio": "9:16",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-009d-lyria-yumiko-nonhumanoid-perception-field.png",
+    "sha256": "ec3d31ef287b011b8f57f14c949fbf2b054c7aa0e38091b79d2d9c72a11ae617",
+    "mime_type": "image/png",
+    "width": 941,
+    "height": 1672,
+    "size_bytes": 2931489
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b4.json#arc-visual-009d",
+    "prompt": "Use case: illustration-story. Asset type: vertical Guardian/Godbeast correction source. Primary request: Lyria with Yumiko as a non-humanoid Sight Gate perception field, not a fox, not a wolf, not a giant person, not a mount. Scene/backdrop: a prismatic observatory above folded clouds, made of smoked glass decks, blank silver-gold mirror pools, and clean lens reefs. Subject: Lyria is a focused operator in restrained myth-tech clothing, small in the frame, holding a blank prism relic; Yumiko is the weather of perception itself: kilometer-scale lens reefs, mirror halos, transparent field arcs, and flowing optical pressure with no face, no body, no animal silhouette. Style/medium: premium Arcanea concept art, neural-cosmos metaphor only, exact and original. Composition/framing: 9:16, upper half is vast nonhumanoid lens-field, lower third anchors Lyria and blank prism, safe top space for later overlay. Lighting/mood: clarity, silver, pale gold, restrained teal, clean awe. Materials/textures: Yumiko Prism, smoked glass, starlight metal, spectral dust, clear crystal. Constraints: no text, no diagrams, no UI, no rainbow clutter, no fox, no wolf, no humanoid giant, no wings shaped like an angel, no fantasy robe, no symbols.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "9:16"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 27,
+    "decision": "approve-with-style-caution",
+    "failure_modes": [
+      "Lyria wardrobe still leans elegant fantasy, but Yumiko is now non-humanoid field architecture",
+      "Very bright lens texture needs thumbnail contrast check"
+    ],
+    "next_improvement": "Promote as corrected Sight Gate field image; create a calmer high-contrast variant for small thumbnails."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md Ten Gates",
+      "Lyria",
+      "Yumiko",
+      "Sight Gate"
+    ],
+    "gate": "Sight",
+    "guardian": "Lyria"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 4,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "guardian-godbeast"
+      },
+      {
+        "trait_type": "surface",
+        "value": "vertical-social-9x16"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Sight"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Lyria"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-009d-lyria-yumiko-nonhumanoid-perception-field.vis.provenance.json"
+  },
+  "used_in": [
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\app\\gallery\\gallery-data.ts",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T05:20:30+02:00"
+}

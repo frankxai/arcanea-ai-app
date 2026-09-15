@@ -1,0 +1,90 @@
+{
+  "asset_uid": "arcanea-2026-07-luminor-rank-proof-atlas",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b3",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "luminor rank proof atlas",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "x-youtube-og-16x9",
+  "aspect_ratio": "16:9",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-031-luminor-rank-proof-atlas.png",
+    "sha256": "0f9b126f23149d75ee4e1a3c9f9bb361513a9f58bae874edbb02b97118675000",
+    "mime_type": "image/png",
+    "width": 1672,
+    "height": 941,
+    "size_bytes": 2157266
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b3.json#arc-visual-031",
+    "prompt": "Use case: stylized-concept. Asset type: 16:9 article, X, and YouTube source frame. Primary request: visualize Luminor as a highest rank of mastery, not a species, through a clean proof-atlas artifact that shows ten opened Gates as light architecture without using text. Scene/backdrop: black-glass Arcanea command table under a vast quiet observatory, no UI, no labels, no inscriptions. Subject: a single smooth atlas artifact floats above the table, ten distinct light portals arranged as pure color and material fields around it; a human creator silhouette stands nearby to show that Luminor is an attained rank. Style/medium: premium cinematic object poster, luxury cosmic myth-tech, not infographic, not game UI. Composition/framing: 16:9, artifact left-center, calm negative space on right for deterministic overlay later, readable at YouTube thumbnail size. Lighting/mood: serious, aspirational, gold/teal/white with restrained elemental accents. Materials/textures: sacred obsidian, starlight metal, living crystal, smooth blank gold foil, dark glass. Constraints: no text, no numerals, no letters, no diagrams, no glyphs, no fake UI, no logos, no humanoid species lineup, no fantasy spell circle.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "16:9"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 28,
+    "decision": "approve",
+    "failure_modes": [
+      "Portal ring can feel infographic-adjacent if overused",
+      "Needs accompanying copy to make Luminor-as-rank explicit because the image must remain text-free"
+    ],
+    "next_improvement": "Promote to gallery/article lane and use deterministic overlay/body copy to explain that Luminor is an earned mastery rank."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md Magic Ranks",
+      "Luminor is a rank",
+      "Ten Gates"
+    ],
+    "gate": "Source",
+    "guardian": "Shinkami"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "luminor-artifact"
+      },
+      {
+        "trait_type": "surface",
+        "value": "x-youtube-og-16x9"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Source"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Shinkami"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-031-luminor-rank-proof-atlas.vis.provenance.json"
+  },
+  "used_in": [
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\app\\gallery\\gallery-data.ts",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T04:43:20+02:00"
+}

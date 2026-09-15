@@ -1,0 +1,263 @@
+{
+  "version": "2026-06-23",
+  "task": "Build and verify the Arcanea Genesis proof visual/system slice: generated proof relic, deterministic storybook seed, collectible blueprint, and /genesis UI integration.",
+  "surface": "Genesis web-app tool surface, generated relic image, proof export metadata, and responsive desktop/mobile screenshots.",
+  "audience": "Arcanea creators, internal world architects, and future marketplace/storybook operators who need proof, provenance, and rights gates before publication.",
+  "first_read": "A creator call becomes a bounded Arcanea proof package with a premium visual relic, story seed, and explicit collectible readiness gate.",
+  "brand": "Arcanea",
+  "date": "2026-06-27",
+  "standards": [
+    "C:/Users/frank/starlight/repos/DESIGN_TASTE.md",
+    "C:/Users/frank/starlight/repos/WEB_EXPERIENCE_STANDARD.md",
+    "C:/Users/frank/starlight/repos/VISUAL_QA_GATE.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/best-practices/image-logo-visual-generation.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/DESIGN.md"
+  ],
+  "references": [
+    {
+      "label": "Arcanea brand pack",
+      "source": "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea",
+      "reason": "Keeps the slice in AI-lab premium territory, with mythic materiality contained inside artifacts instead of product chrome."
+    },
+    {
+      "label": "Genesis roadmap and canon",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/MASTER_PLAN.md",
+      "reason": "Prioritizes Genesis activation, proof metadata, public creator ownership, and Drift-as-condition framing."
+    },
+    {
+      "label": "Generated asset quality gate",
+      "source": "C:/Users/frank/starlight/repos/starlight-design-intelligence/evals/generated-asset-quality-gate.md",
+      "reason": "Requires inspection for fake text, artifacts, weak subject, and final-surface fit."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "Restrained AI-lab product chrome with mythic weight contained in the proof relic.",
+      "Creator ownership language and rights-review friction visible before any marketplace action.",
+      "Deterministic exports that can feed a world repo, storybook, and future registration pipeline."
+    ],
+    "avoid": [
+      "Fantasy-game loot framing, fake scarcity, or cult mechanics.",
+      "Readable generated text, malformed marks, overblown neon, or one-note purple/blue gradients.",
+      "Any implication that public minting or sale is approved before source/model/cultural review."
+    ],
+    "signature": "The Genesis Proof Relic: a glass reliquary holding a source fragment and memory graph, paired with explicit rights-gated collectible metadata.",
+    "system": [
+      "Palette: cosmic black, near-black glass, muted gold, manuscript cream, restrained teal, and deep oxblood accents.",
+      "Typography and UI: existing Arcanea Geist/product system, compact tool panels, proof chips, and 8px-radius cards.",
+      "Asset: generated cinematic bitmap used as an application image, not a final logo or public token proof.",
+      "Proof system: storybook pages, visual prompt record, collectible metadata, and rights checklist included in repo export."
+    ]
+  },
+  "artifacts": [
+    {
+      "path_or_url": "apps/web/public/brand/arcanea-genesis-proof-relic.png",
+      "kind": "image",
+      "inspected": true,
+      "notes": "Raw relic image inspected. Clear centered subject, no readable fake text, no watermark/logo, strong glass/gold/manuscript materiality, and premium proof-artifact read."
+    },
+    {
+      "path_or_url": ".visual-qa/genesis-proof-relic-desktop-2026-06-27.png",
+      "kind": "ui",
+      "inspected": true,
+      "notes": "Desktop full-page screenshot inspected after resetting scroll to top. No nav overlap, no clipped text, proof relic and rights gate render correctly."
+    },
+    {
+      "path_or_url": ".visual-qa/genesis-proof-relic-mobile-2026-06-27.png",
+      "kind": "ui",
+      "inspected": true,
+      "notes": "Mobile screenshot inspected. Stacked flow remains readable, controls fit, proof image and collectible/storybook sections render without clipping."
+    },
+    {
+      "path_or_url": "apps/web/lib/genesis/proof.ts",
+      "kind": "web",
+      "inspected": true,
+      "notes": "Proof system now exports storybook seed, visual canon, collectible metadata, rights checklist, and first-page/prompt records."
+    }
+  ],
+  "checks": [
+    {
+      "name": "type-check",
+      "status": "pass",
+      "evidence": "corepack pnpm --dir apps/web type-check passed earlier in this loop."
+    },
+    {
+      "name": "production-build",
+      "status": "pass",
+      "evidence": "corepack pnpm --dir apps/web build exited 0."
+    },
+    {
+      "name": "focused-e2e",
+      "status": "pass",
+      "evidence": "corepack pnpm exec playwright test e2e/genesis.spec.ts --workers=1 from apps/web: 2 passed."
+    },
+    {
+      "name": "visual-qa-desktop-mobile",
+      "status": "pass",
+      "evidence": "Desktop and mobile screenshots inspected from .visual-qa; generated image inspected directly."
+    },
+    {
+      "name": "local-server-cleanup",
+      "status": "pass",
+      "evidence": "Port 3001 had no listening process after screenshot capture cleanup."
+    }
+  ],
+  "score": {
+    "total": 27,
+    "max": 30,
+    "notes": "First read 4/5; brand fit 5/5; craft/composition 4/5 due spacious desktop left column; accessibility/responsiveness 5/5; provenance/no AI artifacts 4/5 because generated image still needs final rights review before marketplace use; usefulness 5/5."
+  },
+  "decision": "ship",
+  "known_risks": [
+    "Marketplace/NFT sale remains blocked by the rights-review checklist and is not approved by this slice.",
+    "Repo-level security scan reported pre-existing leak findings that require separate triage before production promotion.",
+    "Generated relic is an application image for the Genesis surface, not a final identity mark or public token image."
+  ],
+  "loop_phases": [
+    {
+      "phase": 1,
+      "summary": "Loaded Arcanea repo, estate, canon, brand, visual QA, L99 loop, image generation, and world-system instructions.",
+      "decisions": [
+        "Use /genesis as the strongest existing activation surface.",
+        "Keep mythic intensity inside the artifact and keep product UI restrained."
+      ]
+    },
+    {
+      "phase": 2,
+      "summary": "Defined the proof relic, storybook seed, collectible metadata, and rights-gated export as the coherent system increment.",
+      "decisions": [
+        "Reject raw NFT claims; require rights review before any mint/list/sale.",
+        "Use deterministic proof export files so future plugins/skills can consume the slice."
+      ]
+    },
+    {
+      "phase": 3,
+      "summary": "Generated the proof relic image and implemented the Genesis proof/story/collectible system and UI.",
+      "decisions": [
+        "Copy the generated image into apps/web/public/brand while preserving the source generated image.",
+        "Add storybook, visual prompt, collectible metadata, and rights checklist to the repo export."
+      ]
+    },
+    {
+      "phase": 4,
+      "summary": "Critiqued the generated asset and responsive UI through direct image and screenshot inspection.",
+      "decisions": [
+        "Accept the relic image as a strong application visual.",
+        "Keep desktop layout as a spacious two-column tool panel for this slice."
+      ]
+    },
+    {
+      "phase": 5,
+      "summary": "Iterated the E2E selectors to match the expanded UI semantics and saved-record behavior.",
+      "decisions": [
+        "Use accessible headings and scoped live-region/SIS-memory locators instead of loose text matches."
+      ]
+    },
+    {
+      "phase": 6,
+      "summary": "Ran type/build/E2E gates, captured screenshots, verified server cleanup, and saved this evidence manifest.",
+      "decisions": [
+        "Ship the local slice as a verified draft system, not a production marketplace launch."
+      ]
+    }
+  ],
+  "tokens_used": {
+    "palette": [
+      "#05070f",
+      "#0a0f1f",
+      "#c5a26f",
+      "#f0e9d9",
+      "#2a5c5c",
+      "#6b2a2a"
+    ],
+    "type": "Existing Arcanea Geist/Instrument Serif/Geist Mono stack.",
+    "materials": [
+      "near-black glass",
+      "muted gold",
+      "source manuscript",
+      "memory graph threads",
+      "restrained teal signal"
+    ]
+  },
+  "generate_details": {
+    "prompt_injected": "Premium cinematic Arcanea Genesis Proof Relic hero/card image; dark glass studio reliquary holding luminous manuscript fragment, gold source seal, memory graph threads; no readable text, logos, watermarks, characters, weapons, skulls, neon, pixel art, or fantasy-game framing.",
+    "tool": "image_gen",
+    "output_path": "apps/web/public/brand/arcanea-genesis-proof-relic.png",
+    "source_ref": "C:/Users/frank/.codex/generated_images/019f094f-1fad-7c01-86d7-02179f87b5d2/ig_0923844cd1d8d878016a3fd4b7d53c8191b4b3c709455f69d9.png",
+    "inspection_notes": "Direct inspection passed for clear subject, clean crop, no legible fake text, and brand-fit materiality."
+  },
+  "critics": [
+    {
+      "role": "Arcanea brand critic",
+      "score": 96,
+      "flags": [],
+      "suggested_fixes": [
+        "Keep future Genesis visuals in proof/reliquary/source-material territory rather than heroic fantasy scenes."
+      ]
+    },
+    {
+      "role": "Generated asset critic",
+      "score": 95,
+      "flags": [
+        "Generated manuscript marks are decorative only and must not be treated as readable canon text."
+      ],
+      "suggested_fixes": [
+        "For public sale imagery, run one more asset pass with even cleaner blank manuscript geometry or vector overlay."
+      ]
+    },
+    {
+      "role": "Product UI critic",
+      "score": 94,
+      "flags": [
+        "Desktop left column is intentionally spacious and could be tightened in a broader Genesis UX pass."
+      ],
+      "suggested_fixes": [
+        "Later iteration could bring the call controls higher for faster first-action ergonomics."
+      ]
+    }
+  ],
+  "overall_score": 95,
+  "iterations": 1,
+  "artifacts_inspected": [
+    "apps/web/public/brand/arcanea-genesis-proof-relic.png: raw asset inspection.",
+    ".visual-qa/genesis-proof-relic-desktop-2026-06-27.png: desktop responsive inspection.",
+    ".visual-qa/genesis-proof-relic-mobile-2026-06-27.png: mobile responsive inspection.",
+    "apps/web/e2e/genesis.spec.ts: focused Genesis flow coverage."
+  ],
+  "memory_updates": {
+    "patterns_learned": [
+      "Arcanea Genesis visuals work best when artifact-like, rights-aware, and evidence-driven instead of character-led.",
+      "Generated proof images should be paired with deterministic prompt, metadata, and rights-checklist exports."
+    ],
+    "failure_modes": [
+      "Loose Playwright text selectors break when proof/story language intentionally appears in multiple regions.",
+      "Full-page screenshots after automated clicks can preserve fixed nav at a scrolled offset; reset scroll before visual QA."
+    ],
+    "successful_refs": [
+      "Arcanea brand pack AI-lab premium direction.",
+      "OUTCOMES.md 30-point web/product UI and generated-image gates."
+    ]
+  },
+  "verdict": {
+    "status": "ship",
+    "rationale": "The verified local slice is ready as a private Genesis proof draft system. Marketplace publication remains explicitly blocked until rights review."
+  },
+  "checklist": {
+    "brief_loaded": true,
+    "brand_pack_loaded": true,
+    "canon_loaded": true,
+    "premium_visual_generated_with_negative_prompt": true,
+    "raw_asset_inspected": true,
+    "desktop_screenshot_inspected": true,
+    "mobile_screenshot_inspected": true,
+    "e2e_flow_passed": true,
+    "production_build_passed": true,
+    "rights_gate_visible": true,
+    "marketplace_claims_blocked": true,
+    "server_left_running": false
+  },
+  "red_team_notes": "Do not market this as mint-ready. Treat the collectible metadata as portable draft infrastructure only. Before production launch, triage repository secret-scan findings, run a fresh Vercel preview, and complete source/model/cultural rights review."
+}

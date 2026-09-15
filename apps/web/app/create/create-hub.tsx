@@ -407,7 +407,7 @@ export function CreateHub() {
               <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-white/30">
                 Create
               </p>
-              <StatusBadge level="preview" note="wiring now" />
+              <StatusBadge level="preview" note="Q2 2026" />
             </div>
           </Reveal>
 
@@ -416,7 +416,7 @@ export function CreateHub() {
               <StatusNotice
                 level="preview"
                 title="Template gallery is a preview"
-                body="Templates below preview what is coming — one-click instantiation is being wired now. Use /chat or /worlds to build from scratch today."
+                body="Design is final. Templates below are design previews — real template storage + one-click instantiation land through Q2 2026. Use /chat or /worlds to build from scratch today."
                 linkHref="/worlds"
                 linkLabel="Build a world"
               />
@@ -431,7 +431,7 @@ export function CreateHub() {
               delay={0.05}
               stagger={0.022}
             />
-            <br />{" "}
+            <br />
             <SplitText
               text="making today?"
               as="span"

@@ -1,0 +1,91 @@
+{
+  "asset_uid": "arcanea-2026-07-starweave-vaelith-perspective-loom",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b5",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "Starweave Gate Vaelith Perspective Loom",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "social-editorial-4x5",
+  "aspect_ratio": "4:5",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-037-starweave-vaelith-perspective-loom.png",
+    "sha256": "34ca85abec462a1f5c0fbceeefc43a08a04de4b91111646a38b45a42a4b9a67c",
+    "mime_type": "image/png",
+    "width": 1122,
+    "height": 1402,
+    "size_bytes": 3243863
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b5.json#arc-visual-037",
+    "prompt": "Arcanea Starweave Gate 852 Hz, Elara as a calm perspective engineer standing on a high myth-tech observatory bridge. Vaelith is a colossal perspective loom, not an animal, not a dragon, not a humanoid: interlocking horizon-arches, living starlight fabric, impossible windows showing many viewpoints of the same world, gold-thread constellations, shifting parallax architecture. Tiny creators cross transparent bridges between kilometer-high towers. Luxury cosmic myth-tech, sacred geometry, starlight metal, obsidian glass, celestial gold, cool cosmic blue and warm gold. Composition: cinematic 4:5 social crop, clear central loom, strong depth, clean right-side overlay zone. No text, no letters, no fake writing, no symbols that resemble writing, no inscriptions, no UI, no logos.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "4:5"
+    },
+    "original_generated_path": "C:\\Users\\frank\\.codex\\generated_images\\019f3498-30f9-77a0-b2a3-b54acd0c8e66\\ig_082cc6fdcf888bcd016a4b2d6b34308191a6d71dce7e9c0e88.png"
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "approved-candidate",
+    "score30": 28,
+    "decision": "approve",
+    "failure_modes": [
+      "Excellent perspective loom and world-scale read; ornate lattice may need a calmer crop for small thumbnails."
+    ],
+    "next_improvement": "Crop-test for 4:5 and wide editorial; build deterministic copy around perspective practice."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md",
+      "VISUAL_DOCTRINE.md",
+      "Starweave Gate Vaelith Perspective Loom"
+    ],
+    "gate": "Starweave",
+    "guardian": "Elara",
+    "godbeast": "Vaelith"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "starweave"
+      },
+      {
+        "trait_type": "surface",
+        "value": "social-editorial-4x5"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Starweave"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Elara"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-037-starweave-vaelith-perspective-loom.vis.provenance.json"
+  },
+  "used_in": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/gallery/gallery-data.ts",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T06:31:00+02:00"
+}

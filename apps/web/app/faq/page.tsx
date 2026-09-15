@@ -20,7 +20,7 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What is Arcanea?",
-        a: "Arcanea is a creative multiverse — a living ecosystem where you chat with AI, build fantasy worlds, share what you make, and turn imagination into products. It includes creative partners across development, design, writing, and research, a Library of creative philosophy, an Academy for world-building, and a Studio for generating art, music, and code.",
+        a: "Arcanea is a creative multiverse — a living ecosystem where you chat with AI, build fantasy worlds, share what you make, and turn imagination into products. It includes creative partners across development, design, writing, and research, a Library of 190K+ words of creative philosophy, an Academy for world-building, and a Studio for generating art, music, and code.",
       },
       {
         q: "How do I get started?",
@@ -42,7 +42,7 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "How many companions are there?",
-        a: "Specialized companions are organized across five teams: Orchestrator, Development, Creative, Writing, and Research. Each has a distinct philosophy, expertise, and conversational style. You can explore them all on the Companions page.",
+        a: "There are 13 configured companions organized across five teams: Orchestrator, Development, Creative, Writing, and Research. Each has a distinct philosophy, expertise, and conversational style. You can explore them all on the Companions page.",
       },
       {
         q: "Which companion should I use?",
@@ -259,7 +259,7 @@ export default function FAQPage() {
             {[
               {
                 title: "Companions",
-                desc: "Meet the companions across 5 teams",
+                desc: "Meet the 13 companions across 5 teams",
                 href: "/companions",
               },
               {

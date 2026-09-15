@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import type { Metadata, Viewport } from "next";
-import { cosmic } from "@arcanea/design-system/tokens";
 import "./globals.css";
-import "@fontsource-variable/newsreader";
 import { ReactNode, Suspense } from "react";
-import { JetBrains_Mono, Instrument_Serif } from "next/font/google";
+import { JetBrains_Mono, Newsreader, Instrument_Serif } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { cn } from "@/lib/utils";
@@ -43,6 +41,14 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+  display: "swap",
+});
+
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: ["400"],
@@ -53,22 +59,24 @@ const instrumentSerif = Instrument_Serif({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL || "https://www.arcanea.ai",
+    process.env.NEXT_PUBLIC_APP_URL || "https://arcanea.ai",
   ),
   title: {
-    default: "Arcanea™ — Creative Intelligence Platform",
+    default: "Arcanea™ - Sovereign Creative Intelligence",
     template: "%s | Arcanea",
   },
   description:
-    "A creative multiverse: chat with AI, build fantasy worlds, share what you make, and turn imagination into products. Free to start.",
+    "Arcanea is a sovereign creative intelligence workspace for turning crisis into proof: Genesis activation, living worlds, rights-aware media, memory, provenance, and agent workflows.",
   keywords: [
     "AI",
     "creativity",
     "creative intelligence",
-    "mythology",
-    "philosophy",
+    "creator-owned AI",
+    "AI provenance",
+    "AI agents",
     "creation platform",
     "world building",
+    "creator workflow",
     "AI writing",
     "AI art",
   ],
@@ -78,24 +86,24 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea - Sovereign Creative Intelligence",
     description:
-      "Creative AI partners, a philosophy library, and creation studio in one platform.",
+      "Genesis proof, living worlds, rights-aware media, memory, provenance, and accountable agent workflows in one creator-owned workspace.",
     siteName: "Arcanea",
     images: [
       {
         url: "/brand/arcanea-og.jpg",
         width: 1200,
         height: 630,
-        alt: "Arcanea — Creative Intelligence Platform",
+        alt: "Arcanea - Sovereign Creative Intelligence",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea - Sovereign Creative Intelligence",
     description:
-      "Creative AI partners, a philosophy library, and creation studio in one platform.",
+      "Turn a creator mission into proof, memory, provenance, and an accountable agent workflow.",
     images: ["/brand/arcanea-og.jpg"],
   },
   alternates: {
@@ -117,18 +125,19 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   viewportFit: "cover",
-  themeColor: cosmic.void,
+  themeColor: "#09090b",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      style={{ colorScheme: "dark", "--font-serif": "'Newsreader Variable', serif" } as React.CSSProperties}
-            className={cn(
+      style={{ colorScheme: "dark" }}
+      className={cn(
               GeistSans.variable,
               GeistMono.variable,
               jetbrainsMono.variable,
+              newsreader.variable,
               instrumentSerif.variable,
               "font-sans",
             )}
@@ -144,24 +153,30 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               "@context": "https://schema.org",
               "@type": "WebApplication",
               "name": "Arcanea",
-              "url": "https://www.arcanea.ai",
-              "description": "Creative Intelligence Platform — chat with AI, build fantasy worlds, share what you make, and turn imagination into products.",
-              "applicationCategory": "CreativeWork",
+              "url": "https://arcanea.ai",
+              "description": "Sovereign creative intelligence workspace for Genesis activation, living worlds, rights-aware media, memory, provenance, and accountable agent workflows.",
+              "applicationCategory": "DesignApplication",
               "operatingSystem": "Web",
               "offers": {
                 "@type": "Offer",
                 "price": "0",
                 "priceCurrency": "USD",
-                "description": "Free to start"
+                "description": "Free activation path available"
               },
               "creator": {
                 "@type": "Organization",
                 "name": "Arcanea",
-                "url": "https://www.arcanea.ai"
+                "url": "https://arcanea.ai"
               },
               "featureList": [
-                "Living world builder with auto-linking",
-                "Quest and faction generation"
+                "Genesis proof activation flow",
+                "Rights-aware Creature Atlas",
+                "Creator-owned project memory",
+                "Living world builder",
+                "Agent workflow planning",
+                "MCP and CLI integrations",
+                "Creator economy and Store surfaces",
+                "Provenance-aware creative exports"
               ]
             })
           }}

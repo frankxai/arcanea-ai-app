@@ -4,8 +4,8 @@ import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Academy of Creation | Arcanea',
-    template: '%s — Academy | Arcanea',
+    default: 'Academy of Creation',
+    template: '%s | Academy',
   },
   description:
     'Master the Ten Gates of Creation. Open your channels to the elements and awaken your creative power through the Arcanean Academy.',

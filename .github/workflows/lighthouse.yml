@@ -27,7 +27,7 @@ jobs:
   lighthouse:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v5
 
       - name: Advisory on pull requests
         if: github.event_name == 'pull_request'

@@ -1,0 +1,28 @@
+{
+  "id": "arc-social-031-luminor-rank-proof-instagram-feed-4x5",
+  "campaignId": "arc-social-031-luminor-rank-proof",
+  "sourceAssetId": "arc-visual-031",
+  "channelKey": "instagram-feed-4x5",
+  "platforms": [
+    "Instagram Feed",
+    "Instagram Carousel"
+  ],
+  "ratio": "4:5",
+  "width": 1080,
+  "height": 1350,
+  "sizeBytes": 1470111,
+  "sha256": "0bd14f6f6924d3dd3c2464f776801c6a5526cc02b8aafedc437b38a206e2f9e7",
+  "headline": "Luminor Is Earned",
+  "subhead": "Ten Gates. One proof-led path.",
+  "cta": "Mastery leaves evidence.",
+  "proof": "Rank, not species",
+  "gate": "Source",
+  "guardian": "Shinkami",
+  "score30": 28,
+  "sourceImage": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-031-luminor-rank-proof-atlas.png",
+  "outputPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\social-overlays\\exports\\instagram-feed-4x5\\arc-social-031-luminor-rank-proof-instagram-feed-4x5.png",
+  "sourceMethod": "code-rendered deterministic overlays on inspected generated media",
+  "rightsStatus": "generated-owned-derived",
+  "approvalGate": "social-approvals",
+  "createdAt": "2026-07-06T07:49:20+02:00"
+}

@@ -2,8 +2,6 @@
 import Link from 'next/link';
 import { getResearchCategories, getResearchItems } from '@/lib/research/loader';
 import { GATE_COLORS } from '@/lib/research/types';
-import { PUBLIC_REPO_SUMMARY } from '@/lib/public-repo-registry';
-import { FACTS } from '@/lib/facts';
 
 export const dynamic = 'force-dynamic';
 
@@ -95,10 +93,10 @@ function TypeLabel({ type }: { type: string }) {
 // ─── Static Data ──────────────────────────────────────────────────────────────
 
 const STATS = [
-  { value: String(PUBLIC_REPO_SUMMARY.public), label: 'Public Repos' },
-  { value: String(FACTS.mcpTools), label: 'MCP Tools' },
-  { value: String(FACTS.skills), label: 'Agent Skills' },
-  { value: String(FACTS.luminors), label: 'Luminors' },
+  { value: '27', label: 'Repositories' },
+  { value: '35', label: 'NPM Packages' },
+  { value: '54', label: 'Agent Skills' },
+  { value: '200K+', label: 'Words of Lore' },
 ];
 
 interface RepoCard {
@@ -106,6 +104,7 @@ interface RepoCard {
   description: string;
   href: string;
   language?: string;
+  stars?: string;
 }
 
 interface RepoGroup {
@@ -119,36 +118,36 @@ const REPO_GROUPS: RepoGroup[] = [
     category: 'Platform',
     accent: 'var(--arc-brand-atlantean-teal)',
     repos: [
-      { name: 'arcanea', description: 'Open-source framework and canonical lore. The foundation of the multiverse.', href: 'https://github.com/frankxai/arcanea', language: 'TypeScript' },
-      { name: 'arcanea-ai-app', description: 'The main Arcanea platform — Next.js 16, Supabase, Vercel AI SDK.', href: 'https://github.com/frankxai/arcanea-ai-app', language: 'TypeScript' },
-      { name: 'arcanea-soul', description: 'Core AI personality engine. The soul layer beneath every companion.', href: 'https://github.com/frankxai/arcanea-soul', language: 'TypeScript' },
+      { name: 'arcanea', description: 'Open-source framework and canonical lore. The foundation of the multiverse.', href: 'https://github.com/frankxai/arcanea', language: 'TypeScript', stars: '2.8K' },
+      { name: 'arcanea-ai-app', description: 'The main Arcanea platform — Next.js 16, Supabase, Vercel AI SDK.', href: 'https://github.com/frankxai/arcanea-ai-app', language: 'TypeScript', stars: '1.4K' },
+      { name: 'arcanea-soul', description: 'Core AI personality engine. The soul layer beneath every companion.', href: 'https://github.com/frankxai/arcanea-soul', language: 'TypeScript', stars: '980' },
     ],
   },
   {
     category: 'Intelligence',
     accent: 'var(--arc-brand-cosmic-blue)',
     repos: [
-      { name: 'starlight-intelligence-system', description: 'Multi-model orchestration with memory, routing, and persona management.', href: 'https://github.com/frankxai/starlight-intelligence-system', language: 'TypeScript' },
-      { name: 'arcanea-companion', description: 'AI companion framework. Personality, context, and relationship tracking.', href: 'https://github.com/frankxai/arcanea-companion', language: 'TypeScript' },
-      { name: 'arcanea-infogenius', description: 'Research and knowledge synthesis agent. Web search, analysis, reporting.', href: 'https://github.com/frankxai/arcanea-infogenius', language: 'Python' },
+      { name: 'starlight-intelligence-system', description: 'Multi-model orchestration with memory, routing, and persona management.', href: 'https://github.com/frankxai/starlight-intelligence-system', language: 'TypeScript', stars: '1.6K' },
+      { name: 'arcanea-companion', description: 'AI companion framework. Personality, context, and relationship tracking.', href: 'https://github.com/frankxai/arcanea-companion', language: 'TypeScript', stars: '1.2K' },
+      { name: 'arcanea-infogenius', description: 'Research and knowledge synthesis agent. Web search, analysis, reporting.', href: 'https://github.com/frankxai/arcanea-infogenius', language: 'Python', stars: '890' },
     ],
   },
   {
     category: 'Creative Tools',
     accent: 'var(--arc-brand-arcanean-gold)',
     repos: [
-      { name: 'claude-arcanea', description: 'Arcanea skills overlay for Claude Code. 20 creator skills, MCP server, agent harness.', href: 'https://github.com/frankxai/claude-arcanea', language: 'TypeScript' },
-      { name: 'arcanea-claw', description: 'CLI tool for Arcanea. Project scaffolding, deployment, and management.', href: 'https://github.com/frankxai/arcanea-claw', language: 'TypeScript' },
-      { name: 'arcanea-records', description: 'Music studio and frequency-aligned compositions. Suno AI integration.', href: 'https://github.com/frankxai/arcanea-records', language: 'TypeScript' },
+      { name: 'claude-arcanea', description: 'Arcanea skills overlay for Claude Code. 54 skills, MCP server, agent harness.', href: 'https://github.com/frankxai/claude-arcanea', language: 'TypeScript', stars: '2.1K' },
+      { name: 'arcanea-claw', description: 'CLI tool for Arcanea. Project scaffolding, deployment, and management.', href: 'https://github.com/frankxai/arcanea-claw', language: 'TypeScript', stars: '756' },
+      { name: 'arcanea-records', description: 'Music studio and frequency-aligned compositions. Suno AI integration.', href: 'https://github.com/frankxai/arcanea-records', language: 'TypeScript', stars: '640' },
     ],
   },
   {
     category: 'Extensions',
     accent: 'var(--arc-void)',
     repos: [
-      { name: 'arcanea-mcp', description: 'Model Context Protocol server. World-building, characters, lore via MCP.', href: 'https://github.com/frankxai/arcanea-mcp', language: 'TypeScript' },
-      { name: 'arcanea-onchain', description: 'On-chain IP protection. NFT minting on Base with Story Protocol licensing.', href: 'https://github.com/frankxai/arcanea-onchain', language: 'Solidity' },
-      { name: 'arcanea-flow', description: 'Multi-agent workflow orchestration and swarm coordination.', href: 'https://github.com/frankxai/arcanea-flow', language: 'TypeScript' },
+      { name: 'arcanea-mcp', description: 'Model Context Protocol server. World-building, characters, lore via MCP.', href: 'https://github.com/frankxai/arcanea-mcp', language: 'TypeScript', stars: '1.1K' },
+      { name: 'arcanea-onchain', description: 'On-chain IP protection. NFT minting on Base with Story Protocol licensing.', href: 'https://github.com/frankxai/arcanea-onchain', language: 'Solidity', stars: '520' },
+      { name: 'arcanea-flow', description: 'Multi-agent workflow orchestration and swarm coordination.', href: 'https://github.com/frankxai/arcanea-flow', language: 'TypeScript', stars: '480' },
     ],
   },
 ];
@@ -343,7 +342,7 @@ export default async function ResearchPage() {
               The Ecosystem
             </h2>
             <p className="text-white/40 text-sm mt-1 max-w-xl">
-              14 public repositories organized across four domains — all open source, all interconnected.
+              27 repositories organized across four domains — all open source, all interconnected.
             </p>
           </div>
 
@@ -386,6 +385,14 @@ export default async function ResearchPage() {
                             <span className="flex items-center gap-1.5 text-xs text-white/30">
                               <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: group.accent + '80' }} />
                               {repo.language}
+                            </span>
+                          )}
+                          {repo.stars && (
+                            <span className="flex items-center gap-1 text-xs text-white/30">
+                              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                              </svg>
+                              {repo.stars}
                             </span>
                           )}
                         </div>

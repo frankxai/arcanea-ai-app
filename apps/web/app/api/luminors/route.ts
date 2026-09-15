@@ -6,40 +6,12 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  getPublishedLuminors,
-  LUMINOR_READ_TIMEOUT_MS,
-  saveLuminor,
-} from '@/lib/luminors/luminor-service';
+import { getPublishedLuminors, saveLuminor } from '@/lib/luminors/luminor-service';
 import { createClient } from '@/lib/supabase/server';
 
 // ---------------------------------------------------------------------------
 // GET — Browse published Luminors
 // ---------------------------------------------------------------------------
-
-/** Bound the entire public-read operation, including client creation and retries. */
-async function withPublicReadDeadline<T>(
-  operation: () => Promise<T>
-): Promise<T> {
-  let timeoutId: ReturnType<typeof setTimeout> | undefined;
-  const deadline = new Promise<never>((_, reject) => {
-    timeoutId = setTimeout(
-      () =>
-        reject(
-          new Error(
-            `Published Luminor read exceeded ${LUMINOR_READ_TIMEOUT_MS}ms`
-          )
-        ),
-      LUMINOR_READ_TIMEOUT_MS
-    );
-  });
-
-  try {
-    return await Promise.race([operation(), deadline]);
-  } finally {
-    if (timeoutId) clearTimeout(timeoutId);
-  }
-}
 
 export async function GET(req: NextRequest) {
   try {
@@ -49,23 +21,12 @@ export async function GET(req: NextRequest) {
     const limit = Math.min(parseInt(searchParams.get('limit') ?? '24', 10), 100);
     const offset = Math.max(parseInt(searchParams.get('offset') ?? '0', 10), 0);
 
-    const luminors = await withPublicReadDeadline(() =>
-      getPublishedLuminors({ domain, element, limit, offset })
-    );
+    const luminors = await getPublishedLuminors({ domain, element, limit, offset });
 
     return NextResponse.json({ data: luminors, count: luminors.length });
   } catch (error) {
-    console.error('[api/luminors] public read unavailable:', error);
-    return NextResponse.json(
-      { error: 'Published Luminors are temporarily unavailable. Please retry.' },
-      {
-        status: 503,
-        headers: {
-          'Retry-After': '30',
-          'Cache-Control': 'no-store',
-        },
-      }
-    );
+    const message = error instanceof Error ? error.message : 'Failed to fetch luminors';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 

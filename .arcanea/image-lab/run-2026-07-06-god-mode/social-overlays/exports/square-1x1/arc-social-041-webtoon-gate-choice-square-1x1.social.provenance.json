@@ -1,0 +1,30 @@
+{
+  "id": "arc-social-041-webtoon-gate-choice-square-1x1",
+  "campaignId": "arc-social-041-webtoon-gate-choice",
+  "sourceAssetId": "arc-visual-041",
+  "channelKey": "square-1x1",
+  "platforms": [
+    "X",
+    "Instagram Feed",
+    "Threads",
+    "Bluesky"
+  ],
+  "ratio": "1:1",
+  "width": 1200,
+  "height": 1200,
+  "sizeBytes": 1774688,
+  "sha256": "3cc6de482400054b3ed5c2d20cecaeaba6acb705da092a40d39343b808e0a8a5",
+  "headline": "Hold The Gate Open",
+  "subhead": "A blank ledger. A consent exit. A choice.",
+  "cta": "Choose proof over control.",
+  "proof": "Gate-Descent / story portal",
+  "gate": "Foundation",
+  "guardian": "Lyssandria",
+  "score30": 28,
+  "sourceImage": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-041-webtoon-gate-choice-blank-ledger.png",
+  "outputPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\social-overlays\\exports\\square-1x1\\arc-social-041-webtoon-gate-choice-square-1x1.png",
+  "sourceMethod": "code-rendered deterministic overlays on inspected generated media",
+  "rightsStatus": "generated-owned-derived",
+  "approvalGate": "social-approvals",
+  "createdAt": "2026-07-06T07:49:20+02:00"
+}

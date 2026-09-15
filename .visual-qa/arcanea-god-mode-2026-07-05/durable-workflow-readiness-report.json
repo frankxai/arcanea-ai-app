@@ -1,0 +1,213 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-07-05T06:16:22.508Z",
+  "repo": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app",
+  "summary": {
+    "decision": "runtime-blocked-packet-ready",
+    "implementationReady": false,
+    "runtimeCodeAllowed": false,
+    "packetReady": true,
+    "pass": 2,
+    "warn": 4,
+    "blockers": 0
+  },
+  "inputs": {
+    "durableBrief": "planning-with-files/ARCANEA_DURABLE_WORKFLOW_RELEASE_BRIEF_2026-07-05.md",
+    "packageManifestCount": 68,
+    "packageFiles": [
+      "apps/agenthub/package.json",
+      "apps/web/package.json",
+      "docs/atlas/package.json",
+      "oss/package.json",
+      "package.json",
+      "packages/agent-bus/package.json",
+      "packages/agent-registry/package.json",
+      "packages/ai-core/package.json",
+      "packages/ai-provider/package.json",
+      "packages/aios/package.json",
+      "packages/arc-protocol/package.json",
+      "packages/arcanea-cli/package.json",
+      "packages/arcanea-flow/package.json",
+      "packages/arcanea-hooks/package.json",
+      "packages/arcanea-mcp/package.json",
+      "packages/arcanea-multilingual-config/package.json",
+      "packages/arcanea-registry-mcp/package.json",
+      "packages/arcanea-security/package.json",
+      "packages/arcanea-skills/package.json",
+      "packages/arcanea-voice-agent/package.json",
+      "packages/arcanea-voice/package.json",
+      "packages/auth/package.json",
+      "packages/author-council/package.json",
+      "packages/chrome-extension/package.json",
+      "packages/claude-arcanea/package.json",
+      "packages/claude-plugin-design/package.json",
+      "packages/cli/package.json",
+      "packages/content-api/package.json",
+      "packages/core/package.json",
+      "packages/council/package.json",
+      "packages/creative-pipeline/package.json",
+      "packages/database/package.json",
+      "packages/design-system/package.json",
+      "packages/extension-core/package.json",
+      "packages/flow-engine/package.json",
+      "packages/grok-media/package.json",
+      "packages/guardian-evolution/package.json",
+      "packages/guardian-memory/package.json",
+      "packages/hybrid-memory/package.json",
+      "packages/intelligence-bridge/package.json",
+      "packages/luminor-compiler/package.json",
+      "packages/media/package.json",
+      "packages/memory-mcp/package.json",
+      "packages/memory-system/package.json",
+      "packages/multilingual/package.json",
+      "packages/orchestrator/package.json",
+      "packages/os/package.json",
+      "packages/overlay-chatgpt/package.json",
+      "packages/overlay-claude/package.json",
+      "packages/overlay-copilot/package.json",
+      "packages/overlay-cursor/package.json",
+      "packages/overlay-gemini/package.json",
+      "packages/presence/package.json",
+      "packages/prompt-books/package.json",
+      "packages/publishing-house-mcp/package.json",
+      "packages/publishing-house/package.json",
+      "packages/rituals/package.json",
+      "packages/router-spec/package.json",
+      "packages/skill-registry/package.json",
+      "packages/sona-learner/package.json",
+      "packages/starlight-runtime/package.json",
+      "packages/swarm-coordinator/package.json",
+      "packages/taste-score-action/package.json",
+      "packages/token-optimizer/package.json",
+      "packages/vscode/package.json",
+      "packages/world-engine/package.json",
+      "packages/world-sdk/package.json",
+      "staging/luminor-kernel-spec/compiler/package.json"
+    ]
+  },
+  "officialSources": [
+    {
+      "label": "Vercel Workflows install and TypeScript durable workflow directives",
+      "url": "https://vercel.com/docs/workflows"
+    },
+    {
+      "label": "Vercel Workflow concepts and use step directive",
+      "url": "https://vercel.com/docs/workflows/concepts"
+    },
+    {
+      "label": "Eve skill source-of-truth rule",
+      "path": "C:/Users/frank/.agents/skills/eve/SKILL.md"
+    }
+  ],
+  "targetWorkflow": {
+    "name": "genesisProofRun",
+    "type": "Vercel Workflow first, Eve internal operator second",
+    "contractFiles": [
+      "apps/web/lib/genesis/workflow-contract.ts",
+      "apps/web/lib/genesis/__tests__/workflow-contract.test.ts"
+    ],
+    "firstImplementationFiles": [
+      "apps/web/lib/workflows/genesis-proof-run.ts",
+      "apps/web/app/api/genesis/workflow/route.ts",
+      "apps/web/lib/workflows/__tests__/genesis-proof-run.test.ts"
+    ],
+    "durableSteps": [
+      "intake: receive intent, drift face, mission lane, source route",
+      "gift: generate bounded Gift Object and persist step output",
+      "world_seed: generate laws, characters, visual DNA, first proof",
+      "right_use_review: check source, commercial, and canon boundaries",
+      "artifact_export: produce Markdown/JSON export packet",
+      "metrics: emit safe activation events without prompt text"
+    ]
+  },
+  "nextActions": [
+    {
+      "id": "install-workflow-docs-first",
+      "command": "pnpm add workflow --filter @arcanea/web",
+      "approvalRequired": true,
+      "evidence": [
+        "package manifest and lockfile intentionally updated",
+        "node_modules/workflow/docs/README.md read before writing code"
+      ]
+    },
+    {
+      "id": "read-installed-workflow-docs",
+      "command": "Get-Content -Raw node_modules/workflow/docs/README.md",
+      "approvalRequired": false,
+      "evidence": [
+        "Relevant Workflow setup/start/step/test docs summarized in planning-with-files"
+      ]
+    },
+    {
+      "id": "install-or-scaffold-eve-docs-before-eve-code",
+      "command": "pnpm add eve --filter @arcanea/web",
+      "approvalRequired": true,
+      "evidence": [
+        "node_modules/eve/docs/README.md read before writing Eve instructions/tools/schedules"
+      ]
+    },
+    {
+      "id": "implement-genesis-proof-run-only-after-docs",
+      "command": "Create the firstImplementationFiles listed in targetWorkflow",
+      "approvalRequired": false,
+      "evidence": [
+        "workflow integration test passes",
+        "no raw prompt or provider secret in workflow payload",
+        "release-readiness gate still passes non-Vercel internal checks"
+      ]
+    }
+  ],
+  "guardrails": [
+    "Do not write Eve runtime code until node_modules/eve/docs/README.md has been read.",
+    "Do not write Vercel Workflow runtime code until the installed workflow docs have been read.",
+    "Do not add package dependencies inside the God Mode release slice unless Frank explicitly approves the dependency change.",
+    "Do not send raw prompts, API keys, wallet addresses, transaction hashes, or generated proof bodies through workflow metrics.",
+    "Keep Eve as an internal/operator lane until process, secrets, persistence, and deployment boundary are explicit."
+  ],
+  "checks": [
+    {
+      "status": "warn",
+      "lane": "ai-engineering",
+      "id": "workflow-dependency-present",
+      "summary": "Workflow dependency is not installed; do not write Vercel Workflow runtime code yet.",
+      "installCommand": "pnpm add workflow --filter @arcanea/web"
+    },
+    {
+      "status": "warn",
+      "lane": "ai-engineering",
+      "id": "workflow-docs-present",
+      "summary": "Workflow bundled docs are absent; read installed docs before writing workflow code."
+    },
+    {
+      "status": "warn",
+      "lane": "ai-engineering",
+      "id": "eve-dependency-present",
+      "summary": "Eve dependency is not installed; do not write Eve runtime code yet.",
+      "note": "Repo policy requires pnpm for package changes. The Eve skill says bundled docs under node_modules/eve/docs are the source of truth after installation/scaffold."
+    },
+    {
+      "status": "warn",
+      "lane": "ai-engineering",
+      "id": "eve-docs-present",
+      "summary": "Eve bundled docs are absent; read installed Eve docs before writing Eve code."
+    },
+    {
+      "status": "pass",
+      "lane": "product-doctrine",
+      "id": "genesis-proof-run-specified",
+      "summary": "Durable Genesis proof workflow candidate and safety boundaries are specified.",
+      "evidence": "planning-with-files/ARCANEA_DURABLE_WORKFLOW_RELEASE_BRIEF_2026-07-05.md"
+    },
+    {
+      "status": "pass",
+      "lane": "ai-engineering",
+      "id": "genesis-workflow-contract-ready",
+      "summary": "Dependency-free Genesis proof workflow contract and redaction test are present.",
+      "evidence": [
+        "apps/web/lib/genesis/workflow-contract.ts",
+        "apps/web/lib/genesis/__tests__/workflow-contract.test.ts"
+      ],
+      "note": "This is a contract boundary only. Runtime Workflow/Eve code remains gated until installed docs are present and read."
+    }
+  ]
+}

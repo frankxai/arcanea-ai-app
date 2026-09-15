@@ -1,0 +1,92 @@
+{
+  "asset_uid": "arcanea-2026-07-music-resonance-proof-cover",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b6",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "Music Resonance Proof Cover",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "music-proof-cover-square",
+  "aspect_ratio": "1:1",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-042-music-resonance-proof-cover.png",
+    "sha256": "d30638ba6c9e96fe0e64405742dbaa27bf4295519343df9bc435c468b8f82a1b",
+    "mime_type": "image/png",
+    "width": 1254,
+    "height": 1254,
+    "size_bytes": 2772440
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b6.json#arc-visual-042",
+    "prompt": "Arcanea Visual World Engine batch 6, music resonance proof cover frame. A mythic AI-lab performance chamber where a musician and an Arcanea Voice Gate operator convert a live song into a visible proof artifact. The central object is a blank, flower-like resonance core made of starlight metal, dark glass, gold thread, and living crystal, hovering above a quiet stage pool. Sound appears as restrained luminous ribbons and architectural harmonics, not random glow. Show a vast healthy amphitheater with fabrics, water reflections, small listeners, and a sense of care. This must work as album cover, YouTube thumbnail, and Reels first frame: one strong central shape, deep negative space for deterministic overlay, rich but not cluttered, premium cinematic lighting. 1:1 square composition. No text, no title, no letters, no fake writing, no notes or music notation, no UI, no logo, no watermark, no microphone brand, no malformed hands, no cyberpunk neon grid, no purple cliche, no generic fantasy spell circle, no celebrity likeness.",
+    "negative_prompt": "No text, title, letters, fake writing, notes, music notation, UI, logo, watermark, microphone brand, malformed hands, cyberpunk neon grid, purple cliche, generic fantasy spell circle, celebrity likeness, clutter.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "1:1"
+    },
+    "original_generated_path": "C:/Users/frank/.codex/generated_images/019f3498-30f9-77a0-b2a3-b54acd0c8e66/ig_07102a35bc605078016a4b3b4e01ac8191a311052d5b6b2439.png"
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "approved-candidate",
+    "score30": 28,
+    "decision": "approve-with-crop-check",
+    "failure_modes": [
+      "Beautiful central resonance-core cover with strong negative space; console detail at lower right should not be magnified.",
+      "The flower symmetry is usable for cover art but needs motion/audio variation to avoid static icon overuse."
+    ],
+    "next_improvement": "Promote as music proof-cover source; build deterministic album/YouTube/Reels overlays and optional audio-reactive motion later."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md",
+      "VISUAL_DOCTRINE.md",
+      "Music Resonance Proof Cover"
+    ],
+    "gate": "Voice",
+    "guardian": "Alera",
+    "godbeast": "Otome"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "music"
+      },
+      {
+        "trait_type": "surface",
+        "value": "music-proof-cover-square"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Voice"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Alera"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-042-music-resonance-proof-cover.vis.provenance.json"
+  },
+  "used_in": [
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/app/gallery/gallery-data.ts",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/arcanea-world-engine/god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T07:27:54+02:00"
+}

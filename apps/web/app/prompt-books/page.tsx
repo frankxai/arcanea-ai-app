@@ -19,6 +19,7 @@ import { PromptSearch } from "@/components/prompt-books/search/PromptSearch";
 import { FilterBar } from "@/components/prompt-books/search/FilterBar";
 import { TemplateGallery } from "@/components/prompt-books/templates/TemplateGallery";
 import { TagManager } from "@/components/prompt-books/tags/TagManager";
+import { RegistryBrowser } from "@/components/prompt-books/registry";
 import {
   PhGridFour,
   PhList,
@@ -34,6 +35,7 @@ import {
   PhBooks,
   PhFlame,
   PhStar,
+  PhDatabase,
 } from "@/lib/phosphor-icons";
 import { GlowCard } from "@/components/ui/glow-card";
 import * as service from "@/lib/prompt-books/service";
@@ -303,6 +305,7 @@ export default function PromptBooksPage() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [templateGalleryOpen, setTemplateGalleryOpen] = useState(false);
   const [tagManagerOpen, setTagManagerOpen] = useState(false);
+  const [registryOpen, setRegistryOpen] = useState(false);
 
   const activeCollection = activeCollectionId
     ? collections.find((c) => c.id === activeCollectionId) || null
@@ -446,6 +449,16 @@ export default function PromptBooksPage() {
               variant="ghost"
               size="icon"
               className="text-text-muted hover:text-text-primary"
+              aria-label="Prompt Registry"
+              onClick={() => setRegistryOpen(true)}
+            >
+              <PhDatabase className="w-4 h-4" />
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-text-muted hover:text-text-primary"
               aria-label="Template Gallery"
               onClick={() => setTemplateGalleryOpen(true)}
             >
@@ -562,6 +575,11 @@ export default function PromptBooksPage() {
         onDelete={handleDeleteTag}
         open={tagManagerOpen}
         onClose={() => setTagManagerOpen(false)}
+      />
+
+      <RegistryBrowser
+        open={registryOpen}
+        onClose={() => setRegistryOpen(false)}
       />
     </div>
   );

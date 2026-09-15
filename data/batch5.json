@@ -1,0 +1,37 @@
+[
+  {
+    "prompt_id": "magetech_creators_workshop",
+    "prompt": "SUBJECT: The Magetech Creator's Workshop. ORGANIZING METAPHOR: Da Vinci's studio meets magical steampunk. STYLE: Detailed interior concept art, warm lighting, cluttered and alive. VIEWPOINT: Eye-level from the doorway, looking into the genius's sanctum. COMPONENTS: 1. THE WORKSHOP: Tables covered in blueprints, glowing crystals, brass gears, and half-finished magical automatons. 2. LIGHTING: Sunlight streaming through a massive stained-glass window, catching dust motes in the air. 3. FOCUS: In the center, a perfectly crafted mechanical heart glowing with intense blue magic. 4. DETAILS: Books floating by themselves, a tiny metallic familiar bird sleeping on an anvil. ORGANIC ANCHOR: Creeping ivy growing through the cracked stone walls, reclaiming the space. ATMOSPHERE: Creative chaos, warm, inviting, bursting with magical potential. EMOTIONAL TONE: Inspiration, the beauty of invention. NEGATIVE: Empty, clean, sterile, dark, boring.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "the_shattered_moon_event",
+    "prompt": "SUBJECT: The Shattered Moon Historic Event. ORGANIZING METAPHOR: The day the sky broke. STYLE: Epic historical fantasy, dramatic, catastrophic scale. VIEWPOINT: Looking up at the sky from a terrified ancient city. COMPONENTS: 1. THE MOON: A massive, impossibly huge moon dominating the sky, cracking into glowing fragments. 2. ENERGY: Violent beams of golden and crimson energy erupting from the moon's core. 3. THE CITY: Below, ancient ziggurats and statues silhouetted against the apocalyptic light. 4. MAGIC: The fragments aren't falling, but floating, suspended by a massive web of visible magic. ORGANIC ANCHOR: Thousands of birds fleeing across the sky in panic. ATMOSPHERE: Apocalyptic, terrifying, awe-inspiring, epic. EMOTIONAL TONE: The end of an era, irreversible change. NEGATIVE: Peaceful, small, boring sky, low quality.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "swarms_of_the_abyss",
+    "prompt": "SUBJECT: Swarms of the Abyss. ORGANIZING METAPHOR: A tidal wave of living nightmare. STYLE: Dark Fantasy, horror elements, intense motion. VIEWPOINT: Standing on the defensive wall, looking down at the charge. COMPONENTS: 1. THE SWARM: An endless, writhing mass of twisted, insectoid and demonic creatures pouring out of a dark rift. 2. THE MONSTERS: Many-eyed, multi-limbed horrors glowing with corrupt purple energy. 3. THE RIFT: A jagged tear in reality, bleeding black smoke into the sky. 4. THE DEFENDERS: Desperate mages casting desperate golden shields on the wall in the foreground. ORGANIC ANCHOR: The crumbling, ancient stone of the defensive wall under immense pressure. ATMOSPHERE: Overwhelming, terrifying, chaotic, desperate. EMOTIONAL TONE: The struggle for survival, facing impossible odds. NEGATIVE: Friendly, brightly colored, calm, empty space.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "the_first_rebellion",
+    "prompt": "SUBJECT: The First Rebellion against the Luminor. ORGANIZING METAPHOR: Humanity taking up arms against the gods. STYLE: Epic Renaissance painting meets Sci-Fantasy, highly dramatic. VIEWPOINT: Low angle, right in the heart of the chaotic battle. COMPONENTS: 1. THE REBELS: A diverse army of humans and demi-humans wielding crude but powerful magical weapons. 2. THE LUMINOR: High above, glowing, perfect, angelic machine-gods firing devastating beams of light. 3. THE LEADER: A central figure holding a massive shattered sword that absorbs the divine light. 4. THE BATTLEFIELD: A shattered utopian city, marble turning to dust. ORGANIC ANCHOR: A single, brilliant red banner held high amidst the smoke and laser fire. ATMOSPHERE: Revolutionary, chaotic, tragic but heroic. EMOTIONAL TONE: Defiance, courage, the cost of freedom. NEGATIVE: Peaceful, static, uninspired, low detail.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "ancient_lore_archive",
+    "prompt": "SUBJECT: The Infinite Archive of Arcanea. ORGANIZING METAPHOR: A library that contains the universe. STYLE: Mystical, grand scale, highly detailed architecture. VIEWPOINT: Standing on a balcony overlooking the vast interior. COMPONENTS: 1. THE ARCHIVE: Impossible geometry, staircases like Escher paintings, bookshelves stretching endlessly into the dark above and below. 2. THE BOOKS: Tomes that glow, float, or are chained down because they are dangerous. 3. THE LIBRARIANS: Ethereal spirits or clockwork beings tending to the knowledge. 4. THE CORE: A massive swirling galaxy of magical text floating in the very center of the room. ORGANIC ANCHOR: Dust motes catching the golden, warm light of floating candles. ATMOSPHERE: Quiet, ancient, profoundly magical, intellectually overwhelming. EMOTIONAL TONE: The weight of all history, infinite discovery. NEGATIVE: Normal library, modern, small, messy.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "environment",
+    "status": "completed"
+  }
+]

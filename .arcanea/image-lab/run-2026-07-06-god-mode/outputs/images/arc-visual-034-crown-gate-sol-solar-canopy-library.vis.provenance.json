@@ -1,0 +1,91 @@
+{
+  "asset_uid": "arcanea-2026-07-crown-gate-sol-solar-canopy-library",
+  "source_asset_uid": null,
+  "batch_id": "2026-07-arcanea-visual-world-engine-b4",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 1,
+  "title": "crown gate sol solar canopy library",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "x-youtube-og-16x9",
+  "aspect_ratio": "16:9",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-034-crown-gate-sol-solar-canopy-library.png",
+    "sha256": "44cecb229ec8e06f1b27501df68df25de488a14ed39e423673da4029bb99d61a",
+    "mime_type": "image/png",
+    "width": 1672,
+    "height": 941,
+    "size_bytes": 3285996
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b4.json#arc-visual-034",
+    "prompt": "Use case: stylized-concept. Asset type: 16:9 story/article source frame. Primary request: Crown Gate enlightenment as a solar canopy library without in-image text. Scene/backdrop: a black-glass observatory library under a colossal living sun canopy, where blank crystal shelves, gold leaf bridges, and white-gold light trees form a quiet study city. Subject: Sol appears as a vast gentle solar intelligence overhead, expressed through petals of light, warm halo architecture, and living sun-vines, not a humanoid face; Aiyami is a small seated scholar-operator at a blank crystal desk for scale. Style/medium: premium Arcanea storybook/editorial concept art, luxury cosmic myth-tech, calm and usable. Composition/framing: 16:9, strong left-center solar canopy, calm negative space on right for deterministic article overlay, readable at thumbnail size. Lighting/mood: white gold, soft amber, enlightened, safe, focused. Materials/textures: blank crystal, starlight metal, gold leaf, dark glass, luminous paper-like light with no writing. Constraints: no text, no numerals, no letters, no diagrams, no humanoid sun face, no angel wings, no religious iconography, no fantasy castle.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "16:9"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 28,
+    "decision": "approve",
+    "failure_modes": [
+      "Aiyami still reads as a pale scholar archetype; future variants should broaden identity and wardrobe",
+      "16:9 crop is strong but needs mobile crop derivative before social use"
+    ],
+    "next_improvement": "Promote as Crown Gate editorial/story source and build deterministic article/YouTube overlay later."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md Ten Gates",
+      "Aiyami",
+      "Sol",
+      "Crown Gate"
+    ],
+    "gate": "Crown",
+    "guardian": "Aiyami"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 1,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "storybook-book"
+      },
+      {
+        "trait_type": "surface",
+        "value": "x-youtube-og-16x9"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Crown"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Aiyami"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-034-crown-gate-sol-solar-canopy-library.vis.provenance.json"
+  },
+  "used_in": [
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\app\\gallery\\gallery-data.ts",
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\apps\\web\\public\\images\\arcanea-world-engine\\god-run-2026-07-06"
+  ],
+  "created_at": "2026-07-06T05:20:30+02:00"
+}

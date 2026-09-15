@@ -1,0 +1,29 @@
+{
+  "id": "arc-social-025-world-tower-practice-wide-16x9",
+  "campaignId": "arc-social-025-world-tower-practice",
+  "sourceAssetId": "arc-visual-025",
+  "channelKey": "wide-16x9",
+  "platforms": [
+    "YouTube Thumbnail",
+    "X Link Visual",
+    "Article Header"
+  ],
+  "ratio": "16:9",
+  "width": 1280,
+  "height": 720,
+  "sizeBytes": 1304235,
+  "sha256": "325007e3aacbbf5e114c61af26a9c581e54135c10dc06f8e75d318356ce5feb6",
+  "headline": "A World Big Enough To Practice In",
+  "subhead": "Tiny creators. Vast habitats. One proof at a time.",
+  "cta": "Answer The Drift with artifacts.",
+  "proof": "World tower social source",
+  "gate": "Heart",
+  "guardian": "Maylinn",
+  "score30": 29,
+  "sourceImage": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-025-world-tower-social-crop.png",
+  "outputPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\social-overlays\\exports\\wide-16x9\\arc-social-025-world-tower-practice-wide-16x9.png",
+  "sourceMethod": "code-rendered deterministic overlays on inspected generated media",
+  "rightsStatus": "generated-owned-derived",
+  "approvalGate": "social-approvals",
+  "createdAt": "2026-07-06T07:49:20+02:00"
+}

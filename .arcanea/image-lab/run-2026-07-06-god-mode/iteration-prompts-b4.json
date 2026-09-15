@@ -1,0 +1,77 @@
+{
+  "version": "2026-07-06",
+  "run": "run-2026-07-06-god-mode",
+  "batch": "b4",
+  "assetTier": "B",
+  "sourceMethod": "generated-media",
+  "globalNegative": "No text, captions, logos, subtitles, UI, fake letters, handwriting, inscriptions, runes, glyphs, symbols that resemble writing, watermark, fantasy-game chrome, generic anime, cosplay armor, superhero spandex, neon hacker grids, purple cliche, stock fantasy, horror gore, malformed hands, malformed faces, broken geometry.",
+  "strategy": "Batch 4 mixes two Guardian/Godbeast corrections with three canon Gate-world expansion images and one music/social source frame. Prompts prioritize infrastructure, useful story surfaces, and one-second social readability over ornamental fantasy portraits.",
+  "items": [
+    {
+      "id": "arc-visual-008d",
+      "slug": "alera-otome-operator-resonance-console",
+      "category": "guardian-godbeast",
+      "surface": "character-portal-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Alera", "Otome", "Voice Gate"],
+      "gate": "Voice",
+      "guardian": "Alera",
+      "prompt": "Use case: illustration-story. Asset type: 4:5 Guardian/Godbeast correction source. Primary request: Alera as a contemporary Arcanea Voice Gate operator, not a fantasy queen, working with Otome as resonance infrastructure. Scene/backdrop: a premium AI-lab chamber of black glass, blank gold foil, teal acoustic light, and smooth starlight metal. Subject: Alera wears restrained modern myth-tech studio clothing, standing at a clean resonance console; Otome is a vast non-animal protective vocal lattice around the room, built from translucent ribs, pearl crystal, and breathing architectural light. Style/medium: Arcanea luxury cosmic myth-tech, sacred engineering, cinematic but product-world believable. Composition/framing: 4:5, Alera clear at lower third, Otome huge as environment, one clean first-read crystal at console, no clutter. Lighting/mood: calm authority, truthful voice, gold teal black glass. Materials/textures: Otome Resonite, dark glass, smooth blank gold foil, pearl crystal, starlight metal. Constraints: no text, no glyphs, no waveforms, no visible music notes, no gown, no crown, no medieval armor, no dragon wings, no horns, no animal body."
+    },
+    {
+      "id": "arc-visual-009d",
+      "slug": "lyria-yumiko-nonhumanoid-perception-field",
+      "category": "guardian-godbeast",
+      "surface": "vertical-social-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Lyria", "Yumiko", "Sight Gate"],
+      "gate": "Sight",
+      "guardian": "Lyria",
+      "prompt": "Use case: illustration-story. Asset type: vertical Guardian/Godbeast correction source. Primary request: Lyria with Yumiko as a non-humanoid Sight Gate perception field, not a fox, not a wolf, not a giant person, not a mount. Scene/backdrop: a prismatic observatory above folded clouds, made of smoked glass decks, blank silver-gold mirror pools, and clean lens reefs. Subject: Lyria is a focused operator in restrained myth-tech clothing, small in the frame, holding a blank prism relic; Yumiko is the weather of perception itself: kilometer-scale lens reefs, mirror halos, transparent field arcs, and flowing optical pressure with no face, no body, no animal silhouette. Style/medium: premium Arcanea concept art, neural-cosmos metaphor only, exact and original. Composition/framing: 9:16, upper half is vast nonhumanoid lens-field, lower third anchors Lyria and blank prism, safe top space for later overlay. Lighting/mood: clarity, silver, pale gold, restrained teal, clean awe. Materials/textures: Yumiko Prism, smoked glass, starlight metal, spectral dust, clear crystal. Constraints: no text, no diagrams, no UI, no rainbow clutter, no fox, no wolf, no humanoid giant, no wings shaped like an angel, no fantasy robe, no symbols."
+    },
+    {
+      "id": "arc-visual-032",
+      "slug": "flow-gate-veloura-aquifer-corridor",
+      "category": "mega-scale-world",
+      "surface": "instagram-tiktok-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Leyla", "Veloura", "Flow Gate", "Mar Arcano corridors"],
+      "gate": "Flow",
+      "guardian": "Leyla",
+      "prompt": "Use case: illustration-story. Asset type: 4:5 social source frame. Primary request: Flow Gate worldbuilding for Leyla and Veloura, showing creativity and emotion as healthy living infrastructure. Scene/backdrop: Mar Arcano aquifer corridor inside a crystal sea-canyon, where water, memory, and studio lights move through transparent bridges and blue-silver coral architecture. Subject: Veloura is not a mermaid or humanoid; Veloura appears as an immense flowing water-metal membrane Godbeast sheltering a corridor city, with tiny creators carrying blank proof lanterns across a glass bridge for scale. Style/medium: Arcanea luxury cosmic myth-tech, bright oceanic worldbuilding, premium social hook. Composition/framing: 4:5, huge aquifer corridor first read, tiny creators second, clean upper-right caption-safe water glow. Lighting/mood: blue-silver, healing, emotionally alive, hopeful. Materials/textures: living crystal, water-metal, dark glass, silver fabric, coral glass, soft starlight metal. Constraints: no text, no logos, no mermaid, no humanoid sea goddess, no pirate fantasy, no storm destruction, no cluttered reef noise, no symbols."
+    },
+    {
+      "id": "arc-visual-033",
+      "slug": "fire-gate-draconis-healthy-forge-titan",
+      "category": "mega-scale-world",
+      "surface": "instagram-tiktok-4x5",
+      "aspectRatio": "4:5",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Draconia", "Draconis", "Fire Gate"],
+      "gate": "Fire",
+      "guardian": "Draconia",
+      "prompt": "Use case: illustration-story. Asset type: 4:5 Fire Gate social source frame. Primary request: Draconis and Fire Gate scale without grimdark destruction. Scene/backdrop: a healthy forge-titan city grown around a sleeping lava-crystal Godbeast inside a sunrise volcanic caldera, with gold fabric heat sails, obsidian terraces, and safe creator workshops. Subject: Draconis is vast and dragon-coded because canon permits the Fire Godbeast name, but it must feel ancient, peaceful, and habitat-scale rather than monster attack; Draconia appears only as a tiny forge operator silhouette near a clean proof anvil. Style/medium: Arcanea luxury cosmic myth-tech, cinematic bright fire, social hook, not game boss art. Composition/framing: 4:5, huge sleeping Draconis silhouette first, safe workshops and tiny creators for scale, open top-left glow for overlay. Lighting/mood: red-orange-gold, willpower, warmth, courage, constructive fire. Materials/textures: sacred obsidian, living magma crystal, gold heat fabric, dark glass, starlight metal. Constraints: no text, no logos, no battle, no attack pose, no burning city, no skulls, no grimdark, no medieval castle, no symbols."
+    },
+    {
+      "id": "arc-visual-034",
+      "slug": "crown-gate-sol-solar-canopy-library",
+      "category": "storybook-book",
+      "surface": "x-youtube-og-16x9",
+      "aspectRatio": "16:9",
+      "canonRefs": ["CANON_LOCKED.md Ten Gates", "Aiyami", "Sol", "Crown Gate"],
+      "gate": "Crown",
+      "guardian": "Aiyami",
+      "prompt": "Use case: stylized-concept. Asset type: 16:9 story/article source frame. Primary request: Crown Gate enlightenment as a solar canopy library without in-image text. Scene/backdrop: a black-glass observatory library under a colossal living sun canopy, where blank crystal shelves, gold leaf bridges, and white-gold light trees form a quiet study city. Subject: Sol appears as a vast gentle solar intelligence overhead, expressed through petals of light, warm halo architecture, and living sun-vines, not a humanoid face; Aiyami is a small seated scholar-operator at a blank crystal desk for scale. Style/medium: premium Arcanea storybook/editorial concept art, luxury cosmic myth-tech, calm and usable. Composition/framing: 16:9, strong left-center solar canopy, calm negative space on right for deterministic article overlay, readable at thumbnail size. Lighting/mood: white gold, soft amber, enlightened, safe, focused. Materials/textures: blank crystal, starlight metal, gold leaf, dark glass, luminous paper-like light with no writing. Constraints: no text, no numerals, no letters, no diagrams, no humanoid sun face, no angel wings, no religious iconography, no fantasy castle."
+    },
+    {
+      "id": "arc-visual-035",
+      "slug": "arcanea-music-proof-stage-no-text",
+      "category": "music",
+      "surface": "vertical-social-9x16",
+      "aspectRatio": "9:16",
+      "canonRefs": ["Arcanea music lane", "Voice Gate", "creator proof performance"],
+      "gate": "Voice",
+      "guardian": "Alera",
+      "prompt": "Use case: illustration-story. Asset type: vertical music/social source frame for TikTok, Shorts, and Reels. Primary request: a no-text Arcanea music performance hook where a creator turns sound into a proof artifact on stage. Scene/backdrop: intimate black-glass studio stage with warm gold lights, teal resonance mist, and an audience suggested only as soft silhouettes. Subject: a diverse musician creator stands at a clean instrument-console, not holding a microphone, creating a floating portal-bloom proof artifact from sound; translucent resonance ribbons rise into a circular doorway behind them. Style/medium: premium cinematic music poster, Arcanea AI-lab myth-tech, not EDM visualizer, not generic concert photo. Composition/framing: 9:16, musician lower third, portal-bloom center, large clean dark negative space above for later deterministic hook text. Lighting/mood: intimate, aspirational, gold teal black, emotional lift. Materials/textures: Otome Resonite, dark glass, blank gold foil, living crystal, starlight metal, soft fabric. Constraints: no text, no lyrics, no logos, no waveform UI, no equalizer bars, no microphone cliche, no stage branding, no fake letters, no symbols."
+    }
+  ]
+}

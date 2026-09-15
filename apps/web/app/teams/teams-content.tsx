@@ -18,7 +18,12 @@ import {
   Users,
   Sparkle,
 } from "@/lib/phosphor-icons";
-import { HERO_STATS, PRINCIPLES, STACK_ROWS, TEAM_MEMBERS } from "./teams-data";
+import {
+  HERO_STATS,
+  PRINCIPLES,
+  STACK_ROWS,
+  TEAM_MEMBERS,
+} from "./teams-data";
 import type { ComponentType } from "react";
 
 // ---------------------------------------------------------------------------
@@ -48,132 +53,77 @@ interface TeamDef {
 const TEAMS: TeamDef[] = [
   {
     name: "Luminor Intelligence",
-    charter:
-      "Design the 16 specialist AI minds, train them on Arcanea's philosophy, and ship the Luminor Standard.",
-    owns: [
-      "Luminor Kernel",
-      "Chosen specs",
-      "Swarm Engine",
-      "ReasoningBank",
-      "Quality Gates",
-    ],
+    charter: "Design the 16 specialist AI minds, train them on Arcanea's philosophy, and ship the Luminor Standard.",
+    owns: ["Luminor Kernel", "Chosen specs", "Swarm Engine", "ReasoningBank", "Quality Gates"],
     icon: Brain as unknown as NarrowIcon,
     accent: "var(--arc-brand-atlantean-teal)",
-    stats: [
-      { label: "members", value: "5" },
-      { label: "repos", value: "4" },
-    ],
+    stats: [{ label: "members", value: "5" }, { label: "repos", value: "4" }],
     members: [...TEAM_MEMBERS["Luminor Intelligence"]],
     blogHref: "/blog?tag=luminor",
     repoHref: "https://github.com/frankxai/arcanea",
   },
   {
     name: "World Engine",
-    charter:
-      "The living world graph. Characters, locations, magic schemas, persistence, semantic search.",
-    owns: [
-      "world-graph schema",
-      "pgvector integration",
-      "world API",
-      "cross-world linking",
-    ],
+    charter: "The living world graph. Characters, locations, magic schemas, persistence, semantic search.",
+    owns: ["world-graph schema", "pgvector integration", "world API", "cross-world linking"],
     icon: Globe as unknown as NarrowIcon,
     accent: "var(--arc-brand-atlantean-teal)",
-    stats: [
-      { label: "members", value: "4" },
-      { label: "repos", value: "3" },
-    ],
+    stats: [{ label: "members", value: "4" }, { label: "repos", value: "3" }],
     members: [...TEAM_MEMBERS["World Engine"]],
     blogHref: "/blog?tag=world-engine",
     repoHref: "https://github.com/frankxai/arcanea",
   },
   {
     name: "Creator Platform",
-    charter:
-      "Chat, Imagine, Studio, Worlds UI. The Next.js app, component library, and design system.",
+    charter: "Chat, Imagine, Studio, Worlds UI. The Next.js app, component library, and design system.",
     owns: ["apps/web", "component library", "design system", "onboarding"],
     icon: Palette as unknown as NarrowIcon,
     accent: "var(--arc-void)",
-    stats: [
-      { label: "members", value: "4" },
-      { label: "repos", value: "5" },
-    ],
+    stats: [{ label: "members", value: "4" }, { label: "repos", value: "5" }],
     members: [...TEAM_MEMBERS["Creator Platform"]],
     blogHref: "/blog?tag=platform",
     repoHref: "https://github.com/frankxai/arcanea",
   },
   {
     name: "Protocol & Chain",
-    charter:
-      "Arcanean Protocol spec, smart contracts, on-chain identity, royalties, and IP licensing.",
-    owns: [
-      "AIPs",
-      "Agent Registry contracts",
-      "Story Protocol integration",
-      "x402 micropayments",
-    ],
+    charter: "Arcanean Protocol spec, smart contracts, on-chain identity, royalties, and IP licensing.",
+    owns: ["AIPs", "Agent Registry contracts", "Story Protocol integration", "x402 micropayments"],
     icon: Lightning as unknown as NarrowIcon,
     accent: "var(--arc-brand-arcanean-gold)",
-    stats: [
-      { label: "members", value: "3" },
-      { label: "repos", value: "2" },
-    ],
+    stats: [{ label: "members", value: "3" }, { label: "repos", value: "2" }],
     members: [...TEAM_MEMBERS["Protocol & Chain"]],
     blogHref: "/blog?tag=protocol",
     repoHref: "https://github.com/frankxai/arcanea-ai-app",
   },
   {
     name: "Infra & Ops",
-    charter:
-      "Deploy pipelines, Supabase, Vercel, observability, and performance budgets.",
+    charter: "Deploy pipelines, Supabase, Vercel, observability, and performance budgets.",
     owns: ["CI/CD", "Supabase migrations", "Sentry", "performance budgets"],
     icon: Code as unknown as NarrowIcon,
     accent: "var(--arc-brand-cosmic-blue)",
-    stats: [
-      { label: "members", value: "3" },
-      { label: "repos", value: "3" },
-    ],
+    stats: [{ label: "members", value: "3" }, { label: "repos", value: "3" }],
     members: [...TEAM_MEMBERS["Infra & Ops"]],
     blogHref: "/blog?tag=infra",
     repoHref: "https://github.com/frankxai/arcanea-ai-app",
   },
   {
     name: "Creator Success",
-    charter:
-      "Community managers, Discord moderation, contests, creator onboarding, and Whop tiers.",
-    owns: [
-      "Discord",
-      "Reddit",
-      "Whop communities",
-      "Creator Dashboard",
-      "template review",
-    ],
+    charter: "Community managers, Discord moderation, contests, creator onboarding, and Whop tiers.",
+    owns: ["Discord", "Reddit", "Whop communities", "Creator Dashboard", "template review"],
     icon: Users as unknown as NarrowIcon,
     accent: "var(--arc-fire)",
-    stats: [
-      { label: "members", value: "4" },
-      { label: "repos", value: "1" },
-    ],
+    stats: [{ label: "members", value: "4" }, { label: "repos", value: "1" }],
     members: [...TEAM_MEMBERS["Creator Success"]],
     blogHref: "/blog?tag=community",
     repoHref: "https://github.com/frankxai/arcanea",
   },
   {
     name: "Author & Lore",
-    charter:
-      "The Library of Arcanea, Guardian lore, canon maintenance, and the book production pipeline.",
-    owns: [
-      "book/ collections",
-      "CANON_LOCKED.md",
-      "publishing-house CLI",
-      "editorial standards",
-    ],
+    charter: "The 190K-word library, Guardian lore, canon maintenance, and book production pipeline.",
+    owns: ["book/ collections", "CANON_LOCKED.md", "publishing-house CLI", "editorial standards"],
     icon: Sparkle as unknown as NarrowIcon,
     accent: "var(--arc-void)",
-    stats: [
-      { label: "members", value: "4" },
-      { label: "repos", value: "4" },
-    ],
+    stats: [{ label: "members", value: "4" }, { label: "repos", value: "4" }],
     members: [...TEAM_MEMBERS["Author & Lore"]],
     blogHref: "/blog?tag=lore",
     repoHref: "https://github.com/frankxai/arcanea",
@@ -329,11 +279,7 @@ export function TeamsContent() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {PRINCIPLES.map(({ title, body, color, glyph }, i) => (
-                <FeatureCard
-                  key={title}
-                  glowColor={color}
-                  delay={0.06 + i * 0.08}
-                >
+                <FeatureCard key={title} glowColor={color} delay={0.06 + i * 0.08}>
                   <div
                     className="inline-flex items-center justify-center w-10 h-10 rounded-xl text-base mb-4"
                     style={{
@@ -398,26 +344,14 @@ export function TeamsContent() {
                 <div
                   key={row.team}
                   className={`grid grid-cols-5 gap-0 px-5 py-3.5 ${
-                    i < STACK_ROWS.length - 1
-                      ? "border-b border-white/[0.04]"
-                      : ""
+                    i < STACK_ROWS.length - 1 ? "border-b border-white/[0.04]" : ""
                   } hover:bg-white/[0.02] transition-colors duration-200`}
                 >
-                  <p className="text-xs font-display font-medium text-white/70 truncate pr-2">
-                    {row.team}
-                  </p>
-                  <p className="text-xs font-mono text-white/35 truncate pr-2">
-                    {row.ide}
-                  </p>
-                  <p className="text-xs font-mono text-white/35 truncate pr-2">
-                    {row.ai}
-                  </p>
-                  <p className="text-xs font-mono text-white/35 truncate pr-2">
-                    {row.deploy}
-                  </p>
-                  <p className="text-xs font-mono text-white/35 truncate">
-                    {row.docs}
-                  </p>
+                  <p className="text-xs font-display font-medium text-white/70 truncate pr-2">{row.team}</p>
+                  <p className="text-xs font-mono text-white/35 truncate pr-2">{row.ide}</p>
+                  <p className="text-xs font-mono text-white/35 truncate pr-2">{row.ai}</p>
+                  <p className="text-xs font-mono text-white/35 truncate pr-2">{row.deploy}</p>
+                  <p className="text-xs font-mono text-white/35 truncate">{row.docs}</p>
                 </div>
               ))}
             </m.div>
@@ -456,10 +390,10 @@ export function TeamsContent() {
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Link
-                    href="/contact"
+                    href="/community-hub"
                     className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-[var(--arc-void)] to-[var(--arc-void)] text-sm font-semibold text-white hover:shadow-[0_0_40px_rgba(192,132,252,0.25)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
                   >
-                    Contact about teams
+                    Join a team
                     <span className="text-xs">→</span>
                   </Link>
                   <a
@@ -473,7 +407,7 @@ export function TeamsContent() {
                   </a>
                 </div>
                 <p className="mt-8 text-[11px] font-mono text-white/20 tracking-wider">
-                  Public repos, public issues, source available.
+                  27 repos. MIT license. All issues are public.
                 </p>
               </div>
             </m.div>

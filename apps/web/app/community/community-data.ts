@@ -18,9 +18,7 @@ import {
   PhPackage,
   PhRocket,
   PhHeart,
-} from "@/lib/phosphor-icons";
-import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
-import { FACTS } from "@/lib/facts";
+} from '@/lib/phosphor-icons';
 
 // ─── Community Spaces ─────────────────────────────────────────────────────────
 
@@ -126,11 +124,7 @@ export const WAYS_TO_CONTRIBUTE = [
       "The entire platform is open source. Pick an issue, build a feature, craft an agent skill, or extend the intelligence layer. Your code ships to creators worldwide.",
     icon: PhCode,
     color: "var(--arc-brand-atlantean-teal)",
-    highlights: [
-      "Fork & contribute code",
-      "Create agent skills",
-      "Build platform features",
-    ],
+    highlights: ["Fork & contribute code", "Create agent skills", "Build platform features"],
   },
   {
     title: "Create",
@@ -139,11 +133,7 @@ export const WAYS_TO_CONTRIBUTE = [
       "Expand the mythology, compose frequency-aligned music, illustrate Guardians and Godbeasts, or write Library texts. Every form of creative work deepens the world.",
     icon: PhPaintBrush,
     color: "var(--arc-brand-arcanean-gold)",
-    highlights: [
-      "Write Library texts",
-      "Design character art",
-      "Compose Gate music",
-    ],
+    highlights: ["Write Library texts", "Design character art", "Compose Gate music"],
   },
   {
     title: "Share",
@@ -152,11 +142,7 @@ export const WAYS_TO_CONTRIBUTE = [
       "Share your creations with the community, mentor new creators, write tutorials, and publish skills and content to the marketplace for others to build upon.",
     icon: PhHeart,
     color: "var(--arc-fire)",
-    highlights: [
-      "Publish skills & content",
-      "Write guides & tutorials",
-      "Mentor new creators",
-    ],
+    highlights: ["Publish skills & content", "Write guides & tutorials", "Mentor new creators"],
   },
   {
     title: "Govern",
@@ -165,11 +151,7 @@ export const WAYS_TO_CONTRIBUTE = [
       "Sustained contribution earns governance rights. Shape the platform's direction, vote on canonical decisions, and help steer the creative civilization toward its future.",
     icon: PhCrown,
     color: "var(--arc-void)",
-    highlights: [
-      "Earn governance rights",
-      "Shape platform direction",
-      "Vote on canon decisions",
-    ],
+    highlights: ["Earn governance rights", "Shape platform direction", "Vote on canon decisions"],
   },
 ];
 
@@ -180,7 +162,7 @@ export const FEATURED_REPOS = [
     name: "arcanea",
     fullName: "frankxai/arcanea",
     description:
-      "The main Arcanea monorepo — Next.js platform, AI services, design system, and the Library of Arcanea.",
+      "The main Arcanea monorepo — Next.js platform, AI services, design system, and the Library of 200K+ words.",
     href: "https://github.com/frankxai/arcanea",
     tags: ["monorepo", "next.js", "ai"],
     color: "var(--arc-brand-atlantean-teal)",
@@ -343,24 +325,9 @@ export const QUICK_LINKS = [
 // ─── OSS Stats ────────────────────────────────────────────────────────────────
 
 export const OSS_STATS = [
-  {
-    value: String(PUBLIC_REPO_SUMMARY.public),
-    label: "Public Repos",
-    color: "var(--arc-brand-atlantean-teal)",
-  },
-  {
-    value: String(FACTS.mcpTools),
-    label: "MCP Tools",
-    color: "var(--arc-brand-arcanean-gold)",
-  },
-  {
-    value: String(FACTS.skills),
-    label: "Creator Skills",
-    color: "var(--arc-void)",
-  },
-  {
-    value: String(FACTS.luminors),
-    label: "Luminors",
-    color: "var(--arc-earth)",
-  },
+  { value: "27", label: "Repositories", color: "var(--arc-brand-atlantean-teal)" },
+  { value: "35", label: "npm Packages", color: "var(--arc-brand-arcanean-gold)" },
+  { value: "54", label: "Skills", color: "var(--arc-void)" },
+  { value: "791", label: "Tests Passing", color: "var(--arc-earth)" },
+  { value: "200K+", label: "Words of Lore", color: "var(--arc-fire)" },
 ];

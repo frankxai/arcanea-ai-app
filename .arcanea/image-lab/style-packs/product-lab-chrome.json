@@ -1,0 +1,31 @@
+{
+  "id": "product-lab-chrome",
+  "version": "2026-07-16",
+  "rail": "product",
+  "house": false,
+  "lookName": "AI-Lab Premium Chrome",
+  "description": "Product UI and marketing chrome language. Anthropic/Linear/Vercel/Apple restraint. Cosmic myth lives in content frames, not shell.",
+  "authorities": ["TASTE.md", "DESIGN.md", "@arcanea/design-system"],
+  "materialsWhitelist": [
+    "liquid glass UI",
+    "subtle depth",
+    "token teal/cosmic/gold accents",
+    "abstract data-poetry (optional, restrained)"
+  ],
+  "lightLaw": "UI light: dark #09090b base, controlled teal/gold accents; no particle magic wallpaper as chrome.",
+  "tone": "Inevitable, restrained, expensive lab software.",
+  "promptTemplates": [],
+  "enginesPreferred": ["code-tokens", "playwright-satori"],
+  "enginesAllowed": ["abstract-lab-still-optional"],
+  "identityMode": "none",
+  "forbidden": [
+    "full Godbeast key art as chrome",
+    "fantasy-game UI",
+    "purple gradient AI slop",
+    "emoji/unicode as icons",
+    "Cinzel Space Grotesk Inter as brand type"
+  ],
+  "shipBarScore30": 28,
+  "landingRule": "At most one framed Codex still as content; shell stays lab chrome.",
+  "doNotUseFor": ["Codex encyclopedia heroes", "cast face bible"]
+}

@@ -2,13 +2,13 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'The Arcanea Saga — A Journey Through the Ten Gates',
+  title: 'The Arcanea Saga — A Seven-Book Journey Through the Ten Gates',
   description:
-    'The Chronicles of Arcanea and the wider saga — twenty-two works in draft, readable chapter by chapter, alongside the founding myths, the series bible, character bibles, and the Academy Handbook.',
+    'Explore the complete Arcanea book universe: seven novels, deep worldbuilding, character bibles, and the Academy Handbook. 486,000+ words of original fantasy.',
   openGraph: {
     title: 'The Arcanea Saga',
     description:
-      'Twenty-two works in draft. Nothing finished, everything readable. Written in the open, chapter by chapter.',
+      '486,000+ words across seven books, worldbuilding documents, and character bibles. A complete fantasy universe.',
     images: [
       {
         url: '/guardians/v3/maylinn-hero-v3.webp',

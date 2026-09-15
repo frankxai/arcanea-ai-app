@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "Browse and share AI-generated creations — images, stories, music, and code — from the Arcanea creative community.",
   openGraph: {
-    title: "Creations",
+    title: "Creations | Arcanea",
     description:
       "Browse and share AI-generated creations — images, stories, music, and code — from the Arcanea creative community.",
   },

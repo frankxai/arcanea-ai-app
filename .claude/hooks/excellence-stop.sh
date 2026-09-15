@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+# Portable: source central hook-env for HARNESS/PROJECT detection (claude/grok/codex/agy/da)
+HOOK_DIR="$(cd "$(dirname "#!/usr/bin/env bash
+")" && pwd)"
+if [ -f "$HOOK_DIR/lib/hook-env.sh" ]; then
+  source "$HOOK_DIR/lib/hook-env.sh" 2>/dev/null || true
+elif [ -f "C:/Users/frank/starlight/repos/claude-code-config/hooks/lib/hook-env.sh" ]; then
+  source "C:/Users/frank/starlight/repos/claude-code-config/hooks/lib/hook-env.sh" 2>/dev/null || true
+fi
 # Arcanea Excellence System — Stop hook
 # Surfaces uncommitted/unpushed work when ending a session on a feature
 # branch. Pure status hook — no permission grants, no policy assertions.

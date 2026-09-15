@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 'use client';
 
-import { FACTS } from '@/lib/facts';
 import React, { useState, useMemo } from 'react';
 import { PhX, PhMagnifyingGlass, PhPlus, PhSparkle } from '@/lib/phosphor-icons';
 import { LUMINORS, type LuminorConfig, type Team } from '@/lib/luminors/config';
@@ -97,7 +96,7 @@ export function AgentPicker({ open, onClose, onSelect, currentAgentId }: AgentPi
             </div>
             <div>
               <p className="text-sm font-medium text-white/80">Arcanea Auto</p>
-              <p className="text-[10px] text-white/30">Smart routing — all {FACTS.luminors} specialists available</p>
+              <p className="text-[10px] text-white/30">Smart routing — all 13 specialists available</p>
             </div>
           </button>
 

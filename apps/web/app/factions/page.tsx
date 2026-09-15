@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { FactionGrid } from './faction-grid';
 
 export const metadata: Metadata = {
-  title: 'The Eight Origins',
+  title: 'The Eight Origins | Arcanea',
   description:
     'Discover the eight origin classes of Arcanea — from Academy-trained Arcans to reality-shaping Architects. Every being has an origin. What made you extraordinary?',
   openGraph: {
-    title: 'The Eight Origins',
+    title: 'The Eight Origins | Arcanea',
     description:
       'Discover the eight origin classes of Arcanea — from Academy-trained Arcans to reality-shaping Architects.',
   },

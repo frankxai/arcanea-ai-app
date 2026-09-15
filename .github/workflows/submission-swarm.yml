@@ -11,25 +11,18 @@ concurrency:
   group: submission-swarm-${{ github.ref }}
   cancel-in-progress: true
 
-# `pull-requests: write` is what the sticky compliance comment needs; the issues
-# API path used to read/post it resolves through the pull request, so no
-# repository-wide `issues: write` is granted.
-permissions:
-  contents: read
-  pull-requests: write
-
 jobs:
   aiyami-swarm:
     runs-on: ubuntu-latest
     name: Aiyami Guard — Compliance, Tone & Plagiarism Swarm
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0 # Full history needed for structural plagiarism and author checks
 
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
 

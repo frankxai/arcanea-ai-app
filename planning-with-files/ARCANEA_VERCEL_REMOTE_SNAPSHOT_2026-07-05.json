@@ -1,0 +1,93 @@
+{
+  "queriedAt": "2026-07-05T04:48:07Z",
+  "source": "Vercel connector",
+  "project": {
+    "id": "prj_90OIWsAmfeswv8IG8WxqEAFefTOV",
+    "name": "arcanea-ai-app",
+    "accountId": "team_q6LNT6rnFRlqlcjBJ2Wxz6PE",
+    "framework": "services",
+    "nodeVersion": "24.x",
+    "live": false,
+    "domains": [
+      "arcanea-ai-app.vercel.app",
+      "arcanea-ai-app-starlight-intelligence.vercel.app",
+      "arcanea-ai-app-frankx-eth-starlight-intelligence.vercel.app"
+    ]
+  },
+  "latestDeployment": {
+    "id": "dpl_5uA8PAXkJFqYkpDuG39L11gq9a1Q",
+    "url": "arcanea-ai-krg1xa5pg-starlight-intelligence.vercel.app",
+    "createdAt": 1783226399795,
+    "readyState": "BLOCKED",
+    "target": null,
+    "gitRef": "backup/claude-snapshots",
+    "gitSha": "8817c510c3af20708c160bb22c44db8a3ff878c1",
+    "buildLogs": "Vercel connector returned no build log events and no error/stderr/exit events for this BLOCKED deployment."
+  },
+  "recentDeployments": [
+    {
+      "id": "dpl_5uA8PAXkJFqYkpDuG39L11gq9a1Q",
+      "state": "BLOCKED",
+      "target": null,
+      "gitRef": "backup/claude-snapshots",
+      "gitSha": "8817c510c3af20708c160bb22c44db8a3ff878c1"
+    },
+    {
+      "id": "dpl_ERU4iXKy69iTg5yYagbWZjUdkmbs",
+      "state": "READY",
+      "target": null,
+      "gitRef": "dependabot/npm_and_yarn/production-patches-37e8dbfc5a",
+      "gitSha": "f0ed56baf5c341ed05ddb799bf1ed49e373d26d6"
+    },
+    {
+      "id": "dpl_EQjdb5WJciTBxzeMQa3XXUvgphRk",
+      "state": "READY",
+      "target": null,
+      "gitRef": "dependabot/npm_and_yarn/dev-patches-4c741c8f50",
+      "gitSha": "a1df0d689d29521ec65278051bed8a29daf57675"
+    },
+    {
+      "id": "dpl_8PK3YwLjacjMNvf77YqsZpntHvTf",
+      "state": "READY",
+      "target": "production",
+      "gitRef": "main",
+      "gitSha": "12e8618388715b50e22e42e241e2bc28a05fc3b7"
+    },
+    {
+      "id": "dpl_22biDJ3xSHZzu3wjeKNYYTx19uSW",
+      "state": "READY",
+      "target": null,
+      "gitRef": "dependabot/npm_and_yarn/schema-dts-2.0.0",
+      "gitSha": "2e7887c65829b846c10e775a82d236c23adcd111"
+    },
+    {
+      "id": "dpl_3ufoFcuwU9HnEpNeGNxZVZPuvdKT",
+      "state": "READY",
+      "target": null,
+      "gitRef": "codex/arcanea-homepage-world-engine",
+      "gitSha": "97093bf51ee9944ad9ea68d1fa81492d1b35e08f"
+    },
+    {
+      "id": "dpl_7kax4idwNHK2sghUDopQNc6xBbrf",
+      "state": "ERROR",
+      "target": null,
+      "gitRef": "codex/arcanea-homepage-world-engine",
+      "gitSha": "f105f31bbfd09eaf76cb58f36db4ac127a0d02fe"
+    }
+  ],
+  "candidateDeployment": {
+    "id": "dpl_3ufoFcuwU9HnEpNeGNxZVZPuvdKT",
+    "state": "READY",
+    "target": null,
+    "gitRef": "codex/arcanea-homepage-world-engine",
+    "gitSha": "97093bf51ee9944ad9ea68d1fa81492d1b35e08f",
+    "note": "This is the latest READY deployment found for the God Mode branch, but the current worktree has uncommitted God Mode changes, so it is not proof that the present release slice is deployed."
+  },
+  "operatorNotes": [
+    "Snapshot is intentionally sanitized: no creator emails, inspector URLs, or full deployment metadata.",
+    "Remote project framework and Node runtime do not match the repo's Next.js and .nvmrc posture.",
+    "Latest deployment is BLOCKED on backup/claude-snapshots and has no build log events available through the connector.",
+    "Latest READY deployment for codex/arcanea-homepage-world-engine matches local HEAD 97093bf5, but the worktree has uncommitted God Mode changes, so the current slice still needs a new preview after release packaging.",
+    "The project record does not show arcanea.ai on this Vercel project."
+  ]
+}

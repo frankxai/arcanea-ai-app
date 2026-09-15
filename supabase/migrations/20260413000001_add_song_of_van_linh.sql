@@ -19,35 +19,15 @@ VALUES (
     'Book One of The Song of Van Linh — a four-book series set in modern Vietnam where ancient mythology bleeds through the cracks of the contemporary world. Connected to the Arcanea universe through the Unity Gate and Tu Linh sacred animals.'
 ) ON CONFLICT (slug) DO NOTHING;
 
--- Register the account-less catalog author. book_authors.user_id is intentionally
--- nullable for git-only contributors; never fabricate an auth.users foreign key.
-INSERT INTO public.book_authors (book_id, author_name, role, order_index)
-SELECT b.id, 'FrankX', 'creator', 0
+-- Add author
+INSERT INTO public.book_authors (book_id, user_id, author_name, role, order_index)
+SELECT b.id, '00000000-0000-0000-0000-000000000000', 'FrankX', 'creator', 0
 FROM public.books b WHERE b.slug = 'song-of-van-linh'
 ON CONFLICT DO NOTHING;
 
--- Register the git-tier cover against the canonical book_covers schema.
-INSERT INTO public.book_covers (
-    book_id,
-    version,
-    status,
-    storage_tier,
-    storage_path,
-    public_url,
-    model_id,
-    model_tier,
-    generation_params
-)
-SELECT
-    b.id,
-    1,
-    'active',
-    'git',
-    '/images/books/song-of-van-linh-cover.png',
-    '/images/books/song-of-van-linh-cover.png',
-    'canva-ai',
-    'canva',
-    jsonb_build_object('prompt_hash', 'hoan-kiem-turtle-cover')
+-- Add cover reference
+INSERT INTO public.book_covers (book_id, storage_tier, public_url, model_id, prompt_hash)
+SELECT b.id, 'git', '/images/books/song-of-van-linh-cover.png', 'canva-ai', 'hoan-kiem-turtle-cover'
 FROM public.books b WHERE b.slug = 'song-of-van-linh'
 ON CONFLICT DO NOTHING;
 

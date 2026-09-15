@@ -4,7 +4,7 @@ This file loads every session. Keep it minimal. Domain context lives in director
 
 ## Architecture
 
-Next.js 16 (App Router) + React 19 + TypeScript (strict) + Tailwind + Supabase + Vercel AI SDK. Deployed on Vercel (arcanea-ai-app).
+Next.js 16 (App Router) + React 19 + TypeScript (strict) + Tailwind + Supabase + Vercel AI SDK. Deployed on Vercel (arcanea-ai-appx).
 
 ## Agent System
 
@@ -15,7 +15,7 @@ Luminor hierarchy: Arcanea (model) → Lumina (orchestrator) → Guardians (coor
 - Primary: Atlantean Teal (#00bcd4) | Secondary: Cosmic Blue (#0d47a1) | Accent: Gold (#ffd700)
 - Background: #09090b | Fonts: **Geist** (display + body), **Instrument Serif** (editorial accent), **JetBrains Mono** (code)
 - NEVER use Cinzel, Space Grotesk, or Inter (on Anthropic frontend-design anti-pattern list as of 2026-04-18)
-- Canonical design package: `@arcanea/design-system` v0.3.0
+- Canonical design package: `@arcanea/design-system` v0.2.0
 - Glass cards: `bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm`
 - Framer Motion: `domAnimation` not `domMax`
 
@@ -24,7 +24,7 @@ Luminor hierarchy: Arcanea (model) → Lumina (orchestrator) → Guardians (coor
 - `apps/web/CLAUDE.md` — Next.js patterns, components, content loader
 - `book/CLAUDE.md` — Library voice, canon alignment, creative guidelines
 - `.arcanea/CLAUDE.md` — Intelligence hub, directory map, master plan
-- `packages/CLAUDE.md` — workspace package conventions
+- `arcanea-onchain/CLAUDE.md` — Chain patterns, crypto MCPs
 
 ## WSL2 Storage
 

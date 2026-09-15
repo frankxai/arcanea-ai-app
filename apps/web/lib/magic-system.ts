@@ -5,7 +5,6 @@
 
 import type { Element, Discipline, SpellTier, MagicRank } from '@/lib/types/challenge';
 import spellsRaw from '@/lib/magic/spells.json';
-import { brand, elementNameAccents, elements } from '@arcanea/design-system/tokens';
 
 export type { Element, Discipline, SpellTier, MagicRank };
 
@@ -112,12 +111,12 @@ export interface ElementMeta {
 }
 
 export const ELEMENT_META: Record<Element, ElementMeta> = {
-  fire: { id: 'fire', name: 'Fire', icon: 'Fire', color: elements.fire.base },
-  water: { id: 'water', name: 'Water', icon: 'Drop', color: elements.water.base },
-  earth: { id: 'earth', name: 'Earth', icon: 'Mountains', color: elements.earth.base },
-  wind: { id: 'wind', name: 'Wind', icon: 'Wind', color: elementNameAccents.Wind },
-  void: { id: 'void', name: 'Void', icon: 'Circle', color: elements.void.base },
-  spirit: { id: 'spirit', name: 'Spirit', icon: 'Sparkle', color: brand.arcaneanGold },
+  fire: { id: 'fire', name: 'Fire', icon: 'Fire', color: '#ff6b35' },
+  water: { id: 'water', name: 'Water', icon: 'Drop', color: '#3aa0ff' },
+  earth: { id: 'earth', name: 'Earth', icon: 'Mountains', color: '#7cae54' },
+  wind: { id: 'wind', name: 'Wind', icon: 'Wind', color: '#cbd5e1' },
+  void: { id: 'void', name: 'Void', icon: 'Circle', color: '#9b8cff' },
+  spirit: { id: 'spirit', name: 'Spirit', icon: 'Sparkle', color: '#ffd700' },
 };
 
 // ── The canonical corpus (mirror of magic-intelligence-system/data/spells.json) ──

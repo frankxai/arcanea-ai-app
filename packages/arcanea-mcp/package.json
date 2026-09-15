@@ -2,7 +2,7 @@
   "name": "@arcanea/mcp-server",
   "version": "1.0.0",
   "private": false,
-  "description": "Arcanea worldbuilding tools plus an isolated, authenticated World Context Gateway boundary.",
+  "description": "40 worldbuilding tools for AI — characters, magic, locations, creatures, world intelligence, visual prompts. MCP protocol.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,8 +11,7 @@
     "./tools/generators": "./dist/tools/generators.js",
     "./tools/world-intelligence": "./dist/tools/world-intelligence.js",
     "./tools/visual-prompts": "./dist/tools/visual-prompts.js",
-    "./tools/creation-graph": "./dist/tools/creation-graph.js",
-    "./gateway": "./dist/gateway/index.js"
+    "./tools/creation-graph": "./dist/tools/creation-graph.js"
   },
   "bin": {
     "arcanea-mcp": "./dist/cli.js"
@@ -26,8 +25,7 @@
     "dev": "tsc --watch",
     "start": "node dist/cli.js",
     "clean": "rm -rf dist",
-    "test:gateway": "pnpm run build && node --test tests/world-context-gateway.test.mjs",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "mcp",
@@ -51,15 +49,14 @@
   },
   "homepage": "https://arcanea.ai/docs/mcp",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.30.0",
-    "canonicalize": "^1.0.8",
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@types/node": "^20.19.43",
+    "@types/node": "^20.19.41",
     "typescript": "^5.9.3"
   },
   "engines": {
-    "node": ">=20.18.1 <21 || >=22.0.0"
+    "node": ">=18.0.0"
   }
 }

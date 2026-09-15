@@ -1,0 +1,96 @@
+{
+  "version": "1.0.0",
+  "id": "arcanea-competitive-scorecard-2026-07-05",
+  "updatedAt": "2026-07-05T06:35:00Z",
+  "purpose": "Translate current creative AI workspace competition into Arcanea product and metrics requirements.",
+  "sources": [
+    {
+      "competitor": "OpenAI ChatGPT",
+      "source": "OpenAI Help",
+      "url": "https://help.openai.com/en/articles/9930697-what-is-the-canvas-feature-in-chatgpt-and-how-do-i-use-it",
+      "observedJob": "Editable writing/coding canvas for iterative work."
+    },
+    {
+      "competitor": "OpenAI ChatGPT",
+      "source": "OpenAI Help",
+      "url": "https://help.openai.com/en/articles/10169521-projects-in-chatgpt",
+      "observedJob": "Project workspaces with chats, files, instructions, memory, and tools."
+    },
+    {
+      "competitor": "Anthropic Claude",
+      "source": "Anthropic Help",
+      "url": "https://support.anthropic.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them",
+      "observedJob": "Shareable standalone artifacts for apps, tools, content, and visualizations."
+    },
+    {
+      "competitor": "Anthropic Claude",
+      "source": "Anthropic Help",
+      "url": "https://support.anthropic.com/en/articles/9517075-what-are-projects",
+      "observedJob": "Self-contained project workspaces with chat histories, documents, and context."
+    },
+    {
+      "competitor": "Runway",
+      "source": "Runway Research",
+      "url": "https://runwayml.com/research/introducing-runway-gen-4.5",
+      "observedJob": "High-fidelity, controllable cinematic image/video generation."
+    },
+    {
+      "competitor": "Runway",
+      "source": "Runway Help",
+      "url": "https://help.runwayml.com/hc/en-us/articles/46974685288467-Creating-with-Gen-4-5",
+      "observedJob": "Motion quality, prompt adherence, visual fidelity, and complex instruction execution."
+    },
+    {
+      "competitor": "World Anvil",
+      "source": "World Anvil",
+      "url": "https://www.worldanvil.com/",
+      "observedJob": "Worldbuilding tools for wiki articles, maps, timelines, RPG campaigns, and novel writing."
+    },
+    {
+      "competitor": "World Anvil",
+      "source": "World Anvil Codex",
+      "url": "https://www.worldanvil.com/w/WorldAnvilCodex/a/list-features",
+      "observedJob": "Feature depth across articles, templates, maps, timelines, and organization."
+    }
+  ],
+  "capabilityPressure": [
+    {
+      "category": "editable_workspace",
+      "userExpectation": "Users expect generation to become an editable workspace, not a one-shot chat response.",
+      "arcaneaResponse": ["Genesis proof packet", "Arcanea Method", "proof export"],
+      "metrics": ["homepage_genesis_cta_click", "genesis_prompt_prefill_used", "genesis_proof_export"]
+    },
+    {
+      "category": "project_memory",
+      "userExpectation": "Users expect long-running projects to remember files, instructions, and context.",
+      "arcaneaResponse": ["projects", "SIS/project memory roadmap", "status map"],
+      "metrics": ["genesis_proof_export"]
+    },
+    {
+      "category": "shareable_artifact",
+      "userExpectation": "Users expect outputs that can be shared, remixed, exported, or reused.",
+      "arcaneaResponse": ["proof ID", "proof brief download", "Atlas prompt copy"],
+      "metrics": ["genesis_proof_export", "atlas_creature_prompt_copy"]
+    },
+    {
+      "category": "cinematic_media_control",
+      "userExpectation": "Users expect high visual fidelity, prompt adherence, reference continuity, and motion control.",
+      "arcaneaResponse": ["Image Studio prompt handoff", "Creature Atlas schematics", "rights-aware visual DNA"],
+      "metrics": ["homepage_genesis_cta_click", "atlas_creature_prompt_copy"]
+    },
+    {
+      "category": "world_record_depth",
+      "userExpectation": "Worldbuilders expect structured records, maps, timelines, templates, and campaign/novel continuity.",
+      "arcaneaResponse": ["Creature Atlas", "Worlds", "Genesis laws/characters/proof"],
+      "metrics": ["atlas_creature_prompt_copy", "genesis_proof_export"]
+    },
+    {
+      "category": "production_confidence",
+      "userExpectation": "Modern AI tools need clear status, release posture, and privacy-safe instrumentation.",
+      "arcaneaResponse": ["Status page", "release-readiness gate", "safe analytics payloads"],
+      "metrics": ["studio_store_package_click"]
+    }
+  ],
+  "arcaneaNorthStar": "A user arrives, names a Drift, receives a Gift, sets Right Use, creates a proof artifact, and leaves with memory/provenance/workflow momentum rather than only a chat transcript.",
+  "auditCommand": "node scripts/arcanea-success-metrics-audit.mjs --json"
+}

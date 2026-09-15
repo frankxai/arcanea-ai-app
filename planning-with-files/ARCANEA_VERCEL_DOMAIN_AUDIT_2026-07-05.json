@@ -1,0 +1,141 @@
+{
+  "version": "1.0.0",
+  "id": "arcanea-vercel-domain-audit-2026-07-05",
+  "generatedAt": "2026-07-05T04:56:30Z",
+  "repo": "C:/Users/frank/starlight/repos/arcanea-ai-app",
+  "targetDomain": "arcanea.ai",
+  "team": {
+    "id": "team_q6LNT6rnFRlqlcjBJ2Wxz6PE",
+    "slug": "starlight-intelligence",
+    "name": "Starlight Intelligence"
+  },
+  "summary": {
+    "decision": "domain-owned-but-release-project-unassigned",
+    "domainRegisteredInTeam": true,
+    "servedByVercel": true,
+    "releaseProjectHasDomain": false,
+    "candidateReleaseProject": "arcanea-ai-app",
+    "knownAssociatedProject": "arcanea-lobechat-labs",
+    "knownAssociatedDomain": "lobe.arcanea.ai",
+    "nameserversMatchVercelDns": false
+  },
+  "releaseProject": {
+    "id": "prj_90OIWsAmfeswv8IG8WxqEAFefTOV",
+    "name": "arcanea-ai-app",
+    "framework": "services",
+    "nodeVersion": "24.x",
+    "rootDirectory": ".",
+    "domains": [
+      "arcanea-ai-app.vercel.app",
+      "arcanea-ai-app-starlight-intelligence.vercel.app",
+      "arcanea-ai-app-frankx-eth-starlight-intelligence.vercel.app"
+    ]
+  },
+  "nearbyProjectsInspected": [
+    {
+      "name": "arcanea-ai-appx",
+      "id": "prj_bg70JJwiuYTOyP1oX2ddiatX1O95",
+      "framework": "nextjs",
+      "nodeVersion": "22.x",
+      "rootDirectory": "apps/web",
+      "domains": [
+        "arcanea-ai-appx-starlight-intelligence.vercel.app",
+        "arcanea-ai-appx-git-main-starlight-intelligence.vercel.app"
+      ]
+    },
+    {
+      "name": "arcanea-web",
+      "id": "prj_vEngtP0ncNaO9Ds0rKsw2tyWkI1m",
+      "framework": "nextjs",
+      "nodeVersion": "24.x",
+      "domains": [
+        "arcanea-web.vercel.app",
+        "arcanea-web-starlight-intelligence.vercel.app",
+        "arcanea-web-git-main-starlight-intelligence.vercel.app"
+      ]
+    },
+    {
+      "name": "arcanea-2",
+      "id": "prj_9OaL0ui2ApSCwKNAIAiqtRBuK08s",
+      "framework": null,
+      "nodeVersion": "24.x",
+      "domains": [
+        "arcanea-2-starlight-intelligence.vercel.app",
+        "arcanea-2-git-main-starlight-intelligence.vercel.app"
+      ]
+    },
+    {
+      "name": "arcanea-platform",
+      "id": "prj_X3YSrJJVm68YqpOU2y7iGQnsnkPZ",
+      "framework": "nextjs",
+      "nodeVersion": "24.x",
+      "domains": [
+        "arcanea-platform-frankx-projects.vercel.app",
+        "arcanea-platform-git-main-frankx-projects.vercel.app"
+      ]
+    },
+    {
+      "name": "arcanea-lobechat-labs",
+      "id": "prj_18DOLwS2kuzzVh8PCA0iGxOuKotv",
+      "framework": "nextjs",
+      "nodeVersion": "24.x",
+      "knownDomain": "lobe.arcanea.ai"
+    }
+  ],
+  "domainRegistry": {
+    "registrar": "Third Party",
+    "edgeNetwork": true,
+    "createdAt": "2026-01-17T02:23:10Z",
+    "intendedNameservers": [
+      "ns1.vercel-dns.com",
+      "ns2.vercel-dns.com"
+    ],
+    "currentNameservers": [
+      "ns1024.ui-dns.com",
+      "ns1033.ui-dns.de",
+      "ns1048.ui-dns.biz",
+      "ns1124.ui-dns.org"
+    ],
+    "associatedProjects": [
+      {
+        "project": "arcanea-lobechat-labs",
+        "domain": "lobe.arcanea.ai"
+      }
+    ]
+  },
+  "dnsAndHttp": {
+    "apexARecord": "216.150.1.1",
+    "wwwARecord": "216.150.1.1",
+    "apexHttp": {
+      "status": 307,
+      "location": "https://www.arcanea.ai/",
+      "server": "Vercel"
+    },
+    "wwwHttp": {
+      "status": 200,
+      "server": "Vercel",
+      "xVercelCache": "HIT",
+      "matchedPath": "/"
+    }
+  },
+  "evidenceCommands": [
+    "mcp Vercel _list_teams",
+    "mcp Vercel _list_projects for team_q6LNT6rnFRlqlcjBJ2Wxz6PE",
+    "mcp Vercel _get_project for arcanea-ai-app, arcanea-ai-appx, arcanea-web, arcanea-2, arcanea-platform",
+    "vercel domains inspect arcanea.ai --scope starlight-intelligence --non-interactive --no-color",
+    "vercel domains inspect www.arcanea.ai --scope starlight-intelligence --non-interactive --no-color",
+    "vercel project inspect arcanea-ai-app --scope starlight-intelligence --non-interactive --no-color",
+    "vercel project inspect arcanea-ai-appx --scope starlight-intelligence --non-interactive --no-color",
+    "vercel project inspect arcanea-lobechat-labs --scope starlight-intelligence --non-interactive --no-color",
+    "Resolve-DnsName arcanea.ai",
+    "Resolve-DnsName www.arcanea.ai",
+    "Invoke-WebRequest -Uri https://arcanea.ai -Method Head -MaximumRedirection 0",
+    "Invoke-WebRequest -Uri https://www.arcanea.ai -Method Head -MaximumRedirection 0"
+  ],
+  "operatorActions": [
+    "Decide whether arcanea-ai-app or arcanea-ai-appx is the intended production project for the current God Mode app.",
+    "If arcanea-ai-app is the intended production project, first fix framework/node settings, then attach arcanea.ai and www.arcanea.ai to that project through Vercel with explicit approval.",
+    "If arcanea-ai-appx is the intended production project, relink this repo worktree to that project only after confirming rootDirectory apps/web and build/install commands are corrected to pnpm.",
+    "Do not force-move arcanea.ai until current production owner and rollback path are explicit."
+  ]
+}

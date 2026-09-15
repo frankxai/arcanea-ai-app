@@ -4,9 +4,6 @@ import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
-import { isBookPublic } from '@/lib/content/book-visibility';
-import { notFound } from 'next/navigation';
-import { getBookRoot } from '@/lib/content/book-path';
 
 export const dynamic = "force-dynamic";
 
@@ -17,8 +14,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const BOOK_DIR = join(getBookRoot(), "lumara-valle-de-los-destellos");
-const BOOK_ROOT = join(BOOK_DIR, "chapters");
+const BOOK_ROOT = join(process.cwd(), "..", "..", "book", "lumara-valle-de-los-destellos", "chapters");
 const COVER_PATH = "/images/books/lumara-valle-de-los-destellos-cover-v2.png";
 
 async function loadChapters() {
@@ -32,8 +28,6 @@ async function loadChapters() {
 }
 
 export default async function PrintPage() {
-  if (!(await isBookPublic(BOOK_DIR))) notFound();
-
   const chapters = await loadChapters();
 
   return (

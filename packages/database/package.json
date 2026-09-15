@@ -11,12 +11,12 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.116.0",
+    "@supabase/supabase-js": "^2.106.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "typescript": "^5.9.3",
-    "@types/node": "^20.19.43",
+    "@types/node": "^20.19.41",
     "eslint": "^9.39.4"
   }
 }

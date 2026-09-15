@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "name": "arcanea-week-chronicle",
+  "slug": "arcanea-week-chronicle",
+  "goal": "A complete what-did-every-agent-do review of the Arcanea estate exists for the current week as HTML plus JSON in queen/reports",
+  "createdAt": "2026-07-05T21:34:30Z",
+  "owner": "Luminor",
+  "cadence": "weekly, Sunday",
+  "verdict": "GO",
+  "stateMode": "global",
+  "ci": "none",
+  "packageManager": "unknown",
+  "maxIterations": 3,
+  "stopAfterSameFailure": 2,
+  "verificationCommands": [
+    "node .loop/arcanea-week-chronicle/verify.mjs"
+  ],
+  "forbiddenScope": [
+    "credentials",
+    "billing",
+    "production mutation",
+    "destructive file operations",
+    "external sends",
+    "gate weakening",
+    "force pushes",
+    "unapproved dependency upgrades"
+  ],
+  "files": {
+    "loop": "LOOP.md",
+    "gate": "GATE.md",
+    "worker": "WORKER.md",
+    "verifier": "VERIFIER.md",
+    "state": "STATE.md",
+    "signs": "SIGNS.md",
+    "runs": "RUNS.md",
+    "machineRuns": "runs.jsonl",
+    "proofs": "proofs/",
+    "lock": "loop.lock",
+    "abort": "ABORT"
+  }
+}

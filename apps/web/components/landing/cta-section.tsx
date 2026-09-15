@@ -5,11 +5,12 @@ import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
+import { analytics } from "@/lib/analytics/events";
 
 const BENEFITS = [
-  "Creative partners across writing, code, design, music, and research",
-  "Original philosophy, meditations, and practical craft guidance",
-  "Free to start — create music, stories, art, and worlds immediately",
+  "Genesis turns an intent into a proof packet, world seed, and first trial",
+  "Atlas and Studio keep visual prompts tied to rights and provenance",
+  "Agents, MCP, and Store routes turn proof into repeatable creator workflows",
 ];
 
 const ORBITING_GUARDIANS = [
@@ -47,13 +48,13 @@ export function CTASection() {
               <div>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6">
                   <span className="text-gradient-cosmic">
-                    Your world is waiting.
+                    Leave with proof.
                   </span>
                 </h2>
 
                 <p className="text-lg text-white/50 mb-8 leading-relaxed">
-                  A complete creation ecosystem — not a thin AI wrapper.
-                  Type one sentence and watch a universe unfold.
+                  Start with one real pressure, turn it into a bounded Gift,
+                  and route the result into memory, media, agents, and market.
                 </p>
 
                 <ul className="space-y-3 mb-10">
@@ -76,13 +77,18 @@ export function CTASection() {
 
                 <div className="flex flex-wrap gap-4">
                   <Link
-                    href="/chat"
+                    href="/genesis"
+                    onClick={() =>
+                      analytics.homepageGenesisCtaClick("final_cta", {
+                        destination: "/genesis",
+                      })
+                    }
                     className="group relative px-8 py-4 rounded-2xl font-semibold text-base overflow-hidden btn-glow"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-[var(--arc-brand-cosmic-blue)] via-[var(--arc-brand-cosmic-blue)] to-[var(--arc-brand-atlantean-teal)] transition-opacity duration-300" />
                     <div className="absolute inset-0 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-cosmic-blue)] to-[var(--arc-brand-cosmic-blue)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <span className="relative z-10 text-white flex items-center gap-2">
-                      Start Creating
+                      Create Genesis proof
                       <span className="group-hover:translate-x-1 transition-transform duration-200">
                         →
                       </span>
@@ -90,10 +96,10 @@ export function CTASection() {
                   </Link>
 
                   <Link
-                    href="/library"
+                    href="/atlas/creatures"
                     className="px-8 py-4 rounded-2xl border border-white/[0.10] text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/[0.15] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
                   >
-                    Explore the Library
+                    Explore Atlas
                   </Link>
                 </div>
               </div>

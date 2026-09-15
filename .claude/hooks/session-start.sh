@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 # Arcanea Intelligence OS — Session Start Hook v2.0
 # Initializes session state, Guardian defaults, realm context, and AgentDB.
+# Portable: sources central hook-env for HARNESS/PROJECT detection across claude/grok/etc.
 set +e
+
+# Source portable env (central or local)
+HOOK_DIR="$(cd "$(dirname "$0")" && pwd)"
+if [ -f "$HOOK_DIR/lib/hook-env.sh" ]; then
+  source "$HOOK_DIR/lib/hook-env.sh" 2>/dev/null || true
+elif [ -f "C:/Users/frank/starlight/repos/claude-code-config/hooks/lib/hook-env.sh" ]; then
+  source "C:/Users/frank/starlight/repos/claude-code-config/hooks/lib/hook-env.sh" 2>/dev/null || true
+fi
 
 ARCANEA_HOME="${ARCANEA_HOME:-$HOME/.arcanea}"
 SESSION_DIR="${ARCANEA_HOME}/sessions/current"

@@ -2,7 +2,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Skill Marketplace",
+  title: "Skill Marketplace — Arcanea",
   description:
     "Browse and install open-source skills for Claude Code, OpenCode, Cursor, Codex, and Gemini. One-command install for every skill.",
   openGraph: {

@@ -1,0 +1,14 @@
+# Frank's prompts -- Multi-agent system with project context and MCP integration
+
+Source uuid: 2409d50c-9f2b-48a0-acf8-d5687fe9cf02
+Created: 2025-11-07T13:07:54.401014Z
+
+Verbatim, chronological.
+
+## Turn 0
+
+Hey. Currently, I'm not too happy with the cloth I wish you a voice. Talk back. At the same time, I really appreciate the, CP server connection that you offer. And, yeah, that you can trigger these tools. At the same time, I'm thinking if we should be building, like, a custom system with multi agents. That are each based on the dedicated projects that we are working on. And can trigger actions for the guitar, can trigger a coding, agent, for example, through the MCP server connect. And, yeah, where the large language model also can base its answers based on the complete context of each project that each projects that I open up right, the voice model, everything's tightly interconnected. Is there anything that offers this out of the box? Or, yeah, do we need to custom build custom set this up in some way So this works really seamless.
+
+## Turn 2
+
+So let's think about how we practically put this into production. Do we set up LibreChat and through Verso, for example, Does it deliver the capabilities that I need? And then we have 11 laps as the voice model potentially. And can we then set up the project or the agent orchestration so it's interconnected with the GitHub? The virtual deployments, and Notion pages that are connected to each of these projects, or how do we right, like, what's the whole comprehensive setup requirements that we have so this will works pretty well. Yeah. And at the same time, how can we make ourselves autonomous as possible so the agents can also trigger downstream tasks and execute with the MCP servers. Retrieve information so we don't need so many vector embeddings or anything. But all can work a seamless fashion. Through the system that we built. And if we utilize lope chat, do we need to additionally also an item for some of the multi agent workflows or like, creating or maybe that's the main objective. What I misunderstand I misunderstanding that the conceptualization should be happening N8N. I'm currently not an expert within it. So I would like just, yeah, that you suggest also based on all our projects that we before Kenya and more, Each of them have their own project bases. They're on GitHub. Right? Their own, vision. How do we connect this and then everything else that will build up over time with the correct eGentix system And then also very smooth interface. And how much work does it take to build this up? How much cost can we expect through the API calls? I assume, actually, it might be even cheaper. Interacting with this system day by day instead of paying for clothe codes €100 per month or so. So, yeah, it might be worth really worth it to to set this up and make this my primary way of operating. But need your sophisticated proposal how?

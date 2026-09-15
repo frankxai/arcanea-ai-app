@@ -3,7 +3,7 @@ import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import yaml from 'js-yaml';
+import * as yaml from 'js-yaml';
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
 
@@ -25,18 +25,6 @@ async function exists(p: string) {
   } catch {
     return false;
   }
-}
-
-/**
- * Next.js normalises encoded separators out of a dynamic segment today, so `bookSlug`
- * has not been observed to escape BOOK_ROOT. This resolves the slug against the actual
- * directory listing anyway: the guarantee belongs to this route, not to the router's
- * current normalisation behaviour.
- */
-async function resolveBookDir(bookSlug: string): Promise<string | null> {
-  const entries = await readdir(BOOK_ROOT, { withFileTypes: true });
-  const match = entries.find((e) => e.isDirectory() && e.name === bookSlug);
-  return match ? join(BOOK_ROOT, match.name) : null;
 }
 
 interface BookManifest {
@@ -64,10 +52,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function AuthorWorkspacePage({ params }: PageProps) {
   const { bookSlug, chapterSlug } = await params;
-  const bookDir = await resolveBookDir(bookSlug);
-  if (!bookDir) notFound();
-
+  const bookDir = join(BOOK_ROOT, bookSlug);
   const chaptersDir = join(bookDir, 'chapters');
+
   if (!(await exists(chaptersDir))) notFound();
 
   // Load book manifest

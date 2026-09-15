@@ -1,0 +1,128 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-07-05T04:32:23.825Z",
+  "repo": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app",
+  "summary": {
+    "decision": "metrics-ready",
+    "pass": 6,
+    "warn": 0,
+    "blockers": 0
+  },
+  "inputs": {
+    "analytics": "apps/web/lib/analytics/events.ts",
+    "analyticsTests": "apps/web/lib/analytics/__tests__/events-projects.test.ts",
+    "growthMetrics": "docs/ARCANEA_GROWTH_METRICS.md",
+    "sprint": "planning-with-files/ARCANEA_AI_GOD_MODE_SPRINT_2026-07-05.md",
+    "competitiveScorecard": "planning-with-files/ARCANEA_COMPETITIVE_SCORECARD_2026-07-05.json"
+  },
+  "events": [
+    {
+      "event": "homepage_genesis_cta_click",
+      "helper": "homepageGenesisCtaClick",
+      "owner": "UX Growth",
+      "decision": "Measure whether the first viewport routes users into Genesis proof creation.",
+      "implemented": true,
+      "tested": true,
+      "documented": true
+    },
+    {
+      "event": "genesis_prompt_prefill_used",
+      "helper": "genesisPromptPrefillUsed",
+      "owner": "Product",
+      "decision": "Measure whether private prompt handoff actually reaches Genesis.",
+      "implemented": true,
+      "tested": true,
+      "documented": true
+    },
+    {
+      "event": "genesis_proof_export",
+      "helper": "genesisProofExport",
+      "owner": "Product/Trust",
+      "decision": "Measure proof creation and ownership/export intent.",
+      "implemented": true,
+      "tested": true,
+      "documented": true
+    },
+    {
+      "event": "atlas_creature_prompt_copy",
+      "helper": "atlasCreaturePromptCopy",
+      "owner": "World Engine",
+      "decision": "Measure reuse of Atlas material into generation workflows.",
+      "implemented": true,
+      "tested": true,
+      "documented": true
+    },
+    {
+      "event": "studio_store_package_click",
+      "helper": "studioStorePackageClick",
+      "owner": "Growth/Revenue",
+      "decision": "Measure package, credits, and commerce intent.",
+      "implemented": true,
+      "tested": true,
+      "documented": true
+    }
+  ],
+  "checks": [
+    {
+      "status": "pass",
+      "lane": "ux-growth",
+      "id": "activation-events-implemented",
+      "summary": "All God Mode activation events are implemented in the analytics helper.",
+      "evidence": "apps/web/lib/analytics/events.ts",
+      "events": [
+        "homepage_genesis_cta_click",
+        "genesis_prompt_prefill_used",
+        "genesis_proof_export",
+        "atlas_creature_prompt_copy",
+        "studio_store_package_click"
+      ]
+    },
+    {
+      "status": "pass",
+      "lane": "verification",
+      "id": "activation-events-tested",
+      "summary": "All God Mode activation events are covered by analytics tests.",
+      "evidence": "apps/web/lib/analytics/__tests__/events-projects.test.ts"
+    },
+    {
+      "status": "pass",
+      "lane": "product-doctrine",
+      "id": "activation-events-documented",
+      "summary": "All God Mode activation events are documented in the growth spec and sprint plan.",
+      "evidence": [
+        "docs/ARCANEA_GROWTH_METRICS.md",
+        "planning-with-files/ARCANEA_AI_GOD_MODE_SPRINT_2026-07-05.md"
+      ]
+    },
+    {
+      "status": "pass",
+      "lane": "safety",
+      "id": "privacy-safe-payloads",
+      "summary": "Activation analytics avoid raw prompt, wallet, key, transaction, and proof-body payload fields.",
+      "evidence": "apps/web/lib/analytics/events.ts"
+    },
+    {
+      "status": "pass",
+      "lane": "product-doctrine",
+      "id": "competitive-pressure-mapped",
+      "summary": "Competitive pressure map covers workspace, memory, artifact, media, world-record, and production-confidence expectations.",
+      "evidence": "planning-with-files/ARCANEA_COMPETITIVE_SCORECARD_2026-07-05.json",
+      "sourceCount": 8,
+      "categories": [
+        "editable_workspace",
+        "project_memory",
+        "shareable_artifact",
+        "cinematic_media_control",
+        "world_record_depth",
+        "production_confidence"
+      ]
+    },
+    {
+      "status": "pass",
+      "lane": "ux-growth",
+      "id": "dashboard-views-defined",
+      "summary": "Growth dashboard views are defined for founder, funnel, revenue, quality, model cost, and experiments.",
+      "evidence": "docs/ARCANEA_GROWTH_METRICS.md"
+    }
+  ]
+}

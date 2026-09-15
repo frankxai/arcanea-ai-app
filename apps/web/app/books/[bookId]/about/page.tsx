@@ -7,7 +7,6 @@ import type { Metadata } from 'next';
 import matter from 'gray-matter';
 import ChatMarkdown from '@/components/chat/chat-markdown';
 import { getBookRoot } from '@/lib/content/book-path';
-import { isBookPublic } from '@/lib/content/book-visibility';
 const BOOK_ROOT = getBookRoot();
 
 export const dynamic = 'force-dynamic';
@@ -58,7 +57,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { bookId } = await params;
   const meta = BOOK_ROOTS[bookId];
   if (!meta) return { title: 'About — Not Found' };
-  if (!(await isBookPublic(meta.root))) return { title: 'About — Not Found' };
   return {
     title: `About ${meta.title} — Author's Note & Glossary`,
     description: `The collaboration story behind ${meta.title}: how it was made, who made it, and the words it asks you to learn.`,
@@ -69,7 +67,6 @@ export default async function BookAboutPage({ params }: PageProps) {
   const { bookId } = await params;
   const meta = BOOK_ROOTS[bookId];
   if (!meta) notFound();
-  if (!(await isBookPublic(meta.root))) notFound();
 
   const [authorsNote, glossary] = await Promise.all([
     readIfExists(join(meta.root, 'AUTHORS_NOTE.md')),

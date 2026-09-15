@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { AgentsDashboard } from './agents-dashboard';
 
 export const metadata: Metadata = {
-  title: 'Ops — Agents',
+  title: 'Ops — Agents | Arcanea',
   description:
     'Live view of Arcanea Agent Orchestrator sessions, routed model surfaces, and worktree state.',
   robots: { index: false, follow: false },

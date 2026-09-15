@@ -1,0 +1,150 @@
+{
+  "generatedAt": "2026-07-05T02:32:52.430Z",
+  "baseURL": "http://127.0.0.1:3001",
+  "checks": [
+    {
+      "name": "homepage to genesis private prompt handoff",
+      "status": "ok",
+      "url": "http://127.0.0.1:3001/genesis?source=hero_send",
+      "events": [
+        {
+          "name": "homepage_genesis_cta_click",
+          "data": {
+            "source": "hero_send",
+            "hasPrompt": true,
+            "promptLengthBucket": "medium",
+            "destination": "/genesis"
+          }
+        },
+        {
+          "name": "genesis_prompt_prefill_used",
+          "data": {
+            "source": "hero_send",
+            "promptLengthBucket": "medium"
+          }
+        }
+      ]
+    },
+    {
+      "name": "starter card to image studio session handoff",
+      "status": "ok",
+      "url": "http://127.0.0.1:3001/studio/image?source=starter_card"
+    },
+    {
+      "name": "atlas prompt copy intent metric",
+      "status": "ok",
+      "events": [
+        {
+          "name": "atlas_creature_prompt_copy",
+          "data": {
+            "slug": "aeralith-sky-grazer",
+            "promptKind": "positive",
+            "rightsTier": "factual_reference_only",
+            "generationPolicy": "allowed_original_variant"
+          }
+        }
+      ]
+    },
+    {
+      "name": "studio store package click intent metric",
+      "status": "ok",
+      "events": [
+        {
+          "name": "studio_store_package_click",
+          "data": {
+            "action": "buy_with_credits",
+            "packageId": "cinematic-web-lab",
+            "packageType": "Frontend",
+            "priceCredits": 120,
+            "tab": "marketplace"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile activation screenshots captured",
+      "status": "ok",
+      "screenshots": [
+        "activation-atlas-detail-mobile.png",
+        "activation-store-mobile.png"
+      ],
+      "widthChecks": {
+        "atlasMobileWidth": {
+          "innerWidth": 390,
+          "bodyScrollWidth": 390,
+          "documentScrollWidth": 390
+        },
+        "storeMobileWidth": {
+          "innerWidth": 390,
+          "bodyScrollWidth": 390,
+          "documentScrollWidth": 390
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "failedResponses": [],
+  "ignoredNetworkFailures": [
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "requestType": "script"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3001/_vercel/speed-insights/script.js",
+      "requestType": "script"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "requestType": "script"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3001/_vercel/speed-insights/script.js",
+      "requestType": "script"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3001/_vercel/speed-insights/script.js",
+      "requestType": "script"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "requestType": "script"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3001/_vercel/speed-insights/script.js",
+      "requestType": "script"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "requestType": "script"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3001/_vercel/speed-insights/script.js",
+      "requestType": "script"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "requestType": "script"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3001/_vercel/speed-insights/script.js",
+      "requestType": "script"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:3001/_vercel/insights/script.js",
+      "requestType": "script"
+    }
+  ],
+  "ignoredConsoleCount": 36
+}

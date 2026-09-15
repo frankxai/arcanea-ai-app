@@ -6,24 +6,11 @@
 
 import { describe, it, before, after } from 'node:test';
 import { strict as assert } from 'node:assert';
-import {
-  existsSync,
-  mkdirSync,
-  mkdtempSync,
-  readFileSync,
-  rmSync,
-  writeFileSync,
-  unlinkSync,
-} from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';
-import { tmpdir } from 'node:os';
+import { homedir } from 'node:os';
 
-const TEST_HOME = mkdtempSync(join(tmpdir(), 'arcanea-memory-'));
-const MEMORY_DIR = join(TEST_HOME, '.arcanea');
-const MEMORIES_FILE = join(MEMORY_DIR, 'memories.json');
-
-mkdirSync(MEMORY_DIR, { recursive: true });
-after(() => rmSync(TEST_HOME, { recursive: true, force: true }));
+const MEMORIES_FILE = join(homedir(), '.arcanea', 'memories.json');
 
 describe('Memory Persistence — File Format', () => {
   let backup = null;
@@ -42,8 +29,9 @@ describe('Memory Persistence — File Format', () => {
     }
   });
 
-  it('should use a dedicated .arcanea directory', () => {
-    assert.ok(existsSync(MEMORY_DIR), '.arcanea directory should exist');
+  it('should use ~/.arcanea/ directory', () => {
+    const arcanDir = join(homedir(), '.arcanea');
+    assert.ok(existsSync(arcanDir), '~/.arcanea/ directory should exist');
   });
 
   it('memories.json should have valid structure when present', () => {
@@ -104,7 +92,7 @@ describe('Memory Persistence — Session Schema', () => {
 });
 
 describe('Memory Persistence — Round-Trip', () => {
-  const testFile = join(MEMORY_DIR, 'memories-test-roundtrip.json');
+  const testFile = join(homedir(), '.arcanea', 'memories-test-roundtrip.json');
 
   after(() => {
     // Clean up test file

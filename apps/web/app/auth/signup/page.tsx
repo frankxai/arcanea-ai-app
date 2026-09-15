@@ -4,9 +4,8 @@
 import { useState } from "react";
 import { MotionProvider, m } from "@/lib/motion";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { safeAuthNextPath } from "@/lib/auth/safe-next-path";
 import {
   PhEnvelope,
   PhLock,
@@ -45,8 +44,6 @@ function GoogleLogo() {
 
 export default function SignupPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const nextPath = safeAuthNextPath(searchParams.get("next"), "/onboarding");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -90,7 +87,7 @@ export default function SignupPage() {
       const supabase = createClient();
       const origin = window.location.origin;
       const emailRedirectTo = new URL("/auth/callback", origin);
-      emailRedirectTo.searchParams.set("next", nextPath);
+      emailRedirectTo.searchParams.set("next", "/onboarding");
 
       const { error } = await supabase.auth.signUp({
         email: email.trim(),
@@ -109,9 +106,7 @@ export default function SignupPage() {
         return;
       }
 
-      router.push(
-        `/auth/login?message=check_email&next=${encodeURIComponent(nextPath)}`,
-      );
+      router.push("/auth/login?message=check_email");
       router.refresh();
     } catch {
       setError("Something went wrong. Please try again.");
@@ -138,7 +133,7 @@ export default function SignupPage() {
       const supabase = createClient();
       const origin = window.location.origin;
       const callbackUrl = new URL("/auth/callback", origin);
-      callbackUrl.searchParams.set("next", nextPath);
+      callbackUrl.searchParams.set("next", "/onboarding");
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
@@ -168,247 +163,238 @@ export default function SignupPage() {
 
   return (
     <MotionProvider>
-      <div className="relative flex items-center justify-center min-h-[calc(100dvh-4rem)] px-4 py-12">
-        {/* Background radial glow */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-          <div className="w-[600px] h-[600px] rounded-full bg-atlantean-teal-aqua/[0.04] blur-[120px]" />
+    <div className="relative flex items-center justify-center min-h-[calc(100dvh-4rem)] px-4 py-12">
+      {/* Background radial glow */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+        <div className="w-[600px] h-[600px] rounded-full bg-atlantean-teal-aqua/[0.04] blur-[120px]" />
+      </div>
+
+      <m.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="relative w-full max-w-md"
+      >
+        {/* Header */}
+        <div className="text-center mb-10">
+          <Link href="/" className="inline-block mb-8">
+            <span className="font-display text-2xl font-bold text-text-primary drop-shadow-[0_0_12px_rgba(0,188,212,0.3)]">
+              Arcanea
+            </span>
+          </Link>
+          <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary mb-2">
+            Join the Multiverse
+          </h1>
+          <p className="font-body text-text-secondary text-sm">
+            Create worlds. Build with AI. Share what you make.
+          </p>
         </div>
 
-        <m.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="relative w-full max-w-md"
-        >
-          {/* Header */}
-          <div className="text-center mb-10">
-            <Link href="/" className="inline-block mb-8">
-              <span className="font-display text-2xl font-bold text-text-primary drop-shadow-[0_0_12px_rgba(0,188,212,0.3)]">
-                Arcanea
+        {/* Signup card */}
+        <GlowCard glass="none" className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
+          {/* Google sign-up — primary action */}
+          <button
+            type="button"
+            onClick={handleGoogleSignup}
+            disabled={isLoading}
+            className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl border border-white/[0.12] bg-white/[0.05] hover:border-white/[0.20] hover:bg-white/[0.08] transition-all duration-300 font-body font-medium text-text-primary text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Sign up with Google"
+          >
+            <GoogleLogo />
+            Sign up with Google
+          </button>
+
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-white/[0.06]" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="px-4 bg-cosmic-void font-body text-xs text-text-muted">
+                or create account with email
               </span>
-            </Link>
-            <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary mb-2">
-              Join the Multiverse
-            </h1>
-            <p className="font-body text-text-secondary text-sm">
-              Create worlds. Build with AI. Share what you make.
-            </p>
+            </div>
           </div>
 
-          {/* Signup card */}
-          <GlowCard
-            glass="none"
-            className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8"
-          >
-            {/* Google sign-up — primary action */}
-            <button
-              type="button"
-              onClick={handleGoogleSignup}
-              disabled={isLoading}
-              className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl border border-white/[0.12] bg-white/[0.05] hover:border-white/[0.20] hover:bg-white/[0.08] transition-all duration-300 font-body font-medium text-text-primary text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-              aria-label="Sign up with Google"
-            >
-              <GoogleLogo />
-              Sign up with Google
-            </button>
-
-            {/* Divider */}
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/[0.06]" />
-              </div>
-              <div className="relative flex justify-center">
-                <span className="px-4 bg-cosmic-void font-body text-xs text-text-muted">
-                  or create account with email
-                </span>
+          <form onSubmit={handleSignup} className="space-y-5">
+            {/* Name field */}
+            <div>
+              <label
+                htmlFor="name"
+                className="block font-body text-sm text-text-secondary mb-2"
+              >
+                Name
+              </label>
+              <div className="relative">
+                <PhUser className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-text-muted" />
+                <input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your name"
+                  required
+                  className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/40 focus:ring-1 focus:ring-atlantean-teal-aqua/20 focus:bg-white/[0.06] outline-none transition-all duration-300 font-body text-text-primary placeholder:text-text-muted text-sm"
+                />
               </div>
             </div>
 
-            <form onSubmit={handleSignup} className="space-y-5">
-              {/* Name field */}
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block font-body text-sm text-text-secondary mb-2"
+            {/* Email field */}
+            <div>
+              <label
+                htmlFor="email"
+                className="block font-body text-sm text-text-secondary mb-2"
+              >
+                Email
+              </label>
+              <div className="relative">
+                <PhEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-text-muted" />
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  required
+                  className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/40 focus:ring-1 focus:ring-atlantean-teal-aqua/20 focus:bg-white/[0.06] outline-none transition-all duration-300 font-body text-text-primary placeholder:text-text-muted text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Password field */}
+            <div>
+              <label
+                htmlFor="password"
+                className="block font-body text-sm text-text-secondary mb-2"
+              >
+                Password
+              </label>
+              <div className="relative">
+                <PhLock className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-text-muted" />
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Create a secure password"
+                  required
+                  className="w-full pl-12 pr-12 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/40 focus:ring-1 focus:ring-atlantean-teal-aqua/20 focus:bg-white/[0.06] outline-none transition-all duration-300 font-body text-text-primary placeholder:text-text-muted text-sm"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary transition-colors"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  Name
-                </label>
-                <div className="relative">
-                  <PhUser className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-text-muted" />
-                  <input
-                    id="name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
-                    required
-                    className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/40 focus:ring-1 focus:ring-atlantean-teal-aqua/20 focus:bg-white/[0.06] outline-none transition-all duration-300 font-body text-text-primary placeholder:text-text-muted text-sm"
-                  />
-                </div>
+                  {showPassword ? (
+                    <PhEyeSlash className="w-[18px] h-[18px]" />
+                  ) : (
+                    <PhEye className="w-[18px] h-[18px]" />
+                  )}
+                </button>
               </div>
 
-              {/* Email field */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block font-body text-sm text-text-secondary mb-2"
+              {/* Password requirements */}
+              {password && (
+                <m.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  className="flex flex-wrap gap-x-4 gap-y-1 mt-3"
                 >
-                  Email
-                </label>
-                <div className="relative">
-                  <PhEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-text-muted" />
-                  <input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    required
-                    className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/40 focus:ring-1 focus:ring-atlantean-teal-aqua/20 focus:bg-white/[0.06] outline-none transition-all duration-300 font-body text-text-primary placeholder:text-text-muted text-sm"
-                  />
-                </div>
-              </div>
-
-              {/* Password field */}
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block font-body text-sm text-text-secondary mb-2"
-                >
-                  Password
-                </label>
-                <div className="relative">
-                  <PhLock className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-text-muted" />
-                  <input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Create a secure password"
-                    required
-                    className="w-full pl-12 pr-12 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/40 focus:ring-1 focus:ring-atlantean-teal-aqua/20 focus:bg-white/[0.06] outline-none transition-all duration-300 font-body text-text-primary placeholder:text-text-muted text-sm"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary transition-colors"
-                    aria-label={
-                      showPassword ? "Hide password" : "Show password"
-                    }
-                  >
-                    {showPassword ? (
-                      <PhEyeSlash className="w-[18px] h-[18px]" />
-                    ) : (
-                      <PhEye className="w-[18px] h-[18px]" />
-                    )}
-                  </button>
-                </div>
-
-                {/* Password requirements */}
-                {password && (
-                  <m.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    className="flex flex-wrap gap-x-4 gap-y-1 mt-3"
-                  >
-                    {passwordChecks.map((check, index) => (
+                  {passwordChecks.map((check, index) => (
+                    <div
+                      key={index}
+                      className={`flex items-center gap-1.5 text-xs font-body ${
+                        check.check
+                          ? "text-atlantean-teal-aqua"
+                          : "text-text-muted"
+                      }`}
+                    >
                       <div
-                        key={index}
-                        className={`flex items-center gap-1.5 text-xs font-body ${
+                        className={`w-3.5 h-3.5 rounded-full flex items-center justify-center ${
                           check.check
-                            ? "text-atlantean-teal-aqua"
-                            : "text-text-muted"
+                            ? "bg-atlantean-teal-aqua/20"
+                            : "bg-white/[0.06]"
                         }`}
                       >
-                        <div
-                          className={`w-3.5 h-3.5 rounded-full flex items-center justify-center ${
-                            check.check
-                              ? "bg-atlantean-teal-aqua/20"
-                              : "bg-white/[0.06]"
-                          }`}
-                        >
-                          {check.check && (
-                            <PhCheck className="w-2.5 h-2.5 text-atlantean-teal-aqua" />
-                          )}
-                        </div>
-                        {check.label}
+                        {check.check && (
+                          <PhCheck className="w-2.5 h-2.5 text-atlantean-teal-aqua" />
+                        )}
                       </div>
-                    ))}
-                  </m.div>
-                )}
-              </div>
-
-              {/* Error message */}
-              {error && (
-                <m.div
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-start gap-2.5 rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3"
-                  role="alert"
-                >
-                  <PhWarningCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                  <p className="text-red-400 text-sm font-body leading-relaxed">
-                    {error}
-                  </p>
+                      {check.label}
+                    </div>
+                  ))}
                 </m.div>
               )}
+            </div>
 
-              {/* Terms */}
-              <p className="font-body text-xs text-text-muted leading-relaxed">
-                By creating an account, you agree to our{" "}
-                <Link
-                  href="/terms"
-                  className="text-atlantean-teal-aqua/70 hover:text-atlantean-teal-aqua transition-colors"
-                >
-                  Terms of Service
-                </Link>{" "}
-                and{" "}
-                <Link
-                  href="/privacy"
-                  className="text-atlantean-teal-aqua/70 hover:text-atlantean-teal-aqua transition-colors"
-                >
-                  Privacy Policy
-                </Link>
-                .
-              </p>
-
-              {/* Submit button */}
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-aqua/80 text-cosmic-deep font-semibold text-sm shadow-[0_0_20px_rgba(0,188,212,0.1)] hover:shadow-[0_0_30px_rgba(0,188,212,0.25)] hover:scale-[1.01] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            {/* Error message */}
+            {error && (
+              <m.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-2.5 rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3"
+                role="alert"
               >
-                {isLoading ? (
-                  <div className="flex items-center gap-3">
-                    <PhCircleNotch className="w-5 h-5 animate-spin" />
-                    <span>Creating account...</span>
-                  </div>
-                ) : (
-                  <>
-                    Start Creating
-                    <PhArrowRight className="w-4 h-4" />
-                  </>
-                )}
-              </button>
-            </form>
-          </GlowCard>
+                <PhWarningCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
+                <p className="text-red-400 text-sm font-body leading-relaxed">
+                  {error}
+                </p>
+              </m.div>
+            )}
 
-          {/* Login link */}
-          <p className="text-center mt-8 font-body text-text-secondary text-sm">
-            Already have an account?{" "}
-            <Link
-              href={
-                nextPath === "/worlds/create?resume=1"
-                  ? "/auth/login?next=%2Fworlds%2Fcreate%3Fresume%3D1"
-                  : "/auth/login"
-              }
-              className="text-atlantean-teal-aqua hover:text-atlantean-teal-aqua/80 transition-colors font-semibold"
+            {/* Terms */}
+            <p className="font-body text-xs text-text-muted leading-relaxed">
+              By creating an account, you agree to our{" "}
+              <Link
+                href="/terms"
+                className="text-atlantean-teal-aqua/70 hover:text-atlantean-teal-aqua transition-colors"
+              >
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link
+                href="/privacy"
+                className="text-atlantean-teal-aqua/70 hover:text-atlantean-teal-aqua transition-colors"
+              >
+                Privacy Policy
+              </Link>
+              .
+            </p>
+
+            {/* Submit button */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-aqua/80 text-cosmic-deep font-semibold text-sm shadow-[0_0_20px_rgba(0,188,212,0.1)] hover:shadow-[0_0_30px_rgba(0,188,212,0.25)] hover:scale-[1.01] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
-              Sign in
-            </Link>
-          </p>
-        </m.div>
-      </div>
+              {isLoading ? (
+                <div className="flex items-center gap-3">
+                  <PhCircleNotch className="w-5 h-5 animate-spin" />
+                  <span>Creating account...</span>
+                </div>
+              ) : (
+                <>
+                  Start Creating
+                  <PhArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          </form>
+        </GlowCard>
+
+        {/* Login link */}
+        <p className="text-center mt-8 font-body text-text-secondary text-sm">
+          Already have an account?{" "}
+          <Link
+            href="/auth/login"
+            className="text-atlantean-teal-aqua hover:text-atlantean-teal-aqua/80 transition-colors font-semibold"
+          >
+            Sign in
+          </Link>
+        </p>
+      </m.div>
+    </div>
     </MotionProvider>
   );
 }

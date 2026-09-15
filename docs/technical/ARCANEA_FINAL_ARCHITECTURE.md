@@ -277,13 +277,11 @@ export default async function ReadPage({ params }: { params: { slug: string } })
 | **Hosting** | Vercel | Best DX for Next.js |
 | **Domain** | app.arcanea.ai | Main platform |
 
-## URLs
+### URLs
 
-- **Production:** https://www.arcanea.ai (main platform)
-- **Vercel domain:** https://arcanea-ai-app.vercel.app (public)
-- **Marketing:** https://arcanea.ai (redirects to www)
-
-**Note:** The domain `app.arcanea.ai` mentioned in older docs is not currently in use. The primary production domain is `www.arcanea.ai`.
+- **Main app:** https://app.arcanea.ai
+- **Marketing:** https://arcanea.ai (can be Astro too!)
+- **Admin:** https://app.arcanea.ai/admin
 
 ### Features
 

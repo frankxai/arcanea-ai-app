@@ -1,0 +1,29 @@
+{
+  "id": "arc-social-031-luminor-rank-proof-wide-16x9",
+  "campaignId": "arc-social-031-luminor-rank-proof",
+  "sourceAssetId": "arc-visual-031",
+  "channelKey": "wide-16x9",
+  "platforms": [
+    "YouTube Thumbnail",
+    "X Link Visual",
+    "Article Header"
+  ],
+  "ratio": "16:9",
+  "width": 1280,
+  "height": 720,
+  "sizeBytes": 987859,
+  "sha256": "d147ab46737dd98ff40a0c7ed493f8c018dcba68f7d36d88acc1af28de4ac30b",
+  "headline": "Luminor Is Earned",
+  "subhead": "Ten Gates. One proof-led path.",
+  "cta": "Mastery leaves evidence.",
+  "proof": "Rank, not species",
+  "gate": "Source",
+  "guardian": "Shinkami",
+  "score30": 28,
+  "sourceImage": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-031-luminor-rank-proof-atlas.png",
+  "outputPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\social-overlays\\exports\\wide-16x9\\arc-social-031-luminor-rank-proof-wide-16x9.png",
+  "sourceMethod": "code-rendered deterministic overlays on inspected generated media",
+  "rightsStatus": "generated-owned-derived",
+  "approvalGate": "social-approvals",
+  "createdAt": "2026-07-06T07:49:20+02:00"
+}

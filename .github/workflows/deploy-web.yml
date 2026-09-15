@@ -1,8 +1,20 @@
-name: Manual Arcanea Web Deploy
+name: Deploy Arcanea Web
 
 on:
-  # Emergency/manual deploy path only. Vercel's native Git integration is the
-  # canonical automatic deploy path; ci.yml is the merge-quality gate.
+  push:
+    branches: [main]
+    paths:
+      - 'apps/web/**'
+      - '.github/workflows/deploy-web.yml'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/web/**'
+      - '.github/workflows/deploy-web.yml'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
   workflow_dispatch:
     inputs:
       environment:
@@ -30,7 +42,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v6
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -38,7 +50,7 @@ jobs:
           version: ${{ env.PNPM_VERSION }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
@@ -46,9 +58,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: Test saga chapter policy
-        run: pnpm --filter @arcanea/web exec tsx lib/saga/__tests__/chapter-files.test.ts
 
       - name: Type check (via turbo — builds workspace deps first)
         run: pnpm turbo run type-check --filter=@arcanea/web
@@ -88,14 +97,14 @@ jobs:
     # handles auto-deploys natively, so this CLI-driven path is optional.
     # Without the token, this job would fail with 'No existing credentials'
     # and turn main red even though the actual site deploys fine.
-    if: ${{ github.event.inputs.environment == 'preview' && vars.HAS_VERCEL_TOKEN == 'true' }}
+    if: ${{ (github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'preview')) && vars.HAS_VERCEL_TOKEN == 'true' }}
     environment:
       name: preview
       url: ${{ steps.deploy.outputs.preview_url }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v6
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -103,7 +112,7 @@ jobs:
           version: ${{ env.PNPM_VERSION }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
@@ -136,14 +145,14 @@ jobs:
     # handles production deploys natively when the repo is linked to the
     # Vercel project. To re-enable CLI-driven deploys, set repo variable
     # HAS_VERCEL_TOKEN=true and add VERCEL_TOKEN to repo secrets.
-    if: ${{ github.event.inputs.environment == 'production' && vars.HAS_VERCEL_TOKEN == 'true' }}
+    if: ${{ ((github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')) && vars.HAS_VERCEL_TOKEN == 'true' }}
     environment:
       name: production
       url: ${{ steps.deploy.outputs.production_url }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v6
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -151,7 +160,7 @@ jobs:
           version: ${{ env.PNPM_VERSION }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'

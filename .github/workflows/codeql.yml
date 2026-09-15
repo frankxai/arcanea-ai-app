@@ -3,21 +3,8 @@ name: CodeQL
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - 'book/**'
-      - 'docs/**'
-      - '*.md'
-      - '.arcanea/lore/**'
-      - '.arcanea/projects/log/**'
   pull_request:
     branches: [main]
-    types: [opened, synchronize, reopened, ready_for_review]
-    paths-ignore:
-      - 'book/**'
-      - 'docs/**'
-      - '*.md'
-      - '.arcanea/lore/**'
-      - '.arcanea/projects/log/**'
   schedule:
     # Weekly scan — Mondays 06:00 UTC
     - cron: '0 6 * * 1'
@@ -29,8 +16,6 @@ concurrency:
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    # Cost gate: skip on draft PRs — agents iterate free; scan runs when marked ready.
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -45,10 +30,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v6
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
+        uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
           queries: security-extended
@@ -57,7 +42,7 @@ jobs:
       - name: Perform CodeQL Analysis
         id: analyze
         continue-on-error: true
-        uses: github/codeql-action/analyze@v4
+        uses: github/codeql-action/analyze@v3
         with:
           category: '/language:${{ matrix.language }}'
 

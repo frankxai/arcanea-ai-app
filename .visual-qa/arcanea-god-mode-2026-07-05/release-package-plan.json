@@ -1,0 +1,169 @@
+{
+  "version": "1.0.0",
+  "id": "arcanea-god-mode-release-package-plan-2026-07-05",
+  "generatedAt": "2026-07-05T13:49:36.125Z",
+  "repo": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app",
+  "currentGitHead": "97d3379b89848bf6b1996b96342f96d215f7a3fe",
+  "decision": "stage-plan-ready",
+  "nonMutating": true,
+  "summary": {
+    "pass": 4,
+    "warn": 3,
+    "blockers": 0,
+    "dirtyCount": 5,
+    "includedDirtyCount": 0,
+    "excludedDirtyCount": 5,
+    "unknownDirtyCount": 0,
+    "stageTargetCount": 0,
+    "readyForStaging": true,
+    "readyForPreview": false,
+    "readyForProduction": false
+  },
+  "inputs": {
+    "releaseScope": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
+    "releaseReadinessReport": ".visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json"
+  },
+  "dirty": {
+    "count": 5,
+    "included": [],
+    "excluded": [
+      "data/campaign-loop-state.json",
+      "package.json",
+      "packages/arc-protocol/package.json",
+      "pnpm-lock.yaml",
+      "docs/strategy/ARCANEA_BUSINESS_STRATEGY.md"
+    ],
+    "unknown": [],
+    "entries": [
+      {
+        "raw": " M data/campaign-loop-state.json",
+        "status": "M",
+        "file": "data/campaign-loop-state.json",
+        "included": false,
+        "excluded": true,
+        "classification": "excluded"
+      },
+      {
+        "raw": " M package.json",
+        "status": "M",
+        "file": "package.json",
+        "included": false,
+        "excluded": true,
+        "classification": "excluded"
+      },
+      {
+        "raw": " M packages/arc-protocol/package.json",
+        "status": "M",
+        "file": "packages/arc-protocol/package.json",
+        "included": false,
+        "excluded": true,
+        "classification": "excluded"
+      },
+      {
+        "raw": " M pnpm-lock.yaml",
+        "status": "M",
+        "file": "pnpm-lock.yaml",
+        "included": false,
+        "excluded": true,
+        "classification": "excluded"
+      },
+      {
+        "raw": "?? docs/strategy/ARCANEA_BUSINESS_STRATEGY.md",
+        "status": "??",
+        "file": "docs/strategy/ARCANEA_BUSINESS_STRATEGY.md",
+        "included": false,
+        "excluded": true,
+        "classification": "excluded"
+      }
+    ]
+  },
+  "safeStagePaths": [],
+  "excludedCoveredByStage": [],
+  "includedMissingFromStage": [],
+  "commands": {
+    "preflight": [
+      "node scripts/arcanea-release-package-plan.mjs --strict",
+      "node scripts/arcanea-release-readiness.mjs --strict"
+    ],
+    "stage": [],
+    "verifyAfterStage": [
+      "git diff --cached --name-only",
+      "git status --short",
+      "corepack pnpm --dir apps/web type-check",
+      "corepack pnpm --dir apps/web test:projects",
+      "corepack pnpm --dir apps/web build",
+      "node scripts/arcanea-success-metrics-audit.mjs --strict",
+      "node scripts/arcanea-durable-workflow-readiness.mjs --strict",
+      "node scripts/arcanea-release-readiness.mjs --strict"
+    ],
+    "draftPrOnly": [
+      "gh pr create --draft"
+    ]
+  },
+  "stopConditions": [
+    "Do not run any staging command if unknownDirtyCount is greater than 0.",
+    "Do not stage excludedDirtyPaths unless Frank explicitly expands the release scope.",
+    "Do not push or open a ready PR until local app gates pass after staging.",
+    "Do not create or promote a production deployment until Vercel framework, Node runtime, domain, and live-state blockers are resolved.",
+    "Do not add Workflow or Eve runtime code in this package without installed dependencies and bundled docs."
+  ],
+  "checks": [
+    {
+      "status": "pass",
+      "lane": "safety",
+      "id": "release-scope-loaded",
+      "summary": "Release scope manifest loaded.",
+      "evidence": "planning-with-files/ARCANEA_GOD_MODE_RELEASE_SCOPE_2026-07-05.json",
+      "includedScopeCount": 57,
+      "excludedScopeCount": 5
+    },
+    {
+      "status": "pass",
+      "lane": "safety",
+      "id": "unknown-dirty-paths",
+      "summary": "No dirty paths are outside the release scope classification."
+    },
+    {
+      "status": "pass",
+      "lane": "safety",
+      "id": "excluded-paths-preserved",
+      "summary": "The staging plan does not cover excluded dirty paths."
+    },
+    {
+      "status": "pass",
+      "lane": "safety",
+      "id": "included-paths-covered",
+      "summary": "Every included dirty path is covered by a planned git add target."
+    },
+    {
+      "status": "warn",
+      "lane": "safety",
+      "id": "excluded-dirty-work",
+      "summary": "5 excluded dirty paths remain and must stay out of the God Mode PR.",
+      "excluded": [
+        "data/campaign-loop-state.json",
+        "package.json",
+        "packages/arc-protocol/package.json",
+        "pnpm-lock.yaml",
+        "docs/strategy/ARCANEA_BUSINESS_STRATEGY.md"
+      ]
+    },
+    {
+      "status": "warn",
+      "lane": "release",
+      "id": "stage-command-ready",
+      "summary": "No scoped git add targets are currently needed."
+    },
+    {
+      "status": "warn",
+      "lane": "vercel-release",
+      "id": "release-readiness-context",
+      "summary": "Latest release-readiness report decision is blocked.",
+      "evidence": ".visual-qa/arcanea-god-mode-2026-07-05/release-readiness-report.json",
+      "pass": 18,
+      "warn": 4,
+      "blockers": 4,
+      "action": "Treat packaging as PR/preview preparation only. Do not promote production until release blockers are resolved."
+    }
+  ]
+}

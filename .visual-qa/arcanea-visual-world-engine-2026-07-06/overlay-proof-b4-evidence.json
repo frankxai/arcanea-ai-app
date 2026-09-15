@@ -1,0 +1,147 @@
+{
+  "version": "1.0",
+  "task": "Batch 4 deterministic overlay proof pack for Arcanea Visual World Engine candidates",
+  "surface": "Instagram/TikTok 4:5, TikTok/Reels/Shorts 9:16, X/YouTube/Open Graph 16:9, and Guardian portal review proof",
+  "audience": "Arcanea creators, anime/webtoon fantasy audiences, musicians, storytellers, and AI-native worldbuilders",
+  "first_read": "Arcanea turns Gate-scale mythology into exact social hooks and usable creator proof assets.",
+  "standards": [
+    "C:/Users/frank/starlight/repos/design-agent-standards/PREMIUM_ASSET_STANDARD.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/AGENTIC_DESIGN_LOOP.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/OUTCOMES.md",
+    "C:/Users/frank/starlight/repos/design-agent-standards/best-practices/image-logo-visual-generation.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/BRAND.md",
+    "C:/Users/frank/starlight/repos/starlight-design-intelligence/brand-packs/arcanea/DESIGN.md",
+    "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/lore/CANON_LOCKED.md"
+  ],
+  "references": [
+    {
+      "label": "Batch 4 review",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/review.md",
+      "reason": "Provides Batch 4 scoring, risks, and next prompt learnings."
+    },
+    {
+      "label": "Batch 4 source ledger",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/run-2026-07-06-god-mode/ledger.csv",
+      "reason": "Records source asset scores, ship-status schema values, canon refs, and failure modes."
+    },
+    {
+      "label": "Batch 4 overlay ledger",
+      "source": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b4-2026-07-06T0549/overlay-b4-ledger.csv",
+      "reason": "Records overlay outputs, exact text, scores, and review decisions."
+    }
+  ],
+  "direction": {
+    "keep": [
+      "exact deterministic text over generated masters",
+      "Arcanea proof language rather than vague fantasy copy",
+      "constructive Fire Gate framing",
+      "music and Voice Gate creator utility",
+      "Guardian/Godbeast infrastructure framing"
+    ],
+    "avoid": [
+      "generated in-image text",
+      "public publishing without Frank approval",
+      "canon promotion of staging assets",
+      "Mamoru promotion",
+      "battle-fantasy Draconis framing",
+      "Veloura as a final creature-head Godbeast proof"
+    ],
+    "signature": "Proof becomes myth; myth becomes a usable social artifact.",
+    "system": [
+      "Tier C deterministic PIL overlays on Tier B generated masters",
+      "Exact copy rendered in code with source sidecars",
+      "VIS provenance sidecars beside every exported overlay",
+      "Mirrored working copy in the local brand image system"
+    ]
+  },
+  "asset_quality": {
+    "tier": "C",
+    "source_method": "image-edit",
+    "provenance": "generated",
+    "why_premium": "The pack converts high-scoring Batch 4 masters into exact-text review proofs with clear crop intent, provenance sidecars, and no baked-in generated typography.",
+    "shortcut_risk": "low",
+    "context_tested": true
+  },
+  "artifacts": [
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b4-2026-07-06T0549/arc-overlay-b4-033-fire-builder-4x5.png",
+      "kind": "4:5 social overlay",
+      "inspected": true,
+      "notes": "28/30. Strongest B4 overlay proof; constructive Fire Gate hook with readable type and Draconis as habitat-scale force."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b4-2026-07-06T0549/arc-overlay-b4-035-sound-proof-9x16.png",
+      "kind": "9:16 music social overlay",
+      "inspected": true,
+      "notes": "28/30. Strong vertical hook with dark safe zone and exact text; avoid close crop on hand/instrument details."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b4-2026-07-06T0549/arc-overlay-b4-034-solar-library-og.png",
+      "kind": "16:9 editorial/OG overlay",
+      "inspected": true,
+      "notes": "27/30. Good Crown Gate editorial source; needs future mobile crop and broader Aiyami portrayal before campaign use."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b4-2026-07-06T0549/arc-overlay-b4-008d-voice-operator-4x5.png",
+      "kind": "4:5 Guardian portal overlay",
+      "inspected": true,
+      "notes": "26/30. Best Alera/Otome correction proof so far, but still needs less portrait polish and more contemporary operator wardrobe."
+    },
+    {
+      "path_or_url": "C:/Users/frank/starlight/repos/arcanea-ai-app/.arcanea/image-lab/conductor-2026-07-06/overlay-proofs/b4-2026-07-06T0549/overlay-b4-contact-sheet.jpg",
+      "kind": "contact sheet",
+      "inspected": true,
+      "notes": "Contact sheet reviewed for hierarchy, crop, and text clipping."
+    },
+    {
+      "path_or_url": "C:/Users/frank/brands/image-system/arcanea/2026-07-06-conductor/overlay-proofs/b4-2026-07-06T0549",
+      "kind": "brand image system mirror",
+      "inspected": true,
+      "notes": "Mirrored overlay PNGs, VIS sidecars, contact sheet, CSV ledger, and JSONL metadata."
+    }
+  ],
+  "checks": [
+    {
+      "name": "asset-tier",
+      "status": "pass",
+      "evidence": "Tier C deterministic overlays over Tier B generated masters; no Tier D primary visual."
+    },
+    {
+      "name": "export-inspection",
+      "status": "pass",
+      "evidence": "Full-size B4 overlays and the contact sheet were visually inspected."
+    },
+    {
+      "name": "visual-qa",
+      "status": "pass",
+      "evidence": "033 and 035 pass strongly; 034 and 008d pass with caution; no restart-level asset included."
+    },
+    {
+      "name": "canon-status",
+      "status": "pass",
+      "evidence": "No Mamoru promotion; Luminor not used as a species; Draconis framing stays constructive; Alera/Otome remains a review proof."
+    },
+    {
+      "name": "provenance",
+      "status": "pass",
+      "evidence": "Each overlay has a .vis.provenance.json sidecar and a mirrored copy in the local brand image system."
+    },
+    {
+      "name": "publication",
+      "status": "not_applicable",
+      "evidence": "External publish, deploy, push, mint, scheduler action, and canon promotion are explicitly out of scope for this local proof pack."
+    }
+  ],
+  "score": {
+    "total": 28,
+    "max": 30,
+    "notes": "Ship for Frank review as a proof pack, not for external publication. 008d remains style-caution and should not be treated as final Alera/Otome canon."
+  },
+  "decision": "ship",
+  "known_risks": [
+    "Flow Gate Veloura is not included in the B4 overlay pack because its source still reads too much like a creature-head proof.",
+    "The public gallery integration remains another agent's dirty surface; this pass did not touch gallery code.",
+    "A shared-shell gallery warning appears in existing screenshots and should be handled separately before pristine public visual QA.",
+    "Frank approval is required before any staging candidate becomes canon, published social, minted metadata, or production gallery promotion."
+  ]
+}

@@ -1,25 +1,6 @@
--- Establish the chat session baseline on clean databases, then add the
--- cloud-sync columns expected by existing production installations.
---
--- This file is self-contained: it creates public.chat_sessions before altering
--- it, so no earlier "base" migration is required and none should be added. An
--- earlier one existed briefly (20260322000000_chat_sessions_base.sql) and was
--- removed, because sorting ahead of this file made its own definition win and
--- reduced the create below to a no-op -- which pointed user_id at
--- public.profiles(id) on fresh databases while production references
--- auth.users(id). Keep the create-then-alter shape here rather than splitting
--- the baseline back out into a separate migration.
-
-create table if not exists public.chat_sessions (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  title text,
-  luminor_id text,
-  messages jsonb not null default '[]'::jsonb,
-  model_id text,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
-);
+-- Add cloud sync columns to existing chat_sessions table
+-- The table already exists with: id, user_id, title, luminor_id, created_at, updated_at
+-- We add: messages (jsonb), model_id (text), and relax luminor_id to nullable
 
 alter table public.chat_sessions
   add column if not exists messages jsonb not null default '[]'::jsonb;
@@ -72,6 +53,3 @@ end $$;
 -- Indexes (idempotent)
 create index if not exists idx_chat_sessions_user_id on public.chat_sessions(user_id);
 create index if not exists idx_chat_sessions_updated_at on public.chat_sessions(updated_at desc);
-
-comment on table public.chat_sessions is
-  'Authenticated Arcanea chat sessions; this migration is self-contained for clean preview databases.';

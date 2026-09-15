@@ -1,0 +1,24 @@
+{
+  "id": "anime-social-experiment",
+  "version": "2026-07-16",
+  "rail": "experiment",
+  "house": false,
+  "lookName": "Anime / manhwa social experiment",
+  "description": "Explicit A/B social experiments only. High short-term virality, low brand uniqueness. Never house SSOT. Separate job folders required.",
+  "authorities": ["ARCANEA_VISUAL_OS_OPERATING_MODEL.md"],
+  "materialsWhitelist": ["stylized line", "cel shading", "manhwa lighting"],
+  "lightLaw": "Stylized; still avoid pure isekai glow spam when testing Arcanea cast recognition.",
+  "tone": "Experiment — labeled.",
+  "enginesPreferred": ["nb2", "niji-class-if-available"],
+  "enginesAllowed": ["grok-stylized"],
+  "identityMode": "optional-face-ref",
+  "forbidden": [
+    "promoting to house-myth-tech without Queen decision",
+    "replacing VISUAL_DOCTRINE house",
+    "using as product chrome"
+  ],
+  "shipBarScore30": 28,
+  "labelRequired": "folder must include anime-experiment; never mix into codex-encyclopedia-* house ledgers",
+  "status": "experiment-only",
+  "doNotUseFor": ["official Codex shelf", "book masters", "Soul ID training set"]
+}

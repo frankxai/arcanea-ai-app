@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
-import { FACTS } from "@/lib/facts";
 import { m } from "framer-motion";
 import { thirdPartyBrand, brand, competitorAccent } from "@arcanea/design-system";
 import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
@@ -49,7 +48,7 @@ export interface Integration {
 // integration carries one today.
 export const INTEGRATIONS: Integration[] = [
   // Coding & Dev — the IDE/CLI layer
-  { name: "Claude Code", category: "coding", color: thirdPartyBrand.anthropicClaude, status: "live", note: "MCP server" },
+  { name: "Claude Code", category: "coding", color: thirdPartyBrand.anthropicClaude, status: "live", note: "MCP server + 80 skills" },
   { name: "Cursor", category: "coding", color: thirdPartyBrand.cursor, status: "beta", note: "MCP via .cursor/mcp.json" },
   { name: "VS Code", category: "coding", color: thirdPartyBrand.vsCode, status: "beta", note: "MCP-ready, no extension yet" },
   { name: "Windsurf", category: "coding", color: thirdPartyBrand.windsurf, status: "beta", note: "MCP + rules bridge" },

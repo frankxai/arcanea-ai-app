@@ -57,8 +57,8 @@
     "access": "public"
   },
   "devDependencies": {
-    "@types/node": "^20.19.43",
-    "tsx": "^4.23.13",
+    "@types/node": "^20.19.41",
+    "tsx": "^4.22.3",
     "typescript": "^5.9.3"
   },
   "engines": {

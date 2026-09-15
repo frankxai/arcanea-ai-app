@@ -102,23 +102,17 @@ Each app has a `vercel.json` configuration:
 
 ## 🌐 **Domain Configuration**
 
-### Production Domains (Main App)
-- **Primary:** `www.arcanea.ai` - Main production deployment
-- **Apex:** `arcanea.ai` - Redirects to www
-- **Vercel:** `arcanea-ai-app.vercel.app` - Public Vercel domain
-
-See [docs/deploy/DOMAIN_CONFIGURATION.md](./DOMAIN_CONFIGURATION.md) for detailed domain setup and troubleshooting.
-
-### Legacy/Planned Subdomains
-- **Studio:** `studio.arcanea.ai` (planned)
-- **Gallery:** `gallery.arcanea.ai` (planned)
-- **Library:** `library.arcanea.ai` (planned)
-- **API:** `api.arcanea.ai` (planned for backend services)
+### Custom Domains
+- **Studio:** `studio.arcanea.ai`
+- **Gallery:** `gallery.arcanea.ai`
+- **Library:** `library.arcanea.ai`
+- **API:** `api.arcanea.ai` (backend services)
 
 ### DNS Configuration
 ```
-CNAME www.arcanea.ai -> cname.vercel-dns.com
-ALIAS arcanea.ai -> Vercel IP (redirects to www)
+CNAME studio.arcanea.ai -> cname.vercel-dns.com
+CNAME gallery.arcanea.ai -> cname.vercel-dns.com
+CNAME library.arcanea.ai -> cname.vercel-dns.com
 ```
 
 ## 📊 **Monitoring & Analytics**

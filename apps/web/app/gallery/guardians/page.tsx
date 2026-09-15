@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "Behold the ten divine Guardians of Arcanea — God/Goddess portraits, Godbeast companions, and gallery art across every Gate from Foundation to Source.",
   openGraph: {
-    title: "Guardians of the Ten Gates",
+    title: "Guardians of the Ten Gates — Arcanea",
     description:
       "76 artworks spanning all ten Guardians, their divine-bond Godbeasts, and gallery variations. From Lyssandria at Foundation to Shinkami at Source.",
     type: "website",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Guardians of the Ten Gates",
+    title: "Guardians of the Ten Gates — Arcanea",
     description:
       "10 divine Guardians × 10 Godbeasts × gallery variations. Every artwork from the Arcanea canon.",
   },

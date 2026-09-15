@@ -1,0 +1,13 @@
+# Claude's canon assertions -- Building an open-source publishing house ecosystem
+
+Source uuid: 9c4cc415-e3c5-4e38-bc32-5cdd3fdb53b2
+
+CONFIRMED = Frank's next message reads as explicit approval. PUSHED-BACK = reads as disagreement. UNCLEAR/NO-RESPONSE = no clean signal -- treat as OPEN, not LOCKED.
+
+| Verdict | Claude said | Frank's next message |
+|---|---|---|
+| UNCLEAR | - Module composition (kernel + specialization modules + claw section) gives you prompt-level control per agent without duplicating the canonical system prompt. | So here i also need advice what we structure and approach since some of this is already in our github and claude code with subagents for arcanea-author skill and subagents we already have, sow what do the claws need to do, or they can do same someone doesnt need cc then? or how to think of this? And |
+| UNCLEAR | **Editorial** → developmental editing (structure, pacing, argument), line editing (prose quality), copyediting (grammar, consistency), proofreading (final pass). | So here i also need advice what we structure and approach since some of this is already in our github and claude code with subagents for arcanea-author skill and subagents we already have, sow what do the claws need to do, or they can do same someone doesnt need cc then? or how to think of this? And |
+| UNCLEAR | **Editorial agents** (new): `dev-editor-claw` (structural feedback), `copy-editor-claw` (line-level quality), `proofreader-claw` (final pass). | So here i also need advice what we structure and approach since some of this is already in our github and claude code with subagents for arcanea-author skill and subagents we already have, sow what do the claws need to do, or they can do same someone doesnt need cc then? or how to think of this? And |
+| UNCLEAR | The question "what do the claws need to do, or can someone use this without CC?" is actually the question: **is the Publishing House a Claude Code extension, or a standalone service?**  The answer is: | While might be true The answer is: it must be both. The Luminor→Claw architecture CC built is runtime-agnostic by design — that's what the `Runtime` type union is for. A Claw can run as a CC subagent (`local-claude-code`), as a managed agent on Anthropic's cloud (`claude-managed-agents`), as an Open |
+| UNCLEAR | Media Claw runs the final cover through TASTE for quality gate. | Save this visual from earlier as an artifact: "arcanea_publishing_house_runtime_topology" |

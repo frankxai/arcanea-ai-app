@@ -1,72 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-
-const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
-const MAX_JSON_BYTES = Math.ceil((MAX_IMAGE_BYTES * 4) / 3) + 4_096;
-const ALLOWED_IMAGE_TYPES = new Map([
-  ['image/jpeg', 'jpg'],
-  ['image/png', 'png'],
-  ['image/webp', 'webp'],
-]);
-
-function unauthorized() {
-  return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
-}
-
-function parseBase64Image(imageData: unknown, mimeType: unknown): {
-  base64: string;
-  mimeType: string;
-  extension: string;
-} {
-  if (typeof imageData !== 'string' || typeof mimeType !== 'string') {
-    throw new Error('Image data and MIME type are required');
-  }
-
-  const normalizedMimeType = mimeType.toLowerCase();
-  const extension = ALLOWED_IMAGE_TYPES.get(normalizedMimeType);
-  if (!extension) {
-    throw new Error('Unsupported image type');
-  }
-
-  const base64 = imageData.replace(/^data:[^;]+;base64,/, '');
-  if (
-    base64.length === 0 ||
-    base64.length % 4 !== 0 ||
-    !/^[A-Za-z0-9+/]*={0,2}$/.test(base64)
-  ) {
-    throw new Error('Invalid image encoding');
-  }
-
-  const padding = base64.endsWith('==') ? 2 : base64.endsWith('=') ? 1 : 0;
-  const decodedBytes = (base64.length * 3) / 4 - padding;
-  if (decodedBytes > MAX_IMAGE_BYTES) {
-    throw new Error('Image exceeds the 10 MB limit');
-  }
-
-  return { base64, mimeType: normalizedMimeType, extension };
-}
 
 export async function POST(req: NextRequest) {
   try {
-    const declaredLength = Number(req.headers.get('content-length'));
-    if (Number.isFinite(declaredLength) && declaredLength > MAX_JSON_BYTES) {
-      return NextResponse.json({ error: 'Image exceeds the 10 MB limit' }, { status: 413 });
-    }
-
-    const supabase = await createClient();
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError || !user) {
-      return unauthorized();
-    }
-
     const { imageData, mimeType, prompt } = await req.json();
-    const parsed = parseBase64Image(imageData, mimeType);
+
+    if (!imageData || !mimeType) {
+      return NextResponse.json({ error: 'Image data is required' }, { status: 400 });
+    }
 
     if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      // Gracefully degrade — return success without persisting
       return NextResponse.json({
         url: null,
         message: 'Storage not configured — image available in session only',
@@ -74,29 +18,29 @@ export async function POST(req: NextRequest) {
     }
 
     const { put } = await import('@vercel/blob');
-    const blob = await put(
-      `imagine/${user.id}/${crypto.randomUUID()}.${parsed.extension}`,
-      Buffer.from(parsed.base64, 'base64'),
-      {
-        // Transitional only: the Media Fabric migration moves canonical assets to R2.
-        // UUID paths prevent enumeration, while the gallery is isolated by user ID.
-        access: 'public',
-        contentType: parsed.mimeType,
-        addRandomSuffix: false,
-      },
-    );
+
+    // Convert base64 to buffer
+    const buffer = Buffer.from(imageData, 'base64');
+    const ext = mimeType.includes('png') ? 'png' : 'jpg';
+    const filename = `imagine/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
+    // Store in Vercel Blob
+    const blob = await put(filename, buffer, {
+      access: 'public',
+      contentType: mimeType,
+      addRandomSuffix: false,
+    });
 
     return NextResponse.json({
       url: blob.url,
-      prompt: typeof prompt === 'string' ? prompt.slice(0, 2_000) : undefined,
+      prompt,
       pathname: blob.pathname,
     });
   } catch (error) {
-    console.error('Imagine save failed', {
-      type: error instanceof Error ? error.name : 'unknown',
-    });
-    const message = error instanceof Error ? error.message : 'Failed to save image';
-    const status = message.includes('10 MB') ? 413 : 400;
-    return NextResponse.json({ error: message }, { status });
+    console.error('Save API error:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Failed to save image' },
+      { status: 500 }
+    );
   }
 }

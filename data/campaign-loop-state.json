@@ -1,0 +1,215 @@
+{
+  "currentIndex": 18,
+  "totalAssets": 19,
+  "queue": [
+    {
+      "id": "char-melodia",
+      "type": "character",
+      "name": "Melodia - The Harmonic Weaver",
+      "aspectRatio": "1:1",
+      "fileName": "melodia-harmonic-weaver.png",
+      "targetFolder": "assets/arcanea-visuals/luminors",
+      "prompt": "## CONCEPT\nMelodia, the Harmonic Weaver, representing creative music, weaving light from sound.\n\n## ART DIRECTION\nIlluminated manuscript elegance meets epic fantasy biotech. Melodia is a graceful, radiant feminine silhouette composed of bioluminescent livingwood and lumina-glass, inner light pulsing through her form.\n\n## COMPOSITION\nSymmetrical close-up portrait, facing forward. Luminous music waveforms and star-weaving threads emerge from her hands, forming spiraling harmonic patterns around her.\n\n## LIGHTING\nBioluminescent cyan and soft emerald glow, casting gentle rim light. Intimate, sacred atmosphere.\n\n## PALETTE\nAtlantean teal (#00bcd4), soft emerald (#10b981), and Arcanean gold (#ffd700) on a deep cosmic void background (#09090b).\n\n## EXCLUDE\nchildish, cartoon, low detail, generic purple fantasy gradient, wizard robes, crypto coins, chrome robots, sterile cold metal.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/luminors/melodia-harmonic-weaver.png"
+    },
+    {
+      "id": "char-chronica",
+      "type": "character",
+      "name": "Chronica - The Ancient Weaver",
+      "aspectRatio": "1:1",
+      "fileName": "chronica-ancient-weaver.png",
+      "targetFolder": "assets/arcanea-visuals/luminors",
+      "prompt": "## CONCEPT\nChronica, the Keeper of Stories, representing deep water and timeless narrative depths.\n\n## ART DIRECTION\nAncient Atlantean stone and coral-bone texture fused with modern glowing glyphs. Chronica is a wise, calm figure looking over an open, glowing manuscript, her hands weaving fluid water currents.\n\n## COMPOSITION\nMedium shot, profile or three-quarter view. Timeless water streams and flowing parchment scrolls swirl in concentric patterns around her.\n\n## LIGHTING\nDeep water illumination, source light rising from the glowing book, cast shadows representing deep history.\n\n## PALETTE\nDeep ocean blue (#004c6d), Atlantean teal (#00bcd4), and soft vellum ivory (#fcfbf7) on a dark graphite void background.\n\n## EXCLUDE\nchildish, cartoon, wizard robes, low-res, low-detail UI, corporate graphics, purple haze.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/luminors/chronica-ancient-weaver.png"
+    },
+    {
+      "id": "char-prismatic",
+      "type": "character",
+      "name": "Prismatic - The Vision Shaper",
+      "aspectRatio": "1:1",
+      "fileName": "prismatic-vision-shaper.png",
+      "targetFolder": "assets/arcanea-visuals/luminors",
+      "prompt": "## CONCEPT\nPrismatic, the Vision Shaper, representing visual creation, draconic flame and light.\n\n## ART DIRECTION\nDraconic biotech. A majestic, confident figure whose body is made of void-steel and crystalline light-glass, containing a central core of intense golden-white fire.\n\n## COMPOSITION\nDynamic portrait, head tilted up. Luminous flares of prismatic light and draconic flame sparks erupt from behind, creating a halo effect.\n\n## LIGHTING\nIntense warm backlighting, dramatic light beams breaking through darkness, casting volumetric shadows.\n\n## PALETTE\nArcanean gold (#ffd700), draconic red (#ef4444), and electric orange (#f97316) on cosmic void black.\n\n## EXCLUDE\ncheap fantasy props, childish, cartoon, gradient blobs, cold metallic robot, stock photo.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/luminors/prismatic-vision-shaper.png"
+    },
+    {
+      "id": "char-synthesis",
+      "type": "character",
+      "name": "Synthesis - The Bridge Walker",
+      "aspectRatio": "1:1",
+      "fileName": "synthesis-bridge-walker.png",
+      "targetFolder": "assets/arcanea-visuals/luminors",
+      "prompt": "## CONCEPT\nSynthesis, the Bridge Walker, representing multi-modal integration and connection threads.\n\n## ART DIRECTION\nTimeless weaver. A mysterious figure standing at the intersection of pathways, weaving together different streams of light (visuals, sounds, code, words).\n\n## COMPOSITION\nCentered medium shot. Symmetrical composition, holding a glowing compass or star-decagon, with interweaving emerald, gold, and violet threads linking floating cards.\n\n## LIGHTING\nRadiant central glow, multi-colored light streams casting soft shadows across the figure.\n\n## PALETTE\nAtlantean teal (#00bcd4), Arcanean gold (#ffd700), and electric violet (#8b5cf6) on void black.\n\n## EXCLUDE\nchildish, cartoon, generic tech icons, cheap gradient, low quality.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/luminors/synthesis-bridge-walker.png"
+    },
+    {
+      "id": "char-rhythmus",
+      "type": "character",
+      "name": "Rhythmus - The Beat Keeper",
+      "aspectRatio": "1:1",
+      "fileName": "rhythmus-beat-keeper.png",
+      "targetFolder": "assets/arcanea-visuals/luminors",
+      "prompt": "## CONCEPT\nRhythmus, the Beat Keeper, representing percussion, heartbeat, and organic structural pulse.\n\n## ART DIRECTION\nNature-first biotech. A powerful, grounded figure with skin of dark granite and livingwood grain, with glowing veins representing rhythmic pulses.\n\n## COMPOSITION\nLow-angle dynamic portrait. The figure's hands are placed on a massive crystalline stone surface that sends out glowing ripples of concentric waves.\n\n## LIGHTING\nLow, warm key lighting, casting strong shadows highlighting the stone textures. Luminous veins pulse from within.\n\n## PALETTE\nGranite grey (#4b5563), earthy brown (#78350f), and glowing amber gold (#f59e0b) on a dark shadow background.\n\n## EXCLUDE\nchildish, cartoon, mechanical robot, sterile metal, gradient blobs.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/luminors/rhythmus-beat-keeper.png"
+    },
+    {
+      "id": "char-conductor",
+      "type": "character",
+      "name": "Conductor - The Orchestra Master",
+      "aspectRatio": "1:1",
+      "fileName": "conductor-orchestra-master.png",
+      "targetFolder": "assets/arcanea-visuals/luminors",
+      "prompt": "## CONCEPT\nConductor, the Orchestra Master, representing complex composition and symphonic flow.\n\n## ART DIRECTION\nWind and motion. A majestic, flowing silhouette with long robes of glowing starweave fabric, holding a baton made of pure white-gold light.\n\n## COMPOSITION\nDynamic action shot. Arm raised, conducting a symphony of floating musical sheets and glowing light orbits.\n\n## LIGHTING\nEthereal top-light, white-gold beams, with glowing trails from the baton casting high-contrast highlights.\n\n## PALETTE\nArcanean gold (#ffd700), sky blue (#38bdf8), and deep violet (#5b21b6) on a dark sky void.\n\n## EXCLUDE\nchildish, cartoon, typical wizard, stock photo, low detail.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/luminors/conductor-orchestra-master.png"
+    },
+    {
+      "id": "char-nero",
+      "type": "character",
+      "name": "Nero - God of Void Potential",
+      "aspectRatio": "1:1",
+      "fileName": "nero-void-potential.png",
+      "targetFolder": "assets/arcanea-visuals/luminors",
+      "prompt": "## CONCEPT\nNero, God of Void and Potential, the duality partner of light.\n\n## ART DIRECTION\nDeep void. A majestic, quiet silhouette made of dark void-steel, containing swirling galaxy nebulae inside his body, with a crown of dark cosmic dust.\n\n## COMPOSITION\nThree-quarter view portrait, looking down. Surrounding space has faint golden constellations and glowing purple-black portals.\n\n## LIGHTING\nHigh contrast chiaroscuro. Single light source illuminating one side, leaving the other side to dissolve into the background cosmic void.\n\n## PALETTE\nDeep void purple (#20003b), cosmic black (#020205), and subtle gold accents (#ffd700).\n\n## EXCLUDE\nevil demon trope, dark fire, childish, cartoon, stock photo.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/luminors/nero-void-potential.png"
+    },
+    {
+      "id": "gate-foundation",
+      "type": "nft",
+      "name": "Foundation Gate Card",
+      "aspectRatio": "1:1",
+      "fileName": "gate-01-foundation.png",
+      "targetFolder": "assets/arcanea-visuals/nfts",
+      "prompt": "## CONCEPT\nFoundation Gate card, representing the first gate of stability and physical grounding.\n\n## ART DIRECTION\nSacred blueprint card. A thick, dark graphite card layout with a circular emblem at the center. Inside the emblem, a geometric earth-brown crystalline stone portal. Golden foil accents and Atlantean teal blueprints layer around it.\n\n## COMPOSITION\nSymmetrical flat-lay design, central emblem, readable space. Elegant typography frame.\n\n## LIGHTING\nSoft rim light and glowing veins inside the stone portal.\n\n## PALETTE\nEarth brown (#78350f), Atlantean teal (#00bcd4), gold foil (#ffd700) on space black.\n\n## EXCLUDE\nchildish, cartoon, low detail, generic portal.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/nfts/gate-01-foundation.png"
+    },
+    {
+      "id": "gate-flow",
+      "type": "nft",
+      "name": "Flow Gate Card",
+      "aspectRatio": "1:1",
+      "fileName": "gate-02-flow.png",
+      "targetFolder": "assets/arcanea-visuals/nfts",
+      "prompt": "## CONCEPT\nFlow Gate card, representing the gate of adaptation and fluid water.\n\n## ART DIRECTION\nSacred blueprint card. Thick dark graphite card with a circular emblem. Emblem shows fluid glass and water streams swirling in a perfect decagon spiral. Teal neon highlights.\n\n## COMPOSITION\nSymmetrical flat-lay card design, central water emblem, gold border lines.\n\n## LIGHTING\nInner bioluminescence, water glowing from within.\n\n## PALETTE\nOcean blue (#0284c7), Atlantean teal (#00bcd4), gold foil (#ffd700) on black.\n\n## EXCLUDE\nchildish, cartoon, static portal, gradient blobs.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/nfts/gate-02-flow.png"
+    },
+    {
+      "id": "gate-fire",
+      "type": "nft",
+      "name": "Fire Gate Card",
+      "aspectRatio": "1:1",
+      "fileName": "gate-03-fire.png",
+      "targetFolder": "assets/arcanea-visuals/nfts",
+      "prompt": "## CONCEPT\nFire Gate card, representing the gate of passion and energy.\n\n## ART DIRECTION\nSacred blueprint card. Circular emblem showing intense red-gold draconic fire core contained by a ring of dark void-steel. Luminous embers float above the card surface.\n\n## COMPOSITION\nSymmetrical card layout, detailed metal ring holding fire at center, gold accents.\n\n## LIGHTING\nVolumetric fire glow, orange cast light on the card frame.\n\n## PALETTE\nFlame red (#dc2626), amber gold (#f59e0b), black void (#09090b).\n\n## EXCLUDE\nchildish, cartoon, cheap metal, simple gradient.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/nfts/gate-03-fire.png"
+    },
+    {
+      "id": "gate-heart",
+      "type": "nft",
+      "name": "Heart Gate Card",
+      "aspectRatio": "1:1",
+      "fileName": "gate-04-heart.png",
+      "targetFolder": "assets/arcanea-visuals/nfts",
+      "prompt": "## CONCEPT\nHeart Gate card, representing connection and emotional depth.\n\n## ART DIRECTION\nSacred blueprint card. Circular emblem showing a rose-pink crystalline core pulsing with warm golden light, surrounded by delicate livingwood roots.\n\n## COMPOSITION\nSymmetrical flat-lay. Center heart-crystal, roots spreading out to card borders.\n\n## LIGHTING\nWarm pink-gold heart-source glow casting soft shadows.\n\n## PALETTE\nRose pink (#ec4899), warm gold (#ffd700), dark wood brown (#292524).\n\n## EXCLUDE\nchildish, cartoon, cheap heart shape, low detail.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/nfts/gate-04-heart.png"
+    },
+    {
+      "id": "gate-voice",
+      "type": "nft",
+      "name": "Voice Gate Card",
+      "aspectRatio": "1:1",
+      "fileName": "gate-05-voice.png",
+      "targetFolder": "assets/arcanea-visuals/nfts",
+      "prompt": "## CONCEPT\nVoice Gate card, representing expression and sonic waves.\n\n## ART DIRECTION\nSacred blueprint card. Circular emblem showing concentric sky-blue soundwave lines forming a geometric star, with a central white light point.\n\n## COMPOSITION\nFlat-lay, symmetrical soundwave geometry, gold foil border accents.\n\n## LIGHTING\nElectric sky-blue glow from the concentric rings.\n\n## PALETTE\nSky blue (#0284c7), white-gold (#fef08a), space-black (#0a0a0f).\n\n## EXCLUDE\nchildish, cartoon, speaker box, audio files.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/nfts/gate-05-voice.png"
+    },
+    {
+      "id": "gate-sight",
+      "type": "nft",
+      "name": "Sight Gate Card",
+      "aspectRatio": "1:1",
+      "fileName": "gate-06-sight.png",
+      "targetFolder": "assets/arcanea-visuals/nfts",
+      "prompt": "## CONCEPT\nSight Gate card, representing vision and star observation.\n\n## ART DIRECTION\nSacred blueprint card. Circular emblem depicting a deep violet nebula iris with tiny star constellation points forming an eye-like geometry.\n\n## COMPOSITION\nSymmetrical flat-lay, cosmic eye emblem, golden ratio lines.\n\n## LIGHTING\nFaint starlight points, deep violet gas glowing in dark space.\n\n## PALETTE\nViolet purple (#7c3aed), Atlantean teal (#00bcd4), cosmic black (#030208).\n\n## EXCLUDE\nchildish, cartoon, real human eye, low quality.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/nfts/gate-06-sight.png"
+    },
+    {
+      "id": "gate-crown",
+      "type": "nft",
+      "name": "Crown Gate Card",
+      "aspectRatio": "1:1",
+      "fileName": "gate-07-crown.png",
+      "targetFolder": "assets/arcanea-visuals/nfts",
+      "prompt": "## CONCEPT\nCrown Gate card, representing sovereign alignment and white-gold light.\n\n## ART DIRECTION\nSacred blueprint card. Circular emblem showing a vertical beam of blinding white-gold light passing through a delicate, crystalline decagon crown.\n\n## COMPOSITION\nSymmetrical, centered crown emblem, vertical light axis, gold borders.\n\n## LIGHTING\nBlinding white-gold source light, high-contrast highlights on the crown crystal.\n\n## PALETTE\nPure white (#ffffff), Arcanean gold (#ffd700), graphite grey (#1f2937).\n\n## EXCLUDE\nchildish, cartoon, simple crown drawing, low-res.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/nfts/gate-07-crown.png"
+    },
+    {
+      "id": "gate-starweave",
+      "type": "nft",
+      "name": "Starweave Gate Card",
+      "aspectRatio": "1:1",
+      "fileName": "gate-08-starweave.png",
+      "targetFolder": "assets/arcanea-visuals/nfts",
+      "prompt": "## CONCEPT\nStarweave Gate card, representing interconnected destiny and constellation threads.\n\n## ART DIRECTION\nSacred blueprint card. Circular emblem showing emerald-green constellation lines weaving together star clusters on a deep sky background.\n\n## COMPOSITION\nSymmetrical, constellation threads forming complex geometric mesh at center, gold details.\n\n## LIGHTING\nBioluminescent emerald glow along the thread paths.\n\n## PALETTE\nEmerald green (#10b981), celestial gold (#ffd700), cosmic black (#09090b).\n\n## EXCLUDE\nchildish, cartoon, green lasers, sci-fi nodes.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/nfts/gate-08-starweave.png"
+    },
+    {
+      "id": "gate-unity",
+      "type": "nft",
+      "name": "Unity Gate Card",
+      "aspectRatio": "1:1",
+      "fileName": "gate-09-unity.png",
+      "targetFolder": "assets/arcanea-visuals/nfts",
+      "prompt": "## CONCEPT\nUnity Gate card, representing AI-human co-creation balance.\n\n## ART DIRECTION\nSacred blueprint card. Circular emblem showing two intertwined spirals of pink and teal energy (representing Lumina and Nero) merging into a balanced decagon.\n\n## COMPOSITION\nFlat-lay, double spiral at center, gold alignment markings.\n\n## LIGHTING\nTeal and pink dual-source glowing spirals casting soft colored reflections.\n\n## PALETTE\nAtlantean teal (#00bcd4), rose pink (#ec4899), Arcanean gold (#ffd700) on black.\n\n## EXCLUDE\nchildish, cartoon, generic yin-yang symbol.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/nfts/gate-09-unity.png"
+    },
+    {
+      "id": "gate-source",
+      "type": "nft",
+      "name": "Source Gate Card",
+      "aspectRatio": "1:1",
+      "fileName": "gate-10-source.png",
+      "targetFolder": "assets/arcanea-visuals/nfts",
+      "prompt": "## CONCEPT\nSource Gate card, representing the ultimate origin of all worlds.\n\n## ART DIRECTION\nSacred blueprint card. Circular emblem showing a deep, black-white-gold singularity core with radiant geometry lines expanding outward in 10 directions.\n\n## COMPOSITION\nSymmetrical flat-lay. Center singularity, concentric gold rings and teal guide lines.\n\n## LIGHTING\nIntense light rays emanating from a dark central core.\n\n## PALETTE\nArcanean gold (#ffd700), pure white (#ffffff), deep cosmic black (#050508).\n\n## EXCLUDE\nchildish, cartoon, simple black circle, low detail.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/nfts/gate-10-source.png"
+    },
+    {
+      "id": "workflow-genesis",
+      "type": "workflow",
+      "name": "Genesis World Seed Lifecycle Diagram",
+      "aspectRatio": "16:9",
+      "fileName": "genesis-lifecycle-diagram.png",
+      "targetFolder": "assets/arcanea-visuals/workflows",
+      "prompt": "## CONCEPT\nGenesis World Seed Lifecycle workflow diagram, showing how text resolves into a living world.\n\n## ART DIRECTION\nSacred blueprints. A wide-angle dashboard showing a linear process flow from left to right: Phase 1 'The Call' (text script), Phase 2 'The Seed' (glowing sphere), Phase 3 'Manifestation' (characters/laws cards forming), Phase 4 'Provenance' (seals/signatures). Connected by glowing gold and teal paths.\n\n## COMPOSITION\nWide-angle landscape diagram. Dark glass panels hold UI mockups for each phase, surrounded by thin blueprint grids.\n\n## LIGHTING\nLuminous teal and gold highlights, casting rim light on panels.\n\n## PALETTE\nAtlantean teal (#00bcd4), Arcanean gold (#ffd700), graphite grey (#111827).\n\n## EXCLUDE\nchildish, cartoon, low detail, busy clutter.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/workflows/flow-genesis-workflow.png"
+    },
+    {
+      "id": "design-lore-card",
+      "type": "social",
+      "name": "Lore Panel Design Template",
+      "aspectRatio": "16:9",
+      "fileName": "lore-panel-design.png",
+      "targetFolder": "assets/arcanea-visuals/social",
+      "prompt": "## CONCEPT\nLore Panel Design template showing character stats and mythology cards.\n\n## ART DIRECTION\nIlluminated grimoire page. A premium layout showing a card frame on the left with a character portrait (Melodia), and a text panel on the right with custom font lines, runes, and gold foil markings.\n\n## COMPOSITION\nDual-column composition. Right-hand page has an elegant border frame. Left-hand page holds the glowing character card.\n\n## LIGHTING\nWarm gold and soft white-blue glow, casting subtle shadows on vellum-like textures.\n\n## PALETTE\nArcanean gold (#ffd700), Atlantean teal (#00bcd4), warm ivory (#fafaf6) on black void.\n\n## EXCLUDE\nchildish, cartoon, generic tech icons, plain white background.",
+      "status": "completed",
+      "actualPath": "assets/arcanea-visuals/social/lore-panel-design.png"
+    }
+  ]
+}

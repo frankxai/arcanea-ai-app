@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { CommandSidebar } from './sidebar';
 
 export const metadata: Metadata = {
-  title: 'Command Center',
+  title: 'Command Center — Arcanea',
   description:
     'Creator Command Center: manage media assets, monitor agents, schedule social posts, and publish content across the Arcanea multiverse.',
   robots: { index: false },

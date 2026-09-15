@@ -1,31 +1,28 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-"use client";
+'use client';
 
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import Link from "next/link";
-import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
-import { ReadingToolbar } from "./reading-toolbar";
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import { ReadingToolbar } from './reading-toolbar';
 
-const ChatMarkdown = dynamic(() => import("@/components/chat/chat-markdown"), {
+const ChatMarkdown = dynamic(() => import('@/components/chat/chat-markdown'), {
   ssr: false,
-  loading: () => (
-    <div className="animate-pulse h-4 bg-white/[0.04] rounded w-3/4" />
-  ),
+  loading: () => <div className="animate-pulse h-4 bg-white/[0.04] rounded w-3/4" />,
 });
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                               */
 /* ------------------------------------------------------------------ */
 
-export type ReadingTheme = "dark" | "light" | "sepia" | "cosmic";
+export type ReadingTheme = 'dark' | 'light' | 'sepia' | 'cosmic';
 export type FontSize = 14 | 18 | 22 | 26 | 30;
-export type FontFamily = "serif" | "sans";
-export type LineHeight = "compact" | "normal" | "relaxed";
+export type FontFamily = 'serif' | 'sans';
+export type LineHeight = 'compact' | 'normal' | 'relaxed';
 
-const THEME_CYCLE: ReadingTheme[] = ["dark", "light", "sepia", "cosmic"];
+const THEME_CYCLE: ReadingTheme[] = ['dark', 'light', 'sepia', 'cosmic'];
 const FONT_SIZES: FontSize[] = [14, 18, 22, 26, 30];
-const LINE_HEIGHT_CYCLE: LineHeight[] = ["compact", "normal", "relaxed"];
+const LINE_HEIGHT_CYCLE: LineHeight[] = ['compact', 'normal', 'relaxed'];
 
 interface TocHeading {
   id: string;
@@ -52,103 +49,80 @@ interface ChapterReaderProps {
 
 function getThemeStyles(theme: ReadingTheme) {
   switch (theme) {
-    case "light":
+    case 'light':
       return {
-        bg: "bg-[var(--arc-text-primary)]",
-        text: "text-gray-900",
-        subtext: "text-gray-500",
-        border: "border-gray-200",
-        prose:
-          "prose prose-gray prose-lg max-w-none prose-p:text-gray-800 prose-p:leading-[1.8] prose-p:mb-6 prose-headings:text-gray-900 prose-headings:font-display prose-blockquote:border-l-gray-300 prose-blockquote:text-gray-500 prose-strong:text-gray-900 prose-em:text-gray-700 prose-hr:border-gray-200",
-        linkColor: "text-gray-400 hover:text-gray-600",
-        backLinkColor: "text-gray-300 hover:text-gray-500",
-        noteBtn:
-          "text-gray-400 hover:text-gray-600 border border-gray-200 hover:bg-gray-50",
-        noteArea:
-          "bg-gray-50 border border-gray-200 text-gray-700 placeholder-gray-300",
-        progressBar: "bg-[var(--arc-brand-atlantean-teal)]/70",
-        navNext:
-          "text-[var(--arc-brand-atlantean-teal)] hover:text-[var(--arc-brand-atlantean-teal)]",
+        bg: 'bg-[var(--arc-text-primary)]',
+        text: 'text-gray-900',
+        subtext: 'text-gray-500',
+        border: 'border-gray-200',
+        prose: 'prose prose-gray prose-lg max-w-none prose-p:text-gray-800 prose-p:leading-[1.8] prose-p:mb-6 prose-headings:text-gray-900 prose-headings:font-display prose-blockquote:border-l-gray-300 prose-blockquote:text-gray-500 prose-strong:text-gray-900 prose-em:text-gray-700 prose-hr:border-gray-200',
+        linkColor: 'text-gray-400 hover:text-gray-600',
+        backLinkColor: 'text-gray-300 hover:text-gray-500',
+        noteBtn: 'text-gray-400 hover:text-gray-600 border border-gray-200 hover:bg-gray-50',
+        noteArea: 'bg-gray-50 border border-gray-200 text-gray-700 placeholder-gray-300',
+        progressBar: 'bg-[var(--arc-brand-atlantean-teal)]/70',
+        navNext: 'text-[var(--arc-brand-atlantean-teal)] hover:text-[var(--arc-brand-atlantean-teal)]',
       };
-    case "sepia":
+    case 'sepia':
       return {
-        bg: "bg-[var(--arc-text-primary)]",
-        text: "text-[var(--arc-earth)]",
-        subtext: "text-[var(--arc-earth)]",
-        border: "border-[var(--arc-text-primary)]",
-        prose:
-          "prose prose-stone prose-lg max-w-none prose-p:text-[var(--arc-earth)] prose-p:leading-[1.8] prose-p:mb-6 prose-headings:text-[var(--arc-cosmic-void)] prose-headings:font-display prose-blockquote:border-l-[var(--arc-earth)] prose-blockquote:text-[var(--arc-earth)] prose-strong:text-[var(--arc-cosmic-void)] prose-em:text-[var(--arc-earth)] prose-hr:border-[var(--arc-text-primary)]",
-        linkColor: "text-[var(--arc-earth)] hover:text-[var(--arc-earth)]",
-        backLinkColor: "text-[var(--arc-earth)] hover:text-[var(--arc-earth)]",
-        noteBtn:
-          "text-[var(--arc-earth)] hover:text-[var(--arc-earth)] border border-[var(--arc-text-primary)] hover:bg-[var(--arc-text-primary)]",
-        noteArea:
-          "bg-[var(--arc-text-primary)] border border-[var(--arc-text-primary)] text-[var(--arc-earth)] placeholder-[var(--arc-earth)]",
-        progressBar: "bg-[var(--arc-earth)]",
-        navNext: "text-[var(--arc-earth)] hover:text-[var(--arc-earth)]",
+        bg: 'bg-[var(--arc-text-primary)]',
+        text: 'text-[var(--arc-earth)]',
+        subtext: 'text-[var(--arc-earth)]',
+        border: 'border-[var(--arc-text-primary)]',
+        prose: 'prose prose-stone prose-lg max-w-none prose-p:text-[var(--arc-earth)] prose-p:leading-[1.8] prose-p:mb-6 prose-headings:text-[var(--arc-cosmic-void)] prose-headings:font-display prose-blockquote:border-l-[var(--arc-earth)] prose-blockquote:text-[var(--arc-earth)] prose-strong:text-[var(--arc-cosmic-void)] prose-em:text-[var(--arc-earth)] prose-hr:border-[var(--arc-text-primary)]',
+        linkColor: 'text-[var(--arc-earth)] hover:text-[var(--arc-earth)]',
+        backLinkColor: 'text-[var(--arc-earth)] hover:text-[var(--arc-earth)]',
+        noteBtn: 'text-[var(--arc-earth)] hover:text-[var(--arc-earth)] border border-[var(--arc-text-primary)] hover:bg-[var(--arc-text-primary)]',
+        noteArea: 'bg-[var(--arc-text-primary)] border border-[var(--arc-text-primary)] text-[var(--arc-earth)] placeholder-[var(--arc-earth)]',
+        progressBar: 'bg-[var(--arc-earth)]',
+        navNext: 'text-[var(--arc-earth)] hover:text-[var(--arc-earth)]',
       };
-    case "cosmic":
+    case 'cosmic':
       return {
-        bg: "bg-gradient-to-br from-[var(--arc-cosmic-void)] via-[var(--arc-cosmic-void)] to-[var(--arc-cosmic-void)]",
-        text: "text-gray-100",
-        subtext: "text-purple-300/60",
-        border: "border-purple-500/10",
-        prose:
-          "prose prose-invert prose-lg max-w-none prose-p:text-gray-200/90 prose-p:leading-[1.8] prose-p:mb-6 prose-headings:text-purple-200 prose-headings:font-display prose-blockquote:border-l-purple-500/40 prose-blockquote:text-purple-300/60 prose-strong:text-white prose-em:text-purple-200/80 prose-hr:border-purple-500/10",
-        linkColor: "text-purple-400/60 hover:text-purple-300",
-        backLinkColor: "text-purple-400/40 hover:text-purple-300/60",
-        noteBtn:
-          "text-purple-400/40 hover:text-purple-300/60 border border-purple-500/10 hover:bg-purple-500/5",
-        noteArea:
-          "bg-purple-500/5 border border-purple-500/10 text-purple-200/70 placeholder-purple-400/30",
-        progressBar:
-          "bg-gradient-to-r from-purple-500 to-[var(--arc-brand-atlantean-teal)]",
-        navNext: "text-purple-400/60 hover:text-purple-300",
+        bg: 'bg-gradient-to-br from-[var(--arc-cosmic-void)] via-[var(--arc-cosmic-void)] to-[var(--arc-cosmic-void)]',
+        text: 'text-gray-100',
+        subtext: 'text-purple-300/60',
+        border: 'border-purple-500/10',
+        prose: 'prose prose-invert prose-lg max-w-none prose-p:text-gray-200/90 prose-p:leading-[1.8] prose-p:mb-6 prose-headings:text-purple-200 prose-headings:font-display prose-blockquote:border-l-purple-500/40 prose-blockquote:text-purple-300/60 prose-strong:text-white prose-em:text-purple-200/80 prose-hr:border-purple-500/10',
+        linkColor: 'text-purple-400/60 hover:text-purple-300',
+        backLinkColor: 'text-purple-400/40 hover:text-purple-300/60',
+        noteBtn: 'text-purple-400/40 hover:text-purple-300/60 border border-purple-500/10 hover:bg-purple-500/5',
+        noteArea: 'bg-purple-500/5 border border-purple-500/10 text-purple-200/70 placeholder-purple-400/30',
+        progressBar: 'bg-gradient-to-r from-purple-500 to-[var(--arc-brand-atlantean-teal)]',
+        navNext: 'text-purple-400/60 hover:text-purple-300',
       };
     default: // dark
       return {
-        bg: "bg-[var(--arc-cosmic-void)]",
-        text: "text-white",
-        subtext: "text-white/20",
-        border: "border-white/[0.06]",
-        prose:
-          "prose prose-invert prose-lg max-w-none prose-p:text-white/80 prose-p:leading-[1.8] prose-p:mb-6 prose-headings:text-white/90 prose-headings:font-display prose-blockquote:border-l-[var(--arc-brand-atlantean-teal)]/30 prose-blockquote:text-white/60 prose-strong:text-white/90 prose-em:text-white/70 prose-hr:border-white/[0.06]",
-        linkColor: "text-white/40 hover:text-white/60",
-        backLinkColor: "text-white/30 hover:text-white/50",
-        noteBtn:
-          "text-white/30 hover:text-white/50 border border-white/[0.06] hover:bg-white/[0.02]",
-        noteArea:
-          "bg-white/[0.03] border border-white/[0.08] text-white/70 placeholder-white/20",
-        progressBar: "bg-[var(--arc-brand-atlantean-teal)]/60",
-        navNext:
-          "text-[var(--arc-brand-atlantean-teal)]/60 hover:text-[var(--arc-brand-atlantean-teal)]",
+        bg: 'bg-[var(--arc-cosmic-void)]',
+        text: 'text-white',
+        subtext: 'text-white/20',
+        border: 'border-white/[0.06]',
+        prose: 'prose prose-invert prose-lg max-w-none prose-p:text-white/80 prose-p:leading-[1.8] prose-p:mb-6 prose-headings:text-white/90 prose-headings:font-display prose-blockquote:border-l-[var(--arc-brand-atlantean-teal)]/30 prose-blockquote:text-white/60 prose-strong:text-white/90 prose-em:text-white/70 prose-hr:border-white/[0.06]',
+        linkColor: 'text-white/40 hover:text-white/60',
+        backLinkColor: 'text-white/30 hover:text-white/50',
+        noteBtn: 'text-white/30 hover:text-white/50 border border-white/[0.06] hover:bg-white/[0.02]',
+        noteArea: 'bg-white/[0.03] border border-white/[0.08] text-white/70 placeholder-white/20',
+        progressBar: 'bg-[var(--arc-brand-atlantean-teal)]/60',
+        navNext: 'text-[var(--arc-brand-atlantean-teal)]/60 hover:text-[var(--arc-brand-atlantean-teal)]',
       };
   }
 }
 
 function getFontSizeClass(size: FontSize): string {
   switch (size) {
-    case 14:
-      return "text-sm";
-    case 18:
-      return "text-lg";
-    case 22:
-      return "text-xl";
-    case 26:
-      return "text-2xl";
-    case 30:
-      return "text-3xl";
+    case 14: return 'text-sm';
+    case 18: return 'text-lg';
+    case 22: return 'text-xl';
+    case 26: return 'text-2xl';
+    case 30: return 'text-3xl';
   }
 }
 
 function getLineHeightClass(lh: LineHeight): string {
   switch (lh) {
-    case "compact":
-      return "leading-snug";
-    case "relaxed":
-      return "leading-loose";
-    default:
-      return "leading-relaxed";
+    case 'compact': return 'leading-snug';
+    case 'relaxed': return 'leading-loose';
+    default: return 'leading-relaxed';
   }
 }
 
@@ -157,31 +131,17 @@ function getLineHeightClass(lh: LineHeight): string {
 /* ------------------------------------------------------------------ */
 
 function extractHeadings(content: string): TocHeading[] {
-  const lines = content.split("\n");
+  const lines = content.split('\n');
   const headings: TocHeading[] = [];
   for (const line of lines) {
     const h2 = line.match(/^##\s+(.+)$/);
     const h3 = line.match(/^###\s+(.+)$/);
     if (h2) {
       const text = h2[1].trim();
-      headings.push({
-        id: text
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/(^-|-$)/g, ""),
-        text,
-        level: 2,
-      });
+      headings.push({ id: text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''), text, level: 2 });
     } else if (h3) {
       const text = h3[1].trim();
-      headings.push({
-        id: text
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/(^-|-$)/g, ""),
-        text,
-        level: 3,
-      });
+      headings.push({ id: text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''), text, level: 3 });
     }
   }
   return headings;
@@ -191,7 +151,7 @@ function extractHeadings(content: string): TocHeading[] {
 /*  Storage helpers                                                     */
 /* ------------------------------------------------------------------ */
 
-const STORAGE_KEY = "arcanea-reader-prefs";
+const STORAGE_KEY = 'arcanea-reader-prefs';
 
 interface ReaderPrefs {
   theme: ReadingTheme;
@@ -204,23 +164,14 @@ function loadPrefs(): ReaderPrefs {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) return JSON.parse(raw) as ReaderPrefs;
-  } catch {
-    /* ignore */
-  }
-  return {
-    theme: "dark",
-    fontSize: 18,
-    fontFamily: "serif",
-    lineHeight: "normal",
-  };
+  } catch { /* ignore */ }
+  return { theme: 'dark', fontSize: 18, fontFamily: 'serif', lineHeight: 'normal' };
 }
 
 function savePrefs(prefs: ReaderPrefs) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
-  } catch {
-    /* ignore */
-  }
+  } catch { /* ignore */ }
 }
 
 /* ------------------------------------------------------------------ */
@@ -228,24 +179,14 @@ function savePrefs(prefs: ReaderPrefs) {
 /* ------------------------------------------------------------------ */
 
 export function ChapterReader({
-  bookId,
-  bookTitle,
-  chapterNumber,
-  totalChapters,
-  title,
-  content,
-  wordCount,
-  readTime,
-  prev,
-  next,
+  bookId, bookTitle, chapterNumber, totalChapters,
+  title, content, wordCount, readTime, prev, next,
 }: ChapterReaderProps) {
-  const router = useRouter();
-
   // Reading preferences
-  const [theme, setTheme] = useState<ReadingTheme>("dark");
+  const [theme, setTheme] = useState<ReadingTheme>('dark');
   const [fontSize, setFontSize] = useState<FontSize>(18);
-  const [fontFamily, setFontFamily] = useState<FontFamily>("serif");
-  const [lineHeight, setLineHeight] = useState<LineHeight>("normal");
+  const [fontFamily, setFontFamily] = useState<FontFamily>('serif');
+  const [lineHeight, setLineHeight] = useState<LineHeight>('normal');
 
   // Progress & scroll
   const [progress, setProgress] = useState(0);
@@ -253,12 +194,12 @@ export function ChapterReader({
 
   // TOC
   const [showToc, setShowToc] = useState(false);
-  const [activeHeading, setActiveHeading] = useState("");
+  const [activeHeading, setActiveHeading] = useState('');
   const tocHeadings = useMemo(() => extractHeadings(content), [content]);
 
   // Notes (existing functionality preserved)
   const [showNotes, setShowNotes] = useState(false);
-  const [noteText, setNoteText] = useState("");
+  const [noteText, setNoteText] = useState('');
 
   // Reactions / bookmark
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -270,7 +211,7 @@ export function ChapterReader({
   const scrollYRef = useRef(0);
   const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const chapterSlug = title.toLowerCase().replace(/\s+/g, "-");
+  const chapterSlug = title.toLowerCase().replace(/\s+/g, '-');
 
   /* ---------------------------------------------------------------- */
   /*  Load prefs from localStorage                                     */
@@ -304,9 +245,9 @@ export function ChapterReader({
         scrollTimerRef.current = setTimeout(() => setToolbarVisible(true), 800);
       }
     };
-    window.addEventListener("scroll", handler, { passive: true });
+    window.addEventListener('scroll', handler, { passive: true });
     return () => {
-      window.removeEventListener("scroll", handler);
+      window.removeEventListener('scroll', handler);
       if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
     };
   }, []);
@@ -317,19 +258,13 @@ export function ChapterReader({
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (
-        e.target instanceof HTMLTextAreaElement ||
-        e.target instanceof HTMLInputElement
-      )
-        return;
-      if (e.key === "ArrowLeft" && prev)
-        router.push(`/books/${bookId}/${prev.id}`);
-      if (e.key === "ArrowRight" && next)
-        router.push(`/books/${bookId}/${next.id}`);
+      if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
+      if (e.key === 'ArrowLeft' && prev) window.location.href = `/books/${bookId}/${prev.id}`;
+      if (e.key === 'ArrowRight' && next) window.location.href = `/books/${bookId}/${next.id}`;
     };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [bookId, prev, next, router]);
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [bookId, prev, next]);
 
   /* ---------------------------------------------------------------- */
   /*  TOC IntersectionObserver                                         */
@@ -343,7 +278,7 @@ export function ChapterReader({
           if (entry.isIntersecting) setActiveHeading(entry.target.id);
         }
       },
-      { rootMargin: "-20% 0px -70% 0px" },
+      { rootMargin: '-20% 0px -70% 0px' }
     );
     for (const h of tocHeadings) {
       const el = document.getElementById(h.id);
@@ -359,20 +294,12 @@ export function ChapterReader({
   useEffect(() => {
     const fetchReactions = async () => {
       try {
-        const res = await fetch(
-          `/api/saga/reactions?bookId=${bookId}&chapterSlug=${chapterSlug}`,
-        );
+        const res = await fetch(`/api/saga/reactions?bookId=${bookId}&chapterSlug=${chapterSlug}`);
         if (!res.ok) return;
-        const data = (await res.json()) as {
-          count?: number;
-          bookmarked?: boolean;
-        };
-        if (typeof data.count === "number") setReactionCount(data.count);
-        if (typeof data.bookmarked === "boolean")
-          setIsBookmarked(data.bookmarked);
-      } catch {
-        /* silent */
-      }
+        const data = await res.json() as { count?: number; bookmarked?: boolean };
+        if (typeof data.count === 'number') setReactionCount(data.count);
+        if (typeof data.bookmarked === 'boolean') setIsBookmarked(data.bookmarked);
+      } catch { /* silent */ }
     };
     fetchReactions();
   }, [bookId, chapterSlug]);
@@ -386,31 +313,25 @@ export function ChapterReader({
     touchStartY.current = e.touches[0].clientY;
   }, []);
 
-  const handleTouchEnd = useCallback(
-    (e: React.TouchEvent) => {
-      const dx = e.changedTouches[0].clientX - touchStartX.current;
-      const dy = e.changedTouches[0].clientY - touchStartY.current;
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
 
-      // Only treat as horizontal swipe if horizontal movement dominates
-      if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    // Only treat as horizontal swipe if horizontal movement dominates
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
 
-      if (dx < -60 && next) router.push(`/books/${bookId}/${next.id}`);
-      if (dx > 60 && prev) router.push(`/books/${bookId}/${prev.id}`);
-    },
-    [bookId, prev, next, router],
-  );
+    if (dx < -60 && next) window.location.href = `/books/${bookId}/${next.id}`;
+    if (dx > 60 && prev) window.location.href = `/books/${bookId}/${prev.id}`;
+  }, [bookId, prev, next]);
 
-  const handleTap = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      // Only process clicks directly on the overlay div, not bubbled events from interactive elements
-      if ((e.target as HTMLElement).closest("a,button,textarea,input")) return;
-      const x = e.clientX;
-      const width = window.innerWidth;
-      if (x < width * 0.2 && prev) router.push(`/books/${bookId}/${prev.id}`);
-      if (x > width * 0.8 && next) router.push(`/books/${bookId}/${next.id}`);
-    },
-    [bookId, prev, next, router],
-  );
+  const handleTap = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    // Only process clicks directly on the overlay div, not bubbled events from interactive elements
+    if ((e.target as HTMLElement).closest('a,button,textarea,input')) return;
+    const x = e.clientX;
+    const width = window.innerWidth;
+    if (x < width * 0.2 && prev) window.location.href = `/books/${bookId}/${prev.id}`;
+    if (x > width * 0.8 && next) window.location.href = `/books/${bookId}/${next.id}`;
+  }, [bookId, prev, next]);
 
   /* ---------------------------------------------------------------- */
   /*  Preference mutations                                             */
@@ -445,7 +366,7 @@ export function ChapterReader({
 
   const handleFontFamilyToggle = useCallback(() => {
     setFontFamily((f) => {
-      const next: FontFamily = f === "serif" ? "sans" : "serif";
+      const next: FontFamily = f === 'serif' ? 'sans' : 'serif';
       savePrefs({ theme, fontSize, fontFamily: next, lineHeight });
       return next;
     });
@@ -464,21 +385,14 @@ export function ChapterReader({
     const newState = !isBookmarked;
     setIsBookmarked(newState);
     try {
-      await fetch("/api/saga/reactions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          bookId,
-          chapterSlug,
-          type: "bookmark",
-          value: newState,
-        }),
+      await fetch('/api/saga/reactions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bookId, chapterSlug, type: 'bookmark', value: newState }),
       });
       if (newState) setReactionCount((c) => c + 1);
       else setReactionCount((c) => Math.max(0, c - 1));
-    } catch {
-      /* silent */
-    }
+    } catch { /* silent */ }
   }, [bookId, chapterSlug, isBookmarked]);
 
   /* ---------------------------------------------------------------- */
@@ -488,16 +402,14 @@ export function ChapterReader({
   const handleSaveNote = async () => {
     if (!noteText.trim()) return;
     try {
-      await fetch("/api/saga/notes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      await fetch('/api/saga/notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ bookId, chapterSlug, content: noteText }),
       });
-      setNoteText("");
+      setNoteText('');
       setShowNotes(false);
-    } catch {
-      /* silent */
-    }
+    } catch { /* silent */ }
   };
 
   /* ---------------------------------------------------------------- */
@@ -507,10 +419,10 @@ export function ChapterReader({
   const s = getThemeStyles(theme);
   const fontSizeClass = getFontSizeClass(fontSize);
   const lineHeightClass = getLineHeightClass(lineHeight);
-  const fontFamilyClass = fontFamily === "serif" ? "font-serif" : "font-sans";
+  const fontFamilyClass = fontFamily === 'serif' ? 'font-serif' : 'font-sans';
   const wordsRead = Math.round((progress / 100) * wordCount);
-  const minutesLeft = Math.max(0, Math.ceil((wordCount - wordsRead) / 250));
-  const isLight = theme === "light" || theme === "sepia";
+  const minutesLeft = Math.max(0, Math.ceil(((wordCount - wordsRead) / 250)));
+  const isLight = theme === 'light' || theme === 'sepia';
 
   /* ---------------------------------------------------------------- */
   /*  Render                                                           */
@@ -533,38 +445,26 @@ export function ChapterReader({
 
       {/* Header / breadcrumb */}
       <div className="max-w-[680px] mx-auto px-6 pt-8 pb-4">
-        <Link
-          href={`/books/${bookId}`}
-          className={`text-xs ${s.backLinkColor} transition-colors`}
-        >
+        <Link href={`/books/${bookId}`} className={`text-xs ${s.backLinkColor} transition-colors`}>
           &larr; {bookTitle}
         </Link>
-        <div
-          className={`flex flex-wrap items-center justify-between mt-1 text-xs ${s.subtext} gap-2`}
-        >
+        <div className={`flex flex-wrap items-center justify-between mt-1 text-xs ${s.subtext} gap-2`}>
           <span>
             Chapter {chapterNumber} of {totalChapters}
             {progress > 0 && (
               <span className="ml-2 opacity-70">
                 &middot; {Math.round(progress)}% complete
-                {minutesLeft > 0 ? ` · ${minutesLeft} min left` : " · Finished"}
+                {minutesLeft > 0 ? ` · ${minutesLeft} min left` : ' · Finished'}
               </span>
             )}
           </span>
-          <span>
-            {wordCount.toLocaleString("en-US")} words &middot; {readTime} min
-            read
-          </span>
+          <span>{wordCount.toLocaleString()} words &middot; {readTime} min read</span>
         </div>
       </div>
 
       {/* Chapter title */}
-      <header
-        className={`max-w-[680px] mx-auto px-6 pb-8 border-b ${s.border}`}
-      >
-        <h1 className="text-2xl sm:text-3xl font-display font-bold tracking-tight">
-          {title}
-        </h1>
+      <header className={`max-w-[680px] mx-auto px-6 pb-8 border-b ${s.border}`}>
+        <h1 className="text-2xl sm:text-3xl font-display font-bold tracking-tight">{title}</h1>
       </header>
 
       {/* Content area with optional TOC sidebar */}
@@ -581,14 +481,12 @@ export function ChapterReader({
       {/* TOC slide-in panel */}
       <div
         className={`fixed top-0 right-0 h-full w-64 z-30 transition-transform duration-300 ${
-          showToc ? "translate-x-0" : "translate-x-full"
-        } ${isLight ? "bg-white/95 border-l border-gray-200" : "bg-[var(--arc-cosmic-void)]/95 border-l border-white/[0.07]"} backdrop-blur-xl pt-20 pb-24 overflow-y-auto`}
+          showToc ? 'translate-x-0' : 'translate-x-full'
+        } ${isLight ? 'bg-white/95 border-l border-gray-200' : 'bg-[var(--arc-cosmic-void)]/95 border-l border-white/[0.07]'} backdrop-blur-xl pt-20 pb-24 overflow-y-auto`}
         aria-hidden={!showToc}
       >
         <div className="px-5">
-          <p
-            className={`text-[10px] uppercase tracking-widest mb-4 ${isLight ? "text-gray-400" : "text-white/25"}`}
-          >
+          <p className={`text-[10px] uppercase tracking-widest mb-4 ${isLight ? 'text-gray-400' : 'text-white/25'}`}>
             In this chapter
           </p>
           <nav className="space-y-0.5">
@@ -598,13 +496,13 @@ export function ChapterReader({
                 href={`#${h.id}`}
                 onClick={() => setShowToc(false)}
                 className={`block text-[12px] py-1 transition-colors truncate ${
-                  h.level === 3 ? "pl-3" : ""
+                  h.level === 3 ? 'pl-3' : ''
                 } ${
                   activeHeading === h.id
-                    ? "text-[var(--arc-brand-atlantean-teal)] font-medium"
+                    ? 'text-[var(--arc-brand-atlantean-teal)] font-medium'
                     : isLight
-                      ? "text-gray-400 hover:text-gray-700"
-                      : "text-white/25 hover:text-white/50"
+                    ? 'text-gray-400 hover:text-gray-700'
+                    : 'text-white/25 hover:text-white/50'
                 }`}
               >
                 {h.text}
@@ -625,24 +523,16 @@ export function ChapterReader({
       )}
 
       {/* Chapter navigation */}
-      <nav
-        className={`max-w-[680px] mx-auto px-6 py-8 border-t ${s.border} flex justify-between gap-4`}
-      >
+      <nav className={`max-w-[680px] mx-auto px-6 py-8 border-t ${s.border} flex justify-between gap-4`}>
         {prev ? (
-          <Link
-            href={`/books/${bookId}/${prev.id}`}
-            className={`text-sm ${s.linkColor} transition-colors`}
-          >
+          <Link href={`/books/${bookId}/${prev.id}`} className={`text-sm ${s.linkColor} transition-colors`}>
             &larr; {prev.title}
           </Link>
         ) : (
           <span />
         )}
         {next ? (
-          <Link
-            href={`/books/${bookId}/${next.id}`}
-            className={`text-sm ${s.navNext} transition-colors text-right`}
-          >
+          <Link href={`/books/${bookId}/${next.id}`} className={`text-sm ${s.navNext} transition-colors text-right`}>
             {next.title} &rarr;
           </Link>
         ) : (

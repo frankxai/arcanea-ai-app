@@ -15,44 +15,8 @@ import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { getSupabaseEnv, getSupabaseServiceRoleKey } from '@/lib/supabase/env';
 
 /**
- * Public registry client for read-only discovery surfaces.
- * Uses the publishable/anon key so Postgres grants and RLS remain authoritative.
- */
-export function getRegistryPublicEnv(): { url: string; anonKey: string } | null {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
-  const anonKey =
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
-
-  // Build-only placeholders are valid for compilation, never for runtime I/O.
-  if (
-    !url ||
-    !anonKey ||
-    /^https:\/\/(example|placeholder)\.supabase\.co\/?$/i.test(url) ||
-    /^(preview-build-)?placeholder(?:-key)?$/i.test(anonKey)
-  ) {
-    return null;
-  }
-
-  return { url, anonKey };
-}
-
-export function createRegistryPublicClient() {
-  const env = getRegistryPublicEnv();
-  if (!env) return null;
-
-  return createSupabaseClient(env.url, env.anonKey, {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
-    },
-  });
-}
-
-/**
  * Untyped admin client for registry operations.
- * Bypasses RLS for read/write. Use only in server-side write contexts;
- * public discovery must use createRegistryPublicClient, and the absence of a
- * service-role credential in a public deployment is a valid secure state.
+ * Bypasses RLS for read/write. Use only in server-side contexts.
  */
 export function createRegistryAdminClient() {
   const { url } = getSupabaseEnv();

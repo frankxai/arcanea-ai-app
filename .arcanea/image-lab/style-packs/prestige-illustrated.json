@@ -1,0 +1,31 @@
+{
+  "id": "prestige-illustrated",
+  "version": "2026-07-16",
+  "rail": "world",
+  "house": false,
+  "lookName": "Prestige Illustrated (Arcane-adjacent)",
+  "description": "Secondary emotional rail: hand-painted 3D/2D hybrid prestige look. Labeled secondary only. Not isekai anime. Not a replacement for house-myth-tech.",
+  "authorities": ["VISUAL_DOCTRINE.md", "ARCANEA_VISUAL_OS_OPERATING_MODEL.md"],
+  "materialsWhitelist": [
+    "painterly crystal",
+    "soft volumetric light",
+    "stylized living stone",
+    "celestial gold accents"
+  ],
+  "lightLaw": "Cinematic story light; warmer emotional palette allowed; still ban flat neon spam.",
+  "tone": "Prestige animated feature key art; emotional clarity over photo-real pores.",
+  "promptTemplates": ["cast-portrait-bible-prestige", "godbeast-prestige-hero"],
+  "enginesPreferred": ["grok-imagine-image-quality@2k", "nb2-styled"],
+  "enginesAllowed": ["higgsfield"],
+  "identityMode": "face-ref-chain",
+  "forbidden": [
+    "niji isekai default",
+    "chibi as official cast bible",
+    "unlabeled mix into house ledger",
+    "product chrome"
+  ],
+  "shipBarScore30": 28,
+  "labelRequired": "stylePackId=prestige-illustrated must appear in media-job and folder name",
+  "status": "planned-pilot",
+  "doNotUseFor": ["default Codex shelf", "product UI"]
+}

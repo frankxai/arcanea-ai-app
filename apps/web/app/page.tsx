@@ -12,23 +12,23 @@ const jsonLd = {
     {
       "@type": "WebSite",
       name: "Arcanea",
-      url: "https://www.arcanea.ai",
+      url: "https://arcanea.ai",
       description:
-        "A creative multiverse where creators chat with AI, build fantasy worlds, share what they make, and turn imagination into products.",
+        "A sovereign creative workspace where creators answer The Drift with living worlds, AI agents, rights-aware artifacts, and durable memory.",
       potentialAction: {
         "@type": "SearchAction",
-        target: "https://www.arcanea.ai/library?q={search_term_string}",
+        target: "https://arcanea.ai/library?q={search_term_string}",
         "query-input": "required name=search_term_string",
       },
     },
     {
       "@type": "Organization",
       name: "Arcanea",
-      url: "https://www.arcanea.ai",
-      logo: "https://www.arcanea.ai/icon",
+      url: "https://arcanea.ai",
+      logo: "https://arcanea.ai/icon",
       sameAs: ["https://github.com/frankxai"],
       description:
-        "Creative multiverse for builders: chat with AI, build worlds, share creations, and turn imagination into products.",
+        "Creative intelligence system for builders: chat with AI, build living worlds, preserve provenance, and publish creator-owned work.",
     },
   ],
 };

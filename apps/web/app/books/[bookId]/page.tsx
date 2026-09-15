@@ -5,8 +5,6 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getBookRoot } from '@/lib/content/book-path';
-import { countChapterWords, isChapterMarkdown } from '@/lib/saga/chapter-files';
-import { isBookPublic } from '@/lib/content/book-visibility';
 const BOOK_ROOT = getBookRoot();
 
 export const dynamic = 'force-dynamic';
@@ -244,7 +242,7 @@ async function getChapters(bookDir: string): Promise<ChapterInfo[]> {
   try {
     const files = await readdir(bookDir);
     const mdFiles = files
-      .filter(isChapterMarkdown)
+      .filter((f) => f.endsWith('.md') && !f.startsWith('00-'))
       .sort();
 
     const chapters: ChapterInfo[] = [];
@@ -252,7 +250,7 @@ async function getChapters(bookDir: string): Promise<ChapterInfo[]> {
     for (let i = 0; i < mdFiles.length; i++) {
       const raw = await readFile(join(bookDir, mdFiles[i]), 'utf-8');
       const id = mdFiles[i].replace(/\.md$/, '').replace(/^\d+-/, '');
-      const words = countChapterWords(raw);
+      const words = raw.split(/\s+/).length;
 
       chapters.push({
         id,
@@ -297,7 +295,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { bookId } = await params;
   const book = BOOKS[bookId];
   if (!book) return { title: 'Book Not Found' };
-  if (!(await isBookPublic(book.dir))) return { title: 'Book Not Found' };
 
   return {
     title: `${book.title} -- The Arcanea Saga`,
@@ -313,7 +310,6 @@ export default async function BookOverviewPage({ params }: PageProps) {
   const { bookId } = await params;
   const book = BOOKS[bookId];
   if (!book) notFound();
-  if (!(await isBookPublic(book.dir))) notFound();
 
   const chapters = await getChapters(book.dir);
   const { hasAuthorsNote, hasGlossary } = await getCompanionFlags(book.dir);

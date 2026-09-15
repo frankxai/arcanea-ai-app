@@ -57,9 +57,6 @@ export interface BrowseOptions {
   offset?: number;
 }
 
-/** Public discovery must fail before Vercel's function deadline. */
-export const LUMINOR_READ_TIMEOUT_MS = 4_500;
-
 // ---------------------------------------------------------------------------
 // Mapping: LuminorSpec (camelCase) <-> DB row (snake_case)
 // ---------------------------------------------------------------------------
@@ -241,39 +238,13 @@ export async function getPublishedLuminors(options: BrowseOptions = {}): Promise
     query = query.eq('element', element);
   }
 
-  const signal = AbortSignal.timeout(LUMINOR_READ_TIMEOUT_MS);
-  const timeoutError = new Error(
-    `Published Luminor read exceeded ${LUMINOR_READ_TIMEOUT_MS}ms`
-  );
-  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  const { data, error } = await query;
 
-  try {
-    // Supabase/PostgREST retries may outlive an abort in some runtimes. The
-    // application deadline guarantees that the route can still return a
-    // retryable response even if the underlying request has not settled.
-    const { data, error } = await Promise.race([
-      query.abortSignal(signal),
-      new Promise<never>((_, reject) => {
-        timeoutId = setTimeout(
-          () => reject(timeoutError),
-          LUMINOR_READ_TIMEOUT_MS
-        );
-      }),
-    ]);
-
-    if (error) {
-      throw new Error(`Failed to browse luminors: ${error.message}`);
-    }
-
-    return (data ?? []) as LuminorRow[];
-  } catch (error) {
-    if (error === timeoutError || signal.aborted) {
-      throw new Error(timeoutError.message, { cause: error });
-    }
-    throw error;
-  } finally {
-    if (timeoutId) clearTimeout(timeoutId);
+  if (error) {
+    throw new Error(`Failed to browse luminors: ${error.message}`);
   }
+
+  return (data ?? []) as LuminorRow[];
 }
 
 /**

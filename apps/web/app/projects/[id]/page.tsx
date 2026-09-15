@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!workspace) {
     return {
-      title: 'Project Workspace',
+      title: 'Project Workspace | Arcanea',
     };
   }
 

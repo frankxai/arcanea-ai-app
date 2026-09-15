@@ -22,7 +22,7 @@ jobs:
     name: Validate book contribution
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 2
 
@@ -36,7 +36,7 @@ jobs:
           echo "Changed books: $BOOKS"
 
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
 

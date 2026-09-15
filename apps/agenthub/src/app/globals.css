@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Cosmic Palette */
+  --color-cosmic-void: #0b0e14;
+  --color-cosmic-deep: #121826;
+  --color-cosmic-surface: #1a2332;
+  --color-cosmic-raised: #242f42;
+  --color-cosmic-elevated: #2d3a52;
+  --color-cosmic-overlay: #364562;
+  --color-cosmic-border: #242f42;
+  --color-cosmic-border-bright: #364562;
+
+  /* Brand Colors */
+  --color-brand-primary: #00bcd4;
+  --color-brand-hover: #99ffe0;
+  --color-brand-active: #5ce6b8;
+  --color-brand-secondary: #78a6ff;
+  --color-brand-gold: #ffd700;
+
+  /* Text Colors */
+  --color-text-primary: #e6eefc;
+  --color-text-secondary: #9bb1d0;
+  --color-text-muted: #708094;
+  --color-text-disabled: #515b6b;
+
+  /* Backgrounds */
+  --background: var(--color-cosmic-void);
+  --foreground: var(--color-text-primary);
+
+  /* Shadows for EinUI Glassmorphism */
+  --shadow-glow-sm: 0 0 10px rgba(0, 188, 212, 0.15);
+  --shadow-glow-md: 0 0 20px rgba(0, 188, 212, 0.25);
+  --shadow-glow-lg: 0 0 40px rgba(0, 188, 212, 0.35);
+  --shadow-glow-xl: 0 0 60px rgba(0, 188, 212, 0.45);
+  --shadow-glow-brand: 0 0 20px rgba(0, 188, 212, 0.3);
+  --shadow-elevation-1: 0 2px 8px rgba(0,0,0,0.2), 0 0 1px rgba(255,255,255,0.05);
+  --shadow-elevation-2: 0 4px 16px rgba(0,0,0,0.3), 0 0 1px rgba(255,255,255,0.06);
+
+  /* Fonts */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  background-image: radial-gradient(ellipse at 20% 50%, rgba(0, 188, 212, 0.03) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(153, 102, 255, 0.03) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(120, 166, 255, 0.03) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* EinUI Frosted Glass Utilities */
+.glass-panel {
+  @apply bg-cosmic-surface/40 backdrop-blur-md border border-white/5 shadow-elevation-1 rounded-2xl;
+}
+
+.glass-card {
+  @apply bg-cosmic-raised/40 backdrop-blur-sm border border-white/10 shadow-elevation-1 rounded-xl transition-all duration-300 hover:bg-cosmic-elevated/50 hover:border-brand-primary/30 hover:shadow-glow-sm;
+}

@@ -1,9 +1,8 @@
-<<<<<<< HEAD
 # ARCANEA UNIVERSE - CANONICAL KNOWLEDGE BASE
 **Epic Fantasy Transmedia Franchise**
 
 **Last Updated**: December 10, 2024
-**Status**: AUTHORITATIVE - Primary reference for all Arcanea universe content
+**Status**: CANON_LOCKED (canon/v1) - Primary reference for all Arcanea universe content
 **Purpose**: Complete lore, world-building, and canon for AI assistants working on the fantasy universe
 
 ---

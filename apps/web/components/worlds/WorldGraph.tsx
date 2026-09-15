@@ -165,7 +165,8 @@ export function WorldGraph({ nodes: rawNodes, edges: rawEdges, className }: Worl
   // Convert once, then hand off to React Flow state
   const { nodes: initialNodes, edges: initialEdges } = React.useMemo(
     () => mcpGraphToReactFlow({ nodes: rawNodes, edges: rawEdges }),
-    [rawNodes, rawEdges],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [JSON.stringify(rawNodes), JSON.stringify(rawEdges)],
   );
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);

@@ -1,0 +1,29 @@
+{
+  "id": "arc-social-042-music-resonance-proof-wide-16x9",
+  "campaignId": "arc-social-042-music-resonance-proof",
+  "sourceAssetId": "arc-visual-042",
+  "channelKey": "wide-16x9",
+  "platforms": [
+    "YouTube Thumbnail",
+    "X Link Visual",
+    "Article Header"
+  ],
+  "ratio": "16:9",
+  "width": 1280,
+  "height": 720,
+  "sizeBytes": 1242366,
+  "sha256": "a06798b91fdefc400cd69381edc3ec1ece0d37ff1943d89eba54ecc455f8b26f",
+  "headline": "The Song Leaves Proof",
+  "subhead": "Performance becomes an artifact.",
+  "cta": "Make sound remember.",
+  "proof": "Voice Gate / resonance cover",
+  "gate": "Voice",
+  "guardian": "Alera",
+  "score30": 28,
+  "sourceImage": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-042-music-resonance-proof-cover.png",
+  "outputPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\social-overlays\\exports\\wide-16x9\\arc-social-042-music-resonance-proof-wide-16x9.png",
+  "sourceMethod": "code-rendered deterministic overlays on inspected generated media",
+  "rightsStatus": "generated-owned-derived",
+  "approvalGate": "social-approvals",
+  "createdAt": "2026-07-06T07:49:20+02:00"
+}

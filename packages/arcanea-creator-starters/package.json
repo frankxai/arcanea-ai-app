@@ -1,8 +1,0 @@
-{
-  "name": "@arcanea/creator-starters",
-  "private": true,
-  "type": "module",
-  "exports": {
-    "./build": "./scripts/build.mjs"
-  }
-}

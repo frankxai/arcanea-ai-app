@@ -1,0 +1,29 @@
+{
+  "id": "arc-social-033-fire-gate-forge-titan-wide-16x9",
+  "campaignId": "arc-social-033-fire-gate-forge-titan",
+  "sourceAssetId": "arc-visual-033",
+  "channelKey": "wide-16x9",
+  "platforms": [
+    "YouTube Thumbnail",
+    "X Link Visual",
+    "Article Header"
+  ],
+  "ratio": "16:9",
+  "width": 1280,
+  "height": 720,
+  "sizeBytes": 1346675,
+  "sha256": "867a0bb86c31b88c58f53bf32ed53415f6daa5135a5ff9cf9c564ffbd109d280",
+  "headline": "Power That Builds",
+  "subhead": "Draconis sleeps beneath a forge city.",
+  "cta": "Create proof, not noise.",
+  "proof": "Fire Gate / constructive scale",
+  "gate": "Fire",
+  "guardian": "Draconia",
+  "score30": 29,
+  "sourceImage": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-033-fire-gate-draconis-healthy-forge-titan.png",
+  "outputPath": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\social-overlays\\exports\\wide-16x9\\arc-social-033-fire-gate-forge-titan-wide-16x9.png",
+  "sourceMethod": "code-rendered deterministic overlays on inspected generated media",
+  "rightsStatus": "generated-owned-derived",
+  "approvalGate": "social-approvals",
+  "createdAt": "2026-07-06T07:49:20+02:00"
+}

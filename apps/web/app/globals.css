@@ -309,8 +309,8 @@
   @media (min-width: 640px) { .container-page { padding-inline: 1.5rem; } }
 
   /* Notch / home-indicator safe-area helpers (pair with viewportFit: cover). */
-  .safe-px { padding-left: max(1.25rem, env(safe-area-inset-left)); padding-right: max(1.25rem, env(safe-area-inset-right)); }
-  .safe-pb { padding-bottom: max(0px, env(safe-area-inset-bottom)); }
+  .safe-px { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+  .safe-pb { padding-bottom: env(safe-area-inset-bottom); }
 
   /* --- Tier 1: Glass Subtle (hover overlays, secondary) --- */
   .glass-subtle {

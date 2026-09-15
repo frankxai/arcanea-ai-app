@@ -1,0 +1,10 @@
+# Frank's prompts -- Scaling content production with Claude CLI and automation
+
+Source uuid: 3b1f8151-4379-4278-accf-8376bb49a14f
+Created: 2025-11-12T10:00:46.384336Z
+
+Verbatim, chronological.
+
+## Turn 0
+
+Hey. Couple of quick thoughts of how we're building. Currently, we spend a lot of time with Claude CLI, configuring agents, trying to get the MCP servers to work, connecting with GitHub and Verso. Yeah. I think that's I need to Built a better understanding of how of all of this works, how to have really good website development practices, Content development practices with this specific workflow How much of this works just with Claude CLI? And where we need other automations or other templates. And I think this is also The key point that I'm considering that how we are currently the web design is happening how the, yeah, content design, ebook design, We need to have more consistency in that. Annette? I have templates. Have maybe I'm not sure if it's Figma projects or Canva projects or both. That we have structure in how we are trading, and then clear pipelines as well that the now I'm not sure if Claude is good as it, in this, if the CLI also has a vision capabilities. That I can give it images and it understands how to classify how it fits to the right project, or I need to have another process. And definitely, we need more automation actually publish content. And for this, also needs to build the right knowledge base. So the agents understand my language. They're not sure if we need their N8 then. Or I can do this from the CLI. Or another workflow that you can recommend. We're realizing I need more structure to have consistency and get into the volume that I want to drive traffic to the websites as well, and monetize and also produce high quality products So please reflect on this. Find out and research for me best possible practices for this, any blogs, any books that you can find and synthesize and provide me an sophisticated education on this and suggest that based on all you know, also from other checks from me, we can tailor this for me.

@@ -2,7 +2,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { LazyMotion, domAnimation, m, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { LazyMotion, domAnimation, m, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
@@ -10,7 +10,6 @@ import type { V3BelowFoldProps } from "./v3-below-fold";
 import { HeroShowcase } from "./hero-showcase";
 import { SovereigntyBadge } from "@/components/premium/sovereignty-pillars";
 import { NumberTicker } from "@/components/motion/number-ticker";
-import { FACTS } from "@/lib/facts";
 import { Sparkle, Diamond, Code, ShieldStar } from "@/lib/phosphor-icons";
 import { PUBLIC_REPO_SUMMARY } from "@/lib/public-repo-registry";
 
@@ -91,8 +90,6 @@ export function V3Loading() {
 function HeroPortal() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const reducedMotion = useReducedMotion();
-  const prefersReduced = !isLoaded || !!reducedMotion;
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -156,7 +153,7 @@ function HeroPortal() {
       {/* Content */}
       <m.div
         className="relative z-10 w-full max-w-3xl mx-auto px-5 sm:px-6"
-        style={prefersReduced ? { y: 0, opacity: 1 } : { y: contentY, opacity: contentOpacity }}
+        style={{ y: contentY, opacity: contentOpacity }}
       >
         <div className="flex flex-col items-center text-center">
           {/* Canonical brand mark */}
@@ -179,7 +176,7 @@ function HeroPortal() {
             </div>
           </m.div>
 
-          {/* Headline */}
+          {/* Headline — direct value before mythology */}
           <m.h1
             className="text-[clamp(2.25rem,5.1vw,4.45rem)] font-display font-bold tracking-[-0.025em] leading-[1.04] mb-4 md:mb-5 text-white"
             initial={{ opacity: 0, y: 18 }}
@@ -190,7 +187,7 @@ function HeroPortal() {
             <span className="block">with AI agents.</span>
           </m.h1>
 
-          {/* Value prop */}
+          {/* One-line value prop */}
           <m.p
             className="max-w-2xl mx-auto text-base md:text-lg text-white/55 leading-relaxed mb-5 md:mb-9 font-body"
             initial={{ opacity: 0, y: 16 }}
@@ -200,7 +197,7 @@ function HeroPortal() {
             Turn one idea into a persistent world graph: lore, characters, rules, media briefs, and agent tasks stay connected across sessions.
           </m.p>
 
-          {/* Chat box */}
+          {/* Chat box — the hero element */}
           <m.div
             className="w-full mb-5 md:mb-9"
             initial={{ opacity: 0, y: 16 }}
@@ -210,7 +207,7 @@ function HeroPortal() {
             <HeroChatBox />
           </m.div>
 
-          {/* Trust signals */}
+          {/* Trust signals after the primary action */}
           <m.div
             className="flex w-full max-w-full flex-nowrap items-center justify-start gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] sm:flex-wrap sm:justify-center sm:overflow-visible md:gap-3 [&::-webkit-scrollbar]:hidden"
             initial={{ opacity: 0 }}
@@ -218,6 +215,9 @@ function HeroPortal() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             {[
+              { Icon: Sparkle, num: 13, suffix: "", label: "specialist agents", color: "var(--arc-brand-atlantean-teal)", fixed: true },
+              { Icon: Diamond, num: 190, suffix: "K+", label: "words of canon", color: "var(--arc-brand-atlantean-teal)" },
+              { Icon: Code, num: PUBLIC_REPO_SUMMARY.public, suffix: "", label: "public repos", color: "var(--arc-brand-cosmic-blue)" },
               { Icon: ShieldStar, num: 0, suffix: "MIT", label: "open source", color: "var(--arc-void)", fixed: true },
             ].map(({ Icon, num, suffix, label, color, fixed }, i) => (
               <div
@@ -226,7 +226,7 @@ function HeroPortal() {
               >
                 <Icon size={11} weight="duotone" color={color} className="opacity-70" />
                 <span className="text-[11px] font-display font-semibold text-white/55">
-                  {fixed ? (num > 0 ? `${num}${suffix}` : suffix || num) : <NumberTicker value={num} suffix={suffix} delay={0.36 + i * 0.08} />}
+                  {fixed ? (suffix || num) : <NumberTicker value={num} suffix={suffix} delay={0.36 + i * 0.08} />}
                 </span>
                 <span className="text-[10px] text-white/34 font-body">{label}</span>
               </div>

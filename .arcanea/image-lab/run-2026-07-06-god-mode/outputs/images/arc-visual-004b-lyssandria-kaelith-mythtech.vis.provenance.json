@@ -1,0 +1,92 @@
+{
+  "asset_uid": "arcanea-2026-07-lyssandria-kaelith-mythtech",
+  "source_asset_uid": "arcanea-2026-07-lyssandria-kaelith-foundation-gate",
+  "batch_id": "2026-07-arcanea-visual-world-engine-b1-revisions",
+  "brand": "arcanea",
+  "operating_unit": "arcanea-product-ip",
+  "collection": "arcanea-visual-world-engine",
+  "edition": 2,
+  "title": "lyssandria kaelith mythtech",
+  "media_type": "image",
+  "workflow": "brand-world-poster",
+  "surface": "character-portal-4x5",
+  "aspect_ratio": "4:5",
+  "file": {
+    "path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-004b-lyssandria-kaelith-mythtech.png",
+    "sha256": "d59949f32084610b8fc6216abbcaaec8b857c97c9235b8b075389a515df8883f",
+    "mime_type": "image/png",
+    "width": 1122,
+    "height": 1402,
+    "size_bytes": 3163950
+  },
+  "generation": {
+    "provider": "openai",
+    "model": "codex built-in image_gen",
+    "prompt_ref": "iteration-prompts-b1.json#arc-visual-004b",
+    "prompt": "Use case: illustration-story. Asset type: revised Guardian portal portrait. Primary request: Lyssandria, Arcanean God of the Foundation Gate, with bonded Godbeast Kaelith, redesigned away from fantasy cosplay into sacred engineering and AI-lab myth-tech. Scene/backdrop: living stone observatory rooted into a mountain, gravity-dense crystal veins, precise geometric terraces, subtle lab instrumentation built from stone and starlight metal. Subject: Lyssandria stands calmly in a simple architect-like mantle and star-forged light armor, noble angular silhouette, no ornate fantasy gown; Kaelith appears as a colossal living-stone Godbeast behind the observatory, protective rather than hostile, distinct from a generic dragon. Style/medium: cinematic luxury cosmic myth-tech, museum-grade, AI-lab premium. Composition/framing: 4:5, Lyssandria foreground, Kaelith immense but readable, strong scale anchor, quiet uncluttered composition. Lighting/mood: earth green, stone gray, gold foundation glow, calm authority. Materials/textures: living stone, Kaelith Stone, starlight metal, root-wood, moss light, clean glass instruments. Constraints: no text, no letters, no logos, no fantasy robes, no crown, no medieval armor cosplay, no mud-grit, no superhero suit.",
+    "negative_prompt": "No text, captions, logos, subtitles, UI, fake letters, or watermark inside the image. Arcanea aesthetic: luxury cosmic myth-tech, sacred obsidian, starlight metal, gold thread, living crystal, ancient paper, dark glass, moonlight, portal light. AI-lab premium, not fantasy-game chrome. Cinematic composition with one dominant subject and clean crop-safe negative space. Avoid generic fantasy cosplay, superhero spandex, medieval mud-grit, neon hacker grids, purple cliche, stock fantasy, overdecorated ornaments, malformed hands, malformed faces, broken geometry.",
+    "seed": null,
+    "settings": {
+      "tool_mode": "built-in",
+      "aspect_ratio_requested": "4:5"
+    }
+  },
+  "governance": {
+    "asset_tier": "B",
+    "rights_status": "generated-owned",
+    "approval_status": "candidate",
+    "score30": 26,
+    "decision": "approve-with-canon-caution",
+    "failure_modes": [
+      "Kaelith remains dragon-adjacent",
+      "Guardian still more figure portrait than product-world portal"
+    ],
+    "next_improvement": "Make Kaelith mountain-tortoise/root-stone/gravity beast in next Guardian pass."
+  },
+  "canon": {
+    "refs": [
+      "CANON_LOCKED.md Ten Gates",
+      "Lyssandria",
+      "Kaelith",
+      "Foundation Gate"
+    ],
+    "gate": "Foundation",
+    "guardian": "Lyssandria"
+  },
+  "web3": {
+    "collection": "arcanea-visual-world-engine",
+    "edition": 2,
+    "attributes": [
+      {
+        "trait_type": "category",
+        "value": "guardian-godbeast"
+      },
+      {
+        "trait_type": "surface",
+        "value": "character-portal-4x5"
+      },
+      {
+        "trait_type": "gate",
+        "value": "Foundation"
+      },
+      {
+        "trait_type": "guardian",
+        "value": "Lyssandria"
+      },
+      {
+        "trait_type": "revision_of",
+        "value": "arc-visual-004"
+      }
+    ],
+    "ipfs_cid": null,
+    "metadata_uri": null,
+    "mint_status": "not-minted"
+  },
+  "vis": {
+    "asset_id": null,
+    "visual_uri": null,
+    "sidecar_path": "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\run-2026-07-06-god-mode\\outputs\\images\\arc-visual-004b-lyssandria-kaelith-mythtech.vis.provenance.json"
+  },
+  "used_in": [],
+  "created_at": "2026-07-06T02:32:00+02:00"
+}

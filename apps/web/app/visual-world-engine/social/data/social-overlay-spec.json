@@ -1,0 +1,219 @@
+{
+  "version": "2026-07-06",
+  "run": "run-2026-07-06-god-mode",
+  "assetTier": "B/C",
+  "sourceMethod": "code-rendered deterministic overlays on inspected generated media",
+  "approvalGate": "social-approvals",
+  "brand": {
+    "name": "Arcanea",
+    "url": "arcanea.ai",
+    "label": "VISUAL WORLD ENGINE"
+  },
+  "channels": [
+    {
+      "key": "instagram-feed-4x5",
+      "platforms": ["Instagram Feed", "Instagram Carousel"],
+      "ratio": "4:5",
+      "width": 1080,
+      "height": 1350,
+      "notes": "Feed/carousel crop with strong first read and readable bottom copy."
+    },
+    {
+      "key": "vertical-9x16",
+      "platforms": ["TikTok", "Instagram Reels", "Instagram Stories", "YouTube Shorts"],
+      "ratio": "9:16",
+      "width": 1080,
+      "height": 1920,
+      "notes": "Vertical source frame with top/mid copy and bottom/right safe-zone awareness."
+    },
+    {
+      "key": "square-1x1",
+      "platforms": ["X", "Instagram Feed", "Threads", "Bluesky"],
+      "ratio": "1:1",
+      "width": 1200,
+      "height": 1200,
+      "notes": "Single-image and carousel square crop."
+    },
+    {
+      "key": "wide-16x9",
+      "platforms": ["YouTube Thumbnail", "X Link Visual", "Article Header"],
+      "ratio": "16:9",
+      "width": 1280,
+      "height": 720,
+      "notes": "Big thumbnail read with exact deterministic text."
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "arc-social-033-fire-gate-forge-titan",
+      "sourceAssetId": "arc-visual-033",
+      "sourceImage": "../outputs/images/arc-visual-033-fire-gate-draconis-healthy-forge-titan.png",
+      "score30": 29,
+      "gate": "Fire",
+      "guardian": "Draconia",
+      "accent": "#ffb84d",
+      "headline": "Power That Builds",
+      "subhead": "Draconis sleeps beneath a forge city.",
+      "proof": "Fire Gate / constructive scale",
+      "cta": "Create proof, not noise.",
+      "backgroundPosition": {
+        "instagram-feed-4x5": "50% 50%",
+        "vertical-9x16": "50% 50%",
+        "square-1x1": "50% 52%",
+        "wide-16x9": "50% 48%"
+      }
+    },
+    {
+      "id": "arc-social-028-heart-realm-living-ark",
+      "sourceAssetId": "arc-visual-028",
+      "sourceImage": "../outputs/images/arc-visual-028-heart-realm-living-ark-non-dragon.png",
+      "score30": 29,
+      "gate": "Heart",
+      "guardian": "Maylinn",
+      "accent": "#65d88f",
+      "headline": "Scale Is A Responsibility",
+      "subhead": "A living ark carries creators through the Heart Gate.",
+      "proof": "Non-dragon world scale",
+      "cta": "Build worlds that hold people.",
+      "backgroundPosition": {
+        "instagram-feed-4x5": "45% 46%",
+        "vertical-9x16": "48% 48%",
+        "square-1x1": "46% 46%",
+        "wide-16x9": "50% 45%"
+      }
+    },
+    {
+      "id": "arc-social-025-world-tower-practice",
+      "sourceAssetId": "arc-visual-025",
+      "sourceImage": "../outputs/images/arc-visual-025-world-tower-social-crop.png",
+      "score30": 29,
+      "gate": "Heart",
+      "guardian": "Maylinn",
+      "accent": "#4bd8d3",
+      "headline": "A World Big Enough To Practice In",
+      "subhead": "Tiny creators. Vast habitats. One proof at a time.",
+      "proof": "World tower social source",
+      "cta": "Answer The Drift with artifacts.",
+      "backgroundPosition": {
+        "instagram-feed-4x5": "52% 50%",
+        "vertical-9x16": "52% 50%",
+        "square-1x1": "50% 50%",
+        "wide-16x9": "50% 48%"
+      }
+    },
+    {
+      "id": "arc-social-027-music-portal-bloom",
+      "sourceAssetId": "arc-visual-027",
+      "sourceImage": "../outputs/images/arc-visual-027-music-portal-bloom-clean.png",
+      "score30": 29,
+      "gate": "Voice",
+      "guardian": "Alera",
+      "accent": "#39d7d2",
+      "headline": "Make The Song Visible",
+      "subhead": "Sound becomes a proof artifact.",
+      "proof": "Music portal / Voice Gate",
+      "cta": "Compose something you can keep.",
+      "backgroundPosition": {
+        "instagram-feed-4x5": "50% 48%",
+        "vertical-9x16": "50% 48%",
+        "square-1x1": "50% 50%",
+        "wide-16x9": "50% 50%"
+      }
+    },
+    {
+      "id": "arc-social-031-luminor-rank-proof",
+      "sourceAssetId": "arc-visual-031",
+      "sourceImage": "../outputs/images/arc-visual-031-luminor-rank-proof-atlas.png",
+      "score30": 28,
+      "gate": "Source",
+      "guardian": "Shinkami",
+      "accent": "#ffd37a",
+      "headline": "Luminor Is Earned",
+      "subhead": "Ten Gates. One proof-led path.",
+      "proof": "Rank, not species",
+      "cta": "Mastery leaves evidence.",
+      "backgroundPosition": {
+        "instagram-feed-4x5": "35% 50%",
+        "vertical-9x16": "34% 50%",
+        "square-1x1": "38% 50%",
+        "wide-16x9": "42% 50%"
+      }
+    },
+    {
+      "id": "arc-social-035-music-proof-stage",
+      "sourceAssetId": "arc-visual-035",
+      "sourceImage": "../outputs/images/arc-visual-035-arcanea-music-proof-stage-no-text.png",
+      "score30": 27,
+      "gate": "Voice",
+      "guardian": "Alera",
+      "accent": "#45e3da",
+      "headline": "Turn Performance Into Proof",
+      "subhead": "A creator shapes resonance in public.",
+      "proof": "Music/social vertical source",
+      "cta": "Make the ritual useful.",
+      "backgroundPosition": {
+        "instagram-feed-4x5": "50% 58%",
+        "vertical-9x16": "50% 50%",
+        "square-1x1": "50% 55%",
+        "wide-16x9": "50% 57%"
+      }
+    },
+    {
+      "id": "arc-social-040-unity-cooperation-lattice",
+      "sourceAssetId": "arc-visual-040",
+      "sourceImage": "../outputs/images/arc-visual-040-unity-kyuro-cooperation-lattice.png",
+      "score30": 29,
+      "gate": "Unity",
+      "guardian": "Ino",
+      "accent": "#74e0a0",
+      "headline": "Proof Needs People",
+      "subhead": "Kyuro wakes when the team holds together.",
+      "proof": "Unity Gate / cooperation lattice",
+      "cta": "Build the bridge together.",
+      "backgroundPosition": {
+        "instagram-feed-4x5": "48% 50%",
+        "vertical-9x16": "49% 50%",
+        "square-1x1": "48% 50%",
+        "wide-16x9": "50% 50%"
+      }
+    },
+    {
+      "id": "arc-social-041-webtoon-gate-choice",
+      "sourceAssetId": "arc-visual-041",
+      "sourceImage": "../outputs/images/arc-visual-041-webtoon-gate-choice-blank-ledger.png",
+      "score30": 28,
+      "gate": "Foundation",
+      "guardian": "Lyssandria",
+      "accent": "#70cfff",
+      "headline": "Hold The Gate Open",
+      "subhead": "A blank ledger. A consent exit. A choice.",
+      "proof": "Gate-Descent / story portal",
+      "cta": "Choose proof over control.",
+      "backgroundPosition": {
+        "instagram-feed-4x5": "38% 52%",
+        "vertical-9x16": "38% 52%",
+        "square-1x1": "42% 52%",
+        "wide-16x9": "50% 50%"
+      }
+    },
+    {
+      "id": "arc-social-042-music-resonance-proof",
+      "sourceAssetId": "arc-visual-042",
+      "sourceImage": "../outputs/images/arc-visual-042-music-resonance-proof-cover.png",
+      "score30": 28,
+      "gate": "Voice",
+      "guardian": "Alera",
+      "accent": "#d9b66a",
+      "headline": "The Song Leaves Proof",
+      "subhead": "Performance becomes an artifact.",
+      "proof": "Voice Gate / resonance cover",
+      "cta": "Make sound remember.",
+      "backgroundPosition": {
+        "instagram-feed-4x5": "50% 50%",
+        "vertical-9x16": "50% 50%",
+        "square-1x1": "50% 50%",
+        "wide-16x9": "50% 50%"
+      }
+    }
+  ]
+}

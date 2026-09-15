@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+# Portable: source central hook-env for HARNESS/PROJECT detection (claude/grok/codex/agy/da)
+HOOK_DIR="$(cd "$(dirname "#!/usr/bin/env bash
+")" && pwd)"
+if [ -f "$HOOK_DIR/lib/hook-env.sh" ]; then
+  source "$HOOK_DIR/lib/hook-env.sh" 2>/dev/null || true
+elif [ -f "C:/Users/frank/starlight/repos/claude-code-config/hooks/lib/hook-env.sh" ]; then
+  source "C:/Users/frank/starlight/repos/claude-code-config/hooks/lib/hook-env.sh" 2>/dev/null || true
+fi
 # ops-heartbeat.sh — Lightweight heartbeat hook for SessionStart
 # Writes system metrics to ~/.arcanea/ops/heartbeat.json
 # Optimized for Windows Git Bash: parallel background jobs, < 1 second

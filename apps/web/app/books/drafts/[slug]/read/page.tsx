@@ -11,7 +11,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   return {
-    title: 'Storybook Reader — Coming Soon',
+    title: 'Storybook Reader — Coming Soon — Arcanea',
     description:
       'An immersive page-flip reader with full-bleed chapter art and atmospheric soundtracks — coming soon.',
     alternates: { canonical: `/books/drafts/${slug}/read` },

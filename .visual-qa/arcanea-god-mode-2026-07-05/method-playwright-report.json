@@ -1,0 +1,96 @@
+{
+  "url": "http://127.0.0.1:3001/method",
+  "capturedAt": "2026-07-05T04:00:00.287Z",
+  "checks": [
+    {
+      "viewport": "desktop",
+      "screenshot": ".visual-qa/arcanea-god-mode-2026-07-05/method-desktop.png",
+      "result": {
+        "title": "The Arcanea Method - Proof Before Scale | Arcanea",
+        "h1": "Proof before scale.",
+        "documentScrollWidth": 1440,
+        "innerWidth": 1440,
+        "articleCount": 10,
+        "hasGenesisLink": true,
+        "hasStatusLink": true,
+        "hasStudioLink": true,
+        "hasMcpLink": true,
+        "hasMarketPressure": true,
+        "hasOperatingDoctrine": true,
+        "hasProofPath": true,
+        "bannedNamesFound": []
+      },
+      "ignoredConsoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Refused to execute script from 'http://127.0.0.1:3001/_vercel/speed-insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled.",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Refused to execute script from 'http://127.0.0.1:3001/_vercel/insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled."
+      ],
+      "blockingConsoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "viewport": "tablet",
+      "screenshot": ".visual-qa/arcanea-god-mode-2026-07-05/method-tablet.png",
+      "result": {
+        "title": "The Arcanea Method - Proof Before Scale | Arcanea",
+        "h1": "Proof before scale.",
+        "documentScrollWidth": 1024,
+        "innerWidth": 1024,
+        "articleCount": 10,
+        "hasGenesisLink": true,
+        "hasStatusLink": true,
+        "hasStudioLink": true,
+        "hasMcpLink": true,
+        "hasMarketPressure": true,
+        "hasOperatingDoctrine": true,
+        "hasProofPath": true,
+        "bannedNamesFound": []
+      },
+      "ignoredConsoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Refused to execute script from 'http://127.0.0.1:3001/_vercel/insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled.",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Refused to execute script from 'http://127.0.0.1:3001/_vercel/speed-insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled."
+      ],
+      "blockingConsoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "viewport": "mobile",
+      "screenshot": ".visual-qa/arcanea-god-mode-2026-07-05/method-mobile.png",
+      "result": {
+        "title": "The Arcanea Method - Proof Before Scale | Arcanea",
+        "h1": "Proof before scale.",
+        "documentScrollWidth": 390,
+        "innerWidth": 390,
+        "articleCount": 10,
+        "hasGenesisLink": true,
+        "hasStatusLink": true,
+        "hasStudioLink": true,
+        "hasMcpLink": true,
+        "hasMarketPressure": true,
+        "hasOperatingDoctrine": true,
+        "hasProofPath": true,
+        "bannedNamesFound": []
+      },
+      "ignoredConsoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Refused to execute script from 'http://127.0.0.1:3001/_vercel/speed-insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled.",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Refused to execute script from 'http://127.0.0.1:3001/_vercel/insights/script.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled."
+      ],
+      "blockingConsoleErrors": [],
+      "pageErrors": [],
+      "pass": true
+    }
+  ],
+  "statusLinkCheck": {
+    "documentScrollWidth": 1024,
+    "innerWidth": 1024,
+    "hasMethodLink": true
+  },
+  "pass": true
+}

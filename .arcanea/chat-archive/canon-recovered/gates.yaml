@@ -1,0 +1,101 @@
+# gates.yaml — machine source of truth for the Arcanea gate system
+# Generated from CANON_LOCKED_v6.md §4. Nothing else hardcodes frequencies; everything reads from here.
+# Rule: Gate N = Nth ascending Extended-Solfeggio tone. Positional, not semantic.
+#
+# Recovered from claude.ai chat "Arcanea canon frequency mapping and chat inventory"
+# https://claude.ai/chat/ce32f2da-5b59-48c7-9b01-34e4ea3e80be (generated 2026-05-29)
+# STAGED, NOT PROMOTED — see RECOVERY_STATUS.md in this folder.
+
+scale: extended_solfeggio_ascending
+canon_version: "6.0"
+
+gates:
+  - gate: 1
+    hz: 174
+    guardian: Lyssandria
+    beast: Kaelith
+    form: Stone Wyrm
+    element: Earth
+    center: Root
+    domain: [foundation, survival, ancestral power]
+  - gate: 2
+    hz: 285
+    guardian: Leyla
+    beast: Veloura
+    form: Water-Fire Dragon
+    element: Water
+    center: Sacral
+    domain: [flow, passion, creative-emotional intelligence]
+  - gate: 3
+    hz: 396
+    guardian: Draconia
+    beast: Draconis
+    form: Storm Dragon
+    element: Fire
+    center: Solar
+    domain: [power, will, sovereignty]
+  - gate: 4
+    hz: 417  # LOCKED. Heart. Do not move to 528.
+    guardian: Maylinn
+    beast: Laeylinn  # OPEN: legacy alt 'Haelar'
+    form: Forest Stag
+    element: Wind
+    center: Heart
+    domain: [love, healing, compassion]
+  - gate: 5
+    hz: 528  # Voice. 528 lives here, not on Heart.
+    guardian: Alera
+    beast: Otome
+    form: Whale Dragon
+    element: Fire
+    center: Voice
+    domain: [expression, truth, communication]
+  - gate: 6
+    hz: 639
+    guardian: Lyria
+    beast: Yumiko
+    form: Dream Serpent
+    element: Water
+    center: Third Eye
+    domain: [vision, intuition, prophecy]
+  - gate: 7
+    hz: 741
+    guardian: Aiyami
+    beast: Sol
+    form: Solar Phoenix
+    element: Wind
+    center: Crown
+    domain: [divinity, light, enlightenment]
+  - gate: 8
+    hz: 852
+    guardian: Elara
+    gate_name: Starweave  # was 'Shift' in book files — renamed
+    beast: Vaelith  # was 'Naruun'/'Thessara' — deprecated
+    form: Void Fox
+    element: Arcane
+    center: 8th Gate
+    domain: [transformation, chaos, endings]
+  - gate: 9
+    hz: 963
+    guardian: Ino  # OPEN: lightly attested name
+    beast: Kyuro
+    form: Tiger Dragon
+    element: Arcane
+    center: 9th Flame
+    domain: [integration, observation, completion]
+  - gate: 10
+    hz: 1111
+    guardian: null  # no human Guardian; Source-vessel
+    beast: Shinkami
+    form: Wolf-Dragon (Ten-Tailed)
+    element: Arcane
+    center: Source
+    domain: [harmony, the Observer, source-vessel]
+
+deprecated_do_not_use:
+  frequencies_era_a: { Lyssandria: 396, Maylinn: 639, Alera: 741, Draconia: 528, Aiyami: 963, Elara: 174 }
+  beast_names: [Nohrien, Zaurion, Haelar, Sonael, Khiren, Orienya, Naruun, Velnara, Thessara]
+  guardian_collective_rename: Velari
+  world_tree_wrong: Yggdrasil
+  spelling_wrong: harmonics
+  fifth_element_wrong: Void

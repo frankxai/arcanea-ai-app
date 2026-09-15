@@ -295,8 +295,8 @@ export function DistributeContent(): JSX.Element {
                   level="planned"
                   title="Distribution pipelines are planned, not live"
                   body="Blotato / Postiz / n8n integrations are scheduled on the backlog. Today Arcanea helps you draft — you publish via your own accounts. This page is the spec, not the product."
-                  linkHref="/contact"
-                  linkLabel="Contact for distribution updates"
+                  linkHref="/community-hub"
+                  linkLabel="Join Discord for updates"
                 />
               </m.div>
 

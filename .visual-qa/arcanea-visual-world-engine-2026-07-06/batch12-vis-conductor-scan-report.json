@@ -1,0 +1,15 @@
+{
+  "runId": "run_a2e905de7af52bd20609c4d8",
+  "root": "C:\\Users\\frank\\starlight\\repos\\visual-intelligence",
+  "indexPath": "C:\\Users\\frank\\starlight\\repos\\visual-intelligence\\data\\vis.sqlite",
+  "mediaRoots": [
+    "C:\\Users\\frank\\starlight\\repos\\arcanea-ai-app\\.arcanea\\image-lab\\conductor-2026-07-06"
+  ],
+  "scannedFiles": 20,
+  "logicalAssets": 20,
+  "versions": 20,
+  "locations": 20,
+  "usageEdges": 0,
+  "registryPath": "C:\\Users\\frank\\starlight\\repos\\visual-intelligence\\data\\visual-registry.json",
+  "atlasPath": "C:\\Users\\frank\\starlight\\repos\\visual-intelligence\\data\\vis-atlas.json"
+}

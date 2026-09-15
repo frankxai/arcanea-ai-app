@@ -47,10 +47,10 @@ interface SourceOption {
 const SOURCES: SourceOption[] = [
   { label: "Google Drive", glyph: "▲", color: thirdPartyBrand.googleDrive, action: "drive" },
   { label: "Paste URL", glyph: "⎆", color: ambient.lavender, action: "paste" },
-  { label: "Obsidian vault", glyph: "◰", color: thirdPartyBrand.obsidian, action: "coming-soon", note: "soon" },
+  { label: "Obsidian vault", glyph: "◰", color: thirdPartyBrand.obsidian, action: "coming-soon", note: "Q2 2026" },
   { label: "Notion", glyph: "▰", color: thirdPartyBrand.notion, action: "coming-soon", note: "Q3 2026" },
   { label: "Syncthing", glyph: "⟲", color: thirdPartyBrand.syncthing, action: "coming-soon", note: "Q3 2026" },
-  { label: "GitHub", glyph: "◉", color: thirdPartyBrand.github, action: "coming-soon", note: "soon" },
+  { label: "GitHub", glyph: "◉", color: thirdPartyBrand.github, action: "coming-soon", note: "Q2 2026" },
 ];
 
 type Phase = "idle" | "submitting" | "success" | "error";

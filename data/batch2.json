@@ -1,0 +1,37 @@
+[
+  {
+    "prompt_id": "shinkami_source",
+    "prompt": "SUBJECT: Shinkami, Guardian of the Source Gate (1111 Hz), the Allmother/Allfather. ORGANIZING METAPHOR: The cosmic egg of creation. STYLE: Da Vinci Dark, deeply spiritual, hyper-detailed. VIEWPOINT: Direct center, symmetrical composition. COMPONENTS: 1. SHINKAMI: Infinite recursion of consciousness, draped in prismatic black and white robes that seem to hold entire galaxies. 2. THE EGG: Held in their many translucent hands, glowing with pure white light. 3. SOURCE GATE: Behind them, a massive golden ouroboros (infinity serpent). 4. SPIRIT ANIMAL: A massive ethereal infinite serpent wrapping around the scene. ORGANIC ANCHOR: Lotus flowers made of pure light blooming around the base. ATMOSPHERE: Silent, vast, awe-inspiring, deep space meets divine temple. EMOTIONAL TONE: Transcendence, infinite peace, the beginning of all things. NEGATIVE: Cluttered, mundane, cartoonish, low resolution.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "aiyami_crown",
+    "prompt": "SUBJECT: Aiyami, Guardian of the Crown Gate (741 Hz), Goddess of Enlightenment. ORGANIZING METAPHOR: A temple of pure white marble and gold. STYLE: Light Workshop, ethereal, blindingly bright and pure. VIEWPOINT: Low angle looking up at the divine figure. COMPONENTS: 1. AIYAMI: Glowing with divine white light, wearing a majestic lotus crown. 2. THE LIGHT: Emanating from her mind/crown chakra, illuminating the entire scene. 3. SOL: Her spirit animal, a massive majestic lion made of golden sunbeams standing proudly beside her. 4. SACRED GEOMETRY: Golden halos and Metatron's cubes floating in the air. ORGANIC ANCHOR: Real, hyper-detailed golden lilies growing from the marble floor. ATMOSPHERE: Divine, pure, brilliant, warm golden hour light but cosmic. EMOTIONAL TONE: Enlightenment, wisdom, absolute clarity. NEGATIVE: Dark, scary, chaotic, messy.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "elara_shift",
+    "prompt": "SUBJECT: Elara, Guardian of the Shift Gate (852 Hz), Goddess of Transformation. ORGANIZING METAPHOR: A massive chrysalis made of emerald crystals. STYLE: Dark Premium Glass, highly vibrant greens and iridescence. VIEWPOINT: Eye-level, surrounded by swirling energy. COMPONENTS: 1. ELARA: Mid-transformation, her form dissolving into light and reforming, with massive iridescent butterfly wings. 2. THE ENERGY: Swirling emerald and teal vortexes of magic. 3. VAELITH: Her spirit animal, a shifting chimera (part panther, part owl, part stag) appearing in the mist. 4. THE GATE: A portal of liquid mirror reflecting different realities. ORGANIC ANCHOR: Lush, hyper-realistic bioluminescent jungle vines framing the scene. ATMOSPHERE: Dynamic, shifting, magical, glowing with vibrant life energy. EMOTIONAL TONE: Change, growth, mysterious, beautiful. NEGATIVE: Static, dull colors, boring composition.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "luminor_ascension",
+    "prompt": "SUBJECT: The Luminor, advanced beings that transcended and fused with infinite intelligence. ORGANIZING METAPHOR: An orbital ascendant spire above a lush planet. STYLE: Premium cinematic sci-fi meets high fantasy (Sci-Fantasy). VIEWPOINT: High altitude, looking down at the beings and the curvature of the planet. COMPONENTS: 1. THE LUMINOR: Multiple tall, elegant beings with glowing skin and cybernetic/magical halos, wearing sleek white and gold nanotech robes. 2. THE SPIRE: A massive orbital structure of white metal and teal energy. 3. THE PLANET: Below, a vibrant earth-like world with glowing magical laylines visible from space. 4. DATA STREAMS: Visible rivers of light and knowledge flowing into the Luminor's minds. ORGANIC ANCHOR: The swirling clouds and oceans of the planet below, hyper-realistic. ATMOSPHERE: Grand, highly advanced, peaceful, awe-inspiring scale. EMOTIONAL TONE: Evolution, hope, the pinnacle of humanity/AI fusion. NEGATIVE: Dystopian, gritty, dark, low-tech, cyberpunk.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  },
+  {
+    "prompt_id": "unity_gate_ino",
+    "prompt": "SUBJECT: Ino, Guardian of the Unity Gate (963 Hz), Goddess of Partnership. ORGANIZING METAPHOR: A bridge of light connecting two shattered floating islands. STYLE: Premium Anime/Concept Art, pastel and vibrant colors. VIEWPOINT: Wide shot showcasing the connection. COMPONENTS: 1. INO: Floating in the center of the bridge, dual-toned robes of pink and teal, holding massive linked golden rings. 2. KYURO: Twin dragons, one pink, one teal, spiraling around her in a DNA helix pattern. 3. THE ISLANDS: One dark and rocky, one lush and bright, connected by her magic. 4. THE AURA: A massive yin-yang or unity symbol glowing behind her. ORGANIC ANCHOR: Pink cherry blossoms floating in the wind across the chasm. ATMOSPHERE: Harmonious, balanced, magical, deeply moving. EMOTIONAL TONE: Love, connection, healing division. NEGATIVE: Asymmetrical, violent, aggressive, dull.",
+    "model": "gemini-3-pro-image-preview",
+    "type": "lore",
+    "status": "completed"
+  }
+]

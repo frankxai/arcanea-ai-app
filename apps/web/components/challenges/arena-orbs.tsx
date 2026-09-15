@@ -6,16 +6,15 @@ import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, MeshDistortMaterial, Sphere, Stars } from '@react-three/drei';
 import * as THREE from 'three';
-import { brand, elements, text as textToken } from '@arcanea/design-system/tokens';
 
 const THREE_COLORS = {
-  atlanteanTeal: brand.atlanteanTeal,
-  arcaneanGold: brand.arcaneanGold,
-  cosmicBlue: brand.cosmicBlue,
-  fire: elements.fire.base,
-  textPrimary: textToken.primary,
-  void: elements.void.base,
-  wind: elements.wind.deep,
+  atlanteanTeal: '#00bcd4',
+  arcaneanGold: '#ffd700',
+  cosmicBlue: '#0d47a1',
+  fire: '#ff6b4a',
+  textPrimary: '#f8fafc',
+  void: '#a78bfa',
+  wind: '#4ade80',
 } as const;
 
 /* ----------------------------------------------------------------
