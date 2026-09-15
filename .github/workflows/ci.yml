@@ -146,6 +146,9 @@ jobs:
       - name: Verify auth recovery and creator economics
         run: node --test scripts/tests/auth-env.test.mjs scripts/tests/auth-redirect.test.mjs scripts/tests/creator-economics.test.mjs
 
+      - name: Verify account return and public entry boundaries
+        run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/entry-access.test.ts
+
       - name: ESLint
         run: pnpm --dir apps/web run lint
 
@@ -261,6 +264,12 @@ jobs:
 
       - name: Verify Luminor public-read timeout
         run: pnpm test:luminor-read-timeout
+
+      - name: Verify health and media readiness
+        run: pnpm test:health-media-readiness
+
+      - name: Verify Worlds accessibility boundary
+        run: pnpm test:worlds-accessibility
 
       - name: Verify World detail read deadlines
         run: |

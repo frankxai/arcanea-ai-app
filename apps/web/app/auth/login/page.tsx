@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { getSafeNextPath } from "@/lib/auth/redirect";
+import { safeAuthNextPath } from "@/lib/auth/safe-next-path";
 
 import {
   PhEnvelope,
@@ -142,7 +143,9 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const callbackError = searchParams.get("error");
   const authMessage = searchParams.get("message");
-  const nextPath = getSafeNextPath(searchParams.get("next") || "/dashboard");
+  const nextPath = getSafeNextPath(
+    safeAuthNextPath(searchParams.get("next"), "/dashboard"),
+  );
 
   const callbackErrorMessage =
     callbackError === "callback_failed"
@@ -422,7 +425,11 @@ export default function LoginPage() {
           <p className="text-center mt-8 font-body text-text-secondary text-sm">
             New to the multiverse?{" "}
             <Link
-              href="/auth/signup"
+              href={
+                nextPath === "/worlds/create?resume=1"
+                  ? "/auth/signup?next=%2Fworlds%2Fcreate%3Fresume%3D1"
+                  : "/auth/signup"
+              }
               className="text-atlantean-teal-aqua hover:text-atlantean-teal-aqua/80 transition-colors font-semibold"
             >
               Enter Arcanea
