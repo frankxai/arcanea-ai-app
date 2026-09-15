@@ -31,6 +31,12 @@ type Offer = {
   status: string;
   forWho: string;
   founding: string[];
+  tryNow: {
+    title: string;
+    body: string;
+    link?: { href: string; label: string };
+    example?: { caption: string; text: string };
+  };
 };
 
 // Founding benefits mirror the `founding` field of each row in data/products.graph.json.
@@ -47,6 +53,18 @@ const OFFERS: Offer[] = [
       "Your name in the founder register inside the world",
       "A founding sigil",
     ],
+    tryNow: {
+      title: "Read the canon before you answer",
+      body: "Chapter 1 of The Book of Arcanea is free in the Library. One chapter, no account. If it is not for you, the price question does not matter.",
+      link: {
+        href: "/library/book-of-arcanea#chapter-1-before-the-light",
+        label: "Read Chapter 1",
+      },
+      example: {
+        caption: "From Chapter 1, Before the Light",
+        text: "Before the light, there is Nero.\n\nYou are not starting from nothing. You are starting from everything.",
+      },
+    },
   },
   {
     id: "arcanea-mcp",
@@ -60,6 +78,11 @@ const OFFERS: Offer[] = [
       "Your name in CONTRIBUTORS.md of the published npm package",
       "A vote on which provider adapter ships first",
     ],
+    tryNow: {
+      title: "Nothing to try yet",
+      body: "Studio's media generation and scoring are not built into anything you can install today. The closest thing that runs now is the free World MCP below, which uses the same install path.",
+      link: { href: "#world-mcp", label: "See what runs today" },
+    },
   },
 ];
 
@@ -91,6 +114,14 @@ const STEPS = [
 ];
 
 const INSTALL = "claude mcp add arcanea npx @arcanea/mcp-server";
+
+// Verbatim output of generateName({ element: "fire", type: "place", count: 3 })
+// from packages/arcanea-mcp/src/tools/generators.ts, run 2026-09-15.
+const WORLD_MCP_EXAMPLE = `{
+  "element": "fire",
+  "type": "place",
+  "names": ["Ardgarde", "Calhaven", "Flamvale"]
+}`;
 
 export default async function PricingPage() {
   const states = await Promise.all(
@@ -192,6 +223,33 @@ export default async function PricingPage() {
                   </ul>
                 </div>
 
+                <div className="mt-7 border-t border-white/[0.06] pt-6">
+                  <h3 className="text-sm font-medium text-white/85">
+                    {offer.tryNow.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-white/60">
+                    {offer.tryNow.body}
+                  </p>
+                  {offer.tryNow.example ? (
+                    <figure className="mt-4 rounded-2xl border border-white/[0.06] bg-black/30 p-4">
+                      <blockquote className="whitespace-pre-line font-editorial text-lg leading-snug text-white/85">
+                        {offer.tryNow.example.text}
+                      </blockquote>
+                      <figcaption className="mt-3 font-mono text-[11px] text-white/40">
+                        {offer.tryNow.example.caption}
+                      </figcaption>
+                    </figure>
+                  ) : null}
+                  {offer.tryNow.link ? (
+                    <a
+                      href={offer.tryNow.link.href}
+                      className="mt-4 inline-flex rounded-lg text-sm font-medium text-[var(--arc-brand-atlantean-teal)] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                    >
+                      {offer.tryNow.link.label}
+                    </a>
+                  ) : null}
+                </div>
+
                 <div className="mt-8 border-t border-white/[0.06] pt-6">
                   <WaitlistForm
                     productId={offer.id}
@@ -254,6 +312,16 @@ export default async function PricingPage() {
             <pre className="font-mono text-sm text-white/85">
               <code>{INSTALL}</code>
             </pre>
+            <p className="mb-2 mt-5 font-mono text-[11px] text-white/40">
+              Then ask your client to run generate_name with element fire, type
+              place, count 3
+            </p>
+            <pre className="font-mono text-sm text-white/70">
+              <code>{WORLD_MCP_EXAMPLE}</code>
+            </pre>
+            <p className="mt-2 font-mono text-[11px] text-white/35">
+              One real run. Names change on every call.
+            </p>
           </div>
         </section>
 
