@@ -147,7 +147,10 @@ jobs:
         run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/entry-access.test.ts
 
       - name: Verify waitlist capture fails closed
-        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts
+        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts lib/waitlist/__tests__/faults.test.ts
+
+      - name: Verify checkout stays closed without a release gate PASS
+        run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/commerce/__tests__/release-gate.test.ts
 
       - name: ESLint
         run: pnpm --dir apps/web run lint

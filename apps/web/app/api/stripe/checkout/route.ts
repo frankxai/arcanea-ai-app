@@ -6,42 +6,46 @@
  * Requires STRIPE_SECRET_KEY and STRIPE_PRICE_* env vars.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { isReleased, notReleasedResponse } from "@/lib/commerce/release-gate";
 
-const PRICE_IDS: Record<'creator' | 'studio', string> = {
-  creator: process.env.STRIPE_PRICE_CREATOR || '',
-  studio: process.env.STRIPE_PRICE_STUDIO || '',
+const PRICE_IDS: Record<"creator" | "studio", string> = {
+  creator: process.env.STRIPE_PRICE_CREATOR || "",
+  studio: process.env.STRIPE_PRICE_STUDIO || "",
 };
 
 function isCheckoutTier(tier: unknown): tier is keyof typeof PRICE_IDS {
-  return tier === 'creator' || tier === 'studio';
+  return tier === "creator" || tier === "studio";
 }
 
 export async function POST(req: NextRequest) {
+  if (!isReleased("arcanea-subscription")) return notReleasedResponse();
   try {
     const stripeKey = process.env.STRIPE_SECRET_KEY;
     if (!stripeKey) {
       return NextResponse.json(
         {
-          error: 'Payments are not configured yet.',
-          code: 'stripe_not_configured',
+          error: "Payments are not configured yet.",
+          code: "stripe_not_configured",
         },
-        { status: 503 }
+        { status: 503 },
       );
     }
 
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { tier } = await req.json();
 
     if (!isCheckoutTier(tier)) {
-      return NextResponse.json({ error: 'Invalid tier' }, { status: 400 });
+      return NextResponse.json({ error: "Invalid tier" }, { status: 400 });
     }
 
     const priceId = PRICE_IDS[tier];
@@ -49,24 +53,24 @@ export async function POST(req: NextRequest) {
     if (!priceId) {
       return NextResponse.json(
         {
-          error: 'This plan is not available for purchase yet.',
-          code: 'price_not_configured',
+          error: "This plan is not available for purchase yet.",
+          code: "price_not_configured",
           tier,
         },
-        { status: 503 }
+        { status: 503 },
       );
     }
 
     // Dynamic import to avoid build errors when stripe isn't installed
-    const Stripe = (await import('stripe')).default;
+    const Stripe = (await import("stripe")).default;
     const stripe = new Stripe(stripeKey);
 
     const session = await stripe.checkout.sessions.create({
-      mode: 'subscription',
-      payment_method_types: ['card'],
+      mode: "subscription",
+      payment_method_types: ["card"],
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://arcanea.ai'}/settings?payment=success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://arcanea.ai'}/pricing?payment=cancelled`,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://arcanea.ai"}/settings?payment=success`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://arcanea.ai"}/pricing?payment=cancelled`,
       customer_email: user.email,
       metadata: {
         user_id: user.id,
@@ -76,15 +80,15 @@ export async function POST(req: NextRequest) {
 
     if (!session.url) {
       return NextResponse.json(
-        { error: 'Checkout session created without a redirect URL.' },
-        { status: 502 }
+        { error: "Checkout session created without a redirect URL." },
+        { status: 502 },
       );
     }
 
     return NextResponse.json({ url: session.url });
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Checkout failed';
-    console.error('Stripe checkout error:', message);
+    const message = error instanceof Error ? error.message : "Checkout failed";
+    console.error("Stripe checkout error:", message);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

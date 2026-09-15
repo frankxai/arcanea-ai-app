@@ -14,6 +14,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { CREDIT_PACKS } from "@/lib/types/credits";
+import { isReleased, notReleasedResponse } from "@/lib/commerce/release-gate";
 
 /** Derive valid pack IDs from the canonical CREDIT_PACKS array */
 const VALID_PACK_IDS = CREDIT_PACKS.map((p) => p.id) as [string, ...string[]];
@@ -25,6 +26,8 @@ const checkoutSchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  // Credits have no registry row, so this stays closed until one is added with a gate PASS.
+  if (!isReleased("arcanea-credits")) return notReleasedResponse();
   try {
     const supabase = await createClient();
     const {
@@ -49,7 +52,10 @@ export async function POST(req: NextRequest) {
 
     if (!parsed.success) {
       return NextResponse.json(
-        { error: "Invalid request", details: parsed.error.flatten().fieldErrors },
+        {
+          error: "Invalid request",
+          details: parsed.error.flatten().fieldErrors,
+        },
         { status: 400 },
       );
     }
@@ -94,8 +100,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const siteUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || "https://arcanea.ai";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arcanea.ai";
 
     const Stripe = (await import("stripe")).default;
     const stripe = new Stripe(stripeKey);
@@ -106,8 +111,7 @@ export async function POST(req: NextRequest) {
       line_items: [{ price: pack.stripePriceId, quantity: 1 }],
       success_url:
         successUrl || `${siteUrl}/studio?payment=success&pack=${packId}`,
-      cancel_url:
-        cancelUrl || `${siteUrl}/pricing?payment=cancelled`,
+      cancel_url: cancelUrl || `${siteUrl}/pricing?payment=cancelled`,
       customer_email: user.email,
       metadata: {
         user_id: user.id,
@@ -134,8 +138,7 @@ export async function POST(req: NextRequest) {
       amountUsd: pack.priceUsd,
     });
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Checkout failed";
+    const message = error instanceof Error ? error.message : "Checkout failed";
     console.error("Credits checkout error:", message);
     return NextResponse.json({ error: message }, { status: 500 });
   }
