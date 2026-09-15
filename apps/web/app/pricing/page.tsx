@@ -157,14 +157,13 @@ export default async function PricingPage() {
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-3 text-xs text-white/40">Founding places close at launch.</p>
                 </div>
 
                 <div className="mt-8 border-t border-white/[0.06] pt-6">
                   <WaitlistForm
                     productId={offer.id}
                     productName={offer.name}
-                    foundingBenefit="Founding members keep the launch price for life."
+                    foundingBenefit="Founding places close at launch and do not reopen."
                     initialState={states[i]}
                     placeholder="you@example.com"
                     copy={COPY}
