@@ -166,8 +166,8 @@ export const MCP_SERVERS = [
   {
     name: "arcanea-mcp",
     description:
-      "The core MCP server with 54 tools: world-building, canon validation, Luminor companions, story generation, agent orchestration.",
-    install: "npx @arcanea/mcp-server",
+      "The core MCP server with 59 tools: WorldPack canon audit, world-building, Luminor companions, story generation, agent orchestration.",
+    install: "npx -y @arcanea/mcp-server@1",
     color: "var(--arc-brand-atlantean-teal)",
   },
   {

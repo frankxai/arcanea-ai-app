@@ -13,19 +13,14 @@ import {
   ARCHITECTURE_LAYERS,
 } from "./developers-data";
 
-// Measured by packages/arcanea-mcp/scripts/consumer-smoke.mjs (tools/list from the
-// published bin). FACTS.mcpTools counts registerTool calls in one source file and
-// undercounts the registrations split into other modules.
-const MCP_SERVER_TOOLS = 59;
-
 export const metadata: Metadata = {
   title: "Developers — Build on Arcanea",
   description:
-    `Build on the Arcanea platform. Open-source packages, an MCP server with ${MCP_SERVER_TOOLS} tools, and comprehensive APIs.`,
+    `Build on the Arcanea platform. Open-source packages, an MCP server with ${FACTS.mcpTools} tools, and comprehensive APIs.`,
   openGraph: {
     title: "Developers — Build on Arcanea",
     description:
-      `Build on the Arcanea platform. Open-source packages, an MCP server with ${MCP_SERVER_TOOLS} tools, and comprehensive APIs.`,
+      `Build on the Arcanea platform. Open-source packages, an MCP server with ${FACTS.mcpTools} tools, and comprehensive APIs.`,
   },
   alternates: { canonical: "/developers" },
 };
