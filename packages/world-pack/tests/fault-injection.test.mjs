@@ -7,8 +7,15 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
 import { loadCanonIndex } from "../src/canon-index.mjs";
-import { createWorldSeed, addNode } from "../src/pack.mjs";
+import {
+  createWorldSeed,
+  addNode,
+  exportPack,
+  verifyExport,
+  packDigest,
+} from "../src/pack.mjs";
 import { detectConflicts } from "../src/conflict.mjs";
+import { validatePack } from "../src/validate.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const CANON_PATH = resolve(here, "../../../.arcanea/lore/CANON_LOCKED.md");
@@ -126,4 +133,44 @@ test("P1-1 canon identity is rebuilt from canon: type and attributes must match"
     [],
     "the real Lyria, described as canon describes her, stays clean",
   );
+});
+
+// ── P1-2 seal bypass through a mixed representation ──────────────────────────
+
+async function sealed() {
+  const { pack } = await seed();
+  return exportPack(pack);
+}
+
+test("P1-2 a top-level ledger shadowing the sealed provenance cannot keep the seal", async () => {
+  const p = await sealed();
+  assert.equal(verifyExport(p).valid, true, "baseline export verifies");
+
+  p.sources = structuredClone(p.provenance.sources);
+  p.provenance.sources[0].citation = "forged after export";
+  const result = verifyExport(p);
+  assert.equal(
+    result.valid,
+    false,
+    "editing the sealed ledger must break the seal",
+  );
+  assert.equal(result.representationOk, false);
+  assert.equal(validatePack(p).valid, false);
+  assert.ok(
+    validatePack(p).errors.some((e) => /mix/i.test(e)),
+    validatePack(p).errors.join("; "),
+  );
+});
+
+test("P1-2 every ledger family is covered, and an ambiguous pack is never hashed", async () => {
+  for (const ledger of ["sources", "branches", "versions"]) {
+    const p = await sealed();
+    p[ledger] = structuredClone(p.provenance[ledger]);
+    assert.equal(verifyExport(p).valid, false, `${ledger} shadow`);
+    assert.throws(
+      () => packDigest(p),
+      /mix/i,
+      `${ledger} shadow must not hash`,
+    );
+  }
 });

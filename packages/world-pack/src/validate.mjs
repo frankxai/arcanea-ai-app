@@ -55,6 +55,14 @@ export function validatePack(pack) {
   if (pack.digest != null)
     req(HASH_RE.test(pack.digest), "digest must be sha256:<hex>");
 
+  const mixed =
+    pack.provenance !== undefined &&
+    ["sources", "branches", "versions"].some((k) => pack[k] !== undefined);
+  req(
+    !mixed,
+    "pack mixes top-level sources/branches/versions with an export provenance block; use exactly one representation",
+  );
+
   const prov = pack.provenance || {};
   const branches = pack.branches || prov.branches || [];
   const versions = pack.versions || prov.versions || [];

@@ -225,6 +225,10 @@ async function verifyWorldPack(
   }
 
   const reasons: string[] = [];
+  if (!result.representationOk)
+    reasons.push(
+      `pack is not a pure export (${result.representation}): top-level sources/branches/versions next to a provenance block would let the sealed ledger be edited behind an unchanged digest`,
+    );
   if (!result.digestOk)
     reasons.push(
       `content does not match its digest: declared ${result.expected}, recomputed ${result.actual}`,
@@ -241,7 +245,10 @@ async function verifyWorldPack(
     );
 
   const sealBroken =
-    !result.digestOk || !result.countsOk || !result.agentRolesOk;
+    !result.representationOk ||
+    !result.digestOk ||
+    !result.countsOk ||
+    !result.agentRolesOk;
   const verdict = sealBroken
     ? "tampered"
     : canonBinding.ok

@@ -302,8 +302,14 @@ export interface AgentRoleProblem {
 }
 
 /** Digest, declared counts, and the authority model — three independent checks. */
+export function packRepresentation(
+  pack: unknown,
+): "working" | "export" | "mixed";
 export function verifyExport(exported: Record<string, unknown>): {
   valid: boolean;
+  /** False when the pack is not a pure export (working or mixed ledgers). */
+  representationOk: boolean;
+  representation: "working" | "export" | "mixed";
   digestOk: boolean;
   countsOk: boolean;
   agentRolesOk: boolean;

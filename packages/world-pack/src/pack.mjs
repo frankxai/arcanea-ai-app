@@ -24,6 +24,16 @@ export function contentHash(value) {
   return `sha256:${createHash("sha256").update(canonicalize(value)).digest("hex")}`;
 }
 
+const LEDGERS = ["sources", "branches", "versions"];
+
+/** "working" (ledgers top level), "export" (ledgers under provenance), or "mixed". */
+export function packRepresentation(pack) {
+  const topLevel = LEDGERS.some((key) => pack?.[key] !== undefined);
+  const nested = pack?.provenance !== undefined;
+  if (topLevel && nested) return "mixed";
+  return nested ? "export" : "working";
+}
+
 export function countNodes(nodes) {
   return (nodes || []).reduce(
     (acc, n) => ({ ...acc, [n.type]: (acc[n.type] || 0) + 1 }),
@@ -40,12 +50,19 @@ export function countNodes(nodes) {
  * outside it. A file sold as "every node owned, sourced, versioned" cannot leave
  * the ownership record unsigned.
  *
- * Reads either shape: a working pack keeps its ledgers top level, an exported one
- * nests them under `provenance`.
+ * Hashes exactly one representation. A working pack keeps its ledgers top level,
+ * an exported one nests them under `provenance`; a pack carrying both is refused,
+ * because a digest that reads one copy while verification trusts the other can be
+ * kept intact while the sealed ledger is edited.
  */
 export function packDigest(pack) {
-  const p = pack.provenance || {};
-  const branches = pack.branches ?? p.branches ?? [];
+  const shape = packRepresentation(pack);
+  if (shape === "mixed")
+    throw new TypeError(
+      "pack mixes top-level sources/branches/versions with an export provenance block; refusing to hash an ambiguous representation",
+    );
+  const ledger = shape === "export" ? pack.provenance : pack;
+  const branches = ledger.branches ?? [];
   return contentHash({
     format: pack.format ?? null,
     packVersion: pack.packVersion ?? null,
@@ -58,10 +75,13 @@ export function packDigest(pack) {
     nodes: pack.nodes,
     relationships: pack.relationships,
     provenance: {
-      sources: pack.sources ?? p.sources ?? [],
+      sources: ledger.sources ?? [],
       branches,
-      versions: pack.versions ?? p.versions ?? [],
-      head: p.head ?? branches.find((b) => b.id === "main")?.head ?? null,
+      versions: ledger.versions ?? [],
+      head:
+        shape === "export"
+          ? (pack.provenance.head ?? null)
+          : (branches.find((b) => b.id === "main")?.head ?? null),
     },
     agentRoles: pack.agentRoles ?? [],
     counts: pack.counts ?? countNodes(pack.nodes),
@@ -316,13 +336,30 @@ export function exportPack(
  * nodes, and the agent roles against the Guardian definitions in code.
  */
 export function verifyExport(exported) {
+  const representation = packRepresentation(exported);
+  const counts = countNodes(exported?.nodes);
+  if (representation !== "export")
+    return {
+      valid: false,
+      representationOk: false,
+      representation,
+      digestOk: false,
+      countsOk: false,
+      agentRolesOk: false,
+      expected: exported?.digest ?? null,
+      actual: null,
+      countsDeclared: exported?.counts ?? null,
+      countsActual: counts,
+      agentRoleProblems: [],
+    };
   const recomputed = packDigest(exported);
   const digestOk = recomputed === exported.digest;
-  const counts = countNodes(exported.nodes);
   const countsOk = canonicalize(counts) === canonicalize(exported.counts ?? {});
   const agentRoleProblems = verifyAgentRoles(exported.agentRoles);
   return {
     valid: digestOk && countsOk && agentRoleProblems.length === 0,
+    representationOk: true,
+    representation,
     digestOk,
     countsOk,
     agentRolesOk: agentRoleProblems.length === 0,
