@@ -146,6 +146,9 @@ jobs:
       - name: Verify account return and public entry boundaries
         run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/entry-access.test.ts
 
+      - name: Verify library chapter slugs and hidden agent files
+        run: pnpm --dir apps/web exec tsx --test lib/content/__tests__/loader-slugs.test.ts
+
       - name: ESLint
         run: pnpm --dir apps/web run lint
 

@@ -31,6 +31,12 @@ import {
   Luminor,
 } from "./types";
 
+const NON_TEXT_FILES = new Set(["README.md", "CLAUDE.md"]);
+
+function isTextFile(filename: string): boolean {
+  return filename.endsWith(".md") && !NON_TEXT_FILES.has(filename);
+}
+
 function parseFrontmatter(source: string) {
   return grayMatter(source);
 }
@@ -507,9 +513,7 @@ export async function getTextsInCollection(
     // Check directory exists before reading (book/ may not exist on Vercel)
     await access(collectionPath);
     const files = await readdir(collectionPath);
-    const mdFiles = files.filter(
-      (f) => f.endsWith(".md") && f !== "README.md" && f !== "CLAUDE.md",
-    );
+    const mdFiles = files.filter(isTextFile);
 
     // Check for chapters/ subdirectory
     const chaptersPath = join(collectionPath, "chapters");
@@ -518,9 +522,7 @@ export async function getTextsInCollection(
       await access(chaptersPath);
       const chaptersDir = await readdir(chaptersPath);
       chapterFiles = chaptersDir
-        .filter(
-          (f) => f.endsWith(".md") && f !== "README.md" && f !== "CLAUDE.md",
-        )
+        .filter(isTextFile)
         .map((f) => join("chapters", f));
     } catch (error) {
       // No chapters/ directory or not accessible, skip
@@ -600,7 +602,7 @@ async function loadText(
   };
 
   return {
-    slug: `${collectionSlug}/${filename.replace(".md", "")}`
+    slug: `${collectionSlug}/${filename.replace(/^chapters[\\/]/, "").replace(".md", "")}`
       .toLowerCase()
       .replace(/_/g, "-"),
     filename,
@@ -625,6 +627,7 @@ export async function getText(slug: string): Promise<Text | null> {
 
     // Find matching file (slug could be lowercase with dashes)
     let filename = files.find((f) => {
+      if (!isTextFile(f)) return false;
       const normalizedFilename = f
         .replace(".md", "")
         .toLowerCase()
@@ -639,6 +642,7 @@ export async function getText(slug: string): Promise<Text | null> {
         await access(chaptersPath);
         const chapterFiles = await readdir(chaptersPath);
         const chapterFilename = chapterFiles.find((f) => {
+          if (!isTextFile(f)) return false;
           const normalizedFilename = f
             .replace(".md", "")
             .toLowerCase()
