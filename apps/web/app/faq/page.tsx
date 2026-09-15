@@ -103,18 +103,21 @@ const FAQ_CATEGORIES = [
 export default function FAQPage() {
   const allQuestions = FAQ_CATEGORIES.flatMap((cat) => cat.questions);
   const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
     mainEntity: allQuestions.map((faq) => ({
-      '@type': 'Question',
+      "@type": "Question",
       name: faq.q,
-      acceptedAnswer: { '@type': 'Answer', text: faq.a },
+      acceptedAnswer: { "@type": "Answer", text: faq.a },
     })),
   };
 
   return (
     <div className="relative min-h-screen">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-deep" />
@@ -139,8 +142,8 @@ export default function FAQPage() {
           </h1>
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
-            Everything you need to know about Arcanea.
-            Can't find the answer? Reach out to our support team.
+            Everything you need to know about Arcanea. Can't find the answer?
+            Reach out to our support team.
           </p>
         </section>
 
@@ -283,7 +286,6 @@ export default function FAQPage() {
           </div>
         </section>
       </main>
-
     </div>
   );
 }

@@ -11,7 +11,10 @@ export default function PricingLoading() {
 
         <div className="mt-16 grid gap-6 lg:grid-cols-2">
           {[0, 1].map((i) => (
-            <div key={i} className="rounded-3xl border border-white/[0.06] bg-white/[0.03] p-6 sm:p-8">
+            <div
+              key={i}
+              className="rounded-3xl border border-white/[0.06] bg-white/[0.03] p-6 sm:p-8"
+            >
               <Skeleton variant="text" className="mb-4 h-3 w-40" />
               <Skeleton variant="text" className="mb-3 h-8 w-56" />
               <Skeleton variant="text" className="mb-8 h-4 w-full" />

@@ -6,13 +6,23 @@ import Link from "next/link";
 import { m, LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
 import { CreditBadge } from "@/components/agents/credit-badge";
 import { AGENTS_CATALOG, formatUsageCount, type RunStatus } from "./agent-data";
-import { StarRating, StreamingCursor, StreamingProgress, CopyButton, AgentSidebar } from "./agent-components";
+import {
+  StarRating,
+  StreamingCursor,
+  StreamingProgress,
+  CopyButton,
+  AgentSidebar,
+} from "./agent-components";
 
 // ---------------------------------------------------------------------------
 // Page
 // ---------------------------------------------------------------------------
 
-export default function AgentDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default function AgentDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = use(params);
   const agent = AGENTS_CATALOG.find((a) => a.id === id);
 
@@ -60,7 +70,10 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
         setOutput((prev) => {
           const updated = prev + text;
           requestAnimationFrame(() => {
-            outputRef.current?.scrollTo({ top: outputRef.current.scrollHeight, behavior: "smooth" });
+            outputRef.current?.scrollTo({
+              top: outputRef.current.scrollHeight,
+              behavior: "smooth",
+            });
           });
           return updated;
         });
@@ -83,7 +96,10 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
       <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white flex items-center justify-center">
         <div className="text-center">
           <p className="text-white/50 text-lg mb-4">Agent not found.</p>
-          <Link href="/agents" className="text-[var(--arc-brand-atlantean-teal)] hover:underline">
+          <Link
+            href="/agents"
+            className="text-[var(--arc-brand-atlantean-teal)] hover:underline"
+          >
             Back to Marketplace
           </Link>
         </div>
@@ -91,7 +107,10 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
     );
   }
 
-  const canRun = input.trim().length > 0 && status !== "streaming" && creditBalance >= agent.priceCredits;
+  const canRun =
+    input.trim().length > 0 &&
+    status !== "streaming" &&
+    creditBalance >= agent.priceCredits;
   const remainingAfterRun = creditBalance - agent.priceCredits;
 
   return (
@@ -104,8 +123,19 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
               href="/agents"
               className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60 rounded"
             >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5M12 5l-7 7 7 7" />
+              <svg
+                className="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 12H5M12 5l-7 7 7 7"
+                />
               </svg>
               Agents Marketplace
             </Link>
@@ -131,7 +161,9 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
 
               {/* Output area */}
               <AnimatePresence>
-                {(status === "streaming" || status === "completed" || status === "error") && (
+                {(status === "streaming" ||
+                  status === "completed" ||
+                  status === "error") && (
                   <OutputArea
                     status={status}
                     output={output}
@@ -159,7 +191,11 @@ export default function AgentDetailPage({ params }: { params: Promise<{ id: stri
 // Agent header card
 // ---------------------------------------------------------------------------
 
-function AgentHeaderCard({ agent }: { agent: (typeof AGENTS_CATALOG)[number] }) {
+function AgentHeaderCard({
+  agent,
+}: {
+  agent: (typeof AGENTS_CATALOG)[number];
+}) {
   return (
     <m.div
       initial={{ opacity: 0, y: 20 }}
@@ -167,14 +203,27 @@ function AgentHeaderCard({ agent }: { agent: (typeof AGENTS_CATALOG)[number] }) 
       transition={{ duration: 0.5 }}
       className="relative rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl overflow-hidden p-6"
     >
-      <div className="absolute top-0 left-0 right-0 h-px" style={{ background: agent.gradient }} aria-hidden="true" />
-      <div className="absolute top-0 left-0 right-0 h-32 opacity-20 pointer-events-none" style={{ background: `radial-gradient(ellipse at 30% 0%, ${agent.color}, transparent 60%)` }} aria-hidden="true" />
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: agent.gradient }}
+        aria-hidden="true"
+      />
+      <div
+        className="absolute top-0 left-0 right-0 h-32 opacity-20 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at 30% 0%, ${agent.color}, transparent 60%)`,
+        }}
+        aria-hidden="true"
+      />
 
       <div className="relative z-10">
         <div className="flex items-start gap-5 mb-5">
           <div
             className="w-16 h-16 rounded-2xl text-3xl flex items-center justify-center flex-shrink-0"
-            style={{ background: agent.gradient, boxShadow: `0 8px 24px ${agent.color}40` }}
+            style={{
+              background: agent.gradient,
+              boxShadow: `0 8px 24px ${agent.color}40`,
+            }}
             aria-hidden="true"
           >
             {agent.icon}
@@ -182,10 +231,15 @@ function AgentHeaderCard({ agent }: { agent: (typeof AGENTS_CATALOG)[number] }) 
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-3 flex-wrap mb-1">
               <div>
-                <h1 className="text-2xl font-display font-bold leading-tight" style={{ color: agent.color }}>
+                <h1
+                  className="text-2xl font-display font-bold leading-tight"
+                  style={{ color: agent.color }}
+                >
                   {agent.name}
                 </h1>
-                <p className="text-sm text-white/50 font-medium uppercase tracking-wide">{agent.title}</p>
+                <p className="text-sm text-white/50 font-medium uppercase tracking-wide">
+                  {agent.title}
+                </p>
               </div>
               <div className="flex items-center gap-2 flex-wrap">
                 {agent.isFeatured && (
@@ -194,7 +248,12 @@ function AgentHeaderCard({ agent }: { agent: (typeof AGENTS_CATALOG)[number] }) 
                   </span>
                 )}
                 <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-semibold border border-[var(--arc-brand-arcanean-gold)]/30 bg-[var(--arc-brand-arcanean-gold)]/10 text-[var(--arc-brand-arcanean-gold)]">
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <svg
+                    className="w-3.5 h-3.5"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                   </svg>
                   {agent.priceCredits} credits / run
@@ -205,18 +264,42 @@ function AgentHeaderCard({ agent }: { agent: (typeof AGENTS_CATALOG)[number] }) 
           </div>
         </div>
 
-        <p className="text-white/70 leading-relaxed mb-5">{agent.description}</p>
+        <p className="text-white/70 leading-relaxed mb-5">
+          {agent.description}
+        </p>
 
         <div className="flex items-center gap-6 text-sm text-white/40">
           <span className="flex items-center gap-1.5">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
             </svg>
             {formatUsageCount(agent.usageCount)} runs
           </span>
           <span className="flex items-center gap-1.5">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
             {agent.element} element
           </span>
@@ -257,8 +340,19 @@ function TaskInputCard({
       className="rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl p-6"
     >
       <h2 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
-        <svg className="w-4 h-4 text-[var(--arc-brand-atlantean-teal)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        <svg
+          className="w-4 h-4 text-[var(--arc-brand-atlantean-teal)]"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+          />
         </svg>
         Describe your task
       </h2>
@@ -276,9 +370,13 @@ function TaskInputCard({
       <div className="mt-3 flex items-center justify-between text-xs text-white/40">
         <span>
           This run costs{" "}
-          <span className="text-[var(--arc-brand-arcanean-gold)] font-medium">{agent.priceCredits} credits</span>.
-          Balance after:{" "}
-          <span className={remainingAfterRun < 0 ? "text-red-400" : "text-white/60"}>
+          <span className="text-[var(--arc-brand-arcanean-gold)] font-medium">
+            {agent.priceCredits} credits
+          </span>
+          . Balance after:{" "}
+          <span
+            className={remainingAfterRun < 0 ? "text-red-400" : "text-white/60"}
+          >
             {remainingAfterRun} credits
           </span>
         </span>
@@ -304,14 +402,23 @@ function TaskInputCard({
                 <m.div
                   className="w-4 h-4 rounded-full border-2 border-gray-950/30 border-t-gray-950"
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                  transition={{
+                    duration: 0.8,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
                 />
               </span>
               Generating...
             </>
           ) : (
             <>
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <svg
+                className="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
               </svg>
               Run {agent.name} ({agent.priceCredits} credits)
@@ -359,12 +466,20 @@ function OutputArea({
         <div className="flex items-center gap-2">
           <div
             className={`w-2 h-2 rounded-full ${
-              status === "streaming" ? "bg-[var(--arc-brand-atlantean-teal)] animate-pulse" : status === "completed" ? "bg-green-400" : "bg-red-400"
+              status === "streaming"
+                ? "bg-[var(--arc-brand-atlantean-teal)] animate-pulse"
+                : status === "completed"
+                  ? "bg-green-400"
+                  : "bg-red-400"
             }`}
             aria-hidden="true"
           />
           <span className="text-sm font-medium text-white/70">
-            {status === "streaming" ? "Generating..." : status === "completed" ? "Output" : "Error"}
+            {status === "streaming"
+              ? "Generating..."
+              : status === "completed"
+                ? "Output"
+                : "Error"}
           </span>
         </div>
         {status === "completed" && output && (
@@ -375,8 +490,19 @@ function OutputArea({
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] text-xs text-white/60 hover:text-white hover:border-white/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
               aria-label="Start over with new input"
             >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              <svg
+                className="w-3.5 h-3.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                />
               </svg>
               New Task
             </button>
@@ -386,11 +512,27 @@ function OutputArea({
 
       <StreamingProgress isStreaming={status === "streaming"} />
 
-      <div ref={outputRef} className="px-5 py-5 max-h-[500px] overflow-y-auto" aria-live="polite" aria-label="Agent output">
+      <div
+        ref={outputRef}
+        className="px-5 py-5 max-h-[500px] overflow-y-auto"
+        aria-live="polite"
+        aria-label="Agent output"
+      >
         {status === "error" ? (
           <div className="flex items-center gap-3 text-red-400">
-            <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              className="w-5 h-5 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
             <p className="text-sm">Something went wrong. Please try again.</p>
           </div>
@@ -408,8 +550,19 @@ function OutputArea({
             className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10 text-[var(--arc-brand-atlantean-teal)] text-sm font-medium hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
             aria-label="Save output to your creations"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+              />
             </svg>
             Save to Creations
           </button>

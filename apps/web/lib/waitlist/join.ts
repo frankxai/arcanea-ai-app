@@ -1,6 +1,10 @@
 import { createHash } from "node:crypto";
 import registry from "../../data/products.graph.json";
-import { handleJoin, handleState, type ProductConfig } from "../demand-capture/handler";
+import {
+  handleJoin,
+  handleState,
+  type ProductConfig,
+} from "../demand-capture/handler";
 import { kv } from "../demand-capture/store";
 import type { WaitlistState } from "../demand-capture/types";
 
@@ -14,7 +18,8 @@ export type JoinResult = {
 
 export const UNAVAILABLE =
   "The waitlist is offline right now, so your email was not saved. Please try again later.";
-export const RATE_LIMITED = "Too many attempts. Please wait a few minutes and try again.";
+export const RATE_LIMITED =
+  "Too many attempts. Please wait a few minutes and try again.";
 
 export const RATE_WINDOW_SECONDS = 600;
 export const MAX_PER_IP = 5;
@@ -29,7 +34,8 @@ export function isStoreConfigured(env: NodeJS.ProcessEnv = process.env) {
   return Boolean(env.KV_REST_API_URL && env.KV_REST_API_TOKEN);
 }
 
-const digest = (value: string) => createHash("sha256").update(value).digest("hex").slice(0, 32);
+const digest = (value: string) =>
+  createHash("sha256").update(value).digest("hex").slice(0, 32);
 
 function clientIp(req: Request) {
   const forwarded = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
@@ -38,11 +44,13 @@ function clientIp(req: Request) {
 
 /** Fixed window in the waitlist's own KV. Raw IPs and emails are never stored, only digests. */
 async function hit(bucket: string, limit: number, nowMs: number) {
-  const windowStart = Math.floor(nowMs / 1000 / RATE_WINDOW_SECONDS) * RATE_WINDOW_SECONDS;
+  const windowStart =
+    Math.floor(nowMs / 1000 / RATE_WINDOW_SECONDS) * RATE_WINDOW_SECONDS;
   const key = `waitlist:rl:${bucket}:${windowStart}`;
   const count = Number(await kv(["incr", key]));
   if (count === 1) await kv(["expire", key, String(RATE_WINDOW_SECONDS)]);
-  const retryAfter = windowStart + RATE_WINDOW_SECONDS - Math.floor(nowMs / 1000);
+  const retryAfter =
+    windowStart + RATE_WINDOW_SECONDS - Math.floor(nowMs / 1000);
   return { limited: count > limit, retryAfter: Math.max(1, retryAfter) };
 }
 
@@ -64,14 +72,22 @@ export async function joinWaitlist(
   if (!product) return { status: 404, body: { error: "Unknown product" } };
 
   if (!isStoreConfigured()) {
-    console.error("[waitlist] KV_REST_API_URL or KV_REST_API_TOKEN missing; signup refused");
+    console.error(
+      "[waitlist] KV_REST_API_URL or KV_REST_API_TOKEN missing; signup refused",
+    );
     return { status: 503, body: { error: UNAVAILABLE } };
   }
 
   try {
     const checks = [hit(`ip:${digest(clientIp(req))}`, MAX_PER_IP, nowMs)];
     if (typeof input.email === "string" && input.email.trim()) {
-      checks.push(hit(`email:${digest(input.email.trim().toLowerCase())}`, MAX_PER_EMAIL, nowMs));
+      checks.push(
+        hit(
+          `email:${digest(input.email.trim().toLowerCase())}`,
+          MAX_PER_EMAIL,
+          nowMs,
+        ),
+      );
     }
     const blocked = (await Promise.all(checks)).filter((r) => r.limited);
     if (blocked.length) {
@@ -96,7 +112,9 @@ export async function joinWaitlist(
 }
 
 /** First-paint state. Undefined means "say nothing", never a guessed number. */
-export async function readWaitlistState(id: WaitlistProductId): Promise<WaitlistState | undefined> {
+export async function readWaitlistState(
+  id: WaitlistProductId,
+): Promise<WaitlistState | undefined> {
   const product = findProduct(id);
   if (!product || !isStoreConfigured()) return undefined;
   try {

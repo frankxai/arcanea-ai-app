@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { WaitlistForm, type WaitlistCopy } from "@/lib/demand-capture/WaitlistForm";
-import { findProduct, readWaitlistState, type WaitlistProductId } from "@/lib/waitlist/join";
+import {
+  WaitlistForm,
+  type WaitlistCopy,
+} from "@/lib/demand-capture/WaitlistForm";
+import {
+  findProduct,
+  readWaitlistState,
+  type WaitlistProductId,
+} from "@/lib/waitlist/join";
 import "./waitlist.css";
 
 export const metadata: Metadata = {
@@ -86,7 +93,9 @@ const STEPS = [
 const INSTALL = "claude mcp add arcanea npx @arcanea/mcp-server";
 
 export default async function PricingPage() {
-  const states = await Promise.all(OFFERS.map((offer) => readWaitlistState(offer.id)));
+  const states = await Promise.all(
+    OFFERS.map((offer) => readWaitlistState(offer.id)),
+  );
 
   return (
     <div className="relative min-h-screen bg-[var(--arc-cosmic-void)] text-white">
@@ -102,14 +111,20 @@ export default async function PricingPage() {
           </p>
           <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-[-0.02em] sm:text-6xl">
             No prices yet.{" "}
-            <span className="font-editorial font-normal italic text-white/60">On purpose.</span>
+            <span className="font-editorial font-normal italic text-white/60">
+              On purpose.
+            </span>
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">
-            Arcanea and Arcanea MCP Studio are not on sale. Each opens only once it is finished and
-            tested. Join the list for the one you want and tell us what you would pay.
+            Arcanea and Arcanea MCP Studio are not on sale. Each opens only once
+            it is finished and tested. Join the list for the one you want and
+            tell us what you would pay.
           </p>
 
-          <nav aria-label="On this page" className="mt-8 flex flex-wrap gap-2 text-sm">
+          <nav
+            aria-label="On this page"
+            className="mt-8 flex flex-wrap gap-2 text-sm"
+          >
             {[
               ["#arcanea", "Arcanea"],
               ["#mcp-studio", "MCP Studio"],
@@ -126,7 +141,11 @@ export default async function PricingPage() {
           </nav>
         </header>
 
-        <section id="waitlist" aria-label="Waitlists" className="mt-16 grid scroll-mt-24 gap-6 lg:grid-cols-2">
+        <section
+          id="waitlist"
+          aria-label="Waitlists"
+          className="mt-16 grid scroll-mt-24 gap-6 lg:grid-cols-2"
+        >
           {OFFERS.map((offer, i) => {
             const cohort = findProduct(offer.id)?.waitlist.foundingCohort;
             return (
@@ -137,13 +156,21 @@ export default async function PricingPage() {
                 className="flex scroll-mt-24 flex-col rounded-3xl border border-white/[0.06] bg-white/[0.03] p-6 backdrop-blur-sm sm:p-8"
               >
                 <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-white/50">
-                  <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[var(--arc-brand-atlantean-teal)]" />
+                  <span
+                    aria-hidden="true"
+                    className="h-1.5 w-1.5 rounded-full bg-[var(--arc-brand-atlantean-teal)]"
+                  />
                   {offer.status} · no launch date
                 </p>
-                <h2 id={offer.anchor + "-title"} className="mt-4 font-display text-2xl font-semibold tracking-[-0.01em] sm:text-3xl">
+                <h2
+                  id={offer.anchor + "-title"}
+                  className="mt-4 font-display text-2xl font-semibold tracking-[-0.01em] sm:text-3xl"
+                >
                   {offer.name}
                 </h2>
-                <p className="mt-3 text-[0.9375rem] leading-relaxed text-white/60">{offer.forWho}</p>
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-white/60">
+                  {offer.forWho}
+                </p>
 
                 <div className="mt-7 border-t border-white/[0.06] pt-6">
                   <h3 className="text-sm font-medium text-white/85">
@@ -151,8 +178,14 @@ export default async function PricingPage() {
                   </h3>
                   <ul className="mt-3 space-y-2.5">
                     {offer.founding.map((benefit) => (
-                      <li key={benefit} className="flex gap-3 text-sm text-white/65">
-                        <span aria-hidden="true" className="mt-[0.6rem] h-px w-3 shrink-0 bg-[var(--arc-brand-atlantean-teal)]" />
+                      <li
+                        key={benefit}
+                        className="flex gap-3 text-sm text-white/65"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-[0.6rem] h-px w-3 shrink-0 bg-[var(--arc-brand-atlantean-teal)]"
+                        />
                         {benefit}
                       </li>
                     ))}
@@ -183,25 +216,41 @@ export default async function PricingPage() {
             <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--arc-brand-arcanean-gold)]">
               Free · available now
             </p>
-            <h2 id="world-mcp-title" className="mt-4 font-display text-2xl font-semibold tracking-[-0.01em]">
+            <h2
+              id="world-mcp-title"
+              className="mt-4 font-display text-2xl font-semibold tracking-[-0.01em]"
+            >
               Arcanea World MCP
             </h2>
             <p className="mt-3 text-[0.9375rem] leading-relaxed text-white/60">
-              Worldbuilding tools for Claude Code, Cursor, Codex and other MCP clients. No waitlist.
-              It installs in one command.
+              Worldbuilding tools for Claude Code, Cursor, Codex and other MCP
+              clients. No waitlist. It installs in one command.
             </p>
             <Link
               href="/docs/mcp"
               className="mt-5 inline-flex items-center gap-2 rounded-lg text-sm font-medium text-[var(--arc-brand-atlantean-teal)] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
             >
               Install guide for every client
-              <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 16 16"
+                className="h-3.5 w-3.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </Link>
           </div>
           <div className="overflow-x-auto rounded-2xl border border-white/[0.06] bg-black/40 p-4">
-            <p className="mb-2 font-mono text-[11px] text-white/40">Claude Code</p>
+            <p className="mb-2 font-mono text-[11px] text-white/40">
+              Claude Code
+            </p>
             <pre className="font-mono text-sm text-white/85">
               <code>{INSTALL}</code>
             </pre>
@@ -209,15 +258,25 @@ export default async function PricingPage() {
         </section>
 
         <section aria-labelledby="how-title" className="mt-24">
-          <h2 id="how-title" className="font-display text-2xl font-semibold tracking-[-0.01em]">
+          <h2
+            id="how-title"
+            className="font-display text-2xl font-semibold tracking-[-0.01em]"
+          >
             How the price gets set
           </h2>
           <ol className="mt-8 grid gap-8 sm:grid-cols-3">
             {STEPS.map((step, i) => (
-              <li key={step.title} className="border-t border-white/[0.08] pt-5">
-                <span className="font-mono text-xs text-white/40">0{i + 1}</span>
+              <li
+                key={step.title}
+                className="border-t border-white/[0.08] pt-5"
+              >
+                <span className="font-mono text-xs text-white/40">
+                  0{i + 1}
+                </span>
                 <h3 className="mt-2 font-medium text-white/90">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/55">{step.body}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/55">
+                  {step.body}
+                </p>
               </li>
             ))}
           </ol>

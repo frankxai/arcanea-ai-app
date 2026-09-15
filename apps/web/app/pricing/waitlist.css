@@ -7,7 +7,9 @@
   padding: 0.7rem 0.9rem;
   font-size: 0.9375rem;
   color: #fff;
-  transition: border-color 150ms ease, background-color 150ms ease;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease;
 }
 .wl-input::placeholder {
   color: rgba(255, 255, 255, 0.35);
@@ -33,7 +35,9 @@
   white-space: nowrap;
   color: #09090b;
   background: var(--arc-brand-atlantean-teal, #00bcd4);
-  transition: filter 150ms ease, transform 150ms ease;
+  transition:
+    filter 150ms ease,
+    transform 150ms ease;
 }
 .wl-btn:hover {
   filter: brightness(1.08);
@@ -113,7 +117,10 @@ input[type="checkbox"].wl-check {
   padding: 0.35rem 0.8rem;
   font-size: 0.8125rem;
   color: rgba(255, 255, 255, 0.72);
-  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    color 150ms ease;
 }
 .wl-chip:hover {
   border-color: rgba(255, 255, 255, 0.24);

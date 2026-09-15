@@ -109,7 +109,8 @@ const PAGES = [
   },
   {
     title: "Pricing",
-    description: "Waitlists for Arcanea and Arcanea MCP Studio; the World MCP is free",
+    description:
+      "Waitlists for Arcanea and Arcanea MCP Studio; the World MCP is free",
     internalPath: "/pricing",
   },
   {
