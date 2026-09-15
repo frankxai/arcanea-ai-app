@@ -36,6 +36,7 @@ export const SEVERITIES = Object.freeze([
 const RULES = Object.freeze({
   "canon.binding-mismatch": "blocker",
   "canon.binding-foreign": "info",
+  "canon.truths-unparsed": "error",
   "canon.foreign-canon-node": "info",
   "canon.layer-claim": "blocker",
   "canon.locked-name-taken": "blocker",
@@ -79,8 +80,20 @@ function finding(ruleId, node, message, evidence) {
   };
 }
 
-const NERO_EVIL =
-  /\bnero\b[^.]{0,80}?\b(evil|malevolent|wicked|the enemy|villain)\b|\b(evil|malevolent|wicked|villain)\b[^.]{0,40}?\bnero\b/i;
+// Arcanea canon: Nero is NOT evil. Checked with the same sentence-scoped negation
+// as every other locked truth, so restating canon ("Nero is not evil.") is not a hit.
+const NERO_MISCAST = [
+  "evil",
+  "malevolent",
+  "wicked",
+  "villain",
+  "the enemy",
+].map((forbidden) => ({
+  subject: "nero",
+  subjectLabel: "Nero",
+  forbidden,
+  source: "Nero is NOT evil",
+}));
 
 const PROSE_SKIP = new Set(["id", "type", "layer", "governance", "provenance"]);
 
@@ -168,6 +181,18 @@ export function detectConflicts(pack, canon, options = {}) {
           declared: declaredHash,
           actual: canon.sourceHash,
         },
+      ),
+    );
+  }
+
+  // — the canon document itself: a truth block nothing could read enforces nothing —
+  for (const block of canon.unparsedTruthBlocks || []) {
+    findings.push(
+      finding(
+        "canon.truths-unparsed",
+        null,
+        `canon line ${block.line}: a LOCKED TRUTHS block yielded no parseable truth, so nothing in it is enforced`,
+        { line: block.line, text: block.text },
       ),
     );
   }
@@ -580,7 +605,7 @@ export function detectConflicts(pack, canon, options = {}) {
         ),
       );
     }
-    if (prose && NERO_EVIL.test(prose))
+    if (contradictionsIn(prose, NERO_MISCAST).length)
       findings.push(
         finding(
           "canon.nero-miscast",

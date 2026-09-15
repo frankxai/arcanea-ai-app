@@ -120,15 +120,73 @@ export function contradictionTriggersFrom(lockedTruths) {
   };
   for (const truth of lockedTruths) {
     const negated = truth.match(
-      /^(.{2,48}?)\s+(?:is|are)\s+(?:NOT|never)\s+([^.;:()]{2,60})/i,
+      /^(.{2,48}?)\s+(?:is|are)\s+(?:NOT|never)\s+([^.;:(),—]{2,60})/i,
     );
     if (negated) add(negated[1], negated[2], truth);
     const contrasted = truth.match(
-      /^(.{2,48}?)\s+(?:is|are)\s+[^.;:]{2,80}?,\s*(?:but\s+)?not\s+([^.;:()]{2,60})/i,
+      /^(.{2,48}?)\s+(?:is|are)\s+[^.;:]{2,80}?,\s*(?:but\s+)?not\s+([^.;:(),—]{2,60})/i,
     );
     if (contrasted) add(contrasted[1], contrasted[2], truth);
   }
   return triggers;
+}
+
+const TRUTH_LABEL = /\*\*LOCKED TRUTHS?:\*\*[ \t]*(.*)$/;
+const TRUTH_BLOCK_END =
+  /^\s*(?:#{1,6}\s|\||-{3,}\s*$|\*{3,}\s*$|_{3,}\s*$|>|\*\*[^*]+:\*\*)/;
+const LIST_ITEM = /^\s*(?:[-*+]|\d+[.)])\s+(.*)$/;
+
+/**
+ * Read every **LOCKED TRUTHS:** block as a block rather than one regex over one
+ * layout: an inline truth, any list marker, numbered items, blank lines between
+ * items, the continuation lines of a wrapped item, a paragraph under the label,
+ * and a document that ends without a newline. A label that yields no truth is
+ * returned in `unparsed` so it can be reported; nothing is dropped silently.
+ */
+export function parseLockedTruths(md) {
+  const lines = String(md).split(/\r?\n/);
+  const clean = (text) => text.replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
+  const truths = [];
+  const unparsed = [];
+  for (let i = 0; i < lines.length; i++) {
+    const label = lines[i].match(TRUTH_LABEL);
+    if (!label) continue;
+    const found = clean(label[1]) ? [label[1]] : [];
+    let open = null; // the item that still accepts continuation lines
+    let j = i + 1;
+    for (; j < lines.length; j++) {
+      const line = lines[j];
+      if (!line.trim()) {
+        open = null;
+        continue;
+      }
+      if (TRUTH_BLOCK_END.test(line)) break;
+      const item = line.match(LIST_ITEM);
+      if (item) {
+        found.push(item[1]);
+        open = found.length - 1;
+      } else if (open !== null) {
+        found[open] += ` ${line.trim()}`;
+      } else if (found.length === 0) {
+        found.push(line);
+        open = 0;
+      } else {
+        break;
+      }
+    }
+    const cleaned = found.map(clean).filter(Boolean);
+    if (cleaned.length) truths.push(...cleaned);
+    else
+      unparsed.push({
+        line: i + 1,
+        text: lines
+          .slice(i, Math.min(j, i + 4))
+          .join("\n")
+          .trim(),
+      });
+    i = j - 1;
+  }
+  return { truths, unparsed };
 }
 
 /** Parse every pipe table in the document into { header:[], rows:[[]] }. */
@@ -335,17 +393,8 @@ export function buildCanonIndex(md) {
   }
 
   // Locked truths — the assertions a generated draft is most likely to violate.
-  // Blank lines between the label and its bullets are allowed: markdown formatters
-  // insert one, and a canon that loses its truths to formatting checks nothing.
-  const lockedTruths = [];
-  for (const m of md.matchAll(
-    /\*\*LOCKED TRUTHS?:\*\*[ \t]*([^\n]*)\n(?:[ \t]*\n)*((?:[ \t]*-[ \t]+[^\n]*\n)*)/g,
-  )) {
-    const inline = m[1].trim();
-    if (inline) lockedTruths.push(inline.replace(/\*\*/g, ""));
-    for (const b of m[2].matchAll(/^\s*-\s+(.*)$/gm))
-      lockedTruths.push(b[1].replace(/\*\*/g, "").trim());
-  }
+  const { truths: lockedTruths, unparsed: unparsedTruthBlocks } =
+    parseLockedTruths(md);
 
   // The universe this document governs, taken from its own title ("# ARCANEA
   // CANON — ..."). A canon-layer node is only canon if it resolves here, so the
@@ -389,6 +438,7 @@ export function buildCanonIndex(md) {
     originClasses,
     terms,
     lockedTruths,
+    unparsedTruthBlocks,
     contradictionTriggers: contradictionTriggersFrom(lockedTruths),
     names: Object.fromEntries(names),
     namesNormalized,
@@ -579,13 +629,35 @@ const NEGATORS = new Set([
   "never",
   "no",
   "nor",
+  "neither",
   "isnt",
   "arent",
   "wasnt",
   "werent",
   "cannot",
   "cant",
-  "rather",
+]);
+const PRONOUNS = new Set([
+  "he",
+  "she",
+  "they",
+  "it",
+  "him",
+  "her",
+  "them",
+  "his",
+  "their",
+  "its",
+]);
+const COPULAS = new Set([
+  "is",
+  "are",
+  "was",
+  "were",
+  "am",
+  "be",
+  "been",
+  "being",
 ]);
 
 function runIndexes(tokens, run) {
@@ -595,23 +667,56 @@ function runIndexes(tokens, run) {
   return at;
 }
 
+/** Free text as sentences of normalized tokens, split before punctuation is stripped. */
+export function sentencesOf(prose) {
+  return String(prose ?? "")
+    .split(/(?<=[.!?;])\s+|\n+/)
+    .map((sentence) => normalizeName(sentence))
+    .filter(Boolean)
+    .map((sentence) => sentence.split(" "));
+}
+
+// A negator up to three tokens before the phrase negates it, and only inside the
+// phrase's own sentence. "rather than" negates; "rather" on its own does not.
+function negatedAt(tokens, at) {
+  for (let k = Math.max(0, at - 3); k < at; k++) {
+    if (NEGATORS.has(tokens[k])) return true;
+    if (tokens[k] === "rather" && tokens[k + 1] === "than") return true;
+  }
+  return false;
+}
+
+// A sentence speaks about the subject if it names the subject or names no one
+// else: a pronoun opener ("He is evil.") or a verbless fragment ("Purely evil.").
+function aboutSubject(tokens, subject) {
+  return (
+    runIndexes(tokens, subject).length > 0 ||
+    PRONOUNS.has(tokens[0]) ||
+    !tokens.some((t) => COPULAS.has(t))
+  );
+}
+
 /**
  * Which locked truths does this prose contradict?
  *
- * A trigger fires when the subject and the forbidden phrase co-occur and the
- * phrase is not itself negated — "Nero is not evil" restates canon rather than
- * breaking it. Derived from the document, so the same machinery works against a
- * creator's own canon.
+ * A trigger fires when the node's prose names the subject and some sentence about
+ * that subject asserts the forbidden phrase without a negation in that same
+ * sentence. "Nero is not evil." restates canon; "Malachar is not kind. Purely
+ * evil." breaks it, because the first sentence's "not" does not reach the second.
+ * Derived from the document, so the same machinery works against any canon.
  */
 export function contradictionsIn(prose, triggers) {
-  const norm = normalizeName(prose);
-  if (!norm) return [];
-  const tokens = norm.split(" ");
+  const sentences = sentencesOf(prose);
+  if (!sentences.length) return [];
   const hits = [];
   for (const t of triggers || []) {
-    if (!runIndexes(tokens, t.subject.split(" ")).length) continue;
-    const asserted = runIndexes(tokens, t.forbidden.split(" ")).some(
-      (at) => !NEGATORS.has(tokens[at - 1]) && !NEGATORS.has(tokens[at - 2]),
+    const subject = t.subject.split(" ");
+    if (!sentences.some((s) => runIndexes(s, subject).length)) continue;
+    const forbidden = t.forbidden.split(" ");
+    const asserted = sentences.some(
+      (s) =>
+        aboutSubject(s, subject) &&
+        runIndexes(s, forbidden).some((at) => !negatedAt(s, at)),
     );
     if (asserted) hits.push(t);
   }

@@ -28,6 +28,11 @@ export const RULE_GUIDES: Record<string, RuleGuide> = {
       "The pack is bound to a different canon than the canonDocument supplied. Reported, not enforced, because the document is not the one the pack claims.",
     fix: "None needed when auditing against your own canon on purpose.",
   },
+  "canon.truths-unparsed": {
+    checks:
+      "A **LOCKED TRUTHS:** label in the canon document is followed by nothing the parser can read as a truth (an inline sentence, list items or a paragraph), so nothing under it is enforced. evidence.line and evidence.text locate it.",
+    fix: "Write the truths as list items or a sentence directly under the label, not as a table or a heading, then re-run the check.",
+  },
   "canon.foreign-canon-node": {
     checks:
       "When checking against a custom canonDocument, a node declares layer 'canon' for a universe that document does not govern. It is judged as declared.",

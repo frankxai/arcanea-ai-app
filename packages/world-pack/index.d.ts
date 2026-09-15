@@ -202,6 +202,8 @@ export interface CanonIndex {
   }>;
   terms: Array<{ term: string; status: CanonStatus; definition: string }>;
   lockedTruths: string[];
+  /** LOCKED TRUTHS labels that yielded no truth; reported as canon.truths-unparsed. */
+  unparsedTruthBlocks: Array<{ line: number; text: string }>;
   contradictionTriggers: ContradictionTrigger[];
   names: Record<string, CanonEntry>;
   /** Same entries keyed by `normalizeName`, so case, punctuation and diacritics are not a way around a locked name. */

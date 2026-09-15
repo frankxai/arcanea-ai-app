@@ -169,5 +169,51 @@ export function validatePack(pack) {
       `branch ${b?.id ?? "<no id>"}: id and name are required`,
     );
 
+  // Every record family: ids are unique and every reference resolves. A duplicate
+  // id makes "which record did the signature cover" ambiguous.
+  const uniqueIds = (items, family) => {
+    const seen = new Set();
+    for (const item of items || []) {
+      if (typeof item?.id !== "string") continue;
+      req(!seen.has(item.id), `${family} ${item.id}: duplicate id`);
+      seen.add(item.id);
+    }
+    return seen;
+  };
+  uniqueIds(sources, "source");
+  const versionIds = uniqueIds(versions, "version");
+  const branchIds = uniqueIds(branches, "branch");
+  uniqueIds(pack.relationships, "relationship");
+
+  for (const v of versions) {
+    if (typeof v?.branch === "string")
+      req(
+        branchIds.has(v.branch),
+        `version ${v.id}: branch ${v.branch} is not in the pack`,
+      );
+    for (const parent of Array.isArray(v?.parents) ? v.parents : [])
+      req(
+        versionIds.has(parent),
+        `version ${v.id}: parent ${parent} is not in the pack`,
+      );
+  }
+  for (const b of branches) {
+    if (b?.head != null)
+      req(
+        versionIds.has(b.head),
+        `branch ${b.id}: head ${b.head} is not in the pack`,
+      );
+    if (b?.parent != null)
+      req(
+        branchIds.has(b.parent),
+        `branch ${b.id}: parent ${b.parent} is not in the pack`,
+      );
+  }
+  if (prov.head != null)
+    req(
+      versionIds.has(prov.head),
+      `provenance.head ${prov.head} is not in the pack`,
+    );
+
   return { valid: errors.length === 0, errors };
 }

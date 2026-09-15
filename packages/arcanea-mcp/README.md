@@ -60,7 +60,7 @@ worldpack_check { "path": "./my-world.worldpack.json" }
 ```
 
 `path` works over stdio only; HTTP clients pass the pack inline as `pack`. Run
-`worldpack_rules` for all 32 rule ids with severity, what each checks and how to clear it.
+`worldpack_rules` for all 33 rule ids with severity, what each checks and how to clear it.
 
 ## Tools
 

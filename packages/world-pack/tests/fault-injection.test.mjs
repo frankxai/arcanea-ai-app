@@ -309,3 +309,135 @@ test("P1-4 1,200 nodes against 3,000 canon terms is checked without a nodes-by-t
   const elapsed = performance.now() - started;
   assert.ok(elapsed < 400, `detectConflicts took ${Math.round(elapsed)} ms`);
 });
+
+// ── P2-6 locked truths are parsed structurally, never silently dropped ───────
+
+function moonfall(truthBlock) {
+  return buildCanonIndex(
+    `# MOONFALL CANON\n\n## TIER 1: THE SKY (LOCKED ✅)\n\n**LOCKED TRUTHS:**\n${truthBlock}`,
+  );
+}
+
+async function contradicts(canon, prose) {
+  const { pack } = await seed();
+  const node = userNode(pack, "chr_wren", "Wren Halloway", {
+    backstory: prose,
+  });
+  return detectConflicts(addNode(pack, node), canon, {
+    canonBinding: "foreign",
+  }).findings.some((f) => f.ruleId === "canon.locked-truth-contradiction");
+}
+
+test("P2-6 a truth survives any ordinary markdown shape of its block", async () => {
+  const shapes = {
+    "no final newline": "- Selene is NOT mortal",
+    "blank lines between bullets":
+      "- The tide is NOT a god\n\n- Selene is NOT mortal\n",
+    "star bullets": "* Selene is NOT mortal\n",
+    "plus bullets": "+ Selene is NOT mortal\n",
+    "numbered list": "1. The tide is NOT a god\n2. Selene is NOT mortal\n",
+    "wrapped sentence": "- Selene is NOT\n  mortal, whatever the songs claim\n",
+    "blank line after the label": "\n- Selene is NOT mortal\n",
+  };
+  for (const [label, block] of Object.entries(shapes)) {
+    const canon = moonfall(block);
+    assert.ok(
+      await contradicts(canon, "Selene is mortal."),
+      `${label}: truth dropped, parsed ${JSON.stringify(canon.lockedTruths)}`,
+    );
+  }
+});
+
+test("P2-6 a LOCKED TRUTHS block that yields nothing is a finding, not silence", async () => {
+  const canon = moonfall(
+    "\n| Truth | Note |\n| --- | --- |\n| Selene is NOT mortal | table |\n",
+  );
+  assert.equal(canon.unparsedTruthBlocks.length, 1);
+  const { pack } = await seed();
+  const report = detectConflicts(pack, canon, { canonBinding: "foreign" });
+  const unparsed = report.findings.find(
+    (f) => f.ruleId === "canon.truths-unparsed",
+  );
+  assert.ok(unparsed, report.findings.map((f) => f.ruleId).join(", "));
+  assert.equal(report.clean, false);
+});
+
+// ── P2-7 negation is scoped to its own sentence ──────────────────────────────
+
+test("P2-7 restating a locked truth is not a contradiction", async () => {
+  const { canon, pack } = await seed();
+  const node = userNode(pack, "chr_scribe", "Oren Vale", {
+    backstory: "Nero is not evil.",
+  });
+  const rules = rulesOf(detectConflicts(addNode(pack, node), canon));
+  assert.ok(!rules.includes("canon.nero-miscast"), rules.join(", "));
+  assert.ok(
+    !rules.includes("canon.locked-truth-contradiction"),
+    rules.join(", "),
+  );
+});
+
+test("P2-7 a negation in one sentence does not excuse the next", async () => {
+  const { canon, pack } = await seed();
+  const check = (backstory) =>
+    rulesOf(
+      detectConflicts(
+        addNode(pack, userNode(pack, "chr_scribe", "Oren Vale", { backstory })),
+        canon,
+      ),
+    );
+  assert.ok(
+    check("Malachar is not kind. Purely evil.").includes(
+      "canon.locked-truth-contradiction",
+    ),
+    "Malachar is tragic, not purely evil",
+  );
+  assert.ok(
+    check("Nero is not a hero. He is evil.").includes("canon.nero-miscast"),
+    "the second sentence calls Nero evil",
+  );
+  assert.ok(
+    !check("Nero is patient. The Dark Lord is evil.").includes(
+      "canon.nero-miscast",
+    ),
+    "a sentence about someone else is not about Nero",
+  );
+});
+
+// ── P2-8 ids are unique and references resolve in every ledger ───────────────
+
+test("P2-8 duplicate ids in sources, versions, branches and relationships are errors", async () => {
+  for (const family of ["sources", "versions", "branches", "relationships"]) {
+    const { pack } = await seed();
+    pack[family].push(structuredClone(pack[family][0]));
+    const result = validatePack(pack);
+    assert.equal(result.valid, false, `${family} duplicate passed`);
+    assert.ok(
+      result.errors.some((e) => /duplicate/i.test(e)),
+      `${family}: ${result.errors.join("; ")}`,
+    );
+  }
+});
+
+test("P2-8 version, branch and head references must resolve", async () => {
+  const cases = {
+    "version.branch": (p) => (p.versions[0].branch = "ghost-branch"),
+    "version.parents": (p) => (p.versions[0].parents = ["ver_GHOST"]),
+    "branch.head": (p) => (p.branches[0].head = "ver_GHOST"),
+    "branch.parent": (p) => (p.branches[0].parent = "ghost-branch"),
+  };
+  for (const [label, mutate] of Object.entries(cases)) {
+    const { pack } = await seed();
+    mutate(pack);
+    const result = validatePack(pack);
+    assert.equal(result.valid, false, `${label} dangling reference passed`);
+  }
+  const { pack } = await seed();
+  const exported = exportPack(pack);
+  exported.provenance.head = "ver_GHOST";
+  assert.equal(
+    validatePack(exported).valid,
+    false,
+    "provenance.head dangling passed",
+  );
+});
