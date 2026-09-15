@@ -12,7 +12,18 @@ import { contentHash } from "./pack.mjs";
 export const APL_VERSION = "0.1";
 
 /** Slot types the compiler knows how to bind and constrain against canon. */
-export const SLOT_TYPES = Object.freeze(["text", "gate", "element", "house", "originClass", "wisdom", "rank", "integer", "enum", "nodeRef"]);
+export const SLOT_TYPES = Object.freeze([
+  "text",
+  "gate",
+  "element",
+  "house",
+  "originClass",
+  "wisdom",
+  "rank",
+  "integer",
+  "enum",
+  "nodeRef",
+]);
 
 /**
  * @typedef {object} AplTemplate
@@ -29,7 +40,8 @@ export const TEMPLATES = Object.freeze({
   "character.constrained.v1": {
     id: "character.constrained.v1",
     version: APL_VERSION,
-    intent: "Draft one character who is legal inside Arcanean canon and inside this world.",
+    intent:
+      "Draft one character who is legal inside Arcanean canon and inside this world.",
     produces: "Character",
     slots: [
       { name: "role", type: "text", required: true, max: 120 },
@@ -49,7 +61,8 @@ export const TEMPLATES = Object.freeze({
   "location.constrained.v1": {
     id: "location.constrained.v1",
     version: APL_VERSION,
-    intent: "Draft one location that sits inside this world without contradicting canon geography.",
+    intent:
+      "Draft one location that sits inside this world without contradicting canon geography.",
     produces: "Location",
     slots: [
       { name: "kind", type: "text", required: true, max: 80 },
@@ -82,23 +95,34 @@ function checkSlot(slot, value, canon, pack) {
       return gate;
     }
     case "element":
-      if (!canon.elements.includes(value)) fail(`'${value}' is not a canonical element (${canon.elements.join(", ")})`);
+      if (!canon.elements.includes(value))
+        fail(
+          `'${value}' is not a canonical element (${canon.elements.join(", ")})`,
+        );
       return value;
     case "house": {
       const h = String(value).replace(/^House\s+/i, "");
-      if (!canon.houses.includes(h)) fail(`'${value}' is not one of the seven Academy Houses`);
+      if (!canon.houses.includes(h))
+        fail(`'${value}' is not one of the seven Academy Houses`);
       return `House ${h}`;
     }
     case "originClass": {
-      const hit = canon.originClasses.find((o) => o.name.toLowerCase() === String(value).toLowerCase());
-      if (!hit) fail(`'${value}' is not a catalogued origin class; the eight are closed`);
+      const hit = canon.originClasses.find(
+        (o) => o.name.toLowerCase() === String(value).toLowerCase(),
+      );
+      if (!hit)
+        fail(
+          `'${value}' is not a catalogued origin class; the eight are closed`,
+        );
       return hit;
     }
     case "wisdom":
-      if (!canon.wisdoms.some((w) => w.name === value)) fail(`'${value}' is not one of the Seven Wisdoms`);
+      if (!canon.wisdoms.some((w) => w.name === value))
+        fail(`'${value}' is not one of the Seven Wisdoms`);
       return value;
     case "rank":
-      if (!canon.ranks.some((r) => r.rank === value)) fail(`'${value}' is not a magic rank`);
+      if (!canon.ranks.some((r) => r.rank === value))
+        fail(`'${value}' is not a magic rank`);
       return value;
     case "integer": {
       const n = Number(value);
@@ -111,11 +135,13 @@ function checkSlot(slot, value, canon, pack) {
       return node;
     }
     case "enum":
-      if (!slot.values.includes(value)) fail(`must be one of ${slot.values.join(", ")}`);
+      if (!slot.values.includes(value))
+        fail(`must be one of ${slot.values.join(", ")}`);
       return value;
     default: {
       const s = String(value);
-      if (slot.max && s.length > slot.max) fail(`is longer than ${slot.max} characters`);
+      if (slot.max && s.length > slot.max)
+        fail(`is longer than ${slot.max} characters`);
       return s;
     }
   }
@@ -128,25 +154,49 @@ function checkSlot(slot, value, canon, pack) {
 export function compile(templateId, bindings, { canon, pack }) {
   const template = TEMPLATES[templateId];
   if (!template) throw new AplError(`unknown template: ${templateId}`);
-  if (!canon) throw new AplError("a canon index is required; APL never compiles unconstrained");
+  if (!canon)
+    throw new AplError(
+      "a canon index is required; APL never compiles unconstrained",
+    );
 
   const bound = {};
-  for (const slot of template.slots) bound[slot.name] = checkSlot(slot, bindings[slot.name], canon, pack);
+  for (const slot of template.slots)
+    bound[slot.name] = checkSlot(slot, bindings[slot.name], canon, pack);
 
   const constraints = [];
   const gate = bound.gate;
   if (gate) {
-    constraints.push(`Gate ${gate.index} is ${gate.name}, ${gate.frequencyHz} Hz, kept by ${gate.god}, bonded Godbeast ${gate.godbeast}. These four facts are locked and may not be restated differently.`);
+    constraints.push(
+      `Gate ${gate.index} is ${gate.name}, ${gate.frequencyHz} Hz, kept by ${gate.god}, bonded Godbeast ${gate.godbeast}. These four facts are locked and may not be restated differently.`,
+    );
   }
   if (bound.gatesOpen != null) {
-    const rank = canon.ranks.find((r) => bound.gatesOpen >= r.minGates && bound.gatesOpen <= r.maxGates);
-    if (rank) constraints.push(`With ${bound.gatesOpen} gates open the rank is exactly ${rank.rank}. Luminor is a rank, never a species.`);
+    const rank = canon.ranks.find(
+      (r) => bound.gatesOpen >= r.minGates && bound.gatesOpen <= r.maxGates,
+    );
+    if (rank)
+      constraints.push(
+        `With ${bound.gatesOpen} gates open the rank is exactly ${rank.rank}. Luminor is a rank, never a species.`,
+      );
   }
-  if (bound.element) constraints.push(`Element is ${bound.element}. The canonical elements are ${canon.elements.join(", ")} and no others.`);
-  if (bound.house) constraints.push(`${bound.house} is institutional, not geographic; members come from many Realms.`);
-  if (bound.originClass) constraints.push(`Origin class is ${bound.originClass.name} (power source: ${bound.originClass.powerSource}). The eight origin classes are closed.`);
-  constraints.push("Nero is not evil. Shadow is corrupted Void, the Dark Lord's perversion of Nero's gift.");
-  constraints.push(`Do not use any of these locked canon names for a new entity: ${lockedNameSample(canon).join(", ")}.`);
+  if (bound.element)
+    constraints.push(
+      `Element is ${bound.element}. The canonical elements are ${canon.elements.join(", ")} and no others.`,
+    );
+  if (bound.house)
+    constraints.push(
+      `${bound.house} is institutional, not geographic; members come from many Realms.`,
+    );
+  if (bound.originClass)
+    constraints.push(
+      `Origin class is ${bound.originClass.name} (power source: ${bound.originClass.powerSource}). The eight origin classes are closed.`,
+    );
+  constraints.push(
+    "Nero is not evil. Shadow is corrupted Void, the Dark Lord's perversion of Nero's gift.",
+  );
+  constraints.push(
+    `Do not use any of these locked canon names for a new entity: ${lockedNameSample(canon).join(", ")}.`,
+  );
 
   const contract = {
     format: "AplOutputContract.v1",
@@ -156,7 +206,7 @@ export function compile(templateId, bindings, { canon, pack }) {
     rules: [
       "Return one JSON object and nothing else.",
       `"type" must be "${template.produces}".`,
-      'The caller stamps layer, governance and rights; do not invent them.',
+      "The caller stamps layer, governance and rights; do not invent them.",
     ],
   };
 
@@ -168,8 +218,12 @@ export function compile(templateId, bindings, { canon, pack }) {
     template.intent,
     "",
     "## World",
-    world ? `${world.name} (${world.id}), a creator-owned world inside the Arcanea universe.` : "No world bound.",
-    pack?.canon?.sourceHash ? `Canon binding: ${pack.canon.document} @ ${pack.canon.sourceHash}` : "Canon binding: unbound.",
+    world
+      ? `${world.name} (${world.id}), a creator-owned world inside the Arcanea universe.`
+      : "No world bound.",
+    pack?.canon?.sourceHash
+      ? `Canon binding: ${pack.canon.document} @ ${pack.canon.sourceHash}`
+      : "Canon binding: unbound.",
     "",
     "## Request",
     ...template.slots
@@ -192,12 +246,18 @@ export function compile(templateId, bindings, { canon, pack }) {
     contract,
     constraints,
     bindings: bound,
-    hash: contentHash({ templateId: template.id, bindings: bound, constraints, canonSourceHash: canon.sourceHash }),
+    hash: contentHash({
+      templateId: template.id,
+      bindings: bound,
+      constraints,
+      canonSourceHash: canon.sourceHash,
+    }),
   };
 }
 
 function renderBinding(value) {
-  if (value && typeof value === "object") return value.name ?? value.id ?? JSON.stringify(value);
+  if (value && typeof value === "object")
+    return value.name ?? value.id ?? JSON.stringify(value);
   return String(value);
 }
 
@@ -227,15 +287,26 @@ function lockedNameSample(canon, limit = 12) {
  * Turn a model's answer into a pack node, stamping the governance the model was
  * never allowed to assert. Attributes the contract fixed are overwritten, not trusted.
  */
-export function materialize(compiled, answer, { id, layer = "generated", governance }) {
+export function materialize(
+  compiled,
+  answer,
+  { id, layer = "generated", governance },
+) {
   return {
     id,
     type: compiled.contract.produces,
     name: answer.name,
     description: answer.description,
     layer,
-    attributes: { ...(answer.attributes || {}), ...compiled.contract.attributes },
-    provenance: { apl: compiled.templateId, aplVersion: APL_VERSION, promptHash: compiled.hash },
+    attributes: {
+      ...(answer.attributes || {}),
+      ...compiled.contract.attributes,
+    },
+    provenance: {
+      apl: compiled.templateId,
+      aplVersion: APL_VERSION,
+      promptHash: compiled.hash,
+    },
     governance,
   };
 }

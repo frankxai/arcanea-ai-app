@@ -212,8 +212,8 @@ export default function McpOverviewPage() {
 
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-400">
             Connect Claude Code, Cursor, Windsurf, or any MCP-compatible tool to
-            Arcanea&apos;s creative intelligence layer. Audit a world against its
-            canon with rule-level findings, verify an exported world was not
+            Arcanea&apos;s creative intelligence layer. Audit a world against
+            its canon with rule-level findings, verify an exported world was not
             edited, generate characters, and plan books and games — all from
             inside your editor.
           </p>

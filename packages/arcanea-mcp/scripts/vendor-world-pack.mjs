@@ -26,7 +26,10 @@ mkdirSync(join(vendor, "world-pack"), { recursive: true });
 mkdirSync(join(vendor, "canon"), { recursive: true });
 
 const modules = readdirSync(worldPackSrc).filter((f) => f.endsWith(".mjs"));
-for (const file of modules) cpSync(join(worldPackSrc, file), join(vendor, "world-pack", file));
+for (const file of modules)
+  cpSync(join(worldPackSrc, file), join(vendor, "world-pack", file));
 cpSync(canonDoc, join(vendor, "canon/CANON_LOCKED.md"));
 
-console.error(`vendor-world-pack: ${modules.length} modules + CANON_LOCKED.md -> dist/vendor`);
+console.error(
+  `vendor-world-pack: ${modules.length} modules + CANON_LOCKED.md -> dist/vendor`,
+);

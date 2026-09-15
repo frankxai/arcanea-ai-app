@@ -58,7 +58,8 @@ export const RULE_GUIDES: Record<string, RuleGuide> = {
     fix: "Use a Gate index that exists (evidence.expected), or remove attributes.gate.",
   },
   "canon.gate-frequency-mismatch": {
-    checks: "attributes.frequencyHz differs from the frequency canon fixes for attributes.gate.",
+    checks:
+      "attributes.frequencyHz differs from the frequency canon fixes for attributes.gate.",
     fix: "Set frequencyHz to evidence.expected, or drop it and let the gate imply it.",
   },
   "canon.gate-pairing-mismatch": {
@@ -67,7 +68,8 @@ export const RULE_GUIDES: Record<string, RuleGuide> = {
     fix: "Use evidence.expected, or change the gate to the one that pairing belongs to.",
   },
   "canon.frequency-unknown": {
-    checks: "attributes.frequencyHz is set without a gate and matches no Gate frequency.",
+    checks:
+      "attributes.frequencyHz is set without a gate and matches no Gate frequency.",
     fix: "Use a canonical frequency (evidence.expected) or remove it.",
   },
   "canon.godbeast-unknown": {
@@ -83,7 +85,8 @@ export const RULE_GUIDES: Record<string, RuleGuide> = {
     fix: "Use a rank from evidence.expected.",
   },
   "canon.rank-out-of-band": {
-    checks: "attributes.rank does not match the rank canon assigns to attributes.gatesOpen.",
+    checks:
+      "attributes.rank does not match the rank canon assigns to attributes.gatesOpen.",
     fix: "Set rank to evidence.expected, or change gatesOpen.",
   },
   "canon.element-unknown": {
@@ -95,19 +98,23 @@ export const RULE_GUIDES: Record<string, RuleGuide> = {
     fix: "Use a House from evidence.expected.",
   },
   "canon.origin-class-unknown": {
-    checks: "attributes.originClass is not one of the catalogued origin classes, which are a closed set.",
+    checks:
+      "attributes.originClass is not one of the catalogued origin classes, which are a closed set.",
     fix: "Use an origin class from evidence.expected. New classes require a canon change, not a pack edit.",
   },
   "canon.nero-miscast": {
-    checks: "Node prose casts Nero as evil, malevolent, wicked or a villain (Arcanea canon only).",
+    checks:
+      "Node prose casts Nero as evil, malevolent, wicked or a villain (Arcanea canon only).",
     fix: "Nero is the Primordial Darkness, not evil. Put the villainy on Shadow or the Dark Lord.",
   },
   "canon.luminor-as-species": {
-    checks: "attributes.species or originClass is 'Luminor'. Luminor is a rank, not an entity type.",
+    checks:
+      "attributes.species or originClass is 'Luminor'. Luminor is a rank, not an entity type.",
     fix: "Set rank to Luminor and give the node a real species or origin class.",
   },
   "canon.staging-cited-as-locked": {
-    checks: "A node names a STAGING canon entry but claims canonStatus 'locked'.",
+    checks:
+      "A node names a STAGING canon entry but claims canonStatus 'locked'.",
     fix: "Use canonStatus 'staging' or 'evolving' until the entry is locked in the canon document.",
   },
   "rights.state-illegal-for-layer": {
@@ -116,11 +123,13 @@ export const RULE_GUIDES: Record<string, RuleGuide> = {
     fix: "Set rights.state to one of evidence.expected, or correct the layer.",
   },
   "rights.unresolved": {
-    checks: "rights.state is 'unresolved' or not a valid RightsState. Such a node cannot be exported or sold.",
+    checks:
+      "rights.state is 'unresolved' or not a valid RightsState. Such a node cannot be exported or sold.",
     fix: "Resolve ownership and set rights.state to a legal value for the layer.",
   },
   "rights.licensed-without-licence": {
-    checks: "A node with rights.state 'licensed' names no licence (rights.spdx or rights.licenceRef).",
+    checks:
+      "A node with rights.state 'licensed' names no licence (rights.spdx or rights.licenceRef).",
     fix: "Add the SPDX identifier or a licenceRef for the inbound licence.",
   },
   "status.illegal-for-layer": {
@@ -133,7 +142,8 @@ export const RULE_GUIDES: Record<string, RuleGuide> = {
     fix: "Add the source record or correct the reference.",
   },
   "provenance.dangling-version": {
-    checks: "governance.versionRef points at a version that is not in the pack.",
+    checks:
+      "governance.versionRef points at a version that is not in the pack.",
     fix: "Commit the version or correct the reference.",
   },
   "provenance.dangling-branch": {
@@ -154,7 +164,8 @@ export const RULE_GUIDES: Record<string, RuleGuide> = {
     fix: "Add the missing node or remove the relationship.",
   },
   "schema.unknown-layer": {
-    checks: "A node's layer is not canon, user, licensed, generated or contributed. Its other checks are skipped.",
+    checks:
+      "A node's layer is not canon, user, licensed, generated or contributed. Its other checks are skipped.",
     fix: "Set a valid layer, then re-run the check.",
   },
 };

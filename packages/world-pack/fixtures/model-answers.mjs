@@ -16,7 +16,8 @@ export const goodCharacter = {
 /** The same request answered badly: it takes a locked canon name and miscasts Nero. */
 export const conflictedCharacter = {
   name: "Draconis",
-  description: "A wandering blade who serves Nero, the evil beneath the world, and hunts the Gate-keepers.",
+  description:
+    "A wandering blade who serves Nero, the evil beneath the world, and hunts the Gate-keepers.",
   attributes: {
     archetype: "blade",
     originClass: "Nullborn",
@@ -30,6 +31,7 @@ export const conflictedCharacter = {
 /** A location answer used for the branch/merge path. */
 export const goodLocation = {
   name: "The Slow Chart Room",
-  description: "A vaulted hall where corridor maps are redrawn each season, because corridors drift.",
+  description:
+    "A vaulted hall where corridor maps are redrawn each season, because corridors drift.",
   attributes: { kind: "archive" },
 };

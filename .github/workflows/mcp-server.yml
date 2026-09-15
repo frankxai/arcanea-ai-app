@@ -7,11 +7,11 @@ on:
     branches: [main]
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
-      - 'packages/arcanea-mcp/**'
-      - 'packages/world-pack/**'
-      - '.arcanea/lore/CANON_LOCKED.md'
-      - '.github/workflows/mcp-server.yml'
-      - '.github/workflows/publish-mcp-server.yml'
+      - "packages/arcanea-mcp/**"
+      - "packages/world-pack/**"
+      - ".arcanea/lore/CANON_LOCKED.md"
+      - ".github/workflows/mcp-server.yml"
+      - ".github/workflows/publish-mcp-server.yml"
 
 concurrency:
   group: mcp-server-${{ github.ref }}

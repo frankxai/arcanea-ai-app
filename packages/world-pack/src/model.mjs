@@ -40,7 +40,12 @@ export const ENTITY_TYPES = Object.freeze([
 ]);
 
 export const EDGE_TYPES = Object.freeze(["Relationship"]);
-export const GOVERNANCE_TYPES = Object.freeze(["Branch", "Version", "Source", "AgentRole"]);
+export const GOVERNANCE_TYPES = Object.freeze([
+  "Branch",
+  "Version",
+  "Source",
+  "AgentRole",
+]);
 export const ENUM_TYPES = Object.freeze(["RightsState", "CanonStatus"]);
 
 /** All 21 kinds the format addresses. */

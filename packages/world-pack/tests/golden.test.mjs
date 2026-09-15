@@ -10,7 +10,15 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
 import { loadCanonIndex } from "../src/canon-index.mjs";
-import { createWorldSeed, addNode, addRelationship, commit, exportPack, verifyExport, deterministicId } from "../src/pack.mjs";
+import {
+  createWorldSeed,
+  addNode,
+  addRelationship,
+  commit,
+  exportPack,
+  verifyExport,
+  deterministicId,
+} from "../src/pack.mjs";
 import { detectConflicts } from "../src/conflict.mjs";
 import { validatePack } from "../src/validate.mjs";
 import { withGuardianRoles } from "../src/guardians.mjs";
@@ -35,7 +43,14 @@ export async function buildFixture() {
 
   const compiled = apl.compile(
     "character.constrained.v1",
-    { role: "corridor cartographer", gate: 6, gatesOpen: 3, element: "Void", house: "Synthesis", originClass: "Arcans" },
+    {
+      role: "corridor cartographer",
+      gate: 6,
+      gatesOpen: 3,
+      element: "Void",
+      house: "Synthesis",
+      originClass: "Arcans",
+    },
     { canon, pack },
   );
   pack = addNode(
@@ -47,7 +62,11 @@ export async function buildFixture() {
     }),
   );
 
-  const locationCompiled = apl.compile("location.constrained.v1", { kind: "archive", element: "Void" }, { canon, pack });
+  const locationCompiled = apl.compile(
+    "location.constrained.v1",
+    { kind: "archive", element: "Void" },
+    { canon, pack },
+  );
   pack = addNode(
     pack,
     apl.materialize(locationCompiled, goodLocation, {
@@ -64,14 +83,22 @@ export async function buildFixture() {
     to: deterministicId("loc", "chart-room"),
   });
 
-  pack = commit(withGuardianRoles(pack), { message: "first cast and its room", by: pack.world.creatorRef, at: AT });
+  pack = commit(withGuardianRoles(pack), {
+    message: "first cast and its room",
+    by: pack.world.creatorRef,
+    at: AT,
+  });
   return { canon, exported: exportPack(pack, { exportedAt: AT }) };
 }
 
 test("the exported fixture matches the golden file byte for byte", async () => {
   const { exported } = await buildFixture();
   const golden = JSON.parse(await readFile(GOLDEN, "utf8"));
-  assert.deepEqual(exported, golden, "export format drifted; regenerate the golden file only if the change is intended");
+  assert.deepEqual(
+    exported,
+    golden,
+    "export format drifted; regenerate the golden file only if the change is intended",
+  );
 });
 
 test("the golden fixture is structurally valid, canon-clean, and untampered", async () => {
@@ -88,16 +115,53 @@ test("the golden fixture is structurally valid, canon-clean, and untampered", as
 test("the signature covers the ownership ledger, not just the nodes", async () => {
   const golden = JSON.parse(await readFile(GOLDEN, "utf8"));
   const edits = {
-    "provenance.versions[].createdBy": (g) => ({ ...g, provenance: { ...g.provenance, versions: g.provenance.versions.map((v) => ({ ...v, createdBy: "attacker" })) } }),
-    "provenance.sources[].citation": (g) => ({ ...g, provenance: { ...g.provenance, sources: g.provenance.sources.map((s) => ({ ...s, citation: "forged" })) } }),
-    "provenance.branches[].head": (g) => ({ ...g, provenance: { ...g.provenance, branches: g.provenance.branches.map((b) => ({ ...b, head: "ver_forged" })) } }),
-    "provenance.head": (g) => ({ ...g, provenance: { ...g.provenance, head: "ver_forged" } }),
+    "provenance.versions[].createdBy": (g) => ({
+      ...g,
+      provenance: {
+        ...g.provenance,
+        versions: g.provenance.versions.map((v) => ({
+          ...v,
+          createdBy: "attacker",
+        })),
+      },
+    }),
+    "provenance.sources[].citation": (g) => ({
+      ...g,
+      provenance: {
+        ...g.provenance,
+        sources: g.provenance.sources.map((s) => ({
+          ...s,
+          citation: "forged",
+        })),
+      },
+    }),
+    "provenance.branches[].head": (g) => ({
+      ...g,
+      provenance: {
+        ...g.provenance,
+        branches: g.provenance.branches.map((b) => ({
+          ...b,
+          head: "ver_forged",
+        })),
+      },
+    }),
+    "provenance.head": (g) => ({
+      ...g,
+      provenance: { ...g.provenance, head: "ver_forged" },
+    }),
     agentRoles: (g) => ({ ...g, agentRoles: g.agentRoles.slice(1) }),
     counts: (g) => ({ ...g, counts: { ...g.counts, Character: 9999 } }),
-    "canon.sourceHash": (g) => ({ ...g, canon: { ...g.canon, sourceHash: `sha256:${"0".repeat(64)}` } }),
+    "canon.sourceHash": (g) => ({
+      ...g,
+      canon: { ...g.canon, sourceHash: `sha256:${"0".repeat(64)}` },
+    }),
   };
   for (const [what, edit] of Object.entries(edits)) {
-    assert.equal(verifyExport(edit(golden)).valid, false, `${what} is outside the signature`);
+    assert.equal(
+      verifyExport(edit(golden)).valid,
+      false,
+      `${what} is outside the signature`,
+    );
   }
 });
 

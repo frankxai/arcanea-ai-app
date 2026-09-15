@@ -12,7 +12,15 @@
 // This script is the gate that makes that impossible to repeat.
 
 import { execFileSync } from "node:child_process";
-import { appendFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+  appendFileSync,
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -24,7 +32,12 @@ const pkg = JSON.parse(readFileSync(join(pkgRoot, "package.json"), "utf8"));
 
 // npm and pnpm are .cmd shims on Windows, which execFile can only start through a shell.
 const sh = (cmd, args, cwd) =>
-  execFileSync(cmd, args, { cwd, stdio: ["ignore", "pipe", "inherit"], shell: process.platform === "win32", encoding: "utf8" });
+  execFileSync(cmd, args, {
+    cwd,
+    stdio: ["ignore", "pipe", "inherit"],
+    shell: process.platform === "win32",
+    encoding: "utf8",
+  });
 
 function fail(message) {
   throw new Error(`consumer-smoke: ${message}`);
@@ -38,29 +51,61 @@ try {
   mkdirSync(packDir, { recursive: true });
   if (!argv.includes("--no-build")) sh("pnpm", ["run", "build"], pkgRoot);
   sh("pnpm", ["pack", "--pack-destination", packDir], pkgRoot);
-  const tarball = join(packDir, `${pkg.name.replace(/^@/, "").replace("/", "-")}-${pkg.version}.tgz`);
+  const tarball = join(
+    packDir,
+    `${pkg.name.replace(/^@/, "").replace("/", "-")}-${pkg.version}.tgz`,
+  );
   if (!existsSync(tarball)) fail(`pnpm pack did not produce ${tarball}`);
 
   const consumer = join(work, "consumer");
   mkdirSync(consumer);
-  writeFileSync(join(consumer, "package.json"), JSON.stringify({ name: "consumer-smoke", version: "0.0.0", private: true }));
-  sh("npm", ["i", "--ignore-scripts", "--no-audit", "--no-fund", "--loglevel=error", tarball], consumer);
+  writeFileSync(
+    join(consumer, "package.json"),
+    JSON.stringify({ name: "consumer-smoke", version: "0.0.0", private: true }),
+  );
+  sh(
+    "npm",
+    [
+      "i",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--loglevel=error",
+      tarball,
+    ],
+    consumer,
+  );
 
   const installed = join(consumer, "node_modules", ...pkg.name.split("/"));
   const manifestText = readFileSync(join(installed, "package.json"), "utf8");
   const local = manifestText.match(/"(?:workspace|link|file):[^"]*"/g);
-  if (local) fail(`packed manifest carries local specifiers: ${local.join(", ")}`);
+  if (local)
+    fail(`packed manifest carries local specifiers: ${local.join(", ")}`);
   const manifest = JSON.parse(manifestText);
 
   const bin = join(installed, manifest.bin["arcanea-mcp"]);
   const sdk = join(consumer, "node_modules/@modelcontextprotocol/sdk/dist/esm");
-  const { Client } = await import(pathToFileURL(join(sdk, "client/index.js")).href);
-  const { StdioClientTransport } = await import(pathToFileURL(join(sdk, "client/stdio.js")).href);
+  const { Client } = await import(
+    pathToFileURL(join(sdk, "client/index.js")).href
+  );
+  const { StdioClientTransport } = await import(
+    pathToFileURL(join(sdk, "client/stdio.js")).href
+  );
 
   client = new Client({ name: "consumer-smoke", version: "1.0.0" });
-  await client.connect(new StdioClientTransport({ command: process.execPath, args: [bin], cwd: consumer, stderr: "inherit" }));
+  await client.connect(
+    new StdioClientTransport({
+      command: process.execPath,
+      args: [bin],
+      cwd: consumer,
+      stderr: "inherit",
+    }),
+  );
   const server = client.getServerVersion();
-  if (server?.version !== pkg.version) fail(`server reports version ${server?.version}, package is ${pkg.version}`);
+  if (server?.version !== pkg.version)
+    fail(
+      `server reports version ${server?.version}, package is ${pkg.version}`,
+    );
 
   const tools = [];
   let cursor;
@@ -70,16 +115,24 @@ try {
     cursor = page.nextCursor;
   } while (cursor);
   for (const name of ["worldpack_check", "worldpack_verify", "worldpack_rules"])
-    if (!tools.some((t) => t.name === name)) fail(`${name} missing from tools/list`);
+    if (!tools.some((t) => t.name === name))
+      fail(`${name} missing from tools/list`);
 
-  const fixture = readFileSync(resolve(pkgRoot, "../world-pack/fixtures/slow-chart.worldpack.json"), "utf8");
+  const fixture = readFileSync(
+    resolve(pkgRoot, "../world-pack/fixtures/slow-chart.worldpack.json"),
+    "utf8",
+  );
   const check = async (pack) => {
-    const result = await client.callTool({ name: "worldpack_check", arguments: { pack } });
+    const result = await client.callTool({
+      name: "worldpack_check",
+      arguments: { pack },
+    });
     return JSON.parse(result.content[0].text);
   };
 
   const clean = await check(JSON.parse(fixture));
-  if (clean.verdict !== "pass") fail(`clean pack: expected pass, got ${clean.headline}`);
+  if (clean.verdict !== "pass")
+    fail(`clean pack: expected pass, got ${clean.headline}`);
 
   const forged = JSON.parse(fixture);
   const gov = forged.nodes.find((n) => n.type === "World").governance;
@@ -89,11 +142,20 @@ try {
     name: "Veyra Coldwater",
     layer: "canon",
     attributes: {},
-    governance: { ...gov, owner: "arcanea", canonStatus: "locked", rights: { state: "arcanea-owned" }, evalRule: "canon-immutable" },
+    governance: {
+      ...gov,
+      owner: "arcanea",
+      canonStatus: "locked",
+      rights: { state: "arcanea-owned" },
+      evalRule: "canon-immutable",
+    },
   });
   const blocked = await check(forged);
   const claim = blocked.findings?.find((f) => f.ruleId === "canon.layer-claim");
-  if (blocked.verdict !== "blocked" || claim?.severity !== "blocker") fail(`forged pack: expected a canon.layer-claim blocker, got ${blocked.headline}`);
+  if (blocked.verdict !== "blocked" || claim?.severity !== "blocker")
+    fail(
+      `forged pack: expected a canon.layer-claim blocker, got ${blocked.headline}`,
+    );
 
   console.log(
     [
@@ -106,7 +168,11 @@ try {
     ].join("\n"),
   );
 
-  if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `tool_count=${tools.length}\ntarball=${tarball}\n`);
+  if (process.env.GITHUB_OUTPUT)
+    appendFileSync(
+      process.env.GITHUB_OUTPUT,
+      `tool_count=${tools.length}\ntarball=${tarball}\n`,
+    );
 } catch (err) {
   console.error(err instanceof Error ? err.message : err);
   process.exitCode = 1;

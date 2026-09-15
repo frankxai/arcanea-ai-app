@@ -39,7 +39,10 @@ export async function runStdio(server: McpServer): Promise<void> {
 function setCorsHeaders(res: http.ServerResponse): void {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, Mcp-Session-Id");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Accept, Mcp-Session-Id",
+  );
 }
 
 export async function runHttp(server: McpServer, port: number): Promise<void> {
@@ -77,7 +80,8 @@ export async function runHttp(server: McpServer, port: number): Promise<void> {
       const body = JSON.stringify({
         name: "Arcanea MCP Server",
         version: SERVER_VERSION,
-        description: "Worldbuilding toolkit, creative companion, and magic maker",
+        description:
+          "Worldbuilding toolkit, creative companion, and magic maker",
         transport: "StreamableHTTP",
         endpoints: {
           mcp: "/mcp",
@@ -138,7 +142,9 @@ export async function runHttp(server: McpServer, port: number): Promise<void> {
         const sessionId = req.headers["mcp-session-id"] as string | undefined;
         if (!sessionId || !sessions.has(sessionId)) {
           res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Missing or unknown Mcp-Session-Id" }));
+          res.end(
+            JSON.stringify({ error: "Missing or unknown Mcp-Session-Id" }),
+          );
           return;
         }
         const transport = sessions.get(sessionId)!;

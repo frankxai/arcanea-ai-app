@@ -25,7 +25,10 @@ export function contentHash(value) {
 }
 
 export function countNodes(nodes) {
-  return (nodes || []).reduce((acc, n) => ({ ...acc, [n.type]: (acc[n.type] || 0) + 1 }), {});
+  return (nodes || []).reduce(
+    (acc, n) => ({ ...acc, [n.type]: (acc[n.type] || 0) + 1 }),
+    {},
+  );
 }
 
 /**
@@ -48,7 +51,10 @@ export function packDigest(pack) {
     packVersion: pack.packVersion ?? null,
     interop: pack.interop ?? null,
     world: pack.world,
-    canon: { document: pack.canon?.document ?? null, sourceHash: pack.canon?.sourceHash ?? null },
+    canon: {
+      document: pack.canon?.document ?? null,
+      sourceHash: pack.canon?.sourceHash ?? null,
+    },
     nodes: pack.nodes,
     relationships: pack.relationships,
     provenance: {
@@ -72,7 +78,8 @@ export function packDigest(pack) {
 export function createWorldSeed(spec) {
   const now = spec.createdAt || "1970-01-01T00:00:00.000Z";
   const worldId = spec.worldId || deterministicId("wld", spec.name);
-  const creatorId = spec.creator.id || deterministicId("crt", spec.creator.handle);
+  const creatorId =
+    spec.creator.id || deterministicId("crt", spec.creator.handle);
   const sourceId = deterministicId("src", `${worldId}:seed`);
   const branchId = "main";
   const versionId = deterministicId("ver", `${worldId}:1`);
@@ -92,7 +99,12 @@ export function createWorldSeed(spec) {
     branchRef: branchId,
     visibility: spec.visibility || "private",
     canonStatus: "draft",
-    rights: { state: "creator-owned", spdx: spec.spdx || "CC-BY-4.0", commercial: true, attribution: true },
+    rights: {
+      state: "creator-owned",
+      spdx: spec.spdx || "CC-BY-4.0",
+      commercial: true,
+      attribution: true,
+    },
     evalRule: nodeSeed.evalRule || "canon-conflict-clean",
   });
 
@@ -109,7 +121,12 @@ export function createWorldSeed(spec) {
       branchRef: branchId,
       visibility: "public",
       canonStatus: "locked",
-      rights: { state: "arcanea-owned", spdx: null, commercial: false, attribution: true },
+      rights: {
+        state: "arcanea-owned",
+        spdx: null,
+        commercial: false,
+        attribution: true,
+      },
       evalRule: "canon-immutable",
     },
   };
@@ -136,8 +153,16 @@ export function createWorldSeed(spec) {
     format: PACK_FORMAT,
     packVersion: PACK_VERSION,
     interop: WORLD_SDK_INTEROP,
-    world: { id: worldId, name: spec.name, slug: slugify(spec.name), creatorRef: creatorId },
-    canon: { document: ".arcanea/lore/CANON_LOCKED.md", sourceHash: spec.canonSourceHash || null },
+    world: {
+      id: worldId,
+      name: spec.name,
+      slug: slugify(spec.name),
+      creatorRef: creatorId,
+    },
+    canon: {
+      document: ".arcanea/lore/CANON_LOCKED.md",
+      sourceHash: spec.canonSourceHash || null,
+    },
     nodes: [universe, world, creator],
     relationships: [
       {
@@ -151,7 +176,15 @@ export function createWorldSeed(spec) {
       },
     ],
     branches: [
-      { id: branchId, type: "Branch", name: "main", parent: null, head: versionId, owner: creatorId, createdAt: now },
+      {
+        id: branchId,
+        type: "Branch",
+        name: "main",
+        parent: null,
+        head: versionId,
+        owner: creatorId,
+        createdAt: now,
+      },
     ],
     versions: [
       {
@@ -183,18 +216,25 @@ export function slugify(name) {
 
 /** Insert an entity node, filling the governance envelope from a template node. */
 export function addNode(pack, node, { governanceFrom } = {}) {
-  if (!isEntityType(node.type)) throw new TypeError(`unknown entity type: ${node.type}`);
+  if (!isEntityType(node.type))
+    throw new TypeError(`unknown entity type: ${node.type}`);
   const template = governanceFrom
     ? pack.nodes.find((n) => n.id === governanceFrom)
     : pack.nodes.find((n) => n.type === "World");
-  const governance = node.governance || { ...template.governance, canonStatus: "draft" };
+  const governance = node.governance || {
+    ...template.governance,
+    canonStatus: "draft",
+  };
   const next = { ...node, governance };
   return { ...pack, nodes: [...pack.nodes, next] };
 }
 
 export function addRelationship(pack, rel) {
   const world = pack.nodes.find((n) => n.type === "World");
-  const governance = rel.governance || { ...world.governance, canonStatus: "draft" };
+  const governance = rel.governance || {
+    ...world.governance,
+    canonStatus: "draft",
+  };
   return {
     ...pack,
     relationships: [
@@ -208,10 +248,16 @@ export function addRelationship(pack, rel) {
  * Commit the working pack as a new Version on its current branch.
  * Provenance is the point: every version records who, when, from what, and the digest.
  */
-export function commit(pack, { branch = "main", message, by, at = "1970-01-01T00:00:00.000Z" }) {
+export function commit(
+  pack,
+  { branch = "main", message, by, at = "1970-01-01T00:00:00.000Z" },
+) {
   const head = pack.branches.find((b) => b.id === branch);
   if (!head) throw new Error(`no such branch: ${branch}`);
-  const versionId = deterministicId("ver", `${pack.world.id}:${branch}:${pack.versions.length + 1}`);
+  const versionId = deterministicId(
+    "ver",
+    `${pack.world.id}:${branch}:${pack.versions.length + 1}`,
+  );
   const version = {
     id: versionId,
     type: "Version",
@@ -225,7 +271,9 @@ export function commit(pack, { branch = "main", message, by, at = "1970-01-01T00
   return {
     ...pack,
     versions: [...pack.versions, version],
-    branches: pack.branches.map((b) => (b.id === branch ? { ...b, head: versionId } : b)),
+    branches: pack.branches.map((b) =>
+      b.id === branch ? { ...b, head: versionId } : b,
+    ),
   };
 }
 
@@ -233,7 +281,10 @@ export function commit(pack, { branch = "main", message, by, at = "1970-01-01T00
  * Portable export. This is the activation artifact: one file a stranger can read
  * and verify — every node owned, sourced, versioned, and rights-stated.
  */
-export function exportPack(pack, { exportedAt = "1970-01-01T00:00:00.000Z" } = {}) {
+export function exportPack(
+  pack,
+  { exportedAt = "1970-01-01T00:00:00.000Z" } = {},
+) {
   const digest = packDigest(pack);
   const counts = countNodes(pack.nodes);
   return {

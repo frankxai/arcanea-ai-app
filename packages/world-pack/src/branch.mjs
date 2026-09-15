@@ -14,7 +14,8 @@ function fieldPaths(node) {
   const out = {};
   const walk = (value, path) => {
     if (value && typeof value === "object" && !Array.isArray(value)) {
-      for (const k of Object.keys(value)) walk(value[k], path ? `${path}.${k}` : k);
+      for (const k of Object.keys(value))
+        walk(value[k], path ? `${path}.${k}` : k);
     } else {
       out[path] = value;
     }
@@ -41,24 +42,39 @@ export function diffPacks(base, head) {
     const paths = new Set([...Object.keys(fa), ...Object.keys(fb)]);
     const fields = [];
     for (const p of paths) {
-      if (JSON.stringify(fa[p]) !== JSON.stringify(fb[p])) fields.push({ path: p, base: fa[p] ?? null, head: fb[p] ?? null });
+      if (JSON.stringify(fa[p]) !== JSON.stringify(fb[p]))
+        fields.push({ path: p, base: fa[p] ?? null, head: fb[p] ?? null });
     }
-    if (fields.length) changed.push({ id, type: after.type, name: after.name, fields });
+    if (fields.length)
+      changed.push({ id, type: after.type, name: after.name, fields });
   }
   return { added, removed, changed };
 }
 
 /** Open a branch off a pack's current head. Nodes are not copied; the branch is a pointer. */
-export function branchPack(pack, { name, from = "main", owner, at = "1970-01-01T00:00:00.000Z" }) {
+export function branchPack(
+  pack,
+  { name, from = "main", owner, at = "1970-01-01T00:00:00.000Z" },
+) {
   const parent = pack.branches.find((b) => b.id === from);
   if (!parent) throw new Error(`no such branch: ${from}`);
   const id = name;
-  if (pack.branches.some((b) => b.id === id)) throw new Error(`branch already exists: ${id}`);
+  if (pack.branches.some((b) => b.id === id))
+    throw new Error(`branch already exists: ${id}`);
   return {
     ...pack,
     branches: [
       ...pack.branches,
-      { id, type: "Branch", name, parent: from, head: parent.head, owner, createdAt: at, forkedFrom: parent.head },
+      {
+        id,
+        type: "Branch",
+        name,
+        parent: from,
+        head: parent.head,
+        owner,
+        createdAt: at,
+        forkedFrom: parent.head,
+      },
     ],
   };
 }
@@ -71,7 +87,17 @@ export function branchPack(pack, { name, from = "main", owner, at = "1970-01-01T
  *  - merge.divergent-field  — both sides changed the same field differently
  *  - merge.delete-vs-edit   — one side removed a node the other edited
  */
-export function mergeBranch(ancestor, ours, theirs, { by, at = "1970-01-01T00:00:00.000Z", intoBranch = "main", canon = null } = {}) {
+export function mergeBranch(
+  ancestor,
+  ours,
+  theirs,
+  {
+    by,
+    at = "1970-01-01T00:00:00.000Z",
+    intoBranch = "main",
+    canon = null,
+  } = {},
+) {
   const base = byId(ancestor.nodes);
   const a = byId(ours.nodes);
   const b = byId(theirs.nodes);
@@ -119,7 +145,10 @@ export function mergeBranch(ancestor, ours, theirs, { by, at = "1970-01-01T00:00
     const next = JSON.parse(JSON.stringify(ourNode));
     let blocked = false;
 
-    for (const path of new Set([...Object.keys(fOurs), ...Object.keys(fTheirs)])) {
+    for (const path of new Set([
+      ...Object.keys(fOurs),
+      ...Object.keys(fTheirs),
+    ])) {
       const bv = JSON.stringify(fBase[path]);
       const ov = JSON.stringify(fOurs[path]);
       const tv = JSON.stringify(fTheirs[path]);
@@ -142,7 +171,10 @@ export function mergeBranch(ancestor, ours, theirs, { by, at = "1970-01-01T00:00
   }
 
   const relIds = new Set(ours.relationships.map((r) => r.id));
-  const relationships = [...ours.relationships, ...theirs.relationships.filter((r) => !relIds.has(r.id))];
+  const relationships = [
+    ...ours.relationships,
+    ...theirs.relationships.filter((r) => !relIds.has(r.id)),
+  ];
 
   // A merge inherits the incoming branch's history, or every node stamped with
   // that branch and its versions would point at ledgers the merged pack lacks.
@@ -160,9 +192,14 @@ export function mergeBranch(ancestor, ours, theirs, { by, at = "1970-01-01T00:00
   };
   if (conflicts.length) return { merged: null, conflicts, pack: ours };
 
-  const versionId = deterministicId("ver", `${ours.world.id}:merge:${ours.versions.length + 1}`);
-  const oursHead = ours.branches.find((br) => br.id === intoBranch)?.head ?? null;
-  const theirsHead = theirs.branches.find((br) => br.id !== intoBranch)?.head ?? null;
+  const versionId = deterministicId(
+    "ver",
+    `${ours.world.id}:merge:${ours.versions.length + 1}`,
+  );
+  const oursHead =
+    ours.branches.find((br) => br.id === intoBranch)?.head ?? null;
+  const theirsHead =
+    theirs.branches.find((br) => br.id !== intoBranch)?.head ?? null;
   const withVersion = {
     ...mergedPack,
     versions: [
@@ -178,7 +215,9 @@ export function mergeBranch(ancestor, ours, theirs, { by, at = "1970-01-01T00:00
         digest: packDigest(mergedPack),
       },
     ],
-    branches: mergedPack.branches.map((br) => (br.id === intoBranch ? { ...br, head: versionId } : br)),
+    branches: mergedPack.branches.map((br) =>
+      br.id === intoBranch ? { ...br, head: versionId } : br,
+    ),
   };
   return { merged: withVersion, conflicts: [], pack: withVersion };
 }
@@ -187,7 +226,8 @@ function setPath(obj, path, value) {
   const parts = path.split(".");
   let cur = obj;
   for (let i = 0; i < parts.length - 1; i++) {
-    if (typeof cur[parts[i]] !== "object" || cur[parts[i]] === null) cur[parts[i]] = {};
+    if (typeof cur[parts[i]] !== "object" || cur[parts[i]] === null)
+      cur[parts[i]] = {};
     cur = cur[parts[i]];
   }
   cur[parts[parts.length - 1]] = value;

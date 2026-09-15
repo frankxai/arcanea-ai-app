@@ -8,11 +8,29 @@
 // real document, not against the hash the pack recorded; and the authority model
 // is checked against the Guardian definitions, not against what the file claims.
 
-import { buildCanonIndex, canonNameLoose, contradictionsIn, deriveLayer, gateByIndex, rankForGates } from "./canon-index.mjs";
+import {
+  buildCanonIndex,
+  canonNameLoose,
+  contradictionsIn,
+  deriveLayer,
+  gateByIndex,
+  rankForGates,
+} from "./canon-index.mjs";
 import { verifyAgentRoles } from "./guardians.mjs";
-import { LAYER_RIGHTS_MATRIX, LAYER_STATUS_MATRIX, LAYERS, RIGHTS_STATES, CANON_STATUSES } from "./model.mjs";
+import {
+  LAYER_RIGHTS_MATRIX,
+  LAYER_STATUS_MATRIX,
+  LAYERS,
+  RIGHTS_STATES,
+  CANON_STATUSES,
+} from "./model.mjs";
 
-export const SEVERITIES = Object.freeze(["blocker", "error", "warning", "info"]);
+export const SEVERITIES = Object.freeze([
+  "blocker",
+  "error",
+  "warning",
+  "info",
+]);
 
 const RULES = Object.freeze({
   "canon.binding-mismatch": "blocker",
@@ -60,7 +78,8 @@ function finding(ruleId, node, message, evidence) {
   };
 }
 
-const NERO_EVIL = /\bnero\b[^.]{0,80}?\b(evil|malevolent|wicked|the enemy|villain)\b|\b(evil|malevolent|wicked|villain)\b[^.]{0,40}?\bnero\b/i;
+const NERO_EVIL =
+  /\bnero\b[^.]{0,80}?\b(evil|malevolent|wicked|the enemy|villain)\b|\b(evil|malevolent|wicked|villain)\b[^.]{0,40}?\bnero\b/i;
 
 const PROSE_SKIP = new Set(["id", "type", "layer", "governance", "provenance"]);
 
@@ -76,7 +95,8 @@ export function proseOf(node) {
   const walk = (value) => {
     if (typeof value === "string") parts.push(value);
     else if (Array.isArray(value)) value.forEach(walk);
-    else if (value && typeof value === "object") for (const k of Object.keys(value)) walk(value[k]);
+    else if (value && typeof value === "object")
+      for (const k of Object.keys(value)) walk(value[k]);
   };
   for (const [key, value] of Object.entries(node || {})) {
     if (PROSE_SKIP.has(key)) continue;
@@ -88,7 +108,13 @@ export function proseOf(node) {
 /** Names a node offers for itself. An alias of a locked name is still that name. */
 function nameCandidates(node) {
   const attrs = node.attributes || {};
-  const raw = [node.name, ...(Array.isArray(attrs.aliases) ? attrs.aliases : []), ...(Array.isArray(attrs.alsoKnownAs) ? attrs.alsoKnownAs : []), attrs.alias, attrs.trueName];
+  const raw = [
+    node.name,
+    ...(Array.isArray(attrs.aliases) ? attrs.aliases : []),
+    ...(Array.isArray(attrs.alsoKnownAs) ? attrs.alsoKnownAs : []),
+    attrs.alias,
+    attrs.trueName,
+  ];
   return raw.filter((n) => typeof n === "string" && n.trim().length > 0);
 }
 
@@ -110,34 +136,64 @@ export function detectConflicts(pack, canon, options = {}) {
   // them top level. Both are valid inputs — the detector reads either.
   const prov = pack.provenance || {};
   const nodeIds = new Set(pack.nodes.map((n) => n.id));
-  const sourceIds = new Set((pack.sources || prov.sources || []).map((s) => s.id));
-  const versionIds = new Set((pack.versions || prov.versions || []).map((v) => v.id));
-  const branchIds = new Set((pack.branches || prov.branches || []).map((b) => b.id));
+  const sourceIds = new Set(
+    (pack.sources || prov.sources || []).map((s) => s.id),
+  );
+  const versionIds = new Set(
+    (pack.versions || prov.versions || []).map((v) => v.id),
+  );
+  const branchIds = new Set(
+    (pack.branches || prov.branches || []).map((b) => b.id),
+  );
 
   // — canon binding: the hash of the document in front of us, not the one the pack wrote down —
   const declaredHash = pack.canon?.sourceHash ?? null;
   if (options.canonBinding === "foreign") {
     if (declaredHash && declaredHash !== canon.sourceHash)
       findings.push(
-        finding("canon.binding-foreign", null, `pack is bound to a different canon document; checking it against ${canon.universeName ?? "this canon"} anyway`, {
-          declared: declaredHash,
-          actual: canon.sourceHash,
-        }),
+        finding(
+          "canon.binding-foreign",
+          null,
+          `pack is bound to a different canon document; checking it against ${canon.universeName ?? "this canon"} anyway`,
+          {
+            declared: declaredHash,
+            actual: canon.sourceHash,
+          },
+        ),
       );
   } else if (!declaredHash) {
-    findings.push(finding("canon.binding-mismatch", null, `pack declares no canon binding; the canon document hashes to ${canon.sourceHash}`, { declared: null, actual: canon.sourceHash }));
+    findings.push(
+      finding(
+        "canon.binding-mismatch",
+        null,
+        `pack declares no canon binding; the canon document hashes to ${canon.sourceHash}`,
+        { declared: null, actual: canon.sourceHash },
+      ),
+    );
   } else if (declaredHash !== canon.sourceHash) {
     findings.push(
-      finding("canon.binding-mismatch", null, `pack was cleared against a different canon\n    declared   ${declaredHash}\n    actual     ${canon.sourceHash}`, {
-        declared: declaredHash,
-        actual: canon.sourceHash,
-      }),
+      finding(
+        "canon.binding-mismatch",
+        null,
+        `pack was cleared against a different canon\n    declared   ${declaredHash}\n    actual     ${canon.sourceHash}`,
+        {
+          declared: declaredHash,
+          actual: canon.sourceHash,
+        },
+      ),
     );
   }
 
   // — authority model: Guardian roles are defined in code, never asserted by a file —
   for (const problem of verifyAgentRoles(pack.agentRoles)) {
-    findings.push(finding("provenance.unknown-agent-role", { id: problem.id, name: problem.name }, problem.reason, problem));
+    findings.push(
+      finding(
+        "provenance.unknown-agent-role",
+        { id: problem.id, name: problem.name },
+        problem.reason,
+        problem,
+      ),
+    );
   }
 
   for (const node of pack.nodes) {
@@ -145,67 +201,146 @@ export function detectConflicts(pack, canon, options = {}) {
     const attrs = node.attributes || {};
 
     if (!LAYERS.includes(node.layer)) {
-      findings.push(finding("schema.unknown-layer", node, `layer '${node.layer}' is not one of ${LAYERS.join(", ")}`, { expected: LAYERS }));
+      findings.push(
+        finding(
+          "schema.unknown-layer",
+          node,
+          `layer '${node.layer}' is not one of ${LAYERS.join(", ")}`,
+          { expected: LAYERS },
+        ),
+      );
       continue;
     }
 
     // Layer is derived, never taken on the node's word.
     const attestation = deriveLayer(canon, node);
-    const unattestedClaim = attestation.declared === "canon" && !attestation.attested;
+    const unattestedClaim =
+      attestation.declared === "canon" && !attestation.attested;
     const layer = unattestedClaim && foreign ? "canon" : attestation.layer;
     if (unattestedClaim) {
       findings.push(
         foreign
-          ? finding("canon.foreign-canon-node", node, `node is canon in another universe, not in ${canon.universeName ?? "this canon"}; judged as-declared`, {
-              declaredLayer: "canon",
-              owner: g.owner ?? null,
-            })
-          : finding("canon.layer-claim", node, `node declares layer 'canon' but is not canon: ${attestation.reason}`, {
-              declaredLayer: "canon",
-              derivedLayer: attestation.layer,
-              canonOwner: canon.canonOwner,
-              owner: g.owner ?? null,
-            }),
+          ? finding(
+              "canon.foreign-canon-node",
+              node,
+              `node is canon in another universe, not in ${canon.universeName ?? "this canon"}; judged as-declared`,
+              {
+                declaredLayer: "canon",
+                owner: g.owner ?? null,
+              },
+            )
+          : finding(
+              "canon.layer-claim",
+              node,
+              `node declares layer 'canon' but is not canon: ${attestation.reason}`,
+              {
+                declaredLayer: "canon",
+                derivedLayer: attestation.layer,
+                canonOwner: canon.canonOwner,
+                owner: g.owner ?? null,
+              },
+            ),
       );
     }
 
     // — governance envelope —
-    if (!g.owner) findings.push(finding("provenance.missing-owner", node, "node has no owner"));
+    if (!g.owner)
+      findings.push(
+        finding("provenance.missing-owner", node, "node has no owner"),
+      );
     if (g.sourceRef && !sourceIds.has(g.sourceRef))
-      findings.push(finding("provenance.dangling-source", node, `sourceRef ${g.sourceRef} is not in pack.sources`, { sourceRef: g.sourceRef }));
+      findings.push(
+        finding(
+          "provenance.dangling-source",
+          node,
+          `sourceRef ${g.sourceRef} is not in pack.sources`,
+          { sourceRef: g.sourceRef },
+        ),
+      );
     if (g.versionRef && !versionIds.has(g.versionRef))
-      findings.push(finding("provenance.dangling-version", node, `versionRef ${g.versionRef} is not in pack.versions`, { versionRef: g.versionRef }));
+      findings.push(
+        finding(
+          "provenance.dangling-version",
+          node,
+          `versionRef ${g.versionRef} is not in pack.versions`,
+          { versionRef: g.versionRef },
+        ),
+      );
     if (g.branchRef && !branchIds.has(g.branchRef))
-      findings.push(finding("provenance.dangling-branch", node, `branchRef ${g.branchRef} is not in pack.branches`, { branchRef: g.branchRef }));
+      findings.push(
+        finding(
+          "provenance.dangling-branch",
+          node,
+          `branchRef ${g.branchRef} is not in pack.branches`,
+          { branchRef: g.branchRef },
+        ),
+      );
 
     const status = g.canonStatus;
     if (!CANON_STATUSES.includes(status)) {
-      findings.push(finding("status.illegal-for-layer", node, `canonStatus '${status}' is not a CanonStatus`, { expected: CANON_STATUSES }));
+      findings.push(
+        finding(
+          "status.illegal-for-layer",
+          node,
+          `canonStatus '${status}' is not a CanonStatus`,
+          { expected: CANON_STATUSES },
+        ),
+      );
     } else if (!LAYER_STATUS_MATRIX[layer].includes(status)) {
       findings.push(
-        finding("status.illegal-for-layer", node, `a '${layer}' node cannot be '${status}'`, {
-          expected: LAYER_STATUS_MATRIX[layer],
-          actual: status,
-          derivedLayer: layer,
-        }),
+        finding(
+          "status.illegal-for-layer",
+          node,
+          `a '${layer}' node cannot be '${status}'`,
+          {
+            expected: LAYER_STATUS_MATRIX[layer],
+            actual: status,
+            derivedLayer: layer,
+          },
+        ),
       );
     }
 
     const rights = g.rights || {};
     if (!RIGHTS_STATES.includes(rights.state)) {
-      findings.push(finding("rights.unresolved", node, `rights.state '${rights.state}' is not a RightsState`, { expected: RIGHTS_STATES }));
+      findings.push(
+        finding(
+          "rights.unresolved",
+          node,
+          `rights.state '${rights.state}' is not a RightsState`,
+          { expected: RIGHTS_STATES },
+        ),
+      );
     } else {
-      if (rights.state === "unresolved") findings.push(finding("rights.unresolved", node, "rights are unresolved; this node cannot be exported or sold"));
+      if (rights.state === "unresolved")
+        findings.push(
+          finding(
+            "rights.unresolved",
+            node,
+            "rights are unresolved; this node cannot be exported or sold",
+          ),
+        );
       if (!LAYER_RIGHTS_MATRIX[layer].includes(rights.state))
         findings.push(
-          finding("rights.state-illegal-for-layer", node, `a '${layer}' node cannot claim rights '${rights.state}'`, {
-            expected: LAYER_RIGHTS_MATRIX[layer],
-            actual: rights.state,
-            derivedLayer: layer,
-          }),
+          finding(
+            "rights.state-illegal-for-layer",
+            node,
+            `a '${layer}' node cannot claim rights '${rights.state}'`,
+            {
+              expected: LAYER_RIGHTS_MATRIX[layer],
+              actual: rights.state,
+              derivedLayer: layer,
+            },
+          ),
         );
       if (rights.state === "licensed" && !rights.spdx && !rights.licenceRef)
-        findings.push(finding("rights.licensed-without-licence", node, "licensed node names no licence (spdx or licenceRef)"));
+        findings.push(
+          finding(
+            "rights.licensed-without-licence",
+            node,
+            "licensed node names no licence (spdx or licenceRef)",
+          ),
+        );
     }
 
     // — canon name collisions —
@@ -219,24 +354,38 @@ export function detectConflicts(pack, canon, options = {}) {
         const isNodeName = candidate === node.name;
         const key = loose.entry.name;
         const prior = claimed.get(key);
-        if (!prior || (prior.match !== "exact" && loose.match === "exact")) claimed.set(key, { ...loose, candidate, isNodeName });
+        if (!prior || (prior.match !== "exact" && loose.match === "exact"))
+          claimed.set(key, { ...loose, candidate, isNodeName });
       }
       for (const hit of claimed.values()) {
         if (hit.entry.status === "locked") {
           const exactName = hit.match === "exact" && hit.isNodeName;
           findings.push(
             finding(
-              exactName ? "canon.locked-name-taken" : "canon.alias-of-locked-name",
+              exactName
+                ? "canon.locked-name-taken"
+                : "canon.alias-of-locked-name",
               node,
               exactName
                 ? `'${node.name}' is locked canon (${hit.entry.kind}); a ${layer} node cannot claim that name`
                 : `'${hit.candidate}' carries the locked canon name '${hit.entry.name}' (${hit.entry.kind}); a ${layer} node cannot claim it under a hat`,
-              { canonKind: hit.entry.kind, canonStatus: hit.entry.status, canonName: hit.entry.name, claimedAs: hit.candidate, match: hit.match },
+              {
+                canonKind: hit.entry.kind,
+                canonStatus: hit.entry.status,
+                canonName: hit.entry.name,
+                claimedAs: hit.candidate,
+                match: hit.match,
+              },
             ),
           );
         } else if (hit.entry.status === "staging" && status === "locked") {
           findings.push(
-            finding("canon.staging-cited-as-locked", node, `'${hit.entry.name}' is STAGING in canon but this node claims 'locked'`, { canonStatus: hit.entry.status }),
+            finding(
+              "canon.staging-cited-as-locked",
+              node,
+              `'${hit.entry.name}' is STAGING in canon but this node claims 'locked'`,
+              { canonStatus: hit.entry.status },
+            ),
           );
         }
       }
@@ -246,88 +395,183 @@ export function detectConflicts(pack, canon, options = {}) {
     // A canon that has no Gate table has no opinion about gates. Only tables the
     // document actually carries are enforced — that is what lets these same rules
     // run against a creator's own canon without inventing findings.
-    const gate = attrs.gate == null || !canon.gates.length ? null : gateByIndex(canon, Number(attrs.gate));
+    const gate =
+      attrs.gate == null || !canon.gates.length
+        ? null
+        : gateByIndex(canon, Number(attrs.gate));
     if (attrs.gate != null && !gate && canon.gates.length) {
       findings.push(
-        finding("canon.gate-unknown", node, `gate '${attrs.gate}' is not one of the ${canon.gates.length} Gates`, {
-          expected: canon.gates.map((g2) => g2.index),
-          actual: attrs.gate,
-        }),
+        finding(
+          "canon.gate-unknown",
+          node,
+          `gate '${attrs.gate}' is not one of the ${canon.gates.length} Gates`,
+          {
+            expected: canon.gates.map((g2) => g2.index),
+            actual: attrs.gate,
+          },
+        ),
       );
     }
     if (gate) {
-      if (attrs.frequencyHz != null && Number(attrs.frequencyHz) !== gate.frequencyHz)
+      if (
+        attrs.frequencyHz != null &&
+        Number(attrs.frequencyHz) !== gate.frequencyHz
+      )
         findings.push(
-          finding("canon.gate-frequency-mismatch", node, `gate ${gate.index} (${gate.name}) is ${gate.frequencyHz} Hz, not ${attrs.frequencyHz} Hz`, {
-            expected: gate.frequencyHz,
-            actual: Number(attrs.frequencyHz),
-          }),
+          finding(
+            "canon.gate-frequency-mismatch",
+            node,
+            `gate ${gate.index} (${gate.name}) is ${gate.frequencyHz} Hz, not ${attrs.frequencyHz} Hz`,
+            {
+              expected: gate.frequencyHz,
+              actual: Number(attrs.frequencyHz),
+            },
+          ),
         );
       if (attrs.godbeast && attrs.godbeast !== gate.godbeast)
         findings.push(
-          finding("canon.gate-pairing-mismatch", node, `gate ${gate.index} is bonded to ${gate.godbeast}, not ${attrs.godbeast}`, {
-            expected: gate.godbeast,
-            actual: attrs.godbeast,
-          }),
+          finding(
+            "canon.gate-pairing-mismatch",
+            node,
+            `gate ${gate.index} is bonded to ${gate.godbeast}, not ${attrs.godbeast}`,
+            {
+              expected: gate.godbeast,
+              actual: attrs.godbeast,
+            },
+          ),
         );
       if (attrs.guardian && attrs.guardian !== gate.god)
         findings.push(
-          finding("canon.gate-pairing-mismatch", node, `gate ${gate.index} is kept by ${gate.god}, not ${attrs.guardian}`, {
-            expected: gate.god,
-            actual: attrs.guardian,
-          }),
+          finding(
+            "canon.gate-pairing-mismatch",
+            node,
+            `gate ${gate.index} is kept by ${gate.god}, not ${attrs.guardian}`,
+            {
+              expected: gate.god,
+              actual: attrs.guardian,
+            },
+          ),
         );
     } else if (attrs.frequencyHz != null && canon.gates.length) {
-      const known = canon.gates.some((g2) => g2.frequencyHz === Number(attrs.frequencyHz));
+      const known = canon.gates.some(
+        (g2) => g2.frequencyHz === Number(attrs.frequencyHz),
+      );
       if (!known)
         findings.push(
-          finding("canon.frequency-unknown", node, `${attrs.frequencyHz} Hz is not a Gate frequency`, {
-            expected: canon.gates.map((g2) => g2.frequencyHz),
-            actual: Number(attrs.frequencyHz),
-          }),
+          finding(
+            "canon.frequency-unknown",
+            node,
+            `${attrs.frequencyHz} Hz is not a Gate frequency`,
+            {
+              expected: canon.gates.map((g2) => g2.frequencyHz),
+              actual: Number(attrs.frequencyHz),
+            },
+          ),
         );
     }
 
     // Unknown values are findings, not silence. The old detector only checked a
     // pairing when the gate resolved, so an invented gate took every value with it.
-    if (attrs.godbeast && canon.gates.length && !canon.gates.some((g2) => g2.godbeast === attrs.godbeast))
+    if (
+      attrs.godbeast &&
+      canon.gates.length &&
+      !canon.gates.some((g2) => g2.godbeast === attrs.godbeast)
+    )
       findings.push(
-        finding("canon.godbeast-unknown", node, `'${attrs.godbeast}' is not a canonical Godbeast`, { expected: canon.gates.map((g2) => g2.godbeast), actual: attrs.godbeast }),
+        finding(
+          "canon.godbeast-unknown",
+          node,
+          `'${attrs.godbeast}' is not a canonical Godbeast`,
+          {
+            expected: canon.gates.map((g2) => g2.godbeast),
+            actual: attrs.godbeast,
+          },
+        ),
       );
-    if (attrs.guardian && canon.gates.length && !canon.gates.some((g2) => g2.god === attrs.guardian))
+    if (
+      attrs.guardian &&
+      canon.gates.length &&
+      !canon.gates.some((g2) => g2.god === attrs.guardian)
+    )
       findings.push(
-        finding("canon.guardian-unknown", node, `'${attrs.guardian}' is not a canonical God/Goddess`, { expected: canon.gates.map((g2) => g2.god), actual: attrs.guardian }),
+        finding(
+          "canon.guardian-unknown",
+          node,
+          `'${attrs.guardian}' is not a canonical God/Goddess`,
+          { expected: canon.gates.map((g2) => g2.god), actual: attrs.guardian },
+        ),
       );
-    if (attrs.rank && canon.ranks.length && !canon.ranks.some((r) => r.rank === attrs.rank))
-      findings.push(finding("canon.rank-unknown", node, `'${attrs.rank}' is not a magic rank`, { expected: canon.ranks.map((r) => r.rank), actual: attrs.rank }));
+    if (
+      attrs.rank &&
+      canon.ranks.length &&
+      !canon.ranks.some((r) => r.rank === attrs.rank)
+    )
+      findings.push(
+        finding(
+          "canon.rank-unknown",
+          node,
+          `'${attrs.rank}' is not a magic rank`,
+          { expected: canon.ranks.map((r) => r.rank), actual: attrs.rank },
+        ),
+      );
 
     if (attrs.gatesOpen != null && attrs.rank) {
       const expected = rankForGates(canon, Number(attrs.gatesOpen));
       if (expected && expected !== attrs.rank)
         findings.push(
-          finding("canon.rank-out-of-band", node, `${attrs.gatesOpen} gates open is rank ${expected}, not ${attrs.rank}`, {
-            expected,
-            actual: attrs.rank,
-          }),
+          finding(
+            "canon.rank-out-of-band",
+            node,
+            `${attrs.gatesOpen} gates open is rank ${expected}, not ${attrs.rank}`,
+            {
+              expected,
+              actual: attrs.rank,
+            },
+          ),
         );
     }
 
-    if (attrs.element && canon.elements.length && !canon.elements.includes(attrs.element))
-      findings.push(finding("canon.element-unknown", node, `'${attrs.element}' is not one of the canonical elements`, { expected: canon.elements }));
+    if (
+      attrs.element &&
+      canon.elements.length &&
+      !canon.elements.includes(attrs.element)
+    )
+      findings.push(
+        finding(
+          "canon.element-unknown",
+          node,
+          `'${attrs.element}' is not one of the canonical elements`,
+          { expected: canon.elements },
+        ),
+      );
 
     if (attrs.house && canon.houses.length) {
       const houseName = String(attrs.house).replace(/^House\s+/i, "");
       if (!canon.houses.includes(houseName))
-        findings.push(finding("canon.house-unknown", node, `'${attrs.house}' is not one of the seven Academy Houses`, { expected: canon.houses }));
+        findings.push(
+          finding(
+            "canon.house-unknown",
+            node,
+            `'${attrs.house}' is not one of the seven Academy Houses`,
+            { expected: canon.houses },
+          ),
+        );
     }
 
     if (attrs.originClass && canon.originClasses.length) {
-      const known = canon.originClasses.some((o) => o.name.toLowerCase() === String(attrs.originClass).toLowerCase());
+      const known = canon.originClasses.some(
+        (o) => o.name.toLowerCase() === String(attrs.originClass).toLowerCase(),
+      );
       if (!known)
         findings.push(
-          finding("canon.origin-class-unknown", node, `'${attrs.originClass}' is not a catalogued origin class; the eight are CLOSED`, {
-            expected: canon.originClasses.map((o) => o.name),
-          }),
+          finding(
+            "canon.origin-class-unknown",
+            node,
+            `'${attrs.originClass}' is not a catalogued origin class; the eight are CLOSED`,
+            {
+              expected: canon.originClasses.map((o) => o.name),
+            },
+          ),
         );
     }
 
@@ -335,27 +579,51 @@ export function detectConflicts(pack, canon, options = {}) {
     const prose = proseOf(node);
     for (const hit of contradictionsIn(prose, canon.contradictionTriggers)) {
       findings.push(
-        finding("canon.locked-truth-contradiction", node, `LOCKED TRUTH: ${hit.source}`, {
-          subject: hit.subjectLabel,
-          forbidden: hit.forbidden,
-          lockedTruth: hit.source,
-        }),
+        finding(
+          "canon.locked-truth-contradiction",
+          node,
+          `LOCKED TRUTH: ${hit.source}`,
+          {
+            subject: hit.subjectLabel,
+            forbidden: hit.forbidden,
+            lockedTruth: hit.source,
+          },
+        ),
       );
     }
     if (prose && NERO_EVIL.test(prose))
-      findings.push(finding("canon.nero-miscast", node, "LOCKED TRUTH: Nero is NOT evil; Shadow is corrupted Void, the Dark Lord's perversion", { lockedTruth: canon.lockedTruths[0] }));
+      findings.push(
+        finding(
+          "canon.nero-miscast",
+          node,
+          "LOCKED TRUTH: Nero is NOT evil; Shadow is corrupted Void, the Dark Lord's perversion",
+          { lockedTruth: canon.lockedTruths[0] },
+        ),
+      );
 
     if (/^luminor$/i.test(String(attrs.species || attrs.originClass || "")))
-      findings.push(finding("canon.luminor-as-species", node, "LOCKED TRUTH: Luminor is a RANK, not an entity type", {}));
+      findings.push(
+        finding(
+          "canon.luminor-as-species",
+          node,
+          "LOCKED TRUTH: Luminor is a RANK, not an entity type",
+          {},
+        ),
+      );
   }
 
   for (const rel of pack.relationships || []) {
     if (!nodeIds.has(rel.from) || !nodeIds.has(rel.to))
       findings.push(
-        finding("graph.dangling-relationship", { id: rel.id, name: rel.kind }, `relationship '${rel.kind}' points outside the pack`, {
-          from: rel.from,
-          to: rel.to,
-        }),
+        finding(
+          "graph.dangling-relationship",
+          { id: rel.id, name: rel.kind },
+          `relationship '${rel.kind}' points outside the pack`,
+          {
+            from: rel.from,
+            to: rel.to,
+          },
+        ),
       );
   }
 
@@ -378,7 +646,10 @@ export function detectConflicts(pack, canon, options = {}) {
  */
 export function checkAgainst(pack, canonDocument) {
   const canon = buildCanonIndex(canonDocument);
-  return { canon, report: detectConflicts(pack, canon, { canonBinding: "foreign" }) };
+  return {
+    canon,
+    report: detectConflicts(pack, canon, { canonBinding: "foreign" }),
+  };
 }
 
 export { RULES };

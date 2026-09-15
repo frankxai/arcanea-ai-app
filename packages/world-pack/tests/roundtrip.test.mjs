@@ -8,12 +8,29 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
 import { loadCanonIndex } from "../src/canon-index.mjs";
-import { createWorldSeed, addNode, addRelationship, commit, exportPack, verifyExport, deterministicId } from "../src/pack.mjs";
+import {
+  createWorldSeed,
+  addNode,
+  addRelationship,
+  commit,
+  exportPack,
+  verifyExport,
+  deterministicId,
+} from "../src/pack.mjs";
 import { detectConflicts } from "../src/conflict.mjs";
 import { branchPack, diffPacks, mergeBranch } from "../src/branch.mjs";
-import { withGuardianRoles, guardianById, decide, runGuardianEvals } from "../src/guardians.mjs";
+import {
+  withGuardianRoles,
+  guardianById,
+  decide,
+  runGuardianEvals,
+} from "../src/guardians.mjs";
 import * as apl from "../src/apl.mjs";
-import { goodCharacter, conflictedCharacter, goodLocation } from "../fixtures/model-answers.mjs";
+import {
+  goodCharacter,
+  conflictedCharacter,
+  goodLocation,
+} from "../fixtures/model-answers.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const CANON_PATH = resolve(here, "../../../.arcanea/lore/CANON_LOCKED.md");
@@ -49,10 +66,20 @@ test("APL compiles a constrained request with canon facts embedded and no model 
   const { canon, pack } = await seed();
   const compiled = apl.compile(
     "character.constrained.v1",
-    { role: "corridor cartographer", gate: 6, gatesOpen: 3, element: "Void", house: "Synthesis", originClass: "Arcans" },
+    {
+      role: "corridor cartographer",
+      gate: 6,
+      gatesOpen: 3,
+      element: "Void",
+      house: "Synthesis",
+      originClass: "Arcans",
+    },
     { canon, pack },
   );
-  assert.match(compiled.prompt, /Gate 6 is Sight, 639 Hz, kept by Lyria, bonded Godbeast Yumiko/);
+  assert.match(
+    compiled.prompt,
+    /Gate 6 is Sight, 639 Hz, kept by Lyria, bonded Godbeast Yumiko/,
+  );
   assert.match(compiled.prompt, /rank is exactly Mage/);
   assert.match(compiled.prompt, /Nero is not evil/);
   assert.equal(compiled.contract.produces, "Character");
@@ -62,7 +89,14 @@ test("APL compiles a constrained request with canon facts embedded and no model 
   // Same inputs, same prompt. The compiler is deterministic.
   const again = apl.compile(
     "character.constrained.v1",
-    { role: "corridor cartographer", gate: 6, gatesOpen: 3, element: "Void", house: "Synthesis", originClass: "Arcans" },
+    {
+      role: "corridor cartographer",
+      gate: 6,
+      gatesOpen: 3,
+      element: "Void",
+      house: "Synthesis",
+      originClass: "Arcans",
+    },
     { canon, pack },
   );
   assert.equal(again.hash, compiled.hash);
@@ -70,30 +104,84 @@ test("APL compiles a constrained request with canon facts embedded and no model 
 
 test("APL refuses illegal bindings before a prompt is ever built", async () => {
   const { canon, pack } = await seed();
-  assert.throws(() => apl.compile("character.constrained.v1", { role: "x", gate: 11, gatesOpen: 1, element: "Void" }, { canon, pack }), apl.AplError);
-  assert.throws(() => apl.compile("character.constrained.v1", { role: "x", gate: 1, gatesOpen: 1, element: "Ash" }, { canon, pack }), apl.AplError);
   assert.throws(
-    () => apl.compile("character.constrained.v1", { role: "x", gate: 1, gatesOpen: 1, element: "Fire", originClass: "Nullborn" }, { canon, pack }),
+    () =>
+      apl.compile(
+        "character.constrained.v1",
+        { role: "x", gate: 11, gatesOpen: 1, element: "Void" },
+        { canon, pack },
+      ),
     apl.AplError,
   );
-  assert.throws(() => apl.compile("character.constrained.v1", { gate: 1, gatesOpen: 1, element: "Fire" }, { canon, pack }), apl.AplError);
+  assert.throws(
+    () =>
+      apl.compile(
+        "character.constrained.v1",
+        { role: "x", gate: 1, gatesOpen: 1, element: "Ash" },
+        { canon, pack },
+      ),
+    apl.AplError,
+  );
+  assert.throws(
+    () =>
+      apl.compile(
+        "character.constrained.v1",
+        {
+          role: "x",
+          gate: 1,
+          gatesOpen: 1,
+          element: "Fire",
+          originClass: "Nullborn",
+        },
+        { canon, pack },
+      ),
+    apl.AplError,
+  );
+  assert.throws(
+    () =>
+      apl.compile(
+        "character.constrained.v1",
+        { gate: 1, gatesOpen: 1, element: "Fire" },
+        { canon, pack },
+      ),
+    apl.AplError,
+  );
 });
 
 test("a compliant generated character passes the conflict pass and carries prompt provenance", async () => {
   const { canon, pack } = await seed();
   const compiled = apl.compile(
     "character.constrained.v1",
-    { role: "corridor cartographer", gate: 6, gatesOpen: 3, element: "Void", house: "Synthesis", originClass: "Arcans" },
+    {
+      role: "corridor cartographer",
+      gate: 6,
+      gatesOpen: 3,
+      element: "Void",
+      house: "Synthesis",
+      originClass: "Arcans",
+    },
     { canon, pack },
   );
   const node = apl.materialize(compiled, goodCharacter, {
     id: deterministicId("chr", "sennaris"),
     layer: "generated",
-    governance: { ...governanceOf(pack), canonStatus: "draft", rights: { state: "creator-owned", spdx: "CC-BY-4.0", commercial: true, attribution: true } },
+    governance: {
+      ...governanceOf(pack),
+      canonStatus: "draft",
+      rights: {
+        state: "creator-owned",
+        spdx: "CC-BY-4.0",
+        commercial: true,
+        attribution: true,
+      },
+    },
   });
   const next = addNode(pack, node);
   const report = detectConflicts(next, canon);
-  assert.deepEqual(report.findings.map((f) => f.ruleId), []);
+  assert.deepEqual(
+    report.findings.map((f) => f.ruleId),
+    [],
+  );
   assert.equal(node.attributes.godbeast, "Yumiko");
   assert.equal(node.provenance.promptHash, compiled.hash);
 });
@@ -109,7 +197,10 @@ test("the detector catches every way a bad draft breaks canon", async () => {
     attributes: conflictedCharacter.attributes,
     governance: { ...governanceOf(pack), canonStatus: "draft" },
   };
-  const report = detectConflicts(addNode(pack, bad, { governanceFrom: pack.world.id }), canon);
+  const report = detectConflicts(
+    addNode(pack, bad, { governanceFrom: pack.world.id }),
+    canon,
+  );
   const rules = new Set(report.findings.map((f) => f.ruleId));
   for (const expected of [
     "canon.locked-name-taken",
@@ -119,7 +210,10 @@ test("the detector catches every way a bad draft breaks canon", async () => {
     "canon.house-unknown",
     "canon.origin-class-unknown",
   ]) {
-    assert.ok(rules.has(expected), `expected finding ${expected}, got ${[...rules].join(", ")}`);
+    assert.ok(
+      rules.has(expected),
+      `expected finding ${expected}, got ${[...rules].join(", ")}`,
+    );
   }
   assert.ok(report.blockers > 0);
   assert.equal(report.clean, false);
@@ -140,7 +234,12 @@ test("the detector catches rights and provenance holes, not just lore", async ()
       branchRef: "main",
       visibility: "public",
       canonStatus: "locked",
-      rights: { state: "licensed", spdx: null, commercial: true, attribution: true },
+      rights: {
+        state: "licensed",
+        spdx: null,
+        commercial: true,
+        attribution: true,
+      },
       evalRule: "canon-conflict-clean",
     },
   };
@@ -164,10 +263,23 @@ test("Guardians adjudicate their own charter and escalate rather than lock canon
   };
   const report = detectConflicts(addNode(pack, bad), canon);
 
-  assert.equal(decide(guardianById("guardian.alera"), report).verdict, "reject");
-  assert.equal(decide(guardianById("guardian.shinkami"), report).verdict, "escalate");
-  assert.equal(decide(guardianById("guardian.lyria"), report).verdict, "approve"); // reports, never adjudicates
-  assert.ok(!guardianById("guardian.shinkami").authority.scopes.includes("canon:approve-locked"));
+  assert.equal(
+    decide(guardianById("guardian.alera"), report).verdict,
+    "reject",
+  );
+  assert.equal(
+    decide(guardianById("guardian.shinkami"), report).verdict,
+    "escalate",
+  );
+  assert.equal(
+    decide(guardianById("guardian.lyria"), report).verdict,
+    "approve",
+  ); // reports, never adjudicates
+  assert.ok(
+    !guardianById("guardian.shinkami").authority.scopes.includes(
+      "canon:approve-locked",
+    ),
+  );
 
   const evals = runGuardianEvals();
   assert.deepEqual(evals.failed, []);
@@ -176,9 +288,18 @@ test("Guardians adjudicate their own charter and escalate rather than lock canon
 
 test("branch, diff and merge — and canon is structurally protected from a user branch", async () => {
   const { canon, pack } = await seed();
-  const ancestor = commit(pack, { branch: "main", message: "seed", by: pack.world.creatorRef, at: AT });
+  const ancestor = commit(pack, {
+    branch: "main",
+    message: "seed",
+    by: pack.world.creatorRef,
+    at: AT,
+  });
 
-  const forked = branchPack(ancestor, { name: "chartroom", owner: ancestor.world.creatorRef, at: AT });
+  const forked = branchPack(ancestor, {
+    name: "chartroom",
+    owner: ancestor.world.creatorRef,
+    at: AT,
+  });
   const location = {
     id: deterministicId("loc", "chart-room"),
     type: "Location",
@@ -186,7 +307,11 @@ test("branch, diff and merge — and canon is structurally protected from a user
     description: goodLocation.description,
     layer: "user",
     attributes: { ...goodLocation.attributes, element: "Void" },
-    governance: { ...governanceOf(ancestor), branchRef: "chartroom", canonStatus: "draft" },
+    governance: {
+      ...governanceOf(ancestor),
+      branchRef: "chartroom",
+      canonStatus: "draft",
+    },
   };
   const theirs = addRelationship(addNode(forked, location), {
     id: deterministicId("rel", "chart-room:part_of"),
@@ -200,7 +325,10 @@ test("branch, diff and merge — and canon is structurally protected from a user
   assert.equal(delta.added[0].name, "The Slow Chart Room");
   assert.equal(delta.removed.length, 0);
 
-  const merged = mergeBranch(ancestor, ancestor, theirs, { by: ancestor.world.creatorRef, at: AT });
+  const merged = mergeBranch(ancestor, ancestor, theirs, {
+    by: ancestor.world.creatorRef,
+    at: AT,
+  });
   assert.deepEqual(merged.conflicts, []);
   assert.equal(merged.merged.nodes.length, 4);
   assert.ok(detectConflicts(merged.merged, canon).clean);
@@ -209,32 +337,59 @@ test("branch, diff and merge — and canon is structurally protected from a user
   const universeId = ancestor.nodes.find((n) => n.type === "Universe").id;
   const hostile = {
     ...theirs,
-    nodes: theirs.nodes.map((n) => (n.id === universeId ? { ...n, layer: "user", name: "Arcanea (mine now)" } : n)),
+    nodes: theirs.nodes.map((n) =>
+      n.id === universeId
+        ? { ...n, layer: "user", name: "Arcanea (mine now)" }
+        : n,
+    ),
   };
-  const blocked = mergeBranch(ancestor, ancestor, hostile, { by: "crt_someone", at: AT });
+  const blocked = mergeBranch(ancestor, ancestor, hostile, {
+    by: "crt_someone",
+    at: AT,
+  });
   assert.equal(blocked.merged, null);
-  assert.ok(blocked.conflicts.some((c) => c.ruleId === "merge.canon-protected"));
+  assert.ok(
+    blocked.conflicts.some((c) => c.ruleId === "merge.canon-protected"),
+  );
 });
 
 test("divergent edits to the same field conflict instead of silently overwriting", async () => {
   const { pack } = await seed();
-  const ancestor = commit(pack, { branch: "main", message: "seed", by: pack.world.creatorRef, at: AT });
+  const ancestor = commit(pack, {
+    branch: "main",
+    message: "seed",
+    by: pack.world.creatorRef,
+    at: AT,
+  });
   const worldId = ancestor.world.id;
   const mutate = (p, premise) => ({
     ...p,
-    nodes: p.nodes.map((n) => (n.id === worldId ? { ...n, attributes: { ...n.attributes, premise } } : n)),
+    nodes: p.nodes.map((n) =>
+      n.id === worldId ? { ...n, attributes: { ...n.attributes, premise } } : n,
+    ),
   });
 
   const ours = mutate(ancestor, "Guild of drifting charts");
   const theirs = mutate(ancestor, "Guild of still charts");
   const result = mergeBranch(ancestor, ours, theirs, { by: "crt_x", at: AT });
   assert.equal(result.merged, null);
-  assert.ok(result.conflicts.some((c) => c.ruleId === "merge.divergent-field" && c.path === "attributes.premise"));
+  assert.ok(
+    result.conflicts.some(
+      (c) =>
+        c.ruleId === "merge.divergent-field" && c.path === "attributes.premise",
+    ),
+  );
 
   // One-sided edits fast-forward cleanly.
-  const oneSided = mergeBranch(ancestor, ancestor, theirs, { by: "crt_x", at: AT });
+  const oneSided = mergeBranch(ancestor, ancestor, theirs, {
+    by: "crt_x",
+    at: AT,
+  });
   assert.deepEqual(oneSided.conflicts, []);
-  assert.equal(oneSided.merged.nodes.find((n) => n.id === worldId).attributes.premise, "Guild of still charts");
+  assert.equal(
+    oneSided.merged.nodes.find((n) => n.id === worldId).attributes.premise,
+    "Guild of still charts",
+  );
 });
 
 test("export is portable, verifiable, and carries its own authority model", async () => {
@@ -249,7 +404,11 @@ test("export is portable, verifiable, and carries its own authority model", asyn
     layer: "generated",
     governance: { ...governanceOf(pack), canonStatus: "draft" },
   });
-  const built = commit(withGuardianRoles(addNode(pack, node)), { message: "first character", by: pack.world.creatorRef, at: AT });
+  const built = commit(withGuardianRoles(addNode(pack, node)), {
+    message: "first character",
+    by: pack.world.creatorRef,
+    at: AT,
+  });
 
   const exported = exportPack(built, { exportedAt: AT });
   assert.equal(exported.format, "WorldPack.v1");
@@ -257,11 +416,19 @@ test("export is portable, verifiable, and carries its own authority model", asyn
   assert.equal(exported.counts.Character, 1);
   assert.equal(exported.agentRoles.length, 10);
   assert.equal(exported.provenance.sources.length, 1);
-  assert.equal(exported.provenance.head, built.branches.find((b) => b.id === "main").head);
+  assert.equal(
+    exported.provenance.head,
+    built.branches.find((b) => b.id === "main").head,
+  );
   assert.ok(exported.provenance.versions.every((v) => v.createdAt && v.branch));
 
   assert.equal(verifyExport(exported).valid, true);
-  const tampered = { ...exported, nodes: exported.nodes.map((n) => (n.type === "Character" ? { ...n, name: "Someone Else" } : n)) };
+  const tampered = {
+    ...exported,
+    nodes: exported.nodes.map((n) =>
+      n.type === "Character" ? { ...n, name: "Someone Else" } : n,
+    ),
+  };
   assert.equal(verifyExport(tampered).valid, false);
 
   // Round trip through JSON — the pack is a file, not an object graph.

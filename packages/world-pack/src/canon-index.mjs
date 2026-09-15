@@ -55,13 +55,23 @@ export function contradictionTriggersFrom(lockedTruths) {
     const phrase = normalizeName(String(forbidden).replace(ARTICLE, ""));
     const subj = normalizeName(subject);
     if (!phrase || !subj || subj.length < 3 || phrase.length < 3) return;
-    if (triggers.some((t) => t.subject === subj && t.forbidden === phrase)) return;
-    triggers.push({ subject: subj, subjectLabel: String(subject).trim(), forbidden: phrase, source });
+    if (triggers.some((t) => t.subject === subj && t.forbidden === phrase))
+      return;
+    triggers.push({
+      subject: subj,
+      subjectLabel: String(subject).trim(),
+      forbidden: phrase,
+      source,
+    });
   };
   for (const truth of lockedTruths) {
-    const negated = truth.match(/^(.{2,48}?)\s+(?:is|are)\s+(?:NOT|never)\s+([^.;:()]{2,60})/i);
+    const negated = truth.match(
+      /^(.{2,48}?)\s+(?:is|are)\s+(?:NOT|never)\s+([^.;:()]{2,60})/i,
+    );
     if (negated) add(negated[1], negated[2], truth);
-    const contrasted = truth.match(/^(.{2,48}?)\s+(?:is|are)\s+[^.;:]{2,80}?,\s*(?:but\s+)?not\s+([^.;:()]{2,60})/i);
+    const contrasted = truth.match(
+      /^(.{2,48}?)\s+(?:is|are)\s+[^.;:]{2,80}?,\s*(?:but\s+)?not\s+([^.;:()]{2,60})/i,
+    );
     if (contrasted) add(contrasted[1], contrasted[2], truth);
   }
   return triggers;
@@ -94,7 +104,11 @@ export function parseTables(md) {
 }
 
 function findTable(tables, ...required) {
-  return tables.find((t) => required.every((h) => t.header.some((c) => c.toLowerCase() === h.toLowerCase())));
+  return tables.find((t) =>
+    required.every((h) =>
+      t.header.some((c) => c.toLowerCase() === h.toLowerCase()),
+    ),
+  );
 }
 
 function col(table, name) {
@@ -121,7 +135,11 @@ export function buildCanonIndex(md) {
   if (duality) {
     const ie = col(duality, "Entity");
     for (const r of duality.rows) {
-      primordials.push({ name: r[ie], aspect: r[col(duality, "Aspect")], nature: r[col(duality, "Nature")] });
+      primordials.push({
+        name: r[ie],
+        aspect: r[col(duality, "Aspect")],
+        nature: r[col(duality, "Nature")],
+      });
       register(r[ie], "primordial", "locked");
     }
   }
@@ -172,7 +190,11 @@ export function buildCanonIndex(md) {
     for (const r of ranksT.rows) {
       const span = r[col(ranksT, "Gates Open")];
       const [min, max] = span.split("-").map((n) => Number(n.trim()));
-      const rank = { rank: r[col(ranksT, "Rank")], minGates: min, maxGates: Number.isFinite(max) ? max : min };
+      const rank = {
+        rank: r[col(ranksT, "Rank")],
+        minGates: min,
+        maxGates: Number.isFinite(max) ? max : min,
+      };
       ranks.push(rank);
       register(rank.rank, "rank", "locked");
     }
@@ -209,7 +231,11 @@ export function buildCanonIndex(md) {
     for (const r of originT.rows) {
       const name = r[iName].replace(/\s*\(.*\)\s*$/, "");
       const status = iStatus >= 0 ? statusOf(r[iStatus]) : "staging";
-      originClasses.push({ name, status, powerSource: r[col(originT, "Power Source")] });
+      originClasses.push({
+        name,
+        status,
+        powerSource: r[col(originT, "Power Source")],
+      });
       register(name, "origin-class", status);
     }
   }
@@ -221,33 +247,52 @@ export function buildCanonIndex(md) {
     const iTerm = col(termsT, "Term");
     const iStatus = col(termsT, "Status");
     for (const r of termsT.rows) {
-      const t = { term: r[iTerm], status: statusOf(r[iStatus]), definition: r[col(termsT, "Definition")] };
+      const t = {
+        term: r[iTerm],
+        status: statusOf(r[iStatus]),
+        definition: r[col(termsT, "Definition")],
+      };
       terms.push(t);
       register(t.term, "term", t.status, t.definition);
     }
   }
 
   // The Dark Lord — a locked ### heading inside a (LOCKED ✅) tier.
-  for (const m of md.matchAll(/^##\s+TIER[^\n]*\(LOCKED[^\n]*\)\s*\n([\s\S]*?)(?=\n##\s|\n---\s*\n##|$)/gm)) {
+  for (const m of md.matchAll(
+    /^##\s+TIER[^\n]*\(LOCKED[^\n]*\)\s*\n([\s\S]*?)(?=\n##\s|\n---\s*\n##|$)/gm,
+  )) {
     for (const h of m[1].matchAll(/^###\s+([A-Z][A-Za-z'’ -]+)\s*$/gm)) {
       register(h[1].trim(), "figure", "locked");
     }
   }
 
   // Locked truths — the assertions a generated draft is most likely to violate.
+  // Blank lines between the label and its bullets are allowed: markdown formatters
+  // insert one, and a canon that loses its truths to formatting checks nothing.
   const lockedTruths = [];
-  for (const m of md.matchAll(/\*\*LOCKED TRUTHS?:\*\*[ \t]*([^\n]*)\n((?:[ \t]*-[ \t]+[^\n]*\n)*)/g)) {
+  for (const m of md.matchAll(
+    /\*\*LOCKED TRUTHS?:\*\*[ \t]*([^\n]*)\n(?:[ \t]*\n)*((?:[ \t]*-[ \t]+[^\n]*\n)*)/g,
+  )) {
     const inline = m[1].trim();
     if (inline) lockedTruths.push(inline.replace(/\*\*/g, ""));
-    for (const b of m[2].matchAll(/^\s*-\s+(.*)$/gm)) lockedTruths.push(b[1].replace(/\*\*/g, "").trim());
+    for (const b of m[2].matchAll(/^\s*-\s+(.*)$/gm))
+      lockedTruths.push(b[1].replace(/\*\*/g, "").trim());
   }
 
   // The universe this document governs, taken from its own title ("# ARCANEA
   // CANON — ..."). A canon-layer node is only canon if it resolves here, so the
   // universe node has to be in the registry like everything else.
-  const titled = md.match(/^#\s+([A-Za-z][A-Za-z' -]{1,40}?)\s+CANON\b/im) || md.match(/^#\s+([A-Za-z][A-Za-z' -]{1,40})\s*$/m);
+  const titled =
+    md.match(/^#\s+([A-Za-z][A-Za-z' -]{1,40}?)\s+CANON\b/im) ||
+    md.match(/^#\s+([A-Za-z][A-Za-z' -]{1,40})\s*$/m);
   const universeName = titled ? titleCase(titled[1].trim()) : null;
-  if (universeName) register(universeName, "universe", "locked", "the universe this canon governs");
+  if (universeName)
+    register(
+      universeName,
+      "universe",
+      "locked",
+      "the universe this canon governs",
+    );
 
   const sourceHash = `sha256:${createHash("sha256").update(md).digest("hex")}`;
   const entries = [...names.values()];
@@ -262,7 +307,9 @@ export function buildCanonIndex(md) {
     sourceHash,
     universeName,
     /** The owner id a canon-layer node must carry to be attested. */
-    canonOwner: universeName ? normalizeName(universeName).replace(/\s+/g, "-") : null,
+    canonOwner: universeName
+      ? normalizeName(universeName).replace(/\s+/g, "-")
+      : null,
     profile: universeName === "Arcanea" ? "arcanea" : "custom",
     extractedAt: null, // callers stamp this; keeping it null keeps the index hashable
     primordials,
@@ -319,7 +366,8 @@ export function canonNameLoose(index, candidate) {
     if (key.length < 4) continue; // three-letter canon names would swallow ordinary prose
     const kt = key.split(" ");
     for (let i = 0; i + kt.length <= tokens.length; i++) {
-      if (kt.every((t, j) => t === tokens[i + j])) return { entry, match: "contains", canonName: entry.name };
+      if (kt.every((t, j) => t === tokens[i + j]))
+        return { entry, match: "contains", canonName: entry.name };
     }
   }
   return null;
@@ -337,12 +385,22 @@ export function canonNameLoose(index, candidate) {
  */
 export function deriveLayer(index, node) {
   const declared = node?.layer ?? null;
-  if (declared !== "canon") return { layer: declared, declared, attested: false, entry: null, reason: null };
+  if (declared !== "canon")
+    return {
+      layer: declared,
+      declared,
+      attested: false,
+      entry: null,
+      reason: null,
+    };
 
   const entry = canonName(index, node?.name) || canonName(index, node?.id);
   const owner = node?.governance?.owner ?? null;
-  const ownerOk = Boolean(index?.canonOwner) && normalizeName(owner) === normalizeName(index.canonOwner);
-  if (entry && entry.status === "locked" && ownerOk) return { layer: "canon", declared, attested: true, entry, reason: null };
+  const ownerOk =
+    Boolean(index?.canonOwner) &&
+    normalizeName(owner) === normalizeName(index.canonOwner);
+  if (entry && entry.status === "locked" && ownerOk)
+    return { layer: "canon", declared, attested: true, entry, reason: null };
 
   const reason = !entry
     ? `'${node?.name}' does not resolve in the canon index for ${index?.universeName ?? "this canon"}`
@@ -352,11 +410,24 @@ export function deriveLayer(index, node) {
   return { layer: "user", declared, attested: false, entry, reason };
 }
 
-const NEGATORS = new Set(["not", "never", "no", "nor", "isnt", "arent", "wasnt", "werent", "cannot", "cant", "rather"]);
+const NEGATORS = new Set([
+  "not",
+  "never",
+  "no",
+  "nor",
+  "isnt",
+  "arent",
+  "wasnt",
+  "werent",
+  "cannot",
+  "cant",
+  "rather",
+]);
 
 function runIndexes(tokens, run) {
   const at = [];
-  for (let i = 0; i + run.length <= tokens.length; i++) if (run.every((t, j) => t === tokens[i + j])) at.push(i);
+  for (let i = 0; i + run.length <= tokens.length; i++)
+    if (run.every((t, j) => t === tokens[i + j])) at.push(i);
   return at;
 }
 
@@ -385,7 +456,9 @@ export function contradictionsIn(prose, triggers) {
 
 /** The rank a character with `gatesOpen` gates must hold, per the canon table. */
 export function rankForGates(index, gatesOpen) {
-  const hit = index.ranks.find((r) => gatesOpen >= r.minGates && gatesOpen <= r.maxGates);
+  const hit = index.ranks.find(
+    (r) => gatesOpen >= r.minGates && gatesOpen <= r.maxGates,
+  );
   return hit ? hit.rank : null;
 }
 

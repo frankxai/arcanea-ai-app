@@ -42,7 +42,8 @@ for (let i = 1; i < argv.length; i++) {
 }
 
 const canonPath = flags.canon || DEFAULT_CANON;
-const out = (obj) => console.log(typeof obj === "string" ? obj : JSON.stringify(obj, null, 2));
+const out = (obj) =>
+  console.log(typeof obj === "string" ? obj : JSON.stringify(obj, null, 2));
 const die = (msg) => {
   console.error(msg);
   process.exit(1);
@@ -79,18 +80,25 @@ switch (cmd) {
     else {
       out(`canon        ${canonPath}`);
       out(`sourceHash   ${canon.sourceHash}`);
-      out(`gates        ${canon.gates.length}   ${canon.gates.map((g) => `${g.index}:${g.name}/${g.frequencyHz}Hz`).join("  ")}`);
+      out(
+        `gates        ${canon.gates.length}   ${canon.gates.map((g) => `${g.index}:${g.name}/${g.frequencyHz}Hz`).join("  ")}`,
+      );
       out(`elements     ${canon.elements.join(", ")}`);
       out(`houses       ${canon.houses.join(", ")}`);
-      out(`ranks        ${canon.ranks.map((r) => `${r.rank} ${r.minGates}-${r.maxGates}`).join("  ")}`);
-      out(`origin       ${canon.originClasses.map((o) => o.name).join(", ")} (closed)`);
+      out(
+        `ranks        ${canon.ranks.map((r) => `${r.rank} ${r.minGates}-${r.maxGates}`).join("  ")}`,
+      );
+      out(
+        `origin       ${canon.originClasses.map((o) => o.name).join(", ")} (closed)`,
+      );
       out(`names        ${Object.keys(canon.names).length} indexed`);
       out(`lockedTruths ${canon.lockedTruths.length}`);
     }
     break;
   }
   case "seed": {
-    const name = positional[0] || die("usage: world-pack seed <name> --handle <handle>");
+    const name =
+      positional[0] || die("usage: world-pack seed <name> --handle <handle>");
     const handle = flags.handle || die("--handle is required");
     const canon = await loadCanonIndex(canonPath);
     await emit(
@@ -105,9 +113,15 @@ switch (cmd) {
     break;
   }
   case "compile": {
-    const template = positional[0] || die(`usage: world-pack compile <template>\n  templates: ${Object.keys(apl.TEMPLATES).join(", ")}`);
+    const template =
+      positional[0] ||
+      die(
+        `usage: world-pack compile <template>\n  templates: ${Object.keys(apl.TEMPLATES).join(", ")}`,
+      );
     const canon = await loadCanonIndex(canonPath);
-    const pack = flags.pack ? JSON.parse(await readFile(flags.pack, "utf8")) : undefined;
+    const pack = flags.pack
+      ? JSON.parse(await readFile(flags.pack, "utf8"))
+      : undefined;
     const bindings = { ...flags };
     delete bindings.pack;
     delete bindings.canon;
@@ -132,14 +146,32 @@ switch (cmd) {
       ? checkAgainst(pack, custom)
       : { canon: await loadCanonIndex(canonPath), report: null };
     const finalReport = report || detectConflicts(pack, canon);
-    if (flags.json) out({ structure, canon: { document: custom ? flags.against : canonPath, universe: canon.universeName, sourceHash: canon.sourceHash }, report: finalReport });
+    if (flags.json)
+      out({
+        structure,
+        canon: {
+          document: custom ? flags.against : canonPath,
+          universe: canon.universeName,
+          sourceHash: canon.sourceHash,
+        },
+        report: finalReport,
+      });
     else {
       out(`canon        ${custom ? flags.against : canonPath}`);
-      out(`             ${canon.universeName ?? "(untitled canon)"} @ ${canon.sourceHash}`);
-      out(`structure    ${structure.valid ? "valid" : `${structure.errors.length} error(s)`}`);
+      out(
+        `             ${canon.universeName ?? "(untitled canon)"} @ ${canon.sourceHash}`,
+      );
+      out(
+        `structure    ${structure.valid ? "valid" : `${structure.errors.length} error(s)`}`,
+      );
       for (const e of structure.errors) out(`  - ${e}`);
-      out(`conflicts    ${finalReport.clean ? "clean" : `${finalReport.blockers} blocker(s), ${finalReport.errors} error(s)`}`);
-      for (const f of finalReport.findings) out(`  ${f.severity.padEnd(8)} ${f.ruleId.padEnd(34)} ${f.nodeName ?? f.nodeId ?? ""} — ${f.message}`);
+      out(
+        `conflicts    ${finalReport.clean ? "clean" : `${finalReport.blockers} blocker(s), ${finalReport.errors} error(s)`}`,
+      );
+      for (const f of finalReport.findings)
+        out(
+          `  ${f.severity.padEnd(8)} ${f.ruleId.padEnd(34)} ${f.nodeName ?? f.nodeId ?? ""} — ${f.message}`,
+        );
     }
     process.exit(structure.valid && finalReport.clean ? 0 : 1);
     break;
@@ -161,9 +193,16 @@ switch (cmd) {
     if (result.valid) out(`valid  ${result.expected}`);
     else {
       out("TAMPERED");
-      if (!result.digestOk) out(`  digest declared   ${result.expected}\n  digest recomputed ${result.actual}`);
-      if (!result.countsOk) out(`  counts declared   ${JSON.stringify(result.countsDeclared)}\n  counts actual     ${JSON.stringify(result.countsActual)}`);
-      for (const p of result.agentRoleProblems) out(`  agentRole         ${p.reason}`);
+      if (!result.digestOk)
+        out(
+          `  digest declared   ${result.expected}\n  digest recomputed ${result.actual}`,
+        );
+      if (!result.countsOk)
+        out(
+          `  counts declared   ${JSON.stringify(result.countsDeclared)}\n  counts actual     ${JSON.stringify(result.countsActual)}`,
+        );
+      for (const p of result.agentRoleProblems)
+        out(`  agentRole         ${p.reason}`);
     }
     process.exit(result.valid ? 0 : 1);
     break;
@@ -176,7 +215,9 @@ switch (cmd) {
       process.exit(evals.failed.length ? 1 : 0);
     }
     for (const g of GUARDIAN_ROLES) {
-      out(`${String(g.gate).padStart(2)}  ${g.name.padEnd(12)} ${g.role.padEnd(26)} waives<=${g.authority.maxWaivableSeverity}`);
+      out(
+        `${String(g.gate).padStart(2)}  ${g.name.padEnd(12)} ${g.role.padEnd(26)} waives<=${g.authority.maxWaivableSeverity}`,
+      );
       out(`    scopes  ${g.authority.scopes.join(" ")}`);
       out(`    owns    ${g.authority.owns.join(" ") || "(reports only)"}`);
     }

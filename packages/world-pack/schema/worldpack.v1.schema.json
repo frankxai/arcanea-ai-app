@@ -4,7 +4,17 @@
   "title": "WorldPack.v1",
   "description": "A portable, creator-owned Arcanean world. Every node carries owner, provenance, version, branch, visibility, canon status, rights, and an evaluation rule.",
   "type": "object",
-  "required": ["format", "packVersion", "world", "canon", "nodes", "relationships", "branches", "versions", "sources"],
+  "required": [
+    "format",
+    "packVersion",
+    "world",
+    "canon",
+    "nodes",
+    "relationships",
+    "branches",
+    "versions",
+    "sources"
+  ],
   "additionalProperties": false,
   "properties": {
     "format": { "const": "WorldPack.v1" },
@@ -12,7 +22,10 @@
     "interop": { "$ref": "#/$defs/interop" },
     "exportedAt": { "type": ["string", "null"], "format": "date-time" },
     "digest": { "$ref": "#/$defs/contentHash" },
-    "counts": { "type": "object", "additionalProperties": { "type": "integer" } },
+    "counts": {
+      "type": "object",
+      "additionalProperties": { "type": "integer" }
+    },
     "world": {
       "type": "object",
       "required": ["id", "name", "creatorRef"],
@@ -29,7 +42,9 @@
       "required": ["document"],
       "properties": {
         "document": { "type": "string" },
-        "sourceHash": { "oneOf": [{ "$ref": "#/$defs/contentHash" }, { "type": "null" }] }
+        "sourceHash": {
+          "oneOf": [{ "$ref": "#/$defs/contentHash" }, { "type": "null" }]
+        }
       }
     },
     "provenance": {
@@ -42,7 +57,10 @@
       }
     },
     "nodes": { "type": "array", "items": { "$ref": "#/$defs/EntityNode" } },
-    "relationships": { "type": "array", "items": { "$ref": "#/$defs/Relationship" } },
+    "relationships": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Relationship" }
+    },
     "branches": { "type": "array", "items": { "$ref": "#/$defs/Branch" } },
     "versions": { "type": "array", "items": { "$ref": "#/$defs/Version" } },
     "sources": { "type": "array", "items": { "$ref": "#/$defs/Source" } },
@@ -61,14 +79,46 @@
       }
     },
     "EntityType": {
-      "enum": ["Universe", "World", "Era", "Location", "Faction", "Character", "Creature", "Object", "Law", "Power", "Event", "Scene", "Artifact", "Creator"]
+      "enum": [
+        "Universe",
+        "World",
+        "Era",
+        "Location",
+        "Faction",
+        "Character",
+        "Creature",
+        "Object",
+        "Law",
+        "Power",
+        "Event",
+        "Scene",
+        "Artifact",
+        "Creator"
+      ]
     },
     "Layer": {
       "description": "Ownership separation: Arcanea canon, user worlds, licensed assets, generated drafts, public contributions.",
       "enum": ["canon", "user", "licensed", "generated", "contributed"]
     },
-    "RightsState": { "enum": ["arcanea-owned", "creator-owned", "licensed", "community-contributed", "unresolved"] },
-    "CanonStatus": { "enum": ["locked", "staging", "evolving", "draft", "non-canon", "rejected"] },
+    "RightsState": {
+      "enum": [
+        "arcanea-owned",
+        "creator-owned",
+        "licensed",
+        "community-contributed",
+        "unresolved"
+      ]
+    },
+    "CanonStatus": {
+      "enum": [
+        "locked",
+        "staging",
+        "evolving",
+        "draft",
+        "non-canon",
+        "rejected"
+      ]
+    },
     "Visibility": { "enum": ["public", "unlisted", "private"] },
     "Rights": {
       "type": "object",
@@ -125,7 +175,22 @@
         "id": { "type": "string" },
         "type": { "const": "Relationship" },
         "kind": {
-          "enum": ["part_of", "located_at", "member_of", "bonded_to", "guards", "opposes", "allies_with", "wields", "created_by", "derived_from", "occurs_in", "precedes", "governed_by", "echoes"]
+          "enum": [
+            "part_of",
+            "located_at",
+            "member_of",
+            "bonded_to",
+            "guards",
+            "opposes",
+            "allies_with",
+            "wields",
+            "created_by",
+            "derived_from",
+            "occurs_in",
+            "precedes",
+            "governed_by",
+            "echoes"
+          ]
         },
         "from": { "type": "string" },
         "to": { "type": "string" },
@@ -158,7 +223,9 @@
         "createdAt": { "type": "string" },
         "createdBy": { "type": ["string", "null"] },
         "message": { "type": ["string", "null"] },
-        "digest": { "oneOf": [{ "$ref": "#/$defs/contentHash" }, { "type": "null" }] }
+        "digest": {
+          "oneOf": [{ "$ref": "#/$defs/contentHash" }, { "type": "null" }]
+        }
       }
     },
     "Source": {
@@ -166,11 +233,22 @@
       "required": ["id", "kind"],
       "properties": {
         "id": { "type": "string" },
-        "kind": { "enum": ["creator-input", "canon-document", "licensed-asset", "model-output", "public-contribution", "external-reference"] },
+        "kind": {
+          "enum": [
+            "creator-input",
+            "canon-document",
+            "licensed-asset",
+            "model-output",
+            "public-contribution",
+            "external-reference"
+          ]
+        },
         "uri": { "type": ["string", "null"] },
         "citation": { "type": ["string", "null"] },
         "retrievedAt": { "type": ["string", "null"] },
-        "contentHash": { "oneOf": [{ "$ref": "#/$defs/contentHash" }, { "type": "null" }] }
+        "contentHash": {
+          "oneOf": [{ "$ref": "#/$defs/contentHash" }, { "type": "null" }]
+        }
       }
     },
     "AgentRole": {
@@ -190,10 +268,24 @@
           "properties": {
             "scopes": {
               "type": "array",
-              "items": { "enum": ["canon:read", "canon:propose", "canon:approve-staging", "canon:escalate-to-creator", "world:read", "world:write", "rights:assign", "pack:export", "pack:merge"] }
+              "items": {
+                "enum": [
+                  "canon:read",
+                  "canon:propose",
+                  "canon:approve-staging",
+                  "canon:escalate-to-creator",
+                  "world:read",
+                  "world:write",
+                  "rights:assign",
+                  "pack:export",
+                  "pack:merge"
+                ]
+              }
             },
             "owns": { "type": "array", "items": { "type": "string" } },
-            "maxWaivableSeverity": { "enum": ["info", "warning", "error", "blocker"] }
+            "maxWaivableSeverity": {
+              "enum": ["info", "warning", "error", "blocker"]
+            }
           }
         }
       }

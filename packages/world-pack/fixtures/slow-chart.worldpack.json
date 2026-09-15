@@ -57,9 +57,7 @@
         "id": "ver_8PHTPSEQVE672FKV8NSW8F118R",
         "type": "Version",
         "branch": "main",
-        "parents": [
-          "ver_3KW7S050TGNX0QWAWW17KZ8XSF"
-        ],
+        "parents": ["ver_3KW7S050TGNX0QWAWW17KZ8XSF"],
         "createdAt": "2026-09-02T00:00:00.000Z",
         "createdBy": "crt_4FZNMY28QVTXFMXPHAYA603ES8",
         "message": "first cast and its room",
@@ -278,12 +276,7 @@
       "role": "Guardian of Foundation",
       "charter": "Structure and survivability of a world: does it hold together as a graph?",
       "authority": {
-        "scopes": [
-          "canon:read",
-          "world:read",
-          "world:write",
-          "pack:merge"
-        ],
+        "scopes": ["canon:read", "world:read", "world:write", "pack:merge"],
         "owns": [
           "graph.dangling-relationship",
           "provenance.dangling-source",
@@ -304,15 +297,8 @@
       "role": "Guardian of Flow",
       "charter": "Generation and revision: drafts move, nothing stalls at draft forever.",
       "authority": {
-        "scopes": [
-          "canon:read",
-          "world:read",
-          "world:write",
-          "canon:propose"
-        ],
-        "owns": [
-          "status.illegal-for-layer"
-        ],
+        "scopes": ["canon:read", "world:read", "world:write", "canon:propose"],
+        "owns": ["status.illegal-for-layer"],
         "maxWaivableSeverity": "warning"
       }
     },
@@ -325,11 +311,7 @@
       "role": "Guardian of Fire",
       "charter": "Power systems: gates, ranks, and what a character can actually do.",
       "authority": {
-        "scopes": [
-          "canon:read",
-          "world:read",
-          "world:write"
-        ],
+        "scopes": ["canon:read", "world:read", "world:write"],
         "owns": [
           "canon.rank-out-of-band",
           "canon.rank-unknown",
@@ -348,14 +330,8 @@
       "role": "Guardian of Heart",
       "charter": "Characters and the people they are; sensitivity protocol for Mirror Realms.",
       "authority": {
-        "scopes": [
-          "canon:read",
-          "world:read",
-          "world:write"
-        ],
-        "owns": [
-          "canon.house-unknown"
-        ],
+        "scopes": ["canon:read", "world:read", "world:write"],
+        "owns": ["canon.house-unknown"],
         "maxWaivableSeverity": "warning"
       }
     },
@@ -368,11 +344,7 @@
       "role": "Guardian of Voice",
       "charter": "Truth of statement. Locked truths are not negotiable; nothing that contradicts one passes.",
       "authority": {
-        "scopes": [
-          "canon:read",
-          "world:read",
-          "canon:propose"
-        ],
+        "scopes": ["canon:read", "world:read", "canon:propose"],
         "owns": [
           "canon.nero-miscast",
           "canon.luminor-as-species",
@@ -391,10 +363,7 @@
       "role": "Guardian of Sight",
       "charter": "Detection: runs the conflict pass and reports what it sees, waives nothing.",
       "authority": {
-        "scopes": [
-          "canon:read",
-          "world:read"
-        ],
+        "scopes": ["canon:read", "world:read"],
         "owns": [],
         "maxWaivableSeverity": "info"
       }
@@ -408,12 +377,7 @@
       "role": "Guardian of Crown",
       "charter": "Rights and licence: nothing leaves the studio with unresolved ownership.",
       "authority": {
-        "scopes": [
-          "canon:read",
-          "world:read",
-          "rights:assign",
-          "pack:export"
-        ],
+        "scopes": ["canon:read", "world:read", "rights:assign", "pack:export"],
         "owns": [
           "rights.unresolved",
           "rights.licensed-without-licence",
@@ -431,12 +395,7 @@
       "role": "Guardian of Starweave",
       "charter": "Branch topology: forks, diffs, and merges across versions of a world.",
       "authority": {
-        "scopes": [
-          "canon:read",
-          "world:read",
-          "pack:merge",
-          "world:write"
-        ],
+        "scopes": ["canon:read", "world:read", "pack:merge", "world:write"],
         "owns": [],
         "maxWaivableSeverity": "warning"
       }
@@ -450,14 +409,8 @@
       "role": "Guardian of Unity",
       "charter": "Public contributions: what a stranger may add and on what terms.",
       "authority": {
-        "scopes": [
-          "canon:read",
-          "world:read",
-          "rights:assign"
-        ],
-        "owns": [
-          "schema.unknown-layer"
-        ],
+        "scopes": ["canon:read", "world:read", "rights:assign"],
+        "owns": ["schema.unknown-layer"],
         "maxWaivableSeverity": "warning"
       }
     },

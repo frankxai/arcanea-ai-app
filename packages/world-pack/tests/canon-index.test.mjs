@@ -3,16 +3,28 @@ import assert from "node:assert/strict";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
-import { loadCanonIndex, canonName, rankForGates, gateByIndex } from "../src/canon-index.mjs";
+import {
+  loadCanonIndex,
+  canonName,
+  rankForGates,
+  gateByIndex,
+} from "../src/canon-index.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
-export const CANON_PATH = resolve(here, "../../../.arcanea/lore/CANON_LOCKED.md");
+export const CANON_PATH = resolve(
+  here,
+  "../../../.arcanea/lore/CANON_LOCKED.md",
+);
 
 test("indexes the ten gates with unique frequencies", async () => {
   const canon = await loadCanonIndex(CANON_PATH);
   assert.equal(canon.gates.length, 10);
   const freqs = canon.gates.map((g) => g.frequencyHz);
-  assert.equal(new Set(freqs).size, 10, "each Gate must have a unique frequency");
+  assert.equal(
+    new Set(freqs).size,
+    10,
+    "each Gate must have a unique frequency",
+  );
   assert.deepEqual(gateByIndex(canon, 1), {
     index: 1,
     name: "Foundation",
@@ -26,7 +38,14 @@ test("indexes the ten gates with unique frequencies", async () => {
 
 test("indexes elements, houses, wisdoms, ranks and the closed origin classes", async () => {
   const canon = await loadCanonIndex(CANON_PATH);
-  assert.deepEqual(canon.elements, ["Fire", "Water", "Earth", "Wind", "Void", "Spirit"]);
+  assert.deepEqual(canon.elements, [
+    "Fire",
+    "Water",
+    "Earth",
+    "Wind",
+    "Void",
+    "Spirit",
+  ]);
   assert.equal(canon.houses.length, 7);
   assert.equal(canon.wisdoms.length, 7);
   assert.equal(canon.ranks.length, 5);

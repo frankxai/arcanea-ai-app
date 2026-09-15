@@ -24,7 +24,9 @@ let engine: Promise<Engine> | undefined;
 let arcaneaCanon: Promise<CanonIndex> | undefined;
 
 function loadEngine(): Promise<Engine> {
-  engine ??= import(new URL("world-pack/index.mjs", VENDOR).href) as Promise<Engine>;
+  engine ??= import(
+    new URL("world-pack/index.mjs", VENDOR).href
+  ) as Promise<Engine>;
   return engine;
 }
 
@@ -32,10 +34,12 @@ async function canonFor(
   canonDocument: string | undefined,
 ): Promise<{ canon: CanonIndex; custom: boolean }> {
   const wp = await loadEngine();
-  if (canonDocument !== undefined) return { canon: wp.buildCanonIndex(canonDocument), custom: true };
-  arcaneaCanon ??= readFile(new URL("canon/CANON_LOCKED.md", VENDOR), "utf8").then((md) =>
-    wp.buildCanonIndex(md),
-  );
+  if (canonDocument !== undefined)
+    return { canon: wp.buildCanonIndex(canonDocument), custom: true };
+  arcaneaCanon ??= readFile(
+    new URL("canon/CANON_LOCKED.md", VENDOR),
+    "utf8",
+  ).then((md) => wp.buildCanonIndex(md));
   return { canon: await arcaneaCanon, custom: false };
 }
 
@@ -45,7 +49,9 @@ function parseJson(text: string, label: string): unknown {
   try {
     return JSON.parse(text);
   } catch (err) {
-    throw new InputError(`${label} is not valid JSON: ${(err as Error).message}`);
+    throw new InputError(
+      `${label} is not valid JSON: ${(err as Error).message}`,
+    );
   }
 }
 
@@ -60,17 +66,22 @@ async function readPack(
   if (args.path !== undefined) {
     // Over HTTP a path would let any caller probe the server's filesystem.
     if (context.sessionId !== undefined || context.requestInfo !== undefined)
-      throw new InputError("path is accepted over stdio only. Pass the pack JSON as pack.");
+      throw new InputError(
+        "path is accepted over stdio only. Pass the pack JSON as pack.",
+      );
     const file = resolve(args.path);
     if (extname(file).toLowerCase() !== ".json")
       throw new InputError(`path must point at a .json file: ${file}`);
     const info = await stat(file).catch(() => null);
     if (!info?.isFile()) throw new InputError(`no such file: ${file}`);
     if (info.size > MAX_PACK_BYTES)
-      throw new InputError(`pack file is ${info.size} bytes; the limit is ${MAX_PACK_BYTES}`);
+      throw new InputError(
+        `pack file is ${info.size} bytes; the limit is ${MAX_PACK_BYTES}`,
+      );
     value = parseJson(await readFile(file, "utf8"), file);
   } else {
-    value = typeof args.pack === "string" ? parseJson(args.pack, "pack") : args.pack;
+    value =
+      typeof args.pack === "string" ? parseJson(args.pack, "pack") : args.pack;
   }
 
   if (!value || typeof value !== "object" || Array.isArray(value))
@@ -87,7 +98,10 @@ async function guarded(run: () => Promise<unknown>): Promise<CallToolResult> {
     return json(await run());
   } catch (err) {
     if (!(err instanceof InputError)) throw err;
-    return { isError: true, content: [{ type: "text", text: JSON.stringify({ error: err.message }) }] };
+    return {
+      isError: true,
+      content: [{ type: "text", text: JSON.stringify({ error: err.message }) }],
+    };
   }
 }
 
@@ -101,7 +115,11 @@ function canonLabel(canon: CanonIndex, custom: boolean): string {
   return custom ? `your canon (${universe})` : `${universe} canon`;
 }
 
-async function checkWorldPack(pack: PackObject, canonDocument: string | undefined, limit: number) {
+async function checkWorldPack(
+  pack: PackObject,
+  canonDocument: string | undefined,
+  limit: number,
+) {
   const wp = await loadEngine();
   const { canon, custom } = await canonFor(canonDocument);
 
@@ -109,19 +127,33 @@ async function checkWorldPack(pack: PackObject, canonDocument: string | undefine
   let findings: WorldPackEngine.Finding[] = [];
   if (Array.isArray(pack.nodes)) {
     try {
-      findings = wp.detectConflicts(pack as unknown as WorldPackEngine.WorldPack, canon, {
-        canonBinding: custom ? "foreign" : "required",
-      }).findings;
+      findings = wp.detectConflicts(
+        pack as unknown as WorldPackEngine.WorldPack,
+        canon,
+        {
+          canonBinding: custom ? "foreign" : "required",
+        },
+      ).findings;
     } catch (err) {
-      structureErrors.push(`conflict pass stopped on malformed data: ${(err as Error).message}`);
+      structureErrors.push(
+        `conflict pass stopped on malformed data: ${(err as Error).message}`,
+      );
     }
   }
 
-  const summary: Record<Severity, number> = { blocker: 0, error: 0, warning: 0, info: 0 };
+  const summary: Record<Severity, number> = {
+    blocker: 0,
+    error: 0,
+    warning: 0,
+    info: 0,
+  };
   for (const f of findings) summary[f.severity] += 1;
 
   const ordered = [...findings]
-    .sort((a, b) => SEVERITY_ORDER.indexOf(a.severity) - SEVERITY_ORDER.indexOf(b.severity))
+    .sort(
+      (a, b) =>
+        SEVERITY_ORDER.indexOf(a.severity) - SEVERITY_ORDER.indexOf(b.severity),
+    )
     .map((f) => ({
       ruleId: f.ruleId,
       severity: f.severity,
@@ -132,7 +164,11 @@ async function checkWorldPack(pack: PackObject, canonDocument: string | undefine
     }));
 
   const verdict =
-    structureErrors.length || summary.blocker ? "blocked" : summary.error ? "needs-fixes" : "pass";
+    structureErrors.length || summary.blocker
+      ? "blocked"
+      : summary.error
+        ? "needs-fixes"
+        : "pass";
 
   return {
     verdict,
@@ -155,10 +191,14 @@ async function checkWorldPack(pack: PackObject, canonDocument: string | undefine
   };
 }
 
-async function verifyWorldPack(pack: PackObject, canonDocument: string | undefined) {
+async function verifyWorldPack(
+  pack: PackObject,
+  canonDocument: string | undefined,
+) {
   const wp = await loadEngine();
   const { canon, custom } = await canonFor(canonDocument);
-  const declaredHash = (pack.canon as { sourceHash?: unknown } | undefined)?.sourceHash ?? null;
+  const declaredHash =
+    (pack.canon as { sourceHash?: unknown } | undefined)?.sourceHash ?? null;
   const canonBinding = {
     ok: declaredHash === canon.sourceHash,
     declared: declaredHash,
@@ -179,22 +219,34 @@ async function verifyWorldPack(pack: PackObject, canonDocument: string | undefin
   try {
     result = wp.verifyExport(pack);
   } catch (err) {
-    throw new InputError(`pack is too malformed to verify: ${(err as Error).message}`);
+    throw new InputError(
+      `pack is too malformed to verify: ${(err as Error).message}`,
+    );
   }
 
   const reasons: string[] = [];
   if (!result.digestOk)
-    reasons.push(`content does not match its digest: declared ${result.expected}, recomputed ${result.actual}`);
+    reasons.push(
+      `content does not match its digest: declared ${result.expected}, recomputed ${result.actual}`,
+    );
   if (!result.countsOk)
     reasons.push(
       `declared node counts ${JSON.stringify(result.countsDeclared)} differ from actual ${JSON.stringify(result.countsActual)}`,
     );
-  for (const problem of result.agentRoleProblems) reasons.push(`agent role: ${problem.reason}`);
+  for (const problem of result.agentRoleProblems)
+    reasons.push(`agent role: ${problem.reason}`);
   if (!canonBinding.ok)
-    reasons.push(`canon binding: pack declares ${declaredHash ?? "none"}, the canon document hashes to ${canon.sourceHash}`);
+    reasons.push(
+      `canon binding: pack declares ${declaredHash ?? "none"}, the canon document hashes to ${canon.sourceHash}`,
+    );
 
-  const sealBroken = !result.digestOk || !result.countsOk || !result.agentRolesOk;
-  const verdict = sealBroken ? "tampered" : canonBinding.ok ? "sealed" : "canon-mismatch";
+  const sealBroken =
+    !result.digestOk || !result.countsOk || !result.agentRolesOk;
+  const verdict = sealBroken
+    ? "tampered"
+    : canonBinding.ok
+      ? "sealed"
+      : "canon-mismatch";
   const headline = {
     sealed: `SEALED: ${worldName(pack)} is unchanged since export and bound to ${canonLabel(canon, custom)}. The seal is not a canon verdict; run worldpack_check for that.`,
     tampered: `TAMPERED: ${worldName(pack)} was edited after export (${reasons.length} failing check${reasons.length === 1 ? "" : "s"}).`,
@@ -206,9 +258,20 @@ async function verifyWorldPack(pack: PackObject, canonDocument: string | undefin
     headline,
     digest: result.expected,
     checks: {
-      digest: { ok: result.digestOk, declared: result.expected, recomputed: result.actual },
-      counts: { ok: result.countsOk, declared: result.countsDeclared, actual: result.countsActual },
-      agentRoles: { ok: result.agentRolesOk, problems: result.agentRoleProblems },
+      digest: {
+        ok: result.digestOk,
+        declared: result.expected,
+        recomputed: result.actual,
+      },
+      counts: {
+        ok: result.countsOk,
+        declared: result.countsDeclared,
+        actual: result.countsActual,
+      },
+      agentRoles: {
+        ok: result.agentRolesOk,
+        problems: result.agentRoleProblems,
+      },
       canonBinding,
     },
     reasons,
@@ -217,11 +280,20 @@ async function verifyWorldPack(pack: PackObject, canonDocument: string | undefin
 
 async function ruleCatalog(ruleId: string | undefined) {
   const { RULES } = await loadEngine();
-  const entry = (id: string) => ({ ruleId: id, severity: RULES[id], ...RULE_GUIDES[id] });
+  const entry = (id: string) => ({
+    ruleId: id,
+    severity: RULES[id],
+    ...RULE_GUIDES[id],
+  });
   if (ruleId === undefined)
-    return { severities: SEVERITY_MEANING, rules: Object.keys(RULES).map(entry) };
+    return {
+      severities: SEVERITY_MEANING,
+      rules: Object.keys(RULES).map(entry),
+    };
   if (!(ruleId in RULES))
-    throw new InputError(`unknown ruleId '${ruleId}'. Known: ${Object.keys(RULES).join(", ")}`);
+    throw new InputError(
+      `unknown ruleId '${ruleId}'. Known: ${Object.keys(RULES).join(", ")}`,
+    );
   return { severityMeaning: SEVERITY_MEANING[RULES[ruleId]], ...entry(ruleId) };
 }
 
@@ -229,11 +301,15 @@ const packSource = {
   pack: z
     .union([z.record(z.string(), z.unknown()), z.string().max(MAX_PACK_BYTES)])
     .optional()
-    .describe("The WorldPack.v1 document as a JSON object or JSON string. Working packs and exports are both accepted."),
+    .describe(
+      "The WorldPack.v1 document as a JSON object or JSON string. Working packs and exports are both accepted.",
+    ),
   path: z
     .string()
     .optional()
-    .describe("Local path to a WorldPack .json file, resolved from the server's working directory. stdio only; over HTTP pass pack."),
+    .describe(
+      "Local path to a WorldPack .json file, resolved from the server's working directory. stdio only; over HTTP pass pack.",
+    ),
   canonDocument: z
     .string()
     .max(2_000_000)
@@ -265,13 +341,19 @@ export function registerWorldPackTools(server: McpServer) {
           .min(1)
           .max(1000)
           .optional()
-          .describe(`Maximum findings returned, most severe first. Default ${DEFAULT_LIMIT}; the rest are counted in truncated.`),
+          .describe(
+            `Maximum findings returned, most severe first. Default ${DEFAULT_LIMIT}; the rest are counted in truncated.`,
+          ),
       },
       annotations: readOnly,
     },
     async (args, extra) =>
       guarded(async () =>
-        checkWorldPack(await readPack(args, extra), args.canonDocument, args.limit ?? DEFAULT_LIMIT),
+        checkWorldPack(
+          await readPack(args, extra),
+          args.canonDocument,
+          args.limit ?? DEFAULT_LIMIT,
+        ),
       ),
   );
 
@@ -285,7 +367,9 @@ export function registerWorldPackTools(server: McpServer) {
       annotations: readOnly,
     },
     async (args, extra) =>
-      guarded(async () => verifyWorldPack(await readPack(args, extra), args.canonDocument)),
+      guarded(async () =>
+        verifyWorldPack(await readPack(args, extra), args.canonDocument),
+      ),
   );
 
   server.registerTool(
@@ -295,7 +379,12 @@ export function registerWorldPackTools(server: McpServer) {
       description:
         "List every rule worldpack_check enforces, with severity, what it checks and how to clear a finding. Pass ruleId to explain one finding. Read it before generating world content to avoid findings instead of repairing them.",
       inputSchema: {
-        ruleId: z.string().optional().describe("A ruleId from a worldpack_check finding, e.g. canon.layer-claim."),
+        ruleId: z
+          .string()
+          .optional()
+          .describe(
+            "A ruleId from a worldpack_check finding, e.g. canon.layer-claim.",
+          ),
       },
       annotations: readOnly,
     },

@@ -17,8 +17,14 @@ export type EntityType =
   | "Creator";
 
 export type Layer = "canon" | "user" | "licensed" | "generated" | "contributed";
-export type RightsState = "arcanea-owned" | "creator-owned" | "licensed" | "community-contributed" | "unresolved";
-export type CanonStatus = "locked" | "staging" | "evolving" | "draft" | "non-canon" | "rejected";
+export type RightsState =
+  | "arcanea-owned"
+  | "creator-owned"
+  | "licensed"
+  | "community-contributed"
+  | "unresolved";
+export type CanonStatus =
+  "locked" | "staging" | "evolving" | "draft" | "non-canon" | "rejected";
 export type Visibility = "public" | "unlisted" | "private";
 export type Severity = "info" | "warning" | "error" | "blocker";
 export type ContentHash = `sha256:${string}`;
@@ -114,7 +120,13 @@ export interface Version {
 
 export interface Source {
   id: string;
-  kind: "creator-input" | "canon-document" | "licensed-asset" | "model-output" | "public-contribution" | "external-reference";
+  kind:
+    | "creator-input"
+    | "canon-document"
+    | "licensed-asset"
+    | "model-output"
+    | "public-contribution"
+    | "external-reference";
   uri?: string | null;
   citation?: string | null;
   retrievedAt?: string | null;
@@ -183,7 +195,11 @@ export interface CanonIndex {
   ranks: Array<{ rank: string; minGates: number; maxGates: number }>;
   wisdoms: Array<{ name: string; archive: string; element: string }>;
   houses: string[];
-  originClasses: Array<{ name: string; status: CanonStatus; powerSource: string }>;
+  originClasses: Array<{
+    name: string;
+    status: CanonStatus;
+    powerSource: string;
+  }>;
   terms: Array<{ term: string; status: CanonStatus; definition: string }>;
   lockedTruths: string[];
   contradictionTriggers: ContradictionTrigger[];
@@ -211,23 +227,35 @@ export interface ConflictReport {
 export function buildCanonIndex(markdown: string): CanonIndex;
 export function loadCanonIndex(path: string): Promise<CanonIndex>;
 export function canonName(index: CanonIndex, name: string): CanonEntry | null;
-export function canonNameLoose(index: CanonIndex, candidate: string): { entry: CanonEntry; match: "exact" | "contains"; canonName: string } | null;
+export function canonNameLoose(
+  index: CanonIndex,
+  candidate: string,
+): { entry: CanonEntry; match: "exact" | "contains"; canonName: string } | null;
 export function normalizeName(name: string): string;
-export function rankForGates(index: CanonIndex, gatesOpen: number): string | null;
+export function rankForGates(
+  index: CanonIndex,
+  gatesOpen: number,
+): string | null;
 export function gateByIndex(index: CanonIndex, n: number): CanonGate | null;
 
 /**
  * The layer a node actually has. `layer: "canon"` is never taken on the node's
  * word: it must resolve to a locked canon entry and carry the canon owner.
  */
-export function deriveLayer(index: CanonIndex, node: Partial<EntityNode>): {
+export function deriveLayer(
+  index: CanonIndex,
+  node: Partial<EntityNode>,
+): {
   layer: Layer;
   declared: Layer | null;
   attested: boolean;
   entry: CanonEntry | null;
   reason: string | null;
 };
-export function contradictionsIn(prose: string, triggers: ContradictionTrigger[]): ContradictionTrigger[];
+export function contradictionsIn(
+  prose: string,
+  triggers: ContradictionTrigger[],
+): ContradictionTrigger[];
 
 export function createWorldSeed(spec: {
   name: string;
@@ -240,10 +268,33 @@ export function createWorldSeed(spec: {
   createdAt?: string;
   worldId?: string;
 }): WorldPack;
-export function addNode(pack: WorldPack, node: Partial<EntityNode> & { id: string; type: EntityType; name: string; layer: Layer }, opts?: { governanceFrom?: string }): WorldPack;
-export function addRelationship(pack: WorldPack, rel: Partial<Relationship> & { id: string; kind: RelationshipKind; from: string; to: string }): WorldPack;
-export function commit(pack: WorldPack, opts: { branch?: string; message: string; by: string; at?: string }): WorldPack;
-export function exportPack(pack: WorldPack, opts?: { exportedAt?: string }): Record<string, unknown>;
+export function addNode(
+  pack: WorldPack,
+  node: Partial<EntityNode> & {
+    id: string;
+    type: EntityType;
+    name: string;
+    layer: Layer;
+  },
+  opts?: { governanceFrom?: string },
+): WorldPack;
+export function addRelationship(
+  pack: WorldPack,
+  rel: Partial<Relationship> & {
+    id: string;
+    kind: RelationshipKind;
+    from: string;
+    to: string;
+  },
+): WorldPack;
+export function commit(
+  pack: WorldPack,
+  opts: { branch?: string; message: string; by: string; at?: string },
+): WorldPack;
+export function exportPack(
+  pack: WorldPack,
+  opts?: { exportedAt?: string },
+): Record<string, unknown>;
 export interface AgentRoleProblem {
   id: string | null;
   name: string | null;
@@ -263,7 +314,9 @@ export function verifyExport(exported: Record<string, unknown>): {
   agentRoleProblems: AgentRoleProblem[];
 };
 export function contentHash(value: unknown): ContentHash;
-export function packDigest(pack: WorldPack | Record<string, unknown>): ContentHash;
+export function packDigest(
+  pack: WorldPack | Record<string, unknown>,
+): ContentHash;
 export function countNodes(nodes: EntityNode[]): Record<string, number>;
 export function deterministicId(prefix: string, seed: string): string;
 
@@ -273,33 +326,74 @@ export function detectConflicts(
   options?: { canonBinding?: "required" | "foreign" },
 ): ConflictReport;
 /** Run the same rules against a creator's own canon document. */
-export function checkAgainst(pack: WorldPack, canonDocument: string): { canon: CanonIndex; report: ConflictReport };
+export function checkAgainst(
+  pack: WorldPack,
+  canonDocument: string,
+): { canon: CanonIndex; report: ConflictReport };
 export function proseOf(node: Partial<EntityNode>): string;
 /** Every rule id the conflict detector can emit, with its severity. */
 export const RULES: Readonly<Record<string, Severity>>;
 export const SEVERITIES: readonly Severity[];
 
 /** Structure only; canon legality is detectConflicts' job. */
-export function validatePack(pack: unknown): { valid: boolean; errors: string[] };
+export function validatePack(pack: unknown): {
+  valid: boolean;
+  errors: string[];
+};
 
-export function diffPacks(base: WorldPack, head: WorldPack): {
+export function diffPacks(
+  base: WorldPack,
+  head: WorldPack,
+): {
   added: EntityNode[];
   removed: EntityNode[];
-  changed: Array<{ id: string; type: EntityType; name: string; fields: Array<{ path: string; base: unknown; head: unknown }> }>;
+  changed: Array<{
+    id: string;
+    type: EntityType;
+    name: string;
+    fields: Array<{ path: string; base: unknown; head: unknown }>;
+  }>;
 };
-export function branchPack(pack: WorldPack, opts: { name: string; from?: string; owner: string; at?: string }): WorldPack;
+export function branchPack(
+  pack: WorldPack,
+  opts: { name: string; from?: string; owner: string; at?: string },
+): WorldPack;
 export function mergeBranch(
   ancestor: WorldPack,
   ours: WorldPack,
   theirs: WorldPack,
-  opts?: { by?: string; at?: string; intoBranch?: string; canon?: CanonIndex | null },
-): { merged: WorldPack | null; conflicts: Array<{ ruleId: string; nodeId: string; path?: string; message: string }>; pack: WorldPack };
+  opts?: {
+    by?: string;
+    at?: string;
+    intoBranch?: string;
+    canon?: CanonIndex | null;
+  },
+): {
+  merged: WorldPack | null;
+  conflicts: Array<{
+    ruleId: string;
+    nodeId: string;
+    path?: string;
+    message: string;
+  }>;
+  pack: WorldPack;
+};
 
 export const GUARDIAN_ROLES: readonly AgentRole[];
 export function guardianById(id: string): AgentRole | null;
 export function hasScope(role: AgentRole, scope: Scope): boolean;
-export function decide(role: AgentRole, report: { findings: Finding[] }): { verdict: "approve" | "reject" | "escalate"; reasons: string[]; owned: Finding[] };
-export function runGuardianEvals(cases?: unknown[]): { passed: number; failed: unknown[] };
+export function decide(
+  role: AgentRole,
+  report: { findings: Finding[] },
+): {
+  verdict: "approve" | "reject" | "escalate";
+  reasons: string[];
+  owned: Finding[];
+};
+export function runGuardianEvals(cases?: unknown[]): {
+  passed: number;
+  failed: unknown[];
+};
 /** Check the roles a pack carries against the Guardian definitions in code. */
 export function verifyAgentRoles(roles: AgentRole[]): AgentRoleProblem[];
 export function withGuardianRoles(pack: WorldPack): WorldPack;
@@ -314,7 +408,13 @@ export namespace apl {
   interface Compiled {
     templateId: string;
     prompt: string;
-    contract: { format: "AplOutputContract.v1"; produces: EntityType; required: string[]; attributes: Record<string, unknown>; rules: string[] };
+    contract: {
+      format: "AplOutputContract.v1";
+      produces: EntityType;
+      required: string[];
+      attributes: Record<string, unknown>;
+      rules: string[];
+    };
     constraints: string[];
     bindings: Record<string, unknown>;
     hash: ContentHash;
@@ -322,10 +422,18 @@ export namespace apl {
   const APL_VERSION: string;
   const TEMPLATES: Record<string, unknown>;
   class AplError extends Error {}
-  function compile(templateId: string, bindings: Record<string, unknown>, ctx: { canon: CanonIndex; pack?: WorldPack }): Compiled;
+  function compile(
+    templateId: string,
+    bindings: Record<string, unknown>,
+    ctx: { canon: CanonIndex; pack?: WorldPack },
+  ): Compiled;
   function materialize(
     compiled: Compiled,
-    answer: { name: string; description?: string; attributes?: Record<string, unknown> },
+    answer: {
+      name: string;
+      description?: string;
+      attributes?: Record<string, unknown>;
+    },
     opts: { id: string; layer?: Layer; governance: Governance },
   ): EntityNode;
 }

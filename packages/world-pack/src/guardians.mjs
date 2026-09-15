@@ -38,7 +38,8 @@ export const GUARDIAN_ROLES = Object.freeze([
     gate: 1,
     frequencyHz: 174,
     role: "Guardian of Foundation",
-    charter: "Structure and survivability of a world: does it hold together as a graph?",
+    charter:
+      "Structure and survivability of a world: does it hold together as a graph?",
     authority: {
       scopes: [...BASE, "world:write", "pack:merge"],
       owns: [
@@ -59,8 +60,13 @@ export const GUARDIAN_ROLES = Object.freeze([
     gate: 2,
     frequencyHz: 285,
     role: "Guardian of Flow",
-    charter: "Generation and revision: drafts move, nothing stalls at draft forever.",
-    authority: { scopes: [...BASE, "world:write", "canon:propose"], owns: ["status.illegal-for-layer"], maxWaivableSeverity: "warning" },
+    charter:
+      "Generation and revision: drafts move, nothing stalls at draft forever.",
+    authority: {
+      scopes: [...BASE, "world:write", "canon:propose"],
+      owns: ["status.illegal-for-layer"],
+      maxWaivableSeverity: "warning",
+    },
   },
   {
     id: "guardian.draconia",
@@ -69,10 +75,16 @@ export const GUARDIAN_ROLES = Object.freeze([
     gate: 3,
     frequencyHz: 396,
     role: "Guardian of Fire",
-    charter: "Power systems: gates, ranks, and what a character can actually do.",
+    charter:
+      "Power systems: gates, ranks, and what a character can actually do.",
     authority: {
       scopes: [...BASE, "world:write"],
-      owns: ["canon.rank-out-of-band", "canon.rank-unknown", "canon.element-unknown", "canon.frequency-unknown"],
+      owns: [
+        "canon.rank-out-of-band",
+        "canon.rank-unknown",
+        "canon.element-unknown",
+        "canon.frequency-unknown",
+      ],
       maxWaivableSeverity: "warning",
     },
   },
@@ -83,8 +95,13 @@ export const GUARDIAN_ROLES = Object.freeze([
     gate: 4,
     frequencyHz: 417,
     role: "Guardian of Heart",
-    charter: "Characters and the people they are; sensitivity protocol for Mirror Realms.",
-    authority: { scopes: [...BASE, "world:write"], owns: ["canon.house-unknown"], maxWaivableSeverity: "warning" },
+    charter:
+      "Characters and the people they are; sensitivity protocol for Mirror Realms.",
+    authority: {
+      scopes: [...BASE, "world:write"],
+      owns: ["canon.house-unknown"],
+      maxWaivableSeverity: "warning",
+    },
   },
   {
     id: "guardian.alera",
@@ -93,10 +110,16 @@ export const GUARDIAN_ROLES = Object.freeze([
     gate: 5,
     frequencyHz: 528,
     role: "Guardian of Voice",
-    charter: "Truth of statement. Locked truths are not negotiable; nothing that contradicts one passes.",
+    charter:
+      "Truth of statement. Locked truths are not negotiable; nothing that contradicts one passes.",
     authority: {
       scopes: [...BASE, "canon:propose"],
-      owns: ["canon.nero-miscast", "canon.luminor-as-species", "canon.locked-truth-contradiction", "canon.staging-cited-as-locked"],
+      owns: [
+        "canon.nero-miscast",
+        "canon.luminor-as-species",
+        "canon.locked-truth-contradiction",
+        "canon.staging-cited-as-locked",
+      ],
       maxWaivableSeverity: "info",
     },
   },
@@ -107,7 +130,8 @@ export const GUARDIAN_ROLES = Object.freeze([
     gate: 6,
     frequencyHz: 639,
     role: "Guardian of Sight",
-    charter: "Detection: runs the conflict pass and reports what it sees, waives nothing.",
+    charter:
+      "Detection: runs the conflict pass and reports what it sees, waives nothing.",
     authority: { scopes: [...BASE], owns: [], maxWaivableSeverity: "info" },
   },
   {
@@ -117,10 +141,15 @@ export const GUARDIAN_ROLES = Object.freeze([
     gate: 7,
     frequencyHz: 741,
     role: "Guardian of Crown",
-    charter: "Rights and licence: nothing leaves the studio with unresolved ownership.",
+    charter:
+      "Rights and licence: nothing leaves the studio with unresolved ownership.",
     authority: {
       scopes: [...BASE, "rights:assign", "pack:export"],
-      owns: ["rights.unresolved", "rights.licensed-without-licence", "rights.state-illegal-for-layer"],
+      owns: [
+        "rights.unresolved",
+        "rights.licensed-without-licence",
+        "rights.state-illegal-for-layer",
+      ],
       maxWaivableSeverity: "info",
     },
   },
@@ -131,8 +160,13 @@ export const GUARDIAN_ROLES = Object.freeze([
     gate: 8,
     frequencyHz: 852,
     role: "Guardian of Starweave",
-    charter: "Branch topology: forks, diffs, and merges across versions of a world.",
-    authority: { scopes: [...BASE, "pack:merge", "world:write"], owns: [], maxWaivableSeverity: "warning" },
+    charter:
+      "Branch topology: forks, diffs, and merges across versions of a world.",
+    authority: {
+      scopes: [...BASE, "pack:merge", "world:write"],
+      owns: [],
+      maxWaivableSeverity: "warning",
+    },
   },
   {
     id: "guardian.ino",
@@ -142,7 +176,11 @@ export const GUARDIAN_ROLES = Object.freeze([
     frequencyHz: 963,
     role: "Guardian of Unity",
     charter: "Public contributions: what a stranger may add and on what terms.",
-    authority: { scopes: [...BASE, "rights:assign"], owns: ["schema.unknown-layer"], maxWaivableSeverity: "warning" },
+    authority: {
+      scopes: [...BASE, "rights:assign"],
+      owns: ["schema.unknown-layer"],
+      maxWaivableSeverity: "warning",
+    },
   },
   {
     id: "guardian.shinkami",
@@ -151,9 +189,15 @@ export const GUARDIAN_ROLES = Object.freeze([
     gate: 10,
     frequencyHz: 1111,
     role: "Guardian of Source",
-    charter: "Canon boundary. Cannot lock canon — only the Creator can. Escalates instead.",
+    charter:
+      "Canon boundary. Cannot lock canon — only the Creator can. Escalates instead.",
     authority: {
-      scopes: [...BASE, "canon:propose", "canon:approve-staging", "canon:escalate-to-creator"],
+      scopes: [
+        ...BASE,
+        "canon:propose",
+        "canon:approve-staging",
+        "canon:escalate-to-creator",
+      ],
       owns: [
         "canon.locked-name-taken",
         "canon.alias-of-locked-name",
@@ -191,21 +235,42 @@ export function verifyAgentRoles(roles) {
     const at = { id: role?.id ?? null, name: role?.name ?? null };
     const def = guardianById(role?.id);
     if (!def) {
-      problems.push({ ...at, reason: `agent role '${role?.id ?? "(no id)"}' is not a defined Guardian` });
+      problems.push({
+        ...at,
+        reason: `agent role '${role?.id ?? "(no id)"}' is not a defined Guardian`,
+      });
       continue;
     }
     if (role.name !== def.name || role.gate !== def.gate)
-      problems.push({ ...at, reason: `${def.id} is Gate ${def.gate} ${def.name}, not Gate ${role.gate} ${role.name}` });
+      problems.push({
+        ...at,
+        reason: `${def.id} is Gate ${def.gate} ${def.name}, not Gate ${role.gate} ${role.name}`,
+      });
 
     const authority = role.authority || {};
-    const extraScopes = (authority.scopes || []).filter((s) => !def.authority.scopes.includes(s));
-    if (extraScopes.length) problems.push({ ...at, reason: `${def.id} claims scopes it does not hold: ${extraScopes.join(", ")}` });
+    const extraScopes = (authority.scopes || []).filter(
+      (s) => !def.authority.scopes.includes(s),
+    );
+    if (extraScopes.length)
+      problems.push({
+        ...at,
+        reason: `${def.id} claims scopes it does not hold: ${extraScopes.join(", ")}`,
+      });
 
-    const extraOwns = (authority.owns || []).filter((o) => !def.authority.owns.includes(o));
-    if (extraOwns.length) problems.push({ ...at, reason: `${def.id} claims rules outside its charter: ${extraOwns.join(", ")}` });
+    const extraOwns = (authority.owns || []).filter(
+      (o) => !def.authority.owns.includes(o),
+    );
+    if (extraOwns.length)
+      problems.push({
+        ...at,
+        reason: `${def.id} claims rules outside its charter: ${extraOwns.join(", ")}`,
+      });
 
     if (authority.maxWaivableSeverity !== def.authority.maxWaivableSeverity)
-      problems.push({ ...at, reason: `${def.id} waives up to ${def.authority.maxWaivableSeverity}, not ${authority.maxWaivableSeverity}` });
+      problems.push({
+        ...at,
+        reason: `${def.id} waives up to ${def.authority.maxWaivableSeverity}, not ${authority.maxWaivableSeverity}`,
+      });
   }
   return problems;
 }
@@ -221,18 +286,34 @@ export function hasScope(role, scope) {
  * @returns {{verdict:"approve"|"reject"|"escalate", reasons:string[], owned:Array}}
  */
 export function decide(role, report) {
-  const owned = report.findings.filter((f) => role.authority.owns.includes(f.ruleId));
+  const owned = report.findings.filter((f) =>
+    role.authority.owns.includes(f.ruleId),
+  );
   const ceiling = SEVERITY_ORDER[role.authority.maxWaivableSeverity];
   const unwaivable = owned.filter((f) => SEVERITY_ORDER[f.severity] > ceiling);
 
   if (!unwaivable.length) {
-    return { verdict: "approve", reasons: owned.length ? [`${owned.length} finding(s) within waivable severity`] : ["no findings in this Guardian's charter"], owned };
+    return {
+      verdict: "approve",
+      reasons: owned.length
+        ? [`${owned.length} finding(s) within waivable severity`]
+        : ["no findings in this Guardian's charter"],
+      owned,
+    };
   }
   const hasBlocker = unwaivable.some((f) => f.severity === "blocker");
   if (hasBlocker && hasScope(role, "canon:escalate-to-creator")) {
-    return { verdict: "escalate", reasons: unwaivable.map((f) => `${f.ruleId}: ${f.message}`), owned };
+    return {
+      verdict: "escalate",
+      reasons: unwaivable.map((f) => `${f.ruleId}: ${f.message}`),
+      owned,
+    };
   }
-  return { verdict: "reject", reasons: unwaivable.map((f) => `${f.ruleId}: ${f.message}`), owned };
+  return {
+    verdict: "reject",
+    reasons: unwaivable.map((f) => `${f.ruleId}: ${f.message}`),
+    owned,
+  };
 }
 
 /**
@@ -243,7 +324,13 @@ export const GUARDIAN_EVALS = Object.freeze([
   {
     id: "alera.rejects-nero-as-evil",
     roleId: "guardian.alera",
-    findings: [{ ruleId: "canon.nero-miscast", severity: "blocker", message: "Nero cast as evil" }],
+    findings: [
+      {
+        ruleId: "canon.nero-miscast",
+        severity: "blocker",
+        message: "Nero cast as evil",
+      },
+    ],
     expect: "reject",
   },
   {
@@ -255,73 +342,145 @@ export const GUARDIAN_EVALS = Object.freeze([
   {
     id: "shinkami.escalates-locked-name-claim",
     roleId: "guardian.shinkami",
-    findings: [{ ruleId: "canon.locked-name-taken", severity: "blocker", message: "user node named Draconis" }],
+    findings: [
+      {
+        ruleId: "canon.locked-name-taken",
+        severity: "blocker",
+        message: "user node named Draconis",
+      },
+    ],
     expect: "escalate",
   },
   {
     id: "shinkami.rejects-unknown-origin-class",
     roleId: "guardian.shinkami",
-    findings: [{ ruleId: "canon.origin-class-unknown", severity: "error", message: "origin class 'Nullborn' is not catalogued" }],
+    findings: [
+      {
+        ruleId: "canon.origin-class-unknown",
+        severity: "error",
+        message: "origin class 'Nullborn' is not catalogued",
+      },
+    ],
     expect: "reject",
   },
   {
     id: "aiyami.rejects-unresolved-rights",
     roleId: "guardian.aiyami",
-    findings: [{ ruleId: "rights.unresolved", severity: "error", message: "rights unresolved" }],
+    findings: [
+      {
+        ruleId: "rights.unresolved",
+        severity: "error",
+        message: "rights unresolved",
+      },
+    ],
     expect: "reject",
   },
   {
     id: "aiyami.ignores-canon-findings-outside-charter",
     roleId: "guardian.aiyami",
-    findings: [{ ruleId: "canon.nero-miscast", severity: "blocker", message: "not Aiyami's charter" }],
+    findings: [
+      {
+        ruleId: "canon.nero-miscast",
+        severity: "blocker",
+        message: "not Aiyami's charter",
+      },
+    ],
     expect: "approve",
   },
   {
     id: "lyssandria.waives-warning-in-charter",
     roleId: "guardian.lyssandria",
-    findings: [{ ruleId: "provenance.missing-owner", severity: "warning", message: "owner missing" }],
+    findings: [
+      {
+        ruleId: "provenance.missing-owner",
+        severity: "warning",
+        message: "owner missing",
+      },
+    ],
     expect: "approve",
   },
   {
     id: "lyssandria.rejects-error-in-charter",
     roleId: "guardian.lyssandria",
-    findings: [{ ruleId: "graph.dangling-relationship", severity: "error", message: "edge points outside the pack" }],
+    findings: [
+      {
+        ruleId: "graph.dangling-relationship",
+        severity: "error",
+        message: "edge points outside the pack",
+      },
+    ],
     expect: "reject",
   },
   {
     id: "draconia.rejects-rank-out-of-band",
     roleId: "guardian.draconia",
-    findings: [{ ruleId: "canon.rank-out-of-band", severity: "error", message: "3 gates is Mage, not Archmage" }],
+    findings: [
+      {
+        ruleId: "canon.rank-out-of-band",
+        severity: "error",
+        message: "3 gates is Mage, not Archmage",
+      },
+    ],
     expect: "reject",
   },
   {
     id: "shinkami.escalates-self-declared-canon-layer",
     roleId: "guardian.shinkami",
-    findings: [{ ruleId: "canon.layer-claim", severity: "blocker", message: "user node declares layer canon" }],
+    findings: [
+      {
+        ruleId: "canon.layer-claim",
+        severity: "blocker",
+        message: "user node declares layer canon",
+      },
+    ],
     expect: "escalate",
   },
   {
     id: "shinkami.escalates-canon-binding-mismatch",
     roleId: "guardian.shinkami",
-    findings: [{ ruleId: "canon.binding-mismatch", severity: "blocker", message: "pack cleared against a different canon" }],
+    findings: [
+      {
+        ruleId: "canon.binding-mismatch",
+        severity: "blocker",
+        message: "pack cleared against a different canon",
+      },
+    ],
     expect: "escalate",
   },
   {
     id: "alera.rejects-locked-truth-contradiction",
     roleId: "guardian.alera",
-    findings: [{ ruleId: "canon.locked-truth-contradiction", severity: "blocker", message: "Malachar cast as purely evil" }],
+    findings: [
+      {
+        ruleId: "canon.locked-truth-contradiction",
+        severity: "blocker",
+        message: "Malachar cast as purely evil",
+      },
+    ],
     expect: "reject",
   },
   {
     id: "lyssandria.rejects-forged-agent-role",
     roleId: "guardian.lyssandria",
-    findings: [{ ruleId: "provenance.unknown-agent-role", severity: "blocker", message: "role 'guardian.attacker' is not defined" }],
+    findings: [
+      {
+        ruleId: "provenance.unknown-agent-role",
+        severity: "blocker",
+        message: "role 'guardian.attacker' is not defined",
+      },
+    ],
     expect: "reject",
   },
   {
     id: "lyria.waives-nothing-and-owns-nothing",
     roleId: "guardian.lyria",
-    findings: [{ ruleId: "canon.rank-out-of-band", severity: "error", message: "reported, not adjudicated" }],
+    findings: [
+      {
+        ruleId: "canon.rank-out-of-band",
+        severity: "error",
+        message: "reported, not adjudicated",
+      },
+    ],
     expect: "approve",
   },
 ]);
