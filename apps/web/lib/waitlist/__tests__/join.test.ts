@@ -6,6 +6,8 @@ process.env.KV_REST_API_URL = "https://kv.test.invalid";
 process.env.KV_REST_API_TOKEN = "test-token";
 delete process.env.RESEND_API_KEY;
 delete process.env.RESEND_AUDIENCE_ID;
+const SECRET = "test-secret-at-least-32-characters-long";
+process.env.WAITLIST_TOKEN_SECRET = SECRET;
 
 type Kv = {
   strings: Map<string, string>;
@@ -35,6 +37,29 @@ function kvFetch(kv: Kv, calls: string[]) {
       hash.set(field, value);
       result = 1;
     }
+    if (cmd === "hdel") result = hash.delete(field) ? 1 : 0;
+    if (cmd === "eval") {
+      const args = JSON.parse(String(init?.body)) as string[];
+      const [positionsKey, countKey, signalsKey, email, json, allowUpdate] =
+        args.slice(3);
+      const positions =
+        kv.hashes.get(positionsKey) ?? new Map<string, string>();
+      const saved = kv.hashes.get(signalsKey) ?? new Map<string, string>();
+      kv.hashes.set(positionsKey, positions);
+      kv.hashes.set(signalsKey, saved);
+      const existing = positions.get(email);
+      if (existing) {
+        if (allowUpdate === "1")
+          saved.set(email, json.replace('"__POS__"', existing));
+        result = [Number(existing), 0];
+      } else {
+        const pos = Number(kv.strings.get(countKey) ?? 0) + 1;
+        kv.strings.set(countKey, String(pos));
+        positions.set(email, String(pos));
+        saved.set(email, json.replace('"__POS__"', String(pos)));
+        result = [pos, 1];
+      }
+    }
     return new Response(JSON.stringify({ result }), { status: 200 });
   };
 }
@@ -54,6 +79,7 @@ let kv: Kv;
 beforeEach(() => {
   process.env.KV_REST_API_URL = "https://kv.test.invalid";
   process.env.KV_REST_API_TOKEN = "test-token";
+  process.env.WAITLIST_TOKEN_SECRET = SECRET;
   kv = { strings: new Map(), hashes: new Map(), expiries: new Map() };
 });
 
@@ -187,6 +213,7 @@ test("stores the signal, keeps position on re-submit, withholds the count below 
       consent: true,
       priceBand: "25-99",
       role: "Agent builder",
+      updateToken: (first.body as { updateToken?: string }).updateToken,
     },
     request(),
     NOW,

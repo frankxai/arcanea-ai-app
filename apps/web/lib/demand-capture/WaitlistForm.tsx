@@ -104,6 +104,7 @@ export function WaitlistForm({
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [updateToken, setUpdateToken] = useState<string | undefined>();
   const stepHeading = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -117,7 +118,14 @@ export function WaitlistForm({
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId, email, consent, source, ...payload }),
+        body: JSON.stringify({
+          productId,
+          email,
+          consent,
+          source,
+          updateToken,
+          ...payload,
+        }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok)
@@ -125,6 +133,8 @@ export function WaitlistForm({
           data.error ?? "Something went wrong. Your email was not saved.",
         );
       setState(data);
+      if (typeof data.updateToken === "string")
+        setUpdateToken(data.updateToken);
       return true;
     } catch (e) {
       setError(

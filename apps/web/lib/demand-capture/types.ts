@@ -44,4 +44,6 @@ export interface WaitlistState {
   foundingCohort: number;
   foundingSeatsLeft: number | null;
   stage: Stage;
+  /** Short-lived HMAC returned by a join; required to add step-2 answers. */
+  updateToken?: string;
 }

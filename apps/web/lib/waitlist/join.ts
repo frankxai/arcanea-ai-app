@@ -3,9 +3,10 @@ import registry from "../../data/products.graph.json";
 import {
   handleJoin,
   handleState,
+  isTokenSecretConfigured,
   type ProductConfig,
 } from "../demand-capture/handler";
-import { kv } from "../demand-capture/store";
+import { kvInt } from "../demand-capture/store";
 import type { WaitlistState } from "../demand-capture/types";
 
 export type WaitlistProductId = "arcanea-subscription" | "arcanea-mcp";
@@ -42,13 +43,19 @@ function clientIp(req: Request) {
   return forwarded || req.headers.get("x-real-ip")?.trim() || "unknown";
 }
 
-/** Fixed window in the waitlist's own KV. Raw IPs and emails are never stored, only digests. */
+/**
+ * Fixed window in the waitlist's own KV. Raw IPs and emails are never stored,
+ * only digests. kvInt throws on any reply that is not an integer, so a missing
+ * or malformed limiter result refuses the request instead of admitting it.
+ */
 async function hit(bucket: string, limit: number, nowMs: number) {
   const windowStart =
     Math.floor(nowMs / 1000 / RATE_WINDOW_SECONDS) * RATE_WINDOW_SECONDS;
   const key = `waitlist:rl:${bucket}:${windowStart}`;
-  const count = Number(await kv(["incr", key]));
-  if (count === 1) await kv(["expire", key, String(RATE_WINDOW_SECONDS)]);
+  const count = await kvInt(["incr", key]);
+  if (count < 1)
+    throw new Error(`limiter count ${count} is impossible after INCR`);
+  if (count === 1) await kvInt(["expire", key, String(RATE_WINDOW_SECONDS)]);
   const retryAfter =
     windowStart + RATE_WINDOW_SECONDS - Math.floor(nowMs / 1000);
   return { limited: count > limit, retryAfter: Math.max(1, retryAfter) };
@@ -71,9 +78,9 @@ export async function joinWaitlist(
   const product = findProduct(input.productId);
   if (!product) return { status: 404, body: { error: "Unknown product" } };
 
-  if (!isStoreConfigured()) {
+  if (!isStoreConfigured() || !isTokenSecretConfigured()) {
     console.error(
-      "[waitlist] KV_REST_API_URL or KV_REST_API_TOKEN missing; signup refused",
+      "[waitlist] KV_REST_API_URL, KV_REST_API_TOKEN or WAITLIST_TOKEN_SECRET (32+ chars) missing; signup refused",
     );
     return { status: 503, body: { error: UNAVAILABLE } };
   }
@@ -104,7 +111,7 @@ export async function joinWaitlist(
   }
 
   try {
-    return await handleJoin(product, input, req);
+    return await handleJoin(product, input, req, nowMs);
   } catch (err) {
     console.error("[waitlist] store write failed", err);
     return { status: 503, body: { error: UNAVAILABLE } };
