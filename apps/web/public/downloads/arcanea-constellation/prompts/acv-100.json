@@ -1,0 +1,90 @@
+{
+  "schema": "arcanea.visual_prompt_contract.v1",
+  "intent": "Create an evidence-bound visual study of Sixteen-agent constellation for the contracted deliverable.",
+  "subject": {
+    "stableId": "agents-ensemble",
+    "displayName": "Sixteen-agent constellation",
+    "kind": "regression",
+    "identityLock": "All sixteen public product identities appear as a cooperative atlas of distinct working instruments, with Prismatic as visual workflow lead but the human approval position visibly open. Preserve these exact identity anchors: Logicus — A freestanding four-arm lattice compass holding tensioned threads above a compact architectural model; every arm and load path remains readable in grayscale. | Synthra — A joined filament loom with four materially different inputs passing through visible reversible couplers into one coherent working cloth; no seam is hidden. | Debugon — A split optical bench paired with one tuning fork: the two halves align around a small reproducible fault rather than a field of broken machinery. | Nexus — A four-way relay knot whose channels remain separate through the convergence, with handoff tokens resting at each explicit boundary. | Prismatic — A faceted aperture on a matte ceramic evidence table, translating one source object into five controlled visual test plates without becoming a rainbow portal. | Melodia — A resonant borosilicate bow suspended over a shallow acoustic vessel, with one countable standing wave visible through material response rather than music-note symbols. | Motio — A segmented orbital track with three physically distinct states of one object; motion is legible through spacing, hinge angle, and consequence rather than speed blur. | Formis — A modular relief-tile system shown coherently at interface, book, and physical-object scales, each retaining the same corner, aperture, and spacing law. | Chronica — A ring-bound mechanical timeline whose event plates connect to visible downstream consequence loops; no floating clocks or nostalgic scrolls. | Veritas — A clear-edged standing mirror between a physical source object and three claim plates; only supported claims produce a complete reflection. | Lexicon — A three-strata language wheel aligning source term, operational meaning, and public translation through one exact aperture; no generated glyph soup. | Poetica — A single tensioned filament of light suspended between two heavy material anchors, compressing a larger field of meaning into one memorable line. | Oracle — A horizon astrolabe aligning primary-source plates, counterexamples, and a translucent uncertainty band; never a crystal ball or all-seeing eye. | Analytica — A calibrated ten-notch balance with three physical hard-floor stops and a set of equal candidate plates; score and veto remain visibly different mechanisms. | Memoria — A layered archive key whose nested plates carry source, hash, decision, and supersession grooves; a replacement can slide in without erasing the parent. | Futura — A branching path prism with reversible hinges and three materially different option paths, each preserving a visible return route.",
+    "evidenceState": "source-defined",
+    "openIdentityVariables": [],
+    "allowedVariation": "Crop, pose, action, and camera may vary by panel; identity, anatomy, silhouette, materials, and maintained objects may not drift."
+  },
+  "storyBeat": "The sixteen instruments pass one evidence object through four domain rhythms, surface one dissent, and stop at a visibly unoccupied human decision position.",
+  "composition": "21:9 constellation atlas; four domains legible by spatial rhythm, not uniform superhero lineup.",
+  "output": {
+    "assetCount": 1,
+    "aspectRatio": "21:9",
+    "intendedSurface": "identity-continuity-evidence-sheet",
+    "deliveryRole": "multi-identity constellation regression study",
+    "cropSafety": "Keep both relationship anchors and the decisive interaction inside the central 16:9 safety field; peripheral atmosphere may crop, but no alternate crop is authorized.",
+    "generatedTextPolicy": "no-generated-text"
+  },
+  "designSystem": {
+    "styleMode": "adaptive-primary-pending",
+    "direction": "ADAPTIVE_STYLE_PRIMARY_PENDING_AFTER_ROUND_01",
+    "colorLaw": "70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent.",
+    "escalation": "resonant: one localized impossible behavior; environment remains physically legible",
+    "materialLaw": "Tactile, specific materials with wear, weight, construction, and local environmental response.",
+    "typography": "No text, letters, logos, watermarks, borders, captions, or pseudo-glyphs inside the generated image."
+  },
+  "light": "Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.",
+  "references": {
+    "sourceRefs": [
+      "apps/web/content/blog/luminor-intelligence-system.mdx [sha256:661f6d21c9b358bbd112ceeca186ec84278e97f6c4226a2cf249aa9fb1f6305b]",
+      ".arcanea/lore/CANON_LOCKED.md#terminology-locked [sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f]"
+    ],
+    "imageRefs": [],
+    "imageReferencePolicy": "Use only owned or licensed references. Record file hash and role: identity, composition, material, or lighting. Never use a reference as permission to imitate its creator."
+  },
+  "constraints": [
+    "grayscale silhouette remains identifiable",
+    "the compared identity, anatomy, silhouette, and maintained objects remain continuous across every panel",
+    "visible phenomenon serves one story law",
+    "adult premium editorial finish; no mascot energy",
+    "compare all sixteen instruments against the accepted reference hash for each earlier agent study; stop if any reference is missing",
+    "all sixteen bespoke instrument silhouettes remain individually legible without matching uniforms, robot bodies, or color-only coding",
+    "use one deterministic non-generative reference atlas assembled from all sixteen accepted identity images plus a manifest linking every tile to its source hash; stop if either is absent"
+  ],
+  "avoid": [
+    "generic fantasy concept art",
+    "rainbow galaxy effects",
+    "permanent flame crystal or waterfall hair",
+    "franchise or living-artist style imitation",
+    "appropriated sacred clothing symbols gestures or shrine architecture",
+    "illegible pseudo-text",
+    "sexualized or childlike treatment",
+    "color as the only identity signal"
+  ],
+  "provider": {
+    "adapter": "runtime-discovered",
+    "preferredCapabilities": [
+      "high-fidelity reference input",
+      "iterative editing",
+      "consistent identity",
+      "generation receipt"
+    ],
+    "model": null,
+    "seed": null,
+    "providerParameters": {}
+  },
+  "verification": {
+    "deterministicChecks": [
+      "declared aspect ratio within 1.5% provider-rounding tolerance",
+      "file decodes",
+      "no embedded prompt text",
+      "receipt and output hash recorded"
+    ],
+    "rubric": "arcanea_visual_quality_v1_10x5",
+    "passThreshold": 42,
+    "identityFloor": 4,
+    "canonFloor": 4,
+    "humanApprovalRequired": true
+  },
+  "governance": {
+    "releaseEligibility": "candidate-after-human-gates",
+    "sensitivityReviewRequired": false,
+    "reviewRequirements": []
+  },
+  "contractHash": "c504c582ab9b5a4af8ebb4db34a73118789dba5ccb75922d2c2779aab68d67c2"
+}

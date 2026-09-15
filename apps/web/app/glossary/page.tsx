@@ -399,7 +399,7 @@ const TERMS = [
     term: "MCP Server",
     category: "platform",
     definition:
-      "Model Context Protocol server providing 30+ tools with skill-rules integration.",
+      "Model Context Protocol server providing 54 tools with skill-rules integration.",
   },
   {
     term: "HNSW Memory",
@@ -539,7 +539,7 @@ export default function GlossaryPage() {
                 <Icons.ChevronRight className="text-brand-primary opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <p className="text-sm text-text-muted">
-                Explore the 17 collections of wisdom - legends, prophecies, and
+                Explore the 20 collections of wisdom - legends, prophecies, and
                 practical guidance.
               </p>
             </Link>
@@ -555,8 +555,8 @@ export default function GlossaryPage() {
                 <Icons.ChevronRight className="text-brand-primary opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <p className="text-sm text-text-muted">
-                Explore the Ten Gates of Creation. Take the assessment to
-                find your path.
+                Explore the Ten Gates of Creation. Take the assessment to find
+                your path.
               </p>
             </Link>
           </div>

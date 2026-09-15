@@ -4,11 +4,14 @@ import type { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { ensureProfileForUser } from "@/lib/supabase/profile-bootstrap";
 import { getSafeNextPath } from "@/lib/auth/redirect";
+import { safeAuthNextPath } from "@/lib/auth/safe-next-path";
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
-  const next = getSafeNextPath(requestUrl.searchParams.get("next"));
+  const next = getSafeNextPath(
+    safeAuthNextPath(requestUrl.searchParams.get("next"), "/"),
+  );
 
   if (!code) {
     return NextResponse.redirect(
