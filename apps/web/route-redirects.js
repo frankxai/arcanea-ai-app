@@ -27,7 +27,8 @@ const routeRedirects = [
   moved("/v1", "/"),
   moved("/v3/:path*", "/"),
   moved("/v4", "/"),
-  moved("/vault/:path*", "/starlight-intelligence"),
+  moved("/vault/:category", "/starlight-intelligence/vault/:category"),
+  moved("/vault", "/starlight-intelligence"),
 ];
 
 module.exports = { routeRedirects };
