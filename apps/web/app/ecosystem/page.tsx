@@ -21,7 +21,6 @@ import {
   type PublicRepoGroup,
   type PublicRepoStatus,
 } from "@/lib/public-repo-registry";
-import { FACTS } from "@/lib/facts";
 
 // ─── Inline SVG Icons ─────────────────────────────────────────────────────────
 
@@ -123,7 +122,6 @@ const STATS = [
     value: String(PUBLIC_REPO_SUMMARY.unresolved),
     label: "Needs Verification",
   },
-  { value: String(FACTS.skills), label: "Agent Skills" },
 ];
 
 const LAYERS = [
@@ -133,12 +131,7 @@ const LAYERS = [
     accent: "var(--arc-brand-atlantean-teal)",
     description:
       "Next.js 16, React 19, Vercel. The creative surface where users chat, imagine, build worlds, and publish.",
-    stats: [
-      "181 pages",
-      "12 AI models",
-      "13 configured Luminors",
-      "6 product layers",
-    ],
+    stats: [],
     features: [
       "Chat & Imagine",
       "Studio & Worlds",
@@ -172,7 +165,6 @@ const LAYERS = [
     description:
       "The public repos are forkable. Private production and unresolved historical entries are labeled instead of linked.",
     stats: [
-      `${PUBLIC_REPO_SUMMARY.public} public repos`,
       `${PUBLIC_REPO_SUMMARY.private} private repo`,
       `${PUBLIC_REPO_SUMMARY.unresolved} unresolved`,
       `${PUBLIC_REPO_SUMMARY.upstream} upstream dependency`,
@@ -338,7 +330,7 @@ export default function EcosystemHubPage() {
                 verification before we link them.
               </p>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mb-10 p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
                 {STATS.map((s, i) => (
                   <StatCard
                     key={s.label}
