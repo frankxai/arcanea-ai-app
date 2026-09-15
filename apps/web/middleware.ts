@@ -29,7 +29,6 @@ export async function middleware(request: NextRequest) {
     request.method === "POST"
   ) {
     return NextResponse.next({ request: { headers: request.headers } });
->>>>>>> origin/main
   }
 
   return updateSession(request, {
