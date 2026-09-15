@@ -1,392 +1,197 @@
-# Arcanea MCP Server
+# @arcanea/mcp-server
 
-> **A creative production layer for the age of AI-human co-creation**
-
-[![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue)](https://modelcontextprotocol.io)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)](https://www.typescriptlang.org/)
-[![oh-my-opencode Inspired](https://img.shields.io/badge/Inspired%20by-oh--my--opencode-purple)](https://github.com/code-yeongyu/oh-my-opencode)
-
-Transform your creative process with AI-powered production tools, worldbuilding systems, wisdom companions, and a living creative ecosystem. Plan books, games, music releases, cinematic scenes, asset briefs, and agent handoffs, then generate characters, locations, magical artifacts, and entire worlds within the Arcanea universe - or use the framework for your own creative projects.
-
-**v0.3.0**: Now featuring multi-agent orchestration inspired by [oh-my-opencode](https://github.com/code-yeongyu/oh-my-opencode)!
-
-## Features
-
-### Production Studio Tools
-- **World Planning** - Turn a premise into canon, factions, locations, timelines, visual language, and export context
-- **Book Planning** - Build reader promise, book bible, chapter spine, sample direction, cover brief, and publishing checklist
-- **Game Planning** - Generate player promise, core loop, mechanics, levels, asset kit, and prototype handoff
-- **Music Planning** - Shape artist lore, song briefs, sonic motifs, cover art, visualizers, and release packs
-- **Cinema Planning** - Create trailer or scene packets with hook frame, shot list, camera language, audio direction, and render prompts
-- **Agent Handoffs** - Export structured project context for Claude, Codex, Cursor, and generic MCP hosts
-
-### Worldbuilding Generators
-- **Characters** - Generate rich characters with elemental affinities, magical ranks, and backstories
-- **Locations** - Create mystical places with dominant elements and unique atmospheres
-- **Creatures** - Design magical beings from tiny sprites to massive godbeasts
-- **Artifacts** - Craft legendary items with history, powers, and elemental alignments
-- **Magic Abilities** - Design spells and powers based on the Ten Gates system
-- **Names** - Generate lore-appropriate names for characters, places, and items
-
-### Luminor Companions (AI Wisdom Guides)
-- **Valora** - The Warrior of Light (courage, action, breaking through fear)
-- **Serenith** - The Calm Waters (patience, clarity, sustainable practice)
-- **Ignara** - The Spark of Joy (passion, playfulness, creative fire)
-- **Verdana** - The Ancient Growth (long-term vision, wisdom, patience)
-- **Eloqua** - The Voice of Truth (authentic expression, finding your voice)
-
-### Creative Coaching
-- **Block Diagnosis** - Identify your creative obstacles with the Bestiary of Blocks
-- **Deep Diagnosis** - Multi-step sequential thinking for complex blocks
-- **Luminor Council** - Gather multiple AI companions for guidance
-- **Luminor Debate** - Two perspectives exploring your creative questions
-
-### Memory & Journey Tracking
-- **Session Memory** - Track your creative journey across conversations
-- **Milestone System** - Achieve and celebrate creative accomplishments
-- **Creation Graph** - Build relationships between your creations
-
-### World Relationship Network
-- **Link Creations** - Connect characters, locations, artifacts, and creatures
-- **Relationship Types** - allies_with, opposes, wields, inhabits, guards, and more
-- **Path Finding** - Discover connections between any two creations
-- **World Export** - Export your entire world graph for visualization
-
-### Agent Orchestration (NEW in v0.3)
-Inspired by [oh-my-opencode](https://github.com/code-yeongyu/oh-my-opencode)'s multi-agent architecture:
-
-- **Creator** - Master orchestrator (Claude Opus 4.5) that coordinates all creative work
-- **Worldsmith** - Rapid generation engine (Gemini Pro) for characters, locations, artifacts
-- **Luminor Council** - Creative coaching collective (Claude Sonnet) with 5 wisdom guides
-- **Scribe** - Narrative voice (Claude Sonnet) for story development
-- **Seer** - Fast research eye (Gemini Flash) for connections and canon validation
-
-Features:
-- **Skill-First Blocking** - Requests auto-route to the best agent
-- **Parallel Execution** - Multiple agents work concurrently
-- **World State Assessment** - Suggestions based on world maturity
-- **Multi-Phase Framework** - Intent → Assessment → Delegation → Synthesis
-
-## Quick Start
-
-### Installation
+An MCP server that **audits a world instead of storing it**. Hand it a world, and it
+tells you, rule by rule, where the world contradicts its canon, who owns what, and
+whether anyone edited it after export. Every finding is mechanical, so you can check it
+yourself. Plus Arcanea's worldbuilding, planning and coaching tools.
 
 ```bash
-# Clone and install
-git clone https://github.com/yourusername/arcanea-mcp.git
-cd arcanea-mcp
-npm install
-
-# Build
-npm run build
+claude mcp add arcanea -- npx -y @arcanea/mcp-server@1
 ```
 
-### Claude Desktop Configuration
-
-Add to your `claude_desktop_config.json`:
-
 ```json
+{ "mcpServers": { "arcanea": { "command": "npx", "args": ["-y", "@arcanea/mcp-server@1"] } } }
+```
+
+Node 20.18.1+ or 22+. stdio by default; `--transport http --port 3100` for Streamable HTTP.
+No account, no API key, no network calls for the WorldPack tools.
+
+## Why an audit, not a story bible
+
+Story bibles and wiki tools store what you wrote and hand it back to the model as context.
+Nothing checks whether the next chapter contradicts it, and anything in the bible counts
+as true because it is in the bible. WorldPack flips that:
+
+| The pack claims | What `worldpack_check` / `worldpack_verify` actually do |
+| --- | --- |
+| `layer: "canon"` on a node | Re-derive the layer from the canon document. A name that is not LOCKED canon, or an owner that is not the canon owner, is a `canon.layer-claim` **blocker**. |
+| `canon.sourceHash` | Recompute the sha256 of the canon document and compare. The pack's own value is never evidence. |
+| a locked truth ("Nero is NOT evil") | Scan **every** free-text field for the forbidden assertion, skipping negated phrasing. |
+| a locked name | Match it through case, punctuation, diacritics, "Lyria the Radiant" hats and alias fields. |
+| rights and canon status | Check both against the layer the node really has, not the one it declares. |
+| `digest`, counts, agent roles | Recompute the digest over nodes, edges, the provenance ledger and agent roles, and check roles against Guardian definitions in code. Re-signing a forged role still fails. |
+
+Arcanea's canon is bundled and used by default. Pass `canonDocument` (your own markdown,
+with pipe tables and `**LOCKED TRUTHS:**` bullets) and the same rules enforce **your** world.
+
+### Example
+
+```text
+worldpack_check { "path": "./my-world.worldpack.json" }
+
 {
-  "mcpServers": {
-    "arcanea": {
-      "command": "node",
-      "args": ["/path/to/arcanea-mcp/dist/index.js"]
+  "verdict": "blocked",
+  "headline": "BLOCKED: 'The Slow Chart' against Arcanea canon — 0 structural, 3 blocker, 0 error, 0 warning, 0 info",
+  "findings": [
+    {
+      "ruleId": "canon.layer-claim",
+      "severity": "blocker",
+      "node": { "id": "chr_forged", "name": "Veyra Coldwater" },
+      "message": "node declares layer 'canon' but is not canon: 'Veyra Coldwater' does not resolve in the canon index for Arcanea",
+      "evidence": { "declaredLayer": "canon", "derivedLayer": "user", "canonOwner": "arcanea", "owner": "arcanea" },
+      "fix": "Set layer to what the node is (user, generated, licensed or contributed). Canon layer is granted by the canon document, never by the pack."
     }
-  }
+  ]
 }
 ```
 
-### Using with Claude Code
+`path` works over stdio only; HTTP clients pass the pack inline as `pack`. Run
+`worldpack_rules` for all 32 rule ids with severity, what each checks and how to clear it.
 
-```bash
-# Add to your Claude Code configuration
-claude mcp add arcanea node /path/to/arcanea-mcp/dist/index.js
-```
+## Tools
 
-## Usage Examples
+<!-- tools:start -->
+**59 tools**, 5 resources and 6 prompts, as reported by `tools/list` from the `arcanea-mcp` bin.
+`tests/worldpack-tools.test.mjs` fails if this table and `tools/list` disagree.
 
-### Generate a Character
+### WorldPack audit (3)
 
-```
-"Generate a Fire-aligned character who has opened 5 Gates
-and belongs to House Pyros"
-```
+| Tool | What it does |
+| --- | --- |
+| `worldpack_check` | Audit a WorldPack.v1 world against a canon document: verdict, structural errors, and canon, rights and provenance findings with rule id, severity, evidence and fix. |
+| `worldpack_verify` | Verify an exported pack's seal: digest, node counts, agent roles and canon binding. Returns sealed, tampered, canon-mismatch or unsealed. |
+| `worldpack_rules` | Every rule `worldpack_check` enforces, with severity, what it checks and how to clear it. |
 
-Response includes:
-- Name with Arcanean etymology
-- Elemental affinity and magic rank
-- Academy house and role
-- Backstory and motivations
-- Signature abilities
+### Production planning (9)
 
-### Consult a Luminor
+| Tool | What it does |
+| --- | --- |
+| `plan_world` | World production packet: canon, factions, locations, visuals, audio palette, next actions. |
+| `plan_book` | Book packet: reader promise, bible, chapter spine, sample direction, cover brief, publish checklist. |
+| `plan_game` | Game design packet: player promise, core loop, mechanics, levels, asset kit, prototype handoff. |
+| `plan_music_project` | Music packet: lore, sonic motifs, cover brief, visualizer plan, release copy. |
+| `plan_cinematic_scene` | Cinematic packet: hook, shot list, camera language, references, audio, render prompts. |
+| `generate_asset_brief` | Portable image, video or music asset brief with style, references and aspect ratio. |
+| `export_project_context` | Package a project as a Claude, Codex, Cursor or generic agent handoff. |
+| `list_arcanea_studios` | Arcanea studio surfaces, routes, outcomes and recommended tools. |
+| `get_workflow_recipe` | Reusable recipes for books, games, artist releases, trailers and campaign packs. |
 
-```
-"I'm stuck on my creative project.
-Invoke Valora for guidance on overcoming my fear."
-```
+### Worldbuilding generators (7)
 
-### Diagnose a Creative Block
+| Tool | What it does |
+| --- | --- |
+| `generate_character` | Character with Gates, Element, House and backstory. |
+| `generate_magic` | Magical ability within the Arcanea magic system. |
+| `generate_location` | Location with elemental alignment. |
+| `generate_creature` | Magical creature. |
+| `generate_artifact` | Artifact with history and powers. |
+| `generate_name` | Names following the Arcanean language system. |
+| `generate_story_prompt` | Story prompt set in Arcanea. |
 
-```
-"I feel paralyzed by perfectionism and can't finish anything.
-Run a deep diagnosis on this block."
-```
+### World intelligence and persistence (7)
 
-### Build Your World Graph
+| Tool | What it does |
+| --- | --- |
+| `world_report` | Health, gaps and next steps for the session's world. |
+| `generate_conflict` | Morally complex conflict from your characters, with stakes and resolutions. |
+| `weave_narrative` | Multi-act story arc from the existing world state. |
+| `generate_quest` | Quest hooks, objectives, complications and rewards from the world state. |
+| `analyze_factions` | Faction groups, power balance and tensions. |
+| `save_world` | Save the session's world graph to disk. |
+| `load_world` | Load a saved world, or list saved worlds. |
 
-```
-"Generate a character, then a location where they live,
-then link them together."
-```
+### Creation graph (6)
 
-## Tool Reference
+| Tool | What it does |
+| --- | --- |
+| `link_creations` | Relate two creations. |
+| `get_related` | Creations related to one creation. |
+| `suggest_connections` | Suggested relationships for a creation. |
+| `get_world_graph` | Summary of the world network. |
+| `find_path` | Connection path between two creations. |
+| `export_world` | Export the graph for visualization. |
 
-### Production Studio Tools (9)
+### Agents (6)
 
-| Tool | Description |
-|------|-------------|
-| `plan_world` | Create a world production packet with canon, factions, locations, visuals, audio palette, and next actions |
-| `plan_book` | Create a book packet with reader promise, bible, chapter spine, cover brief, and publish checklist |
-| `plan_game` | Create a game design packet with player promise, core loop, mechanics, levels, asset kit, and prototype handoff |
-| `plan_music_project` | Create artist lore, song brief, sonic motifs, cover art direction, visualizer plan, and release copy |
-| `plan_cinematic_scene` | Create scene intent, shot list, camera language, references, audio direction, and render prompts |
-| `generate_asset_brief` | Create portable image/video/music asset briefs for production tools |
-| `export_project_context` | Package a project for Claude, Codex, Cursor, or another agent |
-| `list_arcanea_studios` | List studio surfaces, routes, outcomes, and recommended tools |
-| `get_workflow_recipe` | Return reusable recipes such as book-to-publish, world-to-game, artist-release, cinematic-trailer, and campaign-pack |
+| Tool | What it does |
+| --- | --- |
+| `orchestrate` | Creative session with multi-agent coordination. |
+| `list_agents` | Available creative agents. |
+| `agent_info` | One agent's details, Guardian hierarchy and Luminor team. |
+| `assess_world` | World maturity and strategic suggestions. |
+| `match_skill` | Best agent for a request. |
+| `active_sessions` | Running creative sessions. |
 
-### Worldbuilding Tools (7)
+### Creative coaching and journey (7)
 
-| Tool | Description |
-|------|-------------|
-| `generate_character` | Create a character with Gates, Elements, House, and backstory |
-| `generate_location` | Create a location with elemental alignment |
-| `generate_creature` | Design a magical creature |
-| `generate_artifact` | Create a magical artifact with powers |
-| `generate_magic` | Design a magical ability |
-| `generate_name` | Generate lore-appropriate names |
-| `generate_story_prompt` | Create inspiring story prompts |
+| Tool | What it does |
+| --- | --- |
+| `diagnose_block` | Quick identification of a creative block. |
+| `deep_diagnosis` | Multi-step analysis of a complex block. |
+| `invoke_luminor` | Guidance from one Luminor companion. |
+| `convene_council` | Guidance from several Luminors. |
+| `luminor_debate` | Two Luminors argue a question. |
+| `get_journey` | Creative progress and milestones. |
+| `check_milestones` | Milestones achieved. |
 
-### Creative Coaching Tools (5)
+### Canon reference and prompt quality (5)
 
-| Tool | Description |
-|------|-------------|
-| `diagnose_block` | Quick identification of creative blocks |
-| `deep_diagnosis` | Multi-step analysis with sequential thinking |
-| `invoke_luminor` | Call upon a Luminor companion |
-| `convene_council` | Gather multiple Luminors for guidance |
-| `luminor_debate` | Two Luminors explore a question |
+| Tool | What it does |
+| --- | --- |
+| `validate_canon` | Check free text for Arcanea canon compliance. |
+| `identify_gate` | A Gate with its Guardian and Godbeast. |
+| `apl_enhance` | Score a prompt with SPARK.SHAPE.SHARPEN and flag slop. |
+| `apl_anti_slop` | Scan text for AI slop patterns with fixes. |
+| `apl_format` | Restructure a prompt as SPARK.SHAPE.SHARPEN. |
 
-### Memory & Journey Tools (2)
+### Visual prompts (3)
 
-| Tool | Description |
-|------|-------------|
-| `get_journey` | Recall your creative progress |
-| `check_milestones` | See achieved milestones |
+| Tool | What it does |
+| --- | --- |
+| `visualize_character` | Image prompt from a character blueprint. |
+| `visualize_location` | Image prompt for a location. |
+| `visualize_creature` | Image prompt for a creature. |
 
-### Creation Graph Tools (6)
+### Arcanea Studio vault (4)
 
-| Tool | Description |
-|------|-------------|
-| `link_creations` | Create relationships between creations |
-| `get_related` | Find related creations |
-| `suggest_connections` | AI-suggested relationships |
-| `get_world_graph` | Summary of your world network |
-| `find_path` | Find connection path between creations |
-| `export_world` | Export graph for visualization |
+Requires `ARCANEA_WEB_URL` and `ARCANEA_SESSION_TOKEN`.
 
-### Agent Orchestration Tools (6)
+| Tool | What it does |
+| --- | --- |
+| `get_arcanea_bridge_status` | Whether the web bridge is configured and reachable. |
+| `search_arcanea_vault` | Semantic search over your Studio vault. |
+| `save_to_arcanea_vault` | Save content to your Studio vault. |
+| `list_arcanea_worlds` | Your Arcanea Worlds, for scoping vault saves. |
 
-| Tool | Description |
-|------|-------------|
-| `orchestrate` | Run a full creative session with multi-agent coordination |
-| `list_agents` | List all available creative agents |
-| `agent_info` | Get details about a specific agent |
-| `assess_world` | Analyze world maturity and get suggestions |
-| `match_skill` | Find the best agent for a request |
-| `active_sessions` | List running creative sessions |
+### Lore archives (2)
 
-### Reference Tools (2)
-
-| Tool | Description |
-|------|-------------|
-| `validate_canon` | Check content for Arcanea canon compliance |
-| `identify_gate` | Get information about a specific Gate |
-
-**Total: 43 documented tools across production, worldbuilding, coaching, memory, graph, orchestration, canon, and prompt optimization categories**
-
-## Resources
-
-The server exposes these resources for reference:
-
-- `arcanea://luminors` - Luminor companion data
-- `arcanea://bestiary` - Bestiary of creative blocks (20+ creatures)
-- `arcanea://gates` - The Ten Gates system
-- `arcanea://elements` - The Five Elements
-- `arcanea://houses` - The Seven Academy Houses
-
-## Prompts
-
-Guided creative experiences:
-
-- `worldbuild_session` - Collaborative worldbuilding
-- `unblock_session` - Overcome creative blocks
-- `gate_ritual` - Practice opening a Gate
-- `luminor_dialogue` - Speak with a Luminor
-- `morning_clearing` - Daily creative practice
-- `creative_sabbath` - Joy-driven creation day
-
-## The Arcanea Universe
-
-### The Ten Gates
-
-| Gate | Frequency | Guardian | Domain |
-|------|-----------|----------|--------|
-| 1 - Foundation | 174 Hz | Lyssandria | Earth, survival |
-| 2 - Flow | 285 Hz | Leyla | Creativity, emotion |
-| 3 - Fire | 396 Hz | Draconia | Power, will |
-| 4 - Heart | 417 Hz | Maylinn | Love, healing |
-| 5 - Voice | 528 Hz | Alera | Truth, expression |
-| 6 - Sight | 639 Hz | Lyria | Intuition, vision |
-| 7 - Crown | 741 Hz | Aiyami | Enlightenment |
-| 8 - Shift | 852 Hz | Elara | Perspective |
-| 9 - Unity | 963 Hz | Ino | Partnership |
-| 10 - Source | 1111 Hz | Shinkami | Meta-consciousness |
-
-### Magic Ranks
-
-| Gates Open | Rank |
-|------------|------|
-| 0-2 | Apprentice |
-| 3-4 | Mage |
-| 5-6 | Master |
-| 7-8 | Archmage |
-| 9-10 | Luminor |
-
-### The Five Elements
-
-- **Fire** - Energy, transformation, passion
-- **Water** - Flow, healing, memory
-- **Earth** - Stability, growth, endurance
-- **Wind** - Freedom, speed, change
-- **Void/Spirit** - Potential and transcendence
-
-### The Seven Houses
-
-- **Lumina** - Light and leadership
-- **Nero** - Mystery and potential
-- **Pyros** - Fire and passion
-- **Aqualis** - Water and wisdom
-- **Terra** - Earth and strength
-- **Ventus** - Wind and freedom
-- **Synthesis** - Balance and unity
-
-## Architecture
-
-```
-                     ┌──────────────────────────────────┐
-                     │       Claude / AI Host           │
-                     └────────────────┬─────────────────┘
-                                      │ MCP Protocol
-                                      ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                    Arcanea MCP Server v0.3.0                        │
-│                                                                     │
-│  ┌────────────────────────────────────────────────────────────────┐│
-│  │                   AGENT ORCHESTRATION LAYER                    ││
-│  │  ┌─────────┐ ┌───────────┐ ┌────────┐ ┌────────┐ ┌──────────┐ ││
-│  │  │ Creator │ │Worldsmith │ │Luminor │ │ Scribe │ │   Seer   │ ││
-│  │  │ (Opus)  │ │ (Gemini)  │ │Council │ │(Sonnet)│ │ (Flash)  │ ││
-│  │  └─────────┘ └───────────┘ └────────┘ └────────┘ └──────────┘ ││
-│  └────────────────────────────────────────────────────────────────┘│
-│                                                                     │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────────┐ │
-│  │   Generators    │  │  Memory Layer   │  │   Creation Graph    │ │
-│  │  (7 tools)      │  │  (milestones)   │  │  (relationship net) │ │
-│  └─────────────────┘  └─────────────────┘  └─────────────────────┘ │
-│                                                                     │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────────┐ │
-│  │    Bestiary     │  │ Deep Diagnosis  │  │  Canon Validation   │ │
-│  │  (20+ blocks)   │  │ (sequential AI) │  │  (lore checking)    │ │
-│  └─────────────────┘  └─────────────────┘  └─────────────────────┘ │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
-### Agent Multi-Model Orchestration
-
-Inspired by [oh-my-opencode](https://github.com/code-yeongyu/oh-my-opencode):
-
-| Agent | Model | Role | Parallel |
-|-------|-------|------|----------|
-| **Creator** | Claude Opus 4.5 | Master orchestrator | No |
-| **Worldsmith** | Gemini 3 Pro | Rapid generation | Yes |
-| **Luminor Council** | Claude Sonnet 4.5 | Creative coaching | Yes |
-| **Scribe** | Claude Sonnet 4.5 | Narrative development | Yes |
-| **Seer** | Gemini 3 Flash | Fast research | Yes |
-
-## Milestones System
-
-Track your creative journey with achievements:
-
-| Milestone | Requirement |
-|-----------|-------------|
-| First Creation | Generate your first piece |
-| Gate Seeker | Explore 3 different Gates |
-| Luminor Friend | Consult 3 Luminors |
-| Block Breaker | Face and name 3 creative blocks |
-| Prolific Creator | Generate 10 creations |
-| Elemental Explorer | Create across 4 elements |
+| Tool | What it does |
+| --- | --- |
+| `search_sovereign_depths` | Sovereign Depths bosses, dungeons and encounters (staging and experimental proposals, opt-in). |
+| `search_weight_of_wonders` | Weight of Wonders concepts (experimental, opt-in). |
+<!-- tools:end -->
 
 ## Development
 
 ```bash
-# Install dependencies
-npm install
-
-# Build TypeScript
-npm run build
-
-# Watch mode for development
-npm run dev
-
-# Run the server locally
-npm start
+pnpm --dir packages/arcanea-mcp build          # tsc, then vendors world-pack + canon into dist/vendor
+pnpm --dir packages/arcanea-mcp test:worldpack # WorldPack tools over a real stdio handshake
+node packages/arcanea-mcp/scripts/consumer-smoke.mjs  # pack, npm install into an empty dir, talk MCP to the bin
 ```
 
-## Roadmap
-
-- [ ] SQLite persistence for journey data
-- [ ] Vector search for semantic creation discovery
-- [ ] Visual worldbuilding with image generation
-- [ ] Community integration for shared worlds
-- [ ] Multi-language support
-- [ ] Custom universe templates
-- [ ] MCP Sampling for guided creation flows
-
-## Contributing
-
-We welcome contributions! Areas where help is especially appreciated:
-
-- Additional Bestiary creatures
-- New Luminor companions
-- Language localizations
-- Integration examples
-- Documentation improvements
+`@arcanea/world-pack` is bundled into `dist/vendor`, so the published package depends
+only on the MCP SDK, zod and canonicalize.
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
-
-## Acknowledgments
-
-- Built on the [Model Context Protocol](https://modelcontextprotocol.io) by Anthropic
-- Inspired by creative communities worldwide
-- Part of the [Arcanea](https://arcanea.ai) universe
-
----
-
-*"Enter seeking, leave transformed, return whenever needed."*
-
-**Making magic through AI-human co-creation.**
+MIT

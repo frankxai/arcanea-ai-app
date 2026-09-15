@@ -13,14 +13,19 @@ import {
   ARCHITECTURE_LAYERS,
 } from "./developers-data";
 
+// Measured by packages/arcanea-mcp/scripts/consumer-smoke.mjs (tools/list from the
+// published bin). FACTS.mcpTools counts registerTool calls in one source file and
+// undercounts the registrations split into other modules.
+const MCP_SERVER_TOOLS = 59;
+
 export const metadata: Metadata = {
   title: "Developers — Build on Arcanea",
   description:
-    `Build on the Arcanea platform. Open-source packages, an MCP server with ${FACTS.mcpTools} tools, and comprehensive APIs.`,
+    `Build on the Arcanea platform. Open-source packages, an MCP server with ${MCP_SERVER_TOOLS} tools, and comprehensive APIs.`,
   openGraph: {
     title: "Developers — Build on Arcanea",
     description:
-      `Build on the Arcanea platform. Open-source packages, an MCP server with ${FACTS.mcpTools} tools, and comprehensive APIs.`,
+      `Build on the Arcanea platform. Open-source packages, an MCP server with ${MCP_SERVER_TOOLS} tools, and comprehensive APIs.`,
   },
   alternates: { canonical: "/developers" },
 };
@@ -195,7 +200,7 @@ export default function DevelopersPage() {
               { icon: Icons.Terminal, color: "var(--arc-brand-atlantean-teal)", title: "Install Arcanea Skills", desc: "Add 54 skills to your coding agent", cmd: "npx @arcanea/skills" },
               { icon: Icons.Sparkles, color: "var(--arc-void)", title: "Launch Claude Arcanea", desc: "Start the Arcanea-enhanced Claude agent", cmd: "npx claude-arcanea" },
               { icon: Icons.Box, color: "var(--arc-brand-arcanean-gold)", title: "Install a Package", desc: "Add any intelligence package to your project", cmd: "npm install @arcanea/council @arcanea/rituals" },
-              { icon: Icons.Server, color: "var(--arc-brand-cosmic-blue)", title: "Start MCP Server", desc: "Run the Arcanea MCP server locally", cmd: "npx @arcanea/mcp-server" },
+              { icon: Icons.Server, color: "var(--arc-brand-cosmic-blue)", title: "Start MCP Server", desc: "Run the Arcanea MCP server locally", cmd: "npx -y @arcanea/mcp-server@1" },
             ].map((item) => {
               const ItemIcon = item.icon;
               return (

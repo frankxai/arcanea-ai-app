@@ -1,5 +1,14 @@
 # @arcanea/mcp-server
 
+## 1.1.0
+
+### Minor Changes
+
+- WorldPack audit tools: `worldpack_check` (canon, rights and provenance findings with rule id, severity, evidence and fix; your own canon via `canonDocument`), `worldpack_verify` (digest, counts, agent roles and canon binding) and `worldpack_rules` (the rule catalog).
+- `@arcanea/world-pack` and Arcanea's `CANON_LOCKED.md` are bundled into `dist/vendor`; the published manifest has no workspace dependencies.
+- Server version and the HTTP `/health` tool count now come from `package.json` and the live registry instead of hardcoded values (`0.3.0` / `54`).
+- `scripts/consumer-smoke.mjs` installs the packed tarball into an empty directory and talks MCP to the bin before any publish.
+
 ## 0.7.0
 
 ### Minor Changes
