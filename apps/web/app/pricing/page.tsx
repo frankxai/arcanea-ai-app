@@ -34,7 +34,7 @@ const OFFERS: Offer[] = [
     name: "Arcanea",
     status: "In development",
     forWho:
-      "For readers and worldbuilders who want the Arcanea canon itself, not another chat window on top of a model.",
+      "The paid tier of arcanea.ai, for readers and worldbuilders who want the canon itself rather than another chat window. What it includes is still being decided, partly by the answers below.",
     founding: [
       "The launch price, locked for life",
       "Your name in the founder register inside the world",
@@ -47,7 +47,7 @@ const OFFERS: Offer[] = [
     name: "Arcanea MCP Studio",
     status: "Not released",
     forWho:
-      "For agent builders who want media generation inside their coding harness, and a way to tell a good output from a bad one before it ships.",
+      "For agent builders. Planned scope: image and media generation inside Claude Code, Cursor or Codex, with scoring that flags weak outputs before you use them.",
     founding: [
       "The launch price, locked for life",
       "Your name in CONTRIBUTORS.md of the published npm package",
