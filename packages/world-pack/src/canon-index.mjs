@@ -26,8 +26,9 @@ function stripCell(cell) {
 }
 
 // Zero-width, joiner, soft-hyphen and bidi-control characters render as nothing,
-// so "Ly​ria" displays as "Lyria". They are removed, never treated as a break.
-const INVISIBLE = /[­͏؜ᅟᅠ឴឵᠎​-‏‪-‮⁠-⁯﻿ㅤﾠ]/g;
+// so "Ly\u200Bria" displays as "Lyria". They are removed, never treated as a break.
+const INVISIBLE =
+  /[\u00AD\u034F\u061C\u115F\u1160\u17B4\u17B5\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\uFEFF\u3164\uFFA0]/g;
 
 // Lowercase Cyrillic and Greek letters that are visually interchangeable with a
 // Latin letter. A confusable skeleton, not a transliteration: its only job is to
@@ -76,7 +77,7 @@ const CONFUSABLES = new Map(
 
 /**
  * Case, punctuation, diacritics, width, invisible characters and look-alike
- * letters are not a way around a locked name. "Lyría!", "Ｌｙｒｉａ", "Ly​ria" and
+ * letters are not a way around a locked name. "Lyría!", "Ｌｙｒｉａ", "Ly\u200Bria" and
  * "Lуria" all normalize to "lyria".
  */
 export function normalizeName(name) {
@@ -429,15 +430,37 @@ export function canonNameLoose(index, candidate) {
   const exact = index.namesNormalized?.[norm];
   if (exact) return { entry: exact, match: "exact", canonName: exact.name };
   const tokens = norm.split(" ");
-  for (const [key, entry] of Object.entries(index.namesNormalized || {})) {
-    if (key.length < 4) continue; // three-letter canon names would swallow ordinary prose
-    const kt = key.split(" ");
-    for (let i = 0; i + kt.length <= tokens.length; i++) {
-      if (kt.every((t, j) => t === tokens[i + j]))
+  const byFirstToken = looseIndex(index);
+  for (let i = 0; i < tokens.length; i++) {
+    for (const { run, entry } of byFirstToken.get(tokens[i]) ?? []) {
+      if (
+        i + run.length <= tokens.length &&
+        run.every((t, j) => t === tokens[i + j])
+      )
         return { entry, match: "contains", canonName: entry.name };
     }
   }
   return null;
+}
+
+const LOOSE_INDEX = new WeakMap();
+
+// Canon names grouped by their first token, built once per index. A lookup then
+// costs the candidate's own tokens, not every name in canon: scanning all names
+// per node was nodes x terms and let a large canon stall the checker.
+function looseIndex(index) {
+  let byFirstToken = LOOSE_INDEX.get(index);
+  if (byFirstToken) return byFirstToken;
+  byFirstToken = new Map();
+  for (const [key, entry] of Object.entries(index.namesNormalized || {})) {
+    if (key.length < 4) continue; // three-letter canon names would swallow ordinary prose
+    const run = key.split(" ");
+    const bucket = byFirstToken.get(run[0]);
+    if (bucket) bucket.push({ run, entry });
+    else byFirstToken.set(run[0], [{ run, entry }]);
+  }
+  LOOSE_INDEX.set(index, byFirstToken);
+  return byFirstToken;
 }
 
 /** Entity types that can legitimately BE a canon entry of each kind. */

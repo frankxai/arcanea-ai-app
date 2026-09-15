@@ -6,7 +6,7 @@ import assert from "node:assert/strict";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
-import { loadCanonIndex } from "../src/canon-index.mjs";
+import { buildCanonIndex, loadCanonIndex } from "../src/canon-index.mjs";
 import {
   createWorldSeed,
   addNode,
@@ -191,9 +191,9 @@ function userNode(pack, id, name, attributes = {}) {
 test("P1-3 zero-width, bidi, full-width and homoglyph spellings are still the locked name", async () => {
   const { canon, pack } = await seed();
   const disguises = {
-    "zero-width space": "Ly​ria",
-    "zero-width joiner": "Lyr‍ia",
-    "bidi override": "Ly‮ria",
+    "zero-width space": "Ly\u200Bria",
+    "zero-width joiner": "Lyr\u200Dia",
+    "bidi override": "Ly\u202Eria",
     "full-width": "Ｌｙｒｉａ",
     "cyrillic u": "Lуria",
     "greek alpha + cyrillic i": "Lyrіα",
@@ -245,4 +245,67 @@ test("P1-3 a homoglyph alias is caught, and ordinary non-Latin names are left al
     [],
     "a Cyrillic name that is not canon stays clean",
   );
+});
+
+test("P1-3 engine and server source carry no invisible or bidi-control characters", async () => {
+  const { readdir, readFile } = await import("node:fs/promises");
+  const roots = [
+    resolve(here, "../src"),
+    here,
+    resolve(here, "../../arcanea-mcp/src/registrations"),
+    resolve(here, "../../arcanea-mcp/src/tools"),
+    resolve(here, "../../arcanea-mcp/tests"),
+  ];
+  const hidden =
+    /[\u00AD\u034F\u061C\u115F\u1160\u17B4\u17B5\u180E\u200B-\u200F\u202A-\u202E\u2060-\u206F\u3164\uFEFF\uFFA0]/;
+  const offenders = [];
+  for (const root of roots) {
+    for (const file of await readdir(root)) {
+      if (!/\.(mjs|ts)$/.test(file)) continue;
+      const lines = (await readFile(resolve(root, file), "utf8")).split("\n");
+      lines.forEach((line, i) => {
+        if (hidden.test(line)) offenders.push(`${file}:${i + 1}`);
+      });
+    }
+  }
+  assert.deepEqual(offenders, [], "write \\u escapes, never the characters");
+});
+
+// ── P1-4 canon lookups are indexed, not nodes x terms ────────────────────────
+
+test("P1-4 1,200 nodes against 3,000 canon terms is checked without a nodes-by-terms scan", async () => {
+  const rows = Array.from(
+    { length: 3000 },
+    (_, i) => `| Tideword${i} Marker | Definition ${i} | LOCKED ✅ |`,
+  );
+  const canon = buildCanonIndex(
+    [
+      "# BIG CANON",
+      "",
+      "| Term | Definition | Status |",
+      "| --- | --- | --- |",
+      ...rows,
+      "",
+    ].join("\n"),
+  );
+  const { pack } = await seed();
+  const nodes = [...pack.nodes];
+  for (let i = 0; i < 1200; i++)
+    nodes.push(
+      userNode(
+        pack,
+        `chr_perf_${i}`,
+        `Wandering cartographer number ${i} of the outer drift`,
+        {
+          aliases: [`drifter of the ${i} corridor`],
+          backstory:
+            "She mapped corridors that moved every season and never named them.",
+        },
+      ),
+    );
+  const big = { ...pack, nodes };
+  const started = performance.now();
+  detectConflicts(big, canon, { canonBinding: "foreign" });
+  const elapsed = performance.now() - started;
+  assert.ok(elapsed < 400, `detectConflicts took ${Math.round(elapsed)} ms`);
 });

@@ -45,6 +45,32 @@ function setCorsHeaders(res: http.ServerResponse): void {
   );
 }
 
+// Above the 5 MiB WorldPack budget plus the JSON-RPC envelope, and nothing more.
+const MAX_HTTP_BODY_BYTES = 6 * 1024 * 1024;
+// A rejected upload is drained and discarded, never stored; this bounds how long
+// a client may keep a connection open doing that.
+const OVERSIZED_DRAIN_MS = 10_000;
+
+function rejectOversized(
+  req: http.IncomingMessage,
+  res: http.ServerResponse,
+): void {
+  if (!res.headersSent) {
+    res.writeHead(413, {
+      "Content-Type": "application/json",
+      Connection: "close",
+    });
+    res.end(
+      JSON.stringify({
+        error: `Request body exceeds ${MAX_HTTP_BODY_BYTES} bytes`,
+      }),
+    );
+  }
+  req.removeAllListeners("data");
+  req.resume();
+  setTimeout(() => req.destroy(), OVERSIZED_DRAIN_MS).unref();
+}
+
 export async function runHttp(server: McpServer, port: number): Promise<void> {
   // Session map: sessionId → transport instance (stateful mode)
   const sessions = new Map<string, StreamableHTTPServerTransport>();
@@ -97,10 +123,29 @@ export async function runHttp(server: McpServer, port: number): Promise<void> {
     // ── MCP endpoint ──────────────────────────────────────────────────────
     if (url.pathname === "/mcp") {
       if (req.method === "POST") {
-        // Collect request body before delegating to transport
+        // The body is capped while it streams: an unbounded body would be held in
+        // memory in full before any validation could run.
+        const declared = Number(req.headers["content-length"]);
+        if (Number.isFinite(declared) && declared > MAX_HTTP_BODY_BYTES) {
+          rejectOversized(req, res);
+          return;
+        }
         const chunks: Buffer[] = [];
-        req.on("data", (chunk: Buffer) => chunks.push(chunk));
+        let received = 0;
+        let rejected = false;
+        req.on("data", (chunk: Buffer) => {
+          if (rejected) return;
+          received += chunk.length;
+          if (received > MAX_HTTP_BODY_BYTES) {
+            rejected = true;
+            chunks.length = 0;
+            rejectOversized(req, res);
+            return;
+          }
+          chunks.push(chunk);
+        });
         req.on("end", async () => {
+          if (rejected) return;
           let parsedBody: unknown;
           try {
             parsedBody = JSON.parse(Buffer.concat(chunks).toString("utf8"));

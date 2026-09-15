@@ -16,7 +16,18 @@ type PackObject = Record<string, unknown>;
 type TransportContext = { sessionId?: string; requestInfo?: unknown };
 
 const VENDOR = new URL("../vendor/", import.meta.url);
-const MAX_PACK_BYTES = 20 * 1024 * 1024;
+
+// Every input is measured before the engine sees it. The engine is linear in what
+// it is given; these caps bound what it can be given.
+const BUDGET = {
+  packBytes: 5 * 1024 * 1024,
+  depth: 32,
+  nodes: 5000,
+  relationships: 20000,
+  stringChars: 32 * 1024,
+  canonChars: 1024 * 1024,
+  canonTableRows: 2000,
+} as const;
 const SEVERITY_ORDER: Severity[] = ["blocker", "error", "warning", "info"];
 const DEFAULT_LIMIT = 200;
 
@@ -34,8 +45,10 @@ async function canonFor(
   canonDocument: string | undefined,
 ): Promise<{ canon: CanonIndex; custom: boolean }> {
   const wp = await loadEngine();
-  if (canonDocument !== undefined)
+  if (canonDocument !== undefined) {
+    assertCanonBudget(canonDocument);
     return { canon: wp.buildCanonIndex(canonDocument), custom: true };
+  }
   arcaneaCanon ??= readFile(
     new URL("canon/CANON_LOCKED.md", VENDOR),
     "utf8",
@@ -44,6 +57,65 @@ async function canonFor(
 }
 
 class InputError extends Error {}
+
+function assertCanonBudget(md: string): void {
+  if (md.length > BUDGET.canonChars)
+    throw new InputError(
+      `canonDocument exceeds the canon size budget: ${md.length} characters (limit ${BUDGET.canonChars})`,
+    );
+  const rows = (md.match(/^[ \t]*\|/gm) ?? []).length;
+  if (rows > BUDGET.canonTableRows)
+    throw new InputError(
+      `canonDocument exceeds the canon table budget: ${rows} table rows (limit ${BUDGET.canonTableRows})`,
+    );
+}
+
+function assertPackBudget(pack: PackObject): void {
+  const nodes = Array.isArray(pack.nodes) ? pack.nodes.length : 0;
+  if (nodes > BUDGET.nodes)
+    throw new InputError(
+      `pack exceeds the node budget: ${nodes} nodes (limit ${BUDGET.nodes})`,
+    );
+  const relationships = Array.isArray(pack.relationships)
+    ? pack.relationships.length
+    : 0;
+  if (relationships > BUDGET.relationships)
+    throw new InputError(
+      `pack exceeds the relationship budget: ${relationships} relationships (limit ${BUDGET.relationships})`,
+    );
+
+  let bytes = 0;
+  const stack: Array<[unknown, number]> = [[pack, 1]];
+  while (stack.length) {
+    const [value, depth] = stack.pop()!;
+    if (depth > BUDGET.depth)
+      throw new InputError(
+        `pack exceeds the depth budget: nested deeper than ${BUDGET.depth} levels`,
+      );
+    if (typeof value === "string") {
+      if (value.length > BUDGET.stringChars)
+        throw new InputError(
+          `pack exceeds the string budget: a string of ${value.length} characters (limit ${BUDGET.stringChars})`,
+        );
+      bytes += value.length + 2;
+    } else if (Array.isArray(value)) {
+      bytes += 2;
+      for (const item of value) stack.push([item, depth + 1]);
+    } else if (value && typeof value === "object") {
+      bytes += 2;
+      for (const [key, item] of Object.entries(value)) {
+        bytes += key.length + 4;
+        stack.push([item, depth + 1]);
+      }
+    } else {
+      bytes += 8;
+    }
+    if (bytes > BUDGET.packBytes)
+      throw new InputError(
+        `pack exceeds the size budget: more than ${BUDGET.packBytes} bytes`,
+      );
+  }
+}
 
 function parseJson(text: string, label: string): unknown {
   try {
@@ -74,18 +146,24 @@ async function readPack(
       throw new InputError(`path must point at a .json file: ${file}`);
     const info = await stat(file).catch(() => null);
     if (!info?.isFile()) throw new InputError(`no such file: ${file}`);
-    if (info.size > MAX_PACK_BYTES)
+    if (info.size > BUDGET.packBytes)
       throw new InputError(
-        `pack file is ${info.size} bytes; the limit is ${MAX_PACK_BYTES}`,
+        `pack file exceeds the size budget: ${info.size} bytes (limit ${BUDGET.packBytes})`,
       );
     value = parseJson(await readFile(file, "utf8"), file);
+  } else if (typeof args.pack === "string") {
+    if (args.pack.length > BUDGET.packBytes)
+      throw new InputError(
+        `pack exceeds the size budget: ${args.pack.length} characters (limit ${BUDGET.packBytes} bytes)`,
+      );
+    value = parseJson(args.pack, "pack");
   } else {
-    value =
-      typeof args.pack === "string" ? parseJson(args.pack, "pack") : args.pack;
+    value = args.pack;
   }
 
   if (!value || typeof value !== "object" || Array.isArray(value))
     throw new InputError("A WorldPack must be a JSON object.");
+  assertPackBudget(value as PackObject);
   return value as PackObject;
 }
 
@@ -306,7 +384,7 @@ async function ruleCatalog(ruleId: string | undefined) {
 
 const packSource = {
   pack: z
-    .union([z.record(z.string(), z.unknown()), z.string().max(MAX_PACK_BYTES)])
+    .union([z.record(z.string(), z.unknown()), z.string()])
     .optional()
     .describe(
       "The WorldPack.v1 document as a JSON object or JSON string. Working packs and exports are both accepted.",
@@ -319,7 +397,6 @@ const packSource = {
     ),
   canonDocument: z
     .string()
-    .max(2_000_000)
     .optional()
     .describe(
       "Markdown of your own canon: a '# <NAME> CANON' title, pipe tables and '**LOCKED TRUTHS:**' bullets. Omit to use Arcanea's canon bundled with this server.",
