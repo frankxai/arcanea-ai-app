@@ -321,7 +321,7 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
           m.name.toLowerCase().includes(q) ||
           m.provider.toLowerCase().includes(q) ||
           m.curatedRole.toLowerCase().includes(q) ||
-          m.gateResonance.toLowerCase().includes(q) ||
+          m.gateResonance?.toLowerCase().includes(q) ||
           m.tags.some((t) => t.toLowerCase().includes(q));
         if (!matchesQuery) return false;
       }
