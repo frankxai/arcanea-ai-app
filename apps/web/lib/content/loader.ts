@@ -33,6 +33,8 @@ import {
 
 const NON_TEXT_FILES = new Set(["README.md", "CLAUDE.md"]);
 
+const CHAPTER_DIR_PREFIX = /^chapters[\\/]/;
+
 function isTextFile(filename: string): boolean {
   return filename.endsWith(".md") && !NON_TEXT_FILES.has(filename);
 }
@@ -570,7 +572,11 @@ async function loadText(
   // Build frontmatter from file data + inferred data
   const textFrontmatter: TextFrontmatter = {
     // From frontmatter if exists, otherwise infer
-    title: frontmatter.title || extractTitleFromFilename(filename),
+    title:
+      frontmatter.title ||
+      (CHAPTER_DIR_PREFIX.test(filename) &&
+        headings.find((heading) => heading.level === 1)?.text) ||
+      extractTitleFromFilename(filename),
     collection: collectionSlug,
     order: frontmatter.order || extractOrderFromFilename(filename),
     status: (frontmatter.status as ContentStatus) || "published",
@@ -602,7 +608,7 @@ async function loadText(
   };
 
   return {
-    slug: `${collectionSlug}/${filename.replace(/^chapters[\\/]/, "").replace(".md", "")}`
+    slug: `${collectionSlug}/${filename.replace(CHAPTER_DIR_PREFIX, "").replace(".md", "")}`
       .toLowerCase()
       .replace(/_/g, "-"),
     filename,

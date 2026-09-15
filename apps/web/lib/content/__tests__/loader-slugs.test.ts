@@ -10,6 +10,10 @@ test("chapter texts get two-segment slugs that /library/[collection]/[text] can 
 
   assert.ok(chapter, "the first chapter is listed in its collection");
   assert.equal(chapter.slug, "creator-principles/01-partnership-principle");
+  assert.equal(
+    chapter.frontmatter.title,
+    "Scroll I: The Partnership Principle",
+  );
   for (const text of texts) {
     assert.equal(
       text.slug.split("/").length,
