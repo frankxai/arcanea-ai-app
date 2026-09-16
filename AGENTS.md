@@ -159,8 +159,8 @@ Templates: `docs/research/templates/`
 | Creativity research      | Flow       | Leyla      | Creative process            |
 | Performance/benchmarks   | Fire       | Draconia   | Power, computation          |
 
-
 <!-- PRODUCT-OUTCOME-CONTRACT:START -->
+
 ## Product outcome acceptance
 
 Before substantial product work, name the intended user's job, current local product decision, owning issue, exact base revision, relevant skills, budget, acceptance and stop condition. Reuse an existing implementation candidate before creating a competing one.
@@ -172,6 +172,7 @@ Review availability, function, customer usefulness, design/editorial quality and
 For production-intent work, bind checks and independent review to the exact candidate revision; bind the stable domain to the accepted deployment/source revision. Record recovery/export behavior, failures, all attempts and human intervention. A preview, merge, or READY deployment does not establish customer success.
 
 At handoff distinguish policy proposed, merged, loaded in this agent session and verified in execution. Include the owning issue, policy/source SHA, artifact, verifier, highest evidenced environment and next action. Dates and goals remain targets until measured.
+
 <!-- PRODUCT-OUTCOME-CONTRACT:END -->
 
 Current quality implementation: https://github.com/frankxai/arcanea-ai-app/issues/427. Reconcile historical instructions against accepted current decisions before changing product scope.
