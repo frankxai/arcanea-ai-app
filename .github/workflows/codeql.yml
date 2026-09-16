@@ -4,23 +4,23 @@ on:
   push:
     branches: [main]
     paths-ignore:
-      - 'book/**'
-      - 'docs/**'
-      - '*.md'
-      - '.arcanea/lore/**'
-      - '.arcanea/projects/log/**'
+      - "book/**"
+      - "docs/**"
+      - "*.md"
+      - ".arcanea/lore/**"
+      - ".arcanea/projects/log/**"
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened, ready_for_review]
     paths-ignore:
-      - 'book/**'
-      - 'docs/**'
-      - '*.md'
-      - '.arcanea/lore/**'
-      - '.arcanea/projects/log/**'
+      - "book/**"
+      - "docs/**"
+      - "*.md"
+      - ".arcanea/lore/**"
+      - ".arcanea/projects/log/**"
   schedule:
     # Weekly scan — Mondays 06:00 UTC
-    - cron: '0 6 * * 1'
+    - cron: "0 6 * * 1"
 
 concurrency:
   group: codeql-${{ github.ref }}
@@ -29,8 +29,8 @@ concurrency:
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    # Cost gate: skip on draft PRs — agents iterate free; scan runs when marked ready.
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+    # Cost gate: skip on draft PRs and Dependabot PRs — agents iterate free; scan runs on main, schedule, or human PRs.
+    if: (github.event_name != 'pull_request' || github.event.pull_request.draft == false) && github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -41,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ['javascript-typescript']
+        language: ["javascript-typescript"]
 
     steps:
       - name: Checkout
@@ -59,7 +59,7 @@ jobs:
         continue-on-error: true
         uses: github/codeql-action/analyze@v4
         with:
-          category: '/language:${{ matrix.language }}'
+          category: "/language:${{ matrix.language }}"
 
       - name: Warn when CodeQL upload is unavailable
         if: steps.analyze.outcome == 'failure'
