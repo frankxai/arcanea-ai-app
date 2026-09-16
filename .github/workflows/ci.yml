@@ -143,6 +143,9 @@ jobs:
       - name: Verify preview deployment history handling
         run: node --test scripts/tests/vercel-ignore-build.test.mjs
 
+      - name: Verify auth recovery and creator economics
+        run: node --test scripts/tests/auth-env.test.mjs scripts/tests/auth-redirect.test.mjs scripts/tests/creator-economics.test.mjs
+
       - name: Verify account return and public entry boundaries
         run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/entry-access.test.ts
 
