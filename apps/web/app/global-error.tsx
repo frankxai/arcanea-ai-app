@@ -1,6 +1,8 @@
 "use client";
 
+/* eslint-disable no-restricted-syntax */
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function GlobalError({
   error,
@@ -23,8 +25,8 @@ export default function GlobalError({
         style={{
           margin: 0,
           padding: 0,
-          backgroundColor: "#030712",
-          color: "#f3f4f6",
+          backgroundColor: "rgb(3, 7, 18)",
+          color: "rgb(243, 244, 246)",
           fontFamily:
             "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
           display: "flex",
@@ -57,7 +59,11 @@ export default function GlobalError({
             }}
           >
             <svg
-              style={{ width: "2rem", height: "2rem", color: "#ef4444" }}
+              style={{
+                width: "2rem",
+                height: "2rem",
+                color: "rgb(239, 68, 68)",
+              }}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -77,7 +83,7 @@ export default function GlobalError({
               lineHeight: "2.25rem",
               fontWeight: 700,
               letterSpacing: "-0.025em",
-              color: "#00bcd4",
+              color: "rgb(0, 188, 212)",
               marginBottom: "0.75rem",
             }}
           >
@@ -92,8 +98,8 @@ export default function GlobalError({
               marginBottom: "1.5rem",
             }}
           >
-            A critical unexpected error occurred at the foundation level. You can
-            attempt to revive the session or return to safety.
+            A critical unexpected error occurred at the foundation level. You
+            can attempt to revive the session or return to safety.
           </p>
 
           {error.message && (
@@ -123,8 +129,9 @@ export default function GlobalError({
                 style={{
                   margin: 0,
                   fontSize: "0.85rem",
-                  fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
-                  color: "#ef4444",
+                  fontFamily:
+                    "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+                  color: "rgb(239, 68, 68)",
                 }}
               >
                 {error.message}
@@ -134,7 +141,8 @@ export default function GlobalError({
                   style={{
                     margin: "0.5rem 0 0 0",
                     fontSize: "0.75rem",
-                    fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+                    fontFamily:
+                      "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
                     color: "rgba(255, 255, 255, 0.3)",
                   }}
                 >
@@ -162,7 +170,7 @@ export default function GlobalError({
                 borderRadius: "0.5rem",
                 backgroundColor: "rgba(0, 188, 212, 0.12)",
                 border: "1px solid rgba(0, 188, 212, 0.4)",
-                color: "#00bcd4",
+                color: "rgb(0, 188, 212)",
                 fontSize: "0.875rem",
                 fontWeight: 600,
                 cursor: "pointer",
@@ -171,7 +179,7 @@ export default function GlobalError({
             >
               Revive Session
             </button>
-            <a
+            <Link
               href="/"
               style={{
                 display: "inline-flex",
@@ -189,7 +197,7 @@ export default function GlobalError({
               }}
             >
               Return Home
-            </a>
+            </Link>
           </div>
         </div>
       </body>
