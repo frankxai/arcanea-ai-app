@@ -80,3 +80,6 @@ writing_status:
   voice_register: "all 10 chapters at gold-standard register — dialogue-heavy, show-don't-tell, Lila narrates to Conejito throughout, abuela/mama wisdom internalized through memory, child-voice flourishes"
   destellos_canon: "fully aligned — destellos used everywhere as the magical sparks; florchispa preserved as kid-friendly name for the flowers that hold the destellos"
   sensitivity_pending: "to validate before sending to Ana — a Spanish-speaking parent/aunt reader for ages 5-8 register check (rural Latin American Spanish, neutral-natural)"
+
+# This manifest records a sensitivity read as still pending validation.
+visibility: private

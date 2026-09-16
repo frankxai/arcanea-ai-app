@@ -1,0 +1,105 @@
+{
+  "schema": "arcanea.visual_prompt_contract.v1",
+  "intent": "Create an internal identity-discovery study of The Unnamed Forge Realm; do not present provisional traits as canonical.",
+  "subject": {
+    "stableId": "forge-realm",
+    "displayName": "The Unnamed Forge Realm",
+    "kind": "world",
+    "identityLock": "The Forge of Ruin setting is a cold, Fire-dominant Heartland Realm whose Arcane lattice gathers under heavy strikes, ringing iron, and pressure. Its page-level places are specific—Galdheim, Vedmark, Nydmark, Harrow's Rest, named passes and siege sites, the Ashenmarch, Deep Wild, and Thornwall—but the Realm itself is deliberately unnamed and unmapped; regional distances, settlement architecture, river and mountain systems, and coastline remain human-author questions.",
+    "evidenceState": "discovery-only",
+    "openIdentityVariables": [
+      "the Realm's canonical name and linguistic system",
+      "map, distances, routes, river system, mountains, and possible coastline",
+      "regional settlement and longhouse architecture beyond named rooms",
+      "civilian clothing, agricultural economy, seasonal cycle, and transport",
+      "visual boundaries among ordinary Fire, kinetic Arcane, Mawfather corruption, and Pale Commander forces"
+    ],
+    "allowedVariation": "This is an identity-discovery study, not an identity master. The following variables are deliberately provisional and may be explored without being treated as canon: the Realm's canonical name and linguistic system; map, distances, routes, river system, mountains, and possible coastline; regional settlement and longhouse architecture beyond named rooms; civilian clothing, agricultural economy, seasonal cycle, and transport; visual boundaries among ordinary Fire, kinetic Arcane, Mawfather corruption, and Pale Commander forces. Only source-defined traits, role or Gate relation, evidence objects, relationship, and story beat may not drift; every variable named as open above must remain visibly provisional."
+  },
+  "storyBeat": "In Galdheim before a winter workday, a repaired cellar chain circuit measures exactly eight feet beside a used ledger, quenching trough, cold well water, and a forge where tool maintenance—not battle spectacle—shows how memory, restraint, iron, heat, and pressure organize daily life.",
+  "composition": "16:9 inhabitable environmental plate with foreground work, midground social system, and distant ecological consequence; no empty establishing shot.",
+  "output": {
+    "assetCount": 1,
+    "aspectRatio": "16:9",
+    "intendedSurface": "world-dossier-and-environment-atlas",
+    "deliveryRole": "world visual identity discovery plate",
+    "cropSafety": "Protect the foreground action and midground causal evidence inside the central field; distant context may not become the sole story carrier, and no alternate crop is authorized.",
+    "generatedTextPolicy": "no-generated-text"
+  },
+  "designSystem": {
+    "styleMode": "adaptive-primary-pending",
+    "direction": "ADAPTIVE_STYLE_PRIMARY_PENDING_AFTER_ROUND_01",
+    "colorLaw": "70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent.",
+    "escalation": "resonant: one localized impossible behavior; environment remains physically legible",
+    "materialLaw": "Tactile, specific materials with wear, weight, construction, and local environmental response.",
+    "typography": "No text, letters, logos, watermarks, borders, captions, or pseudo-glyphs inside the generated image."
+  },
+  "light": "Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.",
+  "references": {
+    "sourceRefs": [
+      "book/forge-of-ruin/BIBLE.md#the-geography--what-is-on-the-page-so-far [sha256:0e6adb71693569fddd515fd84664a26a09d7deecacf04862283266857c18bb72]",
+      "book/forge-of-ruin/BIBLE.md#the-five-elements-in-the-realm [sha256:0e6adb71693569fddd515fd84664a26a09d7deecacf04862283266857c18bb72]"
+    ],
+    "imageRefs": [],
+    "imageReferencePolicy": "Use only owned or licensed references. Record file hash and role: identity, composition, material, or lighting. Never use a reference as permission to imitate its creator."
+  },
+  "constraints": [
+    "grayscale silhouette remains identifiable",
+    "perspective, inhabitable scale, ecology, architecture, labor, and material economy remain coherent",
+    "visible phenomenon serves one story law",
+    "adult premium editorial finish; no mascot energy",
+    "provisional physical choices remain visibly reviewable and must never be described as locked canon",
+    "foreground labor or maintained evidence, midground social system, and distant ecological consequence all derive from cited sources",
+    "geography remains navigable and material economy remains physically plausible",
+    "architecture, ecology, climate, labor, and active phenomenon belong to one causal world system",
+    "provisional world choices remain visibly reviewable and cannot be promoted as locked canon"
+  ],
+  "avoid": [
+    "generic fantasy concept art",
+    "rainbow galaxy effects",
+    "permanent flame crystal or waterfall hair",
+    "franchise or living-artist style imitation",
+    "appropriated sacred clothing symbols gestures or shrine architecture",
+    "illegible pseudo-text",
+    "sexualized or childlike treatment",
+    "color as the only identity signal",
+    "empty skyline postcard",
+    "decorative fantasy megacity without food labor water waste transport or maintenance",
+    "portal as the only evidence of a world",
+    "monoculture represented by one costume one temple or one color"
+  ],
+  "provider": {
+    "adapter": "runtime-discovered",
+    "preferredCapabilities": [
+      "high-fidelity reference input",
+      "iterative editing",
+      "consistent identity",
+      "generation receipt"
+    ],
+    "model": null,
+    "seed": null,
+    "providerParameters": {}
+  },
+  "verification": {
+    "deterministicChecks": [
+      "declared aspect ratio within 1.5% provider-rounding tolerance",
+      "file decodes",
+      "no embedded prompt text",
+      "receipt and output hash recorded"
+    ],
+    "rubric": "arcanea_visual_quality_v1_10x5",
+    "passThreshold": 42,
+    "identityFloor": 4,
+    "canonFloor": 4,
+    "humanApprovalRequired": true
+  },
+  "governance": {
+    "releaseEligibility": "internal-only-until-identity-lock",
+    "sensitivityReviewRequired": false,
+    "reviewRequirements": [
+      "The human author or Lore Master names the Realm and accepts a mapped geography before any wide environmental plate becomes an identity master.",
+      "Identity review distinguishes source-defined working objects and sites from provisional regional architecture and cultural material."
+    ]
+  },
+  "contractHash": "b053746c905d05d47505cdf0d61da462801d6d5c92620995c6cbd61b65915904"
+}

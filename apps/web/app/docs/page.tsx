@@ -73,7 +73,7 @@ const API_SECTIONS = [
   },
   {
     title: 'Library API',
-    description: 'Programmatic access to 200K+ words of creative wisdom across 17 collections.',
+    description: 'Programmatic access to the twenty collections of the Library of Arcanea.',
     href: '/library',
     icon: PhBookOpen,
     color: 'var(--arc-brand-cosmic-blue)',
@@ -81,17 +81,17 @@ const API_SECTIONS = [
 ];
 
 const SDK_PACKAGES = [
-  { name: '@arcanea/ai-provider', description: 'Vercel AI SDK provider for 26 models', version: '0.4.0', downloads: '2.1K' },
-  { name: '@arcanea/mcp-server', description: 'Model Context Protocol server for coding agents', version: '1.2.0', downloads: '850' },
-  { name: '@arcanea/luminors', description: 'Luminor companion system for AI chat', version: '0.3.0', downloads: '1.4K' },
-  { name: '@arcanea/content-loader', description: 'Library content system for wisdom texts', version: '0.2.0', downloads: '620' },
+  { name: '@arcanea/ai-provider', description: 'Vercel AI SDK provider for 26 models', version: '0.4.0' },
+  { name: '@arcanea/mcp-server', description: 'Model Context Protocol server for coding agents', version: '1.2.0' },
+  { name: '@arcanea/luminors', description: 'Luminor companion system for AI chat', version: '0.3.0' },
+  { name: '@arcanea/content-loader', description: 'Library content system for wisdom texts', version: '0.2.0' },
 ];
 
 const COMMUNITY_LINKS = [
-  { name: 'GitHub', description: '27 repositories, open-source ecosystem', href: 'https://github.com/arcanea-ai', icon: PhGithubLogo, color: 'var(--arc-text-primary)' },
+  { name: 'GitHub', description: '14 public repositories, source-available ecosystem', href: 'https://github.com/arcanea-ai', icon: PhGithubLogo, color: 'var(--arc-text-primary)' },
   { name: 'Discord', description: 'Join the creator community', href: 'https://discord.gg/arcanea', icon: PhUsers, color: 'var(--arc-void)' },
   { name: 'Documentation', description: 'Full API reference and guides', href: '/developers/api', icon: PhBook, color: 'var(--arc-brand-atlantean-teal)' },
-  { name: 'npm Packages', description: '35 packages in the ecosystem', href: 'https://www.npmjs.com/org/arcanea', icon: PhPackage, color: 'var(--arc-fire)' },
+  { name: 'npm Packages', description: 'Packages published from the Arcanea repos', href: 'https://www.npmjs.com/org/arcanea', icon: PhPackage, color: 'var(--arc-fire)' },
 ];
 
 const DOC_CATEGORIES = [
@@ -130,7 +130,7 @@ const DOC_CATEGORIES = [
   },
   {
     title: 'The Library',
-    description: '17 collections of practical creative wisdom.',
+    description: '20 collections of practical creative wisdom.',
     icon: PhBookOpen,
     accent: 'var(--arc-brand-cosmic-blue)',
     links: [
@@ -368,7 +368,6 @@ export default function DocsPage() {
                   </div>
                   <div className="flex items-center gap-4 text-xs font-mono text-neutral-500">
                     <span>v{pkg.version}</span>
-                    <span>{pkg.downloads}/wk</span>
                     <span className="text-xs px-2 py-1 rounded-md bg-white/5 text-neutral-400">npm</span>
                   </div>
                 </div>

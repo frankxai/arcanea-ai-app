@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
 import {
   motion,
   useScroll,
   useTransform,
   useMotionValueEvent,
-} from 'framer-motion';
-import Image from 'next/image';
-import { useRef, useState } from 'react';
-import { PhArrowRight } from '@/lib/phosphor-icons';
-import navLogo from '@/assets/brand/arcanea-mark.jpg';
+} from "framer-motion";
+import Image from "next/image";
+import { useRef, useState } from "react";
+import { PhArrowRight } from "@/lib/phosphor-icons";
+import navLogo from "@/assets/brand/arcanea-mark.jpg";
 
 /* ─────────────────────────────────────────────
    Variation 9 — "Motion Theater"
@@ -19,36 +19,39 @@ import navLogo from '@/assets/brand/arcanea-mark.jpg';
    Every pixel of scroll reveals something.
    ───────────────────────────────────────────── */
 
-const CYAN = 'var(--arc-brand-atlantean-teal)';
-const BG = 'var(--arc-cosmic-void)';
+const CYAN = "var(--arc-brand-atlantean-teal)";
+const BG = "var(--arc-cosmic-void)";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-const HEADLINE = 'Creative intelligence, specialized.';
+const HEADLINE = "Creative intelligence, specialized.";
 
 const STATS: { value: string; label: string }[] = [
-  { value: '10', label: 'Luminors' },
-  { value: '34+', label: 'Texts' },
-  { value: 'Free', label: 'To Start' },
+  { value: "10", label: "Luminors" },
+  { value: "57", label: "Texts" },
+  { value: "Free", label: "To Start" },
 ];
 
 /* Floating geometric shape data */
 const SHAPES: {
-  type: 'circle' | 'line';
+  type: "circle" | "line";
   x: string;
   y: string;
   size: number;
   rotation: number;
 }[] = [
-  { type: 'circle', x: '15%', y: '20%', size: 60, rotation: 0 },
-  { type: 'line', x: '75%', y: '15%', size: 120, rotation: 45 },
-  { type: 'circle', x: '80%', y: '65%', size: 40, rotation: 0 },
-  { type: 'line', x: '10%', y: '70%', size: 80, rotation: -30 },
-  { type: 'circle', x: '50%', y: '85%', size: 50, rotation: 0 },
-  { type: 'line', x: '35%', y: '30%', size: 100, rotation: 70 },
+  { type: "circle", x: "15%", y: "20%", size: 60, rotation: 0 },
+  { type: "line", x: "75%", y: "15%", size: 120, rotation: 45 },
+  { type: "circle", x: "80%", y: "65%", size: 40, rotation: 0 },
+  { type: "line", x: "10%", y: "70%", size: 80, rotation: -30 },
+  { type: "circle", x: "50%", y: "85%", size: 50, rotation: 0 },
+  { type: "line", x: "35%", y: "30%", size: 100, rotation: 70 },
 ];
 
 /* Dot positions around the brand mark (10 dots, evenly spaced) */
-function getDotPosition(index: number, radius: number): { x: number; y: number } {
+function getDotPosition(
+  index: number,
+  radius: number,
+): { x: number; y: number } {
   const angle = (index / 10) * Math.PI * 2 - Math.PI / 2;
   return {
     x: Math.cos(angle) * radius,
@@ -62,7 +65,7 @@ export function HeroMotionTheater() {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start start', 'end start'],
+    offset: ["start start", "end start"],
   });
 
   /* ── Scroll-linked transforms ── */
@@ -72,11 +75,19 @@ export function HeroMotionTheater() {
     ease: EASE as unknown as (t: number) => number,
   });
   const markY = useTransform(scrollYProgress, [0, 0.2], [0, -180]);
-  const markOpacity = useTransform(scrollYProgress, [0, 0.15, 0.25], [1, 1, 0.6]);
+  const markOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.15, 0.25],
+    [1, 1, 0.6],
+  );
 
   // Dot ring rotation & fade
   const ringRotation = useTransform(scrollYProgress, [0, 1], [0, 360]);
-  const ringOpacity = useTransform(scrollYProgress, [0, 0.15, 0.25], [0.6, 0.4, 0]);
+  const ringOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.15, 0.25],
+    [0.6, 0.4, 0],
+  );
   const ringScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.5]);
 
   // Headline: appears as mark moves up
@@ -103,14 +114,14 @@ export function HeroMotionTheater() {
   const shapeY = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
   // Cursor blink for the typewriter effect
-  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
     setCursorVisible(v > 0.15 && v < 0.55);
   });
 
   // Headline character reveal based on scroll
   const headlineProgress = useTransform(scrollYProgress, [0.18, 0.38], [0, 1]);
   const [visibleChars, setVisibleChars] = useState(0);
-  useMotionValueEvent(headlineProgress, 'change', (v) => {
+  useMotionValueEvent(headlineProgress, "change", (v) => {
     setVisibleChars(Math.floor(v * HEADLINE.length));
   });
 
@@ -118,15 +129,12 @@ export function HeroMotionTheater() {
     <div
       ref={containerRef}
       className="relative"
-      style={{ height: '200vh', backgroundColor: BG }}
+      style={{ height: "200vh", backgroundColor: BG }}
     >
       {/* ── Sticky viewport ── */}
       <div className="sticky top-0 flex h-[100dvh] w-full items-center justify-center overflow-hidden">
         {/* ── Layer 1: Background gradient mesh ── */}
-        <motion.div
-          className="absolute inset-0"
-          style={{ x: bgX, y: bgY }}
-        >
+        <motion.div className="absolute inset-0" style={{ x: bgX, y: bgY }}>
           <div
             className="absolute inset-0"
             style={{
@@ -140,10 +148,7 @@ export function HeroMotionTheater() {
         </motion.div>
 
         {/* ── Layer 2: Floating geometric shapes ── */}
-        <motion.div
-          className="absolute inset-0"
-          style={{ y: shapeY }}
-        >
+        <motion.div className="absolute inset-0" style={{ y: shapeY }}>
           {SHAPES.map((shape, i) => (
             <div
               key={i}
@@ -154,13 +159,13 @@ export function HeroMotionTheater() {
                 transform: `rotate(${shape.rotation}deg)`,
               }}
             >
-              {shape.type === 'circle' ? (
+              {shape.type === "circle" ? (
                 <div
                   className="rounded-full"
                   style={{
                     width: shape.size,
                     height: shape.size,
-                    border: '1px solid rgba(255, 255, 255, 0.03)',
+                    border: "1px solid rgba(255, 255, 255, 0.03)",
                   }}
                 />
               ) : (
@@ -168,7 +173,7 @@ export function HeroMotionTheater() {
                   style={{
                     width: shape.size,
                     height: 1,
-                    backgroundColor: 'rgba(255, 255, 255, 0.04)',
+                    backgroundColor: "rgba(255, 255, 255, 0.04)",
                   }}
                 />
               )}
@@ -207,9 +212,9 @@ export function HeroMotionTheater() {
                     style={{
                       width: 4,
                       height: 4,
-                      backgroundColor: 'rgba(255, 255, 255, 0.4)',
-                      left: '50%',
-                      top: '50%',
+                      backgroundColor: "rgba(255, 255, 255, 0.4)",
+                      left: "50%",
+                      top: "50%",
                       transform: `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px))`,
                     }}
                   />
@@ -238,9 +243,7 @@ export function HeroMotionTheater() {
               y: headlineY,
             }}
           >
-            <h1
-              className="font-display text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl"
-            >
+            <h1 className="font-display text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">
               <span>{HEADLINE.slice(0, visibleChars)}</span>
               {cursorVisible && (
                 <motion.span
@@ -250,7 +253,7 @@ export function HeroMotionTheater() {
                   transition={{
                     duration: 0.8,
                     repeat: Infinity,
-                    ease: 'steps(2)',
+                    ease: "steps(2)",
                   }}
                 />
               )}
@@ -286,8 +289,8 @@ export function HeroMotionTheater() {
                   <p
                     className="mt-1 text-xs font-medium uppercase"
                     style={{
-                      color: 'rgba(255, 255, 255, 0.4)',
-                      letterSpacing: '0.2em',
+                      color: "rgba(255, 255, 255, 0.4)",
+                      letterSpacing: "0.2em",
                     }}
                   >
                     {stat.label}

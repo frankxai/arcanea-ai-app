@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { LazyMotion, domAnimation, m } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import {
   PhArrowRight,
   PhPaintBrush,
   PhMusicNote,
   PhCode,
-} from '@/lib/phosphor-icons';
+} from "@/lib/phosphor-icons";
 
 /* ─────────────────────────────────────────────
    Variation 2 — "Warm Gradient Flow"
@@ -16,8 +16,8 @@ import {
    gradient text, glass cards.
    ───────────────────────────────────────────── */
 
-const CYAN = 'var(--arc-brand-atlantean-teal)';
-const TEAL = 'var(--arc-brand-cosmic-blue)';
+const CYAN = "var(--arc-brand-atlantean-teal)";
+const TEAL = "var(--arc-brand-cosmic-blue)";
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -32,7 +32,7 @@ function FeatureCard({ icon, title, description, delay }: FeatureCardProps) {
       className="group relative overflow-hidden rounded-3xl border border-white/[0.06] p-6 backdrop-blur-md md:p-8"
       style={{
         background:
-          'linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)',
+          "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
       }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -44,7 +44,7 @@ function FeatureCard({ icon, title, description, delay }: FeatureCardProps) {
       whileHover={{
         scale: 1.02,
         y: -2,
-        transition: { type: 'spring', stiffness: 300, damping: 20 },
+        transition: { type: "spring", stiffness: 300, damping: 20 },
       }}
     >
       <div
@@ -56,7 +56,10 @@ function FeatureCard({ icon, title, description, delay }: FeatureCardProps) {
         {icon}
       </div>
       <h3 className="mb-2 text-lg font-semibold text-white">{title}</h3>
-      <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
+      <p
+        className="text-sm leading-relaxed"
+        style={{ color: "rgba(255,255,255,0.55)" }}
+      >
         {description}
       </p>
     </m.div>
@@ -79,147 +82,162 @@ const fadeUp = {
 export function HeroWarmGradient() {
   return (
     <LazyMotion features={domAnimation}>
-    <section
-      className="relative flex min-h-[100dvh] w-full flex-col items-center justify-center overflow-hidden"
-      style={{ backgroundColor: 'var(--arc-cosmic-void)' }}
-    >
-      {/* ── Background gradient orbs ── */}
-      <div
-        className="pointer-events-none absolute left-1/4 top-1/4 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
-        style={{ background: 'rgba(255, 107, 53, 0.03)' }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute bottom-1/4 right-1/4 h-[500px] w-[500px] translate-x-1/2 translate-y-1/2 rounded-full blur-3xl"
-        style={{ background: `rgba(0, 188, 212, 0.05)` }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute left-1/2 top-[60%] h-[400px] w-[400px] -translate-x-1/2 rounded-full blur-3xl"
-        style={{ background: 'rgba(0, 137, 123, 0.04)' }}
-        aria-hidden="true"
-      />
+      <section
+        className="relative flex min-h-[100dvh] w-full flex-col items-center justify-center overflow-hidden"
+        style={{ backgroundColor: "var(--arc-cosmic-void)" }}
+      >
+        {/* ── Background gradient orbs ── */}
+        <div
+          className="pointer-events-none absolute left-1/4 top-1/4 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+          style={{ background: "rgba(255, 107, 53, 0.03)" }}
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute bottom-1/4 right-1/4 h-[500px] w-[500px] translate-x-1/2 translate-y-1/2 rounded-full blur-3xl"
+          style={{ background: `rgba(0, 188, 212, 0.05)` }}
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute left-1/2 top-[60%] h-[400px] w-[400px] -translate-x-1/2 rounded-full blur-3xl"
+          style={{ background: "rgba(0, 137, 123, 0.04)" }}
+          aria-hidden="true"
+        />
 
-      {/* ── Content ── */}
-      <div className="relative z-10 mx-auto w-full max-w-5xl px-6 pb-20 pt-32 md:px-8 md:pt-36">
-        {/* Trending pill */}
-        <m.div
-          className="mb-8 flex justify-center md:justify-start"
-          custom={0}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-        >
-          <span
-            className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] px-4 py-1.5 text-sm font-medium backdrop-blur-sm"
-            style={{
-              background: 'rgba(255,255,255,0.04)',
-              color: CYAN,
-            }}
+        {/* ── Content ── */}
+        <div className="relative z-10 mx-auto w-full max-w-5xl px-6 pb-20 pt-32 md:px-8 md:pt-36">
+          {/* Trending pill */}
+          <m.div
+            className="mb-8 flex justify-center md:justify-start"
+            custom={0}
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
           >
-            <span className="text-xs">&#10022;</span>
-            AI Creation Platform
-          </span>
-        </m.div>
+            <span
+              className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] px-4 py-1.5 text-sm font-medium backdrop-blur-sm"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                color: CYAN,
+              }}
+            >
+              <span className="text-xs">&#10022;</span>
+              AI Creation Platform
+            </span>
+          </m.div>
 
-        {/* Headline with gradient text */}
-        <m.h1
-          className="font-display text-center text-4xl font-bold leading-[1.08] tracking-[-0.02em] md:text-left md:text-6xl lg:text-7xl"
-          custom={1}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-        >
-          <span className="text-white">Create anything with </span>
-          <span
-            className="bg-clip-text text-transparent"
-            style={{
-              backgroundImage: `linear-gradient(135deg, ${CYAN}, ${TEAL}, var(--arc-fire))`,
-            }}
+          {/* Headline with gradient text */}
+          <m.h1
+            className="font-display text-center text-4xl font-bold leading-[1.08] tracking-[-0.02em] md:text-left md:text-6xl lg:text-7xl"
+            custom={1}
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
           >
-            AI that gets you.
-          </span>
-        </m.h1>
+            <span className="text-white">Create anything with </span>
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage: `linear-gradient(135deg, ${CYAN}, ${TEAL}, var(--arc-fire))`,
+              }}
+            >
+              AI that gets you.
+            </span>
+          </m.h1>
 
-        {/* Subtitle */}
-        <m.p
-          className="mx-auto mt-5 max-w-lg text-center text-base leading-relaxed md:mx-0 md:text-left md:text-lg"
-          style={{ color: 'rgba(255, 255, 255, 0.55)' }}
-          custom={2}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-        >
-          10 specialized AI minds for writing, design, code, music, and research
-          &mdash; all in one place.
-        </m.p>
-
-        {/* CTA Button */}
-        <m.div
-          className="mt-10 flex justify-center md:justify-start"
-          custom={3}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-        >
-          <m.a
-            href="/create"
-            className="group inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-base font-semibold text-white shadow-lg md:text-lg"
-            style={{
-              backgroundImage: `linear-gradient(135deg, ${CYAN}, ${TEAL})`,
-              boxShadow: `0 8px 32px ${CYAN}22`,
-            }}
-            whileHover={{
-              scale: 1.03,
-              boxShadow: `0 12px 40px ${CYAN}33`,
-            }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+          {/* Subtitle */}
+          <m.p
+            className="mx-auto mt-5 max-w-lg text-center text-base leading-relaxed md:mx-0 md:text-left md:text-lg"
+            style={{ color: "rgba(255, 255, 255, 0.55)" }}
+            custom={2}
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
           >
-            Start creating free
-            <PhArrowRight
-              size={20}
-              weight="bold"
-              className="transition-transform group-hover:translate-x-0.5"
+            10 specialized AI minds for writing, design, code, music, and
+            research &mdash; all in one place.
+          </m.p>
+
+          {/* CTA Button */}
+          <m.div
+            className="mt-10 flex justify-center md:justify-start"
+            custom={3}
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+          >
+            <m.a
+              href="/create"
+              className="group inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-base font-semibold text-white shadow-lg md:text-lg"
+              style={{
+                backgroundImage: `linear-gradient(135deg, ${CYAN}, ${TEAL})`,
+                boxShadow: `0 8px 32px ${CYAN}22`,
+              }}
+              whileHover={{
+                scale: 1.03,
+                boxShadow: `0 12px 40px ${CYAN}33`,
+              }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            >
+              Start creating free
+              <PhArrowRight
+                size={20}
+                weight="bold"
+                className="transition-transform group-hover:translate-x-0.5"
+              />
+            </m.a>
+          </m.div>
+
+          {/* Trust line */}
+          <m.p
+            className="mt-5 text-center text-sm md:text-left"
+            style={{ color: "rgba(255, 255, 255, 0.28)" }}
+            custom={4}
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+          >
+            No credit card required &middot; Free to start &middot; 57 original
+            texts
+          </m.p>
+
+          {/* ── Feature cards ── */}
+          <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <FeatureCard
+              icon={
+                <PhPaintBrush
+                  size={24}
+                  weight="duotone"
+                  style={{ color: CYAN }}
+                />
+              }
+              title="Design & Visual"
+              description="Generate images, refine compositions, and iterate on your visual identity with AI that understands aesthetics."
+              delay={0.65}
             />
-          </m.a>
-        </m.div>
-
-        {/* Trust line */}
-        <m.p
-          className="mt-5 text-center text-sm md:text-left"
-          style={{ color: 'rgba(255, 255, 255, 0.28)' }}
-          custom={4}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-        >
-          No credit card required &middot; Free to start &middot; 34+ original texts
-        </m.p>
-
-        {/* ── Feature cards ── */}
-        <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          <FeatureCard
-            icon={<PhPaintBrush size={24} weight="duotone" style={{ color: CYAN }} />}
-            title="Design & Visual"
-            description="Generate images, refine compositions, and iterate on your visual identity with AI that understands aesthetics."
-            delay={0.65}
-          />
-          <FeatureCard
-            icon={<PhMusicNote size={24} weight="duotone" style={{ color: CYAN }} />}
-            title="Music & Audio"
-            description="Compose melodies, arrange tracks, and explore sonic landscapes with a Luminor that speaks music."
-            delay={0.8}
-          />
-          <FeatureCard
-            icon={<PhCode size={24} weight="duotone" style={{ color: CYAN }} />}
-            title="Code & Build"
-            description="Scaffold projects, debug logic, and ship faster with an AI engineer that thinks in systems."
-            delay={0.95}
-          />
+            <FeatureCard
+              icon={
+                <PhMusicNote
+                  size={24}
+                  weight="duotone"
+                  style={{ color: CYAN }}
+                />
+              }
+              title="Music & Audio"
+              description="Compose melodies, arrange tracks, and explore sonic landscapes with a Luminor that speaks music."
+              delay={0.8}
+            />
+            <FeatureCard
+              icon={
+                <PhCode size={24} weight="duotone" style={{ color: CYAN }} />
+              }
+              title="Code & Build"
+              description="Scaffold projects, debug logic, and ship faster with an AI engineer that thinks in systems."
+              delay={0.95}
+            />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
     </LazyMotion>
   );
 }

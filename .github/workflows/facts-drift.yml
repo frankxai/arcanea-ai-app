@@ -6,10 +6,28 @@ name: Facts Drift
 on:
   pull_request:
     branches: [main]
+    # ready_for_review re-fires the draft-gated job(s) below; without it a gated
+    # job skips on the draft and never reports once the PR is marked ready.
+    types: [opened, synchronize, reopened, ready_for_review]
+    # Every input the check reads. A PR that edits llms.txt or repos.json and
+    # nothing else used to skip this job entirely, which is how the agent-facing
+    # surfaces drifted furthest from lib/facts.ts.
     paths:
-      - 'apps/web/app/**'
-      - 'apps/web/components/**'
-      - 'apps/web/lib/facts.ts'
+      - "apps/web/app/**"
+      - "apps/web/components/**"
+      - "apps/web/lib/facts.ts"
+      - "apps/web/lib/luminors/config.ts"
+      - "apps/web/lib/content/loader.ts"
+      - "apps/web/lib/public-repo-registry.ts"
+      - "apps/web/messages/en.json"
+      - "apps/web/public/llms.txt"
+      - "apps/web/public/llms-full.txt"
+      - "apps/web/public/.well-known/ai-plugin.json"
+      - "apps/web/scripts/check-facts-drift.mjs"
+      - ".arcanea/config/repos.json"
+      - "packages/arcanea-mcp/src/index.ts"
+      - "packages/arcanea-skills/skills/**"
+      - ".github/workflows/facts-drift.yml"
 
 concurrency:
   group: facts-${{ github.ref }}
@@ -17,6 +35,8 @@ concurrency:
 
 jobs:
   facts-drift:
+    # Cost gate: skip on draft PRs — agents iterate free; the drift check runs when marked ready.
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     name: Hardcoded platform numbers
     runs-on: ubuntu-latest
     timeout-minutes: 5

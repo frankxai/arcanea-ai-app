@@ -1,0 +1,63 @@
+name: Excellence loop
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      ci_run_id:
+        description: Successful same-repository pull-request CI run to review
+        required: true
+        type: string
+
+concurrency:
+  group: excellence-${{ github.event.workflow_run.id || inputs.ci_run_id }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+
+jobs:
+  critique:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'pull_request' &&
+       github.event.workflow_run.head_repository.id == github.event.repository.id)
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      # Execute only trusted workflow code, never the reviewed PR checkout.
+      # The script also requires the default branch for manual dispatches.
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+          sparse-checkout: |
+            scripts/excellence-review.mjs
+            scripts/excellence-artifact.py
+            standards/EXCELLENCE.md
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Review bounded CI screenshots
+        run: node scripts/excellence-review.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CI_RUN_ID: ${{ github.event.workflow_run.id || inputs.ci_run_id }}
+      - name: Preserve review receipt
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: excellence-review-${{ github.run_id }}
+          path: |
+            excellence-review.json
+            excellence-response.json
+            excellence-failure.json
+          if-no-files-found: warn
+          retention-days: 14

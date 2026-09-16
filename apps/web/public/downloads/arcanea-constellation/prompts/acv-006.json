@@ -1,0 +1,97 @@
+{
+  "schema": "arcanea.visual_prompt_contract.v1",
+  "intent": "Create an evidence-bound visual study of Kael Thornfield for the contracted deliverable.",
+  "subject": {
+    "stableId": "kael-thornfield",
+    "displayName": "Kael Thornfield",
+    "kind": "book-character",
+    "identityLock": "Kael is nineteen and six feet tall, though he compresses his posture to take up less space. He has warm deep-brown skin, broad shoulders, close-cropped hair, dark watchful eyes, large calloused hands, and a small white scar across the base of his left thumb. Worn linen and bare feet are more truthful than pristine student robes.",
+    "evidenceState": "source-complete",
+    "openIdentityVariables": [],
+    "allowedVariation": "Camera, pose, and environmental detail may vary; anatomy, age, body, countable silhouette, role, and story truth may not drift."
+  },
+  "storyBeat": "Inside the Hollow Root’s reconstruction of Ironhold, Kael kneels beside his father’s silent ghost and selects one reusable stone from the ruined shop instead of fleeing the memory.",
+  "composition": "4:5 vertical field portrait, full silhouette readable, one foreground evidence object, generous negative space for a future dossier caption outside the image.",
+  "output": {
+    "assetCount": 1,
+    "aspectRatio": "4:5",
+    "intendedSurface": "book-character-dossier-and-identity-atlas",
+    "deliveryRole": "controlled style benchmark and source-complete character identity candidate",
+    "cropSafety": "Protect the complete subject silhouette, hands or countable limbs, and decisive evidence object from edge loss; no alternate crop is authorized by this contract.",
+    "generatedTextPolicy": "no-generated-text"
+  },
+  "designSystem": {
+    "styleMode": "luminous-atelier",
+    "direction": "restrained painterly realism, visible but disciplined brush intelligence, classical value structure, contemporary character specificity, atmospheric edges",
+    "colorLaw": "70% ecological/material neutral, 20% identity family, 8% active phenomenon, 2% relational accent.",
+    "escalation": "resonant: one localized impossible behavior; environment remains physically legible",
+    "materialLaw": "Tactile, specific materials with wear, weight, construction, and local environmental response.",
+    "typography": "No text, letters, logos, watermarks, borders, captions, or pseudo-glyphs inside the generated image."
+  },
+  "light": "Motivated directional light plus one localized Arcanean working signal; preserve skin, material, and atmospheric truth.",
+  "references": {
+    "sourceRefs": [
+      "book/chronicles-of-arcanea/series-bible/CHARACTER_BIBLE.md#1-kael-thornfield [sha256:fabf13211046b30594f5ed927c5fea1e445219426d82dd2accabb0772e29b557]"
+    ],
+    "imageRefs": [],
+    "imageReferencePolicy": "Use only owned or licensed references. Record file hash and role: identity, composition, material, or lighting. Never use a reference as permission to imitate its creator."
+  },
+  "constraints": [
+    "grayscale silhouette remains identifiable",
+    "face, hands, limbs, countable anatomy, age, and body proportions remain coherent",
+    "visible phenomenon serves one story law",
+    "adult premium editorial finish; no mascot energy",
+    "series: Chronicles of Arcanea",
+    "story-bible evidence outranks name-derived visual shorthand",
+    "Kael remains nineteen, six feet tall, warm deep-brown skinned, broad-shouldered, close-cropped, and visibly inclined to compress his posture",
+    "the small white scar stays at the base of his left thumb and one reusable stone remains the single evidence object"
+  ],
+  "avoid": [
+    "generic fantasy concept art",
+    "rainbow galaxy effects",
+    "permanent flame crystal or waterfall hair",
+    "franchise or living-artist style imitation",
+    "appropriated sacred clothing symbols gestures or shrine architecture",
+    "illegible pseudo-text",
+    "sexualized or childlike treatment",
+    "color as the only identity signal",
+    "pre-Raphaelite imitation",
+    "ethereal sameness",
+    "soft-focus faces",
+    "costume pastiche",
+    "decorative magic",
+    "name-derived costume or elemental shorthand unsupported by the source",
+    "provisional identity traits presented as locked canon"
+  ],
+  "provider": {
+    "adapter": "runtime-discovered",
+    "preferredCapabilities": [
+      "high-fidelity reference input",
+      "iterative editing",
+      "consistent identity",
+      "generation receipt"
+    ],
+    "model": null,
+    "seed": null,
+    "providerParameters": {}
+  },
+  "verification": {
+    "deterministicChecks": [
+      "declared aspect ratio within 1.5% provider-rounding tolerance",
+      "file decodes",
+      "no embedded prompt text",
+      "receipt and output hash recorded"
+    ],
+    "rubric": "arcanea_visual_quality_v1_10x5",
+    "passThreshold": 42,
+    "identityFloor": 4,
+    "canonFloor": 4,
+    "humanApprovalRequired": true
+  },
+  "governance": {
+    "releaseEligibility": "candidate-after-human-gates",
+    "sensitivityReviewRequired": false,
+    "reviewRequirements": []
+  },
+  "contractHash": "a45803914cb4acaed9e1b4289accc93c97ed02eb554d7609db5efaa4f69f2aac"
+}

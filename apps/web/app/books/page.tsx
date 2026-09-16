@@ -73,7 +73,7 @@ export default async function BooksPage() {
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <p className="mb-6 font-mono text-[11px] uppercase tracking-[0.35em] text-[var(--arc-brand-atlantean-teal)]/70">The Arcanea Universe</p>
           <h1 className="font-display text-5xl font-bold tracking-tight text-white/95 md:text-6xl lg:text-7xl leading-[1.05]">The Library of Arcanea</h1>
-          <p className="mt-5 font-mono text-sm text-white/60 tracking-wide">486,000+ words across the Arcanean multiverse</p>
+          <p className="mt-5 font-mono text-sm text-white/60 tracking-wide">Twenty-two works in draft. Nothing finished, everything readable.</p>
           <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">Enter seeking. Leave transformed. Return whenever needed.</p>
 
           <div className="mx-auto mt-10 flex w-48 items-center gap-3 text-[var(--arc-brand-atlantean-teal)]/20" aria-hidden="true">
