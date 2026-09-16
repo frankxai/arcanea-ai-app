@@ -6,9 +6,9 @@ on:
     # job skips on the draft and never reports once the PR is marked ready.
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
-      - 'apps/web/**'
-      - 'packages/design-system/**'
-      - 'packages/arcanea-design-preset.js'
+      - "apps/web/**"
+      - "packages/design-system/**"
+      - "packages/arcanea-design-preset.js"
   workflow_dispatch:
 
 concurrency:

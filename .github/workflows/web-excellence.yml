@@ -23,16 +23,16 @@ on:
     # job skips on the draft and never reports once the PR is marked ready.
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
-      - '**/*.tsx'
-      - '**/*.jsx'
-      - '**/*.vue'
-      - '**/*.svelte'
-      - '**/*.astro'
-      - '**/*.css'
-      - '**/*.scss'
-      - '**/*.sass'
-      - '.github/workflows/web-excellence.yml'
-      - '.claude/ci/web-guidelines-lint.mjs'
+      - "**/*.tsx"
+      - "**/*.jsx"
+      - "**/*.vue"
+      - "**/*.svelte"
+      - "**/*.astro"
+      - "**/*.css"
+      - "**/*.scss"
+      - "**/*.sass"
+      - ".github/workflows/web-excellence.yml"
+      - ".claude/ci/web-guidelines-lint.mjs"
 
 permissions:
   contents: read
@@ -50,7 +50,7 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Smoke-test the hooks
         # The hooks' real tests live with the pack upstream and are deliberately

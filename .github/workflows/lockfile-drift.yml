@@ -17,8 +17,8 @@ on:
     # job skips on the draft and never reports once the PR is marked ready.
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
-      - '**/package.json'
-      - 'pnpm-lock.yaml'
+      - "**/package.json"
+      - "pnpm-lock.yaml"
 
 permissions:
   contents: read
@@ -71,14 +71,14 @@ jobs:
         if: steps.drift.outputs.pkg_changed != '0' || steps.drift.outputs.lock_changed != '0'
         uses: pnpm/action-setup@v4
         with:
-          version: '8.15.0'
+          version: "8.15.0"
 
       - name: Setup Node.js
         if: steps.drift.outputs.pkg_changed != '0' || steps.drift.outputs.lock_changed != '0'
         uses: actions/setup-node@v7
         with:
-          node-version: '22'
-          cache: 'pnpm'
+          node-version: "22"
+          cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
       - name: Verify --frozen-lockfile install succeeds

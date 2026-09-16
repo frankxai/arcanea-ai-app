@@ -6,12 +6,12 @@ on:
     # job skips on the draft and never reports once the PR is marked ready.
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
-      - '.arcanea/config/repos.json'
-      - '.arcanea/config/manifest.yaml'
-      - 'packages/*/package.json'
-      - 'apps/*/package.json'
-      - 'apps/web/lib/ecosystem/derived.ts'
-      - 'packages/orchestrator/src/ecosystem/**'
+      - ".arcanea/config/repos.json"
+      - ".arcanea/config/manifest.yaml"
+      - "packages/*/package.json"
+      - "apps/*/package.json"
+      - "apps/web/lib/ecosystem/derived.ts"
+      - "packages/orchestrator/src/ecosystem/**"
 
 concurrency:
   group: ecosystem-verify-${{ github.ref }}
@@ -27,7 +27,7 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v7
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
           cache: pnpm
       - name: Install
         run: pnpm install --frozen-lockfile

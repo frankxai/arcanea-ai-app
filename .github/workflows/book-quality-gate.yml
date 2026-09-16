@@ -6,9 +6,9 @@ on:
     # job skips on the draft and never reports once the PR is marked ready.
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
-      - 'book/**/book.yaml'
-      - 'book/**/chapters/**'
-      - 'book/**/*.md'
+      - "book/**/book.yaml"
+      - "book/**/chapters/**"
+      - "book/**/*.md"
 
 permissions:
   contents: read
@@ -43,7 +43,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: pip install pyyaml

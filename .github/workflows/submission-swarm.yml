@@ -6,8 +6,8 @@ on:
     # job skips on the draft and never reports once the PR is marked ready.
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
-      - 'book/**'
-      - 'world/**'
+      - "book/**"
+      - "world/**"
   workflow_dispatch:
 
 concurrency:
@@ -36,7 +36,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
@@ -59,7 +59,7 @@ jobs:
             const fs = require('fs');
             const path = require('path');
             const reportPath = 'aiyami-report.md';
-            
+
             if (fs.existsSync(reportPath)) {
               const body = fs.readFileSync(reportPath, 'utf8');
               

@@ -171,8 +171,8 @@ jobs:
       - name: Convene Council with cost cap
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          COUNCIL_BUDGET_USD: '1.00'
-          COUNCIL_TOKEN_CAP: '300000'
+          COUNCIL_BUDGET_USD: "1.00"
+          COUNCIL_TOKEN_CAP: "300000"
         run: |
           # Placeholder: replace with actual Council runner script.
           # Intended: spawn 5 Guardian personas in parallel via Anthropic API.
