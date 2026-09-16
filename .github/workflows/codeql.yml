@@ -29,8 +29,8 @@ concurrency:
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    # Cost gate: skip on draft PRs — agents iterate free; scan runs when marked ready.
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+    # Cost gate: skip on draft PRs and Dependabot PRs — agents iterate free; scan runs on main, schedule, or human PRs.
+    if: (github.event_name != 'pull_request' || github.event.pull_request.draft == false) && github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
