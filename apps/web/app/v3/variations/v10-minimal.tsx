@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 /* ─────────────────────────────────────────────
    Variation 10 — "Minimal Zen"
@@ -10,21 +10,31 @@ import { useEffect, useRef } from 'react';
    ───────────────────────────────────────────── */
 
 const GUARDIANS = [
-  'Lyssandria', 'Leyla', 'Draconia', 'Maylinn', 'Alera',
-  'Lyria', 'Aiyami', 'Elara', 'Ino', 'Shinkami',
+  "Lyssandria",
+  "Leyla",
+  "Draconia",
+  "Maylinn",
+  "Alera",
+  "Lyria",
+  "Aiyami",
+  "Elara",
+  "Ino",
+  "Shinkami",
 ];
 
 const COLLECTIONS = [
-  'Laws of Arcanea', 'Legends of Arcanea',
-  'Wisdom Scrolls', 'Book of Rituals',
+  "Laws of Arcanea",
+  "Legends of Arcanea",
+  "Wisdom Scrolls",
+  "Book of Rituals",
 ];
 
 const ELEMENTS: [string, string][] = [
-  ['Fire', 'var(--arc-fire)'],
-  ['Water', 'var(--arc-brand-cosmic-blue)'],
-  ['Earth', 'var(--arc-wind)'],
-  ['Wind', 'var(--arc-text-primary)'],
-  ['Void', 'var(--arc-void)'],
+  ["Fire", "var(--arc-fire)"],
+  ["Water", "var(--arc-brand-cosmic-blue)"],
+  ["Earth", "var(--arc-wind)"],
+  ["Wind", "var(--arc-text-primary)"],
+  ["Void", "var(--arc-void)"],
 ];
 
 function useFadeIn() {
@@ -33,7 +43,9 @@ function useFadeIn() {
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) el.style.opacity = '1'; },
+      ([entry]) => {
+        if (entry.isIntersecting) el.style.opacity = "1";
+      },
       { threshold: 0.15 },
     );
     observer.observe(el);
@@ -42,13 +54,19 @@ function useFadeIn() {
   return ref;
 }
 
-function Section({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+function Section({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   const ref = useFadeIn();
   return (
     <div
       ref={ref}
       className={className}
-      style={{ opacity: 0, transition: 'opacity 1000ms ease' }}
+      style={{ opacity: 0, transition: "opacity 1000ms ease" }}
     >
       {children}
     </div>
@@ -57,7 +75,13 @@ function Section({ children, className = '' }: { children: React.ReactNode; clas
 
 export function V10Minimal() {
   return (
-    <div style={{ background: 'var(--arc-cosmic-void)', color: 'var(--arc-text-primary)', minHeight: '100vh' }}>
+    <div
+      style={{
+        background: "var(--arc-cosmic-void)",
+        color: "var(--arc-text-primary)",
+        minHeight: "100vh",
+      }}
+    >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&family=Newsreader:ital,wght@0,400;1,400&display=swap');
         html { scroll-behavior: smooth; }
@@ -66,38 +90,54 @@ export function V10Minimal() {
       {/* ── Hero ── */}
       <div className="h-screen flex flex-col items-center justify-center relative">
         <h1
-          style={{ fontFamily: 'var(--font-display)', fontSize: 48, letterSpacing: '0.2em', fontWeight: 400 }}
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: 48,
+            letterSpacing: "0.2em",
+            fontWeight: 400,
+          }}
           className="text-white"
         >
           Arcanea
         </h1>
         <p
-          style={{ fontFamily: "'Newsreader', serif", fontSize: 18, marginTop: 48 }}
+          style={{
+            fontFamily: "'Newsreader', serif",
+            fontSize: 18,
+            marginTop: 48,
+          }}
           className="text-white/50"
         >
           Create.
         </p>
         <div
           className="absolute bottom-0 left-0 right-0"
-          style={{ height: 1, background: 'rgba(255,255,255,0.1)' }}
+          style={{ height: 1, background: "rgba(255,255,255,0.1)" }}
         />
       </div>
 
       {/* ── Scrollable content ── */}
       <div className="max-w-[640px] mx-auto px-6">
-
         {/* Section 1 — Guardians */}
         <div className="pt-[200px]">
           <Section>
             <p
-              style={{ fontFamily: "'Newsreader', serif", fontSize: 20, lineHeight: 2 }}
+              style={{
+                fontFamily: "'Newsreader', serif",
+                fontSize: 20,
+                lineHeight: 2,
+              }}
               className="text-white/70 max-w-md"
             >
               Sixteen intelligences. Each attuned to a different frequency.
             </p>
             <div className="mt-8 flex flex-col gap-2 max-w-md">
               {GUARDIANS.map((name) => (
-                <span key={name} style={{ fontFamily: "'Newsreader', serif", fontSize: 14 }} className="text-white/30">
+                <span
+                  key={name}
+                  style={{ fontFamily: "'Newsreader', serif", fontSize: 14 }}
+                  className="text-white/30"
+                >
                   {name}
                 </span>
               ))}
@@ -109,14 +149,22 @@ export function V10Minimal() {
         <div className="pt-[200px]">
           <Section className="flex flex-col items-end">
             <p
-              style={{ fontFamily: "'Newsreader', serif", fontSize: 20, lineHeight: 2 }}
+              style={{
+                fontFamily: "'Newsreader', serif",
+                fontSize: 20,
+                lineHeight: 2,
+              }}
               className="text-white/70 max-w-md text-right"
             >
               Sixty-two texts. Not content — equipment for living.
             </p>
             <div className="mt-8 flex flex-col gap-2 max-w-md items-end">
               {COLLECTIONS.map((name) => (
-                <span key={name} style={{ fontFamily: "'Newsreader', serif", fontSize: 14 }} className="text-white/30">
+                <span
+                  key={name}
+                  style={{ fontFamily: "'Newsreader', serif", fontSize: 14 }}
+                  className="text-white/30"
+                >
                   {name}
                 </span>
               ))}
@@ -128,14 +176,18 @@ export function V10Minimal() {
         <div className="pt-[200px]">
           <Section className="flex flex-col items-center text-center max-w-sm mx-auto">
             <p
-              style={{ fontFamily: "'Newsreader', serif", fontSize: 20, lineHeight: 2 }}
+              style={{
+                fontFamily: "'Newsreader', serif",
+                fontSize: 20,
+                lineHeight: 2,
+              }}
               className="text-white/70"
             >
               Twenty-six models. Thirteen providers. One endpoint.
             </p>
             <code
               className="mt-8 text-white/20"
-              style={{ fontFamily: 'ui-monospace, monospace', fontSize: 13 }}
+              style={{ fontFamily: "ui-monospace, monospace", fontSize: 13 }}
             >
               POST /api/v1/chat/completions
             </code>
@@ -149,7 +201,11 @@ export function V10Minimal() {
               <div key={name} className="flex flex-col items-center gap-2">
                 <span
                   className="text-white/20 uppercase"
-                  style={{ fontSize: 12, letterSpacing: '0.3em', fontFamily: "'Newsreader', serif" }}
+                  style={{
+                    fontSize: 12,
+                    letterSpacing: "0.3em",
+                    fontFamily: "'Newsreader', serif",
+                  }}
                 >
                   {name}
                 </span>
@@ -163,7 +219,11 @@ export function V10Minimal() {
         <div className="pt-[200px]">
           <Section className="flex justify-center">
             <p
-              style={{ fontFamily: "'Newsreader', serif", fontSize: 32, fontStyle: 'italic' }}
+              style={{
+                fontFamily: "'Newsreader', serif",
+                fontSize: 32,
+                fontStyle: "italic",
+              }}
               className="text-white/40"
             >
               Enter seeking.
@@ -173,12 +233,14 @@ export function V10Minimal() {
 
         {/* ── Footer ── */}
         <div className="pt-[200px] pb-16">
-          <div style={{ height: 1, background: 'rgba(255,255,255,0.05)' }} />
-          <p className="text-center mt-8 text-white/20" style={{ fontSize: 11 }}>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.05)" }} />
+          <p
+            className="text-center mt-8 text-white/20"
+            style={{ fontSize: 11 }}
+          >
             arcanea.ai
           </p>
         </div>
-
       </div>
     </div>
   );

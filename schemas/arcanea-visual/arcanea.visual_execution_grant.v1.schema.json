@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arcanea.ai/schemas/arcanea.visual_execution_grant.v1.schema.json",
+  "title": "Arcanea visual execution grant v1",
+  "description": "Write-once human authority for one current provider manifest and at most ten bounded calls.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "campaignId",
+    "campaignVersion",
+    "round",
+    "providerProfile",
+    "provider",
+    "modelPolicy",
+    "model",
+    "runtimeParameters",
+    "runtimeParametersHash",
+    "executionManifestPath",
+    "executionManifestHash",
+    "sourceContractSetHash",
+    "jobIds",
+    "maxCalls",
+    "maxRevisionCalls",
+    "spendApprovedBy",
+    "spendBoundary",
+    "machinePreflightReceiptPath",
+    "machinePreflightReceiptHash",
+    "rightsAndLikenessAttestedBy",
+    "specialistReviewEvidence",
+    "outputRoot",
+    "authorityEvidence",
+    "humanAttestation",
+    "stopAt",
+    "issuedAt",
+    "expiresAt",
+    "issuedBy",
+    "grantHash"
+  ],
+  "properties": {
+    "schema": { "const": "arcanea.visual_execution_grant.v1" },
+    "campaignId": { "type": "string", "minLength": 3 },
+    "campaignVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "round": { "type": "integer", "minimum": 1, "maximum": 10 },
+    "providerProfile": { "type": "string", "minLength": 3 },
+    "provider": { "type": "string", "minLength": 3 },
+    "modelPolicy": { "type": "string", "minLength": 3 },
+    "model": { "type": ["string", "null"] },
+    "runtimeParameters": { "type": "object" },
+    "runtimeParametersHash": { "$ref": "#/$defs/sha256" },
+    "executionManifestPath": { "type": "string", "minLength": 3 },
+    "executionManifestHash": { "$ref": "#/$defs/sha256" },
+    "sourceContractSetHash": { "$ref": "#/$defs/sha256" },
+    "jobIds": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^ACV-\\d{3}$" }
+    },
+    "maxCalls": { "type": "integer", "minimum": 1, "maximum": 10 },
+    "maxRevisionCalls": { "type": "integer", "minimum": 0, "maximum": 9 },
+    "spendApprovedBy": { "type": "string", "minLength": 2 },
+    "spendBoundary": { "type": "string", "minLength": 3 },
+    "machinePreflightReceiptPath": { "type": "string", "minLength": 3 },
+    "machinePreflightReceiptHash": { "$ref": "#/$defs/sha256" },
+    "rightsAndLikenessAttestedBy": { "type": "string", "minLength": 2 },
+    "specialistReviewEvidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["jobId", "evidence"],
+        "properties": {
+          "jobId": { "type": "string", "pattern": "^ACV-\\d{3}$" },
+          "evidence": { "type": "string", "minLength": 8 }
+        }
+      }
+    },
+    "outputRoot": { "const": "planning-with-files/arcanea-visual-assets/v1" },
+    "authorityEvidence": { "type": "string", "minLength": 12 },
+    "humanAttestation": { "const": true },
+    "stopAt": { "type": "string", "format": "date-time" },
+    "issuedAt": { "type": "string", "format": "date-time" },
+    "expiresAt": { "type": "string", "format": "date-time" },
+    "issuedBy": { "type": "string", "minLength": 2 },
+    "grantHash": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

@@ -1,0 +1,239 @@
+{
+  "version": 1,
+  "templates": [
+    {
+      "id": "resonant",
+      "name": "Resonant",
+      "category": "music",
+      "kind": "Producer portfolio",
+      "layout": "record",
+      "theme": "ember",
+      "eyebrow": "Independent sound / selected work",
+      "headline": "Make a little\nroom for sound.",
+      "description": "A home for the tracks, textures and unfinished ideas that make your sound yours.",
+      "detail": "An editorial artist page with a playable record sleeve, track selector and release notes.",
+      "action": "Explore the tracks",
+      "proof": "Three synthesized sketches. Press play to listen.",
+      "items": ["After the rain", "Soft machinery", "Night window"],
+      "brief": "Build a music producer portfolio with an asymmetric record-sleeve hero, generous editorial typography, three-track player, release notes and artist statement. Keep track ownership and download permissions explicit. The built-in audio is synthesized demo sound, not a commercial catalog. Replace it with owner-provided licensed tracks before launch.",
+      "sections": [
+        "Record sleeve and track selector",
+        "Selected releases with liner notes",
+        "Artist statement and release credits"
+      ],
+      "inputs": [
+        "Artist name and one-sentence sound identity",
+        "Owned audio, artwork and release credits",
+        "Verified streaming or contact destinations"
+      ]
+    },
+    {
+      "id": "crate",
+      "name": "Crate",
+      "category": "music",
+      "kind": "Sample collection",
+      "layout": "record",
+      "theme": "paper",
+      "eyebrow": "Sound design / a small collection",
+      "headline": "Find the texture.\nStart something.",
+      "description": "A listening room for small sounds with a place in your next idea.",
+      "detail": "A sample-pack page with a tactile pad instrument, three playable textures and an honest contents panel.",
+      "action": "Audition the sounds",
+      "proof": "Interactive synthesis demo. No sample pack is for sale.",
+      "items": ["Warm pulse", "Glass keys", "Low tide"],
+      "brief": "Build a sample-collection page with a tactile three-pad audition instrument, a compact contents panel, audio metadata and a clear usage-rights section. Use an ivory editorial palette with orange accents. Do not invent a price, download size, pack count, rights grant or endorsement. Wire demand capture only after a real product ID and provider are supplied; keep checkout absent until release approval.",
+      "sections": [
+        "Audition instrument",
+        "Collection contents and sound notes",
+        "Usage rights and compatibility"
+      ],
+      "inputs": [
+        "Pack title and exact file inventory",
+        "Owned sample files and usage terms",
+        "Verified product ID and capture endpoint"
+      ]
+    },
+    {
+      "id": "fieldwork",
+      "name": "Fieldwork",
+      "category": "labs",
+      "kind": "Research lab",
+      "layout": "research",
+      "theme": "sage",
+      "eyebrow": "An independent research practice",
+      "headline": "Better questions.\nVisible evidence.",
+      "description": "A place to show what you tested, what changed, and what you still do not know.",
+      "detail": "An evidence-led lab page with a local retrieval experiment, research notes and explicit limitations.",
+      "action": "Inspect the experiment",
+      "proof": "Illustrative retrieval experiment. No model runs here.",
+      "items": ["Question", "Evidence", "Review"],
+      "brief": "Build an AI research lab homepage around one inspectable research artifact. Use paper, forest-green ink and a restrained orange signal. Include a question/evidence/review experiment, expandable research notes, methodology and limitations. All fixture results must be labelled illustrative, never benchmark evidence. Require source links, dates and reproduction instructions for real research claims.",
+      "sections": [
+        "Research question and artifact",
+        "Methodology and experiment notes",
+        "Limitations and open questions"
+      ],
+      "inputs": [
+        "Lab mission and named research area",
+        "Citable papers and reproducible experiments",
+        "Verified team, methods and contact information"
+      ]
+    },
+    {
+      "id": "open-model",
+      "name": "Open model",
+      "category": "labs",
+      "kind": "Model release",
+      "layout": "research",
+      "theme": "ink",
+      "eyebrow": "A model card before a marketing page",
+      "headline": "Show your work.\nThen your model.",
+      "description": "Explain the intended use, evaluation method and limits before someone builds on your release.",
+      "detail": "A model-release page with inspectable evaluation fixtures, model-card sections and provenance prompts.",
+      "action": "Read the model card",
+      "proof": "Model-release layout example. No weights are included.",
+      "items": ["Intended use", "Evaluation", "Limitations"],
+      "brief": "Build an open-model release page with the model card as the main artifact. Use charcoal, warm white and mint; include intended use, evaluation context, limitations, training-data provenance, license and version history. Do not fabricate parameters, scores, openness, download counts or weights. Links to code and weights require verified destinations. Distinguish a local fixture walkthrough from actual inference.",
+      "sections": [
+        "Model card and intended use",
+        "Evaluation fixture and methodology",
+        "Limitations, provenance and release history"
+      ],
+      "inputs": [
+        "Model identity, version and license evidence",
+        "Evaluation method, dataset and actual results",
+        "Verified code and weights URLs"
+      ]
+    },
+    {
+      "id": "forma",
+      "name": "Forma",
+      "category": "tools",
+      "kind": "Creative AI tool",
+      "layout": "tool",
+      "theme": "peach",
+      "eyebrow": "A quieter space to start",
+      "headline": "A rough thought.\nA clearer brief.",
+      "description": "Give an idea a little structure. Keep the judgment, the direction and the final word.",
+      "detail": "A creative-tool page with an editable idea-to-brief demo, copy export and a clear privacy boundary.",
+      "action": "Try the brief builder",
+      "proof": "Local formatting demo. Your text stays in this page.",
+      "items": ["Intent", "Direction", "First step"],
+      "brief": "Build a creative AI-tool landing page around an editable input/output demonstration, not a dashboard screenshot. Use warm peach, charcoal and editorial type. The supplied demo formats text locally and must say so. An actual model adapter requires a server-only provider key, explicit cost owner, cancellation, rate limits and user-visible failure states. Never silently upgrade the demo to paid inference.",
+      "sections": [
+        "Editable brief builder",
+        "Three-step creative workflow",
+        "Privacy, export and product boundaries"
+      ],
+      "inputs": [
+        "Tool name and precise input/output job",
+        "One realistic example and known limitations",
+        "Provider, cost ownership and retention policy if applicable"
+      ]
+    },
+    {
+      "id": "relay",
+      "name": "Relay",
+      "category": "tools",
+      "kind": "Agent workflow tool",
+      "layout": "tool",
+      "theme": "midnight",
+      "eyebrow": "Give your workflow a visible shape",
+      "headline": "An idea in.\nA plan you can inspect.",
+      "description": "Turn a task into a small sequence with a clear owner, a check and an outcome.",
+      "detail": "An agent-tool page with an inspectable local plan builder, execution boundaries and Markdown export.",
+      "action": "Build a sample plan",
+      "proof": "Local planning demo. No agents or tools are executed.",
+      "items": ["Prepare", "Create", "Verify"],
+      "brief": "Build an agent-tool landing page with a task-to-plan walkthrough, explicit tool permissions, human approval boundaries, cancellation and export. Use midnight blue, ivory and mint with technical typography. The demo creates a local deterministic plan; do not imply it executed agents, sent messages or verified results. Connect real tools only for a specific authorized workflow; no background daemons by default.",
+      "sections": [
+        "Editable plan and trace preview",
+        "Step ownership and verification",
+        "Tool permissions and local export"
+      ],
+      "inputs": [
+        "Exact workflow and audience",
+        "Available tools and permitted side effects",
+        "Success criteria, failure paths and approval policy"
+      ]
+    },
+    {
+      "id": "session",
+      "name": "Session",
+      "category": "music",
+      "kind": "Release listening room",
+      "layout": "session",
+      "theme": "ember",
+      "eyebrow": "A release, with room to listen",
+      "headline": "Let the record\ntell the story.",
+      "description": "A focused home for a new release: the listening sequence, the credits and the notes that belong with it.",
+      "detail": "A release-first listening room with a three-take console, synchronized audio controls and liner notes.",
+      "action": "Enter the listening room",
+      "proof": "Three original synthesized sketches. No commercial release is offered.",
+      "items": ["Opening light", "Between rooms", "Last train home"],
+      "brief": "Build a release listening room with a wide three-take console and an editorial liner-notes section. Lead with the record title and a user-initiated listen action. Use warm charcoal, amber and a quiet serif accent. On mobile keep track names, playback state and credits visible without hover. No autoplay, fake streaming counts or unverified music license. Preserve the three synthesized demos until owned release files arrive.",
+      "sections": [
+        "Listening sequence and playback",
+        "Liner notes and production credits",
+        "Verified release destinations"
+      ],
+      "inputs": [
+        "Release title, artist and a concise record statement",
+        "Owned masters, cover artwork and complete credits",
+        "Verified listening URLs and explicit download permissions"
+      ]
+    },
+    {
+      "id": "margin",
+      "name": "Margin",
+      "category": "labs",
+      "kind": "Research publication",
+      "layout": "publication",
+      "theme": "sage",
+      "eyebrow": "A research note, opened up",
+      "headline": "A question worth\nleaving open.",
+      "description": "Give the question, the method and the limits equal space. Let the reader see how you reached the work.",
+      "detail": "A publication-led lab page with a readable paper specimen, expandable methods and an exportable research outline.",
+      "action": "Read the working note",
+      "proof": "Fictional research specimen. No scientific results are claimed.",
+      "items": ["Question", "Method", "Limitations"],
+      "brief": "Build a research publication landing page around an actual readable paper excerpt, not a decorative diagram. Use an ivory page, green ink, editorial serif headline, marginal annotations and ruled metadata. Keep abstract, methods, source artifacts and limitations accessible. The sample is not a real paper or citation: replace it with author-approved content and verified publication links. Provide an accessible research-outline export without inventing authors, identifiers, empirical results or acceptance status.",
+      "sections": [
+        "Paper excerpt and research question",
+        "Method, artifacts and replication notes",
+        "Limitations and open review"
+      ],
+      "inputs": [
+        "Paper title, authors and real publication status",
+        "Verified abstract, protocol and source artifacts",
+        "Known limitations and verified paper or code links"
+      ]
+    },
+    {
+      "id": "patch",
+      "name": "Patch",
+      "category": "tools",
+      "kind": "Developer AI tool",
+      "layout": "developer",
+      "theme": "midnight",
+      "eyebrow": "Make the contract clear",
+      "headline": "An interface you\ncan reason about.",
+      "description": "Put a small, inspectable request beside the promise. Show developers what goes in, what comes out and where the boundaries are.",
+      "detail": "A developer-tool landing page with a working JSON formatter, useful error states and copyable output.",
+      "action": "Inspect a request",
+      "proof": "Local JSON syntax check. No API request or model call is made.",
+      "items": ["Request", "Validate", "Export"],
+      "brief": "Build a developer AI-tool landing page with a real editable request workbench. Use restrained navy, mint, monospaced code and a clear split between product copy and input/output. The local demo validates JSON syntax only; label it precisely and do not show a fake HTTP success or generated model response. A real endpoint requires server validation, provider-key isolation, cost ownership, error states and cancellation. Keep code scrollable, preserve invalid user input and make parse feedback accessible.",
+      "sections": [
+        "Editable request and syntax validation",
+        "Documented input, output and errors",
+        "Integration, costs and data handling"
+      ],
+      "inputs": [
+        "Real developer job and representative request schema",
+        "Verified response examples and error contract",
+        "Actual provider, costs, retention and documentation URLs"
+      ]
+    }
+  ]
+}

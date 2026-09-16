@@ -47,8 +47,16 @@ const navLinks: NavLink[] = [
       {
         title: "Ecosystem",
         items: [
-          { href: "/integrations", label: "Integrations", desc: "Connect your stack" },
-          { href: "/distribute", label: "Distribute", desc: "Publish everywhere" },
+          {
+            href: "/integrations",
+            label: "Integrations",
+            desc: "Connect your stack",
+          },
+          {
+            href: "/distribute",
+            label: "Distribute",
+            desc: "Publish everywhere",
+          },
         ],
       },
     ],
@@ -56,14 +64,33 @@ const navLinks: NavLink[] = [
   {
     href: "/gallery",
     label: "Explore",
-    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/showcase", "/models", "/story"],
+    also: [
+      "/discover",
+      "/library",
+      "/lore",
+      "/living-lore",
+      "/luminors",
+      "/constellation",
+      "/showcase",
+      "/models",
+      "/story",
+    ],
     mega: [
       {
         title: "Discover",
         items: [
           { href: "/gallery", label: "Gallery", desc: "Community creations" },
-          { href: "/discover/pages", label: "Pages", desc: "Published from conversations" },
+          {
+            href: "/discover/pages",
+            label: "Pages",
+            desc: "Published from conversations",
+          },
           { href: "/worlds", label: "Worlds", desc: "Browse the multiverse" },
+          {
+            href: "/constellation",
+            label: "Constellation",
+            desc: "Agent blueprints and visual campaign",
+          },
           { href: "/luminors", label: "Luminors", desc: "Meet the AI minds" },
           { href: "/models", label: "Model Arena", desc: "AI benchmarks" },
         ],
@@ -71,11 +98,27 @@ const navLinks: NavLink[] = [
       {
         title: "Lore",
         items: [
-          { href: "/story", label: "The First Light", desc: "Origins · Lumina & Nero" },
+          {
+            href: "/story",
+            label: "The First Light",
+            desc: "Origins · Lumina & Nero",
+          },
           { href: "/library", label: "Library", desc: "Wisdom and philosophy" },
-          { href: "/lore/guardians", label: "Guardians", desc: "Guardian archetypes" },
-          { href: "/living-lore", label: "Chronicles", desc: "Interactive stories" },
-          { href: "/glossary", label: "Glossary", desc: "Arcanean terminology" },
+          {
+            href: "/lore/guardians",
+            label: "Guardians",
+            desc: "Guardian archetypes",
+          },
+          {
+            href: "/living-lore",
+            label: "Chronicles",
+            desc: "Interactive stories",
+          },
+          {
+            href: "/glossary",
+            label: "Glossary",
+            desc: "Arcanean terminology",
+          },
         ],
       },
     ],
@@ -104,7 +147,11 @@ const navLinks: NavLink[] = [
         title: "Academy",
         items: [
           { href: "/academy", label: "Academy", desc: "Creative progression" },
-          { href: "/academy/courses", label: "Courses", desc: "Structured paths" },
+          {
+            href: "/academy/courses",
+            label: "Courses",
+            desc: "Structured paths",
+          },
           { href: "/quiz", label: "Origin Quiz", desc: "Discover your class" },
         ],
       },
@@ -116,19 +163,31 @@ const navLinks: NavLink[] = [
 
 // ─── Mega Dropdown Component ─────────────────────────────────────────────────
 
-function MegaDropdown({ sections, onClose }: { sections: NavSection[]; onClose: () => void }) {
+function MegaDropdown({
+  sections,
+  onClose,
+}: {
+  sections: NavSection[];
+  onClose: () => void;
+}) {
   return (
     <m.div
-      initial={{ opacity: 0, y: 12, scale: 0.97, filter: 'blur(8px)' }}
-      animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-      exit={{ opacity: 0, y: 6, scale: 0.98, filter: 'blur(4px)' }}
+      initial={{ opacity: 0, y: 12, scale: 0.97, filter: "blur(8px)" }}
+      animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      exit={{ opacity: 0, y: 6, scale: 0.98, filter: "blur(4px)" }}
       transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
       className={`absolute top-full left-1/2 -translate-x-1/2 mt-3 w-auto ${sections.length >= 3 ? "min-w-[660px]" : "min-w-[480px]"}`}
     >
       <div className="rounded-2xl bg-[var(--arc-cosmic-void)]/80 backdrop-blur-2xl backdrop-saturate-150 border border-white/[0.08] shadow-[0_32px_80px_-12px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.03)_inset] overflow-hidden">
-        <div className={`grid gap-0 divide-x divide-white/[0.06] p-1 ${
-          sections.length === 1 ? "grid-cols-1" : sections.length === 2 ? "grid-cols-2" : "grid-cols-3"
-        }`}>
+        <div
+          className={`grid gap-0 divide-x divide-white/[0.06] p-1 ${
+            sections.length === 1
+              ? "grid-cols-1"
+              : sections.length === 2
+                ? "grid-cols-2"
+                : "grid-cols-3"
+          }`}
+        >
           {sections.map((section) => (
             <div key={section.title} className="p-4">
               <h3 className="text-[10px] uppercase tracking-[0.2em] text-white/30 font-semibold mb-3 px-2">
@@ -140,7 +199,9 @@ function MegaDropdown({ sections, onClose }: { sections: NavSection[]; onClose: 
                     key={item.href}
                     href={item.href}
                     onClick={onClose}
-                    {...(item.label.includes("↗") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    {...(item.label.includes("↗")
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
                     className="relative flex flex-col gap-0.5 px-3 py-2.5 rounded-xl hover:bg-white/[0.05] transition-all duration-200 group"
                   >
                     <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 rounded-r-full bg-[var(--arc-brand-atlantean-teal)] group-hover:h-6 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]" />
@@ -180,7 +241,10 @@ export function Navbar() {
   }, []);
 
   // Close mega on route change
-  useEffect(() => { setOpenMega(null); setMobileMenuOpen(false); }, [pathname]);
+  useEffect(() => {
+    setOpenMega(null);
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   // Lock body scroll while the mobile menu is open so the page behind doesn't
   // scroll under the sheet (a common "feels broken" report on mobile). Also
@@ -191,7 +255,9 @@ export function Navbar() {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const mql = window.matchMedia("(min-width: 768px)");
-    const onChange = (e: MediaQueryListEvent) => { if (e.matches) setMobileMenuOpen(false); };
+    const onChange = (e: MediaQueryListEvent) => {
+      if (e.matches) setMobileMenuOpen(false);
+    };
     mql.addEventListener("change", onChange);
     return () => {
       document.body.style.overflow = prev;
@@ -202,7 +268,9 @@ export function Navbar() {
   // Close the mobile menu on Escape for keyboard users.
   useEffect(() => {
     if (!mobileMenuOpen) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMobileMenuOpen(false); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [mobileMenuOpen]);
@@ -241,7 +309,10 @@ export function Navbar() {
                 const isActive =
                   pathname === link.href ||
                   pathname?.startsWith(link.href + "/") ||
-                  (link.also?.some(p => pathname === p || pathname?.startsWith(p + "/")) ?? false);
+                  (link.also?.some(
+                    (p) => pathname === p || pathname?.startsWith(p + "/"),
+                  ) ??
+                    false);
                 const hasMega = !!link.mega;
                 const isOpen = openMega === link.label;
 
@@ -266,22 +337,40 @@ export function Navbar() {
                         {link.label}
                       </span>
                       {hasMega && (
-                        <svg width="10" height="10" viewBox="0 0 10 10" className={`opacity-40 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}>
-                          <path d="M2 4L5 7L8 4" stroke="currentColor" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 10 10"
+                          className={`opacity-40 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                        >
+                          <path
+                            d="M2 4L5 7L8 4"
+                            stroke="currentColor"
+                            strokeWidth="1.2"
+                            fill="none"
+                            strokeLinecap="round"
+                          />
                         </svg>
                       )}
                       {isActive && (
                         <m.div
                           layoutId="nav-indicator"
                           className="absolute bottom-0 left-3 right-3 h-[2px] bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] rounded-full"
-                          transition={{ type: "spring", stiffness: 340, damping: 28 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 340,
+                            damping: 28,
+                          }}
                         />
                       )}
                     </Link>
 
                     <AnimatePresence>
                       {hasMega && isOpen && (
-                        <MegaDropdown sections={link.mega!} onClose={() => setOpenMega(null)} />
+                        <MegaDropdown
+                          sections={link.mega!}
+                          onClose={() => setOpenMega(null)}
+                        />
                       )}
                     </AnimatePresence>
                   </div>
@@ -299,16 +388,36 @@ export function Navbar() {
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2.5 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.06] border border-white/[0.10] transition-colors"
-              aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-label={
+                mobileMenuOpen
+                  ? "Close navigation menu"
+                  : "Open navigation menu"
+              }
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-nav-menu"
             >
               {mobileMenuOpen ? (
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                >
                   <path d="M4 4L14 14M14 4L4 14" />
                 </svg>
               ) : (
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                >
                   <path d="M3 5h12M3 9h12M3 13h8" />
                 </svg>
               )}
@@ -351,7 +460,10 @@ export function Navbar() {
                   const isActive =
                     pathname === link.href ||
                     pathname?.startsWith(link.href + "/") ||
-                    (link.also?.some(p => pathname === p || pathname?.startsWith(p + "/")) ?? false);
+                    (link.also?.some(
+                      (p) => pathname === p || pathname?.startsWith(p + "/"),
+                    ) ??
+                      false);
                   const hasMega = !!link.mega;
                   const isExpanded = mobileExpanded === link.label;
 
@@ -378,13 +490,26 @@ export function Navbar() {
                         {hasMega && (
                           <button
                             type="button"
-                            onClick={() => setMobileExpanded(isExpanded ? null : link.label)}
+                            onClick={() =>
+                              setMobileExpanded(isExpanded ? null : link.label)
+                            }
                             aria-expanded={isExpanded}
                             aria-label={`${isExpanded ? "Collapse" : "Expand"} ${link.label} submenu`}
                             className="p-3 rounded-xl text-white/40 active:bg-white/[0.06] min-w-[48px] min-h-[48px] flex items-center justify-center"
                           >
-                            <svg width="12" height="12" viewBox="0 0 10 10" className={`transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}>
-                              <path d="M2 4L5 7L8 4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+                            <svg
+                              width="12"
+                              height="12"
+                              viewBox="0 0 10 10"
+                              className={`transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
+                            >
+                              <path
+                                d="M2 4L5 7L8 4"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                fill="none"
+                                strokeLinecap="round"
+                              />
                             </svg>
                           </button>
                         )}
@@ -396,7 +521,10 @@ export function Navbar() {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{
+                              duration: 0.25,
+                              ease: [0.22, 1, 0.36, 1],
+                            }}
                             className="overflow-hidden"
                           >
                             <div className="pl-3 pb-2 space-y-0.5">
@@ -414,7 +542,9 @@ export function Navbar() {
                                     >
                                       <span>{item.label}</span>
                                       {item.desc && (
-                                        <span className="text-[11px] text-white/20 ml-3 hidden xs:inline">{item.desc}</span>
+                                        <span className="text-[11px] text-white/20 ml-3 hidden xs:inline">
+                                          {item.desc}
+                                        </span>
                                       )}
                                     </Link>
                                   ))}

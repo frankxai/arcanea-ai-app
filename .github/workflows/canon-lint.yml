@@ -33,7 +33,7 @@ jobs:
         # Pinned to a commit SHA, not a tag: this action supplies the file list the
         # canon verdict is computed over, and a mutable tag lets that code change
         # under the guard. Dependabot's github-actions ecosystem keeps the pin fresh.
-        uses: tj-actions/changed-files@24d32ffd492484c1d75e0c0b894501ddb9d30d62 # v47
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
         with:
           files: |
             book/**

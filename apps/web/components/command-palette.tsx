@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import {
   Command,
   CommandInput,
@@ -12,45 +12,51 @@ import {
   CommandItem,
   CommandSeparator,
   CommandShortcut,
-} from '@/components/ui/command';
+} from "@/components/ui/command";
 
 const NAV_ITEMS = [
-  { name: 'Chat', href: '/chat', shortcut: 'C', group: 'Create' },
-  { name: 'Imagine', href: '/imagine', shortcut: 'I', group: 'Create' },
-  { name: 'Voice', href: '/voice', group: 'Create' },
-  { name: 'Studio', href: '/studio', group: 'Create' },
-  { name: 'Worlds', href: '/worlds', shortcut: 'W', group: 'Create' },
-  { name: 'Game Studio', href: '/games', group: 'Create' },
-  { name: 'Music Studio', href: '/music-studio', group: 'Create' },
-  { name: 'Cinema Studio', href: '/cinema-studio', group: 'Create' },
-  { name: 'Canvas', href: '/canvas', group: 'Create' },
-  { name: 'Forge', href: '/forge', group: 'Create' },
-  { name: 'Gallery', href: '/gallery', group: 'Explore' },
-  { name: 'Library', href: '/library', shortcut: 'L', group: 'Explore' },
-  { name: 'Luminors', href: '/luminors', group: 'Explore' },
-  { name: 'Lore', href: '/lore', group: 'Explore' },
-  { name: 'Factions', href: '/factions', group: 'Explore' },
-  { name: 'Starlight Vaults', href: '/arcanea-vault', shortcut: 'V', group: 'Explore' },
-  { name: 'Showcase', href: '/showcase', group: 'Explore' },
-  { name: 'Academy', href: '/academy', group: 'Learn' },
-  { name: 'Model Arena', href: '/models', group: 'Learn' },
-  { name: 'Developers', href: '/developers', group: 'Learn' },
-  { name: 'Ecosystem', href: '/ecosystem', group: 'Open Core' },
-  { name: 'MCP & CLI', href: '/mcp', group: 'Open Core' },
-  { name: 'Blueprints', href: '/templates', shortcut: 'B', group: 'Open Core' },
-  { name: 'Pricing', href: '/pricing', group: 'Open Core' },
-  { name: 'Settings', href: '/settings', group: 'Account' },
-  { name: 'Profile', href: '/profile', group: 'Account' },
+  { name: "Chat", href: "/chat", shortcut: "C", group: "Create" },
+  { name: "Imagine", href: "/imagine", shortcut: "I", group: "Create" },
+  { name: "Voice", href: "/voice", group: "Create" },
+  { name: "Studio", href: "/studio", group: "Create" },
+  { name: "Worlds", href: "/worlds", shortcut: "W", group: "Create" },
+  { name: "Game Studio", href: "/games", group: "Create" },
+  { name: "Music Studio", href: "/music-studio", group: "Create" },
+  { name: "Cinema Studio", href: "/cinema-studio", group: "Create" },
+  { name: "Canvas", href: "/canvas", group: "Create" },
+  { name: "Forge", href: "/forge", group: "Create" },
+  { name: "Gallery", href: "/gallery", group: "Explore" },
+  { name: "Living Constellation", href: "/constellation", group: "Explore" },
+  { name: "Library", href: "/library", shortcut: "L", group: "Explore" },
+  { name: "Luminors", href: "/luminors", group: "Explore" },
+  { name: "Lore", href: "/lore", group: "Explore" },
+  { name: "Factions", href: "/factions", group: "Explore" },
+  {
+    name: "Starlight Vaults",
+    href: "/arcanea-vault",
+    shortcut: "V",
+    group: "Explore",
+  },
+  { name: "Showcase", href: "/showcase", group: "Explore" },
+  { name: "Academy", href: "/academy", group: "Learn" },
+  { name: "Model Arena", href: "/models", group: "Learn" },
+  { name: "Developers", href: "/developers", group: "Learn" },
+  { name: "Ecosystem", href: "/ecosystem", group: "Open Core" },
+  { name: "MCP & CLI", href: "/mcp", group: "Open Core" },
+  { name: "Blueprints", href: "/templates", shortcut: "B", group: "Open Core" },
+  { name: "Pricing", href: "/pricing", group: "Open Core" },
+  { name: "Settings", href: "/settings", group: "Account" },
+  { name: "Profile", href: "/profile", group: "Account" },
 ];
 
 const ACTION_ITEMS = [
-  { name: 'New Chat', href: '/chat', group: 'Actions' },
-  { name: 'Universal Create', href: '/create', group: 'Actions' },
-  { name: 'Create World', href: '/worlds/create', group: 'Actions' },
-  { name: 'Plan Game', href: '/games', group: 'Actions' },
-  { name: 'Plan Music Project', href: '/music-studio', group: 'Actions' },
-  { name: 'Forge Luminor', href: '/forge/luminor', group: 'Actions' },
-  { name: 'Take Origin Quiz', href: '/quiz', group: 'Actions' },
+  { name: "New Chat", href: "/chat", group: "Actions" },
+  { name: "Universal Create", href: "/create", group: "Actions" },
+  { name: "Create World", href: "/worlds/create", group: "Actions" },
+  { name: "Plan Game", href: "/games", group: "Actions" },
+  { name: "Plan Music Project", href: "/music-studio", group: "Actions" },
+  { name: "Forge Luminor", href: "/forge/luminor", group: "Actions" },
+  { name: "Take Origin Quiz", href: "/quiz", group: "Actions" },
 ];
 
 export function CommandPalette() {
@@ -59,16 +65,16 @@ export function CommandPalette() {
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         setOpen((prev) => !prev);
       }
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setOpen(false);
       }
     }
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const navigate = useCallback(
@@ -105,7 +111,9 @@ export function CommandPalette() {
                     key={item.href + item.name}
                     onSelect={() => navigate(item.href)}
                   >
-                    <span className="text-[var(--arc-brand-atlantean-teal)]">+</span>
+                    <span className="text-[var(--arc-brand-atlantean-teal)]">
+                      +
+                    </span>
                     {item.name}
                   </CommandItem>
                 ))}
@@ -133,7 +141,9 @@ export function CommandPalette() {
             <div className="border-t border-white/[0.06] px-3 py-2 flex items-center justify-between text-[10px] text-[var(--arc-text-muted)] font-mono">
               <span>Navigate with ↑↓ · Enter to go · Esc to close</span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 rounded bg-white/[0.06] text-[9px]">⌘K</kbd>
+                <kbd className="px-1.5 py-0.5 rounded bg-white/[0.06] text-[9px]">
+                  ⌘K
+                </kbd>
               </span>
             </div>
           </Command>

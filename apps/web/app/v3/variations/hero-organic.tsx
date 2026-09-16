@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { PhCompass, PhEye, PhFlame, PhArrowRight } from '@/lib/phosphor-icons';
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { PhCompass, PhEye, PhFlame, PhArrowRight } from "@/lib/phosphor-icons";
 
 /* ─────────────────────────────────────────────
    Variation 6 — "Organic Natural"
@@ -12,8 +12,8 @@ import { PhCompass, PhEye, PhFlame, PhArrowRight } from '@/lib/phosphor-icons';
    copy, artisanal feel. Serif display, slow entrances.
    ───────────────────────────────────────────── */
 
-const GOLD = 'var(--arc-fire)';
-const WARM_BG = 'var(--arc-cosmic-void)';
+const GOLD = "var(--arc-fire)";
+const WARM_BG = "var(--arc-cosmic-void)";
 
 interface PillarProps {
   icon: React.ReactNode;
@@ -36,7 +36,7 @@ const fadeUp = {
 
 function Pillar({ icon, label, index }: PillarProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-40px' });
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
 
   return (
     <motion.div
@@ -61,7 +61,7 @@ function Pillar({ icon, label, index }: PillarProps) {
       </div>
       <span
         className="text-xs font-normal tracking-[0.15em] uppercase"
-        style={{ color: 'rgba(255, 255, 255, 0.35)' }}
+        style={{ color: "rgba(255, 255, 255, 0.35)" }}
       >
         {label}
       </span>
@@ -71,7 +71,7 @@ function Pillar({ icon, label, index }: PillarProps) {
 
 export function HeroOrganic() {
   const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: '-40px' });
+  const isInView = useInView(sectionRef, { once: true, margin: "-40px" });
 
   return (
     <section
@@ -85,7 +85,7 @@ export function HeroOrganic() {
         aria-hidden="true"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-          backgroundSize: '128px 128px',
+          backgroundSize: "128px 128px",
         }}
       />
 
@@ -94,51 +94,51 @@ export function HeroOrganic() {
         <motion.div
           className="absolute"
           style={{
-            width: '500px',
-            height: '500px',
-            left: '5%',
-            top: '10%',
+            width: "500px",
+            height: "500px",
+            left: "5%",
+            top: "10%",
             background: `${GOLD}05`,
-            borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
-            filter: 'blur(60px)',
+            borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%",
+            filter: "blur(60px)",
           }}
           animate={{
             borderRadius: [
-              '30% 70% 70% 30% / 30% 30% 70% 70%',
-              '50% 50% 30% 70% / 60% 40% 60% 40%',
-              '70% 30% 50% 50% / 40% 60% 40% 60%',
-              '30% 70% 70% 30% / 30% 30% 70% 70%',
+              "30% 70% 70% 30% / 30% 30% 70% 70%",
+              "50% 50% 30% 70% / 60% 40% 60% 40%",
+              "70% 30% 50% 50% / 40% 60% 40% 60%",
+              "30% 70% 70% 30% / 30% 30% 70% 70%",
             ],
           }}
           transition={{
             duration: 25,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: "easeInOut",
           }}
         />
         <motion.div
           className="absolute"
           style={{
-            width: '400px',
-            height: '400px',
-            right: '10%',
-            bottom: '15%',
-            background: 'rgba(180, 140, 100, 0.03)',
-            borderRadius: '60% 40% 30% 70% / 50% 60% 40% 50%',
-            filter: 'blur(50px)',
+            width: "400px",
+            height: "400px",
+            right: "10%",
+            bottom: "15%",
+            background: "rgba(180, 140, 100, 0.03)",
+            borderRadius: "60% 40% 30% 70% / 50% 60% 40% 50%",
+            filter: "blur(50px)",
           }}
           animate={{
             borderRadius: [
-              '60% 40% 30% 70% / 50% 60% 40% 50%',
-              '40% 60% 60% 40% / 70% 30% 70% 30%',
-              '50% 50% 40% 60% / 30% 70% 30% 70%',
-              '60% 40% 30% 70% / 50% 60% 40% 50%',
+              "60% 40% 30% 70% / 50% 60% 40% 50%",
+              "40% 60% 60% 40% / 70% 30% 70% 30%",
+              "50% 50% 40% 60% / 30% 70% 30% 70%",
+              "60% 40% 30% 70% / 50% 60% 40% 50%",
             ],
           }}
           transition={{
             duration: 30,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: "easeInOut",
           }}
         />
       </div>
@@ -146,14 +146,14 @@ export function HeroOrganic() {
       {/* ── Scattered dots/stars (CSS pseudo via small divs) ── */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         {[
-          { left: '12%', top: '18%', size: 2, opacity: 0.12 },
-          { left: '85%', top: '22%', size: 1.5, opacity: 0.10 },
-          { left: '72%', top: '72%', size: 2, opacity: 0.08 },
-          { left: '25%', top: '78%', size: 1.5, opacity: 0.14 },
-          { left: '55%', top: '12%', size: 1, opacity: 0.10 },
-          { left: '40%', top: '88%', size: 1.5, opacity: 0.06 },
-          { left: '90%', top: '50%', size: 2, opacity: 0.09 },
-          { left: '8%', top: '55%', size: 1, opacity: 0.11 },
+          { left: "12%", top: "18%", size: 2, opacity: 0.12 },
+          { left: "85%", top: "22%", size: 1.5, opacity: 0.1 },
+          { left: "72%", top: "72%", size: 2, opacity: 0.08 },
+          { left: "25%", top: "78%", size: 1.5, opacity: 0.14 },
+          { left: "55%", top: "12%", size: 1, opacity: 0.1 },
+          { left: "40%", top: "88%", size: 1.5, opacity: 0.06 },
+          { left: "90%", top: "50%", size: 2, opacity: 0.09 },
+          { left: "8%", top: "55%", size: 1, opacity: 0.11 },
         ].map((dot, i) => (
           <motion.div
             key={i}
@@ -172,7 +172,7 @@ export function HeroOrganic() {
             transition={{
               duration: 4 + i * 0.7,
               repeat: Infinity,
-              ease: 'easeInOut',
+              ease: "easeInOut",
               delay: i * 0.5,
             }}
           />
@@ -185,14 +185,14 @@ export function HeroOrganic() {
         <motion.h1
           className="font-display leading-[1.15] md:leading-[1.12]"
           style={{
-            fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+            fontSize: "clamp(2.5rem, 6vw, 5rem)",
             fontWeight: 300,
-            letterSpacing: '-0.02em',
-            color: 'rgba(255, 255, 255, 0.93)',
+            letterSpacing: "-0.02em",
+            color: "rgba(255, 255, 255, 0.93)",
           }}
           custom={0}
           initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
+          animate={isInView ? "visible" : "hidden"}
           variants={fadeUp}
         >
           Where creativity
@@ -204,12 +204,12 @@ export function HeroOrganic() {
         <motion.p
           className="mx-auto mt-6 max-w-lg text-base md:mt-8 md:text-lg"
           style={{
-            color: 'rgba(255, 255, 255, 0.45)',
+            color: "rgba(255, 255, 255, 0.45)",
             lineHeight: 1.8,
           }}
           custom={1}
           initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
+          animate={isInView ? "visible" : "hidden"}
           variants={fadeUp}
         >
           An AI creation platform with 10 specialized minds
@@ -222,7 +222,7 @@ export function HeroOrganic() {
           className="mt-10 md:mt-12"
           custom={2}
           initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
+          animate={isInView ? "visible" : "hidden"}
           variants={fadeUp}
         >
           <a
@@ -242,10 +242,10 @@ export function HeroOrganic() {
         {/* Trust line */}
         <motion.p
           className="mt-4 text-xs"
-          style={{ color: 'rgba(255, 255, 255, 0.20)', lineHeight: 1.8 }}
+          style={{ color: "rgba(255, 255, 255, 0.20)", lineHeight: 1.8 }}
           custom={3}
           initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
+          animate={isInView ? "visible" : "hidden"}
           variants={fadeUp}
         >
           Free to start &middot; No credit card required
@@ -254,7 +254,9 @@ export function HeroOrganic() {
         {/* ── Three pillars ── */}
         <div className="mt-24 flex items-start justify-center gap-12 md:mt-32 md:gap-20">
           <Pillar
-            icon={<PhCompass size={22} weight="light" style={{ color: GOLD }} />}
+            icon={
+              <PhCompass size={22} weight="light" style={{ color: GOLD }} />
+            }
             label="Direction"
             index={0}
           />

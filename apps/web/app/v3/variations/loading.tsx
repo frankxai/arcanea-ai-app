@@ -5,7 +5,10 @@ export default function Loading() {
       <div className="flex flex-col items-center gap-4">
         <div
           className="h-8 w-8 animate-spin rounded-full border-2 border-t-transparent"
-          style={{ borderColor: "var(--arc-brand-atlantean-teal)", borderTopColor: "transparent" }}
+          style={{
+            borderColor: "var(--arc-brand-atlantean-teal)",
+            borderTopColor: "transparent",
+          }}
         />
         <p className="text-sm text-gray-500">Loading...</p>
       </div>
