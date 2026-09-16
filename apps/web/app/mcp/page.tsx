@@ -3,7 +3,7 @@ import { PlatformStudioShell, STUDIO_BY_ID } from "@/components/studio";
 import { McpCommandCenter } from "./mcp-command-center";
 
 export const metadata: Metadata = {
-  title: "MCP & CLI - Arcanea",
+  title: "MCP & CLI",
   description:
     "Connect Arcanea to Claude, Codex, Cursor, local MCP clients, and studio workflows.",
   alternates: { canonical: "/mcp" },
