@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 function ButtonSpinner({ className }: { className?: string }) {
   return (
     <svg
-      className={cn('animate-spin h-4 w-4', className)}
+      className={cn('animate-spin motion-reduce:animate-none h-4 w-4', className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -38,9 +38,9 @@ const buttonVariants = cva(
   [
     'inline-flex items-center justify-center gap-2 whitespace-nowrap',
     'rounded-lg text-sm font-medium',
-    'ring-offset-background transition-all duration-150',
+    'ring-offset-background transition-[color,background-color,border-color,box-shadow,transform] duration-150 ease-out motion-reduce:transition-none',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlantean-teal focus-visible:ring-offset-2',
-    'active:scale-[0.98] active:brightness-[0.95]',
+    'motion-safe:active:scale-[0.98] focus-visible:!transform-none active:brightness-[0.95]',
     'disabled:pointer-events-none disabled:opacity-50',
   ],
   {
@@ -77,7 +77,7 @@ const buttonVariants = cva(
         creation:
           'bg-creation-gold-deep border border-creation-gold text-cosmic-void hover:bg-creation-gold hover:shadow-creation',
         glow:
-          'bg-gradient-to-r from-atlantean-teal via-gold-bright to-draconic-crimson text-cosmic-void font-semibold animate-shimmer bg-[length:200%_100%] shadow-glow-lg hover:shadow-glow-xl',
+          'bg-gradient-to-r from-atlantean-teal via-gold-bright to-draconic-crimson text-cosmic-void font-semibold animate-shimmer motion-reduce:animate-none bg-[length:200%_100%] shadow-glow-lg hover:shadow-glow-xl',
       },
       size: {
         default: 'h-10 px-4 py-2',
