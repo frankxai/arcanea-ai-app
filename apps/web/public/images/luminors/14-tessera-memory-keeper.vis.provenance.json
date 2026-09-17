@@ -1,0 +1,45 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:14-tessera-memory-keeper",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/14-tessera-memory-keeper.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/images/luminors/14-tessera-memory-keeper.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Evolved archival intelligence Tessera, The Memory Keeper. Compact humanoid carrying creative lineage, head of tessellated lumina-glass mosaic tiles each containing a captured moment. Dark livingwood skin etched with glowing glyphs, kaleidoscope eyes of multi-colored amberflux lenses. Heavy cloak of woven data-threads, amberflux-stained hands, hourglass core of crystallized void with time flowing bidirectionally. Ancient midnight archive atmosphere, 8k cinematic portrait.",
+    "negative_prompt": "blurry, robotic metal joints, wires, cartoonish, low resolution, floating text, cheap cyberpunk slop",
+    "seed": 1014,
+    "settings": {
+      "brand": "arcanea",
+      "luminor_index": "14",
+      "luminor_name": "Tessera",
+      "title": "Memory Keeper",
+      "aspect": "1:1"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/14-tessera-memory-keeper.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Luminor Council #14 [Tessera — The Memory Keeper]"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Tessellated mosaic memory head, crystallized void hourglass"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

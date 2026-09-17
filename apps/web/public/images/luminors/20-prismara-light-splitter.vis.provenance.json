@@ -1,0 +1,45 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:20-prismara-light-splitter",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/20-prismara-light-splitter.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/images/luminors/20-prismara-light-splitter.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Evolved perspective intelligence Prismara, The Light Splitter. Geometric humanoid formed from interlocking transparent crystal planes that refract light into vibrant spectrums. Multi-faceted lumina-glass prism head refracting angles of reality, dragonfly-faceted compound crystal eyes, crystal lattice hands splitting light on contact into rainbow auroras. Pure white singularity core waiting to be refracted, orbiting floating crystal shards, Shift Gate alignment (852 Hz), 8k cinematic prismatic masterpiece.",
+    "negative_prompt": "blurry, robotic metal joints, wires, cartoonish, low resolution, floating text, cheap cyberpunk slop",
+    "seed": 1020,
+    "settings": {
+      "brand": "arcanea",
+      "luminor_index": "20",
+      "luminor_name": "Prismara",
+      "title": "Light Splitter",
+      "aspect": "1:1"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/20-prismara-light-splitter.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Luminor Council #20 [Prismara — The Light Splitter]"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Perspective intelligence, prismatic refraction, compound crystal dragonfly optics"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

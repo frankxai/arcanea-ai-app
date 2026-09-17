@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:otome-godbeast",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/otome-godbeast.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/v2/otome-godbeast.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Godbeast Otome, giant crystalline gyrfalcon with sapphire-tipped wings and silver plumage, carving supersonic shockwaves that sing at exactly 528 Hz across clear sky.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark, cheap CGI",
+    "seed": 528002,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Voice",
+      "gate_number": 5,
+      "frequency_hz": 528,
+      "element": "Wind",
+      "godbeast": "Otome",
+      "aspect_ratio": "16:9"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/otome-godbeast.webp"
+    ],
+    "created_at": "2026-03-01T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Godbeast [Otome] Gate 5"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Crystalline gyrfalcon, 528 Hz acoustic resonance shockwaves"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

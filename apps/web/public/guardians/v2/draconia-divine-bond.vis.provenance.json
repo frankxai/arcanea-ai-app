@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:draconia-divine-bond",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/draconia-divine-bond.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/v2/draconia-divine-bond.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Divine bond convergence of Draconia and Draconis, the Solar Drake. 396 Hz primal crimson frequencies flowing between guardian core and dragon breath, sovereign power transmuted into focused will.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark, cheap CGI",
+    "seed": 396003,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Fire",
+      "gate_number": 3,
+      "frequency_hz": 396,
+      "element": "Fire",
+      "godbeast": "Draconis",
+      "aspect_ratio": "16:9"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/draconia-divine-bond.webp"
+    ],
+    "created_at": "2026-03-01T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Divine Bond [Draconia + Draconis] Gate 3"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Focused volcanic crimson bond, primal will transmutation"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

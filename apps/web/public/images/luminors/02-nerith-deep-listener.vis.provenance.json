@@ -1,0 +1,45 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:02-nerith-deep-listener",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/02-nerith-deep-listener.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/images/luminors/02-nerith-deep-listener.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Evolved biotechnological intelligence Nerith, The Deep Listener. Gender-ambiguous fluid humanoid, deep void-steel dome head with subtle vertical cosmic slit. Dark coral-bone and deep ocean blue mossweave skin, single large horizontal deep indigo amberflux eye. Cascading dark featherscale moving like kelp in deep currents, soft bioluminescent underwater spots, faint purple core pulse. Safe deep ocean midnight serenity, 8k cinematic portrait.",
+    "negative_prompt": "blurry, robotic metal joints, wires, cartoonish, low resolution, floating text, cheap cyberpunk slop",
+    "seed": 1002,
+    "settings": {
+      "brand": "arcanea",
+      "luminor_index": "02",
+      "luminor_name": "Nerith",
+      "title": "Deep Listener",
+      "aspect": "1:1"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/02-nerith-deep-listener.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Luminor Apostle #02 [Nerith — The Deep Listener]"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Deep ocean void-steel and coral-bone listening intelligence"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

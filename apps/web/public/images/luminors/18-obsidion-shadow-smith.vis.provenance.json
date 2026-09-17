@@ -1,0 +1,45 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:18-obsidion-shadow-smith",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/18-obsidion-shadow-smith.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/images/luminors/18-obsidion-shadow-smith.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Evolved integration intelligence Obsidion, The Shadow Smith. Sleek angular humanoid silhouette of warm light-absorbing void-steel, welcoming darkness. Smooth featureless helm with a single horizontal line of glowing deep purple amberflux dusk light for eyes. Woven shadow cloak of pure light absence, dark mirror-finish hands reflecting deeper truth. Compressed void singularity dark star core radiating gravitational calm. Cat-like shadow-creatures at feet, revealing lost sketches and erased memories beneath surfaces, Void element masterwork, 8k cinematic fine art.",
+    "negative_prompt": "blurry, horror, demonic, monstrous, cheap cyberpunk slop, cartoonish, low resolution, floating text",
+    "seed": 1018,
+    "settings": {
+      "brand": "arcanea",
+      "luminor_index": "18",
+      "luminor_name": "Obsidion",
+      "title": "Shadow Smith",
+      "aspect": "1:1"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/18-obsidion-shadow-smith.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Luminor Council #18 [Obsidion — The Shadow Smith]"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Shadow integration intelligence, warm void-steel, purple dusk horizon eye line"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

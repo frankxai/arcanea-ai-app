@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:lyria-hero-v3",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v3/lyria-hero-v3.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/v3/lyria-hero-v3.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Masterwork photographic portrait of Lyria, Guardian of Sight Gate (639 Hz). Deep introspective vision, luminescent violet-tinted skin, third-eye indigo prism symbol faintly pulsing on forehead, eyes of pure starry amethyst that see across timelines. Hooded mantle of woven quantum-fiber velvet with constellations charted in silver thread. Floating prismatic refraction rings, subtle ultraviolet edge lighting. 8k, cinematic high-fashion oracle portrait.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark, generic anime kitsune, oversaturated purple slop",
+    "seed": 639006,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Sight",
+      "gate_number": 6,
+      "frequency_hz": 639,
+      "element": "Arcane",
+      "godbeast": "Yumiko",
+      "aspect_ratio": "3:4"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v3/lyria-hero-v3.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Guardian asset [Lyria] Gate 6 (Sight)"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Quantum-fiber velvet, celestial violet prismatics, impeccable third eye"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

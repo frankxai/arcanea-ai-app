@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:maylinn-divine-bond",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/maylinn-divine-bond.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/v2/maylinn-divine-bond.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Heart Gate alignment between Maylinn and Laeylinn, the Emerald Starlight Pegasus. 417 Hz gentle green vibrational waves bridging human compassion with celestial wild spirit.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark, cheap CGI",
+    "seed": 417003,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Heart",
+      "gate_number": 4,
+      "frequency_hz": 417,
+      "element": "Air",
+      "godbeast": "Laeylinn",
+      "aspect_ratio": "16:9"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/maylinn-divine-bond.webp"
+    ],
+    "created_at": "2026-03-01T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Divine Bond [Maylinn + Laeylinn] Gate 4"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Emerald green compassionate resonance, celestial wild spirit"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

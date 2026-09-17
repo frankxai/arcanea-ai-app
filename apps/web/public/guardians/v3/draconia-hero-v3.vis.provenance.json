@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:draconia-hero-v3",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v3/draconia-hero-v3.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/v3/draconia-hero-v3.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Masterwork photographic portrait of Draconia, Guardian of Fire Gate (396 Hz). Ferocious focus and inner mastery, warm bronze skin with subtle volcanic magma glow under the temple ridge, piercing molten copper eyes. Wearing tailored crimson-ash battle vestments with forged titanium scales and smoldering ember cuffs. Volumetric smoke and controlled embers floating in warm backlighting, dramatic rim light carving sharp jawline. 8k, photorealistic cinematic portrait.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark, cheap fantasy CGI, deformed hands",
+    "seed": 396003,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Fire",
+      "gate_number": 3,
+      "frequency_hz": 396,
+      "element": "Fire",
+      "godbeast": "Draconis",
+      "aspect_ratio": "3:4"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v3/draconia-hero-v3.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Guardian asset [Draconia] Gate 3 (Fire)"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Volcanic discipline, warm bronze and copper chiaroscuro, zero slop"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

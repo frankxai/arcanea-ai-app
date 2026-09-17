@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:alera-divine-bond",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/alera-divine-bond.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/v2/alera-divine-bond.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Divine bond resonance of Alera and Otome, the Resonant Falcon. 528 Hz sacred miracle geometry projecting in concentric spheres from throat gate to soaring bird wings.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark, cheap CGI",
+    "seed": 528003,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Voice",
+      "gate_number": 5,
+      "frequency_hz": 528,
+      "element": "Wind",
+      "godbeast": "Otome",
+      "aspect_ratio": "16:9"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/alera-divine-bond.webp"
+    ],
+    "created_at": "2026-03-01T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Divine Bond [Alera + Otome] Gate 5"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "528 Hz vocal concentric geometry, silver-blue precision"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

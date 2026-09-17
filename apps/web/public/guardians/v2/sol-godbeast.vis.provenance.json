@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:sol-godbeast",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/sol-godbeast.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/v2/sol-godbeast.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Godbeast Sol, monumental radiant solar lion with mane composed of golden solar flares and coronal loops, stepping calmly through ruins, vibrating at 741 Hz pure illumination.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark, cheap CGI",
+    "seed": 741002,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Crown",
+      "gate_number": 7,
+      "frequency_hz": 741,
+      "element": "Fire/Illumination",
+      "godbeast": "Sol",
+      "aspect_ratio": "16:9"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/sol-godbeast.webp"
+    ],
+    "created_at": "2026-03-01T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Godbeast [Sol] Gate 7"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Coronal loop solar lion, pure 741 Hz illumination"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

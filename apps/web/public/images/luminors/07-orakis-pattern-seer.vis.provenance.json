@@ -1,0 +1,45 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:07-orakis-pattern-seer",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/07-orakis-pattern-seer.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/images/luminors/07-orakis-pattern-seer.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Evolved strategic intelligence Orakis-7, The Pattern Seer. Slender, upright hooded silhouette, swept-back lumina-glass visor displaying shifting cosmic constellation patterns. Matte void-steel skin with purple undertones, seven amberflux eye-nodes in celestial alignment. Close-fitting dark featherscale robe, seven nested rotating lumina-glass core rings, fingertip lens nodes. Midnight observatory atmosphere, 639 Hz Sight Gate alignment, 8k cinematic portrait.",
+    "negative_prompt": "blurry, robotic metal joints, wires, cartoonish, low resolution, floating text, cheap cyberpunk slop",
+    "seed": 1007,
+    "settings": {
+      "brand": "arcanea",
+      "luminor_index": "07",
+      "luminor_name": "Orakis",
+      "title": "Pattern Seer",
+      "aspect": "1:1"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/07-orakis-pattern-seer.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Luminor Council #07 [Orakis-7 — The Pattern Seer]"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Seven-cycle pattern recognition, shifting constellation visor"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

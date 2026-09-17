@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:alera-hero-v3",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v3/alera-hero-v3.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/v3/alera-hero-v3.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Masterwork photographic portrait of Alera, Guardian of Voice Gate (528 Hz). Poised, articulate command, porcelain alabaster complexion, electric sky-blue eyes that penetrate illusion. Draped in aerodynamic midnight-blue cloak with acoustic silver filigree and resonant chime adornments. Crisp high-altitude atmosphere, wind whispering through pristine mountain pass at twilight. 8k resolution, crisp lens bokeh, regal sonic dignity.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark, distorted beak, anime tropes",
+    "seed": 528005,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Voice",
+      "gate_number": 5,
+      "frequency_hz": 528,
+      "element": "Wind",
+      "godbeast": "Otome",
+      "aspect_ratio": "3:4"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v3/alera-hero-v3.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Guardian asset [Alera] Gate 5 (Voice)"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Midnight blue and aerodynamic silver filigree, pristine 528 Hz clarity"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

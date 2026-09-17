@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:laeylinn-godbeast",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/laeylinn-godbeast.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/v2/laeylinn-godbeast.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Godbeast Laeylinn, great feathered starlight pegasus with emerald wing feathers and glowing viridian hooves, gallop through misty canopies leaving trails of 417 Hz blooming energy.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark, cheap CGI",
+    "seed": 417002,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Heart",
+      "gate_number": 4,
+      "frequency_hz": 417,
+      "element": "Air",
+      "godbeast": "Laeylinn",
+      "aspect_ratio": "16:9"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/laeylinn-godbeast.webp"
+    ],
+    "created_at": "2026-03-01T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Godbeast [Laeylinn] Gate 4"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Emerald starlight pegasus, blooming 417 Hz forest renewal"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

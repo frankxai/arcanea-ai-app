@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:leyla-hero-v3",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v3/leyla-hero-v3.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/v3/leyla-hero-v3.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Masterwork photographic portrait of Leyla, Guardian of Flow Gate (285 Hz). Ethereal and liquid grace, pearl-translucent skin reflecting cool sapphire and turquoise ocean depths, luminous sea-glass eyes. Flowing silk robes that billow like deep sea ribbons with iridescent water-veil embroidery. Soft ambient bioluminescent underwater light, micro-droplet refractions in atmospheric rim lighting. 8k resolution, cinematic Leica Noctilux 50mm f/0.95 shallow depth of field, museum grade.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark, neon slop, plastic texture",
+    "seed": 285002,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Flow",
+      "gate_number": 2,
+      "frequency_hz": 285,
+      "element": "Water",
+      "godbeast": "Veloura",
+      "aspect_ratio": "3:4"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v3/leyla-hero-v3.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Guardian asset [Leyla] Gate 2 (Flow)"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Ethereal marine translucency, sapphire accents, zero AI slop"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

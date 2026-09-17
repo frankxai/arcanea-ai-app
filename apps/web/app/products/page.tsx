@@ -37,6 +37,22 @@ interface Stat {
 
 const PRODUCTS: Product[] = [
   {
+    name: "Worldbuilding & Lore Vault",
+    tagline: "The Universe OS (€149)",
+    description: "6 Faction Bibles, 12 Character Genomes, 50 Visual Prompts, Magic Physics & Pre-Linked Obsidian Vault Bundle.",
+    icon: (
+      <svg className="h-8 w-8" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <polygon points="16,2 30,10 30,22 16,30 2,22 2,10" />
+        <polygon points="16,6 26,12 26,20 16,26 6,20 6,12" opacity="0.4" />
+        <circle cx="16" cy="16" r="3" fill="currentColor" />
+      </svg>
+    ),
+    features: ["6 Faction Bibles", "12 Character Genomes", "50 Visual Prompts", "Obsidian Bundle"],
+    pricing: "Digital Download — €149 (Lifetime Access)",
+    cta: { label: "Get Lore Vault", href: "/products/lore-vault" },
+    accent: "from-amber-500/20 via-teal-500/20 to-cyan-500/20",
+  },
+  {
     name: "AgentDB Cloud",
     tagline: "Memory that persists",
     description: "Persistent vector memory for any AI agent. Store, search, and recall across sessions with sub-millisecond HNSW indexing.",

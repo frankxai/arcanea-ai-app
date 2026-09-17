@@ -22,6 +22,9 @@ export interface LibraryMatch {
   relevanceScore: number;
 }
 
+let cachedFiles: string[] | null = null;
+const fileContentCache = new Map<string, string>();
+
 /**
  * Scan a single markdown file and return scored excerpts.
  */
@@ -32,7 +35,12 @@ function scoreFile(
 ): { excerpt: string; score: number } | null {
   let raw: string;
   try {
-    raw = readFileSync(filePath, "utf-8");
+    if (fileContentCache.has(filePath)) {
+      raw = fileContentCache.get(filePath)!;
+    } else {
+      raw = readFileSync(filePath, "utf-8");
+      fileContentCache.set(filePath, raw);
+    }
   } catch {
     return null;
   }
@@ -76,7 +84,7 @@ function scoreFile(
  */
 function getTitleFromFile(filePath: string, fallbackName: string): string {
   try {
-    const content = readFileSync(filePath, "utf-8");
+    const content = fileContentCache.get(filePath) ?? readFileSync(filePath, "utf-8");
     const headingMatch = content.match(/^#{1,2}\s+(.+)/m);
     if (headingMatch) return headingMatch[1].trim();
   } catch {
@@ -89,6 +97,8 @@ function getTitleFromFile(filePath: string, fallbackName: string): string {
  * Recursively list all markdown files under a directory.
  */
 function listMarkdownFiles(dir: string): string[] {
+  if (cachedFiles !== null && dir === BOOK_DIR) return cachedFiles;
+
   const files: string[] = [];
   if (!existsSync(dir)) return files;
 
@@ -103,7 +113,7 @@ function listMarkdownFiles(dir: string): string[] {
     const fullPath = join(dir, entry as string);
     // Recurse into subdirectories
     try {
-      const stat = readdirSync(fullPath);
+      readdirSync(fullPath);
       // It's a directory
       files.push(...listMarkdownFiles(fullPath));
     } catch {
@@ -112,6 +122,10 @@ function listMarkdownFiles(dir: string): string[] {
         files.push(fullPath);
       }
     }
+  }
+
+  if (dir === BOOK_DIR) {
+    cachedFiles = files;
   }
 
   return files;

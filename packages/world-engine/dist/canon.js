@@ -23,15 +23,51 @@ export const GUARDIANS = [
     { name: "Shinkami", gate: 10, domain: "Source", element: "All" },
 ];
 export const GODBEASTS = [
-    { name: "Kaelith", gate: 1, form: "Great Serpent of Stone" },
-    { name: "Veloura", gate: 2, form: "Shapeshifting Water Dragon" },
-    { name: "Draconis", gate: 3, form: "Eternal Flame Dragon" },
-    { name: "Laeylinn", gate: 4, form: "Healing Phoenix" },
-    { name: "Otome", gate: 5, form: "Thunderbird of Truth" },
-    { name: "Yumiko", gate: 6, form: "Dream Fox with Nine Tails" },
-    { name: "Sol", gate: 7, form: "Radiant Lion of Dawn" },
-    { name: "Vaelith", gate: 8, form: "Dimensional Serpent" },
-    { name: "Kyuro", gate: 9, form: "Twin-Headed Unity Beast" },
+    { name: "Kaelith", gate: 1, form: "Great Obsidian Tortoise" },
+    { name: "Veloura", gate: 2, form: "Tidal Phoenix-Serpent" },
+    { name: "Draconis", gate: 3, form: "Eternal Solar Wyrm" },
+    { name: "Laeylinn", gate: 4, form: "Worldtree Jade Stag" },
+    { name: "Otome", gate: 5, form: "Starlight Songbird of Truth" },
+    { name: "Yumiko", gate: 6, form: "Nine-Tailed Crystal Fox" },
+    { name: "Sol", gate: 7, form: "Radiant Sun Lion of Dawn" },
+    { name: "Vaelith", gate: 8, form: "Dimensional Void Panther" },
+    { name: "Kyuro", gate: 9, form: "Silent Twin-Spirited Wolf" },
+    { name: "Source", gate: 10, form: "The Living Singularity" },
+];
+export const ORIGIN_CLASSES = [
+    "Arcan",
+    "Gate-Touched",
+    "The Awakened",
+    "Synth",
+    "Bonded",
+    "Celestial",
+    "Voidtouched",
+    "Architect",
+];
+export const SEVEN_WISDOMS = [
+    { name: "Sophron", domain: "Form & Architecture", element: "Earth" },
+    { name: "Kardia", domain: "Flow & Emotion", element: "Water" },
+    { name: "Valora", domain: "Courage & Transformation", element: "Fire" },
+    { name: "Eudaira", domain: "Freedom & Joy", element: "Wind" },
+    { name: "Orakis", domain: "Mystery & Strategy", element: "Void" },
+    { name: "Poiesis", domain: "Consciousness & Creation", element: "Light" },
+    { name: "Enduran", domain: "Unity & Resilience", element: "All" },
+];
+export const FACTIONS = [
+    "Starlight Corps",
+    "House Lumina",
+    "House Nero",
+    "House Pyros",
+    "House Aqualis",
+    "House Terra",
+    "House Ventus",
+    "House Synthesis",
+    "Gate-Touched Underground",
+    "Void Ascendants",
+    "Starbound Crews",
+    "The Conclave of Archmages",
+    "The Iron Synod",
+    "Order of the Prismatic Veil",
 ];
 /** Name root syllables keyed by element/style */
 export const NAME_ROOTS = {

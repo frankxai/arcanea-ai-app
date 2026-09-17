@@ -7,7 +7,7 @@ import * as yaml from 'js-yaml';
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
 
-import { ChapterNav } from '../../components/chapter-nav';
+import { ManuscriptBinder } from '../../components/manuscript-binder';
 import { AuthorAIPanel } from '../../components/author-ai-panel';
 import { BookHeader } from '../../components/book-header';
 import { CharacterTracker } from '../../components/character-tracker';
@@ -95,6 +95,8 @@ export default async function AuthorWorkspacePage({ params }: PageProps) {
               .replace(/\b\w/g, (c) => c.toUpperCase()),
         wordCount,
         order: idx,
+        status: (idx === 0 ? 'polished' : idx === 1 ? 'drafting' : 'outlined') as any,
+        act: idx < 4 ? 'Act I: Foundation' : idx < 12 ? 'Act II: The Crucible' : 'Act III: Ascension',
       };
     }),
   );
@@ -125,18 +127,19 @@ export default async function AuthorWorkspacePage({ params }: PageProps) {
         bookSlug={bookSlug}
       />
 
-      {/* Three-column workspace */}
+      {/* Three-column workspace: Binder + Center Editor + Right Multi-Agent Council & Inspector */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left: Chapter navigation */}
-        <ChapterNav
+        {/* Left: Scrivener-style Manuscript Binder */}
+        <ManuscriptBinder
           bookSlug={bookSlug}
-          chapters={chapters}
+          bookTitle={bookTitle}
           currentSlug={chapterSlug}
+          chapters={chapters}
           totalWords={totalWords}
         />
 
-        {/* Center: Editor */}
-        <main className="flex-1 overflow-y-auto">
+        {/* Center: Block Editor */}
+        <main className="flex-1 overflow-y-auto bg-[var(--arc-cosmic-void)]">
           <div className="max-w-3xl mx-auto px-8 py-12">
             <AuthorEditor
               bookSlug={bookSlug}
@@ -146,10 +149,14 @@ export default async function AuthorWorkspacePage({ params }: PageProps) {
           </div>
         </main>
 
-        {/* Right: AI + Characters */}
+        {/* Right: AI Council + Living Character Tracker */}
         <div className="flex flex-col">
           <CharacterTracker bookSlug={bookSlug} chapterContent={chapterContent} />
-          <AuthorAIPanel bookSlug={bookSlug} currentChapter={chapterSlug} />
+          <AuthorAIPanel
+            bookSlug={bookSlug}
+            currentChapter={chapterSlug}
+            chapterProse={chapterContent}
+          />
         </div>
       </div>
     </div>

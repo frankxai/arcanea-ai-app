@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:aiyami-divine-bond",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/aiyami-divine-bond.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/v2/aiyami-divine-bond.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Crown Gate sovereign ascension: Aiyami with Godbeast Sol, the Lion of the Zenith. 741 Hz solar crown geometry illuminating the ruins of the First Palace, wisdom held without imposition.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark, cheap CGI",
+    "seed": 741003,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Crown",
+      "gate_number": 7,
+      "frequency_hz": 741,
+      "element": "Fire/Illumination",
+      "godbeast": "Sol",
+      "aspect_ratio": "16:9"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/aiyami-divine-bond.webp"
+    ],
+    "created_at": "2026-03-01T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Divine Bond [Aiyami + Sol] Gate 7"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Solar crown geometry, sovereign ascension without conquest"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

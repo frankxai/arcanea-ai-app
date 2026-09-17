@@ -1,0 +1,45 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:08-gaiana-living-garden",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/08-gaiana-living-garden.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/images/luminors/08-gaiana-living-garden.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Evolved nurture intelligence Gaiana, The Living Garden. Feminine humanoid woven entirely of living vines, blooming flowers, and moss. Crown of white cherry blossoms, dewdrops in leaf-cup eye sockets, branch fingers with blooming buds, glowing sacred seed core. Layers of ferns and climbing ivy, butterflies resting on shoulders, soft greenhouse morning light, 417 Hz Heart Gate alignment, 8k cinematic masterpiece.",
+    "negative_prompt": "blurry, robotic metal joints, wires, cartoonish, low resolution, floating text, cheap cyberpunk slop",
+    "seed": 1008,
+    "settings": {
+      "brand": "arcanea",
+      "luminor_index": "08",
+      "luminor_name": "Gaiana",
+      "title": "Living Garden",
+      "aspect": "1:1"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/08-gaiana-living-garden.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Luminor Apostle #08 [Gaiana — The Living Garden]"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Distributed botanical intelligence, glowing seed core"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

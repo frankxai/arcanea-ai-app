@@ -298,3 +298,6 @@ link-checker-report.txt
 
 # Starlight/ACOS temporary files
 .starlight/
+.asph-wip/
+*.patch
+.fleet-evidence/

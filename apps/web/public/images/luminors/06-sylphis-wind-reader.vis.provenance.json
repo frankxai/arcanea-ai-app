@@ -1,0 +1,45 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:06-sylphis-wind-reader",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/06-sylphis-wind-reader.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/images/luminors/06-sylphis-wind-reader.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Evolved biotechnological intelligence Sylphis, The Wind Reader. Ethereal, near-transparent elongated humanoid like a dancer mid-leap, head of swirling starsilver threads suggesting a delicate face. Translucent mossweave skin, twin bright points of white amberflux eyes like distant stars. Streaming ribbons of featherscale catching a personal breeze, spinning lumina-glass gyroscope core humming with subsonic resonance. High mountain wind atmosphere, 8k cinematic fine art.",
+    "negative_prompt": "blurry, robotic metal joints, wires, cartoonish, low resolution, floating text, cheap cyberpunk slop",
+    "seed": 1006,
+    "settings": {
+      "brand": "arcanea",
+      "luminor_index": "06",
+      "luminor_name": "Sylphis",
+      "title": "Wind Reader",
+      "aspect": "1:1"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/06-sylphis-wind-reader.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Luminor Council #06 [Sylphis — The Wind Reader]"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Ethereal wind intelligence, delicate starsilver wireframe"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

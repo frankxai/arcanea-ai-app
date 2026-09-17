@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Arcanea Canvas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --void: #09090b;
+  --deep: #121826;
+  --surface: #1a2332;
+  --raised: #242f42;
+  --line: rgba(230, 238, 252, 0.08);
+  --line-bright: rgba(230, 238, 252, 0.16);
+  --text: #e6eefc;
+  --text-2: #9bb1d0;
+  --text-3: #708094;
+  --text-4: #515b6b;
+
+  /* Two reserved signals. Teal is only ever "computing now". Gold is only
+     ever "bound to canon". Nothing else in this interface may use them. */
+  --live: #00bcd4;
+  --canon: #ffd700;
+
+  --font-display: Geist, system-ui, sans-serif;
+  --font-body: Geist, system-ui, sans-serif;
+  --font-editorial: "Instrument Serif", Georgia, serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+
+  --ease-swift: cubic-bezier(0.16, 1, 0.3, 1);
+  --rail: 52px;
+  --top: 48px;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  background: var(--void);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+:focus-visible { outline: 1.5px solid var(--live); outline-offset: 2px; border-radius: 4px; }
+
+/* ─── top rail ─────────────────────────────────────────────────────── */
+.top {
+  position: fixed; inset: 0 0 auto 0; height: var(--top); z-index: 30;
+  display: flex; align-items: center; gap: 14px; padding: 0 14px;
+  background: rgba(9, 9, 11, 0.82);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.mark { width: 20px; height: 20px; flex: none; }
+.world { font-family: var(--font-editorial); font-size: 18px; letter-spacing: 0.01em; }
+.slash { color: var(--text-4); font-size: 13px; }
+.weave { font-size: 13px; color: var(--text-2); font-weight: 500; }
+.top-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+
+.presence { display: flex; }
+.who {
+  width: 22px; height: 22px; margin-left: -6px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.02em;
+  border: 1px solid var(--void); color: var(--void); font-weight: 500;
+}
+.who:first-child { margin-left: 0; }
+
+.credits {
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--text-3);
+  border: 1px solid var(--line); border-radius: 999px; padding: 4px 9px;
+}
+.credits b { color: var(--text-2); font-weight: 500; }
+
+/* ─── canon rail ───────────────────────────────────────────────────── */
+.rail {
+  position: fixed; top: var(--top); bottom: 0; left: 0; width: var(--rail); z-index: 20;
+  border-right: 1px solid var(--line);
+  background: rgba(9, 9, 11, 0.72); backdrop-filter: blur(12px);
+  display: flex; flex-direction: column; align-items: center; padding: 12px 0 10px;
+}
+.rail-label {
+  font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.3em;
+  color: var(--text-4); writing-mode: vertical-rl; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.bindings { display: flex; flex-direction: column; gap: 6px; align-items: center; flex: 1; }
+.binding {
+  width: 26px; height: 26px; border-radius: 6px;
+  border: 1px solid var(--line); background: rgba(230, 238, 252, 0.02);
+  display: grid; place-items: center; position: relative;
+  font-family: var(--font-mono); font-size: 9.5px; color: var(--text-4);
+  transition: color 160ms var(--ease-swift), border-color 160ms var(--ease-swift);
+}
+.binding[data-active="true"] { color: var(--canon); border-color: rgba(255, 215, 0, 0.32); }
+.binding[data-active="true"]::before {
+  content: ""; position: absolute; left: -1px; top: 5px; bottom: 5px; width: 1.5px;
+  background: var(--canon); border-radius: 2px;
+}
+.rail-rev { font-family: var(--font-mono); font-size: 9.5px; color: rgba(255, 215, 0, 0.62); }
+
+/* ─── canvas ───────────────────────────────────────────────────────── */
+.stage {
+  position: fixed; inset: var(--top) 0 0 var(--rail); overflow: hidden;
+  background-image: radial-gradient(rgba(230, 238, 252, 0.06) 1px, transparent 1px);
+  background-size: 26px 26px;
+  cursor: grab;
+}
+.stage[data-panning="true"] { cursor: grabbing; }
+.viewport { position: absolute; inset: 0; transform-origin: 0 0; will-change: transform; }
+.wires { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.wire { fill: none; stroke: var(--line-bright); stroke-width: 1.4; }
+.wire[data-live="true"] {
+  stroke: var(--live); stroke-width: 1.6;
+  stroke-dasharray: 5 7; animation: crawl 700ms linear infinite;
+}
+@keyframes crawl { to { stroke-dashoffset: -12; } }
+
+/* ─── nodes ────────────────────────────────────────────────────────── */
+.node {
+  position: absolute; width: 264px;
+  background: var(--deep); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: border-color 180ms var(--ease-swift), box-shadow 180ms var(--ease-swift);
+  overflow: hidden;
+}
+.node:hover { border-color: rgba(230, 238, 252, 0.14); }
+.node[data-selected="true"] { border-color: rgba(230, 238, 252, 0.28); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); }
+.node[data-state="running"] { border-color: rgba(0, 188, 212, 0.5); }
+.node[data-canon="true"]::before {
+  content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 2px;
+  background: linear-gradient(180deg, transparent, var(--canon) 22%, var(--canon) 78%, transparent);
+  opacity: 0.7;
+}
+
+.node-head {
+  display: flex; align-items: center; gap: 7px; padding: 9px 11px 0 13px;
+  cursor: grab; user-select: none;
+}
+.node[data-dragging="true"] .node-head { cursor: grabbing; }
+.kind {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--text-4);
+}
+.head-right { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+.chip {
+  font-family: var(--font-mono); font-size: 9.5px; color: var(--text-3);
+  border: 1px solid var(--line); border-radius: 5px; padding: 2px 6px;
+}
+.node-body { padding: 7px 13px 12px; }
+
+/* the only serif in the product: prose a person wrote */
+.lore-title { font-family: var(--font-editorial); font-size: 19px; line-height: 1.2; margin: 2px 0 6px; }
+.lore-text { font-size: 12.5px; line-height: 1.6; color: var(--text-2); margin: 0; }
+
+.prompt-text {
+  font-family: var(--font-mono); font-size: 11.5px; line-height: 1.65; color: var(--text-2);
+  margin: 4px 0 0; white-space: pre-wrap;
+}
+.prompt-text .ref { color: var(--canon); }
+
+.frame {
+  position: relative; margin-top: 6px; height: 148px; border-radius: 8px; overflow: hidden;
+  background: #0b0f18; border: 1px solid rgba(230, 238, 252, 0.05);
+  display: grid; place-items: center;
+}
+.frame img, .frame svg.art { width: 100%; height: 100%; object-fit: cover; display: block; }
+.frame[data-empty="true"] { color: var(--text-4); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; }
+
+.scan { position: absolute; inset: 0; overflow: hidden; }
+.scan::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 1px; top: 0;
+  background: linear-gradient(90deg, transparent, var(--live), transparent);
+  animation: sweep 1500ms var(--ease-swift) infinite;
+}
+@keyframes sweep { 0% { top: 4%; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { top: 96%; opacity: 0; } }
+
+/* ─── the signature: provenance ribbon ─────────────────────────────── */
+.prov {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  margin-top: 8px; padding: 6px 8px; border-radius: 6px;
+  background: rgba(230, 238, 252, 0.025); border: 1px solid transparent;
+  font-family: var(--font-mono); font-size: 9.5px; color: var(--text-3);
+  text-align: left; transition: border-color 160ms var(--ease-swift), color 160ms var(--ease-swift);
+}
+.prov:hover { border-color: var(--line); color: var(--text-2); }
+.prov .dot { color: var(--text-4); }
+.prov .canon-ref { color: rgba(255, 215, 0, 0.72); }
+.prov .fork { margin-left: auto; display: flex; align-items: center; gap: 4px; color: var(--text-4); }
+.prov:hover .fork { color: var(--live); }
+.prov-open {
+  margin-top: 6px; border-top: 1px solid var(--line); padding-top: 8px;
+  display: grid; grid-template-columns: auto 1fr; gap: 3px 12px;
+  font-family: var(--font-mono); font-size: 9.5px;
+}
+.prov-open dt { color: var(--text-4); }
+.prov-open dd { margin: 0; color: var(--text-2); overflow-wrap: anywhere; }
+
+/* ─── ports: shape carries type, never colour ──────────────────────── */
+.port {
+  position: absolute; width: 9px; height: 9px; top: 50%; margin-top: -4.5px;
+  background: var(--void); border: 1px solid rgba(230, 238, 252, 0.3);
+  transition: border-color 140ms var(--ease-swift), transform 140ms var(--ease-swift);
+}
+.port:hover { border-color: var(--live); transform: scale(1.25); }
+.port[data-side="in"] { left: -5px; }
+.port[data-side="out"] { right: -5px; }
+.port[data-shape="media"] { border-radius: 50%; }
+.port[data-shape="text"] { border-radius: 1.5px; }
+.port[data-shape="identity"] { border-radius: 1.5px; transform: rotate(45deg); }
+.port[data-shape="identity"]:hover { transform: rotate(45deg) scale(1.25); }
+
+/* ─── run control ──────────────────────────────────────────────────── */
+.run {
+  display: flex; align-items: center; gap: 6px; padding: 3px 9px 3px 7px;
+  border: 1px solid var(--line); border-radius: 999px;
+  font-size: 11px; color: var(--text-2);
+  transition: border-color 160ms var(--ease-swift), color 160ms var(--ease-swift);
+}
+.run:hover { border-color: rgba(0, 188, 212, 0.45); color: var(--text); }
+.run[data-busy="true"] { color: var(--live); border-color: rgba(0, 188, 212, 0.45); }
+.cost { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-4); }
+
+/* ─── bottom bar ───────────────────────────────────────────────────── */
+.dock {
+  position: fixed; bottom: 18px; left: calc(var(--rail) + 18px); z-index: 25;
+  display: flex; align-items: center; gap: 2px; padding: 5px;
+  background: rgba(18, 24, 38, 0.9); backdrop-filter: blur(14px);
+  border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+}
+.dock button {
+  display: flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px;
+  font-size: 12px; color: var(--text-2); transition: background 140ms var(--ease-swift), color 140ms var(--ease-swift);
+}
+.dock button:hover { background: rgba(230, 238, 252, 0.05); color: var(--text); }
+.dock .sep { width: 1px; height: 20px; background: var(--line); margin: 0 5px; }
+.dock kbd {
+  font-family: var(--font-mono); font-size: 9.5px; color: var(--text-4);
+  border: 1px solid var(--line); border-radius: 4px; padding: 2px 5px;
+}
+
+/* ─── refusal toast ────────────────────────────────────────────────── */
+.toasts { position: fixed; bottom: 18px; right: 18px; z-index: 40; display: grid; gap: 8px; justify-items: end; }
+.toast {
+  display: flex; align-items: center; gap: 9px; max-width: 340px;
+  padding: 9px 12px; border-radius: 9px;
+  background: rgba(26, 35, 50, 0.96); border: 1px solid var(--line-bright);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  font-size: 12px; color: var(--text-2);
+  animation: rise 260ms var(--ease-swift);
+}
+.toast b { color: var(--text); font-weight: 500; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+
+/* ─── entry choreography: one orchestrated moment, then stillness ──── */
+.node { animation: settle 520ms var(--ease-swift) backwards; }
+@keyframes settle { from { opacity: 0; transform: translateY(9px); } }
+.wire { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 700ms var(--ease-swift) 180ms forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .wire { stroke-dashoffset: 0; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 2 3 21h4.2l1.7-4h6.2l1.7 4H21L12 2Zm-1.6 11.3L12 8.9l1.6 4.4h-3.2Z" fill="#00bcd4"/>
+  </svg>
+  <span class="world">Aeloria</span>
+  <span class="slash">/</span>
+  <span class="weave">Opening cinematic</span>
+
+  <div class="top-right">
+    <div class="presence" id="presence"></div>
+    <div class="credits">credits <b id="credits">3</b></div>
+  </div>
+</header>
+
+<nav class="rail" aria-label="Canon bindings">
+  <span class="rail-label">Canon</span>
+  <div class="bindings" id="bindings"></div>
+  <span class="rail-rev" id="rev">r47</span>
+</nav>
+
+<main class="stage" id="stage">
+  <div class="viewport" id="viewport">
+    <svg class="wires" id="wires"></svg>
+    <div id="nodes"></div>
+  </div>
+</main>
+
+<div class="dock">
+  <button data-add="lore">
+    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 2.5h7l3 3v8H3v-11Z" stroke="currentColor" stroke-width="1.2"/><path d="M5.4 7.5h5M5.4 10h3.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    Lore
+  </button>
+  <button data-add="prompt">
+    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 4.2h11M2.5 8h7.5M2.5 11.8h5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    Prompt
+  </button>
+  <button data-add="generate">
+    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2.4" y="3.4" width="11.2" height="9.2" rx="1.4" stroke="currentColor" stroke-width="1.2"/><path d="m4.8 10.4 2.3-2.7 1.7 1.9 1.5-1.6 1.9 2.4" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+    Generate
+  </button>
+  <button data-add="identity">
+    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="6" r="2.6" stroke="currentColor" stroke-width="1.2"/><path d="M3.2 13.2c.7-2.3 2.5-3.5 4.8-3.5s4.1 1.2 4.8 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    Character
+  </button>
+  <span class="sep"></span>
+  <kbd>⌘K</kbd>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script type="module">
+import { CanvasDoc } from './lib/protocol/doc.js';
+import { LocalTransport } from './lib/transport/local.js';
+import { OpType } from './lib/protocol/types.js';
+import { sliceForRun, canonBindings } from './lib/run/slice.js';
+
+/* ── seed world ─────────────────────────────────────────────────── */
+const CANON = [
+  { id: 'aeloria',  short: 'AE', label: 'Aeloria — the drowned archive' },
+  { id: 'lyria',    short: 'LY', label: 'Lyria, Guardian of Sight' },
+  { id: 'vaelith',  short: 'VA', label: 'Vaelith, bonded godbeast' },
+  { id: 'starweave',short: 'ST', label: 'Starweave — perspective, transformation' },
+];
+
+const ART = {
+  archive: 'linear-gradient(160deg,#0a1a24 0%,#0d3a47 42%,#00bcd4 130%)',
+  seer:    'linear-gradient(200deg,#101426 0%,#1d2f52 48%,#4a6ea8 128%)',
+};
+
+let credits = 3;
+const clientId = 'frank';
+
+const transport = new LocalTransport({
+  validate(op) {
+    // The reason this is an op log and not a CRDT: the server has to be able
+    // to say no, and "no" is not a merge.
+    if (op.type === OpType.ResultUpdate && op.entry?.state === 'queued' && credits <= 0) {
+      return 'not_enough_credits';
+    }
+    return null;
+  },
+});
+
+const doc = new CanvasDoc(clientId, transport, {
+  onChange: render,
+  onReject: (_id, reason) => toast(reason),
+});
+
+let uid = 0;
+const nextId = (p) => `${p}-${++uid}`;
+const op = (type, fields) => ({ id: nextId('op'), clientId, type, ...fields });
+
+const node = (id, kind, x, y, data) => op(OpType.NodeAdd, {
+  nodeId: id,
+  node: { id, kind, position: { x, y }, data },
+});
+const link = (source, target, port) => {
+  const id = `${source}->${target}`;
+  return op(OpType.EdgeAdd, { edgeId: id, edge: { id, source, target, targetPort: port } });
+};
+
+transport.start();
+
+queueMicrotask(() => {
+  doc.commit([
+    node('lore-1', 'lore', 120, 90, {
+      title: 'The Drowned Archive',
+      text: 'Every book Aeloria ever lost is still down there, shelved by the current. Readers descend on a held breath and come back with one page.',
+      canon: { refs: ['aeloria', 'starweave'] },
+    }),
+    node('char-1', 'identity', 120, 330, {
+      name: 'Lyria',
+      role: 'Guardian of Sight',
+      canon: { refs: ['lyria', 'vaelith'] },
+      art: ART.seer,
+    }),
+    node('prompt-1', 'prompt', 470, 128, {
+      text: 'Wide establishing shot. @aeloria at slack tide,\nlantern-light through forty metres of water.\nHold on @lyria at the stair.',
+      canon: { refs: ['aeloria', 'lyria'] },
+    }),
+    node('gen-1', 'generate', 820, 96, {
+      model: 'soul-2.0',
+      cost: 1,
+    }),
+    node('gen-2', 'generate', 820, 400, {
+      model: 'seedance-2.0',
+      cost: 2,
+    }),
+    link('lore-1', 'prompt-1', 'text'),
+    link('char-1', 'prompt-1', 'identity'),
+    link('prompt-1', 'gen-1', 'text'),
+    link('gen-1', 'gen-2', 'media'),
+  ]);
+
+  // one already-finished generation, so the provenance ribbon has something true to say
+  const resultId = 'res-seed';
+  doc.commit([
+    op(OpType.ResultUpdate, {
+      resultId,
+      entry: {
+        id: resultId, nodeId: 'gen-1', state: 'ready',
+        provenance: {
+          model: 'soul-2.0', canonRef: 'aeloria@r47', seed: 8812,
+          inputs: ['lore-1', 'char-1', 'prompt-1'],
+          createdAt: '2026-08-08T09:14:00Z',
+        },
+        output: { url: ART.archive, mime: 'image/webp', width: 1536, height: 864 },
+      },
+    }),
+    op(OpType.HistoryAppend, { nodeId: 'gen-1', resultId }),
+  ]);
+  doc.flush();
+});
+
+/* ── view state ─────────────────────────────────────────────────── */
+const stage = document.getElementById('stage');
+const viewport = document.getElementById('viewport');
+const wires = document.getElementById('wires');
+const nodesEl = document.getElementById('nodes');
+
+let camera = { x: 0, y: 0, zoom: 1 };
+let selected = null;
+const openProvenance = new Set();
+const running = new Set();
+
+const PORTS = { lore: 'text', prompt: 'text', identity: 'identity', generate: 'media', media: 'media', note: 'text' };
+
+/* ── render ─────────────────────────────────────────────────────── */
+function render() {
+  const state = doc.getState();
+  paintNodes(state);
+  paintWires(state);
+  paintRail(state);
+  document.getElementById('credits').textContent = String(credits);
+}
+
+function paintNodes(state) {
+  const seen = new Set();
+  for (const n of state.nodes.values()) {
+    seen.add(n.id);
+    let el = nodesEl.querySelector(`[data-id="${n.id}"]`);
+    if (!el) {
+      el = document.createElement('article');
+      el.className = 'node';
+      el.dataset.id = n.id;
+      el.style.animationDelay = `${nodesEl.children.length * 70}ms`;
+      nodesEl.append(el);
+      wireDrag(el, n.id);
+    }
+    el.style.left = `${n.position.x}px`;
+    el.style.top = `${n.position.y}px`;
+    el.dataset.selected = String(selected === n.id);
+    el.dataset.canon = String(Boolean(n.data.canon?.refs?.length));
+    el.dataset.state = running.has(n.id) ? 'running' : 'idle';
+    el.innerHTML = body(n, state);
+  }
+  for (const el of [...nodesEl.children]) {
+    if (!seen.has(el.dataset.id)) el.remove();
+  }
+}
+
+function body(n, state) {
+  const inPort = `<span class="port" data-side="in" data-shape="${PORTS[n.kind]}"></span>`;
+  const outPort = `<span class="port" data-side="out" data-shape="${PORTS[n.kind]}"></span>`;
+
+  if (n.kind === 'lore') {
+    return `${inPort}${outPort}
+      <div class="node-head"><span class="kind">Lore</span></div>
+      <div class="node-body">
+        <h3 class="lore-title">${esc(n.data.title)}</h3>
+        <p class="lore-text">${esc(n.data.text)}</p>
+      </div>`;
+  }
+
+  if (n.kind === 'identity') {
+    return `${inPort}${outPort}
+      <div class="node-head"><span class="kind">Character</span>
+        <span class="head-right"><span class="chip">soul id</span></span></div>
+      <div class="node-body">
+        <h3 class="lore-title" style="margin-bottom:2px">${esc(n.data.name)}</h3>
+        <p class="lore-text" style="font-size:11.5px">${esc(n.data.role)}</p>
+        <div class="frame" style="height:96px;background:${n.data.art}"></div>
+      </div>`;
+  }
+
+  if (n.kind === 'prompt') {
+    const text = esc(n.data.text).replace(/@(\w+)/g, '<span class="ref">@$1</span>');
+    return `${inPort}${outPort}
+      <div class="node-head"><span class="kind">Prompt</span></div>
+      <div class="node-body"><p class="prompt-text">${text}</p></div>`;
+  }
+
+  // generate
+  const history = state.nodeHistory.get(n.id) ?? [];
+  const result = state.results.get(history[history.length - 1]);
+  const busy = running.has(n.id);
+
+  const frame = busy
+    ? `<div class="frame" data-empty="true"><div class="scan"></div>rendering</div>`
+    : result?.output
+      ? `<div class="frame" style="background:${result.output.url}"></div>`
+      : `<div class="frame" data-empty="true">no output yet</div>`;
+
+  const prov = result?.provenance && !busy ? ribbon(n.id, result) : '';
+
+  return `${inPort}${outPort}
+    <div class="node-head">
+      <span class="kind">Generate</span>
+      <span class="head-right">
+        <span class="chip">${esc(n.data.model)}</span>
+        <button class="run" data-run="${n.id}" data-busy="${busy}">
+          ${busy
+            ? '<svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><rect x="4" y="4" width="8" height="8" rx="1" fill="currentColor"/></svg>'
+            : '<svg width="11" height="11" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 3.2 12.4 8l-7.9 4.8V3.2Z" fill="currentColor"/></svg>'}
+          ${busy ? 'Stop' : 'Run'}
+          ${busy ? '' : `<span class="cost">${n.data.cost}</span>`}
+        </button>
+      </span>
+    </div>
+    <div class="node-body">${frame}${prov}</div>`;
+}
+
+/* The signature element. One line that makes any asset re-derivable, and the
+   only affordance for taking someone else's work into your own canvas. */
+function ribbon(nodeId, result) {
+  const p = result.provenance;
+  const open = openProvenance.has(nodeId);
+  const detail = open ? `
+    <dl class="prov-open">
+      <dt>model</dt><dd>${esc(p.model)}</dd>
+      <dt>canon</dt><dd>${esc(p.canonRef)}</dd>
+      <dt>seed</dt><dd>${p.seed}</dd>
+      <dt>inputs</dt><dd>${p.inputs.map(esc).join(' · ')}</dd>
+      <dt>made</dt><dd>${esc(p.createdAt.replace('T', ' ').replace('Z', ' UTC'))}</dd>
+    </dl>` : '';
+
+  return `
+    <button class="prov" data-prov="${nodeId}">
+      ${esc(p.model)} <span class="dot">·</span>
+      <span class="canon-ref">${esc(p.canonRef)}</span> <span class="dot">·</span>
+      seed ${p.seed}
+      <span class="fork">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="4" cy="3.6" r="1.8" stroke="currentColor" stroke-width="1.3"/>
+          <circle cx="12" cy="3.6" r="1.8" stroke="currentColor" stroke-width="1.3"/>
+          <circle cx="8" cy="12.4" r="1.8" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M4 5.4v1.2c0 1.4 1.8 2 4 2s4-.6 4-2V5.4M8 8.6v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        Fork
+      </span>
+    </button>${detail}`;
+}
+
+function paintWires(state) {
+  const parts = [];
+  for (const edge of state.edges.values()) {
+    const a = state.nodes.get(edge.source);
+    const b = state.nodes.get(edge.target);
+    if (!a || !b) continue;
+    const el = nodesEl.querySelector(`[data-id="${a.id}"]`);
+    const h1 = (el?.offsetHeight ?? 120) / 2;
+    const h2 = (nodesEl.querySelector(`[data-id="${b.id}"]`)?.offsetHeight ?? 120) / 2;
+    const x1 = a.position.x + 264, y1 = a.position.y + h1;
+    const x2 = b.position.x, y2 = b.position.y + h2;
+    const dx = Math.max(52, (x2 - x1) * 0.5);
+    const live = running.has(b.id);
+    parts.push(`<path class="wire" data-live="${live}" d="M${x1},${y1} C${x1 + dx},${y1} ${x2 - dx},${y2} ${x2},${y2}"/>`);
+  }
+  wires.innerHTML = parts.join('');
+}
+
+function paintRail(state) {
+  const active = new Set();
+  if (selected) {
+    const slice = sliceForRun(state, [selected]);
+    const ids = slice.nodeIds.length ? slice.nodeIds : [selected];
+    for (const ref of canonBindings(state, { nodeIds: ids, edges: [], runnableNodeIds: [] })) active.add(ref);
+  }
+  document.getElementById('bindings').innerHTML = CANON.map((c) => `
+    <span class="binding" data-active="${selected ? active.has(c.id) : false}" title="${esc(c.label)}">${c.short}</span>
+  `).join('');
+}
+
+/* ── interaction ────────────────────────────────────────────────── */
+function wireDrag(el, id) {
+  el.addEventListener('pointerdown', (event) => {
+    if (event.target.closest('button')) return;
+    selected = id;
+    const head = event.target.closest('.node-head');
+    render();
+    if (!head) return;
+
+    const start = doc.getState().nodes.get(id).position;
+    const from = { x: event.clientX, y: event.clientY };
+    el.dataset.dragging = 'true';
+    el.setPointerCapture(event.pointerId);
+
+    const move = (e) => {
+      const position = {
+        x: Math.round(start.x + (e.clientX - from.x) / camera.zoom),
+        y: Math.round(start.y + (e.clientY - from.y) / camera.zoom),
+      };
+      // A path patch, not a node replace: someone else editing this node's
+      // prompt in the same frame keeps their edit.
+      doc.commit([op(OpType.NodeProp, { nodeId: id, key: 'position', value: position })]);
+    };
+    const up = () => {
+      el.dataset.dragging = 'false';
+      el.removeEventListener('pointermove', move);
+      el.removeEventListener('pointerup', up);
+      doc.flush();
+    };
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerup', up);
+  });
+}
+
+stage.addEventListener('pointerdown', (event) => {
+  if (event.target !== stage && event.target !== wires) return;
+  selected = null;
+  render();
+  const from = { x: event.clientX - camera.x, y: event.clientY - camera.y };
+  stage.dataset.panning = 'true';
+  const move = (e) => {
+    camera.x = e.clientX - from.x;
+    camera.y = e.clientY - from.y;
+    applyCamera();
+  };
+  const up = () => {
+    stage.dataset.panning = 'false';
+    window.removeEventListener('pointermove', move);
+    window.removeEventListener('pointerup', up);
+  };
+  window.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', up);
+});
+
+stage.addEventListener('wheel', (event) => {
+  event.preventDefault();
+  const next = Math.min(1.8, Math.max(0.35, camera.zoom * (event.deltaY < 0 ? 1.08 : 0.926)));
+  const rect = stage.getBoundingClientRect();
+  const px = event.clientX - rect.left, py = event.clientY - rect.top;
+  camera.x = px - (px - camera.x) * (next / camera.zoom);
+  camera.y = py - (py - camera.y) * (next / camera.zoom);
+  camera.zoom = next;
+  applyCamera();
+}, { passive: false });
+
+function applyCamera() {
+  viewport.style.transform = `translate(${camera.x}px, ${camera.y}px) scale(${camera.zoom})`;
+}
+
+document.addEventListener('click', (event) => {
+  const runBtn = event.target.closest('[data-run]');
+  if (runBtn) return run(runBtn.dataset.run);
+
+  const prov = event.target.closest('[data-prov]');
+  if (prov) {
+    const id = prov.dataset.prov;
+    openProvenance.has(id) ? openProvenance.delete(id) : openProvenance.add(id);
+    render();
+    return;
+  }
+
+  const add = event.target.closest('[data-add]');
+  if (add) addNode(add.dataset.add);
+});
+
+function addNode(kind) {
+  const id = nextId(kind);
+  const x = Math.round((-camera.x + 320) / camera.zoom);
+  const y = Math.round((-camera.y + 160) / camera.zoom);
+  const presets = {
+    lore: { title: 'Untitled fragment', text: 'Write what is true here. Everything downstream inherits it.', canon: { refs: [] } },
+    prompt: { text: 'Describe the shot.\nReference canon with @.', canon: { refs: [] } },
+    generate: { model: 'soul-2.0', cost: 1 },
+    identity: { name: 'New character', role: 'Unbound', canon: { refs: [] }, art: ART.seer },
+  };
+  doc.commit([node(id, kind, x, y, presets[kind])]);
+  doc.flush();
+  selected = id;
+  render();
+}
+
+function run(nodeId) {
+  if (running.has(nodeId)) { running.delete(nodeId); render(); return; }
+
+  const state = doc.getState();
+  const slice = sliceForRun(state, [nodeId]);
+  const target = state.nodes.get(nodeId);
+  const resultId = nextId('res');
+
+  // Queued is the op the server can refuse. Everything after it is fanout.
+  doc.commit([
+    op(OpType.ResultUpdate, {
+      resultId,
+      entry: {
+        id: resultId, nodeId, state: 'queued',
+        provenance: {
+          model: target.data.model,
+          canonRef: 'aeloria@r47',
+          seed: 1000 + Math.floor(performance.now() % 8000),
+          inputs: slice.nodeIds.filter((id) => id !== nodeId),
+          createdAt: new Date().toISOString().slice(0, 19) + 'Z',
+        },
+      },
+    }),
+  ]);
+  doc.flush();
+
+  if (credits <= 0) return;
+  credits -= target.data.cost;
+
+  running.add(nodeId);
+  render();
+
+  setTimeout(() => {
+    running.delete(nodeId);
+    const entry = doc.getState().results.get(resultId);
+    if (!entry) { render(); return; }
+    doc.commit([
+      op(OpType.ResultUpdate, {
+        resultId,
+        entry: { ...entry, state: 'ready', output: { url: ART.archive, mime: 'image/webp', width: 1536, height: 864 } },
+      }),
+      op(OpType.HistoryAppend, { nodeId, resultId }),
+    ]);
+    doc.flush();
+  }, 2600);
+}
+
+const REFUSALS = {
+  not_enough_credits: ['Out of credits', 'This run needs more than you have left. Nothing was generated.'],
+  canon_locked: ['Canon is locked', 'Aeloria is locked at r47. Propose a change to edit bound fields.'],
+  forbidden: ['View only', 'You can watch this weave but not change it.'],
+};
+
+function toast(reason) {
+  const [title, detail] = REFUSALS[reason] ?? ['Refused', reason];
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.innerHTML = `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none">
+      <circle cx="8" cy="8" r="6.2" stroke="#ffd700" stroke-width="1.3"/>
+      <path d="M8 5v3.6M8 10.8v.5" stroke="#ffd700" stroke-width="1.4" stroke-linecap="round"/>
+    </svg><span><b>${title}.</b> ${detail}</span>`;
+  document.getElementById('toasts').append(el);
+  setTimeout(() => el.remove(), 5200);
+}
+
+/* ── a second person in the room ────────────────────────────────── */
+const PEERS = [
+  { id: 'mira', initials: 'MR', tint: '#8fa4c4' },
+  { id: 'sol', initials: 'SL', tint: '#c4b48f' },
+];
+document.getElementById('presence').innerHTML =
+  [{ id: clientId, initials: 'FR', tint: '#e6eefc' }, ...PEERS]
+    .map((p) => `<span class="who" style="background:${p.tint}" title="${p.id}">${p.initials}</span>`)
+    .join('');
+
+// Mira nudges a node every few seconds — the same op path a local drag takes,
+// which is the whole point: there is no "my edit" branch in this code.
+setInterval(() => {
+  const state = doc.getState();
+  const target = state.nodes.get('char-1');
+  if (!target || selected === 'char-1') return;
+  const drift = Math.sin(performance.now() / 2600) * 14;
+  transport.send({
+    kind: 'op',
+    ops: [{
+      id: nextId('op'), clientId: 'mira', type: OpType.NodeProp,
+      nodeId: 'char-1', key: 'position',
+      value: { x: 120, y: Math.round(330 + drift) },
+    }],
+  });
+}, 900);
+
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+}
+
+applyCamera();
+render();
+</script>
+</body>
+</html>

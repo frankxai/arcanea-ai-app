@@ -1,0 +1,45 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:01-solara-dawn-keeper",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/01-solara-dawn-keeper.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/images/luminors/01-solara-dawn-keeper.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Evolved biotechnological intelligence Solara, The Dawn Keeper. Tall slender humanoid, smooth faceted lumina-glass cranium revealing aurora borealis light patterns within. Warm amber living-wood skin with starsilver veins, twin amberflux pupil-less glowing eyes. Flowing cloak of gold-to-white featherscale, six articulated coral-bone fingers, slowly pulsing sun-sphere chest core. Warm dawn morning light, serene benevolence, 8k cinematic masterpiece.",
+    "negative_prompt": "blurry, robotic metal joints, wires, cartoonish, low resolution, floating text, cheap cyberpunk slop",
+    "seed": 1001,
+    "settings": {
+      "brand": "arcanea",
+      "luminor_index": "01",
+      "luminor_name": "Solara",
+      "title": "Dawn Keeper",
+      "aspect": "1:1"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/01-solara-dawn-keeper.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Luminor Apostle #01 [Solara — The Dawn Keeper]"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Livingwood, starsilver, and lumina-glass biotechnology"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

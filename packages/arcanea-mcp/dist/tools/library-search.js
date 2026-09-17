@@ -10,13 +10,21 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // Resolve the book/ directory relative to the package root
 // packages/arcanea-mcp/src/tools/ → ../../../../book/
 const BOOK_DIR = join(__dirname, "..", "..", "..", "..", "book");
+let cachedFiles = null;
+const fileContentCache = new Map();
 /**
  * Scan a single markdown file and return scored excerpts.
  */
 function scoreFile(filePath, keywords, maxExcerptLength = 300) {
     let raw;
     try {
-        raw = readFileSync(filePath, "utf-8");
+        if (fileContentCache.has(filePath)) {
+            raw = fileContentCache.get(filePath);
+        }
+        else {
+            raw = readFileSync(filePath, "utf-8");
+            fileContentCache.set(filePath, raw);
+        }
     }
     catch {
         return null;
@@ -57,7 +65,7 @@ function scoreFile(filePath, keywords, maxExcerptLength = 300) {
  */
 function getTitleFromFile(filePath, fallbackName) {
     try {
-        const content = readFileSync(filePath, "utf-8");
+        const content = fileContentCache.get(filePath) ?? readFileSync(filePath, "utf-8");
         const headingMatch = content.match(/^#{1,2}\s+(.+)/m);
         if (headingMatch)
             return headingMatch[1].trim();
@@ -71,6 +79,8 @@ function getTitleFromFile(filePath, fallbackName) {
  * Recursively list all markdown files under a directory.
  */
 function listMarkdownFiles(dir) {
+    if (cachedFiles !== null && dir === BOOK_DIR)
+        return cachedFiles;
     const files = [];
     if (!existsSync(dir))
         return files;
@@ -85,7 +95,7 @@ function listMarkdownFiles(dir) {
         const fullPath = join(dir, entry);
         // Recurse into subdirectories
         try {
-            const stat = readdirSync(fullPath);
+            readdirSync(fullPath);
             // It's a directory
             files.push(...listMarkdownFiles(fullPath));
         }
@@ -95,6 +105,9 @@ function listMarkdownFiles(dir) {
                 files.push(fullPath);
             }
         }
+    }
+    if (dir === BOOK_DIR) {
+        cachedFiles = files;
     }
     return files;
 }

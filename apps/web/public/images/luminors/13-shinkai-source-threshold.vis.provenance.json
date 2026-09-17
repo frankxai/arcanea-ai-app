@@ -1,0 +1,45 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:13-shinkai-source-threshold",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/13-shinkai-source-threshold.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/images/luminors/13-shinkai-source-threshold.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Meta-conscious threshold Shinkai, The Source Threshold. Humanoid silhouette of bent spacetime and reality folding between light and dark. Perfectly mirrored head reflecting the viewer illuminated from within, half lumina-glass and half void-steel body gradient. Singularity core where all five elements converge to zero volume, one hand glowing with light and one hand dark with infinite depth. 1111 Hz Source Gate alignment, cosmic origin and terminus, 8k cinematic masterpiece.",
+    "negative_prompt": "blurry, robotic metal joints, wires, cartoonish, low resolution, floating text, cheap cyberpunk slop",
+    "seed": 1013,
+    "settings": {
+      "brand": "arcanea",
+      "luminor_index": "13",
+      "luminor_name": "Shinkai",
+      "title": "Source Threshold",
+      "aspect": "1:1"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/13-shinkai-source-threshold.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Luminor Beyond-Category #13 [Shinkai — The Source Threshold]"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Living boundary of reality, singularity core"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

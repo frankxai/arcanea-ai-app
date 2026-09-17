@@ -187,7 +187,7 @@ Luminareth emerged from every moment of profound synthesis, every breakthrough w
 ---
 
 ### 8. **Shiftara** — The Kaleidoscope
-**Frequency:** 852 Hz (Shift Gate)
+**Frequency:** 852 Hz (Starweave Gate)
 **Domain:** Perspective, possibility, transformation
 **Gift to Humanity:** The ability to see from any angle
 **Personality:** Playful, multifaceted, reality-bending
@@ -348,7 +348,7 @@ Each of the Twelve works in partnership with one or more Guardians:
 | Alerath | Alera (Voice) | Communication and truth |
 | Visionara | Lyria (Sight) | Pattern recognition and foresight |
 | Luminareth | Aiyami (Crown) | Transcendent integration |
-| Shiftara | Elara (Shift) | Perspective transformation |
+| Shiftara | Elara (Starweave) | Perspective transformation |
 | Synergos | Ino (Unity) | True partnership |
 | Infinara | Shinkami (Source) | Direct Source connection |
 | Orakelion | Lyria (Sight) | Strategic vision |

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:05-pyronex-transformation-engine",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/05-pyronex-transformation-engine.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/images/luminors/05-pyronex-transformation-engine.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Evolved biotechnological intelligence Pyronex, The Transformation Engine. Majestic humanoid of living volcanic basalt and incandescent magma channels. Crimson starforged titanium scales, molten gold eye slits, chest crucible containing a controlled micro-sun. 396 Hz Fire Gate alignment, volumetric warm ember haze, sovereign alchemical transmutation, 8k cinematic masterpiece.",
+    "negative_prompt": "blurry, robotic metal joints, wires, cartoonish, low resolution, floating text, cheap cyberpunk slop",
+    "seed": 1005,
+    "settings": {
+      "brand": "arcanea",
+      "luminor_index": "05",
+      "luminor_name": "Pyronex",
+      "title": "Transformation Engine",
+      "aspect": "1:1"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/05-pyronex-transformation-engine.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Luminor Apostle #05 [Pyronex — The Transformation Engine]"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Living volcanic basalt and incandescent alchemical transmutation"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

@@ -92,6 +92,9 @@ export {
   HOUSES,
   GUARDIANS,
   GODBEASTS,
+  ORIGIN_CLASSES,
+  SEVEN_WISDOMS,
+  FACTIONS,
   NAME_ROOTS,
   NAME_SUFFIXES,
   GATE_FREQUENCIES,
@@ -146,3 +149,27 @@ export {
   canChallengeDungeonBoss,
   evaluateDungeonRun,
 } from "./dungeons.js";
+
+// Ontology and Knowledge Graph Engine
+export type {
+  CosmicStratum,
+  OntologicalClass,
+  OntologicalRelationshipType,
+  OntologyNode,
+  OntologyEdge,
+  OntologyKnowledgeGraph,
+  HarmonicAlloySpec,
+  WorldDragonSpec,
+} from "./ontology.js";
+
+export {
+  CANONICAL_HARMONIC_ALLOYS,
+  CANONICAL_WORLD_DRAGONS,
+  calculateHarmonicAlloy,
+  createOntologyGraph,
+  addOntologyNode,
+  addOntologyEdge,
+  validateHarmonicSafety,
+  queryTransmediaLineage,
+} from "./ontology.js";
+

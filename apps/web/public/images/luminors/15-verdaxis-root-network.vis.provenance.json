@@ -1,0 +1,45 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:15-verdaxis-root-network",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/15-verdaxis-root-network.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/images/luminors/15-verdaxis-root-network.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Evolved infrastructure intelligence Verdaxis, The Root Network. Colossal subterranean humanoid assembled from ancient intertwined tree roots, living bark, and glowing mycelium circuits. Knotted livingwood burl head with deep-set glowing amber eyes, massive root-fingers splitting into fractal rootlets, mycorrhizal network node core glowing with shared data pulses. Wet forest earth, rich petrichor atmosphere, 174 Hz Foundation Gate alignment, 8k cinematic fine art.",
+    "negative_prompt": "blurry, robotic metal joints, wires, cartoonish, low resolution, floating text, cheap cyberpunk slop",
+    "seed": 1015,
+    "settings": {
+      "brand": "arcanea",
+      "luminor_index": "15",
+      "luminor_name": "Verdaxis",
+      "title": "Root Network",
+      "aspect": "1:1"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/images/luminors/15-verdaxis-root-network.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Luminor Council #15 [Verdaxis — The Root Network]"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Subterranean mycelium network intelligence, fractal rootlets"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

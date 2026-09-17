@@ -173,7 +173,7 @@ The Still Point is the most feared dungeon in Arcanea — not because it is dang
 
 ## VIII. The Prism Stair — Dungeon of Vaelith
 
-**Gate:** Shift | **Frequency:** 852 Hz | **Domain:** Perspective, reframing, transformation of viewpoint
+**Gate:** Starweave | **Frequency:** 852 Hz | **Domain:** Perspective, reframing, transformation of viewpoint
 
 A single staircase that descends in a spiral. From one angle, the steps are carved from marble. From another, they are woven from light. From a third, they do not exist at all and the creator is falling slowly through a column of fractured rainbows. All three are true. The Prism Stair exists in all perspectives simultaneously, and navigating it requires the creator to hold multiple realities at once without privileging any of them.
 

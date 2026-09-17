@@ -148,6 +148,7 @@ export function generateDesignTokensSection(): string {
 - Display: ${FONTS.display.replace(/'/g, '')}
 - Body: ${FONTS.body.replace(/'/g, '')}
 - UI: ${FONTS.sans.replace(/'/g, '')}
+- Editorial: ${FONTS.serif.replace(/'/g, '')}
 - Code: ${FONTS.code.replace(/'/g, '')}
 
 ### Signature Effects

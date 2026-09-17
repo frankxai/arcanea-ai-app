@@ -28,6 +28,8 @@ export type Element = "Fire" | "Water" | "Earth" | "Wind" | "Void" | "Spirit";
 export type House = "Lumina" | "Nero" | "Pyros" | "Aqualis" | "Terra" | "Ventus" | "Synthesis";
 export type MagicRank = "Apprentice" | "Mage" | "Master" | "Archmage" | "Luminor";
 export type NameGender = "masculine" | "feminine" | "neutral";
+export type OriginClass = "Arcan" | "Gate-Touched" | "The Awakened" | "Synth" | "Bonded" | "Celestial" | "Voidtouched" | "Architect";
+export type Wisdom = "Sophron" | "Kardia" | "Valora" | "Eudaira" | "Orakis" | "Poiesis" | "Enduran";
 export interface Guardian {
     name: string;
     gate: number;
@@ -38,6 +40,17 @@ export interface Godbeast {
     name: string;
     gate: number;
     form: string;
+}
+export interface CharacterDiamond {
+    desire: string;
+    wound: string;
+    mask: string;
+    truth: string;
+}
+export interface VaultLoreModule {
+    id: string;
+    title: string;
+    files: string[];
 }
 export interface GenerateCharacterOptions {
     archetype?: string;

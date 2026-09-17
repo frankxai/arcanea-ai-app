@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:ino-hero",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/ino-hero.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/ino-hero.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Canonical Genesis square portrait of Ino, Guardian of Unity Gate (963 Hz). Perfect harmonious duality, shimmering opalescent skin, dual light/void pupils, Zen stillness.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark",
+    "seed": 963000,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Unity",
+      "gate_number": 9,
+      "frequency_hz": 963,
+      "element": "Arcane/Harmony",
+      "godbeast": "Kyuro",
+      "aspect_ratio": "1:1"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/ino-hero.webp"
+    ],
+    "created_at": "2026-01-01T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Genesis Hero asset [Ino] Gate 9"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A",
+    "notes": "Genesis canonical portrait"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

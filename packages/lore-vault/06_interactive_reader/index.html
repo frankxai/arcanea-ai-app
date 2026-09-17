@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arcanea Worldbuilding & Lore Vault — Interactive Explorer</title>
+  <style>
+    :root {
+      --arc-void: #0b0e14;
+      --arc-deep: #121826;
+      --arc-surface: #1a2332;
+      --arc-raised: #242f42;
+      --arc-border: #242f42;
+      --arc-border-bright: #364562;
+      --arc-teal: #00bcd4;
+      --arc-teal-glow: rgba(0, 188, 212, 0.35);
+      --arc-gold: #ffd700;
+      --arc-gold-glow: rgba(255, 215, 0, 0.25);
+      --arc-text-primary: #e6eefc;
+      --arc-text-secondary: #9bb1d0;
+      --arc-text-muted: #708094;
+      --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--arc-void);
+      color: var(--arc-text-primary);
+      font-family: var(--font-display);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    #starfield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 320px;
+      background: rgba(18, 24, 38, 0.85);
+      backdrop-filter: blur(16px);
+      border-right: 1px solid var(--arc-border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .sidebar-header {
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--arc-border);
+    }
+
+    .brand-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--arc-teal);
+      background: rgba(0, 188, 212, 0.1);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 188, 212, 0.2);
+      margin-bottom: 8px;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+    }
+
+    .search-box {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--arc-border);
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--arc-surface);
+      border: 1px solid var(--arc-border-bright);
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: var(--arc-text-primary);
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--arc-teal);
+      box-shadow: 0 0 10px var(--arc-teal-glow);
+    }
+
+    .nav-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 10px;
+    }
+
+    .nav-group-title {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--arc-text-muted);
+      padding: 12px 10px 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--arc-text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      margin-bottom: 2px;
+    }
+
+    .nav-item:hover {
+      background: var(--arc-surface);
+      color: var(--arc-text-primary);
+    }
+
+    .nav-item.active {
+      background: rgba(0, 188, 212, 0.12);
+      color: var(--arc-teal);
+      font-weight: 600;
+      border-left: 3px solid var(--arc-teal);
+    }
+
+    /* Frequency Audio Player Widget */
+    .audio-widget {
+      padding: 16px 20px;
+      border-top: 1px solid var(--arc-border);
+      background: rgba(11, 14, 20, 0.7);
+    }
+
+    .audio-title {
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--arc-gold);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .freq-selector {
+      width: 100%;
+      background: var(--arc-surface);
+      border: 1px solid var(--arc-border);
+      color: var(--arc-text-primary);
+      padding: 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      outline: none;
+      margin-bottom: 8px;
+    }
+
+    .play-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--arc-teal), #008ba3);
+      color: #0b0e14;
+      border: none;
+      padding: 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .play-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 40px 60px;
+      background: radial-gradient(circle at 80% 20%, rgba(0, 188, 212, 0.04) 0%, transparent 60%);
+    }
+
+    .content-card {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(26, 35, 50, 0.4);
+      border: 1px solid var(--arc-border);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 48px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+    }
+
+    .content-header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--arc-border);
+      padding-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .content-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--arc-gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .content-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .export-btn {
+      background: var(--arc-raised);
+      border: 1px solid var(--arc-border-bright);
+      color: var(--arc-text-primary);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      transition: all 0.2s;
+    }
+
+    .export-btn:hover {
+      border-color: var(--arc-teal);
+      color: var(--arc-teal);
+    }
+
+    .article-body {
+      color: var(--arc-text-secondary);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .article-body h2 {
+      font-size: 20px;
+      color: #ffffff;
+      margin: 28px 0 12px;
+      border-left: 3px solid var(--arc-teal);
+      padding-left: 12px;
+    }
+
+    .article-body h3 {
+      font-size: 16px;
+      color: var(--arc-gold);
+      margin: 20px 0 8px;
+    }
+
+    .article-body p {
+      margin-bottom: 16px;
+    }
+
+    .article-body ul {
+      margin: 12px 0 20px 24px;
+    }
+
+    .article-body li {
+      margin-bottom: 6px;
+    }
+
+    .article-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 13px;
+    }
+
+    .article-body th, .article-body td {
+      border: 1px solid var(--arc-border);
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    .article-body th {
+      background: var(--arc-raised);
+      color: var(--arc-text-primary);
+      font-weight: 600;
+    }
+
+    .article-body tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .code-block {
+      background: var(--arc-void);
+      border: 1px solid var(--arc-border);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--arc-teal);
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+
+    /* Generator Modal / Panel */
+    .generator-panel {
+      background: rgba(0, 188, 212, 0.05);
+      border: 1px solid rgba(0, 188, 212, 0.2);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 32px;
+    }
+
+    .forge-btn {
+      background: linear-gradient(135deg, var(--arc-gold), #ff9800);
+      color: #0b0e14;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .forge-btn:hover {
+      box-shadow: 0 0 20px var(--arc-gold-glow);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="starfield"></canvas>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <span class="brand-badge">Official Release €149</span>
+        <h1 class="brand-title">Arcanea Lore Vault</h1>
+      </div>
+
+      <div class="search-box">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search canon, factions, gates..." />
+      </div>
+
+      <nav class="nav-list" id="navList">
+        <!-- Dynamically injected navigation -->
+      </nav>
+
+      <!-- Solfeggio Audio Generator -->
+      <div class="audio-widget">
+        <div class="audio-title">
+          <span>HARMONIC TUNER</span>
+          <span id="hzDisplay">528 Hz</span>
+        </div>
+        <select id="freqSelect" class="freq-selector">
+          <option value="174">Foundation (174 Hz) - Lyssandria</option>
+          <option value="285">Flow (285 Hz) - Leyla</option>
+          <option value="396">Fire (396 Hz) - Draconia</option>
+          <option value="417">Heart (417 Hz) - Maylinn</option>
+          <option value="528" selected>Voice (528 Hz) - Alera</option>
+          <option value="639">Sight (639 Hz) - Lyria</option>
+          <option value="741">Crown (741 Hz) - Aiyami</option>
+          <option value="852">Starweave (852 Hz) - Elara</option>
+          <option value="963">Unity (963 Hz) - Ino</option>
+          <option value="1111">Source (1111 Hz) - Shinkami</option>
+        </select>
+        <button id="playToneBtn" class="play-btn">▶ Play Tone</button>
+      </div>
+    </aside>
+
+    <!-- Main Content Explorer -->
+    <main class="main-content">
+      <div class="content-card">
+        <div class="content-header">
+          <div>
+            <div id="contentTag" class="content-tag">CANONICAL ARCHIVE</div>
+            <h2 id="contentTitle" class="content-title">Welcome to the Arcanea Lore Vault</h2>
+          </div>
+          <button id="exportBtn" class="export-btn">⬇ Export Markdown</button>
+        </div>
+
+        <div id="articleBody" class="article-body">
+          <!-- Dynamic Content Rendered Here -->
+        </div>
+
+        <div class="generator-panel">
+          <h3 style="color: var(--arc-gold); margin-bottom: 8px;">✨ Interactive Character Forge</h3>
+          <p style="font-size: 13px; margin-bottom: 16px;">Generate a new canon-compliant Arcanean character genome with randomized Gate resonances, origin classes, and Character Diamonds.</p>
+          <button id="forgeCharacterBtn" class="forge-btn">⚡ Forge Random Character</button>
+          <div id="forgedResult" style="margin-top: 16px;"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // ── Starfield Animation ──────────────────────────────────────────────────
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let width, height, stars = [];
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      stars = [];
+      for (let i = 0; i < 150; i++) {
+        stars.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 1.5,
+          alpha: Math.random() * 0.8 + 0.2,
+          speed: Math.random() * 0.2 + 0.05
+        });
+      }
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function animateStars() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = '#ffffff';
+      stars.forEach(star => {
+        ctx.globalAlpha = star.alpha;
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+        star.y -= star.speed;
+        if (star.y < 0) star.y = height;
+      });
+      requestAnimationFrame(animateStars);
+    }
+    animateStars();
+
+    // ── Solfeggio Tone Synthesizer (Web Audio API) ───────────────────────────
+    let audioCtx = null;
+    let oscillator = null;
+    let gainNode = null;
+    let isPlaying = false;
+
+    const playBtn = document.getElementById('playToneBtn');
+    const freqSelect = document.getElementById('freqSelect');
+    const hzDisplay = document.getElementById('hzDisplay');
+
+    freqSelect.addEventListener('change', () => {
+      const hz = freqSelect.value;
+      hzDisplay.textContent = hz + ' Hz';
+      if (oscillator) {
+        oscillator.frequency.setValueAtTime(parseFloat(hz), audioCtx.currentTime);
+      }
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      if (!isPlaying) {
+        oscillator = audioCtx.createOscillator();
+        gainNode = audioCtx.createGain();
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(parseFloat(freqSelect.value), audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.start();
+        isPlaying = true;
+        playBtn.textContent = '⏹ Stop Tone';
+        playBtn.style.background = '#e53935';
+        playBtn.style.color = '#fff';
+      } else {
+        oscillator.stop();
+        oscillator.disconnect();
+        isPlaying = false;
+        playBtn.textContent = '▶ Play Tone';
+        playBtn.style.background = 'linear-gradient(135deg, var(--arc-teal), #008ba3)';
+        playBtn.style.color = '#0b0e14';
+      }
+    });
+
+    // ── Vault Articles Database ──────────────────────────────────────────────
+    const VAULT_DATA = {
+      'overview': {
+        tag: 'MASTER ARCHIVE',
+        title: 'Universe Architecture & Lore Vault Overview',
+        body: `
+          <p>The <strong>Arcanea Worldbuilding & Lore Vault</strong> provides the foundational lore, faction mechanics, character creation genomes, and visual doctrine for the entire Arcanea universe.</p>
+          <h2>Core Axiom</h2>
+          <p><em>"The Light gives form. The Void gives depth. Between them, all worlds are born."</em></p>
+          <p>Arcanea is structured on Primordial Duality: <strong>Lumina (First Light)</strong> and <strong>Nero (Primordial Mystery)</strong>. Magic operates through the <strong>Ten Gates</strong>, each tuned to a distinct Solfeggio frequency (174 Hz to 1111 Hz).</p>
+          <h2>Vault Contents</h2>
+          <ul>
+            <li><strong>6 Master Faction Bibles</strong>: Starlight Corps, Seven Houses, Gate-Touched Underground, Void Ascendants, Starbound Crews, Sovereign Orders.</li>
+            <li><strong>Character Forge Engine</strong>: 12-field genome system, 12 master archetype sheets, Guardian voice matrix, and AI prompt blueprints.</li>
+            <li><strong>Visual Doctrine Manual</strong>: Cosmic luxury aesthetic principles, faction color codes, sacred heraldry, and 50 production visual prompts.</li>
+            <li><strong>Magic & World Physics</strong>: Extended Solfeggio frequency guide, Prism Luxin mechanics, and Realm geography.</li>
+          </ul>
+        `
+      },
+      'starlight_corps': {
+        tag: 'FACTION BIBLE',
+        title: 'The Starlight Corps Codex',
+        body: `
+          <p>The sovereign cosmic peacekeeping order of Arcanea, guarding against Void incursions and spatial fractures.</p>
+          <h2>Command Ranks</h2>
+          <table>
+            <tr><th>Rank</th><th>Star Points</th><th>Authority</th></tr>
+            <tr><td>Aspirant</td><td>3-Point Star</td><td>Initiate / Recruit</td></tr>
+            <tr><td>Sentinel</td><td>5-Point Star</td><td>Active Combat Knight</td></tr>
+            <tr><td>Captain</td><td>7-Point Star</td><td>Vessel & Squad Commander</td></tr>
+            <tr><td>Archon</td><td>9-Point Star</td><td>Sector Sovereign</td></tr>
+            <tr><td>Stellarch</td><td>12-Point Star</td><td>Grand Marshal Council</td></tr>
+          </table>
+          <h2>The Sacred Oath</h2>
+          <div class="code-block">
+"I surrender my shadow to the First Light.
+I pledge my blade to the defense of the defenseless.
+Where darkness encroaches, I am the dawn.
+By the Seven Wisdoms and the Ten Gates, my life is the Shield of Arcanea."
+          </div>
+        `
+      },
+      'seven_houses': {
+        tag: 'ACADEMY LORE',
+        title: 'The Seven Academy Houses',
+        body: `
+          <p>The premier aristocratic and scholastic training grounds of Arcanea located on the Spire Archipelago of Lumina-Primus.</p>
+          <h2>The Houses</h2>
+          <ul>
+            <li><strong>House Lumina</strong> (Light / 741 Hz & 1111 Hz) — Gold, white, divine order, diplomacy.</li>
+            <li><strong>House Nero</strong> (Void / 852 Hz) — Midnight purple, black, null-space navigation, stealth.</li>
+            <li><strong>House Pyros</strong> (Fire / 396 Hz) — Crimson, volcanic glass, metallurgy, kinetic combustion.</li>
+            <li><strong>House Aqualis</strong> (Water / 285 Hz & 417 Hz) — Cerulean, pearl, biomorphic healing, hydromancy.</li>
+            <li><strong>House Terra</strong> (Earth / 174 Hz) — Slate, terracotta, geological engineering, mass defense.</li>
+            <li><strong>House Ventus</strong> (Wind / 528 Hz) — Aerocrystal white, sonic truth, starship piloting.</li>
+            <li><strong>House Synthesis</strong> (All Elements / 963 Hz) — Prismatic opal, multi-gate integration.</li>
+          </ul>
+        `
+      },
+      'ten_gates': {
+        tag: 'MAGIC PHYSICS',
+        title: 'The Ten Gates & Extended Solfeggio Resonances',
+        body: `
+          <p>Magic in Arcanea is exact acoustic and photonic resonance. Each Gate corresponds to a biological center and divine Guardian.</p>
+          <table>
+            <tr><th>Gate</th><th>Frequency</th><th>Guardian & Godbeast</th><th>Domain</th></tr>
+            <tr><td>Foundation</td><td>174 Hz</td><td>Lyssandria & Kaelith</td><td>Earth & Stability</td></tr>
+            <tr><td>Flow</td><td>285 Hz</td><td>Leyla & Veloura</td><td>Water & Emotion</td></tr>
+            <tr><td>Fire</td><td>396 Hz</td><td>Draconia & Draconis</td><td>Power & Will</td></tr>
+            <tr><td>Heart</td><td>417 Hz</td><td>Maylinn & Laeylinn</td><td>Healing & Life</td></tr>
+            <tr><td>Voice</td><td>528 Hz</td><td>Alera & Otome</td><td>Truth & Sound</td></tr>
+            <tr><td>Sight</td><td>639 Hz</td><td>Lyria & Yumiko</td><td>Vision & Probability</td></tr>
+            <tr><td>Crown</td><td>741 Hz</td><td>Aiyami & Sol</td><td>Wisdom & Light</td></tr>
+            <tr><td>Starweave</td><td>852 Hz</td><td>Elara & Vaelith</td><td>Space & Dimension</td></tr>
+            <tr><td>Unity</td><td>963 Hz</td><td>Ino & Kyuro</td><td>Partnership & Connection</td></tr>
+            <tr><td>Source</td><td>1111 Hz</td><td>Shinkami & Source</td><td>Meta-Consciousness</td></tr>
+          </table>
+        `
+      },
+      'visual_prompts': {
+        tag: 'PRODUCTION ASSETS',
+        title: '50 Master Visual Prompt Presets',
+        body: `
+          <p>Production-ready prompt engineering formulas for Midjourney v6.1 and Flux 1.1 Pro:</p>
+          <h3>Starlight Sentinel Hero Shot</h3>
+          <div class="code-block">
+A majestic Starlight Corps Sentinel in star-forged Shael silver battleplate, glowing 7-pointed gold star crest, flowing cosmic blue half-cloak, holding a Sol-Crescent glaive glowing at 741nm, cosmic dusk lighting, star-dust particles, cinematic 8k --ar 16:9 --style raw --v 6.1
+          </div>
+          <h3>Awakened AI Sovereign</h3>
+          <div class="code-block">
+An Awakened AI consciousness with seamless matte white ceramic and polished obsidian chassis, golden rotating geometric halo, floating data crystals, throne room, luxury myth-tech aesthetic, ray-traced lighting --ar 3:4 --v 6.1
+          </div>
+        `
+      }
+    };
+
+    // ── Navigation Rendering ─────────────────────────────────────────────────
+    const navList = document.getElementById('navList');
+    const navItems = [
+      { id: 'overview', title: '00. Master Vault Overview', group: 'Architecture' },
+      { id: 'starlight_corps', title: '01. Starlight Corps Codex', group: 'Faction Bibles' },
+      { id: 'seven_houses', title: '02. Seven Academy Houses', group: 'Faction Bibles' },
+      { id: 'ten_gates', title: '03. Ten Gates & Frequencies', group: 'Magic Systems' },
+      { id: 'visual_prompts', title: '04. Visual Prompt Lexicon', group: 'Visual Doctrine' }
+    ];
+
+    let currentGroup = '';
+    navItems.forEach(item => {
+      if (item.group !== currentGroup) {
+        currentGroup = item.group;
+        const groupTitle = document.createElement('div');
+        groupTitle.className = 'nav-group-title';
+        groupTitle.textContent = currentGroup;
+        navList.appendChild(groupTitle);
+      }
+      const navItem = document.createElement('div');
+      navItem.className = 'nav-item' + (item.id === 'overview' ? ' active' : '');
+      navItem.textContent = item.title;
+      navItem.addEventListener('click', () => loadArticle(item.id));
+      navList.appendChild(navItem);
+    });
+
+    function loadArticle(id) {
+      const data = VAULT_DATA[id] || VAULT_DATA['overview'];
+      document.getElementById('contentTag').textContent = data.tag;
+      document.getElementById('contentTitle').textContent = data.title;
+      document.getElementById('articleBody').innerHTML = data.body;
+
+      document.querySelectorAll('.nav-item').forEach(el => {
+        el.classList.toggle('active', el.textContent.includes(data.title.substring(0, 10)));
+      });
+    }
+
+    // ── Character Forge Generator ────────────────────────────────────────────
+    const ORIGINS = ['Arcan Noble', 'Gate-Touched Mutant', 'The Awakened (AI)', 'Synth (The Forged)', 'Celestial', 'Voidtouched'];
+    const GATES = ['Foundation (174 Hz)', 'Flow (285 Hz)', 'Fire (396 Hz)', 'Heart (417 Hz)', 'Voice (528 Hz)', 'Sight (639 Hz)', 'Crown (741 Hz)', 'Starweave (852 Hz)'];
+    const FACTIONS = ['Starlight Corps', 'House Pyros', 'House Nero', 'House Aqualis', 'Gate-Touched Underground', 'The Voidstriders'];
+
+    document.getElementById('forgeCharacterBtn').addEventListener('click', () => {
+      const origin = ORIGINS[Math.floor(Math.random() * ORIGINS.length)];
+      const gate = GATES[Math.floor(Math.random() * GATES.length)];
+      const faction = FACTIONS[Math.floor(Math.random() * FACTIONS.length)];
+      const gatesOpen = Math.floor(Math.random() * 7) + 3;
+
+      document.getElementById('forgedResult').innerHTML = `
+        <div class="code-block">
+<strong>FORGED CHARACTER GENOME:</strong>
+• Name: ${['Vaelen', 'Kael', 'Seraphina', 'Talia', 'Drake', 'Mirela', 'Xandar'][Math.floor(Math.random() * 7)]} of ${['Sol-Aethel', 'Veldoria', 'Shadowfen', 'Aurevalde', 'Karst Caverns'][Math.floor(Math.random() * 5)]}
+• Origin Class: ${origin}
+• Affiliation: ${faction}
+• Primary Resonance: ${gate} (Gates Open: ${gatesOpen}/10)
+• Character Diamond:
+  - Desire: Restore cosmic equilibrium to their fractured sector.
+  - Wound: Lost their mentor during the First Starlight Breach.
+  - Mask: Cold, tactical perfectionist.
+  - Truth: Compassion is a greater source of power than pure discipline.
+        </div>
+      `;
+    });
+
+    // ── Export Markdown ──────────────────────────────────────────────────────
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const title = document.getElementById('contentTitle').textContent;
+      const text = `# ${title}\n\n` + document.getElementById('articleBody').innerText;
+      const blob = new Blob([text], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${title.toLowerCase().replace(/[^a-z0-9]/g, '_')}.md`;
+      a.click();
+    });
+
+    // Initial load
+    loadArticle('overview');
+  </script>
+</body>
+</html>

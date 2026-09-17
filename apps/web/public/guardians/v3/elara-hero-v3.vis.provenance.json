@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:elara-hero-v3",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v3/elara-hero-v3.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/v3/elara-hero-v3.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Masterwork photographic portrait of Elara, Guardian of Starweave Gate (852 Hz). Vast cosmic consciousness, dusk-tinted skin with subtle silver freckles forming miniature galaxies across cheekbones, deep void-black irises flecked with supernova remnants. Clothed in dark interstellar textiles that seem to absorb ambient light, held together by gossamer star-threads. Deep space backdrop with soft planetary nebula dust in bokeh. 8k, cinematic cosmic portrait.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark, generic galaxy wallpaper slop",
+    "seed": 852008,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Starweave",
+      "gate_number": 8,
+      "frequency_hz": 852,
+      "element": "Arcane/Cosmic",
+      "godbeast": "Vaelith",
+      "aspect_ratio": "3:4"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v3/elara-hero-v3.webp"
+    ],
+    "created_at": "2026-03-16T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Guardian asset [Elara] Gate 8 (Starweave)"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Interstellar textiles, subtle silver galaxy freckles, deep space bokeh"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "lib": ["ES2022", "DOM"],
+    "outDir": "demo/lib",
+    "rootDir": "src",
+    "declaration": false
+  },
+  "include": ["src/protocol/**/*.ts", "src/transport/local.ts", "src/transport/types.ts", "src/run/**/*.ts"]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://frankx.ai/schemas/vis-provenance-sidecar.schema.json",
+  "schema_version": "1.0.0",
+  "asset": {
+    "asset_id": "asset:elara-divine-bond",
+    "media_type": "image",
+    "sha256": null,
+    "local_path": "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/elara-divine-bond.webp",
+    "relative_path": "repos/arcanea-ai-app/apps/web/public/guardians/v2/elara-divine-bond.webp"
+  },
+  "generation": {
+    "provider": "antigravity",
+    "model": "nano-banana-pro",
+    "prompt": "Starweave Gate interconnection: Elara and Vaelith, the Celestial Spider-Manta. 852 Hz warp and weft of cosmic spacetime threads uniting all living minds.",
+    "negative_prompt": "blurry, cartoonish, low resolution, extra limbs, floating junk, text overlay, watermark, cheap CGI",
+    "seed": 852003,
+    "settings": {
+      "brand": "arcanea",
+      "gate": "Starweave",
+      "gate_number": 8,
+      "frequency_hz": 852,
+      "element": "Arcane/Cosmic",
+      "godbeast": "Vaelith",
+      "aspect_ratio": "16:9"
+    },
+    "output_paths": [
+      "C:/Users/frank/starlight/repos/arcanea-ai-app/apps/web/public/guardians/v2/elara-divine-bond.webp"
+    ],
+    "created_at": "2026-03-01T00:00:00.000Z"
+  },
+  "agent": {
+    "coding_agent": "antigravity",
+    "repo": "arcanea-ai-app",
+    "session_ref": "7ba26976-f949-4efd-85bb-97f4069f7bf0",
+    "summary": "Canonical Arcanea Divine Bond [Elara + Vaelith] Gate 8"
+  },
+  "evaluation": {
+    "brand": "arcanea",
+    "status": "approved",
+    "taste_grade": "A+",
+    "notes": "Cosmic spacetime warp and weft, 852 Hz telepathic lattice"
+  },
+  "rights": {
+    "rights_status": "generated-owned",
+    "license": "Proprietary Arcanea / FrankX Canon"
+  }
+}
