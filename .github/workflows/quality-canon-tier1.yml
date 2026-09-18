@@ -46,15 +46,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # ============================================
-  # Rule 3 — SVG logo ban
-  # ============================================
-  svg-logo-ban:
-    # Cost gate: skip on draft PRs — agents iterate free; the check runs when marked ready.
+  # One VM, four diff scans. Four separate jobs billed four rounded minutes
+  # for a few seconds of grep each.
+  canon-tier1:
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
-    name: Canon §10.1.3 — No SVG ArcaneanMark
+    name: Quality Canon Tier-1 checks
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 5
     steps:
       - name: Checkout PR
         uses: actions/checkout@v7
@@ -96,22 +94,6 @@ jobs:
 
           echo "::notice::Canon §10.1.3 holds — no SVG ArcaneanMark introduced."
 
-  # ============================================
-  # Rule 5 — No claude-flow / ruvnet co-author contamination
-  # ============================================
-  no-coauthor-contamination:
-    # Cost gate: skip on draft PRs — agents iterate free; the check runs when marked ready.
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
-    name: Canon §10.1.5 — No claude-flow co-author
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    steps:
-      - name: Checkout PR
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha }}
-
       - name: Scan PR commits for forbidden co-author trailers
         shell: bash
         run: |
@@ -141,22 +123,6 @@ jobs:
           fi
 
           echo "::notice::Canon §10.1.5 holds — no forbidden co-author trailers."
-
-  # ============================================
-  # Rule 6 — No empty catch blocks
-  # ============================================
-  no-empty-catch:
-    # Cost gate: skip on draft PRs — agents iterate free; the check runs when marked ready.
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
-    name: Canon §10.1.6 — No empty catch blocks
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    steps:
-      - name: Checkout PR
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Diff-scan for empty catch blocks
         shell: bash
@@ -204,22 +170,6 @@ jobs:
           fi
 
           echo "::notice::Canon §10.1.6 holds — no empty catch blocks introduced."
-
-  # ============================================
-  # Rule 7 — No commented-out code (heuristic)
-  # ============================================
-  no-commented-code:
-    # Cost gate: skip on draft PRs — agents iterate free; the check runs when marked ready.
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
-    name: Canon §10.1.7 — No commented-out code (heuristic)
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    steps:
-      - name: Checkout PR
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Run commented-out-code heuristic
         shell: bash
@@ -306,13 +256,7 @@ jobs:
   tier1-status:
     name: Quality Canon Tier-1 Status
     runs-on: ubuntu-latest
-    needs:
-      [
-        svg-logo-ban,
-        no-coauthor-contamination,
-        no-empty-catch,
-        no-commented-code,
-      ]
+    needs: [canon-tier1]
     if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
     steps:
       - name: Aggregate Tier-1 results
@@ -320,20 +264,11 @@ jobs:
           echo "## Quality Canon Tier-1 Results" >> $GITHUB_STEP_SUMMARY
           echo "| Rule | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| §10.1.3 SVG logo ban | ${{ needs.svg-logo-ban.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| §10.1.5 No claude-flow co-author | ${{ needs.no-coauthor-contamination.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| §10.1.6 No empty catch | ${{ needs.no-empty-catch.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| §10.1.7 No commented-out code | ${{ needs.no-commented-code.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| §10.1.3–7 combined | ${{ needs.canon-tier1.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "_Rules 1, 2, 4 covered by existing design-fence.yml + lockfile-drift.yml._" >> $GITHUB_STEP_SUMMARY
 
-          ALL_GREEN=true
-          [ "${{ needs.svg-logo-ban.result }}" != "success" ] && ALL_GREEN=false
-          [ "${{ needs.no-coauthor-contamination.result }}" != "success" ] && ALL_GREEN=false
-          [ "${{ needs.no-empty-catch.result }}" != "success" ] && ALL_GREEN=false
-          [ "${{ needs.no-commented-code.result }}" != "success" ] && ALL_GREEN=false
-
-          if [ "$ALL_GREEN" = "false" ]; then
+          if [ "${{ needs.canon-tier1.result }}" != "success" ]; then
             echo "::error::Quality Canon Tier-1 had failures — see job summaries above"
             exit 1
           fi

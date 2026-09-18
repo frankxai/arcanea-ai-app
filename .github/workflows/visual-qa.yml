@@ -2,7 +2,10 @@ name: Visual QA - Screenshot + Gemini Vision Analysis
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    # Match Quality Gate: once at open (if already ready) or when marked ready.
+    # synchronize on a ready PR re-downloaded Chromium and waited on Vercel
+    # for every agent push.
+    types: [opened, ready_for_review]
     paths:
       - ".github/workflows/visual-qa.yml"
       - "apps/web/**"
@@ -550,7 +553,7 @@ jobs:
         with:
           name: visual-qa-screenshots-pr${{ github.event.pull_request.number }}-${{ github.run_number }}
           path: screenshots/
-          retention-days: 14
+          retention-days: 7
           if-no-files-found: error
 
       - name: Enforce Visual QA verdict
