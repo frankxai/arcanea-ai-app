@@ -5,7 +5,12 @@
  */
 
 import assert from 'node:assert';
+import { execFile } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { promisify } from 'node:util';
 import { startAgent } from '../src/server.mjs';
+
+const AUTH_TEST = fileURLToPath(new URL('./auth.test.mjs', import.meta.url));
 
 async function main() {
   const handle = await startAgent({ tenants: ['arcanea'] });

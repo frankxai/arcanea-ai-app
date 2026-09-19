@@ -21,6 +21,7 @@
  */
 
 import {
+  appendFileSync,
   writeFileSync,
   readFileSync,
   existsSync,
@@ -212,7 +213,11 @@ export class MemoryBridge {
     const lineCount = current.split('\n').length;
 
     if (lineCount < this.cfg.maxLines - 10) {
-      writeFileSync(this.cfg.outputPath, current + addition, 'utf-8');
+      // Append rather than rewriting what was just read: several agents share
+      // this file, and writing back `current` discards anything another
+      // process added in between. A slightly stale line count only delays the
+      // capacity sync by one call; a lost write loses memory permanently.
+      appendFileSync(this.cfg.outputPath, addition, 'utf-8');
     } else {
       // At capacity — full sync to keep the file clean
       this.sync();

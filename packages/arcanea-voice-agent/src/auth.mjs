@@ -23,13 +23,20 @@ const TOKEN_PATH = join(homedir(), '.arcanea', 'agent-token');
 export function getOrCreateToken() {
   if (existsSync(TOKEN_PATH)) {
     const t = readFileSync(TOKEN_PATH, 'utf8').trim();
-    if (t.length >= 32) return t;
+    if (t.length >= 32) {
+      // Tokens written before the mode was set at creation time may still sit
+      // at the umask default, so repair them on read rather than trusting age.
+      try { chmodSync(TOKEN_PATH, 0o600); } catch {}
+      return t;
+    }
   }
   const dir = dirname(TOKEN_PATH);
-  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true, mode: 0o700 });
   const token = randomBytes(32).toString('hex');
-  writeFileSync(TOKEN_PATH, token, 'utf8');
-  try { chmodSync(TOKEN_PATH, 0o600); } catch {}
+  // The mode belongs in the write, not a chmod afterwards: a separate chmod
+  // leaves the secret readable by the umask default for the window between the
+  // two calls, and leaves it readable forever if the chmod fails.
+  writeFileSync(TOKEN_PATH, token, { encoding: 'utf8', mode: 0o600 });
   return token;
 }
 
