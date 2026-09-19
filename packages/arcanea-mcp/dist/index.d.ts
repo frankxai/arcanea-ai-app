@@ -11,6 +11,7 @@
  * - Memory layer for persistent creative journeys
  * - Canon validation and Ten Gates system
  * - Agent orchestration system (inspired by oh-my-opencode)
+ * - Multi-agent parallel execution
  * - Creation graph with relationship network
  */
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
