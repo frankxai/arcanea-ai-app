@@ -13,12 +13,7 @@
  * `/health` is the one unauthenticated endpoint, used for discovery.
  */
 
-import {
-  mkdirSync,
-  readFileSync,
-  writeFileSync,
-  chmodSync,
-} from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync, chmodSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { homedir } from "node:os";
 import { randomBytes } from "node:crypto";
