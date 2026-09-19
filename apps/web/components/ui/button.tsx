@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import * as React from 'react';
-import { Slot } from '@radix-ui/react-slot';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/lib/utils';
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
 
 // ─── Spinner ─────────────────────────────────────────────────────────────────
 
 function ButtonSpinner({ className }: { className?: string }) {
   return (
     <svg
-      className={cn('animate-spin motion-reduce:animate-none h-4 w-4', className)}
+      className={cn(
+        "animate-spin motion-reduce:animate-none h-4 w-4",
+        className,
+      )}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -36,68 +39,66 @@ function ButtonSpinner({ className }: { className?: string }) {
 
 const buttonVariants = cva(
   [
-    'inline-flex items-center justify-center gap-2 whitespace-nowrap',
-    'rounded-lg text-sm font-medium',
-    'ring-offset-background transition-[color,background-color,border-color,box-shadow,transform,filter] duration-150 ease-out motion-reduce:transition-none',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlantean-teal focus-visible:ring-offset-2',
-    'motion-safe:active:scale-[0.98] focus-visible:!transform-none active:brightness-[0.95]',
-    'disabled:pointer-events-none disabled:opacity-50',
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap",
+    "rounded-lg text-sm font-medium",
+    "ring-offset-background transition-[color,background-color,border-color,box-shadow,transform,filter] duration-150 ease-out motion-reduce:transition-none",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlantean-teal focus-visible:ring-offset-2",
+    "motion-safe:active:scale-[0.98] focus-visible:!transform-none active:brightness-[0.95]",
+    "disabled:pointer-events-none disabled:opacity-50",
   ],
   {
     variants: {
       variant: {
         // PRIMARY — solid teal. The default action.
         default:
-          'bg-atlantean-teal text-cosmic-void font-semibold hover:bg-atlantean-teal-light shadow-glow-sm hover:shadow-glow-md',
+          "bg-atlantean-teal text-cosmic-void font-semibold hover:bg-atlantean-teal-light shadow-glow-sm hover:shadow-glow-md",
         // SECONDARY — ghost with border. Secondary actions.
         secondary:
-          'border border-cosmic-border bg-cosmic-surface text-text-primary hover:bg-cosmic-raised hover:border-cosmic-border-bright',
+          "border border-cosmic-border bg-cosmic-surface text-text-primary hover:bg-cosmic-raised hover:border-cosmic-border-bright",
         // GHOST — no border, no background. Tertiary / navigation.
         ghost:
-          'text-text-secondary hover:bg-cosmic-raised hover:text-text-primary',
+          "text-text-secondary hover:bg-cosmic-raised hover:text-text-primary",
         // DESTRUCTIVE — red. Danger only.
-        destructive:
-          'bg-error text-white hover:bg-error-dark',
+        destructive: "bg-error text-white hover:bg-error-dark",
         // PREMIUM — gold accent. Upgrade / special actions.
         premium:
-          'bg-gold-deep text-cosmic-void font-semibold hover:bg-gold-bright shadow-[0_0_20px_rgba(255,215,0,0.2)] hover:shadow-[0_0_30px_rgba(255,215,0,0.35)]',
+          "bg-gold-deep text-cosmic-void font-semibold hover:bg-gold-bright shadow-[0_0_20px_rgba(255,215,0,0.2)] hover:shadow-[0_0_30px_rgba(255,215,0,0.35)]",
         // LINK — inline link style.
-        link:
-          'text-atlantean-teal underline-offset-4 hover:underline p-0 h-auto',
+        link: "text-atlantean-teal underline-offset-4 hover:underline p-0 h-auto",
 
         // ── Legacy themed variants (kept for backward compat, prefer theme system) ──
         outline:
-          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         cosmic:
-          'bg-cosmic-surface border border-cosmic-border text-text-primary hover:bg-cosmic-raised hover:border-gold-medium shadow-glow-sm hover:shadow-glow-md',
+          "bg-cosmic-surface border border-cosmic-border text-text-primary hover:bg-cosmic-raised hover:border-gold-medium shadow-glow-sm hover:shadow-glow-md",
         atlantean:
-          'bg-atlantean-deep border border-atlantean-teal text-text-primary hover:bg-atlantean-primary hover:shadow-atlantean',
+          "bg-atlantean-deep border border-atlantean-teal text-text-primary hover:bg-atlantean-primary hover:shadow-atlantean",
         draconic:
-          'bg-draconic-crimson-deep border border-draconic-gold text-text-primary hover:bg-draconic-crimson hover:shadow-draconic',
+          "bg-draconic-crimson-deep border border-draconic-gold text-text-primary hover:bg-draconic-crimson hover:shadow-draconic",
         creation:
-          'bg-creation-gold-deep border border-creation-gold text-cosmic-void hover:bg-creation-gold hover:shadow-creation',
-        glow:
-          'bg-gradient-to-r from-atlantean-teal via-gold-bright to-draconic-crimson text-cosmic-void font-semibold animate-shimmer motion-reduce:animate-none bg-[length:200%_100%] shadow-glow-lg hover:shadow-glow-xl',
+          "bg-creation-gold-deep border border-creation-gold text-cosmic-void hover:bg-creation-gold hover:shadow-creation",
+        glow: "bg-gradient-to-r from-atlantean-teal via-gold-bright to-draconic-crimson text-cosmic-void font-semibold animate-shimmer motion-reduce:animate-none bg-[length:200%_100%] shadow-glow-lg hover:shadow-glow-xl",
       },
       size: {
-        default: 'h-10 px-4 py-2',
-        sm: 'h-9 px-3 text-xs',
-        lg: 'h-11 px-8',
-        xl: 'h-14 px-10 text-base',
-        icon: 'h-10 w-10 p-0',
+        default: "h-10 px-4 py-2",
+        sm: "h-9 px-3 text-xs",
+        lg: "h-11 px-8",
+        xl: "h-14 px-10 text-base",
+        icon: "h-10 w-10 p-0",
       },
     },
     defaultVariants: {
-      variant: 'default',
-      size: 'default',
+      variant: "default",
+      size: "default",
     },
-  }
+  },
 );
 
 // ─── Props ───────────────────────────────────────────────────────────────────
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   /** Show a loading spinner and disable interaction */
@@ -124,9 +125,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       ...props
     },
-    ref
+    ref,
   ) => {
-    const Comp = asChild ? Slot : 'button';
+    const Comp = asChild ? Slot : "button";
     const isDisabled = disabled || loading;
 
     if (asChild) {
@@ -154,7 +155,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {loading ? (
-          <ButtonSpinner className={children ? 'mr-0' : ''} />
+          <ButtonSpinner className={children ? "mr-0" : ""} />
         ) : iconLeft ? (
           <span className="shrink-0">{iconLeft}</span>
         ) : null}
@@ -164,9 +165,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ) : null}
       </Comp>
     );
-  }
+  },
 );
 
-Button.displayName = 'Button';
+Button.displayName = "Button";
 
 export { Button, buttonVariants, ButtonSpinner };
