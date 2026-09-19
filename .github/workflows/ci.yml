@@ -38,7 +38,9 @@ jobs:
     # it suppresses: ~140 runs/month x ~14 billable minutes = ~1,960 min/month
     # (~$12 at $0.006/min) against this repo's 10,450 minutes in 2026-08.
     # Buy the verified merge; the concurrency block above already cancels
-    # superseded draft iterations.
+    # superseded draft iterations. Playwright in the Build job is a *step*
+    # skip on drafts, not a job skip, so the required Build context still
+    # earns turbo build + unit tests.
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -296,6 +298,7 @@ jobs:
           pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/weight-of-wonders.test.ts
 
       - name: Verify galleries rendered desktop, 375px mobile and reduced motion
+        if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
           NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
@@ -314,12 +317,12 @@ jobs:
           fi
 
       - name: Upload gallery rendered evidence
-        if: always()
+        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
         uses: actions/upload-artifact@v7
         with:
           name: galleries-built-app-${{ github.sha }}
           path: screenshots/
-          retention-days: 14
+          retention-days: 7
           if-no-files-found: warn
 
       - name: Build summary
