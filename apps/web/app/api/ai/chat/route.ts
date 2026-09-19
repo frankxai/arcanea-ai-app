@@ -303,8 +303,7 @@ export async function POST(req: NextRequest) {
 
     const normalizedMessages = messages.map((msg) => ({
       role: (msg.role === "model" ? "assistant" : msg.role) as
-        | "user"
-        | "assistant",
+        "user" | "assistant",
       content: extractMessageText(msg),
     }));
 
