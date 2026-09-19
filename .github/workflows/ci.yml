@@ -158,7 +158,7 @@ jobs:
         run: pnpm --dir apps/web run lint
 
       - name: Shared button motion contract
-        run: pnpm --dir apps/web test:button-motion
+        run: node --test apps/web/components/ui/button-motion-contract.test.mjs
 
       # The repository has historical formatting debt. Enforce Prettier as a
       # ratchet on every file changed by this push/PR without masking failures
