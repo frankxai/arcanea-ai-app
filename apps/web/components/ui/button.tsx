@@ -38,7 +38,7 @@ const buttonVariants = cva(
   [
     'inline-flex items-center justify-center gap-2 whitespace-nowrap',
     'rounded-lg text-sm font-medium',
-    'ring-offset-background transition-[color,background-color,border-color,box-shadow,transform] duration-150 ease-out motion-reduce:transition-none',
+    'ring-offset-background transition-[color,background-color,border-color,box-shadow,transform,filter] duration-150 ease-out motion-reduce:transition-none',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlantean-teal focus-visible:ring-offset-2',
     'motion-safe:active:scale-[0.98] focus-visible:!transform-none active:brightness-[0.95]',
     'disabled:pointer-events-none disabled:opacity-50',
