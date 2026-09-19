@@ -1,14 +1,9 @@
 name: Lighthouse CI
 
 on:
-  pull_request:
-    # ready_for_review re-fires the draft-gated job(s) below; without it a gated
-    # job skips on the draft and never reports once the PR is marked ready.
-    types: [opened, synchronize, reopened, ready_for_review]
-    paths:
-      - "apps/web/**"
-      - "packages/design-system/**"
-      - "packages/arcanea-design-preset.js"
+  # Do not boot a runner on pull_request. The PR path only printed a skip
+  # notice and still billed a rounded minute. Quality Gate already runs
+  # Lighthouse against the production build at ready-for-review.
   workflow_dispatch:
 
 concurrency:
@@ -28,16 +23,9 @@ permissions:
 
 jobs:
   lighthouse:
-    # Cost gate: skip on draft PRs — agents iterate free; the audit runs when marked ready.
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-
-      - name: Advisory on pull requests
-        if: github.event_name == 'pull_request'
-        run: |
-          echo "::notice::Skipping external Lighthouse audit on PRs. Release gates are CI, Quality Gate, Security Audit, E2E Smoke, and Vercel Preview. Run this workflow manually when a non-blocking Lighthouse report is needed."
 
       - name: Wait for Vercel Preview
         if: github.event_name == 'workflow_dispatch'
