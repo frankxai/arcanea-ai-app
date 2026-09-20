@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
+    # Validate stacked PRs too; each proposed merge needs its own checks.
     # 'edited' is required: it is the only pull_request activity type that fires
     # when the base branch is retargeted, and required-check verdicts are recorded
     # against the head SHA. Without it a green earned against one base survives a
@@ -146,7 +146,7 @@ jobs:
         run: node --test scripts/tests/vercel-ignore-build.test.mjs
 
       - name: Verify auth recovery and creator economics
-        run: node --test scripts/tests/auth-env.test.mjs scripts/tests/auth-redirect.test.mjs scripts/tests/creator-economics.test.mjs scripts/tests/provider-routing.test.mjs scripts/tests/provider-preferences.test.mjs
+        run: node --test scripts/tests/auth-env.test.mjs scripts/tests/auth-redirect.test.mjs scripts/tests/creator-economics.test.mjs scripts/tests/provider-routing.test.mjs scripts/tests/provider-preferences.test.mjs scripts/tests/notification-channel.test.mjs
 
       - name: Verify exact world drafts and account return paths
         run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts

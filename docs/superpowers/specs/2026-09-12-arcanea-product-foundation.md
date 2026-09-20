@@ -40,6 +40,108 @@ turn the proposed hosted option into an active service.
 
 ## Customer journey and tiers
 
+### Strategy clarification after the production audit
+
+Recommendation: a portable creative product business with a small account and
+delivery service. Preserve the estate's customer-operated-runtime rule. The website
+is the storefront, documentation, samples, installer, license/download account and
+optional export workbench. Existing hosted chat remains a transitional capability;
+it is not evidence that hosted inference is the chosen subscription business.
+
+| Surface                   | What Arcanea provides                                                          | Where the creator's work runs                        | Operating commitment                                                             |
+| ------------------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Downloadable kit / plugin | Original examples, schemas, prompts, skills, quality checks, templates         | Customer's chosen tool and files                     | Updates, compatibility, purchase support and statutory remedies                  |
+| Local MCP                 | Canon validation, approved-source lookup, exports and controlled local actions | Customer's machine or deployment                     | Signed/versioned releases, minimal permissions and security fixes                |
+| Public ChatGPT plugin     | Packaged skills; optional authenticated entitlement and catalog tools          | ChatGPT's environment; remote tools run where hosted | Provider review, privacy policy and any remote endpoint's availability           |
+| Arcanea website           | Discover, sample, obtain, install, manage purchases, export                    | Public web plus minimal private account records      | Auth, entitlements, transactional email, privacy requests and security           |
+| Self-deployed workbench   | World graph, continuity editor, model connections and media briefs             | Creator's Vercel/Supabase/provider accounts          | Clear setup, upgrade and export instructions; no promise to operate their server |
+
+MCP is an integration protocol, not the product or a privacy exemption. Use skills
+for repeatable craft, plugins for installation/distribution, and MCP only where
+live data or controlled actions are necessary. A skills-only plugin is a viable
+first edition; it does not require an Arcanea-hosted model endpoint. OpenAI's
+[current skills documentation](https://developers.openai.com/plugins/concepts/skills)
+explicitly supports packaged workflows without an MCP server.
+
+The [OpenAI public plugin rules](https://developers.openai.com/plugins/app-guidelines)
+currently prohibit selling digital subscriptions/content in the plugin or promoting
+an upgrade transaction. Existing subscribers can sign in to use their entitlements.
+Do not place a Polar/Stripe checkout tool, upgrade CTA, API-key field, password field
+or full-chat-history parameter in the published plugin. Sell through the owned
+storefront and use the plugin to deliver a useful, reviewed capability. Public MCP
+submission requires a [stable HTTPS endpoint](https://developers.openai.com/plugins/build/mcp-server);
+local stdio alone does not satisfy that channel. A skills-only package avoids that
+endpoint until a real tool requires it.
+
+[Claude plugins](https://claude.com/docs/plugins/overview) and
+[Claude Code marketplaces](https://code.claude.com/docs/en/plugin-marketplaces)
+provide another distribution channel. Validate each supported host with the same
+sample world and export fixtures; installation support does not prove identical
+permissions, file access, billing, or execution behavior across products.
+
+### What a subscription funds
+
+Use one renewable Creator library first, with optional team licensing when there is
+team demand. The three tier names below are hypotheses, not three launch obligations.
+One-off kits remain a useful purchase for creators who do not need ongoing updates.
+Renewal must buy real new editions, maintained integrations, improved checks and
+usable assets. Do not charge merely for access to a thin API proxy. Keep earned
+downloads usable after cancellation under the product license; never revoke the
+creator's own output. Arcanea earns product revenue, not a royalty on every book
+its customer sells. Marketplace fees for optional distribution would be a separate,
+explicit service agreement, not a default claim on IP.
+
+Creator ownership and data custody are independent. Recommended terms preserve
+the customer's pre-existing and original contributions; Arcanea retains its kit
+and software rights, with a clear commercial-use license. Do not promise exclusive
+copyright in every generated element. The [US Copyright Office's AI work](https://www.copyright.gov/ai/)
+distinguishes human authorship from purely generated output; other jurisdictions
+and provider/license conditions must be assessed for the actual seller and market.
+This is a proposed product boundary, not published legal language.
+
+### Minimum data responsibilities
+
+| Data                                  | Target custody and access                                                                   | Required behavior before claiming it                                                                                       |
+| ------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Worlds, manuscripts, character memory | Customer files by default; explicit opt-in for hosted saving                                | Versioned export with canon, assets and references; no hidden ingestion                                                    |
+| Model keys                            | Customer tool/vault; current web storage is plaintext and sends keys through Arcanea on use | Accurate disclosure, no key logging, no unrelated-provider forwarding; session-only storage is a later compatibility slice |
+| Identity and purchases                | Arcanea's private account service and payment processor                                     | Minimal fields, own-account access, retention schedule and deletion request path                                           |
+| Entitlements and payment customer IDs | Server-controlled private records                                                           | Never publicly readable or user-editable profile attributes                                                                |
+| Analytics and errors                  | Minimal aggregate events and sanitized errors                                               | No manuscript/key capture, documented retention and consent where required                                                 |
+| Published books/media/agents          | Explicit customer-selected destination                                                      | Preview, rights/provenance check, publish confirmation and rollback/unpublish                                              |
+
+Even without hosting manuscripts, Arcanea still processes account, purchase and
+support data. Payment merchant-of-record service reduces specific tax/payment
+work; it does not transfer all privacy, product security, consumer or IP duties.
+The previously observed profile grants remain a paid-release blocker until migrated
+and tested with anonymous, owner and other-user identities.
+
+### Production experience acceptance and skill use
+
+Use Supabase auth/RLS guidance for sessions, grants, private storage, signed URLs and
+deletion; Vercel deployment/env guidance for preview-to-production checks and rollback;
+AI SDK guidance for streaming, cancellation, typed tools and sanitized failures;
+OpenAI documentation for structured outputs, evaluations and provider-specific data
+settings; Superpowers debugging/TDD/review for reproducible failures and regressions;
+Arcanea's Premium Web OS for hierarchy, accessibility and responsive verification.
+Eve is optional internal workflow tooling; adopting it is not a customer feature or
+a reason to host autonomous customer agents.
+
+The provider-settings scene has one primary task: choose one provider, enter its
+key, understand its route, save and continue. Use the existing Arcanea tokens, a
+single-column form, native labeled controls, 44px targets, explicit show/hide,
+optional search disclosure, persistent errors and a clear exit. No decorative
+animation or new media dependencies. Benchmark the clarity of Vercel's connection
+settings; verify Arcanea at desktop and 375px with keyboard and reduced motion.
+
+Release acceptance: Google sign-in returns to the requested protected page; refresh
+preserves the session; sign-out blocks a fresh protected request; invalid callback
+recovers; settings never equate a saved key with verified access; blocked storage
+and stale-tab writes are explicit; a provider receives only its own key; cancel and
+upstream errors are recoverable; purchases use signed, idempotent events; export,
+refund/cancel, deletion and cross-account access have exercised paths. The current
+slice addresses auth and provider settings, not this entire release contract.
+
 Start with one completed path: explore a sample → start a private draft → connect a
 provider → approve a world bible → draft and revise → export → choose a publication
 destination. Publishing and sending are explicit user actions. Every page states

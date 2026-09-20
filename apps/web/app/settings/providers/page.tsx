@@ -1,595 +1,383 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
+import { useEffect, useState, useSyncExternalStore } from "react";
+import Link from "next/link";
+import { PhArrowLeft, PhEye, PhEyeSlash, PhKey } from "@/lib/phosphor-icons";
 import {
-  PhArrowLeft,
-  PhKey,
-  PhCheck,
-  PhCircleNotch,
-  PhWarningCircle,
-  PhEye,
-  PhEyeSlash,
-  PhTrash,
-} from '@/lib/phosphor-icons';
+  parseProviderKeys,
+  readProviderPreferences,
+  saveProviderPreferences,
+  type ProviderKeys,
+} from "@/lib/ai/provider-preferences";
 
-// ---------------------------------------------------------------------------
-// Provider definitions
-// ---------------------------------------------------------------------------
-
-interface Provider {
-  id: string;
-  name: string;
-  description: string;
-  color: string;
-  envKey: string;
-  placeholder: string;
-  docsUrl: string;
-  testEndpoint: string;
-}
-
-const PROVIDERS: Provider[] = [
+const PROVIDERS = [
   {
-    id: 'openrouter',
-    name: 'OpenRouter',
-    description: 'One key, 300+ models — Gemini, Claude, GPT, Llama, Mistral & more',
-    color: 'var(--arc-void)',
-    envKey: 'OPENROUTER_API_KEY',
-    placeholder: 'sk-or-v1-...',
-    docsUrl: 'https://openrouter.ai/keys',
-    testEndpoint: '/api/ai/chat',
+    id: "google",
+    name: "Google Gemini",
+    url: "https://ai.google.dev/gemini-api/docs/api-key",
   },
   {
-    id: 'google',
-    name: 'Google Gemini',
-    description: 'Gemini 2.0 Flash — fast, capable, great for creative work',
-    color: 'var(--arc-brand-atlantean-teal)',
-    envKey: 'GOOGLE_GENERATIVE_AI_API_KEY',
-    placeholder: 'AIza...',
-    docsUrl: 'https://ai.google.dev/gemini-api/docs/api-key',
-    testEndpoint: '/api/ai/chat',
+    id: "anthropic",
+    name: "Anthropic Claude",
+    url: "https://console.anthropic.com/settings/keys",
+  },
+  { id: "openai", name: "OpenAI", url: "https://platform.openai.com/api-keys" },
+  { id: "openrouter", name: "OpenRouter", url: "https://openrouter.ai/keys" },
+  { id: "xai", name: "xAI Grok", url: "https://console.x.ai" },
+  {
+    id: "deepseek",
+    name: "DeepSeek",
+    url: "https://platform.deepseek.com/api_keys",
+  },
+  { id: "groq", name: "Groq", url: "https://console.groq.com/keys" },
+  {
+    id: "cerebras",
+    name: "Cerebras",
+    url: "https://cloud.cerebras.ai/platform",
   },
   {
-    id: 'anthropic',
-    name: 'Anthropic Claude',
-    description: 'Claude 4 — deep reasoning, nuanced writing, code mastery',
-    color: 'var(--arc-fire)',
-    envKey: 'ANTHROPIC_API_KEY',
-    placeholder: 'sk-ant-...',
-    docsUrl: 'https://console.anthropic.com/settings/keys',
-    testEndpoint: '/api/ai/chat',
+    id: "mistral",
+    name: "Mistral AI",
+    url: "https://console.mistral.ai/api-keys",
   },
-  {
-    id: 'openai',
-    name: 'OpenAI',
-    description: 'GPT-5 — ultra high reasoning, mathematics, code',
-    color: 'var(--arc-brand-atlantean-teal)',
-    envKey: 'OPENAI_API_KEY',
-    placeholder: 'sk-...',
-    docsUrl: 'https://platform.openai.com/api-keys',
-    testEndpoint: '/api/ai/chat',
-  },
-  {
-    id: 'xai',
-    name: 'xAI Grok',
-    description: 'Grok 4.2 — 500B params, real-time knowledge, unfiltered',
-    color: 'var(--arc-text-primary)',
-    envKey: 'XAI_API_KEY',
-    placeholder: 'xai-...',
-    docsUrl: 'https://console.x.ai',
-    testEndpoint: '/api/ai/chat',
-  },
-  {
-    id: 'deepseek',
-    name: 'DeepSeek',
-    description: 'DeepSeek R1 + V3 — transparent reasoning, 50-100x cheaper',
-    color: 'var(--arc-void)',
-    envKey: 'DEEPSEEK_API_KEY',
-    placeholder: 'sk-...',
-    docsUrl: 'https://platform.deepseek.com/api_keys',
-    testEndpoint: '/api/ai/chat',
-  },
-  {
-    id: 'groq',
-    name: 'Groq',
-    description: 'Lightning-fast inference — 750 tok/s, lowest latency',
-    color: 'var(--arc-fire)',
-    envKey: 'GROQ_API_KEY',
-    placeholder: 'gsk_...',
-    docsUrl: 'https://console.groq.com/keys',
-    testEndpoint: '/api/ai/chat',
-  },
-  {
-    id: 'cerebras',
-    name: 'Cerebras',
-    description: 'Bolt — 2,200+ tok/s, fastest inference on Earth',
-    color: 'var(--arc-wind)',
-    envKey: 'CEREBRAS_API_KEY',
-    placeholder: 'csk-...',
-    docsUrl: 'https://cloud.cerebras.ai/platform',
-    testEndpoint: '/api/ai/chat',
-  },
-  {
-    id: 'mistral',
-    name: 'Mistral AI',
-    description: 'Mistral Large & Codestral — multilingual, code, and reasoning',
-    color: 'var(--arc-fire)',
-    envKey: 'MISTRAL_API_KEY',
-    placeholder: 'sk-...',
-    docsUrl: 'https://console.mistral.ai/api-keys',
-    testEndpoint: '/api/ai/chat',
-  },
+  { id: "moonshot", name: "Moonshot", url: "https://platform.moonshot.ai" },
 ];
-
-const SEARCH_PROVIDERS_UI: Provider[] = [
-  {
-    id: 'tavily',
-    name: 'Tavily Search',
-    description: 'AI-optimized search — best results, $5 per 1K queries',
-    color: 'var(--arc-brand-atlantean-teal)',
-    envKey: 'TAVILY_API_KEY',
-    placeholder: 'tvly-...',
-    docsUrl: 'https://tavily.com',
-    testEndpoint: '/api/search/web',
-  },
-  {
-    id: 'brave',
-    name: 'Brave Search',
-    description: 'Privacy-focused — 2,000 free searches/month',
-    color: 'var(--arc-fire)',
-    envKey: 'BRAVE_API_KEY',
-    placeholder: 'BSA...',
-    docsUrl: 'https://brave.com/search/api/',
-    testEndpoint: '/api/search/web',
-  },
+const SEARCH_PROVIDERS = [
+  { id: "tavily", name: "Tavily", url: "https://tavily.com" },
+  { id: "brave", name: "Brave Search", url: "https://brave.com/search/api/" },
 ];
+const control =
+  "min-h-11 rounded-xl border border-[var(--arc-cosmic-border-bright)] bg-[var(--arc-cosmic-deep)] px-4 py-3 text-sm text-[var(--arc-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]";
 
-// ---------------------------------------------------------------------------
-// localStorage helpers
-// ---------------------------------------------------------------------------
-
-const STORAGE_KEY = 'arcanea-provider-keys';
-
-interface StoredKeys {
-  [providerId: string]: string;
-}
-
-function loadKeys(): StoredKeys {
-  if (typeof window === 'undefined') return {};
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
-}
-
-function saveKeys(keys: StoredKeys) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(keys));
-}
-
-function getActiveProvider(): string {
-  if (typeof window === 'undefined') return 'google';
-  return localStorage.getItem('arcanea-active-provider') || 'google';
-}
-
-function setActiveProvider(id: string) {
-  localStorage.setItem('arcanea-active-provider', id);
-}
-
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
-
-type TestStatus = 'idle' | 'testing' | 'success' | 'error';
+const subscribeToHydration = () => () => {};
 
 export default function ProvidersPage() {
-  const [keys, setKeys] = useState<StoredKeys>({});
-  const [visibility, setVisibility] = useState<Record<string, boolean>>({});
-  const [testStatus, setTestStatus] = useState<Record<string, TestStatus>>({});
-  const [testError, setTestError] = useState<Record<string, string>>({});
-  const [activeId, setActiveId] = useState('google');
-  const [saved, setSaved] = useState(false);
+  const hydrated = useSyncExternalStore(
+    subscribeToHydration,
+    () => true,
+    () => false,
+  );
+  return hydrated ? (
+    <ProviderSettings />
+  ) : (
+    <p role="status" className="px-5 pb-20 pt-24">
+      Loading saved settings…
+    </p>
+  );
+}
 
-  // Load from localStorage on mount
-  useEffect(() => {
-    setKeys(loadKeys());
-    setActiveId(getActiveProvider());
-  }, []);
-
-  const handleKeyChange = useCallback((providerId: string, value: string) => {
-    setKeys((prev) => ({ ...prev, [providerId]: value }));
-  }, []);
-
-  const handleSave = useCallback(() => {
-    saveKeys(keys);
-    setActiveProvider(activeId);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
-  }, [keys, activeId]);
-
-  const handleRemoveKey = useCallback((providerId: string) => {
-    setKeys((prev) => {
-      const next = { ...prev };
-      delete next[providerId];
-      saveKeys(next);
-      return next;
-    });
-  }, []);
-
-  const toggleVisibility = useCallback((providerId: string) => {
-    setVisibility((prev) => ({ ...prev, [providerId]: !prev[providerId] }));
-  }, []);
-
-  const testConnection = useCallback(async (provider: Provider) => {
-    const key = keys[provider.id];
-    if (!key) return;
-
-    setTestStatus((prev) => ({ ...prev, [provider.id]: 'testing' }));
-    setTestError((prev) => ({ ...prev, [provider.id]: '' }));
-
+function ProviderSettings() {
+  const [initial] = useState(() => {
     try {
-      // Test by hitting the health-check GET endpoint
-      const res = await fetch(provider.testEndpoint, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      if (res.ok) {
-        setTestStatus((prev) => ({ ...prev, [provider.id]: 'success' }));
-      } else {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || `HTTP ${res.status}`);
-      }
-    } catch (err) {
-      setTestStatus((prev) => ({ ...prev, [provider.id]: 'error' }));
-      setTestError((prev) => ({
-        ...prev,
-        [provider.id]: err instanceof Error ? err.message : 'Connection failed',
-      }));
+      return { ...readProviderPreferences(localStorage), error: "" };
+    } catch {
+      return {
+        keys: {} as ProviderKeys,
+        activeId: "google",
+        error:
+          "This browser is blocking site storage. Allow storage to save a provider.",
+      };
     }
+  });
+  const [keys, setKeys] = useState<ProviderKeys>(initial.keys);
+  const [activeId, setActiveId] = useState(initial.activeId);
+  const [savedState, setSavedState] = useState(
+    JSON.stringify({ keys: initial.keys, activeId: initial.activeId }),
+  );
+  const [visible, setVisible] = useState<Record<string, boolean>>({});
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(initial.error);
 
-    setTimeout(() => {
-      setTestStatus((prev) => ({ ...prev, [provider.id]: 'idle' }));
-    }, 3000);
-  }, [keys]);
+  const selected =
+    PROVIDERS.find((provider) => provider.id === activeId) || PROVIDERS[0];
+  const current = JSON.stringify({
+    keys: parseProviderKeys(JSON.stringify(keys)),
+    activeId,
+  });
+  const dirty = current !== savedState;
+  const savedKey = !dirty && Boolean(keys[activeId]?.trim());
 
-  const maskKey = (key: string) => {
-    if (key.length <= 8) return '*'.repeat(key.length);
-    return key.slice(0, 4) + '*'.repeat(key.length - 8) + key.slice(-4);
-  };
+  function reloadSavedSettings() {
+    try {
+      const preferences = readProviderPreferences(localStorage);
+      setKeys(preferences.keys);
+      setActiveId(preferences.activeId);
+      setSavedState(JSON.stringify(preferences));
+      setVisible({});
+      setError("");
+      setMessage("Loaded the settings saved in this browser.");
+    } catch {
+      setError(
+        "Your browser is blocking site storage. Allow storage and try again.",
+      );
+    }
+  }
+
+  useEffect(() => {
+    function sync(event: StorageEvent) {
+      if (
+        event.key &&
+        ![
+          "arcanea-provider-keys",
+          "arcanea-active-provider",
+          "arcanea-active-model",
+        ].includes(event.key)
+      )
+        return;
+      if (dirty) {
+        setError(
+          "Settings changed in another tab. Reload saved settings before saving.",
+        );
+        setMessage("");
+      } else reloadSavedSettings();
+    }
+    window.addEventListener("storage", sync);
+    return () => window.removeEventListener("storage", sync);
+  }, [dirty]);
+
+  function changeKey(id: string, value: string) {
+    setKeys((previous) => ({ ...previous, [id]: value }));
+    setMessage("");
+  }
+  function save() {
+    setError("");
+    try {
+      saveProviderPreferences(
+        localStorage,
+        keys,
+        activeId,
+        savedState || undefined,
+      );
+      const preferences = readProviderPreferences(localStorage);
+      setKeys(preferences.keys);
+      setSavedState(JSON.stringify(preferences));
+      window.dispatchEvent(new Event("arcanea-model-change"));
+      setMessage(
+        "Saved in this browser. Provider access has not been verified.",
+      );
+    } catch (cause) {
+      setError(
+        cause instanceof Error
+          ? cause.message
+          : "Settings could not be saved. Try again.",
+      );
+    }
+  }
+
+  function keyField(provider: (typeof PROVIDERS)[number]) {
+    const id = `provider-key-${provider.id}`;
+    return (
+      <div className="space-y-3" key={provider.id}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <label htmlFor={id} className="text-sm font-medium">
+            {provider.name} API key
+          </label>
+          <a
+            href={provider.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-[var(--arc-brand-atlantean-teal)] underline-offset-4 hover:underline"
+          >
+            Get a key
+            <span className="sr-only">
+              {" "}
+              from {provider.name} (opens in a new tab)
+            </span>
+          </a>
+        </div>
+        <div className="flex gap-2">
+          <input
+            id={id}
+            name={id}
+            type={visible[provider.id] ? "text" : "password"}
+            value={keys[provider.id] || ""}
+            onChange={(event) => changeKey(provider.id, event.target.value)}
+            autoComplete="off"
+            autoCapitalize="none"
+            spellCheck={false}
+            placeholder="Paste your API key"
+            aria-describedby="provider-data-flow"
+            className={`${control} min-w-0 flex-1 font-mono`}
+          />
+          <button
+            type="button"
+            disabled={!keys[provider.id]}
+            aria-label={`${visible[provider.id] ? "Hide" : "Show"} ${provider.name} key`}
+            aria-pressed={Boolean(visible[provider.id])}
+            onClick={() =>
+              setVisible((previous) => ({
+                ...previous,
+                [provider.id]: !previous[provider.id],
+              }))
+            }
+            className={`${control} shrink-0 disabled:opacity-50`}
+          >
+            {visible[provider.id] ? (
+              <PhEyeSlash className="size-4" aria-hidden="true" />
+            ) : (
+              <PhEye className="size-4" aria-hidden="true" />
+            )}
+          </button>
+        </div>
+        {keys[provider.id] && (
+          <button
+            type="button"
+            onClick={() => changeKey(provider.id, "")}
+            className="min-h-11 text-sm text-[var(--arc-text-secondary)] underline underline-offset-4"
+          >
+            Remove {provider.name} key on save
+          </button>
+        )}
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-[var(--arc-cosmic-void)] py-24 px-4">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-2">
-          <Link
-            href="/settings"
-            className="flex w-8 h-8 items-center justify-center rounded-lg text-white/40 hover:text-white/70 hover:bg-white/[0.04] transition-colors"
-            aria-label="Back to settings"
-          >
-            <PhArrowLeft className="w-4 h-4" />
-          </Link>
-          <PhKey className="w-7 h-7 text-[var(--arc-brand-atlantean-teal)]" />
-          <h1 className="text-2xl font-semibold text-white">AI Providers</h1>
-        </div>
-        <p className="text-sm text-white/40 mb-8 ml-11">
-          Connect your own API keys. Keys are stored locally in your browser — never sent to our servers.
-        </p>
-
-        {/* Active Provider Selection */}
-        <div className="bg-black/40 border border-white/[0.06] rounded-2xl p-5 mb-6">
-          <h2 className="text-sm font-medium text-white/60 mb-3">Active Provider</h2>
-          <div className="flex flex-wrap gap-2">
-            {PROVIDERS.map((p) => (
-              <button
-                key={p.id}
-                onClick={() => setActiveId(p.id)}
-                className={`px-3 py-2.5 sm:py-2 rounded-xl text-xs font-medium transition-all min-h-[44px] sm:min-h-0 ${
-                  activeId === p.id
-                    ? 'text-white border-2'
-                    : 'text-white/40 border border-white/[0.06] hover:text-white/60 hover:border-white/[0.12]'
-                }`}
-                style={{
-                  borderColor: activeId === p.id ? p.color : undefined,
-                  backgroundColor: activeId === p.id ? `${p.color}15` : 'transparent',
-                }}
-              >
-                {p.name.split(' ')[0]}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Provider Cards */}
-        <div className="space-y-4">
-          {PROVIDERS.map((provider) => {
-            const key = keys[provider.id] || '';
-            const isVisible = visibility[provider.id] || false;
-            const status = testStatus[provider.id] || 'idle';
-            const error = testError[provider.id] || '';
-            const hasKey = key.length > 0;
-
-            return (
-              <div
-                key={provider.id}
-                className="bg-black/40 border rounded-2xl p-5 transition-colors"
-                style={{
-                  borderColor: activeId === provider.id ? `${provider.color}30` : 'rgba(255,255,255,0.06)',
-                }}
-              >
-                {/* Provider header */}
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold"
-                      style={{ backgroundColor: provider.color }}
-                    >
-                      {provider.name.charAt(0)}
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-medium text-white">{provider.name}</h3>
-                      <p className="text-[11px] text-white/30">{provider.description}</p>
-                    </div>
-                  </div>
-                  {hasKey && (
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                      <span className="text-[11px] text-emerald-400/70">Connected</span>
-                    </div>
-                  )}
-                </div>
-
-                {/* API Key input */}
-                <div className="relative mb-3">
-                  <input
-                    type={isVisible ? 'text' : 'password'}
-                    value={isVisible ? key : (hasKey ? maskKey(key) : '')}
-                    onChange={(e) => handleKeyChange(provider.id, e.target.value)}
-                    placeholder={provider.placeholder}
-                    className="w-full px-4 py-2.5 pr-20 rounded-xl bg-white/[0.04] border border-white/[0.06] text-white/90 text-sm font-mono placeholder-white/20 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/40 transition-colors"
-                    onFocus={() => setVisibility((prev) => ({ ...prev, [provider.id]: true }))}
-                  />
-                  <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                    {hasKey && (
-                      <button
-                        type="button"
-                        onClick={() => toggleVisibility(provider.id)}
-                        className="p-1.5 rounded-md text-white/30 hover:text-white/60 transition-colors"
-                        aria-label={isVisible ? 'Hide key' : 'Show key'}
-                      >
-                        {isVisible ? <PhEyeSlash className="w-4 h-4" /> : <PhEye className="w-4 h-4" />}
-                      </button>
-                    )}
-                    {hasKey && (
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveKey(provider.id)}
-                        className="p-1.5 rounded-md text-white/30 hover:text-red-400 transition-colors"
-                        aria-label="Remove key"
-                      >
-                        <PhTrash className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-                </div>
-
-                {/* Actions row */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
-                  <a
-                    href={provider.docsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[11px] text-[var(--arc-brand-atlantean-teal)]/60 hover:text-[var(--arc-brand-atlantean-teal)] transition-colors"
-                  >
-                    Get API key
-                  </a>
-
-                  <div className="flex items-center gap-2">
-                    {/* Test status */}
-                    {status === 'success' && (
-                      <span className="flex items-center gap-1 text-[11px] text-emerald-400">
-                        <PhCheck className="w-3.5 h-3.5" />
-                        Connected
-                      </span>
-                    )}
-                    {status === 'error' && (
-                      <span className="flex items-center gap-1 text-[11px] text-red-400" title={error}>
-                        <PhWarningCircle className="w-3.5 h-3.5" />
-                        Failed
-                      </span>
-                    )}
-
-                    {/* Test connection button */}
-                    <button
-                      type="button"
-                      onClick={() => testConnection(provider)}
-                      disabled={!hasKey || status === 'testing'}
-                      className="px-3 py-2 sm:py-1.5 rounded-lg text-[11px] font-medium text-white/50 border border-white/[0.08] hover:text-white/70 hover:border-white/[0.15] disabled:opacity-30 disabled:cursor-not-allowed transition-all min-h-[44px] sm:min-h-0"
-                    >
-                      {status === 'testing' ? (
-                        <span className="flex items-center gap-1.5">
-                          <PhCircleNotch className="w-3 h-3 animate-spin" />
-                          Testing...
-                        </span>
-                      ) : (
-                        'Test Connection'
-                      )}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Search Providers */}
-        <div className="mt-10 mb-2">
-          <h2 className="text-lg font-semibold text-white">Search Providers</h2>
-          <p className="text-sm text-white/40 mt-1">
-            Power web search in chat. DuckDuckGo is always available as a free fallback — no key needed.
+    <div className="min-h-screen bg-[var(--arc-cosmic-void)] px-5 pb-20 pt-8 text-[var(--arc-text-primary)] sm:px-8 sm:pt-12">
+      <div className="mx-auto max-w-2xl">
+        <Link
+          href="/settings"
+          className="mb-4 inline-flex min-h-11 items-center gap-2 text-sm text-[var(--arc-text-secondary)] hover:text-[var(--arc-text-primary)]"
+        >
+          <PhArrowLeft className="size-4" aria-hidden="true" />
+          Settings
+        </Link>
+        <div className="mb-8">
+          <PhKey
+            className="mb-4 size-7 text-[var(--arc-brand-atlantean-teal)]"
+            aria-hidden="true"
+          />
+          <h1 className="text-3xl font-semibold tracking-tight">
+            Your AI connection
+          </h1>
+          <p className="mt-3 text-base leading-relaxed text-[var(--arc-text-secondary)]">
+            Choose a provider for chat. Bring your own key and pay that provider
+            for your usage.
           </p>
         </div>
-
-        <div className="space-y-4">
-          {SEARCH_PROVIDERS_UI.map((provider) => {
-            const key = keys[provider.id] || '';
-            const isVisible = visibility[provider.id] || false;
-            const status = testStatus[provider.id] || 'idle';
-            const error = testError[provider.id] || '';
-            const hasKey = key.length > 0;
-
-            return (
-              <div
-                key={provider.id}
-                className="bg-black/40 border border-white/[0.06] rounded-2xl p-5 transition-colors"
-              >
-                {/* Provider header */}
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold"
-                      style={{ backgroundColor: provider.color }}
-                    >
-                      {provider.name.charAt(0)}
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-medium text-white">{provider.name}</h3>
-                      <p className="text-[11px] text-white/30">{provider.description}</p>
-                    </div>
-                  </div>
-                  {hasKey && (
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                      <span className="text-[11px] text-emerald-400/70">Connected</span>
-                    </div>
-                  )}
-                </div>
-
-                {/* API Key input */}
-                <div className="relative mb-3">
-                  <input
-                    type={isVisible ? 'text' : 'password'}
-                    value={isVisible ? key : (hasKey ? maskKey(key) : '')}
-                    onChange={(e) => handleKeyChange(provider.id, e.target.value)}
-                    placeholder={provider.placeholder}
-                    className="w-full px-4 py-2.5 pr-20 rounded-xl bg-white/[0.04] border border-white/[0.06] text-white/90 text-sm font-mono placeholder-white/20 focus:outline-none focus:border-[var(--arc-brand-atlantean-teal)]/40 transition-colors"
-                    onFocus={() => setVisibility((prev) => ({ ...prev, [provider.id]: true }))}
-                  />
-                  <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                    {hasKey && (
-                      <button
-                        type="button"
-                        onClick={() => toggleVisibility(provider.id)}
-                        className="p-1.5 rounded-md text-white/30 hover:text-white/60 transition-colors"
-                        aria-label={isVisible ? 'Hide key' : 'Show key'}
-                      >
-                        {isVisible ? <PhEyeSlash className="w-4 h-4" /> : <PhEye className="w-4 h-4" />}
-                      </button>
-                    )}
-                    {hasKey && (
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveKey(provider.id)}
-                        className="p-1.5 rounded-md text-white/30 hover:text-red-400 transition-colors"
-                        aria-label="Remove key"
-                      >
-                        <PhTrash className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-                </div>
-
-                {/* Actions row */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
-                  <a
-                    href={provider.docsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[11px] text-[var(--arc-brand-atlantean-teal)]/60 hover:text-[var(--arc-brand-atlantean-teal)] transition-colors"
-                  >
-                    Get API key
-                  </a>
-
-                  <div className="flex items-center gap-2">
-                    {status === 'success' && (
-                      <span className="flex items-center gap-1 text-[11px] text-emerald-400">
-                        <PhCheck className="w-3.5 h-3.5" />
-                        Connected
-                      </span>
-                    )}
-                    {status === 'error' && (
-                      <span className="flex items-center gap-1 text-[11px] text-red-400" title={error}>
-                        <PhWarningCircle className="w-3.5 h-3.5" />
-                        Failed
-                      </span>
-                    )}
-
-                    <button
-                      type="button"
-                      onClick={() => testConnection(provider)}
-                      disabled={!hasKey || status === 'testing'}
-                      className="px-3 py-2 sm:py-1.5 rounded-lg text-[11px] font-medium text-white/50 border border-white/[0.08] hover:text-white/70 hover:border-white/[0.15] disabled:opacity-30 disabled:cursor-not-allowed transition-all min-h-[44px] sm:min-h-0"
-                    >
-                      {status === 'testing' ? (
-                        <span className="flex items-center gap-1.5">
-                          <PhCircleNotch className="w-3 h-3 animate-spin" />
-                          Testing...
-                        </span>
-                      ) : (
-                        'Test Connection'
-                      )}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-
-          {/* DuckDuckGo free fallback note */}
-          <div className="bg-black/40 border border-white/[0.06] rounded-2xl p-5">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold bg-[var(--arc-fire)]">
-                D
-              </div>
-              <div>
-                <h3 className="text-sm font-medium text-white">DuckDuckGo</h3>
-                <p className="text-[11px] text-white/30">Free instant answers — always available, no key needed</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 mt-3">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span className="text-[11px] text-emerald-400/70">Always available</span>
-            </div>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            save();
+          }}
+          className="space-y-6"
+        >
+          <div className="space-y-2">
+            <label
+              htmlFor="active-provider"
+              className="block text-sm font-medium"
+            >
+              Chat provider
+            </label>
+            <select
+              id="active-provider"
+              value={activeId}
+              onChange={(event) => {
+                setActiveId(event.target.value);
+                setMessage("");
+                setVisible({});
+              }}
+              className={`${control} w-full`}
+            >
+              {PROVIDERS.map((provider) => (
+                <option key={provider.id} value={provider.id}>
+                  {provider.name}
+                  {keys[provider.id]?.trim() ? " · key entered" : ""}
+                </option>
+              ))}
+            </select>
+            <p className="text-sm text-[var(--arc-text-secondary)]">
+              Saving makes this your default. You can choose a model from the
+              same provider in chat.
+            </p>
           </div>
-        </div>
+          {keyField(selected)}
+          <p className="text-sm text-[var(--arc-text-secondary)]">
+            {dirty
+              ? "Unsaved changes"
+              : savedKey
+                ? "Key saved locally · access not verified"
+                : "No key saved for this provider"}
+          </p>
 
-        {/* Save button */}
-        <div className="mt-6 flex items-center gap-3">
-          <button
-            onClick={handleSave}
-            className="px-6 py-3 rounded-xl bg-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)] text-white text-sm font-medium transition-colors"
+          <div
+            id="provider-data-flow"
+            className="border-l-2 border-[var(--arc-brand-atlantean-teal)] pl-4 text-sm leading-relaxed text-[var(--arc-text-secondary)]"
           >
-            Save Configuration
-          </button>
-          {saved && (
-            <span className="flex items-center gap-1.5 text-sm text-emerald-400">
-              <PhCheck className="w-4 h-4" />
-              Saved
-            </span>
+            <p>
+              Saving keeps keys in this browser. When you send a request,
+              Arcanea’s server receives your key and content and forwards them
+              to the selected provider.
+            </p>
+            <p className="mt-2">
+              Keys are not encrypted in browser storage. Use a personal device
+              and remove keys before sharing it. Your provider’s data and
+              billing terms apply.
+            </p>
+          </div>
+
+          <details className="border-y border-[var(--arc-cosmic-border-bright)] py-4">
+            <summary className="min-h-11 cursor-pointer py-2 text-sm font-medium">
+              Optional web search
+            </summary>
+            <p className="mb-5 text-sm leading-relaxed text-[var(--arc-text-secondary)]">
+              Search is separate from your chat provider. When enabled, search
+              queries pass through Arcanea to the search service. If both keys
+              are saved, Tavily takes priority.
+            </p>
+            <div className="space-y-6">{SEARCH_PROVIDERS.map(keyField)}</div>
+          </details>
+
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <button
+              type="submit"
+              disabled={!dirty}
+              className="min-h-11 rounded-xl bg-[var(--arc-brand-atlantean-teal)] px-5 py-3 text-sm font-semibold text-[var(--arc-cosmic-void)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)] disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Save connection
+            </button>
+            {savedKey && (
+              <Link href="/chat" className={`${control} text-center`}>
+                Open chat
+              </Link>
+            )}
+          </div>
+          <div
+            aria-live="polite"
+            role="status"
+            className="text-sm text-[var(--arc-text-secondary)]"
+          >
+            {message}
+          </div>
+          {error && (
+            <p role="alert" className="text-sm text-[var(--arc-text-primary)]">
+              {error}
+            </p>
           )}
-        </div>
-
-        {/* Info notice */}
-        <div className="mt-6 rounded-xl bg-white/[0.02] border border-white/[0.04] p-4">
-          <p className="text-[12px] text-white/25 leading-relaxed">
-            API keys are stored in your browser&apos;s localStorage and never leave your device.
-            The active provider determines which AI model responds in chat.
-            Server-side keys set by the admin take priority over client-side keys.
-          </p>
-        </div>
+          {error.includes("another tab") && (
+            <button
+              type="button"
+              onClick={reloadSavedSettings}
+              className={control}
+            >
+              Reload saved settings
+            </button>
+          )}
+        </form>
+        <p className="mt-6 text-sm leading-relaxed text-[var(--arc-text-secondary)]">
+          Saving does not make an AI request. Sending a message may incur
+          provider charges. A saved key is checked when you use it; saving alone
+          does not confirm model access or available credit.
+        </p>
+        <p className="mt-6 text-sm text-[var(--arc-text-secondary)]">
+          Prefer your existing tools?{" "}
+          <Link
+            href="/mcp"
+            className="text-[var(--arc-brand-atlantean-teal)] underline underline-offset-4"
+          >
+            Explore Arcanea’s MCP tools
+          </Link>
+        </p>
       </div>
     </div>
   );
