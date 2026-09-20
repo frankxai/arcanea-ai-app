@@ -204,16 +204,21 @@ export class MemoryBridge {
    * line limit.
    */
   appendToMemory(content: string, heading?: string): void {
-    if (!existsSync(this.cfg.outputPath)) {
-      this.sync();
-      return;
-    }
-
     const addition = heading
       ? `\n## ${heading}\n${content}\n`
       : `\n${content}\n`;
 
-    const current = readFileSync(this.cfg.outputPath, "utf-8");
+    let current: string;
+    try {
+      current = readFileSync(this.cfg.outputPath, "utf-8");
+    } catch (err: unknown) {
+      if ((err as { code?: string })?.code === "ENOENT") {
+        this.sync();
+        return;
+      }
+      throw err;
+    }
+
     const lineCount = current.split("\n").length;
 
     if (lineCount < this.cfg.maxLines - 10) {
