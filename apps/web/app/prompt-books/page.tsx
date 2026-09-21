@@ -100,22 +100,26 @@ function PromptBooksLanding() {
   const [aplExpanded, setAplExpanded] = useState(false);
 
   return (
-    <div className="flex-1 overflow-auto">
-      <div className="max-w-3xl mx-auto px-6 sm:px-8 py-16 sm:py-24">
+    <div className="flex-1 min-w-0 overflow-x-clip overflow-y-auto">
+      <div className="max-w-3xl mx-auto min-w-0 px-4 sm:px-8 py-16 sm:py-24">
         {/* Hero */}
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-atlantean-teal-aqua/20 bg-atlantean-teal-aqua/5 mb-8">
-            <PhBookOpen className="w-3.5 h-3.5 text-atlantean-teal-aqua" weight="duotone" />
+            <PhBookOpen
+              className="w-3.5 h-3.5 text-atlantean-teal-aqua"
+              weight="duotone"
+            />
             <span className="text-xs font-mono tracking-widest uppercase text-atlantean-teal-aqua/80">
               Prompt Books
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-white mb-5 leading-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-display font-bold text-white mb-5 leading-tight text-balance break-words">
             Your AI Prompt Library
           </h1>
           <p className="text-base sm:text-lg text-text-secondary font-body leading-relaxed max-w-xl mx-auto">
-            Organize, search, and reuse your best AI prompts across every platform.
-            Import from the Arcanea Vault extension or capture directly.
+            Organize, search, and reuse your best AI prompts across every
+            platform. Import from the Arcanea Vault extension or capture
+            directly.
           </p>
         </div>
 
@@ -131,7 +135,9 @@ function PromptBooksLanding() {
                 className={cn(
                   "group rounded-2xl p-5 sm:p-6 border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all duration-300",
                   isApl && "cursor-pointer sm:col-span-2",
-                  isApl && aplExpanded && "border-[var(--arc-fire)]/30 bg-[var(--arc-fire)]/[0.03]",
+                  isApl &&
+                    aplExpanded &&
+                    "border-[var(--arc-fire)]/30 bg-[var(--arc-fire)]/[0.03]",
                 )}
                 onClick={isApl ? () => setAplExpanded((v) => !v) : undefined}
               >
@@ -143,13 +149,19 @@ function PromptBooksLanding() {
                       border: `1px solid ${c.color}25`,
                     }}
                   >
-                    <Icon className="w-5 h-5" style={{ color: c.color }} weight="duotone" />
+                    <Icon
+                      className="w-5 h-5"
+                      style={{ color: c.color }}
+                      weight="duotone"
+                    />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-display font-semibold text-text-primary text-sm truncate">
                       {c.name}
                     </p>
-                    <p className="text-xs text-text-muted">{c.promptCount} prompts</p>
+                    <p className="text-xs text-text-muted">
+                      {c.promptCount} prompts
+                    </p>
                   </div>
                   {isApl && (
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-[var(--arc-fire)]/10 text-[var(--arc-fire)] border border-[var(--arc-fire)]/20">
@@ -158,10 +170,14 @@ function PromptBooksLanding() {
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-text-secondary leading-relaxed">{c.description}</p>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  {c.description}
+                </p>
                 {isApl && (
                   <p className="text-xs text-text-muted mt-2">
-                    {aplExpanded ? "Click to collapse" : "Click to preview prompts"}
+                    {aplExpanded
+                      ? "Click to collapse"
+                      : "Click to preview prompts"}
                   </p>
                 )}
               </GlowCard>
@@ -198,7 +214,8 @@ function PromptBooksLanding() {
                       </span>
                     </div>
                     <p className="text-xs text-text-muted">
-                      {APL_CATEGORY_LABELS[ex.category] || ex.category} &middot; Best on {ex.bestModels.slice(0, 2).join(", ")}
+                      {APL_CATEGORY_LABELS[ex.category] || ex.category} &middot;
+                      Best on {ex.bestModels.slice(0, 2).join(", ")}
                     </p>
                   </div>
                 </div>
@@ -226,7 +243,12 @@ function PromptBooksLanding() {
         )}
 
         {/* CTAs */}
-        <div className={cn("flex flex-col sm:flex-row items-center justify-center gap-4", !aplExpanded && "mt-8")}>
+        <div
+          className={cn(
+            "flex flex-col sm:flex-row items-center justify-center gap-4",
+            !aplExpanded && "mt-8",
+          )}
+        >
           <Link
             href="/auth/login?next=/prompt-books"
             className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-aqua/80 text-cosmic-deep font-semibold text-sm hover:shadow-[0_0_30px_rgba(0,188,212,0.25)] hover:scale-[1.02] transition-all duration-300"
