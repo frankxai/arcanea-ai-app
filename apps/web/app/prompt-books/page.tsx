@@ -100,8 +100,8 @@ function PromptBooksLanding() {
   const [aplExpanded, setAplExpanded] = useState(false);
 
   return (
-    <div className="flex-1 overflow-auto">
-      <div className="max-w-3xl mx-auto px-6 sm:px-8 py-16 sm:py-24">
+    <div className="flex-1 min-w-0 overflow-x-clip overflow-y-auto">
+      <div className="max-w-3xl mx-auto min-w-0 px-4 sm:px-8 py-16 sm:py-24">
         {/* Hero */}
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-atlantean-teal-aqua/20 bg-atlantean-teal-aqua/5 mb-8">
@@ -110,7 +110,7 @@ function PromptBooksLanding() {
               Prompt Books
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-white mb-5 leading-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-display font-bold text-white mb-5 leading-tight text-balance break-words">
             Your AI Prompt Library
           </h1>
           <p className="text-base sm:text-lg text-text-secondary font-body leading-relaxed max-w-xl mx-auto">
