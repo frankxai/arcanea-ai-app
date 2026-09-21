@@ -1,26 +1,35 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
-import Image from 'next/image';
+"use client";
+import Image from "next/image";
 
-import React, { useState, Fragment } from 'react';
-import Link from 'next/link';
-import { Menu, Transition } from '@headlessui/react';
-import { PhUser, PhSignOut, PhGear, PhSparkle, PhBookOpen, PhPalette, PhCaretDown, PhHouse } from '@/lib/phosphor-icons';
-import { useAuth } from '@/lib/auth/context';
-import { AuthModal } from './auth-modal';
+import React, { useState, Fragment } from "react";
+import Link from "next/link";
+import { Menu, Transition } from "@headlessui/react";
+import {
+  PhUser,
+  PhSignOut,
+  PhGear,
+  PhSparkle,
+  PhBookOpen,
+  PhPalette,
+  PhCaretDown,
+  PhHouse,
+} from "@/lib/phosphor-icons";
+import { useAuth } from "@/lib/auth/context";
+import { AuthModal } from "./auth-modal";
 
 export function UserNav() {
   const { user, isLoading, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [authModalTab, setAuthModalTab] = useState<'login' | 'signup'>('login');
+  const [authModalTab, setAuthModalTab] = useState<"login" | "signup">("login");
 
   const openLogin = () => {
-    setAuthModalTab('login');
+    setAuthModalTab("login");
     setShowAuthModal(true);
   };
 
   const openSignup = () => {
-    setAuthModalTab('signup');
+    setAuthModalTab("signup");
     setShowAuthModal(true);
   };
 
@@ -57,8 +66,9 @@ export function UserNav() {
     );
   }
 
-  const userInitial = user.email?.[0].toUpperCase() || 'U';
-  const username = user.user_metadata?.username || user.email?.split('@')[0] || 'Creator';
+  const userInitial = user.email?.[0].toUpperCase() || "U";
+  const username =
+    user.user_metadata?.username || user.email?.split("@")[0] || "Creator";
   const avatarUrl = user.user_metadata?.avatar_url;
 
   return (
@@ -69,7 +79,7 @@ export function UserNav() {
             src={avatarUrl}
             alt={username}
             className="w-7 h-7 rounded-lg object-cover"
-           />
+          />
         ) : (
           <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-atlantean-teal-aqua to-creation-prism-purple flex items-center justify-center text-cosmic-deep font-semibold text-xs">
             {userInitial}
@@ -97,19 +107,21 @@ export function UserNav() {
 
           <div className="py-1.5">
             {[
-              { href: '/dashboard', icon: PhHouse, label: 'Dashboard' },
-              { href: '/profile', icon: PhUser, label: 'Your Profile' },
-              { href: '/chat', icon: PhSparkle, label: 'Chat' },
-              { href: '/studio', icon: PhPalette, label: 'Studio' },
-              { href: '/library', icon: PhBookOpen, label: 'Library' },
-              { href: '/settings', icon: PhGear, label: 'Settings' },
+              { href: "/dashboard", icon: PhHouse, label: "Dashboard" },
+              { href: "/profile", icon: PhUser, label: "Your Profile" },
+              { href: "/chat", icon: PhSparkle, label: "Chat" },
+              { href: "/studio", icon: PhPalette, label: "Studio" },
+              { href: "/library", icon: PhBookOpen, label: "Library" },
+              { href: "/settings", icon: PhGear, label: "Settings" },
             ].map((item) => (
               <Menu.Item key={item.href}>
                 {({ active }: { active: boolean }) => (
                   <Link
                     href={item.href}
                     className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${
-                      active ? 'bg-white/[0.06] text-white' : 'text-text-secondary'
+                      active
+                        ? "bg-white/[0.06] text-white"
+                        : "text-text-secondary"
                     }`}
                   >
                     <item.icon className="w-4 h-4" />
@@ -126,7 +138,9 @@ export function UserNav() {
                 <button
                   onClick={() => signOut()}
                   className={`flex items-center gap-3 px-4 py-2 text-sm w-full transition-colors ${
-                    active ? 'bg-white/[0.06] text-red-400' : 'text-text-secondary'
+                    active
+                      ? "bg-white/[0.06] text-red-400"
+                      : "text-text-secondary"
                   }`}
                 >
                   <PhSignOut className="w-4 h-4" />
