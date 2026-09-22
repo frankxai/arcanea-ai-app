@@ -218,7 +218,7 @@ export function SearchBar({ compact = false }: { compact?: boolean }) {
             aria-controls="search-listbox"
             aria-activedescendant={activeDescendant}
             aria-autocomplete="list"
-            className={`bg-transparent border-none outline-none text-white placeholder:text-white/30 w-full min-w-0 ${compact ? 'text-xs' : 'text-sm'}`}
+            className={`bg-transparent border-none outline-none text-white placeholder:text-white/30 w-full ${compact ? 'text-xs min-w-[140px]' : 'text-sm'}`}
           />
           {loading && (
             <div className="w-4 h-4 border-2 border-white/20 border-t-[var(--arc-brand-atlantean-teal)] rounded-full animate-spin flex-shrink-0" />
