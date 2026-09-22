@@ -3,11 +3,13 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
-  title: 'Prompt Books',
-  description: 'Cross-device AI prompt management with context engineering.',
+  title: 'Your AI Prompt Library',
+  description:
+    'Organize, search, and reuse your best AI prompts across every platform.',
   openGraph: {
-    title: 'Prompt Books',
-    description: 'Cross-device AI prompt management with context engineering.',
+    title: 'Your AI Prompt Library',
+    description:
+      'Organize, search, and reuse your best AI prompts across every platform.',
   },
   alternates: { canonical: '/prompt-books' },
 }
