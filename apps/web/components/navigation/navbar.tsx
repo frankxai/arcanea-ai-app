@@ -561,14 +561,20 @@ export function Navbar() {
                 <div className="h-px bg-white/[0.08] my-3" />
 
                 <m.div
-                  className="flex items-center gap-3 px-1"
+                  className="flex flex-col gap-3 px-1"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.2, delay: 0.25 }}
                 >
-                  <SearchBar compact />
-                  <NotificationBell />
-                  <UserNav />
+                  <div className="flex min-w-0 items-center gap-3">
+                    <div className="min-w-0 flex-1">
+                      <SearchBar compact />
+                    </div>
+                    <NotificationBell />
+                  </div>
+                  <div className="flex w-full min-w-0 flex-wrap items-center justify-end gap-2">
+                    <UserNav />
+                  </div>
                 </m.div>
               </div>
             </nav>
