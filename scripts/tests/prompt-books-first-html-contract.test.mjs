@@ -27,5 +27,5 @@ test("prompt-books first HTML is the landing, not an auth null gate", async () =
   assert.match(page, /Your AI Prompt Library/);
   assert.match(page, /if \(!userId\)/);
   assert.match(page, /<PromptBooksLanding \/>/);
-  assert.match(layout, /title: 'Your AI Prompt Library'/);
+  assert.match(layout, /title: ['"]Your AI Prompt Library['"]/);
 });
