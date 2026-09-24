@@ -24,7 +24,7 @@ import { join } from 'path';
 import { getBookRoot } from '../content/book-path';
 import { generateText } from 'ai';
 import matter from 'gray-matter';
-import { createAdminClient } from '@/lib/supabase/server';
+import { createAdminClient, createClient } from '@/lib/supabase/server';
 import {
   GUARDIANS,
   GUARDIAN_IDS,
@@ -476,17 +476,20 @@ export async function scoreSingleDimension(
 export async function loadLatestReport(
   bookSlug: string,
 ): Promise<GuardianReport | null> {
+  // Guardian reports are public read-only data. Use the regular client so
+  // the database's public-read RLS policies apply; admin access is reserved
+  // for scoring and persistence.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const admin = createAdminClient() as any;
+  const supabase = await createClient() as any;
 
-  const { data: book, error: bookErr } = await admin
+  const { data: book, error: bookErr } = await supabase
     .from('books')
     .select('id, slug')
     .eq('slug', bookSlug)
     .maybeSingle();
   if (bookErr || !book) return null;
 
-  const { data: reviews, error: revErr } = await admin
+  const { data: reviews, error: revErr } = await supabase
     .from('guardian_reviews')
     .select(
       'guardian, dimension, score, assessment, detailed_notes, model_id, assessed_at',
