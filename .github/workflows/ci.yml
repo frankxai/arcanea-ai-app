@@ -148,6 +148,9 @@ jobs:
       - name: Verify auth recovery and creator economics
         run: node --test scripts/tests/auth-env.test.mjs scripts/tests/auth-redirect.test.mjs scripts/tests/creator-economics.test.mjs
 
+      - name: Verify prompt-books first HTML is the landing
+        run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
+
       - name: Verify exact world drafts and account return paths
         run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
 
