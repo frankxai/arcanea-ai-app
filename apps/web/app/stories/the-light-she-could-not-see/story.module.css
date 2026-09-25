@@ -53,7 +53,7 @@
 }
 .heroImage {
   object-fit: cover;
-  object-position: center 38%;
+  object-position: center;
 }
 .heroShade {
   position: absolute;
@@ -280,7 +280,7 @@
     min-height: 81svh;
   }
   .heroImage {
-    object-position: 39% center;
+    object-position: 73% center;
   }
   .topbar {
     padding: 1.4rem;
