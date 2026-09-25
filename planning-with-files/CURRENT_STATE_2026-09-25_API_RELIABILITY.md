@@ -40,7 +40,7 @@ write that did not occur.
   optional OpenRouter key is absent; quality scores do not imply a model
   rewrite. Provider failures and 429 remain visible as distinct errors.
 - Catalog analysis and TASTE scoring require an authenticated user with a
-  trusted `app_metadata.role = admin` claim *before* any storage, model or
+  trusted `app_metadata.role = admin` claim _before_ any storage, model or
   service-role action. Both require the service-role credential for writes;
   no publishable/anon key fallback is allowed. Missing backend configuration
   is 503, and scoring failures are not reported as successful analysis.
