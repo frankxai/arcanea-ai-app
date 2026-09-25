@@ -4,6 +4,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import navLogo from "@/assets/brand/arcanea-mark.jpg";
 import { m } from "framer-motion";
 import {
   PhPaperPlane,
@@ -104,12 +105,12 @@ export function HeroChatBox() {
           <div className="hidden sm:flex pl-3 pr-1 pb-3" aria-hidden="true">
             <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.07] bg-white/[0.035]">
               <Image
-                src="/images/mascot/arcanea-welcoming.png"
+                src={navLogo}
                 alt=""
                 width={28}
                 height={28}
                 sizes="28px"
-                className="object-contain"
+                className="rounded-md object-cover"
               />
             </div>
           </div>
@@ -140,7 +141,7 @@ export function HeroChatBox() {
               aria-label={hasText ? "Start creating in chat" : "Enter a prompt to start creating"}
             >
               <PhPaperPlane
-                className={`w-4 h-4 transition-colors ${hasText ? "text-white" : "text-white/15"}`}
+                className={`w-4 h-4 transition-colors ${hasText ? "text-[var(--arc-cosmic-void)]" : "text-white/30"}`}
               />
             </button>
           </div>

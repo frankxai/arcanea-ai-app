@@ -19,6 +19,7 @@ import { useState, useEffect, useRef, useCallback, KeyboardEvent } from 'react';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import markSrc from '@/assets/brand/arcanea-mark.jpg';
 import { usePathname } from 'next/navigation';
 import { PhPaperPlane, PhX } from '@/lib/phosphor-icons';
 
@@ -125,21 +126,24 @@ export function LuminaBubble() {
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
         let accumulated = '';
+        let pending = '';
 
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-          const chunk = decoder.decode(value, { stream: true });
+          pending += decoder.decode(value, { stream: true });
 
-          // Parse SSE data lines
-          for (const line of chunk.split('\n')) {
+          // A JSON event may straddle network chunks. Retain its unfinished line.
+          const lines = pending.split('\n');
+          pending = lines.pop() ?? '';
+          for (const line of lines) {
             if (!line.startsWith('data: ')) continue;
             const data = line.slice(6);
             if (data === '[DONE]') continue;
             try {
               const parsed = JSON.parse(data);
-              if (parsed.type === 'text-delta' && parsed.delta) {
-                accumulated += parsed.delta;
+              if (parsed.type === 'text-delta' && (parsed.delta || parsed.text)) {
+                accumulated += parsed.delta || parsed.text;
                 setMessages((prev) =>
                   prev.map((m) =>
                     m.id === assistantId ? { ...m, content: accumulated } : m
@@ -151,6 +155,7 @@ export function LuminaBubble() {
             }
           }
         }
+        if (!accumulated) throw new Error('Arcanea returned an empty response. Try full chat.');
       } catch (err) {
         setMessages((prev) =>
           prev.map((m) =>
@@ -190,7 +195,7 @@ export function LuminaBubble() {
             className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-[calc(1rem+env(safe-area-inset-right))] z-50 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-[var(--arc-cosmic-void)]/80 shadow-[0_0_40px_rgba(127,255,212,0.15)] backdrop-blur-xl transition-all hover:scale-105 hover:border-[var(--arc-brand-atlantean-teal)]/30 hover:shadow-[0_0_60px_rgba(127,255,212,0.25)] sm:bottom-6 sm:right-6 sm:h-16 sm:w-16"
             aria-label="Open Arcanea assistant"
           >
-            <Image src="/images/mascot/arcanea-primary.png" alt="Arcanea" width={56} height={56} className="object-contain drop-shadow-[0_0_12px_rgba(127,255,212,0.3)]" />
+            <Image src={markSrc} alt="Arcanea" width={56} height={56} className="rounded-full object-cover" />
           </m.button>
         )}
       </AnimatePresence>
@@ -209,7 +214,7 @@ export function LuminaBubble() {
             {/* Header */}
             <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
               <div className="flex items-center gap-3">
-                <Image src="/images/mascot/arcanea-primary.png" alt="Arcanea" width={32} height={32} className="rounded-full object-contain" />
+                <Image src={markSrc} alt="Arcanea" width={32} height={32} className="rounded-full object-cover" />
                 <div>
                   <div className="font-display text-sm font-semibold text-white/90">
                     Arcanea

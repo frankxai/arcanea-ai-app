@@ -1,0 +1,15 @@
+.workspace { background: var(--arc-cosmic-void); color: var(--arc-text-primary); padding: 2rem max(1rem, calc((100vw - 1200px) / 2)) 4rem; }
+.toolbar { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+.toolbar h2 { font: 400 2.4rem/1.1 var(--arc-font-editorial); margin: 0; }
+.toolbar p, .status { color: var(--arc-text-secondary); font-size: .85rem; }
+.actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+.actions input { border: 1px solid var(--arc-cosmic-border); background: var(--arc-cosmic-void); color: var(--arc-text-primary); padding: .7rem 1rem; border-radius: .5rem; }
+.actions button { border: 1px solid var(--arc-brand-atlantean-teal); background: transparent; color: var(--arc-brand-atlantean-teal); padding: .7rem 1rem; border-radius: .5rem; cursor: pointer; }
+.actions button:disabled { opacity: .4; cursor: default; }
+.surface { height: min(73svh, 850px); min-height: 420px; border: 1px solid var(--arc-cosmic-border); background: var(--arc-cosmic-void); }
+.surface :global(.react-flow__node) { color: var(--arc-text-primary); border: 1px solid var(--arc-brand-atlantean-teal); border-radius: .6rem; background: var(--arc-cosmic-void); max-width: 260px; white-space: normal; text-align: left; line-height: 1.5; }
+.surface :global(.react-flow__controls button) { background: var(--arc-cosmic-void); color: var(--arc-text-primary); fill: currentColor; border-color: var(--arc-cosmic-border); }
+.sources { margin-top: 1.7rem; display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
+.sources h3 { font-size: .82rem; margin-right: 1rem; }
+.sources button { max-width: 270px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: .6rem; border: 1px solid var(--arc-cosmic-border); background: transparent; color: var(--arc-text-primary); cursor: pointer; }
+.status a, .sources a { color: var(--arc-brand-atlantean-teal); }

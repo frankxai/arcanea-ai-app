@@ -5,6 +5,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import ReactMarkdown from "react-markdown";
 import styles from "./story.module.css";
+import { IllustrateSelection } from "./illustrate-selection";
 
 export const dynamic = "force-static";
 
@@ -129,6 +130,7 @@ export default function HorsewomanStory() {
         </aside>
 
         <article className={styles.reader}>
+          <IllustrateSelection />
           <details id="contents" className={styles.mobileContents}>
             <summary>Browse the 16 chapters</summary>
             <nav aria-label="Mobile chapter index">
@@ -160,6 +162,7 @@ export default function HorsewomanStory() {
             <section
               key={chapter.id}
               id={chapter.id}
+              data-reader-chapter={chapter.number}
               className={styles.chapter}
               aria-label={`Chapter ${chapter.number}: ${chapter.title}`}
             >
