@@ -3,7 +3,8 @@
 An illustrated Arcanea novella. Working story continuity, separate from the locked cosmology.
 
 ## 01 · The Colour of Other People
-*Caracas · The first threshold*
+
+_Caracas · The first threshold_
 
 The light around the woman beside Selene’s desk turned the colour of a struck match, and Selene deleted the last sentence of her proposal.
 
@@ -104,7 +105,8 @@ The stone went cold.
 Selene checked the knot on her bag. Then she stepped through.
 
 ## 02 · The Horse Who Said No
-*Avilara · The orchid road*
+
+_Avilara · The orchid road_
 
 Brío took the cuff of Selene’s shirt between his teeth and tested whether it was edible.
 
@@ -205,7 +207,8 @@ Brío stopped so sharply that Selene caught the saddle.
 Far ahead, between two orchid stems, something enormous moved against the light.
 
 ## 03 · What the Jaguar Wanted
-*The lower river · A mistaken certainty*
+
+_The lower river · A mistaken certainty_
 
 Selene’s hand closed on the reins before she understood how large the jaguar was.
 
@@ -306,7 +309,8 @@ Upstream, the bell rang again.
 This time she listened to the horse.
 
 ## 04 · A Place to Stand
-*The stone terraces · Foundation*
+
+_The stone terraces · Foundation_
 
 The bowl hit the ground for the fourth time, and Master Iolen Stoneward looked at Selene’s boots.
 
@@ -421,7 +425,8 @@ Selene looked down at the wall they had finished that morning. Every stone reste
 Iolen went to fetch his old survey maps.
 
 ## 05 · The River Keeps Its Name
-*The morichal · Flow*
+
+_The morichal · Flow_
 
 The ferrykeeper put Selene’s bag back on the bank.
 
@@ -514,7 +519,8 @@ Above the far bank, an orchid opened. It was beautiful enough to make her stop.
 Then she noticed the split running down its throat.
 
 ## 06 · Under the Jaguar’s Sky
-*The high road · The right to remain unknown*
+
+_The high road · The right to remain unknown_
 
 Selene woke with Brío’s breath against her cheek.
 
@@ -601,7 +607,8 @@ Both lines remained.
 On the next ridge, Solavila appeared beyond the cloud. Its towers shone with a light so even that, for a moment, she could not see where the sun touched them.
 
 ## 07 · The City Without an Evening
-*Solavila · The Kingdom of Light*
+
+_Solavila · The Kingdom of Light_
 
 The guard brushed mud from Selene’s boot before asking her name.
 
@@ -716,7 +723,8 @@ She looked at the spotless window. Outside, the flowering tree held every blosso
 “I need to see the night shift first.”
 
 ## 08 · The Garden That Could Not Sleep
-*The reserve’s edge · A refusal*
+
+_The reserve’s edge · A refusal_
 
 At two in the morning, Selene found a gardener cutting the dead centres from perfect flowers.
 
@@ -817,7 +825,8 @@ Selene turned toward Brío. He was watching the slope that led away from the wat
 This time she followed his gaze.
 
 ## 09 · The Road Beneath the Waterfall
-*The western bypass · Choosing a way through*
+
+_The western bypass · Choosing a way through_
 
 Brío stopped at the mouth of the tunnel, and Selene got down.
 
@@ -914,7 +923,8 @@ She answered once. Wait.
 Then she put her palm on the stone and tried to remember exactly how little she could hold.
 
 ## 10 · A City Learns the Dark
-*The relief station · The cost of acting*
+
+_The relief station · The cost of acting_
 
 The stone pressed back against Selene’s hand.
 
@@ -1025,7 +1035,8 @@ Her own hands remained bare of light.
 She used them to pass Iolen a cup of water.
 
 ## 11 · The Open Courtyard
-*Crystalpeak · The Luminors*
+
+_Crystalpeak · The Luminors_
 
 The Luminor asked Selene to move her chair.
 
@@ -1136,7 +1147,8 @@ Brío reached for a flowering branch. Selene moved it out of range.
 She laughed, and for once did not check the sound of it against anyone else’s light.
 
 ## 12 · The Road She Chose
-*Two homes · A beginning she could keep*
+
+_Two homes · A beginning she could keep_
 
 Mercedes criticised the repair to Selene’s sleeve before she began to cry. Selene had been away for ten weeks.
 

@@ -51,7 +51,8 @@
   --arc-gold-dark: #b38600;
 
   /* Fonts (Geist-forward 2026 stack) */
-  --arc-font-display: Geist, "Geist Sans", "Satoshi Variable", system-ui, sans-serif;
+  --arc-font-display:
+    Geist, "Geist Sans", "Satoshi Variable", system-ui, sans-serif;
   --arc-font-body: Geist, "Geist Sans", system-ui, sans-serif;
   --arc-font-editorial: "Instrument Serif", "Migra", Georgia, serif;
   --arc-font-mono: "Geist Mono", "JetBrains Mono", "Fira Code", monospace;

@@ -1,10 +1,10 @@
 # The Open Road
 
-*A proposed continuation of The Light She Could Not See*
+_A proposed continuation of The Light She Could Not See_
 
 ## Thirteen · The Bell That Rang Twice
 
-*Crystalpeak · The eastern crossing*
+_Crystalpeak · The eastern crossing_
 
 The Academy taught Selene to leave a thing unfinished.
 
@@ -18,7 +18,7 @@ Master Iolen looked at the pieces. “That was my good bowl.”
 
 “It had survived me for eighteen years.”
 
-The others laughed. Selene knelt to gather the pieces and found that she was laughing too. The old habit had risen before the bowl fell: *If I do this well, they will let me belong here.* Nobody had asked her to prove that. Iolen handed her the smallest piece.
+The others laughed. Selene knelt to gather the pieces and found that she was laughing too. The old habit had risen before the bowl fell: _If I do this well, they will let me belong here._ Nobody had asked her to prove that. Iolen handed her the smallest piece.
 
 “What did you notice before you tried to save it?”
 
@@ -90,7 +90,7 @@ The bell inside his case rang once, though no one had touched it.
 
 ## Fourteen · The Crossing Nobody Owned
 
-*The eastern river · A refusal*
+_The eastern river · A refusal_
 
 Cael took the copper band out of Iva’s hands as though it might burn her.
 
@@ -202,7 +202,7 @@ No bridge appeared before morning. The people on each bank kept watch for one an
 
 ## Fifteen · A Sounding Before Dawn
 
-*The school ferry · Iva’s measure*
+_The school ferry · Iva’s measure_
 
 At dawn, Iva refused Cael’s boat.
 
@@ -308,7 +308,7 @@ The bell did not ring again.
 
 ## Sixteen · What the Record Could Bear
 
-*The river station · An accounting*
+_The river station · An accounting_
 
 The woman from the school insisted on crossing last.
 
@@ -440,6 +440,6 @@ The next morning, the families began to return to the school. Selene watched fro
 
 Brío chose the firmer edge of the eastern trail. Selene let him. The mountain was still too distant to hear, but the road under his feet was real. She rode far enough to lose sight of the station before unfolding the map.
 
-At the fern hollow, Cael had written one last note in the margin: *Sound the ground here. I never did.*
+At the fern hollow, Cael had written one last note in the margin: _Sound the ground here. I never did._
 
 She put the map away, dismounted, and went to look.
