@@ -4,7 +4,7 @@
 
 - **Job:** A reader selects a sentence in a published story, sees a faithful image, and keeps it with the passage in a private creative space. They can arrange their images and notes on an infinite canvas.
 - **Owner:** Arcanea web. Base: `697c83f6e81e50919a72319df82b5909b1c70738` on `main`.
-- **Files:** reader route/UI, private illustrations page, canvas route/UI, one additive Supabase migration, chat entry fixes.
+- **Files:** reader route/UI, private illustrations page, canvas route/UI, two additive Supabase migrations, chat entry fixes.
 - **Non-goals:** autonomous agent runtime, mobile binaries, social sharing, public image gallery, new payment checkout.
 - **Acceptance:** Published-text validation; sign-in before generation; atomic one-credit reservation with refund on failure; private asset and creation; RLS graph isolation; lost-update conflict; responsive reader control; typecheck, build, lint and deployment smoke tests.
 - **Rollback:** Revert this commit or deployment; additive tables and reservations remain intact for audit and user data. Do not drop a user table during a rollback.
@@ -32,11 +32,13 @@ AI SDK is already present in the live application; use its streaming and provide
 
 1. Repair the separate `studio/generate-image` demo endpoint and the `imagine/generate` anonymous credit bypass before broad exposure. Centralize all billable actions on one metering contract; failed jobs refund and crashed jobs need a timed reconciliation worker. Reconcile `credit_balances` references with the actual `user_credits` schema.
 2. Add faithful visual continuity tests: repeated Selene/Brío details, geography, source adherence, unintended text, six independent human reviews. Track accepted images per paid generation, not raw completion count.
-3. Make canvas user nodes include signed thumbnails, autosave with revision checks, undo, export JSON/ZIP and a small-screen composition mode. Current graph is a genuine saveable beta with manual save.
+3. Make canvas autosave with revision checks, undo, export JSON/ZIP and a small-screen composition mode. Image nodes now render signed private images; the graph is a saveable beta with manual save.
 4. Consolidate `/chat` and the bubble on one tested UI-message stream adapter and signed-in conversation history. Bubble sessions currently live in browser memory; the full chat has separate persistence.
 5. Monetization: measure model cost and storage egress before pricing a credit pack. Subscriptions bundle predictable text/reading value and a stated monthly image allowance. BYOK is an opt-in advanced path with a clear provider-data boundary. No claim of unlimited GPU usage.
 6. API/MCP after the same permissions and usage limits are enforced across first-party and third-party clients. Native wrappers after web core retention, not before.
 
 ## Evidence ledger
 
-Known production baseline: Vercel `arcanea-ai-app` production deployment at `697c83f6`; Supabase `Arcanea` active in `eu-central-1`. New code and database schema require separately recorded validation, PR promotion and domain smoke tests. A READY build is not user outcome proof. Record failed generation, refund, missing provider key, graph conflict, mobile selection and image retrieval paths before widening release.
+Known production baseline: Vercel `arcanea-ai-app` production deployment at `697c83f6`; Supabase `Arcanea` active in `eu-central-1`. Initial reader migration applied, target `user_credits`/`creations` columns and private bucket verified. The tracked root migration chain has an older, incompatible shape (`credit_balances`, mandatory `file_url`); fresh database reconstruction needs its own baseline reconciliation. A READY build is not user outcome proof. Record failed generation, refund, missing provider key, graph conflict, mobile selection and image retrieval paths before widening release.
+
+Release review found that settlement responses can be lost and requests can stop after a debit. The route now preserves a completed image on an ambiguous response. `20260925190000_reader_illustration_recovery.sql` resolves pending debits older than fifteen minutes every five minutes using the live project's `pg_cron` extension; it has **not** been applied. Automatic approval review rejected an earlier version for relaxing `creations.file_url` and scheduling production work without exact blast-radius approval. The schema relaxation has been removed; do not promote the image route before recovery is authorized, applied and verified. The review decision also blocks assuming a preview build proves the credit lifecycle.

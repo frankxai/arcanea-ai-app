@@ -1,13 +1,27 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { ReactFlow, Background, Controls, MiniMap, addEdge, useEdgesState, useNodesState, type Connection, type Edge, type Node } from '@xyflow/react';
+import { ReactFlow, Background, Controls, Handle, MiniMap, Position, addEdge, useEdgesState, useNodesState, type Connection, type Edge, type Node, type NodeProps } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './workspace.module.css';
 
 type Illustration = { id: string; excerpt: string; chapter: number; imageUrl: string | null };
-type CanvasNode = Node<{ label: string; creationId?: string }>;
+type CanvasNode = Node<{ label: string; creationId?: string; imageUrl?: string | null }>;
+type IllustrationNode = Node<CanvasNode['data'], 'illustration'>;
+
+function IllustrationCard({ data }: NodeProps<IllustrationNode>) {
+  return <article className={styles.illustrationCard}>
+    <Handle type="target" position={Position.Top} />
+    {data.imageUrl ? <Image src={data.imageUrl} alt={data.label} width={280} height={190} unoptimized /> :
+      <div className={styles.imageUnavailable}>Image unavailable. Reload to refresh your private image link.</div>}
+    <p>{data.label}</p>
+    <Handle type="source" position={Position.Bottom} />
+  </article>;
+}
+
+const nodeTypes = { illustration: IllustrationCard };
 
 export function CanvasWorkspace() {
   const [nodes, setNodes, onNodesChange] = useNodesState<CanvasNode>([]);
@@ -17,6 +31,12 @@ export function CanvasWorkspace() {
   const [status, setStatus] = useState('Loading your canvas…');
   const [note, setNote] = useState('');
   const [ready, setReady] = useState(false);
+  const imageUrls = new Map(illustrations.map((item) => [item.id, item.imageUrl]));
+  // Signed URLs are short lived; persist the creation ID, then hydrate its URL
+  // from the owner's gallery each time the canvas opens.
+  const visibleNodes = nodes.map((node) => node.data.creationId ? {
+    ...node, type: 'illustration', data: { ...node.data, imageUrl: imageUrls.get(node.data.creationId) ?? null },
+  } : node);
 
   useEffect(() => {
     Promise.all([
@@ -84,7 +104,7 @@ export function CanvasWorkspace() {
     </div>
     <p className={styles.status} role="status">{status} {status.includes('Sign in') && <Link href="/auth/login?next=%2Fcanvas">Sign in</Link>}</p>
     {ready && <div className={styles.surface}>
-      <ReactFlow nodes={nodes} edges={edges} onNodesChange={(changes) => {
+      <ReactFlow nodes={visibleNodes} edges={edges} nodeTypes={nodeTypes} onNodesChange={(changes) => {
         onNodesChange(changes);
         if (changes.some((change) => change.type === 'position' || change.type === 'remove')) setStatus('Unsaved changes');
       }} onEdgesChange={(changes) => {

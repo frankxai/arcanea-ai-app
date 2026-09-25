@@ -122,10 +122,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ id: creation.id, imageUrl: signed.signedUrl, chapter, excerpt }, { status: 201 });
   } catch (error) {
     console.error('[reader/illustrations] failed:', error);
-    if (creationId) await admin.from('creations').delete().eq('id', creationId).eq('user_id', user.id);
-    await admin.storage.from('creations').remove([storagePath]);
+    // A settlement can commit even when its network response is lost. The
+    // durable ledger decides whether cleanup is allowed, never the exception.
     const refunded = await credits.rpc('settle_reader_illustration', { ...identity, p_creation_id: null });
-    if (refunded.error) console.error('[reader/illustrations] refund failed:', refunded.error);
-    return NextResponse.json({ error: 'Illustration failed. Your credit has been returned if the request was not completed.' }, { status: 503 });
+    if (refunded.error) {
+      console.error('[reader/illustrations] refund uncertain; reconciliation will resolve it:', refunded.error);
+      return NextResponse.json({ error: 'We could not confirm the result. Check your illustrations shortly.' }, { status: 503 });
+    }
+    if (refunded.data === 'refunded') {
+      if (creationId) await admin.from('creations').delete().eq('id', creationId).eq('user_id', user.id);
+      await admin.storage.from('creations').remove([storagePath]);
+      return NextResponse.json({ error: 'Illustration failed. Your credit was returned.' }, { status: 503 });
+    }
+    // A completed reservation owns the saved image, even if the response was lost.
+    return NextResponse.json({ error: 'Your illustration may be ready. Check your illustrations.' }, { status: 503 });
   }
 }

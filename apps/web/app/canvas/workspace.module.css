@@ -9,6 +9,10 @@
 .surface { height: min(73svh, 850px); min-height: 420px; border: 1px solid var(--arc-cosmic-border); background: var(--arc-cosmic-void); }
 .surface :global(.react-flow__node) { color: var(--arc-text-primary); border: 1px solid var(--arc-brand-atlantean-teal); border-radius: .6rem; background: var(--arc-cosmic-void); max-width: 260px; white-space: normal; text-align: left; line-height: 1.5; }
 .surface :global(.react-flow__controls button) { background: var(--arc-cosmic-void); color: var(--arc-text-primary); fill: currentColor; border-color: var(--arc-cosmic-border); }
+.illustrationCard { width: 280px; overflow: hidden; background: var(--arc-cosmic-void); border: 1px solid var(--arc-brand-atlantean-teal); border-radius: .7rem; box-shadow: 0 15px 45px #0005; }
+.illustrationCard img { width: 100%; height: 190px; object-fit: cover; display: block; }
+.illustrationCard p { margin: 0; padding: .8rem 1rem 1rem; font: 400 .86rem/1.5 var(--arc-font-editorial); max-height: 7.5rem; overflow: auto; }
+.imageUnavailable { min-height: 190px; display: grid; place-items: center; padding: 1rem; color: var(--arc-text-secondary); background: #111625; text-align: center; }
 .sources { margin-top: 1.7rem; display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
 .sources h3 { font-size: .82rem; margin-right: 1rem; }
 .sources button { max-width: 270px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: .6rem; border: 1px solid var(--arc-cosmic-border); background: transparent; color: var(--arc-text-primary); cursor: pointer; }
