@@ -56,6 +56,16 @@
   --arc-font-editorial: "Instrument Serif", "Migra", Georgia, serif;
   --arc-font-mono: "Geist Mono", "JetBrains Mono", "Fira Code", monospace;
 
+  /* Long-form illustrated fiction. The reading surface is warmer than the product chrome. */
+  --arc-story-paper: #f7f1e7;
+  --arc-story-ink: #29231e;
+  --arc-story-muted: #695f55;
+  --arc-story-rust: #854521;
+  --arc-story-rule: #d8c9b7;
+  --arc-story-button: #f3e5d1;
+  --arc-story-night: #14201d;
+  --arc-font-reading: "Newsreader Variable", Georgia, serif;
+
   /* Radii */
   --arc-radius-sm: 0.25rem;
   --arc-radius-md: 0.5rem;
