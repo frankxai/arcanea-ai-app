@@ -60,7 +60,10 @@ export default function HorsewomanStory() {
         <Link href="/books" className={styles.brand}>
           ARCANEA <span>/ STORIES</span>
         </Link>
-        <a href="#contents" className={styles.contentsLink}>
+        <a href="#desktop-contents" className={styles.contentsLinkDesktop}>
+          Chapter index
+        </a>
+        <a href="#contents" className={styles.contentsLinkMobile}>
           Chapter index
         </a>
       </header>
@@ -96,7 +99,11 @@ export default function HorsewomanStory() {
       </section>
 
       <div className={styles.layout}>
-        <aside className={styles.sidebar} aria-label="Table of contents">
+        <aside
+          className={styles.sidebar}
+          id="desktop-contents"
+          aria-label="Table of contents"
+        >
           <div className={styles.sidebarInner}>
             <p className={styles.smallLabel}>The story</p>
             <p className={styles.sidebarTitle}>

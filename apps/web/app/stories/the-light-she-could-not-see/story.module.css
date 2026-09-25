@@ -1,4 +1,5 @@
 .page {
+  color-scheme: light;
   --paper: var(--arc-story-paper);
   --ink: var(--arc-story-ink);
   --muted: var(--arc-story-muted);
@@ -37,10 +38,14 @@
   opacity: 0.8;
   letter-spacing: 0.08em;
 }
-.contentsLink {
+.contentsLinkDesktop,
+.contentsLinkMobile {
   font: 500 0.82rem/1.2 var(--arc-font-body);
   text-decoration: underline;
   text-underline-offset: 5px;
+}
+.contentsLinkMobile {
+  display: none;
 }
 .hero {
   position: relative;
@@ -238,8 +243,10 @@
 }
 .partBreak img {
   width: 100%;
-  height: auto;
+  height: min(66vh, 620px);
   display: block;
+  object-fit: cover;
+  object-position: center 42%;
 }
 .partBreak > div {
   position: absolute;
@@ -276,6 +283,12 @@
   color: var(--accent);
 }
 @media (max-width: 760px) {
+  .contentsLinkDesktop {
+    display: none;
+  }
+  .contentsLinkMobile {
+    display: inline;
+  }
   .hero {
     min-height: 81svh;
   }
