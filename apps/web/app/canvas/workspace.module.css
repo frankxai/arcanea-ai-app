@@ -8,6 +8,7 @@
 .actions button:disabled { opacity: .4; cursor: default; }
 .surface { height: min(73svh, 850px); min-height: 420px; border: 1px solid var(--arc-cosmic-border); background: var(--arc-cosmic-void); }
 .surface :global(.react-flow__node) { color: var(--arc-text-primary); border: 1px solid var(--arc-brand-atlantean-teal); border-radius: .6rem; background: var(--arc-cosmic-void); max-width: 260px; white-space: normal; text-align: left; line-height: 1.5; }
+.surface :global(.react-flow__node-illustration) { max-width: none; border: 0; background: transparent; }
 .surface :global(.react-flow__controls button) { background: var(--arc-cosmic-void); color: var(--arc-text-primary); fill: currentColor; border-color: var(--arc-cosmic-border); }
 .illustrationCard { width: 280px; overflow: hidden; background: var(--arc-cosmic-void); border: 1px solid var(--arc-brand-atlantean-teal); border-radius: .7rem; box-shadow: 0 15px 45px #0005; }
 .illustrationCard img { width: 100%; height: 190px; object-fit: cover; display: block; }
