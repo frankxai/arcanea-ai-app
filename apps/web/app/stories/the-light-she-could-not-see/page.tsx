@@ -158,7 +158,7 @@ export default function HorsewomanStory() {
               aria-label={`Chapter ${chapter.number}: ${chapter.title}`}
             >
               {chapter.number === 13 && (
-                <div className={styles.partBreak}>
+                <div className={`${styles.partBreak} ${styles.riderBreak}`}>
                   <Image
                     src="/stories/horsewoman/rider-circle.webp"
                     width={941}
