@@ -12,7 +12,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "The Light She Could Not See | Arcanea Stories",
   description:
-    "An illustrated story of Selene Velara, Brío, two worlds, and the difficult art of seeing without claiming to know.",
+    "An illustrated Arcanea story of Selene Velara, her riding companions, dragons, the sea, and the difficult art of seeing without claiming to know.",
   openGraph: {
     title: "The Light She Could Not See",
     description:
@@ -30,27 +30,19 @@ function chaptersFrom(file: string): Chapter[] {
     "utf8",
   );
   return raw
-    .split(/(?=^## (?:\d{2} · |(?:Thirteen|Fourteen|Fifteen|Sixteen) · ))/m)
+    .split(/(?=^## \d{2} · )/m)
     .filter((part) => /^## /m.test(part))
     .map((text) => {
-      const heading = text.match(
-        /^## (\d{2}|Thirteen|Fourteen|Fifteen|Sixteen) · (.+)$/m,
-      );
+      const heading = text.match(/^## (\d{2}) · (.+)$/m);
       if (!heading) throw new Error(`Missing chapter heading in ${file}`);
-      const number = /^\d+$/.test(heading[1])
-        ? Number(heading[1])
-        : (
-            { Thirteen: 13, Fourteen: 14, Fifteen: 15, Sixteen: 16 } as Record<
-              string,
-              number
-            >
-          )[heading[1]];
+      const number = Number(heading[1]);
       return { number, title: heading[2], text, id: `chapter-${number}` };
     });
 }
 
 const chapters = [
   ...chaptersFrom("THE_LIGHT_SHE_COULD_NOT_SEE.md"),
+  ...chaptersFrom("THE_RIDER_CIRCLE.md"),
   ...chaptersFrom("THE_OPEN_ROAD.md"),
 ];
 
@@ -81,7 +73,7 @@ export default function HorsewomanStory() {
         <div className={styles.heroShade} />
         <div className={styles.heroText}>
           <p className={styles.eyebrow}>
-            An illustrated novella · Caracas to the eastern river
+            An illustrated serial · Caracas to Mar Arcano
           </p>
           <h1 id="story-title">
             The Light
@@ -96,7 +88,9 @@ export default function HorsewomanStory() {
             Begin reading <span aria-hidden="true">↓</span>
           </a>
         </div>
-        <p className={styles.heroCredit}>16 chapters · 26 illustrations</p>
+        <p className={styles.heroCredit}>
+          {chapters.length} chapters · 29 illustrations
+        </p>
       </section>
 
       <div className={styles.layout}>
@@ -132,7 +126,7 @@ export default function HorsewomanStory() {
         <article className={styles.reader}>
           <IllustrateSelection />
           <details id="contents" className={styles.mobileContents}>
-            <summary>Browse the 16 chapters</summary>
+            <summary>Browse the {chapters.length} chapters</summary>
             <nav aria-label="Mobile chapter index">
               <ol className={styles.chapterList}>
                 {chapters.map((chapter) => (
@@ -167,6 +161,21 @@ export default function HorsewomanStory() {
               aria-label={`Chapter ${chapter.number}: ${chapter.title}`}
             >
               {chapter.number === 13 && (
+                <div className={`${styles.partBreak} ${styles.riderBreak}`}>
+                  <Image
+                    src="/stories/horsewoman/rider-circle.webp"
+                    width={941}
+                    height={1672}
+                    sizes="(max-width: 760px) 100vw, 650px"
+                    alt="Selene and Brío ride alongside Iva, Luz, and Tami above a flooded watershed"
+                  />
+                  <div>
+                    <span>THE OPEN ROAD · PART II</span>
+                    <h2>She did not ride into this alone.</h2>
+                  </div>
+                </div>
+              )}
+              {chapter.number === 18 && (
                 <div className={styles.partBreak}>
                   <Image
                     src="/stories/horsewoman/the-open-road-cover.webp"
@@ -176,7 +185,7 @@ export default function HorsewomanStory() {
                     alt="Selene and Brío examine a damaged river crossing while Cael waits with a lantern"
                   />
                   <div>
-                    <span>THE OPEN ROAD · PART II</span>
+                    <span>THE EASTERN CROSSING</span>
                     <h2>Some bridges should wait for daylight.</h2>
                   </div>
                 </div>

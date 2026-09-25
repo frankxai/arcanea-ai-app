@@ -23,7 +23,7 @@ export function IllustrateSelection() {
     const endSection = selected.focusNode?.parentElement?.closest('section[data-reader-chapter]');
     if (!section || section !== endSection) return;
     const chapter = Number(section.getAttribute('data-reader-chapter'));
-    if (chapter >= 1 && chapter <= 16) setSelection({ excerpt, chapter });
+    if (chapter >= 1 && chapter <= 21) setSelection({ excerpt, chapter });
   }, []);
 
   useEffect(() => {

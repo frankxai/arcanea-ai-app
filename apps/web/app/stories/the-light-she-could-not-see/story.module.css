@@ -248,6 +248,9 @@
   object-fit: cover;
   object-position: center 42%;
 }
+.riderBreak img {
+  object-position: center 18%;
+}
 .partBreak > div {
   position: absolute;
   bottom: 0;

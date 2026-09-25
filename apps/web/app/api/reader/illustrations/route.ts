@@ -13,7 +13,7 @@ const BOOK = 'the-light-she-could-not-see';
 const MODEL = 'gpt-image-2';
 const selectionSchema = z.object({
   requestId: z.string().uuid(),
-  chapter: z.number().int().min(1).max(16),
+  chapter: z.number().int().min(1).max(21),
   excerpt: z.string().trim().min(20).max(500),
 });
 
@@ -28,11 +28,11 @@ function paragraphText(value: string) {
 }
 
 async function chapterSource(chapter: number) {
-  const file = chapter <= 12 ? 'THE_LIGHT_SHE_COULD_NOT_SEE.md' : 'THE_OPEN_ROAD.md';
+  const file = chapter <= 12 ? 'THE_LIGHT_SHE_COULD_NOT_SEE.md' :
+    chapter <= 17 ? 'THE_RIDER_CIRCLE.md' : 'THE_OPEN_ROAD.md';
   const raw = await readFile(join(process.cwd(), 'content/stories', BOOK, file), 'utf8');
-  const sections = raw.split(/(?=^## (?:\d{2}|Thirteen|Fourteen|Fifteen|Sixteen) · )/m);
-  const ordinal = chapter <= 12 ? String(chapter).padStart(2, '0') :
-    ['Thirteen', 'Fourteen', 'Fifteen', 'Sixteen'][chapter - 13];
+  const sections = raw.split(/(?=^## \d{2} · )/m);
+  const ordinal = String(chapter).padStart(2, '0');
   const section = sections.find((part) => part.startsWith(`## ${ordinal} · `));
   if (!section) throw new Error('Published chapter unavailable');
   return section;
