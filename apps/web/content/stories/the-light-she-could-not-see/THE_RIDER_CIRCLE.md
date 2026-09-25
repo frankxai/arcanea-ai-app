@@ -66,7 +66,7 @@ _Crystalpeak · The first weeks of Foundation_
 
 Tami could ride a rain-cut ledge with one hand and still could not make a bowl stand on Iolen's worktable. Selene could steady the bowl and lost her balance whenever she looked over a steep drop. Iva measured water accurately until an instructor watched her, at which point she wrote every figure twice and trusted neither. Luz, who was not an Academy student, came to the public stable on rest days and asked if their education had yet taught them to tighten a girth.
 
-It took time for them to know how to be friends.
+The invitations arrived before the ease did.
 
 Selene invited herself into Iva's measurements too often. Iva finally said, "I need another pair of hands. I don't need your eyes on every mark." Tami was quieter after a failed field assessment; when Selene tried to cheer her, Tami asked her to stop treating embarrassment as an injury. Luz missed two rides to care for a sick mare and did not want to explain herself until the third.
 
@@ -102,7 +102,7 @@ The Academy sent a survey party. The four women took their own field permits and
 
 Past the last line of trees, swifts nested under stone lips stained copper by rain. Several flew against the prevailing wind. Tami saw the torn net first: a cargo line running from an abandoned survey tower into a narrow crevice. The tower had been closed after a rockfall. Someone had used it again.
 
-The sound came from beyond the crevice. A dragon had come down on the far ledge with the net wound through the membrane of one wing. The creature was long-bodied, dark green against the wet basalt, and large enough that Selene could see each breath move the grass below her. Its amber eye followed the party. A lesser dragon, Tami whispered, meaning a living creature distinct from Draconis, the Godbeast named at the Fire Gate.
+The sound came from beyond the crevice. A dragon had come down on the far ledge with the net wound through the membrane of one wing. The creature was long-bodied, dark green against the wet basalt, and large enough that Selene could see each breath move the grass below her. Its amber eye followed the party. Selene had studied Draconis of the Fire Gate in a classroom. The living mountain dragon watched her pick a way across the stone.
 
 "No closer," said a woman from the ledge. She wore the plain weathered leathers of a high-roost pilot and had a bloodstained coil of rope at her feet. "It lets me cut one strand at a time. Four people would be four strangers."
 
@@ -152,7 +152,7 @@ The first fall of ground beneath them frightened her so completely that she forg
 
 Nara relayed the correction. Aru made one banking circle, chose the wider shelf, and landed. Selene's knees would not hold when she dismounted. She knelt until they would.
 
-They set a line across. The couriers moved the mule first, then crossed one by one. No duel and no secret power had opened the trail. Aru's choice, Tami's route, Iva's water measure, and Nara's years at the roost had brought them there. Selene had supplied one sighting at the right moment.
+They set a line across. The couriers moved the mule first, then crossed one by one. Aru's choice, Tami's route, Iva's water measure, and Nara's years at the roost had brought them there. Selene had supplied one sighting at the right moment.
 
 At the roost ledger Nara recorded her as a second rider for the day. Another month of work and several calm flights passed before Selene qualified to ride with Aru without Nara aboard, on approved routes and only when he presented for the harness. The word _rider_ was written beside her name. It did not make him hers.
 
@@ -166,7 +166,7 @@ The sea lay beyond weeks of road, ferry, and slow travel with the horses. Tami h
 
 Mar Arcano was dark blue under the chalk cliffs. Houses climbed in tiers above narrow landing steps, bright fabrics drying in wind from the basin. Old captains called it a sea born of five lands beneath the stones. Iva could show Selene the cold upper flow from their river. She could not name all the deep currents, and nobody could ride those underground corridors to another Realm.
 
-At night the surface glittered with small living organisms. A coastal navigator named Neira showed them how a dark lane appeared when a vela passed through the brightness. The velas were broad-backed sea animals with sensing whiskers and thin dorsal sails. They came to the riding ledge for food and company, and some carried people in woven cradles across shallow channels. They also left when they wished. Neira had spent years learning which of them returned.
+At night the surface glittered with small living organisms. A coastal navigator named Neira showed them how a dark lane appeared when a vela passed through the brightness. The velas were broad-backed sea animals with sensing whiskers and thin dorsal sails. They came to the riding ledge when fish gathered in its stone pools. Some presented their backs for woven cradles and carried people across shallow channels. They also left when they wished. Neira had spent years learning which of them returned.
 
 "The channel markers need replacing," she said. "I can take two of you out. The others can go by boat."
 
@@ -184,6 +184,6 @@ Selene thought for a moment she saw another Selene in the water, one who had cro
 
 When they returned, Luz had kept Brío off the salt grass. He greeted Selene with his usual assessment of her pockets. The women ate fish and bread on the steps while Iva argued with Tami about the new route and Neira drew it on a scrap of sailcloth. Selene missed her family. She missed the roost. She was glad to be at this table.
 
-They reached the Academy again near the end of Selene's Foundation term. The friendships had survived sore tempers, long roads, and the ordinary work of making room for one another. Selene still carried the east mountain's sound in her notebook, with new measurements beside it. Iva had found something similar in an older river record. Neither knew yet what it meant.
+They reached the Academy again near the end of Selene's Foundation term. Iva kept the sea measurements; Tami borrowed Selene's dry socks without asking; Luz left a small bag of Brío's preferred oats outside her door. Selene still carried the east mountain's sound in her notebook, with new measurements beside it. Iva had found something similar in an older river record. Neither knew yet what it meant.
 
 On the first clear morning back, Selene brought Iva to see Iolen about a bowl she had cracked months before. By afternoon, a bell would ring twice at the gate.
