@@ -15,64 +15,78 @@
  * Returns: { analyzed, skipped, errors, stats }
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { analyzeStorageBucket, type MediaAnalysis } from '@/lib/media/analyzer';
-
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
-const SUPABASE_ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '';
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ?? '';
+import { NextRequest, NextResponse } from "next/server";
+import { analyzeStorageBucket, type MediaAnalysis } from "@/lib/media/analyzer";
+import { requireMediaOperator } from "@/lib/media/require-operator";
 
 export async function POST(request: NextRequest) {
-  const writeKey = SERVICE_KEY || SUPABASE_ANON;
-  if (!SUPABASE_URL || !writeKey) {
-    return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 });
+  const denial = await requireMediaOperator();
+  if (denial) return denial;
+
+  const supabaseUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+  const readKey =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+  const writeKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !readKey || !writeKey) {
+    return NextResponse.json(
+      { error: "Media catalog unavailable." },
+      { status: 503 },
+    );
   }
 
   const url = new URL(request.url);
-  const force = url.searchParams.get('force') === 'true';
-  const prefixParam = url.searchParams.get('prefix');
+  const force = url.searchParams.get("force") === "true";
+  const prefixParam = url.searchParams.get("prefix");
 
   const prefixes = prefixParam
     ? [prefixParam]
-    : ['guardians/', 'guardians/gallery/', 'community/'];
+    : ["guardians/", "guardians/gallery/", "community/"];
 
   try {
     // Phase 1: Scan and analyze all files (filename intelligence — $0)
     const analyses = await analyzeStorageBucket(
-      SUPABASE_URL, SUPABASE_ANON, 'arcanea-gallery', prefixes
+      supabaseUrl,
+      readKey,
+      "arcanea-gallery",
+      prefixes,
     );
 
     // Phase 2: Get existing entries to skip already-analyzed files
     let existingPaths = new Set<string>();
     if (!force) {
       const existRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/media_catalog?select=storage_path&limit=2000`,
+        `${supabaseUrl}/rest/v1/media_catalog?select=storage_path&limit=2000`,
         {
           headers: {
             apikey: writeKey,
             Authorization: `Bearer ${writeKey}`,
           },
-        }
+        },
       );
-      if (existRes.ok) {
-        const existing: Array<{ storage_path: string }> = await existRes.json();
-        existingPaths = new Set(existing.map(e => e.storage_path));
+      if (!existRes.ok) {
+        return NextResponse.json(
+          { error: "Existing catalog could not be read." },
+          { status: 502 },
+        );
       }
+      const existing: Array<{ storage_path: string }> = await existRes.json();
+      existingPaths = new Set(existing.map((e) => e.storage_path));
     }
 
     // Phase 3: Upsert into media_catalog
     const toInsert = force
       ? analyses
-      : analyses.filter(a => !existingPaths.has(a.storage_path));
+      : analyses.filter((a) => !existingPaths.has(a.storage_path));
 
     let analyzed = 0;
     let errors = 0;
     const BATCH_SIZE = 50;
 
     for (let i = 0; i < toInsert.length; i += BATCH_SIZE) {
-      const batch = toInsert.slice(i, i + BATCH_SIZE).map(a => ({
+      const batch = toInsert.slice(i, i + BATCH_SIZE).map((a) => ({
         storage_path: a.storage_path,
-        bucket: 'arcanea-gallery',
+        bucket: "arcanea-gallery",
         filename: a.filename,
         guardian: a.guardian,
         gate: a.gate,
@@ -85,51 +99,54 @@ export async function POST(request: NextRequest) {
         media_type: a.media_type,
         quality_tier: a.quality_tier,
         taste_score: a.taste_score,
-        status: 'review',
-        analyzed_by: 'filename',
+        status: "review",
+        analyzed_by: "filename",
         public_url: a.public_url,
       }));
 
       const upsertHeaders: Record<string, string> = {
         apikey: writeKey,
         Authorization: `Bearer ${writeKey}`,
-        'Content-Type': 'application/json',
-        Prefer: 'return=minimal',
+        "Content-Type": "application/json",
+        Prefer: "return=minimal",
       };
-      if (force) upsertHeaders['Prefer'] = 'resolution=merge-duplicates,return=minimal';
+      if (force)
+        upsertHeaders["Prefer"] = "resolution=merge-duplicates,return=minimal";
 
-      const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/media_catalog`,
-        {
-          method: 'POST',
-          headers: upsertHeaders,
-          body: JSON.stringify(batch),
-        }
-      );
+      const res = await fetch(`${supabaseUrl}/rest/v1/media_catalog`, {
+        method: "POST",
+        headers: upsertHeaders,
+        body: JSON.stringify(batch),
+      });
 
       if (res.ok || res.status === 201) {
         analyzed += batch.length;
       } else {
         errors += batch.length;
-        console.error(`[media/analyze] batch ${i} failed:`, await res.text());
+        console.error(
+          `[media/analyze] batch ${i} failed with status ${res.status}`,
+        );
       }
     }
 
     // Phase 4: Compute stats
     const stats = computeStats(analyses);
 
-    return NextResponse.json({
-      analyzed,
-      skipped: analyses.length - toInsert.length,
-      errors,
-      total_scanned: analyses.length,
-      stats,
-    });
-  } catch (err) {
-    console.error('[media/analyze] error:', err);
     return NextResponse.json(
-      { error: 'Analysis pipeline failed', details: String(err) },
-      { status: 500 }
+      {
+        analyzed,
+        skipped: analyses.length - toInsert.length,
+        errors,
+        total_scanned: analyses.length,
+        stats,
+      },
+      { status: errors > 0 ? 502 : 200 },
+    );
+  } catch {
+    console.error("[media/analyze] processing failed");
+    return NextResponse.json(
+      { error: "Analysis pipeline failed" },
+      { status: 502 },
     );
   }
 }
@@ -142,7 +159,7 @@ function computeStats(analyses: MediaAnalysis[]) {
   let totalScore = 0;
 
   for (const a of analyses) {
-    const g = a.guardian || 'unassigned';
+    const g = a.guardian || "unassigned";
     byGuardian[g] = (byGuardian[g] ?? 0) + 1;
     bySource[a.source] = (bySource[a.source] ?? 0) + 1;
     byTier[a.quality_tier] = (byTier[a.quality_tier] ?? 0) + 1;
@@ -152,10 +169,16 @@ function computeStats(analyses: MediaAnalysis[]) {
 
   return {
     total: analyses.length,
-    avgTasteScore: analyses.length > 0 ? Math.round(totalScore / analyses.length) : 0,
+    avgTasteScore:
+      analyses.length > 0 ? Math.round(totalScore / analyses.length) : 0,
     byGuardian,
     bySource,
-    byTier: { hero: byTier[1] ?? 0, gallery: byTier[2] ?? 0, thumbnail: byTier[3] ?? 0, reject: byTier[4] ?? 0 },
+    byTier: {
+      hero: byTier[1] ?? 0,
+      gallery: byTier[2] ?? 0,
+      thumbnail: byTier[3] ?? 0,
+      reject: byTier[4] ?? 0,
+    },
     byElement,
   };
 }

@@ -11,10 +11,11 @@
  * and before/after quality scores from the local enhance() engine.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { enhance } from '@/lib/apl/enhance';
+import { NextRequest, NextResponse } from "next/server";
+import { enhance } from "@/lib/apl/enhance";
+import { buildLocalGuidance } from "@/lib/apl/local-guidance";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
 // ---------------------------------------------------------------------------
 // Rate limiting (mirrors /api/ai/chat pattern)
@@ -72,8 +73,8 @@ Rules:
 export async function POST(req: NextRequest) {
   try {
     // --- Rate limiting by IP ---
-    const forwarded = req.headers.get('x-forwarded-for');
-    const ip = forwarded?.split(',')[0].trim() || 'anonymous';
+    const forwarded = req.headers.get("x-forwarded-for");
+    const ip = forwarded?.split(",")[0].trim() || "anonymous";
     const rateLimitKey = `apl:${ip}`;
     const now = Date.now();
     const userLimit = rateLimits.get(rateLimitKey);
@@ -84,32 +85,55 @@ export async function POST(req: NextRequest) {
           const retryAfterSec = Math.ceil((userLimit.resetAt - now) / 1000);
           return NextResponse.json(
             { error: `Rate limit exceeded. Try again in ${retryAfterSec}s.` },
-            { status: 429, headers: { 'Retry-After': String(retryAfterSec) } }
+            { status: 429, headers: { "Retry-After": String(retryAfterSec) } },
           );
         }
         userLimit.count++;
       } else {
-        rateLimits.set(rateLimitKey, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
+        rateLimits.set(rateLimitKey, {
+          count: 1,
+          resetAt: now + RATE_LIMIT_WINDOW,
+        });
       }
     } else {
-      rateLimits.set(rateLimitKey, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
+      rateLimits.set(rateLimitKey, {
+        count: 1,
+        resetAt: now + RATE_LIMIT_WINDOW,
+      });
     }
 
     // --- Parse & validate ---
-    const body = await req.json();
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json(
+        { error: "Invalid JSON body." },
+        { status: 400 },
+      );
+    }
     const prompt: unknown = body?.prompt;
-    const mode: string = body?.mode || 'text';
+    const mode: string = body?.mode || "text";
 
-    if (!prompt || typeof prompt !== 'string') {
-      return NextResponse.json({ error: 'prompt is required (string)' }, { status: 400 });
+    if (!prompt || typeof prompt !== "string") {
+      return NextResponse.json(
+        { error: "prompt is required (string)" },
+        { status: 400 },
+      );
     }
 
     if (prompt.length > 4000) {
-      return NextResponse.json({ error: 'Prompt too long (max 4000 chars)' }, { status: 400 });
+      return NextResponse.json(
+        { error: "Prompt too long (max 4000 chars)" },
+        { status: 400 },
+      );
     }
 
-    if (!['text', 'image', 'music'].includes(mode)) {
-      return NextResponse.json({ error: 'mode must be "text", "image", or "music"' }, { status: 400 });
+    if (!["text", "image", "music"].includes(mode)) {
+      return NextResponse.json(
+        { error: 'mode must be "text", "image", or "music"' },
+        { status: 400 },
+      );
     }
 
     // --- Before quality score ---
@@ -119,50 +143,70 @@ export async function POST(req: NextRequest) {
     // --- LLM enhancement via OpenRouter / Grok ---
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) {
-      return NextResponse.json(
-        { error: 'Enhancement service not configured.' },
-        { status: 503 }
+      // The local APL engine can give useful, deterministic guidance without
+      // billing a model or pretending to have rewritten the creator's ideas.
+      const { guidance, enhanced } = buildLocalGuidance(
+        prompt,
+        before.suggestions,
       );
+      return NextResponse.json({
+        original: prompt,
+        enhanced,
+        spark: null,
+        palette: before.detectedPalettes[0]?.palette ?? null,
+        paletteDescription: null,
+        sharpened: [],
+        suggestions: guidance,
+        source: "local-guidance",
+        qualityBefore,
+        qualityAfter: qualityBefore,
+      });
     }
 
     const systemContent = MODE_HINTS[mode]
       ? `${SYSTEM_PROMPT}\n\n${MODE_HINTS[mode]}`
       : SYSTEM_PROMPT;
 
-    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
-        'HTTP-Referer': 'https://arcanea.ai',
-        'X-Title': 'Arcanea APL Enhance',
+        "HTTP-Referer": "https://arcanea.ai",
+        "X-Title": "Arcanea APL Enhance",
       },
       body: JSON.stringify({
-        model: 'x-ai/grok-2-1212',
+        model: "x-ai/grok-2-1212",
         messages: [
-          { role: 'system', content: systemContent },
+          { role: "system", content: systemContent },
           {
-            role: 'user',
+            role: "user",
             content: `Transform this ${mode} prompt using SPARK.SHAPE.SHARPEN:\n\n"${prompt}"`,
           },
         ],
         max_tokens: 600,
         temperature: 0.85,
-        response_format: { type: 'json_object' },
+        response_format: { type: "json_object" },
       }),
     });
 
     if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(
-        (err as { error?: { message?: string } })?.error?.message || 'Enhancement failed'
+      return NextResponse.json(
+        {
+          error:
+            res.status === 429
+              ? "Enhancement provider rate limited."
+              : "Enhancement provider unavailable.",
+        },
+        { status: res.status === 429 ? 429 : 502 },
       );
     }
 
     const data = await res.json();
     const raw =
-      (data as { choices?: { message?: { content?: string } }[] })?.choices?.[0]?.message
-        ?.content?.trim() || '';
+      (
+        data as { choices?: { message?: { content?: string } }[] }
+      )?.choices?.[0]?.message?.content?.trim() || "";
 
     // --- Parse LLM JSON response ---
     let parsed: {
@@ -205,12 +249,13 @@ export async function POST(req: NextRequest) {
       sharpened: parsed.sharpen || [],
       qualityBefore,
       qualityAfter,
+      source: "provider-rewrite",
     });
-  } catch (error) {
-    console.error('APL Enhance API error:', error);
+  } catch {
+    console.error("APL Enhance API error");
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Enhancement failed' },
-      { status: 500 }
+      { error: "Prompt enhancement is temporarily unavailable." },
+      { status: 502 },
     );
   }
 }
