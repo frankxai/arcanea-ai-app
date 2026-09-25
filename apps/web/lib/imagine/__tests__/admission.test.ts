@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { checkImageAdmission } from "../admission.ts";
+import { checkImageAdmission } from "../admission";
 
 test("provider access requires an explicit successful spend", () => {
   assert.deepEqual(checkImageAdmission(200, { success: true }), {
