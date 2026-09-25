@@ -13,12 +13,12 @@ export const metadata: Metadata = {
 export default function CanvasPage() {
   return (
     <>
+      <CanvasWorkspace />
       <PlatformStudioShell
         studio={STUDIO_BY_ID.canvas}
         title="One canvas for every creative workflow"
         subtitle="Drop a world, book, song, scene, or repo into a node graph. Chain agents, assets, prompts, models, and exports into repeatable studio workflows."
       />
-      <CanvasWorkspace />
       <CanvasFlowLab />
     </>
   );
