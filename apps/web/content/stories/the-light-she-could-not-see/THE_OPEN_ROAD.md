@@ -2,13 +2,13 @@
 
 _A proposed continuation of The Light She Could Not See_
 
-## Thirteen · The Bell That Rang Twice
+## 18 · The Bell That Rang Twice
 
 _Crystalpeak · The eastern crossing_
 
 The Academy taught Selene to leave a thing unfinished.
 
-On the first morning of her Foundation term, she held a stone bowl between her hands while three other students watched. Her task was to sense where the weight belonged. The bowl had one shallow crack. She found four ways to stop it spreading, then a fifth, and in reaching for the fifth dropped it.
+On the first clear morning after the coastal practicum, near the end of her Foundation term, she held a stone bowl between her hands while three other students watched. Her task was to sense where the weight belonged. The bowl had one shallow crack. She found four ways to stop it spreading, then a fifth, and in reaching for the fifth dropped it.
 
 It struck the floor with a sound that could have ended a lesson.
 
@@ -26,7 +26,7 @@ The others laughed. Selene knelt to gather the pieces and found that she was lau
 
 “Good. Tomorrow we begin there.”
 
-At the stable, Brío was enjoying the Academy more than she was. He had worked out which apprentice carried apples and which one merely talked about them. He had also made an enemy of a loose brass bell above the feed door. When the bell rang, he flattened his ears and walked away from the entire building.
+At the stable, Brío had worked out which apprentice carried apples and which one merely talked about them. Luz had found him a warmer corner after the coastal journey. He had also made an enemy of a loose brass bell above the feed door. When the bell rang, he flattened his ears and walked away from the entire building.
 
 That afternoon it rang twice.
 
@@ -56,7 +56,7 @@ The man with the case gave her a quick glance. He had heard the distinction.
 
 His name was Cael Rovan. He built travelling instruments for the Academy and kept a workshop by the canal below Crystalpeak. Iolen had asked him to examine the eastern crossing, though Cael seemed unsure that this counted as being asked to work with Selene.
 
-They left at first light with Brío, a repair cart, two river keepers, and a young Aqualis apprentice called Iva, whose knowledge of the flood beds was better than either of theirs. Cael walked beside the cart and did not offer to lead the horse. Brío noticed this, considered him briefly, and turned his attention to a flowering hedge.
+They left at first light with Brío, a repair cart, two river keepers, and Iva, who had shared both the high trail and the sea with Selene. Her knowledge of the flood beds was better than either of theirs. Cael walked beside the cart and did not offer to lead the horse. Brío noticed this, considered him briefly, and turned his attention to a flowering hedge.
 
 At the river the bridge hung from one bank by a single cable. A cluster of people waited across the water under the roof of a small field school. One held up a square of white cloth. A signal: they could see the party; they were still there.
 
@@ -88,7 +88,7 @@ Cael stared at the band.
 
 The bell inside his case rang once, though no one had touched it.
 
-## Fourteen · The Crossing Nobody Owned
+## 19 · The Crossing Nobody Owned
 
 _The eastern river · A refusal_
 
@@ -200,7 +200,7 @@ Brío pushed his nose into Cael’s coat. Cael checked his pockets, found nothin
 
 No bridge appeared before morning. The people on each bank kept watch for one another anyway.
 
-## Fifteen · A Sounding Before Dawn
+## 20 · A Sounding Before Dawn
 
 _The school ferry · Iva’s measure_
 
@@ -306,7 +306,7 @@ The first boat reached their bank. Brío raised his head. Cael shut his instrume
 
 The bell did not ring again.
 
-## Sixteen · What the Record Could Bear
+## 21 · What the Record Could Bear
 
 _The river station · An accounting_
 
@@ -420,7 +420,7 @@ Selene set her notebook on the rail. "I wanted to tell her I saw who took the re
 
 "But you didn't."
 
-"I had Iva's times. Adela had hers." She watched water fall from his hands. "Tomorrow I'm riding to the upper school. They still need the written route. After that I'm going to the mountain."
+"I had Iva's times. Adela had hers." She watched water fall from his hands. "Tomorrow I'm riding to the upper school. They still need the written route. After that I'm going back to the mountain. Tami is meeting me on the high trail."
 
 He dried his fingers on the edge of his coat. "I have to stay for the inquiry."
 
