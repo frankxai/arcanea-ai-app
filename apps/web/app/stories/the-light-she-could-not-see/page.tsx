@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: "The Light She Could Not See",
     description:
       "An illustrated Arcanea story about the roads we choose and the people we let choose with us.",
-    images: ["/stories/horsewoman/the-open-road-cover.webp"],
+    images: ["/stories/horsewoman/open-road-hero.webp"],
   },
   alternates: { canonical: "/stories/the-light-she-could-not-see" },
 };
@@ -60,15 +60,18 @@ export default function HorsewomanStory() {
         <Link href="/books" className={styles.brand}>
           ARCANEA <span>/ STORIES</span>
         </Link>
-        <a href="#contents" className={styles.contentsLink}>
+        <a href="#desktop-contents" className={styles.contentsLinkDesktop}>
+          Chapter index
+        </a>
+        <a href="#contents" className={styles.contentsLinkMobile}>
           Chapter index
         </a>
       </header>
 
       <section className={styles.hero} aria-labelledby="story-title">
         <Image
-          src="/stories/horsewoman/chapter-12-2.webp"
-          alt="Selene rides Brío along a high trail above a dawn-lit river and distant tepuis"
+          src="/stories/horsewoman/open-road-hero.webp"
+          alt="Selene rides Brío above a winding dawn-lit river, with misty tepuis and orchids beyond"
           fill
           priority
           sizes="100vw"
@@ -92,11 +95,15 @@ export default function HorsewomanStory() {
             Begin reading <span aria-hidden="true">↓</span>
           </a>
         </div>
-        <p className={styles.heroCredit}>16 chapters · 25 illustrations</p>
+        <p className={styles.heroCredit}>16 chapters · 26 illustrations</p>
       </section>
 
       <div className={styles.layout}>
-        <aside className={styles.sidebar} aria-label="Table of contents">
+        <aside
+          className={styles.sidebar}
+          id="desktop-contents"
+          aria-label="Table of contents"
+        >
           <div className={styles.sidebarInner}>
             <p className={styles.smallLabel}>The story</p>
             <p className={styles.sidebarTitle}>
