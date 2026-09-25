@@ -1,326 +1,118 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-/**
- * Chat History API Route
- *
- * GET  /api/chat/history?luminorId=&userId=&limit=&before=
- *   Returns paginated message history + bond state.
- *
- * POST /api/chat/history
- *   Body: { luminorId, userId, messages: [{id, role, content, timestamp}] }
- *   Persists messages and returns updated bond state.
- *
- * Strategy:
- *   - Authenticated users → Supabase (chat_sessions + chat_messages tables)
- *   - Anonymous / unconfigured → file-based fallback (.arcanea-runtime/chat-history.json)
- *
- * The file-based fallback ensures the chat UI always works even without
- * Supabase configuration or when the user is not logged in.
- */
+/** Chat history is durable only for authenticated accounts, under Supabase RLS. */
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 
-import { promises as fs } from 'fs';
-import path from 'path';
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+export const runtime = "nodejs";
 
-export const runtime = 'nodejs';
-
-// ---------------------------------------------------------------------------
-// Shared types
-// ---------------------------------------------------------------------------
-
-type ChatRole = 'user' | 'assistant';
-
-interface StoredMessage {
+type StoredMessage = {
   id: string;
-  role: ChatRole;
+  role: "user" | "assistant";
   content: string;
-  timestamp: string;
+};
+
+function respond(body: object, status = 200) {
+  return NextResponse.json(body, {
+    status,
+    headers: { "Cache-Control": "no-store" },
+  });
 }
 
-interface BondState {
-  level: number;
-  xp: number;
-  xpToNextLevel: number;
-  relationshipStatus: string;
-}
-
-interface HistoryResponse {
-  messages: StoredMessage[];
-  bondState: BondState;
-  hasMore: boolean;
-  sessionId?: string;
-}
-
-// ---------------------------------------------------------------------------
-// File-based fallback store
-// ---------------------------------------------------------------------------
-
-interface FileStore {
-  users: Record<string, Record<string, StoredMessage[]>>;
-}
-
-const HISTORY_PATH = path.join(
-  process.cwd(),
-  '.arcanea-runtime',
-  'chat-history.json'
-);
-
-async function readFileStore(): Promise<FileStore> {
-  try {
-    const raw = await fs.readFile(HISTORY_PATH, 'utf8');
-    const parsed = JSON.parse(raw) as FileStore;
-    return parsed.users ? parsed : { users: {} };
-  } catch {
-    return { users: {} };
-  }
-}
-
-async function writeFileStore(store: FileStore): Promise<void> {
-  await fs.mkdir(path.dirname(HISTORY_PATH), { recursive: true });
-  await fs.writeFile(HISTORY_PATH, JSON.stringify(store, null, 2), 'utf8');
-}
-
-// ---------------------------------------------------------------------------
-// Bond state helper
-// ---------------------------------------------------------------------------
-
-function deriveBondState(userTurnCount: number): BondState {
-  const level = Math.max(1, Math.min(10, Math.floor(userTurnCount / 10) + 1));
-  const xp = userTurnCount * 10;
-  const nextLevelTurns = level * 10;
-  const xpToNextLevel =
-    level >= 10 ? 0 : Math.max(0, (nextLevelTurns - userTurnCount) * 10);
-  const relationshipStatus =
-    level >= 8
-      ? 'trusted_ally'
-      : level >= 5
-      ? 'companion'
-      : level >= 3
-      ? 'friend'
-      : 'stranger';
-
-  return { level, xp, xpToNextLevel, relationshipStatus };
-}
-
-// ---------------------------------------------------------------------------
-// Auth helper
-// ---------------------------------------------------------------------------
-
-/**
- * Returns the authenticated Supabase user id, or null if not logged in
- * or Supabase is not configured.  Never throws.
- */
-async function getAuthenticatedUserId(): Promise<string | null> {
+async function authenticatedUserId(): Promise<string | null> {
   try {
     const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    return user?.id ?? null;
+    const { data, error } = await supabase.auth.getUser();
+    return error ? null : (data.user?.id ?? null);
   } catch {
     return null;
   }
 }
 
-// ---------------------------------------------------------------------------
-// Input sanitisation
-// ---------------------------------------------------------------------------
-
-function sanitizeMessages(input: unknown): StoredMessage[] {
-  if (!Array.isArray(input)) return [];
-  return input
-    .map((item) => {
-      const role: ChatRole | null =
-        item?.role === 'assistant'
-          ? 'assistant'
-          : item?.role === 'user'
-          ? 'user'
-          : null;
-      const content =
-        typeof item?.content === 'string' ? item.content.trim() : '';
-      if (!role || !content) return null;
-      return {
-        id:
-          typeof item?.id === 'string' && item.id
-            ? item.id
-            : `msg-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-        role,
-        content,
-        timestamp:
-          typeof item?.timestamp === 'string' && item.timestamp
-            ? item.timestamp
-            : new Date().toISOString(),
-      } satisfies StoredMessage;
-    })
-    .filter((m): m is StoredMessage => Boolean(m));
+function validMessages(value: unknown): value is StoredMessage[] {
+  return (
+    Array.isArray(value) &&
+    value.length <= 50 &&
+    value.every(
+      (message) =>
+        message &&
+        typeof message.id === "string" &&
+        message.id.length > 0 &&
+        message.id.length <= 128 &&
+        (message.role === "user" || message.role === "assistant") &&
+        typeof message.content === "string" &&
+        message.content.trim().length > 0 &&
+        message.content.length <= 8000,
+    )
+  );
 }
 
-// ---------------------------------------------------------------------------
-// GET — fetch history
-// ---------------------------------------------------------------------------
-
 export async function GET(req: NextRequest) {
+  const userId = await authenticatedUserId();
+  if (!userId)
+    return respond({ error: "Sign in to access saved chat history." }, 401);
+
+  const luminorId = req.nextUrl.searchParams.get("luminorId") || "default";
+  const beforeId = req.nextUrl.searchParams.get("before") ?? undefined;
+  const requestedLimit = Number(req.nextUrl.searchParams.get("limit") || 50);
+  const limit = Number.isFinite(requestedLimit)
+    ? Math.max(1, Math.min(200, Math.trunc(requestedLimit)))
+    : 50;
+
   try {
-    const params = req.nextUrl.searchParams;
-    const luminorId = params.get('luminorId') || 'default';
-    const requestedUserId = params.get('userId');
-    const beforeId = params.get('before') ?? undefined;
-    const limit = Math.max(1, Math.min(200, Number(params.get('limit') || 50)));
-
-    const authUserId = await getAuthenticatedUserId();
-
-    // --- Supabase path (authenticated users) ---
-    if (authUserId) {
-      try {
-        const { getChatHistory } = await import(
-          '@/lib/services/chat-service'
-        );
-        const result = await getChatHistory(authUserId, luminorId, {
-          limit,
-          beforeId,
-        });
-
-        const payload: HistoryResponse = {
-          sessionId: result.sessionId,
-          messages: result.messages.map((m) => ({
-            id: m.id,
-            role: m.role as ChatRole,
-            content: m.content,
-            timestamp: m.createdAt,
-          })),
-          bondState: result.bondState,
-          hasMore: result.hasMore,
-        };
-
-        return NextResponse.json(payload, {
-          headers: { 'Cache-Control': 'no-store' },
-        });
-      } catch (err) {
-        console.error('[chat/history GET] Supabase error — falling back to file store:', err);
-        // Fall through to file store
-      }
-    }
-
-    // --- File-based fallback (anonymous or Supabase unavailable) ---
-    const userKey = requestedUserId || 'guest';
-    const store = await readFileStore();
-    const allMessages = store.users[userKey]?.[luminorId] || [];
-
-    let start = 0;
-    let end = allMessages.length;
-
-    if (beforeId) {
-      const beforeIndex = allMessages.findIndex((msg) => msg.id === beforeId);
-      end = beforeIndex >= 0 ? beforeIndex : allMessages.length;
-      start = Math.max(0, end - limit);
-    } else {
-      start = Math.max(0, allMessages.length - limit);
-    }
-
-    const messages = allMessages.slice(start, end);
-    const userTurns = allMessages.filter((m) => m.role === 'user').length;
-
-    const payload: HistoryResponse = {
-      messages,
-      bondState: deriveBondState(userTurns),
-      hasMore: start > 0,
-    };
-
-    return NextResponse.json(payload, {
-      headers: { 'Cache-Control': 'no-store' },
+    const { getChatHistory } = await import("@/lib/services/chat-service");
+    const result = await getChatHistory(userId, luminorId, { limit, beforeId });
+    return respond({
+      sessionId: result.sessionId,
+      messages: result.messages.map((message) => ({
+        id: message.id,
+        role: message.role,
+        content: message.content,
+        timestamp: message.createdAt,
+      })),
+      bondState: result.bondState,
+      hasMore: result.hasMore,
     });
   } catch {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 },
+    console.error("[chat/history GET] Persistence unavailable");
+    return respond(
+      { error: "Saved chat history is temporarily unavailable." },
+      503,
     );
   }
 }
 
-// ---------------------------------------------------------------------------
-// POST — persist messages
-// ---------------------------------------------------------------------------
-
 export async function POST(req: NextRequest) {
+  const userId = await authenticatedUserId();
+  if (!userId) return respond({ error: "Sign in to save chat history." }, 401);
+
+  let body: { luminorId?: unknown; messages?: unknown };
   try {
-    const body = await req.json().catch(() => ({}));
-    const luminorId =
-      typeof body.luminorId === 'string' && body.luminorId
-        ? body.luminorId
-        : 'default';
-    const requestedUserId =
-      typeof body.userId === 'string' ? body.userId : null;
-    const incoming = sanitizeMessages(body.messages);
-
-    if (incoming.length === 0) {
-      return NextResponse.json({ ok: true, saved: 0 });
-    }
-
-    const authUserId = await getAuthenticatedUserId();
-
-    // --- Supabase path (authenticated users) ---
-    if (authUserId) {
-      try {
-        const { persistChatMessages } = await import(
-          '@/lib/services/chat-service'
-        );
-        const result = await persistChatMessages(authUserId, luminorId, incoming);
-
-        return NextResponse.json({
-          ok: true,
-          saved: result.saved,
-          sessionId: result.sessionId,
-          bondState: result.bondState,
-        });
-      } catch (err) {
-        console.error('[chat/history POST] Supabase error — falling back to file store:', err);
-        // Fall through to file store
-      }
-    }
-
-    // --- File-based fallback ---
-    const userKey = requestedUserId || 'guest';
-    const store = await readFileStore();
-
-    if (!store.users[userKey]) store.users[userKey] = {};
-    if (!store.users[userKey][luminorId])
-      store.users[userKey][luminorId] = [];
-
-    const existing = store.users[userKey][luminorId];
-    const seen = new Set(existing.map((m) => m.id));
-
-    for (const message of incoming) {
-      if (!seen.has(message.id)) {
-        existing.push(message);
-        seen.add(message.id);
-      }
-    }
-
-    existing.sort(
-      (a, b) =>
-        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+    body = await req.json();
+  } catch {
+    return respond({ error: "Invalid JSON body." }, 400);
+  }
+  if (!validMessages(body?.messages)) {
+    return respond(
+      { error: "Provide at most 50 valid messages of up to 8,000 characters." },
+      400,
     );
+  }
+  const luminorId =
+    typeof body.luminorId === "string" &&
+    body.luminorId.length <= 128 &&
+    body.luminorId
+      ? body.luminorId
+      : "default";
+  if (body.messages.length === 0) return respond({ ok: true, saved: 0 });
 
-    await writeFileStore(store);
-
-    const userTurns = existing.filter((m) => m.role === 'user').length;
-
-    return NextResponse.json({
-      ok: true,
-      saved: incoming.length,
-      total: existing.length,
-      bondState: deriveBondState(userTurns),
-    });
-  } catch (error) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error:
-          error instanceof Error
-            ? error.message
-            : 'Failed to persist history',
-      },
-      { status: 500 }
+  try {
+    const { persistChatMessages } = await import("@/lib/services/chat-service");
+    const result = await persistChatMessages(userId, luminorId, body.messages);
+    return respond({ ok: true, ...result });
+  } catch {
+    console.error("[chat/history POST] Persistence unavailable");
+    return respond(
+      { ok: false, error: "Chat was not saved. Please retry." },
+      503,
     );
   }
 }
