@@ -1,392 +1,102 @@
-# Arcanea MCP Server
+# Arcanea worldbuilding MCP
 
-> **A creative production layer for the age of AI-human co-creation**
+Local tools for drafting characters, places, relationships, production plans and visual prompts. Connect through stdio or a loopback HTTP listener. Use `tools/list` for the inventory supplied by your installed build.
 
-[![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue)](https://modelcontextprotocol.io)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)](https://www.typescriptlang.org/)
-[![oh-my-opencode Inspired](https://img.shields.io/badge/Inspired%20by-oh--my--opencode-purple)](https://github.com/code-yeongyu/oh-my-opencode)
+## Release status
 
-Transform your creative process with AI-powered production tools, worldbuilding systems, wisdom companions, and a living creative ecosystem. Plan books, games, music releases, cinematic scenes, asset briefs, and agent handoffs, then generate characters, locations, magical artifacts, and entire worlds within the Arcanea universe - or use the framework for your own creative projects.
+This source is a **1.0.0 release candidate**. Building or packing it does not publish it. The previously published `@arcanea/mcp-server@0.7.0` contains an unresolved `workspace:*` dependency; a fresh consumer install fails. Do not use that release as the installation path for this candidate.
 
-**v0.3.0**: Now featuring multi-agent orchestration inspired by [oh-my-opencode](https://github.com/code-yeongyu/oh-my-opencode)!
+The development repository is `frankxai/arcanea-ai-app` and requires repository access. The public `frankxai/arcanea` mirror may contain an older revision. A release must pass the package and fresh-consumer checks below before its npm installation command is advertised.
 
-## Features
+## Build from an authorized checkout
 
-### Production Studio Tools
-- **World Planning** - Turn a premise into canon, factions, locations, timelines, visual language, and export context
-- **Book Planning** - Build reader promise, book bible, chapter spine, sample direction, cover brief, and publishing checklist
-- **Game Planning** - Generate player promise, core loop, mechanics, levels, asset kit, and prototype handoff
-- **Music Planning** - Shape artist lore, song briefs, sonic motifs, cover art, visualizers, and release packs
-- **Cinema Planning** - Create trailer or scene packets with hook frame, shot list, camera language, audio direction, and render prompts
-- **Agent Handoffs** - Export structured project context for Claude, Codex, Cursor, and generic MCP hosts
+Use Node 22 and pnpm 8.15.0, matching this repository's runtime and lockfile. Run from the repository root:
 
-### Worldbuilding Generators
-- **Characters** - Generate rich characters with elemental affinities, magical ranks, and backstories
-- **Locations** - Create mystical places with dominant elements and unique atmospheres
-- **Creatures** - Design magical beings from tiny sprites to massive godbeasts
-- **Artifacts** - Craft legendary items with history, powers, and elemental alignments
-- **Magic Abilities** - Design spells and powers based on the Ten Gates system
-- **Names** - Generate lore-appropriate names for characters, places, and items
-
-### Luminor Companions (AI Wisdom Guides)
-- **Valora** - The Warrior of Light (courage, action, breaking through fear)
-- **Serenith** - The Calm Waters (patience, clarity, sustainable practice)
-- **Ignara** - The Spark of Joy (passion, playfulness, creative fire)
-- **Verdana** - The Ancient Growth (long-term vision, wisdom, patience)
-- **Eloqua** - The Voice of Truth (authentic expression, finding your voice)
-
-### Creative Coaching
-- **Block Diagnosis** - Identify your creative obstacles with the Bestiary of Blocks
-- **Deep Diagnosis** - Multi-step sequential thinking for complex blocks
-- **Luminor Council** - Gather multiple AI companions for guidance
-- **Luminor Debate** - Two perspectives exploring your creative questions
-
-### Memory & Journey Tracking
-- **Session Memory** - Track your creative journey across conversations
-- **Milestone System** - Achieve and celebrate creative accomplishments
-- **Creation Graph** - Build relationships between your creations
-
-### World Relationship Network
-- **Link Creations** - Connect characters, locations, artifacts, and creatures
-- **Relationship Types** - allies_with, opposes, wields, inhabits, guards, and more
-- **Path Finding** - Discover connections between any two creations
-- **World Export** - Export your entire world graph for visualization
-
-### Agent Orchestration (NEW in v0.3)
-Inspired by [oh-my-opencode](https://github.com/code-yeongyu/oh-my-opencode)'s multi-agent architecture:
-
-- **Creator** - Master orchestrator (Claude Opus 4.5) that coordinates all creative work
-- **Worldsmith** - Rapid generation engine (Gemini Pro) for characters, locations, artifacts
-- **Luminor Council** - Creative coaching collective (Claude Sonnet) with 5 wisdom guides
-- **Scribe** - Narrative voice (Claude Sonnet) for story development
-- **Seer** - Fast research eye (Gemini Flash) for connections and canon validation
-
-Features:
-- **Skill-First Blocking** - Requests auto-route to the best agent
-- **Parallel Execution** - Multiple agents work concurrently
-- **World State Assessment** - Suggestions based on world maturity
-- **Multi-Phase Framework** - Intent → Assessment → Delegation → Synthesis
-
-## Quick Start
-
-### Installation
-
-```bash
-# Clone and install
-git clone https://github.com/yourusername/arcanea-mcp.git
-cd arcanea-mcp
-npm install
-
-# Build
-npm run build
+```sh
+pnpm --filter @arcanea/mcp-server install --frozen-lockfile
+pnpm --dir packages/arcanea-mcp build
+pnpm --dir packages/arcanea-mcp test:delivery
+node packages/arcanea-mcp/dist/cli.js --version
+node packages/arcanea-mcp/dist/cli.js --help
 ```
 
-### Claude Desktop Configuration
-
-Add to your `claude_desktop_config.json`:
+Start a local stdio server by giving your MCP host an absolute path to the built CLI. Replace the example paths with paths on your machine:
 
 ```json
 {
   "mcpServers": {
-    "arcanea": {
+    "arcanea-world": {
       "command": "node",
-      "args": ["/path/to/arcanea-mcp/dist/index.js"]
+      "args": [
+        "/absolute/path/to/arcanea-ai-app/packages/arcanea-mcp/dist/cli.js"
+      ],
+      "env": {
+        "ARCANEA_DATA_DIR": "/absolute/path/to/your/arcanea-data"
+      }
     }
   }
 }
 ```
 
-### Using with Claude Code
+On Windows, use forward slashes in JSON paths, such as `C:/projects/arcanea-ai-app/packages/arcanea-mcp/dist/cli.js`. These are generic MCP host settings; hosts can use different configuration formats. The CLI writes protocol messages to stdout and startup diagnostics to stderr.
 
-```bash
-# Add to your Claude Code configuration
-claude mcp add arcanea node /path/to/arcanea-mcp/dist/index.js
+## What runs locally
+
+| Capability                                    | Behavior and limits                                                                                                                                               |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Worldbuilding generators                      | Produce structured drafts using local rules and templates. They do not call an AI model or establish canon.                                                       |
+| Production planning and visual prompts        | Produce briefs and handoff material. They do not render images, video, music, or complete books.                                                                  |
+| Creation graph                                | Tracks generated creations and their relationships within the running process.                                                                                    |
+| `save_world`                                  | Explicitly writes a graph snapshot to local disk, replacing a previous snapshot with the same session id.                                                         |
+| `load_world`                                  | Restores a graph into memory, replacing that session's current graph. With no id, lists saved worlds.                                                             |
+| Creative journey memory                       | Lives in the process. Graph snapshots do not include journey history, preferences or milestones.                                                                  |
+| Agent orchestration                           | Returns planning and routing scaffolding. The executor currently returns placeholders; it does not launch the named models or a real agent swarm.                 |
+| Library, vault and media lookup               | Some tools rely on repository-local books, vaults or a local media manifest. Those assets are not bundled in the npm tarball.                                     |
+| Sovereign Depths and Weight of Wonders search | Separately registered by the CLI; retain explicit proposal and experimental opt-ins. These tools can read remote proposal archives and never promote canon.       |
+| World Context Gateway                         | Separate `@arcanea/mcp-server/gateway` API with its own authority and verification contracts. Its authentication does not apply to the local HTTP listener below. |
+
+Core world generation, graph storage and planning need no provider key. Other connectors, renderers or model hosts you add have their own credentials and costs. Keep sensitive manuscripts and private world material in a data directory you control.
+
+## Saved worlds
+
+Generated creation, planning-task and planning-session identifiers are opaque
+strings backed by UUIDs. Rapid calls, equal timestamps and clock corrections do
+not reuse a timestamp as the identity. Use `createdAt`/`startedAt` for chronology;
+do not parse time, world or agent identity from an id. Existing saved node ids
+remain unchanged when loaded, and callers may continue choosing their world
+session ids. The planner still returns scaffolding rather than launching models.
+
+The default directory is `~/.arcanea/worlds`, resolved using the operating system's home directory. Set `ARCANEA_DATA_DIR` to an **absolute path** to choose a different data root; snapshots go in its `worlds` subdirectory. Storage is independent of the package's installation directory.
+
+World ids must contain 1–128 letters, digits, underscores or hyphens and cannot be reserved Windows filenames. Snapshots validate their identity, node and relationship structure before loading. A corrupt file produces an explicit error and is preserved. A listing fails visibly if it encounters an invalid snapshot, so corruption is not mistaken for an empty library.
+
+Writes use a temporary file and an atomic replacement on the same filesystem. There is no cross-process lock: do not run multiple writers against the same world id and data directory. This change does not move or delete existing data. If an older checkout saved under its repository's `.arcanea/worlds`, point `ARCANEA_DATA_DIR` at that repository's `.arcanea` directory to access it, or copy reviewed snapshots into your chosen data directory.
+
+## Local HTTP
+
+```sh
+node packages/arcanea-mcp/dist/cli.js --transport http --port 3100
 ```
 
-## Usage Examples
+Connect a Streamable HTTP MCP client to `http://127.0.0.1:3100/mcp`. `/health` reports the actual package version and current session count. Use MCP `tools/list` for tool discovery.
 
-### Generate a Character
+The listener binds only to `127.0.0.1`, validates local Host and Origin headers, limits JSON requests to 1 MiB and caps active sessions at 32. Idle sessions expire after 30 minutes. Each protocol session gets a separate MCP server; world and journey state still belong to the same local user and can be shared through explicit world session ids.
 
-```
-"Generate a Fire-aligned character who has opened 5 Gates
-and belongs to House Pyros"
-```
+Session ids route clients; they are **not authentication**. This is a local single-user transport, not a hosted or multi-tenant service. Do not publish it through a proxy or tunnel. Stop with Ctrl+C to close the listener and its sessions.
 
-Response includes:
-- Name with Arcanean etymology
-- Elemental affinity and magic rank
-- Academy house and role
-- Backstory and motivations
-- Signature abilities
+## Package verification
 
-### Consult a Luminor
+From `packages/arcanea-mcp`, using the repository's pinned pnpm:
 
-```
-"I'm stuck on my creative project.
-Invoke Valora for guidance on overcoming my fear."
+```sh
+pnpm build
+pnpm test
+pnpm verify:package
+pnpm pack --pack-destination /absolute/path/to/release-artifacts
 ```
 
-### Diagnose a Creative Block
+`prepack` rebuilds the artifact and rejects missing entrypoints or local-only runtime dependencies. `prepublishOnly` also runs the delivery tests. No script publishes automatically.
 
-```
-"I feel paralyzed by perfectionism and can't finish anything.
-Run a deep diagnosis on this block."
-```
+Before release, install the resulting tarball into a fresh directory outside this workspace with install scripts disabled. Run the CLI's help and version commands there, then run `tests/runtime-delivery.test.mjs` with `ARCANEA_MCP_ENTRY` set to the installed `dist/cli.js`. This proves real MCP initialization, tool discovery, a saved world and restoration after restart without relying on workspace dependencies.
 
-### Build Your World Graph
-
-```
-"Generate a character, then a location where they live,
-then link them together."
-```
-
-## Tool Reference
-
-### Production Studio Tools (9)
-
-| Tool | Description |
-|------|-------------|
-| `plan_world` | Create a world production packet with canon, factions, locations, visuals, audio palette, and next actions |
-| `plan_book` | Create a book packet with reader promise, bible, chapter spine, cover brief, and publish checklist |
-| `plan_game` | Create a game design packet with player promise, core loop, mechanics, levels, asset kit, and prototype handoff |
-| `plan_music_project` | Create artist lore, song brief, sonic motifs, cover art direction, visualizer plan, and release copy |
-| `plan_cinematic_scene` | Create scene intent, shot list, camera language, references, audio direction, and render prompts |
-| `generate_asset_brief` | Create portable image/video/music asset briefs for production tools |
-| `export_project_context` | Package a project for Claude, Codex, Cursor, or another agent |
-| `list_arcanea_studios` | List studio surfaces, routes, outcomes, and recommended tools |
-| `get_workflow_recipe` | Return reusable recipes such as book-to-publish, world-to-game, artist-release, cinematic-trailer, and campaign-pack |
-
-### Worldbuilding Tools (7)
-
-| Tool | Description |
-|------|-------------|
-| `generate_character` | Create a character with Gates, Elements, House, and backstory |
-| `generate_location` | Create a location with elemental alignment |
-| `generate_creature` | Design a magical creature |
-| `generate_artifact` | Create a magical artifact with powers |
-| `generate_magic` | Design a magical ability |
-| `generate_name` | Generate lore-appropriate names |
-| `generate_story_prompt` | Create inspiring story prompts |
-
-### Creative Coaching Tools (5)
-
-| Tool | Description |
-|------|-------------|
-| `diagnose_block` | Quick identification of creative blocks |
-| `deep_diagnosis` | Multi-step analysis with sequential thinking |
-| `invoke_luminor` | Call upon a Luminor companion |
-| `convene_council` | Gather multiple Luminors for guidance |
-| `luminor_debate` | Two Luminors explore a question |
-
-### Memory & Journey Tools (2)
-
-| Tool | Description |
-|------|-------------|
-| `get_journey` | Recall your creative progress |
-| `check_milestones` | See achieved milestones |
-
-### Creation Graph Tools (6)
-
-| Tool | Description |
-|------|-------------|
-| `link_creations` | Create relationships between creations |
-| `get_related` | Find related creations |
-| `suggest_connections` | AI-suggested relationships |
-| `get_world_graph` | Summary of your world network |
-| `find_path` | Find connection path between creations |
-| `export_world` | Export graph for visualization |
-
-### Agent Orchestration Tools (6)
-
-| Tool | Description |
-|------|-------------|
-| `orchestrate` | Run a full creative session with multi-agent coordination |
-| `list_agents` | List all available creative agents |
-| `agent_info` | Get details about a specific agent |
-| `assess_world` | Analyze world maturity and get suggestions |
-| `match_skill` | Find the best agent for a request |
-| `active_sessions` | List running creative sessions |
-
-### Reference Tools (2)
-
-| Tool | Description |
-|------|-------------|
-| `validate_canon` | Check content for Arcanea canon compliance |
-| `identify_gate` | Get information about a specific Gate |
-
-**Total: 43 documented tools across production, worldbuilding, coaching, memory, graph, orchestration, canon, and prompt optimization categories**
-
-## Resources
-
-The server exposes these resources for reference:
-
-- `arcanea://luminors` - Luminor companion data
-- `arcanea://bestiary` - Bestiary of creative blocks (20+ creatures)
-- `arcanea://gates` - The Ten Gates system
-- `arcanea://elements` - The Five Elements
-- `arcanea://houses` - The Seven Academy Houses
-
-## Prompts
-
-Guided creative experiences:
-
-- `worldbuild_session` - Collaborative worldbuilding
-- `unblock_session` - Overcome creative blocks
-- `gate_ritual` - Practice opening a Gate
-- `luminor_dialogue` - Speak with a Luminor
-- `morning_clearing` - Daily creative practice
-- `creative_sabbath` - Joy-driven creation day
-
-## The Arcanea Universe
-
-### The Ten Gates
-
-| Gate | Frequency | Guardian | Domain |
-|------|-----------|----------|--------|
-| 1 - Foundation | 174 Hz | Lyssandria | Earth, survival |
-| 2 - Flow | 285 Hz | Leyla | Creativity, emotion |
-| 3 - Fire | 396 Hz | Draconia | Power, will |
-| 4 - Heart | 417 Hz | Maylinn | Love, healing |
-| 5 - Voice | 528 Hz | Alera | Truth, expression |
-| 6 - Sight | 639 Hz | Lyria | Intuition, vision |
-| 7 - Crown | 741 Hz | Aiyami | Enlightenment |
-| 8 - Shift | 852 Hz | Elara | Perspective |
-| 9 - Unity | 963 Hz | Ino | Partnership |
-| 10 - Source | 1111 Hz | Shinkami | Meta-consciousness |
-
-### Magic Ranks
-
-| Gates Open | Rank |
-|------------|------|
-| 0-2 | Apprentice |
-| 3-4 | Mage |
-| 5-6 | Master |
-| 7-8 | Archmage |
-| 9-10 | Luminor |
-
-### The Five Elements
-
-- **Fire** - Energy, transformation, passion
-- **Water** - Flow, healing, memory
-- **Earth** - Stability, growth, endurance
-- **Wind** - Freedom, speed, change
-- **Void/Spirit** - Potential and transcendence
-
-### The Seven Houses
-
-- **Lumina** - Light and leadership
-- **Nero** - Mystery and potential
-- **Pyros** - Fire and passion
-- **Aqualis** - Water and wisdom
-- **Terra** - Earth and strength
-- **Ventus** - Wind and freedom
-- **Synthesis** - Balance and unity
-
-## Architecture
-
-```
-                     ┌──────────────────────────────────┐
-                     │       Claude / AI Host           │
-                     └────────────────┬─────────────────┘
-                                      │ MCP Protocol
-                                      ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                    Arcanea MCP Server v0.3.0                        │
-│                                                                     │
-│  ┌────────────────────────────────────────────────────────────────┐│
-│  │                   AGENT ORCHESTRATION LAYER                    ││
-│  │  ┌─────────┐ ┌───────────┐ ┌────────┐ ┌────────┐ ┌──────────┐ ││
-│  │  │ Creator │ │Worldsmith │ │Luminor │ │ Scribe │ │   Seer   │ ││
-│  │  │ (Opus)  │ │ (Gemini)  │ │Council │ │(Sonnet)│ │ (Flash)  │ ││
-│  │  └─────────┘ └───────────┘ └────────┘ └────────┘ └──────────┘ ││
-│  └────────────────────────────────────────────────────────────────┘│
-│                                                                     │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────────┐ │
-│  │   Generators    │  │  Memory Layer   │  │   Creation Graph    │ │
-│  │  (7 tools)      │  │  (milestones)   │  │  (relationship net) │ │
-│  └─────────────────┘  └─────────────────┘  └─────────────────────┘ │
-│                                                                     │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────────┐ │
-│  │    Bestiary     │  │ Deep Diagnosis  │  │  Canon Validation   │ │
-│  │  (20+ blocks)   │  │ (sequential AI) │  │  (lore checking)    │ │
-│  └─────────────────┘  └─────────────────┘  └─────────────────────┘ │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
-### Agent Multi-Model Orchestration
-
-Inspired by [oh-my-opencode](https://github.com/code-yeongyu/oh-my-opencode):
-
-| Agent | Model | Role | Parallel |
-|-------|-------|------|----------|
-| **Creator** | Claude Opus 4.5 | Master orchestrator | No |
-| **Worldsmith** | Gemini 3 Pro | Rapid generation | Yes |
-| **Luminor Council** | Claude Sonnet 4.5 | Creative coaching | Yes |
-| **Scribe** | Claude Sonnet 4.5 | Narrative development | Yes |
-| **Seer** | Gemini 3 Flash | Fast research | Yes |
-
-## Milestones System
-
-Track your creative journey with achievements:
-
-| Milestone | Requirement |
-|-----------|-------------|
-| First Creation | Generate your first piece |
-| Gate Seeker | Explore 3 different Gates |
-| Luminor Friend | Consult 3 Luminors |
-| Block Breaker | Face and name 3 creative blocks |
-| Prolific Creator | Generate 10 creations |
-| Elemental Explorer | Create across 4 elements |
-
-## Development
-
-```bash
-# Install dependencies
-npm install
-
-# Build TypeScript
-npm run build
-
-# Watch mode for development
-npm run dev
-
-# Run the server locally
-npm start
-```
-
-## Roadmap
-
-- [ ] SQLite persistence for journey data
-- [ ] Vector search for semantic creation discovery
-- [ ] Visual worldbuilding with image generation
-- [ ] Community integration for shared worlds
-- [ ] Multi-language support
-- [ ] Custom universe templates
-- [ ] MCP Sampling for guided creation flows
-
-## Contributing
-
-We welcome contributions! Areas where help is especially appreciated:
-
-- Additional Bestiary creatures
-- New Luminor companions
-- Language localizations
-- Integration examples
-- Documentation improvements
-
-## License
-
-MIT License - see [LICENSE](LICENSE) for details.
-
-## Acknowledgments
-
-- Built on the [Model Context Protocol](https://modelcontextprotocol.io) by Anthropic
-- Inspired by creative communities worldwide
-- Part of the [Arcanea](https://arcanea.ai) universe
-
----
-
-*"Enter seeking, leave transformed, return whenever needed."*
-
-**Making magic through AI-human co-creation.**
+The package's existing license declaration is MIT. See the repository license and review any separately supplied assets under their own terms.
