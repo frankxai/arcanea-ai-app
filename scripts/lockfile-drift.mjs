@@ -33,6 +33,16 @@ function canonical(value) {
   return value;
 }
 
+/** Root lockfile importers are the root manifest and the pnpm-workspace globs apps/* and packages/*. */
+export function isWorkspaceManifest(file) {
+  const normalized = String(file).replaceAll("\\", "/");
+  return (
+    normalized === "package.json" ||
+    normalized.startsWith("apps/") ||
+    normalized.startsWith("packages/")
+  );
+}
+
 /** before/after are parsed package.json objects, or null when the file is added or deleted. */
 export function needsLockfileChange(before, after) {
   // pnpm keeps one lockfile importer per workspace package, so adding or removing one always drifts.
@@ -87,8 +97,10 @@ function main([baseRef, headRef]) {
       "--",
       "pnpm-lock.yaml",
     ]).trim() !== "";
-  const drifting = manifests.filter((file) =>
-    needsLockfileChange(manifestAt(baseRef, file), manifestAt(headRef, file)),
+  const drifting = manifests.filter(
+    (file) =>
+      isWorkspaceManifest(file) &&
+      needsLockfileChange(manifestAt(baseRef, file), manifestAt(headRef, file)),
   );
 
   console.log(`package.json files changed: ${manifests.length}`);
