@@ -11,11 +11,11 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "The Light She Could Not See | Arcanea Stories",
   description:
-    "An illustrated Arcanea story of Selene Velara, her riding companions, dragons, the sea, and the difficult art of seeing without claiming to know.",
+    "At twenty-nine, Selene can see the light around everyone but herself. Ride with her from Caracas into the mountains, the dragon roost, and the depths of Mar Arcano.",
   openGraph: {
     title: "The Light She Could Not See",
     description:
-      "An illustrated Arcanea story about the roads we choose and the people we let choose with us.",
+      "A rider, three friends, a wounded dragon, and a sea that carries a dangerous secret.",
     images: ["/stories/horsewoman/open-road-hero.webp"],
   },
   alternates: { canonical: "/stories/the-light-she-could-not-see" },
@@ -44,6 +44,27 @@ const chapters = [
   ...chaptersFrom("THE_RIDER_CIRCLE.md"),
   ...chaptersFrom("THE_OPEN_ROAD.md"),
 ];
+
+const movements = [
+  { number: 1, title: "The first crossing", chapter: 1 },
+  { number: 2, title: "The rider circle", chapter: 13 },
+  { number: 3, title: "The eastern crossing", chapter: 18 },
+];
+
+function ChapterIndex() {
+  return (
+    <ol className={styles.chapterList}>
+      {chapters.map((chapter) => (
+        <li key={chapter.id}>
+          <a href={`#${chapter.id}`}>
+            <span>{String(chapter.number).padStart(2, "0")}</span>
+            {chapter.title}
+          </a>
+        </li>
+      ))}
+    </ol>
+  );
+}
 
 export default function HorsewomanStory() {
   return (
@@ -80,15 +101,15 @@ export default function HorsewomanStory() {
             She Could Not See
           </h1>
           <p>
-            She could see the light around everyone except herself. Then a horse
-            taught her to ask before she followed.
+            At twenty-nine, she could see the light around everyone but herself.
+            Then the mountain began to sound beneath the water.
           </p>
           <a href="#chapter-1" className={styles.readButton}>
             Begin reading <span aria-hidden="true">↓</span>
           </a>
         </div>
         <p className={styles.heroCredit}>
-          {chapters.length} chapters · 29 illustrations
+          {chapters.length} chapters · Three crossings · Illustrated
         </p>
       </section>
 
@@ -100,24 +121,19 @@ export default function HorsewomanStory() {
         >
           <div className={styles.sidebarInner}>
             <p className={styles.smallLabel}>The story</p>
-            <p className={styles.sidebarTitle}>
-              Two homes. One road of her own.
-            </p>
+            <p className={styles.sidebarTitle}>The Light She Could Not See</p>
+            <nav aria-label="Story movements" className={styles.movements}>
+              {movements.map((movement) => (
+                <a key={movement.number} href={`#chapter-${movement.chapter}`}>
+                  <span>Part {movement.number}</span> {movement.title}
+                </a>
+              ))}
+            </nav>
             <nav aria-label="Chapters" className={styles.desktopChapters}>
-              <ol className={styles.chapterList}>
-                {chapters.map((chapter) => (
-                  <li key={chapter.id}>
-                    <a href={`#${chapter.id}`}>
-                      <span>{String(chapter.number).padStart(2, "0")}</span>
-                      {chapter.title}
-                    </a>
-                  </li>
-                ))}
-              </ol>
+              <ChapterIndex />
             </nav>
             <p className={styles.sidebarNote}>
-              A complete first journey, followed by the opening of The Open
-              Road.
+              A complete first journey and the opening of The Open Road.
             </p>
           </div>
         </aside>
@@ -126,24 +142,14 @@ export default function HorsewomanStory() {
           <details id="contents" className={styles.mobileContents}>
             <summary>Browse the {chapters.length} chapters</summary>
             <nav aria-label="Mobile chapter index">
-              <ol className={styles.chapterList}>
-                {chapters.map((chapter) => (
-                  <li key={chapter.id}>
-                    <a href={`#${chapter.id}`}>
-                      <span>{String(chapter.number).padStart(2, "0")}</span>
-                      {chapter.title}
-                    </a>
-                  </li>
-                ))}
-              </ol>
+              <ChapterIndex />
             </nav>
           </details>
           <div className={styles.intro}>
-            <p className={styles.smallLabel}>Before the road</p>
+            <p className={styles.smallLabel}>Part I · The first crossing</p>
             <p>
-              There are extraordinary places here. They still have broken gates,
-              late dinners, tired animals, people who disagree, and a future
-              nobody gets to own alone.
+              Caracas. A mountain passage. A woman who has spent her life
+              reading everybody else, and a horse who makes her wait.
             </p>
             <p className={styles.editionNote}>
               An independent story continuity. Its Selene is twenty-nine; she is
@@ -167,8 +173,8 @@ export default function HorsewomanStory() {
                     alt="Selene and Brío ride alongside Iva, Luz, and Tami above a flooded watershed"
                   />
                   <div>
-                    <span>THE OPEN ROAD · PART II</span>
-                    <h2>She did not ride into this alone.</h2>
+                    <span>PART II · THE RIDER CIRCLE</span>
+                    <h2>Four riders. One sound beneath the mountain.</h2>
                   </div>
                 </div>
               )}
@@ -204,6 +210,17 @@ export default function HorsewomanStory() {
               >
                 {chapter.text}
               </ReactMarkdown>
+              {chapter.number < chapters.length && (
+                <a
+                  className={styles.nextChapter}
+                  href={`#chapter-${chapter.number + 1}`}
+                >
+                  <span>
+                    Next chapter <span aria-hidden="true">→</span>
+                  </span>
+                  <strong>{chapters[chapter.number].title}</strong>
+                </a>
+              )}
               <div className={styles.chapterEnd} aria-hidden="true" />
             </section>
           ))}
