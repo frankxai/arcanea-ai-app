@@ -30,21 +30,31 @@ import { registerWorldIntelligenceTools } from "./registrations/world-intelligen
 import { registerWorldPersistenceTools } from "./registrations/world-persistence.js";
 import { registerVisualPromptTools } from "./registrations/visual-prompts.js";
 import { RUNTIME_INFO } from "./runtime-info.js";
+import { catalogServer, resolveToolsets } from "./toolsets.js";
 
-export function createServer(): McpServer {
+export interface ServerOptions {
+  /** Comma list of toolsets or "all". Omitted: every tool, for library callers. */
+  toolsets?: string;
+}
+
+export function createServer(options: ServerOptions = {}): McpServer {
   const server = new McpServer(RUNTIME_INFO);
-  registerGeneratorTools(server);
-  registerGuidanceTools(server);
-  registerWorldGraphTools(server);
-  registerOrchestrationTools(server);
-  registerCanonTools(server);
-  registerVisualStyleTools(server);
-  registerWorldIntelligenceTools(server);
-  registerWorldPersistenceTools(server);
-  registerVisualPromptTools(server);
-  registerProductionTools(server);
-  registerReferences(server);
-  registerWebVaultTools(server);
+  const target = catalogServer(
+    server,
+    options.toolsets === undefined ? null : resolveToolsets(options.toolsets),
+  );
+  registerGeneratorTools(target);
+  registerGuidanceTools(target);
+  registerWorldGraphTools(target);
+  registerOrchestrationTools(target);
+  registerCanonTools(target);
+  registerVisualStyleTools(target);
+  registerWorldIntelligenceTools(target);
+  registerWorldPersistenceTools(target);
+  registerVisualPromptTools(target);
+  registerProductionTools(target);
+  registerReferences(target);
+  registerWebVaultTools(target);
   return server;
 }
 

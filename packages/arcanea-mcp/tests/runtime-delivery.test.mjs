@@ -72,7 +72,8 @@ test(
       const transport = new StdioClientTransport({
         command: process.execPath,
         args: [entry],
-        env: { ...env, ARCANEA_DATA_DIR: directory },
+        // The CLI serves the small core toolset by default; this test covers the full catalogue.
+        env: { ...env, ARCANEA_DATA_DIR: directory, ARCANEA_TOOLSETS: "all" },
         stderr: "pipe",
       });
       await client.connect(transport);

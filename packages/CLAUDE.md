@@ -14,7 +14,7 @@ Workspace packages in the pnpm monorepo. Each package is independently buildable
 
 ## Key Packages
 
-- `arcanea-mcp` — 42 world-building + intelligence MCP tools
+- `arcanea-mcp` — 56 world-building + intelligence MCP tools in 8 toolsets; the CLI serves the 12-tool `core` set by default (`--toolsets`)
 - `arcanea-vault` — Persistent memory and vault system
 - `ai-core` — AI provider abstraction layer
 - `arcanea-skills` — Creative and universe knowledge skills
