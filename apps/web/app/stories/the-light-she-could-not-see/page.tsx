@@ -11,7 +11,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "The Light She Could Not See | Arcanea Stories",
   description:
-    "At twenty-nine, Selene can see the light around everyone but herself. Ride with her from Caracas into the mountains, the dragon roost, and the depths of Mar Arcano.",
+    "Iria Soreda rides from Miralumbre's rain terraces into Avilara's living valleys, a dragon roost, Mar Arcano, and an ancient pressure vault beneath the eastern forest.",
   openGraph: {
     title: "The Light She Could Not See",
     description:
@@ -43,12 +43,14 @@ const chapters = [
   ...chaptersFrom("THE_LIGHT_SHE_COULD_NOT_SEE.md"),
   ...chaptersFrom("THE_RIDER_CIRCLE.md"),
   ...chaptersFrom("THE_OPEN_ROAD.md"),
+  ...chaptersFrom("THE_BELL_BELOW.md"),
 ];
 
 const movements = [
   { number: 1, title: "The first crossing", chapter: 1 },
   { number: 2, title: "The rider circle", chapter: 13 },
   { number: 3, title: "The eastern crossing", chapter: 18 },
+  { number: 4, title: "The Bell Below", chapter: 22 },
 ];
 
 function ChapterIndex() {
@@ -84,7 +86,7 @@ export default function HorsewomanStory() {
       <section className={styles.hero} aria-labelledby="story-title">
         <Image
           src="/stories/horsewoman/open-road-hero.webp"
-          alt="Selene rides Brío above a winding dawn-lit river, with misty tepuis and orchids beyond"
+          alt="Iria rides Brío above a winding dawn-lit river, with misty tepuis and orchids beyond"
           fill
           priority
           sizes="100vw"
@@ -93,7 +95,7 @@ export default function HorsewomanStory() {
         <div className={styles.heroShade} />
         <div className={styles.heroText}>
           <p className={styles.eyebrow}>
-            An illustrated serial · Caracas to Mar Arcano
+            An illustrated serial · Miralumbre to Mar Arcano
           </p>
           <h1 id="story-title">
             The Light
@@ -101,7 +103,7 @@ export default function HorsewomanStory() {
             She Could Not See
           </h1>
           <p>
-            At twenty-nine, she could see the light around everyone but herself.
+            She could see where a Gate began to wake, but never her own light.
             Then the mountain began to sound beneath the water.
           </p>
           <a href="#chapter-1" className={styles.readButton}>
@@ -109,7 +111,7 @@ export default function HorsewomanStory() {
           </a>
         </div>
         <p className={styles.heroCredit}>
-          {chapters.length} chapters · Three crossings · Illustrated
+          {chapters.length} chapters · Four movements · Illustrated
         </p>
       </section>
 
@@ -133,7 +135,7 @@ export default function HorsewomanStory() {
               <ChapterIndex />
             </nav>
             <p className={styles.sidebarNote}>
-              A complete first journey and the opening of The Open Road.
+              Four movements through the valleys, roost, sea, and eastern mountain.
             </p>
           </div>
         </aside>
@@ -148,12 +150,8 @@ export default function HorsewomanStory() {
           <div className={styles.intro}>
             <p className={styles.smallLabel}>Part I · The first crossing</p>
             <p>
-              Caracas. A mountain passage. A woman who has spent her life
-              reading everybody else, and a horse who makes her wait.
-            </p>
-            <p className={styles.editionNote}>
-              An independent story continuity. Its Selene is twenty-nine; she is
-              distinct from the younger Selene of <em>Las Tierras de Luz</em>.
+              Miralumbre's rain terraces. A moving mountain passage. A woman
+              learning the limits of her sight, and a horse who makes her wait.
             </p>
           </div>
           {chapters.map((chapter) => (
@@ -170,7 +168,7 @@ export default function HorsewomanStory() {
                     width={941}
                     height={1672}
                     sizes="(max-width: 760px) 100vw, 650px"
-                    alt="Selene and Brío ride alongside Iva, Luz, and Tami above a flooded watershed"
+                    alt="Iria and Brío ride alongside Iva, Luz, and Tami above a flooded watershed"
                   />
                   <div>
                     <span>PART II · THE RIDER CIRCLE</span>
@@ -185,11 +183,26 @@ export default function HorsewomanStory() {
                     width={1024}
                     height={1536}
                     sizes="(max-width: 760px) 100vw, 650px"
-                    alt="Selene and Brío examine a damaged river crossing while Cael waits with a lantern"
+                    alt="Iria and Brío examine a damaged river crossing while Cael waits with a lantern"
                   />
                   <div>
                     <span>THE EASTERN CROSSING</span>
                     <h2>Some bridges should wait for daylight.</h2>
+                  </div>
+                </div>
+              )}
+              {chapter.number === 22 && (
+                <div className={styles.partBreak}>
+                  <Image
+                    src="/stories/horsewoman/the-bell-below.webp"
+                    width={1024}
+                    height={1536}
+                    sizes="(max-width: 760px) 100vw, 650px"
+                    alt="Iria, Oren, and Iva work in a vast pressure vault beneath hanging forest basins and suspended stone weights"
+                  />
+                  <div>
+                    <span>PART IV · THE BELL BELOW</span>
+                    <h2>The mountain kept a record of every borrowed river.</h2>
                   </div>
                 </div>
               )}
@@ -226,10 +239,9 @@ export default function HorsewomanStory() {
           ))}
           <footer className={styles.endnote}>
             <p>
-              End of the opening chapters of <em>The Open Road</em>. Selene,
-              Brío, and Cael have more to learn; this story is an independent
-              imagining, separate from the locked <em>Las Tierras de Luz</em>{" "}
-              continuity.
+              End of <em>The Bell Below</em>. The watershed has its water back;
+              the road and the inquiry remain unfinished. This independent story
+              does not alter the locked <em>Las Tierras de Luz</em> continuity.
             </p>
             <div className={styles.footerLinks}>
               <a href="#story-title">Return to the beginning</a>
