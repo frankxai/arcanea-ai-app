@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { needsLockfileChange } from "../lockfile-drift.mjs";
+import {
+  isWorkspaceManifest,
+  needsLockfileChange,
+} from "../lockfile-drift.mjs";
 
 const base = {
   name: "@arcanea/mcp-server",
@@ -52,6 +55,13 @@ test("any dependency field change requires a lockfile change", () => {
 test("adding or removing a workspace package requires a lockfile change", () => {
   assert.equal(needsLockfileChange(null, base), true);
   assert.equal(needsLockfileChange(base, null), true);
+});
+
+test("docs scaffolds are not root-lockfile importers", () => {
+  assert.equal(isWorkspaceManifest("package.json"), true);
+  assert.equal(isWorkspaceManifest("apps/web/package.json"), true);
+  assert.equal(isWorkspaceManifest("packages/media/package.json"), true);
+  assert.equal(isWorkspaceManifest("docs/atlas/package.json"), false);
 });
 
 test("the change PR #388 made (description + scripts) passes", () => {
