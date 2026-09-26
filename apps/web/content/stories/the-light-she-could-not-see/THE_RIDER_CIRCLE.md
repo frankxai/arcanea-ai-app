@@ -2,188 +2,244 @@
 
 _An independent Arcanea story continuity · before the eastern crossing_
 
-## 13 · Four Saddles at the Sluice
+## 13 · The Hill That Came Down
 
 _The western beds · Six weeks before term_
 
-Selene had been given a letter to deliver and an hour to inspect the western beds. By the time she reached the broken sluice, three women had already come to argue with it.
+The hill moved while Selene was reading the address.
 
-One stood knee-deep in the outflow, holding a measuring staff against the stone. Another had dismounted and was clearing silt from a gate with the blunt end of a spade. The third was brushing burrs from a dun mule's tail while keeping an eye on the uphill bank.
+It moved only the length of a finger. In the valley below, children were driving goats across a stone footbridge, and a woman was hanging a blanket on the fence. Above them, an entire slope of bell-cups turned its pale mouths toward the sky. Water ran under the roots in threads Selene could see with her bare eyes. One of those threads went out.
 
-"You can't open it from there," the woman in the water called. "The hinge is carrying the whole wall."
+Brío stopped so sharply that she caught his mane. Down by the sluice, a rider in a green coat drove her chestnut into the channel, dismounted, and pulled a measuring staff from the saddle. A second woman was already turning the gate wheel with a spade handle. On the path behind them, an older rider in a gray braid put her mule across the bridge and shouted to the children to go back.
 
-"I know," said the woman with the spade. "I'm finding out why."
+The first woman looked up at the hillside. “Tami. Leave the wheel.”
 
-Brío stopped above the ditch. Selene recognized the small apprentice in the water from the Academy's reading room. Iva, House Aqualis. She remembered a slate full of figures and an instructor who had kept interrupting her.
+“If it opens, the school path goes.”
 
-"Is there a downstream gauge?" Selene asked.
+“The path is going anyway.”
 
-Iva looked up. "There was. The bank ate it."
+Selene rode down. The woman with the staff was Iva, whom she knew from the Academy reading room. She remembered an instructor correcting the way Iva held her pencil, although the figures on the slate had been right.
 
-"That seems inconvenient for the bank," said the older woman by the mule. She had a long gray braid and the air of someone who would make the bank apologize if given enough time. "I'm Luz. This is Tami, and that is Iva. Bring your horse off the wet lip."
+“What do you need?” Selene asked.
 
-Selene did. Tami's roan sidled at the splash, then stood while Tami made another careful cut in the silt. The women had come by three different roads: Iva to measure the flow, Tami to reopen a trail used by hill families, Luz because the fodder terraces below belonged to people who bought her mules. None of them had waited for an Academy order.
+“The distance from that crack to the lower wall. From above.”
 
-The sluice had been built against a slope of bell-cups, waxy pitcher flowers that collected rain. Small, nearly transparent frogs sheltered beneath their lips. When a cup filled, water passed from its stem into a seam of orchid roots along the stone. The roots shone faintly at each overflow. Selene had mistaken that sequence for a single current until Iva showed her where one cup remained dry.
+Selene took the upper bank on Brío. Close to the rupture, the bell-cups smelled of pepper and rain. Their waxy bowls had kept the transparent frogs beneath them safe through the dry weeks; now the stems were full, their roots pulsing with overflow. A thin copper strip had been hammered into the stone beneath the sluice. It shone with the same pale current as the roots, though nothing green grew from it.
 
-"The gate's stealing the seep," Iva said. "If we pull it open, the first rush takes the lower nests."
+Selene counted her paces. When she looked back, the crack had crossed one of her hoofprints.
 
-Tami put down her spade. "And if we leave it shut, the school trail goes. Children use it tomorrow."
+“Nineteen!” she called. “It's moving.”
 
-Selene could see a pale line behind the masonry. She was about to say where the pressure would break. Then Luz asked how far the lower terrace was from the nests, and Iva gave a number Selene had not thought to seek.
+Iva struck the staff into the outflow. “Then we lose the new seedlings. Tami, cut the bank above the empty beds.”
 
-"Can we lead the water into the empty fodder beds for one night?" Selene asked.
+“Those belong to the growers,” said the older woman.
 
-"You can ask the growers," Luz said. "I'll take you. They know which bed can be lost."
+“They do,” Iva said. She looked at Selene. “Can you reach them?”
 
-Selene looked at the letter in her satchel, already late. "I'll ride."
+Selene still had an unopened letter to deliver uphill. She turned Brío and rode hard enough to feel him shorten his stride at the wet stones. She let him choose the line. At the growers' yard, two sisters heard Iva's calculation and consented to the diversion; one came back with a hoe, furious about the crop and already asking who would pay for it.
 
-"We'll ride," Tami said. "I need their answer for the trail."
+By the time they returned, the hill was speaking in a different register. Stone knocked against stone below the soil. Tami drove the spade into the bank and missed the first cut because her hands were shaking. Luz, the older rider, took hold beside her. Together they opened a channel toward the empty beds.
 
-They went single file along a narrow causeway. Iva rode a chestnut who could find a firm stone under standing water; Tami took the upper edge on her roan; Luz's mule chose its own cautious distance from the drop. Brío tried once to overtake the mule and received a flat look from both of them.
+The slope came down.
 
-The growers agreed to flood a cut bed, not the new seedlings. They wanted the agreement written down before the Academy borrowed their land in an emergency. Iva wrote it. Tami made the notch in the temporary channel; Luz set her mule across the trail to turn back an impatient courier. Selene held the gate only as long as her arms allowed, then called for Tami to take her place. Water ran where the people below had chosen to receive it.
+Brío threw his head. Selene barely kept her seat as water and flowering earth burst across the upper trail. Iva stayed in the sluice long enough to lift a trapped child out of the outflow. The chestnut, untethered and splendidly annoyed, followed them to dry ground. When the surge hit the diversion, a dozen bell-cups broke away and sailed past like small white boats. The empty beds filled; the stone bridge held.
 
-They ate late at a table outside the stable. Iva kept checking her notebook for a missing measurement. Luz reached over and closed it with a clean hand.
+For a while nobody spoke. Frogs clung to the remaining roots. Below, the sisters counted which terraces they had lost. Luz counted children. Tami was kneeling beside the broken gate, holding a small strip of copper she had found under the hinge.
 
-"Tomorrow," she said.
+“This wasn't here last season,” she said.
 
-"The seep will change by morning."
+Iva took it without touching the bright end. “No.”
 
-"Then we'll have something to measure tomorrow."
+At the stable that evening, Selene found the three women eating bread without plates. Luz had brought cheese. Tami's roan had a cut on one fetlock, and she kept leaving the table to look at it. Iva spread out her wet figures, then closed the book before Luz could do it for her.
 
-Tami passed Selene a piece of bread. "We're riding the upper watershed at dawn. Come if you can. There are better things up there than gates."
+“You were right about the path,” Tami told her. “I hate how you told me.”
 
-Selene had an Academy form to finish, a letter still undelivered, and a sore shoulder. She wanted to go.
+“I hated needing to.”
 
-"I'll bring the letter on the way," she said.
+Luz set down a fourth piece of bread. “We're riding the upper watershed at dawn. We can argue where the horses can't hear us.”
 
-Nobody asked whether she had earned a place at the table. Luz shifted the bread toward her, because there was room.
+Selene thought of the letter, late and damp in her satchel. She thought of the sisters standing over the drowned crop. “I owe them a witness statement first.”
 
-## 14 · What the Roots Could Tell
+“Come after,” Luz said.
+
+The seat was an overturned feed bucket. Selene sat on it. Nobody asked for the story of what she could see, and for the first time that day she was glad to have nothing useful to say.
+
+## 14 · The Sound Under the Mountain
 
 _Crystalpeak · The first weeks of Foundation_
 
-Tami could ride a rain-cut ledge with one hand and still could not make a bowl stand on Iolen's worktable. Selene could steady the bowl and lost her balance whenever she looked over a steep drop. Iva measured water accurately until an instructor watched her, at which point she wrote every figure twice and trusted neither. Luz, who was not an Academy student, came to the public stable on rest days and asked if their education had yet taught them to tighten a girth.
+On the fifth ride, Tami asked Selene to stop telling her where to put her feet.
 
-The invitations arrived before the ease did.
+“I know you're trying to help. I've crossed this ledge since I was eleven.”
 
-Selene invited herself into Iva's measurements too often. Iva finally said, "I need another pair of hands. I don't need your eyes on every mark." Tami was quieter after a failed field assessment; when Selene tried to cheer her, Tami asked her to stop treating embarrassment as an injury. Luz missed two rides to care for a sick mare and did not want to explain herself until the third.
+“You nearly slipped.”
 
-They kept riding together. On ordinary days they talked about saddle sores, damp paper, Tami's sister's wedding, and a very bad soup served in the east hall. On the fifth week a child from the lower farms came to tell them the bell-cups had gone silent. The frogs were leaving the stone.
+“I did slip. Then I caught myself.”
 
-At the upper watershed the orchids along the spillway showed a thin light. One root flashed after another, slowly enough to count. Below them a patch of bell-cups stood dry, though the soil at their base was wet. A crew from the Academy had cleared a blocked culvert and set a copper screen across the seep. The screen caught silt. It also kept the small frogs from their breeding pools.
+Ahead of them, Iva was teaching her chestnut to wait at a shallow ford. Luz rode last, leading a spare mule. She heard everything and said nothing. Later she made Selene hold a lantern while Tami stitched her own torn saddlebag; that was the whole punishment.
 
-"The roots were warning us," Selene said.
+The four kept meeting between Academy lessons, market errands, and the work Luz did for the hill families. Tami wanted a House Ventus route command and had failed her field assessment once. Iva needed her Aqualis instructor to sign a water survey she had already completed twice. Luz refused an Academy contract after a clerk offered to pay her for her mule and not for her judgment. Selene wanted to belong at Crystalpeak. It embarrassed her that she could not yet say what she would do there.
 
-Iva knelt beside the nearest cup. "The roots were wetting and drying. We noticed. Those are different claims."
+One evening the brass bucket handles in the stable began to hum.
 
-Selene felt the correction sting because it was true. She had wanted the hillside to speak in a language that would make her useful. A living watershed did carry consequences through water, roots, fungi, fish and people; it did not confer permission or tell her exactly what to do.
+For three nights the sound travelled down from the eastern heights and stopped before dawn. The orchids by the spillway opened in sequence, a little later each time. They were not singing to anyone. Water reached one root after another; Selene had learned enough in Solavila to see the difference. But the rhythm of the water was wrong.
 
-Tami found a trapped frog in the screen. It was no longer moving. The school culvert served thirty families. Pulling out the screen might close it again.
+Iva brought her old measurements. The warm pulse in the stream arrived upstream first. That made no sense if the heat came from the city works below. The Academy crew had fitted a copper screen across the culvert after the landslip. It caught silt, and it had also trapped the small frogs trying to return to their breeding pools.
 
-They took their measurements to the crew rather than removing anything alone. The forewoman listened until Iva showed her how a narrow gap at the lower edge could pass the animals without releasing the silt. She authorized a trial for one day. Tami cut the gap. Selene waited beside the stone with a bucket, watching for a washout; Luz held the horses far enough away that their hooves would not break the bank.
+“Take it off,” Tami said.
 
-The first frog that found the opening was so small Selene almost missed it. It vanished beneath a leaf. They did not know if the change was enough. Iva wrote a return visit into the crew schedule before anyone could call it a success.
+“And bury the road the next time it rains?” Iva said. “Help me draw where the water actually goes.”
 
-That evening Selene wrote Mercedes about the horse she had ridden, the broken screen, and the small dead animal. She left out any claim that she had understood the whole forest. The answer came a week later: _Tell me how your friends are._
+They worked by lantern on the ground outside the stable. Selene traced the line she had seen beneath the broken sluice. It ran toward the mountain. Iva drew the real stream over it; the lines crossed only at the culvert. When Selene insisted that a second pulse must mean a second river, Iva shook her head.
 
-Selene wrote their names on the next page. She had not had to make herself necessary for any of them to ask her back.
+“It means something is passing through the first one. I don't know what.”
+
+Selene was irritated, then frightened. She had wanted a name for the thing. Iva wanted a measurement before somebody moved a gate.
+
+At first light a child arrived from the lower farms. The bell-cups were dry at their mouths though the soil was wet. Her father's goats had refused the ford.
+
+By noon they found the screen clogged with living roots. The bodies of two frogs hung in the mesh. Below it, the ground had settled around the school path, leaving a gap a child's boot could disappear into. Tami took one step toward it and the crust fell away. Luz pulled her back by the collar; Tami struck the bank with her shoulder and swore at Luz before thanking her.
+
+Inside the hole was an old stone conduit. A copper band had been set around it recently. Someone had sealed the joint with fresh clay, although no repair appeared in the public log. Iva held her hand above the conduit. The band pulsed against the warm current and, for an instant, the roots along the hole lit up in a ring.
+
+From the upper ridge, the mountain answered with a low note.
+
+They could have gone down. The conduit was wide enough for a body and the seal was already cracked. Selene imagined finding the source and returning with a story nobody could dismiss.
+
+Iva stood up. “Not with the school above it.”
+
+They called the road crew, moved the children by Luz's mule path, and put a guard at the gap. Tami cut a passage for the frogs in the screen under the forewoman's eye. Nobody called it a solution. By evening the crew had filled the hole and marked the conduit for a proper opening after the road could be supported.
+
+Iva submitted her measurements with the mistakes left visible. Her instructor signed the report and wrote a question across the bottom: _Who installed the band?_ It was the first time anyone at the Academy had asked for her conclusion instead of correcting her hand.
+
+Mercedes wrote from Caracas that week. After asking whether Selene had eaten anything green, she wrote: _Tell me about your friends._
+
+Selene started with Tami's temper and Iva's patient horse. Luz appeared on the second page, with her refusal of the contract and her bad habit of giving away the best part of lunch. None of the three needed to become proof that Selene had finally found her place. She folded the letter before she could make them into that.
 
 ## 15 · The Door in the Wind
 
 _The eastern heights · The month of long rain_
 
-The mountain Selene had marked in her notebook kept sounding at night.
+The survey tower had been abandoned for nine years. From below, its frame looked like a set of black ribs hooked into the mountain. Something moved between them against the wind.
 
-It was no voice. On clear evenings, a low vibration passed through the stable roof and set the brass bucket handles trembling. Tami had heard it along the old high trail. Luz knew a drover who had turned back when his mule refused the pass. Iva found that the high streams were warmer than their seasonal readings allowed.
+Tami had seen the movement at dawn and brought the others. Brío and the other mounts would go no higher than the grass shelf. Luz stayed with them and the pack mule, arguing with a surveyor who wanted to tie both animals beside a loose slope. The others climbed while the swifts wheeled over the old roosts. Their flight was wrong: they were keeping to the lee even though the air was rising.
 
-The Academy sent a survey party. The four women took their own field permits and went with it. Brío carried the measuring poles until the path became too steep; Selene left him and the other mounts with Luz at a sheltered grass shelf, where there was water and a way down. Luz stayed because she knew how quickly a horse could become a rescue problem above the tree line. Nobody made the decision sound lesser than climbing.
+Near the tower, three people in patched weather cloaks were dismantling the metal fittings. One held a hook spear. Another was a boy with a bloodied hand. They were salvage workers from a valley whose winter road had been closed; the tower copper would buy timber for a bridge. They had strung a cargo net between the ribs during the night.
 
-Past the last line of trees, swifts nested under stone lips stained copper by rain. Several flew against the prevailing wind. Tami saw the torn net first: a cargo line running from an abandoned survey tower into a narrow crevice. The tower had been closed after a rockfall. Someone had used it again.
+The net was full of dragon.
 
-The sound came from beyond the crevice. A dragon had come down on the far ledge with the net wound through the membrane of one wing. The creature was long-bodied, dark green against the wet basalt, and large enough that Selene could see each breath move the grass below her. Its amber eye followed the party. Selene had studied Draconis of the Fire Gate in a classroom. The living mountain dragon watched her pick a way across the stone.
+Aru lay on a narrow ledge below them, dark green wing folded around the wire. Each breath stirred the grass at the cliff's far edge. The membrane had torn. His amber eye followed the spear, the boy, the distant swifts; it settled on Selene and did not soften. A high-roost pilot named Nara stood between the workers and the ledge with a rope around her waist. Her knife was blunt. Her hands shook from holding the line.
 
-"No closer," said a woman from the ledge. She wore the plain weathered leathers of a high-roost pilot and had a bloodstained coil of rope at her feet. "It lets me cut one strand at a time. Four people would be four strangers."
+“If he lifts, the tower comes with him,” she said.
 
-Her name was Nara. Another rider had gone for a longer cable. The injured dragon, Aru, had flown with her before, on his own terms; today he would allow the rope to be touched and no more. Nara's knife had blunted. She needed a sharper one and someone on the tower side to take the weight.
+“If we release it, we lose the copper,” said the worker with the spear. “My people need the bridge.”
 
-Iva checked the stream below the ledge. A forced flight would bring them down into its flood. Tami secured a belay to the old tower. Selene took the knife to the line and stopped when Aru's body tightened.
+Iva pointed to the stream under the ledge. “And if the tower falls there, your people lose the ford as well.”
 
-"Wait," Nara said.
+The boy looked at his cut palm. He had set the net; he had not expected a living animal to fly into it. Tami gave him her spare gloves and asked him to hold the upper line. He did. The woman lowered the spear.
 
-They waited through three breaths. The dragon settled. Selene cut one strand. The damaged wing held. On the next she felt her own attention reach toward the creature's light, hungry for certainty. She put Mercedes's lens away.
+For a few minutes there was a plan. Tami tied an anchor to sound rock. Iva measured how fast the water was rising. Nara went down to Aru. Selene crossed to the tower with the sharp knife, felt the angle of the net in her bones, and cut the strand she thought held the wing.
 
-"I can see where the net is caught," she told Nara. "I can't tell you what he will tolerate."
+It was the wrong one.
 
-"Good. I can ask him."
+The tower lurched. Aru struck the ledge with his free wing and a slab of stone dropped into the gorge. Tami went over the edge on her rope; the anchor caught her a body's length below the path. Selene froze with the knife in her hand. There was nothing to see in the lens that could undo the cut.
+
+“Hold the frame,” Nara said. She was speaking to Selene. “Don't touch him again.”
+
+Selene braced the tower while the others got Tami back. The metal burned cold through her gloves. She had wanted the right answer to arrive the way light sometimes did. She had acted before asking the person who knew the net's weight.
+
+Nara let Aru see her hands. For a long time the dragon did nothing. Then he hooked one claw through the rope she offered and drew the line away from his wing. The boy worked the winch from above. Tami, white-faced and furious, cut her own anchor free when the frame pulled against it. Her new compass went over with the rope. Selene felt its brass case strike the stone three times before the gorge took the sound.
 
 ![Selene and three women free a wounded dragon's wing on a high Arcanean ledge, allowing the creature room to choose whether they may approach.](/stories/horsewoman/dragon-ledger.webp)
 
-They worked in short intervals. Aru bit through the final line himself. When it snapped, the survey tower shifted toward Tami's anchor. She had time to save her gear or release it. She cut the rope and let the tower take the kit. The loss included her new compass, bought with the money from a month's trail work.
+Aru bit through the last wire himself. Heat rolled across the ledge; not flame, but the stone under Selene's palms warmed until she had to let go. The tower fell away from him and shattered below the ford. He spread the torn wing once, tested it, and folded it again. He did not fly.
 
-The dragon did not fly. He opened the wing enough to inspect it, then folded it. Nara thanked each woman by name and offered no grand explanation of why Aru had come to the mountain. She asked them to help bring water and food while he healed.
+The salvage workers carried their injured boy down with Luz's mule. Nara asked them to help build a safer landing at the roost in exchange for usable copper from the wreck. The older woman agreed to take the offer to her valley, where someone else would decide. Tami did not forgive the net because a bridge was needed. She did accept the boy's apology.
 
-On the descent, Selene reached the grass shelf and found Brío standing with his head tucked under Luz's arm. Her hands were warm on his neck. Selene told her about the net, the injured wing, and the compass.
+On the grass shelf, Selene reached for Brío and stopped. She had cut before she understood; now she waited until he pressed his nose against her sleeve.
 
-"Tami will say she's fine," Luz said. "She isn't. Let her be angry when she wants to be."
+“Are you all right?” she asked Tami.
 
-Selene stayed beside Brío until Tami came down. Then she asked where they could find another compass.
+“No.” Tami stared at the empty clip where the compass had been. “I will be. Don't tell the others I was brave.”
 
-## 16 · The Weight of Flight
+Selene didn't. She rode down beside her. The dark tower remained visible long after the ledge disappeared into cloud.
+
+## 16 · Where the Sky Has Weight
 
 _The high roost · Seven weeks later_
 
-Selene learned to be useful at the roost without going into the sky. She hauled water, scraped old food from stone, copied Nara's weather readings, and went home twice when Iolen said her Foundation exercises were slipping. Tami came to learn wind routes. Iva compared the high streams with her old measurements. Luz supplied mules and spent the first morning explaining to a new pilot why feed sacks could not be packed against a mule's spine.
+In the seven weeks Aru's wing took to heal, Selene learned how little of flight happened in the air.
 
-The roost had three adult dragons and no riding test one could pass by being brave. Nara taught them to read a shift in weight, an ear turned away, a refusal to present the back. Harnesses were offered on the ground and removed when an animal stepped aside. Aru accepted one again after his wing knitted, then walked away from Selene carrying it. She felt foolish for the rest of the afternoon. The following week he came to stand by her while she repaired its loose buckle. She did not call that a promise.
+She hauled water to the roost, copied Nara's weather readings, repaired a harness strap three times, and missed enough Foundation work that Iolen sent her home to finish it. Tami mapped the shifting winds and replaced her compass with one Luz found secondhand. Iva compared the mountain's warm pulse with the conduit figures. Luz negotiated feed for the mules and made three pilots change the way they packed their saddles.
 
-On a morning of crosswind, a storm broke above the ridge before the river couriers had cleared the trail. Their signal cloth appeared on the far shoulder of the mountain: three people and a pack animal caught behind a washout. The nearest dry landing was beyond the ridge. Nara was ready to fly an empty rescue line over, but a damaged wind vane had left her without a reliable read of the narrow updraft.
+Aru could leave whenever he wanted. The roost was open to the cliff and had always been. One morning he walked past Selene carrying his repaired harness in her hands; on another he came to stand near her while she worked, his shadow covering the whole table. Nara taught her to distinguish curiosity from an invitation. They practised on the ground. Selene rode behind Nara only after Aru accepted the weight twice on calm mornings.
 
-Tami knew the pass. Iva knew how fast the outflow would rise. Selene knew the roost's old sighting marks because she had spent seven weeks copying them. Together they gave Nara a route with an escape line that did not cross the nesting cliff. Nara checked it herself and offered Aru the harness. He stepped into place.
+Then a storm split over the eastern ridge.
 
-"You can come to the near perch," Nara told Selene. "He has carried a second rider there in settled wind. Today he decides. You decide too."
+Three river couriers and a pack mule were caught beyond a washout. Their signal cloth flashed between sheets of rain. Tami knew the shelf above them, but the wind vane on the roost had snapped; a straight crossing would drive a dragon into the nesting cliff. On the lower trail, Luz was already leading a rescue party. It would take them hours to climb.
 
-Selene thought of Brío below, who had taught her that an animal's hesitation was information. She thought of the trapped couriers and the one part of the route they could only mark from above. She put her palm against the offered saddle. Aru stayed. At Nara's signal she climbed in behind her.
+Nara laid out two routes in charcoal. Tami crossed out one. Iva added the level to which the stream would rise before nightfall. Selene, who had spent weeks copying old sighting marks, recognized a notch where the wind reversed for a few breaths. It offered a landing; it also ended at the tower wreck.
 
-The first fall of ground beneath them frightened her so completely that she forgot to look for anything beautiful. Wind pulled at the red sash; Nara caught it and tucked it under the strap. The river was a thin moving seam. On the far ridge she saw the couriers' animal tied too close to a crumbling edge.
+“We don't have to go,” Nara said. She held the harness open for Aru to see. “The ground party may get there in time.”
 
-"The upper perch," she called. "Their mule needs room to turn."
+Aru stepped into the straps. Selene took her place behind Nara. Her mouth was dry, and the last thing she saw before they ran for the edge was Tami holding the map against the rain with both hands.
 
-Nara relayed the correction. Aru made one banking circle, chose the wider shelf, and landed. Selene's knees would not hold when she dismounted. She knelt until they would.
+The fall was so absolute that Selene forgot the storm. Then Aru caught the rising air. The ridge dropped away; dark ravines opened between bright belts of orchid forest. Beyond them the cloud pulled apart around a mountain taller than any she had seen from the road. A scar of pale stone ran across its face. At intervals the scar lit from within, one low pulse passing through it like a question asked too slowly to hear.
 
-They set a line across. The couriers moved the mule first, then crossed one by one. Aru's choice, Tami's route, Iva's water measure, and Nara's years at the roost had brought them there. Selene had supplied one sighting at the right moment.
+The couriers were a handful of movement on the far shelf. Their mule was tied too near the edge. Selene shouted to Nara, who changed their approach, and Aru banked. Wind struck the torn wing; he corrected so hard that Selene lost one stirrup. She caught the strap and did not reach for the lens. There would be no second pair of hands for the mule if hers were occupied.
 
-At the roost ledger Nara recorded her as a second rider for the day. Another month of work and several calm flights passed before Selene qualified to ride with Aru without Nara aboard, on approved routes and only when he presented for the harness. The word _rider_ was written beside her name. It did not make him hers.
+They landed above the couriers. The storm made ordinary speech impossible. Nara went with the line; Selene stayed on the shelf and cut the mule's tether when its handler nodded. It would not turn. She put herself between it and the drop and waited while it shook, one hoof on stone and the others in empty air. Brío would have hated this place. That unhelpful thought brought back the weight of her own feet. She led the mule around a buried boulder, and it came.
 
-Selene carried the news to the stables. Tami gave her a hard, delighted hug; Iva demanded the wind readings; Luz wanted to know whether she had eaten. Brío sniffed the dragon scent on her coat, stepped back, and accepted an apple only after she changed it.
+Below, the tower wreck had dammed the stream. Water found a new seam under the rock and began to lift the ledge where Nara was standing. Iva's prediction had been too slow. The couriers crossed on the line, then Nara. Selene cut the last knot. The mule went first; she followed it into Aru's shadow as the shelf broke apart.
 
-## 17 · A Sea That Did Not Answer
+For one terrible moment the dragon did not lift. His injured wing opened against the wind. He took one step, another, and chose the open drop.
+
+They came home by a route Tami had marked through the rain. Luz's ground party met them at the lower roost. The couriers had no heroic account to give, only three soaked blankets and a pack animal too frightened to eat. Selene spent the night walking the mule beside Brío until both would take water.
+
+In the morning she asked Iva to draw the mountain she had seen from above. Iva opened her earlier survey. Under the watershed and the broken tower, the same pale pulse had appeared in her measurements. It had arrived in the stream before the storm and before the landslip. It wasn't a mountain waking. Something was drawing on the water beneath it.
+
+Nara entered Selene as a second rider in the roost ledger. Months of routine flights and an independent route assessment passed before Aru carried her without Nara aboard. Even then his answer varied with the weather. Tami called her a rider and then made her help clean the roost. Iva wanted the wind readings. Luz wanted supper. Selene wanted, suddenly and painfully, to tell Mercedes what the sky had weighed.
+
+She wrote the letter that night. She did not write that the mountain had chosen her.
+
+## 17 · The Fifth Current
 
 _Mar Arcano · The coastal practicum_
 
-The sea lay beyond weeks of road, ferry, and slow travel with the horses. Tami had applied for the coastal trail survey; Iva had earned a place measuring the inland inflows; Luz had freight to deliver. Selene took leave from the roost and joined them because she wanted to see where the mountain's water went. She told her mother the route and when she would next send word. It was the first journey in a long time she took without waiting for a crisis to justify it.
+The first thing Selene learned at Mar Arcano was that the sea had a second shore she could not see.
 
-Mar Arcano was dark blue under the chalk cliffs. Houses climbed in tiers above narrow landing steps, bright fabrics drying in wind from the basin. Old captains called it a sea born of five lands beneath the stones. Iva could show Selene the cold upper flow from their river. She could not name all the deep currents, and nobody could ride those underground corridors to another Realm.
+The coast fell away in chalk steps, one fishing house above another. At dawn the water looked almost black. At night billions of small lives lit in the wash of each boat, outlining the route of its hull long after it had passed. Far below the surface, cold water came from five lands through stone. No traveller could follow those aquifer corridors into another Realm. Their water and resonance arrived anyway.
 
-At night the surface glittered with small living organisms. A coastal navigator named Neira showed them how a dark lane appeared when a vela passed through the brightness. The velas were broad-backed sea animals with sensing whiskers and thin dorsal sails. They came to the riding ledge when fish gathered in its stone pools. Some presented their backs for woven cradles and carried people across shallow channels. They also left when they wished. Neira had spent years learning which of them returned.
+Tami had won a place surveying the coastal trails. Iva had earned a posting to measure the inland inflows, and Luz had freight to deliver. Selene came on leave from the roost because she wanted to see where the mountain's water went. It was the first journey she took because she wanted it, without dressing desire as a duty.
 
-"The channel markers need replacing," she said. "I can take two of you out. The others can go by boat."
+Neira, the coastal navigator, showed them the riding ledge on a morning the tide smelled of iron. Broad-backed velas moved in the pools below, their sensing whiskers breaking the water before their dorsal sails appeared. Each was large enough to carry a rider in a woven cradle across the shallow channels. At the far end of the ledge, other riders waited with their saddles in their hands. They knew which animals returned, and they counted those who did not.
 
-Iva chose the boat because she could measure more from a steady deck. Tami rode with Neira on a familiar vela. Selene waited at the wet ledge with a third cradle while a dark-backed animal circled twice and declined to approach. Neira made no attempt to call it back. Another surfaced only after the tide turned. It held still when Selene laid the cradle across its back; when it moved toward the open water, Selene climbed aboard.
+“The old route runs through the spawning curtain,” Neira said. She pointed to a band of faint light beyond the harbor mouth. “We used it last week. This morning it has moved.”
+
+Iva went by boat with the sounding crew. Tami rode with Neira. A vela circled Selene twice and sank without approaching. She put the cradle back on the stones. Another rose after the tide turned and held still while she set it across its back. When it started toward the harbor, Selene climbed aboard.
 
 ![Selene rides a willing vela across Mar Arcano beside experienced ocean riders as bioluminescent life marks the safer current below the chalk cliffs.](/stories/horsewoman/mar-arcano-riders.webp)
 
-The sea was colder than she expected. Its deep oscuro did not answer her attention as the orchid roots did. She let the darkness remain large. In the water beneath them, bands of light divided around a floating curtain of young organisms. The old channel marker led straight through it.
+The animal's movement had nothing of a horse or a dragon. Selene could feel its choice of depth beneath her knees, a slow lift as it crossed a cold flow. The sea's oscuro remained vast and unresponsive. When she turned her attention toward it, no answer came. For once the absence of an answer did not feel like her own absence.
 
-Neira pointed toward the far buoy. "That's the short way."
+Beyond the outer buoy, a line of young organisms hung in the water like a curtain woven from separate stars. Fishing boats returning from the western shelf were heading straight for it. The marker that should have sent them north was gone. Farther out, on a survey skiff, someone was hauling a heavy length of copper aboard. The crew saw the riders and cut their lanterns.
 
-Tami could see the shallows beside the cliff. Iva sounded them from the boat; a rock shelf left enough water for the velas but not for the laden fishing boats. The four women worked out a longer route by lantern signal. It would delay the evening catch. Neira went ashore to ask the boat crews whether they could afford that delay and what passage they needed left open. They moved the marker together after the crews answered.
+Neira shouted for the boats to turn. Her voice disappeared into the wind. Tami's vela took the northern channel to signal the lead vessel; Neira went after the skiff. Selene could have followed either. Below her, the young curtain tightened. The old buoy's chain had caught it, dragging a whole bright field toward the rocks.
 
-Selene thought for a moment she saw another Selene in the water, one who had crossed further seas and knew their names. A wave took the reflection. She held on to the cradle, felt the vela adjust its course, and did not ask the sea to promise a future.
+She looked to Iva's boat. Iva sounded the water on the southern side and lifted one lantern, then two: deep enough for the velas, too shallow for the laden boats. A path for Selene to reach the chain, and no path for anyone to tow it from the deck.
 
-When they returned, Luz had kept Brío off the salt grass. He greeted Selene with his usual assessment of her pockets. The women ate fish and bread on the steps while Iva argued with Tami about the new route and Neira drew it on a scrap of sailcloth. Selene missed her family. She missed the roost. She was glad to be at this table.
+Selene asked her vela toward the southern rocks. The animal turned before she had finished moving her weight. She slid into the water at the chain and the cold emptied her lungs. Copper flashed under the links: the buoy had been fixed to a band like the one at the mountain culvert. She could not free it with her hands. She hooked her belt through the exposed ring and let the vela pull until the old chain tore clear of the living curtain. The belt broke. For an instant she had no hold on anything.
 
-They reached the Academy again near the end of Selene's Foundation term. Iva kept the sea measurements; Tami borrowed Selene's dry socks without asking; Luz left a small bag of Brío's preferred oats outside her door. Selene still carried the east mountain's sound in her notebook, with new measurements beside it. Iva had found something similar in an older river record. Neither knew yet what it meant.
+The vela came back. Its sail rose beside her shoulder. She caught the cradle and heard Iva shouting from the boat as Tami's signal reached the returning vessels. One boat turned; the next followed. The lead captain scraped a reef and lost a night's catch, but they did not enter the spawning water.
 
-On the first clear morning back, Selene brought Iva to see Iolen about a bowl she had cracked months before. By afternoon, a bell would ring twice at the gate.
+Neira came ashore carrying a cut mooring rope. The survey skiff was gone. Its crew had taken their copper, and nobody had seen a face. At the harbor steps, the captain whose boat had struck the reef wanted to know who would repair it. Neira showed him the ruined belt and the living curtain still shining offshore. He looked past her at the other fishers. There was no easy settlement.
+
+Over supper, with her hair still salt-stiff, Selene watched Iva set the recovered ring beside the mountain drawing. The marks on the copper were identical. Iva refused to call that a name or a motive. She sent copies of her readings to both the coastal council and the Academy. Tami made Selene promise to tell Luz about the broken belt herself. Luz, who had waited up with Brío, asked what it had cost the captain before she asked whether the sea had been beautiful.
+
+“It was,” Selene said. “I don't think he cares.”
+
+Luz poured her another cup of tea. “Then start with the reef.”
+
+At dawn the four rode the cliff road. The sea lay behind them; the mountain's pale scar was hidden by weather. Iva had found an older river record that carried the same low pulse. Selene wanted to return to the roost, and to write home, and to sleep for three days. For the first time in years, wanting several things did not require her to choose one person to become.
+
+They reached Crystalpeak near the end of her Foundation term. Tami borrowed her dry socks. Iva went to dispute the old river record with an instructor. Luz left a bag of Brío's preferred oats outside Selene's door. On the first clear morning Selene brought Iva to Iolen's workroom to show him a bowl she had cracked months before. By afternoon, a bell would ring twice at the gate.

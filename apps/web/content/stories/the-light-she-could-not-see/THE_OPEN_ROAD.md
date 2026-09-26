@@ -80,6 +80,8 @@ Cael folded the measuring arm. He did not tell her the line was safe. He also di
 
 At the third mark the pole sank through what looked like solid ground. Iva pulled it free, bringing up a knot of living roots with a copper band grown into them. Across the river, the people at the school lifted the white cloth again.
 
+Iva turned the band in her hands. The shallow cut near its fastening matched the ring they had found under the sea marker. She did not say it aloud yet; the school was waiting across the water. She showed Selene the cut, then held the band out to Cael.
+
 Cael stared at the band.
 
 “You’ve seen one of these before,” Selene said.
