@@ -1,6 +1,16 @@
 # The Light She Could Not See · continuation bible
 
-Status: **independent story continuity**, 25 September 2026. The original twelve chapter illustrated novella is preserved in `THE_LIGHT_SHE_COULD_NOT_SEE.md`. Chapters 13–17 in `THE_RIDER_CIRCLE.md` establish the friendships, high roost, and coastal journey; chapters 18–21 in `THE_OPEN_ROAD.md` open the eastern river inquiry. This Selene is twenty-nine, unlike the nineteen-year-old Selene in the locked _Las Tierras de Luz_ novel. Shared names and locations do not make these events canonical to that novel.
+Status: **independent story continuity**, revised 26 September 2026. The original twelve chapter illustrated novella is preserved in `THE_LIGHT_SHE_COULD_NOT_SEE.md`. Chapters 13–17 in `THE_RIDER_CIRCLE.md` establish the friendships, high roost, and coastal journey; chapters 18–21 in `THE_OPEN_ROAD.md` open the eastern river inquiry. This Selene is twenty-nine, unlike the nineteen-year-old Selene in the locked _Las Tierras de Luz_ novel. Shared names and locations do not make these events canonical to that novel.
+
+## Editorial correction · 26 September
+
+The first release overexplained its ethic and made the rider-circle chapters a sequence of responsible field exercises. The five chapters have been rebuilt around an audible disturbance that travels from a failed hillside to an illicit mountain survey net, then to a displaced sea marker and the eastern bridge. The clues are related in material and resonance; **their installer and motive remain unknown**. Danger changes something tangible: the growers lose crops, Tami loses a compass, the roost loses a tower, a fishing captain loses a catch and damages a boat, and Cael must answer for how his earlier instrument can hear the bands. None of these losses are morally erased by a rescue.
+
+**Prose rule:** begin with an observable disturbance, enter the body during motion, and let the next decision expose character. A paragraph explaining what a character learned usually needs to become an act, a disagreement, or a silence. Keep the objects specific enough to remember: the cut on a copper band, Tami's compass clip, Iva's annotated figures, a torn belt, Brío's refusal. Earn any cosmic moment through spatial clarity and physical risk. The sea's Nero mystery does not respond like a human mind; its five currents are a hydrological reality, not five convenient portals or an all-purpose god.
+
+**Scale rule:** the roost, five-source sea, and subterranean machinery can be immense. Their behavior must stay legible at the scene scale. Do not add spectacle by turning local creatures into disposable enemies or declaring every animal a rider's mount. No borrowed Pandora or superhero setting, imagery, names, or narrative beats. The distinctive Arcanean relationship is between Gates, situated perception, the land's real processes, and people whose knowledge conflicts.
+
+**Next editorial pass:** the original twelve-chapter novella and chapters 18–21 have their own quieter voice. Audit chapter transitions, deepen Cael's independent craft and flawed desire, and make the inquiry's human opposition as vivid as the rider circle without retrofitting a singular villain. Write the Root Loom descent only after its operator, mechanical failure, and consequences for the villages are plotted. This published middle-arc revision is a chapter-scale improvement, not a claim that a 21-chapter illustrated serial is a finished novel.
 
 ## Series decision
 
