@@ -9,8 +9,17 @@ import {
   ImageSquare,
   MusicNote,
 } from "@/lib/phosphor-icons";
-import type { ProjectCreationRecord } from "@/lib/projects/server";
-import styles from "./project-media-stage.module.css";
+import styles from "./creation-media-stage.module.css";
+
+export interface MediaStageCreation {
+  id: string;
+  title: string;
+  type: string;
+  status: string;
+  fileUrl?: string | null;
+  thumbnailUrl?: string | null;
+  sourceSessionId?: string | null;
+}
 
 type MediaKind = "image" | "video" | "music";
 
@@ -55,7 +64,7 @@ function MediaPreview({
   creation,
   kind,
 }: {
-  creation: ProjectCreationRecord;
+  creation: MediaStageCreation;
   kind: MediaKind;
 }) {
   const originalUrl = safeMediaUrl(creation.fileUrl);
@@ -153,10 +162,12 @@ function MediaPreview({
   );
 }
 
-export function ProjectMediaStage({
+export function CreationMediaStage({
   creations,
+  scope,
 }: {
-  creations: ProjectCreationRecord[];
+  creations: MediaStageCreation[];
+  scope: "project" | "library";
 }) {
   const media = creations.flatMap((creation) => {
     const kind = mediaKind(creation.type);
@@ -175,10 +186,18 @@ export function ProjectMediaStage({
     <section className={styles.stage} aria-labelledby="project-media-title">
       <div className={styles.heading}>
         <div>
-          <p className={styles.kicker}>Project studio</p>
-          <h2 id="project-media-title">See the work take shape</h2>
+          <p className={styles.kicker}>
+            {scope === "project" ? "Project studio" : "Media library"}
+          </p>
+          <h2 id="project-media-title">
+            {scope === "project"
+              ? "See the work take shape"
+              : "Your work, in focus"}
+          </h2>
           <p className={styles.intro}>
-            Images, film and music stay together with their source.
+            {scope === "project"
+              ? "Linked images, film and music in one place."
+              : "Your latest images, film and music, ready to revisit."}
           </p>
         </div>
         <span className={styles.count}>
@@ -199,10 +218,14 @@ export function ProjectMediaStage({
               </div>
               <div className={styles.details}>
                 <p>
-                  {selected.creation.sourceSessionId
-                    ? "Source chat linked"
-                    : "Source chat not linked"}
-                  <span aria-hidden="true"> · </span>
+                  {scope === "project" && (
+                    <>
+                      {selected.creation.sourceSessionId
+                        ? "Source chat linked"
+                        : "Source chat not linked"}
+                      <span aria-hidden="true"> · </span>
+                    </>
+                  )}
                   {selected.creation.status.replaceAll("_", " ")}
                 </p>
                 {selectedOriginalUrl && (
@@ -220,7 +243,11 @@ export function ProjectMediaStage({
 
           <div className={styles.collection}>
             <h3>Recent media</h3>
-            <div className={styles.items} aria-label="Choose a media preview">
+            <div
+              className={styles.items}
+              role="group"
+              aria-label="Choose a media preview"
+            >
               {media.map(({ creation, kind }) => {
                 const thumbnailUrl = previewableUrl(creation.thumbnailUrl);
                 return (
@@ -266,29 +293,36 @@ export function ProjectMediaStage({
             <MusicNote size={48} weight="thin" />
           </div>
           <div>
-            <h3>Your project starts here</h3>
+            <h3>
+              {scope === "project"
+                ? "Your project starts here"
+                : "A place for your media"}
+            </h3>
             <p>
-              Create an image, film or track, then attach it to this project
-              below. Recent linked media will appear here.
+              {scope === "project"
+                ? "Create an image, film or track, then attach it to this project below. Recent linked media will appear here."
+                : "Images, films and music you save will appear here."}
             </p>
           </div>
         </div>
       )}
 
-      <nav className={styles.actions} aria-label="Manage project media">
-        <a href="#project-creations">
-          <ImageSquare size={19} aria-hidden="true" />
-          Attach a creation
-        </a>
-        <Link href="/creations">
-          Browse your creations
-          <ArrowUpRight
-            size={16}
-            className={styles.trailingIcon}
-            aria-hidden="true"
-          />
-        </Link>
-      </nav>
+      {scope === "project" && (
+        <nav className={styles.actions} aria-label="Media actions">
+          <a href="#project-creations">
+            <ImageSquare size={19} aria-hidden="true" />
+            Attach a creation
+          </a>
+          <Link href="/creations">
+            Browse your creations
+            <ArrowUpRight
+              size={16}
+              className={styles.trailingIcon}
+              aria-hidden="true"
+            />
+          </Link>
+        </nav>
+      )}
     </section>
   );
 }

@@ -27,7 +27,7 @@ import {
 } from "@/lib/projects/server";
 import { OpenProjectChatButton } from "./open-project-chat-button";
 import { ProjectCreationPanel } from "./project-creation-panel";
-import { ProjectMediaStage } from "./project-media-stage";
+import { CreationMediaStage } from "@/components/media/creation-media-stage";
 import { ProjectDocPanel } from "./project-doc-panel";
 import { ProjectSessionPanel } from "./project-session-panel";
 import { ProjectWorkspaceControls } from "./project-workspace-controls";
@@ -153,7 +153,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
           </div>
         </div>
 
-        <ProjectMediaStage creations={mediaCreations} />
+        <CreationMediaStage creations={mediaCreations} scope="project" />
 
         <section className="mt-8 grid gap-6 xl:grid-cols-[1.15fr_0.95fr]">
           <Card variant="liquid-glass" className="min-h-[320px]">

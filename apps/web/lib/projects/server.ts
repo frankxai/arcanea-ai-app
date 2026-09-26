@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 import { createClient } from "@/lib/supabase/server";
 import type { ProjectWorkspaceEvaluation } from "@/lib/projects/enrichment";
+import { creationMediaUrl } from "@/lib/media/creation-url";
 
 export interface ProjectRecord {
   id: string;
@@ -182,31 +183,12 @@ function mapSessionRow(row: Record<string, unknown>): ProjectSessionRecord {
 }
 
 function mapCreationRow(row: Record<string, unknown>): ProjectCreationRecord {
-  const content =
-    row.content &&
-    typeof row.content === "object" &&
-    !Array.isArray(row.content)
-      ? (row.content as Record<string, unknown>)
-      : {};
-  const mediaFields =
-    row.type === "video"
-      ? ["videoUrl", "fileUrl", "url"]
-      : row.type === "music" || row.type === "audio"
-        ? ["audioUrl", "fileUrl", "url"]
-        : ["imageUrl", "fileUrl", "url"];
-  const fileUrl =
-    typeof row.content === "string"
-      ? row.content
-      : mediaFields
-          .map((field) => content[field])
-          .find((value): value is string => typeof value === "string");
-
   return {
     id: String(row.id),
     title: String(row.title ?? "Untitled Creation"),
     type: String(row.type ?? "mixed"),
     status: String(row.status ?? "draft"),
-    fileUrl: fileUrl ?? null,
+    fileUrl: creationMediaUrl(row.content, String(row.type ?? "mixed")),
     thumbnailUrl:
       typeof row.thumbnail_url === "string" ? row.thumbnail_url : null,
     createdAt: String(row.created_at ?? new Date().toISOString()),
