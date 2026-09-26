@@ -1,6 +1,7 @@
--- Founding Circle waitlist written by apps/web/app/api/waitlist/route.ts.
--- The route shipped before this table existed and reported success while every
--- insert failed; this creates the table it expects.
+-- Email capture tables written by apps/web/app/api/waitlist/route.ts (Founding
+-- Circle) and apps/web/app/api/subscribe/route.ts (footer and coming-soon pages).
+-- Both routes shipped before their tables existed and reported success while every
+-- insert failed; this creates the tables they expect.
 
 CREATE TABLE IF NOT EXISTS public.waitlists (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -13,11 +14,25 @@ CREATE TABLE IF NOT EXISTS public.waitlists (
 CREATE INDEX IF NOT EXISTS idx_waitlists_source_created_at
   ON public.waitlists (source, created_at DESC);
 
-ALTER TABLE public.waitlists ENABLE ROW LEVEL SECURITY;
+CREATE TABLE IF NOT EXISTS public.subscribers (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email TEXT NOT NULL UNIQUE CHECK (length(email) BETWEEN 3 AND 320 AND position('@' in email) > 1),
+  source TEXT NOT NULL DEFAULT 'footer',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
 
--- Visitors may join; nobody but the service role may read the list.
+CREATE INDEX IF NOT EXISTS idx_subscribers_created_at
+  ON public.subscribers (created_at DESC);
+
+ALTER TABLE public.waitlists ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.subscribers ENABLE ROW LEVEL SECURITY;
+
+-- Visitors may join; nobody but the service role may read either list.
 CREATE POLICY "Public can join the waitlist" ON public.waitlists
+  FOR INSERT TO anon, authenticated WITH CHECK (true);
+CREATE POLICY "Public can subscribe" ON public.subscribers
   FOR INSERT TO anon, authenticated WITH CHECK (true);
 
 GRANT USAGE ON SCHEMA public TO anon, authenticated;
 GRANT INSERT ON public.waitlists TO anon, authenticated;
+GRANT INSERT ON public.subscribers TO anon, authenticated;

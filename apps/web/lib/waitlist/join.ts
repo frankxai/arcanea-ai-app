@@ -14,6 +14,7 @@ export async function joinWaitlist(
   rawEmail: unknown,
   insert: WaitlistInsert,
   source = "pricing_founding_circle",
+  successMessage = "Welcome to the Founding Circle!",
 ): Promise<JoinResult> {
   const email =
     typeof rawEmail === "string" ? rawEmail.trim().toLowerCase() : "";
@@ -39,6 +40,6 @@ export async function joinWaitlist(
 
   return {
     status: 200,
-    body: { success: true, message: "Welcome to the Founding Circle!" },
+    body: { success: true, message: successMessage },
   };
 }

@@ -26,22 +26,29 @@ export function ComingSoonPage({
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubscribe = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || submitting) return;
     setSubmitting(true);
+    setError("");
     try {
-      await fetch('/api/subscribe', {
+      const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.trim(), source: `coming-soon:${title}` }),
       });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success) {
+        setSubscribed(true);
+        setEmail("");
+      } else {
+        setError(data.error || "We couldn't save your email. Please try again.");
+      }
     } catch {
-      // Still show success
+      setError("We couldn't reach the server. Please try again.");
     } finally {
-      setSubscribed(true);
-      setEmail("");
       setSubmitting(false);
     }
   }, [email, submitting, title]);
@@ -102,6 +109,11 @@ export function ComingSoonPage({
                 {submitting ? "..." : "Notify Me"}
               </button>
             </form>
+          )}
+          {error && !subscribed && (
+            <p role="alert" className="mt-2 text-sm text-white/60">
+              {error}
+            </p>
           )}
         </div>
       )}
