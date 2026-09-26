@@ -11,11 +11,11 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "The Light She Could Not See | Arcanea Stories",
   description:
-    "An illustrated Arcanea story of Selene Velara, her riding companions, dragons, the sea, and the difficult art of seeing without claiming to know.",
+    "Iria Soreda rides from Miralumbre's rain terraces into Avilara's living valleys, a dragon roost, Mar Arcano, and an ancient pressure vault beneath the eastern forest.",
   openGraph: {
     title: "The Light She Could Not See",
     description:
-      "An illustrated Arcanea story about the roads we choose and the people we let choose with us.",
+      "A rider, three friends, a wounded dragon, and a sea that carries a dangerous secret.",
     images: ["/stories/horsewoman/open-road-hero.webp"],
   },
   alternates: { canonical: "/stories/the-light-she-could-not-see" },
@@ -43,7 +43,30 @@ const chapters = [
   ...chaptersFrom("THE_LIGHT_SHE_COULD_NOT_SEE.md"),
   ...chaptersFrom("THE_RIDER_CIRCLE.md"),
   ...chaptersFrom("THE_OPEN_ROAD.md"),
+  ...chaptersFrom("THE_BELL_BELOW.md"),
 ];
+
+const movements = [
+  { number: 1, title: "The first crossing", chapter: 1 },
+  { number: 2, title: "The rider circle", chapter: 13 },
+  { number: 3, title: "The eastern crossing", chapter: 18 },
+  { number: 4, title: "The Bell Below", chapter: 22 },
+];
+
+function ChapterIndex() {
+  return (
+    <ol className={styles.chapterList}>
+      {chapters.map((chapter) => (
+        <li key={chapter.id}>
+          <a href={`#${chapter.id}`}>
+            <span>{String(chapter.number).padStart(2, "0")}</span>
+            {chapter.title}
+          </a>
+        </li>
+      ))}
+    </ol>
+  );
+}
 
 export default function HorsewomanStory() {
   return (
@@ -63,7 +86,7 @@ export default function HorsewomanStory() {
       <section className={styles.hero} aria-labelledby="story-title">
         <Image
           src="/stories/horsewoman/open-road-hero.webp"
-          alt="Selene rides Brío above a winding dawn-lit river, with misty tepuis and orchids beyond"
+          alt="Iria rides Brío above a winding dawn-lit river, with misty tepuis and orchids beyond"
           fill
           priority
           sizes="100vw"
@@ -72,7 +95,7 @@ export default function HorsewomanStory() {
         <div className={styles.heroShade} />
         <div className={styles.heroText}>
           <p className={styles.eyebrow}>
-            An illustrated serial · Caracas to Mar Arcano
+            An illustrated serial · Miralumbre to Mar Arcano
           </p>
           <h1 id="story-title">
             The Light
@@ -80,15 +103,15 @@ export default function HorsewomanStory() {
             She Could Not See
           </h1>
           <p>
-            She could see the light around everyone except herself. Then a horse
-            taught her to ask before she followed.
+            She could see where a Gate began to wake, but never her own light.
+            Then the mountain began to sound beneath the water.
           </p>
           <a href="#chapter-1" className={styles.readButton}>
             Begin reading <span aria-hidden="true">↓</span>
           </a>
         </div>
         <p className={styles.heroCredit}>
-          {chapters.length} chapters · 29 illustrations
+          {chapters.length} chapters · Four movements · Illustrated
         </p>
       </section>
 
@@ -100,24 +123,19 @@ export default function HorsewomanStory() {
         >
           <div className={styles.sidebarInner}>
             <p className={styles.smallLabel}>The story</p>
-            <p className={styles.sidebarTitle}>
-              Two homes. One road of her own.
-            </p>
+            <p className={styles.sidebarTitle}>The Light She Could Not See</p>
+            <nav aria-label="Story movements" className={styles.movements}>
+              {movements.map((movement) => (
+                <a key={movement.number} href={`#chapter-${movement.chapter}`}>
+                  <span>Part {movement.number}</span> {movement.title}
+                </a>
+              ))}
+            </nav>
             <nav aria-label="Chapters" className={styles.desktopChapters}>
-              <ol className={styles.chapterList}>
-                {chapters.map((chapter) => (
-                  <li key={chapter.id}>
-                    <a href={`#${chapter.id}`}>
-                      <span>{String(chapter.number).padStart(2, "0")}</span>
-                      {chapter.title}
-                    </a>
-                  </li>
-                ))}
-              </ol>
+              <ChapterIndex />
             </nav>
             <p className={styles.sidebarNote}>
-              A complete first journey, followed by the opening of The Open
-              Road.
+              Four movements through a living Arcanea.
             </p>
           </div>
         </aside>
@@ -126,28 +144,14 @@ export default function HorsewomanStory() {
           <details id="contents" className={styles.mobileContents}>
             <summary>Browse the {chapters.length} chapters</summary>
             <nav aria-label="Mobile chapter index">
-              <ol className={styles.chapterList}>
-                {chapters.map((chapter) => (
-                  <li key={chapter.id}>
-                    <a href={`#${chapter.id}`}>
-                      <span>{String(chapter.number).padStart(2, "0")}</span>
-                      {chapter.title}
-                    </a>
-                  </li>
-                ))}
-              </ol>
+              <ChapterIndex />
             </nav>
           </details>
           <div className={styles.intro}>
-            <p className={styles.smallLabel}>Before the road</p>
+            <p className={styles.smallLabel}>Part I · The first crossing</p>
             <p>
-              There are extraordinary places here. They still have broken gates,
-              late dinners, tired animals, people who disagree, and a future
-              nobody gets to own alone.
-            </p>
-            <p className={styles.editionNote}>
-              An independent story continuity. Its Selene is twenty-nine; she is
-              distinct from the younger Selene of <em>Las Tierras de Luz</em>.
+              Miralumbre’s rain terraces. A moving mountain passage. A woman
+              learning the limits of her sight, and a horse who makes her wait.
             </p>
           </div>
           {chapters.map((chapter) => (
@@ -164,11 +168,11 @@ export default function HorsewomanStory() {
                     width={941}
                     height={1672}
                     sizes="(max-width: 760px) 100vw, 650px"
-                    alt="Selene and Brío ride alongside Iva, Luz, and Tami above a flooded watershed"
+                    alt="Iria and Brío ride alongside Iva, Luz, and Tami above a flooded watershed"
                   />
                   <div>
-                    <span>THE OPEN ROAD · PART II</span>
-                    <h2>She did not ride into this alone.</h2>
+                    <span>PART II · THE RIDER CIRCLE</span>
+                    <h2>Four riders. One sound beneath the mountain.</h2>
                   </div>
                 </div>
               )}
@@ -179,11 +183,26 @@ export default function HorsewomanStory() {
                     width={1024}
                     height={1536}
                     sizes="(max-width: 760px) 100vw, 650px"
-                    alt="Selene and Brío examine a damaged river crossing while Cael waits with a lantern"
+                    alt="Iria and Brío examine a damaged river crossing while Cael waits with a lantern"
                   />
                   <div>
                     <span>THE EASTERN CROSSING</span>
                     <h2>Some bridges should wait for daylight.</h2>
+                  </div>
+                </div>
+              )}
+              {chapter.number === 22 && (
+                <div className={styles.partBreak}>
+                  <Image
+                    src="/stories/horsewoman/the-bell-below.webp"
+                    width={1024}
+                    height={1536}
+                    sizes="(max-width: 760px) 100vw, 650px"
+                    alt="Iria, Oren, and Iva work in a vast pressure vault beneath hanging forest basins and suspended stone weights"
+                  />
+                  <div>
+                    <span>PART IV · THE BELL BELOW</span>
+                    <h2>The mountain kept a record of every borrowed river.</h2>
                   </div>
                 </div>
               )}
@@ -204,15 +223,25 @@ export default function HorsewomanStory() {
               >
                 {chapter.text}
               </ReactMarkdown>
+              {chapter.number < chapters.length && (
+                <a
+                  className={styles.nextChapter}
+                  href={`#chapter-${chapter.number + 1}`}
+                >
+                  <span>
+                    Next chapter <span aria-hidden="true">→</span>
+                  </span>
+                  <strong>{chapters[chapter.number].title}</strong>
+                </a>
+              )}
               <div className={styles.chapterEnd} aria-hidden="true" />
             </section>
           ))}
           <footer className={styles.endnote}>
             <p>
-              End of the opening chapters of <em>The Open Road</em>. Selene,
-              Brío, and Cael have more to learn; this story is an independent
-              imagining, separate from the locked <em>Las Tierras de Luz</em>{" "}
-              continuity.
+              End of <em>The Bell Below</em>. The watershed has its water back;
+              the road and the inquiry remain unfinished. This independent story
+              does not alter the locked <em>Las Tierras de Luz</em> continuity.
             </p>
             <div className={styles.footerLinks}>
               <a href="#story-title">Return to the beginning</a>
