@@ -1,36 +1,26 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import type { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
-import {
-  ArrowRight,
-  ClockCounterClockwise,
-  FolderOpen,
-} from "@/lib/phosphor-icons";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { createClient } from "@/lib/supabase/server";
-import { buildProjectGraphView } from "@/lib/projects/enrichment";
-import { buildProjectCompletionSummary } from "@/lib/projects/progress";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { notFound, redirect } from 'next/navigation';
+import { ArrowRight, ClockCounterClockwise, FolderOpen } from '@/lib/phosphor-icons';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { createClient } from '@/lib/supabase/server';
+import { buildProjectGraphView } from '@/lib/projects/enrichment';
+import { buildProjectCompletionSummary } from '@/lib/projects/progress';
 import {
   getProjectGraphSummaryForCurrentUser,
   getProjectWorkspaceForCurrentUser,
-  listProjectMediaCreationsForCurrentUser,
   listProjectCandidateCreationsForCurrentUser,
   listProjectCandidateSessionsForCurrentUser,
   listProjectActivityForCurrentUser,
-} from "@/lib/projects/server";
-import { OpenProjectChatButton } from "./open-project-chat-button";
-import { ProjectCreationPanel } from "./project-creation-panel";
-import { CreationMediaStage } from "@/components/media/creation-media-stage";
-import { ProjectDocPanel } from "./project-doc-panel";
-import { ProjectSessionPanel } from "./project-session-panel";
-import { ProjectWorkspaceControls } from "./project-workspace-controls";
+} from '@/lib/projects/server';
+import { OpenProjectChatButton } from './open-project-chat-button';
+import { ProjectCreationPanel } from './project-creation-panel';
+import { ProjectDocPanel } from './project-doc-panel';
+import { ProjectSessionPanel } from './project-session-panel';
+import { ProjectWorkspaceControls } from './project-workspace-controls';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -42,28 +32,26 @@ function formatTimestamp(value: string): string {
 
 function statusLabel(value: string): string {
   return value
-    .split("_")
+    .split('_')
     .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join(" ");
+    .join(' ');
 }
 
 function actionLabel(value: string): string {
   return value
-    .replace(/^project_/, "")
-    .split("_")
+    .replace(/^project_/, '')
+    .split('_')
     .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join(" ");
+    .join(' ');
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
   const workspace = await getProjectWorkspaceForCurrentUser(id);
 
   if (!workspace) {
     return {
-      title: "Project Workspace",
+      title: 'Project Workspace',
     };
   }
 
@@ -72,7 +60,7 @@ export async function generateMetadata({
     description:
       workspace.project.description ??
       workspace.project.goal ??
-      "Project workspace graph for Arcanea chats, creations, and memories.",
+      'Project workspace graph for Arcanea chats, creations, and memories.',
   };
 }
 
@@ -92,27 +80,27 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
     notFound();
   }
 
-  const [
-    persistedGraph,
-    activity,
-    candidateSessions,
-    candidateCreations,
-    mediaCreations,
-  ] = await Promise.all([
+  const [persistedGraph, activity, candidateSessions, candidateCreations] = await Promise.all([
     getProjectGraphSummaryForCurrentUser(id),
     listProjectActivityForCurrentUser(id, 8),
     listProjectCandidateSessionsForCurrentUser(id, 6),
     listProjectCandidateCreationsForCurrentUser(id, 6),
-    listProjectMediaCreationsForCurrentUser(id),
   ]);
 
   const completion = buildProjectCompletionSummary(workspace);
   const { graph } = buildProjectGraphView(
     workspace,
     persistedGraph,
-    persistedGraph ? "stored" : "derived",
+    persistedGraph ? 'stored' : 'derived',
   );
   const progress = completion.progress;
+  const stats = [
+    { label: 'Chats', value: workspace.stats.sessionCount },
+    { label: 'Creations', value: workspace.stats.creationCount },
+    { label: 'Docs', value: workspace.stats.docCount },
+    { label: 'Memories', value: workspace.stats.memoryCount },
+    { label: 'Graph Score', value: `${graph.score}` },
+  ];
   const remainingSteps = progress.steps.filter((step) => !step.completed);
 
   return (
@@ -120,23 +108,19 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
       <div className="mx-auto max-w-7xl px-6 py-10">
         <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-3xl">
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-atlantean-teal-aqua/80">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs uppercase tracking-[0.22em] text-atlantean-teal-aqua/80">
               <FolderOpen size={14} />
-              Project workspace
+              Project Workspace
             </div>
             <h1 className="text-4xl font-display font-bold tracking-tight text-white">
               {workspace.project.title}
             </h1>
             {(workspace.project.description || workspace.project.goal) && (
               <div className="mt-4 space-y-3 text-sm leading-7 text-white/70">
-                {workspace.project.description && (
-                  <p>{workspace.project.description}</p>
-                )}
+                {workspace.project.description && <p>{workspace.project.description}</p>}
                 {workspace.project.goal && (
                   <p>
-                    <span className="mr-2 font-semibold text-white/90">
-                      Goal:
-                    </span>
+                    <span className="mr-2 font-semibold text-white/90">Goal:</span>
                     {workspace.project.goal}
                   </p>
                 )}
@@ -150,10 +134,24 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
 
           <div className="flex flex-wrap items-center gap-3">
             <OpenProjectChatButton projectId={workspace.project.id} />
+            <Button asChild variant="ghost">
+              <Link href="/chat">View Chat Shell</Link>
+            </Button>
           </div>
         </div>
 
-        <CreationMediaStage creations={mediaCreations} scope="project" />
+        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+          {stats.map((stat) => (
+            <Card key={stat.label} variant="liquid-glass">
+              <CardHeader className="pb-3">
+                <CardDescription className="uppercase tracking-[0.18em] text-white/40">
+                  {stat.label}
+                </CardDescription>
+                <CardTitle className="text-3xl text-white">{stat.value}</CardTitle>
+              </CardHeader>
+            </Card>
+          ))}
+        </section>
 
         <section className="mt-8 grid gap-6 xl:grid-cols-[1.15fr_0.95fr]">
           <Card variant="liquid-glass" className="min-h-[320px]">
@@ -164,52 +162,37 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
                   {statusLabel(progress.status)}
                 </span>
               </div>
-              <CardDescription>{completion.summary}</CardDescription>
+              <CardDescription>
+                {completion.summary}
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-white/40">
                   <span>Workspace progress</span>
-                  <span>
-                    {progress.completedCount}/{progress.totalSteps}
-                  </span>
+                  <span>{progress.completedCount}/{progress.totalSteps}</span>
                 </div>
-                <Progress
-                  value={progress.completionPercent}
-                  variant="brand"
-                  size="lg"
-                  animated
-                />
+                <Progress value={progress.completionPercent} variant="brand" size="lg" animated />
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">
-                    Next action
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-white/75">
-                    {progress.nextRecommendedAction}
-                  </p>
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Next action</p>
+                  <p className="mt-2 text-sm leading-6 text-white/75">{progress.nextRecommendedAction}</p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">
-                    Graph health
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-white/75">
-                    {progress.completionPercent === 100
-                      ? "Frame, sessions, creations, memory, and provenance are all connected."
-                      : `Graph is ${progress.completionPercent}% complete and still missing ${remainingSteps.length} step(s).`}
-                  </p>
-                </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Graph health</p>
+                <p className="mt-2 text-sm leading-6 text-white/75">
+                  {progress.completionPercent === 100
+                    ? 'Frame, sessions, creations, memory, and provenance are all connected.'
+                    : `Graph is ${progress.completionPercent}% complete and still missing ${remainingSteps.length} step(s).`}
+                </p>
+              </div>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">
-                  Semantic summary
-                </p>
-                <p className="mt-2 text-sm leading-6 text-white/75">
-                  {graph.summary}
-                </p>
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Semantic summary</p>
+                <p className="mt-2 text-sm leading-6 text-white/75">{graph.summary}</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {graph.tags.length > 0 ? (
                     graph.tags.map((tag) => (
@@ -221,40 +204,28 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
                       </span>
                     ))
                   ) : (
-                    <span className="text-xs text-white/40">
-                      No graph tags yet.
-                    </span>
+                    <span className="text-xs text-white/40">No graph tags yet.</span>
                   )}
                 </div>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">
-                  Node inventory
-                </p>
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Node inventory</p>
                 <div className="mt-3 grid gap-3 sm:grid-cols-3">
                   <div>
-                    <p className="text-2xl font-semibold text-white">
-                      {workspace.sessions.length}
-                    </p>
+                    <p className="text-2xl font-semibold text-white">{workspace.sessions.length}</p>
                     <p className="text-xs text-white/45">Linked sessions</p>
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-white">
-                      {workspace.creations.length}
-                    </p>
+                    <p className="text-2xl font-semibold text-white">{workspace.creations.length}</p>
                     <p className="text-xs text-white/45">Linked creations</p>
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-white">
-                      {workspace.docs.length}
-                    </p>
+                    <p className="text-2xl font-semibold text-white">{workspace.docs.length}</p>
                     <p className="text-xs text-white/45">Linked docs</p>
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-white">
-                      {workspace.memories.length}
-                    </p>
+                    <p className="text-2xl font-semibold text-white">{workspace.memories.length}</p>
                     <p className="text-xs text-white/45">Linked memories</p>
                   </div>
                 </div>
@@ -274,8 +245,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
               <CardHeader>
                 <CardTitle>Next Actions</CardTitle>
                 <CardDescription>
-                  The workspace graph is live. These are the remaining steps
-                  Arcanea can still learn from.
+                  The workspace graph is live. These are the remaining steps Arcanea can still learn from.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3 text-sm text-white/70">
@@ -283,20 +253,13 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
                   <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
                     <p className="font-medium text-white">Workspace complete</p>
                     <p className="mt-1 text-white/60">
-                      The project has the frame, continuity, artifacts, memory,
-                      and source provenance Arcanea expects.
+                      The project has the frame, continuity, artifacts, memory, and source provenance Arcanea expects.
                     </p>
                   </div>
                 ) : (
                   remainingSteps.map((step) => (
-                    <div
-                      key={step.id}
-                      className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
-                    >
-                      <ArrowRight
-                        size={14}
-                        className="mt-1 text-atlantean-teal-aqua"
-                      />
+                    <div key={step.id} className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                      <ArrowRight size={14} className="mt-1 text-atlantean-teal-aqua" />
                       <div className="min-w-0">
                         <p className="font-medium text-white">{step.title}</p>
                         <p className="mt-1 text-white/55">{step.detail}</p>
@@ -309,10 +272,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
           </div>
         </section>
 
-        <section
-          id="project-creations"
-          className="mt-6 grid scroll-mt-6 gap-6 xl:grid-cols-[1fr_1fr]"
-        >
+        <section className="mt-6 grid gap-6 xl:grid-cols-[1fr_1fr]">
           <ProjectSessionPanel
             projectId={workspace.project.id}
             linkedSessions={workspace.sessions}
@@ -328,10 +288,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
         </section>
 
         <section className="mt-6">
-          <ProjectDocPanel
-            projectId={workspace.project.id}
-            docs={workspace.docs}
-          />
+          <ProjectDocPanel projectId={workspace.project.id} docs={workspace.docs} />
         </section>
 
         <section className="mt-6 grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
@@ -339,8 +296,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
             <CardHeader>
               <CardTitle>Graph Facts & Checks</CardTitle>
               <CardDescription>
-                Stored or derived facts Arcanea is using to understand this
-                workspace.
+                Stored or derived facts Arcanea is using to understand this workspace.
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
@@ -350,8 +306,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
                 </p>
                 {graph.facts.length === 0 ? (
                   <p className="text-sm text-white/50">
-                    No durable facts recorded yet. Arcanea will infer them as
-                    the workspace gains activity.
+                    No durable facts recorded yet. Arcanea will infer them as the workspace gains activity.
                   </p>
                 ) : (
                   graph.facts.map((fact) => (
@@ -366,9 +321,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
               </div>
 
               <div className="space-y-3">
-                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">
-                  Evaluation checks
-                </p>
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Evaluation checks</p>
                 {graph.checks.map((check) => (
                   <div
                     key={check.name}
@@ -376,21 +329,19 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
                   >
                     <div className="flex items-center justify-between gap-4">
                       <p className="text-sm font-medium text-white">
-                        {check.name.replace(/_/g, " ")}
+                        {check.name.replace(/_/g, ' ')}
                       </p>
                       <span
                         className={`rounded-full px-2.5 py-1 text-[11px] uppercase tracking-[0.12em] ${
                           check.passed
-                            ? "border border-emerald-400/20 bg-emerald-400/10 text-emerald-200"
-                            : "border border-amber-400/20 bg-amber-400/10 text-amber-200"
+                            ? 'border border-emerald-400/20 bg-emerald-400/10 text-emerald-200'
+                            : 'border border-amber-400/20 bg-amber-400/10 text-amber-200'
                         }`}
                       >
-                        {check.passed ? "Pass" : "Open"}
+                        {check.passed ? 'Pass' : 'Open'}
                       </span>
                     </div>
-                    <p className="mt-2 text-sm leading-6 text-white/60">
-                      {check.detail}
-                    </p>
+                    <p className="mt-2 text-sm leading-6 text-white/60">{check.detail}</p>
                   </div>
                 ))}
               </div>
@@ -407,8 +358,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
             <CardContent className="space-y-3">
               {activity.length === 0 ? (
                 <p className="text-sm text-white/50">
-                  No recent project activity yet. It will appear as Arcanea
-                  records project actions and graph updates.
+                  No recent project activity yet. It will appear as Arcanea records project actions and graph updates.
                 </p>
               ) : (
                 activity.map((item) => (
@@ -417,9 +367,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
                     className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
                   >
                     <div className="flex items-center justify-between gap-4">
-                      <p className="text-sm font-medium text-white">
-                        {actionLabel(item.action)}
-                      </p>
+                      <p className="text-sm font-medium text-white">{actionLabel(item.action)}</p>
                       <span className="text-[11px] text-white/35">
                         {new Date(item.createdAt).toLocaleDateString()}
                       </span>
@@ -429,9 +377,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
                         {JSON.stringify(item.metadata)}
                       </p>
                     ) : (
-                      <p className="mt-2 text-sm leading-6 text-white/45">
-                        No extra metadata.
-                      </p>
+                      <p className="mt-2 text-sm leading-6 text-white/45">No extra metadata.</p>
                     )}
                   </div>
                 ))
@@ -445,15 +391,13 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
             <CardHeader>
               <CardTitle>Memory Links</CardTitle>
               <CardDescription>
-                Retrieved memory snippets already attached to this project
-                container.
+                Retrieved memory snippets already attached to this project container.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
               {workspace.memories.length === 0 ? (
                 <p className="text-sm text-white/50">
-                  No durable memory links yet. They will appear as Arcanea
-                  extracts and connects relevant insights in the background.
+                  No durable memory links yet. They will appear as Arcanea extracts and connects relevant insights in the background.
                 </p>
               ) : (
                 workspace.memories.map((memory) => (
@@ -472,39 +416,21 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
             <CardHeader>
               <CardTitle>Workspace Actions</CardTitle>
               <CardDescription>
-                Move between the project graph and the chat shell without losing
-                continuity.
+                Move between the project graph and the chat shell without losing continuity.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 text-sm text-white/70">
               <div className="flex items-start gap-2">
-                <ArrowRight
-                  size={14}
-                  className="mt-1 text-atlantean-teal-aqua"
-                />
-                <span>
-                  Open this project in chat to continue the active context.
-                </span>
+                <ArrowRight size={14} className="mt-1 text-atlantean-teal-aqua" />
+                <span>Open this project in chat to continue the active context.</span>
               </div>
               <div className="flex items-start gap-2">
-                <ArrowRight
-                  size={14}
-                  className="mt-1 text-atlantean-teal-aqua"
-                />
-                <span>
-                  Save a creation from chat or studio to attach provenance to
-                  the graph.
-                </span>
+                <ArrowRight size={14} className="mt-1 text-atlantean-teal-aqua" />
+                <span>Save a creation from chat or studio to attach provenance to the graph.</span>
               </div>
               <div className="flex items-start gap-2">
-                <ArrowRight
-                  size={14}
-                  className="mt-1 text-atlantean-teal-aqua"
-                />
-                <span>
-                  Link or extract memories to keep the workspace semantically
-                  useful.
-                </span>
+                <ArrowRight size={14} className="mt-1 text-atlantean-teal-aqua" />
+                <span>Link or extract memories to keep the workspace semantically useful.</span>
               </div>
             </CardContent>
           </Card>

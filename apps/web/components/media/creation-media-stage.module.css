@@ -2,7 +2,7 @@
   color: var(--arc-text-primary);
   background: var(--arc-cosmic-deep);
   border: 1px solid var(--arc-cosmic-border);
-  border-radius: 24px;
+  border-radius: var(--arc-radius-2xl);
   padding: clamp(1.25rem, 3vw, 2.25rem);
 }
 
@@ -61,7 +61,7 @@
   min-height: 18rem;
   background: var(--arc-cosmic-void);
   border: 1px solid var(--arc-cosmic-border);
-  border-radius: 18px;
+  border-radius: var(--arc-radius-xl);
 }
 
 .image,
@@ -103,7 +103,7 @@
   padding: 1rem;
   background: color-mix(in srgb, var(--arc-cosmic-void) 88%, transparent);
   border: 1px solid var(--arc-cosmic-border-bright);
-  border-radius: 14px;
+  border-radius: var(--arc-radius-lg);
 }
 
 .audioControls span {
@@ -114,18 +114,6 @@
 .audioControls audio {
   width: 100%;
   min-height: 44px;
-}
-
-.audioControls p {
-  color: var(--arc-text-secondary);
-  font-size: 0.9rem;
-}
-
-.audioControls p a {
-  margin-left: 0.4rem;
-  color: var(--arc-text-primary);
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
 }
 
 .noPreview {
@@ -160,6 +148,13 @@
   font-weight: 600;
   line-height: 1.3;
   overflow-wrap: anywhere;
+}
+
+.disclosure {
+  margin-top: 0.4rem;
+  color: var(--arc-brand-atlantean-teal);
+  font-size: 0.78rem;
+  font-weight: 600;
 }
 
 .details {
@@ -212,7 +207,7 @@
   color: var(--arc-text-primary);
   background: var(--arc-cosmic-surface);
   border: 1px solid var(--arc-cosmic-border);
-  border-radius: 14px;
+  border-radius: var(--arc-radius-lg);
   text-align: left;
   cursor: pointer;
 }
@@ -232,7 +227,7 @@
   height: 58px;
   color: var(--arc-text-secondary);
   background: var(--arc-cosmic-void);
-  border-radius: 9px;
+  border-radius: var(--arc-radius-md);
 }
 
 .thumbImage {
@@ -274,7 +269,7 @@
   color: var(--arc-text-muted);
   background: var(--arc-cosmic-void);
   border: 1px solid var(--arc-cosmic-border);
-  border-radius: 18px;
+  border-radius: var(--arc-radius-xl);
 }
 
 .empty h3 {
@@ -289,38 +284,7 @@
   line-height: 1.65;
 }
 
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem;
-  margin-top: 1.8rem;
-  padding-top: 1.4rem;
-  border-top: 1px solid var(--arc-cosmic-border);
-}
-
-.actions a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.55rem;
-  min-height: 44px;
-  padding: 0.6rem 0.85rem;
-  color: var(--arc-text-primary);
-  border: 1px solid var(--arc-cosmic-border-bright);
-  border-radius: 11px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.actions .trailingIcon {
-  margin-left: 0.35rem;
-  color: var(--arc-text-secondary);
-}
-
 .item:focus-visible,
-.actions a:focus-visible,
-.audioControls a:focus-visible,
 .details a:focus-visible,
 .noPreview a:focus-visible {
   outline: 2px solid var(--arc-brand-atlantean-teal);
@@ -330,15 +294,6 @@
 @media (hover: hover) and (pointer: fine) {
   .item:hover {
     border-color: var(--arc-cosmic-border-bright);
-  }
-
-  .actions a {
-    transition: background-color var(--arc-duration-fast)
-      var(--arc-ease-expo-out);
-  }
-
-  .actions a:hover {
-    background: var(--arc-cosmic-raised);
   }
 }
 
@@ -387,20 +342,5 @@
 
   .emptyFrame {
     min-height: 13rem;
-  }
-
-  .actions a {
-    width: 100%;
-    justify-content: flex-start;
-  }
-
-  .actions .trailingIcon {
-    margin-left: auto;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .actions a {
-    transition: none;
   }
 }

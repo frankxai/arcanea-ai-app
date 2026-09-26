@@ -18,13 +18,19 @@ import {
   type MediaStageCreation,
 } from "@/components/media/creation-media-stage";
 
-type Filter = "all" | "image" | "video" | "music";
+type Filter = "all" | "image" | "video" | "music" | "audio";
 type LibraryCreation = MediaStageCreation & { createdAt: string };
+const PAGE_SIZE = 24;
+const columns =
+  "id, title, type, status, content, thumbnail_url, created_at, ai_model, ai_prompt";
 
 interface LibrarySnapshot {
   userId: string;
+  filter: Filter;
   items: LibraryCreation[];
   media: LibraryCreation[];
+  nextOffset: number;
+  hasMore: boolean;
   error: boolean;
 }
 
@@ -33,13 +39,8 @@ const filters: Array<{ id: Filter; label: string }> = [
   { id: "image", label: "Images" },
   { id: "video", label: "Film" },
   { id: "music", label: "Music" },
+  { id: "audio", label: "Audio" },
 ];
-
-function mediaKind(type: string): Filter | null {
-  if (type === "image" || type === "video") return type;
-  if (type === "music" || type === "audio") return "music";
-  return null;
-}
 
 function mapCreation(row: {
   id: string;
@@ -49,7 +50,15 @@ function mapCreation(row: {
   content: unknown;
   thumbnail_url: string | null;
   created_at: string;
+  ai_model: string | null;
+  ai_prompt: string | null;
 }): LibraryCreation {
+  const content =
+    row.content &&
+    typeof row.content === "object" &&
+    !Array.isArray(row.content)
+      ? (row.content as Record<string, unknown>)
+      : null;
   return {
     id: row.id,
     title: row.title,
@@ -58,13 +67,29 @@ function mapCreation(row: {
     fileUrl: creationMediaUrl(row.content, row.type),
     thumbnailUrl: row.thumbnail_url,
     createdAt: row.created_at,
+    aiGenerated:
+      Boolean(row.ai_model || row.ai_prompt) ||
+      content?.source === "chat" ||
+      (content?.mode === "image" && typeof content.prompt === "string"),
   };
+}
+
+async function fetchPage(userId: string, filter: Filter, offset: number) {
+  let query = createClient()
+    .from("creations")
+    .select(columns)
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false })
+    .order("id", { ascending: false });
+  if (filter !== "all") query = query.eq("type", filter);
+  return query.range(offset, offset + PAGE_SIZE);
 }
 
 function typeLabel(type: string): string {
   if (type === "image") return "Image";
   if (type === "video") return "Film";
-  if (type === "music" || type === "audio") return "Music";
+  if (type === "music") return "Music";
+  if (type === "audio") return "Audio";
   if (type === "text") return "Writing";
   return "Creation";
 }
@@ -88,23 +113,17 @@ export default function CreationsPage() {
   const [retry, setRetry] = useState(0);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [deleteError, setDeleteError] = useState(false);
+  const [loadingMoreKey, setLoadingMoreKey] = useState<string | null>(null);
+  const [loadMoreErrorKey, setLoadMoreErrorKey] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) return;
     const userId = user.id;
     let active = true;
     const client = createClient();
-    const columns =
-      "id, title, type, status, content, thumbnail_url, created_at";
-
     async function load() {
       const [itemsResult, mediaResult] = await Promise.all([
-        client
-          .from("creations")
-          .select(columns)
-          .eq("user_id", userId)
-          .order("created_at", { ascending: false })
-          .limit(60),
+        fetchPage(userId, filter, 0),
         client
           .from("creations")
           .select(columns)
@@ -115,32 +134,86 @@ export default function CreationsPage() {
       ]);
       if (!active) return;
       if (itemsResult.error || mediaResult.error) {
-        setSnapshot({ userId, items: [], media: [], error: true });
+        setSnapshot({
+          userId,
+          filter,
+          items: [],
+          media: [],
+          nextOffset: 0,
+          hasMore: false,
+          error: true,
+        });
         return;
       }
+      const rows = itemsResult.data ?? [];
       setSnapshot({
         userId,
-        items: (itemsResult.data ?? []).map(mapCreation),
+        filter,
+        items: rows.slice(0, PAGE_SIZE).map(mapCreation),
         media: (mediaResult.data ?? []).map(mapCreation),
+        nextOffset: Math.min(rows.length, PAGE_SIZE),
+        hasMore: rows.length > PAGE_SIZE,
         error: false,
       });
     }
 
     void load().catch(() => {
-      if (active) setSnapshot({ userId, items: [], media: [], error: true });
+      if (active)
+        setSnapshot({
+          userId,
+          filter,
+          items: [],
+          media: [],
+          nextOffset: 0,
+          hasMore: false,
+          error: true,
+        });
     });
     return () => {
       active = false;
     };
-  }, [user, retry]);
+  }, [user, filter, retry]);
 
   const loading =
-    authLoading || (user !== null && snapshot?.userId !== user.id);
+    authLoading ||
+    (user !== null &&
+      (snapshot?.userId !== user.id || snapshot.filter !== filter));
   const items = snapshot?.items ?? [];
-  const visible =
-    filter === "all"
-      ? items
-      : items.filter((creation) => mediaKind(creation.type) === filter);
+  const currentKey = user ? `${user.id}:${filter}` : null;
+
+  async function loadMore() {
+    if (!user || !snapshot || !snapshot.hasMore || loadingMoreKey) return;
+    const { id: userId } = user;
+    const { nextOffset } = snapshot;
+    const requestedFilter = filter;
+    const key = `${userId}:${requestedFilter}`;
+    setLoadingMoreKey(key);
+    setLoadMoreErrorKey(null);
+    try {
+      const result = await fetchPage(userId, requestedFilter, nextOffset);
+      if (result.error) throw result.error;
+      const rows = result.data ?? [];
+      setSnapshot((current) =>
+        current?.userId === userId &&
+        current.filter === requestedFilter &&
+        current.nextOffset === nextOffset
+          ? {
+              ...current,
+              items: [
+                ...current.items,
+                ...rows.slice(0, PAGE_SIZE).map(mapCreation),
+              ],
+              nextOffset: nextOffset + Math.min(rows.length, PAGE_SIZE),
+              hasMore: rows.length > PAGE_SIZE,
+            }
+          : current,
+      );
+    } catch {
+      setLoadMoreErrorKey(key);
+    } finally {
+      setLoadingMoreKey(null);
+    }
+  }
 
   async function deleteCreation(creation: LibraryCreation) {
     if (
@@ -151,21 +224,16 @@ export default function CreationsPage() {
     setDeletingId(creation.id);
     setDeleteError(false);
     try {
-      const { error } = await createClient()
+      const { data, error } = await createClient()
         .from("creations")
         .delete()
         .eq("id", creation.id)
-        .eq("user_id", user.id);
-      if (error) throw error;
-      setSnapshot((current) =>
-        current?.userId === user.id
-          ? {
-              ...current,
-              items: current.items.filter((item) => item.id !== creation.id),
-              media: current.media.filter((item) => item.id !== creation.id),
-            }
-          : current,
-      );
+        .eq("user_id", user.id)
+        .select("id")
+        .single();
+      if (error || !data) throw error ?? new Error("Creation not found");
+      setSnapshot(null);
+      setRetry((value) => value + 1);
     } catch {
       setDeleteError(true);
     } finally {
@@ -240,10 +308,12 @@ export default function CreationsPage() {
           </section>
         ) : (
           <>
-            <CreationMediaStage
-              creations={snapshot?.media ?? []}
-              scope="library"
-            />
+            <CreationMediaStage creations={snapshot?.media ?? []} />
+
+            <p className="mt-5 text-xs leading-5 text-white/50">
+              Arcanea AI creations are labeled AI-generated when their source is
+              recorded. Uploaded work may have a different origin.
+            </p>
 
             <section className="mt-12" aria-labelledby="recent-creations-title">
               {deleteError && (
@@ -263,7 +333,7 @@ export default function CreationsPage() {
                     Recent creations
                   </h2>
                   <p className="mt-1 text-sm text-white/55">
-                    Showing up to 60 saved pieces.
+                    Browse your saved work, newest first.
                   </p>
                 </div>
                 <div
@@ -285,15 +355,15 @@ export default function CreationsPage() {
                 </div>
               </div>
 
-              {visible.length === 0 ? (
+              {items.length === 0 ? (
                 <p className="rounded-2xl border border-white/10 p-6 text-sm text-white/60">
                   {filter === "all"
                     ? "No saved creations yet."
-                    : `No ${filters.find((item) => item.id === filter)?.label.toLowerCase()} in your recent work.`}
+                    : `No ${filters.find((item) => item.id === filter)?.label.toLowerCase()} saved yet.`}
                 </p>
               ) : (
                 <ul className="grid gap-3 md:grid-cols-2">
-                  {visible.map((creation) => (
+                  {items.map((creation) => (
                     <li
                       key={creation.id}
                       className="flex min-w-0 items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.025] p-4"
@@ -319,6 +389,14 @@ export default function CreationsPage() {
                             )}
                           </time>
                         </p>
+                        {creation.aiGenerated && (
+                          <p
+                            data-ai-generated="true"
+                            className="mt-1 text-xs font-medium text-[var(--arc-brand-atlantean-teal)]"
+                          >
+                            AI-generated
+                          </p>
+                        )}
                       </div>
                       <button
                         type="button"
@@ -332,6 +410,23 @@ export default function CreationsPage() {
                     </li>
                   ))}
                 </ul>
+              )}
+              {loadMoreErrorKey === currentKey && (
+                <p role="alert" className="mt-4 text-sm text-white/70">
+                  More creations could not load. Try again.
+                </p>
+              )}
+              {snapshot?.hasMore && (
+                <div className="mt-6 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => void loadMore()}
+                    disabled={loadingMoreKey !== null}
+                    className="min-h-11 rounded-full border border-white/20 px-6 py-2 text-sm font-medium hover:bg-white/[0.06] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)] disabled:opacity-50"
+                  >
+                    {loadingMoreKey === currentKey ? "Loading…" : "Load more"}
+                  </button>
+                </div>
               )}
             </section>
           </>

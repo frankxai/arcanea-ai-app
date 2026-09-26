@@ -19,3 +19,12 @@ export function creationMediaUrl(
   }
   return null;
 }
+
+export function creationTypeForMime(
+  mime: string,
+): "image" | "video" | "audio" | "text" {
+  if (mime.startsWith("image/")) return "image";
+  if (mime.startsWith("video/")) return "video";
+  if (mime.startsWith("audio/")) return "audio";
+  return "text";
+}

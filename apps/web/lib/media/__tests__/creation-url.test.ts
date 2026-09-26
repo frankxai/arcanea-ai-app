@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { creationMediaUrl } from "../creation-url";
+import { creationMediaUrl, creationTypeForMime } from "../creation-url";
 
 test("reads the JSON string URL written by the authenticated upload route", () => {
   const uploadedUrl =
@@ -34,4 +34,11 @@ test("uses the media-specific URL when a creation has several assets", () => {
 test("does not infer a preview from missing or non-media content", () => {
   assert.equal(creationMediaUrl(null, "image"), null);
   assert.equal(creationMediaUrl({ prompt: "a city at dawn" }, "image"), null);
+});
+
+test("classifies uploaded audio as audio for the media library", () => {
+  assert.equal(creationTypeForMime("audio/mpeg"), "audio");
+  assert.equal(creationTypeForMime("audio/wav"), "audio");
+  assert.equal(creationTypeForMime("video/mp4"), "video");
+  assert.equal(creationTypeForMime("image/png"), "image");
 });

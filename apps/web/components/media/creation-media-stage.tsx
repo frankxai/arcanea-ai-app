@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
   ArrowUpRight,
   FilmStrip,
@@ -18,14 +17,21 @@ export interface MediaStageCreation {
   status: string;
   fileUrl?: string | null;
   thumbnailUrl?: string | null;
-  sourceSessionId?: string | null;
+  aiGenerated?: boolean;
 }
 
-type MediaKind = "image" | "video" | "music";
+type MediaKind = "image" | "video" | "music" | "audio";
+
+const subscribeToOrigin = () => () => {};
 
 function mediaKind(type: string): MediaKind | null {
-  if (type === "image" || type === "video") return type;
-  if (type === "music" || type === "audio") return "music";
+  if (
+    type === "image" ||
+    type === "video" ||
+    type === "music" ||
+    type === "audio"
+  )
+    return type;
   return null;
 }
 
@@ -45,32 +51,111 @@ function safeMediaUrl(value: string | null | undefined): string | null {
   }
 }
 
-function previewableUrl(value: string | null | undefined): string | null {
+function previewableUrl(
+  value: string | null | undefined,
+  origin: string | null,
+): string | null {
   const safeUrl = safeMediaUrl(value);
   if (!safeUrl || safeUrl.startsWith("/")) return safeUrl;
-  const hostname = new URL(safeUrl).hostname;
+  const parsed = new URL(safeUrl);
+  const hostname = parsed.hostname;
+  if (origin && parsed.origin === origin) {
+    return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+  }
   return hostname.endsWith(".supabase.co") ||
     hostname.endsWith(".public.blob.vercel-storage.com") ||
-    hostname === "media.starlightintelligence.org"
+    hostname === "media.starlightintelligence.org" ||
+    hostname === "arcanea.ai" ||
+    hostname === "www.arcanea.ai"
     ? safeUrl
     : null;
 }
 
 function mediaLabel(kind: MediaKind): string {
-  return kind === "image" ? "Image" : kind === "video" ? "Film" : "Music";
+  if (kind === "image") return "Image";
+  if (kind === "video") return "Film";
+  return kind === "audio" ? "Audio" : "Music";
+}
+
+function UnavailablePreview({
+  kind,
+  originalUrl,
+}: {
+  kind: MediaKind;
+  originalUrl: string | null;
+}) {
+  return (
+    <div className={styles.noPreview}>
+      <span>{mediaLabel(kind)} preview unavailable</span>
+      {originalUrl && (
+        <a href={originalUrl} target="_blank" rel="noopener noreferrer">
+          Open original <ArrowUpRight size={16} aria-hidden="true" />
+        </a>
+      )}
+    </div>
+  );
+}
+
+function MediaThumbnail({
+  creation,
+  kind,
+  origin,
+}: {
+  creation: MediaStageCreation;
+  kind: MediaKind;
+  origin: string | null;
+}) {
+  const [failed, setFailed] = useState(false);
+  const thumbnailUrl =
+    previewableUrl(creation.thumbnailUrl, origin) ??
+    (kind === "image" ? previewableUrl(creation.fileUrl, origin) : null);
+  return (
+    <span className={styles.thumb}>
+      {thumbnailUrl && !failed ? (
+        <Image
+          src={thumbnailUrl}
+          alt=""
+          fill
+          sizes="80px"
+          className={styles.thumbImage}
+          onError={() => setFailed(true)}
+        />
+      ) : kind === "video" ? (
+        <FilmStrip size={24} aria-hidden="true" />
+      ) : kind === "music" || kind === "audio" ? (
+        <MusicNote size={24} aria-hidden="true" />
+      ) : (
+        <ImageSquare size={24} aria-hidden="true" />
+      )}
+    </span>
+  );
 }
 
 function MediaPreview({
   creation,
   kind,
+  origin,
 }: {
   creation: MediaStageCreation;
   kind: MediaKind;
+  origin: string | null;
 }) {
-  const originalUrl = safeMediaUrl(creation.fileUrl);
-  const fileUrl = previewableUrl(creation.fileUrl);
-  const thumbnailUrl = previewableUrl(creation.thumbnailUrl);
+  const [failed, setFailed] = useState(false);
+  const [artFailed, setArtFailed] = useState(false);
+  const originalUrl =
+    safeMediaUrl(creation.fileUrl) ?? safeMediaUrl(creation.thumbnailUrl);
+  const fileUrl = previewableUrl(creation.fileUrl, origin);
+  const thumbnailUrl = previewableUrl(creation.thumbnailUrl, origin);
   const imageUrl = fileUrl ?? thumbnailUrl;
+
+  if (
+    failed ||
+    (kind === "video" && !fileUrl) ||
+    (kind === "image" && !imageUrl) ||
+    ((kind === "music" || kind === "audio") && !fileUrl)
+  ) {
+    return <UnavailablePreview kind={kind} originalUrl={originalUrl} />;
+  }
 
   if (kind === "video" && fileUrl) {
     return (
@@ -82,6 +167,7 @@ function MediaPreview({
         preload="none"
         poster={thumbnailUrl ?? undefined}
         aria-label={"Play " + creation.title}
+        onError={() => setFailed(true)}
       >
         <source src={fileUrl} />
         Your browser cannot play this film.
@@ -89,16 +175,17 @@ function MediaPreview({
     );
   }
 
-  if (kind === "music") {
+  if (kind === "music" || kind === "audio") {
     return (
       <div className={styles.audioStage}>
-        {thumbnailUrl ? (
+        {thumbnailUrl && !artFailed ? (
           <Image
             src={thumbnailUrl}
             alt=""
             fill
             sizes="(max-width: 760px) 100vw, 60vw"
             className={styles.audioArtwork}
+            onError={() => setArtFailed(true)}
           />
         ) : (
           <MusicNote
@@ -109,27 +196,17 @@ function MediaPreview({
           />
         )}
         <div className={styles.audioControls}>
-          <span>Listen to this take</span>
-          {fileUrl ? (
-            <audio
-              key={creation.id}
-              controls
-              preload="none"
-              src={fileUrl}
-              aria-label={"Play " + creation.title}
-            >
-              Your browser cannot play this track.
-            </audio>
-          ) : (
-            <p>
-              Audio preview is unavailable.
-              {originalUrl && (
-                <a href={originalUrl} target="_blank" rel="noopener noreferrer">
-                  Open original
-                </a>
-              )}
-            </p>
-          )}
+          <span>Listen to this piece</span>
+          <audio
+            key={creation.id}
+            controls
+            preload="none"
+            src={fileUrl ?? undefined}
+            aria-label={"Play " + creation.title}
+            onError={() => setFailed(true)}
+          >
+            Your browser cannot play this audio.
+          </audio>
         </div>
       </div>
     );
@@ -146,29 +223,24 @@ function MediaPreview({
         className={styles.image}
         loading="eager"
         fetchPriority="high"
+        onError={() => setFailed(true)}
       />
     );
   }
 
-  return (
-    <div className={styles.noPreview}>
-      <span>{mediaLabel(kind)} preview unavailable</span>
-      {originalUrl && (
-        <a href={originalUrl} target="_blank" rel="noopener noreferrer">
-          Open original <ArrowUpRight size={16} aria-hidden="true" />
-        </a>
-      )}
-    </div>
-  );
+  return <UnavailablePreview kind={kind} originalUrl={originalUrl} />;
 }
 
 export function CreationMediaStage({
   creations,
-  scope,
 }: {
   creations: MediaStageCreation[];
-  scope: "project" | "library";
 }) {
+  const origin = useSyncExternalStore(
+    subscribeToOrigin,
+    () => window.location.origin,
+    () => null,
+  );
   const media = creations.flatMap((creation) => {
     const kind = mediaKind(creation.type);
     return kind ? [{ creation, kind }] : [];
@@ -179,25 +251,18 @@ export function CreationMediaStage({
   const selected =
     media.find(({ creation }) => creation.id === selectedId) ?? media[0];
   const selectedOriginalUrl = selected
-    ? safeMediaUrl(selected.creation.fileUrl)
+    ? (safeMediaUrl(selected.creation.fileUrl) ??
+      safeMediaUrl(selected.creation.thumbnailUrl))
     : null;
 
   return (
-    <section className={styles.stage} aria-labelledby="project-media-title">
+    <section className={styles.stage} aria-labelledby="creation-media-title">
       <div className={styles.heading}>
         <div>
-          <p className={styles.kicker}>
-            {scope === "project" ? "Project studio" : "Media library"}
-          </p>
-          <h2 id="project-media-title">
-            {scope === "project"
-              ? "See the work take shape"
-              : "Your work, in focus"}
-          </h2>
+          <p className={styles.kicker}>Media library</p>
+          <h2 id="creation-media-title">Your work, in focus</h2>
           <p className={styles.intro}>
-            {scope === "project"
-              ? "Linked images, film and music in one place."
-              : "Your latest images, film and music, ready to revisit."}
+            Your latest images, film and audio, ready to revisit.
           </p>
         </div>
         <span className={styles.count}>
@@ -209,25 +274,25 @@ export function CreationMediaStage({
         <div className={styles.layout}>
           <div className={styles.main}>
             <div className={styles.preview}>
-              <MediaPreview creation={selected.creation} kind={selected.kind} />
+              <MediaPreview
+                key={selected.creation.id}
+                creation={selected.creation}
+                kind={selected.kind}
+                origin={origin}
+              />
             </div>
             <div className={styles.caption}>
               <div>
                 <span className={styles.type}>{mediaLabel(selected.kind)}</span>
                 <h3 aria-live="polite">{selected.creation.title}</h3>
+                {selected.creation.aiGenerated && (
+                  <p data-ai-generated="true" className={styles.disclosure}>
+                    AI-generated
+                  </p>
+                )}
               </div>
               <div className={styles.details}>
-                <p>
-                  {scope === "project" && (
-                    <>
-                      {selected.creation.sourceSessionId
-                        ? "Source chat linked"
-                        : "Source chat not linked"}
-                      <span aria-hidden="true"> · </span>
-                    </>
-                  )}
-                  {selected.creation.status.replaceAll("_", " ")}
-                </p>
+                <p>{selected.creation.status.replaceAll("_", " ")}</p>
                 {selectedOriginalUrl && (
                   <a
                     href={selectedOriginalUrl}
@@ -249,7 +314,6 @@ export function CreationMediaStage({
               aria-label="Choose a media preview"
             >
               {media.map(({ creation, kind }) => {
-                const thumbnailUrl = previewableUrl(creation.thumbnailUrl);
                 return (
                   <button
                     key={creation.id}
@@ -258,23 +322,11 @@ export function CreationMediaStage({
                     aria-pressed={selected.creation.id === creation.id}
                     onClick={() => setSelectedId(creation.id)}
                   >
-                    <span className={styles.thumb}>
-                      {thumbnailUrl ? (
-                        <Image
-                          src={thumbnailUrl}
-                          alt=""
-                          fill
-                          sizes="80px"
-                          className={styles.thumbImage}
-                        />
-                      ) : kind === "video" ? (
-                        <FilmStrip size={24} aria-hidden="true" />
-                      ) : kind === "music" ? (
-                        <MusicNote size={24} aria-hidden="true" />
-                      ) : (
-                        <ImageSquare size={24} aria-hidden="true" />
-                      )}
-                    </span>
+                    <MediaThumbnail
+                      creation={creation}
+                      kind={kind}
+                      origin={origin}
+                    />
                     <span className={styles.itemText}>
                       <strong>{creation.title}</strong>
                       <small>{mediaLabel(kind)}</small>
@@ -293,35 +345,10 @@ export function CreationMediaStage({
             <MusicNote size={48} weight="thin" />
           </div>
           <div>
-            <h3>
-              {scope === "project"
-                ? "Your project starts here"
-                : "A place for your media"}
-            </h3>
-            <p>
-              {scope === "project"
-                ? "Create an image, film or track, then attach it to this project below. Recent linked media will appear here."
-                : "Images, films and music you save will appear here."}
-            </p>
+            <h3>A place for your media</h3>
+            <p>Images, films and audio you save will appear here.</p>
           </div>
         </div>
-      )}
-
-      {scope === "project" && (
-        <nav className={styles.actions} aria-label="Media actions">
-          <a href="#project-creations">
-            <ImageSquare size={19} aria-hidden="true" />
-            Attach a creation
-          </a>
-          <Link href="/creations">
-            Browse your creations
-            <ArrowUpRight
-              size={16}
-              className={styles.trailingIcon}
-              aria-hidden="true"
-            />
-          </Link>
-        </nav>
       )}
     </section>
   );

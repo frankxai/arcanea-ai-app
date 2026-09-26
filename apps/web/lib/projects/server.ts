@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { createClient } from "@/lib/supabase/server";
-import type { ProjectWorkspaceEvaluation } from "@/lib/projects/enrichment";
-import { creationMediaUrl } from "@/lib/media/creation-url";
+import { createClient } from '@/lib/supabase/server';
+import type { ProjectWorkspaceEvaluation } from '@/lib/projects/enrichment';
 
 export interface ProjectRecord {
   id: string;
@@ -57,7 +56,7 @@ export interface ProjectGraphSummaryRecord {
   tags: string[];
   facts: string[];
   score: number;
-  checks: ProjectWorkspaceEvaluation["checks"];
+  checks: ProjectWorkspaceEvaluation['checks'];
   updatedAt: string;
 }
 
@@ -82,7 +81,6 @@ export interface ProjectCreationRecord {
   title: string;
   type: string;
   status: string;
-  fileUrl?: string | null;
   thumbnailUrl: string | null;
   createdAt: string;
   sourceSessionId: string | null;
@@ -120,7 +118,7 @@ interface UntypedQueryBuilder extends UntypedQueryResult {
 // column arguments to the generated Database schema and breaking the escape.
 type UntypedServerSupabase = {
   from: (table: string) => UntypedQueryBuilder;
-  auth: ServerSupabase["auth"];
+  auth: ServerSupabase['auth'];
 };
 
 function asUntyped(client: ServerSupabase): UntypedServerSupabase {
@@ -130,42 +128,32 @@ function asUntyped(client: ServerSupabase): UntypedServerSupabase {
 function mapProjectRow(row: Record<string, unknown>): ProjectRecord {
   return {
     id: String(row.id),
-    title: String(row.title ?? "Untitled Project"),
-    description: typeof row.description === "string" ? row.description : null,
-    goal: typeof row.goal === "string" ? row.goal : null,
+    title: String(row.title ?? 'Untitled Project'),
+    description: typeof row.description === 'string' ? row.description : null,
+    goal: typeof row.goal === 'string' ? row.goal : null,
     createdAt: String(row.created_at ?? new Date().toISOString()),
     updatedAt: String(row.updated_at ?? new Date().toISOString()),
   };
 }
 
-function mapGraphSummaryRow(
-  row: Record<string, unknown>,
-): ProjectGraphSummaryRecord {
+function mapGraphSummaryRow(row: Record<string, unknown>): ProjectGraphSummaryRecord {
   return {
-    summary: typeof row.summary === "string" ? row.summary : "",
-    tags: Array.isArray(row.tags)
-      ? row.tags.filter((tag): tag is string => typeof tag === "string")
-      : [],
-    facts: Array.isArray(row.facts)
-      ? row.facts.filter((fact): fact is string => typeof fact === "string")
-      : [],
-    score: typeof row.score === "number" ? row.score : 0,
-    checks: Array.isArray(row.checks)
-      ? (row.checks as ProjectWorkspaceEvaluation["checks"])
-      : [],
+    summary: typeof row.summary === 'string' ? row.summary : '',
+    tags: Array.isArray(row.tags) ? row.tags.filter((tag): tag is string => typeof tag === 'string') : [],
+    facts: Array.isArray(row.facts) ? row.facts.filter((fact): fact is string => typeof fact === 'string') : [],
+    score: typeof row.score === 'number' ? row.score : 0,
+    checks: Array.isArray(row.checks) ? row.checks as ProjectWorkspaceEvaluation['checks'] : [],
     updatedAt: String(row.updated_at ?? new Date().toISOString()),
   };
 }
 
-function mapProjectActivityRow(
-  row: Record<string, unknown>,
-): ProjectActivityRecord {
+function mapProjectActivityRow(row: Record<string, unknown>): ProjectActivityRecord {
   return {
     id: String(row.id),
-    action: String(row.action ?? "project_updated"),
+    action: String(row.action ?? 'project_updated'),
     createdAt: String(row.created_at ?? new Date().toISOString()),
     metadata:
-      row.metadata && typeof row.metadata === "object"
+      row.metadata && typeof row.metadata === 'object'
         ? (row.metadata as Record<string, unknown>)
         : null,
   };
@@ -174,56 +162,45 @@ function mapProjectActivityRow(
 function mapSessionRow(row: Record<string, unknown>): ProjectSessionRecord {
   return {
     id: String(row.id),
-    title: typeof row.title === "string" ? row.title : null,
+    title: typeof row.title === 'string' ? row.title : null,
     updatedAt: String(row.updated_at ?? new Date().toISOString()),
-    luminorId: typeof row.luminor_id === "string" ? row.luminor_id : null,
-    modelId: typeof row.model_id === "string" ? row.model_id : null,
-    projectId: typeof row.project_id === "string" ? row.project_id : null,
+    luminorId: typeof row.luminor_id === 'string' ? row.luminor_id : null,
+    modelId: typeof row.model_id === 'string' ? row.model_id : null,
+    projectId: typeof row.project_id === 'string' ? row.project_id : null,
   };
 }
 
 function mapCreationRow(row: Record<string, unknown>): ProjectCreationRecord {
   return {
     id: String(row.id),
-    title: String(row.title ?? "Untitled Creation"),
-    type: String(row.type ?? "mixed"),
-    status: String(row.status ?? "draft"),
-    fileUrl: creationMediaUrl(row.content, String(row.type ?? "mixed")),
-    thumbnailUrl:
-      typeof row.thumbnail_url === "string" ? row.thumbnail_url : null,
+    title: String(row.title ?? 'Untitled Creation'),
+    type: String(row.type ?? 'mixed'),
+    status: String(row.status ?? 'draft'),
+    thumbnailUrl: typeof row.thumbnail_url === 'string' ? row.thumbnail_url : null,
     createdAt: String(row.created_at ?? new Date().toISOString()),
-    sourceSessionId:
-      typeof row.source_session_id === "string" ? row.source_session_id : null,
-    projectId: typeof row.project_id === "string" ? row.project_id : null,
+    sourceSessionId: typeof row.source_session_id === 'string' ? row.source_session_id : null,
+    projectId: typeof row.project_id === 'string' ? row.project_id : null,
   };
 }
 
 function mapDocRow(
   row: Record<string, unknown> & {
-    project_doc_content?: Array<{
-      content_text?: string | null;
-      word_count?: number | null;
-    }>;
+    project_doc_content?: Array<{ content_text?: string | null; word_count?: number | null }>;
   },
 ): ProjectDocRecord {
-  const content = Array.isArray(row.project_doc_content)
-    ? row.project_doc_content[0]
-    : null;
+  const content = Array.isArray(row.project_doc_content) ? row.project_doc_content[0] : null;
   const excerpt =
-    typeof content?.content_text === "string" &&
-    content.content_text.trim().length > 0
+    typeof content?.content_text === 'string' && content.content_text.trim().length > 0
       ? content.content_text.trim().slice(0, 220)
       : null;
 
   return {
     id: String(row.id),
-    title: String(row.title ?? "Untitled Doc"),
-    docType: String(row.doc_type ?? "note"),
-    status: String(row.status ?? "draft"),
-    updatedAt: String(
-      row.updated_at ?? row.last_edited_at ?? new Date().toISOString(),
-    ),
-    wordCount: typeof content?.word_count === "number" ? content.word_count : 0,
+    title: String(row.title ?? 'Untitled Doc'),
+    docType: String(row.doc_type ?? 'note'),
+    status: String(row.status ?? 'draft'),
+    updatedAt: String(row.updated_at ?? row.last_edited_at ?? new Date().toISOString()),
+    wordCount: typeof content?.word_count === 'number' ? content.word_count : 0,
     excerpt,
   };
 }
@@ -243,10 +220,10 @@ export async function listProjectsForCurrentUser(): Promise<ProjectRecord[]> {
   if (!user) return [];
 
   const { data, error } = await db
-    .from("chat_projects")
-    .select("id, title, description, goal, created_at, updated_at")
-    .eq("user_id", user.id)
-    .order("updated_at", { ascending: false });
+    .from('chat_projects')
+    .select('id, title, description, goal, created_at, updated_at')
+    .eq('user_id', user.id)
+    .order('updated_at', { ascending: false });
 
   if (error || !data) return [];
 
@@ -263,7 +240,7 @@ export async function createProjectForCurrentUser(input: {
 
   const now = new Date().toISOString();
   const { data, error } = await db
-    .from("chat_projects")
+    .from('chat_projects')
     .insert({
       user_id: user.id,
       title: input.title,
@@ -272,7 +249,7 @@ export async function createProjectForCurrentUser(input: {
       created_at: now,
       updated_at: now,
     })
-    .select("id, title, description, goal, created_at, updated_at")
+    .select('id, title, description, goal, created_at, updated_at')
     .single();
 
   if (error || !data) return null;
@@ -280,17 +257,15 @@ export async function createProjectForCurrentUser(input: {
   return mapProjectRow(data as Record<string, unknown>);
 }
 
-export async function getProjectForCurrentUser(
-  projectId: string,
-): Promise<ProjectRecord | null> {
+export async function getProjectForCurrentUser(projectId: string): Promise<ProjectRecord | null> {
   const { db, user } = await getProjectAuthContext();
   if (!user) return null;
 
   const { data, error } = await db
-    .from("chat_projects")
-    .select("id, title, description, goal, created_at, updated_at")
-    .eq("id", projectId)
-    .eq("user_id", user.id)
+    .from('chat_projects')
+    .select('id, title, description, goal, created_at, updated_at')
+    .eq('id', projectId)
+    .eq('user_id', user.id)
     .single();
 
   if (error || !data) return null;
@@ -313,11 +288,11 @@ export async function updateProjectForCurrentUser(
   if (patch.goal !== undefined) payload.goal = patch.goal;
 
   const { data, error } = await db
-    .from("chat_projects")
+    .from('chat_projects')
     .update(payload)
-    .eq("id", projectId)
-    .eq("user_id", user.id)
-    .select("id, title, description, goal, created_at, updated_at")
+    .eq('id', projectId)
+    .eq('user_id', user.id)
+    .select('id, title, description, goal, created_at, updated_at')
     .single();
 
   if (error || !data) return null;
@@ -325,17 +300,15 @@ export async function updateProjectForCurrentUser(
   return mapProjectRow(data as Record<string, unknown>);
 }
 
-export async function deleteProjectForCurrentUser(
-  projectId: string,
-): Promise<boolean> {
+export async function deleteProjectForCurrentUser(projectId: string): Promise<boolean> {
   const { db, user } = await getProjectAuthContext();
   if (!user) return false;
 
   const { error } = await db
-    .from("chat_projects")
+    .from('chat_projects')
     .delete()
-    .eq("id", projectId)
-    .eq("user_id", user.id);
+    .eq('id', projectId)
+    .eq('user_id', user.id);
 
   return !error;
 }
@@ -347,98 +320,75 @@ export async function getProjectWorkspaceForCurrentUser(
   if (!user) return null;
 
   const { data: projectRow, error: projectError } = await db
-    .from("chat_projects")
-    .select("id, title, description, goal, created_at, updated_at")
-    .eq("id", projectId)
-    .eq("user_id", user.id)
+    .from('chat_projects')
+    .select('id, title, description, goal, created_at, updated_at')
+    .eq('id', projectId)
+    .eq('user_id', user.id)
     .single();
 
   if (projectError || !projectRow) return null;
 
-  const [sessionsRes, creationsRes, docsRes, memoryLinksRes] =
-    await Promise.all([
-      db
-        .from("chat_sessions")
-        .select("id, title, updated_at, luminor_id, model_id")
-        .eq("user_id", user.id)
-        .eq("project_id", projectId)
-        .order("updated_at", { ascending: false })
-        .limit(12),
-      db
-        .from("creations")
-        .select(
-          "id, title, type, status, thumbnail_url, created_at, source_session_id",
-        )
-        .eq("user_id", user.id)
-        .eq("project_id", projectId)
-        .order("created_at", { ascending: false })
-        .limit(12),
-      db
-        .from("project_docs")
-        .select(
-          `
+  const [sessionsRes, creationsRes, docsRes, memoryLinksRes] = await Promise.all([
+    db
+      .from('chat_sessions')
+      .select('id, title, updated_at, luminor_id, model_id')
+      .eq('user_id', user.id)
+      .eq('project_id', projectId)
+      .order('updated_at', { ascending: false })
+      .limit(12),
+    db
+      .from('creations')
+      .select('id, title, type, status, thumbnail_url, created_at, source_session_id')
+      .eq('user_id', user.id)
+      .eq('project_id', projectId)
+      .order('created_at', { ascending: false })
+      .limit(12),
+    db
+      .from('project_docs')
+      .select(`
         id, title, doc_type, status, updated_at, last_edited_at,
         project_doc_content ( content_text, word_count )
-      `,
-        )
-        .eq("user_id", user.id)
-        .eq("project_id", projectId)
-        .order("last_edited_at", { ascending: false })
-        .limit(12),
-      db
-        .from("project_memory_links")
-        .select("memory_id, created_at")
-        .eq("user_id", user.id)
-        .eq("project_id", projectId)
-        .order("created_at", { ascending: false })
-        .limit(24),
-    ]);
+      `)
+      .eq('user_id', user.id)
+      .eq('project_id', projectId)
+      .order('last_edited_at', { ascending: false })
+      .limit(12),
+    db
+      .from('project_memory_links')
+      .select('memory_id, created_at')
+      .eq('user_id', user.id)
+      .eq('project_id', projectId)
+      .order('created_at', { ascending: false })
+      .limit(24),
+  ]);
 
-  const linkedMemoryIds = (
-    (memoryLinksRes.data as Array<{ memory_id: string }> | null) ?? []
-  )
+  const linkedMemoryIds = ((memoryLinksRes.data as Array<{ memory_id: string }> | null) ?? [])
     .map((row) => row.memory_id)
     .filter(Boolean);
 
-  const memoriesRes =
-    linkedMemoryIds.length > 0
-      ? await db
-          .from("user_memories")
-          .select("id, content, created_at")
-          .in("id", linkedMemoryIds)
-          .limit(12)
-      : {
-          data: [] as Array<{
-            id: string;
-            content: string;
-            created_at: string | null;
-          }>,
-        };
+  const memoriesRes = linkedMemoryIds.length > 0
+    ? await db
+        .from('user_memories')
+        .select('id, content, created_at')
+        .in('id', linkedMemoryIds)
+        .limit(12)
+    : { data: [] as Array<{ id: string; content: string; created_at: string | null }> };
 
-  const sessions = (
-    (sessionsRes.data as Array<Record<string, unknown>> | null) ?? []
-  ).map(mapSessionRow);
+  const sessions = ((sessionsRes.data as Array<Record<string, unknown>> | null) ?? []).map(mapSessionRow);
 
-  const creations = (
-    (creationsRes.data as Array<Record<string, unknown>> | null) ?? []
-  ).map(mapCreationRow);
+  const creations = ((creationsRes.data as Array<Record<string, unknown>> | null) ?? []).map(mapCreationRow);
   const docs = (
     (docsRes.data as Array<
       Record<string, unknown> & {
-        project_doc_content?: Array<{
-          content_text?: string | null;
-          word_count?: number | null;
-        }>;
+        project_doc_content?: Array<{ content_text?: string | null; word_count?: number | null }>;
       }
     > | null) ?? []
   ).map(mapDocRow);
 
-  const memories = (
-    (memoriesRes.data as Array<Record<string, unknown>> | null) ?? []
-  ).map((row) => ({
+  const memories = ((memoriesRes.data as Array<Record<string, unknown>> | null) ?? []).map((row) => ({
     id: String(row.id),
-    content: String(row.content ?? ""),
-    createdAt: typeof row.created_at === "string" ? row.created_at : null,
+    content: String(row.content ?? ''),
+    createdAt: typeof row.created_at === 'string' ? row.created_at : null,
   }));
 
   return {
@@ -456,28 +406,6 @@ export async function getProjectWorkspaceForCurrentUser(
   };
 }
 
-export async function listProjectMediaCreationsForCurrentUser(
-  projectId: string,
-  limit = 18,
-): Promise<ProjectCreationRecord[]> {
-  const { db, user } = await getProjectAuthContext();
-  if (!user) return [];
-
-  const { data, error } = await db
-    .from("creations")
-    .select(
-      "id, title, type, status, content, thumbnail_url, created_at, source_session_id",
-    )
-    .eq("user_id", user.id)
-    .eq("project_id", projectId)
-    .in("type", ["image", "video", "music", "audio"])
-    .order("created_at", { ascending: false })
-    .limit(limit);
-
-  if (error || !data) return [];
-  return (data as Array<Record<string, unknown>>).map(mapCreationRow);
-}
-
 export async function getProjectGraphSummaryForCurrentUser(
   projectId: string,
 ): Promise<ProjectGraphSummaryRecord | null> {
@@ -486,10 +414,10 @@ export async function getProjectGraphSummaryForCurrentUser(
 
   try {
     const { data, error } = await db
-      .from("project_graph_summaries")
-      .select("summary, tags, facts, score, checks, updated_at")
-      .eq("project_id", projectId)
-      .eq("user_id", user.id)
+      .from('project_graph_summaries')
+      .select('summary, tags, facts, score, checks, updated_at')
+      .eq('project_id', projectId)
+      .eq('user_id', user.id)
       .single();
 
     if (error || !data) return null;
@@ -509,12 +437,12 @@ export async function listProjectActivityForCurrentUser(
 
   try {
     const { data, error } = await db
-      .from("activity_log")
-      .select("id, action, metadata, created_at")
-      .eq("user_id", user.id)
-      .eq("entity_type", "project")
-      .eq("entity_id", projectId)
-      .order("created_at", { ascending: false })
+      .from('activity_log')
+      .select('id, action, metadata, created_at')
+      .eq('user_id', user.id)
+      .eq('entity_type', 'project')
+      .eq('entity_id', projectId)
+      .order('created_at', { ascending: false })
       .limit(limit);
 
     if (error || !data) return [];
@@ -534,11 +462,11 @@ export async function listProjectCandidateSessionsForCurrentUser(
 
   try {
     const { data, error } = await db
-      .from("chat_sessions")
-      .select("id, title, updated_at, luminor_id, model_id, project_id")
-      .eq("user_id", user.id)
+      .from('chat_sessions')
+      .select('id, title, updated_at, luminor_id, model_id, project_id')
+      .eq('user_id', user.id)
       .or(`project_id.is.null,project_id.neq.${projectId}`)
-      .order("updated_at", { ascending: false })
+      .order('updated_at', { ascending: false })
       .limit(limit);
 
     if (error || !data) return [];
@@ -558,13 +486,11 @@ export async function listProjectCandidateCreationsForCurrentUser(
 
   try {
     const { data, error } = await db
-      .from("creations")
-      .select(
-        "id, title, type, status, thumbnail_url, created_at, source_session_id, project_id",
-      )
-      .eq("user_id", user.id)
+      .from('creations')
+      .select('id, title, type, status, thumbnail_url, created_at, source_session_id, project_id')
+      .eq('user_id', user.id)
       .or(`project_id.is.null,project_id.neq.${projectId}`)
-      .order("created_at", { ascending: false })
+      .order('created_at', { ascending: false })
       .limit(limit);
 
     if (error || !data) return [];
@@ -583,14 +509,14 @@ export async function assignSessionToProjectForCurrentUser(
   if (!user) return null;
 
   const { data, error } = await db
-    .from("chat_sessions")
+    .from('chat_sessions')
     .update({
       project_id: projectId,
       updated_at: new Date().toISOString(),
     } as any)
-    .eq("id", sessionId)
-    .eq("user_id", user.id)
-    .select("id, title, updated_at, luminor_id, model_id, project_id")
+    .eq('id', sessionId)
+    .eq('user_id', user.id)
+    .select('id, title, updated_at, luminor_id, model_id, project_id')
     .single();
 
   if (error || !data) return null;
@@ -605,14 +531,14 @@ export async function detachSessionFromProjectForCurrentUser(
   if (!user) return false;
 
   const { error } = await db
-    .from("chat_sessions")
+    .from('chat_sessions')
     .update({
       project_id: null,
       updated_at: new Date().toISOString(),
     } as any)
-    .eq("id", sessionId)
-    .eq("user_id", user.id)
-    .eq("project_id", projectId);
+    .eq('id', sessionId)
+    .eq('user_id', user.id)
+    .eq('project_id', projectId);
 
   return !error;
 }
@@ -633,13 +559,11 @@ export async function assignCreationToProjectForCurrentUser(
   }
 
   const { data, error } = await db
-    .from("creations")
+    .from('creations')
     .update(payload)
-    .eq("id", creationId)
-    .eq("user_id", user.id)
-    .select(
-      "id, title, type, status, thumbnail_url, created_at, source_session_id, project_id",
-    )
+    .eq('id', creationId)
+    .eq('user_id', user.id)
+    .select('id, title, type, status, thumbnail_url, created_at, source_session_id, project_id')
     .single();
 
   if (error || !data) return null;
@@ -654,13 +578,13 @@ export async function detachCreationFromProjectForCurrentUser(
   if (!user) return false;
 
   const { error } = await db
-    .from("creations")
+    .from('creations')
     .update({
       project_id: null,
     } as any)
-    .eq("id", creationId)
-    .eq("user_id", user.id)
-    .eq("project_id", projectId);
+    .eq('id', creationId)
+    .eq('user_id', user.id)
+    .eq('project_id', projectId);
 
   return !error;
 }
