@@ -2,8 +2,10 @@ packages:
   - apps/*
   - packages/*
 
+# pnpm 8 reads package.json pnpm.overrides and ignores this block; pnpm 10+ reads
+# this block. Keep the two in step, or a pnpm upgrade silently changes versions.
 overrides:
-  next: 16.2.12
+  next: 16.3.5
   '@types/react': ^19.0.0
   '@types/react-dom': ^19.0.0
   eslint: 9.39.4
