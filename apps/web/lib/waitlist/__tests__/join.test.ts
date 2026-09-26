@@ -48,6 +48,11 @@ test("invalid emails are rejected before any write", async () => {
     "invalid",
     "a@b",
     "@example.com",
+    "a@@b.co",
+    "a@b@c.co",
+    "a@.co",
+    "a@b.",
+    "a b@c.co",
     `${"a".repeat(320)}@x.io`,
   ]) {
     const result = await joinWaitlist(email, counting);
@@ -55,4 +60,11 @@ test("invalid emails are rejected before any write", async () => {
   }
   assert.equal(writes, 0);
   assert.equal((await joinWaitlist("a@b.co", ok)).status, 200);
+});
+
+test("hostile input is refused quickly", async () => {
+  const started = performance.now();
+  const result = await joinWaitlist(`!@!${"!.".repeat(50_000)}`, ok);
+  assert.equal(result.status, 400);
+  assert.ok(performance.now() - started < 50);
 });

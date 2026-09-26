@@ -28,6 +28,9 @@ ALTER TABLE public.waitlists ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.subscribers ENABLE ROW LEVEL SECURITY;
 
 -- Visitors may join; nobody but the service role may read either list.
+-- Drops first so the file can be re-run safely in the SQL editor.
+DROP POLICY IF EXISTS "Public can join the waitlist" ON public.waitlists;
+DROP POLICY IF EXISTS "Public can subscribe" ON public.subscribers;
 CREATE POLICY "Public can join the waitlist" ON public.waitlists
   FOR INSERT TO anon, authenticated WITH CHECK (true);
 CREATE POLICY "Public can subscribe" ON public.subscribers

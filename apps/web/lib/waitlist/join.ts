@@ -8,7 +8,16 @@ export type JoinResult =
   | { status: 400 | 503; body: { success: false; error: string } };
 
 const UNIQUE_VIOLATION = "23505";
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Linear checks rather than a regex: user input must not drive backtracking (CodeQL js/polynomial-redos).
+function isPlausibleEmail(email: string): boolean {
+  if (email.length > 320 || /\s/.test(email)) return false;
+  const at = email.indexOf("@");
+  if (at < 1 || at !== email.lastIndexOf("@")) return false;
+  const domain = email.slice(at + 1);
+  const dot = domain.lastIndexOf(".");
+  return dot > 0 && dot < domain.length - 1;
+}
 
 export async function joinWaitlist(
   rawEmail: unknown,
@@ -18,7 +27,7 @@ export async function joinWaitlist(
 ): Promise<JoinResult> {
   const email =
     typeof rawEmail === "string" ? rawEmail.trim().toLowerCase() : "";
-  if (!EMAIL.test(email) || email.length > 320) {
+  if (!isPlausibleEmail(email)) {
     return {
       status: 400,
       body: { success: false, error: "Please enter a valid email address." },
