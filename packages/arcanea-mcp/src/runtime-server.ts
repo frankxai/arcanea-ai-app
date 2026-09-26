@@ -1,5 +1,5 @@
 import { createServer, type ServerOptions } from "./index.js";
-import { gateTools, resolveToolsets } from "./toolsets.js";
+import { catalogServer, resolveToolsets } from "./toolsets.js";
 
 import {
   searchSovereignDepths,
@@ -12,10 +12,10 @@ import {
 
 export function createRuntimeServer(options: ServerOptions = {}) {
   const server = createServer(options);
-  const target =
-    options.toolsets === undefined
-      ? server
-      : gateTools(server, resolveToolsets(options.toolsets));
+  const target = catalogServer(
+    server,
+    options.toolsets === undefined ? null : resolveToolsets(options.toolsets),
+  );
 
   target.registerTool(
     "search_sovereign_depths",

@@ -4,7 +4,12 @@ import test from "node:test";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import { PROMPT_TOOLS, TOOLSETS, resolveToolsets } from "../dist/toolsets.js";
+import {
+  PROMPT_TOOLS,
+  TOOL_CATALOG,
+  TOOLSETS,
+  resolveToolsets,
+} from "../dist/toolsets.js";
 import { createServer } from "../dist/index.js";
 import { createRuntimeServer } from "../dist/runtime-server.js";
 import { parseCliOptions } from "../dist/cli-options.js";
@@ -93,6 +98,63 @@ test("PROMPT_TOOLS declares every tool each prompt mentions (keeps the map in sy
       name,
     );
   }
+});
+
+test("every tool carries a title and complete safety annotations, on every server", async () => {
+  const [serverSide, clientSide] = InMemoryTransport.createLinkedPair();
+  const client = new Client({ name: "annotations-test", version: "0.0.0" });
+  await Promise.all([
+    createRuntimeServer().connect(serverSide),
+    client.connect(clientSide),
+  ]);
+  const { tools } = await client.listTools();
+  await client.close();
+  assert.equal(tools.length, everyGroupedTool.length);
+  for (const tool of tools) {
+    const hints = tool.annotations ?? {};
+    assert.ok(tool.title, `${tool.name} title`);
+    assert.equal(
+      typeof hints.readOnlyHint,
+      "boolean",
+      `${tool.name} readOnlyHint`,
+    );
+    assert.equal(
+      typeof hints.openWorldHint,
+      "boolean",
+      `${tool.name} openWorldHint`,
+    );
+    if (!hints.readOnlyHint) {
+      assert.equal(
+        typeof hints.destructiveHint,
+        "boolean",
+        `${tool.name} destructiveHint`,
+      );
+      assert.equal(
+        typeof hints.idempotentHint,
+        "boolean",
+        `${tool.name} idempotentHint`,
+      );
+    }
+  }
+  const byName = Object.fromEntries(tools.map((tool) => [tool.name, tool]));
+  assert.equal(byName.generate_character.title, "Generate character");
+  assert.equal(
+    byName.save_world.annotations.readOnlyHint,
+    false,
+    "save_world writes to disk",
+  );
+  assert.equal(
+    byName.search_sovereign_depths.annotations.openWorldHint,
+    true,
+    "module-set hints win",
+  );
+});
+
+test("TOOL_CATALOG covers exactly the grouped tools", () => {
+  assert.deepEqual(
+    Object.keys(TOOL_CATALOG).sort(),
+    [...everyGroupedTool].sort(),
+  );
 });
 
 test("all: every served tool has a group and every grouped tool is served", async () => {
