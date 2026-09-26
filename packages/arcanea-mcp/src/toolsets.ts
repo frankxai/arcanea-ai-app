@@ -79,28 +79,45 @@ export const TOOLSETS = {
 export type ToolsetName = keyof typeof TOOLSETS;
 const TOOLSET_NAMES = Object.keys(TOOLSETS) as ToolsetName[];
 
+/**
+ * Tools each prompt tells the agent to call. A prompt loads only when all of them are
+ * enabled, so a session never receives instructions for tools it cannot see.
+ */
+export const PROMPT_TOOLS: Readonly<Record<string, readonly string[]>> = {
+  worldbuild_session: [
+    "generate_character",
+    "generate_location",
+    "generate_magic",
+    "generate_creature",
+    "generate_artifact",
+  ],
+  unblock_session: ["diagnose_block"],
+  gate_ritual: ["identify_gate"],
+};
+
 /** "core,world" | "all" | undefined or blank (= core) -> enabled tool names. */
 export function resolveToolsets(spec: string | undefined): Set<string> {
-  const requested = (spec?.trim() || "core")
-    .split(",")
-    .map((part) => part.trim())
-    .filter(Boolean);
-  const groups = requested.includes("all") ? TOOLSET_NAMES : requested;
-  const enabled = new Set<string>();
-  for (const group of groups) {
-    if (!(group in TOOLSETS)) {
+  const trimmed = spec?.trim();
+  const requested = (trimmed || "core").split(",").map((part) => part.trim());
+  if (requested.some((part) => !part)) {
+    throw new Error(`Empty toolset name in "${spec}".`);
+  }
+  for (const group of requested) {
+    if (group !== "all" && !(group in TOOLSETS)) {
       throw new Error(
         `Unknown toolset "${group}". Available: ${TOOLSET_NAMES.join(", ")}, all.`,
       );
     }
-    for (const tool of TOOLSETS[group as ToolsetName]) enabled.add(tool);
   }
-  return enabled;
+  const groups = requested.includes("all")
+    ? TOOLSET_NAMES
+    : (requested as ToolsetName[]);
+  return new Set(groups.flatMap((group) => [...TOOLSETS[group]]));
 }
 
 /**
- * Registration modules keep calling server.registerTool(name, ...); the proxy drops the
- * names that are not enabled, so no module needs to know about toolsets.
+ * Registration modules keep calling server.registerTool / registerPrompt; the proxy drops
+ * disabled tools and the prompts that depend on them, so no module knows about toolsets.
  */
 export function gateTools(server: McpServer, enabled: Set<string>): McpServer {
   return new Proxy(server, {
@@ -109,6 +126,15 @@ export function gateTools(server: McpServer, enabled: Set<string>): McpServer {
         return (name: string, ...rest: unknown[]) =>
           enabled.has(name)
             ? (target.registerTool as (...args: unknown[]) => unknown)(
+                name,
+                ...rest,
+              )
+            : undefined;
+      }
+      if (property === "registerPrompt") {
+        return (name: string, ...rest: unknown[]) =>
+          (PROMPT_TOOLS[name] ?? []).every((tool) => enabled.has(tool))
+            ? (target.registerPrompt as (...args: unknown[]) => unknown)(
                 name,
                 ...rest,
               )

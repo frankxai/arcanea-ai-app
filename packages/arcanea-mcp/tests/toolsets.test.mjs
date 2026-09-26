@@ -4,7 +4,7 @@ import test from "node:test";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import { TOOLSETS, resolveToolsets } from "../dist/toolsets.js";
+import { PROMPT_TOOLS, TOOLSETS, resolveToolsets } from "../dist/toolsets.js";
 import { createServer } from "../dist/index.js";
 import { createRuntimeServer } from "../dist/runtime-server.js";
 import { parseCliOptions } from "../dist/cli-options.js";
@@ -46,6 +46,53 @@ test("resolveToolsets: default core, lists, all, unknown", () => {
     () => resolveToolsets("core,nope"),
     /Unknown toolset "nope"\. Available: core, world/,
   );
+});
+
+test("resolveToolsets rejects empty entries and unknown names, even next to all", () => {
+  assert.throws(() => resolveToolsets(","), /Empty toolset name/);
+  assert.throws(() => resolveToolsets("core,,world"), /Empty toolset name/);
+  assert.throws(() => resolveToolsets("all,nope"), /Unknown toolset "nope"/);
+});
+
+test("a prompt loads only when every tool it tells the agent to use is enabled", async () => {
+  async function prompts(toolsets) {
+    const [serverSide, clientSide] = InMemoryTransport.createLinkedPair();
+    const client = new Client({ name: "prompts-test", version: "0.0.0" });
+    await Promise.all([
+      createRuntimeServer({ toolsets }).connect(serverSide),
+      client.connect(clientSide),
+    ]);
+    const { prompts: list } = await client.listPrompts();
+    await client.close();
+    return list.map((prompt) => prompt.name);
+  }
+  const core = await prompts("core");
+  assert.ok(core.includes("gate_ritual"));
+  assert.ok(!core.includes("worldbuild_session"));
+  assert.ok(!core.includes("unblock_session"));
+  const all = await prompts("all");
+  for (const name of ["worldbuild_session", "unblock_session", "gate_ritual"])
+    assert.ok(all.includes(name), name);
+});
+
+test("PROMPT_TOOLS declares every tool each prompt mentions (keeps the map in sync)", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(
+    new URL("../src/registrations/references.ts", import.meta.url),
+    "utf8",
+  );
+  const blocks = source.split("registerPrompt(").slice(1);
+  for (const block of blocks) {
+    const name = /^\s*"([a-z_]+)"/.exec(block)[1];
+    const mentioned = everyGroupedTool.filter((tool) =>
+      new RegExp(`\\b${tool}\\b`).test(block),
+    );
+    assert.deepEqual(
+      [...(PROMPT_TOOLS[name] ?? [])].sort(),
+      mentioned.sort(),
+      name,
+    );
+  }
 });
 
 test("all: every served tool has a group and every grouped tool is served", async () => {
