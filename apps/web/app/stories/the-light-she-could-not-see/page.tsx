@@ -150,7 +150,7 @@ export default function HorsewomanStory() {
           <div className={styles.intro}>
             <p className={styles.smallLabel}>Part I · The first crossing</p>
             <p>
-              Miralumbre's rain terraces. A moving mountain passage. A woman
+              Miralumbre’s rain terraces. A moving mountain passage. A woman
               learning the limits of her sight, and a horse who makes her wait.
             </p>
           </div>
