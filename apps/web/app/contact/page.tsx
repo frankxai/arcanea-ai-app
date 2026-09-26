@@ -197,7 +197,7 @@ const FAQS: FaqItem[] = [
   {
     question: "Is Arcanea free to use?",
     answer:
-      "Yes. The Spark plan is free and includes 3 companions, Library browsing, and Academy access. Creator ($19/mo) and Studio ($49/mo) plans unlock all 16 companions and full creation tools.",
+      "Yes. The free plan includes chat, Library browsing, and Academy access. Paid tiers are waitlist-only for now; the Pricing page shows what is live.",
   },
   {
     question: "Can I build on Arcanea?",
@@ -210,8 +210,6 @@ const FAQS: FaqItem[] = [
       "The Academy has a progression system from Apprentice to Luminor. Advance by creating, learning, and demonstrating mastery across domains. Progress is earned through work, not purchases.",
   },
 ];
-
-
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 export default function ContactPage() {
@@ -237,250 +235,248 @@ export default function ContactPage() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            {/* Hero Section */}
-            <section className="mb-16">
-              <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-12 sm:px-12 sm:py-16">
-                <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/12 via-transparent to-crystal/10 pointer-events-none" />
-                <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/8 rounded-full blur-3xl pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-80 h-80 bg-crystal/6 rounded-full blur-3xl pointer-events-none" />
+        {/* Hero Section */}
+        <section className="mb-16">
+          <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-12 sm:px-12 sm:py-16">
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/12 via-transparent to-crystal/10 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/8 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-crystal/6 rounded-full blur-3xl pointer-events-none" />
 
-                <div className="relative max-w-3xl">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-primary/30 bg-brand-primary/10 mb-6">
-                    <Icons.MessageCircle />
-                    <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
-                      Get in Touch
-                    </span>
-                  </div>
-
-                  <h1 className="text-fluid-3xl font-display font-bold mb-4">
-                    Contact
-                    {" "}<span className="block text-gradient-brand">Arcanea</span>
-                  </h1>
-
-                  <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
-                    Have questions, feedback, or just want to say hello? The
-                    Arcanea team is always listening. Reach out through any
-                    channel that suits you.
-                  </p>
-
-                  <div className="flex flex-wrap gap-4">
-                    <Link
-                      href="#contact-form"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
-                    >
-                      Send a Message
-                      <Icons.ArrowRight />
-                    </Link>
-                    <Link
-                      href="/community"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
-                    >
-                      Join Community
-                      <Icons.ChevronRight />
-                    </Link>
-                  </div>
-                </div>
+            <div className="relative max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-primary/30 bg-brand-primary/10 mb-6">
+                <Icons.MessageCircle />
+                <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
+                  Get in Touch
+                </span>
               </div>
-            </section>
 
-            {/* Contact Methods */}
-            <section className="mb-16" aria-labelledby="contact-heading">
-              <div className="mb-8">
-                <h2
-                  id="contact-heading"
-                  className="text-xs font-mono tracking-[0.35em] uppercase text-crystal mb-2"
+              <h1 className="text-fluid-3xl font-display font-bold mb-4">
+                Contact{" "}
+                <span className="block text-gradient-brand">Arcanea</span>
+              </h1>
+
+              <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
+                Have questions, feedback, or just want to say hello? The Arcanea
+                team is always listening. Reach out through any channel that
+                suits you.
+              </p>
+
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href="#contact-form"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                 >
-                  Ways to Connect
-                </h2>
-                <h3 className="text-fluid-2xl font-display font-bold">
-                  Find Your Channel
-                </h3>
-              </div>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {CONTACT_METHODS.map((method) => {
-                  const MethodIcon = Icons[method.icon];
-                  return (
-                    <a
-                      key={method.title}
-                      href={method.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all"
-                    >
-                      <div
-                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
-                        style={{
-                          background: `radial-gradient(ellipse at 30% 30%, ${method.color}15, transparent 65%)`,
-                        }}
-                      />
-
-                      <div className="relative">
-                        <div
-                          className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                          style={{ backgroundColor: `${method.color}18` }}
-                        >
-                          <MethodIcon />
-                        </div>
-
-                        <h4
-                          className="font-display text-xl font-semibold text-text-primary mb-2 group-hover:text-crystal transition-colors"
-                          style={{ color: method.color }}
-                        >
-                          {method.title}
-                        </h4>
-
-                        <p className="text-text-secondary text-sm leading-relaxed font-sans">
-                          {method.description}
-                        </p>
-                      </div>
-                    </a>
-                  );
-                })}
-              </div>
-            </section>
-
-            {/* Contact Form */}
-            <section id="contact-form" className="mb-16">
-              <div className="liquid-glass rounded-2xl p-8">
-                <h2 className="font-display text-2xl font-semibold text-text-primary mb-6 text-center">
                   Send a Message
-                </h2>
+                  <Icons.ArrowRight />
+                </Link>
+                <Link
+                  href="/community"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                >
+                  Join Community
+                  <Icons.ChevronRight />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
 
-                {formSubmitted ? (
-                  <div className="text-center py-12">
-                    <div className="w-16 h-16 rounded-full bg-crystal/20 flex items-center justify-center mx-auto mb-4">
-                      <Icons.Check className="w-8 h-8 text-crystal" />
+        {/* Contact Methods */}
+        <section className="mb-16" aria-labelledby="contact-heading">
+          <div className="mb-8">
+            <h2
+              id="contact-heading"
+              className="text-xs font-mono tracking-[0.35em] uppercase text-crystal mb-2"
+            >
+              Ways to Connect
+            </h2>
+            <h3 className="text-fluid-2xl font-display font-bold">
+              Find Your Channel
+            </h3>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {CONTACT_METHODS.map((method) => {
+              const MethodIcon = Icons[method.icon];
+              return (
+                <a
+                  key={method.title}
+                  href={method.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all"
+                >
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
+                    style={{
+                      background: `radial-gradient(ellipse at 30% 30%, ${method.color}15, transparent 65%)`,
+                    }}
+                  />
+
+                  <div className="relative">
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                      style={{ backgroundColor: `${method.color}18` }}
+                    >
+                      <MethodIcon />
                     </div>
-                    <h3 className="font-display text-xl font-semibold text-text-primary mb-2">
-                      Message Sent
-                    </h3>
-                    <p className="text-text-secondary">
-                      Thank you for reaching out. We'll respond as soon as
-                      possible.
+
+                    <h4
+                      className="font-display text-xl font-semibold text-text-primary mb-2 group-hover:text-crystal transition-colors"
+                      style={{ color: method.color }}
+                    >
+                      {method.title}
+                    </h4>
+
+                    <p className="text-text-secondary text-sm leading-relaxed font-sans">
+                      {method.description}
                     </p>
                   </div>
-                ) : (
-                  <form
-                    onSubmit={handleSubmit}
-                    className="max-w-xl mx-auto space-y-6"
+                </a>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Contact Form */}
+        <section id="contact-form" className="mb-16">
+          <div className="liquid-glass rounded-2xl p-8">
+            <h2 className="font-display text-2xl font-semibold text-text-primary mb-6 text-center">
+              Send a Message
+            </h2>
+
+            {formSubmitted ? (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 rounded-full bg-crystal/20 flex items-center justify-center mx-auto mb-4">
+                  <Icons.Check className="w-8 h-8 text-crystal" />
+                </div>
+                <h3 className="font-display text-xl font-semibold text-text-primary mb-2">
+                  Message Sent
+                </h3>
+                <p className="text-text-secondary">
+                  Thank you for reaching out. We'll respond as soon as possible.
+                </p>
+              </div>
+            ) : (
+              <form
+                onSubmit={handleSubmit}
+                className="max-w-xl mx-auto space-y-6"
+              >
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-text-secondary mb-2"
                   >
-                    <div>
-                      <label
-                        htmlFor="name"
-                        className="block text-sm font-medium text-text-secondary mb-2"
-                      >
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        required
-                        value={formData.name}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name: e.target.value })
-                        }
-                        className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50 transition-all"
-                        placeholder="Your name"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium text-text-secondary mb-2"
-                      >
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        required
-                        value={formData.email}
-                        onChange={(e) =>
-                          setFormData({ ...formData, email: e.target.value })
-                        }
-                        className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50 transition-all"
-                        placeholder="your@email.com"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="message"
-                        className="block text-sm font-medium text-text-secondary mb-2"
-                      >
-                        Message
-                      </label>
-                      <textarea
-                        id="message"
-                        required
-                        rows={5}
-                        value={formData.message}
-                        onChange={(e) =>
-                          setFormData({ ...formData, message: e.target.value })
-                        }
-                        className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50 transition-all resize-none"
-                        placeholder="Your message..."
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.02] transition-all duration-200"
-                    >
-                      <Icons.Send />
-                      Send Message
-                    </button>
-                  </form>
-                )}
-              </div>
-            </section>
-
-            {/* FAQ */}
-            <section className="mb-16">
-              <div className="liquid-glass rounded-2xl p-8">
-                <h2 className="font-display text-2xl font-semibold text-text-primary mb-6 text-center">
-                  Frequently Asked Questions
-                </h2>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  {FAQS.map((faq, idx) => (
-                    <div key={idx} className="p-5 rounded-xl bg-cosmic-void/30">
-                      <h3 className="font-semibold text-text-primary mb-2">
-                        {faq.question}
-                      </h3>
-                      <p className="text-text-secondary text-sm">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  ))}
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    required
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50 transition-all"
+                    placeholder="Your name"
+                  />
                 </div>
-              </div>
-            </section>
-
-            {/* CTA */}
-            <section>
-              <div className="relative liquid-glass rounded-3xl overflow-hidden p-8 sm:p-12 text-center">
-                <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/10 via-transparent to-crystal/8 pointer-events-none" />
-                <div className="absolute -top-16 -right-16 w-64 h-64 bg-brand-primary/6 rounded-full blur-3xl pointer-events-none" />
-
-                <div className="relative max-w-2xl mx-auto">
-                  <h2 className="text-fluid-2xl font-display font-bold mb-4">
-                    Ready to Begin?
-                  </h2>
-                  <p className="text-text-secondary font-body leading-relaxed mb-8">
-                    Create an account and start building. Pick your first companion and go.
-                  </p>
-                  <div className="flex flex-wrap justify-center gap-4">
-                    <Link
-                      href="/auth/signup"
-                      className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
-                    >
-                      <Icons.Sparkles />
-                      Begin Creating
-                    </Link>
-                  </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-text-secondary mb-2"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                    className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50 transition-all"
+                    placeholder="your@email.com"
+                  />
                 </div>
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-text-secondary mb-2"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    required
+                    rows={5}
+                    value={formData.message}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
+                    className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50 transition-all resize-none"
+                    placeholder="Your message..."
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.02] transition-all duration-200"
+                >
+                  <Icons.Send />
+                  Send Message
+                </button>
+              </form>
+            )}
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="mb-16">
+          <div className="liquid-glass rounded-2xl p-8">
+            <h2 className="font-display text-2xl font-semibold text-text-primary mb-6 text-center">
+              Frequently Asked Questions
+            </h2>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {FAQS.map((faq, idx) => (
+                <div key={idx} className="p-5 rounded-xl bg-cosmic-void/30">
+                  <h3 className="font-semibold text-text-primary mb-2">
+                    {faq.question}
+                  </h3>
+                  <p className="text-text-secondary text-sm">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section>
+          <div className="relative liquid-glass rounded-3xl overflow-hidden p-8 sm:p-12 text-center">
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/10 via-transparent to-crystal/8 pointer-events-none" />
+            <div className="absolute -top-16 -right-16 w-64 h-64 bg-brand-primary/6 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="relative max-w-2xl mx-auto">
+              <h2 className="text-fluid-2xl font-display font-bold mb-4">
+                Ready to Begin?
+              </h2>
+              <p className="text-text-secondary font-body leading-relaxed mb-8">
+                Create an account and start building. Pick your first companion
+                and go.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Link
+                  href="/auth/signup"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
+                >
+                  <Icons.Sparkles />
+                  Begin Creating
+                </Link>
               </div>
-            </section>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );

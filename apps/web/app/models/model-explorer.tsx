@@ -3,25 +3,20 @@
 
 import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
-import { AI_MODELS, type AIModel, type ArcaneanGateName } from "@/lib/models-data";
+import { AI_MODELS } from "@/lib/models-data";
+import {
+  byRatingDesc,
+  mergeExplorerModels,
+  type ExplorerModel,
+  type LiveModelSummary,
+} from "@/lib/models/live-models";
 import { useModelFavorites } from "@/hooks/use-model-favorites";
+
+export type { LiveModelSummary };
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
 /* ------------------------------------------------------------------ */
-
-export interface LiveModelSummary {
-  id: string;
-  name: string;
-  provider: string;
-  context_length: number;
-  pricing_prompt_per_mtok: number;
-  pricing_completion_per_mtok: number;
-  is_free: boolean;
-  max_completion: number;
-  modality: string;
-  description: string;
-}
 
 interface ModelExplorerProps {
   models?: LiveModelSummary[];
@@ -66,70 +61,50 @@ function formatPrice(perMtok: number): string {
   return `$${perMtok.toFixed(2)}`;
 }
 
-interface EnrichedModelView {
-  id: string;
-  name: string;
-  provider: string;
-  providerLogo: string;
-  contextWindow: number;
-  inputPrice: number;
-  outputPrice: number;
-  isFree: boolean;
-  speed: number;
-  worldCraftScore: number;
-  proseQuality: number;
-  loreMemory: number;
-  magicLogic: number;
-  characterVoice: number;
-  gateResonance: string;
-  gateFrequency: string;
-  guardian: string;
-  curatedRole: string;
-  curatedAward?: string;
-  worldbuildingSweetSpot: string;
-  slopResistance: "S" | "A" | "B" | "C";
-  category: string;
-  tags: string[];
-  description: string;
-}
-
 function awardBadge(award?: string) {
   if (!award) return null;
   switch (award) {
     case "editors-choice":
       return {
         label: "🏆 Editor’s Choice",
-        color: "bg-[var(--arc-brand-arcanean-gold)]/15 text-[var(--arc-brand-arcanean-gold)] border-[var(--arc-brand-arcanean-gold)]/30",
+        color:
+          "bg-[var(--arc-brand-arcanean-gold)]/15 text-[var(--arc-brand-arcanean-gold)] border-[var(--arc-brand-arcanean-gold)]/30",
       };
     case "best-lore":
       return {
         label: "📜 Best Lore Vault",
-        color: "bg-[var(--arc-brand-cosmic-blue)]/15 text-[var(--arc-brand-cosmic-blue)] border-[var(--arc-brand-cosmic-blue)]/30",
+        color:
+          "bg-[var(--arc-brand-cosmic-blue)]/15 text-[var(--arc-brand-cosmic-blue)] border-[var(--arc-brand-cosmic-blue)]/30",
       };
     case "best-prose":
       return {
         label: "👑 Supreme Prose",
-        color: "bg-[var(--arc-void)]/15 text-[var(--arc-void)] border-[var(--arc-void)]/30",
+        color:
+          "bg-[var(--arc-void)]/15 text-[var(--arc-void)] border-[var(--arc-void)]/30",
       };
     case "best-free":
       return {
         label: "⚡ Best Free Model",
-        color: "bg-[var(--arc-wind)]/15 text-[var(--arc-wind)] border-[var(--arc-wind)]/30",
+        color:
+          "bg-[var(--arc-wind)]/15 text-[var(--arc-wind)] border-[var(--arc-wind)]/30",
       };
     case "best-magic":
       return {
         label: "🔮 Grand Enchanter",
-        color: "bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)] border-[var(--arc-brand-atlantean-teal)]/30",
+        color:
+          "bg-[var(--arc-brand-atlantean-teal)]/15 text-[var(--arc-brand-atlantean-teal)] border-[var(--arc-brand-atlantean-teal)]/30",
       };
     case "best-dialogue":
       return {
         label: "🎭 Bard of Truth",
-        color: "bg-[var(--arc-fire)]/15 text-[var(--arc-fire)] border-[var(--arc-fire)]/30",
+        color:
+          "bg-[var(--arc-fire)]/15 text-[var(--arc-fire)] border-[var(--arc-fire)]/30",
       };
     case "best-tactics":
       return {
         label: "⚔️ War Master",
-        color: "bg-[var(--arc-fire)]/15 text-[var(--arc-fire)] border-[var(--arc-fire)]/30",
+        color:
+          "bg-[var(--arc-fire)]/15 text-[var(--arc-fire)] border-[var(--arc-fire)]/30",
       };
     default:
       return null;
@@ -145,7 +120,7 @@ function WorldCraftModelCard({
   isFavorite,
   onToggleFavorite,
 }: {
-  model: EnrichedModelView;
+  model: ExplorerModel;
   isFavorite: boolean;
   onToggleFavorite: (id: string) => void;
 }) {
@@ -176,7 +151,9 @@ function WorldCraftModelCard({
             title={isFavorite ? "Remove from favorites" : "Add to favorites"}
             aria-label={`Favorite ${model.name}`}
           >
-            <span className="text-sm leading-none">{isFavorite ? "★" : "☆"}</span>
+            <span className="text-sm leading-none">
+              {isFavorite ? "★" : "☆"}
+            </span>
           </button>
         </div>
 
@@ -194,56 +171,68 @@ function WorldCraftModelCard({
               Free Zen
             </span>
           )}
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] text-white/40 bg-white/[0.04] border border-white/[0.04]">
-            {model.gateResonance} Gate • {model.gateFrequency}
-          </span>
-          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono text-[var(--arc-brand-atlantean-teal)] bg-white/[0.02]">
-            Slop: {model.slopResistance}
-          </span>
-        </div>
-
-        {/* WorldCraft Composite Bar */}
-        <div className="mb-4 bg-white/[0.02] border border-white/[0.04] rounded-xl p-3">
-          <div className="flex justify-between items-center text-xs mb-1.5">
-            <span className="text-white/60 font-medium">WorldCraft Index</span>
-            <span className="text-[var(--arc-brand-atlantean-teal)] font-mono font-bold">
-              {model.worldCraftScore}/100
+          {model.gateResonance && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] text-white/40 bg-white/[0.04] border border-white/[0.04]">
+              {model.gateResonance} Gate • {model.gateFrequency}
             </span>
-          </div>
-          <div className="w-full h-1.5 bg-white/[0.06] rounded-full overflow-hidden mb-3">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-arcanean-gold)]"
-              style={{ width: `${model.worldCraftScore}%` }}
-            />
-          </div>
-
-          <div className="grid grid-cols-4 gap-1 text-center text-[10px]">
-            <div className="bg-white/[0.02] rounded p-1">
-              <span className="text-white/40 block">Prose</span>
-              <span className="text-white font-mono font-medium">
-                {model.proseQuality}%
-              </span>
-            </div>
-            <div className="bg-white/[0.02] rounded p-1">
-              <span className="text-white/40 block">Lore</span>
-              <span className="text-white font-mono font-medium">
-                {model.loreMemory}%
-              </span>
-            </div>
-            <div className="bg-white/[0.02] rounded p-1">
-              <span className="text-white/40 block">Magic</span>
-              <span className="text-white font-mono font-medium">
-                {model.magicLogic}%
-              </span>
-            </div>
-            <div className="bg-white/[0.02] rounded p-1">
-              <span className="text-white/40 block">Voice</span>
-              <span className="text-white font-mono font-medium">
-                {model.characterVoice}%
-              </span>
-            </div>
-          </div>
+          )}
+          {model.slopResistance && (
+            <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono text-[var(--arc-brand-atlantean-teal)] bg-white/[0.02]">
+              Slop: {model.slopResistance}
+            </span>
+          )}
         </div>
+
+        {model.worldCraftScore === null ? (
+          <div className="mb-4 bg-white/[0.02] border border-white/[0.04] rounded-xl p-3 flex justify-between items-center text-xs">
+            <span className="text-white/60 font-medium">WorldCraft rating</span>
+            <span className="text-white/40 font-mono">Not rated</span>
+          </div>
+        ) : (
+          <div className="mb-4 bg-white/[0.02] border border-white/[0.04] rounded-xl p-3">
+            <div className="flex justify-between items-center text-xs mb-1.5">
+              <span className="text-white/60 font-medium">
+                WorldCraft Index
+              </span>
+              <span className="text-[var(--arc-brand-atlantean-teal)] font-mono font-bold">
+                {model.worldCraftScore}/100
+              </span>
+            </div>
+            <div className="w-full h-1.5 bg-white/[0.06] rounded-full overflow-hidden mb-3">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-arcanean-gold)]"
+                style={{ width: `${model.worldCraftScore}%` }}
+              />
+            </div>
+
+            <div className="grid grid-cols-4 gap-1 text-center text-[10px]">
+              <div className="bg-white/[0.02] rounded p-1">
+                <span className="text-white/40 block">Prose</span>
+                <span className="text-white font-mono font-medium">
+                  {model.proseQuality}%
+                </span>
+              </div>
+              <div className="bg-white/[0.02] rounded p-1">
+                <span className="text-white/40 block">Lore</span>
+                <span className="text-white font-mono font-medium">
+                  {model.loreMemory}%
+                </span>
+              </div>
+              <div className="bg-white/[0.02] rounded p-1">
+                <span className="text-white/40 block">Magic</span>
+                <span className="text-white font-mono font-medium">
+                  {model.magicLogic}%
+                </span>
+              </div>
+              <div className="bg-white/[0.02] rounded p-1">
+                <span className="text-white/40 block">Voice</span>
+                <span className="text-white font-mono font-medium">
+                  {model.characterVoice}%
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Role & Sweet Spot */}
         <p className="text-xs text-[var(--arc-brand-arcanean-gold)] font-medium mb-1">
@@ -273,7 +262,9 @@ function WorldCraftModelCard({
           </span>
         </div>
         <div className="flex justify-between items-center pt-2 mt-2">
-          <span className="text-[10px] text-white/30">{model.speed} tok/s</span>
+          <span className="text-[10px] text-white/30">
+            {model.speed === null ? "" : `${model.speed} tok/s`}
+          </span>
           <Link
             href="/chat"
             className="inline-flex items-center gap-1 text-[11px] text-[var(--arc-brand-atlantean-teal)] hover:underline font-medium"
@@ -314,97 +305,10 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
     };
   }, []);
 
-  // Merge known curated AI_MODELS with any live OpenRouter additions
-  const unifiedModels: EnrichedModelView[] = useMemo(() => {
-    const curatedMap = new Map<string, AIModel>();
-    for (const m of AI_MODELS) {
-      curatedMap.set(m.id, m);
-    }
-
-    const result: EnrichedModelView[] = [];
-
-    // 1. First push all curated models (the gold standard)
-    for (const m of AI_MODELS) {
-      result.push({
-        id: m.id,
-        name: m.name,
-        provider: m.provider,
-        providerLogo: m.providerLogo,
-        contextWindow: m.contextWindow,
-        inputPrice: typeof m.pricing.input === "number" ? m.pricing.input : 0,
-        outputPrice: typeof m.pricing.output === "number" ? m.pricing.output : 0,
-        isFree: m.pricing.input === "free",
-        speed: m.speed,
-        worldCraftScore: m.worldCraftScore,
-        proseQuality: m.proseQuality,
-        loreMemory: m.loreMemory,
-        magicLogic: m.magicLogic,
-        characterVoice: m.characterVoice,
-        gateResonance: m.gateResonance,
-        gateFrequency: m.gateFrequency,
-        guardian: m.guardian,
-        curatedRole: m.curatedRole,
-        curatedAward: m.curatedAward,
-        worldbuildingSweetSpot: m.worldbuildingSweetSpot,
-        slopResistance: m.slopResistance,
-        category: m.category,
-        tags: m.tags,
-        description: m.strengths[0] || "",
-      });
-    }
-
-    // 2. Include extra models from live OpenRouter feed if not already tracked
-    for (const lm of models) {
-      const alreadyTracked = result.some(
-        (r) =>
-          r.id === lm.id ||
-          lm.id.endsWith(`/${r.id}`) ||
-          r.name.toLowerCase() === lm.name.toLowerCase(),
-      );
-
-      if (!alreadyTracked && lm.context_length >= 32_000) {
-        // Calculate estimated worldcraft metrics based on context and pricing
-        const isFree = lm.is_free;
-        const isLong = lm.context_length >= 500_000;
-        const estLore = isLong ? 90 : lm.context_length >= 128_000 ? 82 : 75;
-        const estProse = isFree ? 80 : 85;
-        const estMagic = 82;
-        const estVoice = 80;
-        const estWorldCraft = Math.round(
-          estLore * 0.35 + estProse * 0.3 + estMagic * 0.2 + estVoice * 0.15,
-        );
-
-        result.push({
-          id: lm.id,
-          name: lm.name,
-          provider: lm.provider,
-          providerLogo: "🌐",
-          contextWindow: lm.context_length,
-          inputPrice: lm.pricing_prompt_per_mtok,
-          outputPrice: lm.pricing_completion_per_mtok,
-          isFree: lm.is_free,
-          speed: 70,
-          worldCraftScore: estWorldCraft,
-          proseQuality: estProse,
-          loreMemory: estLore,
-          magicLogic: estMagic,
-          characterVoice: estVoice,
-          gateResonance: isLong ? "Starweave" : "Unity",
-          gateFrequency: isLong ? "852 Hz" : "963 Hz",
-          guardian: isLong ? "Elara" : "Ino",
-          curatedRole: `${lm.provider} OpenRouter Model`,
-          worldbuildingSweetSpot:
-            lm.description || "Available via OpenRouter live catalog routing.",
-          slopResistance: "B",
-          category: lm.is_free ? "free-tier" : "frontier",
-          tags: ["openrouter", lm.modality],
-          description: lm.description,
-        });
-      }
-    }
-
-    return result;
-  }, [models]);
+  const unifiedModels = useMemo(
+    () => mergeExplorerModels(AI_MODELS, models),
+    [models],
+  );
 
   // Filtering
   const filtered = useMemo(() => {
@@ -417,7 +321,7 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
           m.name.toLowerCase().includes(q) ||
           m.provider.toLowerCase().includes(q) ||
           m.curatedRole.toLowerCase().includes(q) ||
-          m.gateResonance.toLowerCase().includes(q) ||
+          m.gateResonance?.toLowerCase().includes(q) ||
           m.tags.some((t) => t.toLowerCase().includes(q));
         if (!matchesQuery) return false;
       }
@@ -425,9 +329,10 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
       // Quick filter
       if (quickFilter === "favorites" && !isFavorite(m.id)) return false;
       if (quickFilter === "curated" && !m.curatedAward) return false;
-      if (quickFilter === "1m-lore" && m.contextWindow < 1_000_000) return false;
-      if (quickFilter === "prose" && m.proseQuality < 90) return false;
-      if (quickFilter === "magic" && m.magicLogic < 90) return false;
+      if (quickFilter === "1m-lore" && m.contextWindow < 1_000_000)
+        return false;
+      if (quickFilter === "prose" && (m.proseQuality ?? 0) < 90) return false;
+      if (quickFilter === "magic" && (m.magicLogic ?? 0) < 90) return false;
       if (quickFilter === "free" && !m.isFree) return false;
       if (quickFilter === "open-source" && m.category !== "open-source")
         return false;
@@ -444,16 +349,16 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
     const arr = [...filtered];
     switch (sortKey) {
       case "worldcraft":
-        arr.sort((a, b) => b.worldCraftScore - a.worldCraftScore);
+        arr.sort((a, b) => byRatingDesc(a.worldCraftScore, b.worldCraftScore));
         break;
       case "prose":
-        arr.sort((a, b) => b.proseQuality - a.proseQuality);
+        arr.sort((a, b) => byRatingDesc(a.proseQuality, b.proseQuality));
         break;
       case "lore":
-        arr.sort((a, b) => b.loreMemory - a.loreMemory);
+        arr.sort((a, b) => byRatingDesc(a.loreMemory, b.loreMemory));
         break;
       case "magic":
-        arr.sort((a, b) => b.magicLogic - a.magicLogic);
+        arr.sort((a, b) => byRatingDesc(a.magicLogic, b.magicLogic));
         break;
       case "context":
         arr.sort((a, b) => b.contextWindow - a.contextWindow);
@@ -462,7 +367,7 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
         arr.sort((a, b) => a.inputPrice - b.inputPrice);
         break;
       case "speed":
-        arr.sort((a, b) => b.speed - a.speed);
+        arr.sort((a, b) => byRatingDesc(a.speed, b.speed));
         break;
       case "name":
         arr.sort((a, b) => a.name.localeCompare(b.name));
@@ -575,8 +480,8 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
 
         <div className="flex items-center gap-3">
           <span className="text-xs text-white/40 font-mono">
-            Showing <strong className="text-white">{displayed.length}</strong> of{" "}
-            <strong className="text-white">{sorted.length}</strong> models
+            Showing <strong className="text-white">{displayed.length}</strong>{" "}
+            of <strong className="text-white">{sorted.length}</strong> models
           </span>
 
           <div className="flex items-center gap-1.5">
@@ -634,7 +539,8 @@ export default function ModelExplorer({ models = [] }: ModelExplorerProps) {
             No models match your current filters
           </p>
           <p className="text-xs text-white/40 mb-4 max-w-sm mx-auto">
-            Try loosening your search terms or toggling from &ldquo;{quickFilter}&rdquo; back to &ldquo;All Models&rdquo;.
+            Try loosening your search terms or toggling from &ldquo;
+            {quickFilter}&rdquo; back to &ldquo;All Models&rdquo;.
           </p>
           <button
             onClick={() => {

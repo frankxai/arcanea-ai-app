@@ -145,7 +145,9 @@ const PULL_QUOTES: Record<number, string> = {
 };
 
 /** Split book markdown into chapters for interleaved quote rendering */
-function splitIntoChapters(content: string): { chapterNum: number; markdown: string }[] {
+function splitIntoChapters(
+  content: string,
+): { chapterNum: number; markdown: string }[] {
   // Match "## Chapter N" headings (the book uses ## for chapters)
   const chapterRegex = /^(## Chapter \d+)/gm;
   const parts: { chapterNum: number; markdown: string }[] = [];
@@ -178,7 +180,10 @@ function splitIntoChapters(content: string): { chapterNum: number; markdown: str
 
 /* Shared markdown component config */
 const markdownComponents = {
-  h1: ({ children, ...props }: React.ComponentPropsWithoutRef<"h2"> & { children?: React.ReactNode }) => {
+  h1: ({
+    children,
+    ...props
+  }: React.ComponentPropsWithoutRef<"h2"> & { children?: React.ReactNode }) => {
     const id = String(children)
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
@@ -193,7 +198,10 @@ const markdownComponents = {
       </h2>
     );
   },
-  h2: ({ children, ...props }: React.ComponentPropsWithoutRef<"h3"> & { children?: React.ReactNode }) => {
+  h2: ({
+    children,
+    ...props
+  }: React.ComponentPropsWithoutRef<"h3"> & { children?: React.ReactNode }) => {
     const text = String(children);
     const id = text
       .toLowerCase()
@@ -209,7 +217,10 @@ const markdownComponents = {
       </h3>
     );
   },
-  h3: ({ children, ...props }: React.ComponentPropsWithoutRef<"h4"> & { children?: React.ReactNode }) => {
+  h3: ({
+    children,
+    ...props
+  }: React.ComponentPropsWithoutRef<"h4"> & { children?: React.ReactNode }) => {
     const id = String(children)
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
@@ -348,8 +359,8 @@ export default function BookOfArcaneaPage() {
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-white/70 sm:text-xl">
             A creation myth. A philosophical core. A practical map.
-            <br className="hidden sm:block" />
-            A community invitation. A complete world.
+            <br className="hidden sm:block" />A community invitation. A complete
+            world.
           </p>
           <div className="mt-8 flex items-center justify-center gap-6 text-sm text-white/50">
             <span>23 chapters</span>
@@ -413,7 +424,13 @@ export default function BookOfArcaneaPage() {
                     chapter={part.chapterNum}
                   />
                 )}
-                <ReactMarkdown components={markdownComponents as Parameters<typeof ReactMarkdown>[0]['components']}>
+                <ReactMarkdown
+                  components={
+                    markdownComponents as Parameters<
+                      typeof ReactMarkdown
+                    >[0]["components"]
+                  }
+                >
                   {part.markdown}
                 </ReactMarkdown>
               </div>
@@ -440,10 +457,10 @@ export default function BookOfArcaneaPage() {
               Explore the Library
             </Link>
             <Link
-              href="/council"
+              href="/luminors"
               className="rounded-lg border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10 px-5 py-2.5 text-sm text-[var(--arc-brand-atlantean-teal)] transition-all hover:bg-[var(--arc-brand-atlantean-teal)]/20"
             >
-              Meet the Council
+              Meet the Luminors
             </Link>
           </div>
         </div>

@@ -31,12 +31,6 @@ const NAV_ITEMS = [
   { name: "Luminors", href: "/luminors", group: "Explore" },
   { name: "Lore", href: "/lore", group: "Explore" },
   { name: "Factions", href: "/factions", group: "Explore" },
-  {
-    name: "Starlight Vaults",
-    href: "/arcanea-vault",
-    shortcut: "V",
-    group: "Explore",
-  },
   { name: "Showcase", href: "/showcase", group: "Explore" },
   { name: "Academy", href: "/academy", group: "Learn" },
   { name: "Model Arena", href: "/models", group: "Learn" },
