@@ -1,0 +1,15 @@
+# Status: STAGING — 2026-09-09; adult illustrated companion edition.
+# Touches LOCKED canon: no. Earlier source editions remain unchanged.
+title: The Light She Could Not See
+subtitle: Selene & Brío — Illustrated companion edition
+author: Arcanea
+license: CC-BY-NC-SA-4.0
+ai_transparency:
+  method: Human-directed story development with AI-assisted prose and generated illustrations.
+status: staging
+visibility: public
+edition: illustrated-companion
+language: en
+route: /books/selene-y-brio
+images: 24
+chapters: 12
