@@ -9,6 +9,8 @@ import {
 const fields = ["original", "thumbnail", "captions", "transcript"] as const;
 type Field = (typeof fields)[number];
 
+export const creationMediaRouteDeps = { createClient };
+
 function mediaValue(
   creation: { type: string; content: unknown; thumbnail_url: string | null },
   field: Field,
@@ -35,7 +37,7 @@ export async function GET(
   if (!fields.includes(field as Field))
     return NextResponse.json({ error: "Invalid media field" }, { status: 400 });
 
-  const client = await createClient();
+  const client = await creationMediaRouteDeps.createClient();
   const { data: auth } = await client.auth.getUser();
   if (!auth.user)
     return NextResponse.json({ error: "Sign in required" }, { status: 401 });
@@ -46,7 +48,12 @@ export async function GET(
     .eq("id", id)
     .eq("user_id", auth.user.id)
     .maybeSingle();
-  if (error || !creation)
+  if (error)
+    return NextResponse.json(
+      { error: "Media temporarily unavailable" },
+      { status: 503 },
+    );
+  if (!creation)
     return NextResponse.json({ error: "Media not found" }, { status: 404 });
 
   const value = safeCreationUrl(mediaValue(creation, field as Field));
