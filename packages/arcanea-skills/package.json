@@ -1,18 +1,23 @@
 {
   "name": "@arcanea/skills",
-  "version": "1.0.0",
-  "description": "97 Claude Code skills for creative intelligence — worldbuilding, coding, writing, design, and more",
+  "version": "1.1.0",
+  "description": "A measured bundle of Arcanea creative and engineering skills with previewable, non-overwriting installation",
   "main": "index.js",
+  "types": "index.d.ts",
   "bin": {
     "arcanea-skills": "bin/install.js"
   },
   "files": [
     "skills/",
     "bin/",
+    "lib/",
     "index.js",
+    "index.d.ts",
     "README.md"
   ],
   "scripts": {
+    "test": "node --test tests/*.test.cjs",
+    "check": "node --check bin/install.js && node --check lib/installer.js && node --check index.js",
     "install-skills": "node bin/install.js",
     "list": "node -e \"const s = require('./index.js'); console.log(s.skills.join('\\n'));\""
   },
@@ -35,14 +40,14 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/frankxai/arcanea.git",
+    "url": "git+https://github.com/frankxai/arcanea-ai-app.git",
     "directory": "packages/arcanea-skills"
   },
   "homepage": "https://arcanea.ai",
   "bugs": {
-    "url": "https://github.com/frankxai/arcanea/issues"
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=22.0.0"
   }
 }
