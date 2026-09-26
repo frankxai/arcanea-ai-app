@@ -1,0 +1,13 @@
+.page { min-height: 100vh; background: var(--arc-cosmic-void); color: var(--arc-text-primary); padding: clamp(2rem, 5vw, 6rem) max(1.5rem, calc((100vw - 1100px) / 2)); }
+.header { margin-bottom: 3rem; }
+.header a, .card a { color: var(--arc-brand-atlantean-teal); text-decoration: underline; text-underline-offset: 4px; }
+.header > p:first-of-type { margin-top: 3rem; font: 500 .7rem var(--arc-font-mono); text-transform: uppercase; letter-spacing: .2em; color: var(--arc-brand-atlantean-teal); }
+.header h1 { font: 400 clamp(2.6rem, 7vw, 5rem)/1.05 var(--arc-font-editorial); margin: .5rem 0; }
+.header > p:last-child { color: var(--arc-text-secondary); }
+.empty { border: 1px solid var(--arc-cosmic-border); padding: 2rem; max-width: 36rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr)); gap: 1.5rem; }
+.card { border: 1px solid var(--arc-cosmic-border); background: var(--arc-cosmic-raised); overflow: hidden; }
+.card img { width: 100%; height: auto; aspect-ratio: 3/2; object-fit: cover; }
+.card > div { padding: 1.3rem; }
+.card p { color: var(--arc-brand-atlantean-teal); font: 500 .7rem var(--arc-font-mono); text-transform: uppercase; }
+.card blockquote { font: 400 1.1rem/1.45 var(--arc-font-editorial); margin: .7rem 0 1rem; }

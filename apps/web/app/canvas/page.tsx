@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PlatformStudioShell, STUDIO_BY_ID } from "@/components/studio";
 import { CanvasFlowLab } from "./canvas-flow-lab";
+import { CanvasWorkspace } from "./canvas-workspace";
 
 export const metadata: Metadata = {
   title: "Canvas - Arcanea",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default function CanvasPage() {
   return (
     <>
+      <CanvasWorkspace />
       <PlatformStudioShell
         studio={STUDIO_BY_ID.canvas}
         title="One canvas for every creative workflow"
