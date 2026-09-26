@@ -150,4 +150,29 @@ test("creation media redirects require ownership and handle storage failures", a
       "https://cdn.example.com/film.mp4",
     );
   });
+
+  await t.test("opens an image from the public gallery bucket", async () => {
+    const galleryUrl = `${origin}/storage/v1/object/public/arcanea-gallery/community/${owner}/art.png`;
+    creationMediaRouteDeps.createClient = async () =>
+      clientStub({
+        userId: owner,
+        row: { type: "image", content: null, thumbnail_url: galleryUrl },
+      });
+    const response = await request();
+    assert.equal(response.status, 307);
+    assert.equal(response.headers.get("location"), galleryUrl);
+  });
+
+  await t.test("refuses an unrecognized same-project storage URL", async () => {
+    creationMediaRouteDeps.createClient = async () =>
+      clientStub({
+        userId: owner,
+        row: {
+          type: "image",
+          content: `${origin}/storage/v1/object/public/unknown/private.png`,
+          thumbnail_url: null,
+        },
+      });
+    assert.equal((await request()).status, 503);
+  });
 });

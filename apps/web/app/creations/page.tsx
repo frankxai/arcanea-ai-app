@@ -1,14 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "@/lib/phosphor-icons";
 import { useAuth } from "@/lib/auth/context";
 import { createClient } from "@/lib/supabase/client";
-import {
-  creationMediaUrl,
-  ownedCreationStoragePath,
-} from "@/lib/media/creation-url";
+import { creationMediaUrl } from "@/lib/media/creation-url";
+import { signStageMedia } from "@/lib/media/sign-creation-media";
 import {
   CreationMediaStage,
   type MediaStageCreation,
@@ -36,6 +34,13 @@ interface LibrarySnapshot {
   hasMore: boolean;
   error: boolean;
   mediaError: boolean;
+}
+
+interface MediaCache {
+  userId: string;
+  source: LibraryCreation[];
+  signed: LibraryCreation[];
+  signedAt: number;
 }
 
 const filters: Array<{ id: Filter; label: string }> = [
@@ -91,53 +96,8 @@ function mapCreation(row: {
       content?.source === "chat" ||
       row.content_source === "chat" ||
       (content?.mode === "image" && typeof content.prompt === "string") ||
-      (row.content_mode === "image" && Boolean(row.content_prompt)),
+      (row.content_mode === "image" && typeof row.content_prompt === "string"),
   };
-}
-
-async function signStageMedia(creations: LibraryCreation[], userId: string) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  if (!supabaseUrl) return creations;
-  const paths = new Set<string>();
-  for (const creation of creations) {
-    for (const value of [
-      creation.fileUrl,
-      creation.thumbnailUrl,
-      creation.captionsUrl,
-      creation.transcriptUrl,
-    ]) {
-      const path = ownedCreationStoragePath(value, userId, supabaseUrl);
-      if (path) paths.add(path);
-    }
-  }
-  if (!paths.size) return creations;
-  const pathList = [...paths];
-  const { data, error } = await createClient()
-    .storage.from("creations")
-    .createSignedUrls(pathList, 60 * 30);
-  if (error || !data) throw error ?? new Error("Media signing failed");
-  const signed = new Map<string, string | null>(
-    data.map(
-      (
-        entry: { signedUrl?: string | null },
-        index: number,
-      ): [string, string | null] => [
-        pathList[index],
-        entry.signedUrl ? new URL(entry.signedUrl, supabaseUrl).href : null,
-      ],
-    ),
-  );
-  function url(value: string | null | undefined): string | null {
-    const path = ownedCreationStoragePath(value, userId, supabaseUrl!);
-    return path ? (signed.get(path) ?? null) : (value ?? null);
-  }
-  return creations.map((creation) => ({
-    ...creation,
-    fileUrl: url(creation.fileUrl),
-    thumbnailUrl: url(creation.thumbnailUrl),
-    captionsUrl: url(creation.captionsUrl),
-    transcriptUrl: url(creation.transcriptUrl),
-  }));
 }
 
 async function fetchPage(
@@ -169,6 +129,8 @@ export default function CreationsPage() {
   const [retry, setRetry] = useState(0);
   const [loadingMoreKey, setLoadingMoreKey] = useState<string | null>(null);
   const [loadMoreErrorKey, setLoadMoreErrorKey] = useState<string | null>(null);
+  const mediaCache = useRef<MediaCache | null>(null);
+  const activeUserId = user?.id;
 
   useEffect(() => {
     if (!user) return;
@@ -176,15 +138,19 @@ export default function CreationsPage() {
     let active = true;
     const client = createClient();
     async function load() {
+      const cached =
+        mediaCache.current?.userId === userId ? mediaCache.current : null;
       const [itemsSettled, mediaSettled] = await Promise.allSettled([
         fetchPage(userId, filter, null),
-        client
-          .from("creations")
-          .select(stageColumns)
-          .eq("user_id", userId)
-          .in("type", ["image", "video", "music", "audio"])
-          .order("created_at", { ascending: false })
-          .limit(18),
+        cached
+          ? Promise.resolve(null)
+          : client
+              .from("creations")
+              .select(stageColumns)
+              .eq("user_id", userId)
+              .in("type", ["image", "video", "music", "audio"])
+              .order("created_at", { ascending: false })
+              .limit(18),
       ]);
       if (!active) return;
       const itemsResult =
@@ -197,11 +163,18 @@ export default function CreationsPage() {
         mediaResult && !mediaResult.error ? (mediaResult.data ?? []) : [];
       const pageRows = rows.slice(0, PAGE_SIZE);
       const last = pageRows.at(-1);
-      let media = mediaRows.map(mapCreation);
-      let mediaError = !mediaResult || Boolean(mediaResult.error);
-      if (!mediaError) {
+      let media = cached?.signed ?? mediaRows.map(mapCreation);
+      let mediaError = !cached && (!mediaResult || Boolean(mediaResult.error));
+      if (!cached && !mediaError) {
+        const source = media;
         try {
-          media = await signStageMedia(media, userId);
+          media = await signStageMedia(source, userId);
+          mediaCache.current = {
+            userId,
+            source,
+            signed: media,
+            signedAt: Date.now(),
+          };
         } catch {
           media = [];
           mediaError = true;
@@ -237,6 +210,47 @@ export default function CreationsPage() {
       active = false;
     };
   }, [user, filter, retry]);
+
+  useEffect(() => {
+    if (!activeUserId) return;
+    let active = true;
+    let refreshing = false;
+    async function refreshMedia() {
+      const cached = mediaCache.current;
+      if (
+        !active ||
+        refreshing ||
+        cached?.userId !== activeUserId ||
+        Date.now() - cached.signedAt < 20 * 60 * 1000
+      )
+        return;
+      refreshing = true;
+      try {
+        const media = await signStageMedia(cached.source, activeUserId!);
+        if (!active || mediaCache.current !== cached) return;
+        mediaCache.current = { ...cached, signed: media, signedAt: Date.now() };
+        setSnapshot((current) =>
+          current?.userId === activeUserId
+            ? { ...current, media, mediaError: false }
+            : current,
+        );
+      } catch {
+        // Keep the current preview and retry while the owner session is active.
+      } finally {
+        refreshing = false;
+      }
+    }
+    const timer = window.setInterval(() => void refreshMedia(), 60 * 1000);
+    const onVisible = () => {
+      if (!document.hidden) void refreshMedia();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [activeUserId]);
 
   const loading =
     authLoading || (user !== null && snapshot?.userId !== user.id);
@@ -287,7 +301,7 @@ export default function CreationsPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[var(--arc-cosmic-void)] px-4 pb-20 pt-9 text-[var(--arc-text-primary)] sm:px-6">
+    <div className="min-h-screen bg-[var(--arc-cosmic-void)] px-4 pb-20 pt-9 text-[var(--arc-text-primary)] sm:px-6">
       <div className="mx-auto max-w-7xl">
         <header className="mb-8 flex flex-wrap items-end justify-between gap-5">
           <div>
@@ -455,6 +469,6 @@ export default function CreationsPage() {
           </>
         )}
       </div>
-    </main>
+    </div>
   );
 }

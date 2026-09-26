@@ -26,7 +26,7 @@ function readableContent(content: unknown): string | null {
   for (const key of ["text", "code", "body", "content"]) {
     if (typeof record[key] === "string") return record[key];
   }
-  return JSON.stringify(content, null, 2);
+  return JSON.stringify(content, null, 2) ?? null;
 }
 
 function typeLabel(type: string): string {

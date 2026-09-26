@@ -73,9 +73,15 @@ export async function GET(
     if (signError || !data?.signedUrl)
       return NextResponse.json({ error: "Media unavailable" }, { status: 503 });
     target = new URL(data.signedUrl, supabaseUrl).href;
-  } else if (supabaseUrl && value.startsWith(new URL(supabaseUrl).origin)) {
-    // A configured private bucket URL must never fall through to an unusable public link.
-    return NextResponse.json({ error: "Media unavailable" }, { status: 503 });
+  } else if (supabaseUrl) {
+    const url = new URL(value, request.url);
+    const sameSupabaseOrigin = url.origin === new URL(supabaseUrl).origin;
+    const knownPublicBucket =
+      /^\/storage\/v1\/object\/public\/(arcanea-gallery|avatars|thumbnails)\//.test(
+        url.pathname,
+      );
+    if (sameSupabaseOrigin && !knownPublicBucket)
+      return NextResponse.json({ error: "Media unavailable" }, { status: 503 });
   }
 
   const response = NextResponse.redirect(new URL(target, request.url), 307);
