@@ -121,8 +121,16 @@ async function signStageMedia(creations: LibraryCreation[], userId: string) {
     .storage.from("creations")
     .createSignedUrls(pathList, 60 * 30);
   if (error || !data) throw error ?? new Error("Media signing failed");
-  const signed = new Map(
-    data.map((entry, index) => [pathList[index], entry.signedUrl ?? null]),
+  const signed = new Map<string, string | null>(
+    data.map(
+      (
+        entry: { signedUrl?: string | null },
+        index: number,
+      ): [string, string | null] => [
+        pathList[index],
+        entry.signedUrl ? new URL(entry.signedUrl, supabaseUrl).href : null,
+      ],
+    ),
   );
   function url(value: string | null | undefined): string | null {
     const path = ownedCreationStoragePath(value, userId, supabaseUrl!);
