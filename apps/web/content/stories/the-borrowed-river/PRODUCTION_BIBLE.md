@@ -1,6 +1,6 @@
-# The Light She Could Not See · continuation bible
+# The Borrowed River · The Bell Roads story bible
 
-Status: **independent story continuity**, revised 26 September 2026. Chapters 1–12 in `THE_LIGHT_SHE_COULD_NOT_SEE.md` begin in Miralumbre, Avilara; chapters 13–17 in `THE_RIDER_CIRCLE.md` establish the friendships, high roost, and coastal journey; chapters 18–21 in `THE_OPEN_ROAD.md` open the eastern river inquiry; chapters 22–24 in `THE_BELL_BELOW.md` enter the ancient pressure vault. `WORLD_ATLAS.md` records story-local geography, ecology, and limits. Iria Soreda is twenty-nine and distinct from nineteen-year-old Selene Velara in the locked _Las Tierras de Luz_ novel. Their events do not share continuity.
+Status: **proposed storyline in shared Arcanea**, revised 26 September 2026. Chapters 1–12 in `THE_BORROWED_RIVER.md` begin in Miralumbre, Avilara; chapters 13–17 in `THE_RIDER_CIRCLE.md` establish the friendships, high roost, and coastal journey; chapters 18–21 in `THE_OPEN_ROAD.md` open the eastern river inquiry; chapters 22–24 in `THE_BELL_BELOW.md` enter the ancient pressure vault. `WORLD_ATLAS.md` records story-local geography, ecology, and limits. Iria Soreda is twenty-nine and distinct from nineteen-year-old Selene Velara in the locked _Las Tierras de Luz_ novel. Their personal plots are distinct; the relative chronology is not fixed. Solavila and the Arcanean foundations are shared setting, while the new people and sites remain story-local proposals.
 
 ## Editorial correction · 26 September
 
@@ -18,7 +18,7 @@ Iria Soreda remains the protagonist. Her perceptiveness does not make her respon
 
 **Promise:** a woman learns that she can be deeply known without surrendering her freedom; a maker learns that a brilliant bridge has failed when the people it serves cannot refuse it. Each person grows through a separate apprenticeship. Their attraction develops as a consequence of what they do together and what each does when the other is absent.
 
-**Series question:** when you can see a possible path, who gets to decide whether anyone walks it?
+**Series question:** when a city borrows the life of a river, who is allowed to name the debt and decide how it is repaid? A second question follows Iria and Cael: how can two people help one another grow without claiming one another?
 
 **Spiritual grammar:** faith is practiced through honest attention, difficult work, restitution, rest, and willingness to act without certainty. Synchronicity provides an invitation to investigate, not proof of a prophecy or a person's consent. There are no magical shortcuts to mutual love.
 
@@ -36,7 +36,7 @@ Iria Soreda remains the protagonist. Her perceptiveness does not make her respon
 | Neira and the velas | Navigate the coastal channels while protecting spawning water                            | Treat an old marker as permanent permission            | Ask affected boat crews before moving the channel and leave space for the living migration                                                                                                       |
 | Captain Ema Rivas   | Keep river settlements supplied while the Academy rebuilds after Solavila                | Control the only crossing and exact silence as a toll  | Remains accountable for coercion; gains a credible chance to negotiate without becoming instantly benign                                                                                         |
 
-Iria's family and Renata stay present. Mercedes's earlier concealment does not vanish after one apology. Iva, Luz, and Tami disagree with Iria and each other; they are not a cheering section for a romance. Cael has friends, colleagues, and obligations independent of Iria. Their first disagreement costs them something tangible; their repair occurs through changed behavior, not eloquent declarations. The story may allow romance but does not promise the reader that recognition equals commitment.
+Iria's family and Mireya stay present. Elvia's earlier concealment does not vanish after one apology. Iva, Luz, and Tami disagree with Iria and each other; they are not a cheering section for a romance. Cael has friends, colleagues, and obligations independent of Iria. Their first disagreement costs them something tangible; their repair occurs through changed behavior, not eloquent declarations. The story may allow romance but does not promise the reader that recognition equals commitment.
 
 ## Rider circle · chapters 13–17 · elapsed time
 
@@ -48,7 +48,7 @@ Iria's family and Renata stay present. Mercedes's earlier concealment does not v
 | 16      | Seven weeks of roost work, then a month of further training | Aru chooses the rescue flight; Iria later qualifies on approved routes | Animal autonomy and weather limits do not disappear with a rider title |
 | 17      | Coastal practicum, then the return near term's end          | Ocean riders move a marker with the boat crews' agreement              | Longer passage; spawning water requires further watch                  |
 
-**Arcanean foundations and proposal boundary:** Houses Aqualis, Terra, Ventus, the ten Gates, Anima, the Fire Gate's Godbeast Draconis, and the natural Nero aspect are locked. Mar Arcano's five-source sea is catalogued **staging**, not a newly locked Realm; the sea's aquifer corridors transmit resonance, never human travelers. This independent continuity proposes the bell-cup watershed, Aru and the high roost, vela riders, and the named local crew as story-specific inventions. Dragons in the roost are living animals distinct from Draconis; neither a new Godbeast nor an extra Gate. The orchid roots and sea organisms pass material signals through local ecology; no universal personified intelligence announces anyone's destiny. Keep names and inventions out of the locked novel until the owner explicitly chooses to adapt them.
+**Arcanean foundations and proposal boundary:** Houses Aqualis, Terra, Ventus, the ten Gates, Anima, the Fire Gate's Godbeast Draconis, and the natural Nero aspect are locked. Mar Arcano's five-source sea is catalogued **staging**, not a newly locked Realm; the sea's aquifer corridors transmit resonance, never human travelers. This storyline proposes the bell-cup watershed, Aru and the high roost, vela riders, and the named local crew as story-specific inventions. Dragons in the roost are living animals distinct from Draconis; neither a new Godbeast nor an extra Gate. The orchid roots and sea organisms pass material signals through local ecology; no universal personified intelligence announces anyone's destiny. Keep names and inventions out of the locked novel until the owner explicitly chooses to adapt them.
 
 ## Eastern river and the Bell Below · chapters 18–24
 
@@ -72,11 +72,11 @@ Iria's family and Renata stay present. Mercedes's earlier concealment does not v
 
 ## Production rules
 
-- **Magic:** keep Gates, ranks, Wisdoms, Anima, and Luminors aligned with `.arcanea/lore/CANON_LOCKED.md`. No new divine identity, Gate, or cosmic law is introduced. New devices, town names, river guard, and characters remain proposed local fiction.
+- **Magic:** keep Gates, ranks, Wisdoms, Anima, and Luminors aligned with `.arcanea/lore/CANON_LOCKED.md`; keep Avilaran destello usage compatible with `book/las-tierras-de-luz/MAGIC_DESTELLOS.md`. Iria reads some structural strain through practice and a two-slot faultglass, not a full human aura or an inherited veil stone. No new divine identity, Gate, or cosmic law is introduced. New devices, town names, river guard, and characters remain proposed local fiction.
 - **Encounter design:** the human opponent has a material objective; ecology has cause and consequence; the machinery has prior maintenance history. A boss can be stopped, repaired, or contained. The jaguar is wildlife, not a pet or a morality detector.
 - **Love story:** no character diagnoses the other from a colored aura; attraction is not framed as supernatural certainty. A refusal, delay, or independent journey stands without an emotional penalty. Pleasure and wit appear among crises: meals, river crossings, faulty tools, riding lessons, and imperfect messages home.
 - **Art continuity:** the original illustrations show the dark-haired rider in an ivory blouse, red sash and small hoop earrings, with Brío a dark bay with a white forehead star. Earlier Earth-named alt text has been revised. The new Bell Below image establishes the scale and workings of the vault while preserving Iria's silhouette. Review any later image against scene topology and costume before publication.
-- **Page experience:** read the whole twelve chapter original before the proposed continuation; keep keyboard chapter anchors, meaningful alt text, mobile typography, and reduced motion support. Use original illustrations at chapter positions; no artificial quote from a real person or fictionalized personal history in site copy.
+- **Page experience:** read all four manuscript movements in sequence; keep keyboard chapter anchors, meaningful alt text, mobile typography, and reduced motion support. Audit every illustration against the revised scene; no artificial quote from a real person or fictionalized personal history in site copy.
 - **Next writing task:** draft the House Terra hearing with those harmed by Cael's earlier accident. Carry Tami, Luz, Iva, roost duties, the road loss, and the coastal marker into later choices; investigate who reused the tower line and why the river bands sound alike. Commission later images after checking scene continuity (costume, horse star, topology, who physically acts).
 
 ## Privacy and editorial boundary

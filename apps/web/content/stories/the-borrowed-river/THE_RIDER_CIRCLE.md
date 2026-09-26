@@ -112,7 +112,7 @@ They called the road crew, moved the children by Luz's mule path, and put a guar
 
 Iva submitted her measurements with the mistakes left visible. Her instructor signed the report and wrote a question across the bottom: _Who installed the band?_ It was the first time anyone at the Academy had asked for her conclusion instead of correcting her hand.
 
-Mercedes wrote from Miralumbre that week. After asking whether Iria had eaten anything green, she wrote: _Tell me about your friends._
+Elvia wrote from Miralumbre that week. After asking whether Iria had eaten anything green, she wrote: _Tell me about your friends._
 
 Iria started with Tami's temper and Iva's patient horse. Luz appeared on the second page, with her refusal of the contract and her bad habit of giving away the best part of lunch. None of the three needed to become proof that Iria had finally found her place. She folded the letter before she could make them into that.
 
@@ -142,7 +142,7 @@ For a few minutes there was a plan. Tami tied an anchor to sound rock. Iva measu
 
 It was the wrong one.
 
-The tower lurched. Aru struck the ledge with his free wing and a slab of stone dropped into the gorge. Tami went over the edge on her rope; the anchor caught her a body's length below the path. Iria froze with the knife in her hand. There was nothing to see in the lens that could undo the cut.
+The tower lurched. Aru struck the ledge with his free wing and a slab of stone dropped into the gorge. Tami went over the edge on her rope; the anchor caught her a body's length below the path. Iria froze with the knife in her hand. There was nothing to see in the faultglass that could undo the cut.
 
 “Hold the frame,” Nara said. She was speaking to Iria. “Don't touch him again.”
 
@@ -170,7 +170,7 @@ _The high roost · Seven weeks later_
 
 In the seven weeks Aru's wing took to heal, Iria learned how little of flight happened in the air.
 
-She hauled water to the roost, copied Nara's weather readings, repaired a harness strap three times, and missed enough Foundation work that Iolen sent her home to finish it. Tami mapped the shifting winds and replaced her compass with one Luz found secondhand. Iva compared the mountain's warm pulse with the conduit figures. Luz negotiated feed for the mules and made three pilots change the way they packed their saddles.
+She hauled water to the roost, copied Nara's weather readings, repaired a harness strap three times, and missed enough Foundation work that Beltrán sent her home to finish it. Tami mapped the shifting winds and replaced her compass with one Luz found secondhand. Iva compared the mountain's warm pulse with the conduit figures. Luz negotiated feed for the mules and made three pilots change the way they packed their saddles.
 
 Aru could leave whenever he wanted. The roost was open to the cliff and had always been. One morning he walked past Iria carrying his repaired harness in her hands; on another he came to stand near her while she worked, his shadow covering the whole table. Nara taught her to distinguish curiosity from an invitation. They practised on the ground. Iria rode behind Nara only after Aru accepted the weight twice on calm mornings.
 
@@ -186,7 +186,7 @@ Aru stepped into the straps. Iria took her place behind Nara. Her mouth was dry,
 
 The fall was so absolute that Iria forgot the storm. Then Aru caught the rising air. The ridge dropped away; dark ravines opened between bright belts of orchid forest. Beyond them the cloud pulled apart around a mountain taller than any she had seen from the road. A scar of pale stone ran across its face. At intervals the scar lit from within, one low pulse passing through it like a question asked too slowly to hear.
 
-The couriers were a handful of movement on the far shelf. Their mule was tied too near the edge. Iria shouted to Nara, who changed their approach, and Aru banked. Wind struck the torn wing; he corrected so hard that Iria lost one stirrup. She caught the strap and did not reach for the lens. There would be no second pair of hands for the mule if hers were occupied.
+The couriers were a handful of movement on the far shelf. Their mule was tied too near the edge. Iria shouted to Nara, who changed their approach, and Aru banked. Wind struck the torn wing; he corrected so hard that Iria lost one stirrup. She caught the strap and did not reach for the faultglass. There would be no second pair of hands for the mule if hers were occupied.
 
 They landed above the couriers. The storm made ordinary speech impossible. Nara went with the line; Iria stayed on the shelf and cut the mule's tether when its handler nodded. It would not turn. She put herself between it and the drop and waited while it shook, one hoof on stone and the others in empty air. Brío would have hated this place. That unhelpful thought brought back the weight of her own feet. She led the mule around a buried boulder, and it came.
 
@@ -198,7 +198,7 @@ They came home by a route Tami had marked through the rain. Luz's ground party m
 
 In the morning she asked Iva to draw the mountain she had seen from above. Iva opened her earlier survey. Under the watershed and the broken tower, the same pale pulse had appeared in her measurements. It had arrived in the stream before the storm and before the landslip. It wasn't a mountain waking. Something was drawing on the water beneath it.
 
-Nara entered Iria as a second rider in the roost ledger. Months of routine flights and an independent route assessment passed before Aru carried her without Nara aboard. Even then his answer varied with the weather. Tami called her a rider and then made her help clean the roost. Iva wanted the wind readings. Luz wanted supper. Iria wanted, suddenly and painfully, to tell Mercedes what the sky had weighed.
+Nara entered Iria as a second rider in the roost ledger. Months of routine flights and an independent route assessment passed before Aru carried her without Nara aboard. Even then his answer varied with the weather. Tami called her a rider and then made her help clean the roost. Iva wanted the wind readings. Luz wanted supper. Iria wanted, suddenly and painfully, to tell Elvia what the sky had weighed.
 
 She wrote the letter that night. She did not write that the mountain had chosen her.
 
@@ -242,4 +242,4 @@ Luz poured her another cup of tea. “Then start with the reef.”
 
 At dawn the four rode the cliff road. The sea lay behind them; the mountain's pale scar was hidden by weather. Iva had found an older river record that carried the same low pulse. Iria wanted to return to the roost, and to write home, and to sleep for three days. For the first time in years, wanting several things did not require her to choose one person to become.
 
-They reached Crystalpeak near the end of her Foundation term. Tami borrowed her dry socks. Iva went to dispute the old river record with an instructor. Luz left a bag of Brío's preferred oats outside Iria's door. On the first clear morning Iria brought Iva to Iolen's workroom to show him a bowl she had cracked months before. By afternoon, a bell would ring twice at the gate.
+They reached Crystalpeak near the end of her Foundation term. Tami borrowed her dry socks. Iva went to dispute the old river record with an instructor. Luz left a bag of Brío's preferred oats outside Iria's door. On the first clear morning Iria brought Iva to Beltrán's workroom to show him a bowl she had cracked months before. By afternoon, a bell would ring twice at the gate.

@@ -1,6 +1,6 @@
 # The Open Road
 
-_A proposed continuation of The Light She Could Not See_
+_A proposed continuation of The Borrowed River_
 
 ## 18 · The Bell That Rang Twice
 
@@ -12,13 +12,13 @@ On the first clear morning after the coastal practicum, near the end of her Foun
 
 It struck the floor with a sound that could have ended a lesson.
 
-Master Iolen looked at the pieces. “That was my good bowl.”
+Master Beltrán looked at the pieces. “That was my good bowl.”
 
 “You gave me the cracked one.”
 
 “It had survived me for eighteen years.”
 
-The others laughed. Iria knelt to gather the pieces and found that she was laughing too. The old habit had risen before the bowl fell: _If I do this well, they will let me belong here._ Nobody had asked her to prove that. Iolen handed her the smallest piece.
+The others laughed. Iria knelt to gather the pieces and found that she was laughing too. The old habit had risen before the bowl fell: _If I do this well, they will let me belong here._ Nobody had asked her to prove that. Beltrán handed her the smallest piece.
 
 “What did you notice before you tried to save it?”
 
@@ -54,7 +54,7 @@ The ferryman knew Iria’s name. In the months since Solavila, other people had 
 
 The man with the case gave her a quick glance. He had heard the distinction.
 
-His name was Cael Rovan. He built travelling instruments for the Academy and kept a workshop by the canal below Crystalpeak. Iolen had asked him to examine the eastern crossing, though Cael seemed unsure that this counted as being asked to work with Iria.
+His name was Cael Rovan. He built travelling instruments for the Academy and kept a workshop by the canal below Crystalpeak. Beltrán had asked him to examine the eastern crossing, though Cael seemed unsure that this counted as being asked to work with Iria.
 
 They left at first light with Brío, a repair cart, two river keepers, and Iva, who had shared both the high trail and the sea with Iria. Her knowledge of the flood beds was better than either of theirs. Cael walked beside the cart and did not offer to lead the horse. Brío noticed this, considered him briefly, and turned his attention to a flowering hedge.
 
@@ -66,9 +66,9 @@ Cael set his instrument on a flat stone. It unfolded into two thin shutters, a m
 
 The line was neat. Iria wanted it to be true.
 
-She raised Mercedes’s lens. For two breaths the river separated into currents: green water, silt, pale threads of Anima carried among roots. At the far end of Cael’s line a white seam appeared and went dark. A second line opened below it, toward a bank of reeds.
+She held the faultglass against the survey peg at the waterline. For two breaths it picked out a strained seam in the stone beneath Cael's marker. The river itself remained opaque with silt. At the far end of his line one pale notch appeared and went dark. A second showed under the reeds, where a sounding pole could reach it.
 
-The lens cooled against her palm.
+The plates equalized against her palm.
 
 “Something moves under your anchor,” she said.
 

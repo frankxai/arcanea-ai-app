@@ -1,108 +1,96 @@
-# The Light She Could Not See
+# The Borrowed River
 
 An illustrated Arcanea novella. Working story continuity, separate from the locked cosmology.
 
-## 01 · The Copper Line
+## 01 · The Line They Left Blank
 
-_Miralumbre, Avilara · The upper passage_
+_Miralumbre, Avilara · The northern flank_
 
-As the rain roofs above Miralumbre opened for the afternoon storm, a copper line appeared around the woman beside Iria’s desk. Iria deleted the last sentence of her proposal.
+On the afternoon they told Iria to remove the blank space from the city's water map, the north lift rang twice.
 
-“Too much?” she asked.
+The first note came up through the floor of the design office. The second arrived half a breath late, from somewhere under the rain roofs. At the window, a freight car stopped between terraces with twelve people inside it. Nobody screamed. One woman pushed open the vent and began counting the passengers.
 
-Her colleague looked up from her handglass. “What?”
+“The gauge says the shaft is dry,” said Joana, Iria's colleague.
 
-“The new layout.”
+“Then why is there water in the return?”
 
-“No. My sister’s in labour.”
+Joana leaned over Iria's desk. The public map on the handglass showed the Miralumbre cisterns in blue, the lifts in black, and the northern supply line as an uncolored interval. Iria had left it blank because the city had no current reading for it. The publication officer wanted a continuous line. Residents complained when a map appeared unfinished.
 
-Iria put the sentence back.
+“Leave the gap,” Joana said. She was already calling the lift keeper.
 
-On the screen, a clean black line divided two columns of text. She had spent forty minutes getting it right. Beyond the office windows, the cliff city's counterweight lifts climbed between ceramic rain terraces and the blue underside of Cerro Luminoso. The line at her colleague’s wrists vanished. Iria had once mistaken that kind of flare for a feeling; it had told her nothing about the child about to be born.
+Iria took the faultglass from its sleeve. It was a survey instrument, cut with two narrow slots that let her compare the same stone at different angles. Most days she could notice a working's strain before she could name it; the glass made the seam clear for two breaths, then the plates equalized and showed ordinary stone. It could be reset in running water. It could not tell her who had opened a valve.
 
-At twenty-nine, she was very good at making this distinction in retrospect.
+Across the street a silver thread appeared at the base of the lift arch. It did not reach the freight car. The arch was taking a load from the northern line the map called dry.
 
-She finished the proposal. She answered a message she wanted to answer and three she did not. When the others left for drinks, she went with them, laughed at a story about a spectacularly unsuccessful date, and stayed until a freight lift shuddered above the restaurant. Its resonance caught briefly at the tables, five strangers lighting at once. She excused herself with a headache. It was easier than explaining why machinery sometimes made people impossible to look at.
+“Stop the next car,” she told Joana.
 
-At home she made coffee too late in the day. Bluewing guacamayas crossed the gap between buildings, their flight reflected in the rain channels. Her handglass showed the image she had taken of the mountain that morning: ordinary cloud, ordinary stone. None of the fine silver lines she had seen moving through it.
+“The keeper has it.”
 
-She turned its image plate toward herself.
+Iria went downstairs anyway. The keeper had already thrown the brake; a maintenance crew climbed the service stair with a basket of tools. Rain hammered the blue tile above them. The people in the car had water and a dry roof. The delay would cost the evening market its deliveries, and Iria heard a porter say so as she took down the arch number.
 
-A tired woman looked back. One eyebrow sat slightly higher than the other. The little gold hoops her grandmother had given her needed cleaning.
+![Iria and Joana examine a water map while rain lashes Miralumbre and a freight lift waits for its maintenance crew outside.](/stories/horsewoman/chapter-01-map-v2.webp)
 
-There was no light around her.
+At dusk the publication officer asked whether she could label the gap “normal flow” until the crew finished its inspection.
 
-She moved the handglass closer, as if a thing that had refused her for twenty-nine years might yield to a better angle.
+“No,” Iria said. “We can label it ‘reading unavailable’ and put a time on the next update.”
 
-A voice message arrived from Mercedes.
+“People will think something's wrong.”
 
-![Iria holds coffee at a Miralumbre window with Cerro Luminoso dark beyond the terraced city.](/stories/horsewoman/chapter-01-1.webp)
+“Something is wrong.”
 
-“Before you invent an excuse, I have made enough food for two.”
+He looked at the stopped lift. “I need the map before the morning opening.”
 
-Iria smiled despite herself.
+“I'll have it.”
 
-Her grandmother lived six floors below, in a flat whose windows were crowded with plants. Dinner was arepas, avocado, white cheese, and an argument about whether Iria was sleeping enough. Mercedes lost the argument without conceding it. When Iria took the plates to the sink, the old woman set a small cloth bundle on the table.
+She stayed to draw a version that showed what they knew and what they did not. By the time she came home her shoulders hurt from leaning over the handglass. Bluewing guacamayas passed between the rain channels, making a sudden, impossible quantity of noise. Six floors below, her grandmother had left a lamp in the kitchen window.
 
-Inside lay a translucent stone.
+Elvia had made arepas, white cheese, and enough food for an argument. She listened to Iria describe the stopped lift without interrupting. Then she put down her cup.
 
-Its light touched the ceiling in five narrow bands. Iria put a hand beneath them. The bands slid over her skin; nothing answered.
+“What did the second bell sound like?”
 
-“Where did you get this?”
+“Lower. As if it came through water.”
 
-“From the upper valley.”
+Elvia went to the cupboard and returned with a clay tile wrapped in a dishcloth. One edge was chipped. Rows of tiny cuts ran across its face: dates, quantities, the marks of three operators. At the bottom, beside the oldest draw, stood the name SOREDA.
 
-“You’ve never told me about the upper valley.”
+“I was one of them,” Elvia said.
 
-Mercedes turned the stone with one finger. “From before.”
+Iria turned the tile toward the lamp. “You worked on the northern supply?”
 
-Iria sat down.
+“On the road above it. Before the city took the water.”
 
-The story took most of the evening. The upper valleys of Avilara. A mountain with a voice. A passage that shifted beneath Cerro Luminoso and had closed behind a frightened young woman carrying too little money and the wrong kind of shoes. She had made a life in Miralumbre while the corridor-watch found no stable way back; years later she learned there had been messages she might have sent.
+Elvia had never kept her past a secret in any grand way. She had spoken of stone work, a bad winter, a crew she missed. Iria knew which elbow ached in the rain. She did not know her grandmother had signed a water draw from the upper valley during the famine years. The draw had kept the northern lifts and the hospital operating. It had also emptied a basin that fed two farms. The order was meant to last one season.
 
-“You could have told me.”
+“How long did it last?”
 
-“Yes.”
+“I left after the third.”
 
-The quick agreement made Iria angrier.
+“That wasn't the question.”
 
-“All those years I thought—”
+“No.” Elvia drew the cloth across her knee. “I don't know.”
 
-“I know some of what you thought.” Mercedes’s hand remained on the table, an inch from hers. “I don’t know all of it.”
+Iria could have filled the silence for her. Instead she put the tile beside her own map. The old cuts and the current blank occupied the same part of the mountain.
 
-For once, Iria did not help someone finish the difficult part.
+“Why didn't you tell me?”
 
-The old woman waited. Then she said, “I was afraid you would go.”
+“Because I signed it. Because I kept the wages. Later because every year I said nothing made the next one harder.”
 
-“So you let me be afraid to stay.”
+That was not an apology. Elvia did not offer it as one. Iria wanted to leave before saying something that would make the answer smaller. She stayed long enough for Elvia to draw the road she had used: up the northern flank of Cerro Luminoso, through a cleft the rain opened and closed, down to the orchid valley and an old station above the river. Beyond that lay Solavila, the capital on the mountain's sea-facing side. None of this was a hidden other world. It was Avilara, including the part of Avilara her city's map had stopped drawing.
 
-![Iria lifts a prismatic stone at a narrow opening in the cloud forest, revealing a rose-gold valley beyond.](/stories/horsewoman/chapter-01-2.webp)
+“You know someone there?” Iria asked.
 
-Mercedes lowered her eyes. A pale thread passed between her hand and the five bands on the stone. Iria could have spent the night pretending it explained the years her grandmother had kept quiet.
+“Mireya Arvelo. She keeps horses near the upper station. We disagreed about the third draw.”
 
-Instead she said, “I need you to answer my questions.”
+“Does she still speak to you?”
 
-They spoke until the coffee went cold.
+“I don't know.”
 
-The stone was a lens. It could clarify a Gate's resonance in living matter for two breaths, then needed a day’s warmth against a living chest. It could neither create a gift nor tell its bearer what to do with one. A destello was a visible sign that a Gate had begun to wake, not a person's secret feelings. No one, Mercedes said, could look directly at their own.
+Iria called her mother before she slept. Her mother knew Elvia had worked the upper road; she had never seen the signed tile. They argued about the climb, then agreed on the northern watch station, a written route, and two times for messages. Iria sent Joana the map with the gap intact. Joana replied that the lift crew had found water behind a panel listed as dry.
 
-“Then how do you know you have one?”
+At dawn Iria took the faultglass, the tile, and a spare pair of dry socks. The watchwoman at the cleft checked the weather and made her wait while two porters came down the narrow steps. The passage was stone underfoot, cold water at the ankles, and a rope polished by other hands. Through the slots of the faultglass she saw a pale seam traveling from the city side toward the valley. The plates warmed. The seam vanished.
 
-Her grandmother opened her mouth, stopped, and tried again.
+![Iria examines a prismatic faultglass at the rain-cut cleft above the upper Avilaran valley.](/stories/horsewoman/chapter-01-pass-v2.webp)
 
-“I have been told. By people I trust.”
-
-Iria slept little. In the morning she told her mother where she was going, gave her the route Mercedes had drawn, and promised to return to the threshold the following evening if it remained open. Her mother disliked every part of it. They arranged a second check-in anyway.
-
-At the mountain, mist caught in Iria’s hair. A silver cat sat beside a cleft she did not remember from any trail.
-
-She lifted the stone.
-
-For two breaths, the rock disclosed a seam of pink light. Beyond it stood a valley too deep for the mountain to contain.
-
-The stone went cold.
-
-Iria checked the knot on her bag. Then she stepped through.
+She put the glass away and kept hold of the rope. The bell sounded once behind her. Ahead, somewhere below the orchids, another answered.
 
 ## 02 · The Horse Who Said No
 
@@ -114,21 +102,23 @@ Brío took the cuff of Iria’s shirt between his teeth and tested whether it wa
 
 “He likes to establish these things himself.”
 
-The woman at the stable door had silver in her dark hair and a knife worn short from sharpening. She introduced herself as Renata Solar, examined the small map Mercedes had drawn, and sat down very abruptly.
+The woman at the stable door had silver in her dark hair and a knife worn short from sharpening. She introduced herself as Mireya Arvelo. Iria gave her the route Elvia had drawn and the clay tile she had signed. Mireya held the tile by its chipped edge, away from the cuts.
 
-For a moment Iria thought she might be ill.
-
-“Mercedes,” Renata said.
+“Elvia,” Mireya said.
 
 “My grandmother.”
 
-“That stubborn woman.”
+“I argued against the third draw,” Mireya said. “She signed it anyway.”
 
-“She’ll be delighted you remember.”
+“She told me.”
 
-Renata laughed. The sound shook something loose in her face.
+“Did she tell you what happened to the farms?”
 
-She had found Iria on the upper passage the evening before, wet to the knees and furious that her handglass could hold an image of a flower taller than a city lift but could not reach the Miralumbre relay. Renata had given her a bed, fed her, and sent a runner to check the passage. The runner crossed before dawn with Iria’s letter and returned with her mother’s reply. After breakfast Iria checked the cleft herself, well before the evening she had promised. It had closed. Renata gave her the watch service’s schedule for the next likely opening. Iria sent word by the corridor-watch service whenever a passage allowed it; going home would require more patience than going out.
+“Two lost their water.”
+
+“Three households left. One returned.” Mireya gave back the tile. “I can take you to the old station. The keepers there have the later records. Solavila has the reserve schedules, if the capital still lets people read them.”
+
+Iria had reached the stable before the rain closed the cleft behind her. The watchwoman had her name and her mother's message times; the next courier would take a letter when the pass reopened. No relay reached across the wet stone. Iria wanted to ask what Elvia had been like then, but Mireya was looking at the tile as if its numbers still had the power to empty a basin.
 
 Now there was Brío.
 
@@ -136,9 +126,9 @@ He was a dark bay gelding with a small star on his forehead and an expression su
 
 Brío watched a brass bell hanging outside the stable. One ear never left it.
 
-“He was a river courier,” Renata said. “A flood took a bridge under him. His rider lived. Neither of them works that route now.”
+“He was a river courier,” Mireya said. “A flood took a bridge under him. His rider lived. Neither of them works that route now.”
 
-![Iria offers her open palm to Brío in an orchid-root stable while Renata watches from a distance.](/stories/horsewoman/chapter-02-1.webp)
+![Iria offers her open palm to Brío in an orchid-root stable while Mireya watches from a distance.](/stories/horsewoman/chapter-02-1.webp)
 
 “And you’re lending him to a stranger?”
 
@@ -148,13 +138,13 @@ They began in the yard. Brío turned readily, stopped promptly, and refused to a
 
 His back tightened.
 
-Renata lifted a hand. “Get off.”
+Mireya lifted a hand. “Get off.”
 
 Iria dismounted, cheeks hot.
 
 “Watch his feet. Then his ears. Then decide what you know.”
 
-The yard smelled of leather and damp wood. Outside, orchids leaned from the trees, their violet throats large enough to shelter a person from rain. Their roots held the stable roof in place. Iria looked at the flowers because it was easier than looking at Renata.
+The yard smelled of leather and damp wood. Outside, orchids leaned from the trees, their violet throats large enough to shelter a person from rain. Their roots held the stable roof in place. Iria looked at the flowers because it was easier than looking at Mireya.
 
 “I know he’s afraid.”
 
@@ -166,17 +156,15 @@ The yard smelled of leather and damp wood. Outside, orchids leaned from the tree
 
 They moved the bell indoors. Brío walked across the yard.
 
-Renata offered no congratulation. She handed Iria a brush.
+Mireya offered no congratulation. She handed Iria a brush.
 
-By midday they had negotiated an arrangement. Renata would escort them as far as the first river station. Iria would check the saddle at every rest, walk the steepest descents, and bring Brío back if he became lame. Their destination was Solavila, where visiting Luminors received travellers seeking instruction. From there, if she still wished it, the road continued to Crystalpeak and the Academy.
+By midday they had negotiated an arrangement. Mireya would escort them as far as the first river station. Iria would check the saddle at every rest, walk the steepest descents, and bring Brío back if he became lame. They would follow the water to Solavila, where the old draws had become a modern reserve. It was three days around the mountain in dry weather. The record office might let Iria compare her grandmother's tile with the present schedule; the Academy at Crystalpeak could wait.
 
-“A school,” Iria said, trying to hide her disappointment.
+“You could send a request,” Mireya said.
 
-“A good place to discover how much you don’t know.”
+“A request from the city that kept the water?”
 
-“I have quite a lot of experience with that.”
-
-“Then you may be an excellent student.”
+“They might even answer it. You'd have no way to tell what they left out.”
 
 ![Iria rides Brío beneath immense violet orchids and tree ferns, with tepuis rising beyond the clouds.](/stories/horsewoman/chapter-02-2.webp)
 
@@ -186,9 +174,9 @@ Iria took out her handglass. Its image plate made the mountains small.
 
 She put it away.
 
-Renata rode ahead on a grey mare. Brío followed, his stride warm and sure beneath Iria. At the roots of the enormous flowers a faint light travelled in pulses, then disappeared. Above them, a crown of membrane leaves tilted, each broad enough to shadow the road, draining the night's rain into cisterns people had built beneath the trunks. For the first time in months, she could look without bracing.
+Mireya rode ahead on a grey mare. Brío followed, his stride warm and sure beneath Iria. At the roots of the enormous flowers a faint light travelled in pulses, then disappeared. Above them, a crown of membrane leaves tilted, each broad enough to shadow the road, draining the night's rain into cisterns people had built beneath the trunks. For the first time in months, she could look without bracing.
 
-“Destellos,” Renata said when Iria asked about the pulses. “Where a Gate wakes. Some things answer water or stone; some don't answer at all. Don't make a person out of a tree.”
+“Destellos,” Mireya said when Iria asked about the pulses. “The roots answer the changing flow. You can see it without knowing which way the water will go. Don't make a person out of a tree.”
 
 “I know the word.”
 
@@ -198,7 +186,7 @@ Near evening, they passed a closed pavilion of white glass. No vine touched its 
 
 A sign on the door read: RIVER STATION. SERVICE SUSPENDED.
 
-Renata’s mouth tightened.
+Mireya’s mouth tightened.
 
 From somewhere inside came the sound of a bell.
 
@@ -212,15 +200,15 @@ _The lower river · A mistaken certainty_
 
 Iria’s hand closed on the reins before she understood how large the jaguar was.
 
-Its shoulder stood higher than Brío’s head. Rain darkened the gold between its rosettes. One ear was torn, and the light running beneath its fur pulsed with a dense, restless green.
+Its shoulder stood higher than Brío’s head. Rain darkened the gold between its rosettes. One ear was torn. At its feet a green line ran through the soaked bank toward the river; when the cat moved, the line remained.
 
 The cat stepped onto the path.
 
-Renata’s mare backed once. Brío turned his head toward an uphill track.
+Mireya’s mare backed once. Brío turned his head toward an uphill track.
 
-“Turn uphill with him,” Renata said.
+“Turn uphill with him,” Mireya said.
 
-But Iria was staring at the jaguar’s light. It was brightest along the riverward side of its body. The cat looked downstream, then at them, then downstream again.
+But Iria was staring at the line in the bank. The cat looked downstream, then at them, then downstream again.
 
 “It wants us to follow.”
 
@@ -230,7 +218,7 @@ A bell rang below.
 
 Through the trees a young courier stood beside a narrow service bridge, pulling a warning cord. Water foamed against the first support. A woman on the far bank held a child on her hip.
 
-Iria felt the brief, intoxicating alignment of fear and purpose. Here was someone she could help. Here was a light that seemed to mean something simple.
+Iria felt the brief, intoxicating alignment of fear and purpose. Here was someone she could help. The line in the bank seemed to point straight toward him.
 
 She asked Brío down the slope.
 
@@ -244,15 +232,15 @@ He took three stiff steps. Mud slid under his hind foot. Iria hauled the rein, a
 
 The bridge gave a dry crack.
 
-Renata was off her mare and past them before Iria moved. She threw the woman a rope. The courier tried to rise and cried out. Water struck the bridge broadside and took half of it away.
+Mireya was off her mare and past them before Iria moved. She threw the woman a rope. The courier tried to rise and cried out. Water struck the bridge broadside and took half of it away.
 
-What followed came back to Iria later in separate pieces: Brío scrambling onto firm ground; her own hands dragging the courier by his coat; Renata planting her boots around a tree root; the child refusing to let go of a red shoe.
+What followed came back to Iria later in separate pieces: Brío scrambling onto firm ground; her own hands dragging the courier by his coat; Mireya planting her boots around a tree root; the child refusing to let go of a red shoe.
 
 They got everyone uphill.
 
 For a while, all Iria could hear was the river.
 
-The courier’s wrist swelled beneath Renata’s fingers. Renata asked his name. Tomás. He looked younger now that he was trying not to cry.
+The courier’s wrist swelled beneath Mireya’s fingers. Mireya asked his name. Tomás. He looked younger now that he was trying not to cry.
 
 “I’m sorry,” Iria said.
 
@@ -266,7 +254,7 @@ Iria looked from the cub to the green seam she had seen beneath the cat's fur. F
 
 “She was guarding the bank.”
 
-“Perhaps,” Renata said, tying a splint. “Now you have another piece of information.”
+“Perhaps,” Mireya said, tying a splint. “Now you have another piece of information.”
 
 “You could have stopped me.”
 
@@ -274,7 +262,7 @@ Iria looked from the cub to the green seam she had seen beneath the cat's fur. F
 
 It was spoken without cruelty. Iria found that worse.
 
-They spent the night in a maintenance shelter above the flood line. At the shelter they found a station attendant. Renata sent him ahead on the grey mare for help; the woman and child slept near the stove. Brío stood under the awning, favouring no leg, but he moved away when Iria reached for him.
+They spent the night in a maintenance shelter above the flood line. At the shelter they found a station attendant. Mireya sent him ahead on the grey mare for help; the woman and child slept near the stove. Brío stood under the awning, favouring no leg, but he moved away when Iria reached for him.
 
 She left her hand where he could see it.
 
@@ -282,17 +270,17 @@ Eventually she put it down.
 
 ![A swollen river tears away a timber bridge while Iria and Brío remain on the rocky uphill bank.](/stories/horsewoman/chapter-03-2.webp)
 
-At dawn Renata showed her the river schedule nailed inside the shelter. The emergency release was not due for another six days. Beside the date someone had stamped an amendment in blue ink.
+At dawn Mireya showed her the river schedule nailed inside the shelter. The emergency release was not due for another six days. Beside the date someone had stamped an amendment in blue ink.
 
 CONTINUITY RESERVE: INCREASED DRAW.
 
-“Solavila,” Renata said.
+“Solavila,” Mireya said.
 
 “The city did this?”
 
 “The city signed a paper. We need to find out what the paper did.”
 
-Iria offered Tomás the city notes in her pocket. He shook his head; the corridor-watch had suspended exchange while the passage moved. Renata found her work instead: clean the shelter, boil water, carry his bag to the returning transport.
+Iria offered Tomás the city notes in her pocket. He shook his head; the pass-watch had suspended exchange while the pass was flooded. Mireya found her work instead: clean the shelter, boil water, carry his bag to the returning transport.
 
 When they lifted him into the cart, Iria said, “I made your route more dangerous.”
 
@@ -312,7 +300,7 @@ This time she listened to the horse.
 
 _The stone terraces · Foundation_
 
-The bowl hit the ground for the fourth time, and Master Iolen Stoneward looked at Iria’s boots.
+The bowl hit the ground for the fourth time, and Master Beltrán Arocha looked at Iria’s boots.
 
 “You keep trying to balance it with your face.”
 
@@ -322,7 +310,7 @@ The bowl hit the ground for the fourth time, and Master Iolen Stoneward looked a
 
 He picked it up and placed it on the wall between them.
 
-Iolen repaired the old river terraces in exchange for meals, tools, and the privilege of complaining about other people’s mortar. Renata had brought Iria to him after the flood. He listened to her account, asked three questions about the bridge supports, and offered her an apprenticeship until the next supply cart reached Solavila.
+Beltrán repaired the old river terraces in exchange for meals, tools, and the privilege of complaining about other people’s mortar. Mireya had brought Iria to him after the flood. He listened to her account, asked three questions about the bridge supports, and offered her an apprenticeship until the next supply cart reached Solavila.
 
 “For my gift?”
 
@@ -330,7 +318,7 @@ Iolen repaired the old river terraces in exchange for meals, tools, and the priv
 
 For six mornings she carried stone.
 
-Her palms blistered. Her shoulders learned to object before her pride did. Iolen showed her how to set the heaviest load close to her body and how to stop before her grip failed. When she tried to hurry, he took half the stones out of her basket and made her carry them twice.
+Her palms blistered. Her shoulders learned to object before her pride did. Beltrán showed her how to set the heaviest load close to her body and how to stop before her grip failed. When she tried to hurry, he took half the stones out of her basket and made her carry them twice.
 
 In the afternoons they sat beside the unfinished wall.
 
@@ -348,11 +336,11 @@ Iria pressed her heel down. Stone. Damp leather. The weight of her own leg.
 
 For a moment the lights became part of a landscape she occupied.
 
-![Iria rests her hands on warm stone beside an unfinished terrace as Master Iolen repairs the wall.](/stories/horsewoman/chapter-04-1.webp)
+![Iria rests her hands on warm stone beside an unfinished terrace as Master Beltrán repairs the wall.](/stories/horsewoman/chapter-04-1.webp)
 
 Then she thought, I’m doing it, and lost the feeling.
 
-Iolen handed her the bowl.
+Beltrán handed her the bowl.
 
 By the eighth day she could carry it full of water from one end of the terrace to the other. On the ninth, he asked her a question halfway.
 
@@ -372,7 +360,7 @@ He waited.
 
 “Because I’m tired of explaining what I see. I wanted one thing to happen that would prove it was useful.”
 
-Iolen took the bowl. “The wall still needs finishing.”
+Beltrán took the bowl. “The wall still needs finishing.”
 
 She almost laughed. Then she did.
 
@@ -382,7 +370,7 @@ When she tried, the stone shivered.
 
 Then every muscle in her forearm locked.
 
-Iolen lifted her hand immediately. “Enough.”
+Beltrán lifted her hand immediately. “Enough.”
 
 “I nearly—”
 
@@ -396,25 +384,25 @@ Seeing had never spent this part of her. Acting did.
 
 They waited two days before she tried again. This time she held a pebble steady for the space of an ordinary exhalation. Then she stopped while she still could.
 
-Iolen made no announcement about destiny.
+Beltrán made no announcement about destiny.
 
 He gave her a better-fitting pair of work gloves.
 
-Renata visited at the end of the second week. She found Iria on the wall, laughing because Brío had carefully stolen a strip of sweet peel from Iolen’s pocket while the master was explaining discipline.
+Mireya visited at the end of the second week. She found Iria on the wall, laughing because Brío had carefully stolen a strip of sweet peel from Beltrán’s pocket while the master was explaining discipline.
 
-“He looks well,” Renata said.
+“He looks well,” Mireya said.
 
 “He’s an extortionist.”
 
 “He was that before.”
 
-The letter Renata carried was from Mercedes. Her mother had added a line at the bottom: _Send me a message the moment the upper relay works. Until then, write on both sides of the paper._
+The letter Mireya carried was from Elvia. Her mother had added a line at the bottom: _Send me a message the moment the upper relay works. Until then, write on both sides of the paper._
 
 Iria read it twice.
 
-Renata also brought news from the river. Three more stations had closed. The orchids below them had stayed open for four consecutive nights. Their petals were beginning to split.
+Mireya also brought news from the river. Three more stations had closed. The orchids below them had stayed open for four consecutive nights. Their petals were beginning to split.
 
-Iolen folded the notice.
+Beltrán folded the notice.
 
 “The flowers need darkness to rest,” he said. “Whoever is drawing through those roots has forgotten what a pause is for.”
 
@@ -422,7 +410,7 @@ Iria looked down at the wall they had finished that morning. Every stone rested 
 
 “What is the city resting on?” she asked.
 
-Iolen went to fetch his old survey maps.
+Beltrán went to fetch his old survey maps.
 
 ## 05 · The River Keeps Its Name
 
@@ -436,7 +424,7 @@ The ferrykeeper put Iria’s bag back on the bank.
 
 “There is. There’s also a current.”
 
-Iria looked at the broad wooden ferry, the black water, and Brío, who had planted all four feet on dry ground. Iolen’s maps were wrapped inside her bag. So was the letter requesting an inspection of the city’s draw stations.
+Iria looked at the broad wooden ferry, the black water, and Brío, who had planted all four feet on dry ground. Beltrán’s maps were wrapped inside her bag. So was the letter requesting an inspection of the city’s draw stations.
 
 “The papers have to come.”
 
@@ -486,7 +474,7 @@ The gauge read NORMAL.
 
 Outside, a fallen flower smelled faintly sour.
 
-Iria wanted to tear the collar free. Instead she unfolded Iolen’s maps and checked the line. It connected to the city’s floodgates. The ferrykeeper showed her a maintenance wheel beneath the gauge.
+Iria wanted to tear the collar free. Instead she unfolded Beltrán’s maps and checked the line. It connected to the city’s floodgates. The ferrykeeper showed her a maintenance wheel beneath the gauge.
 
 “Turn this without opening a relief channel and you send the whole head of water into the landing.”
 
@@ -498,7 +486,7 @@ Iria wanted to tear the collar free. Instead she unfolded Iolen’s maps and che
 
 They measured the water against a stake. They wrote the time. On the return crossing, Iria kept the leaf in sight while the ferrykeeper counted the beats between the gauge’s pulses. Four short. One long.
 
-At breakfast they compared the count with Iolen’s notes. The reserve was drawing during its scheduled rest.
+At breakfast they compared the count with Beltrán’s notes. The reserve was drawing during its scheduled rest.
 
 “Can you make it stop?” the ferrykeeper asked.
 
@@ -604,11 +592,11 @@ I helped. I was also afraid.
 
 Both lines remained.
 
-On the next ridge, Solavila appeared beyond the cloud. Its towers shone with a light so even that, for a moment, she could not see where the sun touched them.
+On the next ridge, Solavila appeared beyond the cloud. Coral stone climbed the sea-facing slope in terraces of blue roofs and crowded balconies. Above the old market, the reserve quarter's glass towers shone with a light so even that she could not see where the sun touched them.
 
 ## 07 · The City Without an Evening
 
-_Solavila · The Kingdom of Light_
+_Solavila · The Avilaran capital_
 
 The guard brushed mud from Iria’s boot before asking her name.
 
@@ -616,7 +604,7 @@ She looked down, startled.
 
 “For the glass,” he explained.
 
-A pale bridge curved ahead of her, clean enough to hold the reflection of Brío’s white star. Beyond it rose terraces, shaded courtyards, water running through channels cut with extraordinary care. Nothing crowded its neighbour. Even the signs seemed to know how much space a person needed to read them.
+A pink stone bridge curved ahead, its dark-blue tiles slick from the morning wash. Past it the market occupied every shaded arch: a repairer of bells beside a fish seller, wet laundry strung above the channel, two women arguing cheerfully over a broken pump. Up the slope the new reserve quarter rose in pale glass and carefully spaced courtyards. Its signs seemed to know exactly how much room a person needed to read them.
 
 Iria loved it immediately.
 
@@ -626,7 +614,7 @@ After weeks of wet blankets and smoke, the room assigned to her at the traveller
 
 She washed her hair twice.
 
-The city called itself the western welcome of the Kingdom of Light. Travellers entered here to petition the Academy or seek the counsel of visiting Luminors. Iria’s petition joined a tray with thirty others. Iolen’s letter, bearing a different seal, received an answer within an hour.
+The council called the reserve quarter Solavila's western welcome. Travellers could petition a visiting Luminor or apply for passage to the Academy from here. Iria filed a request to compare the current draw with the old station tiles. It joined a tray with thirty others. Beltrán’s letter, bearing a different seal, received an answer within an hour.
 
 Proctor Vyne Halcen met her in the reserve house.
 
@@ -646,7 +634,7 @@ He said their names. Iria could not have repeated all six afterward, but she rem
 
 “Yes.”
 
-![Iria and Brío enter Solavila across a pale stone-and-glass bridge above luminous terraces and waterways.](/stories/horsewoman/chapter-07-1.webp)
+![Iria and Brío enter Solavila along a coral-stone bridge past bell makers and blue-tiled markets, with the sea and newer reserve towers beyond.](/stories/horsewoman/chapter-07-solavila-v2.webp)
 
 “The river stations are failing.”
 
@@ -770,19 +758,19 @@ The ferrykeeper was unloading baskets of fish so small that three fitted across 
 
 Iria took the next basket without answering.
 
-Renata arrived that afternoon with Iolen and a cart full of tools. She also brought Tomás, his wrist bound but healing, and three station keepers whose wages had continued arriving after their stations closed.
+Mireya arrived that afternoon with Beltrán and a cart full of tools. She also brought Tomás, his wrist bound but healing, and three station keepers whose wages had continued arriving after their stations closed.
 
 They spread the maps on an upturned boat.
 
-Each person had a different piece. Iolen knew the stone bypasses. The ferrykeeper knew the old flood marks. The station keepers knew which wheels were seized. Tomás knew the maintenance tunnels because he had spent two winters carrying replacement lenses through them.
+Each person had a different piece. Beltrán knew the stone bypasses. The ferrykeeper knew the old flood marks. The station keepers knew which wheels were seized. Tomás knew the maintenance tunnels because he had spent two winters carrying replacement lenses through them.
 
 Iria could see the living current.
 
 It was useful. It was not enough.
 
-Together they found a route through the plans: open the western relief beds, drain the tower circuit in sections, preserve the hospital’s isolated reservoir, and return the night draw to the marsh. The work required the reserve-house crew. It required Vyne. The relief beds would also flood the city's lower garden and threaten two storehouses built where Iolen's old map showed open ground. They marked the buildings for evacuation.
+Together they found a route through the plans: open the western relief beds, drain the tower circuit in sections, preserve the hospital’s isolated reservoir, and return the night draw to the marsh. The work required the reserve-house crew. It required Vyne. The relief beds would also flood the city's lower garden and threaten two storehouses built where Beltrán's old map showed open ground. They marked the buildings for evacuation.
 
-Renata volunteered to take the proposal.
+Mireya volunteered to take the proposal.
 
 “He’ll say no,” Iria said.
 
@@ -834,7 +822,7 @@ The alarm bell rang somewhere beyond the dark. Water dropped from the lintel ont
 
 Behind them, the landing crew were hauling the last boat above the flood mark. The western relief wheel lay through this service passage, beneath the old escarpment. Without it, opening the city gates would crush the settlement against its own embankment.
 
-Renata had gone to the reserve house with the valve sequence. Iolen and two keepers were already hauling an iron brace along the upper road. The tunnel saved twenty minutes, but its ledge could not carry their cart. Iria and Tomás would reach the wheel first and establish the old bell relay; the third keeper remained with the ferry crew.
+Mireya had gone to the reserve house with the valve sequence. Beltrán and two keepers were already hauling an iron brace along the upper road. The tunnel saved twenty minutes, but its ledge could not carry their cart. Iria and Tomás would reach the wheel first and establish the old bell relay; the third keeper remained with the ferry crew.
 
 Iria loosened the girth and took off the saddlebags.
 
@@ -900,15 +888,15 @@ She took out the stone of the veils.
 
 One breath.
 
-The lens separated the current from its reflection. The real strain ran beneath the spindle; the bright line above it was an echo in the wet glass.
+The faultglass separated the current from its reflection. The real strain ran beneath the spindle; the bright line above it was an echo in the wet glass.
 
 Second breath.
 
 She marked the lower seam with charcoal.
 
-The stone went cold.
+The plates equalized.
 
-She pushed it back against her chest. No third breath would improve the mark now. She placed Iolen’s wedge against the seam and struck it with a maintenance hammer.
+She pushed it back against her chest. No third breath would improve the mark now. She placed Beltrán’s wedge against the seam and struck it with a maintenance hammer.
 
 The wedge moved.
 
@@ -942,13 +930,13 @@ Iria took her hand away.
 
 For a second she could not feel her fingers.
 
-She had wanted to stay until the work was finished. Her hand was shaking too hard to close. Iolen’s voice, irritatingly ordinary, returned to her: That is the answer for today.
+She had wanted to stay until the work was finished. Her hand was shaking too hard to close. Beltrán’s voice, irritatingly ordinary, returned to her: That is the answer for today.
 
 She sounded the alarm for assistance.
 
 It was the signal she had least wanted to use.
 
-Across the ravine, Tomás repeated it. The repeater bells carried it to Renata at the reserve house and to Iolen, already coming down the upper road.
+Across the ravine, Tomás repeated it. The repeater bells carried it to Mireya at the reserve house and to Beltrán, already coming down the upper road.
 
 Iria sat on the dry edge of the platform. Brío stood in the station's small stone-walled mule pen beside her, his bridle removed and the gate latched. She leaned her forehead against his shoulder.
 
@@ -976,7 +964,7 @@ The towers dimmed one by one. Their reflections shortened across the marsh. For 
 
 The wheel eased.
 
-Iolen arrived with two station keepers by the upper road, breathing hard and furious about the condition of the steps. He examined the charcoal mark, the wedge, and Iria’s hand.
+Beltrán arrived with two station keepers by the upper road, breathing hard and furious about the condition of the steps. He examined the charcoal mark, the wedge, and Iria’s hand.
 
 “You stopped.”
 
@@ -984,7 +972,7 @@ Iolen arrived with two station keepers by the upper road, breathing hard and fur
 
 “Good. Give me the cord.”
 
-He knelt against the stone while the keepers fitted an iron brace. Iria called the measurements. When the brace took the load, Iolen removed his palm. His whole body sagged. One keeper gave him an arm; the other braced her boots against the wheel.
+He knelt against the stone while the keepers fitted an iron brace. Iria called the measurements. When the brace took the load, Beltrán removed his palm. His whole body sagged. One keeper gave him an arm; the other braced her boots against the wheel.
 
 Together they turned it.
 
@@ -994,7 +982,7 @@ Water entered the old beds in a heavy, controlled sheet. The first channel fille
 
 “Hold there,” she said.
 
-The keeper looked at Iolen.
+The keeper looked at Beltrán.
 
 He nodded toward Iria. “She can see that part.”
 
@@ -1022,7 +1010,11 @@ He asked for everyone’s names.
 
 “For the inquiry,” he said before Iria could speak. “Including mine.”
 
-She gave him the written account of the bridge accident, folded inside Iolen’s original letter. He read the first page, then placed it with his own report.
+She gave him the written account of the bridge accident, folded inside Beltrán’s original letter. He read the first page, then placed it with his own report.
+
+“What became of my request for the old draw schedules?” she asked.
+
+Vyne turned the ledger to a section headed NORTHERN SUPPLY. It showed the current reserve cycle but not the date the third draw had ended. Two intervening leaves were missing. He let her copy the page and wrote the missing leaves into the inquiry notice. Neither of them called the gap a mistake.
 
 The sun rose on a city less brilliant than the one she had entered.
 
@@ -1032,7 +1024,7 @@ Iria left them their distance.
 
 Her own hands remained bare of light.
 
-She used them to pass Iolen a cup of water.
+She used her hands to pass Beltrán a cup of water.
 
 ## 11 · The Open Courtyard
 
@@ -1050,7 +1042,7 @@ She had imagined this meeting often enough to be embarrassed by its ordinariness
 
 She had arrived after twelve days of recovery and testimony in Solavila, then a supervised passage through the Academy corridor. Brío travelled with the supply caravan and now occupied a stable with a view he appeared to consider inferior to its hay.
 
-Iolen introduced her to Ada Rell and Tovan Reed. Both had opened all ten Gates; both, he warned her, were quite capable of saying they did not know.
+Beltrán introduced her to Ada Rell and Tovan Reed. Both had opened all ten Gates; both, he warned her, were quite capable of saying they did not know.
 
 Ada was an older woman with brown hands and silver hair cut at the jaw. Tovan, a quiet man in a green work coat, was mending the courtyard latch. Neither wore a crown.
 
@@ -1084,19 +1076,13 @@ Over the following weeks the exercises became harder. She learned to notice a Ga
 
 One afternoon she asked the question she had brought from Miralumbre.
 
-“When my Gate wakes, what do you see?”
+“How do I tell a seam in the stone from a line I need to be there?”
 
-Ada studied her.
+Ada brought out two water-stained tiles and set them on the wall. Iria named the damaged one at once. Ada turned it over: the cut stopped at the glaze. The other tile, smooth to the eye, had a crack through its back.
 
-“If I answer, what will you know?”
+“You compare readings,” Ada said. “You ask the keeper what happened here. Then you make a mark somebody else can challenge.”
 
-“That I'm here. That it isn't only in my head.”
-
-“You are here when no one sees it,” Ada said. “Would the colour help you remember that?”
-
-Iria looked at the open doorway. “I don't know.”
-
-The woman nodded.
+Iria thought of her public map and its blank northern line.
 
 “Can you tell me what I do when I reach too far?”
 
@@ -1122,7 +1108,7 @@ She accepted half the year.
 
 The Luminor lifted an eyebrow.
 
-“My family is in Miralumbre. Renata needs someone on the river route. I want to be here, but I’m not disappearing into a place because it finally understands one part of me.”
+“My family is in Miralumbre. Mireya needs someone on the river route. I want to be here, but I’m not disappearing into a place because it finally understands one part of me.”
 
 “Write that into your agreement.”
 
@@ -1150,7 +1136,7 @@ She laughed, and for once did not check the sound of it against anyone else’s 
 
 _Two homes · A beginning she could keep_
 
-Mercedes criticised the repair to Iria’s sleeve before she began to cry. Iria had been away for ten weeks.
+Elvia criticised the repair to Iria’s sleeve before she began to cry. Iria had been away for ten weeks.
 
 “The stitches are too far apart.”
 
@@ -1160,7 +1146,7 @@ Mercedes criticised the repair to Iria’s sleeve before she began to cry. Iria 
 
 Then the old woman put both arms around her and held on.
 
-Her mother waited until Mercedes let go. She touched Iria’s cheek, the new callus at the base of her thumb, the place where the saddle had rubbed a seam into her trousers.
+Her mother waited until Elvia let go. She touched Iria’s cheek, the new callus at the base of her thumb, the place where the saddle had rubbed a seam into her trousers.
 
 “You look tired.”
 
@@ -1182,7 +1168,7 @@ Her colleague caught her looking at the blue heading.
 
 “Too much?”
 
-![In a warm Miralumbre kitchen, Iria embraces her grandmother Mercedes while her mother rests a hand on her shoulder.](/stories/horsewoman/chapter-12-1.webp)
+![In a warm Miralumbre kitchen, Iria embraces her grandmother Elvia while her mother rests a hand on her shoulder.](/stories/horsewoman/chapter-12-1.webp)
 
 “Yes,” Iria said. “That time I mean the layout.”
 
@@ -1196,7 +1182,7 @@ She placed that one beside the photograph she had taken after the gates opened: 
 
 She sent both to her mother.
 
-Later, at Mercedes’s table, they spoke about the years of silence. The first conversation did not repair them. Neither did the second. On the third, Mercedes said, “I should have trusted you to be angry with me.”
+Later, at Elvia’s table, they spoke about the years of silence. The first conversation did not repair them. Neither did the second. On the third, Elvia said, “I should have trusted you to be angry with me.”
 
 Iria looked at her grandmother’s hands.
 
@@ -1206,13 +1192,13 @@ They made coffee.
 
 A month later, the passage opened again.
 
-Iria crossed with letters, replacement needles, and the coffee Iolen had requested after insisting he disliked it. Renata was waiting at the stable gate. Brío heard Iria before he saw her and lifted his head from the hay.
+Iria crossed with letters, replacement needles, and the coffee Beltrán had requested after insisting he disliked it. Mireya was waiting at the stable gate. Brío heard Iria before he saw her and lifted his head from the hay.
 
 She did not ask anyone what the movement meant.
 
 She went to him.
 
-The river route had changed. Tomás now supervised two new couriers and objected to Iria’s handwritten incident forms on the grounds that no one could read them. The ferrykeeper had replaced her measuring stake. Iolen’s terrace held through the first heavy rain.
+The river route had changed. Tomás now supervised two new couriers and objected to Iria’s handwritten incident forms on the grounds that no one could read them. The ferrykeeper had replaced her measuring stake. Beltrán’s terrace held through the first heavy rain.
 
 In Solavila, Vyne’s new schedule was posted at every station. It named the hours of rest, the emergency limits, and the people permitted to halt the draw. River crews now held one of the required keys. The inquiry continued. So did the repairs.
 
@@ -1220,7 +1206,7 @@ Some towers stayed dark.
 
 People had started meeting beneath them to watch the stars.
 
-Iria rode out with Renata’s blessing and Brío’s evident interest in leaving the yard. Her first assignment was modest: inspect the western beds, deliver a letter, return before the evening storm. She would begin the Academy term in six weeks.
+Iria rode out with Mireya’s blessing and Brío’s evident interest in leaving the yard. Her first assignment was modest: inspect the western beds, deliver a letter, return before the evening storm. She would begin the Academy term in six weeks.
 
 ![Iria rides Brío at an easy canter beneath closing violet orchids, above a dawn-lit river and distant tepuis.](/stories/horsewoman/chapter-12-2.webp)
 
@@ -1236,9 +1222,9 @@ For several minutes there was only the rhythm of the horse, the wet scent of lea
 
 Then, beneath the water's rhythm, another sound reached her.
 
-Far to the east, beyond the known passes, light moved along a mountain she had never seen on Renata’s maps. She lifted the warm lens for two breaths. The line resolved into a succession of living signatures, too distant to distinguish: something was moving through the forest high above the clouds.
+Far to the east, beyond the routes marked on Mireya's map, a low note came from the mountain above the forest. She raised the faultglass to a wet stone post. Through its two slots she found a fine seam under the road, stretched toward that distant height. It could be an old conduit, or it could be a fault in the post. She wrote down both possibilities.
 
-The stone went cold. She lowered it. The mountain remained, plain and far away.
+The plates equalized. She lowered the glass. The mountain remained, plain and far away.
 
 Brío stopped.
 

@@ -1,6 +1,6 @@
 # The Bell Below
 
-_The eastern mountain · A fourth movement of The Light She Could Not See_
+_The eastern mountain · A fourth movement of The Borrowed River_
 
 ## 22 · The Forest Above the Road
 
@@ -44,7 +44,7 @@ Iria caught her sleeve. The tread fell away. It took the loose end of the climbi
 
 Tami stared at the missing step. “That was the road I used this morning.”
 
-Iria found a dry patch for a message flare and marked it with three stones so a courier would see it from the upper trail. She sent Brío back with a written account tied to his saddle, not because he could find the Academy but because he knew Renata's station and the track was sound as far as the last ford. He resisted leaving her. She walked him to the bend herself, waited until he chose the descent, and watched his white star disappear.
+Iria found a dry patch for a message flare and marked it with three stones so a courier would see it from the upper trail. She sent Brío back with a written account tied to his saddle, not because he could find the Academy but because he knew Mireya's station and the track was sound as far as the last ford. He resisted leaving her. She walked him to the bend herself, waited until he chose the descent, and watched his white star disappear.
 
 The bell sounded again. This time both women were on firm rock.
 
@@ -66,7 +66,7 @@ Oren met them at a door cut into the mountain's underside. She was small, with o
 
 Inside, the first chamber opened around a shaft wider than the Academy courtyard. Stone galleries crossed it at different heights; on the far side, a line of suspended cisterns climbed into darkness. When water moved through a channel, the entire space changed pitch. The sound travelled under Iria's boots, up the walls, out through the bell-shaped vents above the forest. The shellbacks had followed those pulses into the hanging leaves for generations. People in the valley used the same sound to judge the next day's river.
 
-Modern copper wire had been stapled across an older carving. The carving showed three hands on three separate wheels. Below each, a narrow tile had been fitted into the stone. Oren slid one out. Its surface carried columns of tiny notches, a record of permitted draws, floods, repairs, and names. There were hundreds. The oldest were cut so finely that Iria needed Mercedes's lens to see them; she used her two breaths to find the Gate resonance in the masonry around a recently forced fastener, not to read the intentions of its maker. The lens cooled. She put it away.
+Modern copper wire had been stapled across an older carving. The carving showed three hands on three separate wheels. Below each, a narrow tile had been fitted into the stone. Its surface carried columns of tiny notches, a record of permitted draws, floods, repairs, and names. There were hundreds. Iria thought of Elvia's tile in Miralumbre: another system built so a draw had to bear a name. This was a different watershed, with its own keepers. At the end of the row, someone had cut a fourth notch and left the operator column blank. Oren asked for a rubbing before anyone moved the tile again.
 
 “They left us their measurements,” Oren said. “We called the whole place a ruin because we stopped reading them.”
 
@@ -124,7 +124,7 @@ Iva worked the blue wheel with one keeper. Iria and Oren reached the lower galle
 
 “The road settles. If we don't, the gate bursts and takes the farms.”
 
-Oren set the comb against the housing. Only two teeth sang. Iria could see a pale seam where the fastener bit into living root, but the lens was cold and the seam gave her no map of the wall beyond. She put her hand on the stone. Foundation practice let her steady one small piece while Oren loosened its pin. Pain climbed her forearm. She stopped before her fingers locked.
+Oren set the comb against the housing. Only two teeth sang. Iria could see a pale seam where the fastener bit into living root, but the faultglass had equalized and the seam gave her no map of the wall beyond. She put her hand on the stone. Foundation practice let her steady one small piece while Oren loosened its pin. Pain climbed her forearm. She stopped before her fingers locked.
 
 “Again,” Oren said.
 
@@ -156,6 +156,6 @@ Oren brought the witness tiles into daylight. Varek came down from the convoy ro
 
 Cael's reply to Iria's message reached the valley that afternoon. He had opened his old schematics to the keepers and found an error in the way the bands estimated stored water. He would correct it under their review. He had not asked when she would come back.
 
-At Renata's station, Brío had refused two attempts to send him home and waited under the dry awning. Iria walked the final mile to him. He sniffed the torn seam of her coat and turned toward the feed bin. She laughed, exhausted, and fetched him water first.
+At Mireya's station, Brío had refused two attempts to send him home and waited under the dry awning. Iria walked the final mile to him. He sniffed the torn seam of her coat and turned toward the feed bin. She laughed, exhausted, and fetched him water first.
 
 Beyond the stable, the mountain gave one low note as the restored channel filled. The sound was no promise. It was a measurement the valley could hear again.
