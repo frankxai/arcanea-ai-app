@@ -1,7 +1,8 @@
 name: Lockfile Drift Check
 
-# Blocks PRs that modify package.json without committing the corresponding
-# pnpm-lock.yaml change. Catches the recurring main-break pattern:
+# Blocks PRs that change a package.json dependency field without committing the
+# corresponding pnpm-lock.yaml change (scripts/lockfile-drift.mjs). Metadata-only
+# edits (description, scripts, version) pass. Catches the recurring main-break pattern:
 #   2026-05-04 PR #77 — package.json changed, lockfile not committed → main red
 #   2026-05-05 PR #87 — same pattern → main red 5 days
 #
@@ -17,8 +18,10 @@ on:
     # job skips on the draft and never reports once the PR is marked ready.
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
+      - "package.json"
       - "**/package.json"
       - "pnpm-lock.yaml"
+      - "scripts/lockfile-drift.mjs"
 
 permissions:
   contents: read
@@ -42,23 +45,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Compare package.json vs pnpm-lock.yaml in PR
+      # Fails only when a dependency field changed without a lockfile change; description,
+      # script and version edits pass here and are still verified by the frozen install below.
+      - name: Compare dependency changes vs pnpm-lock.yaml in PR
         id: drift
         run: |
-          BASE_REF="${{ github.event.pull_request.base.sha }}"
-          HEAD_REF="${{ github.event.pull_request.head.sha }}"
-
-          PKG_CHANGED=$(git diff --name-only "$BASE_REF" "$HEAD_REF" -- '**/package.json' | wc -l)
-          LOCK_CHANGED=$(git diff --name-only "$BASE_REF" "$HEAD_REF" -- 'pnpm-lock.yaml' | wc -l)
-
-          echo "package.json files changed: $PKG_CHANGED"
-          echo "pnpm-lock.yaml changed: $LOCK_CHANGED"
-
-          echo "pkg_changed=$PKG_CHANGED" >> "$GITHUB_OUTPUT"
-          echo "lock_changed=$LOCK_CHANGED" >> "$GITHUB_OUTPUT"
-
-          if [ "$PKG_CHANGED" -gt 0 ] && [ "$LOCK_CHANGED" -eq 0 ]; then
-            echo "::error::package.json modified but pnpm-lock.yaml unchanged"
+          if ! node scripts/lockfile-drift.mjs "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}"; then
             echo "## Lockfile drift detected" >> "$GITHUB_STEP_SUMMARY"
             echo "" >> "$GITHUB_STEP_SUMMARY"
             echo "Run \`pnpm install\` locally, then stage and commit \`pnpm-lock.yaml\`." >> "$GITHUB_STEP_SUMMARY"
