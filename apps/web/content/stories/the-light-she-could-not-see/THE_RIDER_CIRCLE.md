@@ -6,7 +6,7 @@ _An independent Arcanea story continuity · before the eastern crossing_
 
 _The western beds · Six weeks before term_
 
-The hill moved while Selene was reading the letter.
+The hill moved while Selene was reading the address.
 
 It moved only the length of a finger. In the valley below, children were driving goats across a stone footbridge, and a woman was hanging a blanket on the fence. Above them, an entire slope of bell-cups turned its pale mouths toward the sky. Water ran under the roots in threads Selene could see with her bare eyes. One of those threads went out.
 
