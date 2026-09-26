@@ -213,6 +213,7 @@ export default function CreationsPage() {
 
   useEffect(() => {
     if (!activeUserId) return;
+    const userId = activeUserId;
     let active = true;
     let refreshing = false;
     async function refreshMedia() {
@@ -220,17 +221,18 @@ export default function CreationsPage() {
       if (
         !active ||
         refreshing ||
-        cached?.userId !== activeUserId ||
+        !cached ||
+        cached.userId !== userId ||
         Date.now() - cached.signedAt < 20 * 60 * 1000
       )
         return;
       refreshing = true;
       try {
-        const media = await signStageMedia(cached.source, activeUserId!);
+        const media = await signStageMedia(cached.source, userId);
         if (!active || mediaCache.current !== cached) return;
         mediaCache.current = { ...cached, signed: media, signedAt: Date.now() };
         setSnapshot((current) =>
-          current?.userId === activeUserId
+          current?.userId === userId
             ? { ...current, media, mediaError: false }
             : current,
         );
