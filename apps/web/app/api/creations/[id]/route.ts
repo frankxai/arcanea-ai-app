@@ -13,9 +13,9 @@ import { createClient } from "@/lib/supabase/server";
 import {
   getCreation,
   updateCreation,
+  deleteCreation,
   incrementViewCount,
 } from "@/lib/database/services/creation-service";
-import { ownedCreationStoragePaths } from "@/lib/media/creation-url";
 import {
   successResponse,
   errorResponse,
@@ -173,7 +173,7 @@ export async function PATCH(
  * DELETE /api/creations/[id]
  */
 export async function DELETE(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
@@ -184,67 +184,27 @@ export async function DELETE(
       return errorResponse("INVALID_INPUT", "Creation ID is required", 400);
     }
 
-    const { data: auth } = await supabaseServer.auth.getUser();
-    if (!auth.user) {
-      return errorResponse("UNAUTHORIZED", "Sign in to delete a creation", 401);
-    }
-    const { data: creation, error: lookupError } = await supabaseServer
-      .from("creations")
-      .select("id, content, thumbnail_url")
-      .eq("id", id)
-      .eq("user_id", auth.user.id)
-      .single();
-    if (lookupError || !creation) {
-      return errorResponse("NOT_FOUND", "Creation not found", 404);
-    }
-
-    const supabaseUrl =
-      process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
-    const paths = supabaseUrl
-      ? ownedCreationStoragePaths(
-          creation.content,
-          creation.thumbnail_url,
-          auth.user.id,
-          supabaseUrl,
-        )
-      : [];
-
-    const { data: deleted, error: deleteError } = await supabaseServer
-      .from("creations")
-      .delete()
-      .eq("id", id)
-      .eq("user_id", auth.user.id)
-      .select("id")
-      .single();
-    if (deleteError || !deleted) {
+    const body = await parseRequestBody(request);
+    if (!body || !body.userId) {
       return errorResponse(
-        "DATABASE_ERROR",
-        "Creation could not be deleted",
-        500,
+        "INVALID_INPUT",
+        "User ID is required for authorization",
+        400,
       );
     }
 
-    let storageCleanupComplete = Boolean(supabaseUrl);
-    if (paths.length > 0) {
-      try {
-        const { error: storageError } = await supabaseServer.storage
-          .from("creations")
-          .remove(paths);
-        if (storageError) throw storageError;
-      } catch (storageError) {
-        storageCleanupComplete = false;
-        console.error("[creations delete] storage cleanup failed", {
-          creationId: id,
-          objectPaths: paths,
-          error: storageError,
-        });
-      }
+    const userId = body.userId as string;
+    const deleted = await deleteCreation(supabaseServer, id, userId);
+
+    if (!deleted) {
+      return errorResponse(
+        "NOT_FOUND",
+        "Creation not found or not owned by user",
+        404,
+      );
     }
 
-    return successResponse({
-      message: "Creation deleted successfully",
-      storageCleanupComplete,
-    });
+    return successResponse({ message: "Creation deleted successfully" });
   } catch (error) {
     return handleApiError(error);
   }

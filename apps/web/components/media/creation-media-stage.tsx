@@ -86,6 +86,7 @@ function MediaThumbnail({
       {thumbnailUrl && !failed ? (
         <Image
           src={thumbnailUrl}
+          unoptimized={thumbnailUrl.includes("/object/sign/")}
           alt=""
           fill
           sizes="80px"
@@ -165,6 +166,7 @@ function MediaPreview({
         {thumbnailUrl && !artFailed ? (
           <Image
             src={thumbnailUrl}
+            unoptimized={thumbnailUrl.includes("/object/sign/")}
             alt=""
             fill
             sizes="(max-width: 760px) 100vw, 60vw"
@@ -201,6 +203,7 @@ function MediaPreview({
       <Image
         key={creation.id}
         src={imageUrl}
+        unoptimized={imageUrl.includes("/object/sign/")}
         alt={creation.title}
         fill
         sizes="(max-width: 760px) 100vw, (max-width: 1200px) 70vw, 58vw"

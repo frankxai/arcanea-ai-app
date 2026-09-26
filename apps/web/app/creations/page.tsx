@@ -8,11 +8,13 @@ import {
   FilmStrip,
   ImageSquare,
   MusicNote,
-  Trash,
 } from "@/lib/phosphor-icons";
 import { useAuth } from "@/lib/auth/context";
 import { createClient } from "@/lib/supabase/client";
-import { creationMediaUrl, safeCreationUrl } from "@/lib/media/creation-url";
+import {
+  creationMediaUrl,
+  ownedCreationStoragePath,
+} from "@/lib/media/creation-url";
 import {
   CreationMediaStage,
   type MediaStageCreation,
@@ -25,8 +27,10 @@ type LibraryCreation = MediaStageCreation & {
 };
 type Cursor = { createdAt: string; id: string };
 const PAGE_SIZE = 24;
-const columns =
+const stageColumns =
   "id, title, type, status, content, thumbnail_url, created_at, ai_model, ai_prompt";
+const listColumns =
+  "id, title, type, status, thumbnail_url, created_at, ai_model, ai_prompt, content_source:content->>source, content_mode:content->>mode, content_prompt:content->>prompt";
 
 interface LibrarySnapshot {
   userId: string;
@@ -53,7 +57,10 @@ function mapCreation(row: {
   title: string;
   type: string;
   status: string;
-  content: unknown;
+  content?: unknown;
+  content_source?: string | null;
+  content_mode?: string | null;
+  content_prompt?: string | null;
   thumbnail_url: string | null;
   created_at: string;
   ai_model: string | null;
@@ -87,8 +94,47 @@ function mapCreation(row: {
     aiGenerated:
       Boolean(row.ai_model || row.ai_prompt) ||
       content?.source === "chat" ||
-      (content?.mode === "image" && typeof content.prompt === "string"),
+      row.content_source === "chat" ||
+      (content?.mode === "image" && typeof content.prompt === "string") ||
+      (row.content_mode === "image" && Boolean(row.content_prompt)),
   };
+}
+
+async function signStageMedia(creations: LibraryCreation[], userId: string) {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!supabaseUrl) return creations;
+  const paths = new Set<string>();
+  for (const creation of creations) {
+    for (const value of [
+      creation.fileUrl,
+      creation.thumbnailUrl,
+      creation.captionsUrl,
+      creation.transcriptUrl,
+    ]) {
+      const path = ownedCreationStoragePath(value, userId, supabaseUrl);
+      if (path) paths.add(path);
+    }
+  }
+  if (!paths.size) return creations;
+  const pathList = [...paths];
+  const { data, error } = await createClient()
+    .storage.from("creations")
+    .createSignedUrls(pathList, 60 * 30);
+  if (error || !data) throw error ?? new Error("Media signing failed");
+  const signed = new Map(
+    data.map((entry, index) => [pathList[index], entry.signedUrl ?? null]),
+  );
+  function url(value: string | null | undefined): string | null {
+    const path = ownedCreationStoragePath(value, userId, supabaseUrl!);
+    return path ? (signed.get(path) ?? null) : (value ?? null);
+  }
+  return creations.map((creation) => ({
+    ...creation,
+    fileUrl: url(creation.fileUrl),
+    thumbnailUrl: url(creation.thumbnailUrl),
+    captionsUrl: url(creation.captionsUrl),
+    transcriptUrl: url(creation.transcriptUrl),
+  }));
 }
 
 async function fetchPage(
@@ -98,7 +144,7 @@ async function fetchPage(
 ) {
   let query = createClient()
     .from("creations")
-    .select(columns)
+    .select(listColumns)
     .eq("user_id", userId)
     .order("created_at", { ascending: false })
     .order("id", { ascending: false });
@@ -148,24 +194,44 @@ function TypeIcon({ type }: { type: string }) {
 
 function CreationRow({
   creation,
-  deletingId,
-  onDelete,
+  userId,
 }: {
   creation: LibraryCreation;
-  deletingId: string | null;
-  onDelete: (creation: LibraryCreation) => void;
+  userId: string;
 }) {
   const [expanded, setExpanded] = useState(false);
+  const [detail, setDetail] = useState<unknown>(undefined);
+  const [detailLoading, setDetailLoading] = useState(false);
+  const [detailError, setDetailError] = useState(false);
   const isMedia = ["image", "video", "music", "audio"].includes(creation.type);
-  const originalUrl = isMedia
-    ? (safeCreationUrl(creation.fileUrl) ??
-      (creation.type === "image"
-        ? safeCreationUrl(creation.thumbnailUrl)
-        : null))
-    : null;
-  const textContent =
-    !isMedia && expanded ? readableContent(creation.content) : null;
+  const originalUrl = isMedia ? `/api/creations/${creation.id}/media` : null;
+  const textContent = !isMedia && expanded ? readableContent(detail) : null;
   const detailId = `creation-detail-${creation.id}`;
+
+  async function toggleDetail() {
+    if (expanded) {
+      setExpanded(false);
+      return;
+    }
+    setExpanded(true);
+    if (detail !== undefined) return;
+    setDetailLoading(true);
+    setDetailError(false);
+    try {
+      const { data, error } = await createClient()
+        .from("creations")
+        .select("content")
+        .eq("id", creation.id)
+        .eq("user_id", userId)
+        .single();
+      if (error || !data) setDetailError(true);
+      else setDetail(data.content);
+    } catch {
+      setDetailError(true);
+    } finally {
+      setDetailLoading(false);
+    }
+  }
 
   return (
     <li className="min-w-0 rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-4">
@@ -211,21 +277,12 @@ function CreationRow({
               type="button"
               aria-expanded={expanded}
               aria-controls={detailId}
-              onClick={() => setExpanded((value) => !value)}
+              onClick={() => void toggleDetail()}
               className="min-h-11 rounded-[var(--arc-radius-xl)] px-3 text-sm text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
             >
               {expanded ? "Close" : "Read"}
             </button>
           ) : null}
-          <button
-            type="button"
-            onClick={() => onDelete(creation)}
-            disabled={deletingId !== null}
-            aria-label={`Delete ${creation.title}`}
-            className="flex min-h-11 min-w-11 items-center justify-center rounded-[var(--arc-radius-xl)] text-[var(--arc-text-muted)] hover:bg-[var(--arc-cosmic-raised)] hover:text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)] disabled:opacity-40"
-          >
-            <Trash size={18} aria-hidden="true" />
-          </button>
         </div>
       </div>
       {!isMedia && (
@@ -238,7 +295,12 @@ function CreationRow({
             tabIndex={0}
             className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words font-sans text-sm leading-7 text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
           >
-            {textContent ?? "No saved content is available for this record."}
+            {detailLoading
+              ? "Loading saved content…"
+              : detailError
+                ? "Saved content could not load. Close and try again."
+                : (textContent ??
+                  "No saved content is available for this record.")}
           </pre>
         </div>
       )}
@@ -251,9 +313,6 @@ export default function CreationsPage() {
   const [snapshot, setSnapshot] = useState<LibrarySnapshot | null>(null);
   const [filter, setFilter] = useState<Filter>("all");
   const [retry, setRetry] = useState(0);
-  const [deletingId, setDeletingId] = useState<string | null>(null);
-  const [deleteError, setDeleteError] = useState(false);
-  const [deleteWarning, setDeleteWarning] = useState(false);
   const [loadingMoreKey, setLoadingMoreKey] = useState<string | null>(null);
   const [loadMoreErrorKey, setLoadMoreErrorKey] = useState<string | null>(null);
 
@@ -267,7 +326,7 @@ export default function CreationsPage() {
         fetchPage(userId, filter, null),
         client
           .from("creations")
-          .select(columns)
+          .select(stageColumns)
           .eq("user_id", userId)
           .in("type", ["image", "video", "music", "audio"])
           .order("created_at", { ascending: false })
@@ -284,15 +343,26 @@ export default function CreationsPage() {
         mediaResult && !mediaResult.error ? (mediaResult.data ?? []) : [];
       const pageRows = rows.slice(0, PAGE_SIZE);
       const last = pageRows.at(-1);
+      let media = mediaRows.map(mapCreation);
+      let mediaError = !mediaResult || Boolean(mediaResult.error);
+      if (!mediaError) {
+        try {
+          media = await signStageMedia(media, userId);
+        } catch {
+          media = [];
+          mediaError = true;
+        }
+      }
+      if (!active) return;
       setSnapshot({
         userId,
         filter,
         items: pageRows.map(mapCreation),
-        media: mediaRows.map(mapCreation),
+        media,
         nextCursor: last ? { createdAt: last.created_at, id: last.id } : null,
         hasMore: rows.length > PAGE_SIZE,
         error: !itemsResult || Boolean(itemsResult.error),
-        mediaError: !mediaResult || Boolean(mediaResult.error),
+        mediaError,
       });
     }
 
@@ -362,33 +432,6 @@ export default function CreationsPage() {
     }
   }
 
-  async function deleteCreation(creation: LibraryCreation) {
-    if (
-      !user ||
-      !window.confirm(`Delete ${creation.title}? This cannot be undone.`)
-    )
-      return;
-    setDeletingId(creation.id);
-    setDeleteError(false);
-    setDeleteWarning(false);
-    try {
-      const response = await fetch(`/api/creations/${creation.id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error("Creation could not be deleted");
-      const result = (await response.json()) as {
-        data?: { storageCleanupComplete?: boolean };
-      };
-      setDeleteWarning(result.data?.storageCleanupComplete === false);
-      setSnapshot(null);
-      setRetry((value) => value + 1);
-    } catch {
-      setDeleteError(true);
-    } finally {
-      setDeletingId(null);
-    }
-  }
-
   return (
     <main className="min-h-screen bg-[var(--arc-cosmic-void)] px-4 pb-20 pt-9 text-[var(--arc-text-primary)] sm:px-6">
       <div className="mx-auto max-w-7xl">
@@ -454,22 +497,6 @@ export default function CreationsPage() {
             </p>
 
             <section className="mt-12" aria-labelledby="recent-creations-title">
-              {deleteError && (
-                <p
-                  role="alert"
-                  className="mb-5 rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] p-4 text-sm text-[var(--arc-text-primary)]"
-                >
-                  This creation could not be deleted. Try again.
-                </p>
-              )}
-              {deleteWarning && (
-                <p
-                  role="status"
-                  className="mb-5 rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] p-4 text-sm text-[var(--arc-text-secondary)]"
-                >
-                  The creation was deleted. Stored file cleanup needs attention.
-                </p>
-              )}
               <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
                 <div>
                   <h2
@@ -543,8 +570,7 @@ export default function CreationsPage() {
                     <CreationRow
                       key={creation.id}
                       creation={creation}
-                      deletingId={deletingId}
-                      onDelete={(item) => void deleteCreation(item)}
+                      userId={user.id}
                     />
                   ))}
                 </ul>

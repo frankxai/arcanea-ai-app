@@ -44,7 +44,7 @@ const uploadMetadataSchema = z.object({
     .string()
     .regex(/^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/)
     .optional(),
-  transcript: z.string().max(100_000).optional(),
+  transcript: z.string().max(4_000).optional(),
   transcriptUrl: accessibleUrl.optional(),
 });
 
@@ -168,6 +168,14 @@ export async function POST(request: NextRequest) {
 
     if (insertError) {
       console.error("[creations upload] db error:", insertError);
+      const { error: cleanupError } = await supabase.storage
+        .from("creations")
+        .remove([storagePath]);
+      if (cleanupError)
+        console.error("[creations upload] orphan cleanup failed:", {
+          storagePath,
+          error: cleanupError,
+        });
       return NextResponse.json({ error: insertError.message }, { status: 500 });
     }
 
@@ -192,10 +200,14 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const { data: signed } = await supabase.storage
+      .from("creations")
+      .createSignedUrl(storagePath, 60 * 10);
+
     return NextResponse.json({
       data: {
         id: creation.id,
-        url: urlData.publicUrl,
+        url: signed?.signedUrl ?? `/api/creations/${creation.id}/media`,
         title: creation.title,
         type: creation.type,
         createdAt: creation.created_at,

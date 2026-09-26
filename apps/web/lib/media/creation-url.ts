@@ -90,31 +90,33 @@ export function ownedCreationStoragePaths(
   }
 
   const paths = new Set<string>();
-  let origin: string;
-  try {
-    origin = new URL(supabaseUrl).origin;
-  } catch {
-    return [];
-  }
-  const prefix = "/storage/v1/object/public/creations/";
   for (const value of values) {
-    if (typeof value !== "string") continue;
-    try {
-      const url = new URL(value);
-      if (url.origin !== origin || !url.pathname.startsWith(prefix)) continue;
-      const path = decodeURIComponent(url.pathname.slice(prefix.length));
-      if (
-        !path.startsWith(`${userId}/`) ||
-        path
-          .split("/")
-          .some((segment) => segment === ".." || segment === ".") ||
-        path.includes("\\")
-      )
-        continue;
-      paths.add(path);
-    } catch {
-      continue;
-    }
+    const path = ownedCreationStoragePath(value, userId, supabaseUrl);
+    if (path) paths.add(path);
   }
   return [...paths];
+}
+
+export function ownedCreationStoragePath(
+  value: unknown,
+  userId: string,
+  supabaseUrl: string,
+): string | null {
+  if (typeof value !== "string") return null;
+  try {
+    const origin = new URL(supabaseUrl).origin;
+    const url = new URL(value);
+    const prefix = "/storage/v1/object/public/creations/";
+    if (url.origin !== origin || !url.pathname.startsWith(prefix)) return null;
+    const path = decodeURIComponent(url.pathname.slice(prefix.length));
+    if (
+      !path.startsWith(`${userId}/`) ||
+      path.split("/").some((segment) => segment === ".." || segment === ".") ||
+      path.includes("\\")
+    )
+      return null;
+    return path;
+  } catch {
+    return null;
+  }
 }

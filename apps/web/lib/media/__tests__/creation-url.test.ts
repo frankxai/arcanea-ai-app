@@ -3,6 +3,7 @@ import { test } from "node:test";
 import {
   creationMediaUrl,
   creationTypeForMime,
+  ownedCreationStoragePath,
   ownedCreationStoragePaths,
   previewableCreationUrl,
   safeCreationUrl,
@@ -93,5 +94,18 @@ test("selects only owned objects from the configured creations bucket", () => {
       project,
     ),
     [],
+  );
+  assert.equal(
+    ownedCreationStoragePath(own, owner, project),
+    `${owner}/film.mp4`,
+  );
+  assert.equal(ownedCreationStoragePath(other, owner, project), null);
+  assert.equal(
+    ownedCreationStoragePath(
+      `${project}/storage/v1/object/public/creations/${owner}/%2E%2E/other.mp4`,
+      owner,
+      project,
+    ),
+    null,
   );
 });
