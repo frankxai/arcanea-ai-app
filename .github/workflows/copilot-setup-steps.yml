@@ -28,7 +28,7 @@ jobs:
           df -h /
 
       - name: Check out repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Enable pnpm from the packageManager field
         run: corepack enable
