@@ -89,13 +89,17 @@ test("transport failure remains retryable", async (t) => {
 test("anonymous feedback is acknowledged after the insert", async (t) => {
   setStorage(t, true);
   let inserted: unknown;
-  t.mock.method(globalThis, "fetch", async (input: RequestInfo | URL, init?: RequestInit) => {
-    const url = new URL(input instanceof Request ? input.url : String(input));
-    assert.equal(url.pathname, "/rest/v1/feedback");
-    assert.equal(init?.method, "POST");
-    inserted = JSON.parse(String(init?.body));
-    return new Response(null, { status: 201 });
-  });
+  t.mock.method(
+    globalThis,
+    "fetch",
+    async (input: RequestInfo | URL, init?: RequestInit) => {
+      const url = new URL(input instanceof Request ? input.url : String(input));
+      assert.equal(url.pathname, "/rest/v1/feedback");
+      assert.equal(init?.method, "POST");
+      inserted = JSON.parse(String(init?.body));
+      return new Response(null, { status: 201 });
+    },
+  );
 
   const response = await POST(
     request({
