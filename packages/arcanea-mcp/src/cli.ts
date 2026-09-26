@@ -10,16 +10,21 @@ try {
     process.stdout.write(`${RUNTIME_INFO.version}\n`);
   } else {
     const { createRuntimeServer } = await import("./runtime-server.js");
+    const { resolveToolsets } = await import("./toolsets.js");
     const { runStdio, runHttp } = await import("./transport.js");
+    const toolsets =
+      options.toolsets ?? (process.env.ARCANEA_TOOLSETS || "core");
+    resolveToolsets(toolsets);
+    const create = () => createRuntimeServer({ toolsets });
     if (options.transport === "http") {
-      const running = await runHttp(createRuntimeServer, options.port);
+      const running = await runHttp(create, options.port);
       const shutdown = () => {
         void running.close().then(() => process.exit(0));
       };
       process.once("SIGINT", shutdown);
       process.once("SIGTERM", shutdown);
     } else {
-      await runStdio(createRuntimeServer());
+      await runStdio(create());
     }
   }
 } catch (error) {

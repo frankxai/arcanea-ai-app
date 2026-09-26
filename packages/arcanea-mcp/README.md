@@ -57,6 +57,23 @@ On Windows, use forward slashes in JSON paths, such as `C:/projects/arcanea-ai-a
 
 Core world generation, graph storage and planning need no provider key. Other connectors, renderers or model hosts you add have their own credentials and costs. Keep sensitive manuscripts and private world material in a data directory you control.
 
+## Toolsets
+
+Every tool a server lists costs the agent context on every turn, so the CLI serves the 12-tool `core` set by default. Add groups with `--toolsets core,world` or `ARCANEA_TOOLSETS=all`; the flag wins over the variable.
+
+| Toolset          | Tools                                                                                                                                                                                                                                 |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `core` (default) | generate_character, generate_location, generate_story_prompt, world_report, validate_canon, identify_gate, plan_world, plan_book, save_world, load_world, search_arcanea_vault, get_workflow_recipe                                   |
+| `world`          | generate_magic, generate_creature, generate_artifact, generate_name, link_creations, get_related, suggest_connections, get_world_graph, find_path, export_world, generate_conflict, weave_narrative, generate_quest, analyze_factions |
+| `coaching`       | diagnose_block, invoke_luminor, deep_diagnosis, convene_council, luminor_debate, get_journey, check_milestones                                                                                                                        |
+| `agents`         | orchestrate, list_agents, agent_info, assess_world, match_skill, active_sessions                                                                                                                                                      |
+| `production`     | plan_game, plan_music_project, plan_cinematic_scene, generate_asset_brief, export_project_context, list_arcanea_studios                                                                                                               |
+| `visuals`        | visualize_character, visualize_location, visualize_creature, apl_enhance, apl_anti_slop, apl_format                                                                                                                                   |
+| `vault`          | save_to_arcanea_vault, list_arcanea_worlds, get_arcanea_bridge_status                                                                                                                                                                 |
+| `library`        | search_sovereign_depths, search_weight_of_wonders                                                                                                                                                                                     |
+
+Library callers of `createServer()` or `createRuntimeServer()` get every tool unless they pass `{ toolsets }`.
+
 ## Saved worlds
 
 Generated creation, planning-task and planning-session identifiers are opaque
