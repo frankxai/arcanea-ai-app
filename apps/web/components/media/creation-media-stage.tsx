@@ -8,7 +8,10 @@ import {
   ImageSquare,
   MusicNote,
 } from "@/lib/phosphor-icons";
-import { safeCreationUrl as safeMediaUrl } from "@/lib/media/creation-url";
+import {
+  safeCreationUrl as safeMediaUrl,
+  previewableCreationUrl as previewableUrl,
+} from "@/lib/media/creation-url";
 import styles from "./creation-media-stage.module.css";
 
 export interface MediaStageCreation {
@@ -38,26 +41,6 @@ function mediaKind(type: string): MediaKind | null {
   )
     return type;
   return null;
-}
-
-function previewableUrl(
-  value: string | null | undefined,
-  origin: string | null,
-): string | null {
-  const safeUrl = safeMediaUrl(value);
-  if (!safeUrl || safeUrl.startsWith("/")) return safeUrl;
-  const parsed = new URL(safeUrl);
-  const hostname = parsed.hostname;
-  if (origin && parsed.origin === origin) {
-    return `${parsed.pathname}${parsed.search}${parsed.hash}`;
-  }
-  return hostname.endsWith(".supabase.co") ||
-    hostname.endsWith(".public.blob.vercel-storage.com") ||
-    hostname === "media.starlightintelligence.org" ||
-    hostname === "arcanea.ai" ||
-    hostname === "www.arcanea.ai"
-    ? safeUrl
-    : null;
 }
 
 function mediaLabel(kind: MediaKind): string {
@@ -132,7 +115,8 @@ function MediaPreview({
   const [failed, setFailed] = useState(false);
   const [artFailed, setArtFailed] = useState(false);
   const originalUrl =
-    safeMediaUrl(creation.fileUrl) ?? safeMediaUrl(creation.thumbnailUrl);
+    safeMediaUrl(creation.fileUrl) ??
+    (kind === "image" ? safeMediaUrl(creation.thumbnailUrl) : null);
   const fileUrl = previewableUrl(creation.fileUrl, origin);
   const thumbnailUrl = previewableUrl(creation.thumbnailUrl, origin);
   const captionsUrl = previewableUrl(creation.captionsUrl, origin);
@@ -154,6 +138,7 @@ function MediaPreview({
         className={styles.video}
         controls
         playsInline
+        crossOrigin={captionsUrl ? "anonymous" : undefined}
         preload="none"
         poster={thumbnailUrl ?? undefined}
         aria-label={"Play " + creation.title}
@@ -251,7 +236,12 @@ export function CreationMediaStage({
     media.find(({ creation }) => creation.id === selectedId) ?? media[0];
   const selectedOriginalUrl = selected
     ? (safeMediaUrl(selected.creation.fileUrl) ??
-      safeMediaUrl(selected.creation.thumbnailUrl))
+      (selected.kind === "image"
+        ? safeMediaUrl(selected.creation.thumbnailUrl)
+        : null))
+    : null;
+  const selectedCaptionsUrl = selected
+    ? safeMediaUrl(selected.creation.captionsUrl)
     : null;
   const selectedTranscriptUrl = selected
     ? safeMediaUrl(selected.creation.transcriptUrl)
@@ -302,6 +292,15 @@ export function CreationMediaStage({
                     rel="noopener noreferrer"
                   >
                     Open original <ArrowUpRight size={15} aria-hidden="true" />
+                  </a>
+                )}
+                {selectedCaptionsUrl && selected.kind === "video" && (
+                  <a
+                    href={selectedCaptionsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Captions file <ArrowUpRight size={15} aria-hidden="true" />
                   </a>
                 )}
               </div>

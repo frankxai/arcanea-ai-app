@@ -47,6 +47,25 @@ export function safeCreationUrl(
   }
 }
 
+export function previewableCreationUrl(
+  value: string | null | undefined,
+  origin: string | null,
+): string | null {
+  const safeUrl = safeCreationUrl(value);
+  if (!safeUrl || safeUrl.startsWith("/")) return safeUrl;
+  const parsed = new URL(safeUrl);
+  const hostname = parsed.hostname;
+  if (origin && parsed.origin === origin)
+    return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+  return hostname.endsWith(".supabase.co") ||
+    hostname.endsWith(".public.blob.vercel-storage.com") ||
+    hostname === "media.starlightintelligence.org" ||
+    hostname === "arcanea.ai" ||
+    hostname === "www.arcanea.ai"
+    ? safeUrl
+    : null;
+}
+
 export function ownedCreationStoragePaths(
   content: unknown,
   thumbnailUrl: string | null,

@@ -36,6 +36,7 @@ interface LibrarySnapshot {
   nextCursor: Cursor | null;
   hasMore: boolean;
   error: boolean;
+  mediaError: boolean;
 }
 
 const filters: Array<{ id: Filter; label: string }> = [
@@ -158,7 +159,9 @@ function CreationRow({
   const isMedia = ["image", "video", "music", "audio"].includes(creation.type);
   const originalUrl = isMedia
     ? (safeCreationUrl(creation.fileUrl) ??
-      safeCreationUrl(creation.thumbnailUrl))
+      (creation.type === "image"
+        ? safeCreationUrl(creation.thumbnailUrl)
+        : null))
     : null;
   const textContent =
     !isMedia && expanded ? readableContent(creation.content) : null;
@@ -250,6 +253,7 @@ export default function CreationsPage() {
   const [retry, setRetry] = useState(0);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [deleteError, setDeleteError] = useState(false);
+  const [deleteWarning, setDeleteWarning] = useState(false);
   const [loadingMoreKey, setLoadingMoreKey] = useState<string | null>(null);
   const [loadMoreErrorKey, setLoadMoreErrorKey] = useState<string | null>(null);
 
@@ -259,7 +263,7 @@ export default function CreationsPage() {
     let active = true;
     const client = createClient();
     async function load() {
-      const [itemsResult, mediaResult] = await Promise.all([
+      const [itemsSettled, mediaSettled] = await Promise.allSettled([
         fetchPage(userId, filter, null),
         client
           .from("creations")
@@ -270,29 +274,25 @@ export default function CreationsPage() {
           .limit(18),
       ]);
       if (!active) return;
-      if (itemsResult.error || mediaResult.error) {
-        setSnapshot({
-          userId,
-          filter,
-          items: [],
-          media: [],
-          nextCursor: null,
-          hasMore: false,
-          error: true,
-        });
-        return;
-      }
-      const rows = itemsResult.data ?? [];
+      const itemsResult =
+        itemsSettled.status === "fulfilled" ? itemsSettled.value : null;
+      const mediaResult =
+        mediaSettled.status === "fulfilled" ? mediaSettled.value : null;
+      const rows =
+        itemsResult && !itemsResult.error ? (itemsResult.data ?? []) : [];
+      const mediaRows =
+        mediaResult && !mediaResult.error ? (mediaResult.data ?? []) : [];
       const pageRows = rows.slice(0, PAGE_SIZE);
       const last = pageRows.at(-1);
       setSnapshot({
         userId,
         filter,
         items: pageRows.map(mapCreation),
-        media: (mediaResult.data ?? []).map(mapCreation),
+        media: mediaRows.map(mapCreation),
         nextCursor: last ? { createdAt: last.created_at, id: last.id } : null,
         hasMore: rows.length > PAGE_SIZE,
-        error: false,
+        error: !itemsResult || Boolean(itemsResult.error),
+        mediaError: !mediaResult || Boolean(mediaResult.error),
       });
     }
 
@@ -306,6 +306,7 @@ export default function CreationsPage() {
           nextCursor: null,
           hasMore: false,
           error: true,
+          mediaError: true,
         });
     });
     return () => {
@@ -369,11 +370,16 @@ export default function CreationsPage() {
       return;
     setDeletingId(creation.id);
     setDeleteError(false);
+    setDeleteWarning(false);
     try {
       const response = await fetch(`/api/creations/${creation.id}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error("Creation could not be deleted");
+      const result = (await response.json()) as {
+        data?: { storageCleanupComplete?: boolean };
+      };
+      setDeleteWarning(result.data?.storageCleanupComplete === false);
       setSnapshot(null);
       setRetry((value) => value + 1);
     } catch {
@@ -430,7 +436,17 @@ export default function CreationsPage() {
           </section>
         ) : (
           <>
-            <CreationMediaStage creations={snapshot?.media ?? []} />
+            {snapshot?.mediaError ? (
+              <p
+                role="alert"
+                className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-6 text-sm text-[var(--arc-text-secondary)]"
+              >
+                Recent media previews could not load. Your saved work remains
+                available below.
+              </p>
+            ) : (
+              <CreationMediaStage creations={snapshot?.media ?? []} />
+            )}
 
             <p className="mt-5 text-xs leading-5 text-[var(--arc-text-muted)]">
               Arcanea AI creations are labeled AI-generated when their source is
@@ -444,6 +460,14 @@ export default function CreationsPage() {
                   className="mb-5 rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] p-4 text-sm text-[var(--arc-text-primary)]"
                 >
                   This creation could not be deleted. Try again.
+                </p>
+              )}
+              {deleteWarning && (
+                <p
+                  role="status"
+                  className="mb-5 rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] p-4 text-sm text-[var(--arc-text-secondary)]"
+                >
+                  The creation was deleted. Stored file cleanup needs attention.
                 </p>
               )}
               <div className="mb-5 flex flex-wrap items-end justify-between gap-4">

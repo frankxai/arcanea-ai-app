@@ -4,6 +4,7 @@ import {
   creationMediaUrl,
   creationTypeForMime,
   ownedCreationStoragePaths,
+  previewableCreationUrl,
   safeCreationUrl,
 } from "../creation-url";
 
@@ -52,6 +53,22 @@ test("only treats HTTPS or local paths as openable media URLs", () => {
   assert.equal(safeCreationUrl("javascript:alert(1)"), null);
   assert.equal(safeCreationUrl("//evil.example/film.mp4"), null);
   assert.equal(safeCreationUrl("/media/film.mp4"), "/media/film.mp4");
+});
+
+test("preview hosts match the upload caption policy", () => {
+  const origin = "https://arcanea.ai";
+  assert.equal(
+    previewableCreationUrl("https://arcanea.ai/captions/film.vtt", origin),
+    "/captions/film.vtt",
+  );
+  assert.equal(
+    previewableCreationUrl("https://project.supabase.co/film.vtt", origin),
+    "https://project.supabase.co/film.vtt",
+  );
+  assert.equal(
+    previewableCreationUrl("https://unknown.example/film.vtt", origin),
+    null,
+  );
 });
 
 test("selects only owned objects from the configured creations bucket", () => {

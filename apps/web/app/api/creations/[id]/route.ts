@@ -200,31 +200,14 @@ export async function DELETE(
 
     const supabaseUrl =
       process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
-    if (!supabaseUrl) {
-      return errorResponse(
-        "EXTERNAL_SERVICE_ERROR",
-        "Storage is unavailable",
-        503,
-      );
-    }
-    const paths = ownedCreationStoragePaths(
-      creation.content,
-      creation.thumbnail_url,
-      auth.user.id,
-      supabaseUrl,
-    );
-    if (paths.length > 0) {
-      const { error: storageError } = await supabaseServer.storage
-        .from("creations")
-        .remove(paths);
-      if (storageError) {
-        return errorResponse(
-          "EXTERNAL_SERVICE_ERROR",
-          "Stored media could not be deleted",
-          502,
-        );
-      }
-    }
+    const paths = supabaseUrl
+      ? ownedCreationStoragePaths(
+          creation.content,
+          creation.thumbnail_url,
+          auth.user.id,
+          supabaseUrl,
+        )
+      : [];
 
     const { data: deleted, error: deleteError } = await supabaseServer
       .from("creations")
@@ -241,7 +224,27 @@ export async function DELETE(
       );
     }
 
-    return successResponse({ message: "Creation deleted successfully" });
+    let storageCleanupComplete = Boolean(supabaseUrl);
+    if (paths.length > 0) {
+      try {
+        const { error: storageError } = await supabaseServer.storage
+          .from("creations")
+          .remove(paths);
+        if (storageError) throw storageError;
+      } catch (storageError) {
+        storageCleanupComplete = false;
+        console.error("[creations delete] storage cleanup failed", {
+          creationId: id,
+          objectPaths: paths,
+          error: storageError,
+        });
+      }
+    }
+
+    return successResponse({
+      message: "Creation deleted successfully",
+      storageCleanupComplete,
+    });
   } catch (error) {
     return handleApiError(error);
   }

@@ -21,7 +21,11 @@ import { z } from "zod";
 import { getProjectWorkspaceForCurrentUser } from "@/lib/projects/server";
 import { enrichProjectGraph } from "@/lib/projects/enrichment";
 import { recordProjectTrace } from "@/lib/projects/trace";
-import { creationTypeForMime, safeCreationUrl } from "@/lib/media/creation-url";
+import {
+  creationTypeForMime,
+  previewableCreationUrl,
+  safeCreationUrl,
+} from "@/lib/media/creation-url";
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
 const accessibleUrl = z
@@ -72,6 +76,15 @@ export async function POST(request: NextRequest) {
         );
       }
       metadata = validation.data;
+    }
+    if (
+      metadata.captionsUrl &&
+      !previewableCreationUrl(metadata.captionsUrl, new URL(request.url).origin)
+    ) {
+      return NextResponse.json(
+        { error: "Caption URL must use a supported media host." },
+        { status: 400 },
+      );
     }
 
     // Check if Supabase is configured
