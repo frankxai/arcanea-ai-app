@@ -115,9 +115,12 @@ function MediaPreview({
 }) {
   const [failed, setFailed] = useState(false);
   const [artFailed, setArtFailed] = useState(false);
-  const originalUrl =
+  const hasOriginal =
     safeMediaUrl(creation.fileUrl) ??
     (kind === "image" ? safeMediaUrl(creation.thumbnailUrl) : null);
+  const originalUrl = hasOriginal
+    ? `/api/creations/${creation.id}/media`
+    : null;
   const fileUrl = previewableUrl(creation.fileUrl, origin);
   const thumbnailUrl = previewableUrl(creation.thumbnailUrl, origin);
   const captionsUrl = previewableUrl(creation.captionsUrl, origin);
@@ -237,17 +240,23 @@ export function CreationMediaStage({
   );
   const selected =
     media.find(({ creation }) => creation.id === selectedId) ?? media[0];
-  const selectedOriginalUrl = selected
-    ? (safeMediaUrl(selected.creation.fileUrl) ??
+  const selectedOriginalUrl =
+    selected &&
+    (safeMediaUrl(selected.creation.fileUrl) ??
       (selected.kind === "image"
         ? safeMediaUrl(selected.creation.thumbnailUrl)
         : null))
-    : null;
+      ? `/api/creations/${selected.creation.id}/media`
+      : null;
   const selectedCaptionsUrl = selected
     ? safeMediaUrl(selected.creation.captionsUrl)
+      ? `/api/creations/${selected.creation.id}/media?field=captions`
+      : null
     : null;
   const selectedTranscriptUrl = selected
     ? safeMediaUrl(selected.creation.transcriptUrl)
+      ? `/api/creations/${selected.creation.id}/media?field=transcript`
+      : null
     : null;
 
   return (
