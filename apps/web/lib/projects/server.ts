@@ -194,9 +194,12 @@ function mapCreationRow(row: Record<string, unknown>): ProjectCreationRecord {
       : row.type === "music" || row.type === "audio"
         ? ["audioUrl", "fileUrl", "url"]
         : ["imageUrl", "fileUrl", "url"];
-  const fileUrl = mediaFields
-    .map((field) => content[field])
-    .find((value): value is string => typeof value === "string");
+  const fileUrl =
+    typeof row.content === "string"
+      ? row.content
+      : mediaFields
+          .map((field) => content[field])
+          .find((value): value is string => typeof value === "string");
 
   return {
     id: String(row.id),

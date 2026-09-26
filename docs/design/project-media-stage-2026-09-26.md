@@ -17,7 +17,7 @@ The stage uses existing design tokens and Phosphor icons. It introduces no templ
 ## Data and interaction contract
 
 - Query up to 18 recent creations of type image, video, music, or audio, filtered by the authenticated owner and project. Other creation types do not displace media in this query.
-- Read media URLs from the existing `content` JSON (`imageUrl`, `videoUrl`, `audioUrl`, `fileUrl`, or `url`) and use `thumbnail_url` for still images and posters. An absent or unsupported asset displays an honest unavailable state and an original link when an HTTPS URL exists. The current generated Supabase type contract does not include a `file_url` column.
+- Read media URLs from the existing `content` JSON, including the string URL stored by the upload route and object keys (`imageUrl`, `videoUrl`, `audioUrl`, `fileUrl`, or `url`); use `thumbnail_url` for still images and posters. An absent or unsupported asset displays an honest unavailable state and an original link when an HTTPS URL exists. The current generated Supabase type contract does not include a `file_url` column.
 - Embed only same-origin assets or the existing Supabase, Vercel Blob, and Starlight media hosts. The page's `media-src` policy admits those hosts for native audio and video.
 - The selected asset changes immediately on activation. Native players have controls, load on demand, and never autoplay. The selected image is optimized; thumbnails load lazily.
 - The rail is keyboard reachable, uses `aria-pressed`, and scrolls horizontally on small screens. Links and controls have visible focus states and 44 px minimum targets.
