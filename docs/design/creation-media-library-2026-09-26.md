@@ -10,8 +10,9 @@ The live `/creations` page should open with the work itself. A large preview sho
 | Mock IP registration                               | No simulated provenance action                                         | The interface stops implying a registration happened.        |
 | Signed-out public results labeled as personal work | Clear sign-in path                                                     | Ownership stays truthful.                                    |
 | Hover-only deletion                                | Keyboard-reachable delete control with confirmation and error feedback | The existing action remains available on touch and keyboard. |
-| Only the first 60 records available                | Database-filtered pages with a load-more control                       | Older work remains reachable without loading it all at once. |
+| Only the first 60 records available                | Database-filtered cursor pages with a load-more control                | Older work remains reachable as the collection changes.      |
 | Blanket synthetic-content notice                   | Visible notice and AI-origin labels where source is recorded           | Uploads are not mislabeled as generated work.                |
+| Rows without an open action                        | Readable writing and code; original links for older media              | Saved content can be revisited beyond the stage.             |
 
 ## References and decisions
 
@@ -19,12 +20,15 @@ The implementation uses the existing design tokens and Phosphor icons, native me
 
 ## Data and interaction contract
 
-- The authenticated owner gets two bounded initial queries: up to 18 recent image, video, music, or audio creations for the stage, and 24 creations plus one lookahead row for the list. The selected type is filtered by the database, and the list offers further pages until all matching records are reachable. The queries use only columns present in the connected production `creations` table.
+- The authenticated owner gets two bounded initial queries: up to 18 recent image, video, music, or audio creations for the stage, and 24 creations plus one lookahead row for the list. The selected type is filtered by the database. Later pages use a `(created_at, id)` cursor so inserts and deletes before it do not shift the next page. The queries use only columns present in the connected production `creations` table.
+- Every safe media URL has an original link in its library row, including records older than the stage window. Writing and code rows open their saved content inline. Filter controls stay mounted while results load.
 - The page marks AI-generated work when `ai_model` or `ai_prompt` is recorded, or when the known chat-save or studio-image payload identifies an AI source. A visible note explains that uploaded work may have another origin. The existing rows lack a universal provenance field, so this label reflects recorded evidence rather than claiming to classify every historic row.
 - Media URLs come from `content`, which may be a JSON string from uploads or an object with `imageUrl`, `videoUrl`, `audioUrl`, `fileUrl`, or `url`. `thumbnail_url` supplies still art when present; image uploads use the original URL as a rail thumbnail fallback.
 - Supported previews are root-relative, absolute same-origin, or stored on the existing Supabase, Vercel Blob, Arcanea, and Starlight media hosts. Other safe HTTPS originals remain linkable. Failed loads show an unavailable state and original link.
-- Audio is labeled as audio, distinct from music. The upload route now classifies `audio/*` as `audio`; read-only production schema inspection confirmed this type and the supported audio MIME types. A bounded aggregate query found no existing scalar audio uploads misclassified as text by common audio extensions.
+- Audio is labeled as audio, distinct from music. The shared Music & audio filter includes both types because the current production type constraint admits `audio` but not `music`; uploaded tracks can still be found without calling speech recordings music. The upload route classifies `audio/*` as `audio`; read-only production schema inspection confirmed this type and the supported audio MIME types. A bounded aggregate query found no existing scalar audio uploads misclassified as text by common audio extensions.
 - Selection buttons expose `aria-pressed`, the rail has a group label, controls meet a 44 px target, focus is visible, and narrow screens use a horizontal rail. There is no movement transition, so reduced-motion users receive the same calm behavior.
+- Video supports an optional captions track, and video/audio can expose an optional transcript supplied with upload metadata or already stored in creation content. Historic media with no supplied alternative still needs a transcript; the interface cannot invent one.
+- The library's delete action calls the authenticated server route. It removes URLs in this owner's `creations` storage folder before deleting the row, and leaves external URLs alone. Storage and database operations are separate; a database failure after storage removal can leave a broken row and needs operational recovery.
 - Uploads return an unavailable response when storage is unconfigured instead of fabricating a successful creation.
 
 ## Release boundary

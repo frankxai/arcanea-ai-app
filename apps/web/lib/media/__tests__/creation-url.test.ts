@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { creationMediaUrl, creationTypeForMime } from "../creation-url";
+import {
+  creationMediaUrl,
+  creationTypeForMime,
+  ownedCreationStoragePaths,
+  safeCreationUrl,
+} from "../creation-url";
 
 test("reads the JSON string URL written by the authenticated upload route", () => {
   const uploadedUrl =
@@ -41,4 +46,35 @@ test("classifies uploaded audio as audio for the media library", () => {
   assert.equal(creationTypeForMime("audio/wav"), "audio");
   assert.equal(creationTypeForMime("video/mp4"), "video");
   assert.equal(creationTypeForMime("image/png"), "image");
+});
+
+test("only treats HTTPS or local paths as openable media URLs", () => {
+  assert.equal(safeCreationUrl("javascript:alert(1)"), null);
+  assert.equal(safeCreationUrl("//evil.example/film.mp4"), null);
+  assert.equal(safeCreationUrl("/media/film.mp4"), "/media/film.mp4");
+});
+
+test("selects only owned objects from the configured creations bucket", () => {
+  const project = "https://project.supabase.co";
+  const owner = "123e4567-e89b-12d3-a456-426614174000";
+  const own = `${project}/storage/v1/object/public/creations/${owner}/film.mp4`;
+  const other = `${project}/storage/v1/object/public/creations/other-user/film.mp4`;
+  assert.deepEqual(
+    ownedCreationStoragePaths(
+      { videoUrl: own, imageUrl: other, url: "https://elsewhere.example/a" },
+      own,
+      owner,
+      project,
+    ),
+    [`${owner}/film.mp4`],
+  );
+  assert.deepEqual(
+    ownedCreationStoragePaths(
+      `${project}/storage/v1/object/public/creations/${owner}/../other/file.png`,
+      null,
+      owner,
+      project,
+    ),
+    [],
+  );
 });

@@ -6,7 +6,7 @@
  *
  * Accepts FormData with:
  *   - file: The file to upload (max 100MB)
- *   - metadata: JSON string with title, tags, isPublic
+ *   - metadata: JSON string with title, tags, isPublic, and optional accessibility assets
  *
  * If Supabase is configured:
  *   - Authenticates the user via cookie session
@@ -21,9 +21,13 @@ import { z } from "zod";
 import { getProjectWorkspaceForCurrentUser } from "@/lib/projects/server";
 import { enrichProjectGraph } from "@/lib/projects/enrichment";
 import { recordProjectTrace } from "@/lib/projects/trace";
-import { creationTypeForMime } from "@/lib/media/creation-url";
+import { creationTypeForMime, safeCreationUrl } from "@/lib/media/creation-url";
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
+const accessibleUrl = z
+  .string()
+  .max(2048)
+  .refine((value) => safeCreationUrl(value) !== null);
 
 const uploadMetadataSchema = z.object({
   title: z.string().optional(),
@@ -31,6 +35,13 @@ const uploadMetadataSchema = z.object({
   isPublic: z.boolean().optional(),
   projectId: z.string().uuid().optional(),
   sourceSessionId: z.string().min(1).max(255).optional(),
+  captionsUrl: accessibleUrl.optional(),
+  captionsLanguage: z
+    .string()
+    .regex(/^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/)
+    .optional(),
+  transcript: z.string().max(100_000).optional(),
+  transcriptUrl: accessibleUrl.optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -121,7 +132,16 @@ export async function POST(request: NextRequest) {
         user_id: user.id,
         title: metadata.title || file.name,
         type: creationType,
-        content: urlData.publicUrl,
+        content:
+          metadata.captionsUrl || metadata.transcript || metadata.transcriptUrl
+            ? {
+                fileUrl: urlData.publicUrl,
+                captionsUrl: metadata.captionsUrl ?? null,
+                captionsLanguage: metadata.captionsLanguage ?? null,
+                transcript: metadata.transcript ?? null,
+                transcriptUrl: metadata.transcriptUrl ?? null,
+              }
+            : urlData.publicUrl,
         tags: metadata.tags || [],
         visibility: metadata.isPublic === false ? "private" : "public",
         status: "published",

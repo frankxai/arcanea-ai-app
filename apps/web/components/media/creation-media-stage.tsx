@@ -8,6 +8,7 @@ import {
   ImageSquare,
   MusicNote,
 } from "@/lib/phosphor-icons";
+import { safeCreationUrl as safeMediaUrl } from "@/lib/media/creation-url";
 import styles from "./creation-media-stage.module.css";
 
 export interface MediaStageCreation {
@@ -18,6 +19,10 @@ export interface MediaStageCreation {
   fileUrl?: string | null;
   thumbnailUrl?: string | null;
   aiGenerated?: boolean;
+  captionsUrl?: string | null;
+  captionsLanguage?: string | null;
+  transcript?: string | null;
+  transcriptUrl?: string | null;
 }
 
 type MediaKind = "image" | "video" | "music" | "audio";
@@ -33,22 +38,6 @@ function mediaKind(type: string): MediaKind | null {
   )
     return type;
   return null;
-}
-
-function safeMediaUrl(value: string | null | undefined): string | null {
-  if (!value) return null;
-  if (
-    value.startsWith("/") &&
-    !value.startsWith("//") &&
-    !value.startsWith("/\\")
-  )
-    return value;
-  try {
-    const url = new URL(value);
-    return url.protocol === "https:" ? url.href : null;
-  } catch {
-    return null;
-  }
 }
 
 function previewableUrl(
@@ -146,6 +135,7 @@ function MediaPreview({
     safeMediaUrl(creation.fileUrl) ?? safeMediaUrl(creation.thumbnailUrl);
   const fileUrl = previewableUrl(creation.fileUrl, origin);
   const thumbnailUrl = previewableUrl(creation.thumbnailUrl, origin);
+  const captionsUrl = previewableUrl(creation.captionsUrl, origin);
   const imageUrl = fileUrl ?? thumbnailUrl;
 
   if (
@@ -170,6 +160,15 @@ function MediaPreview({
         onError={() => setFailed(true)}
       >
         <source src={fileUrl} />
+        {captionsUrl && (
+          <track
+            kind="captions"
+            src={captionsUrl}
+            srcLang={creation.captionsLanguage || "und"}
+            label="Captions"
+            default
+          />
+        )}
         Your browser cannot play this film.
       </video>
     );
@@ -254,6 +253,9 @@ export function CreationMediaStage({
     ? (safeMediaUrl(selected.creation.fileUrl) ??
       safeMediaUrl(selected.creation.thumbnailUrl))
     : null;
+  const selectedTranscriptUrl = selected
+    ? safeMediaUrl(selected.creation.transcriptUrl)
+    : null;
 
   return (
     <section className={styles.stage} aria-labelledby="creation-media-title">
@@ -304,6 +306,25 @@ export function CreationMediaStage({
                 )}
               </div>
             </div>
+            {(selected.creation.transcript || selectedTranscriptUrl) && (
+              <div className={styles.transcript}>
+                {selected.creation.transcript ? (
+                  <details>
+                    <summary>Read transcript</summary>
+                    <p>{selected.creation.transcript}</p>
+                  </details>
+                ) : (
+                  <a
+                    href={selectedTranscriptUrl ?? undefined}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Read transcript{" "}
+                    <ArrowUpRight size={15} aria-hidden="true" />
+                  </a>
+                )}
+              </div>
+            )}
           </div>
 
           <div className={styles.collection}>
