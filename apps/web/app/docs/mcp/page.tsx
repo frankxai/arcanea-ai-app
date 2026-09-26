@@ -5,21 +5,21 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Arcanea MCP — Developer Docs",
   description:
-    "Connect any MCP-compatible AI coding tool to Arcanea's creative production layer: 54 tools, 5 resources, 6 prompts. Works with Claude Code, Codex, Cursor, Windsurf, and Cline.",
+    "Audit a world against its canon from any MCP-compatible tool, plus Arcanea's production layer: 59 tools, 5 resources, 6 prompts. Works with Claude Code, Codex, Cursor, Windsurf, and Cline.",
   openGraph: {
     title: "Arcanea MCP — Model Context Protocol Server",
     description:
-      "54 tools, 5 resources, 6 prompts. Connect Claude Code, Codex, Cursor, or Windsurf to Arcanea world intelligence and production workflows.",
+      "59 tools, 5 resources, 6 prompts. Audit worlds against canon and connect Claude Code, Codex, Cursor, or Windsurf to Arcanea production workflows.",
   },
   alternates: { canonical: "/docs/mcp" },
 };
 
 const FEATURES = [
   {
-    count: "43",
+    count: "59",
     label: "Tools",
     description:
-      "Worldbuilding, books, games, music, cinema, asset briefs, agent handoffs, creative coaching, memory, canon validation, and APL.",
+      "WorldPack canon audit and seal verification, worldbuilding, books, games, music, cinema, asset briefs, agent handoffs, creative coaching, memory, and APL.",
     href: "/docs/mcp/tools",
   },
   {
@@ -46,6 +46,11 @@ const FEATURES = [
 ];
 
 const TOOL_CATEGORIES = [
+  {
+    name: "WorldPack Audit",
+    count: 3,
+    tools: ["worldpack_check", "worldpack_verify", "worldpack_rules"],
+  },
   {
     name: "Production Studios",
     count: 9,
@@ -87,8 +92,19 @@ const TOOL_CATEGORIES = [
   },
   {
     name: "World Intelligence",
-    count: 3,
-    tools: ["world_report", "generate_conflict", "weave_narrative"],
+    count: 5,
+    tools: [
+      "world_report",
+      "generate_conflict",
+      "weave_narrative",
+      "generate_quest",
+      "analyze_factions",
+    ],
+  },
+  {
+    name: "World Persistence",
+    count: 2,
+    tools: ["save_world", "load_world"],
   },
   {
     name: "Creation Graph",
@@ -128,6 +144,26 @@ const TOOL_CATEGORIES = [
     name: "APL",
     count: 3,
     tools: ["apl_enhance", "apl_anti_slop", "apl_format"],
+  },
+  {
+    name: "Visual Prompts",
+    count: 3,
+    tools: ["visualize_character", "visualize_location", "visualize_creature"],
+  },
+  {
+    name: "Studio Vault",
+    count: 4,
+    tools: [
+      "get_arcanea_bridge_status",
+      "search_arcanea_vault",
+      "save_to_arcanea_vault",
+      "list_arcanea_worlds",
+    ],
+  },
+  {
+    name: "Lore Archives",
+    count: 2,
+    tools: ["search_sovereign_depths", "search_weight_of_wonders"],
   },
 ];
 
@@ -176,9 +212,10 @@ export default function McpOverviewPage() {
 
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-400">
             Connect Claude Code, Cursor, Windsurf, or any MCP-compatible tool to
-            Arcanea&apos;s creative intelligence layer. Generate characters,
-            validate canon, orchestrate agents, and build narrative-consistent
-            worlds — all from inside your editor.
+            Arcanea&apos;s creative intelligence layer. Audit a world against
+            its canon with rule-level findings, verify an exported world was not
+            edited, generate characters, and plan books and games — all from
+            inside your editor.
           </p>
 
           {/* Quick start */}
@@ -196,7 +233,7 @@ export default function McpOverviewPage() {
                   $
                 </span>
                 <code className="text-zinc-200">
-                  claude mcp add arcanea npx @arcanea/mcp-server
+                  claude mcp add arcanea -- npx -y @arcanea/mcp-server@1
                 </code>
               </div>
               <div className="mt-4 flex items-start gap-3">
@@ -211,7 +248,7 @@ export default function McpOverviewPage() {
                 </span>
                 <code className="text-zinc-200 break-all">
                   {
-                    '{ "arcanea": { "command": "npx", "args": ["@arcanea/mcp-server"] } }'
+                    '{ "arcanea": { "command": "npx", "args": ["-y", "@arcanea/mcp-server@1"] } }'
                   }
                 </code>
               </div>
@@ -335,7 +372,7 @@ export default function McpOverviewPage() {
                 Tool Reference
               </p>
               <p className="mt-1.5 text-sm text-zinc-400">
-                All 54 tools with parameters and usage examples.
+                All 59 tools with parameters and usage examples.
               </p>
             </Link>
             <Link

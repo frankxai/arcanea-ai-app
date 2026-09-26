@@ -65,6 +65,8 @@ import { registerVisualStyleTools } from "./registrations/visual-style.js";
 import { registerProductionTools } from "./registrations/production.js";
 import { registerReferences } from "./registrations/references.js";
 import { registerWebVaultTools } from "./registrations/web-vault.js";
+import { registerWorldPackTools } from "./registrations/worldpack.js";
+import { SERVER_VERSION } from "./version.js";
 
 const ELEMENTS = ["Fire", "Water", "Earth", "Wind", "Void", "Spirit"] as const;
 
@@ -95,7 +97,7 @@ const RELATIONSHIP_TYPES = [
   "same_gate",
 ] as const;
 
-const server = new McpServer({ name: "arcanea-mcp", version: "0.3.0" });
+const server = new McpServer({ name: "arcanea-mcp", version: SERVER_VERSION });
 
 // =========================================================================
 // WORLDBUILDING GENERATORS
@@ -879,6 +881,8 @@ registerProductionTools(server);
 registerReferences(server);
 
 registerWebVaultTools(server);
+
+registerWorldPackTools(server);
 
 // =========================================================================
 // EXPORTS

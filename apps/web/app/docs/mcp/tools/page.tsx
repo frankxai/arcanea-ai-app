@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
+import { FACTS } from "@/lib/facts";
 import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "MCP Tool Reference — Arcanea Docs",
-  description:
-    "Complete reference for all 43 Arcanea MCP tools: production studios, worldbuilding generators, creative coaching, world intelligence, creation graph, agent orchestration, memory, canon, and APL.",
+  description: `Complete reference for all ${FACTS.mcpTools} Arcanea MCP tools: WorldPack canon audit, production studios, worldbuilding generators, creative coaching, world intelligence, creation graph, agent orchestration, memory, canon, and APL.`,
   alternates: { canonical: "/docs/mcp/tools" },
 };
 
@@ -1178,8 +1178,9 @@ export default function McpToolsPage() {
             </span>
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-400">
-            All 54 tools across 9 categories. Each tool is available via any
-            MCP-compatible client once the server is configured.
+            All {FACTS.mcpTools} tools across 9 categories. Each tool is
+            available via any MCP-compatible client once the server is
+            configured.
           </p>
 
           {/* Category index */}

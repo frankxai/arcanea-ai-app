@@ -1,3 +1,7 @@
 # Generated in pnpm's native format. Lockfile Drift Check and frozen installs
 # remain authoritative; dependency validation is not a Prettier operation.
 pnpm-lock.yaml
+
+# Byte-identical snapshot of the public canon, pinned by sha256 in
+# packages/arcanea-mcp/canon/PUBLIC_CANON.json. Reformatting it breaks the pin.
+packages/arcanea-mcp/canon/CANON_LOCKED.public.md

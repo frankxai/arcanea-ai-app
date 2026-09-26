@@ -1,8 +1,8 @@
 {
   "name": "@arcanea/mcp-server",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": false,
-  "description": "Arcanea worldbuilding tools plus an isolated, authenticated World Context Gateway boundary.",
+  "description": "MCP server that audits a world against its canon: WorldPack canon, rights and provenance checks with rule ids and fixes, seal verification, plus Arcanea worldbuilding tools.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,17 +22,23 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node scripts/vendor-world-pack.mjs",
     "dev": "tsc --watch",
     "start": "node dist/cli.js",
     "clean": "rm -rf dist",
     "test:gateway": "pnpm run build && node --test tests/world-context-gateway.test.mjs",
+    "test:worldpack": "pnpm run build && node --test tests/worldpack-tools.test.mjs tests/hardening.test.mjs tests/public-canon.test.mjs tests/publish-workflow.test.mjs tests/public-counts.test.mjs",
+    "smoke:consumer": "node scripts/consumer-smoke.mjs",
     "prepublishOnly": "pnpm run build"
   },
   "keywords": [
     "mcp",
     "arcanea",
     "worldbuilding",
+    "canon",
+    "continuity",
+    "story-bible",
+    "worldpack",
     "creative",
     "ai",
     "fantasy",
@@ -47,9 +53,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frankxai/arcanea"
+    "url": "git+https://github.com/frankxai/arcanea-ai-app.git",
+    "directory": "packages/arcanea-mcp"
   },
   "homepage": "https://arcanea.ai/docs/mcp",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
     "canonicalize": "^1.0.8",

@@ -11,9 +11,16 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { randomUUID } from "node:crypto";
+import { SERVER_VERSION } from "./version.js";
 
-const SERVER_VERSION = "0.3.0";
-const TOOL_COUNT = 54;
+// The SDK exposes no public tool count; reading the registry keeps /health from
+// advertising a number nobody measured.
+function toolCount(server: McpServer): number {
+  return Object.keys(
+    (server as unknown as { _registeredTools: Record<string, unknown> })
+      ._registeredTools,
+  ).length;
+}
 
 // -------------------------------------------------------------------------
 // Stdio transport — default, backward compatible
@@ -32,7 +39,35 @@ export async function runStdio(server: McpServer): Promise<void> {
 function setCorsHeaders(res: http.ServerResponse): void {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, Mcp-Session-Id");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Accept, Mcp-Session-Id",
+  );
+}
+
+// Above the 5 MiB WorldPack budget plus the JSON-RPC envelope, and nothing more.
+const MAX_HTTP_BODY_BYTES = 6 * 1024 * 1024;
+// A rejected upload is drained and discarded, never stored; this bounds how long
+// a client may keep a connection open doing that.
+const OVERSIZED_DRAIN_MS = 10_000;
+
+function rejectOversized(
+  req: http.IncomingMessage,
+  res: http.ServerResponse,
+): void {
+  if (!res.headersSent) {
+    // No "Connection: close": closing while the client is still uploading makes
+    // it see EPIPE instead of this 413. The rest of the body is drained and dropped.
+    res.writeHead(413, { "Content-Type": "application/json" });
+    res.end(
+      JSON.stringify({
+        error: `Request body exceeds ${MAX_HTTP_BODY_BYTES} bytes`,
+      }),
+    );
+  }
+  req.removeAllListeners("data");
+  req.resume();
+  setTimeout(() => req.destroy(), OVERSIZED_DRAIN_MS).unref();
 }
 
 export async function runHttp(server: McpServer, port: number): Promise<void> {
@@ -55,7 +90,7 @@ export async function runHttp(server: McpServer, port: number): Promise<void> {
     if (url.pathname === "/health" && req.method === "GET") {
       const body = JSON.stringify({
         status: "ok",
-        tools: TOOL_COUNT,
+        tools: toolCount(server),
         version: SERVER_VERSION,
         transport: "http",
         sessions: sessions.size,
@@ -70,13 +105,14 @@ export async function runHttp(server: McpServer, port: number): Promise<void> {
       const body = JSON.stringify({
         name: "Arcanea MCP Server",
         version: SERVER_VERSION,
-        description: "Worldbuilding toolkit, creative companion, and magic maker",
+        description:
+          "Worldbuilding toolkit, creative companion, and magic maker",
         transport: "StreamableHTTP",
         endpoints: {
           mcp: "/mcp",
           health: "/health",
         },
-        tools: TOOL_COUNT,
+        tools: toolCount(server),
       });
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(body);
@@ -86,10 +122,29 @@ export async function runHttp(server: McpServer, port: number): Promise<void> {
     // ── MCP endpoint ──────────────────────────────────────────────────────
     if (url.pathname === "/mcp") {
       if (req.method === "POST") {
-        // Collect request body before delegating to transport
+        // The body is capped while it streams: an unbounded body would be held in
+        // memory in full before any validation could run.
+        const declared = Number(req.headers["content-length"]);
+        if (Number.isFinite(declared) && declared > MAX_HTTP_BODY_BYTES) {
+          rejectOversized(req, res);
+          return;
+        }
         const chunks: Buffer[] = [];
-        req.on("data", (chunk: Buffer) => chunks.push(chunk));
+        let received = 0;
+        let rejected = false;
+        req.on("data", (chunk: Buffer) => {
+          if (rejected) return;
+          received += chunk.length;
+          if (received > MAX_HTTP_BODY_BYTES) {
+            rejected = true;
+            chunks.length = 0;
+            rejectOversized(req, res);
+            return;
+          }
+          chunks.push(chunk);
+        });
         req.on("end", async () => {
+          if (rejected) return;
           let parsedBody: unknown;
           try {
             parsedBody = JSON.parse(Buffer.concat(chunks).toString("utf8"));
@@ -131,7 +186,9 @@ export async function runHttp(server: McpServer, port: number): Promise<void> {
         const sessionId = req.headers["mcp-session-id"] as string | undefined;
         if (!sessionId || !sessions.has(sessionId)) {
           res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Missing or unknown Mcp-Session-Id" }));
+          res.end(
+            JSON.stringify({ error: "Missing or unknown Mcp-Session-Id" }),
+          );
           return;
         }
         const transport = sessions.get(sessionId)!;
