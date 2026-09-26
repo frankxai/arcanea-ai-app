@@ -56,11 +56,11 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_APP_URL || "https://www.arcanea.ai",
   ),
   title: {
-    default: "Arcanea™ — Creative Intelligence Platform",
+    default: "Arcanea™ — World Engine for Persistent Creative Intelligence",
     template: "%s | Arcanea",
   },
   description:
-    "A creative multiverse: chat with AI, build fantasy worlds, share what you make, and turn imagination into products. Free to start.",
+    "A live creative-world proving environment building continuity infrastructure for narrative IP across AI tools.",
   keywords: [
     "AI",
     "creativity",
@@ -78,24 +78,24 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea — Build a world that remembers itself",
     description:
-      "Creative AI partners, a philosophy library, and creation studio in one platform.",
+      "Persistent Creative Intelligence for narrative studios and game-world teams stewarding long-lived IP.",
     siteName: "Arcanea",
     images: [
       {
         url: "/brand/arcanea-og.jpg",
         width: 1200,
         height: 630,
-        alt: "Arcanea — Creative Intelligence Platform",
+        alt: "Arcanea World Engine",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea — Build a world that remembers itself",
     description:
-      "Creative AI partners, a philosophy library, and creation studio in one platform.",
+      "Persistent Creative Intelligence for narrative studios and game-world teams stewarding long-lived IP.",
     images: ["/brand/arcanea-og.jpg"],
   },
   alternates: {
@@ -145,7 +145,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               "@type": "WebApplication",
               "name": "Arcanea",
               "url": "https://www.arcanea.ai",
-              "description": "Creative Intelligence Platform — chat with AI, build fantasy worlds, share what you make, and turn imagination into products.",
+              "description": "A live creative-world proving environment building continuity infrastructure for narrative IP across AI tools.",
               "applicationCategory": "CreativeWork",
               "operatingSystem": "Web",
               "offers": {
@@ -160,8 +160,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 "url": "https://www.arcanea.ai"
               },
               "featureList": [
-                "Living world builder with auto-linking",
-                "Quest and faction generation"
+                "Arcanea lore and canon versioned in public Git",
+                "Live world and creation surfaces",
+                "Public repository mirror and MCP status surface"
               ]
             })
           }}
