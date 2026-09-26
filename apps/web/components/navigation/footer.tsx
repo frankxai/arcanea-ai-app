@@ -45,7 +45,11 @@ const footerLinks = {
       { href: "/distribute", label: "Distribute" },
       { href: "/teams", label: "Teams" },
       { href: "/developers", label: "Developers" },
-      { href: "https://github.com/frankxai", label: "GitHub Public Profile", external: true },
+      {
+        href: "https://github.com/frankxai",
+        label: "GitHub Public Profile",
+        external: true,
+      },
     ],
   },
   learn: {
@@ -73,27 +77,37 @@ export function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubscribe = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.trim() || submitting) return;
-    setSubmitting(true);
-    try {
-      await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), source: 'footer' }),
-      });
-      setSubscribed(true);
-      setEmail("");
-    } catch {
-      // Still show success — email intent was captured
-      setSubscribed(true);
-      setEmail("");
-    } finally {
-      setSubmitting(false);
-    }
-  }, [email, submitting]);
+  const handleSubscribe = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!email.trim() || submitting) return;
+      setSubmitting(true);
+      setError("");
+      try {
+        const res = await fetch("/api/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email.trim(), source: "footer" }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
+          setSubscribed(true);
+          setEmail("");
+        } else {
+          setError(
+            data.error || "We couldn't save your email. Please try again.",
+          );
+        }
+      } catch {
+        setError("We couldn't reach the server. Please try again.");
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [email, submitting],
+  );
 
   return (
     <footer
@@ -117,8 +131,8 @@ export function Footer() {
               Creative Intelligence
             </p>
             <p className="text-sm text-white/50 mt-4 leading-relaxed">
-              Chat with AI. Build fantasy worlds. Create art, stories, music.
-              An open creative multiverse for world-builders.
+              Chat with AI. Build fantasy worlds. Create art, stories, music. An
+              open creative multiverse for world-builders.
             </p>
           </div>
 
@@ -149,6 +163,11 @@ export function Footer() {
                   {submitting ? "..." : "Subscribe"}
                 </button>
               </form>
+            )}
+            {error && !subscribed && (
+              <p role="alert" className="mt-2 text-sm text-white/60">
+                {error}
+              </p>
             )}
           </div>
         </div>
