@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { type ReactNode } from 'react';
-import { canAccess, getUpgradeMessage, type PricingTier, type FeatureGates } from '@/lib/features/feature-gates';
+import Link from "next/link";
+import { type ReactNode } from "react";
+import {
+  canAccess,
+  getUpgradeMessage,
+  type PricingTier,
+  type FeatureGates,
+} from "@/lib/features/feature-gates";
 
 interface UpgradeGateProps {
   feature: keyof FeatureGates;
@@ -24,7 +29,12 @@ interface UpgradeGateProps {
  *     <ImageGenerator />
  *   </UpgradeGate>
  */
-export function UpgradeGate({ feature, tier, children, fallback }: UpgradeGateProps) {
+export function UpgradeGate({
+  feature,
+  tier,
+  children,
+  fallback,
+}: UpgradeGateProps) {
   if (canAccess(tier, feature)) {
     return <>{children}</>;
   }
@@ -54,16 +64,26 @@ export function UpgradeGate({ feature, tier, children, fallback }: UpgradeGatePr
       </div>
 
       <p className="mb-4 text-sm text-neutral-400">
-        {message ?? 'This feature requires a higher plan.'}
+        {message ?? "This feature is not available on your account yet."}
       </p>
 
       <Link
         href="/pricing"
         className="inline-flex items-center gap-2 rounded-lg bg-[var(--arc-brand-atlantean-teal)] px-4 py-2 text-sm font-semibold text-[var(--arc-cosmic-void)] transition-all hover:shadow-[0_0_20px_rgba(0,188,212,0.4)]"
       >
-        Upgrade
-        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        See availability
+        <svg
+          className="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
         </svg>
       </Link>
     </div>

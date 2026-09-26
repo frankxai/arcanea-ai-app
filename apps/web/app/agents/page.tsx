@@ -952,7 +952,7 @@ export default function AgentsMarketplacePage() {
               </h2>
               <p className="text-base text-white/40 mb-10 max-w-lg mx-auto font-body leading-relaxed">
                 Pick a Luminor, describe what you want, and watch it come to
-                life. Each run uses credits — top up anytime.
+                life. Each run uses credits.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <m.button
@@ -973,7 +973,7 @@ export default function AgentsMarketplacePage() {
                   href="/pricing"
                   className="inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-[var(--arc-brand-atlantean-teal)]/25 text-[var(--arc-brand-atlantean-teal)] font-semibold text-sm rounded-xl hover:bg-[var(--arc-brand-atlantean-teal)]/[0.06] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--arc-brand-atlantean-teal)]/60"
                 >
-                  Get Credits
+                  See availability
                   <svg
                     className="w-4 h-4"
                     fill="none"

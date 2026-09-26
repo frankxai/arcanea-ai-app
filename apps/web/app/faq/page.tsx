@@ -25,7 +25,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "How do I get started?",
-        a: "Simply create a free account at arcanea.ai. You'll immediately have access to 3 companions and 100 messages per month. From there, you can explore the Library, start Academy training, or upgrade for access to the full creative team.",
+        a: "Create a free account at arcanea.ai. From there you can explore the Library and start Academy training.",
       },
       {
         q: "How are Arcanea's companions different from regular AI?",
@@ -64,20 +64,16 @@ const FAQ_CATEGORIES = [
     icon: "💎",
     questions: [
       {
-        q: "What's included in the free plan?",
-        a: "The Spark (free) plan includes 3 creative companions, 100 messages per month, full Library access, and Gallery browsing. It's everything you need to explore the platform and see if Arcanea fits your creative workflow.",
+        q: "What does Arcanea cost?",
+        a: "Nothing is priced yet. Arcanea and Arcanea MCP Studio each have a waitlist on the pricing page. A price is published only when a product is finished and tested, and founding members keep that price for life.",
       },
       {
-        q: "What do the paid plans include?",
-        a: "The Creator plan ($19/month) unlocks all creative partners with 5,000 messages per month, full Studio creation tools, complete Academy access, and custom prompt templates. The Studio plan ($49/month) adds API access, priority support, custom partner training, and team collaboration features.",
-      },
-      {
-        q: "Can I switch plans later?",
-        a: "Yes. You can upgrade or downgrade at any time. Changes take effect immediately, and we prorate any payments. Your conversations and progress are always preserved.",
+        q: "What is free today?",
+        a: "The public Library and the Arcanea World MCP server. The World MCP installs into Claude Code, Cursor, Codex and other MCP clients in one command.",
       },
       {
         q: "Do you offer team or enterprise plans?",
-        a: "Yes. The enterprise plan ($99/month) includes team collaboration, custom companion deployment, dedicated support, SLA guarantees, custom integrations, and white-label options. Contact us for custom solutions.",
+        a: "Not yet. If you need Arcanea for a team, say so when you answer the waitlist questions.",
       },
     ],
   },
@@ -95,11 +91,11 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "Can I use Arcanea via API?",
-        a: "Yes. Studio and Enterprise plans include API access. You can integrate Arcanea's companions into your own applications, workflows, and tools. See the Developers page for details.",
+        a: "The Arcanea World MCP server is free and runs in any MCP client today. See the MCP docs for install steps.",
       },
       {
         q: "Do you offer self-hosting?",
-        a: "Arcanea is available as a CLI tool that you can run locally. Enterprise customers can also explore custom deployment options. Contact us for details.",
+        a: "Arcanea is available as a CLI tool that you can run locally.",
       },
     ],
   },

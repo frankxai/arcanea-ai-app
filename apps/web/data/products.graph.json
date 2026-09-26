@@ -1,0 +1,44 @@
+{
+  "source": "starlight/graph/products.graph.json",
+  "syncedAt": "2026-09-15",
+  "products": [
+    {
+      "id": "arcanea-mcp",
+      "name": "Arcanea MCP",
+      "brand": "Arcanea",
+      "surface": "arcanea.ai",
+      "stage": "gated",
+      "gate": "UNGATED",
+      "buyer": "Agent builders who need generation inside their harness and cannot tell good output from bad",
+      "waitlist": {
+        "enabled": true,
+        "publicCountThreshold": 50,
+        "foundingCohort": 100
+      },
+      "founding": [
+        "Price lock for life",
+        "Name in CONTRIBUTORS.md in the published npm package",
+        "Vote on which direct provider adapter ships first"
+      ]
+    },
+    {
+      "id": "arcanea-subscription",
+      "name": "Arcanea app subscription",
+      "brand": "Arcanea",
+      "surface": "arcanea.ai",
+      "stage": "building",
+      "gate": "UNGATED",
+      "buyer": "Readers and worldbuilders inside the Arcanea canon",
+      "waitlist": {
+        "enabled": true,
+        "publicCountThreshold": 50,
+        "foundingCohort": 250
+      },
+      "founding": [
+        "Founding sigil",
+        "Named in the world in-fiction founder register",
+        "Lifetime price lock"
+      ]
+    }
+  ]
+}
