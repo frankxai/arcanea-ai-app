@@ -1,5 +1,12 @@
 # Deployment Guide — IPFS + Smart Contract
 
+> Historical deployment concept, not an executable or audited release guide.
+> The referenced `packages/nft-forge` implementation is absent from the checked
+> source. SDK calls, prices, contract addresses and security assumptions below
+> require fresh primary-source verification. Do not execute these snippets as a
+> consequence of an artwork request. Current task authorization, exact reviewed
+> artifacts and the applicable human release gates govern external actions.
+
 ## IPFS Upload Pipeline
 
 ### Pinata SDK (TypeScript)

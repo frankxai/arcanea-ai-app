@@ -1,5 +1,12 @@
 # Arcanea NFT Forge — Art Direction Bible
 
+> Historical design study, retained for provenance. The “single source of truth”
+> and universal identity rules below describe an earlier collection concept;
+> they do not override current locked canon or a creator's approved brief.
+> Treat named-artist and collection comparisons as historical research, not
+> generation instructions. Use `style-dna-spec.md` and the current skill for
+> active work, and verify any proposed identity feature against authorized sources.
+
 > This document is the SINGLE SOURCE OF TRUTH for visual taste.
 > Every agent involved in NFT generation MUST read this before producing prompts.
 > Last updated after 12-image quality audit (2026-04-02).
