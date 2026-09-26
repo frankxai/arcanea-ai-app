@@ -33,7 +33,8 @@ export async function joinWaitlist(
       status: 503,
       body: {
         success: false,
-        error: "We couldn't save your place just now. Please try again in a minute.",
+        error:
+          "We couldn't save your place just now. Please try again in a minute.",
       },
     };
   }

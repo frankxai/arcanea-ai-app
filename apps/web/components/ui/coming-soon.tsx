@@ -28,35 +28,45 @@ export function ComingSoonPage({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubscribe = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.trim() || submitting) return;
-    setSubmitting(true);
-    setError("");
-    try {
-      const res = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), source: `coming-soon:${title}` }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (res.ok && data.success) {
-        setSubscribed(true);
-        setEmail("");
-      } else {
-        setError(data.error || "We couldn't save your email. Please try again.");
+  const handleSubscribe = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!email.trim() || submitting) return;
+      setSubmitting(true);
+      setError("");
+      try {
+        const res = await fetch("/api/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email.trim(),
+            source: `coming-soon:${title}`,
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
+          setSubscribed(true);
+          setEmail("");
+        } else {
+          setError(
+            data.error || "We couldn't save your email. Please try again.",
+          );
+        }
+      } catch {
+        setError("We couldn't reach the server. Please try again.");
+      } finally {
+        setSubmitting(false);
       }
-    } catch {
-      setError("We couldn't reach the server. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
-  }, [email, submitting, title]);
+    },
+    [email, submitting, title],
+  );
 
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center px-6 py-20 text-center">
       {icon && (
-        <div className="mb-6 text-[var(--arc-brand-atlantean-teal)]/60">{icon}</div>
+        <div className="mb-6 text-[var(--arc-brand-atlantean-teal)]/60">
+          {icon}
+        </div>
       )}
 
       <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-[var(--arc-brand-atlantean-teal)]/10 border border-[var(--arc-brand-atlantean-teal)]/20 text-[11px] uppercase tracking-[0.2em] font-semibold text-[var(--arc-brand-atlantean-teal)] mb-6">

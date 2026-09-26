@@ -19,7 +19,10 @@ test("a saved signup succeeds with a normalised email", async () => {
 
 test("a failed save is reported, never shown as success", async () => {
   const result = await joinWaitlist("reader@example.com", async () => ({
-    error: { code: "42P01", message: 'relation "public.waitlists" does not exist' },
+    error: {
+      code: "42P01",
+      message: 'relation "public.waitlists" does not exist',
+    },
   }));
   assert.equal(result.status, 503);
   assert.equal(result.body.success, false);
@@ -38,7 +41,15 @@ test("invalid emails are rejected before any write", async () => {
     writes += 1;
     return { error: null };
   };
-  for (const email of [undefined, 42, "", "invalid", "a@b", "@example.com", `${"a".repeat(320)}@x.io`]) {
+  for (const email of [
+    undefined,
+    42,
+    "",
+    "invalid",
+    "a@b",
+    "@example.com",
+    `${"a".repeat(320)}@x.io`,
+  ]) {
     const result = await joinWaitlist(email, counting);
     assert.equal(result.status, 400, String(email));
   }
