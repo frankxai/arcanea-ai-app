@@ -135,7 +135,7 @@ export default function HorsewomanStory() {
               <ChapterIndex />
             </nav>
             <p className={styles.sidebarNote}>
-              Four movements through the valleys, roost, sea, and eastern mountain.
+              Four movements through a living Arcanea.
             </p>
           </div>
         </aside>
