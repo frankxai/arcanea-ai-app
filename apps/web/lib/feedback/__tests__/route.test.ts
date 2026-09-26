@@ -58,7 +58,7 @@ test("unconfigured storage never acknowledges feedback", async (t) => {
 test("insert failure is retryable and hides backend details", async (t) => {
   setStorage(t, true);
   let inserts = 0;
-  t.mock.method(globalThis, "fetch", async (input) => {
+  t.mock.method(globalThis, "fetch", async (input: RequestInfo | URL) => {
     const url = new URL(input instanceof Request ? input.url : String(input));
     assert.equal(url.pathname, "/rest/v1/feedback");
     inserts++;
@@ -89,7 +89,7 @@ test("transport failure remains retryable", async (t) => {
 test("anonymous feedback is acknowledged after the insert", async (t) => {
   setStorage(t, true);
   let inserted: unknown;
-  t.mock.method(globalThis, "fetch", async (input, init) => {
+  t.mock.method(globalThis, "fetch", async (input: RequestInfo | URL, init?: RequestInit) => {
     const url = new URL(input instanceof Request ? input.url : String(input));
     assert.equal(url.pathname, "/rest/v1/feedback");
     assert.equal(init?.method, "POST");
