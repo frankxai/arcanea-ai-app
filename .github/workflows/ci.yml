@@ -157,6 +157,9 @@ jobs:
       - name: Verify library chapter slugs and hidden agent files
         run: pnpm --dir apps/web exec tsx --test lib/content/__tests__/loader-slugs.test.ts
 
+      - name: Verify waitlist capture fails closed and unknown locales 404
+        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/route.test.ts lib/waitlist/__tests__/join.test.ts lib/waitlist/__tests__/faults.test.ts lib/__tests__/locale-catch-all.test.ts
+
       - name: ESLint
         run: pnpm --dir apps/web run lint
 
