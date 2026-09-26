@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 /**
  * In-Memory Rate Limiter
@@ -33,7 +33,10 @@ const cleanupTimer = setInterval(() => {
     }
   }
 }, 5 * 60 * 1000);
-if (typeof cleanupTimer === 'object' && typeof cleanupTimer.unref === 'function') {
+if (
+  typeof cleanupTimer === "object" &&
+  typeof cleanupTimer.unref === "function"
+) {
   cleanupTimer.unref();
 }
 
@@ -47,9 +50,9 @@ export function getClientIdentifier(req: NextRequest, userId?: string): string {
   }
 
   // Try to get real IP from headers (for proxies/load balancers)
-  const forwardedFor = req.headers.get('x-forwarded-for');
-  const realIp = req.headers.get('x-real-ip');
-  const ip = forwardedFor?.split(',')[0] || realIp || 'unknown';
+  const forwardedFor = req.headers.get("x-forwarded-for");
+  const realIp = req.headers.get("x-real-ip");
+  const ip = forwardedFor?.split(",")[0] || realIp || "unknown";
 
   return `ip:${ip}`;
 }
@@ -59,7 +62,7 @@ export function getClientIdentifier(req: NextRequest, userId?: string): string {
  */
 export function checkRateLimit(
   identifier: string,
-  config: RateLimitConfig
+  config: RateLimitConfig,
 ): {
   allowed: boolean;
   remaining: number;
@@ -112,22 +115,22 @@ export function rateLimit(config: RateLimitConfig) {
 
     // Add rate limit headers
     const headers = {
-      'X-RateLimit-Limit': config.maxRequests.toString(),
-      'X-RateLimit-Remaining': result.remaining.toString(),
-      'X-RateLimit-Reset': new Date(result.resetTime).toISOString(),
+      "X-RateLimit-Limit": config.maxRequests.toString(),
+      "X-RateLimit-Remaining": result.remaining.toString(),
+      "X-RateLimit-Reset": new Date(result.resetTime).toISOString(),
     };
 
     if (!result.allowed) {
       return NextResponse.json(
         {
           success: false,
-          error: config.message || 'Too many requests, please try again later',
+          error: config.message || "Too many requests, please try again later",
           retryAfter: Math.ceil((result.resetTime - Date.now()) / 1000),
         },
         {
           status: 429,
           headers,
-        }
+        },
       );
     }
 
@@ -143,28 +146,28 @@ export const RateLimitPresets = {
   standard: {
     maxRequests: 100,
     windowMs: 15 * 60 * 1000, // 15 minutes
-    message: 'Rate limit exceeded. Maximum 100 requests per 15 minutes.',
+    message: "Rate limit exceeded. Maximum 100 requests per 15 minutes.",
   },
 
   /** Strict rate limit for expensive operations: 10 requests per 15 minutes */
   strict: {
     maxRequests: 10,
     windowMs: 15 * 60 * 1000,
-    message: 'Rate limit exceeded. Maximum 10 requests per 15 minutes.',
+    message: "Rate limit exceeded. Maximum 10 requests per 15 minutes.",
   },
 
   /** Generous rate limit for read operations: 200 requests per 15 minutes */
   generous: {
     maxRequests: 200,
     windowMs: 15 * 60 * 1000,
-    message: 'Rate limit exceeded. Maximum 200 requests per 15 minutes.',
+    message: "Rate limit exceeded. Maximum 200 requests per 15 minutes.",
   },
 
   /** Auth rate limit: 5 attempts per 15 minutes */
   auth: {
     maxRequests: 5,
     windowMs: 15 * 60 * 1000,
-    message: 'Too many authentication attempts. Please try again later.',
+    message: "Too many authentication attempts. Please try again later.",
   },
 } as const;
 
@@ -182,12 +185,12 @@ export const RateLimitPresets = {
 export async function applyRateLimit(
   req: NextRequest,
   config: RateLimitConfig,
-  userId?: string
+  userId?: string,
 ): Promise<NextResponse | null> {
   const limiter = rateLimit(config);
   const result = await limiter(req, userId);
 
-  if ('allowed' in result && result.allowed) {
+  if ("allowed" in result && result.allowed) {
     return null; // Rate limit not exceeded, continue
   }
 
