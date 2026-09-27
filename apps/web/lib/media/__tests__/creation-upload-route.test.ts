@@ -17,7 +17,11 @@ function uploadRequest() {
   });
 }
 
-function uploadClient(code: string | null, removed: string[][]) {
+function uploadClient(
+  code: string | null,
+  removed: string[][],
+  signError?: Error,
+) {
   let uploadedPath = "";
   const bucket = {
     upload: async (path: string) => {
@@ -33,12 +37,15 @@ function uploadClient(code: string | null, removed: string[][]) {
       removed.push(paths);
       return { error: null };
     },
-    createSignedUrl: async () => ({
-      data: {
-        signedUrl:
-          "https://project.supabase.co/storage/v1/object/sign/creations/recording.mp3?token=test",
-      },
-    }),
+    createSignedUrl: async () => {
+      if (signError) throw signError;
+      return {
+        data: {
+          signedUrl:
+            "https://project.supabase.co/storage/v1/object/sign/creations/recording.mp3?token=test",
+        },
+      };
+    },
   };
   const result = {
     data: code
@@ -112,6 +119,27 @@ test("creation upload keeps media when the insert outcome is uncertain", async (
       assert.equal(response.status, 200);
       assert.equal(payload.data.type, "audio");
       assert.match(payload.data.url, /\/object\/sign\/creations\//);
+      assert.equal(removed.length, 0);
+    },
+  );
+
+  await t.test(
+    "reports a successful insert when post-insert signing throws",
+    async () => {
+      const removed: string[][] = [];
+      creationUploadDeps.createClient = async () =>
+        uploadClient(
+          null,
+          removed,
+          new Error("storage temporarily unavailable"),
+        );
+      const response = await POST(uploadRequest());
+      const payload = (await response.json()) as { data: { url: string } };
+      assert.equal(response.status, 200);
+      assert.equal(
+        payload.data.url,
+        "/api/creations/123e4567-e89b-12d3-a456-426614174002/media",
+      );
       assert.equal(removed.length, 0);
     },
   );

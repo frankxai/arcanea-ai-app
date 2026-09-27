@@ -193,34 +193,50 @@ export async function POST(request: NextRequest) {
     }
 
     if (metadata.projectId && creation) {
-      await recordProjectTrace(supabase as any, {
-        userId: user.id,
-        projectId: metadata.projectId,
-        action: "project_creation_linked",
-        metadata: {
-          creationId: creation.id,
-          type: creation.type,
-          sourceSessionId: metadata.sourceSessionId ?? null,
-          origin: "creations_upload",
-        },
-      });
+      try {
+        await recordProjectTrace(supabase as any, {
+          userId: user.id,
+          projectId: metadata.projectId,
+          action: "project_creation_linked",
+          metadata: {
+            creationId: creation.id,
+            type: creation.type,
+            sourceSessionId: metadata.sourceSessionId ?? null,
+            origin: "creations_upload",
+          },
+        });
 
-      const workspace = await getProjectWorkspaceForCurrentUser(
-        metadata.projectId,
-      );
-      if (workspace) {
-        await enrichProjectGraph(supabase as any, user.id, workspace);
+        const workspace = await getProjectWorkspaceForCurrentUser(
+          metadata.projectId,
+        );
+        if (workspace) {
+          await enrichProjectGraph(supabase as any, user.id, workspace);
+        }
+      } catch (enrichmentError) {
+        console.error(
+          "[creations upload] project enrichment failed after insert:",
+          enrichmentError,
+        );
       }
     }
 
-    const { data: signed } = await supabase.storage
-      .from("creations")
-      .createSignedUrl(storagePath, 60 * 60 * 6);
+    let signedUrl: string | null = null;
+    try {
+      const { data: signed } = await supabase.storage
+        .from("creations")
+        .createSignedUrl(storagePath, 60 * 60 * 6);
+      signedUrl = signed?.signedUrl ?? null;
+    } catch (signError) {
+      console.error(
+        "[creations upload] signing failed after insert:",
+        signError,
+      );
+    }
 
     return NextResponse.json({
       data: {
         id: creation.id,
-        url: signed?.signedUrl ?? `/api/creations/${creation.id}/media`,
+        url: signedUrl ?? `/api/creations/${creation.id}/media`,
         title: creation.title,
         type: creation.type,
         createdAt: creation.created_at,
