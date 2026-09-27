@@ -48,11 +48,13 @@ function CreationsContent() {
   const filter: Filter =
     filters.find(({ id }) => id === searchParams?.get("view"))?.id ?? "all";
   const [retry, setRetry] = useState(0);
+  const [mediaRetrying, setMediaRetrying] = useState(false);
   const [loadingMoreKey, setLoadingMoreKey] = useState<string | null>(null);
   const [loadMoreErrorKey, setLoadMoreErrorKey] = useState<string | null>(null);
   const [pageAnnouncement, setPageAnnouncement] =
     useState<PageAnnouncement | null>(null);
   const mediaCache = useRef<MediaCache<LibraryCreation> | null>(null);
+  const mediaRetryInFlight = useRef(false);
   const activeUserId = user?.id;
 
   useEffect(() => {
@@ -129,10 +131,12 @@ function CreationsContent() {
         error: !itemsResult || Boolean(itemsResult.error),
         mediaError,
       });
+      mediaRetryInFlight.current = false;
+      setMediaRetrying(false);
     }
 
     void load().catch(() => {
-      if (active)
+      if (active) {
         setSnapshot({
           userId,
           filter,
@@ -143,6 +147,9 @@ function CreationsContent() {
           error: true,
           mediaError: true,
         });
+        mediaRetryInFlight.current = false;
+        setMediaRetrying(false);
+      }
     });
     return () => {
       active = false;
@@ -323,18 +330,23 @@ function CreationsContent() {
             {snapshot?.mediaError && (
               <div
                 role="alert"
+                aria-busy={mediaRetrying}
                 className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-[var(--arc-media-space-150)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]"
               >
                 Some recent media previews could not load. Try again.
                 <button
                   type="button"
                   onClick={() => {
+                    if (mediaRetryInFlight.current) return;
+                    mediaRetryInFlight.current = true;
+                    setMediaRetrying(true);
                     mediaCache.current = null;
                     setRetry((value) => value + 1);
                   }}
+                  disabled={mediaRetrying}
                   className="ml-[var(--arc-media-space-075)] min-h-[var(--arc-size-interactive-min)] rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] px-[var(--arc-media-space-100)] font-medium text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
                 >
-                  Try again
+                  {mediaRetrying ? "Retrying…" : "Try again"}
                 </button>
               </div>
             )}
