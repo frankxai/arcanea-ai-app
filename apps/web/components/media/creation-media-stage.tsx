@@ -180,7 +180,7 @@ function MediaPreview({
     );
   }
 
-  if (kind === "music" || kind === "audio") {
+  if ((kind === "music" || kind === "audio") && playbackUrl) {
     return (
       <div className={styles.audioStage}>
         {thumbnailUrl && artFailedUrl !== thumbnailUrl ? (
@@ -209,7 +209,7 @@ function MediaPreview({
             key={creation.id}
             controls
             preload="none"
-            src={playbackUrl ?? undefined}
+            src={playbackUrl}
             aria-label={"Play " + creation.title}
             onPlay={() => setLockedPlaybackUrl(playbackUrl)}
             onEnded={() => setLockedPlaybackUrl(null)}
