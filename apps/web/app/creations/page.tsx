@@ -14,6 +14,7 @@ import {
   type CreationFilter as Filter,
 } from "@/lib/media/creation-library-filters";
 import {
+  maskUnsignedPrivateStageMedia,
   signStageMedia,
   type MediaCache,
 } from "@/lib/media/sign-creation-media";
@@ -118,7 +119,10 @@ export default function CreationsPage() {
             signedAt: Date.now(),
           };
         } catch {
-          media = [];
+          const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+          media = supabaseUrl
+            ? maskUnsignedPrivateStageMedia(source, userId, supabaseUrl)
+            : source;
           mediaError = true;
         }
       }
@@ -308,13 +312,14 @@ export default function CreationsPage() {
           </section>
         ) : (
           <>
-            {snapshot?.mediaError ? (
+            {snapshot?.mediaError && (
               <div
                 role="alert"
                 className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-6 text-sm text-[var(--arc-text-secondary)]"
               >
-                Recent media previews could not load. Your saved work remains
-                available below.
+                {snapshot.media.length
+                  ? "Some private media previews could not load. Public work remains visible."
+                  : "Recent media previews could not load. Your saved work remains available below."}
                 <button
                   type="button"
                   onClick={() => setRetry((value) => value + 1)}
@@ -323,7 +328,8 @@ export default function CreationsPage() {
                   Try again
                 </button>
               </div>
-            ) : (
+            )}
+            {(!snapshot?.mediaError || (snapshot?.media.length ?? 0) > 0) && (
               <CreationMediaStage creations={snapshot?.media ?? []} />
             )}
 

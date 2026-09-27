@@ -105,6 +105,11 @@ test("creation media redirects require ownership and handle storage failures", a
         row: { type: "video", content: privateUrl, thumbnail_url: null },
       });
     assert.equal((await request()).status, 404);
+    assert.equal((await request("captions")).status, 404);
+  });
+
+  await t.test("rejects an unknown media field", async () => {
+    assert.equal((await request("unknown")).status, 400);
   });
 
   await t.test("reports database errors as retryable", async () => {
@@ -161,6 +166,57 @@ test("creation media redirects require ownership and handle storage failures", a
       "https://cdn.example.com/film.mp4",
     );
   });
+
+  await t.test("signs an owned private captions file", async () => {
+    const captionsUrl = privateUrl.replace("film.mp4", "film.vtt");
+    creationMediaRouteDeps.createClient = async () =>
+      clientStub({
+        userId: owner,
+        row: {
+          type: "video",
+          content: { fileUrl: privateUrl, captionsUrl },
+          thumbnail_url: null,
+        },
+      });
+    const response = await request("captions");
+    assert.equal(response.status, 307);
+    assert.match(response.headers.get("location") ?? "", /film\.vtt/);
+    assert.match(response.headers.get("location") ?? "", /\/object\/sign\//);
+  });
+
+  await t.test("opens a safe external transcript", async () => {
+    const transcriptUrl =
+      "https://media.starlightintelligence.org/transcript.txt";
+    creationMediaRouteDeps.createClient = async () =>
+      clientStub({
+        userId: owner,
+        row: {
+          type: "audio",
+          content: { fileUrl: privateUrl, transcriptUrl },
+          thumbnail_url: null,
+        },
+      });
+    const response = await request("transcript");
+    assert.equal(response.status, 307);
+    assert.equal(response.headers.get("location"), transcriptUrl);
+  });
+
+  await t.test(
+    "does not open missing or non-string accessibility assets",
+    async () => {
+      creationMediaRouteDeps.createClient = async () =>
+        clientStub({
+          userId: owner,
+          row: {
+            type: "video",
+            content: { fileUrl: privateUrl, captionsUrl: 42 },
+            thumbnail_url: null,
+          },
+        });
+      assert.equal((await request("captions")).status, 404);
+      assert.equal((await request("transcript")).status, 404);
+    },
+  );
 
   await t.test("opens an image from the public gallery bucket", async () => {
     const galleryUrl = `${origin}/storage/v1/object/public/arcanea-gallery/community/${owner}/art.png`;

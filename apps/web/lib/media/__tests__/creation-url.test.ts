@@ -10,6 +10,7 @@ import {
   previewableCreationUrl,
   safeCreationUrl,
 } from "../creation-url";
+import { maskUnsignedPrivateStageMedia } from "../sign-creation-media";
 
 test("reads the JSON string URL written by the authenticated upload route", () => {
   const uploadedUrl =
@@ -76,6 +77,28 @@ test("only treats HTTPS or local paths as openable media URLs", () => {
   );
 });
 
+test("permits HTTP media only from the configured loopback Supabase origin", () => {
+  const previous = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const previousServer = process.env.SUPABASE_URL;
+  const local =
+    "http://localhost:54321/storage/v1/object/public/creations/a.png";
+  try {
+    delete process.env.NEXT_PUBLIC_SUPABASE_URL;
+    delete process.env.SUPABASE_URL;
+    assert.equal(safeCreationUrl(local), null);
+    process.env.NEXT_PUBLIC_SUPABASE_URL = "http://localhost:54321";
+    assert.equal(safeCreationUrl(local), local);
+    assert.equal(previewableCreationUrl(local, "http://localhost:3000"), local);
+    assert.equal(safeCreationUrl("http://localhost:54322/a.png"), null);
+    assert.equal(safeCreationUrl("http://example.com/a.png"), null);
+  } finally {
+    if (previous === undefined) delete process.env.NEXT_PUBLIC_SUPABASE_URL;
+    else process.env.NEXT_PUBLIC_SUPABASE_URL = previous;
+    if (previousServer === undefined) delete process.env.SUPABASE_URL;
+    else process.env.SUPABASE_URL = previousServer;
+  }
+});
+
 test("opens document uploads with scalar or metadata-wrapped file URLs", () => {
   const fileUrl =
     "https://example.supabase.co/storage/v1/object/public/creations/file.pdf";
@@ -140,4 +163,33 @@ test("selects only owned objects from the configured creations bucket", () => {
     ),
     null,
   );
+});
+
+test("keeps public previews when signing private media is unavailable", () => {
+  const project = "https://project.supabase.co";
+  const owner = "123e4567-e89b-12d3-a456-426614174000";
+  const privateUrl = `${project}/storage/v1/object/public/creations/${owner}/film.mp4`;
+  const publicUrl = `${project}/storage/v1/object/public/arcanea-gallery/still.png`;
+  const creations = [
+    {
+      id: "private",
+      title: "Private film",
+      type: "video",
+      status: "complete",
+      fileUrl: privateUrl,
+      thumbnailUrl: publicUrl,
+    },
+    {
+      id: "public",
+      title: "Public film",
+      type: "video",
+      status: "complete",
+      fileUrl: publicUrl,
+      thumbnailUrl: null,
+    },
+  ];
+  const visible = maskUnsignedPrivateStageMedia(creations, owner, project);
+  assert.equal(visible[0].fileUrl, null);
+  assert.equal(visible[0].thumbnailUrl, publicUrl);
+  assert.equal(visible[1].fileUrl, publicUrl);
 });

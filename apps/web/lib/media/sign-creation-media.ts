@@ -9,6 +9,24 @@ export interface MediaCache<T extends MediaStageCreation> {
   signedAt: number;
 }
 
+export function maskUnsignedPrivateStageMedia<T extends MediaStageCreation>(
+  creations: T[],
+  userId: string,
+  supabaseUrl: string,
+): T[] {
+  const publicUrl = (value: string | null | undefined) =>
+    ownedCreationStoragePath(value, userId, supabaseUrl)
+      ? null
+      : (value ?? null);
+  return creations.map((creation) => ({
+    ...creation,
+    fileUrl: publicUrl(creation.fileUrl),
+    thumbnailUrl: publicUrl(creation.thumbnailUrl),
+    captionsUrl: publicUrl(creation.captionsUrl),
+    transcriptUrl: publicUrl(creation.transcriptUrl),
+  }));
+}
+
 export async function signStageMedia<T extends MediaStageCreation>(
   creations: T[],
   userId: string,

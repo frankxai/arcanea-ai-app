@@ -46,6 +46,21 @@ export function isDefiniteInsertRejection(code: unknown): boolean {
   );
 }
 
+export function configuredLoopbackSupabaseOrigin(): string | null {
+  const configured =
+    process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+  if (!configured) return null;
+  try {
+    const url = new URL(configured);
+    return url.protocol === "http:" &&
+      ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname)
+      ? url.origin
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 export function safeCreationUrl(
   value: string | null | undefined,
 ): string | null {
@@ -62,7 +77,11 @@ export function safeCreationUrl(
     return value;
   try {
     const url = new URL(value);
-    return url.protocol === "https:" ? url.href : null;
+    if (url.protocol === "https:") return url.href;
+    const loopbackOrigin = configuredLoopbackSupabaseOrigin();
+    return url.protocol === "http:" && url.origin === loopbackOrigin
+      ? url.href
+      : null;
   } catch {
     return null;
   }
@@ -86,6 +105,7 @@ export function previewableCreationUrl(
   const hostname = parsed.hostname;
   if (origin && parsed.origin === origin)
     return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+  if (parsed.origin === configuredLoopbackSupabaseOrigin()) return safeUrl;
   return hostname.endsWith(".supabase.co") ||
     hostname.endsWith(".public.blob.vercel-storage.com") ||
     hostname === "media.starlightintelligence.org" ||

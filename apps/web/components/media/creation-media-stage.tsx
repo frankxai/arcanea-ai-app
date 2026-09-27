@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import {
   ArrowUpRight,
@@ -118,6 +118,16 @@ function MediaPreview({
   const [lockedPlaybackUrl, setLockedPlaybackUrl] = useState<string | null>(
     null,
   );
+  const resumeAt = useRef<number | null>(null);
+  const restorePosition = (element: HTMLMediaElement) => {
+    if (resumeAt.current === null) return;
+    try {
+      element.currentTime = resumeAt.current;
+      resumeAt.current = null;
+    } catch {
+      // Wait for metadata when the renewed source has not loaded yet.
+    }
+  };
   const hasOriginal =
     safeMediaUrl(creation.fileUrl) ??
     (kind === "image" ? safeMediaUrl(creation.thumbnailUrl) : null);
@@ -158,8 +168,23 @@ function MediaPreview({
         preload="none"
         poster={thumbnailUrl ?? undefined}
         aria-label={"Play " + creation.title}
-        onPlay={() => setLockedPlaybackUrl(playbackUrl)}
-        onEnded={() => setLockedPlaybackUrl(null)}
+        onPlay={(event) => {
+          restorePosition(event.currentTarget);
+          setLockedPlaybackUrl(playbackUrl);
+        }}
+        onPause={(event) => {
+          resumeAt.current = event.currentTarget.currentTime;
+          setLockedPlaybackUrl(null);
+        }}
+        onSeeked={(event) => {
+          if (event.currentTarget.paused)
+            resumeAt.current = event.currentTarget.currentTime;
+        }}
+        onLoadedMetadata={(event) => restorePosition(event.currentTarget)}
+        onEnded={() => {
+          resumeAt.current = null;
+          setLockedPlaybackUrl(null);
+        }}
         onError={() => {
           setFailedUrls((urls) => [...urls, playbackUrl]);
           setLockedPlaybackUrl(null);
@@ -211,8 +236,23 @@ function MediaPreview({
             preload="none"
             src={playbackUrl}
             aria-label={"Play " + creation.title}
-            onPlay={() => setLockedPlaybackUrl(playbackUrl)}
-            onEnded={() => setLockedPlaybackUrl(null)}
+            onPlay={(event) => {
+              restorePosition(event.currentTarget);
+              setLockedPlaybackUrl(playbackUrl);
+            }}
+            onPause={(event) => {
+              resumeAt.current = event.currentTarget.currentTime;
+              setLockedPlaybackUrl(null);
+            }}
+            onSeeked={(event) => {
+              if (event.currentTarget.paused)
+                resumeAt.current = event.currentTarget.currentTime;
+            }}
+            onLoadedMetadata={(event) => restorePosition(event.currentTarget)}
+            onEnded={() => {
+              resumeAt.current = null;
+              setLockedPlaybackUrl(null);
+            }}
             onError={() => {
               setFailedUrls((urls) => [...urls, playbackUrl]);
               setLockedPlaybackUrl(null);
