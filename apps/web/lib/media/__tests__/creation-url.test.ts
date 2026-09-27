@@ -203,6 +203,7 @@ test("preserves successful private signatures and reports missing batch entries"
     paths,
     [
       {
+        path: "owner/image.png",
         signedUrl: "/storage/v1/object/sign/creations/owner/image.png?token=a",
       },
     ],
@@ -214,4 +215,25 @@ test("preserves successful private signatures and reports missing batch entries"
   );
   assert.equal(result.signed.get(paths[1]), null);
   assert.equal(result.partialFailure, true);
+});
+
+test("matches signed URLs by storage path even when a batch is reordered", () => {
+  const paths = ["owner/image.png", "owner/film.mp4"];
+  const result = resolveSignedCreationPaths(
+    paths,
+    [
+      { path: paths[1], signedUrl: "/film?token=film" },
+      { path: paths[0], signedUrl: "/image?token=image" },
+    ],
+    "https://project.supabase.co",
+  );
+  assert.equal(
+    result.signed.get(paths[0]),
+    "https://project.supabase.co/image?token=image",
+  );
+  assert.equal(
+    result.signed.get(paths[1]),
+    "https://project.supabase.co/film?token=film",
+  );
+  assert.equal(result.partialFailure, false);
 });

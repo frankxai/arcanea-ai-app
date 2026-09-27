@@ -1,6 +1,7 @@
 /*
  * @arcanea/design-system — CSS variables
- * Framework-agnostic export. Mirror of src/tokens.ts.
+ * Framework-agnostic export. Core tokens mirror src/tokens.ts;
+ * media library tokens mirror src/media-library-tokens.ts.
  * Import into any non-React consumer (Astro, Svelte, Vue, plain HTML).
  *
  * Typography (2026 premium stack):

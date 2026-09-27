@@ -17,12 +17,16 @@ interface SignedStageMedia<T extends MediaStageCreation> {
 
 export function resolveSignedCreationPaths(
   paths: string[],
-  data: Array<{ signedUrl?: string | null }>,
+  data: Array<{ path: string | null; signedUrl?: string | null }>,
   supabaseUrl: string,
 ) {
+  const returned = new Map<string, string | null>();
+  for (const entry of data) {
+    if (entry.path) returned.set(entry.path, entry.signedUrl ?? null);
+  }
   const signed = new Map<string, string | null>(
-    paths.map((path, index): [string, string | null] => {
-      const signedUrl = data[index]?.signedUrl;
+    paths.map((path): [string, string | null] => {
+      const signedUrl = returned.get(path);
       return [path, signedUrl ? new URL(signedUrl, supabaseUrl).href : null];
     }),
   );
