@@ -2,6 +2,13 @@ import { createClient } from "@/lib/supabase/client";
 import { ownedCreationStoragePath } from "@/lib/media/creation-url";
 import type { MediaStageCreation } from "@/components/media/creation-media-stage";
 
+export interface MediaCache<T extends MediaStageCreation> {
+  userId: string;
+  source: T[];
+  signed: T[];
+  signedAt: number;
+}
+
 export async function signStageMedia<T extends MediaStageCreation>(
   creations: T[],
   userId: string,

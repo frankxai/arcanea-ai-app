@@ -6,7 +6,10 @@ import { ArrowUpRight } from "@/lib/phosphor-icons";
 import { useAuth } from "@/lib/auth/context";
 import { createClient } from "@/lib/supabase/client";
 import { creationMediaUrl } from "@/lib/media/creation-url";
-import { signStageMedia } from "@/lib/media/sign-creation-media";
+import {
+  signStageMedia,
+  type MediaCache,
+} from "@/lib/media/sign-creation-media";
 import {
   CreationMediaStage,
   type MediaStageCreation,
@@ -34,13 +37,6 @@ interface LibrarySnapshot {
   hasMore: boolean;
   error: boolean;
   mediaError: boolean;
-}
-
-interface MediaCache {
-  userId: string;
-  source: LibraryCreation[];
-  signed: LibraryCreation[];
-  signedAt: number;
 }
 
 const filters: Array<{ id: Filter; label: string }> = [
@@ -129,7 +125,8 @@ export default function CreationsPage() {
   const [retry, setRetry] = useState(0);
   const [loadingMoreKey, setLoadingMoreKey] = useState<string | null>(null);
   const [loadMoreErrorKey, setLoadMoreErrorKey] = useState<string | null>(null);
-  const mediaCache = useRef<MediaCache | null>(null);
+  const [pageAnnouncement, setPageAnnouncement] = useState("");
+  const mediaCache = useRef<MediaCache<LibraryCreation> | null>(null);
   const activeUserId = user?.id;
 
   useEffect(() => {
@@ -295,6 +292,9 @@ export default function CreationsPage() {
             }
           : current,
       );
+      setPageAnnouncement(
+        `${pageRows.length} more creations loaded; ${snapshot.items.length + pageRows.length} shown.${rows.length > PAGE_SIZE ? "" : " All creations loaded."}`,
+      );
     } catch {
       setLoadMoreErrorKey(key);
     } finally {
@@ -350,13 +350,20 @@ export default function CreationsPage() {
         ) : (
           <>
             {snapshot?.mediaError ? (
-              <p
+              <div
                 role="alert"
                 className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-6 text-sm text-[var(--arc-text-secondary)]"
               >
                 Recent media previews could not load. Your saved work remains
                 available below.
-              </p>
+                <button
+                  type="button"
+                  onClick={() => setRetry((value) => value + 1)}
+                  className="ml-3 min-h-11 rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] px-4 font-medium text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                >
+                  Try again
+                </button>
+              </div>
             ) : (
               <CreationMediaStage creations={snapshot?.media ?? []} />
             )}
@@ -389,7 +396,10 @@ export default function CreationsPage() {
                       key={id}
                       type="button"
                       aria-pressed={filter === id}
-                      onClick={() => setFilter(id)}
+                      onClick={() => {
+                        setPageAnnouncement("");
+                        setFilter(id);
+                      }}
                       className="min-h-11 rounded-[var(--arc-radius-full)] border border-[var(--arc-cosmic-border)] px-4 py-2 text-sm text-[var(--arc-text-secondary)] aria-pressed:border-[var(--arc-brand-atlantean-teal)] aria-pressed:bg-[var(--arc-cosmic-raised)] aria-pressed:text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
                     >
                       {label}
@@ -420,6 +430,7 @@ export default function CreationsPage() {
                   <button
                     type="button"
                     onClick={() => {
+                      setPageAnnouncement("");
                       setSnapshot(null);
                       setRetry((value) => value + 1);
                     }}
@@ -445,6 +456,9 @@ export default function CreationsPage() {
                   ))}
                 </ul>
               )}
+              <p role="status" className="sr-only">
+                {pageAnnouncement}
+              </p>
               {!filterLoading &&
                 !snapshot?.error &&
                 loadMoreErrorKey === currentKey && (
@@ -455,18 +469,26 @@ export default function CreationsPage() {
                     More creations could not load. Try again.
                   </p>
                 )}
-              {!filterLoading && !snapshot?.error && snapshot?.hasMore && (
-                <div className="mt-6 flex justify-center">
-                  <button
-                    type="button"
-                    onClick={() => void loadMore()}
-                    disabled={loadingMoreKey !== null}
-                    className="min-h-11 rounded-[var(--arc-radius-full)] border border-[var(--arc-cosmic-border-bright)] px-6 py-2 text-sm font-medium hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)] disabled:opacity-50"
-                  >
-                    {loadingMoreKey === currentKey ? "Loading…" : "Load more"}
-                  </button>
-                </div>
-              )}
+              {!filterLoading &&
+                !snapshot?.error &&
+                (snapshot?.hasMore || pageAnnouncement) && (
+                  <div className="mt-6 flex justify-center">
+                    <button
+                      type="button"
+                      onClick={() => void loadMore()}
+                      aria-disabled={
+                        loadingMoreKey !== null || !snapshot?.hasMore
+                      }
+                      className="min-h-11 rounded-[var(--arc-radius-full)] border border-[var(--arc-cosmic-border-bright)] px-6 py-2 text-sm font-medium hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)] aria-disabled:opacity-50"
+                    >
+                      {loadingMoreKey === currentKey
+                        ? "Loading…"
+                        : snapshot?.hasMore
+                          ? "Load more"
+                          : "All creations loaded"}
+                    </button>
+                  </div>
+                )}
             </section>
           </>
         )}
