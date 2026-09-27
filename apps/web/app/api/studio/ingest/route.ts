@@ -16,21 +16,18 @@
  * Returns: { id, classification, confidence, title, tags, summary }
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 import {
   classifyContent,
   estimateTokens,
   wordCount,
   type Classification,
-} from '@/lib/studio/classify';
-import {
-  embedStudioDocument,
-  toPgVector,
-} from '@/lib/studio/embed';
-import { linkToWorldGraph } from '@/lib/studio/world-link';
+} from "@/lib/studio/classify";
+import { embedStudioDocument, toPgVector } from "@/lib/studio/embed";
+import { linkToWorldGraph } from "@/lib/studio/world-link";
 
-export const runtime = 'nodejs';
+export const runtime = "nodejs";
 export const maxDuration = 30;
 
 // ---------------------------------------------------------------------------
@@ -38,7 +35,7 @@ export const maxDuration = 30;
 // ---------------------------------------------------------------------------
 
 interface IngestTextBody {
-  kind: 'text';
+  kind: "text";
   content: string;
   title?: string;
   worldId?: string | null;
@@ -47,7 +44,7 @@ interface IngestTextBody {
 }
 
 interface IngestUrlBody {
-  kind: 'url';
+  kind: "url";
   url: string;
   worldId?: string | null;
   tags?: string[];
@@ -66,22 +63,39 @@ type IngestBody = IngestTextBody | IngestUrlBody;
 const MAX_REDIRECTS = 3;
 
 function isPrivateHost(hostname: string): boolean {
-  const host = hostname.replace(/^\[|\]$/g, '').toLowerCase();
-  if (host === 'localhost' || host.endsWith('.localhost') || host.endsWith('.local')
-    || host.endsWith('.internal') || !host.includes('.') && !host.includes(':')) {
+  const host = hostname.replace(/^\[|\]$/g, "").toLowerCase();
+  if (
+    host === "localhost" ||
+    host.endsWith(".localhost") ||
+    host.endsWith(".local") ||
+    host.endsWith(".internal") ||
+    (!host.includes(".") && !host.includes(":"))
+  ) {
     return true;
   }
   const v4 = host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
   if (v4) {
     const [a, b] = [Number(v4[1]), Number(v4[2])];
-    return a === 0 || a === 10 || a === 127 || (a === 100 && b >= 64 && b <= 127)
-      || (a === 169 && b === 254) || (a === 172 && b >= 16 && b <= 31)
-      || (a === 192 && b === 168) || a >= 224;
+    return (
+      a === 0 ||
+      a === 10 ||
+      a === 127 ||
+      (a === 100 && b >= 64 && b <= 127) ||
+      (a === 169 && b === 254) ||
+      (a === 172 && b >= 16 && b <= 31) ||
+      (a === 192 && b === 168) ||
+      a >= 224
+    );
   }
-  if (host.includes(':')) {
+  if (host.includes(":")) {
     // IPv6 literal: loopback, unspecified, unique-local, link-local, v4-mapped.
-    return host === '::1' || host === '::' || /^f[cd]/.test(host) || /^fe[89ab]/.test(host)
-      || host.startsWith('::ffff:');
+    return (
+      host === "::1" ||
+      host === "::" ||
+      /^f[cd]/.test(host) ||
+      /^fe[89ab]/.test(host) ||
+      host.startsWith("::ffff:")
+    );
   }
   return false;
 }
@@ -91,43 +105,48 @@ function assertPublicUrl(raw: string): URL {
   try {
     parsed = new URL(raw);
   } catch {
-    throw new Error('Invalid URL');
+    throw new Error("Invalid URL");
   }
-  if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') {
-    throw new Error('Only http(s) URLs can be ingested');
+  if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+    throw new Error("Only http(s) URLs can be ingested");
   }
   if (parsed.username || parsed.password || isPrivateHost(parsed.hostname)) {
-    throw new Error('URL host is not allowed');
+    throw new Error("URL host is not allowed");
   }
   return parsed;
 }
 
-async function fetchAsText(url: string): Promise<{ title: string; content: string }> {
+async function fetchAsText(
+  url: string,
+): Promise<{ title: string; content: string }> {
   let target = assertPublicUrl(url);
   let resp: Response | undefined;
   for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
     resp = await fetch(target, {
       headers: {
         // Identify ourselves so sites don't 403 a headless fetch
-        'User-Agent': 'ArcaneaStudioIngestor/1.0 (+https://arcanea.ai)',
-        Accept: 'text/html,application/xhtml+xml,text/plain',
+        "User-Agent": "ArcaneaStudioIngestor/1.0 (+https://arcanea.ai)",
+        Accept: "text/html,application/xhtml+xml,text/plain",
       },
-      redirect: 'manual',
+      redirect: "manual",
     });
-    const location = resp.status >= 300 && resp.status < 400 ? resp.headers.get('location') : null;
+    const location =
+      resp.status >= 300 && resp.status < 400
+        ? resp.headers.get("location")
+        : null;
     if (!location) break;
-    if (hop === MAX_REDIRECTS) throw new Error('Too many redirects');
+    if (hop === MAX_REDIRECTS) throw new Error("Too many redirects");
     target = assertPublicUrl(new URL(location, target).toString());
   }
-  if (!resp) throw new Error('No response');
+  if (!resp) throw new Error("No response");
 
   if (!resp.ok) {
     throw new Error(`Fetch ${url} failed: ${resp.status}`);
   }
 
-  const contentType = resp.headers.get('content-type') ?? '';
+  const contentType = resp.headers.get("content-type") ?? "";
 
-  if (contentType.includes('text/plain') || contentType.includes('markdown')) {
+  if (contentType.includes("text/plain") || contentType.includes("markdown")) {
     const text = await resp.text();
     return {
       title: url,
@@ -135,7 +154,7 @@ async function fetchAsText(url: string): Promise<{ title: string; content: strin
     };
   }
 
-  if (contentType.includes('text/html')) {
+  if (contentType.includes("text/html")) {
     const html = await resp.text();
     // Extract <title> if present
     const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
@@ -144,26 +163,26 @@ async function fetchAsText(url: string): Promise<{ title: string; content: strin
     // Strip scripts, styles, navs — then convert to plain text.
     // Minimal approach: no Turndown dependency, keep bundle lean.
     const stripped = html
-      .replace(/<script[\s\S]*?<\/script>/gi, '')
-      .replace(/<style[\s\S]*?<\/style>/gi, '')
-      .replace(/<nav[\s\S]*?<\/nav>/gi, '')
-      .replace(/<header[\s\S]*?<\/header>/gi, '')
-      .replace(/<footer[\s\S]*?<\/footer>/gi, '')
+      .replace(/<script[\s\S]*?<\/script>/gi, "")
+      .replace(/<style[\s\S]*?<\/style>/gi, "")
+      .replace(/<nav[\s\S]*?<\/nav>/gi, "")
+      .replace(/<header[\s\S]*?<\/header>/gi, "")
+      .replace(/<footer[\s\S]*?<\/footer>/gi, "")
       // Convert headings to markdown
-      .replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, '\n# $1\n')
-      .replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, '\n## $1\n')
-      .replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, '\n### $1\n')
-      .replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, '\n$1\n')
-      .replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, '- $1\n')
-      .replace(/<br\s*\/?>/gi, '\n')
-      .replace(/<[^>]+>/g, '')
-      .replace(/&nbsp;/g, ' ')
-      .replace(/&amp;/g, '&')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
+      .replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, "\n# $1\n")
+      .replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, "\n## $1\n")
+      .replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, "\n### $1\n")
+      .replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, "\n$1\n")
+      .replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, "- $1\n")
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<[^>]+>/g, "")
+      .replace(/&nbsp;/g, " ")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
       .replace(/&quot;/g, '"')
       .replace(/&#39;/g, "'")
-      .replace(/\n{3,}/g, '\n\n')
+      .replace(/\n{3,}/g, "\n\n")
       .trim();
 
     return { title, content: stripped };
@@ -195,7 +214,7 @@ export async function POST(request: NextRequest) {
   try {
     body = (await request.json()) as IngestBody;
   } catch {
-    return err('Invalid JSON body', 400);
+    return err("Invalid JSON body", 400);
   }
 
   // ── Auth ────────────────────────────────────────────────
@@ -206,53 +225,56 @@ export async function POST(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return err('Sign in required to ingest content', 401);
+    return err("Sign in required to ingest content", 401);
   }
 
   // ── Normalize input → (title, markdown, sourceType, sourceUri) ──
   let title: string;
   let markdown: string;
-  let sourceType: 'paste' | 'url';
+  let sourceType: "paste" | "url";
   let sourceUri: string | undefined;
   let worldId: string | null = null;
   const extraTags: string[] = [];
 
-  if (body.kind === 'text') {
+  if (body.kind === "text") {
     if (!body.content || body.content.trim().length < 4) {
-      return err('content must be at least 4 characters', 400);
+      return err("content must be at least 4 characters", 400);
     }
     if (body.content.length > 250_000) {
-      return err('content exceeds 250K character limit', 413);
+      return err("content exceeds 250K character limit", 413);
     }
-    title = body.title?.trim() || 'Untitled';
+    title = body.title?.trim() || "Untitled";
     markdown = body.content;
-    sourceType = 'paste';
+    sourceType = "paste";
     sourceUri = body.sourceUri;
     worldId = body.worldId ?? null;
     if (body.tags) extraTags.push(...body.tags);
-  } else if (body.kind === 'url') {
+  } else if (body.kind === "url") {
     try {
       assertPublicUrl(body.url);
     } catch (e) {
-      return err(e instanceof Error ? e.message : 'Invalid URL', 400);
+      return err(e instanceof Error ? e.message : "Invalid URL", 400);
     }
     try {
       const fetched = await fetchAsText(body.url);
       title = fetched.title;
       markdown = fetched.content;
-      sourceType = 'url';
+      sourceType = "url";
       sourceUri = body.url;
       worldId = body.worldId ?? null;
       if (body.tags) extraTags.push(...body.tags);
     } catch (e) {
-      return err(`Failed to fetch URL: ${e instanceof Error ? e.message : 'unknown'}`, 502);
+      return err(
+        `Failed to fetch URL: ${e instanceof Error ? e.message : "unknown"}`,
+        502,
+      );
     }
   } else {
-    return err('Unknown ingestion kind', 400);
+    return err("Unknown ingestion kind", 400);
   }
 
   if (markdown.trim().length < 4) {
-    return err('Extracted content is empty', 422);
+    return err("Extracted content is empty", 422);
   }
 
   // ── Classify ────────────────────────────────────────────
@@ -265,15 +287,18 @@ export async function POST(request: NextRequest) {
     const classified = await classifyContent(markdown);
     classification = classified.classification;
     confidence = classified.confidence;
-    tags = [...new Set([...extraTags, ...classified.suggested_tags])].slice(0, 10);
+    tags = [...new Set([...extraTags, ...classified.suggested_tags])].slice(
+      0,
+      10,
+    );
     summary = classified.summary;
     // Prefer LLM-suggested title only if user didn't provide one
-    if (title === 'Untitled' && classified.suggested_title) {
+    if (title === "Untitled" && classified.suggested_title) {
       title = classified.suggested_title;
     }
   } catch (e) {
-    console.warn('[studio/ingest] classification failed:', e);
-    classification = 'reference';
+    console.warn("[studio/ingest] classification failed:", e);
+    classification = "reference";
     confidence = 0.2;
     tags = extraTags;
     summary = markdown.slice(0, 400);
@@ -290,7 +315,10 @@ export async function POST(request: NextRequest) {
         markdownContent: markdown,
       });
     } catch (e) {
-      console.warn('[studio/ingest] embedding failed, storing without vector:', e);
+      console.warn(
+        "[studio/ingest] embedding failed, storing without vector:",
+        e,
+      );
     }
   }
 
@@ -313,17 +341,19 @@ export async function POST(request: NextRequest) {
   };
 
   const { data, error } = await supabase
-    .from('ingested_documents')
+    .from("ingested_documents")
     .insert(row)
-    .select('id, title, classification, classification_confidence, tags, created_at')
+    .select(
+      "id, title, classification, classification_confidence, tags, created_at",
+    )
     .single();
 
   if (error) {
-    console.error('[studio/ingest] insert error:', error);
+    console.error("[studio/ingest] insert error:", error);
     // Table may not exist yet — surface clearly
-    if (error.code === '42P01') {
+    if (error.code === "42P01") {
       return err(
-        'ingested_documents table not yet migrated. Run: supabase db push',
+        "ingested_documents table not yet migrated. Run: supabase db push",
         503,
       );
     }
@@ -332,7 +362,7 @@ export async function POST(request: NextRequest) {
 
   // Best-effort world graph linking — don't fail the ingest if it fails
   let worldLink: Awaited<ReturnType<typeof linkToWorldGraph>> | null = null;
-  if (worldId && ['character', 'location', 'magic'].includes(classification)) {
+  if (worldId && ["character", "location", "magic"].includes(classification)) {
     try {
       worldLink = await linkToWorldGraph(supabase, {
         worldId,
@@ -344,7 +374,7 @@ export async function POST(request: NextRequest) {
         documentId: data.id,
       });
     } catch (e) {
-      console.warn('[studio/ingest] world link failed:', e);
+      console.warn("[studio/ingest] world link failed:", e);
     }
   }
 
@@ -367,11 +397,14 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   return NextResponse.json({
-    status: 'ok',
-    methods: ['POST'],
-    accepts: ['text', 'url'],
+    status: "ok",
+    methods: ["POST"],
+    accepts: ["text", "url"],
     requires_auth: true,
-    requires_env: ['ANTHROPIC_API_KEY (classifier, falls back to heuristic)', 'OPENAI_API_KEY (embeddings, optional)'],
-    migration: '20260417_studio_ingestion.sql',
+    requires_env: [
+      "ANTHROPIC_API_KEY (classifier, falls back to heuristic)",
+      "OPENAI_API_KEY (embeddings, optional)",
+    ],
+    migration: "20260417_studio_ingestion.sql",
   });
 }
