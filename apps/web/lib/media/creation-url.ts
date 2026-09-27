@@ -64,6 +64,14 @@ export function safeCreationUrl(
   }
 }
 
+export function creationDocumentUrl(content: unknown): string | null {
+  if (typeof content === "string") return safeCreationUrl(content);
+  if (!content || typeof content !== "object" || Array.isArray(content))
+    return null;
+  const fileUrl = (content as Record<string, unknown>).fileUrl;
+  return typeof fileUrl === "string" ? safeCreationUrl(fileUrl) : null;
+}
+
 export function previewableCreationUrl(
   value: string | null | undefined,
   origin: string | null,

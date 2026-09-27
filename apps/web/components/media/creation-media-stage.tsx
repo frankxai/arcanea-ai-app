@@ -145,7 +145,7 @@ function MediaPreview({
   if (kind === "video" && playbackUrl) {
     return (
       <video
-        key={creation.id}
+        key={`${creation.id}:${playbackUrl}`}
         className={styles.video}
         controls
         playsInline

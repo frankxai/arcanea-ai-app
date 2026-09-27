@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
+  creationDocumentUrl,
   creationMediaUrl,
   creationTypeForMime,
   isDefiniteInsertRejection,
@@ -66,6 +67,18 @@ test("only treats HTTPS or local paths as openable media URLs", () => {
   assert.equal(safeCreationUrl("javascript:alert(1)"), null);
   assert.equal(safeCreationUrl("//evil.example/film.mp4"), null);
   assert.equal(safeCreationUrl("/media/film.mp4"), "/media/film.mp4");
+});
+
+test("opens document uploads with scalar or metadata-wrapped file URLs", () => {
+  const fileUrl =
+    "https://example.supabase.co/storage/v1/object/public/creations/file.pdf";
+  assert.equal(creationDocumentUrl(fileUrl), fileUrl);
+  assert.equal(
+    creationDocumentUrl({ fileUrl, transcript: "A recorded note" }),
+    fileUrl,
+  );
+  assert.equal(creationDocumentUrl({ text: "A written note" }), null);
+  assert.equal(creationDocumentUrl({ fileUrl: "javascript:alert(1)" }), null);
 });
 
 test("preview hosts match the upload caption policy", () => {

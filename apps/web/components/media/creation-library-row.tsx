@@ -9,7 +9,7 @@ import {
   MusicNote,
 } from "@/lib/phosphor-icons";
 import { createClient } from "@/lib/supabase/client";
-import { safeCreationUrl } from "@/lib/media/creation-url";
+import { creationDocumentUrl } from "@/lib/media/creation-url";
 
 export interface CreationListItem {
   id: string;
@@ -67,9 +67,7 @@ export function CreationLibraryRow({
   const originalUrl = isMedia ? `/api/creations/${creation.id}/media` : null;
   const textContent = !isMedia && expanded ? readableContent(detail) : null;
   const documentUrl =
-    creation.type === "text" &&
-    typeof detail === "string" &&
-    safeCreationUrl(detail)
+    creation.type === "text" && creationDocumentUrl(detail)
       ? `/api/creations/${creation.id}/media`
       : null;
   const detailId = `creation-detail-${creation.id}`;
@@ -176,17 +174,19 @@ export function CreationLibraryRow({
               Open file <ArrowUpRight size={15} aria-hidden="true" />
             </a>
           )}
-          <pre
-            tabIndex={0}
-            className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words font-sans text-sm leading-7 text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
-          >
-            {detailLoading
-              ? "Loading saved content…"
-              : detailError
-                ? "Saved content could not load. Close and try again."
-                : (textContent ??
-                  "No saved content is available for this record.")}
-          </pre>
+          {!documentUrl && (
+            <pre
+              tabIndex={0}
+              className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words font-sans text-sm leading-7 text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+            >
+              {detailLoading
+                ? "Loading saved content…"
+                : detailError
+                  ? "Saved content could not load. Close and try again."
+                  : (textContent ??
+                    "No saved content is available for this record.")}
+            </pre>
+          )}
         </div>
       )}
     </li>
