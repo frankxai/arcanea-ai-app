@@ -166,6 +166,7 @@ export default function CreationsPage() {
         const source = media;
         try {
           media = await signStageMedia(source, userId);
+          if (!active) return;
           mediaCache.current = {
             userId,
             source,

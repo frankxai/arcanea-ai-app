@@ -279,7 +279,7 @@ export function CreationMediaStage({
           <div className={styles.main}>
             <div className={styles.preview}>
               <MediaPreview
-                key={selected.creation.id}
+                key={`${selected.creation.id}:${selected.creation.fileUrl}:${selected.creation.thumbnailUrl}`}
                 creation={selected.creation}
                 kind={selected.kind}
                 origin={origin}
@@ -355,6 +355,7 @@ export function CreationMediaStage({
                     onClick={() => setSelectedId(creation.id)}
                   >
                     <MediaThumbnail
+                      key={`${creation.id}:${creation.thumbnailUrl}:${creation.fileUrl}`}
                       creation={creation}
                       kind={kind}
                       origin={origin}
