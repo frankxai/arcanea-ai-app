@@ -66,7 +66,14 @@ test("only cleans uploaded files after a definite database rejection", () => {
 test("only treats HTTPS or local paths as openable media URLs", () => {
   assert.equal(safeCreationUrl("javascript:alert(1)"), null);
   assert.equal(safeCreationUrl("//evil.example/film.mp4"), null);
+  assert.equal(safeCreationUrl("/\t/evil.example/film.mp4"), null);
+  assert.equal(safeCreationUrl("/\\evil.example/film.mp4"), null);
+  assert.equal(safeCreationUrl("https://arcanea.ai/film\n.mp4"), null);
   assert.equal(safeCreationUrl("/media/film.mp4"), "/media/film.mp4");
+  assert.equal(
+    previewableCreationUrl("/\t/evil.example/film.mp4", "https://arcanea.ai"),
+    null,
+  );
 });
 
 test("opens document uploads with scalar or metadata-wrapped file URLs", () => {

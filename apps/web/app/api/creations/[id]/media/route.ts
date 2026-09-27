@@ -33,6 +33,8 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
+  if (!/^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(id))
+    return NextResponse.json({ error: "Invalid creation ID" }, { status: 400 });
   const field = new URL(request.url).searchParams.get("field") ?? "original";
   if (!fields.includes(field as Field))
     return NextResponse.json({ error: "Invalid media field" }, { status: 400 });

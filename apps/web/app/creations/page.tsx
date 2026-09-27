@@ -123,6 +123,12 @@ export default function CreationsPage() {
         }
       }
       if (!active) return;
+      if (itemsResult && !itemsResult.error) {
+        setLoadMoreErrorKey((current) =>
+          current === `${userId}:${filter}` ? null : current,
+        );
+        setPageAnnouncement(null);
+      }
       setSnapshot({
         userId,
         filter,

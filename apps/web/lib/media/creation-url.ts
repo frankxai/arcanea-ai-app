@@ -50,6 +50,10 @@ export function safeCreationUrl(
   value: string | null | undefined,
 ): string | null {
   if (!value) return null;
+  for (let index = 0; index < value.length; index += 1) {
+    const code = value.charCodeAt(index);
+    if (code < 0x20 || code === 0x7f || code === 0x5c) return null;
+  }
   if (
     value.startsWith("/") &&
     !value.startsWith("//") &&

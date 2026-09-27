@@ -81,6 +81,17 @@ test("creation media redirects require ownership and handle storage failures", a
     else process.env.NEXT_PUBLIC_SUPABASE_URL = originalUrl;
   });
 
+  await t.test("rejects malformed IDs before accessing storage", async () => {
+    creationMediaRouteDeps.createClient = async () => {
+      throw new Error("An invalid ID should not reach the database");
+    };
+    const response = await GET(
+      new NextRequest("https://arcanea.ai/api/creations/not-a-uuid/media"),
+      { params: Promise.resolve({ id: "not-a-uuid" }) },
+    );
+    assert.equal(response.status, 400);
+  });
+
   await t.test("rejects an unsigned-in request", async () => {
     creationMediaRouteDeps.createClient = async () =>
       clientStub({ userId: null });
