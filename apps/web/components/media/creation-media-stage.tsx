@@ -186,6 +186,8 @@ function MediaPreview({
             fill
             sizes="(max-width: 760px) 100vw, 60vw"
             className={styles.audioArtwork}
+            loading="eager"
+            fetchPriority="high"
             onError={() => setArtFailedUrl(thumbnailUrl)}
           />
         ) : (

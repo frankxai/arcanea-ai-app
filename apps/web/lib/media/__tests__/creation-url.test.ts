@@ -54,7 +54,11 @@ test("classifies uploaded audio as audio for the media library", () => {
 test("only cleans uploaded files after a definite database rejection", () => {
   assert.equal(isDefiniteInsertRejection("23514"), true);
   assert.equal(isDefiniteInsertRejection("23502"), true);
-  assert.equal(isDefiniteInsertRejection("PGRST301"), false);
+  assert.equal(isDefiniteInsertRejection("PGRST204"), true);
+  assert.equal(isDefiniteInsertRejection("PGRST301"), true);
+  assert.equal(isDefiniteInsertRejection("42501"), true);
+  assert.equal(isDefiniteInsertRejection("42P01"), true);
+  assert.equal(isDefiniteInsertRejection("PGRST116"), false);
   assert.equal(isDefiniteInsertRejection(undefined), false);
 });
 

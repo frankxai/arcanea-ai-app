@@ -9,6 +9,7 @@ import {
   MusicNote,
 } from "@/lib/phosphor-icons";
 import { createClient } from "@/lib/supabase/client";
+import { safeCreationUrl } from "@/lib/media/creation-url";
 
 export interface CreationListItem {
   id: string;
@@ -65,6 +66,12 @@ export function CreationLibraryRow({
   const isMedia = ["image", "video", "music", "audio"].includes(creation.type);
   const originalUrl = isMedia ? `/api/creations/${creation.id}/media` : null;
   const textContent = !isMedia && expanded ? readableContent(detail) : null;
+  const documentUrl =
+    creation.type === "text" &&
+    typeof detail === "string" &&
+    safeCreationUrl(detail)
+      ? `/api/creations/${creation.id}/media`
+      : null;
   const detailId = `creation-detail-${creation.id}`;
 
   async function toggleDetail() {
@@ -159,6 +166,16 @@ export function CreationLibraryRow({
                   : "Saved content ready"
               : ""}
           </p>
+          {documentUrl && (
+            <a
+              href={documentUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mb-3 inline-flex min-h-11 items-center gap-1 rounded-[var(--arc-radius-xl)] text-sm font-medium text-[var(--arc-brand-atlantean-teal)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+            >
+              Open file <ArrowUpRight size={15} aria-hidden="true" />
+            </a>
+          )}
           <pre
             tabIndex={0}
             className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words font-sans text-sm leading-7 text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"

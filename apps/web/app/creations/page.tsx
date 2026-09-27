@@ -5,23 +5,23 @@ import Link from "next/link";
 import { ArrowUpRight } from "@/lib/phosphor-icons";
 import { useAuth } from "@/lib/auth/context";
 import { createClient } from "@/lib/supabase/client";
-import { creationMediaUrl } from "@/lib/media/creation-url";
+import {
+  mapCreation,
+  type LibraryCreation,
+} from "@/lib/media/creation-library-data";
+import {
+  creationFilters as filters,
+  type CreationFilter as Filter,
+} from "@/lib/media/creation-library-filters";
 import {
   signStageMedia,
   type MediaCache,
 } from "@/lib/media/sign-creation-media";
-import {
-  CreationMediaStage,
-  type MediaStageCreation,
-} from "@/components/media/creation-media-stage";
+import { CreationMediaStage } from "@/components/media/creation-media-stage";
 import { CreationLibraryRow } from "@/components/media/creation-library-row";
 
-type Filter = "all" | "image" | "video" | "audio" | "text" | "code";
-type LibraryCreation = MediaStageCreation & {
-  createdAt: string;
-  content: unknown;
-};
 type Cursor = { createdAt: string; id: string };
+type PageAnnouncement = { key: string; text: string; total: number };
 const PAGE_SIZE = 24;
 const stageColumns =
   "id, title, type, status, content, thumbnail_url, created_at, ai_model, ai_prompt";
@@ -37,63 +37,6 @@ interface LibrarySnapshot {
   hasMore: boolean;
   error: boolean;
   mediaError: boolean;
-}
-
-const filters: Array<{ id: Filter; label: string }> = [
-  { id: "all", label: "All work" },
-  { id: "image", label: "Images" },
-  { id: "video", label: "Film" },
-  { id: "audio", label: "Music & audio" },
-  { id: "text", label: "Writing" },
-  { id: "code", label: "Code" },
-];
-
-function mapCreation(row: {
-  id: string;
-  title: string;
-  type: string;
-  status: string;
-  content?: unknown;
-  content_source?: string | null;
-  content_mode?: string | null;
-  content_prompt?: string | null;
-  thumbnail_url: string | null;
-  created_at: string;
-  ai_model: string | null;
-  ai_prompt: string | null;
-}): LibraryCreation {
-  const content =
-    row.content &&
-    typeof row.content === "object" &&
-    !Array.isArray(row.content)
-      ? (row.content as Record<string, unknown>)
-      : null;
-  return {
-    id: row.id,
-    title: row.title,
-    type: row.type,
-    status: row.status,
-    fileUrl: creationMediaUrl(row.content, row.type),
-    thumbnailUrl: row.thumbnail_url,
-    createdAt: row.created_at,
-    content: row.content,
-    captionsUrl:
-      typeof content?.captionsUrl === "string" ? content.captionsUrl : null,
-    captionsLanguage:
-      typeof content?.captionsLanguage === "string"
-        ? content.captionsLanguage
-        : null,
-    transcript:
-      typeof content?.transcript === "string" ? content.transcript : null,
-    transcriptUrl:
-      typeof content?.transcriptUrl === "string" ? content.transcriptUrl : null,
-    aiGenerated:
-      Boolean(row.ai_model || row.ai_prompt) ||
-      content?.source === "chat" ||
-      row.content_source === "chat" ||
-      (content?.mode === "image" && typeof content.prompt === "string") ||
-      (row.content_mode === "image" && typeof row.content_prompt === "string"),
-  };
 }
 
 async function fetchPage(
@@ -125,7 +68,8 @@ export default function CreationsPage() {
   const [retry, setRetry] = useState(0);
   const [loadingMoreKey, setLoadingMoreKey] = useState<string | null>(null);
   const [loadMoreErrorKey, setLoadMoreErrorKey] = useState<string | null>(null);
-  const [pageAnnouncement, setPageAnnouncement] = useState("");
+  const [pageAnnouncement, setPageAnnouncement] =
+    useState<PageAnnouncement | null>(null);
   const mediaCache = useRef<MediaCache<LibraryCreation> | null>(null);
   const activeUserId = user?.id;
 
@@ -257,6 +201,12 @@ export default function CreationsPage() {
   const filterLoading = user !== null && snapshot?.filter !== filter;
   const items = snapshot?.items ?? [];
   const currentKey = user ? `${user.id}:${filter}` : null;
+  const announcement =
+    pageAnnouncement?.key === currentKey &&
+    pageAnnouncement.total === snapshot?.items.length &&
+    snapshot?.filter === filter
+      ? pageAnnouncement.text
+      : "";
 
   async function loadMore() {
     if (
@@ -293,9 +243,11 @@ export default function CreationsPage() {
             }
           : current,
       );
-      setPageAnnouncement(
-        `${pageRows.length} more creations loaded; ${snapshot.items.length + pageRows.length} shown.${rows.length > PAGE_SIZE ? "" : " All creations loaded."}`,
-      );
+      setPageAnnouncement({
+        key,
+        total: snapshot.items.length + pageRows.length,
+        text: `${pageRows.length} more creations loaded; ${snapshot.items.length + pageRows.length} shown.${rows.length > PAGE_SIZE ? "" : " All creations loaded."}`,
+      });
     } catch {
       setLoadMoreErrorKey(key);
     } finally {
@@ -398,7 +350,7 @@ export default function CreationsPage() {
                       type="button"
                       aria-pressed={filter === id}
                       onClick={() => {
-                        setPageAnnouncement("");
+                        setPageAnnouncement(null);
                         setFilter(id);
                       }}
                       className="min-h-11 rounded-[var(--arc-radius-full)] border border-[var(--arc-cosmic-border)] px-4 py-2 text-sm text-[var(--arc-text-secondary)] aria-pressed:border-[var(--arc-brand-atlantean-teal)] aria-pressed:bg-[var(--arc-cosmic-raised)] aria-pressed:text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
@@ -431,7 +383,7 @@ export default function CreationsPage() {
                   <button
                     type="button"
                     onClick={() => {
-                      setPageAnnouncement("");
+                      setPageAnnouncement(null);
                       setSnapshot(null);
                       setRetry((value) => value + 1);
                     }}
@@ -458,7 +410,7 @@ export default function CreationsPage() {
                 </ul>
               )}
               <p role="status" className="sr-only">
-                {pageAnnouncement}
+                {announcement}
               </p>
               {!filterLoading &&
                 !snapshot?.error &&
@@ -472,7 +424,7 @@ export default function CreationsPage() {
                 )}
               {!filterLoading &&
                 !snapshot?.error &&
-                (snapshot?.hasMore || pageAnnouncement) && (
+                (snapshot?.hasMore || announcement) && (
                   <div className="mt-6 flex justify-center">
                     <button
                       type="button"

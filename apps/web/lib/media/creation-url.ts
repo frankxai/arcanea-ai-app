@@ -32,7 +32,17 @@ export function creationTypeForMime(
 export function isDefiniteInsertRejection(code: unknown): boolean {
   return (
     typeof code === "string" &&
-    ["22P02", "23502", "23503", "23505", "23514"].includes(code)
+    [
+      "22P02",
+      "23502",
+      "23503",
+      "23505",
+      "23514",
+      "42501",
+      "42P01",
+      "PGRST204",
+      "PGRST301",
+    ].includes(code)
   );
 }
 

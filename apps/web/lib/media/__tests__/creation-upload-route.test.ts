@@ -93,7 +93,7 @@ test("creation upload keeps media when the insert outcome is uncertain", async (
     async () => {
       const removed: string[][] = [];
       creationUploadDeps.createClient = async () =>
-        uploadClient("PGRST301", removed);
+        uploadClient("PGRST116", removed);
       const response = await POST(uploadRequest());
       assert.equal(response.status, 500);
       assert.equal(removed.length, 0);
