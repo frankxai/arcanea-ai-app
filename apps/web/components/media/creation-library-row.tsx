@@ -146,6 +146,7 @@ export function CreationLibraryRow({
             type="button"
             aria-expanded={expanded}
             aria-controls={detailId}
+            aria-label={`${expanded ? "Close" : isMedia ? "View" : "Read"} ${creation.title}`}
             onClick={() => void toggleDetail()}
             className="min-h-[var(--arc-size-interactive-min)] rounded-[var(--arc-radius-xl)] px-[var(--arc-media-space-075)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
           >
