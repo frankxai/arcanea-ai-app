@@ -111,8 +111,8 @@ export async function fetchDriveDocAsText(
   if (mimeType === 'application/vnd.google-apps.document') {
     // Google Docs native — use export endpoint, prefer markdown if available
     const exportMime = 'text/plain';
-    const exportUrl = `${GOOGLE_DRIVE_BASE}/files/${fileId}/export?mimeType=${encodeURIComponent(exportMime)}`;
-    const metaUrl = `${GOOGLE_DRIVE_BASE}/files/${fileId}?fields=id,name,mimeType`;
+    const exportUrl = `${GOOGLE_DRIVE_BASE}/files/${encodeURIComponent(fileId)}/export?mimeType=${encodeURIComponent(exportMime)}`;
+    const metaUrl = `${GOOGLE_DRIVE_BASE}/files/${encodeURIComponent(fileId)}?fields=id,name,mimeType`;
 
     const [metaRes, textRes] = await Promise.all([
       fetch(metaUrl, { headers: { Authorization: `Bearer ${accessToken}` } }),
@@ -136,8 +136,8 @@ export async function fetchDriveDocAsText(
     mimeType === 'text/markdown' ||
     mimeType === 'text/x-markdown'
   ) {
-    const metaUrl = `${GOOGLE_DRIVE_BASE}/files/${fileId}?fields=id,name,mimeType`;
-    const contentUrl = `${GOOGLE_DRIVE_BASE}/files/${fileId}?alt=media`;
+    const metaUrl = `${GOOGLE_DRIVE_BASE}/files/${encodeURIComponent(fileId)}?fields=id,name,mimeType`;
+    const contentUrl = `${GOOGLE_DRIVE_BASE}/files/${encodeURIComponent(fileId)}?alt=media`;
 
     const [metaRes, textRes] = await Promise.all([
       fetch(metaUrl, { headers: { Authorization: `Bearer ${accessToken}` } }),

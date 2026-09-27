@@ -26,6 +26,14 @@ async function exists(p: string) {
   try { await access(p); return true; } catch { return false; }
 }
 
+// Book directories are lowercase slugs. Anything else (`..`, slashes, absolute
+// paths) would let a request read files outside BOOK_ROOT into the prompt.
+const BOOK_SLUG = /^[a-z0-9][a-z0-9-]{0,99}$/;
+
+function isBookSlug(value: unknown): value is string {
+  return typeof value === 'string' && BOOK_SLUG.test(value);
+}
+
 interface BookManifest {
   curated_context?: {
     characters?: boolean;
@@ -206,6 +214,13 @@ export async function POST(req: NextRequest) {
 
     if (!messages || messages.length === 0) {
       return new Response('Messages are required', {
+        status: 400,
+        headers: { 'Content-Type': 'text/plain' },
+      });
+    }
+
+    if (bookSlug !== undefined && bookSlug !== '' && !isBookSlug(bookSlug)) {
+      return new Response('Invalid bookSlug', {
         status: 400,
         headers: { 'Content-Type': 'text/plain' },
       });
