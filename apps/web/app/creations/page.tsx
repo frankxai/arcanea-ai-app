@@ -317,9 +317,7 @@ function CreationsContent() {
                 role="alert"
                 className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-[var(--arc-media-space-150)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]"
               >
-                {snapshot.media.length
-                  ? "Some private media previews could not load. Public work remains visible."
-                  : "Recent media previews could not load. Your saved work remains available below."}
+                Some recent media previews could not load. Try again.
                 <button
                   type="button"
                   onClick={() => {

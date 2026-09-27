@@ -26,6 +26,9 @@ export interface MediaStageCreation {
   captionsLanguage?: string | null;
   transcript?: string | null;
   transcriptUrl?: string | null;
+  originalAvailable?: boolean;
+  captionsAvailable?: boolean;
+  transcriptFileAvailable?: boolean;
 }
 
 type MediaKind = "image" | "video" | "music" | "audio";
@@ -126,10 +129,13 @@ function MediaPreview({
       // Wait for metadata when the renewed source has not loaded yet.
     }
   };
-  const hasOriginal =
-    safeMediaUrl(creation.fileUrl) ??
-    (kind === "image" ? safeMediaUrl(creation.thumbnailUrl) : null);
-  const originalUrl = hasOriginal
+  const originalAvailable =
+    creation.originalAvailable ??
+    Boolean(
+      safeMediaUrl(creation.fileUrl) ??
+      (kind === "image" ? safeMediaUrl(creation.thumbnailUrl) : null),
+    );
+  const originalUrl = originalAvailable
     ? `/api/creations/${creation.id}/media`
     : null;
   const fileUrl = previewableUrl(creation.fileUrl, origin);
@@ -271,7 +277,7 @@ function MediaPreview({
         unoptimized={imageUrl.includes("/object/sign/")}
         alt={creation.title}
         fill
-        sizes="(max-width: 760px) 100vw, (max-width: 1200px) 70vw, 58vw"
+        sizes="(max-width: 900px) 100vw, (max-width: 1200px) 70vw, 58vw"
         className={styles.image}
         loading="eager"
         fetchPriority="high"
@@ -304,19 +310,24 @@ export function CreationMediaStage({
     media.find(({ creation }) => creation.id === selectedId) ?? media[0];
   const selectedOriginalUrl =
     selected &&
-    (safeMediaUrl(selected.creation.fileUrl) ??
-      (selected.kind === "image"
-        ? safeMediaUrl(selected.creation.thumbnailUrl)
-        : null))
+    (selected.creation.originalAvailable ??
+      Boolean(
+        safeMediaUrl(selected.creation.fileUrl) ??
+        (selected.kind === "image"
+          ? safeMediaUrl(selected.creation.thumbnailUrl)
+          : null),
+      ))
       ? `/api/creations/${selected.creation.id}/media`
       : null;
   const selectedCaptionsUrl = selected
-    ? safeMediaUrl(selected.creation.captionsUrl)
+    ? (selected.creation.captionsAvailable ??
+      Boolean(safeMediaUrl(selected.creation.captionsUrl)))
       ? `/api/creations/${selected.creation.id}/media?field=captions`
       : null
     : null;
   const selectedTranscriptUrl = selected
-    ? safeMediaUrl(selected.creation.transcriptUrl)
+    ? (selected.creation.transcriptFileAvailable ??
+      Boolean(safeMediaUrl(selected.creation.transcriptUrl)))
       ? `/api/creations/${selected.creation.id}/media?field=transcript`
       : null
     : null;

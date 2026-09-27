@@ -1,5 +1,5 @@
 import type { MediaStageCreation } from "@/components/media/creation-media-stage";
-import { creationMediaUrl } from "@/lib/media/creation-url";
+import { creationMediaUrl, safeCreationUrl } from "@/lib/media/creation-url";
 import { createClient } from "@/lib/supabase/client";
 import type { CreationFilter } from "@/lib/media/creation-library-filters";
 
@@ -56,25 +56,34 @@ export function mapCreation(row: {
     !Array.isArray(row.content)
       ? (row.content as Record<string, unknown>)
       : null;
+  const fileUrl = creationMediaUrl(row.content, row.type);
+  const captionsUrl =
+    typeof content?.captionsUrl === "string" ? content.captionsUrl : null;
+  const transcriptUrl =
+    typeof content?.transcriptUrl === "string" ? content.transcriptUrl : null;
   return {
     id: row.id,
     title: row.title,
     type: row.type,
     status: row.status,
-    fileUrl: creationMediaUrl(row.content, row.type),
+    fileUrl,
     thumbnailUrl: row.thumbnail_url,
+    originalAvailable: Boolean(
+      safeCreationUrl(fileUrl) ||
+      (row.type === "image" && safeCreationUrl(row.thumbnail_url)),
+    ),
+    captionsAvailable: Boolean(safeCreationUrl(captionsUrl)),
+    transcriptFileAvailable: Boolean(safeCreationUrl(transcriptUrl)),
     createdAt: row.created_at,
     content: row.content,
-    captionsUrl:
-      typeof content?.captionsUrl === "string" ? content.captionsUrl : null,
+    captionsUrl,
     captionsLanguage:
       typeof content?.captionsLanguage === "string"
         ? content.captionsLanguage
         : null,
     transcript:
       typeof content?.transcript === "string" ? content.transcript : null,
-    transcriptUrl:
-      typeof content?.transcriptUrl === "string" ? content.transcriptUrl : null,
+    transcriptUrl,
     aiGenerated:
       Boolean(row.ai_model || row.ai_prompt) ||
       content?.source === "chat" ||

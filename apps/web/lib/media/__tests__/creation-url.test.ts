@@ -14,6 +14,7 @@ import {
   maskUnsignedPrivateStageMedia,
   resolveSignedCreationPaths,
 } from "../sign-creation-media";
+import { mapCreation } from "../creation-library-data";
 
 test("reads the JSON string URL written by the authenticated upload route", () => {
   const uploadedUrl =
@@ -195,6 +196,34 @@ test("keeps public previews when signing private media is unavailable", () => {
   assert.equal(visible[0].fileUrl, null);
   assert.equal(visible[0].thumbnailUrl, publicUrl);
   assert.equal(visible[1].fileUrl, publicUrl);
+});
+
+test("keeps owner recovery links available when private previews are masked", () => {
+  const project = "https://project.supabase.co";
+  const owner = "123e4567-e89b-12d3-a456-426614174000";
+  const path = `${project}/storage/v1/object/public/creations/${owner}`;
+  const creation = mapCreation({
+    id: "film",
+    title: "Film",
+    type: "video",
+    status: "published",
+    content: {
+      fileUrl: `${path}/film.mp4`,
+      captionsUrl: `${path}/film.vtt`,
+      transcriptUrl: `${path}/transcript.txt`,
+    },
+    thumbnail_url: null,
+    created_at: "2026-09-27T00:00:00Z",
+    ai_model: null,
+    ai_prompt: null,
+  });
+  const [masked] = maskUnsignedPrivateStageMedia([creation], owner, project);
+  assert.equal(masked.fileUrl, null);
+  assert.equal(masked.captionsUrl, null);
+  assert.equal(masked.transcriptUrl, null);
+  assert.equal(masked.originalAvailable, true);
+  assert.equal(masked.captionsAvailable, true);
+  assert.equal(masked.transcriptFileAvailable, true);
 });
 
 test("preserves successful private signatures and reports missing batch entries", () => {

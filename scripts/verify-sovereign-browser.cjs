@@ -29,7 +29,12 @@ module.exports.verifySovereignPreview = async ({
   await page.getByRole("button", { name: "Dungeons", exact: true }).click();
   await page.getByText("12 works", { exact: true }).waitFor();
   await page
-    .getByLabel("Search names, regions, factions and books", { exact: true })
+    .locator("main:visible #collection:visible")
+    .getByRole("searchbox", {
+      name: "Search names, regions, factions and books",
+      exact: true,
+    })
+    .first()
     .fill("Pelagic Cathedral");
   await page.getByText("1 work", { exact: true }).waitFor();
   await page
@@ -60,7 +65,12 @@ module.exports.verifySovereignPreview = async ({
   await page.getByRole("button", { name: "Bosses", exact: true }).click();
   await page.getByText("24 works", { exact: true }).waitFor();
   await page
-    .getByLabel("Search names, regions, factions and books", { exact: true })
+    .locator("main:visible #collection:visible")
+    .getByRole("searchbox", {
+      name: "Search names, regions, factions and books",
+      exact: true,
+    })
+    .first()
     .fill("no-such-sovereign-entry-12345");
   await page
     .getByText("No works match this search.", { exact: true })
