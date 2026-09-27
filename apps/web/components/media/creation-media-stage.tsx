@@ -397,7 +397,9 @@ export function CreationMediaStage({
                 {selected.creation.transcript ? (
                   <details>
                     <summary>Read transcript</summary>
-                    <p>{selected.creation.transcript}</p>
+                    <p role="region" aria-label="Transcript" tabIndex={0}>
+                      {selected.creation.transcript}
+                    </p>
                   </details>
                 ) : (
                   <a

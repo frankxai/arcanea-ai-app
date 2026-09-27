@@ -216,6 +216,7 @@
 }
 
 .transcript summary:focus-visible,
+.transcript p:focus-visible,
 .transcript a:focus-visible {
   outline: var(--arc-media-focus-width) solid var(--arc-brand-atlantean-teal);
   outline-offset: var(--arc-media-focus-offset);

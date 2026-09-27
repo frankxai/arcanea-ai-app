@@ -56,7 +56,6 @@ function CreationsContent() {
   const mediaCache = useRef<MediaCache<LibraryCreation> | null>(null);
   const mediaRetryInFlight = useRef(false);
   const activeUserId = user?.id;
-
   useEffect(() => {
     if (!user) return;
     const userId = user.id;
@@ -170,9 +169,10 @@ function CreationsContent() {
         refreshing ||
         !cached ||
         cached.userId !== userId ||
-        (cached.partialFailure
-          ? reason !== "visibility" || now - cached.signedAt < 15 * 60 * 1000
-          : now - cached.signedAt < 5 * 60 * 60 * 1000) ||
+        (now - cached.signedAt < 5 * 60 * 60 * 1000 &&
+          (!cached.partialFailure ||
+            reason !== "visibility" ||
+            now - cached.signedAt < 15 * 60 * 1000)) ||
         now - lastFailedAttemptAt < 15 * 60 * 1000
       )
         return;
