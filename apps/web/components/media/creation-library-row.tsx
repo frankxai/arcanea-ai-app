@@ -9,7 +9,11 @@ import {
   MusicNote,
 } from "@/lib/phosphor-icons";
 import { createClient } from "@/lib/supabase/client";
-import { creationDocumentUrl } from "@/lib/media/creation-url";
+import {
+  creationDocumentUrl,
+  creationMediaUrl,
+  safeCreationUrl,
+} from "@/lib/media/creation-url";
 
 export interface CreationListItem {
   id: string;
@@ -17,6 +21,7 @@ export interface CreationListItem {
   type: string;
   createdAt: string;
   aiGenerated?: boolean;
+  thumbnailUrl?: string | null;
 }
 
 function readableContent(content: unknown): string | null {
@@ -64,7 +69,16 @@ export function CreationLibraryRow({
   const [detailLoading, setDetailLoading] = useState(false);
   const [detailError, setDetailError] = useState(false);
   const isMedia = ["image", "video", "music", "audio"].includes(creation.type);
-  const originalUrl = isMedia ? `/api/creations/${creation.id}/media` : null;
+  const mediaOriginal =
+    isMedia && detail !== undefined
+      ? safeCreationUrl(
+          creationMediaUrl(detail, creation.type) ??
+            (creation.type === "image" ? creation.thumbnailUrl : null),
+        )
+      : null;
+  const originalUrl = mediaOriginal
+    ? `/api/creations/${creation.id}/media`
+    : null;
   const textContent = !isMedia && expanded ? readableContent(detail) : null;
   const documentUrl =
     creation.type === "text" && creationDocumentUrl(detail)
@@ -126,69 +140,80 @@ export function CreationLibraryRow({
           )}
         </div>
         <div className="ml-auto flex shrink-0 items-center gap-1">
-          {originalUrl ? (
+          <button
+            type="button"
+            aria-expanded={expanded}
+            aria-controls={detailId}
+            onClick={() => void toggleDetail()}
+            className="min-h-11 rounded-[var(--arc-radius-xl)] px-3 text-sm text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+          >
+            {expanded ? "Close" : isMedia ? "View" : "Read"}
+          </button>
+        </div>
+      </div>
+      <div
+        id={detailId}
+        hidden={!expanded}
+        className="mt-4 border-t border-[var(--arc-cosmic-border)] pt-4"
+      >
+        <p role="status" className="sr-only">
+          {expanded
+            ? detailLoading
+              ? "Loading saved content"
+              : detailError
+                ? "Saved content could not load"
+                : isMedia
+                  ? originalUrl
+                    ? "Original ready"
+                    : "Original unavailable"
+                  : "Saved content ready"
+            : ""}
+        </p>
+        {isMedia ? (
+          detailLoading ? (
+            <p>Loading original…</p>
+          ) : detailError ? (
+            <p>Original could not load. Close and try again.</p>
+          ) : originalUrl ? (
             <a
               href={originalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Open ${creation.title} in a new tab`}
-              className="inline-flex min-h-11 items-center gap-1 rounded-[var(--arc-radius-xl)] px-3 text-sm text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+              className="inline-flex min-h-11 items-center gap-1 rounded-[var(--arc-radius-xl)] text-sm font-medium text-[var(--arc-brand-atlantean-teal)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
             >
-              Open <ArrowUpRight size={15} aria-hidden="true" />
+              Open original <ArrowUpRight size={15} aria-hidden="true" />
             </a>
-          ) : !isMedia ? (
-            <button
-              type="button"
-              aria-expanded={expanded}
-              aria-controls={detailId}
-              onClick={() => void toggleDetail()}
-              className="min-h-11 rounded-[var(--arc-radius-xl)] px-3 text-sm text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
-            >
-              {expanded ? "Close" : "Read"}
-            </button>
-          ) : null}
-        </div>
+          ) : (
+            <p>No original file is available for this creation.</p>
+          )
+        ) : (
+          <>
+            {documentUrl && (
+              <a
+                href={documentUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mb-3 inline-flex min-h-11 items-center gap-1 rounded-[var(--arc-radius-xl)] text-sm font-medium text-[var(--arc-brand-atlantean-teal)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+              >
+                Open file <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+            )}
+            {!documentUrl && (
+              <pre
+                tabIndex={0}
+                className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words font-sans text-sm leading-7 text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+              >
+                {detailLoading
+                  ? "Loading saved content…"
+                  : detailError
+                    ? "Saved content could not load. Close and try again."
+                    : (textContent ??
+                      "No saved content is available for this record.")}
+              </pre>
+            )}
+          </>
+        )}
       </div>
-      {!isMedia && (
-        <div
-          id={detailId}
-          hidden={!expanded}
-          className="mt-4 border-t border-[var(--arc-cosmic-border)] pt-4"
-        >
-          <p role="status" className="sr-only">
-            {expanded
-              ? detailLoading
-                ? "Loading saved content"
-                : detailError
-                  ? "Saved content could not load"
-                  : "Saved content ready"
-              : ""}
-          </p>
-          {documentUrl && (
-            <a
-              href={documentUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mb-3 inline-flex min-h-11 items-center gap-1 rounded-[var(--arc-radius-xl)] text-sm font-medium text-[var(--arc-brand-atlantean-teal)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
-            >
-              Open file <ArrowUpRight size={15} aria-hidden="true" />
-            </a>
-          )}
-          {!documentUrl && (
-            <pre
-              tabIndex={0}
-              className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words font-sans text-sm leading-7 text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
-            >
-              {detailLoading
-                ? "Loading saved content…"
-                : detailError
-                  ? "Saved content could not load. Close and try again."
-                  : (textContent ??
-                    "No saved content is available for this record.")}
-            </pre>
-          )}
-        </div>
-      )}
     </li>
   );
 }

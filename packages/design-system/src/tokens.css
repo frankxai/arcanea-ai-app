@@ -75,6 +75,9 @@
   --arc-radius-2xl: 1.5rem;
   --arc-radius-full: 9999px;
 
+  /* Fluid workspace spacing */
+  --arc-space-fluid-stage-inset: clamp(1.25rem, 3vw, 2.25rem);
+
   /* Shadows */
   --arc-shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   --arc-shadow-glow: 0 0 24px rgba(0, 188, 212, 0.35);

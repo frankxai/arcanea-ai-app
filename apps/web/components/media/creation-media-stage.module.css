@@ -3,7 +3,7 @@
   background: var(--arc-cosmic-deep);
   border: 1px solid var(--arc-cosmic-border);
   border-radius: var(--arc-radius-2xl);
-  padding: clamp(1.25rem, 3vw, 2.25rem);
+  padding: var(--arc-space-fluid-stage-inset);
 }
 
 .heading {

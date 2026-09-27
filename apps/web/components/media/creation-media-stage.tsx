@@ -113,7 +113,7 @@ function MediaPreview({
   kind: MediaKind;
   origin: string | null;
 }) {
-  const [failedUrl, setFailedUrl] = useState<string | null>(null);
+  const [failedUrls, setFailedUrls] = useState<string[]>([]);
   const [artFailedUrl, setArtFailedUrl] = useState<string | null>(null);
   const [lockedPlaybackUrl, setLockedPlaybackUrl] = useState<string | null>(
     null,
@@ -127,10 +127,15 @@ function MediaPreview({
   const fileUrl = previewableUrl(creation.fileUrl, origin);
   const thumbnailUrl = previewableUrl(creation.thumbnailUrl, origin);
   const captionsUrl = previewableUrl(creation.captionsUrl, origin);
-  const imageUrl = fileUrl ?? thumbnailUrl;
+  const imageUrl =
+    fileUrl && !failedUrls.includes(fileUrl)
+      ? fileUrl
+      : thumbnailUrl && !failedUrls.includes(thumbnailUrl)
+        ? thumbnailUrl
+        : null;
   const playbackUrl = lockedPlaybackUrl ?? fileUrl;
   const failed = Boolean(
-    failedUrl && failedUrl === (kind === "image" ? imageUrl : playbackUrl),
+    kind !== "image" && playbackUrl && failedUrls.includes(playbackUrl),
   );
 
   if (
@@ -156,7 +161,7 @@ function MediaPreview({
         onPlay={() => setLockedPlaybackUrl(playbackUrl)}
         onEnded={() => setLockedPlaybackUrl(null)}
         onError={() => {
-          setFailedUrl(playbackUrl);
+          setFailedUrls((urls) => [...urls, playbackUrl]);
           setLockedPlaybackUrl(null);
         }}
       >
@@ -209,7 +214,7 @@ function MediaPreview({
             onPlay={() => setLockedPlaybackUrl(playbackUrl)}
             onEnded={() => setLockedPlaybackUrl(null)}
             onError={() => {
-              setFailedUrl(playbackUrl);
+              setFailedUrls((urls) => [...urls, playbackUrl]);
               setLockedPlaybackUrl(null);
             }}
           >
@@ -232,7 +237,7 @@ function MediaPreview({
         className={styles.image}
         loading="eager"
         fetchPriority="high"
-        onError={() => setFailedUrl(imageUrl)}
+        onError={() => setFailedUrls((urls) => [...urls, imageUrl])}
       />
     );
   }
