@@ -23,11 +23,16 @@ import { enrichProjectGraph } from "@/lib/projects/enrichment";
 import { recordProjectTrace } from "@/lib/projects/trace";
 import {
   creationTypeForMime,
+  isDefiniteInsertRejection,
   previewableCreationUrl,
   safeCreationUrl,
 } from "@/lib/media/creation-url";
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
+export const creationUploadDeps = {
+  createClient: async () =>
+    (await import("@/lib/supabase/server")).createClient(),
+};
 const accessibleUrl = z
   .string()
   .max(2048)
@@ -102,9 +107,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Supabase is configured — authenticate and upload
-    const { createClient } = await import("@/lib/supabase/server");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const supabase = (await createClient()) as any;
+    const supabase = (await creationUploadDeps.createClient()) as any;
 
     const {
       data: { user },
@@ -168,14 +172,23 @@ export async function POST(request: NextRequest) {
 
     if (insertError) {
       console.error("[creations upload] db error:", insertError);
-      const { error: cleanupError } = await supabase.storage
-        .from("creations")
-        .remove([storagePath]);
-      if (cleanupError)
-        console.error("[creations upload] orphan cleanup failed:", {
-          storagePath,
-          error: cleanupError,
-        });
+      if (isDefiniteInsertRejection(insertError.code)) {
+        const { error: cleanupError } = await supabase.storage
+          .from("creations")
+          .remove([storagePath]);
+        if (cleanupError)
+          console.error("[creations upload] rejected upload cleanup failed:", {
+            storagePath,
+            error: cleanupError,
+          });
+      } else {
+        console.error(
+          "[creations upload] insert outcome uncertain; file retained",
+          {
+            storagePath,
+          },
+        );
+      }
       return NextResponse.json({ error: insertError.message }, { status: 500 });
     }
 
@@ -202,7 +215,7 @@ export async function POST(request: NextRequest) {
 
     const { data: signed } = await supabase.storage
       .from("creations")
-      .createSignedUrl(storagePath, 60 * 10);
+      .createSignedUrl(storagePath, 60 * 60 * 6);
 
     return NextResponse.json({
       data: {

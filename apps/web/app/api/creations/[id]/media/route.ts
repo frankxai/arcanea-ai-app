@@ -69,7 +69,7 @@ export async function GET(
   if (path) {
     const { data, error: signError } = await client.storage
       .from("creations")
-      .createSignedUrl(path, 60 * 10);
+      .createSignedUrl(path, 60 * 60 * 6);
     if (signError || !data?.signedUrl)
       return NextResponse.json({ error: "Media unavailable" }, { status: 503 });
     target = new URL(data.signedUrl, supabaseUrl).href;

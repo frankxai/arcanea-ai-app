@@ -3,6 +3,7 @@ import { test } from "node:test";
 import {
   creationMediaUrl,
   creationTypeForMime,
+  isDefiniteInsertRejection,
   ownedCreationStoragePath,
   ownedCreationStoragePaths,
   previewableCreationUrl,
@@ -48,6 +49,13 @@ test("classifies uploaded audio as audio for the media library", () => {
   assert.equal(creationTypeForMime("audio/wav"), "audio");
   assert.equal(creationTypeForMime("video/mp4"), "video");
   assert.equal(creationTypeForMime("image/png"), "image");
+});
+
+test("only cleans uploaded files after a definite database rejection", () => {
+  assert.equal(isDefiniteInsertRejection("23514"), true);
+  assert.equal(isDefiniteInsertRejection("23502"), true);
+  assert.equal(isDefiniteInsertRejection("PGRST301"), false);
+  assert.equal(isDefiniteInsertRejection(undefined), false);
 });
 
 test("only treats HTTPS or local paths as openable media URLs", () => {

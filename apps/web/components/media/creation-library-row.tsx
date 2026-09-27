@@ -150,6 +150,15 @@ export function CreationLibraryRow({
           hidden={!expanded}
           className="mt-4 border-t border-[var(--arc-cosmic-border)] pt-4"
         >
+          <p role="status" className="sr-only">
+            {expanded
+              ? detailLoading
+                ? "Loading saved content"
+                : detailError
+                  ? "Saved content could not load"
+                  : "Saved content ready"
+              : ""}
+          </p>
           <pre
             tabIndex={0}
             className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words font-sans text-sm leading-7 text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"

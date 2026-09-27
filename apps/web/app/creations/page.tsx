@@ -221,7 +221,7 @@ export default function CreationsPage() {
         refreshing ||
         !cached ||
         cached.userId !== userId ||
-        Date.now() - cached.signedAt < 20 * 60 * 1000
+        Date.now() - cached.signedAt < 5 * 60 * 60 * 1000
       )
         return;
       refreshing = true;

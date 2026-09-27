@@ -113,8 +113,11 @@ function MediaPreview({
   kind: MediaKind;
   origin: string | null;
 }) {
-  const [failed, setFailed] = useState(false);
-  const [artFailed, setArtFailed] = useState(false);
+  const [failedUrl, setFailedUrl] = useState<string | null>(null);
+  const [artFailedUrl, setArtFailedUrl] = useState<string | null>(null);
+  const [lockedPlaybackUrl, setLockedPlaybackUrl] = useState<string | null>(
+    null,
+  );
   const hasOriginal =
     safeMediaUrl(creation.fileUrl) ??
     (kind === "image" ? safeMediaUrl(creation.thumbnailUrl) : null);
@@ -125,17 +128,21 @@ function MediaPreview({
   const thumbnailUrl = previewableUrl(creation.thumbnailUrl, origin);
   const captionsUrl = previewableUrl(creation.captionsUrl, origin);
   const imageUrl = fileUrl ?? thumbnailUrl;
+  const playbackUrl = lockedPlaybackUrl ?? fileUrl;
+  const failed = Boolean(
+    failedUrl && failedUrl === (kind === "image" ? imageUrl : playbackUrl),
+  );
 
   if (
     failed ||
-    (kind === "video" && !fileUrl) ||
+    (kind === "video" && !playbackUrl) ||
     (kind === "image" && !imageUrl) ||
-    ((kind === "music" || kind === "audio") && !fileUrl)
+    ((kind === "music" || kind === "audio") && !playbackUrl)
   ) {
     return <UnavailablePreview kind={kind} originalUrl={originalUrl} />;
   }
 
-  if (kind === "video" && fileUrl) {
+  if (kind === "video" && playbackUrl) {
     return (
       <video
         key={creation.id}
@@ -146,9 +153,14 @@ function MediaPreview({
         preload="none"
         poster={thumbnailUrl ?? undefined}
         aria-label={"Play " + creation.title}
-        onError={() => setFailed(true)}
+        onPlay={() => setLockedPlaybackUrl(playbackUrl)}
+        onEnded={() => setLockedPlaybackUrl(null)}
+        onError={() => {
+          setFailedUrl(playbackUrl);
+          setLockedPlaybackUrl(null);
+        }}
       >
-        <source src={fileUrl} />
+        <source src={playbackUrl} />
         {captionsUrl && (
           <track
             kind="captions"
@@ -166,7 +178,7 @@ function MediaPreview({
   if (kind === "music" || kind === "audio") {
     return (
       <div className={styles.audioStage}>
-        {thumbnailUrl && !artFailed ? (
+        {thumbnailUrl && artFailedUrl !== thumbnailUrl ? (
           <Image
             src={thumbnailUrl}
             unoptimized={thumbnailUrl.includes("/object/sign/")}
@@ -174,7 +186,7 @@ function MediaPreview({
             fill
             sizes="(max-width: 760px) 100vw, 60vw"
             className={styles.audioArtwork}
-            onError={() => setArtFailed(true)}
+            onError={() => setArtFailedUrl(thumbnailUrl)}
           />
         ) : (
           <MusicNote
@@ -190,9 +202,14 @@ function MediaPreview({
             key={creation.id}
             controls
             preload="none"
-            src={fileUrl ?? undefined}
+            src={playbackUrl ?? undefined}
             aria-label={"Play " + creation.title}
-            onError={() => setFailed(true)}
+            onPlay={() => setLockedPlaybackUrl(playbackUrl)}
+            onEnded={() => setLockedPlaybackUrl(null)}
+            onError={() => {
+              setFailedUrl(playbackUrl);
+              setLockedPlaybackUrl(null);
+            }}
           >
             Your browser cannot play this audio.
           </audio>
@@ -213,7 +230,7 @@ function MediaPreview({
         className={styles.image}
         loading="eager"
         fetchPriority="high"
-        onError={() => setFailed(true)}
+        onError={() => setFailedUrl(imageUrl)}
       />
     );
   }
@@ -279,7 +296,7 @@ export function CreationMediaStage({
           <div className={styles.main}>
             <div className={styles.preview}>
               <MediaPreview
-                key={`${selected.creation.id}:${selected.creation.fileUrl}:${selected.creation.thumbnailUrl}`}
+                key={selected.creation.id}
                 creation={selected.creation}
                 kind={selected.kind}
                 origin={origin}

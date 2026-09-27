@@ -31,7 +31,7 @@ export async function signStageMedia<T extends MediaStageCreation>(
   const pathList = [...paths];
   const { data, error } = await createClient()
     .storage.from("creations")
-    .createSignedUrls(pathList, 60 * 30);
+    .createSignedUrls(pathList, 60 * 60 * 6);
   if (error || !data) throw error ?? new Error("Media signing failed");
   const signed = new Map<string, string | null>(
     data.map(

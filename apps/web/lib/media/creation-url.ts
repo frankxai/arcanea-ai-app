@@ -29,6 +29,13 @@ export function creationTypeForMime(
   return "text";
 }
 
+export function isDefiniteInsertRejection(code: unknown): boolean {
+  return (
+    typeof code === "string" &&
+    ["22P02", "23502", "23503", "23505", "23514"].includes(code)
+  );
+}
+
 export function safeCreationUrl(
   value: string | null | undefined,
 ): string | null {
