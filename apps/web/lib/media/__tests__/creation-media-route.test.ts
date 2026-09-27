@@ -230,6 +230,21 @@ test("creation media redirects require ownership and handle storage failures", a
     assert.equal(response.headers.get("location"), galleryUrl);
   });
 
+  await t.test(
+    "opens an image from the public book-covers bucket",
+    async () => {
+      const coverUrl = `${origin}/storage/v1/object/public/book-covers/library/cover.png`;
+      creationMediaRouteDeps.createClient = async () =>
+        clientStub({
+          userId: owner,
+          row: { type: "image", content: null, thumbnail_url: coverUrl },
+        });
+      const response = await request();
+      assert.equal(response.status, 307);
+      assert.equal(response.headers.get("location"), coverUrl);
+    },
+  );
+
   await t.test("refuses an unrecognized same-project storage URL", async () => {
     creationMediaRouteDeps.createClient = async () =>
       clientStub({

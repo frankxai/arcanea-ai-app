@@ -154,15 +154,19 @@ function CreationsContent() {
     const userId = activeUserId;
     let active = true;
     let refreshing = false;
-    async function refreshMedia() {
+    let lastFailedAttemptAt = 0;
+    async function refreshMedia(reason: "interval" | "visibility") {
       const cached = mediaCache.current;
+      const now = Date.now();
       if (
         !active ||
         refreshing ||
         !cached ||
         cached.userId !== userId ||
-        (!cached.partialFailure &&
-          Date.now() - cached.signedAt < 5 * 60 * 60 * 1000)
+        (cached.partialFailure
+          ? reason !== "visibility" || now - cached.signedAt < 15 * 60 * 1000
+          : now - cached.signedAt < 5 * 60 * 60 * 1000) ||
+        now - lastFailedAttemptAt < 15 * 60 * 1000
       )
         return;
       refreshing = true;
@@ -185,14 +189,18 @@ function CreationsContent() {
             : current,
         );
       } catch {
-        // Keep the current preview and retry while the owner session is active.
+        // Keep the current preview and back off after a failed refresh.
+        lastFailedAttemptAt = Date.now();
       } finally {
         refreshing = false;
       }
     }
-    const timer = window.setInterval(() => void refreshMedia(), 60 * 1000);
+    const timer = window.setInterval(
+      () => void refreshMedia("interval"),
+      60 * 1000,
+    );
     const onVisible = () => {
-      if (!document.hidden) void refreshMedia();
+      if (!document.hidden) void refreshMedia("visibility");
     };
     document.addEventListener("visibilitychange", onVisible);
     return () => {

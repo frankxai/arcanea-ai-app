@@ -79,7 +79,7 @@ export async function GET(
     const url = new URL(value, request.url);
     const sameSupabaseOrigin = url.origin === new URL(supabaseUrl).origin;
     const knownPublicBucket =
-      /^\/storage\/v1\/object\/public\/(arcanea-gallery|avatars|thumbnails)\//.test(
+      /^\/storage\/v1\/object\/public\/(arcanea-gallery|avatars|book-covers|thumbnails)\//.test(
         url.pathname,
       );
     if (sameSupabaseOrigin && !knownPublicBucket)

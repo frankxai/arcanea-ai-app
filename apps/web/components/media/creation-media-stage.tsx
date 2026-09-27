@@ -12,6 +12,7 @@ import {
   safeCreationUrl as safeMediaUrl,
   previewableCreationUrl as previewableUrl,
 } from "@/lib/media/creation-url";
+import { BREAKPOINTS } from "@/lib/theme-utils";
 import styles from "./creation-media-stage.module.css";
 
 export interface MediaStageCreation {
@@ -34,6 +35,7 @@ export interface MediaStageCreation {
 type MediaKind = "image" | "video" | "music" | "audio";
 
 const subscribeToOrigin = () => () => {};
+const stageImageSizes = `(max-width: ${BREAKPOINTS.lg - 1}px) 100vw, (max-width: ${BREAKPOINTS.xl - 1}px) 70vw, 58vw`;
 
 function mediaKind(type: string): MediaKind | null {
   if (
@@ -218,7 +220,7 @@ function MediaPreview({
             unoptimized={thumbnailUrl.includes("/object/sign/")}
             alt=""
             fill
-            sizes="(max-width: 760px) 100vw, 60vw"
+            sizes={stageImageSizes}
             className={styles.audioArtwork}
             loading="eager"
             fetchPriority="high"
@@ -277,7 +279,7 @@ function MediaPreview({
         unoptimized={imageUrl.includes("/object/sign/")}
         alt={creation.title}
         fill
-        sizes="(max-width: 900px) 100vw, (max-width: 1200px) 70vw, 58vw"
+        sizes={stageImageSizes}
         className={styles.image}
         loading="eager"
         fetchPriority="high"
