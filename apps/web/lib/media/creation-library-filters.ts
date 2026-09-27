@@ -1,10 +1,5 @@
 export type CreationFilter =
-  | "all"
-  | "image"
-  | "video"
-  | "audio"
-  | "text"
-  | "code";
+  "all" | "image" | "video" | "audio" | "text" | "code";
 
 export const creationFilters: Array<{ id: CreationFilter; label: string }> = [
   { id: "all", label: "All work" },
