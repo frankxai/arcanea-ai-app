@@ -7,6 +7,29 @@ export interface MediaCache<T extends MediaStageCreation> {
   source: T[];
   signed: T[];
   signedAt: number;
+  partialFailure: boolean;
+}
+
+interface SignedStageMedia<T extends MediaStageCreation> {
+  creations: T[];
+  partialFailure: boolean;
+}
+
+export function resolveSignedCreationPaths(
+  paths: string[],
+  data: Array<{ signedUrl?: string | null }>,
+  supabaseUrl: string,
+) {
+  const signed = new Map<string, string | null>(
+    paths.map((path, index): [string, string | null] => {
+      const signedUrl = data[index]?.signedUrl;
+      return [path, signedUrl ? new URL(signedUrl, supabaseUrl).href : null];
+    }),
+  );
+  return {
+    signed,
+    partialFailure: paths.some((path) => !signed.get(path)),
+  };
 }
 
 export function maskUnsignedPrivateStageMedia<T extends MediaStageCreation>(
@@ -30,9 +53,9 @@ export function maskUnsignedPrivateStageMedia<T extends MediaStageCreation>(
 export async function signStageMedia<T extends MediaStageCreation>(
   creations: T[],
   userId: string,
-): Promise<T[]> {
+): Promise<SignedStageMedia<T>> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  if (!supabaseUrl) return creations;
+  if (!supabaseUrl) return { creations, partialFailure: false };
   const paths = new Set<string>();
   for (const creation of creations) {
     for (const value of [
@@ -45,32 +68,29 @@ export async function signStageMedia<T extends MediaStageCreation>(
       if (path) paths.add(path);
     }
   }
-  if (!paths.size) return creations;
+  if (!paths.size) return { creations, partialFailure: false };
   const pathList = [...paths];
   const { data, error } = await createClient()
     .storage.from("creations")
     .createSignedUrls(pathList, 60 * 60 * 6);
   if (error || !data) throw error ?? new Error("Media signing failed");
-  const signed = new Map<string, string | null>(
-    data.map(
-      (
-        entry: { signedUrl?: string | null },
-        index: number,
-      ): [string, string | null] => [
-        pathList[index],
-        entry.signedUrl ? new URL(entry.signedUrl, supabaseUrl).href : null,
-      ],
-    ),
+  const { signed, partialFailure } = resolveSignedCreationPaths(
+    pathList,
+    data,
+    supabaseUrl,
   );
   function url(value: string | null | undefined): string | null {
     const path = ownedCreationStoragePath(value, userId, supabaseUrl!);
     return path ? (signed.get(path) ?? null) : (value ?? null);
   }
-  return creations.map((creation) => ({
-    ...creation,
-    fileUrl: url(creation.fileUrl),
-    thumbnailUrl: url(creation.thumbnailUrl),
-    captionsUrl: url(creation.captionsUrl),
-    transcriptUrl: url(creation.transcriptUrl),
-  }));
+  return {
+    creations: creations.map((creation) => ({
+      ...creation,
+      fileUrl: url(creation.fileUrl),
+      thumbnailUrl: url(creation.thumbnailUrl),
+      captionsUrl: url(creation.captionsUrl),
+      transcriptUrl: url(creation.transcriptUrl),
+    })),
+    partialFailure,
+  };
 }

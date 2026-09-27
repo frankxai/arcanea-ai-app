@@ -201,7 +201,7 @@ export function CreationLibraryRow({
             {!documentUrl && (
               <pre
                 tabIndex={0}
-                className="max-h-[32rem] overflow-auto whitespace-pre-wrap break-words font-sans text-sm leading-7 text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                className="max-h-[var(--arc-size-media-content-max)] overflow-auto whitespace-pre-wrap break-words font-sans text-sm leading-7 text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
               >
                 {detailLoading
                   ? "Loading saved content…"

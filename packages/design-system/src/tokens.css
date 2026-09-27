@@ -82,12 +82,29 @@
   --arc-space-media-layout-gap: clamp(1.25rem, 2.5vw, 2rem);
   --arc-space-media-controls-inset: clamp(1rem, 3vw, 2rem);
   --arc-space-media-empty-gap: clamp(1rem, 4vw, 3rem);
+  --arc-space-media-page-gutter: 1rem;
+  --arc-space-media-page-gutter-wide: 1.5rem;
+  --arc-space-media-page-top: 2.25rem;
+  --arc-space-media-page-bottom: 5rem;
 
   /* Media stage typography and proportions */
   --arc-type-media-kicker: 0.82rem;
   --arc-type-media-heading: clamp(2rem, 3.5vw, 3.25rem);
   --arc-type-media-caption: clamp(1.15rem, 2vw, 1.45rem);
   --arc-type-media-empty: clamp(1.65rem, 2.5vw, 2.25rem);
+  --arc-type-media-page-title: 2.25rem;
+  --arc-type-media-page-title-wide: 3rem;
+  --arc-type-media-section-title: 1.5rem;
+  --arc-type-media-section-title-wide: 1.875rem;
+  --arc-type-media-body: 0.875rem;
+  --arc-type-media-note: 0.75rem;
+  --arc-line-media-note: 1.25rem;
+  --arc-line-media-body: 1.5rem;
+  --arc-line-media-reading: 1.75rem;
+  --arc-size-media-page-max: 80rem;
+  --arc-size-media-description-max: 42rem;
+  --arc-size-media-signin-copy-max: 36rem;
+  --arc-size-media-loading: 26rem;
   --arc-size-media-sidebar-min: 15rem;
   --arc-size-media-preview-min: 18rem;
   --arc-size-media-rail-max: 35rem;
@@ -113,7 +130,10 @@
   --arc-media-space-080: 0.8rem;
   --arc-media-space-085: 0.85rem;
   --arc-media-space-100: 1rem;
+  --arc-media-space-125: 1.25rem;
+  --arc-media-space-150: 1.5rem;
   --arc-media-space-200: 2rem;
+  --arc-media-space-300: 3rem;
   --arc-media-type-078: 0.78rem;
   --arc-media-type-080: 0.8rem;
   --arc-media-type-085: 0.85rem;
@@ -124,6 +144,7 @@
   --arc-media-focus-width: 2px;
   --arc-media-focus-offset: 3px;
   --arc-size-media-transcript-max: 18rem;
+  --arc-size-media-content-max: 32rem;
 
   /* Shadows */
   --arc-shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);

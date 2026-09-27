@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { ArrowUpRight } from "@/lib/phosphor-icons";
 import { useAuth } from "@/lib/auth/context";
 import { createClient } from "@/lib/supabase/client";
@@ -62,10 +63,12 @@ async function fetchPage(
   return query.limit(PAGE_SIZE + 1);
 }
 
-export default function CreationsPage() {
+function CreationsContent() {
   const { user, isLoading: authLoading } = useAuth();
+  const searchParams = useSearchParams();
   const [snapshot, setSnapshot] = useState<LibrarySnapshot | null>(null);
-  const [filter, setFilter] = useState<Filter>("all");
+  const filter: Filter =
+    filters.find(({ id }) => id === searchParams?.get("view"))?.id ?? "all";
   const [retry, setRetry] = useState(0);
   const [loadingMoreKey, setLoadingMoreKey] = useState<string | null>(null);
   const [loadMoreErrorKey, setLoadMoreErrorKey] = useState<string | null>(null);
@@ -106,17 +109,22 @@ export default function CreationsPage() {
       const pageRows = rows.slice(0, PAGE_SIZE);
       const last = pageRows.at(-1);
       let media = cached?.signed ?? mediaRows.map(mapCreation);
-      let mediaError = !cached && (!mediaResult || Boolean(mediaResult.error));
+      let mediaError = cached
+        ? cached.partialFailure
+        : !mediaResult || Boolean(mediaResult.error);
       if (!cached && !mediaError) {
         const source = media;
         try {
-          media = await signStageMedia(source, userId);
+          const signed = await signStageMedia(source, userId);
+          media = signed.creations;
+          mediaError = signed.partialFailure;
           if (!active) return;
           mediaCache.current = {
             userId,
             source,
             signed: media,
             signedAt: Date.now(),
+            partialFailure: signed.partialFailure,
           };
         } catch {
           const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -175,17 +183,27 @@ export default function CreationsPage() {
         refreshing ||
         !cached ||
         cached.userId !== userId ||
-        Date.now() - cached.signedAt < 5 * 60 * 60 * 1000
+        (!cached.partialFailure &&
+          Date.now() - cached.signedAt < 5 * 60 * 60 * 1000)
       )
         return;
       refreshing = true;
       try {
-        const media = await signStageMedia(cached.source, userId);
+        const signed = await signStageMedia(cached.source, userId);
         if (!active || mediaCache.current !== cached) return;
-        mediaCache.current = { ...cached, signed: media, signedAt: Date.now() };
+        mediaCache.current = {
+          ...cached,
+          signed: signed.creations,
+          signedAt: Date.now(),
+          partialFailure: signed.partialFailure,
+        };
         setSnapshot((current) =>
           current?.userId === userId
-            ? { ...current, media, mediaError: false }
+            ? {
+                ...current,
+                media: signed.creations,
+                mediaError: signed.partialFailure,
+              }
             : current,
         );
       } catch {
@@ -266,24 +284,24 @@ export default function CreationsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--arc-cosmic-void)] px-4 pb-20 pt-9 text-[var(--arc-text-primary)] sm:px-6">
-      <div className="mx-auto max-w-7xl">
-        <header className="mb-8 flex flex-wrap items-end justify-between gap-5">
+    <div className="min-h-screen bg-[var(--arc-cosmic-void)] px-[var(--arc-space-media-page-gutter)] pb-[var(--arc-space-media-page-bottom)] pt-[var(--arc-space-media-page-top)] text-[var(--arc-text-primary)] sm:px-[var(--arc-space-media-page-gutter-wide)]">
+      <div className="mx-auto max-w-[var(--arc-size-media-page-max)]">
+        <header className="mb-[var(--arc-media-space-200)] flex flex-wrap items-end justify-between gap-[var(--arc-media-space-125)]">
           <div>
-            <p className="mb-2 text-sm text-[var(--arc-text-secondary)]">
+            <p className="mb-[var(--arc-media-space-050)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]">
               Your workspace
             </p>
-            <h1 className="font-display text-4xl font-medium tracking-tight sm:text-5xl">
+            <h1 className="font-display text-[length:var(--arc-type-media-page-title)] font-medium tracking-tight sm:text-[length:var(--arc-type-media-page-title-wide)]">
               Creations
             </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--arc-text-secondary)]">
+            <p className="mt-[var(--arc-media-space-075)] max-w-[var(--arc-size-media-description-max)] text-[length:var(--arc-type-media-body)] leading-[var(--arc-line-media-body)] text-[var(--arc-text-secondary)]">
               See your saved images, film, music, and other creations in one
               place.
             </p>
           </div>
           <Link
             href="/chat"
-            className="inline-flex min-h-11 items-center gap-2 rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] px-4 py-2 text-sm font-medium text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+            className="inline-flex min-h-[var(--arc-size-interactive-min)] items-center gap-[var(--arc-media-space-050)] rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] px-[var(--arc-media-space-100)] py-[var(--arc-media-space-050)] text-[length:var(--arc-type-media-body)] font-medium text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
           >
             Open chat <ArrowUpRight size={16} aria-hidden="true" />
           </Link>
@@ -291,21 +309,21 @@ export default function CreationsPage() {
 
         {loading ? (
           <div
-            className="h-[26rem] rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)]"
+            className="h-[var(--arc-size-media-loading)] rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)]"
             role="status"
             aria-label="Loading creations"
           />
         ) : !user ? (
-          <section className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-8 sm:p-12">
-            <h2 className="font-display text-3xl">
+          <section className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-[var(--arc-media-space-200)] sm:p-[var(--arc-media-space-300)]">
+            <h2 className="font-display text-[length:var(--arc-type-media-section-title-wide)]">
               Your work belongs with you
             </h2>
-            <p className="mt-3 max-w-xl text-sm leading-7 text-[var(--arc-text-secondary)]">
+            <p className="mt-[var(--arc-media-space-075)] max-w-[var(--arc-size-media-signin-copy-max)] text-[length:var(--arc-type-media-body)] leading-[var(--arc-line-media-reading)] text-[var(--arc-text-secondary)]">
               Sign in to see your private media and saved creations.
             </p>
             <Link
               href="/auth/login?next=/creations"
-              className="mt-6 inline-flex min-h-11 items-center rounded-[var(--arc-radius-xl)] bg-[var(--arc-brand-atlantean-teal)] px-5 py-2 text-sm font-semibold text-[var(--arc-cosmic-void)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-text-primary)]"
+              className="mt-[var(--arc-media-space-150)] inline-flex min-h-[var(--arc-size-interactive-min)] items-center rounded-[var(--arc-radius-xl)] bg-[var(--arc-brand-atlantean-teal)] px-[var(--arc-media-space-125)] py-[var(--arc-media-space-050)] text-[length:var(--arc-type-media-body)] font-semibold text-[var(--arc-cosmic-void)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-text-primary)]"
             >
               Sign in
             </Link>
@@ -315,15 +333,18 @@ export default function CreationsPage() {
             {snapshot?.mediaError && (
               <div
                 role="alert"
-                className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-6 text-sm text-[var(--arc-text-secondary)]"
+                className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-[var(--arc-media-space-150)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]"
               >
                 {snapshot.media.length
                   ? "Some private media previews could not load. Public work remains visible."
                   : "Recent media previews could not load. Your saved work remains available below."}
                 <button
                   type="button"
-                  onClick={() => setRetry((value) => value + 1)}
-                  className="ml-3 min-h-11 rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] px-4 font-medium text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                  onClick={() => {
+                    mediaCache.current = null;
+                    setRetry((value) => value + 1);
+                  }}
+                  className="ml-[var(--arc-media-space-075)] min-h-[var(--arc-size-interactive-min)] rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] px-[var(--arc-media-space-100)] font-medium text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
                 >
                   Try again
                 </button>
@@ -333,28 +354,31 @@ export default function CreationsPage() {
               <CreationMediaStage creations={snapshot?.media ?? []} />
             )}
 
-            <p className="mt-5 text-xs leading-5 text-[var(--arc-text-muted)]">
+            <p className="mt-[var(--arc-media-space-125)] text-[length:var(--arc-type-media-note)] leading-[var(--arc-line-media-note)] text-[var(--arc-text-muted)]">
               Arcanea AI creations are labeled AI-generated when their source is
               recorded. Uploaded work may have a different origin.
             </p>
 
-            <section className="mt-12" aria-labelledby="recent-creations-title">
-              <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
+            <section
+              className="mt-[var(--arc-media-space-300)]"
+              aria-labelledby="recent-creations-title"
+            >
+              <div className="mb-[var(--arc-media-space-125)] flex flex-wrap items-end justify-between gap-[var(--arc-media-space-100)]">
                 <div>
                   <h2
                     id="recent-creations-title"
-                    className="font-display text-2xl sm:text-3xl"
+                    className="font-display text-[length:var(--arc-type-media-section-title)] sm:text-[length:var(--arc-type-media-section-title-wide)]"
                   >
                     Recent creations
                   </h2>
-                  <p className="mt-1 text-sm text-[var(--arc-text-muted)]">
+                  <p className="mt-[var(--arc-media-space-025)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-muted)]">
                     Browse your saved work, newest first.
                   </p>
                 </div>
                 <div
                   role="group"
                   aria-label="Filter creations"
-                  className="flex flex-wrap gap-2"
+                  className="flex flex-wrap gap-[var(--arc-media-space-050)]"
                 >
                   {filters.map(({ id, label }) => (
                     <button
@@ -363,9 +387,13 @@ export default function CreationsPage() {
                       aria-pressed={filter === id}
                       onClick={() => {
                         setPageAnnouncement(null);
-                        setFilter(id);
+                        if (filter === id) return;
+                        const nextUrl = new URL(window.location.href);
+                        if (id === "all") nextUrl.searchParams.delete("view");
+                        else nextUrl.searchParams.set("view", id);
+                        window.history.pushState(null, "", nextUrl);
                       }}
-                      className="min-h-11 rounded-[var(--arc-radius-full)] border border-[var(--arc-cosmic-border)] px-4 py-2 text-sm text-[var(--arc-text-secondary)] aria-pressed:border-[var(--arc-brand-atlantean-teal)] aria-pressed:bg-[var(--arc-cosmic-raised)] aria-pressed:text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                      className="min-h-[var(--arc-size-interactive-min)] rounded-[var(--arc-radius-full)] border border-[var(--arc-cosmic-border)] px-[var(--arc-media-space-100)] py-[var(--arc-media-space-050)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)] aria-pressed:border-[var(--arc-brand-atlantean-teal)] aria-pressed:bg-[var(--arc-cosmic-raised)] aria-pressed:text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
                     >
                       {label}
                     </button>
@@ -376,7 +404,7 @@ export default function CreationsPage() {
               {filterLoading ? (
                 <p
                   role="status"
-                  className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] p-6 text-sm text-[var(--arc-text-secondary)]"
+                  className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] p-[var(--arc-media-space-150)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]"
                 >
                   Loading{" "}
                   {filters
@@ -387,9 +415,9 @@ export default function CreationsPage() {
               ) : snapshot?.error ? (
                 <div
                   role="alert"
-                  className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] p-6"
+                  className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] p-[var(--arc-media-space-150)]"
                 >
-                  <p className="text-sm text-[var(--arc-text-secondary)]">
+                  <p className="text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]">
                     Your creations could not load.
                   </p>
                   <button
@@ -399,19 +427,19 @@ export default function CreationsPage() {
                       setSnapshot(null);
                       setRetry((value) => value + 1);
                     }}
-                    className="mt-4 min-h-11 rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] px-5 py-2 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                    className="mt-[var(--arc-media-space-100)] min-h-[var(--arc-size-interactive-min)] rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] px-[var(--arc-media-space-125)] py-[var(--arc-media-space-050)] text-[length:var(--arc-type-media-body)] font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
                   >
                     Try again
                   </button>
                 </div>
               ) : items.length === 0 ? (
-                <p className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] p-6 text-sm text-[var(--arc-text-secondary)]">
+                <p className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] p-[var(--arc-media-space-150)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]">
                   {filter === "all"
                     ? "No saved creations yet."
                     : `No ${filters.find((item) => item.id === filter)?.label.toLowerCase()} saved yet.`}
                 </p>
               ) : (
-                <ul className="grid gap-3 md:grid-cols-2">
+                <ul className="grid gap-[var(--arc-media-space-075)] md:grid-cols-2">
                   {items.map((creation) => (
                     <CreationLibraryRow
                       key={creation.id}
@@ -429,7 +457,7 @@ export default function CreationsPage() {
                 loadMoreErrorKey === currentKey && (
                   <p
                     role="alert"
-                    className="mt-4 text-sm text-[var(--arc-text-secondary)]"
+                    className="mt-[var(--arc-media-space-100)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]"
                   >
                     More creations could not load. Try again.
                   </p>
@@ -437,14 +465,14 @@ export default function CreationsPage() {
               {!filterLoading &&
                 !snapshot?.error &&
                 (snapshot?.hasMore || announcement) && (
-                  <div className="mt-6 flex justify-center">
+                  <div className="mt-[var(--arc-media-space-150)] flex justify-center">
                     <button
                       type="button"
                       onClick={() => void loadMore()}
                       aria-disabled={
                         loadingMoreKey !== null || !snapshot?.hasMore
                       }
-                      className="min-h-11 rounded-[var(--arc-radius-full)] border border-[var(--arc-cosmic-border-bright)] px-6 py-2 text-sm font-medium hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)] aria-disabled:opacity-50"
+                      className="min-h-[var(--arc-size-interactive-min)] rounded-[var(--arc-radius-full)] border border-[var(--arc-cosmic-border-bright)] px-[var(--arc-media-space-150)] py-[var(--arc-media-space-050)] text-[length:var(--arc-type-media-body)] font-medium hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)] aria-disabled:opacity-50"
                     >
                       {loadingMoreKey === currentKey
                         ? "Loading…"
@@ -459,5 +487,23 @@ export default function CreationsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function CreationsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[var(--arc-cosmic-void)] p-[var(--arc-space-media-page-gutter)]">
+          <div
+            className="mx-auto h-[var(--arc-size-media-loading)] max-w-[var(--arc-size-media-page-max)] rounded-[var(--arc-radius-2xl)] bg-[var(--arc-cosmic-surface)]"
+            role="status"
+            aria-label="Loading creations"
+          />
+        </div>
+      }
+    >
+      <CreationsContent />
+    </Suspense>
   );
 }

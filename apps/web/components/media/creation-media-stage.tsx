@@ -78,9 +78,7 @@ function MediaThumbnail({
   origin: string | null;
 }) {
   const [failed, setFailed] = useState(false);
-  const thumbnailUrl =
-    previewableUrl(creation.thumbnailUrl, origin) ??
-    (kind === "image" ? previewableUrl(creation.fileUrl, origin) : null);
+  const thumbnailUrl = previewableUrl(creation.thumbnailUrl, origin);
   return (
     <span className={styles.thumb}>
       {thumbnailUrl && !failed ? (

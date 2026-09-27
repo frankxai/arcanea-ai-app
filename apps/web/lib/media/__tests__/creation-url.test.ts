@@ -10,7 +10,10 @@ import {
   previewableCreationUrl,
   safeCreationUrl,
 } from "../creation-url";
-import { maskUnsignedPrivateStageMedia } from "../sign-creation-media";
+import {
+  maskUnsignedPrivateStageMedia,
+  resolveSignedCreationPaths,
+} from "../sign-creation-media";
 
 test("reads the JSON string URL written by the authenticated upload route", () => {
   const uploadedUrl =
@@ -192,4 +195,23 @@ test("keeps public previews when signing private media is unavailable", () => {
   assert.equal(visible[0].fileUrl, null);
   assert.equal(visible[0].thumbnailUrl, publicUrl);
   assert.equal(visible[1].fileUrl, publicUrl);
+});
+
+test("preserves successful private signatures and reports missing batch entries", () => {
+  const paths = ["owner/image.png", "owner/film.mp4"];
+  const result = resolveSignedCreationPaths(
+    paths,
+    [
+      {
+        signedUrl: "/storage/v1/object/sign/creations/owner/image.png?token=a",
+      },
+    ],
+    "https://project.supabase.co",
+  );
+  assert.equal(
+    result.signed.get(paths[0]),
+    "https://project.supabase.co/storage/v1/object/sign/creations/owner/image.png?token=a",
+  );
+  assert.equal(result.signed.get(paths[1]), null);
+  assert.equal(result.partialFailure, true);
 });
