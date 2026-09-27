@@ -1,5 +1,35 @@
 import type { MediaStageCreation } from "@/components/media/creation-media-stage";
 import { creationMediaUrl } from "@/lib/media/creation-url";
+import { createClient } from "@/lib/supabase/client";
+import type { CreationFilter } from "@/lib/media/creation-library-filters";
+
+export type Cursor = { createdAt: string; id: string };
+export const PAGE_SIZE = 24;
+
+const listColumns =
+  "id, title, type, status, thumbnail_url, created_at, ai_model, ai_prompt, content_source:content->>source, content_mode:content->>mode, content_prompt:content->>prompt";
+
+export async function fetchCreationPage(
+  userId: string,
+  filter: CreationFilter,
+  cursor: Cursor | null,
+) {
+  let query = createClient()
+    .from("creations")
+    .select(listColumns)
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false })
+    .order("id", { ascending: false });
+  if (filter === "audio") query = query.in("type", ["audio", "music"]);
+  else if (filter !== "all") query = query.eq("type", filter);
+  if (cursor) {
+    const timestamp = `"${cursor.createdAt}"`;
+    query = query.or(
+      `created_at.lt.${timestamp},and(created_at.eq.${timestamp},id.lt.${cursor.id})`,
+    );
+  }
+  return query.limit(PAGE_SIZE + 1);
+}
 
 export type LibraryCreation = MediaStageCreation & {
   createdAt: string;

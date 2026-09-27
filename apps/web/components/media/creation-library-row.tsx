@@ -112,14 +112,16 @@ export function CreationLibraryRow({
   }
 
   return (
-    <li className="min-w-0 rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-4">
-      <div className="flex min-w-0 items-center gap-4">
-        <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[var(--arc-radius-xl)] bg-[var(--arc-cosmic-raised)] text-[var(--arc-text-secondary)]">
+    <li className="min-w-0 rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-[var(--arc-media-space-100)]">
+      <div className="flex min-w-0 items-center gap-[var(--arc-media-space-100)]">
+        <span className="flex h-[var(--arc-size-media-row-icon)] w-[var(--arc-size-media-row-icon)] shrink-0 items-center justify-center rounded-[var(--arc-radius-xl)] bg-[var(--arc-cosmic-raised)] text-[var(--arc-text-secondary)]">
           <TypeIcon type={creation.type} />
         </span>
         <div className="min-w-0">
-          <h3 className="truncate text-sm font-semibold">{creation.title}</h3>
-          <p className="mt-1 text-xs text-[var(--arc-text-muted)]">
+          <h3 className="truncate text-[length:var(--arc-type-media-body)] font-semibold">
+            {creation.title}
+          </h3>
+          <p className="mt-[var(--arc-media-space-025)] text-[length:var(--arc-type-media-note)] text-[var(--arc-text-muted)]">
             {typeLabel(creation.type)} ·{" "}
             <time dateTime={creation.createdAt}>
               {new Date(creation.createdAt).toLocaleDateString("en-US", {
@@ -133,19 +135,19 @@ export function CreationLibraryRow({
           {creation.aiGenerated && (
             <p
               data-ai-generated="true"
-              className="mt-1 text-xs font-medium text-[var(--arc-brand-atlantean-teal)]"
+              className="mt-[var(--arc-media-space-025)] text-[length:var(--arc-type-media-note)] font-medium text-[var(--arc-brand-atlantean-teal)]"
             >
               AI-generated
             </p>
           )}
         </div>
-        <div className="ml-auto flex shrink-0 items-center gap-1">
+        <div className="ml-auto flex shrink-0 items-center gap-[var(--arc-media-space-025)]">
           <button
             type="button"
             aria-expanded={expanded}
             aria-controls={detailId}
             onClick={() => void toggleDetail()}
-            className="min-h-11 rounded-[var(--arc-radius-xl)] px-3 text-sm text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+            className="min-h-[var(--arc-size-interactive-min)] rounded-[var(--arc-radius-xl)] px-[var(--arc-media-space-075)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
           >
             {expanded ? "Close" : isMedia ? "View" : "Read"}
           </button>
@@ -154,7 +156,7 @@ export function CreationLibraryRow({
       <div
         id={detailId}
         hidden={!expanded}
-        className="mt-4 border-t border-[var(--arc-cosmic-border)] pt-4"
+        className="mt-[var(--arc-media-space-100)] border-t border-[var(--arc-cosmic-border)] pt-[var(--arc-media-space-100)]"
       >
         <p role="status" className="sr-only">
           {expanded
@@ -179,7 +181,7 @@ export function CreationLibraryRow({
               href={originalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center gap-1 rounded-[var(--arc-radius-xl)] text-sm font-medium text-[var(--arc-brand-atlantean-teal)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+              className="inline-flex min-h-[var(--arc-size-interactive-min)] items-center gap-[var(--arc-media-space-025)] rounded-[var(--arc-radius-xl)] text-[length:var(--arc-type-media-body)] font-medium text-[var(--arc-brand-atlantean-teal)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
             >
               Open original <ArrowUpRight size={15} aria-hidden="true" />
             </a>
@@ -193,7 +195,7 @@ export function CreationLibraryRow({
                 href={documentUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mb-3 inline-flex min-h-11 items-center gap-1 rounded-[var(--arc-radius-xl)] text-sm font-medium text-[var(--arc-brand-atlantean-teal)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                className="mb-[var(--arc-media-space-075)] inline-flex min-h-[var(--arc-size-interactive-min)] items-center gap-[var(--arc-media-space-025)] rounded-[var(--arc-radius-xl)] text-[length:var(--arc-type-media-body)] font-medium text-[var(--arc-brand-atlantean-teal)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
               >
                 Open file <ArrowUpRight size={15} aria-hidden="true" />
               </a>
@@ -201,7 +203,7 @@ export function CreationLibraryRow({
             {!documentUrl && (
               <pre
                 tabIndex={0}
-                className="max-h-[var(--arc-size-media-content-max)] overflow-auto whitespace-pre-wrap break-words font-sans text-sm leading-7 text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                className="max-h-[var(--arc-size-media-content-max)] overflow-auto whitespace-pre-wrap break-words font-sans text-[length:var(--arc-type-media-body)] leading-[var(--arc-line-media-reading)] text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
               >
                 {detailLoading
                   ? "Loading saved content…"

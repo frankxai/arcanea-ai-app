@@ -7,7 +7,10 @@ import { ArrowUpRight } from "@/lib/phosphor-icons";
 import { useAuth } from "@/lib/auth/context";
 import { createClient } from "@/lib/supabase/client";
 import {
+  fetchCreationPage,
   mapCreation,
+  PAGE_SIZE,
+  type Cursor,
   type LibraryCreation,
 } from "@/lib/media/creation-library-data";
 import {
@@ -21,14 +24,11 @@ import {
 } from "@/lib/media/sign-creation-media";
 import { CreationMediaStage } from "@/components/media/creation-media-stage";
 import { CreationLibraryRow } from "@/components/media/creation-library-row";
+import { CreationsLoading } from "@/components/media/creations-loading";
 
-type Cursor = { createdAt: string; id: string };
 type PageAnnouncement = { key: string; text: string; total: number };
-const PAGE_SIZE = 24;
 const stageColumns =
   "id, title, type, status, content, thumbnail_url, created_at, ai_model, ai_prompt";
-const listColumns =
-  "id, title, type, status, thumbnail_url, created_at, ai_model, ai_prompt, content_source:content->>source, content_mode:content->>mode, content_prompt:content->>prompt";
 
 interface LibrarySnapshot {
   userId: string;
@@ -39,28 +39,6 @@ interface LibrarySnapshot {
   hasMore: boolean;
   error: boolean;
   mediaError: boolean;
-}
-
-async function fetchPage(
-  userId: string,
-  filter: Filter,
-  cursor: Cursor | null,
-) {
-  let query = createClient()
-    .from("creations")
-    .select(listColumns)
-    .eq("user_id", userId)
-    .order("created_at", { ascending: false })
-    .order("id", { ascending: false });
-  if (filter === "audio") query = query.in("type", ["audio", "music"]);
-  else if (filter !== "all") query = query.eq("type", filter);
-  if (cursor) {
-    const timestamp = `"${cursor.createdAt}"`;
-    query = query.or(
-      `created_at.lt.${timestamp},and(created_at.eq.${timestamp},id.lt.${cursor.id})`,
-    );
-  }
-  return query.limit(PAGE_SIZE + 1);
 }
 
 function CreationsContent() {
@@ -86,7 +64,7 @@ function CreationsContent() {
       const cached =
         mediaCache.current?.userId === userId ? mediaCache.current : null;
       const [itemsSettled, mediaSettled] = await Promise.allSettled([
-        fetchPage(userId, filter, null),
+        fetchCreationPage(userId, filter, null),
         cached
           ? Promise.resolve(null)
           : client
@@ -252,7 +230,11 @@ function CreationsContent() {
     setLoadingMoreKey(key);
     setLoadMoreErrorKey(null);
     try {
-      const result = await fetchPage(userId, requestedFilter, nextCursor);
+      const result = await fetchCreationPage(
+        userId,
+        requestedFilter,
+        nextCursor,
+      );
       if (result.error) throw result.error;
       const rows = result.data ?? [];
       const pageRows = rows.slice(0, PAGE_SIZE);
@@ -492,17 +474,7 @@ function CreationsContent() {
 
 export default function CreationsPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen bg-[var(--arc-cosmic-void)] p-[var(--arc-space-media-page-gutter)]">
-          <div
-            className="mx-auto h-[var(--arc-size-media-loading)] max-w-[var(--arc-size-media-page-max)] rounded-[var(--arc-radius-2xl)] bg-[var(--arc-cosmic-surface)]"
-            role="status"
-            aria-label="Loading creations"
-          />
-        </div>
-      }
-    >
+    <Suspense fallback={<CreationsLoading />}>
       <CreationsContent />
     </Suspense>
   );
