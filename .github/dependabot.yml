@@ -48,6 +48,11 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "react-dom"
         update-types: ["version-update:semver-major"]
+      # Hold React 19.3 minors separately while PR #476 / #477 track the duplicate Sovereign Depths searchbox failure.
+      - dependency-name: "react"
+        versions: [">=19.3.0 <19.4.0"]
+      - dependency-name: "react-dom"
+        versions: [">=19.3.0 <19.4.0"]
     labels:
       - "dependencies"
       - "automated"

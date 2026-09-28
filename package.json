@@ -96,8 +96,6 @@
     "autoprefixer": "^10.6.1",
     "eslint": "^9.39.4",
     "next": "16.3.5",
-    "react": "19.2.8",
-    "react-dom": "19.2.8",
     "postcss": "^8.5.28",
     "prettier": "^3.9.9",
     "semver": "^7.8.5",
@@ -140,8 +138,11 @@
   },
   "homepage": "https://arcanea.ai",
   "pnpm": {
+    "// react-19.3-hold": "See PR #476 and PR #477 for the Sovereign Depths Playwright failure under React 19.3.",
     "overrides": {
       "next": "16.3.5",
+      "react": "19.2.8",
+      "react-dom": "19.2.8",
       "@types/react": "^19.0.0",
       "@types/react-dom": "^19.0.0",
       "eslint": "9.39.4",
