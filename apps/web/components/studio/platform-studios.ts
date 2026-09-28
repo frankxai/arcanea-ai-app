@@ -262,27 +262,20 @@ export const STUDIO_MODES: StudioMode[] = [
     accent: "var(--arc-brand-arcanean-gold)",
     gradient:
       "from-[var(--arc-brand-arcanean-gold)]/40 via-[var(--arc-cosmic-void)]/45 to-[var(--arc-brand-atlantean-teal)]/25",
-    prompt:
-      "Give Claude and Codex the full context to build this universe with me",
-    assetHint: "@repo @world @vault",
-    output:
-      "MCP install, tool plan, agent rules, repo handoff, workflow recipes",
-    proof:
-      "Best for agent-native creators and studios that build with AI teammates.",
-    presets: ["Claude Code", "Codex", "Cursor", "Local MCP"],
-    workflow: ["Install MCP", "Load context", "Run recipe", "Ship artifact"],
-    commands: [
-      "list_arcanea_studios",
-      "get_workflow_recipe",
-      "export_project_context",
-    ],
+    prompt: "Check this draft before the agent invents an eleventh gate",
+    assetHint: "https://arcanea-reader.frankxai.workers.dev/mcp",
+    output: "Rubric, canon lint, and a score that cannot grant ship",
+    proof: "For writers whose agent keeps adding lore the world does not have.",
+    presets: ["Claude", "Codex", "Cursor"],
+    workflow: ["Connect the reader", "Run a lint", "Read the score", "Join the studio list"],
+    commands: ["arcanea_rubric", "arcanea_canon_lint", "arcanea_score"],
     media: {
       poster: "/guardians/v3/draconia-hero-v3.webp",
       secondary: "/images/blog/publishing/10-ecosystem-overview.png",
-      label: "Agent handoff",
-      frames: ["Install MCP", "List tools", "Run recipe", "Commit output"],
+      label: "Free reader",
+      frames: ["Connect", "Lint", "Score", "Waitlist"],
     },
-    stats: ["4 agent hosts"],
+    stats: ["Live reader"],
   },
 ];
 
