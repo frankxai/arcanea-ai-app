@@ -65,15 +65,26 @@ export function AuthorAIPanel({
   }, []);
 
   const [input, setInput] = useState("");
+  // useChat keeps the first transport it receives, so the request body reads
+  // the latest key, model and chapter from a ref at send time.
+  const requestBody = useRef({
+    bookSlug,
+    currentChapter,
+    model,
+    userApiKey: apiKey || undefined,
+  });
+  useEffect(() => {
+    requestBody.current = {
+      bookSlug,
+      currentChapter,
+      model,
+      userApiKey: apiKey || undefined,
+    };
+  }, [bookSlug, currentChapter, model, apiKey]);
   const { messages, sendMessage, status, error } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/ai/author-chat",
-      body: {
-        bookSlug,
-        currentChapter,
-        model,
-        userApiKey: apiKey || undefined,
-      },
+      body: () => requestBody.current,
     }),
   });
   const isLoading = status === "streaming" || status === "submitted";

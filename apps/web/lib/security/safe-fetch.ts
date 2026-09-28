@@ -182,13 +182,13 @@ function requestOnce(
     body: Buffer;
   }>((resolve, reject) => {
     const client = target.protocol === "https:" ? https : http;
+    let deadline: ReturnType<typeof setTimeout> | undefined;
     const req = client.request(
       target,
       {
         method: "GET",
         headers,
         lookup: guardedLookup as never,
-        timeout: timeoutMs,
       },
       (res) => {
         const status = res.statusCode ?? 0;
@@ -196,7 +196,10 @@ function requestOnce(
           status >= 300 && status < 400 ? (res.headers.location ?? null) : null;
         const contentType = String(res.headers["content-type"] ?? "");
         if (location || status < 200 || status >= 300) {
-          res.resume(); // drain and discard: a non-2xx body is never returned
+          // A non-2xx body is never returned, so close the socket instead of
+          // draining it (a server could stream forever behind a redirect).
+          clearTimeout(deadline);
+          req.destroy();
           return resolve({
             status,
             location,
@@ -214,19 +217,28 @@ function requestOnce(
           }
           chunks.push(chunk);
         });
-        res.on("end", () =>
+        res.on("end", () => {
+          clearTimeout(deadline);
           resolve({
             status,
             location,
             contentType,
             body: Buffer.concat(chunks),
-          }),
-        );
+          });
+        });
         res.on("error", reject);
       },
     );
-    req.on("timeout", () => req.destroy(new Error("Request timed out")));
-    req.on("error", reject);
+    // Wall-clock limit for the whole request. Node's `timeout` option only
+    // fires on idle sockets, so a slow trickle would never trip it.
+    deadline = setTimeout(
+      () => req.destroy(new Error("Request timed out")),
+      timeoutMs,
+    );
+    req.on("error", (err) => {
+      clearTimeout(deadline);
+      reject(err);
+    });
     req.end();
   });
 }
@@ -244,11 +256,15 @@ export async function safeFetchText(
   } = {},
 ): Promise<SafeResponse> {
   let target = assertPublicUrl(raw);
+  // One time budget across every redirect hop.
+  const endAt = Date.now() + (opts.timeoutMs ?? DEFAULT_TIMEOUT_MS);
   for (let hop = 0; ; hop++) {
+    const remaining = endAt - Date.now();
+    if (remaining <= 0) throw new Error("Request timed out");
     const res = await requestOnce(
       target,
       opts.maxBytes ?? DEFAULT_MAX_BYTES,
-      opts.timeoutMs ?? DEFAULT_TIMEOUT_MS,
+      remaining,
       opts.headers ?? {},
     );
     if (!res.location) {
