@@ -18,6 +18,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { assertPublicUrl, safeFetchText } from "@/lib/security/safe-fetch";
 import {
   classifyContent,
   estimateTokens,
@@ -56,98 +57,27 @@ type IngestBody = IngestTextBody | IngestUrlBody;
 // URL → text extraction (minimal, no external deps)
 // ---------------------------------------------------------------------------
 
-// A signed-in user chooses this URL, so the server must not become a proxy
-// into loopback, private, or link-local networks (SSRF). Literal IPs and
-// internal hostnames are rejected; each redirect hop is re-checked.
-// DNS names that resolve to private IPs are not caught here.
-const MAX_REDIRECTS = 3;
-
-function isPrivateHost(hostname: string): boolean {
-  const host = hostname.replace(/^\[|\]$/g, "").toLowerCase();
-  if (
-    host === "localhost" ||
-    host.endsWith(".localhost") ||
-    host.endsWith(".local") ||
-    host.endsWith(".internal") ||
-    (!host.includes(".") && !host.includes(":"))
-  ) {
-    return true;
-  }
-  const v4 = host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
-  if (v4) {
-    const [a, b] = [Number(v4[1]), Number(v4[2])];
-    return (
-      a === 0 ||
-      a === 10 ||
-      a === 127 ||
-      (a === 100 && b >= 64 && b <= 127) ||
-      (a === 169 && b === 254) ||
-      (a === 172 && b >= 16 && b <= 31) ||
-      (a === 192 && b === 168) ||
-      a >= 224
-    );
-  }
-  if (host.includes(":")) {
-    // IPv6 literal: loopback, unspecified, unique-local, link-local, v4-mapped.
-    return (
-      host === "::1" ||
-      host === "::" ||
-      /^f[cd]/.test(host) ||
-      /^fe[89ab]/.test(host) ||
-      host.startsWith("::ffff:")
-    );
-  }
-  return false;
-}
-
-function assertPublicUrl(raw: string): URL {
-  let parsed: URL;
-  try {
-    parsed = new URL(raw);
-  } catch {
-    throw new Error("Invalid URL");
-  }
-  if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
-    throw new Error("Only http(s) URLs can be ingested");
-  }
-  if (parsed.username || parsed.password || isPrivateHost(parsed.hostname)) {
-    throw new Error("URL host is not allowed");
-  }
-  return parsed;
-}
-
 async function fetchAsText(
   url: string,
 ): Promise<{ title: string; content: string }> {
-  let target = assertPublicUrl(url);
-  let resp: Response | undefined;
-  for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
-    resp = await fetch(target, {
-      headers: {
-        // Identify ourselves so sites don't 403 a headless fetch
-        "User-Agent": "ArcaneaStudioIngestor/1.0 (+https://arcanea.ai)",
-        Accept: "text/html,application/xhtml+xml,text/plain",
-      },
-      redirect: "manual",
-    });
-    const location =
-      resp.status >= 300 && resp.status < 400
-        ? resp.headers.get("location")
-        : null;
-    if (!location) break;
-    if (hop === MAX_REDIRECTS) throw new Error("Too many redirects");
-    target = assertPublicUrl(new URL(location, target).toString());
-  }
-  if (!resp) throw new Error("No response");
+  // User-chosen URL: safeFetchText resolves and checks every hop so this
+  // route cannot be used to reach internal networks (SSRF).
+  const resp = await safeFetchText(url, {
+    headers: {
+      // Identify ourselves so sites don't 403 a headless fetch
+      "User-Agent": "ArcaneaStudioIngestor/1.0 (+https://arcanea.ai)",
+      Accept: "text/html,application/xhtml+xml,text/plain",
+    },
+  });
 
-  if (!resp.ok) {
+  if (resp.status < 200 || resp.status >= 300) {
     throw new Error(`Fetch ${url} failed: ${resp.status}`);
   }
 
-  const contentType = resp.headers.get("content-type") ?? "";
+  const contentType = resp.contentType;
 
   if (contentType.includes("text/plain") || contentType.includes("markdown")) {
-    const text = await resp.text();
+    const text = resp.text;
     return {
       title: url,
       content: text,
@@ -155,7 +85,7 @@ async function fetchAsText(
   }
 
   if (contentType.includes("text/html")) {
-    const html = await resp.text();
+    const html = resp.text;
     // Extract <title> if present
     const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
     const title = titleMatch?.[1]?.trim() ?? url;
@@ -189,7 +119,7 @@ async function fetchAsText(
   }
 
   // Unknown content type — try text
-  const text = await resp.text();
+  const text = resp.text;
   return { title: url, content: text };
 }
 

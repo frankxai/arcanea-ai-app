@@ -113,6 +113,10 @@ export async function fetchDriveDocAsText(
   fileId: string,
   mimeType: string,
 ): Promise<{ title: string; content: string }> {
+  // Drive file ids are URL-safe base64; anything else (e.g. "..") is refused.
+  if (!/^[A-Za-z0-9_-]+$/.test(fileId)) {
+    throw new Error("Invalid Drive file id");
+  }
   if (mimeType === "application/vnd.google-apps.document") {
     // Google Docs native — use export endpoint, prefer markdown if available
     const exportMime = "text/plain";
