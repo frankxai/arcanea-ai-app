@@ -4,6 +4,18 @@ const createNextIntlPlugin = require('next-intl/plugin')
 
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
 
+const localSupabaseOrigin = (() => {
+  try {
+    const url = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL || '')
+    return url.protocol === 'http:' && ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)
+      ? url.origin
+      : null
+  } catch {
+    return null
+  }
+})()
+const localSupabaseWebSocket = localSupabaseOrigin?.replace(/^http:/, 'ws:') || ''
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
@@ -67,6 +79,11 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
+      ...(localSupabaseOrigin ? [{
+        protocol: 'http',
+        hostname: new URL(localSupabaseOrigin).hostname,
+        port: new URL(localSupabaseOrigin).port,
+      }] : []),
       {
         protocol: 'https',
         hostname: 'hcfhyssdzphudaqatxbk.supabase.co',
@@ -90,6 +107,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'media.starlightintelligence.org',
+      },
+      {
+        protocol: 'https',
+        hostname: 'arcanea.ai',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.arcanea.ai',
       },
     ],
     formats: ['image/avif', 'image/webp'],
@@ -127,9 +152,10 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://vercel.live",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: blob: https://*.supabase.co https://avatars.githubusercontent.com https://lh3.googleusercontent.com https://*.public.blob.vercel-storage.com https://media.starlightintelligence.org",
+              `img-src 'self' data: blob: https://*.supabase.co https://avatars.githubusercontent.com https://lh3.googleusercontent.com https://*.public.blob.vercel-storage.com https://media.starlightintelligence.org https://arcanea.ai https://www.arcanea.ai${localSupabaseOrigin ? ` ${localSupabaseOrigin}` : ''}`,
+              `media-src 'self' https://*.supabase.co https://*.public.blob.vercel-storage.com https://media.starlightintelligence.org https://arcanea.ai https://www.arcanea.ai${localSupabaseOrigin ? ` ${localSupabaseOrigin}` : ''}`,
               "font-src 'self' data:",
-              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://generativelanguage.googleapis.com https://openrouter.ai https://api.anthropic.com https://va.vercel-scripts.com https://vercel.live",
+              `connect-src 'self' https://*.supabase.co wss://*.supabase.co https://generativelanguage.googleapis.com https://openrouter.ai https://api.anthropic.com https://va.vercel-scripts.com https://vercel.live${localSupabaseOrigin ? ` ${localSupabaseOrigin} ${localSupabaseWebSocket}` : ''}`,
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",

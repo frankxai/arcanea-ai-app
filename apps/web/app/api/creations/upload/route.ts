@@ -6,24 +6,37 @@
  *
  * Accepts FormData with:
  *   - file: The file to upload (max 100MB)
- *   - metadata: JSON string with title, tags, isPublic
+ *   - metadata: JSON string with title, tags, isPublic, and optional accessibility assets
  *
  * If Supabase is configured:
  *   - Authenticates the user via cookie session
  *   - Uploads file to the 'creations' storage bucket
  *   - Inserts a record into the 'creations' table
  *
- * If Supabase is not configured:
- *   - Returns a mock success response for local development
+ * If Supabase is not configured, uploads are unavailable.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
-import { getProjectWorkspaceForCurrentUser } from '@/lib/projects/server';
-import { enrichProjectGraph } from '@/lib/projects/enrichment';
-import { recordProjectTrace } from '@/lib/projects/trace';
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+import { getProjectWorkspaceForCurrentUser } from "@/lib/projects/server";
+import { enrichProjectGraph } from "@/lib/projects/enrichment";
+import { recordProjectTrace } from "@/lib/projects/trace";
+import {
+  creationTypeForMime,
+  isDefiniteInsertRejection,
+  previewableCreationUrl,
+  safeCreationUrl,
+} from "@/lib/media/creation-url";
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
+export const creationUploadDeps = {
+  createClient: async () =>
+    (await import("@/lib/supabase/server")).createClient(),
+};
+const accessibleUrl = z
+  .string()
+  .max(2048)
+  .refine((value) => safeCreationUrl(value) !== null);
 
 const uploadMetadataSchema = z.object({
   title: z.string().optional(),
@@ -31,20 +44,30 @@ const uploadMetadataSchema = z.object({
   isPublic: z.boolean().optional(),
   projectId: z.string().uuid().optional(),
   sourceSessionId: z.string().min(1).max(255).optional(),
+  captionsUrl: accessibleUrl.optional(),
+  captionsLanguage: z
+    .string()
+    .regex(/^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/)
+    .optional(),
+  transcript: z.string().max(4_000).optional(),
+  transcriptUrl: accessibleUrl.optional(),
 });
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
-    const file = formData.get('file') as File | null;
-    const metadataStr = formData.get('metadata') as string | null;
+    const file = formData.get("file") as File | null;
+    const metadataStr = formData.get("metadata") as string | null;
 
     if (!file) {
-      return NextResponse.json({ error: 'No file provided' }, { status: 400 });
+      return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
     if (file.size > MAX_FILE_SIZE) {
-      return NextResponse.json({ error: 'File too large (max 100MB)' }, { status: 413 });
+      return NextResponse.json(
+        { error: "File too large (max 100MB)" },
+        { status: 413 },
+      );
     }
 
     let metadata: z.infer<typeof uploadMetadataSchema> = {};
@@ -52,117 +75,168 @@ export async function POST(request: NextRequest) {
       const parsed = JSON.parse(metadataStr);
       const validation = uploadMetadataSchema.safeParse(parsed);
       if (!validation.success) {
-        return NextResponse.json({ error: 'Invalid metadata payload' }, { status: 400 });
+        return NextResponse.json(
+          { error: "Invalid metadata payload" },
+          { status: 400 },
+        );
       }
       metadata = validation.data;
+    }
+    if (
+      metadata.captionsUrl &&
+      !previewableCreationUrl(metadata.captionsUrl, new URL(request.url).origin)
+    ) {
+      return NextResponse.json(
+        { error: "Caption URL must use a supported media host." },
+        { status: 400 },
+      );
     }
 
     // Check if Supabase is configured
     const supabaseUrl =
       process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
     const supabaseAnonKey =
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+      process.env.SUPABASE_ANON_KEY;
 
     if (!supabaseUrl || !supabaseAnonKey) {
-      // Supabase not configured — return mock response for development
-      return NextResponse.json({
-        data: {
-          id: `mock-${Date.now()}`,
-          url: '/placeholder.png',
-          title: metadata.title || file.name,
-          type: file.type.startsWith('image/')
-            ? 'image'
-            : file.type.startsWith('video/')
-            ? 'video'
-            : 'text',
-          createdAt: new Date().toISOString(),
-        },
-      });
+      return NextResponse.json(
+        { error: "Uploads are unavailable until storage is configured." },
+        { status: 503 },
+      );
     }
 
     // Supabase is configured — authenticate and upload
-    const { createClient } = await import('@/lib/supabase/server');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const supabase = (await createClient()) as any;
+    const supabase = (await creationUploadDeps.createClient()) as any;
 
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
     if (!user) {
-      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+      return NextResponse.json(
+        { error: "Authentication required" },
+        { status: 401 },
+      );
     }
 
-    const ext = file.name.split('.').pop() || 'bin';
+    const ext = file.name.split(".").pop() || "bin";
     const storagePath = `${user.id}/${Date.now()}.${ext}`;
     const bytes = await file.arrayBuffer();
 
     const { error: uploadError } = await supabase.storage
-      .from('creations')
+      .from("creations")
       .upload(storagePath, bytes, {
         contentType: file.type,
         upsert: false,
       });
 
     if (uploadError) {
-      console.error('[creations upload] storage error:', uploadError);
+      console.error("[creations upload] storage error:", uploadError);
       return NextResponse.json({ error: uploadError.message }, { status: 500 });
     }
 
     const { data: urlData } = supabase.storage
-      .from('creations')
+      .from("creations")
       .getPublicUrl(storagePath);
 
-    const creationType = file.type.startsWith('image/')
-      ? 'image'
-      : file.type.startsWith('video/')
-      ? 'video'
-      : 'text';
+    const creationType = creationTypeForMime(file.type);
 
     const { data: creation, error: insertError } = await supabase
-      .from('creations')
+      .from("creations")
       .insert({
         user_id: user.id,
         title: metadata.title || file.name,
         type: creationType,
-        content: urlData.publicUrl,
+        content:
+          metadata.captionsUrl || metadata.transcript || metadata.transcriptUrl
+            ? {
+                fileUrl: urlData.publicUrl,
+                captionsUrl: metadata.captionsUrl ?? null,
+                captionsLanguage: metadata.captionsLanguage ?? null,
+                transcript: metadata.transcript ?? null,
+                transcriptUrl: metadata.transcriptUrl ?? null,
+              }
+            : urlData.publicUrl,
         tags: metadata.tags || [],
-        visibility: metadata.isPublic === false ? 'private' : 'public',
-        status: 'published',
+        visibility: metadata.isPublic === false ? "private" : "public",
+        status: "published",
         ...(metadata.projectId ? { project_id: metadata.projectId } : {}),
-        ...(metadata.sourceSessionId ? { source_session_id: metadata.sourceSessionId } : {}),
+        ...(metadata.sourceSessionId
+          ? { source_session_id: metadata.sourceSessionId }
+          : {}),
       })
       .select()
       .single();
 
     if (insertError) {
-      console.error('[creations upload] db error:', insertError);
+      console.error("[creations upload] db error:", insertError);
+      if (isDefiniteInsertRejection(insertError.code)) {
+        const { error: cleanupError } = await supabase.storage
+          .from("creations")
+          .remove([storagePath]);
+        if (cleanupError)
+          console.error("[creations upload] rejected upload cleanup failed:", {
+            storagePath,
+            error: cleanupError,
+          });
+      } else {
+        console.error(
+          "[creations upload] insert outcome uncertain; file retained",
+          {
+            storagePath,
+          },
+        );
+      }
       return NextResponse.json({ error: insertError.message }, { status: 500 });
     }
 
     if (metadata.projectId && creation) {
-      await recordProjectTrace(supabase as any, {
-        userId: user.id,
-        projectId: metadata.projectId,
-        action: 'project_creation_linked',
-        metadata: {
-          creationId: creation.id,
-          type: creation.type,
-          sourceSessionId: metadata.sourceSessionId ?? null,
-          origin: 'creations_upload',
-        },
-      });
+      try {
+        await recordProjectTrace(supabase as any, {
+          userId: user.id,
+          projectId: metadata.projectId,
+          action: "project_creation_linked",
+          metadata: {
+            creationId: creation.id,
+            type: creation.type,
+            sourceSessionId: metadata.sourceSessionId ?? null,
+            origin: "creations_upload",
+          },
+        });
 
-      const workspace = await getProjectWorkspaceForCurrentUser(metadata.projectId);
-      if (workspace) {
-        await enrichProjectGraph(supabase as any, user.id, workspace);
+        const workspace = await getProjectWorkspaceForCurrentUser(
+          metadata.projectId,
+        );
+        if (workspace) {
+          await enrichProjectGraph(supabase as any, user.id, workspace);
+        }
+      } catch (enrichmentError) {
+        console.error(
+          "[creations upload] project enrichment failed after insert:",
+          enrichmentError,
+        );
       }
+    }
+
+    let signedUrl: string | null = null;
+    try {
+      const { data: signed } = await supabase.storage
+        .from("creations")
+        .createSignedUrl(storagePath, 60 * 60 * 6);
+      signedUrl = signed?.signedUrl ?? null;
+    } catch (signError) {
+      console.error(
+        "[creations upload] signing failed after insert:",
+        signError,
+      );
     }
 
     return NextResponse.json({
       data: {
         id: creation.id,
-        url: urlData.publicUrl,
+        url: signedUrl ?? `/api/creations/${creation.id}/media`,
         title: creation.title,
         type: creation.type,
         createdAt: creation.created_at,
@@ -171,10 +245,10 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('[creations upload] unexpected error:', error);
+    console.error("[creations upload] unexpected error:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Upload failed' },
-      { status: 500 }
+      { error: error instanceof Error ? error.message : "Upload failed" },
+      { status: 500 },
     );
   }
 }

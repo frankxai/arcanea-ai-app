@@ -1,331 +1,499 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-'use client';
-import Image from 'next/image';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
-import { useAuth } from '@/lib/auth/context';
-import { createClient } from '@/lib/supabase/client';
-import { SyntheticContentNotice } from '@/components/compliance/synthetic-content-notice';
-import { getCreations, getUserCreations, deleteCreation, updateCreation } from '@/lib/database/services/creation-service';
-import type { Creation, CreationType } from '@/lib/database/types/api-responses';
-import { AccountAbstractionService } from '@/lib/web3/account-abstraction';
-import { StoryProtocolService } from '@/lib/web3/story-protocol';
+import { Suspense, useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { ArrowUpRight } from "@/lib/phosphor-icons";
+import { useAuth } from "@/lib/auth/context";
+import { createClient } from "@/lib/supabase/client";
 import {
-  PhPlus,
-  PhFunnel,
-  PhImage,
-  PhFileText,
-  PhMusicNote,
-  PhCode,
-  PhTrash,
-  PhEye,
-  PhHeart,
-  PhGridFour,
-  PhArrowRight,
-  PhShieldStar,
-  PhSpinner,
-  PhArrowSquareOut
-} from '@/lib/phosphor-icons';
-// @ts-ignore
-import { Wallet as PhWallet } from '@phosphor-icons/react';
+  fetchCreationPage,
+  mapCreation,
+  PAGE_SIZE,
+  type Cursor,
+  type LibraryCreation,
+} from "@/lib/media/creation-library-data";
+import {
+  creationFilters as filters,
+  type CreationFilter as Filter,
+} from "@/lib/media/creation-library-filters";
+import {
+  maskUnsignedPrivateStageMedia,
+  signStageMedia,
+  type MediaCache,
+} from "@/lib/media/sign-creation-media";
+import { CreationMediaStage } from "@/components/media/creation-media-stage";
+import { CreationLibraryRow } from "@/components/media/creation-library-row";
+import { CreationsLoading } from "@/components/media/creations-loading";
 
-const TYPE_FILTERS: { key: CreationType | 'all'; label: string; icon: typeof PhGridFour }[] = [
-  { key: 'all', label: 'All', icon: PhGridFour },
-  { key: 'text', label: 'Text', icon: PhFileText },
-  { key: 'image', label: 'Image', icon: PhImage },
-  { key: 'audio', label: 'Music', icon: PhMusicNote },
-  { key: 'code', label: 'Code', icon: PhCode },
-];
+type PageAnnouncement = { key: string; text: string; total: number };
+const stageColumns =
+  "id, title, type, status, content, thumbnail_url, created_at, ai_model, ai_prompt";
 
-function formatDate(iso: string): string {
-  const d = new Date(iso);
-  const now = new Date();
-  const diff = now.getTime() - d.getTime();
-  const mins = Math.floor(diff / 60_000);
-  if (mins < 1) return 'just now';
-  if (mins < 60) return `${mins}m ago`;
-  const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h ago`;
-  const days = Math.floor(hrs / 24);
-  if (days === 1) return 'yesterday';
-  if (days < 7) return `${days}d ago`;
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+interface LibrarySnapshot {
+  userId: string;
+  filter: Filter;
+  items: LibraryCreation[];
+  media: LibraryCreation[];
+  nextCursor: Cursor | null;
+  hasMore: boolean;
+  error: boolean;
+  mediaError: boolean;
 }
 
-export default function CreationsPage() {
-  const { user } = useAuth();
-  const [creations, setCreations] = useState<Creation[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<CreationType | 'all'>('all');
-  const [registeringId, setRegisteringId] = useState<string | null>(null);
-
-  const aaService = new AccountAbstractionService();
-  const storyService = new StoryProtocolService();
-
-  const handleRegisterIP = async (creation: Creation) => {
-    if (!user) {
-      alert('Please log in to register creations.');
-      return;
-    }
-    setRegisteringId(creation.id);
-    try {
-      // 1. Get/derive Smart account TBA address
-      const wallet = await aaService.getOrCreateSmartAccount(user.id);
-      
-      // 2. Derive mock IPFS metadata hash
-      const ipfsHash = `ipfs://bafybeih${Math.random().toString(36).substring(2, 15)}hash`;
-      
-      // 3. Register IP Asset on Base Sepolia Story Protocol
-      const ipAsset = await storyService.registerIPAsset(
-        wallet,
-        '0x89793139C247B2E3f3F8C56c32168393Fcf92168', // Mock NFT Contract Address
-        Math.floor(Math.random() * 100000), // Mock Token ID
-        ipfsHash
-      );
-
-      // 4. Persist registration info inside Creation metadata
-      const updatedMeta = {
-        ...(creation.metadata || {}),
-        ipfsHash,
-        ipaAddress: ipAsset.ipaAddress,
-        licenseTermsId: ipAsset.licenseTermsId,
-        registeredAt: new Date().toISOString()
-      };
-
-      const supabase = createClient();
-      await updateCreation(supabase, creation.id, user.id, {
-        metadata: updatedMeta
+function CreationsContent() {
+  const { user, isLoading: authLoading } = useAuth();
+  const searchParams = useSearchParams();
+  const [snapshot, setSnapshot] = useState<LibrarySnapshot | null>(null);
+  const filter: Filter =
+    filters.find(({ id }) => id === searchParams?.get("view"))?.id ?? "all";
+  const [retry, setRetry] = useState(0);
+  const [mediaRetrying, setMediaRetrying] = useState(false);
+  const [loadingMoreKey, setLoadingMoreKey] = useState<string | null>(null);
+  const [loadMoreErrorKey, setLoadMoreErrorKey] = useState<string | null>(null);
+  const [pageAnnouncement, setPageAnnouncement] =
+    useState<PageAnnouncement | null>(null);
+  const mediaCache = useRef<MediaCache<LibraryCreation> | null>(null);
+  const mediaRetryInFlight = useRef(false);
+  const activeUserId = user?.id;
+  useEffect(() => {
+    if (!user) return;
+    const userId = user.id;
+    let active = true;
+    const client = createClient();
+    async function load() {
+      const cached =
+        mediaCache.current?.userId === userId ? mediaCache.current : null;
+      const [itemsSettled, mediaSettled] = await Promise.allSettled([
+        fetchCreationPage(userId, filter, null),
+        cached
+          ? Promise.resolve(null)
+          : client
+              .from("creations")
+              .select(stageColumns)
+              .eq("user_id", userId)
+              .in("type", ["image", "video", "music", "audio"])
+              .order("created_at", { ascending: false })
+              .limit(18),
+      ]);
+      if (!active) return;
+      const itemsResult =
+        itemsSettled.status === "fulfilled" ? itemsSettled.value : null;
+      const mediaResult =
+        mediaSettled.status === "fulfilled" ? mediaSettled.value : null;
+      const rows =
+        itemsResult && !itemsResult.error ? (itemsResult.data ?? []) : [];
+      const mediaRows =
+        mediaResult && !mediaResult.error ? (mediaResult.data ?? []) : [];
+      const pageRows = rows.slice(0, PAGE_SIZE);
+      const last = pageRows.at(-1);
+      let media = cached?.signed ?? mediaRows.map(mapCreation);
+      let mediaError = cached
+        ? cached.partialFailure
+        : !mediaResult || Boolean(mediaResult.error);
+      if (!cached && !mediaError) {
+        const source = media;
+        try {
+          const signed = await signStageMedia(source, userId);
+          media = signed.creations;
+          mediaError = signed.partialFailure;
+          if (!active) return;
+          mediaCache.current = {
+            userId,
+            source,
+            signed: media,
+            signedAt: Date.now(),
+            partialFailure: signed.partialFailure,
+          };
+        } catch {
+          const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+          media = supabaseUrl
+            ? maskUnsignedPrivateStageMedia(source, userId, supabaseUrl)
+            : source;
+          mediaError = true;
+        }
+      }
+      if (!active) return;
+      if (itemsResult && !itemsResult.error) {
+        setLoadMoreErrorKey((current) =>
+          current === `${userId}:${filter}` ? null : current,
+        );
+        setPageAnnouncement(null);
+      }
+      setSnapshot({
+        userId,
+        filter,
+        items: pageRows.map(mapCreation),
+        media,
+        nextCursor: last ? { createdAt: last.created_at, id: last.id } : null,
+        hasMore: rows.length > PAGE_SIZE,
+        error: !itemsResult || Boolean(itemsResult.error),
+        mediaError,
       });
+      mediaRetryInFlight.current = false;
+      setMediaRetrying(false);
+    }
 
-      // Update state
-      setCreations((prev) =>
-        prev.map((c) =>
-          c.id === creation.id ? { ...c, metadata: updatedMeta } : c
-        )
+    void load().catch(() => {
+      if (active) {
+        setSnapshot({
+          userId,
+          filter,
+          items: [],
+          media: [],
+          nextCursor: null,
+          hasMore: false,
+          error: true,
+          mediaError: true,
+        });
+        mediaRetryInFlight.current = false;
+        setMediaRetrying(false);
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, [user, filter, retry]);
+
+  useEffect(() => {
+    if (!activeUserId) return;
+    const userId = activeUserId;
+    let active = true;
+    let refreshing = false;
+    let lastFailedAttemptAt = 0;
+    async function refreshMedia(reason: "interval" | "visibility") {
+      const cached = mediaCache.current;
+      const now = Date.now();
+      if (
+        !active ||
+        refreshing ||
+        !cached ||
+        cached.userId !== userId ||
+        (now - cached.signedAt < 5 * 60 * 60 * 1000 &&
+          (!cached.partialFailure ||
+            reason !== "visibility" ||
+            now - cached.signedAt < 15 * 60 * 1000)) ||
+        now - lastFailedAttemptAt < 15 * 60 * 1000
+      )
+        return;
+      refreshing = true;
+      try {
+        const signed = await signStageMedia(cached.source, userId);
+        if (!active || mediaCache.current !== cached) return;
+        mediaCache.current = {
+          ...cached,
+          signed: signed.creations,
+          signedAt: Date.now(),
+          partialFailure: signed.partialFailure,
+        };
+        setSnapshot((current) =>
+          current?.userId === userId
+            ? {
+                ...current,
+                media: signed.creations,
+                mediaError: signed.partialFailure,
+              }
+            : current,
+        );
+      } catch {
+        // Keep the current preview and back off after a failed refresh.
+        lastFailedAttemptAt = Date.now();
+      } finally {
+        refreshing = false;
+      }
+    }
+    const timer = window.setInterval(
+      () => void refreshMedia("interval"),
+      60 * 1000,
+    );
+    const onVisible = () => {
+      if (!document.hidden) void refreshMedia("visibility");
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [activeUserId]);
+
+  const loading =
+    authLoading || (user !== null && snapshot?.userId !== user.id);
+  const filterLoading = user !== null && snapshot?.filter !== filter;
+  const items = snapshot?.items ?? [];
+  const currentKey = user ? `${user.id}:${filter}` : null;
+  const announcement =
+    pageAnnouncement?.key === currentKey &&
+    pageAnnouncement.total === snapshot?.items.length &&
+    snapshot?.filter === filter
+      ? pageAnnouncement.text
+      : "";
+
+  async function loadMore() {
+    if (
+      !user ||
+      !snapshot ||
+      snapshot.filter !== filter ||
+      !snapshot.hasMore ||
+      loadingMoreKey
+    )
+      return;
+    const { id: userId } = user;
+    const { nextCursor } = snapshot;
+    const requestedFilter = filter;
+    const key = `${userId}:${requestedFilter}`;
+    setLoadingMoreKey(key);
+    setLoadMoreErrorKey(null);
+    try {
+      const result = await fetchCreationPage(
+        userId,
+        requestedFilter,
+        nextCursor,
       );
-
-      alert(`Successfully registered ${creation.title} on Story Protocol!\nIP Address: ${ipAsset.ipaAddress}`);
-    } catch (err) {
-      console.error(err);
-      alert('Story Protocol IP Asset registration failed.');
-    } finally {
-      setRegisteringId(null);
-    }
-  };
-
-  const loadCreations = useCallback(async () => {
-    setLoading(true);
-    try {
-      const client = createClient();
-      const data = user
-        ? await getUserCreations(client, user.id, filter === 'all' ? undefined : { type: filter })
-        : await getCreations(client, { limit: 50, ...(filter !== 'all' ? { type: filter } : {}) });
-      setCreations(data);
-    } catch (err) {
-      console.warn('Failed to load creations:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, [user, filter]);
-
-  useEffect(() => { loadCreations(); }, [loadCreations]);
-
-  const handleDelete = async (id: string) => {
-    if (!confirm('Delete this creation?')) return;
-    try {
-      await deleteCreation(createClient(), id, user?.id ?? '');
-      setCreations((prev) => prev.filter((c) => c.id !== id));
+      if (result.error) throw result.error;
+      const rows = result.data ?? [];
+      const pageRows = rows.slice(0, PAGE_SIZE);
+      const last = pageRows.at(-1);
+      setSnapshot((current) =>
+        current?.userId === userId &&
+        current.filter === requestedFilter &&
+        current.nextCursor?.id === nextCursor?.id
+          ? {
+              ...current,
+              items: [...current.items, ...pageRows.map(mapCreation)],
+              nextCursor: last
+                ? { createdAt: last.created_at, id: last.id }
+                : current.nextCursor,
+              hasMore: rows.length > PAGE_SIZE,
+            }
+          : current,
+      );
+      setPageAnnouncement({
+        key,
+        total: snapshot.items.length + pageRows.length,
+        text: `${pageRows.length} more creations loaded; ${snapshot.items.length + pageRows.length} shown.${rows.length > PAGE_SIZE ? "" : " All creations loaded."}`,
+      });
     } catch {
-      console.warn('Delete failed');
+      setLoadMoreErrorKey(key);
+    } finally {
+      setLoadingMoreKey(null);
     }
-  };
-
-  const filtered = filter === 'all' ? creations : creations.filter((c) => c.type === filter);
+  }
 
   return (
-    <div className="min-h-screen bg-[var(--arc-cosmic-void)]">
-      <div className="max-w-6xl mx-auto px-6 pt-8 pb-24">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+    <div className="min-h-screen bg-[var(--arc-cosmic-void)] px-[var(--arc-space-media-page-gutter)] pb-[var(--arc-space-media-page-bottom)] pt-[var(--arc-space-media-page-top)] text-[var(--arc-text-primary)] sm:px-[var(--arc-space-media-page-gutter-wide)]">
+      <div className="mx-auto max-w-[var(--arc-size-media-page-max)]">
+        <header className="mb-[var(--arc-media-space-200)] flex flex-wrap items-end justify-between gap-[var(--arc-media-space-125)]">
           <div>
-            <h1 className="text-2xl font-display font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-              Your Creations
-            </h1>
-            <p className="text-sm text-white/60 mt-1">
-              {creations.length} creation{creations.length !== 1 ? 's' : ''} saved
+            <p className="mb-[var(--arc-media-space-050)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]">
+              Your workspace
             </p>
-            <SyntheticContentNotice medium="content" className="mt-1.5" />
+            <h1 className="font-display text-[length:var(--arc-type-media-page-title)] font-medium tracking-tight sm:text-[length:var(--arc-type-media-page-title-wide)]">
+              Creations
+            </h1>
+            <p className="mt-[var(--arc-media-space-075)] max-w-[var(--arc-size-media-description-max)] text-[length:var(--arc-type-media-body)] leading-[var(--arc-line-media-body)] text-[var(--arc-text-secondary)]">
+              See your saved images, film, music, and other creations in one
+              place.
+            </p>
           </div>
           <Link
             href="/chat"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/15 to-[var(--arc-brand-cosmic-blue)]/10 text-[var(--arc-brand-atlantean-teal)] text-sm font-medium border border-[var(--arc-brand-atlantean-teal)]/20 hover:border-[var(--arc-brand-atlantean-teal)]/30 hover:shadow-[0_0_16px_rgba(0,188,212,0.1)] transition-all"
+            className="inline-flex min-h-[var(--arc-size-interactive-min)] items-center gap-[var(--arc-media-space-050)] rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] px-[var(--arc-media-space-100)] py-[var(--arc-media-space-050)] text-[length:var(--arc-type-media-body)] font-medium text-[var(--arc-text-primary)] hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
           >
-            <PhPlus className="w-4 h-4" aria-hidden="true" />
-            Create New
+            Open chat <ArrowUpRight size={16} aria-hidden="true" />
           </Link>
-        </div>
+        </header>
 
-        {/* Filter tabs */}
-        <div
-          className="flex items-center gap-1.5 mb-8 p-1 rounded-xl bg-white/[0.03] border border-white/[0.05] w-fit"
-          role="group"
-          aria-label="Filter creations by type"
-        >
-          {TYPE_FILTERS.map((f) => {
-            const Icon = f.icon;
-            const isActive = filter === f.key;
-            return (
-              <button
-                key={f.key}
-                onClick={() => setFilter(f.key)}
-                aria-pressed={isActive}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  isActive
-                    ? 'bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)]/15 to-transparent text-[var(--arc-brand-atlantean-teal)] shadow-[inset_0_0_0_1px_rgba(0,188,212,0.2)]'
-                    : 'text-white/65 hover:text-white/85'
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" aria-hidden="true" />
-                {f.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Content */}
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-48 rounded-xl bg-white/[0.03] animate-pulse" />
-            ))}
-          </div>
-        ) : filtered.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center" aria-hidden="true">
-              <PhFunnel className="w-6 h-6 text-white/40" />
-            </div>
-            <p className="text-white/70 text-sm mb-2">
-              {filter === 'all' ? 'No creations yet' : `No ${filter} creations yet`}
+          <div
+            className="h-[var(--arc-size-media-loading)] rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)]"
+            role="status"
+            aria-label="Loading creations"
+          />
+        ) : !user ? (
+          <section className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-[var(--arc-media-space-200)] sm:p-[var(--arc-media-space-300)]">
+            <h2 className="font-display text-[length:var(--arc-type-media-section-title-wide)]">
+              Your work belongs with you
+            </h2>
+            <p className="mt-[var(--arc-media-space-075)] max-w-[var(--arc-size-media-signin-copy-max)] text-[length:var(--arc-type-media-body)] leading-[var(--arc-line-media-reading)] text-[var(--arc-text-secondary)]">
+              Sign in to see your private media and saved creations.
             </p>
-            <Link href="/chat" className="text-[var(--arc-brand-atlantean-teal)] text-sm hover:underline">
-              Start creating
+            <Link
+              href="/auth/login?next=/creations"
+              className="mt-[var(--arc-media-space-150)] inline-flex min-h-[var(--arc-size-interactive-min)] items-center rounded-[var(--arc-radius-xl)] bg-[var(--arc-brand-atlantean-teal)] px-[var(--arc-media-space-125)] py-[var(--arc-media-space-050)] text-[length:var(--arc-type-media-body)] font-semibold text-[var(--arc-cosmic-void)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-text-primary)]"
+            >
+              Sign in
             </Link>
-          </div>
+          </section>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filtered.map((creation) => (
+          <>
+            {snapshot?.mediaError && (
               <div
-                key={creation.id}
-                className="group relative rounded-xl bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/[0.06] hover:border-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[0_0_20px_rgba(0,188,212,0.06)] transition-all duration-300 overflow-hidden"
+                role="alert"
+                aria-busy={mediaRetrying}
+                className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] bg-[var(--arc-cosmic-surface)] p-[var(--arc-media-space-150)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]"
               >
-                {/* Preview */}
-                {creation.thumbnailUrl ? (
-                  <div className="aspect-video bg-white/[0.02] relative">
-                    <Image
-                      src={creation.thumbnailUrl}
-                      alt={creation.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="aspect-video bg-gradient-to-br from-white/[0.03] to-white/[0.01] flex items-center justify-center">
-                    {creation.type === 'image' && <PhImage className="w-8 h-8 text-white/10" />}
-                    {creation.type === 'text' && <PhFileText className="w-8 h-8 text-white/10" />}
-                    {creation.type === 'audio' && <PhMusicNote className="w-8 h-8 text-white/10" />}
-                    {creation.type === 'code' && <PhCode className="w-8 h-8 text-white/10" />}
-                  </div>
-                )}
+                Some recent media previews could not load. Try again.
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (mediaRetryInFlight.current) return;
+                    mediaRetryInFlight.current = true;
+                    setMediaRetrying(true);
+                    mediaCache.current = null;
+                    setRetry((value) => value + 1);
+                  }}
+                  disabled={mediaRetrying}
+                  className="ml-[var(--arc-media-space-075)] min-h-[var(--arc-size-interactive-min)] rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] px-[var(--arc-media-space-100)] font-medium text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                >
+                  {mediaRetrying ? "Retrying…" : "Try again"}
+                </button>
+              </div>
+            )}
+            {(!snapshot?.mediaError || (snapshot?.media.length ?? 0) > 0) && (
+              <CreationMediaStage creations={snapshot?.media ?? []} />
+            )}
 
-                {/* Info */}
-                <div className="p-4">
-                  <h3 className="text-sm font-medium text-white/90 truncate">{creation.title}</h3>
-                  <p className="text-[11px] text-white/60 mt-1">{formatDate(creation.createdAt)}</p>
+            <p className="mt-[var(--arc-media-space-125)] text-[length:var(--arc-type-media-note)] leading-[var(--arc-line-media-note)] text-[var(--arc-text-muted)]">
+              Arcanea AI creations are labeled AI-generated when their source is
+              recorded. Uploaded work may have a different origin.
+            </p>
 
-                  {/* Stats */}
-                  <div className="flex items-center gap-3 mt-3">
-                    <span className="flex items-center gap-1 text-[11px] text-white/60">
-                      <PhEye className="w-3 h-3" aria-hidden="true" />
-                      <span className="sr-only">Views:</span>
-                      {creation.viewCount ?? 0}
-                    </span>
-                    <span className="flex items-center gap-1 text-[11px] text-white/60">
-                      <PhHeart className="w-3 h-3" aria-hidden="true" />
-                      <span className="sr-only">Likes:</span>
-                      {creation.likeCount ?? 0}
-                    </span>
-                    <span className="text-[10px] text-white/65 px-1.5 py-0.5 rounded bg-white/[0.06]">
-                      {creation.type}
-                    </span>
-                  </div>
-
-                  {/* Web3 Provenance Section */}
-                  <div className="mt-4 pt-3.5 border-t border-white/[0.04] flex items-center justify-between gap-2">
-                    {creation.metadata?.ipaAddress ? (
-                      <div className="flex flex-col gap-0.5">
-                        <div className="flex items-center gap-1 text-[10px] text-green-400 font-semibold">
-                          <PhShieldStar className="w-3.5 h-3.5" />
-                          Story IP Registered
-                        </div>
-                        <span className="text-[9px] font-mono text-white/45 truncate max-w-[120px]">
-                          {creation.metadata.ipaAddress as string}
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="text-[10px] text-white/40 font-medium">Unregistered IP</div>
-                    )}
-
-                    {creation.metadata?.ipaAddress ? (
-                      <a
-                        href={`https://explorer.story.foundation/ipa/${creation.metadata.ipaAddress}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-1 text-[10px] font-semibold text-[var(--arc-brand-atlantean-teal)] hover:underline"
-                      >
-                        Explorer
-                        <PhArrowSquareOut className="w-3 h-3" />
-                      </a>
-                    ) : (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleRegisterIP(creation);
-                        }}
-                        disabled={registeringId !== null}
-                        className="px-2.5 py-1 rounded bg-[var(--arc-brand-atlantean-teal)]/10 hover:bg-[var(--arc-brand-atlantean-teal)]/15 border border-[var(--arc-brand-atlantean-teal)]/20 text-[var(--arc-brand-atlantean-teal)] text-[10px] font-bold transition-all flex items-center gap-1 disabled:opacity-50"
-                      >
-                        {registeringId === creation.id ? (
-                          <>
-                            <PhSpinner className="w-3 h-3 animate-spin" />
-                            Registering...
-                          </>
-                        ) : (
-                          <>
-                            <PhWallet className="w-3 h-3" />
-                            Register PIL
-                          </>
-                        )}
-                      </button>
-                    )}
-                  </div>
-                </div>
-
-                {/* Hover actions */}
-                <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button
-                    onClick={() => handleDelete(creation.id)}
-                    className="w-7 h-7 rounded-lg bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/40 hover:text-red-400 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
-                    aria-label={`Delete ${creation.title}`}
+            <section
+              className="mt-[var(--arc-media-space-300)]"
+              aria-labelledby="recent-creations-title"
+            >
+              <div className="mb-[var(--arc-media-space-125)] flex flex-wrap items-end justify-between gap-[var(--arc-media-space-100)]">
+                <div>
+                  <h2
+                    id="recent-creations-title"
+                    className="font-display text-[length:var(--arc-type-media-section-title)] sm:text-[length:var(--arc-type-media-section-title-wide)]"
                   >
-                    <PhTrash className="w-3.5 h-3.5" aria-hidden="true" />
-                  </button>
+                    Recent creations
+                  </h2>
+                  <p className="mt-[var(--arc-media-space-025)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-muted)]">
+                    Browse your saved work, newest first.
+                  </p>
+                </div>
+                <div
+                  role="group"
+                  aria-label="Filter creations"
+                  className="flex flex-wrap gap-[var(--arc-media-space-050)]"
+                >
+                  {filters.map(({ id, label }) => (
+                    <button
+                      key={id}
+                      type="button"
+                      aria-pressed={filter === id}
+                      onClick={() => {
+                        setPageAnnouncement(null);
+                        if (filter === id) return;
+                        const nextUrl = new URL(window.location.href);
+                        if (id === "all") nextUrl.searchParams.delete("view");
+                        else nextUrl.searchParams.set("view", id);
+                        window.history.pushState(null, "", nextUrl);
+                      }}
+                      className="min-h-[var(--arc-size-interactive-min)] rounded-[var(--arc-radius-full)] border border-[var(--arc-cosmic-border)] px-[var(--arc-media-space-100)] py-[var(--arc-media-space-050)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)] aria-pressed:border-[var(--arc-brand-atlantean-teal)] aria-pressed:bg-[var(--arc-cosmic-raised)] aria-pressed:text-[var(--arc-text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                    >
+                      {label}
+                    </button>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
+
+              {filterLoading ? (
+                <p
+                  role="status"
+                  className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] p-[var(--arc-media-space-150)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]"
+                >
+                  Loading{" "}
+                  {filters
+                    .find((item) => item.id === filter)
+                    ?.label.toLowerCase()}
+                  …
+                </p>
+              ) : snapshot?.error ? (
+                <div
+                  role="alert"
+                  className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] p-[var(--arc-media-space-150)]"
+                >
+                  <p className="text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]">
+                    Your creations could not load.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPageAnnouncement(null);
+                      setSnapshot(null);
+                      setRetry((value) => value + 1);
+                    }}
+                    className="mt-[var(--arc-media-space-100)] min-h-[var(--arc-size-interactive-min)] rounded-[var(--arc-radius-xl)] border border-[var(--arc-cosmic-border-bright)] px-[var(--arc-media-space-125)] py-[var(--arc-media-space-050)] text-[length:var(--arc-type-media-body)] font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
+                  >
+                    Try again
+                  </button>
+                </div>
+              ) : items.length === 0 ? (
+                <p className="rounded-[var(--arc-radius-2xl)] border border-[var(--arc-cosmic-border)] p-[var(--arc-media-space-150)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]">
+                  {filter === "all"
+                    ? "No saved creations yet."
+                    : `No ${filters.find((item) => item.id === filter)?.label.toLowerCase()} saved yet.`}
+                </p>
+              ) : (
+                <ul className="grid gap-[var(--arc-media-space-075)] md:grid-cols-2">
+                  {items.map((creation) => (
+                    <CreationLibraryRow
+                      key={creation.id}
+                      creation={creation}
+                      userId={user.id}
+                    />
+                  ))}
+                </ul>
+              )}
+              <p role="status" className="sr-only">
+                {announcement}
+              </p>
+              {!filterLoading &&
+                !snapshot?.error &&
+                loadMoreErrorKey === currentKey && (
+                  <p
+                    role="alert"
+                    className="mt-[var(--arc-media-space-100)] text-[length:var(--arc-type-media-body)] text-[var(--arc-text-secondary)]"
+                  >
+                    More creations could not load. Try again.
+                  </p>
+                )}
+              {!filterLoading &&
+                !snapshot?.error &&
+                (snapshot?.hasMore || announcement) && (
+                  <div className="mt-[var(--arc-media-space-150)] flex justify-center">
+                    <button
+                      type="button"
+                      onClick={() => void loadMore()}
+                      aria-disabled={
+                        loadingMoreKey !== null || !snapshot?.hasMore
+                      }
+                      className="min-h-[var(--arc-size-interactive-min)] rounded-[var(--arc-radius-full)] border border-[var(--arc-cosmic-border-bright)] px-[var(--arc-media-space-150)] py-[var(--arc-media-space-050)] text-[length:var(--arc-type-media-body)] font-medium hover:bg-[var(--arc-cosmic-raised)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)] aria-disabled:opacity-50"
+                    >
+                      {loadingMoreKey === currentKey
+                        ? "Loading…"
+                        : snapshot?.hasMore
+                          ? "Load more"
+                          : "All creations loaded"}
+                    </button>
+                  </div>
+                )}
+            </section>
+          </>
         )}
       </div>
     </div>
+  );
+}
+
+export default function CreationsPage() {
+  return (
+    <Suspense fallback={<CreationsLoading />}>
+      <CreationsContent />
+    </Suspense>
   );
 }

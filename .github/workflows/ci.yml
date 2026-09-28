@@ -279,6 +279,9 @@ jobs:
       - name: Verify health and media readiness
         run: pnpm test:health-media-readiness
 
+      - name: Verify saved media URL contracts
+        run: pnpm --dir apps/web exec tsx --test lib/media/__tests__/creation-url.test.ts lib/media/__tests__/creation-media-route.test.ts lib/media/__tests__/creation-upload-route.test.ts
+
       - name: Verify Worlds accessibility boundary
         run: pnpm test:worlds-accessibility
 

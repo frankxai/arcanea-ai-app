@@ -1,0 +1,465 @@
+"use client";
+
+import { useRef, useState, useSyncExternalStore } from "react";
+import Image from "next/image";
+import {
+  ArrowUpRight,
+  FilmStrip,
+  ImageSquare,
+  MusicNote,
+} from "@/lib/phosphor-icons";
+import {
+  safeCreationUrl as safeMediaUrl,
+  previewableCreationUrl as previewableUrl,
+} from "@/lib/media/creation-url";
+import { BREAKPOINTS } from "@/lib/theme-utils";
+import styles from "./creation-media-stage.module.css";
+
+export interface MediaStageCreation {
+  id: string;
+  title: string;
+  type: string;
+  status: string;
+  fileUrl?: string | null;
+  thumbnailUrl?: string | null;
+  aiGenerated?: boolean;
+  captionsUrl?: string | null;
+  captionsLanguage?: string | null;
+  transcript?: string | null;
+  transcriptUrl?: string | null;
+  originalAvailable?: boolean;
+  captionsAvailable?: boolean;
+  transcriptFileAvailable?: boolean;
+}
+
+type MediaKind = "image" | "video" | "music" | "audio";
+
+const subscribeToOrigin = () => () => {};
+const stageImageSizes = `(max-width: ${BREAKPOINTS.lg - 1}px) 100vw, (max-width: ${BREAKPOINTS.xl - 1}px) 70vw, 58vw`;
+
+function mediaKind(type: string): MediaKind | null {
+  if (
+    type === "image" ||
+    type === "video" ||
+    type === "music" ||
+    type === "audio"
+  )
+    return type;
+  return null;
+}
+
+function mediaLabel(kind: MediaKind): string {
+  if (kind === "image") return "Image";
+  if (kind === "video") return "Film";
+  return kind === "audio" ? "Audio" : "Music";
+}
+
+function UnavailablePreview({
+  kind,
+  originalUrl,
+}: {
+  kind: MediaKind;
+  originalUrl: string | null;
+}) {
+  return (
+    <div className={styles.noPreview}>
+      <span>{mediaLabel(kind)} preview unavailable</span>
+      {originalUrl && (
+        <a href={originalUrl} target="_blank" rel="noopener noreferrer">
+          Open original <ArrowUpRight size={16} aria-hidden="true" />
+        </a>
+      )}
+    </div>
+  );
+}
+
+function MediaThumbnail({
+  creation,
+  kind,
+  origin,
+}: {
+  creation: MediaStageCreation;
+  kind: MediaKind;
+  origin: string | null;
+}) {
+  const [failed, setFailed] = useState(false);
+  const thumbnailUrl = previewableUrl(creation.thumbnailUrl, origin);
+  return (
+    <span className={styles.thumb}>
+      {thumbnailUrl && !failed ? (
+        <Image
+          src={thumbnailUrl}
+          unoptimized={thumbnailUrl.includes("/object/sign/")}
+          alt=""
+          fill
+          sizes="80px"
+          className={styles.thumbImage}
+          onError={() => setFailed(true)}
+        />
+      ) : kind === "video" ? (
+        <FilmStrip size={24} aria-hidden="true" />
+      ) : kind === "music" || kind === "audio" ? (
+        <MusicNote size={24} aria-hidden="true" />
+      ) : (
+        <ImageSquare size={24} aria-hidden="true" />
+      )}
+    </span>
+  );
+}
+
+function MediaPreview({
+  creation,
+  kind,
+  origin,
+}: {
+  creation: MediaStageCreation;
+  kind: MediaKind;
+  origin: string | null;
+}) {
+  const [failedUrls, setFailedUrls] = useState<string[]>([]);
+  const [artFailedUrl, setArtFailedUrl] = useState<string | null>(null);
+  const [lockedPlaybackUrl, setLockedPlaybackUrl] = useState<string | null>(
+    null,
+  );
+  const resumeAt = useRef<number | null>(null);
+  const restorePosition = (element: HTMLMediaElement) => {
+    if (resumeAt.current === null) return;
+    try {
+      element.currentTime = resumeAt.current;
+      resumeAt.current = null;
+    } catch {
+      // Wait for metadata when the renewed source has not loaded yet.
+    }
+  };
+  const originalAvailable =
+    creation.originalAvailable ??
+    Boolean(
+      safeMediaUrl(creation.fileUrl) ??
+      (kind === "image" ? safeMediaUrl(creation.thumbnailUrl) : null),
+    );
+  const originalUrl = originalAvailable
+    ? `/api/creations/${creation.id}/media`
+    : null;
+  const fileUrl = previewableUrl(creation.fileUrl, origin);
+  const thumbnailUrl = previewableUrl(creation.thumbnailUrl, origin);
+  const captionsUrl = previewableUrl(creation.captionsUrl, origin);
+  const imageUrl =
+    fileUrl && !failedUrls.includes(fileUrl)
+      ? fileUrl
+      : thumbnailUrl && !failedUrls.includes(thumbnailUrl)
+        ? thumbnailUrl
+        : null;
+  const playbackUrl = lockedPlaybackUrl ?? fileUrl;
+  const failed = Boolean(
+    kind !== "image" && playbackUrl && failedUrls.includes(playbackUrl),
+  );
+
+  if (
+    failed ||
+    (kind === "video" && !playbackUrl) ||
+    (kind === "image" && !imageUrl) ||
+    ((kind === "music" || kind === "audio") && !playbackUrl)
+  ) {
+    return <UnavailablePreview kind={kind} originalUrl={originalUrl} />;
+  }
+
+  if (kind === "video" && playbackUrl) {
+    return (
+      <video
+        key={`${creation.id}:${playbackUrl}`}
+        className={styles.video}
+        controls
+        playsInline
+        crossOrigin={captionsUrl ? "anonymous" : undefined}
+        preload="none"
+        poster={thumbnailUrl ?? undefined}
+        aria-label={"Play " + creation.title}
+        onPlay={(event) => {
+          restorePosition(event.currentTarget);
+          setLockedPlaybackUrl(playbackUrl);
+        }}
+        onPause={(event) => {
+          resumeAt.current = event.currentTarget.currentTime;
+          setLockedPlaybackUrl(null);
+        }}
+        onSeeked={(event) => {
+          if (event.currentTarget.paused)
+            resumeAt.current = event.currentTarget.currentTime;
+        }}
+        onLoadedMetadata={(event) => restorePosition(event.currentTarget)}
+        onEnded={() => {
+          resumeAt.current = null;
+          setLockedPlaybackUrl(null);
+        }}
+        onError={() => {
+          setFailedUrls((urls) => [...urls, playbackUrl]);
+          setLockedPlaybackUrl(null);
+        }}
+      >
+        <source src={playbackUrl} />
+        {captionsUrl && (
+          <track
+            kind="captions"
+            src={captionsUrl}
+            srcLang={creation.captionsLanguage || "und"}
+            label="Captions"
+            default
+          />
+        )}
+        Your browser cannot play this film.
+      </video>
+    );
+  }
+
+  if ((kind === "music" || kind === "audio") && playbackUrl) {
+    return (
+      <div className={styles.audioStage}>
+        {thumbnailUrl && artFailedUrl !== thumbnailUrl ? (
+          <Image
+            src={thumbnailUrl}
+            unoptimized={thumbnailUrl.includes("/object/sign/")}
+            alt=""
+            fill
+            sizes={stageImageSizes}
+            className={styles.audioArtwork}
+            loading="eager"
+            fetchPriority="high"
+            onError={() => setArtFailedUrl(thumbnailUrl)}
+          />
+        ) : (
+          <MusicNote
+            className={styles.audioIcon}
+            size={72}
+            weight="thin"
+            aria-hidden="true"
+          />
+        )}
+        <div className={styles.audioControls}>
+          <span>Listen to this piece</span>
+          <audio
+            key={creation.id}
+            controls
+            preload="none"
+            src={playbackUrl}
+            aria-label={"Play " + creation.title}
+            onPlay={(event) => {
+              restorePosition(event.currentTarget);
+              setLockedPlaybackUrl(playbackUrl);
+            }}
+            onPause={(event) => {
+              resumeAt.current = event.currentTarget.currentTime;
+              setLockedPlaybackUrl(null);
+            }}
+            onSeeked={(event) => {
+              if (event.currentTarget.paused)
+                resumeAt.current = event.currentTarget.currentTime;
+            }}
+            onLoadedMetadata={(event) => restorePosition(event.currentTarget)}
+            onEnded={() => {
+              resumeAt.current = null;
+              setLockedPlaybackUrl(null);
+            }}
+            onError={() => {
+              setFailedUrls((urls) => [...urls, playbackUrl]);
+              setLockedPlaybackUrl(null);
+            }}
+          >
+            Your browser cannot play this audio.
+          </audio>
+        </div>
+      </div>
+    );
+  }
+
+  if (kind === "image" && imageUrl) {
+    return (
+      <Image
+        key={creation.id}
+        src={imageUrl}
+        unoptimized={imageUrl.includes("/object/sign/")}
+        alt={creation.title}
+        fill
+        sizes={stageImageSizes}
+        className={styles.image}
+        loading="eager"
+        fetchPriority="high"
+        onError={() => setFailedUrls((urls) => [...urls, imageUrl])}
+      />
+    );
+  }
+
+  return <UnavailablePreview kind={kind} originalUrl={originalUrl} />;
+}
+
+export function CreationMediaStage({
+  creations,
+}: {
+  creations: MediaStageCreation[];
+}) {
+  const origin = useSyncExternalStore(
+    subscribeToOrigin,
+    () => window.location.origin,
+    () => null,
+  );
+  const media = creations.flatMap((creation) => {
+    const kind = mediaKind(creation.type);
+    return kind ? [{ creation, kind }] : [];
+  });
+  const [selectedId, setSelectedId] = useState<string | null>(
+    media[0]?.creation.id ?? null,
+  );
+  const selected =
+    media.find(({ creation }) => creation.id === selectedId) ?? media[0];
+  const selectedOriginalUrl =
+    selected &&
+    (selected.creation.originalAvailable ??
+      Boolean(
+        safeMediaUrl(selected.creation.fileUrl) ??
+        (selected.kind === "image"
+          ? safeMediaUrl(selected.creation.thumbnailUrl)
+          : null),
+      ))
+      ? `/api/creations/${selected.creation.id}/media`
+      : null;
+  const selectedCaptionsUrl = selected
+    ? (selected.creation.captionsAvailable ??
+      Boolean(safeMediaUrl(selected.creation.captionsUrl)))
+      ? `/api/creations/${selected.creation.id}/media?field=captions`
+      : null
+    : null;
+  const selectedTranscriptUrl = selected
+    ? (selected.creation.transcriptFileAvailable ??
+      Boolean(safeMediaUrl(selected.creation.transcriptUrl)))
+      ? `/api/creations/${selected.creation.id}/media?field=transcript`
+      : null
+    : null;
+
+  return (
+    <section className={styles.stage} aria-labelledby="creation-media-title">
+      <div className={styles.heading}>
+        <div>
+          <p className={styles.kicker}>Media library</p>
+          <h2 id="creation-media-title">Your work, in focus</h2>
+          <p className={styles.intro}>
+            Your latest images, film and audio, ready to revisit.
+          </p>
+        </div>
+        <span className={styles.count}>
+          {media.length} {media.length === 1 ? "recent piece" : "recent pieces"}
+        </span>
+      </div>
+
+      {selected ? (
+        <div className={styles.layout}>
+          <div className={styles.main}>
+            <div className={styles.preview}>
+              <MediaPreview
+                key={selected.creation.id}
+                creation={selected.creation}
+                kind={selected.kind}
+                origin={origin}
+              />
+            </div>
+            <div className={styles.caption}>
+              <div>
+                <span className={styles.type}>{mediaLabel(selected.kind)}</span>
+                <h3 aria-live="polite">{selected.creation.title}</h3>
+                {selected.creation.aiGenerated && (
+                  <p data-ai-generated="true" className={styles.disclosure}>
+                    AI-generated
+                  </p>
+                )}
+              </div>
+              <div className={styles.details}>
+                <p>{selected.creation.status.replaceAll("_", " ")}</p>
+                {selectedOriginalUrl && (
+                  <a
+                    href={selectedOriginalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Open original <ArrowUpRight size={15} aria-hidden="true" />
+                  </a>
+                )}
+                {selectedCaptionsUrl && selected.kind === "video" && (
+                  <a
+                    href={selectedCaptionsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Captions file <ArrowUpRight size={15} aria-hidden="true" />
+                  </a>
+                )}
+              </div>
+            </div>
+            {(selected.creation.transcript || selectedTranscriptUrl) && (
+              <div className={styles.transcript}>
+                {selected.creation.transcript ? (
+                  <details>
+                    <summary>Read transcript</summary>
+                    <p role="region" aria-label="Transcript" tabIndex={0}>
+                      {selected.creation.transcript}
+                    </p>
+                  </details>
+                ) : (
+                  <a
+                    href={selectedTranscriptUrl ?? undefined}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Read transcript{" "}
+                    <ArrowUpRight size={15} aria-hidden="true" />
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className={styles.collection}>
+            <h3>Recent media</h3>
+            <div
+              className={styles.items}
+              role="group"
+              aria-label="Choose a media preview"
+            >
+              {media.map(({ creation, kind }) => {
+                return (
+                  <button
+                    key={creation.id}
+                    type="button"
+                    className={styles.item}
+                    aria-pressed={selected.creation.id === creation.id}
+                    onClick={() => setSelectedId(creation.id)}
+                  >
+                    <MediaThumbnail
+                      key={`${creation.id}:${creation.thumbnailUrl}:${creation.fileUrl}`}
+                      creation={creation}
+                      kind={kind}
+                      origin={origin}
+                    />
+                    <span className={styles.itemText}>
+                      <strong>{creation.title}</strong>
+                      <small>{mediaLabel(kind)}</small>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className={styles.empty}>
+          <div className={styles.emptyFrame} aria-hidden="true">
+            <ImageSquare size={48} weight="thin" />
+            <FilmStrip size={48} weight="thin" />
+            <MusicNote size={48} weight="thin" />
+          </div>
+          <div>
+            <h3>A place for your media</h3>
+            <p>Images, films and audio you save will appear here.</p>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}

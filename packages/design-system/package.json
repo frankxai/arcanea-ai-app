@@ -14,6 +14,10 @@
       "types": "./dist/tokens.d.ts",
       "default": "./dist/tokens.js"
     },
+    "./media-library-tokens": {
+      "types": "./dist/media-library-tokens.d.ts",
+      "default": "./dist/media-library-tokens.js"
+    },
     "./brand-kits": {
       "types": "./dist/brand-kits.d.ts",
       "default": "./dist/brand-kits.js"
