@@ -1,0 +1,71 @@
+# Dependabot auto-merge, fail-closed. Copy this to .github/workflows/ in a target repo.
+# Policy: docs/AUTO-MERGE-AND-AGENTIC-REVIEW.md (Tier 0).
+#
+# It arms GitHub's native auto-merge only when ALL of these hold:
+#   1. The PR is from dependabot[bot] and comes from this repo, not a fork.
+#   2. The update is semver-patch, or semver-minor on a package that is already >= 1.0.
+#   3. No dependency in the PR is on the HOLD list (framework and runtime packages).
+#   4. The base branch enforces at least one required status check.
+# If 4 fails, arming auto-merge would merge immediately, so the job refuses and exits.
+# GitHub then merges only after every required check passes. Nothing is merged by this job directly.
+name: Dependabot auto-merge
+
+on: pull_request
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  arm:
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+
+      - name: Decide
+        id: decide
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BASE: ${{ github.event.pull_request.base.ref }}
+          UPDATE_TYPE: ${{ steps.meta.outputs.update-type }}
+          PREV: ${{ steps.meta.outputs.previous-version }}
+          DEPS: ${{ steps.meta.outputs.dependency-names }}
+          # Minor releases of these have broken builds here before (React 19.3, 2026-09-28). A human decides.
+          HOLD: "react react-dom next typescript tailwindcss framer-motion @supabase/supabase-js"
+        run: |
+          set -euo pipefail
+          verdict=arm; why=""
+          case "$UPDATE_TYPE" in
+            version-update:semver-patch) ;;
+            version-update:semver-minor)
+              if [[ "${PREV%%.*}" == "0" ]]; then verdict=hold; why="0.x minor can break the API"; fi ;;
+            *) verdict=hold; why="update type '$UPDATE_TYPE' needs review" ;;
+          esac
+          IFS=', ' read -ra names <<< "$DEPS"
+          for d in "${names[@]}"; do
+            for h in $HOLD; do
+              if [[ "$d" == "$h" ]]; then verdict=hold; why="$d is on the hold list"; fi
+            done
+          done
+          checks=$(gh api "repos/$REPO/branches/$BASE" --jq '(.protection.required_status_checks.contexts // []) | length')
+          level=$(gh api "repos/$REPO/branches/$BASE" --jq '.protection.required_status_checks.enforcement_level // "off"')
+          if [[ "$checks" -eq 0 || "$level" == "off" ]]; then
+            verdict=hold; why="$BASE enforces no required checks, so auto-merge would merge at once"
+          fi
+          echo "verdict=$verdict" >> "$GITHUB_OUTPUT"
+          echo "### Dependabot auto-merge: $verdict" >> "$GITHUB_STEP_SUMMARY"
+          echo "- update: $UPDATE_TYPE (from $PREV) · deps: $DEPS" >> "$GITHUB_STEP_SUMMARY"
+          echo "- required checks on $BASE: $checks ($level)" >> "$GITHUB_STEP_SUMMARY"
+          if [[ -n "$why" ]]; then echo "- held: $why" >> "$GITHUB_STEP_SUMMARY"; fi
+          echo "verdict=$verdict ${why}"
+
+      - name: Arm auto-merge (waits for required checks)
+        if: steps.decide.outputs.verdict == 'arm'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge --auto --squash "$PR"
