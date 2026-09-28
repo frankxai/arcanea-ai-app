@@ -20,6 +20,7 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit/rate-limiter";
 import { getBookRoot } from "@/lib/content/book-path";
+import { createClient } from "@/lib/supabase/server";
 
 const BOOK_ROOT = getBookRoot();
 
@@ -255,8 +256,33 @@ export async function POST(req: NextRequest) {
     }
 
     // --- Resolve API key ---
-    // If user provides their own key (BYOK), use it; otherwise fall back to server key
-    const effectiveApiKey = userApiKey || process.env.ANTHROPIC_API_KEY;
+    // BYOK callers pay for their own usage. The server key is only spent on
+    // signed-in users, is rate limited per user, and only runs Haiku, which is
+    // what the Studio UI offers without a key.
+    const byok = typeof userApiKey === "string" && userApiKey.trim() !== "";
+    if (!byok) {
+      const supabase = (await createClient()) as any;
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        return new Response(
+          "Sign in or add your own Anthropic API key to use the Author Companion.",
+          { status: 401, headers: { "Content-Type": "text/plain" } },
+        );
+      }
+      const userLimit = checkRateLimit(
+        getClientIdentifier(req, user.id),
+        AUTHOR_RATE_LIMIT,
+      );
+      if (!userLimit.allowed) {
+        return new Response("Too many requests. Please slow down.", {
+          status: 429,
+          headers: { "Content-Type": "text/plain" },
+        });
+      }
+    }
+    const effectiveApiKey = byok ? userApiKey : process.env.ANTHROPIC_API_KEY;
     if (!effectiveApiKey) {
       return new Response(
         "No Anthropic API key configured. Provide your own key or set ANTHROPIC_API_KEY on Vercel.",
@@ -272,9 +298,9 @@ export async function POST(req: NextRequest) {
     // --- Create model ---
     const anthropic = createAnthropic({ apiKey: effectiveApiKey });
     const modelId =
-      requestedModel === "opus"
+      byok && requestedModel === "opus"
         ? "claude-opus-4-6"
-        : requestedModel === "sonnet"
+        : byok && requestedModel === "sonnet"
           ? "claude-sonnet-4-20250514"
           : "claude-haiku-4-5-20251001";
 
