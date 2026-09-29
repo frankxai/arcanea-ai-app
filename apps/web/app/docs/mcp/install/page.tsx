@@ -35,11 +35,15 @@ export default function McpInstallPage() {
         <nav className="pb-2 pt-8">
           <ol className="flex items-center gap-2 text-sm text-zinc-500">
             <li>
-              <Link href="/docs" className="hover:text-zinc-300">Docs</Link>
+              <Link href="/docs" className="hover:text-zinc-300">
+                Docs
+              </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li>
-              <Link href="/docs/mcp" className="hover:text-zinc-300">MCP</Link>
+              <Link href="/docs/mcp" className="hover:text-zinc-300">
+                MCP
+              </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li className="text-[var(--arc-brand-atlantean-teal)]">Install</li>
@@ -47,28 +51,49 @@ export default function McpInstallPage() {
         </nav>
 
         <section className="pb-16 pt-10">
-          <h1 className="font-display text-4xl font-bold text-white sm:text-5xl">Connect the reader</h1>
+          <h1 className="font-display text-4xl font-bold text-white sm:text-5xl">
+            Connect the reader
+          </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-400">
-            The reader is already running. You do not install a package, and you do not send an API key. After it connects, call <code className="text-zinc-200">arcanea_canon_lint</code> on a draft.
+            The reader is already running. You do not install a package, and you
+            do not send an API key. After it connects, call{" "}
+            <code className="text-zinc-200">arcanea_canon_lint</code> on a
+            draft.
           </p>
-          <p className="mt-4 break-all font-mono text-sm text-[var(--arc-brand-atlantean-teal)]">{READER}</p>
+          <p className="mt-4 break-all font-mono text-sm text-[var(--arc-brand-atlantean-teal)]">
+            {READER}
+          </p>
         </section>
 
         <section className="grid gap-4 pb-20">
           {CLIENTS.map((client) => (
-            <article key={client.name} className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5">
-              <h2 className="font-display text-xl font-semibold text-white">{client.name}</h2>
+            <article
+              key={client.name}
+              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5"
+            >
+              <h2 className="font-display text-xl font-semibold text-white">
+                {client.name}
+              </h2>
               <p className="mt-2 text-sm text-zinc-400">{client.note}</p>
-              <pre className="mt-4 overflow-x-auto whitespace-pre-wrap font-mono text-sm leading-relaxed text-zinc-200">{client.code}</pre>
+              <pre className="mt-4 overflow-x-auto whitespace-pre-wrap font-mono text-sm leading-relaxed text-zinc-200">
+                {client.code}
+              </pre>
             </article>
           ))}
           <p className="text-sm leading-relaxed text-zinc-500">
             Health is at{" "}
-            <a className="text-[var(--arc-brand-atlantean-teal)] hover:text-white" href="https://arcanea-reader.frankxai.workers.dev/health">
+            <a
+              className="text-[var(--arc-brand-atlantean-teal)] hover:text-white"
+              href="https://arcanea-reader.frankxai.workers.dev/health"
+            >
               /health
             </a>
-            . It should report the free reader and keys false. Tool arguments are on the{" "}
-            <Link href="/docs/mcp/tools" className="text-[var(--arc-brand-atlantean-teal)] hover:text-white">
+            . It should report the free reader and keys false. Tool arguments
+            are on the{" "}
+            <Link
+              href="/docs/mcp/tools"
+              className="text-[var(--arc-brand-atlantean-teal)] hover:text-white"
+            >
               tool page
             </Link>
             .

@@ -14,7 +14,8 @@ export async function POST(req: NextRequest) {
   }
 
   const source =
-    typeof payload.source === "string" && /^[a-z0-9_]{1,64}$/.test(payload.source)
+    typeof payload.source === "string" &&
+    /^[a-z0-9_]{1,64}$/.test(payload.source)
       ? payload.source
       : undefined;
 

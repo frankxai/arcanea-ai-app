@@ -18,15 +18,18 @@ export const metadata: Metadata = {
 const TOOLS = [
   {
     name: "arcanea_rubric",
-    detail: "Returns the canon-fit or visual-taste rubric. Any other name is refused.",
+    detail:
+      "Returns the canon-fit or visual-taste rubric. Any other name is refused.",
   },
   {
     name: "arcanea_canon_lint",
-    detail: "Flags an eleventh gate, or a Guardian or godbeast on the wrong element. No model call.",
+    detail:
+      "Flags an eleventh gate, or a Guardian or godbeast on the wrong element. No model call.",
   },
   {
     name: "arcanea_score",
-    detail: "A contradiction blocks ship. A clean draft is clear, and clear is not a score of 85.",
+    detail:
+      "A contradiction blocks ship. A clean draft is clear, and clear is not a score of 85.",
   },
   {
     name: "arcanea_doctor",
@@ -49,7 +52,10 @@ export default function McpOverviewPage() {
         <nav className="pb-2 pt-8">
           <ol className="flex items-center gap-2 text-sm text-zinc-500">
             <li>
-              <Link href="/docs" className="transition-colors hover:text-zinc-300">
+              <Link
+                href="/docs"
+                className="transition-colors hover:text-zinc-300"
+              >
                 Docs
               </Link>
             </li>
@@ -66,7 +72,9 @@ export default function McpOverviewPage() {
             Arcanea MCP reader
           </h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-zinc-400">
-            One HTTPS address. No package and no API key. Claude Code, Codex, and Cursor can call the rubrics, the lint, and a score that will not grant ship.
+            One HTTPS address. No package and no API key. Claude Code, Codex,
+            and Cursor can call the rubrics, the lint, and a score that will not
+            grant ship.
           </p>
 
           <div className="mt-8 rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6">
@@ -77,8 +85,13 @@ export default function McpOverviewPage() {
               claude mcp add --transport http arcanea {READER}
             </code>
             <p className="mt-4 text-sm leading-relaxed text-zinc-500">
-              Run that in a terminal, then <code className="text-zinc-300">claude mcp list</code>. Codex and Cursor use the URL directly. The full blocks are on the{" "}
-              <Link href="/docs/mcp/install" className="text-[var(--arc-brand-atlantean-teal)] hover:text-white">
+              Run that in a terminal, then{" "}
+              <code className="text-zinc-300">claude mcp list</code>. Codex and
+              Cursor use the URL directly. The full blocks are on the{" "}
+              <Link
+                href="/docs/mcp/install"
+                className="text-[var(--arc-brand-atlantean-teal)] hover:text-white"
+              >
                 install page
               </Link>
               .
@@ -87,12 +100,21 @@ export default function McpOverviewPage() {
         </section>
 
         <section className="pb-12">
-          <h2 className="mb-5 font-display text-xl font-semibold text-white">Six tools</h2>
+          <h2 className="mb-5 font-display text-xl font-semibold text-white">
+            Six tools
+          </h2>
           <ul className="grid gap-3">
             {TOOLS.map((tool) => (
-              <li key={tool.name} className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-5 py-4">
-                <code className="text-sm text-[var(--arc-brand-atlantean-teal)]">{tool.name}</code>
-                <p className="mt-1 text-sm leading-relaxed text-zinc-400">{tool.detail}</p>
+              <li
+                key={tool.name}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-5 py-4"
+              >
+                <code className="text-sm text-[var(--arc-brand-atlantean-teal)]">
+                  {tool.name}
+                </code>
+                <p className="mt-1 text-sm leading-relaxed text-zinc-400">
+                  {tool.detail}
+                </p>
               </li>
             ))}
           </ul>
@@ -105,9 +127,16 @@ export default function McpOverviewPage() {
         </section>
 
         <section className="pb-20">
-          <h2 className="mb-3 font-display text-xl font-semibold text-white">What this door is not</h2>
+          <h2 className="mb-3 font-display text-xl font-semibold text-white">
+            What this door is not
+          </h2>
           <p className="max-w-2xl text-sm leading-relaxed text-zinc-400">
-            It does not return canon passages, prompts, or templates. It does not generate images. It does not hold a provider key. A clear score is not permission to publish. The licensed studio is a later install, and this page does not show an npm command for it. Older docs that listed dozens of generators described a package that is not this server.
+            It does not return canon passages, prompts, or templates. It does
+            not generate images. It does not hold a provider key. A clear score
+            is not permission to publish. The licensed studio is a later
+            install, and this page does not show an npm command for it. Older
+            docs that listed dozens of generators described a package that is
+            not this server.
           </p>
         </section>
       </main>

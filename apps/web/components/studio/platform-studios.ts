@@ -267,7 +267,12 @@ export const STUDIO_MODES: StudioMode[] = [
     output: "Rubric, canon lint, and a score that cannot grant ship",
     proof: "For writers whose agent keeps adding lore the world does not have.",
     presets: ["Claude", "Codex", "Cursor"],
-    workflow: ["Connect the reader", "Run a lint", "Read the score", "Join the studio list"],
+    workflow: [
+      "Connect the reader",
+      "Run a lint",
+      "Read the score",
+      "Join the studio list",
+    ],
     commands: ["arcanea_rubric", "arcanea_canon_lint", "arcanea_score"],
     media: {
       poster: "/guardians/v3/draconia-hero-v3.webp",
