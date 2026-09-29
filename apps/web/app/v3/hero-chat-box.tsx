@@ -4,6 +4,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import navLogo from "@/assets/brand/arcanea-mark.jpg";
 import { m } from "framer-motion";
 import {
   PhPaperPlane,
@@ -21,23 +22,27 @@ const STARTER_CARDS = [
   {
     icon: PhPencil,
     label: "Map a world",
-    prompt: "Create a world bible for a near-future mythic city: premise, factions, rules of magic, three conflicts, and the first scene.",
+    prompt:
+      "Create a world bible for a near-future mythic city: premise, factions, rules of magic, three conflicts, and the first scene.",
     href: "/worlds/create",
   },
   {
     icon: PhMusicNote,
     label: "Write a scene",
-    prompt: "Write an opening scene for a creator-owned fantasy series with a strong hook, sensory detail, and a clear character choice.",
+    prompt:
+      "Write an opening scene for a creator-owned fantasy series with a strong hook, sensory detail, and a clear character choice.",
   },
   {
     icon: PhPaintBrush,
     label: "Design visuals",
-    prompt: "Create a visual direction for a new world: palette, locations, character silhouettes, mood-board prompts, and a hero image brief.",
+    prompt:
+      "Create a visual direction for a new world: palette, locations, character silhouettes, mood-board prompts, and a hero image brief.",
   },
   {
     icon: PhCode,
     label: "Plan agents",
-    prompt: "Plan an agent workflow for a world creator: research, story editing, art direction, release planning, and weekly publishing tasks.",
+    prompt:
+      "Plan an agent workflow for a world creator: research, story editing, art direction, release planning, and weekly publishing tasks.",
   },
 ];
 
@@ -90,13 +95,13 @@ export function HeroChatBox() {
         <div
           className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-300"
           style={{
-            padding: '1px',
+            padding: "1px",
             background: isFocused
-              ? 'linear-gradient(135deg, color-mix(in srgb, var(--arc-brand-atlantean-teal) 35%, transparent), color-mix(in srgb, var(--arc-brand-cosmic-blue) 20%, transparent), color-mix(in srgb, var(--arc-brand-atlantean-teal) 28%, transparent))'
-              : 'linear-gradient(135deg, color-mix(in srgb, var(--arc-text-primary) 8%, transparent), color-mix(in srgb, var(--arc-text-primary) 3%, transparent), color-mix(in srgb, var(--arc-text-primary) 6%, transparent))',
-            mask: 'linear-gradient(var(--arc-text-primary) 0 0) content-box, linear-gradient(var(--arc-text-primary) 0 0)',
-            maskComposite: 'exclude',
-            WebkitMaskComposite: 'xor',
+              ? "linear-gradient(135deg, color-mix(in srgb, var(--arc-brand-atlantean-teal) 35%, transparent), color-mix(in srgb, var(--arc-brand-cosmic-blue) 20%, transparent), color-mix(in srgb, var(--arc-brand-atlantean-teal) 28%, transparent))"
+              : "linear-gradient(135deg, color-mix(in srgb, var(--arc-text-primary) 8%, transparent), color-mix(in srgb, var(--arc-text-primary) 3%, transparent), color-mix(in srgb, var(--arc-text-primary) 6%, transparent))",
+            mask: "linear-gradient(var(--arc-text-primary) 0 0) content-box, linear-gradient(var(--arc-text-primary) 0 0)",
+            maskComposite: "exclude",
+            WebkitMaskComposite: "xor",
           }}
         />
 
@@ -104,12 +109,12 @@ export function HeroChatBox() {
           <div className="hidden sm:flex pl-3 pr-1 pb-3" aria-hidden="true">
             <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.07] bg-white/[0.035]">
               <Image
-                src="/images/mascot/arcanea-welcoming.png"
+                src={navLogo}
                 alt=""
                 width={28}
                 height={28}
                 sizes="28px"
-                className="object-contain"
+                className="rounded-md object-cover"
               />
             </div>
           </div>
@@ -137,10 +142,14 @@ export function HeroChatBox() {
                   ? "bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-brand-atlantean-teal)] to-[var(--arc-brand-cosmic-blue)] shadow-[0_2px_16px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_35%,transparent)] hover:shadow-[0_4px_24px_color-mix(in_srgb,var(--arc-brand-atlantean-teal)_50%,transparent)] hover:scale-105 active:scale-95"
                   : "bg-white/[0.04] cursor-default"
               }`}
-              aria-label={hasText ? "Start creating in chat" : "Enter a prompt to start creating"}
+              aria-label={
+                hasText
+                  ? "Start creating in chat"
+                  : "Enter a prompt to start creating"
+              }
             >
               <PhPaperPlane
-                className={`w-4 h-4 transition-colors ${hasText ? "text-white" : "text-white/15"}`}
+                className={`w-4 h-4 transition-colors ${hasText ? "text-[var(--arc-cosmic-void)]" : "text-white/30"}`}
               />
             </button>
           </div>
@@ -158,8 +167,10 @@ export function HeroChatBox() {
           const Icon = card.icon;
           const handleClick = () => {
             if ("href" in card && card.href) {
-              const sep = card.href.includes('?') ? '&' : '?';
-              router.push(`${card.href}${sep}prompt=${encodeURIComponent(card.prompt)}`);
+              const sep = card.href.includes("?") ? "&" : "?";
+              router.push(
+                `${card.href}${sep}prompt=${encodeURIComponent(card.prompt)}`,
+              );
             } else {
               goToChat(card.prompt);
             }
