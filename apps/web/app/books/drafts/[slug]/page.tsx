@@ -293,6 +293,9 @@ async function loadBook(slug: string) {
   if (!(await fileExists(yamlPath))) return null;
 
   const { data: manifest } = matter(`---\n${await readFile(yamlPath, 'utf-8')}\n---`) as unknown as { data: BookManifest };
+  // book/companions and book/gate-touched-files carry only `visibility: public`. Without a title and
+  // authors list this is not a draft manifest, and the page below threw on `manifest.authors.map`.
+  if (typeof manifest?.title !== 'string' || !Array.isArray(manifest.authors)) return null;
   const chaptersDir = join(bookDir, 'chapters');
   const chapters: DraftChapter[] = [];
 
