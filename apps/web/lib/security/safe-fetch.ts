@@ -182,7 +182,6 @@ function requestOnce(
     body: Buffer;
   }>((resolve, reject) => {
     const client = target.protocol === "https:" ? https : http;
-    let deadline: ReturnType<typeof setTimeout> | undefined;
     const req = client.request(
       target,
       {
@@ -231,7 +230,7 @@ function requestOnce(
     );
     // Wall-clock limit for the whole request. Node's `timeout` option only
     // fires on idle sockets, so a slow trickle would never trip it.
-    deadline = setTimeout(
+    const deadline = setTimeout(
       () => req.destroy(new Error("Request timed out")),
       timeoutMs,
     );
