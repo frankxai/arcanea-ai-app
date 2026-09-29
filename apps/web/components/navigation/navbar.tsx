@@ -248,13 +248,13 @@ export function Navbar() {
 
   // Lock body scroll while the mobile menu is open so the page behind doesn't
   // scroll under the sheet (a common "feels broken" report on mobile). Also
-  // auto-close at the md breakpoint so the lock is released if the viewport
-  // grows past mobile while the menu is open.
+  // auto-close at the lg breakpoint so the lock is released if the viewport
+  // grows past tablet while the menu is open.
   useEffect(() => {
     if (!mobileMenuOpen) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const mql = window.matchMedia("(min-width: 768px)");
+    const mql = window.matchMedia("(min-width: 1024px)");
     const onChange = (e: MediaQueryListEvent) => {
       if (e.matches) setMobileMenuOpen(false);
     };
@@ -287,6 +287,11 @@ export function Navbar() {
   return (
     <LazyMotion features={domAnimation}>
       <nav
+        style={
+          pathname === "/stories/the-light-she-could-not-see"
+            ? { backgroundColor: "var(--arc-story-night)" }
+            : undefined
+        }
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? "liquid-glass bg-[var(--arc-cosmic-void)]/85 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_8px_36px_rgba(0,0,0,0.32)]"
@@ -304,7 +309,7 @@ export function Navbar() {
             </Link>
 
             {/* Desktop nav with mega dropdowns */}
-            <div className="hidden md:flex items-center gap-1.5">
+            <div className="hidden lg:flex items-center gap-1.5">
               {navLinks.map((link) => {
                 const isActive =
                   pathname === link.href ||
@@ -378,7 +383,7 @@ export function Navbar() {
               })}
             </div>
 
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden lg:flex items-center gap-2">
               <SearchBar compact />
               <NotificationBell />
               <UserNav />
@@ -387,7 +392,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2.5 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.06] border border-white/[0.10] transition-colors"
+              className="lg:hidden p-2.5 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.06] border border-white/[0.10] transition-colors"
               aria-label={
                 mobileMenuOpen
                   ? "Close navigation menu"
@@ -437,7 +442,7 @@ export function Navbar() {
             transition={{ duration: 0.2 }}
             onClick={() => setMobileMenuOpen(false)}
             aria-hidden={true}
-            className="fixed inset-0 z-[45] md:hidden bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[45] lg:hidden bg-black/60 backdrop-blur-sm"
           />
         )}
       </AnimatePresence>
@@ -449,7 +454,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.98 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-x-0 top-[var(--nav-h,4rem)] z-[55] md:hidden max-h-[calc(100dvh_-_var(--nav-h,4rem))] overflow-y-auto pb-[env(safe-area-inset-bottom)]"
+            className="fixed inset-x-0 top-[var(--nav-h,4rem)] z-[55] lg:hidden max-h-[calc(100dvh_-_var(--nav-h,4rem))] overflow-y-auto pb-[env(safe-area-inset-bottom)]"
           >
             <nav
               aria-label="Mobile navigation"
