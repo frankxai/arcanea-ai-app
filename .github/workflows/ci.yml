@@ -282,6 +282,9 @@ jobs:
       - name: Verify Worlds accessibility boundary
         run: pnpm test:worlds-accessibility
 
+      - name: Verify Guardian reports use RLS reads without service role
+        run: node --test scripts/tests/guardian-report-read.test.mjs
+
       - name: Verify World detail read deadlines
         run: |
           node --test scripts/tests/world-detail-read-contract.test.mjs
