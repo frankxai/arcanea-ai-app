@@ -154,6 +154,9 @@ jobs:
       - name: Verify exact world drafts and account return paths
         run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
 
+      - name: Verify waitlist signups are saved or honestly refused
+        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts
+
       - name: Verify library chapter slugs and hidden agent files
         run: pnpm --dir apps/web exec tsx --test lib/content/__tests__/loader-slugs.test.ts
 
@@ -282,9 +285,12 @@ jobs:
       - name: Verify Worlds accessibility boundary
         run: pnpm test:worlds-accessibility
 
+      - name: Verify Guardian reports use RLS reads without service role
+        run: node --test scripts/tests/guardian-report-read.test.mjs
+
       - name: Verify World detail read deadlines
         run: |
-          node --test scripts/tests/world-detail-read-contract.test.mjs
+          node --experimental-strip-types --test scripts/tests/world-detail-read-contract.test.mjs scripts/tests/world-read-result.test.mjs
           pnpm --filter @arcanea/web exec tsx --test lib/__tests__/async-deadline.test.ts
 
       - name: Verify saga public release boundary (default-deny)

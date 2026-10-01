@@ -1,6 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "arcanea",
+  "description": "The Arcanea creative framework for Claude Code.",
   "owner": {
     "name": "FrankX",
     "url": "https://arcanea.ai"
@@ -9,9 +10,8 @@
     {
       "name": "arcanea",
       "source": "./",
-      "version": "3.0.0",
       "category": "creative-framework",
-      "description": "Living mythology for AI-human co-creation — 87 commands, 78 skills, modular rules, Starlight Vault continuous learning, and SIS memory persistence.",
+      "description": "Living mythology for AI-human co-creation: world-building, lore and canon, design-system and creative-studio commands and skills.",
       "tags": [
         "world-building",
         "prompt-framework",
@@ -19,15 +19,8 @@
         "mythology",
         "ai-creation",
         "luminors",
-        "guardians",
-        "continuous-learning",
-        "memory-persistence"
-      ],
-      "strict": false,
-      "install": {
-        "command": "/plugin install frankxai/arcanea",
-        "postInstall": "echo 'Arcanea installed. The Gates are open.'"
-      }
+        "guardians"
+      ]
     }
   ]
 }

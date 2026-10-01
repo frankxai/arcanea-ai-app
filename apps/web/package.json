@@ -21,6 +21,7 @@
     "test:media": "tsx lib/media/__tests__/gallery-contract.test.ts",
     "test:mcp-world-context": "tsx --test lib/mcp/__tests__/world-context.test.ts",
     "test:saga-gate": "tsx --test lib/saga/__tests__/public-release-gate.test.ts",
+    "test:safe-fetch": "tsx --test lib/security/__tests__/safe-fetch.test.ts",
     "test:models": "tsx lib/models/__tests__/models-data.test.ts",
     "type-check": "node -e \"require('fs').rmSync('.next/types',{recursive:true,force:true});require('fs').rmSync('.next/dev/types',{recursive:true,force:true});require('fs').rmSync('tsconfig.tsbuildinfo',{force:true})\" && next typegen && tsc --noEmit",
     "check:env": "tsx ../../scripts/check-env.ts",
@@ -118,7 +119,7 @@
     "@playwright/test": "1.63.0",
     "@types/three": "^0.185.4",
     "eslint": "10.2.0",
-    "eslint-config-next": "16.3.5",
+    "eslint-config-next": "16.3.6",
     "schema-dts": "^2.0.0",
     "sharp": "^0.35.4"
   }
