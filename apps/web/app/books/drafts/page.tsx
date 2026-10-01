@@ -81,6 +81,10 @@ async function loadDraftBooks(): Promise<DraftBook[]> {
       const raw = await readFile(yamlPath, 'utf-8');
       const { data: manifest } = matter(`---\n${raw}\n---`);
 
+      // Same draft-manifest gate as [slug]/page (#480): visibility-only stubs
+      // must not appear as hub cards that dump to "Draft Not Found".
+      if (typeof manifest?.title !== 'string' || !Array.isArray(manifest.authors)) continue;
+
       // Count chapters
       const chaptersDir = join(BOOK_ROOT, dir, 'chapters');
       let chapterCount = 0;
