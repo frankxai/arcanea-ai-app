@@ -1,110 +1,85 @@
-# @arcanea/skills
+# Arcanea creator workflows
 
-> 97 Claude Code skills for creative intelligence — worldbuilding, coding, writing, design, and more.
+This package proposes `packages/arcanea-skills/skills` as the curated source inside
+`frankxai/arcanea-ai-app`. It currently has four candidates and zero ready skills.
+The package is private while release decisions remain open.
 
-This package bundles the **top 20 A-grade skills** from the Arcanea ecosystem, ready to install into Claude Code with a single command.
+| Candidate          | Creator's job                                                                         | Example                                                           |
+| ------------------ | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `world-build`      | Turn supplied material into an editable world bible with accepted facts and proposals | [Tideglass bible](skills/world-build/references/example.md)       |
+| `continuity-check` | Find source-backed contradictions and propose small repairs                           | [Bridge conflict](skills/continuity-check/references/example.md)  |
+| `scene-to-media`   | Turn a scene into a traceable shot and prompt brief                                   | [Ferry rescue brief](skills/scene-to-media/references/example.md) |
+| `quest-adapt`      | Adapt a world into one quest with conditions, consequences and replay cases           | [Last crossing](skills/quest-adapt/references/example.md)         |
 
-## Install
+The examples use an invented creator-owned world. They are authored walkthroughs;
+behavioral evaluation and independent review are pending. Official Arcanea canon
+remains in `.arcanea/lore/CANON_LOCKED.md` at the repository root.
 
-```bash
-# One-shot install (no global install needed)
-npx @arcanea/skills
+## Local review
 
-# Or install globally
-npm install -g @arcanea/skills
-arcanea-skills
+Use the repository's Node version and pinned pnpm. From this package directory:
+
+```sh
+node scripts/catalog.cjs
+node bin/install.js --list
+node bin/install.js --dry-run
+node --test tests/catalog.test.mjs
 ```
 
-Skills are copied to `~/.claude/skills/` where Claude Code picks them up automatically.
+With the current catalog, `--dry-run` and installation exit with code 2 and leave
+the user's home untouched. `--list` and validation exit with code 0 when valid.
+No candidate has been installed or activated by this change.
 
-## What's Included
+## Catalog and release evidence
 
-### Creative Writing (7 skills)
+`catalog.json` is the installer allowlist. Each passport records identity, owner,
+source history, resources, allowed actions, rights status, evaluation and review.
+Candidates retain `metadata.internal: true` for skills CLI discovery. That flag
+can be overridden by a consumer; the package installer still excludes candidates.
 
-| Skill | Description |
-|-------|-------------|
-| **story-weave** | Narrative structure, plot arcs, and story architecture |
-| **character-forge** | Deep character creation with psychology and arcs |
-| **world-build** | Complete world construction — geography, culture, magic systems |
-| **scene-craft** | Scene-level writing with pacing, tension, and beats |
-| **dialogue-mastery** | Authentic dialogue with subtext and voice differentiation |
-| **voice-alchemy** | Distinctive narrative voice and prose style development |
-| **bestiary-nav** | Creative creature design and mythological taxonomy |
+A ready entry needs a rights decision and evidence, a passing evaluation and an
+independent review with distinct maker/reviewer identities. Evaluation and review
+must name the same `contentSha256`. To promote a candidate, remove its internal
+discovery flag, hash the final files, and obtain evidence against those bytes.
+Keep `private: true` until the repository's separate release gate is satisfied.
 
-### Software Development (7 skills)
+For each file, compute SHA-256 of its bytes. Sort relative POSIX paths and compute
+the skill hash over `path + NUL + fileHash + LF` for every file. Support files are
+included. Source validation rejects links, hidden files, missing resources,
+identity mismatches and references escaping the skill directory.
 
-| Skill | Description |
-|-------|-------------|
-| **code-review** | Structured code review with security and quality focus |
-| **tdd** | Test-driven development with London School mocking |
-| **systematic-debug** | Root-cause analysis and systematic debugging methodology |
-| **api-design** | RESTful and GraphQL API design patterns |
-| **architecture-patterns** | System architecture, DDD, and design patterns |
-| **refactoring-ritual** | Safe refactoring with incremental transformation |
-| **performance-tuning** | Performance profiling, optimization, and benchmarking |
+Evidence fields are maintainer declarations. The validator checks presence and
+matching hashes; it does not authenticate a reviewer, establish legal rights or
+replace the human release approval tracked by issue #277.
 
-### Arcanea Framework (6 skills)
+## Installation behavior
 
-| Skill | Description |
-|-------|-------------|
-| **centaur-mode** | Human-AI collaborative workflow orchestration |
-| **prompt-craft** | Advanced prompt engineering and chain-of-thought design |
-| **luminor-wisdom** | Arcanea's council of AI advisors for strategic guidance |
-| **arcanea-creator-academy** | Complete creator onboarding through the Ten Gates |
-| **deep-work** | Focus protocols and deep concentration techniques |
-| **creative-flow** | Creative state management and inspiration systems |
+Only ready entries are copied to `~/.claude/skills/<name>`, including their
+validated support files. The installer plans all destinations before copying and
+refuses existing skill directories, destination links and unknown options.
+`--dry-run` performs validation and planning without writing. An I/O failure during
+copying exits with code 1 and may leave a partial new directory for inspection;
+existing user skills are preserved. It has no automatic overwrite or cleanup mode.
 
-## Usage
+The CommonJS API keeps `skills`, `skillCount`, `bundledCount`, `categories`,
+`getByCategory` and `getSkillPath`, with ready entries only. `candidates` exposes
+the review backlog. Callers that relied on the previous top-20 list must migrate.
 
-### CLI
+Earlier skill folders remain in the checkout and Git history for reconciliation.
+They are excluded from the API, installer and package file list. Other discovery
+roots and plugin manifests in the app still need reconciliation; this package
+does not make a repository-wide install curated.
 
-```bash
-# List all bundled skills
-arcanea-skills --list
+## Rights and integration
 
-# Preview what would be installed
-arcanea-skills --dry-run
+The existing package's `license: MIT` metadata is unchanged. Each candidate's rights
+passport remains pending, and no root license has been added. Rights decisions for
+earlier sources, official lore and third-party material remain separate work.
 
-# Install to ~/.claude/skills/
-arcanea-skills
-```
+The bundle launcher still needs a verified repository origin and coordinated root
+selection for both discovery and installation. Future bundle sources should pin
+the app repository, this folder and a commit. Working-set links and legacy-repo
+salvage have not been applied.
 
-### Programmatic
-
-```javascript
-const skills = require('@arcanea/skills');
-
-// Get all skill names
-console.log(skills.skills);
-// => ['story-weave', 'character-forge', 'world-build', ...]
-
-// Get skills by category
-const devSkills = skills.getByCategory('development');
-// => ['code-review', 'tdd', 'systematic-debug', ...]
-
-// Get path to a specific skill
-const storyPath = skills.getSkillPath('story-weave');
-```
-
-## The Arcanea Ecosystem
-
-This package is part of the [Arcanea](https://arcanea.ai) creative multiverse — a living ecosystem where creators chat with AI, build fantasy worlds, share what they make, and turn imagination into products.
-
-The full ecosystem includes 97 skills across categories:
-
-- Creative Writing and Worldbuilding
-- Software Development and Architecture
-- AI Agent Design and Orchestration
-- Visual Design and Brand Systems
-- Game Development and Interactive Fiction
-- Community and Collaboration
-
-### Related Packages
-
-- [`@arcanea/soul`](https://www.npmjs.com/package/@arcanea/soul) — Core identity and lore engine
-- [`@arcanea/mcp`](https://www.npmjs.com/package/@arcanea/mcp) — MCP server for worldbuilding tools
-- [`claude-arcanea`](https://www.npmjs.com/package/claude-arcanea) — Claude Code overlay with Arcanea integration
-
-## License
-
-MIT
+Track the consolidation and product scope in
+[Arcanea issue #276](https://github.com/frankxai/arcanea-ai-app/issues/276).

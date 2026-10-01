@@ -1,0 +1,95 @@
+{
+  "schema": "arcanea.skill-catalog.v1",
+  "sourceRepo": "frankxai/arcanea-ai-app",
+  "root": "skills",
+  "skills": [
+    {
+      "name": "world-build",
+      "path": "skills/world-build",
+      "category": "world",
+      "status": "candidate",
+      "owner": "Arcanea maintainers",
+      "mode": "creator-owned",
+      "authoringSession": "01a0f74f-8bad-7db1-ab06-fd89b5faec84",
+      "sourceHistory": [
+        {
+          "repo": "frankxai/arcanea-ai-app",
+          "commit": "2b9a0a5e421d39d272a0f00fef764b3cbe10b3b3",
+          "path": "packages/arcanea-skills/skills/world-build/SKILL.md",
+          "relation": "Revised existing canonical-root candidate; old source remains in Git"
+        }
+      ],
+      "aliases": ["arcanea-world-build"],
+      "permissions": ["read supplied source", "draft editable artifacts"],
+      "resources": ["references/example.md"],
+      "rights": { "status": "pending", "license": null, "evidence": null },
+      "evaluation": { "status": "pending", "evidence": null },
+      "review": { "status": "pending", "evidence": null },
+      "releaseBlockers": [
+        "Rights ruling and attribution review",
+        "Independent forward evaluation",
+        "Independent provider review"
+      ]
+    },
+    {
+      "name": "continuity-check",
+      "path": "skills/continuity-check",
+      "category": "writing",
+      "status": "candidate",
+      "owner": "Arcanea maintainers",
+      "mode": "creator-owned",
+      "authoringSession": "01a0f74f-8bad-7db1-ab06-fd89b5faec84",
+      "sourceHistory": [],
+      "permissions": ["read supplied source", "propose local repair"],
+      "resources": ["references/example.md"],
+      "rights": { "status": "pending", "license": null, "evidence": null },
+      "evaluation": { "status": "pending", "evidence": null },
+      "review": { "status": "pending", "evidence": null },
+      "releaseBlockers": [
+        "Rights ruling",
+        "Forward evaluation of conflicts and false positives",
+        "Independent provider review"
+      ]
+    },
+    {
+      "name": "scene-to-media",
+      "path": "skills/scene-to-media",
+      "category": "media",
+      "status": "candidate",
+      "owner": "Arcanea maintainers",
+      "mode": "creator-owned",
+      "authoringSession": "01a0f74f-8bad-7db1-ab06-fd89b5faec84",
+      "sourceHistory": [],
+      "permissions": ["read supplied scene", "draft text brief"],
+      "resources": ["references/example.md"],
+      "rights": { "status": "pending", "license": null, "evidence": null },
+      "evaluation": { "status": "pending", "evidence": null },
+      "review": { "status": "pending", "evidence": null },
+      "releaseBlockers": [
+        "Rights ruling",
+        "Forward evaluation of source fidelity and provenance boundary",
+        "Independent provider review"
+      ]
+    },
+    {
+      "name": "quest-adapt",
+      "path": "skills/quest-adapt",
+      "category": "game",
+      "status": "candidate",
+      "owner": "Arcanea maintainers",
+      "mode": "creator-owned",
+      "authoringSession": "01a0f74f-8bad-7db1-ab06-fd89b5faec84",
+      "sourceHistory": [],
+      "permissions": ["read supplied world", "draft quest and replay cases"],
+      "resources": ["references/example.md"],
+      "rights": { "status": "pending", "license": null, "evidence": null },
+      "evaluation": { "status": "pending", "evidence": null },
+      "review": { "status": "pending", "evidence": null },
+      "releaseBlockers": [
+        "Rights ruling",
+        "Forward evaluation and target-engine proof",
+        "Independent provider review"
+      ]
+    }
+  ]
+}
