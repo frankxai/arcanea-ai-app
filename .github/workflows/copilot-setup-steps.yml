@@ -1,0 +1,43 @@
+name: Copilot Setup Steps
+
+# Prepares the GitHub Copilot coding agent environment for this repository.
+# This is a large pnpm workspace; on the default runner an agent session can run
+# out of disk during install, so free space first and pre-install dependencies
+# with the pinned package manager.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - name: Free runner disk space
+        run: |
+          df -h /
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
+          sudo docker image prune --all --force || true
+          df -h /
+
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Enable pnpm from the packageManager field
+        run: corepack enable
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile

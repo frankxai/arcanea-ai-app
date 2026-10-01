@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
+import { getOAuthRecoveryPath } from "@/lib/auth/redirect";
 
 export async function middleware(request: NextRequest) {
   // Redirect non-www to www (permanent 308) so all client-side fetches
@@ -12,10 +13,20 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 308);
   }
 
+  // Recover Supabase's Site URL fallback before rendering or loading analytics.
+  const recovery =
+    request.method === "GET" ? getOAuthRecoveryPath(request.nextUrl) : null;
+  if (recovery) {
+    const response = NextResponse.redirect(new URL(recovery, request.url), 303);
+    response.headers.set("Cache-Control", "private, no-store");
+    return response;
+  }
+
   // Newsletter and founding-circle forms are public. Keep this exception exact:
   // other methods, nested paths and all world generation/save APIs still require auth.
   if (
-    request.nextUrl.pathname === "/api/waitlist" &&
+    (request.nextUrl.pathname === "/api/waitlist" ||
+      request.nextUrl.pathname === "/api/subscribe") &&
     request.method === "POST"
   ) {
     return NextResponse.next({ request: { headers: request.headers } });
