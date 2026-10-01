@@ -5,63 +5,77 @@
 > **Guardian**: Shinkami (Source Gate)
 > **Status**: Active — MCP Phase 1+2 Complete, Luminor System Built, Publishing Next
 
-This is the **single source of truth** for the entire Arcanea platform. Every agent, skill, command, and session MUST consult this document before making architectural decisions. It aggregates state from `.arcanea/projects/`, `task_plan.md`, `progress.md`, and live deployment data.
+This is a historical March/April 2026 dashboard, retained with its milestone and
+source references. Its dated counts and completion labels are historical claims,
+not current acceptance evidence. For current execution read `AGENTS.md`, current
+`planning-with-files/` records and GitHub issues #276, #408 and #427.
+
+**Operating guidance reconciled 2026-10-01 (draft PR #487):** one public
+`frankxai/arcanea-ai-app` integration source, canon in place, no mirror or
+dual-remote publishing. Bundles pin repo/folder/full commit. Merge and release
+approval remain separate human gates. The [release policy](../docs/ops/RELEASE_POLICY.md)
+states the current direction, observations and unverified enforcement limits.
+Historical plans below do not override that contract.
 
 ---
 
 ## Quick State Dashboard
 
-| Metric | Value | Target |
-|--------|-------|--------|
-| Total Pages | ~190 (+2 new: /ops/agents, /contribute) | 80 (prune stubs) |
-| Pages with Metadata | ~79 (+2) | 100% |
-| Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
-| Milestones Active | 11 (M001-M010 + M006) | M001 (Auth) → M008 (Onboarding) → M006 (Creator Tools) → M009 (Polish) |
-| Vercel Build | PASSING (3 build bugs fixed: layout dynamic, phosphor Stop dup, leaderboard JSX) | Maintain green |
-| Last Deploy | 2026-03-30 | Ops Center + Performance + Agent Certification + Creations Gallery |
-| Live URL | arcanea.ai | arcanea.ai |
-| 7-Gap Status | 5/7 closed, 2 blocked (npm publish needs creds, Supabase needs dashboard) | 7/7 |
-| Agent Framework | evaluation-framework.ts, agent-registry.ts (38 agents), reasoning-bank.ts | Learning loop |
-| Studio Decomposition | 1644L → 496L main + 6 components (all < 300L) | Under 500L |
-| Quality Gates | CI workflow + canon-lint + pre-commit hooks | Automated |
-| Cross-Repo | repos.json registry (7 repos) + sync script + health check | Multi-repo ops |
-| **Faction Architecture** | **22 docs, 202K words, 80+ characters, 42/42 build** | **COMPLETE** |
-| **Naming Audit** | **4/4 critical collisions FIXED, pushed to main** | **CLEAN** |
-| **Council Grade** | **A- overall (A+ characters, A+ villains, C naming → FIXED)** | **Franchise-ready** |
+| Metric                   | Value                                                                            | Target                                                                 |
+| ------------------------ | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Total Pages              | ~190 (+2 new: /ops/agents, /contribute)                                          | 80 (prune stubs)                                                       |
+| Pages with Metadata      | ~79 (+2)                                                                         | 100%                                                                   |
+| Pages with loading.tsx   | ~81 (+32)                                                                        | 100% of dynamic pages                                                  |
+| Milestones Active        | 11 (M001-M010 + M006)                                                            | M001 (Auth) → M008 (Onboarding) → M006 (Creator Tools) → M009 (Polish) |
+| Vercel Build             | PASSING (3 build bugs fixed: layout dynamic, phosphor Stop dup, leaderboard JSX) | Maintain green                                                         |
+| Last Deploy              | 2026-03-30                                                                       | Ops Center + Performance + Agent Certification + Creations Gallery     |
+| Live URL                 | arcanea.ai                                                                       | arcanea.ai                                                             |
+| 7-Gap Status             | 5/7 closed, 2 blocked (npm publish needs creds, Supabase needs dashboard)        | 7/7                                                                    |
+| Agent Framework          | evaluation-framework.ts, agent-registry.ts (38 agents), reasoning-bank.ts        | Learning loop                                                          |
+| Studio Decomposition     | 1644L → 496L main + 6 components (all < 300L)                                    | Under 500L                                                             |
+| Quality Gates            | CI workflow + canon-lint + pre-commit hooks                                      | Automated                                                              |
+| Cross-Repo               | repos.json registry (7 repos) + sync script + health check                       | Multi-repo ops                                                         |
+| **Faction Architecture** | **22 docs, 202K words, 80+ characters, 42/42 build**                             | **COMPLETE**                                                           |
+| **Naming Audit**         | **4/4 critical collisions FIXED, pushed to main**                                | **CLEAN**                                                              |
+| **Council Grade**        | **A- overall (A+ characters, A+ villains, C naming → FIXED)**                    | **Franchise-ready**                                                    |
 
 ---
 
 ## NEW: MCP Product + Luminor Sprint Results (2026-04-02/03)
 
 ### MCP Server — Product-Ready
-| Achievement | Status |
-|-------------|--------|
-| SDK upgraded 0.5.0 → 1.29.0 | COMPLETE |
-| 34 tools via registerTool() + Zod schemas | COMPLETE |
-| HTTP/SSE dual-transport (cloud-ready) | COMPLETE |
-| memory-mcp migrated from raw JSON-RPC → SDK 1.29 | COMPLETE |
-| World Intelligence Engine (world_report, generate_conflict, weave_narrative) | COMPLETE |
-| 79 dep vulnerabilities → 0 | COMPLETE |
-| npm publish | BLOCKED (needs `npm login`) |
+
+| Achievement                                                                  | Status                      |
+| ---------------------------------------------------------------------------- | --------------------------- |
+| SDK upgraded 0.5.0 → 1.29.0                                                  | COMPLETE                    |
+| 34 tools via registerTool() + Zod schemas                                    | COMPLETE                    |
+| HTTP/SSE dual-transport (cloud-ready)                                        | COMPLETE                    |
+| memory-mcp migrated from raw JSON-RPC → SDK 1.29                             | COMPLETE                    |
+| World Intelligence Engine (world_report, generate_conflict, weave_narrative) | COMPLETE                    |
+| 79 dep vulnerabilities → 0                                                   | COMPLETE                    |
+| npm publish                                                                  | BLOCKED (needs `npm login`) |
 
 ### Luminor Agent System — Operational
-| Achievement | Status |
-|-------------|--------|
-| Engineering Kernel (CANONICAL prompt) | COMPLETE |
-| 12 domain modules (github, frontend, backend, mcp, ops, security, test, research, lore, onchain, mobile, claw) | COMPLETE |
-| Spawn config (30+ agent types mapped) | COMPLETE |
-| @arcanea/flow v0.1.0 package | COMPLETE |
-| Proven: haiku+kernel = senior engineer output | VALIDATED |
+
+| Achievement                                                                                                    | Status    |
+| -------------------------------------------------------------------------------------------------------------- | --------- |
+| Engineering Kernel (CANONICAL prompt)                                                                          | COMPLETE  |
+| 12 domain modules (github, frontend, backend, mcp, ops, security, test, research, lore, onchain, mobile, claw) | COMPLETE  |
+| Spawn config (30+ agent types mapped)                                                                          | COMPLETE  |
+| @arcanea/flow v0.1.0 package                                                                                   | COMPLETE  |
+| Proven: haiku+kernel = senior engineer output                                                                  | VALIDATED |
 
 ### CI/Ops Hardened
-| Achievement | Status |
-|-------------|--------|
-| Execution Law in AGENTS.md | COMPLETE |
+
+| Achievement                                       | Status   |
+| ------------------------------------------------- | -------- |
+| Execution Law in AGENTS.md                        | COMPLETE |
 | CI: npm rejection, .nvmrc check, typecheck blocks | COMPLETE |
-| .nvmrc pinning Node 20 | COMPLETE |
-| Linear synced: ARC-71 through ARC-78 | COMPLETE |
+| .nvmrc pinning Node 20                            | COMPLETE |
+| Linear synced: ARC-71 through ARC-78              | COMPLETE |
 
 ### In Progress (agents running)
+
 - Blog post: "Mythology Engine as MCP Server"
 - /docs/mcp developer documentation pages
 - Luminor auto-injection Claude Code hooks
@@ -72,30 +86,33 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 ## Faction Architecture Sprint Results (2026-03-30)
 
 ### Lore Documents (`.arcanea/lore/`)
-| Document | Words | Grade | Status |
-|----------|-------|-------|--------|
-| FACTIONS.md | 4,500 | A | 8 origin classes, org hierarchy |
-| CHARACTER_TEMPLATE.md | 2,500 | A+ | Ready for LOCKED promotion |
-| VISUAL_DOCTRINE.md | 3,500 | A | Faction aesthetics, all houses |
-| FLAGSHIP_TEAM.md + V2 | 12,000 | A | THE DAWNSWORN — 7 heroes |
-| STARBOUND_CREWS.md | 8,000 | A- | 3 crews (Solara, Ninth Flame, Hollow Stars) |
-| VOID_ASCENDANTS.md | 7,000 | A+ | 5 Heralds, Shadow Doctrine |
-| GATE_TOUCHED_UNDERGROUND.md | 14,000 | A | 7 Havens, 15 mutant powers |
-| STARLIGHT_CORPS_CODEX.md | 10,000 | A | 800 years of history, 6 sectors |
-| STELLARIS.md | 7,000 | A+ | Franchise mascot, ready for LOCKED |
-| LEAGUES_AND_ORDERS.md | 10,000 | A | 7 Leagues, 7 Radiant Orders |
-| STORY_ENGINE.md | 8,000 | A | 5 arcs, 10 seeds, timeline |
+
+| Document                    | Words  | Grade | Status                                      |
+| --------------------------- | ------ | ----- | ------------------------------------------- |
+| FACTIONS.md                 | 4,500  | A     | 8 origin classes, org hierarchy             |
+| CHARACTER_TEMPLATE.md       | 2,500  | A+    | Ready for LOCKED promotion                  |
+| VISUAL_DOCTRINE.md          | 3,500  | A     | Faction aesthetics, all houses              |
+| FLAGSHIP_TEAM.md + V2       | 12,000 | A     | THE DAWNSWORN — 7 heroes                    |
+| STARBOUND_CREWS.md          | 8,000  | A-    | 3 crews (Solara, Ninth Flame, Hollow Stars) |
+| VOID_ASCENDANTS.md          | 7,000  | A+    | 5 Heralds, Shadow Doctrine                  |
+| GATE_TOUCHED_UNDERGROUND.md | 14,000 | A     | 7 Havens, 15 mutant powers                  |
+| STARLIGHT_CORPS_CODEX.md    | 10,000 | A     | 800 years of history, 6 sectors             |
+| STELLARIS.md                | 7,000  | A+    | Franchise mascot, ready for LOCKED          |
+| LEAGUES_AND_ORDERS.md       | 10,000 | A     | 7 Leagues, 7 Radiant Orders                 |
+| STORY_ENGINE.md             | 8,000  | A     | 5 arcs, 10 seeds, timeline                  |
 
 ### Strategy Documents (`.arcanea/strategy/`)
-| Document | Grade | Status |
-|----------|-------|--------|
-| FRANCHISE_PRODUCTS.md | B+ | Product architecture, needs acquisition strategy |
-| ECOSYSTEM_MAP.md | B- | 90-day roadmap too ambitious |
-| OPS_ARCHITECTURE.md | A- | Immediately implementable |
-| ACADEMY_AND_COMMUNITY.md | B | Needs existing community first |
-| INTERCONNECTION_MAP.md | C+ | Reclassify as marketing/pitch material |
+
+| Document                 | Grade | Status                                           |
+| ------------------------ | ----- | ------------------------------------------------ |
+| FRANCHISE_PRODUCTS.md    | B+    | Product architecture, needs acquisition strategy |
+| ECOSYSTEM_MAP.md         | B-    | 90-day roadmap too ambitious                     |
+| OPS_ARCHITECTURE.md      | A-    | Immediately implementable                        |
+| ACADEMY_AND_COMMUNITY.md | B     | Needs existing community first                   |
+| INTERCONNECTION_MAP.md   | C+    | Reclassify as marketing/pitch material           |
 
 ### Infrastructure
+
 - `.github/workflows/ci.yml` — CI pipeline (lint, typecheck, build)
 - `.github/workflows/canon-lint.yml` — Lore validation, blocks merge on canon violations
 - 10 packages fixed: `@arcanea/core` dep `^0.1.0` → `workspace:*`
@@ -107,6 +124,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 ## WEEK SPRINT: March 31 — April 6
 
 ### P0: SHIP (blocks everything)
+
 - [ ] **Supabase Dashboard config** — 15 min, Frank does manually
   - Site URL → `https://arcanea.ai`
   - Redirect URL → `https://arcanea.ai/auth/callback`
@@ -115,6 +133,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 - [ ] **Sentry + PostHog** — set API keys on Vercel (code already installed)
 
 ### P0: BUILD (highest leverage products)
+
 - [ ] **Origin Class Quiz** — `/quiz` page, 8 origin classes, viral mechanic
   - Inputs: FACTIONS.md origin classes
   - Output: shareable result card with faction assignment
@@ -124,6 +143,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
   - Link to CHARACTER_TEMPLATE for "create your character"
 
 ### P1: CONTENT (faction launch sequence)
+
 - [ ] **Faction reveal social campaign** — 1 origin class per day for 8 days
   - Sequence: Arcans → Gate-Touched → Bonded → Synths → Awakened → Celestials → Voidtouched → Architects
   - Each: image + 3-line description + "Which one are you?"
@@ -131,10 +151,12 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 - [ ] **Dawnsworn team reveal** — lineup poster concept
 
 ### P1: OPS
+
 - [ ] **npm publish** — 13 packages (needs npm credentials)
 - [ ] **Promote to LOCKED** — CHARACTER_TEMPLATE.md, STELLARIS.md
 
 ### P2: NEXT WAVE
+
 - [ ] Build Starbound Crews V2 (5 crews expanded — was blocked by usage limit)
 - [ ] Fix voice-under-pressure progressions (Narrative audit top recommendation)
 - [ ] Merge INTERCONNECTION_MAP into ECOSYSTEM_MAP (redundancy fix)
@@ -146,6 +168,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 Source: `.arcanea/projects/milestones/`
 
 ### M001: Supabase Auth & Storage (90%) — P0
+
 - **Guardian**: Lyssandria (Foundation Gate)
 - **GitHub**: [#1](https://github.com/frankxai/arcanea-ai-app/issues/1), [#4](https://github.com/frankxai/arcanea-ai-app/issues/4), [#6](https://github.com/frankxai/arcanea-ai-app/issues/6)
 - **Tasks**: 15/17 done, 2 pending (admin-only), 0 blocked
@@ -154,18 +177,20 @@ Source: `.arcanea/projects/milestones/`
   - [x] ~~Set 3 env vars on Vercel project `arcanea-ai-appx`~~ — DONE (confirmed set on Vercel, 2026-03-10)
   - [x] ~~Sync repos~~ — arcanea-records → arcanea-ai-app (lean-prod branch)
   - [x] ~~Migrate legacy API routes~~ — DONE (lib/supabase.ts deleted, 0 imports remain)
-  - [x] ~~DB tables~~ — All persistence tables created: profiles, creations, reading_progress, pb_* (Prompt Books), chat_sessions, luminor_councils, activity_log
+  - [x] ~~DB tables~~ — All persistence tables created: profiles, creations, reading*progress, pb*\* (Prompt Books), chat_sessions, luminor_councils, activity_log
   - [ ] **Supabase Dashboard config** (15 min): Site URL → `https://arcanea.ai`, add redirect URL `https://arcanea.ai/auth/callback`, enable Google + GitHub OAuth providers
   - [ ] **E2E auth test** — verify full flow on production
 - **Files**: `m001-supabase-auth.arc`
 
 ### M002: Cloudflare Stream (0%) — P2
+
 - **Guardian**: Leyla (Flow Gate)
 - **Blocked by**: M001 completion
 - **Scope**: Video upload, transcoding, HLS playback for creator content
 - **Files**: `m002-cloudflare-stream.arc`
 
 ### M003: Memory System (75%) — P1
+
 - **Guardian**: Lyria (Sight Gate)
 - **Remaining**:
   - [ ] Build `@arcanea/memory-mcp` package
@@ -174,6 +199,7 @@ Source: `.arcanea/projects/milestones/`
 - **Files**: `m003-memory-system.arc`
 
 ### M004: Arcanea PM Toolkit (60%) — P1
+
 - **Guardian**: Shinkami (Source Gate)
 - **Remaining**:
   - [ ] CLI parser (`starlight pm` binary)
@@ -183,6 +209,7 @@ Source: `.arcanea/projects/milestones/`
 - **Files**: `m004-arcanea-pm.arc`
 
 ### M005: Premium UI Overhaul via v0 (55%) — P0
+
 - **Guardian**: Leyla (Flow Gate)
 - **Target**: 2026-03-15
 - **v0 Chats Generated**:
@@ -203,6 +230,7 @@ Source: `.arcanea/projects/milestones/`
 - **Files**: `m005-premium-ui-v0.arc`
 
 ### M006: Creator Tools Backend (75%) — P1
+
 - **Guardian**: Draconia (Fire Gate)
 - **Target**: 2026-03-22
 - **Scope**: Creation pipeline, AI generation APIs, Prompt Books persistence, Reading progress, Course system, Gallery social
@@ -218,6 +246,7 @@ Source: `.arcanea/projects/milestones/`
 - **Files**: `m006-creator-tools-backend.arc`
 
 ### M007: Community & Social (0%) — P2
+
 - **Guardian**: Ino (Unity Gate)
 - **Target**: 2026-03-29
 - **Scope**: Creator discovery, social interactions, forums, events/challenges, collaboration
@@ -225,6 +254,7 @@ Source: `.arcanea/projects/milestones/`
 - **Files**: `m007-community-social.arc`
 
 ### M008: Onboarding & Conversion (90%) — P0
+
 - **Guardian**: Maylinn (Heart Gate)
 - **Target**: 2026-03-10
 - **Scope**: Onboarding wizard integration, welcome dashboard, activation loops, analytics, auth UX
@@ -237,6 +267,7 @@ Source: `.arcanea/projects/milestones/`
 - **Files**: `m008-onboarding-conversion.arc`
 
 ### M009: Performance & Production Polish (99%) — P1
+
 - **Guardian**: Elara (Starweave Gate)
 - **Target**: 2026-03-22
 - **Scope**: Core Web Vitals, SEO, accessibility, error handling, production hardening, cleanup
@@ -323,6 +354,7 @@ Source: `.arcanea/projects/milestones/`
 - **Files**: `m009-performance-polish.arc`
 
 ### M010: Language & Experience Transformation (100%) — COMPLETE
+
 - **Guardian**: Alera (Voice Gate)
 - **Target**: 2026-03-08 — COMPLETED 2026-03-10
 - **Strategy**: `.arcanea/strategy/LANGUAGE_EXPERIENCE_STRATEGY.md`
@@ -355,6 +387,7 @@ Source: `.arcanea/projects/milestones/`
 ## Platform Architecture
 
 ### Three-Layer Stack
+
 ```
 SIS (Framework)     — starlight-intelligence-system/
 ACOS (Implementation) — packages/*, .claude/skills/*, .claude/commands/*
@@ -362,6 +395,7 @@ Arcanea (Product)   — apps/web/*, apps/premium-web/*
 ```
 
 ### Data Sources
+
 ```
 .arcanea/projects/     → Milestones, sprints, logs (git-native .arc files)
 .arcanea/lore/         → Canon (CANON_LOCKED.md)
@@ -372,22 +406,24 @@ packages/              → 37 workspace packages
 ```
 
 ### Planning File Map
-| File | Purpose | Update Frequency |
-|------|---------|------------------|
-| `.arcanea/MASTER_PLAN.md` | THIS FILE — central orchestrator | Every session |
-| `.arcanea/projects/milestones/*.arc` | Milestone task tracking | Per task completion |
-| `.arcanea/projects/sprints/*.arc` | Sprint capacity/burndown | Weekly |
-| `.arcanea/projects/log/*.md` | Progress narrative | Daily |
-| `task_plan.md` | Session-scoped execution plan | Per session |
-| `progress.md` | Session narrative log | Per session |
-| `findings.md` | Research/audit discoveries | As found |
-| `apps/web/app/command-center/data.ts` | Web-facing dashboard data | Sync with .arc |
+
+| File                                  | Purpose                          | Update Frequency    |
+| ------------------------------------- | -------------------------------- | ------------------- |
+| `.arcanea/MASTER_PLAN.md`             | THIS FILE — central orchestrator | Every session       |
+| `.arcanea/projects/milestones/*.arc`  | Milestone task tracking          | Per task completion |
+| `.arcanea/projects/sprints/*.arc`     | Sprint capacity/burndown         | Weekly              |
+| `.arcanea/projects/log/*.md`          | Progress narrative               | Daily               |
+| `task_plan.md`                        | Session-scoped execution plan    | Per session         |
+| `progress.md`                         | Session narrative log            | Per session         |
+| `findings.md`                         | Research/audit discoveries       | As found            |
+| `apps/web/app/command-center/data.ts` | Web-facing dashboard data        | Sync with .arc      |
 
 ---
 
 ## Page Registry — Complete State & Specs
 
 ### Status Legend
+
 - **LIVE**: Deployed, functional, has metadata + loading
 - **PARTIAL**: Deployed but missing metadata, loading, or has issues
 - **STUB**: UI exists but no backend/functionality
@@ -399,6 +435,7 @@ packages/              → 37 workspace packages
 ### TIER 1: Core Experience (Must be flawless)
 
 #### Homepage `/`
+
 - **Status**: LIVE
 - **Component**: Server (async)
 - **Metadata**: Yes (root default)
@@ -408,6 +445,7 @@ packages/              → 37 workspace packages
 - **Priority**: Maintenance only
 
 #### Academy `/academy`
+
 - **Status**: LIVE
 - **Component**: Client
 - **Metadata**: Yes (layout.tsx)
@@ -422,18 +460,20 @@ packages/              → 37 workspace packages
 - **Priority**: P0 — primary conversion funnel
 
 #### Academy Sub-pages
-| Route | Status | Needs |
-|-------|--------|-------|
-| `/academy/gates` | LIVE | loading.tsx added |
-| `/academy/gates/[id]` | LIVE | 10 gates pre-rendered, generateMetadata, element colors, teachings, navigation |
-| `/academy/houses` | PARTIAL | loading.tsx added |
-| `/academy/ranks` | PARTIAL | loading.tsx added |
-| `/academy/assessment` | PARTIAL | loading.tsx added, save results to profile |
-| `/academy/gate-quiz` | PARTIAL | loading.tsx added, save results to profile |
-| `/academy/courses` | LIVE | 5 courses, difficulty badges, prerequisites, grid layout |
-| `/academy/courses/[slug]` | LIVE | 5 pre-rendered courses, inline lessons, JSON-LD, prev/next nav |
+
+| Route                     | Status  | Needs                                                                          |
+| ------------------------- | ------- | ------------------------------------------------------------------------------ |
+| `/academy/gates`          | LIVE    | loading.tsx added                                                              |
+| `/academy/gates/[id]`     | LIVE    | 10 gates pre-rendered, generateMetadata, element colors, teachings, navigation |
+| `/academy/houses`         | PARTIAL | loading.tsx added                                                              |
+| `/academy/ranks`          | PARTIAL | loading.tsx added                                                              |
+| `/academy/assessment`     | PARTIAL | loading.tsx added, save results to profile                                     |
+| `/academy/gate-quiz`      | PARTIAL | loading.tsx added, save results to profile                                     |
+| `/academy/courses`        | LIVE    | 5 courses, difficulty badges, prerequisites, grid layout                       |
+| `/academy/courses/[slug]` | LIVE    | 5 pre-rendered courses, inline lessons, JSON-LD, prev/next nav                 |
 
 #### Library `/library`
+
 - **Status**: LIVE
 - **Component**: Server (async)
 - **Metadata**: Yes
@@ -447,14 +487,16 @@ packages/              → 37 workspace packages
 - **Priority**: P1
 
 #### Library Sub-pages
-| Route | Status | Needs |
-|-------|--------|-------|
-| `/library/[collection]` | LIVE | loading.tsx added |
-| `/library/[collection]/[text]` | LIVE | loading.tsx added, reading time estimate, bookmarks |
-| `/library/codex` | LIVE | loading.tsx added |
-| `/library/graph` | LIVE | loading.tsx added |
+
+| Route                          | Status | Needs                                               |
+| ------------------------------ | ------ | --------------------------------------------------- |
+| `/library/[collection]`        | LIVE   | loading.tsx added                                   |
+| `/library/[collection]/[text]` | LIVE   | loading.tsx added, reading time estimate, bookmarks |
+| `/library/codex`               | LIVE   | loading.tsx added                                   |
+| `/library/graph`               | LIVE   | loading.tsx added                                   |
 
 #### Luminors `/luminors`
+
 - **Status**: LIVE
 - **Component**: Server
 - **Metadata**: Yes (full OG + Twitter)
@@ -463,12 +505,13 @@ packages/              → 37 workspace packages
 - **Needs**: None critical
 - **Priority**: Maintenance
 
-| Route | Status | Needs |
-|-------|--------|-------|
-| `/luminors/[id]` | LIVE | loading.tsx |
-| `/luminor-intelligence` | LIVE | loading.tsx |
+| Route                   | Status | Needs       |
+| ----------------------- | ------ | ----------- |
+| `/luminors/[id]`        | LIVE   | loading.tsx |
+| `/luminor-intelligence` | LIVE   | loading.tsx |
 
 #### Chat `/chat`
+
 - **Status**: LIVE
 - **Component**: Client
 - **Metadata**: Via layout
@@ -483,11 +526,12 @@ packages/              → 37 workspace packages
   - [ ] File attachments
 - **Priority**: P1 — polish features
 
-| Route | Status | Needs |
-|-------|--------|-------|
-| `/chat/[luminorId]` | LIVE | loading.tsx added, generateMetadata via layout, chat persistence wired to Supabase |
+| Route               | Status | Needs                                                                              |
+| ------------------- | ------ | ---------------------------------------------------------------------------------- |
+| `/chat/[luminorId]` | LIVE   | loading.tsx added, generateMetadata via layout, chat persistence wired to Supabase |
 
 #### Lore `/lore`
+
 - **Status**: LIVE
 - **Component**: Server
 - **Metadata**: Yes (full OG)
@@ -496,22 +540,23 @@ packages/              → 37 workspace packages
 - **Needs**: None critical
 - **Priority**: Maintenance
 
-| Route | Status | Needs |
-|-------|--------|-------|
-| `/lore/gates` | LIVE | loading.tsx added, deep narrative + sacred geometry + creative lessons |
-| `/lore/guardians` | LIVE | loading.tsx added, full personality profiles, 3-column layout |
-| `/lore/guardians/[name]` | LIVE | enriched godbeast descriptions + deeper teachings |
-| `/lore/godbeasts` | LIVE | loading.tsx added, origin narratives + legendary encounters |
-| `/lore/elements` | LIVE | loading.tsx added, cosmological context + Malachar connection |
-| `/lore/malachar` | LIVE | loading.tsx added, 2 new teaching cards |
-| `/lore/wisdoms` | LIVE | loading.tsx added, richer domains + voice samples |
-| `/lore/library` | LIVE | loading.tsx added |
+| Route                    | Status | Needs                                                                  |
+| ------------------------ | ------ | ---------------------------------------------------------------------- |
+| `/lore/gates`            | LIVE   | loading.tsx added, deep narrative + sacred geometry + creative lessons |
+| `/lore/guardians`        | LIVE   | loading.tsx added, full personality profiles, 3-column layout          |
+| `/lore/guardians/[name]` | LIVE   | enriched godbeast descriptions + deeper teachings                      |
+| `/lore/godbeasts`        | LIVE   | loading.tsx added, origin narratives + legendary encounters            |
+| `/lore/elements`         | LIVE   | loading.tsx added, cosmological context + Malachar connection          |
+| `/lore/malachar`         | LIVE   | loading.tsx added, 2 new teaching cards                                |
+| `/lore/wisdoms`          | LIVE   | loading.tsx added, richer domains + voice samples                      |
+| `/lore/library`          | LIVE   | loading.tsx added                                                      |
 
 ---
 
 ### TIER 2: Creator Tools (Core value prop)
 
 #### Studio `/studio`
+
 - **Status**: PARTIAL
 - **Component**: Client
 - **Loading**: Yes
@@ -523,11 +568,12 @@ packages/              → 37 workspace packages
   - [ ] Export options
 - **Priority**: P1
 
-| Route | Status | Needs |
-|-------|--------|-------|
+| Route           | Status  | Needs                               |
+| --------------- | ------- | ----------------------------------- |
 | `/studio/image` | PARTIAL | loading.tsx, reliable image gen API |
 
 #### Gallery `/gallery`
+
 - **Status**: LIVE
 - **Component**: Client
 - **Loading**: Yes
@@ -539,6 +585,7 @@ packages/              → 37 workspace packages
 - **Priority**: P1
 
 #### Prompt Books `/prompt-books`
+
 - **Status**: PARTIAL
 - **Component**: Client
 - **Loading**: Yes
@@ -548,13 +595,14 @@ packages/              → 37 workspace packages
   - [ ] Share/publish prompts
   - [ ] Community prompt marketplace
 
-| Route | Status | Needs |
-|-------|--------|-------|
-| `/prompt-books/[collectionId]` | PARTIAL | loading.tsx, metadata |
+| Route                                     | Status  | Needs                 |
+| ----------------------------------------- | ------- | --------------------- |
+| `/prompt-books/[collectionId]`            | PARTIAL | loading.tsx, metadata |
 | `/prompt-books/[collectionId]/[promptId]` | PARTIAL | loading.tsx, metadata |
-| `/prompt-books/settings` | PARTIAL | loading.tsx, metadata |
+| `/prompt-books/settings`                  | PARTIAL | loading.tsx, metadata |
 
 #### Workspace `/workspace`
+
 - **Status**: STUB
 - **Component**: Client
 - **Current**: Tabbed UI (Ask, Create, Library, Vault, Agents) — tabs are non-functional stubs
@@ -562,18 +610,20 @@ packages/              → 37 workspace packages
 - **Priority**: P3 (consider removing)
 
 #### World/Universe Builders
-| Route | Status | Needs |
-|-------|--------|-------|
-| `/world-builder` | STUB | Backend, AI generation, persistence |
-| `/universe-builder` | STUB | Backend, AI generation, persistence |
-| `/character-book` | PARTIAL | loading.tsx, backend |
-| `/vision-board` | STUB | metadata, backend |
+
+| Route               | Status  | Needs                               |
+| ------------------- | ------- | ----------------------------------- |
+| `/world-builder`    | STUB    | Backend, AI generation, persistence |
+| `/universe-builder` | STUB    | Backend, AI generation, persistence |
+| `/character-book`   | PARTIAL | loading.tsx, backend                |
+| `/vision-board`     | STUB    | metadata, backend                   |
 
 ---
 
 ### TIER 3: Community & Social
 
 #### Community `/community`
+
 - **Status**: PARTIAL
 - **Component**: Client
 - **Loading**: Yes
@@ -585,12 +635,13 @@ packages/              → 37 workspace packages
   - [ ] Event calendar integration
 - **Priority**: P2
 
-| Route | Status | Needs |
-|-------|--------|-------|
-| `/community/create` | PARTIAL | metadata |
+| Route                 | Status  | Needs    |
+| --------------------- | ------- | -------- |
+| `/community/create`   | PARTIAL | metadata |
 | `/community/strategy` | PARTIAL | metadata |
 
 #### Dashboard `/dashboard`
+
 - **Status**: LIVE
 - **Component**: Client
 - **Metadata**: Yes (layout.tsx with OG)
@@ -604,6 +655,7 @@ packages/              → 37 workspace packages
 - **Priority**: P0 — post-login landing page
 
 #### Onboarding `/onboarding`
+
 - **Status**: LIVE
 - **Component**: Client
 - **Loading**: No (needs)
@@ -615,81 +667,83 @@ packages/              → 37 workspace packages
 - **Priority**: P0 — conversion funnel
 
 #### Profile System
-| Route | Status | Needs |
-|-------|--------|-------|
-| `/profile` | LIVE | Redirect works |
-| `/profile/[username]` | LIVE | loading.tsx |
-| `/profile/edit` | PARTIAL | loading.tsx |
-| `/activity` | LIVE | Works |
-| `/settings` | PARTIAL | loading.tsx, persist preferences to Supabase |
-| `/discover` | LIVE | Works |
+
+| Route                 | Status  | Needs                                        |
+| --------------------- | ------- | -------------------------------------------- |
+| `/profile`            | LIVE    | Redirect works                               |
+| `/profile/[username]` | LIVE    | loading.tsx                                  |
+| `/profile/edit`       | PARTIAL | loading.tsx                                  |
+| `/activity`           | LIVE    | Works                                        |
+| `/settings`           | PARTIAL | loading.tsx, persist preferences to Supabase |
+| `/discover`           | LIVE    | Works                                        |
 
 ---
 
 ### TIER 4: Marketing & Info
 
-| Route | Status | Needs |
-|-------|--------|-------|
-| `/research` | LIVE | NEW (2026-03-24): Ecosystem showcase, tech stack, Intelligence OS |
-| `/ecosystem` | LIVE | UPDATED (constellation map with 19 interactive nodes) |
-| `/vision` | LIVE | NEW (2026-03-24): Six Layers, Creator Journey, Guardians, Open Source Philosophy |
-| `/architecture` | LIVE | NEW (2026-03-24): 6-tab interactive ReactFlow (ecosystem, intelligence, memory, agents, roadmap, business) |
-| `/about` | LIVE | None |
-| `/pricing` | LIVE | UPDATED (credits model: Free / Credits $5-49 / Forge $29/mo) |
-| `/faq` | LIVE | None |
-| `/changelog` | LIVE | None |
-| `/developers` | LIVE | None |
-| `/glossary` | LIVE | None |
-| `/linktree` | LIVE | None |
-| `/blog` | LIVE | JSON-LD, aria-labels, shared data module |
-| `/blog/[slug]` | LIVE | Article JSON-LD, safe rendering, shared data |
-| `/hub` | LIVE | None |
-| `/contact` | LIVE | None |
-| `/platform` | LIVE | None |
-| `/roadmap` | LIVE | None |
-| `/install` | LIVE | None |
-| `/privacy` | LIVE | loading.tsx (low priority) |
-| `/terms` | LIVE | loading.tsx (low priority) |
-| `/status` | LIVE | None |
+| Route           | Status | Needs                                                                                                      |
+| --------------- | ------ | ---------------------------------------------------------------------------------------------------------- |
+| `/research`     | LIVE   | NEW (2026-03-24): Ecosystem showcase, tech stack, Intelligence OS                                          |
+| `/ecosystem`    | LIVE   | UPDATED (constellation map with 19 interactive nodes)                                                      |
+| `/vision`       | LIVE   | NEW (2026-03-24): Six Layers, Creator Journey, Guardians, Open Source Philosophy                           |
+| `/architecture` | LIVE   | NEW (2026-03-24): 6-tab interactive ReactFlow (ecosystem, intelligence, memory, agents, roadmap, business) |
+| `/about`        | LIVE   | None                                                                                                       |
+| `/pricing`      | LIVE   | UPDATED (credits model: Free / Credits $5-49 / Forge $29/mo)                                               |
+| `/faq`          | LIVE   | None                                                                                                       |
+| `/changelog`    | LIVE   | None                                                                                                       |
+| `/developers`   | LIVE   | None                                                                                                       |
+| `/glossary`     | LIVE   | None                                                                                                       |
+| `/linktree`     | LIVE   | None                                                                                                       |
+| `/blog`         | LIVE   | JSON-LD, aria-labels, shared data module                                                                   |
+| `/blog/[slug]`  | LIVE   | Article JSON-LD, safe rendering, shared data                                                               |
+| `/hub`          | LIVE   | None                                                                                                       |
+| `/contact`      | LIVE   | None                                                                                                       |
+| `/platform`     | LIVE   | None                                                                                                       |
+| `/roadmap`      | LIVE   | None                                                                                                       |
+| `/install`      | LIVE   | None                                                                                                       |
+| `/privacy`      | LIVE   | loading.tsx (low priority)                                                                                 |
+| `/terms`        | LIVE   | loading.tsx (low priority)                                                                                 |
+| `/status`       | LIVE   | None                                                                                                       |
 
 ---
 
 ### TIER 5: Product Pages
 
-| Route | Status | Needs |
-|-------|--------|-------|
-| `/acos` | LIVE | None |
-| `/arcanea-os` | LIVE | None |
-| `/arcanea-vault` | LIVE | None |
-| `/arcanea-code` | LIVE | None |
-| `/overlays` | LIVE | None |
-| `/workflows` | LIVE | None |
-| `/user-flows` | LIVE | None |
-| `/records` | LIVE | None |
-| `/records/vibe-gods` | PARTIAL | loading.tsx |
-| `/companions` | LIVE | Design system v5 aligned (Mar 10) |
-| `/companions/forge` | LIVE | NEW: 3-step forge flow, 16 archetypes (Mar 10) |
-| `/skills` | LIVE | None |
+| Route                | Status  | Needs                                          |
+| -------------------- | ------- | ---------------------------------------------- |
+| `/acos`              | LIVE    | None                                           |
+| `/arcanea-os`        | LIVE    | None                                           |
+| `/arcanea-vault`     | LIVE    | None                                           |
+| `/arcanea-code`      | LIVE    | None                                           |
+| `/overlays`          | LIVE    | None                                           |
+| `/workflows`         | LIVE    | None                                           |
+| `/user-flows`        | LIVE    | None                                           |
+| `/records`           | LIVE    | None                                           |
+| `/records/vibe-gods` | PARTIAL | loading.tsx                                    |
+| `/companions`        | LIVE    | Design system v5 aligned (Mar 10)              |
+| `/companions/forge`  | LIVE    | NEW: 3-step forge flow, 16 archetypes (Mar 10) |
+| `/skills`            | LIVE    | None                                           |
 
 ---
 
 ### TIER 6: Internal/Dev (Low Priority)
 
-| Route | Status | Needs |
-|-------|--------|-------|
-| `/command-center` | LIVE | Auth-gated, works |
-| `/components` | PARTIAL | Dev-only, no metadata needed |
-| `/feedback` | PARTIAL | loading.tsx |
-| `/docs` | PARTIAL | loading.tsx |
-| `/chess` | LIVE | Experimental |
-| `/bestiary` | PARTIAL | loading.tsx |
-| `/(marketing)/chat-demo` | PARTIAL | Dead import cleanup |
+| Route                    | Status  | Needs                        |
+| ------------------------ | ------- | ---------------------------- |
+| `/command-center`        | LIVE    | Auth-gated, works            |
+| `/components`            | PARTIAL | Dev-only, no metadata needed |
+| `/feedback`              | PARTIAL | loading.tsx                  |
+| `/docs`                  | PARTIAL | loading.tsx                  |
+| `/chess`                 | LIVE    | Experimental                 |
+| `/bestiary`              | PARTIAL | loading.tsx                  |
+| `/(marketing)/chat-demo` | PARTIAL | Dead import cleanup          |
 
 ---
 
 ### Routes Pruned (Wave 11, 2026-03-01)
 
 16 redirect-only routes deleted. Route count reduced from 201 → ~185:
+
 - ~~`/chess/play`, `/chess/analysis`, `/chess/leaderboard`, `/chess/community`~~ — DELETED
 - ~~`/gallery/explore`~~ — DELETED
 - ~~`/docs/acos`~~ — DELETED
@@ -705,15 +759,17 @@ packages/              → 37 workspace packages
 ## Priority Queue (Next Actions)
 
 ### P0 — Deploy Blockers & Core Experience
+
 1. ~~**Language & Experience Transformation (M010)**~~ — COMPLETE (2026-03-10). specialist/intelligence → Luminor rename finalized.
 2. ~~Set Supabase env vars on Vercel~~ — DONE (confirmed 2026-03-10)
 3. Configure Supabase Dashboard Site URL + Redirect URLs
-3. ~~Add metadata to `/academy`~~ — DONE (2026-03-01, layout.tsx with generateMetadata)
-4. ~~Build `/academy/gates/[id]` dynamic route~~ — DONE (2026-03-01, 10 gates pre-rendered)
-5. ~~Add chat persistence (Supabase tables + service)~~ — DONE (2026-03-01, chat_sessions + chat_messages)
-6. ~~Fix `/chat/[luminorId]` metadata~~ — DONE (2026-03-01, generateMetadata via layout)
+4. ~~Add metadata to `/academy`~~ — DONE (2026-03-01, layout.tsx with generateMetadata)
+5. ~~Build `/academy/gates/[id]` dynamic route~~ — DONE (2026-03-01, 10 gates pre-rendered)
+6. ~~Add chat persistence (Supabase tables + service)~~ — DONE (2026-03-01, chat_sessions + chat_messages)
+7. ~~Fix `/chat/[luminorId]` metadata~~ — DONE (2026-03-01, generateMetadata via layout)
 
 ### P1 — Quality & Polish
+
 7. ~~Add loading.tsx to all Tier 1 pages~~ — DONE (2026-03-01, 32+17 new, 98 total)
 8. ~~Add metadata to all Tier 2 pages~~ — DONE (2026-03-01, 12 new layout.tsx)
 9. ~~Wire settings persistence to Supabase~~ — DONE (2026-03-01, avatar + prefs + metadata JSONB)
@@ -757,6 +813,7 @@ packages/              → 37 workspace packages
 47. ~~Remove debug console.log~~ — DONE (2026-03-01, chat-imagine gate invocation)
 
 ### P2 — Feature Expansion
+
 48. Integrate v0 Onboarding wizard (M008-T1)
 49. Integrate v0 Settings page (M005-T2)
 50. ~~Academy course system (M006-T5)~~ — DONE (5 courses, 20+ lessons, 2026-03-10)
@@ -765,6 +822,7 @@ packages/              → 37 workspace packages
 53. Cloudflare Stream integration (M002)
 
 ### P3 — Cleanup & Optimization
+
 54. ~~Prune 15+ redirect-only pages~~ — DONE (2026-03-01, 16 routes deleted)
 55. Core Web Vitals audit (M009-T1)
 56. WCAG 2.2 accessibility audit (M009-T3)
@@ -777,6 +835,7 @@ packages/              → 37 workspace packages
 ## Cross-Cutting Concerns
 
 ### Security
+
 - ~~RLS on arcanea table~~ — FIXED (2026-03-01)
 - ~~Overly permissive feedback policy~~ — FIXED (2026-03-01)
 - ~~auth_rls_initplan performance~~ — FIXED (2026-03-01)
@@ -788,16 +847,20 @@ packages/              → 37 workspace packages
 - Security headers added to next.config.js (HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy)
 
 ### Design System
+
 - Liquid glass system fully deployed (7 tiers)
 - Opacity hierarchy standardized across 177 files
 - Icon aliases using wrong Phosphor icons (3 instances)
 - ~~`font-cinzel` references~~ — VERIFIED: 0 remaining (2026-03-01)
 
-### Repo Sync
-- Local monorepo remote: `origin` → `arcanea-records`
-- Vercel deploys from: `production` → `arcanea-ai-app`
-- All pushes must go to BOTH remotes
-- Currently on `lean-prod` branch (not `main`)
+### Repository and deployment path (reconciled 2026-10-01)
+
+- Verify `origin` is `https://github.com/frankxai/arcanea-ai-app.git` in the assigned checkout.
+- Work on an owned branch. Native Vercel Git deployment uses app `main` for production; development branches receive previews.
+- Push the owned branch to that app origin. Do not push into `arcanea-records` or synchronize a mirror.
+- App merges require Frank's named approval under #408; deployment/publishing gates also apply.
+- Bind preview, checks, review and stable-domain observations to exact source revisions under #427. READY does not prove the user journey.
+- Legacy `lean-prod` and dual-remote instructions are retained only in historical commit records; they are not the current deployment path.
 
 ---
 
@@ -805,39 +868,42 @@ packages/              → 37 workspace packages
 
 When an agent starts work, consult this table for the right specialist:
 
-| Domain | Agent Type | Gate | Guardian |
-|--------|-----------|------|----------|
-| Auth/Security | `security-architect` | Foundation | Lyssandria |
-| UI/Design | `Arcanea Frontend Specialist` | Flow | Leyla |
-| Backend/API | `Arcanea Backend Specialist` | Fire | Draconia |
-| Content/Lore | `Arcanea Lore Master` | Heart | Maylinn |
-| Chat/AI | `Arcanea AI Specialist` | Voice | Alera |
-| Analytics | `researcher` | Sight | Lyria |
-| Architecture | `system-architect` | Crown | Aiyami |
-| Testing | `tester` | Starweave | Elara |
-| Community | `Arcanea World Expander` | Unity | Ino |
-| Orchestration | `Arcanea Master Orchestrator` | Source | Shinkami |
-| Economy/Onchain | `Arcanea Onchain Architect` | Fire | Draconia |
-| Mobile | `Arcanea Mobile Specialist` | Flow | Leyla |
-| Media/Video | `Arcanea Media Engine` | Flow | Leyla |
-| Knowledge/Search | `Arcanea Knowledge Scout` | Sight | Lyria |
+| Domain           | Agent Type                    | Gate       | Guardian   |
+| ---------------- | ----------------------------- | ---------- | ---------- |
+| Auth/Security    | `security-architect`          | Foundation | Lyssandria |
+| UI/Design        | `Arcanea Frontend Specialist` | Flow       | Leyla      |
+| Backend/API      | `Arcanea Backend Specialist`  | Fire       | Draconia   |
+| Content/Lore     | `Arcanea Lore Master`         | Heart      | Maylinn    |
+| Chat/AI          | `Arcanea AI Specialist`       | Voice      | Alera      |
+| Analytics        | `researcher`                  | Sight      | Lyria      |
+| Architecture     | `system-architect`            | Crown      | Aiyami     |
+| Testing          | `tester`                      | Starweave  | Elara      |
+| Community        | `Arcanea World Expander`      | Unity      | Ino        |
+| Orchestration    | `Arcanea Master Orchestrator` | Source     | Shinkami   |
+| Economy/Onchain  | `Arcanea Onchain Architect`   | Fire       | Draconia   |
+| Mobile           | `Arcanea Mobile Specialist`   | Flow       | Leyla      |
+| Media/Video      | `Arcanea Media Engine`        | Flow       | Leyla      |
+| Knowledge/Search | `Arcanea Knowledge Scout`     | Sight      | Lyria      |
 
 ---
 
 ## How to Use This Document
 
 ### For Agents
+
 1. Read this document at session start
 2. Check the Priority Queue for next actions
 3. Update the Page Registry after completing work
 4. Update milestone progress in `.arcanea/projects/milestones/`
 
 ### For Skills
+
 1. Reference `MASTER_PLAN.md` for current state before making recommendations
 2. Route tasks based on the Agent Routing Table
 3. Check Cross-Cutting Concerns before approving PRs
 
 ### For Sessions
+
 1. `task_plan.md` = session-scoped plan (create fresh each session)
 2. `MASTER_PLAN.md` = persistent state (update after each session)
 3. `progress.md` = session narrative (append, don't overwrite)
@@ -927,6 +993,7 @@ When an agent starts work, consult this table for the right specialist:
 - **Performance**: All Tier 1 pages use LazyMotion (verified), no unoptimized `motion` imports in active path
 
 ### v1.3.0 (2026-03-07) — Deep M010 Quality Sprint
+
 - M010 Language Transformation: 90% → 98% — comprehensive anti-slop sweep
 - Navbar: 5 labels simplified from lore-heavy to clean (Explore, Create, Chat, Library, Academy)
 - Footer: 4 columns restructured, removed duplicate links, "Kingdom of Light" → "Creative Intelligence"
@@ -944,6 +1011,7 @@ When an agent starts work, consult this table for the right specialist:
 - Zero AI slop remaining (grep-verified across entire app directory)
 
 ### v1.2.0 (2026-03-01) — v0 Premium UI + Milestones Sprint
+
 - 5 new milestones created: M005 (Premium UI v0), M006 (Creator Backend), M007 (Community), M008 (Onboarding), M009 (Performance)
 - 4 v0 premium UI components generated: Studio, Settings, Onboarding, Gallery
 - Feedback route build error fixed (untyped table bypass)
@@ -955,6 +1023,7 @@ When an agent starts work, consult this table for the right specialist:
 - Build: PASSING (201 routes, 0 errors)
 
 ### v1.1.0 (2026-03-01) — Massive Action Session
+
 - Academy Gates system built: 10 individual gate pages, lib/gates.ts data layer
 - Chat persistence: chat_sessions + chat_messages tables, chat-service.ts, Supabase RLS
 - 32 new loading.tsx files (81 total across platform)
@@ -966,6 +1035,7 @@ When an agent starts work, consult this table for the right specialist:
 - Commit: c6538cb4
 
 ### v1.0.0 (2026-02-28)
+
 - Initial creation from comprehensive audit
 - 111 pages mapped with status, needs, and priority
 - 4 milestones tracked with task-level detail

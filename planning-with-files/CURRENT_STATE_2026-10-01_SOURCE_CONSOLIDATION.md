@@ -28,3 +28,32 @@ Rollback: revert the four exact files; no production or data side effects.
 Inventory tests are local CLI evidence, not full app lint/typecheck/build or installer evals. No independent provider review yet. Emil/Apple skills selected and read, applied to proposed website acceptance, reduced motion/focus/touch/interruption runtime verification not applicable to this non-UI change. Proposed policy is not merged or loaded by any installed consumer.
 
 Next bounded action: review the proposal against #276, obtain rights/Heart rulings, and coordinate the root-selector change with the existing launcher owner. Then choose four skill survivors from exact paths with support files, provenance and failing/passing evals before migration.
+
+## Release-guide reconciliation, October 1
+
+Scope: correct active-looking mirror, dual-remote, direct-merge and age-based
+archive guidance in existing docs/ops/RELEASE_POLICY.md and .arcanea/MASTER_PLAN.md.
+Owner: Codex, existing consolidation branch/draft #487; #276/#408/#427.
+Exact base for this slice: 5327861370c95748764017dc2e022b67b4abb348.
+Files: those two guides and this existing task record.
+Acceptance: one public integration source; canon remains in place; no app mirror
+or dual pushes; pinned folder consumers distinguished from pending launcher;
+no direct-merge exception or age-only deletion; historical tasks preserved;
+current exact-SHA checks, review and human gates stated without claiming actual
+environment/protection enforcement or installed consumer compatibility.
+Non-goals: canon, source skills/runtime, workflows/protection, archive/rename,
+licensing, merge, release or deployment changes. No new repo, worktree or guide.
+Verification: inspect the bounded documentation diff, preserve historical
+milestone/extraction references, formatter and enabled secrets, exact-head CI.
+No implementation-mirroring tests are added for this documentation change.
+Rollback: scoped revert of the three-file policy slice, preserving other work.
+
+Fresh GitHub metadata: app, arcanea and records are public, unarchived, default
+main. arcanea-code and oh-my-arcanea are public/unarchived with default dev;
+their earlier production/master release-branch claims are not reasserted.
+Other proposed retirement statuses and branch/environment protections are not
+verified by this slice. Different-harness policy review remains required before
+promotion; prior unavailable review paths are not counted as sign-off.
+Reader draft #490 remains separately at 60fcf333b4, with four required CI checks
+and 13 native reader tests passing. Its branch remains intact; this worktree is
+back on the consolidation branch. Full creator/world/revenue objective active.
