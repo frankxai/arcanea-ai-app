@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { createPublicClient } from "@/lib/supabase/public";
 import { withAbortDeadline } from "@/lib/async-deadline";
+import { worldReadFailure } from "@/lib/worlds/read-result";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -34,14 +35,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           .select("name, tagline, description, hero_image_url")
           .eq("slug", slug)
           .abortSignal(signal)
-          .single()
+          .maybeSingle(),
     );
 
     if (error || !world) {
       if (error) {
-        console.error("[worlds/[slug]] metadata query failed", {
-          errorName: error instanceof Error ? error.name : "SupabaseError",
-        });
+        console.error(
+          "[worlds/[slug]] metadata query failed",
+          worldReadFailure(error),
+        );
       }
       return fallbackMetadata(slug);
     }
@@ -73,9 +75,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       alternates: { canonical: `/worlds/${slug}` },
     };
   } catch (error) {
-    console.error("[worlds/[slug]] metadata query aborted or threw", {
-      errorName: error instanceof Error ? error.name : "UnknownError",
-    });
+    console.error(
+      "[worlds/[slug]] metadata query aborted or threw",
+      worldReadFailure(error),
+    );
     return fallbackMetadata(slug);
   }
 }

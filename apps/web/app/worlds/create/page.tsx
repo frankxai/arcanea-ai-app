@@ -1,24 +1,34 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useCallback, useRef } from "react";
+import {
+  LazyMotion,
+  domAnimation,
+  m,
+  AnimatePresence,
+  MotionConfig,
+} from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import type { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
+import {
+  draftResult,
+  readStoredWorldDraft,
+  WORLD_DRAFT_KEY,
+  WORLD_PREVIOUS_DRAFT_KEY,
+  WORLD_REFINEMENTS,
+  saveWorldDraftSchema,
+  type WorldDraft,
+} from "@/lib/worlds/draft";
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
-interface GeneratedCharacter {
-  name: string;
-  title?: string;
-  backstory?: string;
-  element?: string;
-  origin_class?: string;
-}
+type GeneratedCharacter = WorldDraft["characters"][number];
 
 interface GeneratedLocation {
   name: string;
@@ -27,17 +37,10 @@ interface GeneratedLocation {
   significance?: string;
 }
 
-interface GeneratedWorld {
-  name: string;
-  slug: string;
-  tagline: string;
-  description: string;
-  mood?: string;
-  elements?: { name: string; domain: string; color: string }[];
-  palette?: { primary: string; secondary: string; accent: string };
-}
+type GeneratedWorld = WorldDraft;
 
 interface GenerateResult {
+  draft_id: string;
   world: GeneratedWorld;
   characters: GeneratedCharacter[];
   locations: GeneratedLocation[];
@@ -60,21 +63,7 @@ const EXAMPLES = [
   "A dying star that holds the last library of the universe",
 ];
 
-const PROGRESS_STEPS = [
-  "Naming your world...",
-  "Forging characters...",
-  "Mapping locations...",
-  "Writing the founding myth...",
-  "Choosing a color palette...",
-];
-
-const REFINE_SUFFIXES = [
-  "more dramatic and epic",
-  "darker and more mysterious",
-  "more whimsical and playful",
-  "grittier and more realistic",
-  "more ancient and mythological",
-];
+const REFINE_SUFFIXES = WORLD_REFINEMENTS;
 
 const EL_GLOW: Record<string, string> = {
   fire: "shadow-red-500/30",
@@ -158,14 +147,14 @@ function GenrePreview({ description }: { description: string }) {
   if (!match) return null;
   return (
     <m.div
-      initial={{ opacity: 0, y: 4 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 4 }}
       className="flex items-center gap-2 mt-2 px-1"
     >
       <span className="relative flex h-2 w-2">
         <span
-          className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
+          className="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
           style={{ backgroundColor: match.color }}
         />
         <span
@@ -173,7 +162,7 @@ function GenrePreview({ description }: { description: string }) {
           style={{ backgroundColor: match.color }}
         />
       </span>
-      <span className="text-xs text-white/40">{match.genre} World</span>
+      <span className="text-xs text-white/70">{match.genre} world</span>
     </m.div>
   );
 }
@@ -188,7 +177,7 @@ function AuroraBackground() {
       className="fixed inset-0 pointer-events-none overflow-hidden"
       aria-hidden="true"
     >
-      <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-[var(--arc-brand-atlantean-teal)]/[0.04] rounded-full blur-[120px] animate-pulse" />
+      <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-[var(--arc-brand-atlantean-teal)]/[0.04] rounded-full blur-[120px] motion-safe:animate-pulse" />
       <div
         className="absolute bottom-1/4 -right-32 w-[500px] h-[500px] bg-[var(--arc-void)]/[0.04] rounded-full blur-[120px]"
         style={{ animationDelay: "2s" }}
@@ -198,43 +187,22 @@ function AuroraBackground() {
   );
 }
 
-function GeneratingOverlay({ step }: { step: number }) {
+function GeneratingOverlay() {
   return (
-    <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6"
+    <div
+      role="status"
+      className="min-h-[60vh] flex flex-col items-center justify-center gap-5 text-center px-6"
     >
-      <div className="relative w-28 h-28 mb-10">
-        <div
-          className="absolute inset-0 rounded-full bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/30 via-[var(--arc-void)]/20 to-[var(--arc-brand-arcanean-gold)]/20 animate-ping"
-          style={{ animationDuration: "2s" }}
-        />
-        <div className="absolute inset-3 rounded-full bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/40 via-[var(--arc-void)]/30 to-[var(--arc-brand-arcanean-gold)]/30 animate-pulse" />
-        <div className="absolute inset-6 rounded-full bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)] via-[var(--arc-void)] to-[var(--arc-brand-arcanean-gold)] opacity-50 blur-sm" />
-        <div className="absolute inset-8 rounded-full bg-[var(--arc-cosmic-void)]" />
-      </div>
-      <p className="text-white/60 text-lg font-display mb-8">
-        Weaving the fabric of your universe...
+      <div
+        className="w-10 h-10 border-2 border-white/20 border-t-[var(--arc-brand-atlantean-teal)] rounded-full motion-safe:animate-spin"
+        aria-hidden="true"
+      />
+      <h2 className="text-2xl font-display">Creating your world draft</h2>
+      <p className="text-white/70 max-w-sm">
+        The model is composing your world, characters and locations. This can
+        take a moment.
       </p>
-      <div className="space-y-3 max-w-xs">
-        {PROGRESS_STEPS.map((label, i) => (
-          <m.div
-            key={label}
-            initial={{ opacity: 0, x: -12 }}
-            animate={i <= step ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: i * 0.15, duration: 0.4 }}
-            className={`flex items-center gap-3 text-sm ${i <= step ? "text-white/70" : "text-white/10"}`}
-          >
-            <span
-              className={`w-2 h-2 rounded-full ${i < step ? "bg-[var(--arc-brand-atlantean-teal)]" : i === step ? "bg-[var(--arc-brand-atlantean-teal)] animate-pulse" : "bg-white/10"}`}
-            />
-            {label}
-          </m.div>
-        ))}
-      </div>
-    </m.div>
+    </div>
   );
 }
 
@@ -250,7 +218,7 @@ function HeroSection({
   const h = heroImage ? 320 : 200;
   return (
     <m.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
       className="relative w-full rounded-2xl overflow-hidden mb-12"
@@ -276,12 +244,12 @@ function HeroSection({
         className="relative z-10 flex flex-col items-center justify-end h-full px-6 py-10"
         style={{ minHeight: h }}
       >
-        <p className="text-[var(--arc-brand-atlantean-teal)] font-mono text-xs tracking-widest uppercase mb-3">
-          Your World
+        <p className="text-[var(--arc-brand-atlantean-teal)] font-mono text-xs tracking-widest mb-3">
+          Your world
         </p>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-3 text-center drop-shadow-lg">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-3 text-center drop-shadow-lg">
           {world.name}
-        </h2>
+        </h1>
         {world.tagline && (
           <p className="text-lg text-white/60 max-w-xl text-center">
             {world.tagline}
@@ -299,7 +267,7 @@ function ElementOrbs({
 }) {
   return (
     <m.div
-      initial={{ opacity: 0 }}
+      initial={false}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.4 }}
       className="flex flex-wrap items-center justify-center gap-5 mb-12"
@@ -317,14 +285,14 @@ function ElementOrbs({
             style={{ backgroundColor: el.color }}
           >
             <div
-              className="absolute inset-0 rounded-full animate-pulse"
+              className="absolute inset-0 rounded-full motion-safe:animate-pulse"
               style={{
                 boxShadow: `0 0 20px ${el.color}40, 0 0 40px ${el.color}20`,
               }}
             />
           </div>
           <span className="text-xs text-white/50 font-medium">{el.name}</span>
-          <span className="text-[10px] text-white/25">{el.domain}</span>
+          <span className="text-[10px] text-white/70">{el.domain}</span>
         </m.div>
       ))}
     </m.div>
@@ -353,10 +321,10 @@ function CharacterCard({
     "var(--arc-brand-atlantean-teal)";
   return (
     <m.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.6 + index * 0.15 }}
-      className="rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.12] transition-all overflow-hidden flex"
+      className="rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.12] transition-colors overflow-hidden flex"
     >
       <div className="w-1 shrink-0" style={{ backgroundColor: stripe }} />
       <div className="p-5 flex-1">
@@ -369,7 +337,7 @@ function CharacterCard({
           )}
         </div>
         {char.title && (
-          <p className="text-xs text-white/40 mb-1">{char.title}</p>
+          <p className="text-xs text-white/70 mb-1">{char.title}</p>
         )}
         {char.origin_class && (
           <span className="inline-block text-[10px] px-2 py-0.5 rounded bg-[var(--arc-void)]/10 text-[var(--arc-void)]/70 border border-[var(--arc-void)]/20 mb-2">
@@ -377,8 +345,18 @@ function CharacterCard({
           </span>
         )}
         {char.backstory && (
-          <p className="text-sm text-white/50 leading-relaxed line-clamp-3">
+          <p className="text-sm text-white/50 leading-relaxed">
             {char.backstory}
+          </p>
+        )}
+        {!!char.personality?.traits.length && (
+          <p className="mt-3 text-sm text-white/70">
+            Traits: {char.personality.traits.join(", ")}
+          </p>
+        )}
+        {char.personality?.voice_style && (
+          <p className="mt-2 text-sm text-white/70">
+            Voice: {char.personality.voice_style}
           </p>
         )}
       </div>
@@ -395,26 +373,24 @@ function LocationCard({
 }) {
   return (
     <m.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.9 + index * 0.15 }}
-      className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 hover:border-white/[0.12] transition-all"
+      className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 hover:border-white/[0.12] transition-colors"
     >
       {loc.region && (
-        <p className="text-[10px] text-[var(--arc-void)]/50 uppercase tracking-widest mb-2">
+        <p className="text-[10px] text-[var(--arc-void)]/50 tracking-widest mb-2">
           {loc.region}
         </p>
       )}
       <h4 className="font-display font-semibold text-white mb-1">{loc.name}</h4>
       {loc.description && (
-        <p className="text-sm text-white/50 leading-relaxed line-clamp-3 mb-2">
+        <p className="text-sm text-white/50 leading-relaxed mb-2">
           {loc.description}
         </p>
       )}
       {loc.significance && (
-        <p className="text-xs text-white/30 italic line-clamp-2">
-          {loc.significance}
-        </p>
+        <p className="text-xs text-white/70 italic">{loc.significance}</p>
       )}
     </m.div>
   );
@@ -429,7 +405,7 @@ function FoundingEvent({
 }) {
   return (
     <m.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.1 }}
       className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-6 mb-10 relative overflow-hidden"
@@ -438,8 +414,8 @@ function FoundingEvent({
       <div className="absolute left-[19px] top-6 w-3 h-3 rounded-full bg-[var(--arc-brand-arcanean-gold)]/60 ring-2 ring-[var(--arc-brand-arcanean-gold)]/20" />
       <div className="pl-8">
         <div className="flex items-center gap-3 mb-3">
-          <p className="text-xs text-[var(--arc-brand-arcanean-gold)]/50 uppercase tracking-wider">
-            Founding Event
+          <p className="text-xs text-[var(--arc-brand-arcanean-gold)]/50 tracking-wider">
+            Founding event
           </p>
           {event.era && (
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--arc-brand-arcanean-gold)]/10 text-[var(--arc-brand-arcanean-gold)]/60 border border-[var(--arc-brand-arcanean-gold)]/20">
@@ -447,7 +423,7 @@ function FoundingEvent({
             </span>
           )}
         </div>
-        <p className="text-xs text-white/25 mb-2">
+        <p className="text-xs text-white/70 mb-2">
           The beginning of {worldName}
         </p>
         <h4 className="font-display font-semibold text-white mb-2">
@@ -473,12 +449,12 @@ function PaletteSection({
   ] as const;
   return (
     <m.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.2 }}
       className="mb-10"
     >
-      <p className="text-sm font-mono text-white/30 uppercase tracking-wider mb-4">
+      <p className="text-sm font-mono text-white/70 tracking-wider mb-4">
         Palette
       </p>
       <div className="flex gap-4">
@@ -488,7 +464,7 @@ function PaletteSection({
               className="w-20 h-14 rounded-xl border border-white/10 shadow-lg"
               style={{ backgroundColor: color }}
             />
-            <span className="text-[10px] text-white/30">{label}</span>
+            <span className="text-[10px] text-white/70">{label}</span>
             <span className="text-[11px] text-white/50 font-mono">{color}</span>
           </div>
         ))}
@@ -509,35 +485,128 @@ export default function CreateWorldPage() {
   const [heroImage, setHeroImage] = useState<string | null>(null);
   const [imageLoading, setImageLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [progressStep, setProgressStep] = useState(0);
+  const generating = useRef(false);
+  const [storageNote, setStorageNote] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [saving, setSaving] = useState(false);
   const [refining, setRefining] = useState(false);
-  const [exampleIdx, setExampleIdx] = useState(-1);
+  const [pendingConcept, setPendingConcept] = useState<string | null>(null);
+  const [previousDraft, setPreviousDraft] =
+    useState<ReturnType<typeof readStoredWorldDraft>>(null);
+  const [previousHeroImage, setPreviousHeroImage] = useState<string | null>(
+    null,
+  );
 
   useEffect(() => {
     const supabase = createClient();
-    supabase.auth.getUser().then(({ data }: any) => {
-      setIsAuthenticated(!!data?.user);
-    });
-
+    supabase.auth
+      .getUser()
+      .then(({ data }: { data: { user: User | null } }) =>
+        setIsAuthenticated(!!data?.user),
+      )
+      .catch(() => setIsAuthenticated(false));
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(
+      (_event: AuthChangeEvent, session: Session | null) =>
+        setIsAuthenticated(!!session?.user),
+    );
     const params = new URLSearchParams(window.location.search);
-    const prompt = params.get("prompt");
-    if (prompt) setDescription(prompt.slice(0, 500));
+    try {
+      const concept = sessionStorage.getItem("arcanea.world-concept");
+      const stored = readStoredWorldDraft(
+        sessionStorage.getItem(WORLD_DRAFT_KEY),
+      );
+      setPreviousDraft(
+        readStoredWorldDraft(sessionStorage.getItem(WORLD_PREVIOUS_DRAFT_KEY)),
+      );
+      if (stored) {
+        setDescription(stored.description);
+        setResult(draftResult(stored.world, stored.draft_id));
+        setPhase("result");
+        setStorageNote("Draft restored from this browser tab.");
+        if (concept) setPendingConcept(concept.slice(0, 500));
+      } else if (concept) {
+        setDescription(concept.slice(0, 500));
+        window.history.replaceState(null, "", "/worlds/create");
+      } else if (params.get("prompt"))
+        setDescription(params.get("prompt")!.slice(0, 500));
+    } catch {
+      setStorageNote(
+        "Browser storage is unavailable. Export your draft before leaving this page.",
+      );
+    }
+    return () => subscription.unsubscribe();
   }, []);
 
-  useEffect(() => {
-    if (phase !== "generating") return;
-    setProgressStep(0);
-    const interval = setInterval(() => {
-      setProgressStep((s) => (s < PROGRESS_STEPS.length - 1 ? s + 1 : s));
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [phase]);
+  const rememberDraft = useCallback(
+    (data: GenerateResult, concept: string) => {
+      try {
+        const current =
+          result && !result.saved
+            ? {
+                version: 1 as const,
+                description,
+                draft_id: result.draft_id,
+                world: result.world,
+              }
+            : readStoredWorldDraft(sessionStorage.getItem(WORLD_DRAFT_KEY));
+        if (current && current.draft_id !== data.draft_id) {
+          setPreviousDraft(current);
+          setPreviousHeroImage(heroImage);
+          sessionStorage.setItem(
+            WORLD_PREVIOUS_DRAFT_KEY,
+            JSON.stringify(current),
+          );
+        }
+        sessionStorage.setItem(
+          WORLD_DRAFT_KEY,
+          JSON.stringify({
+            version: 1,
+            description: concept,
+            draft_id: data.draft_id,
+            world: data.world,
+          }),
+        );
+        sessionStorage.removeItem("arcanea.world-concept");
+        setStorageNote(
+          "Draft kept in this browser tab. Save to your account or export a copy before closing it.",
+        );
+      } catch {
+        setStorageNote(
+          "Browser storage is unavailable. Export your draft before leaving this page.",
+        );
+      }
+    },
+    [heroImage, result, description],
+  );
+
+  const continueToSignIn = useCallback(
+    (concept?: string) => {
+      try {
+        // Existing drafts already have their own recovery record. A pending
+        // concept is only needed before the first generation.
+        if (concept && !result)
+          sessionStorage.setItem("arcanea.world-concept", concept);
+      } catch {
+        setError(
+          "Copy your concept before signing in; browser storage is unavailable.",
+        );
+        return;
+      }
+      router.push("/auth/login?next=%2Fworlds%2Fcreate%3Fresume%3D1");
+    },
+    [result, router],
+  );
 
   const generateHeroImage = useCallback(
     async (imagePrompt: string, worldName: string) => {
+      if (!isAuthenticated) {
+        continueToSignIn();
+        return;
+      }
       setImageLoading(true);
+      setError(null);
       try {
         const res = await fetch("/api/worlds/generate-image", {
           method: "POST",
@@ -548,59 +617,104 @@ export default function CreateWorldPage() {
           }),
         });
 
-        if (!res.ok) return;
+        if (res.status === 401) {
+          setIsAuthenticated(false);
+          throw new Error(
+            "Sign in again to create concept art. Your world draft is still here.",
+          );
+        }
+        if (!res.ok)
+          throw new Error(
+            "Concept art could not be generated. Your world draft is unchanged.",
+          );
         const data = await res.json();
         if (data.generated && data.imageData && data.mimeType) {
           setHeroImage(`data:${data.mimeType};base64,${data.imageData}`);
+        } else {
+          throw new Error(
+            "Concept art is unavailable. Your world draft is unchanged.",
+          );
         }
-      } catch {
-        // Non-blocking — silently continue without image
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Concept art is unavailable. Your world draft is unchanged.",
+        );
       } finally {
         setImageLoading(false);
       }
     },
-    [],
+    [isAuthenticated, continueToSignIn],
   );
 
   const generate = useCallback(
-    async (desc?: string) => {
+    async (desc?: string, refinement?: string) => {
       const trimmed = (desc || description).trim();
-      if (!trimmed || trimmed.length < 5) return;
+      if (
+        !trimmed ||
+        trimmed.length < 5 ||
+        generating.current ||
+        isAuthenticated === null
+      )
+        return;
+      if (!isAuthenticated) {
+        continueToSignIn(trimmed);
+        return;
+      }
+      generating.current = true;
 
       setError(null);
-      setHeroImage(null);
       setPhase("generating");
       try {
         const res = await fetch("/api/worlds/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ description: trimmed }),
+          body: JSON.stringify({ description: trimmed, refinement }),
         });
 
         if (!res.ok) {
           const body = await res.json().catch(() => ({}));
-          throw new Error(body.error || `Generation failed (${res.status})`);
+          if (res.status === 401) {
+            setIsAuthenticated(false);
+            throw new Error(
+              "Your session ended. Sign in again to create a draft.",
+            );
+          }
+          throw new Error(
+            typeof body.error === "string"
+              ? body.error
+              : `Generation failed (${res.status})`,
+          );
         }
 
         const data: GenerateResult = await res.json();
-        setResult(data);
+        const parsed = saveWorldDraftSchema.safeParse(data);
+        if (!parsed.success)
+          throw new Error(
+            "The draft could not be validated. Please try again.",
+          );
+        const normalized = draftResult(parsed.data.world, parsed.data.draft_id);
+        rememberDraft(normalized, trimmed);
+        setResult(normalized);
+        setDescription(trimmed);
+        setHeroImage(null);
+        setPendingConcept(null);
         setPhase("result");
-
-        // Phase 2: generate hero image in background
-        if (data.image_prompt) {
-          generateHeroImage(data.image_prompt, data.world.name);
-        }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Something went wrong.");
-        setPhase("input");
+        setPhase(result ? "result" : "input");
+      } finally {
+        generating.current = false;
       }
     },
-    [description, generateHeroImage],
+    [description, rememberDraft, result, isAuthenticated, continueToSignIn],
   );
 
   const saveWorld = useCallback(async () => {
     if (!result || saving) return;
     setSaving(true);
+    setError(null);
 
     try {
       if (result.saved && result.world?.slug) {
@@ -608,383 +722,575 @@ export default function CreateWorldPage() {
         return;
       }
 
-      const res = await fetch("/api/worlds/generate", {
+      const res = await fetch("/api/worlds/save", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ description }),
+        body: JSON.stringify({
+          draft_id: result.draft_id,
+          world: result.world,
+        }),
       });
 
-      if (!res.ok) throw new Error("Failed to save world");
-      const data: GenerateResult = await res.json();
-      if (data.world?.slug) {
-        router.push(`/worlds/${data.world.slug}`);
+      const data = await res.json();
+      if (res.status === 401) {
+        setIsAuthenticated(false);
+        throw new Error(
+          "Sign in again to save this draft. Your draft is still here.",
+        );
       }
-    } catch {
-      setError("Failed to save. Please try again.");
+      if (!res.ok || data.saved !== true || !data.slug)
+        throw new Error(
+          data.error ||
+            "Saving did not finish. Your draft is still here; try again.",
+        );
+      setResult({
+        ...result,
+        saved: true,
+        world_id: data.world_id,
+        world: { ...result.world, slug: data.slug },
+      });
+      try {
+        sessionStorage.removeItem(WORLD_DRAFT_KEY);
+      } catch {
+        /* The saved world remains in the account. */
+      }
+      router.push(`/worlds/${encodeURIComponent(data.slug)}`);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Saving did not finish. Your draft is still here; try again.",
+      );
     } finally {
       setSaving(false);
     }
-  }, [result, saving, description, router]);
+  }, [result, saving, router]);
 
   const startRefine = () => {
     setRefining(true);
   };
 
   const handleRefine = (suffix: string) => {
-    const newDesc = `${description} -- but make it ${suffix}`;
-    setDescription(newDesc.slice(0, 500));
     setRefining(false);
-    generate(newDesc.slice(0, 500));
+    generate(description, suffix);
+  };
+
+  const exportDraft = () => {
+    if (!result) return;
+    const url = URL.createObjectURL(
+      new Blob([JSON.stringify(result.world, null, 2)], {
+        type: "application/json",
+      }),
+    );
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${result.world.slug}.json`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   const reset = () => {
+    if (saving || imageLoading) return false;
+    if (
+      result &&
+      !result.saved &&
+      !window.confirm(
+        "Start a new concept? Save or export this draft first if you need a lasting copy. You can restore the previous text draft in this tab.",
+      )
+    )
+      return false;
+    try {
+      const current =
+        result && !result.saved
+          ? {
+              version: 1 as const,
+              description,
+              draft_id: result.draft_id,
+              world: result.world,
+            }
+          : readStoredWorldDraft(sessionStorage.getItem(WORLD_DRAFT_KEY));
+      if (current) {
+        sessionStorage.setItem(
+          WORLD_PREVIOUS_DRAFT_KEY,
+          JSON.stringify(current),
+        );
+        setPreviousDraft(current);
+        setPreviousHeroImage(heroImage);
+      }
+      sessionStorage.removeItem(WORLD_DRAFT_KEY);
+      sessionStorage.removeItem("arcanea.world-concept");
+    } catch {
+      setError(
+        "Export your draft before starting over. A recovery copy could not be stored.",
+      );
+      return false;
+    }
+    setStorageNote(null);
     setPhase("input");
     setDescription("");
     setResult(null);
     setHeroImage(null);
     setError(null);
     setRefining(false);
+    setPendingConcept(null);
+    return true;
   };
 
-  // Keyboard shortcuts: Cmd/Ctrl+Enter to generate, Escape to reset, Tab to cycle examples
+  const restorePrevious = () => {
+    if (!previousDraft || saving || imageLoading || phase === "generating")
+      return;
+    const restored = draftResult(previousDraft.world, previousDraft.draft_id);
+    const restoredImage = previousHeroImage;
+    rememberDraft(restored, previousDraft.description);
+    setDescription(previousDraft.description);
+    setResult(restored);
+    setHeroImage(restoredImage);
+    setPhase("result");
+    setError(null);
+    setPendingConcept(null);
+  };
+
+  // Preserve native Tab navigation and IME composition.
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (phase === "input" && e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        generate();
-      }
+    const handler = (event: KeyboardEvent) => {
       if (
         phase === "input" &&
-        e.key === "Tab" &&
-        !e.shiftKey &&
-        document.activeElement?.tagName !== "TEXTAREA"
+        event.key === "Enter" &&
+        (event.metaKey || event.ctrlKey) &&
+        !event.isComposing
       ) {
-        e.preventDefault();
-        const next = (exampleIdx + 1) % EXAMPLES.length;
-        setExampleIdx(next);
-        setDescription(EXAMPLES[next]);
-      }
-      if (phase === "result" && e.key === "Escape") {
-        e.preventDefault();
-        reset();
+        event.preventDefault();
+        generate();
       }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [phase, exampleIdx, generate, reset]);
+  }, [phase, generate]);
 
   return (
-    <LazyMotion features={domAnimation}>
-      <main className="min-h-screen bg-[var(--arc-cosmic-void)] text-white relative">
-        <AuroraBackground />
+    <MotionConfig reducedMotion="user">
+      <LazyMotion features={domAnimation}>
+        <div className="min-h-screen bg-[var(--arc-cosmic-void)] text-white relative">
+          <AuroraBackground />
 
-        {/* Back nav */}
-        <div className="relative z-10 max-w-4xl mx-auto px-6 pt-8">
-          <Link
-            href="/worlds"
-            className="inline-flex items-center gap-2 text-sm text-white/30 hover:text-white/60 transition-colors"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          {/* Back nav */}
+          <div className="relative z-10 max-w-4xl mx-auto px-6 pt-8">
+            <Link
+              href="/worlds"
+              className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white/90 transition-colors"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-            Worlds
-          </Link>
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-6 pt-8 pb-24">
-          <AnimatePresence mode="wait">
-            {/* -- Phase: Input ----------------------------------------- */}
-            {phase === "input" && (
-              <m.div
-                key="input"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-                className="flex flex-col items-center text-center"
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                <div className="inline-flex items-center gap-2 mb-6">
-                  <div className="h-px w-8 bg-gradient-to-r from-transparent to-[var(--arc-brand-atlantean-teal)]/60" />
-                  <span className="text-[var(--arc-brand-atlantean-teal)] font-mono text-xs tracking-widest uppercase">
-                    World Forge
-                  </span>
-                  <div className="h-px w-8 bg-gradient-to-l from-transparent to-[var(--arc-brand-atlantean-teal)]/60" />
-                </div>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 leading-tight">
-                  <span className="text-white">Create a </span>
-                  <span
-                    className="bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-void), var(--arc-brand-arcanean-gold))",
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+              Worlds
+            </Link>
+          </div>
+
+          <div className="relative z-10 max-w-4xl mx-auto px-6 pt-8 pb-24">
+            {pendingConcept && (
+              <section
+                aria-label="Choose your draft"
+                className="mb-8 rounded-xl border border-white/20 p-5"
+              >
+                <h2 className="text-lg font-medium">
+                  Your unsaved draft is still here
+                </h2>
+                <p className="mt-2 text-sm text-white/70">
+                  You also brought a new concept. Keep this draft or start the
+                  new idea with a recoverable copy of the previous text.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <button
+                    className="rounded-lg border border-white/30 px-4 py-3"
+                    onClick={() => {
+                      setPendingConcept(null);
+                      try {
+                        sessionStorage.removeItem("arcanea.world-concept");
+                      } catch {
+                        /* The current draft remains visible. */
+                      }
                     }}
                   >
-                    World
-                  </span>
-                </h1>
-
-                <p className="text-lg text-white/40 max-w-lg mb-8">
-                  Describe your world in one sentence. AI will generate
-                  characters, locations, lore, and a color palette.
-                </p>
-
-                {/* Showcase examples */}
-                <div className="w-full max-w-2xl mb-10">
-                  <p className="text-xs text-white/25 uppercase tracking-wider mb-3 text-center">
-                    See what&apos;s possible
-                  </p>
-                  <div className="flex justify-center gap-3 flex-wrap">
-                    {[
-                      {
-                        name: "Arcanea Prime",
-                        tagline: "10 Gates, 5 Elements, one living mythology",
-                        chars: 28,
-                        gradient:
-                          "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold))",
-                        href: "/lore",
-                      },
-                      {
-                        name: "The Shadowfen",
-                        tagline: "Horror bleeds through fractured reality",
-                        chars: 12,
-                        gradient:
-                          "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-cosmic-void), var(--arc-earth))",
-                        href: "/lore",
-                      },
-                      {
-                        name: "Starweave Academy",
-                        tagline: "Seven houses and a thousand untold stories",
-                        chars: 19,
-                        gradient:
-                          "linear-gradient(135deg, var(--arc-brand-cosmic-blue), var(--arc-brand-arcanean-gold), var(--arc-brand-atlantean-teal))",
-                        href: "/lore",
-                      },
-                    ].map((w) => (
-                      <Link
-                        key={w.name}
-                        href={w.href}
-                        className="group/card w-[180px] rounded-xl overflow-hidden border border-white/[0.06] hover:border-white/[0.15] transition-all hover:-translate-y-0.5"
-                      >
-                        <div
-                          className="h-[80px] relative"
-                          style={{ background: w.gradient }}
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-t from-[var(--arc-cosmic-void)] to-transparent opacity-70" />
-                        </div>
-                        <div className="p-3 bg-white/[0.02]">
-                          <p className="text-sm font-display font-semibold text-white group-hover/card:text-[var(--arc-brand-atlantean-teal)] transition-colors truncate">
-                            {w.name}
-                          </p>
-                          <p className="text-[11px] text-white/35 truncate mt-0.5">
-                            {w.tagline}
-                          </p>
-                          <span className="inline-block mt-1.5 text-[10px] px-1.5 py-0.5 rounded bg-white/[0.04] text-white/30 border border-white/[0.06]">
-                            {w.chars} characters
-                          </span>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
+                    Keep this draft
+                  </button>
+                  <button
+                    className="rounded-lg border border-white/30 px-4 py-3"
+                    onClick={() => {
+                      const concept = pendingConcept;
+                      if (reset()) setDescription(concept);
+                    }}
+                  >
+                    Use new concept
+                  </button>
                 </div>
-
-                <div className="w-full max-w-2xl mb-6">
-                  <div className="relative rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_4px_24px_rgba(0,0,0,0.4)] focus-within:shadow-[0_0_0_1px_rgba(0,188,212,0.3),0_8px_40px_rgba(0,0,0,0.4),0_0_80px_rgba(0,188,212,0.08)] transition-all duration-300">
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.035] via-white/[0.02] to-white/[0.025] backdrop-blur-2xl" />
-                    <textarea
-                      value={description}
-                      onChange={(e) =>
-                        setDescription(e.target.value.slice(0, 500))
-                      }
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                          e.preventDefault();
-                          generate();
-                        }
-                      }}
-                      placeholder="A floating archipelago where gravity is controlled by ancient crystals..."
-                      rows={3}
-                      className="relative w-full px-6 py-5 bg-transparent text-white/90 placeholder-white/20 resize-none focus:outline-none font-body text-[15px] leading-relaxed"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between mt-2 px-1">
-                    <span className="text-xs text-white/20">
-                      {description.length}/500
+              </section>
+            )}
+            {previousDraft && previousDraft.draft_id !== result?.draft_id && (
+              <button
+                onClick={restorePrevious}
+                disabled={saving || imageLoading || phase === "generating"}
+                className="mb-6 rounded-lg border border-white/20 px-4 py-3 text-sm disabled:opacity-50"
+              >
+                Restore previous draft
+              </button>
+            )}
+            <AnimatePresence mode="wait">
+              {/* -- Phase: Input ----------------------------------------- */}
+              {phase === "input" && (
+                <m.div
+                  key="input"
+                  initial={false}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex flex-col items-center text-center"
+                >
+                  <div className="inline-flex items-center gap-2 mb-6">
+                    <div className="h-px w-8 bg-gradient-to-r from-transparent to-[var(--arc-brand-atlantean-teal)]/60" />
+                    <span className="text-[var(--arc-brand-atlantean-teal)] font-mono text-xs tracking-widest">
+                      World draft
                     </span>
-                    {error && (
-                      <span className="text-xs text-red-400">{error}</span>
+                    <div className="h-px w-8 bg-gradient-to-l from-transparent to-[var(--arc-brand-atlantean-teal)]/60" />
+                  </div>
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 leading-tight">
+                    <span className="text-white">Create a </span>
+                    <span
+                      className="bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage:
+                          "linear-gradient(135deg, var(--arc-brand-atlantean-teal), var(--arc-void), var(--arc-brand-arcanean-gold))",
+                      }}
+                    >
+                      world
+                    </span>
+                  </h1>
+
+                  <p className="text-lg text-white/70 max-w-lg mb-8">
+                    Describe your world in one sentence. Preview its characters,
+                    locations and rules before saving.
+                  </p>
+
+                  <p className="text-sm text-white/70 max-w-lg mb-8">
+                    Sign in to generate with hosted AI. Drafts stay in this tab
+                    until you save privately to your account. Avoid confidential
+                    material.
+                  </p>
+                  <div className="w-full max-w-2xl mb-6">
+                    <div className="relative rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_4px_24px_rgba(0,0,0,0.4)] focus-within:shadow-[0_0_0_1px_rgba(0,188,212,0.3),0_8px_40px_rgba(0,0,0,0.4),0_0_80px_rgba(0,188,212,0.08)] transition-colors duration-300">
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.035] via-white/[0.02] to-white/[0.025] backdrop-blur-2xl" />
+                      <textarea
+                        aria-label="Describe your world"
+                        value={description}
+                        onChange={(e) =>
+                          setDescription(e.target.value.slice(0, 500))
+                        }
+                        onKeyDown={(e) => {
+                          if (
+                            e.key === "Enter" &&
+                            (e.ctrlKey || e.metaKey) &&
+                            !e.shiftKey &&
+                            !e.nativeEvent.isComposing
+                          ) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            generate();
+                          }
+                        }}
+                        placeholder="A floating archipelago where gravity is controlled by ancient crystals..."
+                        rows={3}
+                        className="relative w-full px-6 py-5 bg-transparent text-white/90 placeholder-white/60 resize-none focus:outline-none font-body text-[15px] leading-relaxed"
+                      />
+                    </div>
+                    <div className="flex items-center justify-between mt-2 px-1">
+                      <span className="text-xs text-white/70">
+                        {description.length}/500
+                      </span>
+                      {error && (
+                        <span role="alert" className="text-xs text-red-400">
+                          {error}
+                        </span>
+                      )}
+                    </div>
+                    <AnimatePresence>
+                      <GenrePreview description={description} />
+                    </AnimatePresence>
+                  </div>
+
+                  <m.button
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => generate()}
+                    disabled={
+                      description.trim().length < 5 || isAuthenticated === null
+                    }
+                    className={`px-10 py-4 rounded-xl font-bold text-base transition-colors duration-200 ${
+                      description.trim().length >= 5
+                        ? "bg-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40"
+                        : "bg-white/[0.04] text-white/70 cursor-not-allowed"
+                    }`}
+                  >
+                    {isAuthenticated === null
+                      ? "Checking your session…"
+                      : isAuthenticated
+                        ? "Create world"
+                        : "Sign in to create your world"}
+                  </m.button>
+
+                  <div className="mt-10 w-full max-w-2xl">
+                    <p className="text-xs text-white/70 mb-3 tracking-wider">
+                      Try one of these
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-2">
+                      {EXAMPLES.map((ex) => (
+                        <button
+                          key={ex}
+                          onClick={() => setDescription(ex)}
+                          className="px-4 py-2 rounded-full text-[13px] text-white/70 hover:text-white/90 bg-white/[0.02] hover:bg-[var(--arc-brand-atlantean-teal)]/[0.06] border border-white/[0.04] hover:border-[var(--arc-brand-atlantean-teal)]/20 transition-colors duration-300"
+                        >
+                          {ex}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </m.div>
+              )}
+
+              {/* -- Phase: Generating ------------------------------------ */}
+              {phase === "generating" && <GeneratingOverlay key="generating" />}
+
+              {/* -- Phase: Result ---------------------------------------- */}
+              {phase === "result" && result && (
+                <m.div
+                  key="result"
+                  initial={false}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {/* Hero section with image */}
+                  <HeroSection world={result.world} heroImage={heroImage} />
+
+                  {/* Image loading indicator */}
+                  {imageLoading && (
+                    <m.div
+                      initial={false}
+                      animate={{ opacity: 1 }}
+                      className="text-center mb-8"
+                    >
+                      <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06]">
+                        <div className="w-2 h-2 rounded-full bg-[var(--arc-brand-atlantean-teal)] motion-safe:animate-pulse" />
+                        <span className="text-xs text-white/70">
+                          Generating concept art...
+                        </span>
+                      </div>
+                    </m.div>
+                  )}
+
+                  {/* Description */}
+                  {result.world.description && (
+                    <m.p
+                      initial={false}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                      className="text-sm text-white/70 max-w-2xl mx-auto leading-relaxed text-center mb-10"
+                    >
+                      {result.world.description}
+                    </m.p>
+                  )}
+
+                  {/* Element orbs */}
+                  {result.world.elements &&
+                    result.world.elements.length > 0 && (
+                      <ElementOrbs elements={result.world.elements} />
+                    )}
+
+                  {/* Characters */}
+                  {result.characters.length > 0 && (
+                    <div className="mb-10">
+                      <m.h3
+                        initial={false}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                        className="text-sm font-mono text-[var(--arc-brand-atlantean-teal)]/60 tracking-wider mb-4"
+                      >
+                        Characters
+                      </m.h3>
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {result.characters.map((c, i) => (
+                          <CharacterCard key={c.name} char={c} index={i} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Locations */}
+                  {result.locations.length > 0 && (
+                    <div className="mb-10">
+                      <m.h3
+                        initial={false}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.8 }}
+                        className="text-sm font-mono text-[var(--arc-void)]/60 tracking-wider mb-4"
+                      >
+                        Locations
+                      </m.h3>
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {result.locations.map((l, i) => (
+                          <LocationCard key={l.name} loc={l} index={i} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Founding event */}
+                  {result.event && (
+                    <FoundingEvent
+                      event={result.event}
+                      worldName={result.world.name}
+                    />
+                  )}
+
+                  {/* Palette */}
+                  {result.world.palette && (
+                    <PaletteSection palette={result.world.palette} />
+                  )}
+
+                  {result.world.laws.length > 0 && (
+                    <section className="my-10">
+                      <h3 className="text-lg mb-4">World rules</h3>
+                      <ul className="space-y-4">
+                        {result.world.laws.map((law) => (
+                          <li
+                            key={law.name}
+                            className="border-l-2 border-[var(--arc-brand-atlantean-teal)] pl-4"
+                          >
+                            <h4 className="font-medium">{law.name}</h4>
+                            <p className="text-sm text-white/70 mt-1">
+                              {law.description}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  )}
+                  {result.world.systems.length > 0 && (
+                    <section className="my-10">
+                      <h2 className="text-lg mb-4">World systems</h2>
+                      <div className="space-y-5">
+                        {result.world.systems.map((system, index) => (
+                          <article
+                            key={`${system.name}-${index}`}
+                            className="border-l-2 border-[var(--arc-brand-atlantean-teal)] pl-4"
+                          >
+                            <h3 className="font-medium">{system.name}</h3>
+                            <p className="text-sm text-white/70 mt-1">
+                              {system.type}
+                            </p>
+                            <p className="text-sm text-white/80 mt-2 whitespace-pre-wrap">
+                              {system.rules}
+                            </p>
+                          </article>
+                        ))}
+                      </div>
+                    </section>
+                  )}
+                  <p
+                    role="status"
+                    className="text-sm text-white/70 text-center my-5"
+                  >
+                    {storageNote}
+                  </p>
+                  {error && (
+                    <p
+                      role="alert"
+                      className="text-sm text-red-300 text-center my-5"
+                    >
+                      {error}
+                    </p>
+                  )}
+                  <div className="flex flex-wrap justify-center gap-4 my-6">
+                    <button
+                      onClick={exportDraft}
+                      className="px-5 py-3 rounded-lg border border-white/20 text-sm"
+                    >
+                      Export draft
+                    </button>
+                    {result.image_prompt && !heroImage && (
+                      <button
+                        disabled={imageLoading}
+                        onClick={() =>
+                          generateHeroImage(
+                            result.image_prompt!,
+                            result.world.name,
+                          )
+                        }
+                        className="px-5 py-3 rounded-lg border border-white/20 text-sm disabled:opacity-50"
+                      >
+                        {imageLoading
+                          ? "Creating concept art…"
+                          : isAuthenticated
+                            ? "Generate concept art"
+                            : "Sign in to create concept art"}
+                      </button>
                     )}
                   </div>
-                  <AnimatePresence>
-                    <GenrePreview description={description} />
-                  </AnimatePresence>
-                </div>
-
-                <m.button
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={() => generate()}
-                  disabled={description.trim().length < 5}
-                  className={`px-10 py-4 rounded-xl font-bold text-base transition-all duration-200 ${
-                    description.trim().length >= 5
-                      ? "bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40"
-                      : "bg-white/[0.04] text-white/20 cursor-not-allowed"
-                  }`}
-                >
-                  Create World
-                </m.button>
-
-                <div className="mt-10 w-full max-w-2xl">
-                  <p className="text-xs text-white/20 mb-3 uppercase tracking-wider">
-                    Try one of these
+                  <p className="text-xs text-white/70 text-center">
+                    Concept art is a separate generation and is not included in
+                    the saved text draft.
                   </p>
-                  <div className="flex flex-wrap justify-center gap-2">
-                    {EXAMPLES.map((ex) => (
-                      <button
-                        key={ex}
-                        onClick={() => setDescription(ex)}
-                        className="px-4 py-2 rounded-full text-[13px] text-white/30 hover:text-white/65 bg-white/[0.02] hover:bg-[var(--arc-brand-atlantean-teal)]/[0.06] border border-white/[0.04] hover:border-[var(--arc-brand-atlantean-teal)]/20 transition-all duration-300"
-                      >
-                        {ex}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </m.div>
-            )}
-
-            {/* -- Phase: Generating ------------------------------------ */}
-            {phase === "generating" && (
-              <GeneratingOverlay key="generating" step={progressStep} />
-            )}
-
-            {/* -- Phase: Result ---------------------------------------- */}
-            {phase === "result" && result && (
-              <m.div
-                key="result"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                {/* Hero section with image */}
-                <HeroSection world={result.world} heroImage={heroImage} />
-
-                {/* Image loading indicator */}
-                {imageLoading && (
+                  {/* CTA */}
                   <m.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-center mb-8"
+                    initial={false}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.3 }}
+                    className="mt-12 text-center"
                   >
-                    <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06]">
-                      <div className="w-2 h-2 rounded-full bg-[var(--arc-brand-atlantean-teal)] animate-pulse" />
-                      <span className="text-xs text-white/40">
-                        Generating concept art...
-                      </span>
-                    </div>
-                  </m.div>
-                )}
+                    <p className="text-white/70 text-sm mb-6">
+                      This is your world. What happens next?
+                    </p>
 
-                {/* Description */}
-                {result.world.description && (
-                  <m.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                    className="text-sm text-white/35 max-w-2xl mx-auto leading-relaxed text-center mb-10"
-                  >
-                    {result.world.description}
-                  </m.p>
-                )}
-
-                {/* Element orbs */}
-                {result.world.elements && result.world.elements.length > 0 && (
-                  <ElementOrbs elements={result.world.elements} />
-                )}
-
-                {/* Characters */}
-                {result.characters.length > 0 && (
-                  <div className="mb-10">
-                    <m.h3
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 }}
-                      className="text-sm font-mono text-[var(--arc-brand-atlantean-teal)]/60 uppercase tracking-wider mb-4"
-                    >
-                      Characters
-                    </m.h3>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {result.characters.slice(0, 3).map((c, i) => (
-                        <CharacterCard key={c.name} char={c} index={i} />
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Locations */}
-                {result.locations.length > 0 && (
-                  <div className="mb-10">
-                    <m.h3
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.8 }}
-                      className="text-sm font-mono text-[var(--arc-void)]/60 uppercase tracking-wider mb-4"
-                    >
-                      Locations
-                    </m.h3>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {result.locations.slice(0, 3).map((l, i) => (
-                        <LocationCard key={l.name} loc={l} index={i} />
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Founding event */}
-                {result.event && (
-                  <FoundingEvent
-                    event={result.event}
-                    worldName={result.world.name}
-                  />
-                )}
-
-                {/* Palette */}
-                {result.world.palette && (
-                  <PaletteSection palette={result.world.palette} />
-                )}
-
-                {/* CTA */}
-                <m.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.3 }}
-                  className="mt-12 text-center"
-                >
-                  <p className="text-white/30 text-sm mb-6">
-                    This is your world. What happens next?
-                  </p>
-
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    {isAuthenticated ? (
-                      <m.button
-                        whileHover={{ scale: 1.03 }}
-                        whileTap={{ scale: 0.97 }}
-                        onClick={saveWorld}
-                        disabled={saving}
-                        className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow disabled:opacity-50"
-                      >
-                        {saving ? "Saving..." : "Enter This World"}
-                        {!saving && (
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                      {isAuthenticated ? (
+                        <m.button
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
+                          onClick={saveWorld}
+                          disabled={saving}
+                          className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow disabled:opacity-50"
+                        >
+                          {saving ? "Saving..." : "Save this world"}
+                          {!saving && (
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                              />
+                            </svg>
+                          )}
+                        </m.button>
+                      ) : (
+                        <Link
+                          href="/auth/login?next=%2Fworlds%2Fcreate%3Fresume%3D1"
+                          className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow"
+                        >
+                          Sign in to save this draft
                           <svg
                             className="w-4 h-4"
                             fill="none"
@@ -998,75 +1304,60 @@ export default function CreateWorldPage() {
                               d="M17 8l4 4m0 0l-4 4m4-4H3"
                             />
                           </svg>
-                        )}
-                      </m.button>
-                    ) : (
-                      <Link
-                        href="/auth/signup"
-                        className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--arc-brand-atlantean-teal)] to-[var(--arc-void)] text-white font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow"
+                        </Link>
+                      )}
+
+                      <button
+                        onClick={startRefine}
+                        disabled={saving || imageLoading}
+                        className="inline-flex items-center gap-2 px-8 py-4 border border-[var(--arc-brand-arcanean-gold)]/20 text-[var(--arc-brand-arcanean-gold)]/60 font-bold rounded-xl hover:bg-[var(--arc-brand-arcanean-gold)]/[0.04] hover:text-[var(--arc-brand-arcanean-gold)]/80 transition-colors"
                       >
-                        Sign up to save
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
+                        Refine
+                      </button>
+
+                      <button
+                        onClick={reset}
+                        disabled={saving || imageLoading}
+                        className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/60 font-bold rounded-xl hover:bg-white/[0.04] transition-colors"
+                      >
+                        Start over
+                      </button>
+                    </div>
+
+                    {/* Refine options */}
+                    <AnimatePresence>
+                      {refining && (
+                        <m.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="mt-6 overflow-hidden"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                          />
-                        </svg>
-                      </Link>
-                    )}
-
-                    <button
-                      onClick={startRefine}
-                      className="inline-flex items-center gap-2 px-8 py-4 border border-[var(--arc-brand-arcanean-gold)]/20 text-[var(--arc-brand-arcanean-gold)]/60 font-bold rounded-xl hover:bg-[var(--arc-brand-arcanean-gold)]/[0.04] hover:text-[var(--arc-brand-arcanean-gold)]/80 transition-colors"
-                    >
-                      Refine
-                    </button>
-
-                    <button
-                      onClick={reset}
-                      className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/60 font-bold rounded-xl hover:bg-white/[0.04] transition-colors"
-                    >
-                      Start Over
-                    </button>
-                  </div>
-
-                  {/* Refine options */}
-                  <AnimatePresence>
-                    {refining && (
-                      <m.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="mt-6 overflow-hidden"
-                      >
-                        <p className="text-xs text-white/30 mb-3">Make it...</p>
-                        <div className="flex flex-wrap justify-center gap-2">
-                          {REFINE_SUFFIXES.map((suffix) => (
-                            <button
-                              key={suffix}
-                              onClick={() => handleRefine(suffix)}
-                              className="px-4 py-2 rounded-full text-[13px] text-[var(--arc-brand-arcanean-gold)]/50 hover:text-[var(--arc-brand-arcanean-gold)]/80 bg-[var(--arc-brand-arcanean-gold)]/[0.03] hover:bg-[var(--arc-brand-arcanean-gold)]/[0.08] border border-[var(--arc-brand-arcanean-gold)]/10 hover:border-[var(--arc-brand-arcanean-gold)]/30 transition-all duration-300"
-                            >
-                              {suffix}
-                            </button>
-                          ))}
-                        </div>
-                      </m.div>
-                    )}
-                  </AnimatePresence>
+                          <p className="text-xs text-white/70 mb-3">
+                            Generate a new version. The previous text draft
+                            stays available to restore.
+                          </p>
+                          <div className="flex flex-wrap justify-center gap-2">
+                            {REFINE_SUFFIXES.map((suffix) => (
+                              <button
+                                key={suffix}
+                                onClick={() => handleRefine(suffix)}
+                                className="px-4 py-2 rounded-full text-[13px] text-[var(--arc-brand-arcanean-gold)]/50 hover:text-[var(--arc-brand-arcanean-gold)]/80 bg-[var(--arc-brand-arcanean-gold)]/[0.03] hover:bg-[var(--arc-brand-arcanean-gold)]/[0.08] border border-[var(--arc-brand-arcanean-gold)]/10 hover:border-[var(--arc-brand-arcanean-gold)]/30 transition-colors duration-300"
+                              >
+                                {suffix}
+                              </button>
+                            ))}
+                          </div>
+                        </m.div>
+                      )}
+                    </AnimatePresence>
+                  </m.div>
                 </m.div>
-              </m.div>
-            )}
-          </AnimatePresence>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
-      </main>
-    </LazyMotion>
+      </LazyMotion>
+    </MotionConfig>
   );
 }
