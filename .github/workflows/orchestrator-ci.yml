@@ -29,6 +29,7 @@ jobs:
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     name: Test + build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
 
@@ -44,7 +45,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install deps for orchestrator packages only
-        run: pnpm install --filter "@arcanea/router-spec" --filter "@arcanea/orchestrator" --frozen-lockfile=false
+        run: pnpm install --filter "@arcanea/router-spec" --filter "@arcanea/orchestrator" --frozen-lockfile
 
       - name: Validate router spec
         run: pnpm --filter "@arcanea/router-spec" validate
