@@ -1,0 +1,449 @@
+{
+  "format": "WorldPack.v1",
+  "packVersion": "1.0.0",
+  "interop": {
+    "standard": "world.arcanea.json",
+    "schemaVersion": "1.0.0",
+    "contentHashFormat": "sha256:<hex>",
+    "idPrefixes": {
+      "world": "wld_"
+    }
+  },
+  "exportedAt": "2026-09-02T00:00:00.000Z",
+  "digest": "sha256:79ebdaac74a7cba3cf68919bdf8e6d523b2b64f31203528d89e87a995a0f33b7",
+  "world": {
+    "id": "wld_5ZQT57WAMDHF3XVE6A02VWWYYV",
+    "name": "The Slow Chart",
+    "slug": "the-slow-chart",
+    "creatorRef": "crt_4FZNMY28QVTXFMXPHAYA603ES8"
+  },
+  "canon": {
+    "document": ".arcanea/lore/CANON_LOCKED.md",
+    "sourceHash": "sha256:58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f"
+  },
+  "provenance": {
+    "sources": [
+      {
+        "id": "src_7ZXT40XMD87BJX8EFQ8023KBRQ",
+        "kind": "creator-input",
+        "uri": null,
+        "citation": "World seed authored by @frankx",
+        "retrievedAt": "2026-09-02T00:00:00.000Z"
+      }
+    ],
+    "branches": [
+      {
+        "id": "main",
+        "type": "Branch",
+        "name": "main",
+        "parent": null,
+        "head": "ver_8PHTPSEQVE672FKV8NSW8F118R",
+        "owner": "crt_4FZNMY28QVTXFMXPHAYA603ES8",
+        "createdAt": "2026-09-02T00:00:00.000Z"
+      }
+    ],
+    "versions": [
+      {
+        "id": "ver_3KW7S050TGNX0QWAWW17KZ8XSF",
+        "type": "Version",
+        "branch": "main",
+        "parents": [],
+        "createdAt": "2026-09-02T00:00:00.000Z",
+        "createdBy": "crt_4FZNMY28QVTXFMXPHAYA603ES8",
+        "message": "world seed",
+        "digest": null
+      },
+      {
+        "id": "ver_8PHTPSEQVE672FKV8NSW8F118R",
+        "type": "Version",
+        "branch": "main",
+        "parents": ["ver_3KW7S050TGNX0QWAWW17KZ8XSF"],
+        "createdAt": "2026-09-02T00:00:00.000Z",
+        "createdBy": "crt_4FZNMY28QVTXFMXPHAYA603ES8",
+        "message": "first cast and its room",
+        "digest": "sha256:67871c04411489094157280e9ed9845022213bbc51056fea8e45d269bdbfac18"
+      }
+    ],
+    "head": "ver_8PHTPSEQVE672FKV8NSW8F118R"
+  },
+  "counts": {
+    "Universe": 1,
+    "World": 1,
+    "Creator": 1,
+    "Character": 1,
+    "Location": 1
+  },
+  "nodes": [
+    {
+      "id": "uni_TA22B0V6HD87ZJC8KR0ZZPARZR",
+      "type": "Universe",
+      "name": "Arcanea",
+      "layer": "canon",
+      "attributes": {
+        "canonDocument": ".arcanea/lore/CANON_LOCKED.md"
+      },
+      "governance": {
+        "owner": "arcanea",
+        "sourceRef": "src_7ZXT40XMD87BJX8EFQ8023KBRQ",
+        "versionRef": "ver_3KW7S050TGNX0QWAWW17KZ8XSF",
+        "branchRef": "main",
+        "visibility": "public",
+        "canonStatus": "locked",
+        "rights": {
+          "state": "arcanea-owned",
+          "spdx": null,
+          "commercial": false,
+          "attribution": true
+        },
+        "evalRule": "canon-immutable"
+      }
+    },
+    {
+      "id": "wld_5ZQT57WAMDHF3XVE6A02VWWYYV",
+      "type": "World",
+      "name": "The Slow Chart",
+      "layer": "user",
+      "attributes": {
+        "premise": "A cartographers' guild that maps corridors before they drift.",
+        "mood": "fantasy"
+      },
+      "governance": {
+        "owner": "crt_4FZNMY28QVTXFMXPHAYA603ES8",
+        "sourceRef": "src_7ZXT40XMD87BJX8EFQ8023KBRQ",
+        "versionRef": "ver_3KW7S050TGNX0QWAWW17KZ8XSF",
+        "branchRef": "main",
+        "visibility": "private",
+        "canonStatus": "draft",
+        "rights": {
+          "state": "creator-owned",
+          "spdx": "CC-BY-4.0",
+          "commercial": true,
+          "attribution": true
+        },
+        "evalRule": "canon-conflict-clean"
+      }
+    },
+    {
+      "id": "crt_4FZNMY28QVTXFMXPHAYA603ES8",
+      "type": "Creator",
+      "name": "Frank",
+      "layer": "user",
+      "attributes": {
+        "handle": "frankx"
+      },
+      "governance": {
+        "owner": "crt_4FZNMY28QVTXFMXPHAYA603ES8",
+        "sourceRef": "src_7ZXT40XMD87BJX8EFQ8023KBRQ",
+        "versionRef": "ver_3KW7S050TGNX0QWAWW17KZ8XSF",
+        "branchRef": "main",
+        "visibility": "private",
+        "canonStatus": "draft",
+        "rights": {
+          "state": "creator-owned",
+          "spdx": "CC-BY-4.0",
+          "commercial": true,
+          "attribution": true
+        },
+        "evalRule": "canon-conflict-clean"
+      }
+    },
+    {
+      "id": "chr_WEY577WJD69ZZHM2H3MV80S13S",
+      "type": "Character",
+      "name": "Sennaris Vale",
+      "description": "A cartographer of drifting corridors who reads a room the way others read weather. She keeps her sixth gate half-open on purpose.",
+      "layer": "generated",
+      "attributes": {
+        "archetype": "cartographer",
+        "disposition": "watchful",
+        "element": "Void",
+        "gate": 6,
+        "frequencyHz": 639,
+        "guardian": "Lyria",
+        "godbeast": "Yumiko",
+        "gatesOpen": 3,
+        "house": "House Synthesis",
+        "originClass": "Arcans"
+      },
+      "provenance": {
+        "apl": "character.constrained.v1",
+        "aplVersion": "0.1",
+        "promptHash": "sha256:d4d700d80b843981bc8dcdecc2489718ccb6d649e563da6927af6c82b8228339"
+      },
+      "governance": {
+        "owner": "crt_4FZNMY28QVTXFMXPHAYA603ES8",
+        "sourceRef": "src_7ZXT40XMD87BJX8EFQ8023KBRQ",
+        "versionRef": "ver_3KW7S050TGNX0QWAWW17KZ8XSF",
+        "branchRef": "main",
+        "visibility": "private",
+        "canonStatus": "draft",
+        "rights": {
+          "state": "creator-owned",
+          "spdx": "CC-BY-4.0",
+          "commercial": true,
+          "attribution": true
+        },
+        "evalRule": "canon-conflict-clean"
+      }
+    },
+    {
+      "id": "loc_0651824K3T0PXT63CG0C9ARE8K",
+      "type": "Location",
+      "name": "The Slow Chart Room",
+      "description": "A vaulted hall where corridor maps are redrawn each season, because corridors drift.",
+      "layer": "generated",
+      "attributes": {
+        "kind": "archive",
+        "element": "Void"
+      },
+      "provenance": {
+        "apl": "location.constrained.v1",
+        "aplVersion": "0.1",
+        "promptHash": "sha256:66eda6ad103d7c78dff6a3565e416a3a12cc306e2db127d22528c83d237a120d"
+      },
+      "governance": {
+        "owner": "crt_4FZNMY28QVTXFMXPHAYA603ES8",
+        "sourceRef": "src_7ZXT40XMD87BJX8EFQ8023KBRQ",
+        "versionRef": "ver_3KW7S050TGNX0QWAWW17KZ8XSF",
+        "branchRef": "main",
+        "visibility": "private",
+        "canonStatus": "draft",
+        "rights": {
+          "state": "creator-owned",
+          "spdx": "CC-BY-4.0",
+          "commercial": true,
+          "attribution": true
+        },
+        "evalRule": "canon-conflict-clean"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_TYGBVF04F8YXE798PD8YZ43H07",
+      "type": "Relationship",
+      "kind": "part_of",
+      "from": "wld_5ZQT57WAMDHF3XVE6A02VWWYYV",
+      "to": "uni_TA22B0V6HD87ZJC8KR0ZZPARZR",
+      "strength": 1,
+      "governance": {
+        "owner": "crt_4FZNMY28QVTXFMXPHAYA603ES8",
+        "sourceRef": "src_7ZXT40XMD87BJX8EFQ8023KBRQ",
+        "versionRef": "ver_3KW7S050TGNX0QWAWW17KZ8XSF",
+        "branchRef": "main",
+        "visibility": "private",
+        "canonStatus": "draft",
+        "rights": {
+          "state": "creator-owned",
+          "spdx": "CC-BY-4.0",
+          "commercial": true,
+          "attribution": true
+        },
+        "evalRule": "canon-conflict-clean"
+      }
+    },
+    {
+      "type": "Relationship",
+      "strength": 1,
+      "id": "rel_QK356YKN8E6EQGVR3Q5WBR5DVF",
+      "kind": "located_at",
+      "from": "chr_WEY577WJD69ZZHM2H3MV80S13S",
+      "to": "loc_0651824K3T0PXT63CG0C9ARE8K",
+      "governance": {
+        "owner": "crt_4FZNMY28QVTXFMXPHAYA603ES8",
+        "sourceRef": "src_7ZXT40XMD87BJX8EFQ8023KBRQ",
+        "versionRef": "ver_3KW7S050TGNX0QWAWW17KZ8XSF",
+        "branchRef": "main",
+        "visibility": "private",
+        "canonStatus": "draft",
+        "rights": {
+          "state": "creator-owned",
+          "spdx": "CC-BY-4.0",
+          "commercial": true,
+          "attribution": true
+        },
+        "evalRule": "canon-conflict-clean"
+      }
+    }
+  ],
+  "agentRoles": [
+    {
+      "id": "guardian.lyssandria",
+      "type": "AgentRole",
+      "name": "Lyssandria",
+      "gate": 1,
+      "frequencyHz": 174,
+      "role": "Guardian of Foundation",
+      "charter": "Structure and survivability of a world: does it hold together as a graph?",
+      "authority": {
+        "scopes": ["canon:read", "world:read", "world:write", "pack:merge"],
+        "owns": [
+          "graph.dangling-relationship",
+          "provenance.dangling-source",
+          "provenance.dangling-version",
+          "provenance.dangling-branch",
+          "provenance.missing-owner",
+          "provenance.unknown-agent-role"
+        ],
+        "maxWaivableSeverity": "warning"
+      }
+    },
+    {
+      "id": "guardian.leyla",
+      "type": "AgentRole",
+      "name": "Leyla",
+      "gate": 2,
+      "frequencyHz": 285,
+      "role": "Guardian of Flow",
+      "charter": "Generation and revision: drafts move, nothing stalls at draft forever.",
+      "authority": {
+        "scopes": ["canon:read", "world:read", "world:write", "canon:propose"],
+        "owns": ["status.illegal-for-layer"],
+        "maxWaivableSeverity": "warning"
+      }
+    },
+    {
+      "id": "guardian.draconia",
+      "type": "AgentRole",
+      "name": "Draconia",
+      "gate": 3,
+      "frequencyHz": 396,
+      "role": "Guardian of Fire",
+      "charter": "Power systems: gates, ranks, and what a character can actually do.",
+      "authority": {
+        "scopes": ["canon:read", "world:read", "world:write"],
+        "owns": [
+          "canon.rank-out-of-band",
+          "canon.rank-unknown",
+          "canon.element-unknown",
+          "canon.frequency-unknown"
+        ],
+        "maxWaivableSeverity": "warning"
+      }
+    },
+    {
+      "id": "guardian.maylinn",
+      "type": "AgentRole",
+      "name": "Maylinn",
+      "gate": 4,
+      "frequencyHz": 417,
+      "role": "Guardian of Heart",
+      "charter": "Characters and the people they are; sensitivity protocol for Mirror Realms.",
+      "authority": {
+        "scopes": ["canon:read", "world:read", "world:write"],
+        "owns": ["canon.house-unknown"],
+        "maxWaivableSeverity": "warning"
+      }
+    },
+    {
+      "id": "guardian.alera",
+      "type": "AgentRole",
+      "name": "Alera",
+      "gate": 5,
+      "frequencyHz": 528,
+      "role": "Guardian of Voice",
+      "charter": "Truth of statement. Locked truths are not negotiable; nothing that contradicts one passes.",
+      "authority": {
+        "scopes": ["canon:read", "world:read", "canon:propose"],
+        "owns": [
+          "canon.nero-miscast",
+          "canon.luminor-as-species",
+          "canon.locked-truth-contradiction",
+          "canon.staging-cited-as-locked"
+        ],
+        "maxWaivableSeverity": "info"
+      }
+    },
+    {
+      "id": "guardian.lyria",
+      "type": "AgentRole",
+      "name": "Lyria",
+      "gate": 6,
+      "frequencyHz": 639,
+      "role": "Guardian of Sight",
+      "charter": "Detection: runs the conflict pass and reports what it sees, waives nothing.",
+      "authority": {
+        "scopes": ["canon:read", "world:read"],
+        "owns": [],
+        "maxWaivableSeverity": "info"
+      }
+    },
+    {
+      "id": "guardian.aiyami",
+      "type": "AgentRole",
+      "name": "Aiyami",
+      "gate": 7,
+      "frequencyHz": 741,
+      "role": "Guardian of Crown",
+      "charter": "Rights and licence: nothing leaves the studio with unresolved ownership.",
+      "authority": {
+        "scopes": ["canon:read", "world:read", "rights:assign", "pack:export"],
+        "owns": [
+          "rights.unresolved",
+          "rights.licensed-without-licence",
+          "rights.state-illegal-for-layer"
+        ],
+        "maxWaivableSeverity": "info"
+      }
+    },
+    {
+      "id": "guardian.elara",
+      "type": "AgentRole",
+      "name": "Elara",
+      "gate": 8,
+      "frequencyHz": 852,
+      "role": "Guardian of Starweave",
+      "charter": "Branch topology: forks, diffs, and merges across versions of a world.",
+      "authority": {
+        "scopes": ["canon:read", "world:read", "pack:merge", "world:write"],
+        "owns": [],
+        "maxWaivableSeverity": "warning"
+      }
+    },
+    {
+      "id": "guardian.ino",
+      "type": "AgentRole",
+      "name": "Ino",
+      "gate": 9,
+      "frequencyHz": 963,
+      "role": "Guardian of Unity",
+      "charter": "Public contributions: what a stranger may add and on what terms.",
+      "authority": {
+        "scopes": ["canon:read", "world:read", "rights:assign"],
+        "owns": ["schema.unknown-layer"],
+        "maxWaivableSeverity": "warning"
+      }
+    },
+    {
+      "id": "guardian.shinkami",
+      "type": "AgentRole",
+      "name": "Shinkami",
+      "gate": 10,
+      "frequencyHz": 1111,
+      "role": "Guardian of Source",
+      "charter": "Canon boundary. Cannot lock canon — only the Creator can. Escalates instead.",
+      "authority": {
+        "scopes": [
+          "canon:read",
+          "world:read",
+          "canon:propose",
+          "canon:approve-staging",
+          "canon:escalate-to-creator"
+        ],
+        "owns": [
+          "canon.locked-name-taken",
+          "canon.alias-of-locked-name",
+          "canon.layer-claim",
+          "canon.binding-mismatch",
+          "canon.gate-frequency-mismatch",
+          "canon.gate-pairing-mismatch",
+          "canon.gate-unknown",
+          "canon.godbeast-unknown",
+          "canon.guardian-unknown",
+          "canon.origin-class-unknown"
+        ],
+        "maxWaivableSeverity": "info"
+      }
+    }
+  ]
+}

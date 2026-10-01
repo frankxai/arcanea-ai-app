@@ -22,8 +22,8 @@ export const FACTS = {
   wisdoms: 7,
   /** Luminor teams — canon. */
   teams: 4,
-  /** Tools registered in packages/arcanea-mcp/src/index.ts (unique server.registerTool names). */
-  mcpTools: 54,
+  /** tools/list from the @arcanea/mcp-server bin, measured by packages/arcanea-mcp/scripts/consumer-smoke.mjs. */
+  mcpTools: 59,
   /** Skills shipped in packages/arcanea-skills/skills/. */
   skills: 20,
 } as const;
