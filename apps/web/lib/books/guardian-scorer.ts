@@ -18,13 +18,13 @@
  * claude-opus-4-6, overridable via GUARDIAN_REVIEW_MODEL env var.
  */
 
-import { readFile, readdir } from 'fs/promises';
-import { access } from 'fs/promises';
-import { join } from 'path';
-import { getBookRoot } from '../content/book-path';
-import { generateText } from 'ai';
-import matter from 'gray-matter';
-import { createAdminClient } from '@/lib/supabase/server';
+import { readFile, readdir } from "fs/promises";
+import { access } from "fs/promises";
+import { join } from "path";
+import { getBookRoot } from "../content/book-path";
+import { generateText } from "ai";
+import matter from "gray-matter";
+import { createAdminClient, createClient } from "@/lib/supabase/server";
 import {
   GUARDIANS,
   GUARDIAN_IDS,
@@ -35,7 +35,7 @@ import {
   type GuardianId,
   type GuardianPrompt,
   type BookTier,
-} from './guardian-prompts';
+} from "./guardian-prompts";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -51,7 +51,7 @@ export interface GuardianScore {
   durationMs: number;
 }
 
-export type Grade = 'luminor' | 'master' | 'apprentice' | 'none';
+export type Grade = "luminor" | "master" | "apprentice" | "none";
 
 export interface GuardianReport {
   bookSlug: string;
@@ -67,15 +67,15 @@ export class GuardianScorerError extends Error {
   constructor(
     message: string,
     public code:
-      | 'book_not_found'
-      | 'no_chapters'
-      | 'missing_api_key'
-      | 'llm_failed'
-      | 'db_write_failed'
-      | 'parse_failed',
+      | "book_not_found"
+      | "no_chapters"
+      | "missing_api_key"
+      | "llm_failed"
+      | "db_write_failed"
+      | "parse_failed",
   ) {
     super(message);
-    this.name = 'GuardianScorerError';
+    this.name = "GuardianScorerError";
   }
 }
 
@@ -83,7 +83,7 @@ export class GuardianScorerError extends Error {
 // Config
 // ---------------------------------------------------------------------------
 
-const DEFAULT_MODEL = 'claude-opus-4-6';
+const DEFAULT_MODEL = "claude-opus-4-6";
 const BOOK_ROOT = getBookRoot();
 const MAX_OUTPUT_TOKENS = 1024;
 
@@ -96,10 +96,10 @@ function getModelId(): string {
 // ---------------------------------------------------------------------------
 
 export function gradeFromComposite(composite: number): Grade {
-  if (composite >= 8.0) return 'luminor';
-  if (composite >= 6.0) return 'master';
-  if (composite >= 4.0) return 'apprentice';
-  return 'none';
+  if (composite >= 8.0) return "luminor";
+  if (composite >= 6.0) return "master";
+  if (composite >= 4.0) return "apprentice";
+  return "none";
 }
 
 // ---------------------------------------------------------------------------
@@ -121,11 +121,11 @@ function extractChapterTitle(content: string, filename: string): string {
   const prologueHeading = content.match(/^##\s+Prologue:\s*(.+)$/m);
   if (prologueHeading) return `Prologue: ${prologueHeading[1].trim()}`;
   return filename
-    .replace(/\.md$/, '')
-    .replace(/^\d+-/, '')
-    .split('-')
+    .replace(/\.md$/, "")
+    .replace(/^\d+-/, "")
+    .split("-")
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
+    .join(" ");
 }
 
 /**
@@ -135,17 +135,17 @@ function extractChapterTitle(content: string, filename: string): string {
 async function loadChaptersFromFS(
   slug: string,
 ): Promise<{ title: string; content: string }[]> {
-  const chaptersDir = join(BOOK_ROOT, slug, 'chapters');
+  const chaptersDir = join(BOOK_ROOT, slug, "chapters");
   if (!(await fileExists(chaptersDir))) return [];
 
   const files = (await readdir(chaptersDir))
-    .filter((f) => f.endsWith('.md'))
+    .filter((f) => f.endsWith(".md"))
     .sort();
 
   const out: { title: string; content: string }[] = [];
   for (const file of files) {
     try {
-      const raw = await readFile(join(chaptersDir, file), 'utf-8');
+      const raw = await readFile(join(chaptersDir, file), "utf-8");
       // strip frontmatter if present
       const { content } = matter(raw);
       const title = extractChapterTitle(content || raw, file);
@@ -177,15 +177,15 @@ async function loadBook(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const admin = createAdminClient() as any;
   const { data, error } = await admin
-    .from('books')
-    .select('id, slug, title, tier, genre, tags, acknowledgments')
-    .eq('slug', bookSlug)
+    .from("books")
+    .select("id, slug, title, tier, genre, tags, acknowledgments")
+    .eq("slug", bookSlug)
     .maybeSingle();
 
   if (error || !data) {
     throw new GuardianScorerError(
       `Book '${bookSlug}' not found`,
-      'book_not_found',
+      "book_not_found",
     );
   }
 
@@ -194,14 +194,14 @@ async function loadBook(
   if (chapters.length === 0) {
     throw new GuardianScorerError(
       `No chapters found for '${bookSlug}' (expected at book/${bookSlug}/chapters/*.md)`,
-      'no_chapters',
+      "no_chapters",
     );
   }
 
   const input: BookInput = {
     title: row.title,
     tier: row.tier,
-    genre: row.genre ?? 'fiction',
+    genre: row.genre ?? "fiction",
     tags: row.tags ?? [],
     chapters,
     acknowledgments: row.acknowledgments ?? undefined,
@@ -251,7 +251,7 @@ function extractJson(raw: string): unknown {
 
   throw new GuardianScorerError(
     `Failed to extract JSON from response: ${trimmed.slice(0, 200)}`,
-    'parse_failed',
+    "parse_failed",
   );
 }
 
@@ -266,32 +266,29 @@ function validateVerdict(parsed: unknown): {
   assessment: string;
   detailedNotes: string;
 } {
-  if (!parsed || typeof parsed !== 'object') {
-    throw new GuardianScorerError(
-      'Verdict is not an object',
-      'parse_failed',
-    );
+  if (!parsed || typeof parsed !== "object") {
+    throw new GuardianScorerError("Verdict is not an object", "parse_failed");
   }
   const v = parsed as RawVerdict;
 
   const rawScore =
-    typeof v.score === 'string' ? Number(v.score) : (v.score as number);
-  if (typeof rawScore !== 'number' || !Number.isFinite(rawScore)) {
+    typeof v.score === "string" ? Number(v.score) : (v.score as number);
+  if (typeof rawScore !== "number" || !Number.isFinite(rawScore)) {
     throw new GuardianScorerError(
-      'Verdict score is not a number',
-      'parse_failed',
+      "Verdict score is not a number",
+      "parse_failed",
     );
   }
   const score = Math.min(10, Math.max(0, Math.round(rawScore * 10) / 10));
 
   const assessment =
-    typeof v.assessment === 'string' && v.assessment.trim().length > 0
+    typeof v.assessment === "string" && v.assessment.trim().length > 0
       ? v.assessment.trim()
-      : 'No assessment returned.';
+      : "No assessment returned.";
   const detailedNotes =
-    typeof v.detailed_notes === 'string' && v.detailed_notes.trim().length > 0
+    typeof v.detailed_notes === "string" && v.detailed_notes.trim().length > 0
       ? v.detailed_notes.trim()
-      : 'No detailed notes returned.';
+      : "No detailed notes returned.";
 
   return { score, assessment, detailedNotes };
 }
@@ -303,13 +300,13 @@ async function runGuardian(
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     throw new GuardianScorerError(
-      'ANTHROPIC_API_KEY not set — cannot run Guardian review',
-      'missing_api_key',
+      "ANTHROPIC_API_KEY not set — cannot run Guardian review",
+      "missing_api_key",
     );
   }
 
   const modelId = getModelId();
-  const { createAnthropic } = await import('@ai-sdk/anthropic');
+  const { createAnthropic } = await import("@ai-sdk/anthropic");
   const anthropic = createAnthropic({ apiKey });
   const model = anthropic(modelId);
 
@@ -358,7 +355,7 @@ async function runGuardian(
     if (err instanceof GuardianScorerError) throw err;
     throw new GuardianScorerError(
       `${prompt.displayName} failed: ${err instanceof Error ? err.message : String(err)}`,
-      'llm_failed',
+      "llm_failed",
     );
   }
 }
@@ -388,13 +385,13 @@ async function persistScores(
   }));
 
   const { error } = await admin
-    .from('guardian_reviews')
-    .upsert(rows, { onConflict: 'book_id,guardian,dimension' });
+    .from("guardian_reviews")
+    .upsert(rows, { onConflict: "book_id,guardian,dimension" });
 
   if (error) {
     throw new GuardianScorerError(
       `Failed to persist Guardian reviews: ${error.message}`,
-      'db_write_failed',
+      "db_write_failed",
     );
   }
 }
@@ -418,11 +415,12 @@ export async function scoreBook(bookSlug: string): Promise<GuardianReport> {
   const errors: string[] = [];
   for (let i = 0; i < settled.length; i++) {
     const r = settled[i];
-    if (r.status === 'fulfilled') {
+    if (r.status === "fulfilled") {
       scores.push(r.value);
     } else {
       const guardian = GUARDIANS[i].guardian;
-      const reason = r.reason instanceof Error ? r.reason.message : String(r.reason);
+      const reason =
+        r.reason instanceof Error ? r.reason.message : String(r.reason);
       errors.push(`${guardian}: ${reason}`);
       console.error(`[guardian-scorer] ${guardian} failed:`, reason);
     }
@@ -430,8 +428,8 @@ export async function scoreBook(bookSlug: string): Promise<GuardianReport> {
 
   if (scores.length === 0) {
     throw new GuardianScorerError(
-      `All Guardians failed. Errors: ${errors.join('; ')}`,
-      'llm_failed',
+      `All Guardians failed. Errors: ${errors.join("; ")}`,
+      "llm_failed",
     );
   }
 
@@ -476,23 +474,25 @@ export async function scoreSingleDimension(
 export async function loadLatestReport(
   bookSlug: string,
 ): Promise<GuardianReport | null> {
+  // Reading existing reports uses the caller's RLS scope and never requires
+  // the service-role key. Scoring and report writes retain the admin client.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const admin = createAdminClient() as any;
+  const supabase = (await createClient()) as any;
 
-  const { data: book, error: bookErr } = await admin
-    .from('books')
-    .select('id, slug')
-    .eq('slug', bookSlug)
+  const { data: book, error: bookErr } = await supabase
+    .from("books")
+    .select("id, slug")
+    .eq("slug", bookSlug)
     .maybeSingle();
   if (bookErr || !book) return null;
 
-  const { data: reviews, error: revErr } = await admin
-    .from('guardian_reviews')
+  const { data: reviews, error: revErr } = await supabase
+    .from("guardian_reviews")
     .select(
-      'guardian, dimension, score, assessment, detailed_notes, model_id, assessed_at',
+      "guardian, dimension, score, assessment, detailed_notes, model_id, assessed_at",
     )
-    .eq('book_id', book.id)
-    .order('assessed_at', { ascending: false });
+    .eq("book_id", book.id)
+    .order("assessed_at", { ascending: false });
   if (revErr || !reviews || reviews.length === 0) return null;
 
   // Keep only the newest row per (guardian, dimension)
@@ -510,9 +510,9 @@ export async function loadLatestReport(
     guardian: r.guardian as GuardianId,
     dimension: r.dimension as GuardianDimension,
     score: Number(r.score),
-    assessment: r.assessment ?? '',
-    detailedNotes: r.detailed_notes ?? '',
-    modelId: r.model_id ?? 'unknown',
+    assessment: r.assessment ?? "",
+    detailedNotes: r.detailed_notes ?? "",
+    modelId: r.model_id ?? "unknown",
     durationMs: 0,
   }));
 
