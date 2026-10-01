@@ -182,7 +182,14 @@ function validateSources(packageRoot, catalog) {
     if (ready.has(skill.name) && sha256 !== skill.contentSha256) {
       throw new Error(`Reviewed content changed: ${skill.name}`);
     }
-    return { name: skill.name, path: skill.path, sha256, files };
+    return {
+      name: skill.name,
+      path: skill.path,
+      sha256,
+      files,
+      description: data.description,
+      body: text.replace(/^---\r?\n[\s\S]*?\r?\n---(?:\r?\n|$)/, ""),
+    };
   });
 }
 

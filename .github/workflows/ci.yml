@@ -298,6 +298,7 @@ jobs:
           pnpm test:quick
           pnpm --filter @arcanea/skills test
           node --test scripts/audit-skill-sources.test.mjs
+          pnpm --dir apps/web exec tsx --test lib/skills/__tests__/loader.test.ts
 
       - name: Verify public collection assets and proposal relationships
         run: |

@@ -145,3 +145,68 @@ of import revision, contractual authorization or supporting-resource rights.
 Root licence choice stays with Frank; four internal candidates, zero ready.
 The auditor adds notice hashes and UPSTREAM-LICENSE recognition while keeping
 all applicability unreviewed. No development import or notice was altered.
+
+## Public skills consumer and source terms, 2026-10-02 local
+
+Scope: move the /skills reader from the earlier OSS pack into the existing curated
+catalog and correct two public blanket MIT claims/source pointers, under #276
+and draft #487. Owner: Codex in the assigned source-consolidation worktree.
+Base: `21850c2da160e3319c582b6973e14e2be8368a04`.
+User job: find creator workflows they can review and reuse without mistaking
+pending or uncurated development imports for released skills.
+Files: apps/web/app/skills/{page.tsx,[slug]/page.tsx},
+apps/web/app/v3/v3-below-fold.tsx, components/skills/InstallTabs.tsx,
+lib/skills/{loader.ts,__tests__/loader.test.ts}, apps/web/next.config.js,
+packages/arcanea-skills/scripts/catalog.{cjs,d.cts}, .arcanea/config/repos.json,
+.github/workflows/ci.yml and this record.
+Acceptance: reuse the existing catalog rights/eval/review/content gate, expose
+only validated ready bodies, exclude candidates/undeclared folders, bind source
+and guidance links to a full source commit, reject stale/invalid evidence, and
+show an honest zero-ready state. Source links identify the public app, terms
+stay per-skill, and registry visibility agrees with current GitHub metadata.
+Budget/stop: one sequential text/test/review workload; no dependency installs,
+new worktrees, fanout or full local app build. Stop on routing/lane/admission or
+verification failure. No canon, licence choice, rights promotion, history rewrite,
+archive/rename, home install, merge, deployment or publishing.
+Rollback: reviewed revert of these twelve files, retaining rights/eval evidence.
+
+The old loader read oss/skills/arcanea and generated legacy source/installation
+pointers. The web reader now calls the same loadCatalog/selectReady/validateSources
+functions used by package API/installer. Validated sources expose already-parsed
+description/body alongside their unchanged hash/file inventory. Declaration types
+bridge this CJS source without a dependency/lockfile change. Five web-reader cases
+exercise actual catalog logic; old reader passed1/failed4, new reader passes5.
+The existing eleven package cases also pass. Local TS runtime used existing
+Sucrase3.35.1 type erasure and YAML2.9.0, not native tsx or a typecheck. CI runs
+native tsx with frozen dependencies. Syntax, source-copy and link checks passed.
+
+Ready source/guidance URLs require a full VERCEL_GIT_COMMIT_SHA (or explicit
+trusted fixture revision); no moving branch fallback or universal npx claim.
+Installer/copy commands were replaced with the same-revision package guidance.
+Catalog declarations are checked, not independently authenticated; this adapter
+does not grant rights, certify reviewers or prove an installed harness.
+Candidate slugs return null for the existing detail route's notFound behavior.
+Zero ready is derived, not a hardcoded promotion. Missing/invalid catalog, malformed
+ready evidence or changed resources fail reads rather than being silently listed.
+
+Next tracing includes catalog and skills resources only for /skills routes, using
+the existing monorepo tracing root. Actual deployed traces/rendering remain
+unverified; a config include is not proof of production file availability.
+Primary documentation: https://nextjs.org/docs/app/api-reference/config/next-config-js/output
+and https://vercel.com/docs/environment-variables/system-environment-variables.
+
+Public /skills copy now states creator workflows, ready count and per-skill terms,
+with an honest empty state and public app source link. The homepage removes its
+blanket public-repo MIT statement and fixed MIT/uncurated skill-count badges;
+remaining counters are labelled listed repos/packages. Its featured source uses
+arcanea-ai-app. Registry app visibility/public URL were reconciled against GitHub
+(private=false, archived=false, main); the diverged arcanea entry remains tracked
+with a salvage-review description. Shared owners and other registry facts remain.
+Formatting changes in existing large TSX/config files follow required Prettier;
+only the described copy/selection/tracing logic changes. Other MIT assertions and
+third-party rights remain review work. No rendered or live-public repair is claimed.
+
+Exact candidate CI and scoped independent source/copy review are recorded in the
+PR/issue and hub after terminal verification. All four internal skill candidates
+remain zero ready; licence/Heart, donor folds, plugins/MCP consumers, creator and
+community/revenue acceptance and Frank's named #408 merge approval remain open.
