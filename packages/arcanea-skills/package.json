@@ -4,6 +4,9 @@
   "description": "Curated Arcanea creator workflow candidates and catalog-controlled installer",
   "private": true,
   "main": "index.js",
+  "dependencies": {
+    "yaml": "2.9.1"
+  },
   "bin": {
     "arcanea-skills": "bin/install.js"
   },

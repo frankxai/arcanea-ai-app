@@ -3,6 +3,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { createHash } = require("node:crypto");
+const { isMap, parseDocument } = require("yaml");
 
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const HASH = /^[a-f0-9]{64}$/;
@@ -127,17 +128,28 @@ function validateSources(packageRoot, catalog) {
     const frontmatter = text.match(
       /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/,
     )?.[1];
-    const names = [
-      ...(frontmatter ?? "").matchAll(/^name:\s*([a-z0-9-]+)\s*$/gm),
-    ];
+    const document = parseDocument(frontmatter ?? "", {
+      strict: true,
+      uniqueKeys: true,
+      stringKeys: true,
+    });
     if (
-      names.length !== 1 ||
-      names[0][1] !== skill.name ||
-      !/^description:\s*\S.+$/m.test(frontmatter ?? "")
+      !isMap(document.contents) ||
+      document.errors.length ||
+      document.warnings.length
     ) {
+      throw new Error(`Invalid skill frontmatter: ${skill.name}`);
+    }
+    const data = document.toJS();
+    if (data.name !== skill.name || !present(data.description)) {
       throw new Error(`Skill frontmatter mismatch: ${skill.name}`);
     }
-    const internal = /^  internal:\s*true\s*$/m.test(frontmatter);
+    const metadata = data.metadata;
+    const internal =
+      metadata !== null &&
+      typeof metadata === "object" &&
+      !Array.isArray(metadata) &&
+      metadata.internal === true;
     if (ready.has(skill.name) && internal)
       throw new Error(`Ready skill is hidden from discovery: ${skill.name}`);
     if (skill.status === "candidate" && !internal)

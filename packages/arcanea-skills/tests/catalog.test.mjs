@@ -87,6 +87,79 @@ test("candidate files validate with portable examples and exact names", () => {
   }
 });
 
+test("candidate visibility follows parsed metadata rather than unrelated text", (t) => {
+  const { pkg, home, run } = fixture(t);
+  const { loadCatalog, validateSources } = require("../scripts/catalog.cjs");
+  const catalog = loadCatalog(pkg);
+  const file = join(pkg, "skills/world-build/SKILL.md");
+  const source = readFileSync(file, "utf8");
+  const body = source.replace(/^---\r?\n[\s\S]*?\r?\n---/, "");
+  const header = "name: world-build\ndescription: Fixture world workflow\n";
+  for (const metadata of [
+    "metadata:\n  internal: false\nunrelated:\n  internal: true",
+    "metadata:\n  nested:\n    internal: true",
+    'metadata:\n  internal: "true"',
+    "metadata: |\n  internal: true",
+    "metadata:\n  - internal: true",
+    "unrelated:\n  internal: true",
+  ]) {
+    writeFileSync(file, `---\n${header}${metadata}\n---${body}`);
+    assert.throws(
+      () => validateSources(pkg, catalog),
+      /candidate must remain internal/i,
+      metadata,
+    );
+    const result = run(["--dry-run"]);
+    assert.equal(result.status, 1, metadata);
+    assert.equal(existsSync(join(home, ".claude")), false);
+  }
+  for (const metadata of [
+    "metadata: { internal: true }",
+    'metadata:\n  "internal": true # hidden candidate',
+    "metadata:\n    internal: true",
+  ]) {
+    writeFileSync(file, `---\n${header}${metadata}\n---${body}`);
+    assert.equal(validateSources(pkg, catalog).length, 4, metadata);
+  }
+});
+
+test("ambiguous YAML, mismatched identity and non-string descriptions fail validation", (t) => {
+  const { pkg } = fixture(t);
+  const { loadCatalog, validateSources } = require("../scripts/catalog.cjs");
+  const catalog = loadCatalog(pkg);
+  const file = join(pkg, "skills/world-build/SKILL.md");
+  for (const frontmatter of [
+    "name: world-build\ndescription: Fixture\nmetadata:\n  internal: true\nmetadata:\n  internal: false",
+    'name: world-build\ndescription: Fixture\nmetadata:\n  internal: true\n  "internal": false',
+    'name: world-build\n"name": other\ndescription: Fixture\nmetadata: { internal: true }',
+    "name: world-build\ndescription: true\nmetadata: { internal: true }",
+    "name: world-build\ndescription: []\nmetadata: { internal: true }",
+    "name: world-build\ndescription: Fixture\nmetadata: [",
+    "- name: world-build\n- description: Fixture",
+  ]) {
+    writeFileSync(file, `---\n${frontmatter}\n---\nFixture\n`);
+    assert.throws(() => validateSources(pkg, catalog), /frontmatter/i);
+  }
+});
+
+test("ready visibility rejects a hidden YAML mapping after promotion", (t) => {
+  const { pkg } = readyFixture(t);
+  const { loadCatalog, validateSources } = require("../scripts/catalog.cjs");
+  const file = join(pkg, "skills/world-build/SKILL.md");
+  const source = readFileSync(file, "utf8");
+  writeFileSync(
+    file,
+    source.replace(
+      /metadata:\r?\n  internal: false/,
+      "metadata: { internal: true }",
+    ),
+  );
+  assert.throws(
+    () => validateSources(pkg, loadCatalog(pkg)),
+    /ready skill is hidden/i,
+  );
+});
+
 test("catalog rejects traversal, duplicate identity, missing source and external links", (t) => {
   const { pkg } = fixture(t);
   const { loadCatalog, validateSources } = require("../scripts/catalog.cjs");

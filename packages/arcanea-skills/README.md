@@ -50,6 +50,13 @@ the skill hash over `path + NUL + fileHash + LF` for every file. Support files a
 included. Source validation rejects links, hidden files, missing resources,
 identity mismatches and references escaping the skill directory.
 
+Frontmatter is parsed as YAML. `name` must match the passport, `description` must
+be a nonempty string, and a candidate's parsed `metadata.internal` must be the
+boolean `true`. An `internal` value in another mapping or inside a string has no
+effect. Duplicate keys, invalid mappings and YAML warnings fail validation;
+quoted keys and inline metadata mappings are supported. Install this package's
+dependencies before running its commands in a standalone checkout.
+
 Evidence fields are maintainer declarations. The validator checks presence and
 matching hashes; it does not authenticate a reviewer, establish legal rights or
 replace the human release approval tracked by issue #277.
