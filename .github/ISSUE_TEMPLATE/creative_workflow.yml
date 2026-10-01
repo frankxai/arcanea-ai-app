@@ -1,0 +1,47 @@
+name: Creative workflow feedback
+description: Show where a world, writing, media or quest workflow helped or failed.
+title: "[Workflow] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The curated skills are review candidates. This form gathers concrete requests and results; it does not approve a release or canon change.
+        Share only invented or cleared material. Issues are public, so remove unpublished manuscripts, personal information and credentials.
+  - type: dropdown
+    id: workflow
+    attributes:
+      label: Workflow
+      options:
+        - World bible
+        - Continuity check
+        - Scene or illustration brief
+        - Quest adaptation
+        - Another existing workflow
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Skill or feature and version
+      description: Name the source path and commit, or the installed package/version. Say if you used only a worked example.
+    validations:
+      required: true
+  - type: textarea
+    id: request
+    attributes:
+      label: Creator's request and accepted facts
+      description: Give a small shareable request. Identify accepted facts, proposed changes and source revisions.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Output and corrections needed
+      description: Include the unedited output or a sanitized excerpt, expected result, failures and your manual corrections. Say if no output returned.
+    validations:
+      required: true
+  - type: textarea
+    id: runtime
+    attributes:
+      label: Evaluation context
+      description: Provider/model and harness if known, attempts, duration or cost when measured, source/asset rights status, and whether an adaptation was actually imported or played.
