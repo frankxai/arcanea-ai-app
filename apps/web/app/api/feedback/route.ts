@@ -62,15 +62,24 @@ export async function POST(req: NextRequest) {
         });
 
         if (error) {
-          // Table might not exist yet — log and return success anyway
-          console.warn("[Feedback] Supabase insert failed:", error.message);
+          console.warn("[Feedback] Supabase insert failed");
+          return NextResponse.json(
+            { error: "Feedback is temporarily unavailable. Please try again." },
+            { status: 503, headers: { "retry-after": "60" } },
+          );
         }
       } catch {
-        // createAdminClient throws if service role key is missing — log and continue
         console.warn("[Feedback] Supabase admin client unavailable");
+        return NextResponse.json(
+          { error: "Feedback is temporarily unavailable. Please try again." },
+          { status: 503, headers: { "retry-after": "60" } },
+        );
       }
     } else {
-      // Supabase unavailable — feedback acknowledged but not persisted
+      return NextResponse.json(
+        { error: "Feedback is temporarily unavailable. Please try again." },
+        { status: 503, headers: { "retry-after": "60" } },
+      );
     }
 
     return NextResponse.json({ ok: true });
