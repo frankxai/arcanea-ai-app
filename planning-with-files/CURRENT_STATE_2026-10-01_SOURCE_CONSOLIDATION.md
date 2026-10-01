@@ -21,8 +21,7 @@ Rollback: revert the four exact files; no production or data side effects.
 - Canon's Heart-frequency conflict is inside `CANON_LOCKED.md`; ruling pending.
 - Local MCP directory points to private `arcanea-mcp-generate`, not the nonexistent GitHub `arcanea-mcp` name.
 - `skill-bundles` has no origin and its launcher worktree is another harness's lane. Root support is specified, not implemented here.
-- Routing guard and explicit-file check passed through the bootstrap fallback. Registry discovery and canonical capability-loading/storage-sensor files are absent in the current control-plane branch; not repaired by this product slice.
-- PP interactive admission allowed one workload with 5,541 MB free RAM; new swarms paused. Fresh C: free space was about 16%, above the worktree floor. A sparse isolated worktree avoided checking out the full app or installing dependencies.
+- Routing guard, explicit-file check and lane ownership passed. Workload/storage admission was checked; a sparse isolated worktree avoided checking out the full app or installing dependencies. Machine details and control-plane limitations are in the private hub handover.
 
 ## Verification boundaries
 
