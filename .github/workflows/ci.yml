@@ -8,12 +8,6 @@ on:
     # against the head SHA. Without it a green earned against one base survives a
     # retarget to another and gates a merge that was never verified.
     types: [opened, synchronize, reopened, ready_for_review, edited]
-    paths-ignore:
-      - "book/**"
-      - "docs/**"
-      - "*.md"
-      - ".arcanea/lore/**"
-      - ".arcanea/projects/log/**"
 
 concurrency:
   group: ci-${{ github.ref }}
