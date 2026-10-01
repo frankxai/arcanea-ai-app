@@ -232,3 +232,46 @@ category reads with explicit source options. Legacy optional display fields are
 marked as currently absent (INFO); deployed trace inspection remains open (INFO).
 The root-context correction was found by maker inspection and the new runtime
 case, not by that baseline review. Exact follow-up review binds these corrections.
+
+## Pinned skill documentation resources, 2026-10-02 local
+
+Scope/user job: a creator reading a skill can open its worked example and resources
+from the same reviewed source commit. Owning issue #276; existing draft #487.
+Owner: Codex in the assigned source-consolidation worktree.
+Exact base: `b37c2a6dcb43a90a9872826b47d0b79dc8178b2c`.
+Files: apps/web/lib/skills/loader.ts, lib/skills/**tests**/loader.test.ts,
+components/skills/SkillDocumentation.tsx, app/skills/[slug]/page.tsx, this record.
+Acceptance: actual Markdown-renderer output resolves each current candidate's
+example link to its own source folder at the full commit; only validated files
+resolve locally; preserve supported external links; reject traversal, malformed
+encoding, unsupported protocols and missing files. No new catalog or parser.
+Budget/stop: one sequential text/test/review workload, existing dependencies,
+no new worktree, fanout, local full app build or installed harness. Stop on
+ownership, admission, tests or review failure. Rollback: reviewed revert of these
+five files, keeping previous catalog and rights/eval receipts.
+
+All four candidate bodies link references/example.md. Previously the detail page
+used default ReactMarkdown and left that URL relative to the web route. The first
+new static renderer case reproduced the problem (seven earlier cases passed, one
+failed). A small server documentation component now uses ReactMarkdown's supported
+urlTransform with its default sanitizer and the loader's validated file inventory.
+Relative local hrefs resolve to immutable GitHub source files; local image srcs
+resolve to raw bytes at the same commit. Query/fragment suffixes and encoded
+filenames are retained. Fragment-only links target the source SKILL.md because
+this web renderer does not assign heading IDs. HTTP(S)/mailto links retain their
+supported behavior; protocol-relative/root paths, backslashes, control characters,
+encoded or plain traversal, unknown files and unsafe protocols do not resolve.
+Rejected links render as plain text rather than empty-href anchors.
+Primary API reference: https://github.com/remarkjs/react-markdown#options
+
+Twelve consumer cases pass locally, including actual server-rendered Markdown
+inline/reference links, each of the four current candidate examples in isolated
+synthetic-ready fixtures, blocked paths and a synthetic image. Fixture declarations
+and image bytes grant no rights and do not prove downloaded-image behavior. The
+actual catalog remains four internal candidates and zero ready; no content,
+rights, eval, canon or readiness changes. Local tests use existing Sucrase3.35.1
+for type erasure and process-scoped dependencies; CI uses native tsx/frozen deps.
+Static server rendering is not browser QA or deployed trace inspection. Existing
+CI wiring already runs this expanded consumer file; source CI and scoped
+independent five-file review must be recorded at the exact candidate revision.
+Keep canceled-preview limits and #408/#427 human/source/release gates open.

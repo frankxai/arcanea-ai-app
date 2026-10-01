@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import ReactMarkdown from "react-markdown";
+import SkillDocumentation from "@/components/skills/SkillDocumentation";
 import { ArrowLeft, BookOpen, ExternalLink, Tag, Users } from "lucide-react";
 import { getAllSkills, getSkillBySlug, type Skill } from "@/lib/skills/loader";
 import InstallTabs from "@/components/skills/InstallTabs";
@@ -224,7 +224,7 @@ export default async function SkillDetailPage({ params }: PageProps) {
                 Documentation
               </h2>
               <article className="skill-prose">
-                <ReactMarkdown>{skill.readmeContent}</ReactMarkdown>
+                <SkillDocumentation skill={skill} />
               </article>
             </div>
 

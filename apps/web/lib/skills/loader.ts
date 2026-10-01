@@ -22,6 +22,7 @@ export interface Skill {
   readmeContent: string;
   sourceUrl: string;
   installGuideUrl: string;
+  sourceFiles: string[];
 }
 
 interface CatalogOptions {
@@ -76,6 +77,7 @@ export async function getAllSkills(
         readmeContent: source.body,
         sourceUrl: `${sourceBase}/${entry.path}/SKILL.md`,
         installGuideUrl: `${sourceBase}/README.md`,
+        sourceFiles: source.files,
       };
     })
     .sort((a, b) => a.name.localeCompare(b.name));
