@@ -64,3 +64,37 @@ Next bounded action: run forward evaluations from fresh requests against pinned 
 bytes, record outputs and failure cases, obtain independent review and rights decisions,
 then reconcile existing skill variants before promotion. Keep this package private and
 candidates internal while those gates are open.
+
+## Fresh requests and independent-review attempt
+
+Continuation base: `ecb22a33a3bfb8becd77c5c02966c6122f8c86b9`. Current main observed
+on 2026-10-01: `ed25729ceaee02f6c622119edd0c34ef9987f785`; the added MCP reader
+documentation commit changes no files in this candidate package. This branch has
+not been rebased or integrated into main.
+
+Prepared four original Ember Post requests and explicit rubrics in
+`packages/arcanea-skills/evals/creator-smoke-2026-10-01.json`, with committed source
+and aggregate skill hashes. Cases cover accepted facts/authorized revisions,
+contradictions/false positives/manuscript injection, media fidelity/unknown rights,
+and an existing quest state format/reachable endings/unavailable transmission.
+
+One independent-provider attempt requested Sonnet 4.6 through Claude Code 2.1.286,
+using the repo kernel and Senior review routing. It ran with no tools, MCP loading
+or slash commands and reached the 300-second timeout with zero stdout bytes.
+The session-owned process was terminated. No outputs, findings, model receipt,
+cost receipt or sign-off were obtained. $3 was a configured maximum, not known
+spend. Actual served model and failure cause remain unknown. No second run was
+started. The original packet exposed all cases and checks to the reviewer; a
+repeat must isolate contexts and hide rubrics from the producer.
+
+Highest evidence: pinned source, prepared cases, local regression tests and a
+failed CLI attempt receipt. Zero cases executed, no behavioral pass claimed.
+Passports remain pending, package private, all four candidates internal. Existing
+11 Node tests passed again before this documentation-only continuation. No app
+build/typecheck/lint, CI, real-home install, rights decision or public release.
+
+The hub lane was free at this continuation's check. Save the attempt and next
+action in its existing session/ledger/prompt and comment on issue #276. This
+supersedes the earlier hub-ownership hold without erasing that observation.
+Rollback: revert these four evidence/documentation files. Next: restore a bounded
+review harness, run isolated saved requests and resolve rights before promotion.

@@ -12,7 +12,9 @@ The package is private while release decisions remain open.
 | `quest-adapt`      | Adapt a world into one quest with conditions, consequences and replay cases           | [Last crossing](skills/quest-adapt/references/example.md)         |
 
 The examples use an invented creator-owned world. They are authored walkthroughs;
-behavioral evaluation and independent review are pending. Official Arcanea canon
+behavioral evaluation and independent review are pending. The source checkout's
+`evals/creator-smoke-2026-10-01.md` records a fresh four-request packet and a review
+timeout with zero returned outputs; it provides no sign-off. Official Arcanea canon
 remains in `.arcanea/lore/CANON_LOCKED.md` at the repository root.
 
 ## Local review
