@@ -102,7 +102,9 @@ export function auditSnapshot({
       (row) =>
         row.type === "blob" &&
         row.mode !== "120000" &&
-        /^(?:licen[sc]e|copying)(?:[._-].*)?$/i.test(posix.basename(row.path)),
+        /^(?:upstream[-_.])?(?:licen[sc]e|copying)(?:[._-].*)?$/i.test(
+          posix.basename(row.path),
+        ),
     )
     .map((row) => row.path)
     .sort(compare);
@@ -117,7 +119,12 @@ export function auditSnapshot({
   if (root && !tree.some((row) => row.path.startsWith(`${root}/`))) {
     throw new Error(`root does not exist at ${commit}: ${root}`);
   }
-  const blobs = [...new Set(skills.map((row) => row.blob))];
+  // Include notice bytes in the same immutable batch. A file's name or location
+  // cannot establish its terms or their applicability to the skill/resources.
+  const licenseRows = tree.filter((row) => licenses.includes(row.path));
+  const blobs = [
+    ...new Set([...skills, ...licenseRows].map((row) => row.blob)),
+  ];
   const bytes = blobs.length
     ? git(cwd, ["cat-file", "--batch"], {
         encoding: null,
@@ -146,6 +153,14 @@ export function auditSnapshot({
     contents.set(blob, bytes.subarray(newline + 1, newline + 1 + size));
     offset = newline + size + 2;
   }
+  const licenseEvidence = licenseRows
+    .map((row) => ({
+      path: row.path,
+      blob: row.blob,
+      sha256: createHash("sha256").update(contents.get(row.blob)).digest("hex"),
+      review: "terms-and-applicability-unreviewed",
+    }))
+    .sort((a, b) => compare(a.path, b.path));
   const entries = skills.map((row) => {
     const bytes = contents.get(row.blob);
     const name =
@@ -177,6 +192,7 @@ export function auditSnapshot({
     rights:
       "License paths are evidence to review, not a license grant or clearance.",
     rootLicenseFiles: licenses.filter((path) => !path.includes("/")),
+    licenseEvidence,
     ...summarize(entries),
     entries,
   };

@@ -297,6 +297,7 @@ jobs:
         run: |
           pnpm test:quick
           pnpm --filter @arcanea/skills test
+          node --test scripts/audit-skill-sources.test.mjs
 
       - name: Verify public collection assets and proposal relationships
         run: |

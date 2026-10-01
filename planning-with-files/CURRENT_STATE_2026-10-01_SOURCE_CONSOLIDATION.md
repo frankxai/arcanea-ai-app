@@ -111,3 +111,37 @@ Formatter, enabled secrets, candidate-head CI and independent delta review remai
 required. The hub's former foreign lane is now clear and an owned save is queued.
 Scope: package.json, README, installer comment, junction-test assertion and this
 task record, basee2012e95de. Rollback: revert those exact changes. Full goal active.
+
+## Imported skill notice evidence follow-up
+
+Scope: existing immutable source auditor and selected import evidence, under #276
+and draft #487. Owner: Codex in the assigned source-consolidation worktree.
+Base: `0a04c976d66f2f2d12aa895060f94c6c089f635b`.
+Files: `scripts/audit-skill-sources.{mjs,test.mjs}`,
+`docs/strategy/arcanea-skill-rights-evidence-2026-10-01.{md,json}`,
+`.github/workflows/ci.yml` and this record.
+User job: safely discover and reuse curated Arcanea skills without assuming that
+publicly visible development imports have blanket redistribution rights.
+Acceptance: recognize preserved upstream notice filenames, bind exact notice
+bytes to a commit and retain unreviewed applicability; document the selected
+restricted copies and provenance gaps without selecting licences or changing canon.
+Verification: four focused Node 22 tests passed locally, including the new notice
+fixture. The existing CI package-test step now also runs those fixtures; test:quick
+did not include this auditor. Exact delta review and source CI will be recorded
+in the PR/issue and hub.
+Non-goals: rights clearance, whole-repo inventory, current-tree deletion, history
+rewrite, public copy correction, provider/consumer installation, merge or release.
+Rollback: reviewed revert of this delta; preserve import and failed-attempt evidence.
+Budget/stop: one sequential text/audit/review workload, no installs or full app
+build. Stop on routing/ownership/admission failure or failed verification.
+
+The receipt measures ten skill bodies/notices at base and main
+`e863be8304fdde9f00ba812d7845d66ec52787b9`, with identical local bytes between
+those trees. Eight document-skill copies carry restrictive Anthropic notices;
+algorithmic-art preserves Apache 2.0 with a placeholder copyright appendix;
+apple-design preserves Emil Kowalski's MIT notice. Nine notices match pinned
+current upstream, zero skill bodies do. Current-upstream comparison is not proof
+of import revision, contractual authorization or supporting-resource rights.
+Root licence choice stays with Frank; four internal candidates, zero ready.
+The auditor adds notice hashes and UPSTREAM-LICENSE recognition while keeping
+all applicability unreviewed. No development import or notice was altered.

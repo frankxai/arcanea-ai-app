@@ -100,6 +100,97 @@ test("committed inventory ignores working edits and untracked files, and exposes
   assert.deepEqual(auditSnapshot({ cwd, ref: first.commit }), first);
 });
 
+test("notice evidence hashes committed bytes without granting ancestor rights or following symlinks", (t) => {
+  const cwd = mkdtempSync(join(tmpdir(), "arcanea-notice-audit-"));
+  t.after(() => {
+    assert.ok(
+      relative(resolve(tmpdir()), resolve(cwd)).startsWith(
+        "arcanea-notice-audit-",
+      ),
+    );
+    rmSync(cwd, { recursive: true, force: true });
+  });
+  const git = (args, options = {}) =>
+    execFileSync("git", args, { cwd, encoding: "utf8", ...options });
+  git(["init", "-q"]);
+  git(["config", "core.autocrlf", "false"]);
+  const put = (path, text) => {
+    mkdirSync(join(cwd, path, ".."), { recursive: true });
+    writeFileSync(join(cwd, path), text);
+  };
+  const skill = "---\nname: example\n---\nInstructions\n";
+  const upstream = "MIT notice\r\nCopyright Example\r\n";
+  put("LICENSE", "Original project terms\n");
+  put("skills/imported/SKILL.md", skill);
+  put("skills/imported/UPSTREAM-LICENSE", upstream);
+  put("skills/imported/resources/COPYING.txt", "Separate resource terms\n");
+  put("skills/document/SKILL.md", skill);
+  put("skills/document/LICENSE.txt", "Restricted use; all rights reserved\n");
+  put("skills/no-local-notice/SKILL.md", skill);
+  put("skills/imported/LICENSE.backup.md", "Backup terms still need review\n");
+  git(["add", "--", "LICENSE", "skills"]);
+  const linkBlob = git(["hash-object", "-w", "--stdin"], {
+    input: "../../private/terms.txt",
+  }).trim();
+  git([
+    "update-index",
+    "--add",
+    "--cacheinfo",
+    `120000,${linkBlob},skills/imported/LICENSE.link`,
+  ]);
+  git([
+    "-c",
+    "user.name=Audit test",
+    "-c",
+    "user.email=audit@example.invalid",
+    "commit",
+    "-qm",
+    "notice fixture",
+  ]);
+  const report = auditSnapshot({ cwd });
+  const notice = report.licenseEvidence.find(
+    (row) => row.path === "skills/imported/UPSTREAM-LICENSE",
+  );
+  assert.equal(
+    notice.sha256,
+    createHash("sha256").update(upstream).digest("hex"),
+  );
+  assert.equal(
+    notice.blob,
+    git(["rev-parse", "HEAD:skills/imported/UPSTREAM-LICENSE"]).trim(),
+  );
+  assert.ok(
+    report.licenseEvidence.every(
+      (row) => row.review === "terms-and-applicability-unreviewed",
+    ),
+  );
+  assert.ok(
+    !report.licenseEvidence.some((row) => row.path.endsWith("LICENSE.link")),
+  );
+  assert.deepEqual(
+    report.entries.find((row) => row.path === "skills/imported/SKILL.md")
+      .ancestorLicenseFiles,
+    [
+      "LICENSE",
+      "skills/imported/LICENSE.backup.md",
+      "skills/imported/UPSTREAM-LICENSE",
+    ],
+  );
+  assert.deepEqual(
+    report.entries.find((row) => row.path === "skills/no-local-notice/SKILL.md")
+      .ancestorLicenseFiles,
+    ["LICENSE"],
+  );
+  assert.ok(
+    report.licenseEvidence.some(
+      (row) => row.path === "skills/imported/resources/COPYING.txt",
+    ),
+  );
+  put("skills/imported/UPSTREAM-LICENSE", "Uncommitted replacement\n");
+  put("skills/no-local-notice/UPSTREAM-LICENSE", "Untracked notice\n");
+  assert.deepEqual(auditSnapshot({ cwd, ref: report.commit }), report);
+});
+
 test("resource inventory preserves shared references, cycles and support files at immutable bytes", (t) => {
   const cwd = mkdtempSync(join(tmpdir(), "arcanea-resource-audit-"));
   t.after(() => {
