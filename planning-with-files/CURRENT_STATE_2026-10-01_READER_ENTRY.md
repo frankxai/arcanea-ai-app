@@ -51,3 +51,21 @@ both suites with frozen-lockfile dependencies and the four required checks.
 Implementation keeps numbered saga API chapter slugs. Document loading,
 publication manifests, default-deny API registry and manuscripts are unchanged.
 Different-harness sign-off and rendered browser verification remain pending.
+
+## Support-file review correction
+
+Independent Claude Sonnet 4.6 HIGH source review at
+60fcf333b4f178de0f255b5d8edb057a5ede6d25 returned PASS with a WARN:
+bare BIBLE.md inside chapters was still eligible. This correction reserves
+only the exact BIBLE and OUTLINE basenames, case-insensitively. Numbered
+01-bible.md and 01-outline.md remain eligible; HTML ID casing and numbered
+API slugs retain their contracts. Manuscripts and publication gates are unchanged.
+
+Expanded nested/flat/saga fixtures reproduced six of seven series failures
+and one of six policy failures before the two-basename fix. All seven series
+and six policy checks pass after formatting, using the same existing
+Node 22.23.2/Sucrase 3.35.1 runtime method. No install or local typecheck.
+Exact-head CI and independent delta review are required for this changed
+source; the earlier review does not sign off these new bytes. Rendered
+preview QA remains blocked by preview authentication and browser admission.
+Draft #490 remains unmerged under #408; this is no release approval.

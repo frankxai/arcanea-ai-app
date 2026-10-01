@@ -34,6 +34,8 @@ function main() {
   test("chapter policy includes numbered chapters and real prologues", () => {
     for (const filename of [
       "01-arrival.md",
+      "01-bible.md",
+      "01-outline.md",
       "chapter-01-before-the-name.md",
       "00-prolog.md",
       "00-prologue.md",
@@ -50,6 +52,10 @@ function main() {
       "CLAUDE.md",
       "AUTHORS_NOTE.md",
       "GLOSSARY.md",
+      "BIBLE.md",
+      "OUTLINE.md",
+      "Bible.md",
+      "outline.md",
       "00-outline.md",
       "cover.png",
     ]) {

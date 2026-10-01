@@ -57,8 +57,13 @@ before(async () => {
     "CLAUDE",
     "AUTHORS_NOTE",
     "GLOSSARY",
+    "BIBLE",
+    "OUTLINE",
     "00-outline",
   ]) {
+    for (const work of ["forge-of-ruin", "tides-of-silence"]) {
+      await file(`${work}/chapters/${support}.md`, "Support file only");
+    }
     await file(`companions/${support}.md`, "Support file only");
     await file(`dragonborne/book-01-bond/${support}.md`, "Support file only");
     await file(`chapters/book1/${support}.md`, "Support file only");
@@ -102,7 +107,7 @@ test("Heart entry uses the same numbered-filename ID accepted by the reader", as
   assert.equal(series.totalWordCount, 6);
 });
 
-test("a work with root notes but no chapters has no read entry", async () => {
+test("a work with only support files inside chapters has no read entry", async () => {
   const series = (await loader.getAllSeries()).find(
     (item) => item.id === "tides-of-silence",
   );
@@ -142,7 +147,9 @@ test("main saga chapter counts exclude support files and frontmatter", async () 
 });
 
 test("chapter loading rejects support files while retaining existing API slugs", async () => {
-  assert.equal(await loader.getSagaChapter("book1", "authors_note"), null);
+  for (const slug of ["authors_note", "bible", "outline"]) {
+    assert.equal(await loader.getSagaChapter("book1", slug), null, slug);
+  }
   const chapter = await loader.getSagaChapter("book1", "01-arrival");
   assert.ok(chapter);
   assert.equal(chapter.wordCount, 2);

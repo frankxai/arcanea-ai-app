@@ -6,6 +6,8 @@ const NON_CHAPTER_BASENAMES = new Set([
   "CLAUDE",
   "AUTHORS_NOTE",
   "GLOSSARY",
+  "BIBLE",
+  "OUTLINE",
 ]);
 
 const PROLOGUE_BASENAME = /^00-prolog(?:ue|o)?(?:[-_.]|$)/i;
