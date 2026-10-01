@@ -71,8 +71,7 @@ async function readCapped(req: Request, max: number): Promise<string | null> {
 }
 
 export type WaitlistJson =
-  | { ok: true; json: unknown }
-  | { ok: false; status: 400 | 413; error: string };
+  { ok: true; json: unknown } | { ok: false; status: 400 | 413; error: string };
 
 /** Size-capped JSON read shared by both signup shapes on /api/waitlist. */
 export async function readWaitlistJson(req: Request): Promise<WaitlistJson> {

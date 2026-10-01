@@ -253,7 +253,9 @@ test("a Founding Circle save that cannot reach Supabase is an honest 503", async
 test("a body naming a product is never misfiled as a Founding Circle signup", async (t) => {
   t.mock.method(globalThis, "fetch", kvFetch(kv, calls));
   const { POST } = await loadRoute();
-  const res = await POST(post({ productId: "arcanea-subscription", email: "a@b.co" }));
+  const res = await POST(
+    post({ productId: "arcanea-subscription", email: "a@b.co" }),
+  );
   assert.equal(res.status, 400);
   assert.deepEqual(await res.json(), { error: "Invalid request" });
 });
