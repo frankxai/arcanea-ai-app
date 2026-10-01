@@ -259,7 +259,8 @@ export function catalogServer(
           ...rest: unknown[]
         ) =>
           isEnabled(name)
-            ? (target.registerTool as (...args: unknown[]) => unknown)(
+            ? (target.registerTool as (...args: unknown[]) => unknown).call(
+                target,
                 name,
                 {
                   ...config,
@@ -276,7 +277,8 @@ export function catalogServer(
       if (property === "registerPrompt") {
         return (name: string, ...rest: unknown[]) =>
           (PROMPT_TOOLS[name] ?? []).every(isEnabled)
-            ? (target.registerPrompt as (...args: unknown[]) => unknown)(
+            ? (target.registerPrompt as (...args: unknown[]) => unknown).call(
+                target,
                 name,
                 ...rest,
               )
