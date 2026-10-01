@@ -80,3 +80,34 @@ cost is $0.424038 list equivalent, not billed subscription spend. Earlier
 zero-output timeout attempts are retained; the new result does not diagnose
 their individual causes. Complete input/output/hash/usage receipts are private.
 Hub save remains held by the Queen handover lane; product evidence is on #427.
+
+## Independent package-core review reconciliation
+
+The corrected guide source e2012e95de passed CI36912589855 and the independent
+documentation delta check. A separate full seven-file package-core review at
+that SHA returned REVISE: one MEDIUM runtime-floor finding, two LOW filesystem
+and assertion findings, and one INFO undocumented-export observation. It did
+not inspect skill instructions/examples or approve the whole PR or release.
+
+The package now declares Node >=22, matching the repository's .nvmrc/CI baseline,
+and documents the existing identity/location exports. Official Node docs record
+structuredClone since17 and node:test since18/16.17; the review's blanket claim
+that node:test is absent from all Node16 is corrected. No Node16 runtime test was
+performed. The earlier >=16 floor nevertheless advertised a development workflow
+that uses APIs beyond that floor; Node22 is the supported, tested repo baseline.
+
+The destination-parent race remains explicitly documented in code and README.
+Path-based checks cannot guarantee containment when another local process swaps
+a parent between check and write; adding another check would not remove that
+race. This candidate installer requires trusted, stable home/source trees.
+The source-junction test accepts both legitimate validation errors; the reviewer
+inferred a Windows variation without executing it. No protection, passport,
+rights or ready state is promoted. The INFO API exports are now documented.
+
+Verification: the first local test invocation lacked the checkout's yaml dependency
+and failed; rerun uses existing local yaml2.9.0 via process-scoped NODE_PATH,
+without installing dependencies. Frozen CI resolves the pinned yaml2.9.1.
+Formatter, enabled secrets, candidate-head CI and independent delta review remain
+required. The hub's former foreign lane is now clear and an owned save is queued.
+Scope: package.json, README, installer comment, junction-test assertion and this
+task record, basee2012e95de. Rollback: revert those exact changes. Full goal active.

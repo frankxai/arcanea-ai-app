@@ -295,7 +295,7 @@ test("source junctions and destination junctions are rejected without writing ou
   symlinkSync(external, join(pkg, "skills/world-build/linked"), "junction");
   const source = run(["--dry-run"]);
   assert.equal(source.status, 1);
-  assert.match(source.stderr, /unsafe skill source/i);
+  assert.match(source.stderr, /unsafe (skill source|source directory)/i);
 });
 
 test("unknown CLI flags are rejected without installing anything", (t) => {

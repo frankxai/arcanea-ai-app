@@ -54,6 +54,6 @@
     "url": "https://github.com/frankxai/arcanea-ai-app/issues"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=22.0.0"
   }
 }

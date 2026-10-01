@@ -19,7 +19,8 @@ remains in `.arcanea/lore/CANON_LOCKED.md` at the repository root.
 
 ## Local review
 
-Use the repository's Node version and pinned pnpm. From this package directory:
+Use Node 22 or newer and the repository's pinned pnpm. The repository develops
+and verifies this package on its `.nvmrc` Node 22 runtime. From this package directory:
 
 ```sh
 node scripts/catalog.cjs
@@ -69,10 +70,15 @@ refuses existing skill directories, destination links and unknown options.
 `--dry-run` performs validation and planning without writing. An I/O failure during
 copying exits with code 1 and may leave a partial new directory for inspection;
 existing user skills are preserved. It has no automatic overwrite or cleanup mode.
+Path checks and copying are separate filesystem operations. Another local process
+could replace a source or destination parent between them, including before the
+post-creation check detects a junction. Install only from a trusted, stable source
+tree into a home directory whose parents other processes are not changing.
 
 The CommonJS API keeps `skills`, `skillCount`, `bundledCount`, `categories`,
 `getByCategory` and `getSkillPath`, with ready entries only. `candidates` exposes
 the review backlog. Callers that relied on the previous top-20 list must migrate.
+`name`, `version` and `skillsDir` also expose package identity and source location.
 
 Earlier skill folders remain in the checkout and Git history for reconciliation.
 They are excluded from the API, installer and package file list. Other discovery

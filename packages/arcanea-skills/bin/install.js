@@ -99,6 +99,8 @@ function run(args) {
       );
     return 0;
   }
+  // Path checks cannot prevent another local process swapping a parent during mkdir/copy.
+  // Install only with a trusted, stable home and source tree; the postcheck detects static links.
   fs.mkdirSync(destination, { recursive: true });
   checkParents(homeDir, destination);
   for (const row of plan) {
