@@ -57,3 +57,26 @@ promotion; prior unavailable review paths are not counted as sign-off.
 Reader draft #490 remains separately at 60fcf333b4, with four required CI checks
 and 13 native reader tests passing. Its branch remains intact; this worktree is
 back on the consolidation branch. Full creator/world/revenue objective active.
+
+## Independent guide review and correction
+
+Both source CI36909193888 and description-edited CI36910266070 completed
+SUCCESS at 411ec427e79c01020562f1a187df0bdabc4aa1d3: Install and the four
+required checks. Sonnet 4.6 independently reviewed the full three-document
+guide change at that exact revision and returned scoped PASS with two LOW
+findings. Markdown formatting had made historical queue numbering ambiguous
+and corrupted the reading*progress/pb*\* table identifiers. The correction
+labels historical item numbers non-authoritative and protects the identifiers
+with code spans; source history and actual database state are not modified.
+Scope of this correction: MASTER_PLAN and this task record, base411ec427e7.
+Formatter, enabled secrets, new-head CI and a bounded independent delta check
+must bind the corrected candidate. The full PR/skills/reader/release remains
+outside this guide verdict. No passport, rights or readiness promotion follows.
+
+The tool-free high-effort review completed in158seconds on Claude Code2.1.287
+with a240second deadline after a separate response-health probe succeeded.
+Provider receipt identifies first-party claude-sonnet-4-6; reported review
+cost is $0.424038 list equivalent, not billed subscription spend. Earlier
+zero-output timeout attempts are retained; the new result does not diagnose
+their individual causes. Complete input/output/hash/usage receipts are private.
+Hub save remains held by the Queen handover lane; product evidence is on #427.

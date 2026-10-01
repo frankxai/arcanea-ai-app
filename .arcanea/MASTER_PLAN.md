@@ -177,7 +177,7 @@ Source: `.arcanea/projects/milestones/`
   - [x] ~~Set 3 env vars on Vercel project `arcanea-ai-appx`~~ — DONE (confirmed set on Vercel, 2026-03-10)
   - [x] ~~Sync repos~~ — arcanea-records → arcanea-ai-app (lean-prod branch)
   - [x] ~~Migrate legacy API routes~~ — DONE (lib/supabase.ts deleted, 0 imports remain)
-  - [x] ~~DB tables~~ — All persistence tables created: profiles, creations, reading*progress, pb*\* (Prompt Books), chat_sessions, luminor_councils, activity_log
+  - [x] ~~DB tables~~ — All persistence tables created: profiles, creations, `reading_progress`, `pb_*` (Prompt Books), chat_sessions, luminor_councils, activity_log
   - [ ] **Supabase Dashboard config** (15 min): Site URL → `https://arcanea.ai`, add redirect URL `https://arcanea.ai/auth/callback`, enable Google + GitHub OAuth providers
   - [ ] **E2E auth test** — verify full flow on production
 - **Files**: `m001-supabase-auth.arc`
@@ -756,7 +756,10 @@ packages/              → 37 workspace packages
 
 ---
 
-## Priority Queue (Next Actions)
+## Historical priority queue
+
+Item numbers in this retained March/April queue are non-authoritative. Use the
+current issue IDs and planning records for execution and task references.
 
 ### P0 — Deploy Blockers & Core Experience
 
