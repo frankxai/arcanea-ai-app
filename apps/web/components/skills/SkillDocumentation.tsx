@@ -51,6 +51,13 @@ export default function SkillDocumentation({ skill }: { skill: Skill }) {
           ) : (
             <span>{children}</span>
           ),
+        img: ({ src, alt, title }) =>
+          src ? (
+            // eslint-disable-next-line @next/next/no-img-element -- Markdown resources have no intrinsic dimensions for the image optimizer.
+            <img src={src} alt={alt ?? ""} title={title} />
+          ) : (
+            <span>{alt}</span>
+          ),
       }}
     >
       {skill.readmeContent}

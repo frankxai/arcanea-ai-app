@@ -275,3 +275,20 @@ Static server rendering is not browser QA or deployed trace inspection. Existing
 CI wiring already runs this expanded consumer file; source CI and scoped
 independent five-file review must be recorded at the exact candidate revision.
 Keep canceled-preview limits and #408/#427 human/source/release gates open.
+
+Resource-renderer review and image fallback correction:
+The first five-file independent source attempt reached its configured 300-second
+deadline with no verdict; owned PID56100 was terminated and its raw receipt kept.
+One sequential streaming retry at unchanged2c63 completed (owned PID3172) with
+REVISE/three LOW. Two findings cover the same missing-image fallback; the other
+asks for an explicit external-image decision and test. The review inferred an
+empty-src HTTP GET. Local React19 static output actually omits src and retains the
+img/alt element; no browser requests were inspected. The real plain-text fallback
+gap reproduces (thirteen pass, one fails) and is corrected with an img renderer.
+Rejected image paths now keep their alt text as plain text, without a broken img.
+External HTTP(S) images deliberately retain normal Markdown behavior, now tested
+and explicit: their remote bytes are neither pinned nor validated by the local
+inventory. Content/rights readiness review still has to consider those URLs.
+Fourteen consumer cases pass locally after correction; exact source CI and scoped
+correction review remain necessary. Raw initial/timeout/retry/output/SSR receipts
+are kept privately; the review does not approve rights, the whole PR or release.

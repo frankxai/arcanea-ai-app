@@ -377,3 +377,43 @@ test("each current candidate's actual example link renders at its own pinned sou
     );
   }
 });
+
+test("rejected Markdown images retain alt text without rendering a broken image element", async (t) => {
+  const f = fixture(t);
+  ready(f);
+  const loaded = (await getAllSkills(f.options))[0];
+  const skill = {
+    ...loaded,
+    readmeContent: [
+      "![missing image](references/missing.png)",
+      "![traversal image](../image.png)",
+      "![unsafe image](data:image/png;base64,example)",
+    ].join("\n\n"),
+  };
+  const html = renderToStaticMarkup(
+    createElement(SkillDocumentation, { skill }),
+  );
+  assert.ok(html.includes("<span>missing image</span>"));
+  assert.ok(html.includes("<span>traversal image</span>"));
+  assert.ok(html.includes("<span>unsafe image</span>"));
+  assert.ok(!html.includes("<img"));
+});
+
+test("external HTTP(S) images retain Markdown behavior without claiming pinned or validated remote bytes", async (t) => {
+  const f = fixture(t);
+  ready(f);
+  const loaded = (await getAllSkills(f.options))[0];
+  for (const url of [
+    "https://example.com/image.png",
+    "http://example.com/image.png",
+  ]) {
+    assert.equal(resolveSkillMarkdownUrl(loaded, url, "src"), url);
+    const html = renderToStaticMarkup(
+      createElement(SkillDocumentation, {
+        skill: { ...loaded, readmeContent: `![external image](${url})` },
+      }),
+    );
+    assert.ok(html.includes(`src="${url}"`));
+    assert.ok(html.includes('alt="external image"'));
+  }
+});
