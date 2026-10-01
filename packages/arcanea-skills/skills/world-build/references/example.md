@@ -32,3 +32,5 @@ Open choice: Does P1 fit the desired magic cost? No fact has been promoted or wr
 “Mira grows a permanent bridge at high tide” violates F1, F2 and F3. Report the three conflicts with source evidence, or propose a marked revision if the creator requests changed rules.
 
 F3 does not establish why Mira cannot grow glass, or that she is the only ferry keeper. A curse or exclusive job must be labeled as a proposal, including in her biography. F1 specifies when glass growth is possible, not the only location where it can happen.
+
+For a different supplied note, “Mira forgot the harbor's name during the storm,” a faithful biography records the forgotten name and its timing. The note does not say that Mira paid the name as a bridge toll, that the storm caused the loss, or that she can never learn it again. Those mechanisms remain open. If the creator wants a proposed toll explanation, label it where it appears in the biography and in every dependent hook; do not cite the original loss as evidence that the toll occurred.

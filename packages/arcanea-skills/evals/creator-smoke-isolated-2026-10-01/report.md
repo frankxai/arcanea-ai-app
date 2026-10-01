@@ -57,7 +57,7 @@ rerun does not prove general correctness. Its refined source hash and unedited
 artifact/usage receipts are in `postRefinement` in the JSON report.
 
 The rerun reports another $0.0549984 list cost, for $0.3390966 across the five
-returned attempts. Other refined skills remain unexercised. Add independent
+returned attempts before the three later observations below. Add independent
 cases, repeats and a comparable control before claiming reliability or attributing
 improvement to the skills rather than the model or kernel.
 
@@ -71,3 +71,38 @@ The first evidence commit failed CI's changed-file Prettier check because raw
 model Markdown was included. The artifacts now use `.txt`; original UTF-8
 hashes are unchanged, and no formatting/security check was disabled. CI at the
 packaging correction's final head is a separate result, not inherited green.
+
+## Remaining refined requests at 8f94d8849b
+
+Three isolated reruns used exact Git bytes at
+`8f94d8849b43449d9421625b25a93df95a5429d4`, with the same original requests,
+hidden rubrics and tool-free producer context. All returned artifacts and usage
+receipts. The world request was admitted at 9,362 MB free RAM; later gates
+reported 9,184/9,193 MB, with fresh samples of 9,045/9,775 MB immediately before
+media/quest starts. All exceeded the 4,096 MB floor. No failed earlier attempt
+was overwritten.
+
+| Case  | Artifact                             | Observation                                                                                                                                                                                          |
+| ----- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| W1-R1 | [World bible](W1-refined.txt)        | Diagnostic failure: a loss becomes a transmission, and erasure becomes permanent/impossible to recover. An accurate fact table and later disclaimer do not repair unsupported biography/hook claims. |
+| M1-R1 | [Illustration brief](M1-refined.txt) | Specific prior findings avoided: supplied ownership remains unverified and illustration constraints are not promoted to universal mechanisms. Visual choices still require creator review.           |
+| Q1-R1 | [Quest packet](Q1-refined.txt)       | Specific prior findings avoided: child identity remains open and one complete JSON packet is returned. Actual runtime compatibility remains unproven.                                                |
+
+The quest object parses and names five states, two variables and four transitions.
+All conditions are the literal string `true`. Maker enumeration of the listed
+transitions reaches `delivered` and `guided`; drawing custody remains true and
+boarding differs. No transmission transition is listed at the start. This is
+inspection of this one finite packet, not execution in the creator's runtime.
+Its handling of unlisted actions and the extra start/goal fields is still unknown.
+No model-provided code was evaluated. The JSON inspection records paths and limits.
+
+World instructions are refined again to leave cause/recovery open, preserve local
+proposal status and check claims across the premise, biography and hooks. These
+later world bytes need a fresh check; W1-R1 describes the preceding version.
+Media and quest bytes are unchanged. All eight result texts remain unedited.
+
+These three receipts add $0.1881072 list equivalent, for $0.5272038 across eight
+returned attempts. Neither figure is verified billed spend. Timed-out and
+resource-aborted attempts remain without cost receipts. Source review, rights,
+held-out/control/creator evidence, installation, engine import and release gates
+remain open. Four candidates and zero ready.
