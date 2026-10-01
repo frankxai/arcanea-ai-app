@@ -6,7 +6,7 @@ User job: review curated candidates without exposing an uncleared candidate thro
 default skills CLI discovery.
 Base: `2ba6309aad2ead8225a8eab8ccf1cad0cdac5d7b`.
 Files: package catalog validator, tests, dependency declaration, README, root
-lockfile importer and this execution record.
+lockfile importer, existing CI package test step and this execution record.
 Non-goals: workflow text, readiness, licences, lore, launcher ownership, donor
 migration, archives and release.
 Budget: text edits and small Node tests; no dependency installation, new worktree,
@@ -40,3 +40,24 @@ The pinned v2.9.1 still requires verification in frozen-lockfile CI. Source
 validation reports four candidates and zero ready; all four workflow/resource
 hashes match the base. Formatting and diff checks passed. Independent review and
 new-head CI remain pending; prior green checks belong to the base revision.
+
+CI run 36891455589 at `39b1b89cc62286f668b4dd9bf7606f75e093ee4a`
+completed with Install and all four required checks successful. Inspection of
+the package-test step showed that `test:quick` excludes this package. The
+existing step now also invokes `pnpm --filter @arcanea/skills test`, so the
+catalog regressions execute against the frozen, pinned parser in CI. No job,
+cache, concurrency or release gate is removed. This follow-up requires a new
+exact-head CI receipt; the preceding green run did not execute these 11 tests.
+
+The smaller three-document Sonnet source review timed out after 120 seconds with
+zero returned output. An installed Gemini CLI 0.60.0 attempt requested
+`gemini-3.1-pro-preview`, using a tool-deny policy and the existing OAuth account;
+authentication failed with `UNSUPPORTED_CLIENT`. Neither attempt provides a
+verdict, served-model/cost receipt or sign-off. Global settings and credentials
+were unchanged. Attempts remain in the private review packet and issue #276
+comment 5935838080. Earlier PR-description edits cancelled live CI because its
+workflow handles `edited` events; keep metadata stable during this next run.
+
+Hub session/ledger/prompt writes remain queued behind lane `codex-fa375014`.
+The private pending-hub-visibility.json is a proposed hub save, not an applied
+estate record. Goal remains active; no workflow, licence or release promotion.
