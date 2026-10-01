@@ -156,7 +156,7 @@ User job: find creator workflows they can review and reuse without mistaking
 pending or uncurated development imports for released skills.
 Files: apps/web/app/skills/{page.tsx,[slug]/page.tsx},
 apps/web/app/v3/v3-below-fold.tsx, components/skills/InstallTabs.tsx,
-lib/skills/{loader.ts,__tests__/loader.test.ts}, apps/web/next.config.js,
+lib/skills/{loader.ts,**tests**/loader.test.ts}, apps/web/next.config.js,
 packages/arcanea-skills/scripts/catalog.{cjs,d.cts}, .arcanea/config/repos.json,
 .github/workflows/ci.yml and this record.
 Acceptance: reuse the existing catalog rights/eval/review/content gate, expose
