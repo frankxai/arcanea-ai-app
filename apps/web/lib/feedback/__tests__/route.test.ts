@@ -7,20 +7,18 @@ const unavailable = {
   error: "Feedback is temporarily unavailable. Please try again.",
 };
 
-let requestNumber = 0;
-function request(body: unknown) {
-  requestNumber++;
+function request(body: unknown, address: string) {
   return new NextRequest("https://www.arcanea.ai/api/feedback", {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "x-forwarded-for": "198.51.100." + requestNumber,
+      "x-forwarded-for": address,
     },
     body: JSON.stringify(body),
   });
 }
 
-function setStorage(t: TestContext, configured: boolean) {
+function useStorage(t: TestContext, configured: boolean) {
   const previousUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const previousKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (configured) {
@@ -44,53 +42,8 @@ async function expectUnavailable(response: Response) {
   assert.deepEqual(await response.json(), unavailable);
 }
 
-test("unconfigured storage never acknowledges feedback", async (t) => {
-  setStorage(t, false);
-  t.mock.method(globalThis, "fetch", async () => {
-    throw new Error("No network should be reached");
-  });
-
-  await expectUnavailable(
-    await POST(request({ message: "Please fix the reader." })),
-  );
-});
-
-test("insert failure is retryable and hides backend details", async (t) => {
-  setStorage(t, true);
-  let inserts = 0;
-  t.mock.method(globalThis, "fetch", async (input: RequestInfo | URL) => {
-    const url = new URL(input instanceof Request ? input.url : String(input));
-    assert.equal(url.pathname, "/rest/v1/feedback");
-    inserts++;
-    return new Response(
-      JSON.stringify({
-        code: "42P01",
-        message: "private database table detail",
-        details: null,
-        hint: null,
-      }),
-      { status: 400, headers: { "content-type": "application/json" } },
-    );
-  });
-
-  await expectUnavailable(await POST(request({ message: "A broken scene." })));
-  assert.equal(inserts, 1);
-});
-
-test("server error from storage is retryable and hides backend details", async (t) => {
-  setStorage(t, true);
-  t.mock.method(globalThis, "fetch", async () => {
-    return new Response(
-      JSON.stringify({ message: "private database table detail" }),
-      { status: 500, headers: { "content-type": "application/json" } },
-    );
-  });
-
-  await expectUnavailable(await POST(request({ message: "A missing image." })));
-});
-
-test("anonymous feedback is acknowledged after the insert", async (t) => {
-  setStorage(t, true);
+test("feedback is acknowledged only after the insert is saved", async (t) => {
+  let mode = "idle";
   let inserted: unknown;
   t.mock.method(
     globalThis,
@@ -98,18 +51,50 @@ test("anonymous feedback is acknowledged after the insert", async (t) => {
     async (input: RequestInfo | URL, init?: RequestInit) => {
       const url = new URL(input instanceof Request ? input.url : String(input));
       assert.equal(url.pathname, "/rest/v1/feedback");
-      assert.equal(init?.method, "POST");
-      inserted = JSON.parse(String(init?.body));
-      return new Response(null, { status: 201 });
+      if (mode === "400" || mode === "500") {
+        return new Response(
+          JSON.stringify({ message: "private database table detail" }),
+          {
+            status: mode === "400" ? 400 : 500,
+            headers: { "content-type": "application/json" },
+          },
+        );
+      }
+      if (mode === "201") {
+        assert.equal(init?.method, "POST");
+        inserted = JSON.parse(String(init?.body));
+        return new Response(null, { status: 201 });
+      }
+      throw new Error("No network should be reached");
     },
   );
 
+  useStorage(t, false);
+  await expectUnavailable(
+    await POST(request({ message: "Please fix the reader." }, "198.51.100.1")),
+  );
+
+  useStorage(t, true);
+  mode = "400";
+  await expectUnavailable(
+    await POST(request({ message: "A broken scene." }, "198.51.100.2")),
+  );
+
+  mode = "500";
+  await expectUnavailable(
+    await POST(request({ message: "A missing image." }, "198.51.100.3")),
+  );
+
+  mode = "201";
   const response = await POST(
-    request({
-      type: "feature",
-      message: "  More scene context  ",
-      email: "  creator@example.test  ",
-    }),
+    request(
+      {
+        type: "feature",
+        message: "  More scene context  ",
+        email: "  creator@example.test  ",
+      },
+      "198.51.100.4",
+    ),
   );
   assert.equal(response.status, 200);
   assert.deepEqual(await response.json(), { ok: true });
