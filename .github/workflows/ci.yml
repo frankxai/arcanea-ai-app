@@ -296,6 +296,11 @@ jobs:
       - name: Verify saga public release boundary (default-deny)
         run: pnpm --dir apps/web test:saga-gate
 
+      - name: Verify catalog entries match reader chapters
+        run: |
+          pnpm --dir apps/web exec tsx lib/saga/__tests__/chapter-files.test.ts
+          pnpm --dir apps/web exec tsx --test lib/saga/__tests__/series-entry.test.ts
+
       - name: Run package tests
         run: pnpm test:quick
 
