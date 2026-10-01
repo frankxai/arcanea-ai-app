@@ -182,6 +182,134 @@ export function auditSnapshot({
   };
 }
 
+// Follow explicit file references without executing a skill or reading the working tree.
+export function auditResources({
+  cwd = process.cwd(),
+  ref = "HEAD",
+  paths = [],
+} = {}) {
+  const commit = git(cwd, [
+    "rev-parse",
+    "--verify",
+    "--end-of-options",
+    `${ref}^{commit}`,
+  ]).trim();
+  const tree = new Map(
+    git(cwd, ["ls-tree", "-rz", "--full-tree", commit])
+      .split("\0")
+      .filter(Boolean)
+      .map((row) => {
+        const [, mode, type, blob, path] = row.match(
+          /^(\d+) (\w+) ([0-9a-f]+)\t([\s\S]+)$/,
+        );
+        return [path, { mode, type, blob }];
+      }),
+  );
+  const contents = new Map();
+  const read = (blob) => {
+    if (!contents.has(blob))
+      contents.set(
+        blob,
+        git(cwd, ["cat-file", "blob", blob], { encoding: null }),
+      );
+    return contents.get(blob);
+  };
+  const entries = paths.map((entry) => {
+    if (
+      typeof entry !== "string" ||
+      entry.startsWith("/") ||
+      entry.includes("\\") ||
+      entry.includes(":") ||
+      entry.split("/").some((part) => !part || part === "." || part === "..") ||
+      posix.basename(entry) !== "SKILL.md" ||
+      !tree.has(entry)
+    )
+      throw new Error(`Invalid skill entry: ${entry}`);
+    const root = posix.dirname(entry);
+    const queue = [...tree.keys()].filter((path) =>
+      path.startsWith(`${root}/`),
+    );
+    const visited = new Set(),
+      files = [],
+      references = [],
+      issues = [];
+    while (queue.length) {
+      const path = queue.shift();
+      if (visited.has(path)) continue;
+      visited.add(path);
+      if (visited.size > 200)
+        throw new Error(`Resource review exceeds 200 files: ${entry}`);
+      const row = tree.get(path);
+      if (row.type !== "blob" || !["100644", "100755"].includes(row.mode)) {
+        issues.push({ path, issue: "nonregular-resource", mode: row.mode });
+        continue;
+      }
+      const bytes = read(row.blob);
+      files.push({
+        path,
+        blob: row.blob,
+        sha256: createHash("sha256").update(bytes).digest("hex"),
+        outsideSkill: !path.startsWith(`${root}/`),
+      });
+      if (!path.endsWith(".md")) continue;
+      const text = bytes.toString("utf8");
+      const links = [...text.matchAll(/\]\(([^)\r\n]+)\)/g)].map(
+        (match) => match[1],
+      );
+      const codePaths = [...text.matchAll(/`((?:\.\.?\/)[^`\r\n]+)`/g)].map(
+        (match) => match[1],
+      );
+      for (const link of [...new Set([...links, ...codePaths])]) {
+        if (/^(?:https?:|mailto:|#)/i.test(link)) continue;
+        let value;
+        try {
+          value = decodeURIComponent(link.split("#")[0]);
+        } catch {
+          issues.push({ path, link, issue: "unparsed-reference" });
+          continue;
+        }
+        if (!value) continue;
+        if (/\s/.test(value) || value.includes("\\") || value.includes(":")) {
+          issues.push({ path, link, issue: "unparsed-reference" });
+          continue;
+        }
+        const target = posix.normalize(posix.join(posix.dirname(path), value));
+        if (
+          value.startsWith("/") ||
+          target === ".." ||
+          target.startsWith("../")
+        ) {
+          issues.push({ path, link, issue: "outside-repository" });
+          continue;
+        }
+        references.push({ from: path, link, target });
+        if (tree.has(target)) queue.push(target);
+        else
+          issues.push({
+            path,
+            link,
+            target,
+            issue: "unresolved-file-reference",
+          });
+      }
+    }
+    return {
+      entry,
+      files: files.sort((a, b) => compare(a.path, b.path)),
+      references: references.sort((a, b) =>
+        compare(`${a.from}/${a.link}`, `${b.from}/${b.link}`),
+      ),
+      issues,
+    };
+  });
+  return {
+    commit,
+    scope:
+      "Tracked skill files and explicit relative Markdown/backtick file references only. Runtime imports, prose-only references, licensing, canon authority and installability require separate review.",
+    entries,
+  };
+}
+
 if (
   process.argv[1] &&
   resolve(process.argv[1]) === fileURLToPath(import.meta.url)

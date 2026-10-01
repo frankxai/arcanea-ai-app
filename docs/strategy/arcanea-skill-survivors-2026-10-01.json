@@ -1,0 +1,3315 @@
+{
+  "schema": "arcanea.skill-fold-evidence.v1",
+  "sourceTask": "01a0f74f-8bad-7db1-ab06-fd89b5faec84",
+  "status": "proposal-no-moves-or-clearance",
+  "canonicalRoot": "packages/arcanea-skills/skills",
+  "snapshots": [
+    {
+      "id": "app",
+      "repo": "frankxai/arcanea-ai-app",
+      "commit": "b48f6ccf94f276a7df3eb03d48f4bf2119dfda2c",
+      "roots": [
+        ".claude/skills/oss",
+        "oss/skills",
+        "packages/arcanea-skills/skills"
+      ],
+      "rootLicenseFiles": []
+    },
+    {
+      "id": "distilled",
+      "repo": "frankxai/arcanea-agent-skills",
+      "commit": "e4530e9fba35043996ca588f9641755f8db669f4",
+      "roots": ["skills"],
+      "rootLicenseFiles": [],
+      "pluginVersion": "0.3.2",
+      "pluginLicenseDeclaration": "UNLICENSED"
+    },
+    {
+      "id": "distilled-branch",
+      "repo": "frankxai/arcanea-agent-skills",
+      "commit": "8bd8f50ae140132319ce69a145b45d5f6780e186",
+      "branch": "codex/arcanea-gateway-productization",
+      "roots": ["skills"],
+      "rootLicenseFiles": [],
+      "isAncestorOfDistilledMain": false,
+      "retention": "Unmerged fork; preserve branch-only skills/global-install/runtime work and consumer history before any retirement"
+    },
+    {
+      "id": "legacy",
+      "repo": "frankxai/arcanea",
+      "commit": "a88b76974a5a9778346c78861d7dc47f1dad7f8b",
+      "roots": ["arcanea-skills-opensource"],
+      "rootLicense": {
+        "path": "LICENSE",
+        "blob": "c7b1d7f90a92fc6a072635d67f25a3f1ae468c7f",
+        "notice": "Rights reserved by default; separate express and historical grants require review"
+      },
+      "packageLicenseDeclaration": "MIT",
+      "inspection": "Complete non-truncated subtree metadata; root notice and pack package metadata read; skills not content-reviewed"
+    }
+  ],
+  "resourceScope": "Tracked skill files and explicit relative Markdown/backtick file references only. Runtime imports, prose-only references, licensing, canon authority and installability require separate review.",
+  "summary": {
+    "sourceEntries": 122,
+    "appAttemptEntries": 57,
+    "additionalAppVariantEntries": 6,
+    "distilledMainEntries": 19,
+    "distilledForkEntries": 17,
+    "legacyTreeEntries": 23,
+    "referencedFiles": 192
+  },
+  "sources": [
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/api-design/SKILL.md",
+      "name": "arcanea-api-design",
+      "blob": "3383084e9b6c39adf41e76de11c7bd42539189bc",
+      "sha256": "8a4876fe9d2b7b1e9ec170bfda9db54392d3cb18c6d486319bb8a957bb722815",
+      "resourcePaths": [".claude/skills/oss/api-design/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/architecture-patterns/SKILL.md",
+      "name": "arcanea-architecture-patterns",
+      "blob": "a54504dbf3a3f41e064a9831e7e494f3f4733d97",
+      "sha256": "40ca0f1c53325faa822406f28fd79eeb2f8d08d7535bb230499fc0afb2c5e086",
+      "resourcePaths": [".claude/skills/oss/architecture-patterns/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/bestiary-nav/SKILL.md",
+      "name": "arcanea-bestiary-nav",
+      "blob": "53afe6d1652844daf4077e8e295f02b43776890d",
+      "sha256": "35a13ce395b26d84d39095a4dbe876f10086fa6cb66416b70feec784e3e22c68",
+      "resourcePaths": [".claude/skills/oss/bestiary-nav/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/character-forge/SKILL.md",
+      "name": "arcanea-character-forge",
+      "blob": "5ac904d8c13be6e867c682a5d9995629dff5f39b",
+      "sha256": "c485cd6f7a178f35017603fab8239e3f3b99de9676bbac6672a166e41df61237",
+      "resourcePaths": [".claude/skills/oss/character-forge/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/code-review/SKILL.md",
+      "name": "arcanea-code-review",
+      "blob": "8a50ea48f6501fac3f3611398ae2853bd7e1471b",
+      "sha256": "8bbce7d2301e4caa8e01cc6fa02800f9469a4038892a60b00ddf1618147893cb",
+      "resourcePaths": [".claude/skills/oss/code-review/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/creative-flow/SKILL.md",
+      "name": "arcanea-creative-flow",
+      "blob": "33d1413df94bdc165f598d4a3b6eeeeb38006945",
+      "sha256": "20e2f113384a655e24ef1a38b22268857ddfb008c699e8c3bb11a0f34fcd71a2",
+      "resourcePaths": [".claude/skills/oss/creative-flow/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/deep-work/SKILL.md",
+      "name": "arcanea-deep-work",
+      "blob": "fada7d28d6fad0aeaf305f55cf156451566f318c",
+      "sha256": "4adb9bcf4b479a0f1e79d949b5346754371a9043cdc6aed3a4bb08e22e99f8c1",
+      "resourcePaths": [".claude/skills/oss/deep-work/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/dialogue-mastery/SKILL.md",
+      "name": "arcanea-dialogue-mastery",
+      "blob": "c2f828b08180dc7ed9b47901543ec1ee7ec1e247",
+      "sha256": "9c77b45f180815ddd054a6ea5cc8857f2c7b45ee6f88ed06769964fa2296670a",
+      "resourcePaths": [".claude/skills/oss/dialogue-mastery/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/performance-tuning/SKILL.md",
+      "name": "arcanea-performance-tuning",
+      "blob": "7b963672957ec40f909c7139e20ecf59e27871ae",
+      "sha256": "11898ba007fd19cc1e965081040d44c062f1fa7a8cd4006c0be128c5c23011fe",
+      "resourcePaths": [".claude/skills/oss/performance-tuning/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/refactoring-ritual/SKILL.md",
+      "name": "arcanea-refactoring-ritual",
+      "blob": "df142a4a3b4ff2ee5b0bfdd211ac18aeab6e1c5d",
+      "sha256": "471ba1cb40713c31e0bccf0d0296358e0146b6466f8ebc35a4b024ebad39a7d6",
+      "resourcePaths": [".claude/skills/oss/refactoring-ritual/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/revision-ritual/SKILL.md",
+      "name": "arcanea-revision-ritual",
+      "blob": "ff9dbb18d149623a0a694349d1806e22bac1404a",
+      "sha256": "62d3ebedd584e0476a7e522eb4fe340e8b8b51011b385cd24c4856cac712bb8b",
+      "resourcePaths": [".claude/skills/oss/revision-ritual/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/scene-craft/SKILL.md",
+      "name": "arcanea-scene-craft",
+      "blob": "a960096256399ee647c443c933118d1ddedea4c1",
+      "sha256": "a092060828696d06882207169f6968a2dc8788bdf46dd96ade32c3ab3c9f9b95",
+      "resourcePaths": [".claude/skills/oss/scene-craft/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/skill-mastery/SKILL.md",
+      "name": "arcanea-skill-mastery",
+      "blob": "4bb2d657f63c88c974343904d42ebd1fe90c1b74",
+      "sha256": "661a6db77deeb8f658bbc91d09b84dd0c4fb5a2c27189d7e81563781b610d4f8",
+      "resourcePaths": [".claude/skills/oss/skill-mastery/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/story-weave/SKILL.md",
+      "name": "arcanea-story-weave",
+      "blob": "42fd2a05f2ed23cdc939ae5f01d3f4850b602437",
+      "sha256": "84ba570f210f76b271fad95a850c167383bda98eaa74907c92f9f8331f53fedb",
+      "resourcePaths": [".claude/skills/oss/story-weave/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/systematic-debug/SKILL.md",
+      "name": "arcanea-systematic-debug",
+      "blob": "b6089570bc7431a824d4c291a7665c09738e9633",
+      "sha256": "3cdc65515369af7cddf24a079a55e7a7c9da26af08cd5c2cadd1ce193544f676",
+      "resourcePaths": [".claude/skills/oss/systematic-debug/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/tdd/SKILL.md",
+      "name": "arcanea-tdd",
+      "blob": "da72c246baf3d76533f56031ab368cf80db289a2",
+      "sha256": "6ec3401488703dd1647f288c3199c6cb9cdb545a901fe2b8f6184c8ee26b35dc",
+      "resourcePaths": [".claude/skills/oss/tdd/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/voice-alchemy/SKILL.md",
+      "name": "arcanea-voice-alchemy",
+      "blob": "4d00dbf7384533c29e632bb515b50f076608e0be",
+      "sha256": "b868c0cfcbe541749e4ff1e20d12592f39c7a5402000234ca4698dcc304964e4",
+      "resourcePaths": [".claude/skills/oss/voice-alchemy/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/world-build/SKILL.md",
+      "name": "arcanea-world-build",
+      "blob": "a6526fabebea2c15758d6693aa22bd7065d8032c",
+      "sha256": "a3ce2baded3e92aef21690ada32c6ea648a75caf2e14e2120af2529a6a235802",
+      "resourcePaths": [".claude/skills/oss/world-build/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "world-pattern-review"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-anti-trope/SKILL.md",
+      "name": null,
+      "blob": "3ec286c740c7ef15069b03ad145271a6b4fbeaa9",
+      "sha256": "4ed05a6b5e2498412359fa43807cd0b9a130b675964ffd277b09834f7692e061",
+      "resourcePaths": [
+        "oss/skills/arcanea/arcanea-anti-trope/SKILL.md",
+        "oss/skills/arcanea/arcanea-anti-trope/skill.yaml"
+      ],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-book-cover/SKILL.md",
+      "name": "arcanea-book-cover",
+      "blob": "5ca26ec99e9de4abc0488431978ca4f0b3dbe1c7",
+      "sha256": "e8973659e876687686bba38ea89e3009193397a6422e0f973399fcdcf5bb826d",
+      "resourcePaths": [
+        "oss/skills/arcanea/arcanea-book-cover/SKILL.md",
+        "oss/skills/arcanea/arcanea-book-cover/skill.yaml"
+      ],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-canon/SKILL.md",
+      "name": null,
+      "blob": "b2c47e4066b520d4ed0438710cc4d24cb4517ae0",
+      "sha256": "83e58635b6c84afd0730ea4afdc2438598fcc3f22213ee9edb2d9672ed255a77",
+      "resourcePaths": [
+        "oss/skills/arcanea/arcanea-canon/SKILL.md",
+        "oss/skills/arcanea/arcanea-canon/skill.yaml"
+      ],
+      "referenceIssues": [],
+      "disposition": "official-authority-review"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-centaur-mode/SKILL.md",
+      "name": "arcanea-centaur-mode",
+      "blob": "0a82a10be09d4b4c37acecb33a29a815138ebb04",
+      "sha256": "307c93679b5cd022dd2c11328acdea6646decff8d66d188a550e2678cf72c4bf",
+      "resourcePaths": [
+        "oss/skills/arcanea/arcanea-centaur-mode/SKILL.md",
+        "oss/skills/arcanea/arcanea-centaur-mode/skill.yaml"
+      ],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-creator-academy/SKILL.md",
+      "name": null,
+      "blob": "38db1ee8cc87e9091efffd107b0b3c04f34ae389",
+      "sha256": "7fee9d651e44fb744169b15457488cafa9f7acedac7ab8e8c63e132ce910b581",
+      "resourcePaths": [
+        "oss/skills/arcanea/arcanea-creator-academy/SKILL.md",
+        "oss/skills/arcanea/arcanea-creator-academy/skill.yaml"
+      ],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-design-system/SKILL.md",
+      "name": "arcanea-design-system",
+      "blob": "fde2af5e5e81a586de53cc456f58dab586bee883",
+      "sha256": "06b481eee8d68d8a3388f84b319dbc87a30b9ca9f03044737c1e4a1c680e2f36",
+      "resourcePaths": [
+        "oss/skills/arcanea/arcanea-design-system/SKILL.md",
+        "oss/skills/arcanea/arcanea-design-system/skill.yaml"
+      ],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-voice/SKILL.md",
+      "name": null,
+      "blob": "30c61309affd74a9345c7bb9b4ea9455da0758b6",
+      "sha256": "a0cda3c0e6be7cb956c69623d639179bf4f10781a1060de1a11cf9e87c8072ac",
+      "resourcePaths": [
+        "oss/skills/arcanea/arcanea-voice/SKILL.md",
+        "oss/skills/arcanea/arcanea-voice/skill.yaml"
+      ],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/luminor-wisdom/SKILL.md",
+      "name": "arcanea-luminor-wisdom",
+      "blob": "017c281513557a652e2506d6b2f2645862fa9a1b",
+      "sha256": "502d961a6dc7de2cb46b281f98150ccba5b89f80c01040c678af4dc382ef546d",
+      "resourcePaths": [
+        "oss/skills/arcanea/luminor-wisdom/SKILL.md",
+        "oss/skills/arcanea/luminor-wisdom/skill.yaml"
+      ],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/prompt-craft/SKILL.md",
+      "name": "arcanea-prompt-craft",
+      "blob": "ca69af4dc15d8aada54fb9867ef94e9d56e824ac",
+      "sha256": "83a99dc8b6462055a24f8ee26b44cf6342ed1e288f3d71cbe84fca96a47bb035",
+      "resourcePaths": [
+        "oss/skills/arcanea/prompt-craft/SKILL.md",
+        "oss/skills/arcanea/prompt-craft/skill.yaml"
+      ],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/creative/bestiary-nav/SKILL.md",
+      "name": "arcanea-bestiary-nav",
+      "blob": "53afe6d1652844daf4077e8e295f02b43776890d",
+      "sha256": "35a13ce395b26d84d39095a4dbe876f10086fa6cb66416b70feec784e3e22c68",
+      "resourcePaths": ["oss/skills/creative/bestiary-nav/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/creative/character-forge/SKILL.md",
+      "name": "arcanea-character-forge",
+      "blob": "5ac904d8c13be6e867c682a5d9995629dff5f39b",
+      "sha256": "c485cd6f7a178f35017603fab8239e3f3b99de9676bbac6672a166e41df61237",
+      "resourcePaths": ["oss/skills/creative/character-forge/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/creative/story-weave/SKILL.md",
+      "name": "arcanea-story-weave",
+      "blob": "42fd2a05f2ed23cdc939ae5f01d3f4850b602437",
+      "sha256": "84ba570f210f76b271fad95a850c167383bda98eaa74907c92f9f8331f53fedb",
+      "resourcePaths": ["oss/skills/creative/story-weave/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/creative/world-build/SKILL.md",
+      "name": "arcanea-world-build",
+      "blob": "a6526fabebea2c15758d6693aa22bd7065d8032c",
+      "sha256": "a3ce2baded3e92aef21690ada32c6ea648a75caf2e14e2120af2529a6a235802",
+      "resourcePaths": ["oss/skills/creative/world-build/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "world-pattern-review"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/development/code-review/SKILL.md",
+      "name": "arcanea-code-review",
+      "blob": "8a50ea48f6501fac3f3611398ae2853bd7e1471b",
+      "sha256": "8bbce7d2301e4caa8e01cc6fa02800f9469a4038892a60b00ddf1618147893cb",
+      "resourcePaths": ["oss/skills/development/code-review/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/development/systematic-debug/SKILL.md",
+      "name": "arcanea-systematic-debug",
+      "blob": "b6089570bc7431a824d4c291a7665c09738e9633",
+      "sha256": "3cdc65515369af7cddf24a079a55e7a7c9da26af08cd5c2cadd1ce193544f676",
+      "resourcePaths": ["oss/skills/development/systematic-debug/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/development/tdd/SKILL.md",
+      "name": "arcanea-tdd",
+      "blob": "da72c246baf3d76533f56031ab368cf80db289a2",
+      "sha256": "6ec3401488703dd1647f288c3199c6cb9cdb545a901fe2b8f6184c8ee26b35dc",
+      "resourcePaths": ["oss/skills/development/tdd/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/api-design/SKILL.md",
+      "name": "arcanea-api-design",
+      "blob": "3383084e9b6c39adf41e76de11c7bd42539189bc",
+      "sha256": "8a4876fe9d2b7b1e9ec170bfda9db54392d3cb18c6d486319bb8a957bb722815",
+      "resourcePaths": ["packages/arcanea-skills/skills/api-design/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/arcanea-creator-academy/SKILL.md",
+      "name": null,
+      "blob": "38db1ee8cc87e9091efffd107b0b3c04f34ae389",
+      "sha256": "7fee9d651e44fb744169b15457488cafa9f7acedac7ab8e8c63e132ce910b581",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/arcanea-creator-academy/SKILL.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/architecture-patterns/SKILL.md",
+      "name": "arcanea-architecture-patterns",
+      "blob": "a54504dbf3a3f41e064a9831e7e494f3f4733d97",
+      "sha256": "40ca0f1c53325faa822406f28fd79eeb2f8d08d7535bb230499fc0afb2c5e086",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/architecture-patterns/SKILL.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/bestiary-nav/SKILL.md",
+      "name": "arcanea-bestiary-nav",
+      "blob": "53afe6d1652844daf4077e8e295f02b43776890d",
+      "sha256": "35a13ce395b26d84d39095a4dbe876f10086fa6cb66416b70feec784e3e22c68",
+      "resourcePaths": ["packages/arcanea-skills/skills/bestiary-nav/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/centaur-mode/SKILL.md",
+      "name": "arcanea-centaur-mode",
+      "blob": "0a82a10be09d4b4c37acecb33a29a815138ebb04",
+      "sha256": "307c93679b5cd022dd2c11328acdea6646decff8d66d188a550e2678cf72c4bf",
+      "resourcePaths": ["packages/arcanea-skills/skills/centaur-mode/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/character-forge/SKILL.md",
+      "name": "arcanea-character-forge",
+      "blob": "5ac904d8c13be6e867c682a5d9995629dff5f39b",
+      "sha256": "c485cd6f7a178f35017603fab8239e3f3b99de9676bbac6672a166e41df61237",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/character-forge/SKILL.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/code-review/SKILL.md",
+      "name": "arcanea-code-review",
+      "blob": "8a50ea48f6501fac3f3611398ae2853bd7e1471b",
+      "sha256": "8bbce7d2301e4caa8e01cc6fa02800f9469a4038892a60b00ddf1618147893cb",
+      "resourcePaths": ["packages/arcanea-skills/skills/code-review/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/continuity-check/SKILL.md",
+      "name": "continuity-check",
+      "blob": "84df0f3d4c6fbc715fc5f410946b8f44521ed400",
+      "sha256": "027cff25e4610eb83ffe7fde67ba68fa12175a53a3ca9d6ab713b7b35c6c0116",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/continuity-check/SKILL.md",
+        "packages/arcanea-skills/skills/continuity-check/references/example.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "canonical-candidate"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/creative-flow/SKILL.md",
+      "name": "arcanea-creative-flow",
+      "blob": "33d1413df94bdc165f598d4a3b6eeeeb38006945",
+      "sha256": "20e2f113384a655e24ef1a38b22268857ddfb008c699e8c3bb11a0f34fcd71a2",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/creative-flow/SKILL.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/deep-work/SKILL.md",
+      "name": "arcanea-deep-work",
+      "blob": "fada7d28d6fad0aeaf305f55cf156451566f318c",
+      "sha256": "4adb9bcf4b479a0f1e79d949b5346754371a9043cdc6aed3a4bb08e22e99f8c1",
+      "resourcePaths": ["packages/arcanea-skills/skills/deep-work/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/dialogue-mastery/SKILL.md",
+      "name": "arcanea-dialogue-mastery",
+      "blob": "c2f828b08180dc7ed9b47901543ec1ee7ec1e247",
+      "sha256": "9c77b45f180815ddd054a6ea5cc8857f2c7b45ee6f88ed06769964fa2296670a",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/dialogue-mastery/SKILL.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/luminor-wisdom/SKILL.md",
+      "name": "arcanea-luminor-wisdom",
+      "blob": "017c281513557a652e2506d6b2f2645862fa9a1b",
+      "sha256": "502d961a6dc7de2cb46b281f98150ccba5b89f80c01040c678af4dc382ef546d",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/luminor-wisdom/SKILL.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/performance-tuning/SKILL.md",
+      "name": "arcanea-performance-tuning",
+      "blob": "7b963672957ec40f909c7139e20ecf59e27871ae",
+      "sha256": "11898ba007fd19cc1e965081040d44c062f1fa7a8cd4006c0be128c5c23011fe",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/performance-tuning/SKILL.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/prompt-craft/SKILL.md",
+      "name": "arcanea-prompt-craft",
+      "blob": "ca69af4dc15d8aada54fb9867ef94e9d56e824ac",
+      "sha256": "83a99dc8b6462055a24f8ee26b44cf6342ed1e288f3d71cbe84fca96a47bb035",
+      "resourcePaths": ["packages/arcanea-skills/skills/prompt-craft/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/quest-adapt/SKILL.md",
+      "name": "quest-adapt",
+      "blob": "6c92b5f79359411fd4ccb2d119d5a4841ebf2f43",
+      "sha256": "443aa6facfdbfd41ddaf20f6adfb24e01c8492e8c44a1ae50a64c2ebd3829e2d",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/quest-adapt/SKILL.md",
+        "packages/arcanea-skills/skills/quest-adapt/references/example.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "canonical-candidate"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/refactoring-ritual/SKILL.md",
+      "name": "arcanea-refactoring-ritual",
+      "blob": "df142a4a3b4ff2ee5b0bfdd211ac18aeab6e1c5d",
+      "sha256": "471ba1cb40713c31e0bccf0d0296358e0146b6466f8ebc35a4b024ebad39a7d6",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/refactoring-ritual/SKILL.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/scene-craft/SKILL.md",
+      "name": "arcanea-scene-craft",
+      "blob": "a960096256399ee647c443c933118d1ddedea4c1",
+      "sha256": "a092060828696d06882207169f6968a2dc8788bdf46dd96ade32c3ab3c9f9b95",
+      "resourcePaths": ["packages/arcanea-skills/skills/scene-craft/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/scene-to-media/SKILL.md",
+      "name": "scene-to-media",
+      "blob": "ce150a4a49990673e951aa3932ebbe5bea7ec312",
+      "sha256": "f8d978d103fcb5555ce3e37b5cf5abc25364b116cf85fe4b6080f971f4df9b2b",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/scene-to-media/SKILL.md",
+        "packages/arcanea-skills/skills/scene-to-media/references/example.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "canonical-candidate"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/story-weave/SKILL.md",
+      "name": "arcanea-story-weave",
+      "blob": "42fd2a05f2ed23cdc939ae5f01d3f4850b602437",
+      "sha256": "84ba570f210f76b271fad95a850c167383bda98eaa74907c92f9f8331f53fedb",
+      "resourcePaths": ["packages/arcanea-skills/skills/story-weave/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/systematic-debug/SKILL.md",
+      "name": "arcanea-systematic-debug",
+      "blob": "b6089570bc7431a824d4c291a7665c09738e9633",
+      "sha256": "3cdc65515369af7cddf24a079a55e7a7c9da26af08cd5c2cadd1ce193544f676",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/systematic-debug/SKILL.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/tdd/SKILL.md",
+      "name": "arcanea-tdd",
+      "blob": "da72c246baf3d76533f56031ab368cf80db289a2",
+      "sha256": "6ec3401488703dd1647f288c3199c6cb9cdb545a901fe2b8f6184c8ee26b35dc",
+      "resourcePaths": ["packages/arcanea-skills/skills/tdd/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/voice-alchemy/SKILL.md",
+      "name": "arcanea-voice-alchemy",
+      "blob": "4d00dbf7384533c29e632bb515b50f076608e0be",
+      "sha256": "b868c0cfcbe541749e4ff1e20d12592f39c7a5402000234ca4698dcc304964e4",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/voice-alchemy/SKILL.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/world-build/SKILL.md",
+      "name": "world-build",
+      "blob": "7922db98a51612969d73d65740f203bf710e1d9c",
+      "sha256": "4ce1982095e05df84b9c89520e2c839e2c45edb19fc91e1641d3a1446c2618f6",
+      "resourcePaths": [
+        "packages/arcanea-skills/skills/world-build/SKILL.md",
+        "packages/arcanea-skills/skills/world-build/references/example.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "canonical-candidate"
+    },
+    {
+      "snapshot": "app",
+      "path": ".arcanea/skills/arcanea/design-system/SKILL.md",
+      "name": "arcanea-design-system",
+      "blob": "83f5d1bed436a5b9266d259e90e8049e63d79a63",
+      "sha256": "95d7993c01c4f5d514cf1e8fc890224443a44510bfebf6a220e07ca20b8a367a",
+      "resourcePaths": [".arcanea/skills/arcanea/design-system/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/arcanea/design-system/SKILL.md",
+      "name": "arcanea-design-system",
+      "blob": "956268be4063fa99a90a480c13eb9d10bfa3107d",
+      "sha256": "d14b27cf21cbfd5b399bde2605281092613f95fe7bf6b5a8b8a78a9c0379fc74",
+      "resourcePaths": [".claude/skills/arcanea/design-system/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "app",
+      "path": ".arcanea/skills/arcanea-core/luminor-personality-design/SKILL.md",
+      "name": "luminor-personality-design",
+      "blob": "93036b8fc45efcfafb6648eff2a625976e0b8426",
+      "sha256": "b892879174d169ac36e0c05d3dfdceb439e3c7edc2f979621db8254bd576fe04",
+      "resourcePaths": [
+        ".arcanea/skills/arcanea-core/luminor-personality-design/SKILL.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/arcanea-core/luminor-personality-design/SKILL.md",
+      "name": "luminor-personality-design",
+      "blob": "f77c431beaea8ba50a71f8ac175da057ddfd75ea",
+      "sha256": "08f62736a9a3d94f13e814e0d5e7917568d31d7a7a93602a6e661728d0194e00",
+      "resourcePaths": [
+        ".claude/skills/arcanea-core/luminor-personality-design/SKILL.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "unreviewed-retain-source"
+    },
+    {
+      "snapshot": "app",
+      "path": ".arcanea/skills/creative/sovereign-depths/SKILL.md",
+      "name": "sovereign-depths",
+      "blob": "c26fdb75157eecf2544d5d6ef1569d907e0853b4",
+      "sha256": "53bd9d5749293f48eda7b723de98eb40a3058c910e2536db5f246f8a5d8a79eb",
+      "resourcePaths": [".arcanea/skills/creative/sovereign-depths/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "specialty-review"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/creative/sovereign-depths/SKILL.md",
+      "name": "sovereign-depths",
+      "blob": "3e6256635f75287a64ad50cfb3d43876f2233817",
+      "sha256": "247db75b1049a52a081714f7ef1a930af46d45a76677ee5a70887b34ed6283e4",
+      "resourcePaths": [".claude/skills/creative/sovereign-depths/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "specialty-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanea-character-forge/SKILL.md",
+      "name": "arcanea-character-forge",
+      "blob": "c72812deb2cd60a9be15181ab4a9aa6e32766a6c",
+      "sha256": "da080ae7c43a38b8c66509c34da60eedf30dd3c2f0ae5b37b0b2a246043e4168",
+      "resourcePaths": ["skills/arcanea-character-forge/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanea-code-review/SKILL.md",
+      "name": "arcanea-code-review",
+      "blob": "d072ee5875299dd19c59e3080ef64b6eeb48a5bd",
+      "sha256": "42cc689f22552c5ba23352dee77a9a3a8d241a4bdc4041c7d6ffcc3bf6b70ff2",
+      "resourcePaths": ["skills/arcanea-code-review/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanea-story-weave/SKILL.md",
+      "name": "arcanea-story-weave",
+      "blob": "9d1ed88f24d70476b4ede3c6872d55db43438de6",
+      "sha256": "5c5803fcd8932925b9474850340ba3710106dd99d1f6e7e8575175da732e5169",
+      "resourcePaths": ["skills/arcanea-story-weave/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanea-systematic-debug/SKILL.md",
+      "name": "arcanea-systematic-debug",
+      "blob": "6f0c91f09e8023efcffbe4507ee80cc8a23453b8",
+      "sha256": "01362098b59bee8e9d01505aa383cfb76becd2aa9459f5d6590577241bfb631b",
+      "resourcePaths": ["skills/arcanea-systematic-debug/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanea-tdd/SKILL.md",
+      "name": "arcanea-tdd",
+      "blob": "e975685774d3a8cc0cc5248ee0c8afb18a693da1",
+      "sha256": "ea8f0d13d3e0a047010445f94f6fdd3cdb3e74005ec77a68311442a61c49d3ab",
+      "resourcePaths": ["skills/arcanea-tdd/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanea-world-build/SKILL.md",
+      "name": "arcanea-world-build",
+      "blob": "4a183459ec8e69a78d2bb4889aae46dfd1a715a2",
+      "sha256": "2608014a827b03bc69d1fe44966211ff285d3e75b4e1724a39ae38444c5a14be",
+      "resourcePaths": ["skills/arcanea-world-build/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "world-pattern-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanean-art-director/SKILL.md",
+      "name": "arcanean-art-director",
+      "blob": "cce252789aba2237c3241635639ad9d1001cd577",
+      "sha256": "7422ffd5b867a457f50508bf3a168ab76c1913f47b37332d377c38ad3e27a863",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/forbidden-patterns.md",
+        "references/quality-and-release-gates.md",
+        "references/quality-bar.md",
+        "references/visual-style-system.md",
+        "skills/arcanean-art-director/SKILL.md",
+        "templates/canon-ledger.md",
+        "templates/image-brief.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "media-pattern-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanean-worldbuilder/SKILL.md",
+      "name": "arcanean-worldbuilder",
+      "blob": "1c528f5b0e866513d2f25da7da56dbc427e82920",
+      "sha256": "7584173e4b484ea99b3e6eea28e055aef04f76ea62d635d78820f4002d0340f9",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/forbidden-patterns.md",
+        "skills/arcanean-worldbuilder/SKILL.md",
+        "templates/canon-ledger.md",
+        "templates/character-sheet.md",
+        "templates/scene-sheet.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "world-pattern-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/canon-guardian/SKILL.md",
+      "name": "canon-guardian",
+      "blob": "f911b1781b3a1f4563930297b12b70544c249394",
+      "sha256": "3d9415ad8679923aa7784dbf3d6d5685ebf552d69be4b98849051f8638e5885d",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/forbidden-patterns.md",
+        "references/quality-and-release-gates.md",
+        "references/quality-bar.md",
+        "skills/canon-guardian/SKILL.md",
+        "templates/canon-ledger.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "official-authority-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/canon-taste/SKILL.md",
+      "name": "canon-taste",
+      "blob": "b977239ba68e838107f26ccf1ba29b61aeb01a22",
+      "sha256": "abc055074e9f1cb2dbfc5699de9450602757df9b740f543a0f382c64ad920fa9",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/forbidden-patterns.md",
+        "references/quality-and-release-gates.md",
+        "references/quality-bar.md",
+        "skills/canon-taste/SKILL.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "official-authority-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/cinematic-image-prompt-master/SKILL.md",
+      "name": "cinematic-image-prompt-master",
+      "blob": "584cb571486135e73e26df1be67cfa67f3152d74",
+      "sha256": "0e6c45c055e8ed3d9f4e5d2e1472e5beb738d481d7d18100c9f24407b08b0599",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/prompt-patterns.md",
+        "references/quality-and-release-gates.md",
+        "references/quality-bar.md",
+        "references/visual-style-system.md",
+        "skills/cinematic-image-prompt-master/SKILL.md",
+        "templates/canon-ledger.md",
+        "templates/image-brief.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "media-pattern-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/cowork-conductor/SKILL.md",
+      "name": "cowork-conductor",
+      "blob": "1ec8a88a7428ad7f74e70e7afec88759cce16370",
+      "sha256": "6befbe316360c5223e0b3914afe4bec1b89baf1b14d183252f2178003f946107",
+      "resourcePaths": ["skills/cowork-conductor/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "operator-private-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/door-smoke/SKILL.md",
+      "name": "door-smoke",
+      "blob": "4678d28380dbf884ed95454118096c2aadf4fd09",
+      "sha256": "a7574e6729c463df7ce3dd2238817d2ad4ba322b9a0ee8e1dd5338791c3f0e5d",
+      "resourcePaths": ["skills/door-smoke/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/emotional-story-architect/SKILL.md",
+      "name": "emotional-story-architect",
+      "blob": "3fd7092c1a7e7741b100e4fba3502e4cd9d7ae1c",
+      "sha256": "3e0fdec40ae3c07a135b989bbce9f286d90208f4ad420c79251d081b06aeeb53",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/quality-and-release-gates.md",
+        "references/quality-bar.md",
+        "skills/emotional-story-architect/SKILL.md",
+        "templates/canon-ledger.md",
+        "templates/character-sheet.md",
+        "templates/novella-brief.md",
+        "templates/scene-sheet.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/library-honesty/SKILL.md",
+      "name": "library-honesty",
+      "blob": "116264294fcdc270af0489f649b79ba1ead13450",
+      "sha256": "9277d4c483c3671f0580f569d97683cff01907a984d047efa291b027b925bec6",
+      "resourcePaths": ["skills/library-honesty/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/operate-arcanea-creative-worlds/SKILL.md",
+      "name": "operate-arcanea-creative-worlds",
+      "blob": "ee56f2e4ad7c8e2d60e482af467bad9993a30ad2",
+      "sha256": "5917a03c3de41ff061e9fdf84a6a9a1edf9f0b01c6528954061594bf6281f540",
+      "resourcePaths": [
+        "fixtures/academy-world-proof-v1/fixture.json",
+        "references/arcanea-capability-map.md",
+        "references/arcanea-gateway-contract.json",
+        "references/arcanea-world-context-compatibility-preview.v1.json",
+        "references/canon-state-protocol.md",
+        "references/community-and-icp.md",
+        "references/creator-workflows.md",
+        "references/demand-loading.md",
+        "references/quality-and-release-gates.md",
+        "references/runtime-architecture.md",
+        "references/source-ledger.md",
+        "references/world-proof-contract.md",
+        "scripts/resolve-creator-workflow.mjs",
+        "skills/operate-arcanea-creative-worlds/SKILL.md",
+        "skills/operate-arcanea-creative-worlds/agents/openai.yaml",
+        "templates/canon-ledger.md",
+        "templates/guild-contribution-packet.md",
+        "templates/portable-world-packet.md",
+        "templates/quest-timeline-proof.md",
+        "templates/release-packet.md",
+        "templates/series-proof-pair.md",
+        "templates/world-proof.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "operator-private-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/social-asset-forge/SKILL.md",
+      "name": "social-asset-forge",
+      "blob": "3b01ee37bbc9ffdb07c612d8e2194b9af7322c36",
+      "sha256": "90f687d9aa55af2f4f1ad79f68dce8f91a816ea2f44527fa68d4ffd4ab387dd1",
+      "resourcePaths": [
+        "references/canon-state-protocol.md",
+        "references/prompt-patterns.md",
+        "references/quality-and-release-gates.md",
+        "references/quality-bar.md",
+        "references/visual-style-system.md",
+        "skills/social-asset-forge/SKILL.md",
+        "templates/canon-ledger.md",
+        "templates/image-brief.md",
+        "templates/social-carousel.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "specialty-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/visual-quality-critic/SKILL.md",
+      "name": "visual-quality-critic",
+      "blob": "739fb532b889460b73b394cc5d6f9b105d0d7dc0",
+      "sha256": "8f873f5a2aefafc115d2ad30b02071b03f26ee1efcaa1015c91e431b90d436d5",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/forbidden-patterns.md",
+        "references/quality-and-release-gates.md",
+        "references/quality-bar.md",
+        "references/visual-style-system.md",
+        "skills/visual-quality-critic/SKILL.md",
+        "templates/canon-ledger.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "media-pattern-review"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/wonder-series-planner/SKILL.md",
+      "name": "wonder-series-planner",
+      "blob": "d931b50d0030464367d0aaca5b156a7ec2cd62c7",
+      "sha256": "e881064f5f16ca9884f5947703cc60bc1d5c41c45bd84e1a2c1799de359fb3de",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/prompt-patterns.md",
+        "references/quality-and-release-gates.md",
+        "references/quality-bar.md",
+        "references/visual-style-system.md",
+        "skills/wonder-series-planner/SKILL.md",
+        "templates/canon-ledger.md",
+        "templates/series-proof-pair.md",
+        "templates/social-carousel.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "specialty-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanea-character-forge/SKILL.md",
+      "name": "arcanea-character-forge",
+      "blob": "c72812deb2cd60a9be15181ab4a9aa6e32766a6c",
+      "sha256": "da080ae7c43a38b8c66509c34da60eedf30dd3c2f0ae5b37b0b2a246043e4168",
+      "resourcePaths": ["skills/arcanea-character-forge/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanea-code-review/SKILL.md",
+      "name": "arcanea-code-review",
+      "blob": "d072ee5875299dd19c59e3080ef64b6eeb48a5bd",
+      "sha256": "42cc689f22552c5ba23352dee77a9a3a8d241a4bdc4041c7d6ffcc3bf6b70ff2",
+      "resourcePaths": ["skills/arcanea-code-review/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanea-story-weave/SKILL.md",
+      "name": "arcanea-story-weave",
+      "blob": "9d1ed88f24d70476b4ede3c6872d55db43438de6",
+      "sha256": "5c5803fcd8932925b9474850340ba3710106dd99d1f6e7e8575175da732e5169",
+      "resourcePaths": ["skills/arcanea-story-weave/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanea-systematic-debug/SKILL.md",
+      "name": "arcanea-systematic-debug",
+      "blob": "6f0c91f09e8023efcffbe4507ee80cc8a23453b8",
+      "sha256": "01362098b59bee8e9d01505aa383cfb76becd2aa9459f5d6590577241bfb631b",
+      "resourcePaths": ["skills/arcanea-systematic-debug/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanea-tdd/SKILL.md",
+      "name": "arcanea-tdd",
+      "blob": "e975685774d3a8cc0cc5248ee0c8afb18a693da1",
+      "sha256": "ea8f0d13d3e0a047010445f94f6fdd3cdb3e74005ec77a68311442a61c49d3ab",
+      "resourcePaths": ["skills/arcanea-tdd/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "development-only"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanea-world-build/SKILL.md",
+      "name": "arcanea-world-build",
+      "blob": "4a183459ec8e69a78d2bb4889aae46dfd1a715a2",
+      "sha256": "2608014a827b03bc69d1fe44966211ff285d3e75b4e1724a39ae38444c5a14be",
+      "resourcePaths": ["skills/arcanea-world-build/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "world-pattern-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanean-art-director/SKILL.md",
+      "name": "arcanean-art-director",
+      "blob": "aec4d83ff679dcd6566a8dc8c10ce21d31781e0a",
+      "sha256": "359375f4b727f517b6084d13b9d1a0f5232ad120e1665d1fb08cec863a3e71a3",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/forbidden-patterns.md",
+        "references/quality-bar.md",
+        "references/visual-style-system.md",
+        "skills/arcanean-art-director/SKILL.md",
+        "templates/canon-ledger.md",
+        "templates/image-brief.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "media-pattern-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanean-worldbuilder/SKILL.md",
+      "name": "arcanean-worldbuilder",
+      "blob": "1c528f5b0e866513d2f25da7da56dbc427e82920",
+      "sha256": "7584173e4b484ea99b3e6eea28e055aef04f76ea62d635d78820f4002d0340f9",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/forbidden-patterns.md",
+        "skills/arcanean-worldbuilder/SKILL.md",
+        "templates/canon-ledger.md",
+        "templates/character-sheet.md",
+        "templates/scene-sheet.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "world-pattern-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/canon-guardian/SKILL.md",
+      "name": "canon-guardian",
+      "blob": "18e6353241aab8705103208ac3547c1152dcd139",
+      "sha256": "7890d2d75c85681722ba446caa54ae0fa89229fb4979c24d58a79baa1d2ceab2",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/forbidden-patterns.md",
+        "references/quality-bar.md",
+        "skills/canon-guardian/SKILL.md",
+        "templates/canon-ledger.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "official-authority-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/cinematic-image-prompt-master/SKILL.md",
+      "name": "cinematic-image-prompt-master",
+      "blob": "584cb571486135e73e26df1be67cfa67f3152d74",
+      "sha256": "0e6c45c055e8ed3d9f4e5d2e1472e5beb738d481d7d18100c9f24407b08b0599",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/prompt-patterns.md",
+        "references/quality-bar.md",
+        "references/visual-style-system.md",
+        "skills/cinematic-image-prompt-master/SKILL.md",
+        "templates/canon-ledger.md",
+        "templates/image-brief.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "media-pattern-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/cowork-conductor/SKILL.md",
+      "name": "cowork-conductor",
+      "blob": "1ec8a88a7428ad7f74e70e7afec88759cce16370",
+      "sha256": "6befbe316360c5223e0b3914afe4bec1b89baf1b14d183252f2178003f946107",
+      "resourcePaths": ["skills/cowork-conductor/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "operator-private-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/emotional-story-architect/SKILL.md",
+      "name": "emotional-story-architect",
+      "blob": "3fd7092c1a7e7741b100e4fba3502e4cd9d7ae1c",
+      "sha256": "3e0fdec40ae3c07a135b989bbce9f286d90208f4ad420c79251d081b06aeeb53",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/quality-bar.md",
+        "skills/emotional-story-architect/SKILL.md",
+        "templates/canon-ledger.md",
+        "templates/character-sheet.md",
+        "templates/novella-brief.md",
+        "templates/scene-sheet.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "story-specialty-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/operate-arcanea-creative-worlds/SKILL.md",
+      "name": "operate-arcanea-creative-worlds",
+      "blob": "b4ebf9fda0e8f67775e074d655d482032509c92b",
+      "sha256": "751b3974b33779a6db8381575267c064f3f25e0497bdd8c4d686a5c94b2a9a69",
+      "resourcePaths": [
+        "fixtures/academy-world-proof-v1/fixture.json",
+        "references/arcanea-capability-map.md",
+        "references/arcanea-gateway-contract.json",
+        "references/canon-state-protocol.md",
+        "references/community-and-icp.md",
+        "references/creator-workflows.md",
+        "references/quality-and-release-gates.md",
+        "references/runtime-architecture.md",
+        "references/source-ledger.md",
+        "references/world-proof-contract.md",
+        "skills/operate-arcanea-creative-worlds/SKILL.md",
+        "skills/operate-arcanea-creative-worlds/agents/openai.yaml",
+        "templates/canon-ledger.md",
+        "templates/release-packet.md",
+        "templates/world-proof.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "operator-private-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/social-asset-forge/SKILL.md",
+      "name": "social-asset-forge",
+      "blob": "3b01ee37bbc9ffdb07c612d8e2194b9af7322c36",
+      "sha256": "90f687d9aa55af2f4f1ad79f68dce8f91a816ea2f44527fa68d4ffd4ab387dd1",
+      "resourcePaths": [
+        "references/canon-state-protocol.md",
+        "references/prompt-patterns.md",
+        "references/quality-and-release-gates.md",
+        "references/quality-bar.md",
+        "references/visual-style-system.md",
+        "skills/social-asset-forge/SKILL.md",
+        "templates/canon-ledger.md",
+        "templates/image-brief.md",
+        "templates/social-carousel.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "specialty-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/swarm-of-light/SKILL.md",
+      "name": "swarm-of-light",
+      "blob": "b8174cec1651f008917fc43da613467a5e6f376c",
+      "sha256": "70479b3d00e5ad257f106d2600ba043d49babc0032db02970de2dc1c20174263",
+      "resourcePaths": ["skills/swarm-of-light/SKILL.md"],
+      "referenceIssues": [],
+      "disposition": "operator-private-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/visual-quality-critic/SKILL.md",
+      "name": "visual-quality-critic",
+      "blob": "2891a77219f2724ae375507071dc83585fdbe50d",
+      "sha256": "58bc7709e9643dc4ebfe412b93da0449e0974224499057912db6ac7248e14faa",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/forbidden-patterns.md",
+        "references/quality-bar.md",
+        "references/visual-style-system.md",
+        "skills/visual-quality-critic/SKILL.md",
+        "templates/canon-ledger.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "media-pattern-review"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/wonder-series-planner/SKILL.md",
+      "name": "wonder-series-planner",
+      "blob": "1bfd029dac1ccef93e4b81cbabb2f0cbac0463d2",
+      "sha256": "1763f656fa5ac90b1927c55a143ee10e2531ee1d6cb464e50b6bcc2a1d15eece",
+      "resourcePaths": [
+        "references/arcanea-canon.md",
+        "references/canon-state-protocol.md",
+        "references/prompt-patterns.md",
+        "references/quality-bar.md",
+        "references/visual-style-system.md",
+        "skills/wonder-series-planner/SKILL.md",
+        "templates/canon-ledger.md",
+        "templates/social-carousel.md"
+      ],
+      "referenceIssues": [],
+      "disposition": "specialty-review"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/ai-symbiosis/SKILL.md",
+      "name": null,
+      "pathLabel": "ai-symbiosis",
+      "blob": "ac2f056097c1cba52f516428eb071edaaf65a219",
+      "sha256": null,
+      "disposition": "unreviewed-retain-source",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/arcanea/ai-symbiosis/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/anti-trope/SKILL.md",
+      "name": null,
+      "pathLabel": "anti-trope",
+      "blob": "0a713bcf3b7c95c1a47029300fc89b0ce8f012ad",
+      "sha256": null,
+      "disposition": "unreviewed-retain-source",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/arcanea/anti-trope/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/arcanea-canon/SKILL.md",
+      "name": null,
+      "pathLabel": "arcanea-canon",
+      "blob": "58e3ad0f763b05747aed0fbdd600524673c2bdb7",
+      "sha256": null,
+      "disposition": "official-authority-review",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/arcanea/arcanea-canon/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/arcanea-creator-academy/SKILL.md",
+      "name": null,
+      "pathLabel": "arcanea-creator-academy",
+      "blob": "f7be72e0ae7a1c725020fe5b47c6a4e85128b3c0",
+      "sha256": null,
+      "disposition": "unreviewed-retain-source",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/arcanea/arcanea-creator-academy/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/arcanea-design-system/SKILL.md",
+      "name": null,
+      "pathLabel": "arcanea-design-system",
+      "blob": "c5be9fc55f5fd185a2234503677750c37d0cb2f0",
+      "sha256": null,
+      "disposition": "development-only",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/arcanea/arcanea-design-system/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/arcanea-lore/SKILL.md",
+      "name": null,
+      "pathLabel": "arcanea-lore",
+      "blob": "27ad9f197a6585be185de6a794aa0f9c30f56479",
+      "sha256": null,
+      "disposition": "official-authority-review",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/arcanea/arcanea-lore/ENHANCEMENT_SUMMARY.md",
+        "arcanea-skills-opensource/skills/arcanea/arcanea-lore/ONBOARDING_NARRATIVES.md",
+        "arcanea-skills-opensource/skills/arcanea/arcanea-lore/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/arcanea-voice/SKILL.md",
+      "name": null,
+      "pathLabel": "arcanea-voice",
+      "blob": "85ec340f26178d646b6d1dbb1c367c87ff5cd21f",
+      "sha256": null,
+      "disposition": "unreviewed-retain-source",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/arcanea/arcanea-voice/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/centaur-mode/SKILL.md",
+      "name": null,
+      "pathLabel": "centaur-mode",
+      "blob": "a4b59e45099931eb166a214afaabec87fbf05090",
+      "sha256": null,
+      "disposition": "unreviewed-retain-source",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/arcanea/centaur-mode/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/design-system/SKILL.md",
+      "name": null,
+      "pathLabel": "design-system",
+      "blob": "e25038b0a59478e7aff8f3630135bf78e26aabd6",
+      "sha256": null,
+      "disposition": "development-only",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/arcanea/design-system/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/luminor-council/SKILL.md",
+      "name": null,
+      "pathLabel": "luminor-council",
+      "blob": "75829cbd0e3a59ee0e1eb94dddcd815f872a22e3",
+      "sha256": null,
+      "disposition": "operator-private-review",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/arcanea/luminor-council/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/luminor-wisdom/SKILL.md",
+      "name": null,
+      "pathLabel": "luminor-wisdom",
+      "blob": "34ddbf6cdecdc76e7712de6457f9dc57629b8f01",
+      "sha256": null,
+      "disposition": "unreviewed-retain-source",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/arcanea/luminor-wisdom/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/prompt-craft/SKILL.md",
+      "name": null,
+      "pathLabel": "prompt-craft",
+      "blob": "a8e36acf4e70209685495b787c73f8e300ed32ae",
+      "sha256": null,
+      "disposition": "unreviewed-retain-source",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/arcanea/prompt-craft/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/bestiary-nav/SKILL.md",
+      "name": null,
+      "pathLabel": "bestiary-nav",
+      "blob": "e5162956088db0629df8bc62748e08a546b9ab1a",
+      "sha256": null,
+      "disposition": "unreviewed-retain-source",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/creative/bestiary-nav/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/character-alchemist/SKILL.md",
+      "name": null,
+      "pathLabel": "character-alchemist",
+      "blob": "e0439563aab4155498e5be71fa800ee4c5c46792",
+      "sha256": null,
+      "disposition": "story-specialty-review",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/creative/character-alchemist/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/character-forge/SKILL.md",
+      "name": null,
+      "pathLabel": "character-forge",
+      "blob": "0ec4d54c2ac3a6a62ffcae99446ec33c8d70500d",
+      "sha256": null,
+      "disposition": "story-specialty-review",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/creative/character-forge/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/creative-bestiary/SKILL.md",
+      "name": null,
+      "pathLabel": "creative-bestiary",
+      "blob": "274448c5ec286f3c8a992095eb8df7bd32e88e6d",
+      "sha256": null,
+      "disposition": "unreviewed-retain-source",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/creative/creative-bestiary/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/story-weave/SKILL.md",
+      "name": null,
+      "pathLabel": "story-weave",
+      "blob": "d441b84acdd56b8f6adac596942d2ef3e7e3af9c",
+      "sha256": null,
+      "disposition": "story-specialty-review",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/creative/story-weave/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/story-weaver/SKILL.md",
+      "name": null,
+      "pathLabel": "story-weaver",
+      "blob": "97ef797fac958ecf113e57ec57c2986483c798bd",
+      "sha256": null,
+      "disposition": "story-specialty-review",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/creative/story-weaver/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/world-architect/SKILL.md",
+      "name": null,
+      "pathLabel": "world-architect",
+      "blob": "ae0cf303e6b3b250f857de43bb5720f19b6fd91e",
+      "sha256": null,
+      "disposition": "world-pattern-review",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/creative/world-architect/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/world-build/SKILL.md",
+      "name": null,
+      "pathLabel": "world-build",
+      "blob": "b02b8c768a7951298299fde6a578c2bd8eb83d82",
+      "sha256": null,
+      "disposition": "world-pattern-review",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/creative/world-build/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/development/code-review/SKILL.md",
+      "name": null,
+      "pathLabel": "code-review",
+      "blob": "3bce6b25950a8fcaf86ca63ad0d0d0078afc265e",
+      "sha256": null,
+      "disposition": "development-only",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/development/code-review/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/development/systematic-debug/SKILL.md",
+      "name": null,
+      "pathLabel": "systematic-debug",
+      "blob": "33d9aa05aca7133059b4ab57538d6e58f570a00b",
+      "sha256": null,
+      "disposition": "development-only",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/development/systematic-debug/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/development/tdd/SKILL.md",
+      "name": null,
+      "pathLabel": "tdd",
+      "blob": "6e34b52408c1b53eb2407cc3db49c33bac14f4b0",
+      "sha256": null,
+      "disposition": "development-only",
+      "resourcePaths": [
+        "arcanea-skills-opensource/skills/development/tdd/SKILL.md"
+      ],
+      "referenceIssues": null,
+      "inspection": "Git tree metadata only; skill text, relative references and runtime dependencies remain unreviewed"
+    }
+  ],
+  "resourceFiles": [
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/api-design/SKILL.md",
+      "blob": "3383084e9b6c39adf41e76de11c7bd42539189bc",
+      "sha256": "8a4876fe9d2b7b1e9ec170bfda9db54392d3cb18c6d486319bb8a957bb722815"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/architecture-patterns/SKILL.md",
+      "blob": "a54504dbf3a3f41e064a9831e7e494f3f4733d97",
+      "sha256": "40ca0f1c53325faa822406f28fd79eeb2f8d08d7535bb230499fc0afb2c5e086"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/bestiary-nav/SKILL.md",
+      "blob": "53afe6d1652844daf4077e8e295f02b43776890d",
+      "sha256": "35a13ce395b26d84d39095a4dbe876f10086fa6cb66416b70feec784e3e22c68"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/character-forge/SKILL.md",
+      "blob": "5ac904d8c13be6e867c682a5d9995629dff5f39b",
+      "sha256": "c485cd6f7a178f35017603fab8239e3f3b99de9676bbac6672a166e41df61237"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/code-review/SKILL.md",
+      "blob": "8a50ea48f6501fac3f3611398ae2853bd7e1471b",
+      "sha256": "8bbce7d2301e4caa8e01cc6fa02800f9469a4038892a60b00ddf1618147893cb"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/creative-flow/SKILL.md",
+      "blob": "33d1413df94bdc165f598d4a3b6eeeeb38006945",
+      "sha256": "20e2f113384a655e24ef1a38b22268857ddfb008c699e8c3bb11a0f34fcd71a2"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/deep-work/SKILL.md",
+      "blob": "fada7d28d6fad0aeaf305f55cf156451566f318c",
+      "sha256": "4adb9bcf4b479a0f1e79d949b5346754371a9043cdc6aed3a4bb08e22e99f8c1"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/dialogue-mastery/SKILL.md",
+      "blob": "c2f828b08180dc7ed9b47901543ec1ee7ec1e247",
+      "sha256": "9c77b45f180815ddd054a6ea5cc8857f2c7b45ee6f88ed06769964fa2296670a"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/performance-tuning/SKILL.md",
+      "blob": "7b963672957ec40f909c7139e20ecf59e27871ae",
+      "sha256": "11898ba007fd19cc1e965081040d44c062f1fa7a8cd4006c0be128c5c23011fe"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/refactoring-ritual/SKILL.md",
+      "blob": "df142a4a3b4ff2ee5b0bfdd211ac18aeab6e1c5d",
+      "sha256": "471ba1cb40713c31e0bccf0d0296358e0146b6466f8ebc35a4b024ebad39a7d6"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/revision-ritual/SKILL.md",
+      "blob": "ff9dbb18d149623a0a694349d1806e22bac1404a",
+      "sha256": "62d3ebedd584e0476a7e522eb4fe340e8b8b51011b385cd24c4856cac712bb8b"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/scene-craft/SKILL.md",
+      "blob": "a960096256399ee647c443c933118d1ddedea4c1",
+      "sha256": "a092060828696d06882207169f6968a2dc8788bdf46dd96ade32c3ab3c9f9b95"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/skill-mastery/SKILL.md",
+      "blob": "4bb2d657f63c88c974343904d42ebd1fe90c1b74",
+      "sha256": "661a6db77deeb8f658bbc91d09b84dd0c4fb5a2c27189d7e81563781b610d4f8"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/story-weave/SKILL.md",
+      "blob": "42fd2a05f2ed23cdc939ae5f01d3f4850b602437",
+      "sha256": "84ba570f210f76b271fad95a850c167383bda98eaa74907c92f9f8331f53fedb"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/systematic-debug/SKILL.md",
+      "blob": "b6089570bc7431a824d4c291a7665c09738e9633",
+      "sha256": "3cdc65515369af7cddf24a079a55e7a7c9da26af08cd5c2cadd1ce193544f676"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/tdd/SKILL.md",
+      "blob": "da72c246baf3d76533f56031ab368cf80db289a2",
+      "sha256": "6ec3401488703dd1647f288c3199c6cb9cdb545a901fe2b8f6184c8ee26b35dc"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/voice-alchemy/SKILL.md",
+      "blob": "4d00dbf7384533c29e632bb515b50f076608e0be",
+      "sha256": "b868c0cfcbe541749e4ff1e20d12592f39c7a5402000234ca4698dcc304964e4"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/oss/world-build/SKILL.md",
+      "blob": "a6526fabebea2c15758d6693aa22bd7065d8032c",
+      "sha256": "a3ce2baded3e92aef21690ada32c6ea648a75caf2e14e2120af2529a6a235802"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-anti-trope/SKILL.md",
+      "blob": "3ec286c740c7ef15069b03ad145271a6b4fbeaa9",
+      "sha256": "4ed05a6b5e2498412359fa43807cd0b9a130b675964ffd277b09834f7692e061"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-anti-trope/skill.yaml",
+      "blob": "e177293208247645fa2cc3ee99eec5fa9e793bb1",
+      "sha256": "034d4fe60fe69aeed91c67f46175551bacbb4d2ea02603e06347a8c53e593a08"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-book-cover/SKILL.md",
+      "blob": "5ca26ec99e9de4abc0488431978ca4f0b3dbe1c7",
+      "sha256": "e8973659e876687686bba38ea89e3009193397a6422e0f973399fcdcf5bb826d"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-book-cover/skill.yaml",
+      "blob": "7d51d6a1a01fe406a3aedd5091ca61bc99160e57",
+      "sha256": "e3340af3556775568542ff2ec69d56e861c5a5724ef75b846c18e68bd0be64c2"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-canon/SKILL.md",
+      "blob": "b2c47e4066b520d4ed0438710cc4d24cb4517ae0",
+      "sha256": "83e58635b6c84afd0730ea4afdc2438598fcc3f22213ee9edb2d9672ed255a77"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-canon/skill.yaml",
+      "blob": "1ca48a184a3c955d1dad42c32b0f66632577ca8b",
+      "sha256": "bc100018716c5352acdcfdb5ae5b676408a3e0516ec2faf90f891644fc4789e6"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-centaur-mode/SKILL.md",
+      "blob": "0a82a10be09d4b4c37acecb33a29a815138ebb04",
+      "sha256": "307c93679b5cd022dd2c11328acdea6646decff8d66d188a550e2678cf72c4bf"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-centaur-mode/skill.yaml",
+      "blob": "9f3d8e80cc10718f3a82d3733f6108daa858bf73",
+      "sha256": "30c1daa9bec7816f22e3952ba1ce88530f73f9fa1fbd2c772874180d6211eec8"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-creator-academy/SKILL.md",
+      "blob": "38db1ee8cc87e9091efffd107b0b3c04f34ae389",
+      "sha256": "7fee9d651e44fb744169b15457488cafa9f7acedac7ab8e8c63e132ce910b581"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-creator-academy/skill.yaml",
+      "blob": "6d6490e55a081a21db87223e32e06fc2fe138bd5",
+      "sha256": "c8f6afe4de50dc3dccbe11bfabeac88d9d0dd80a97be255f9c1d6686a436ebf1"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-design-system/SKILL.md",
+      "blob": "fde2af5e5e81a586de53cc456f58dab586bee883",
+      "sha256": "06b481eee8d68d8a3388f84b319dbc87a30b9ca9f03044737c1e4a1c680e2f36"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-design-system/skill.yaml",
+      "blob": "b5528af8c6e81a52e6777c56ba02aa934ca433c2",
+      "sha256": "a8e691ebf4483fbe40de0044c2561c217992ee089f7b43deaf7a75181a812633"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-voice/SKILL.md",
+      "blob": "30c61309affd74a9345c7bb9b4ea9455da0758b6",
+      "sha256": "a0cda3c0e6be7cb956c69623d639179bf4f10781a1060de1a11cf9e87c8072ac"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/arcanea-voice/skill.yaml",
+      "blob": "6b8612c5b0e5f504f1efdda6eaa59872b10e8e10",
+      "sha256": "2ee757e0571d0c657a5bd4f2acb2fdad73ece76e48596606d26c7a55487b6d50"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/luminor-wisdom/SKILL.md",
+      "blob": "017c281513557a652e2506d6b2f2645862fa9a1b",
+      "sha256": "502d961a6dc7de2cb46b281f98150ccba5b89f80c01040c678af4dc382ef546d"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/luminor-wisdom/skill.yaml",
+      "blob": "18de849403a573adb2257518c3b163b7fc0e2a7e",
+      "sha256": "1b956e611962ed943d6da2ae096794b8b4f5e0a41e0599344ec78f79dc8207dd"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/prompt-craft/SKILL.md",
+      "blob": "ca69af4dc15d8aada54fb9867ef94e9d56e824ac",
+      "sha256": "83a99dc8b6462055a24f8ee26b44cf6342ed1e288f3d71cbe84fca96a47bb035"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/arcanea/prompt-craft/skill.yaml",
+      "blob": "8043554151e5a11b4aed982f64bae1f7ae12d38d",
+      "sha256": "f5ed8df570441335417bc08653946081c1f95405e5e5ab7d1bd4acdf4fd36b10"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/creative/bestiary-nav/SKILL.md",
+      "blob": "53afe6d1652844daf4077e8e295f02b43776890d",
+      "sha256": "35a13ce395b26d84d39095a4dbe876f10086fa6cb66416b70feec784e3e22c68"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/creative/character-forge/SKILL.md",
+      "blob": "5ac904d8c13be6e867c682a5d9995629dff5f39b",
+      "sha256": "c485cd6f7a178f35017603fab8239e3f3b99de9676bbac6672a166e41df61237"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/creative/story-weave/SKILL.md",
+      "blob": "42fd2a05f2ed23cdc939ae5f01d3f4850b602437",
+      "sha256": "84ba570f210f76b271fad95a850c167383bda98eaa74907c92f9f8331f53fedb"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/creative/world-build/SKILL.md",
+      "blob": "a6526fabebea2c15758d6693aa22bd7065d8032c",
+      "sha256": "a3ce2baded3e92aef21690ada32c6ea648a75caf2e14e2120af2529a6a235802"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/development/code-review/SKILL.md",
+      "blob": "8a50ea48f6501fac3f3611398ae2853bd7e1471b",
+      "sha256": "8bbce7d2301e4caa8e01cc6fa02800f9469a4038892a60b00ddf1618147893cb"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/development/systematic-debug/SKILL.md",
+      "blob": "b6089570bc7431a824d4c291a7665c09738e9633",
+      "sha256": "3cdc65515369af7cddf24a079a55e7a7c9da26af08cd5c2cadd1ce193544f676"
+    },
+    {
+      "snapshot": "app",
+      "path": "oss/skills/development/tdd/SKILL.md",
+      "blob": "da72c246baf3d76533f56031ab368cf80db289a2",
+      "sha256": "6ec3401488703dd1647f288c3199c6cb9cdb545a901fe2b8f6184c8ee26b35dc"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/api-design/SKILL.md",
+      "blob": "3383084e9b6c39adf41e76de11c7bd42539189bc",
+      "sha256": "8a4876fe9d2b7b1e9ec170bfda9db54392d3cb18c6d486319bb8a957bb722815"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/arcanea-creator-academy/SKILL.md",
+      "blob": "38db1ee8cc87e9091efffd107b0b3c04f34ae389",
+      "sha256": "7fee9d651e44fb744169b15457488cafa9f7acedac7ab8e8c63e132ce910b581"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/architecture-patterns/SKILL.md",
+      "blob": "a54504dbf3a3f41e064a9831e7e494f3f4733d97",
+      "sha256": "40ca0f1c53325faa822406f28fd79eeb2f8d08d7535bb230499fc0afb2c5e086"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/bestiary-nav/SKILL.md",
+      "blob": "53afe6d1652844daf4077e8e295f02b43776890d",
+      "sha256": "35a13ce395b26d84d39095a4dbe876f10086fa6cb66416b70feec784e3e22c68"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/centaur-mode/SKILL.md",
+      "blob": "0a82a10be09d4b4c37acecb33a29a815138ebb04",
+      "sha256": "307c93679b5cd022dd2c11328acdea6646decff8d66d188a550e2678cf72c4bf"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/character-forge/SKILL.md",
+      "blob": "5ac904d8c13be6e867c682a5d9995629dff5f39b",
+      "sha256": "c485cd6f7a178f35017603fab8239e3f3b99de9676bbac6672a166e41df61237"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/code-review/SKILL.md",
+      "blob": "8a50ea48f6501fac3f3611398ae2853bd7e1471b",
+      "sha256": "8bbce7d2301e4caa8e01cc6fa02800f9469a4038892a60b00ddf1618147893cb"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/continuity-check/SKILL.md",
+      "blob": "84df0f3d4c6fbc715fc5f410946b8f44521ed400",
+      "sha256": "027cff25e4610eb83ffe7fde67ba68fa12175a53a3ca9d6ab713b7b35c6c0116"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/continuity-check/references/example.md",
+      "blob": "c8ff36b3c7108eed0025ace1c50aba9583f77d51",
+      "sha256": "72058f83190e9a606ed748dc5f0949bb691a83d99047f386c477e7bab0f801cd"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/creative-flow/SKILL.md",
+      "blob": "33d1413df94bdc165f598d4a3b6eeeeb38006945",
+      "sha256": "20e2f113384a655e24ef1a38b22268857ddfb008c699e8c3bb11a0f34fcd71a2"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/deep-work/SKILL.md",
+      "blob": "fada7d28d6fad0aeaf305f55cf156451566f318c",
+      "sha256": "4adb9bcf4b479a0f1e79d949b5346754371a9043cdc6aed3a4bb08e22e99f8c1"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/dialogue-mastery/SKILL.md",
+      "blob": "c2f828b08180dc7ed9b47901543ec1ee7ec1e247",
+      "sha256": "9c77b45f180815ddd054a6ea5cc8857f2c7b45ee6f88ed06769964fa2296670a"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/luminor-wisdom/SKILL.md",
+      "blob": "017c281513557a652e2506d6b2f2645862fa9a1b",
+      "sha256": "502d961a6dc7de2cb46b281f98150ccba5b89f80c01040c678af4dc382ef546d"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/performance-tuning/SKILL.md",
+      "blob": "7b963672957ec40f909c7139e20ecf59e27871ae",
+      "sha256": "11898ba007fd19cc1e965081040d44c062f1fa7a8cd4006c0be128c5c23011fe"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/prompt-craft/SKILL.md",
+      "blob": "ca69af4dc15d8aada54fb9867ef94e9d56e824ac",
+      "sha256": "83a99dc8b6462055a24f8ee26b44cf6342ed1e288f3d71cbe84fca96a47bb035"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/quest-adapt/SKILL.md",
+      "blob": "6c92b5f79359411fd4ccb2d119d5a4841ebf2f43",
+      "sha256": "443aa6facfdbfd41ddaf20f6adfb24e01c8492e8c44a1ae50a64c2ebd3829e2d"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/quest-adapt/references/example.md",
+      "blob": "bafd94fe576e0dae90893905f607a6c14cffbf6b",
+      "sha256": "e893787c852b0b38dc57ad5d2c083b448e8ba9d4074023e7b5bdc90e88927cf7"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/refactoring-ritual/SKILL.md",
+      "blob": "df142a4a3b4ff2ee5b0bfdd211ac18aeab6e1c5d",
+      "sha256": "471ba1cb40713c31e0bccf0d0296358e0146b6466f8ebc35a4b024ebad39a7d6"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/scene-craft/SKILL.md",
+      "blob": "a960096256399ee647c443c933118d1ddedea4c1",
+      "sha256": "a092060828696d06882207169f6968a2dc8788bdf46dd96ade32c3ab3c9f9b95"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/scene-to-media/SKILL.md",
+      "blob": "ce150a4a49990673e951aa3932ebbe5bea7ec312",
+      "sha256": "f8d978d103fcb5555ce3e37b5cf5abc25364b116cf85fe4b6080f971f4df9b2b"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/scene-to-media/references/example.md",
+      "blob": "7624789da1c85b9984ff121293437f004bb4bf25",
+      "sha256": "3ea6b27d8bfec12f4dcbcc84cad3685af02e96fd91d7153a2a4048e31b1882f7"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/story-weave/SKILL.md",
+      "blob": "42fd2a05f2ed23cdc939ae5f01d3f4850b602437",
+      "sha256": "84ba570f210f76b271fad95a850c167383bda98eaa74907c92f9f8331f53fedb"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/systematic-debug/SKILL.md",
+      "blob": "b6089570bc7431a824d4c291a7665c09738e9633",
+      "sha256": "3cdc65515369af7cddf24a079a55e7a7c9da26af08cd5c2cadd1ce193544f676"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/tdd/SKILL.md",
+      "blob": "da72c246baf3d76533f56031ab368cf80db289a2",
+      "sha256": "6ec3401488703dd1647f288c3199c6cb9cdb545a901fe2b8f6184c8ee26b35dc"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/voice-alchemy/SKILL.md",
+      "blob": "4d00dbf7384533c29e632bb515b50f076608e0be",
+      "sha256": "b868c0cfcbe541749e4ff1e20d12592f39c7a5402000234ca4698dcc304964e4"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/world-build/SKILL.md",
+      "blob": "7922db98a51612969d73d65740f203bf710e1d9c",
+      "sha256": "4ce1982095e05df84b9c89520e2c839e2c45edb19fc91e1641d3a1446c2618f6"
+    },
+    {
+      "snapshot": "app",
+      "path": "packages/arcanea-skills/skills/world-build/references/example.md",
+      "blob": "55867fbe9ad002780ce0e24b9fbeeff35a91c7c7",
+      "sha256": "9f7a54e0d31378863404416b75db0022eecc506e8032595fdf70b3d59740c02f"
+    },
+    {
+      "snapshot": "app",
+      "path": ".arcanea/skills/arcanea/design-system/SKILL.md",
+      "blob": "83f5d1bed436a5b9266d259e90e8049e63d79a63",
+      "sha256": "95d7993c01c4f5d514cf1e8fc890224443a44510bfebf6a220e07ca20b8a367a"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/arcanea/design-system/SKILL.md",
+      "blob": "956268be4063fa99a90a480c13eb9d10bfa3107d",
+      "sha256": "d14b27cf21cbfd5b399bde2605281092613f95fe7bf6b5a8b8a78a9c0379fc74"
+    },
+    {
+      "snapshot": "app",
+      "path": ".arcanea/skills/arcanea-core/luminor-personality-design/SKILL.md",
+      "blob": "93036b8fc45efcfafb6648eff2a625976e0b8426",
+      "sha256": "b892879174d169ac36e0c05d3dfdceb439e3c7edc2f979621db8254bd576fe04"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/arcanea-core/luminor-personality-design/SKILL.md",
+      "blob": "f77c431beaea8ba50a71f8ac175da057ddfd75ea",
+      "sha256": "08f62736a9a3d94f13e814e0d5e7917568d31d7a7a93602a6e661728d0194e00"
+    },
+    {
+      "snapshot": "app",
+      "path": ".arcanea/skills/creative/sovereign-depths/SKILL.md",
+      "blob": "c26fdb75157eecf2544d5d6ef1569d907e0853b4",
+      "sha256": "53bd9d5749293f48eda7b723de98eb40a3058c910e2536db5f246f8a5d8a79eb"
+    },
+    {
+      "snapshot": "app",
+      "path": ".claude/skills/creative/sovereign-depths/SKILL.md",
+      "blob": "3e6256635f75287a64ad50cfb3d43876f2233817",
+      "sha256": "247db75b1049a52a081714f7ef1a930af46d45a76677ee5a70887b34ed6283e4"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanea-character-forge/SKILL.md",
+      "blob": "c72812deb2cd60a9be15181ab4a9aa6e32766a6c",
+      "sha256": "da080ae7c43a38b8c66509c34da60eedf30dd3c2f0ae5b37b0b2a246043e4168"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanea-code-review/SKILL.md",
+      "blob": "d072ee5875299dd19c59e3080ef64b6eeb48a5bd",
+      "sha256": "42cc689f22552c5ba23352dee77a9a3a8d241a4bdc4041c7d6ffcc3bf6b70ff2"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanea-story-weave/SKILL.md",
+      "blob": "9d1ed88f24d70476b4ede3c6872d55db43438de6",
+      "sha256": "5c5803fcd8932925b9474850340ba3710106dd99d1f6e7e8575175da732e5169"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanea-systematic-debug/SKILL.md",
+      "blob": "6f0c91f09e8023efcffbe4507ee80cc8a23453b8",
+      "sha256": "01362098b59bee8e9d01505aa383cfb76becd2aa9459f5d6590577241bfb631b"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanea-tdd/SKILL.md",
+      "blob": "e975685774d3a8cc0cc5248ee0c8afb18a693da1",
+      "sha256": "ea8f0d13d3e0a047010445f94f6fdd3cdb3e74005ec77a68311442a61c49d3ab"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanea-world-build/SKILL.md",
+      "blob": "4a183459ec8e69a78d2bb4889aae46dfd1a715a2",
+      "sha256": "2608014a827b03bc69d1fe44966211ff285d3e75b4e1724a39ae38444c5a14be"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/arcanea-canon.md",
+      "blob": "ece699f8d57c0cd1665a320cd3a727b384b2cf8c",
+      "sha256": "15fdd9465da493e445bc8e42a82ddb1cee615405f25be0447b35183742a4c04f"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/canon-state-protocol.md",
+      "blob": "0259fdb49b5520e8417c4db5d63e98b75f3abb95",
+      "sha256": "971b1a9df4b21109b7dabe07c877409aa47910bf79a47a679db61138466643e6"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/forbidden-patterns.md",
+      "blob": "dd272b231a6a63343db9f04a8974c2df818d7868",
+      "sha256": "cb3f5d5f37d939f11e5c59a0bc2c12c447e35b32518ddd2ca5adfd4c89949947"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/quality-and-release-gates.md",
+      "blob": "5d9dd4c28b5861877eabdb9e0bd13c6a6c451369",
+      "sha256": "2bd334fe7671cacb3c2ab26ed31c0676f2f40cac12d070eff479a94b057018ef"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/quality-bar.md",
+      "blob": "f9883b970f2e42aeaf029cb3df378abebe352b0b",
+      "sha256": "3d30ce9099327c8f98039e1fbc7ae5130863e1a2ab6c77b92c5cb574344bace9"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/visual-style-system.md",
+      "blob": "154059461b4986168be639064dccbfcc84d6ef6d",
+      "sha256": "6c82c160fbe47d482da6072775f082b16b87682beb09e18fc9a4809fc21f366b"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanean-art-director/SKILL.md",
+      "blob": "cce252789aba2237c3241635639ad9d1001cd577",
+      "sha256": "7422ffd5b867a457f50508bf3a168ab76c1913f47b37332d377c38ad3e27a863"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "templates/canon-ledger.md",
+      "blob": "d716836052c1f5e9d32ced3a72ade85ecb0e7cd5",
+      "sha256": "b3cb1d95e6ce74416c0049088b821ecc623401049fc673f549a088acc1da3104"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "templates/image-brief.md",
+      "blob": "5754d73550a9fe75236ad2b5dfeaafffb6488acf",
+      "sha256": "a9e2283d69d236bf5082de41eda413f7865ed3216d7e499f9dee512dc02a19e7"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/arcanean-worldbuilder/SKILL.md",
+      "blob": "1c528f5b0e866513d2f25da7da56dbc427e82920",
+      "sha256": "7584173e4b484ea99b3e6eea28e055aef04f76ea62d635d78820f4002d0340f9"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "templates/character-sheet.md",
+      "blob": "5035d1ab6f347e9797f9ca809f21158b75d955df",
+      "sha256": "be84d8f3a3437fd321feb7a2d0017bb15cf6ab74dafef1ba4fc3dd5d3bc5bfec"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "templates/scene-sheet.md",
+      "blob": "2598bc66f9423f3291c3b79ecebe5728db735c7e",
+      "sha256": "d55aab3810e9b32a8b598f03fe0d36231e28796189a3c20fb72fa1fd3a63a16f"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/canon-guardian/SKILL.md",
+      "blob": "f911b1781b3a1f4563930297b12b70544c249394",
+      "sha256": "3d9415ad8679923aa7784dbf3d6d5685ebf552d69be4b98849051f8638e5885d"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/canon-taste/SKILL.md",
+      "blob": "b977239ba68e838107f26ccf1ba29b61aeb01a22",
+      "sha256": "abc055074e9f1cb2dbfc5699de9450602757df9b740f543a0f382c64ad920fa9"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/prompt-patterns.md",
+      "blob": "3581e4141a78630acef00dc46f23858a9c538e2d",
+      "sha256": "e4f41edd0cc11fc7907206059e2b430e043c2b278c666ed20a0ab7f1aa22e055"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/cinematic-image-prompt-master/SKILL.md",
+      "blob": "584cb571486135e73e26df1be67cfa67f3152d74",
+      "sha256": "0e6c45c055e8ed3d9f4e5d2e1472e5beb738d481d7d18100c9f24407b08b0599"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/cowork-conductor/SKILL.md",
+      "blob": "1ec8a88a7428ad7f74e70e7afec88759cce16370",
+      "sha256": "6befbe316360c5223e0b3914afe4bec1b89baf1b14d183252f2178003f946107"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/door-smoke/SKILL.md",
+      "blob": "4678d28380dbf884ed95454118096c2aadf4fd09",
+      "sha256": "a7574e6729c463df7ce3dd2238817d2ad4ba322b9a0ee8e1dd5338791c3f0e5d"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/emotional-story-architect/SKILL.md",
+      "blob": "3fd7092c1a7e7741b100e4fba3502e4cd9d7ae1c",
+      "sha256": "3e0fdec40ae3c07a135b989bbce9f286d90208f4ad420c79251d081b06aeeb53"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "templates/novella-brief.md",
+      "blob": "69fa66d3b09afdd0563d5fb1308fa513be47cdee",
+      "sha256": "c999f9640fd8abe03f06a14003d36f4734fa290c9881e2b0c114b8aebdbf4136"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/library-honesty/SKILL.md",
+      "blob": "116264294fcdc270af0489f649b79ba1ead13450",
+      "sha256": "9277d4c483c3671f0580f569d97683cff01907a984d047efa291b027b925bec6"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "fixtures/academy-world-proof-v1/fixture.json",
+      "blob": "aeefca9bb7de4c02a05444f2070810452039e69c",
+      "sha256": "2adb5d913c81bb47574966bfda84bf805b73027ce0152d715d7f11accc523257"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/arcanea-capability-map.md",
+      "blob": "ea560c022c493cf247b04e51e0aad9b213b3a706",
+      "sha256": "9067c60e50ce3cdbb12d417b9e07d59a1b1df13081c5ed95b21cab41f9ecd9b3"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/arcanea-gateway-contract.json",
+      "blob": "5d7980fd1d73ff955da4850ee54c2d705b608d67",
+      "sha256": "0c7b5b68b81c93fe2328dd96e9f1539935a32cc626d8ae59b3c384b9f01879bf"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/arcanea-world-context-compatibility-preview.v1.json",
+      "blob": "2f0aea734c9e1a9662838f22d02f35dc7d83cbf8",
+      "sha256": "c2dc670e857af3ce34b46e39a9d9ab0e297a27f7c6ed9829d37f2563bcb25a76"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/community-and-icp.md",
+      "blob": "013e2406d1032099f4ac8478f5f19c9b9a4f59be",
+      "sha256": "1f31f91dec309655ab80fd18564699ef0dc48aa11c8143e4d6ba80577b716887"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/creator-workflows.md",
+      "blob": "48a1cd68d45748109c5dbfbf12fdfd9e5da4640b",
+      "sha256": "f1254d029d9c2b357dfe2ece07b44370897fd5b7f125393bf832c8f4e697ffaa"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/demand-loading.md",
+      "blob": "cbe7b4647bbdb82abbd01eb8853c844167fe1883",
+      "sha256": "5aa58adb54e491a310fff3d3620500ca23565ee59aa647924922d642bc44482e"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/runtime-architecture.md",
+      "blob": "a7297e2550bc2836cba4ab516377ffbeab6e65ee",
+      "sha256": "b2c285b5f9582c5044460923e4a49efbd1aac023e01a5115a256e769162a2947"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/source-ledger.md",
+      "blob": "ca56e9b1e00827df3e16d59be77b4cf79f70e4fe",
+      "sha256": "809006fedd66ff9f5b940bd404bfb86955cf2066a83a91a0d7c09d278ee227d6"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "references/world-proof-contract.md",
+      "blob": "e2910a835e41f126d2549bf35d10fcf1e576478f",
+      "sha256": "14851d3d79b45213e4d9eacf6c7fdacfb9fa0517097b8f8aa358c23a79388f75"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "scripts/resolve-creator-workflow.mjs",
+      "blob": "d5b7008728feb48faacd778eb283590c8deeaa85",
+      "sha256": "316d020352ba8a34fd4540e4879d75ed522822976dd06c156b74cb7b3920812e"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/operate-arcanea-creative-worlds/SKILL.md",
+      "blob": "ee56f2e4ad7c8e2d60e482af467bad9993a30ad2",
+      "sha256": "5917a03c3de41ff061e9fdf84a6a9a1edf9f0b01c6528954061594bf6281f540"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/operate-arcanea-creative-worlds/agents/openai.yaml",
+      "blob": "d118b181e487df046ea0c74e88e894dde7c953df",
+      "sha256": "5928ad34b4d279ced601d8f5b75e49eb8a2a12fab36140fd52a4d54438bdfea5"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "templates/guild-contribution-packet.md",
+      "blob": "419761e39134fac52fbbed98bd09d5663508d275",
+      "sha256": "a99fd46778c7ef6048754010953c3c6a8cad845560c2da2acc0541498402fa63"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "templates/portable-world-packet.md",
+      "blob": "afbe762985e1a1e2ffd756b13dc0308021f8c267",
+      "sha256": "64574d04f5be59e203d82ff2ae1d3e817de5925ebf47f875c14e2c5390f838d4"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "templates/quest-timeline-proof.md",
+      "blob": "3d5d2d6376b6af833ab5cf9fd1656d5d4714ce7b",
+      "sha256": "c96d9dfec844212a1d1cb7f10e4213b89ad989ee288358387cf331e01b591684"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "templates/release-packet.md",
+      "blob": "fc412b0f0a32b04ced6fec847f376adc3d95c96e",
+      "sha256": "384dd72bf9cf58fc9eb7dc97932997e6f9ab888bbc5ad6103c6e48bc1ddf4418"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "templates/series-proof-pair.md",
+      "blob": "9272fd9f29183f807b9e0e2fa56265e4b4bbc36f",
+      "sha256": "d75a3ced1a1dc88e87b9cf65e2e54f001b25baf51c5c370d585178747d7fb6b4"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "templates/world-proof.md",
+      "blob": "33647a87a88154167f5d609abde3b1b48426ffd5",
+      "sha256": "2c6c3728dc3dac361c93cd2751b7428fa171e7160ef491fa20be5f52c149b8d1"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/social-asset-forge/SKILL.md",
+      "blob": "3b01ee37bbc9ffdb07c612d8e2194b9af7322c36",
+      "sha256": "90f687d9aa55af2f4f1ad79f68dce8f91a816ea2f44527fa68d4ffd4ab387dd1"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "templates/social-carousel.md",
+      "blob": "07c3cf13af3edc2cf37303097b79b74bbd4e3b00",
+      "sha256": "7b77839dcc569495ec92a1d667462f9c83341e0069268d23e5f26ec7df97864a"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/visual-quality-critic/SKILL.md",
+      "blob": "739fb532b889460b73b394cc5d6f9b105d0d7dc0",
+      "sha256": "8f873f5a2aefafc115d2ad30b02071b03f26ee1efcaa1015c91e431b90d436d5"
+    },
+    {
+      "snapshot": "distilled",
+      "path": "skills/wonder-series-planner/SKILL.md",
+      "blob": "d931b50d0030464367d0aaca5b156a7ec2cd62c7",
+      "sha256": "e881064f5f16ca9884f5947703cc60bc1d5c41c45bd84e1a2c1799de359fb3de"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanea-character-forge/SKILL.md",
+      "blob": "c72812deb2cd60a9be15181ab4a9aa6e32766a6c",
+      "sha256": "da080ae7c43a38b8c66509c34da60eedf30dd3c2f0ae5b37b0b2a246043e4168"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanea-code-review/SKILL.md",
+      "blob": "d072ee5875299dd19c59e3080ef64b6eeb48a5bd",
+      "sha256": "42cc689f22552c5ba23352dee77a9a3a8d241a4bdc4041c7d6ffcc3bf6b70ff2"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanea-story-weave/SKILL.md",
+      "blob": "9d1ed88f24d70476b4ede3c6872d55db43438de6",
+      "sha256": "5c5803fcd8932925b9474850340ba3710106dd99d1f6e7e8575175da732e5169"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanea-systematic-debug/SKILL.md",
+      "blob": "6f0c91f09e8023efcffbe4507ee80cc8a23453b8",
+      "sha256": "01362098b59bee8e9d01505aa383cfb76becd2aa9459f5d6590577241bfb631b"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanea-tdd/SKILL.md",
+      "blob": "e975685774d3a8cc0cc5248ee0c8afb18a693da1",
+      "sha256": "ea8f0d13d3e0a047010445f94f6fdd3cdb3e74005ec77a68311442a61c49d3ab"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanea-world-build/SKILL.md",
+      "blob": "4a183459ec8e69a78d2bb4889aae46dfd1a715a2",
+      "sha256": "2608014a827b03bc69d1fe44966211ff285d3e75b4e1724a39ae38444c5a14be"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/arcanea-canon.md",
+      "blob": "ece699f8d57c0cd1665a320cd3a727b384b2cf8c",
+      "sha256": "15fdd9465da493e445bc8e42a82ddb1cee615405f25be0447b35183742a4c04f"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/canon-state-protocol.md",
+      "blob": "0259fdb49b5520e8417c4db5d63e98b75f3abb95",
+      "sha256": "971b1a9df4b21109b7dabe07c877409aa47910bf79a47a679db61138466643e6"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/forbidden-patterns.md",
+      "blob": "dd272b231a6a63343db9f04a8974c2df818d7868",
+      "sha256": "cb3f5d5f37d939f11e5c59a0bc2c12c447e35b32518ddd2ca5adfd4c89949947"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/quality-bar.md",
+      "blob": "174d4160f5bd9cc323e1fc988bec9657528fc13b",
+      "sha256": "babdd496412f6ebffc2c3e4a4dc0ca5f890f93d75feefc7bcfff2c463712cf8a"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/visual-style-system.md",
+      "blob": "154059461b4986168be639064dccbfcc84d6ef6d",
+      "sha256": "6c82c160fbe47d482da6072775f082b16b87682beb09e18fc9a4809fc21f366b"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanean-art-director/SKILL.md",
+      "blob": "aec4d83ff679dcd6566a8dc8c10ce21d31781e0a",
+      "sha256": "359375f4b727f517b6084d13b9d1a0f5232ad120e1665d1fb08cec863a3e71a3"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "templates/canon-ledger.md",
+      "blob": "d716836052c1f5e9d32ced3a72ade85ecb0e7cd5",
+      "sha256": "b3cb1d95e6ce74416c0049088b821ecc623401049fc673f549a088acc1da3104"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "templates/image-brief.md",
+      "blob": "5754d73550a9fe75236ad2b5dfeaafffb6488acf",
+      "sha256": "a9e2283d69d236bf5082de41eda413f7865ed3216d7e499f9dee512dc02a19e7"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/arcanean-worldbuilder/SKILL.md",
+      "blob": "1c528f5b0e866513d2f25da7da56dbc427e82920",
+      "sha256": "7584173e4b484ea99b3e6eea28e055aef04f76ea62d635d78820f4002d0340f9"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "templates/character-sheet.md",
+      "blob": "5035d1ab6f347e9797f9ca809f21158b75d955df",
+      "sha256": "be84d8f3a3437fd321feb7a2d0017bb15cf6ab74dafef1ba4fc3dd5d3bc5bfec"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "templates/scene-sheet.md",
+      "blob": "2598bc66f9423f3291c3b79ecebe5728db735c7e",
+      "sha256": "d55aab3810e9b32a8b598f03fe0d36231e28796189a3c20fb72fa1fd3a63a16f"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/canon-guardian/SKILL.md",
+      "blob": "18e6353241aab8705103208ac3547c1152dcd139",
+      "sha256": "7890d2d75c85681722ba446caa54ae0fa89229fb4979c24d58a79baa1d2ceab2"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/prompt-patterns.md",
+      "blob": "3581e4141a78630acef00dc46f23858a9c538e2d",
+      "sha256": "e4f41edd0cc11fc7907206059e2b430e043c2b278c666ed20a0ab7f1aa22e055"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/cinematic-image-prompt-master/SKILL.md",
+      "blob": "584cb571486135e73e26df1be67cfa67f3152d74",
+      "sha256": "0e6c45c055e8ed3d9f4e5d2e1472e5beb738d481d7d18100c9f24407b08b0599"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/cowork-conductor/SKILL.md",
+      "blob": "1ec8a88a7428ad7f74e70e7afec88759cce16370",
+      "sha256": "6befbe316360c5223e0b3914afe4bec1b89baf1b14d183252f2178003f946107"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/emotional-story-architect/SKILL.md",
+      "blob": "3fd7092c1a7e7741b100e4fba3502e4cd9d7ae1c",
+      "sha256": "3e0fdec40ae3c07a135b989bbce9f286d90208f4ad420c79251d081b06aeeb53"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "templates/novella-brief.md",
+      "blob": "70d9e57693de8320e27f94132c293ec4b720ef5e",
+      "sha256": "22116073c4dffcec3cfd59239c78e9387ade8577bd59a87321c8f41caca2b4f5"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "fixtures/academy-world-proof-v1/fixture.json",
+      "blob": "aeefca9bb7de4c02a05444f2070810452039e69c",
+      "sha256": "2adb5d913c81bb47574966bfda84bf805b73027ce0152d715d7f11accc523257"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/arcanea-capability-map.md",
+      "blob": "50b2f577ae53f5c744467c9b31187571b5110634",
+      "sha256": "8664163c0a4307e40b31659a8e3c3f6fa62edf877f210d7dfe6779e15913ce80"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/arcanea-gateway-contract.json",
+      "blob": "1a24ffe1da8d21b46e13407eda79f85ea41767a9",
+      "sha256": "e6296e867fd634600f3cf5da6e395bb0c71fbd08cb1e1ccab35906d326e0eaa9"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/community-and-icp.md",
+      "blob": "db9ab499ea8f79700c56c3ee942b9d8f43d92212",
+      "sha256": "503074a9d28acbc82095585e61ac290df147bc55b909a78e5db83a42cf4c9804"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/creator-workflows.md",
+      "blob": "fbd296c95105b5bb609c7f89c24d98eac06bd083",
+      "sha256": "7776b344277a16eaf546d7b24a7d52d2d28f1e030401a4902c93514a83105c36"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/quality-and-release-gates.md",
+      "blob": "5d9dd4c28b5861877eabdb9e0bd13c6a6c451369",
+      "sha256": "2bd334fe7671cacb3c2ab26ed31c0676f2f40cac12d070eff479a94b057018ef"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/runtime-architecture.md",
+      "blob": "b6a61745cd5c4b7a6988d8b5abb214873d81810d",
+      "sha256": "aa6ffaebce52461d91febf5c166ef8358ae5a11ef55839ad9171a956f37146df"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/source-ledger.md",
+      "blob": "30626f1ff29de3ef0e3978776812f478fa9cb2c4",
+      "sha256": "e4374230e2e00585b372d86b3a412ed7fd6dedfd5871ad4716e491c65b9718a2"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "references/world-proof-contract.md",
+      "blob": "57b98a9c35bf9d487d4db8cc2aadd08512b416e5",
+      "sha256": "0f60f72c0c26c2c5125d16a18f81d32bb1ba88e66ac9c02b54598622542e46c1"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/operate-arcanea-creative-worlds/SKILL.md",
+      "blob": "b4ebf9fda0e8f67775e074d655d482032509c92b",
+      "sha256": "751b3974b33779a6db8381575267c064f3f25e0497bdd8c4d686a5c94b2a9a69"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/operate-arcanea-creative-worlds/agents/openai.yaml",
+      "blob": "d118b181e487df046ea0c74e88e894dde7c953df",
+      "sha256": "5928ad34b4d279ced601d8f5b75e49eb8a2a12fab36140fd52a4d54438bdfea5"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "templates/release-packet.md",
+      "blob": "fc412b0f0a32b04ced6fec847f376adc3d95c96e",
+      "sha256": "384dd72bf9cf58fc9eb7dc97932997e6f9ab888bbc5ad6103c6e48bc1ddf4418"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "templates/world-proof.md",
+      "blob": "33647a87a88154167f5d609abde3b1b48426ffd5",
+      "sha256": "2c6c3728dc3dac361c93cd2751b7428fa171e7160ef491fa20be5f52c149b8d1"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/social-asset-forge/SKILL.md",
+      "blob": "3b01ee37bbc9ffdb07c612d8e2194b9af7322c36",
+      "sha256": "90f687d9aa55af2f4f1ad79f68dce8f91a816ea2f44527fa68d4ffd4ab387dd1"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "templates/social-carousel.md",
+      "blob": "07c3cf13af3edc2cf37303097b79b74bbd4e3b00",
+      "sha256": "7b77839dcc569495ec92a1d667462f9c83341e0069268d23e5f26ec7df97864a"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/swarm-of-light/SKILL.md",
+      "blob": "b8174cec1651f008917fc43da613467a5e6f376c",
+      "sha256": "70479b3d00e5ad257f106d2600ba043d49babc0032db02970de2dc1c20174263"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/visual-quality-critic/SKILL.md",
+      "blob": "2891a77219f2724ae375507071dc83585fdbe50d",
+      "sha256": "58bc7709e9643dc4ebfe412b93da0449e0974224499057912db6ac7248e14faa"
+    },
+    {
+      "snapshot": "distilled-branch",
+      "path": "skills/wonder-series-planner/SKILL.md",
+      "blob": "1bfd029dac1ccef93e4b81cbabb2f0cbac0463d2",
+      "sha256": "1763f656fa5ac90b1927c55a143ee10e2531ee1d6cb464e50b6bcc2a1d15eece"
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/ai-symbiosis/SKILL.md",
+      "blob": "ac2f056097c1cba52f516428eb071edaaf65a219",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/anti-trope/SKILL.md",
+      "blob": "0a713bcf3b7c95c1a47029300fc89b0ce8f012ad",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/arcanea-canon/SKILL.md",
+      "blob": "58e3ad0f763b05747aed0fbdd600524673c2bdb7",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/arcanea-creator-academy/SKILL.md",
+      "blob": "f7be72e0ae7a1c725020fe5b47c6a4e85128b3c0",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/arcanea-design-system/SKILL.md",
+      "blob": "c5be9fc55f5fd185a2234503677750c37d0cb2f0",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/arcanea-lore/ENHANCEMENT_SUMMARY.md",
+      "blob": "417a336cee0d25134dba41f3bacdb68f8c1f4012",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/arcanea-lore/ONBOARDING_NARRATIVES.md",
+      "blob": "d4f8c9c6d2feea07061239e497baff91a02b1f23",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/arcanea-lore/SKILL.md",
+      "blob": "27ad9f197a6585be185de6a794aa0f9c30f56479",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/arcanea-voice/SKILL.md",
+      "blob": "85ec340f26178d646b6d1dbb1c367c87ff5cd21f",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/centaur-mode/SKILL.md",
+      "blob": "a4b59e45099931eb166a214afaabec87fbf05090",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/design-system/SKILL.md",
+      "blob": "e25038b0a59478e7aff8f3630135bf78e26aabd6",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/luminor-council/SKILL.md",
+      "blob": "75829cbd0e3a59ee0e1eb94dddcd815f872a22e3",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/luminor-wisdom/SKILL.md",
+      "blob": "34ddbf6cdecdc76e7712de6457f9dc57629b8f01",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/arcanea/prompt-craft/SKILL.md",
+      "blob": "a8e36acf4e70209685495b787c73f8e300ed32ae",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/bestiary-nav/SKILL.md",
+      "blob": "e5162956088db0629df8bc62748e08a546b9ab1a",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/character-alchemist/SKILL.md",
+      "blob": "e0439563aab4155498e5be71fa800ee4c5c46792",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/character-forge/SKILL.md",
+      "blob": "0ec4d54c2ac3a6a62ffcae99446ec33c8d70500d",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/creative-bestiary/SKILL.md",
+      "blob": "274448c5ec286f3c8a992095eb8df7bd32e88e6d",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/story-weave/SKILL.md",
+      "blob": "d441b84acdd56b8f6adac596942d2ef3e7e3af9c",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/story-weaver/SKILL.md",
+      "blob": "97ef797fac958ecf113e57ec57c2986483c798bd",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/world-architect/SKILL.md",
+      "blob": "ae0cf303e6b3b250f857de43bb5720f19b6fd91e",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/creative/world-build/SKILL.md",
+      "blob": "b02b8c768a7951298299fde6a578c2bd8eb83d82",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/development/code-review/SKILL.md",
+      "blob": "3bce6b25950a8fcaf86ca63ad0d0d0078afc265e",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/development/systematic-debug/SKILL.md",
+      "blob": "33d9aa05aca7133059b4ab57538d6e58f570a00b",
+      "sha256": null,
+      "contentInspected": false
+    },
+    {
+      "snapshot": "legacy",
+      "path": "arcanea-skills-opensource/skills/development/tdd/SKILL.md",
+      "blob": "6e34b52408c1b53eb2407cc3db49c33bac14f4b0",
+      "sha256": null,
+      "contentInspected": false
+    }
+  ],
+  "identicalSkillBlobGroups": [
+    {
+      "blob": "3383084e9b6c39adf41e76de11c7bd42539189bc",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/api-design/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/api-design/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "a54504dbf3a3f41e064a9831e7e494f3f4733d97",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/architecture-patterns/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/architecture-patterns/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "53afe6d1652844daf4077e8e295f02b43776890d",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/bestiary-nav/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "oss/skills/creative/bestiary-nav/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/bestiary-nav/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "5ac904d8c13be6e867c682a5d9995629dff5f39b",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/character-forge/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "oss/skills/creative/character-forge/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/character-forge/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "8a50ea48f6501fac3f3611398ae2853bd7e1471b",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/code-review/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "oss/skills/development/code-review/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/code-review/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "33d1413df94bdc165f598d4a3b6eeeeb38006945",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/creative-flow/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/creative-flow/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "fada7d28d6fad0aeaf305f55cf156451566f318c",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/deep-work/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/deep-work/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "c2f828b08180dc7ed9b47901543ec1ee7ec1e247",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/dialogue-mastery/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/dialogue-mastery/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "7b963672957ec40f909c7139e20ecf59e27871ae",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/performance-tuning/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/performance-tuning/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "df142a4a3b4ff2ee5b0bfdd211ac18aeab6e1c5d",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/refactoring-ritual/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/refactoring-ritual/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "a960096256399ee647c443c933118d1ddedea4c1",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/scene-craft/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/scene-craft/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "42fd2a05f2ed23cdc939ae5f01d3f4850b602437",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/story-weave/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "oss/skills/creative/story-weave/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/story-weave/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "b6089570bc7431a824d4c291a7665c09738e9633",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/systematic-debug/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "oss/skills/development/systematic-debug/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/systematic-debug/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "da72c246baf3d76533f56031ab368cf80db289a2",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/tdd/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "oss/skills/development/tdd/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/tdd/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "4d00dbf7384533c29e632bb515b50f076608e0be",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/voice-alchemy/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/voice-alchemy/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "a6526fabebea2c15758d6693aa22bd7065d8032c",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": ".claude/skills/oss/world-build/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "oss/skills/creative/world-build/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "0a82a10be09d4b4c37acecb33a29a815138ebb04",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": "oss/skills/arcanea/arcanea-centaur-mode/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/centaur-mode/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "38db1ee8cc87e9091efffd107b0b3c04f34ae389",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": "oss/skills/arcanea/arcanea-creator-academy/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/arcanea-creator-academy/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "017c281513557a652e2506d6b2f2645862fa9a1b",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": "oss/skills/arcanea/luminor-wisdom/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/luminor-wisdom/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "ca69af4dc15d8aada54fb9867ef94e9d56e824ac",
+      "paths": [
+        {
+          "snapshot": "app",
+          "path": "oss/skills/arcanea/prompt-craft/SKILL.md"
+        },
+        {
+          "snapshot": "app",
+          "path": "packages/arcanea-skills/skills/prompt-craft/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "c72812deb2cd60a9be15181ab4a9aa6e32766a6c",
+      "paths": [
+        {
+          "snapshot": "distilled",
+          "path": "skills/arcanea-character-forge/SKILL.md"
+        },
+        {
+          "snapshot": "distilled-branch",
+          "path": "skills/arcanea-character-forge/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "d072ee5875299dd19c59e3080ef64b6eeb48a5bd",
+      "paths": [
+        {
+          "snapshot": "distilled",
+          "path": "skills/arcanea-code-review/SKILL.md"
+        },
+        {
+          "snapshot": "distilled-branch",
+          "path": "skills/arcanea-code-review/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "9d1ed88f24d70476b4ede3c6872d55db43438de6",
+      "paths": [
+        {
+          "snapshot": "distilled",
+          "path": "skills/arcanea-story-weave/SKILL.md"
+        },
+        {
+          "snapshot": "distilled-branch",
+          "path": "skills/arcanea-story-weave/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "6f0c91f09e8023efcffbe4507ee80cc8a23453b8",
+      "paths": [
+        {
+          "snapshot": "distilled",
+          "path": "skills/arcanea-systematic-debug/SKILL.md"
+        },
+        {
+          "snapshot": "distilled-branch",
+          "path": "skills/arcanea-systematic-debug/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "e975685774d3a8cc0cc5248ee0c8afb18a693da1",
+      "paths": [
+        {
+          "snapshot": "distilled",
+          "path": "skills/arcanea-tdd/SKILL.md"
+        },
+        {
+          "snapshot": "distilled-branch",
+          "path": "skills/arcanea-tdd/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "4a183459ec8e69a78d2bb4889aae46dfd1a715a2",
+      "paths": [
+        {
+          "snapshot": "distilled",
+          "path": "skills/arcanea-world-build/SKILL.md"
+        },
+        {
+          "snapshot": "distilled-branch",
+          "path": "skills/arcanea-world-build/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "1c528f5b0e866513d2f25da7da56dbc427e82920",
+      "paths": [
+        {
+          "snapshot": "distilled",
+          "path": "skills/arcanean-worldbuilder/SKILL.md"
+        },
+        {
+          "snapshot": "distilled-branch",
+          "path": "skills/arcanean-worldbuilder/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "584cb571486135e73e26df1be67cfa67f3152d74",
+      "paths": [
+        {
+          "snapshot": "distilled",
+          "path": "skills/cinematic-image-prompt-master/SKILL.md"
+        },
+        {
+          "snapshot": "distilled-branch",
+          "path": "skills/cinematic-image-prompt-master/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "1ec8a88a7428ad7f74e70e7afec88759cce16370",
+      "paths": [
+        {
+          "snapshot": "distilled",
+          "path": "skills/cowork-conductor/SKILL.md"
+        },
+        {
+          "snapshot": "distilled-branch",
+          "path": "skills/cowork-conductor/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "3fd7092c1a7e7741b100e4fba3502e4cd9d7ae1c",
+      "paths": [
+        {
+          "snapshot": "distilled",
+          "path": "skills/emotional-story-architect/SKILL.md"
+        },
+        {
+          "snapshot": "distilled-branch",
+          "path": "skills/emotional-story-architect/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    },
+    {
+      "blob": "3b01ee37bbc9ffdb07c612d8e2194b9af7322c36",
+      "paths": [
+        {
+          "snapshot": "distilled",
+          "path": "skills/social-asset-forge/SKILL.md"
+        },
+        {
+          "snapshot": "distilled-branch",
+          "path": "skills/social-asset-forge/SKILL.md"
+        }
+      ],
+      "equivalence": "Exact skill bytes only; excludes support-file equivalence, rights, semantics and consumer compatibility"
+    }
+  ],
+  "appVariantReview": [
+    {
+      "name": "arcanea-design-system",
+      "identicalSkillText": false,
+      "paths": [
+        ".arcanea/skills/arcanea/design-system/SKILL.md",
+        ".claude/skills/arcanea/design-system/SKILL.md",
+        "oss/skills/arcanea/arcanea-design-system/SKILL.md"
+      ],
+      "decision": "Development-only; reconcile fonts/tokens with accepted current runtime and visual policy before replacing"
+    },
+    {
+      "name": "luminor-personality-design",
+      "identicalSkillText": false,
+      "paths": [
+        ".arcanea/skills/arcanea-core/luminor-personality-design/SKILL.md",
+        ".claude/skills/arcanea-core/luminor-personality-design/SKILL.md"
+      ],
+      "decision": "Persona content differs in six-versus-seven headings; preserve variants until authorized-source review"
+    },
+    {
+      "name": "sovereign-depths",
+      "identicalSkillText": false,
+      "paths": [
+        ".arcanea/skills/creative/sovereign-depths/SKILL.md",
+        ".claude/skills/creative/sovereign-depths/SKILL.md"
+      ],
+      "decision": "Intentional canonical-workflow adapter; preserve pointer relationship instead of treating it as accidental duplication"
+    }
+  ],
+  "unexamined": [
+    "Legacy pack agents, commands, CLI and visualization code",
+    "Loose definitions without SKILL.md in oss/skills",
+    "Runtime imports and prose-only references",
+    "Historical grants, attribution and consumer migration",
+    "Compiled plugin artifacts and behavioral evaluations",
+    "Broader legacy experiments/content outside the specified roots"
+  ],
+  "migrationRules": [
+    "Matching skill bytes do not authorize source retirement or establish equivalent support files",
+    "Dispositions are proposals; four current candidates do not replace every donor capability",
+    "Retain source identities and support-file hashes; rebase references inside the downloaded plugin subtree after rights review",
+    "Use existing source-bound locked-canon generation; starter aids never replace official authority",
+    "Keep operator and Studio gateway material outside public creator installation",
+    "Retain shared dependency owners; do not add a parallel world schema or runtime"
+  ]
+}
