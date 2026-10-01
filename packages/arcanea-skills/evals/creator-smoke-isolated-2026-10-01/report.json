@@ -37,7 +37,7 @@
       "numTurns": 1,
       "rubricExposedToProducer": false,
       "humanIntervention": "None after invocation",
-      "artifact": "W1.md",
+      "artifact": "W1.txt",
       "artifactUtf8Sha256": "f5088d100c4c8aba646f65712cd38d9bd53a7cc61fe6c1e6b3bbe4ddeef4e9f0",
       "status": "diagnostic-failure",
       "inspection": {
@@ -91,7 +91,7 @@
       "numTurns": 1,
       "rubricExposedToProducer": false,
       "humanIntervention": "None after invocation",
-      "artifact": "C1.md",
+      "artifact": "C1.txt",
       "artifactUtf8Sha256": "8417153337f2088cd98c28d7f7370c657382d14a66c9ecd4bc9d1f3b6da88710",
       "status": "diagnostic-failure",
       "inspection": {
@@ -140,7 +140,7 @@
       "numTurns": 1,
       "rubricExposedToProducer": false,
       "humanIntervention": "None after invocation",
-      "artifact": "M1.md",
+      "artifact": "M1.txt",
       "artifactUtf8Sha256": "8915a094912c460163d544519b8f0c0f43d28949323d79df4b9d938101975141",
       "status": "diagnostic-failure",
       "inspection": {
@@ -194,7 +194,7 @@
       "numTurns": 1,
       "rubricExposedToProducer": false,
       "humanIntervention": "None after invocation",
-      "artifact": "Q1.md",
+      "artifact": "Q1.txt",
       "artifactUtf8Sha256": "e600436a0fb0499a0e45444bc44d6a5c2973b278c6966fdfe6ec3e48c3d38882",
       "status": "diagnostic-failure",
       "inspection": {
@@ -219,7 +219,7 @@
       }
     }
   ],
-  "reportedListCostUsd": 0.2840982,
+  "reportedListCostUsd": 0.3390966,
   "costMeaning": "Harness-reported list-price API equivalent; not a verified subscription debit or invoice. Earlier timed-out request returned no cost receipt.",
   "procedure": {
     "runsPerCase": 1,
@@ -231,12 +231,66 @@
     "originalOutputsRepaired": false
   },
   "result": "All four returned artifacts; each has at least one blocking source-boundary finding. No skill promoted.",
-  "refinementStatus": "Instructions/examples revised after these observations; changed source bytes have not been behaviorally evaluated or independently reviewed.",
+  "refinementStatus": "One C1 repeat exercised refined continuity hash at e8aff17a6c. The earlier repair regression was avoided. Other refined skills remain unexercised; no skill promoted or independently source-reviewed.",
   "limits": [
     "One original synthetic request per skill, no repeats or comparable no-skill control",
     "The engineering kernel is part of producer context; behavior cannot be attributed to the skill alone",
     "Case prompts and exact kernel/input packets are retained privately under the original task",
     "No official Arcanea lore, engine import, generation, rights clearance, release or customer success established",
     "The earlier four-case batch timeout remains preserved and is not erased by successful isolated invocations"
-  ]
+  ],
+  "postRefinement": [
+    {
+      "skill": "continuity-check",
+      "sourceRevision": "e8aff17a6c6c5345494eec140e62205c7b4dbf9e",
+      "contentSha256": "9e9f6207712a0b3d550782eb31ad2882d1b2ad92484ed48d564cd050ed4c520b",
+      "startedAt": "2026-10-01T15:23:18.241138+00:00",
+      "endedAt": "2026-10-01T15:24:06.090864+00:00",
+      "requestedModel": "claude-sonnet-4-6",
+      "harnessVersion": "2.1.286",
+      "promptSha256": "92cdfb150dbcaa58733bca92037af6391f6787aa5bba622c570007496d92e9ce",
+      "systemSha256": "a6adafc153deb386a9649f645c634279e381eab166af8eebb301964617644cb4",
+      "outputSha256": "24d265a9999ef29e99912930425aff67498a3c99fa0fe8d1071920e93229a8f7",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 2821,
+          "cacheReadInputTokens": 1388,
+          "cacheCreationInputTokens": 2043,
+          "webSearchRequests": 0,
+          "costUSD": 0.0549984,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 1863,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.0549984,
+      "numTurns": 1,
+      "rubricExposedToProducer": false,
+      "humanIntervention": "None after invocation",
+      "case": "C1-R1",
+      "originalCase": "C1",
+      "artifact": "C1-refined.txt",
+      "artifactUtf8Sha256": "b492157e73031bcf24ef13c18b06a48a0c01e451a2f08efb21858be00c6acc51",
+      "status": "observed-regression-avoided; no readiness claim",
+      "inspection": {
+        "inspector": "Codex maker-side inspection",
+        "evidence": [
+          "Remove the send entirely.",
+          "No local patch preserves a successful name-send at this story moment"
+        ],
+        "observed": "The earlier replacement-send failure is avoided; the name-delivery outcome remains unresolved instead of silently changing accepted facts.",
+        "limits": [
+          "One repeated synthetic request, not a held-out case or no-skill control",
+          "Face presentation is not specified as an executable action; additional author/context interpretation may be needed",
+          "Not independent source/installer review or whole-skill reliability proof"
+        ]
+      }
+    }
+  ],
+  "initialReportedListCostUsd": 0.2840982,
+  "artifactPackaging": "Unedited model result text stored as .txt so repository Markdown formatting does not alter the evidence. No formatting check disabled."
 }

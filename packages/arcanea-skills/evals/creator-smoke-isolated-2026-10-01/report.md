@@ -5,12 +5,12 @@ Four original Ember Post requests returned artifacts against app commit
 [JSON report](report.json) binds unedited outputs to source and prompt hashes,
 times, reported model usage and maker-side inspection. No candidate is promoted.
 
-| Case | Artifact                    | Useful behavior observed                                                            | Blocking finding                                                                              |
-| ---- | --------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| W1   | [World bible](W1.md)        | Accepted facts retained in the table; authorized revision logged                    | A tower becomes the only relay point; a memory loss is given an unsupported cause             |
-| C1   | [Continuity review](C1.md)  | Three conflicts found; recognition, lie and fictional instruction handled correctly | The suggested face-memory send still violates the exhausted daily limit                       |
-| M1   | [Illustration brief](M1.md) | One traceable brief; online rights unknown; no fabricated generation                | Supplied notes labeled creator-owned; absence of a visual effect asserted as a universal rule |
-| Q1   | [Quest packet](Q1.md)       | Declared variables, distinct endings and an unavailable transmission                | A daughter's forgotten name generalized to an unidentified child                              |
+| Case | Artifact                     | Useful behavior observed                                                            | Blocking finding                                                                              |
+| ---- | ---------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| W1   | [World bible](W1.txt)        | Accepted facts retained in the table; authorized revision logged                    | A tower becomes the only relay point; a memory loss is given an unsupported cause             |
+| C1   | [Continuity review](C1.txt)  | Three conflicts found; recognition, lie and fictional instruction handled correctly | The suggested face-memory send still violates the exhausted daily limit                       |
+| M1   | [Illustration brief](M1.txt) | One traceable brief; online rights unknown; no fabricated generation                | Supplied notes labeled creator-owned; absence of a visual effect asserted as a universal rule |
+| Q1   | [Quest packet](Q1.txt)       | Declared variables, distinct endings and an unavailable transmission                | A daughter's forgotten name generalized to an unidentified child                              |
 
 Q1 also presents separate arrays rather than a complete packet envelope. The field
 shapes can be inspected, but interface compatibility was not established by an
@@ -31,7 +31,7 @@ cost basis, totaling **$0.2840982**. This is reported API-equivalent cost, not a
 verified subscription debit or invoice. The earlier batch timeout remains in
 [the original attempt record](../creator-smoke-2026-10-01.md); its cost is unknown.
 
-The Markdown outputs preserve the model's returned result text. Their SHA-256
+The text artifacts preserve the model's returned result text. Their SHA-256
 values use that string's exact UTF-8 bytes; raw-response hashes refer to the
 private JSON wrappers. Skill hashes use sorted relative paths, NUL, each Git
 blob's SHA-256 and LF, matching the package's aggregate convention. No output
@@ -48,10 +48,17 @@ The four SKILL files and their examples now ask for:
   from accepted world mechanisms.
 - Entity-specific quest constraints and the creator's complete packet format.
 
-These revisions have not been exercised by this report. Its results apply to the
-earlier source hashes, not the changed instructions. Repeat requests against the
-final committed bytes, retain failures, and add independent cases and repeats
-before claiming reliability. A comparable control is needed to attribute any
+The four initial results apply to the earlier source hashes. A later
+[continuity rerun](C1-refined.txt) against commit
+`e8aff17a6c6c5345494eec140e62205c7b4dbf9e` removes the send entirely and leaves
+name delivery unresolved. It avoids the observed replacement-send failure. The
+face-presentation alternative is not an executable action specification; one
+rerun does not prove general correctness. Its refined source hash and unedited
+artifact/usage receipts are in `postRefinement` in the JSON report.
+
+The rerun reports another $0.0549984 list cost, for $0.3390966 across the five
+returned attempts. Other refined skills remain unexercised. Add independent
+cases, repeats and a comparable control before claiming reliability or attributing
 improvement to the skills rather than the model or kernel.
 
 Codex inspected outputs it did not produce, but Codex also authored the skills.
@@ -59,3 +66,8 @@ This is diagnostic inspection, not the required independent source/installer
 review. Rights, final-byte behavior, installed-harness compatibility, app CI at
 the new head and human release decisions remain separate gates. Four internal
 candidates, zero ready; no canon, license, generation, game or customer proof.
+
+The first evidence commit failed CI's changed-file Prettier check because raw
+model Markdown was included. The artifacts now use `.txt`; original UTF-8
+hashes are unchanged, and no formatting/security check was disabled. CI at the
+packaging correction's final head is a separate result, not inherited green.

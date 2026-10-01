@@ -5,7 +5,7 @@ failures, and refine source boundaries. User job: continue a world across prose,
 continuity, media and quests without silent changes to accepted facts or rights.
 Owner: Codex; existing program issue #276, draft PR #487.
 Base: `3d7494cd0f8f9ca63fc0a61927972820492873ce`.
-Files: four SKILL files and their references; six isolated evaluation artifacts;
+Files: four SKILL files and their references; seven isolated evaluation artifacts;
 this execution record. No package/catalog/installer or runtime changes.
 Budget: one admitted interactive harness at a time, 120 seconds and $1 API cap
 per request; no new worktree, dependencies, servers, media or fanout.
@@ -29,7 +29,8 @@ independent source sign-off. One synthetic request each proves neither reliabili
 nor uplift; no no-skill baseline, engine import, generation or customer test ran.
 
 Four instructions/examples are refined around the failures. Their new hashes are
-not evaluated by the earlier results. Passports remain pending, package private,
+not evaluated by the earlier results. One later continuity rerun is recorded below.
+Passports remain pending, package private,
 four internal candidates and zero ready. No rights, Heart-frequency, archive,
 canon or release decision was made. The public repo/root proposal is unchanged;
 the launcher patch remains private and unapplied pending upstream/ownership.
@@ -46,3 +47,16 @@ validations passed. Four unedited artifact hashes and source receipt bindings
 matched; report JSON parsed and catalog remains four candidates/zero ready.
 Explicit-file formatting and diff checks passed. Changed source behavior and
 independent source review remain unproven; staged secrets run before commit.
+
+At committed source `e8aff17a6c6c5345494eec140e62205c7b4dbf9e`, one isolated
+continuity rerun avoided the original replacement-send failure and left the
+name-delivery outcome unresolved. The unedited output and source/usage hashes are
+in the report's `postRefinement` entry. Reported list cost for all five returned
+attempts is $0.3390966; no billed-spend assertion. This is one known-request
+regression observation, not a general pass or independent source sign-off. The
+other three changed skills remain unexercised.
+
+CI run 36883680144 at e8aff17a6c failed its changed-file Prettier step because
+raw model Markdown was unformatted. Preserve exact text as `.txt` evidence and
+recheck hashes and the normal changed-file formatting gate. No gate bypass or
+output repair. That failing run cannot establish the correction's final CI.
