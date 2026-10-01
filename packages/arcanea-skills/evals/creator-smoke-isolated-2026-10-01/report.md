@@ -106,3 +106,22 @@ returned attempts. Neither figure is verified billed spend. Timed-out and
 resource-aborted attempts remain without cost receipts. Source review, rights,
 held-out/control/creator evidence, installation, engine import and release gates
 remain open. Four candidates and zero ready.
+
+## Second world refinement at bfd005dadd
+
+[W1-R2](W1-second-refined.txt) uses the exact world source at
+`bfd005dadd2c265db51465971373d24179288366`. A fresh admitted sample exceeded
+the 4,096 MB floor. It leaves Ivo’s loss cause and recovery open, avoiding the
+preceding transmission/permanence errors, and marks Hook 1’s P2 dependency.
+It still fails the request to label inventions: the place calls the tower the
+network’s most exposed relay and asserts a dispatch log; Hook 2 asserts that
+the network has no inquiry protocol and that the log is the daughter’s only
+lead. These unsupported claims remain unqualified. No further source edit or
+ready promotion follows this observation.
+
+This is one known repeat, with no held-out/control comparison. Its returned
+text is unchanged; source/prompt/output and first-party usage receipts are in
+the JSON report. The $0.0782754 reported list equivalent brings nine returned
+creator attempts to $0.6054792, with no billed-spend claim. Review attempts and
+unreceipted failures remain separate. Fresh creator/control work and complete
+source review are still required.

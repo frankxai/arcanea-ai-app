@@ -220,7 +220,7 @@
       }
     }
   ],
-  "reportedListCostUsd": 0.5272038,
+  "reportedListCostUsd": 0.6054792,
   "costMeaning": "Harness-reported list-price API equivalent; not a verified subscription debit or invoice. Earlier timed-out request returned no cost receipt.",
   "procedure": {
     "runsPerCase": 1,
@@ -232,7 +232,7 @@
     "originalOutputsRepaired": false
   },
   "result": "All four returned artifacts; each has at least one blocking source-boundary finding. No skill promoted.",
-  "refinementStatus": "Four refined skills have one known-request observation each. W1 still fails source boundaries; media, quest and earlier continuity avoid specific prior findings. A further world refinement is not exercised by these outputs. No readiness or independent source sign-off.",
+  "refinementStatus": "All four original refined requests observed; world repeated after its second refinement and still fails invention labeling. Four internal candidates, zero ready.",
   "limits": [
     "One initial and one known-request refined observation per skill; no held-out cases or comparable no-skill control",
     "The engineering kernel is part of producer context; behavior cannot be attributed to the skill alone",
@@ -489,6 +489,78 @@
             "Not an engine import, executable playtest or general packet validator"
           ]
         }
+      }
+    },
+    {
+      "skill": "world-build",
+      "sourceRevision": "bfd005dadd2c265db51465971373d24179288366",
+      "contentSha256": "f0941cb141af29797faf7e2785b26c902ccf2ab912b5854097d0f759e337c592",
+      "startedAt": "2026-10-01T17:21:06.210202+00:00",
+      "endedAt": "2026-10-01T17:22:14.493834+00:00",
+      "requestedModel": "claude-sonnet-4-6",
+      "promptSha256": "061cb6dc02e3eb1803aa93aa44184a9f8d6e0e46f717effc2977c52161393347",
+      "systemSha256": "a6adafc153deb386a9649f645c634279e381eab166af8eebb301964617644cb4",
+      "outputSha256": "097b46a473270abe71f6e5ce4fb1a3227e8bce081e7e591b00d453d1d9c6142b",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 4202,
+          "cacheReadInputTokens": 1388,
+          "cacheCreationInputTokens": 2470,
+          "webSearchRequests": 0,
+          "costUSD": 0.0782754,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 2880,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.0782754,
+      "rubricExposedToProducer": false,
+      "humanIntervention": "None after invocation",
+      "harnessVersion": "2.1.286",
+      "case": "W1-R2",
+      "originalCase": "W1",
+      "artifact": "W1-second-refined.txt",
+      "artifactUtf8Sha256": "c785ca0bac1addddd34c87932e9cfae9820b3ea5c6252d6265915e0e1b3f82aa",
+      "numTurns": 1,
+      "status": "diagnostic-failure; prior cause/permanence findings avoided",
+      "inspection": {
+        "inspector": "Codex maker-side inspection",
+        "observedStrengths": [
+          "Cause and recovery are explicitly open in Ivo biography and fact table",
+          "No claim that Ivo transmitted the lost name or that loss is permanent",
+          "Hook 1 marks its proposed P2 dependency"
+        ],
+        "findings": [
+          {
+            "severity": "blocking",
+            "excerpt": "The network's most exposed relay.",
+            "reason": "An unsupplied comparative claim appears in the place description without a proposal label."
+          },
+          {
+            "severity": "blocking",
+            "excerpt": "it keeps a dispatch log for after-sunset transmissions",
+            "reason": "The invented log is presented as an operating fact; P3 labels its proposed investigation role but not the existence of the log."
+          },
+          {
+            "severity": "blocking",
+            "excerpt": "the network has no protocol for this inquiry",
+            "reason": "The request supplies no such institutional limitation; the hook presents it as fact."
+          },
+          {
+            "severity": "blocking",
+            "excerpt": "Ivo's daughter's only lead",
+            "reason": "The hook asserts an exclusive route without source support or a local proposal label."
+          }
+        ],
+        "limits": [
+          "One known repeated synthetic request; no held-out or no-skill control",
+          "Prior specific errors being avoided does not establish complete fact/proposal separation",
+          "No independent source or installed-harness review, creator usefulness or release proof"
+        ]
       }
     }
   ],

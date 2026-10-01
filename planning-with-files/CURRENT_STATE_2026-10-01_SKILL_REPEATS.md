@@ -36,8 +36,8 @@ Detailed inspection and hashes are in the existing isolated report.
 World instructions now leave cause and recovery open, require local proposal
 labels throughout biographies/hooks, and reject contradictory claims across
 sections. The added example uses a different storm/name loss to illustrate the
-boundary. These new world bytes require a fresh check; the preceding output is
-not evidence that the additional refinement works.
+boundary. The preceding output applies to the earlier source; the new-byte result
+is recorded below.
 
 Local Node 22 catalog tests pass 11/11 using the existing YAML 2.9.0 runtime;
 the changed world skill passes the skill-authoring validator. Metadata formatting
@@ -47,3 +47,18 @@ tests with frozen YAML 2.9.1 dependencies; it does not verify this later source
 change. Prior source-review timeouts, Gemini client
 authentication rejection, RAM-floor intervention and policy-rejected temporary
 cleanup remain retained. The hub save is still subject to current ownership.
+
+W1-R2 returned at committed source bfd005dadd. Cause and recovery remain open,
+but the dispatch log, missing protocol and exclusive lead remain unmarked
+inventions. Preserve this diagnostic failure and its exact source/artifact
+hashes. Nine creator outputs report $0.6054792 list equivalent, not invoiced
+spend. No source change after this repeat, no ready promotion, and no claim
+that repeated synthetic requests establish reliability.
+
+A separate three-document catalog review at bfd005dadd used the full kernel
+with an explicit bounded read-only system role. Sonnet 4.6 again returned zero
+bytes at the 120-second deadline; only the exact owned CLI was stopped. This
+attempt supplies no verdict, served-model usage, cost receipt or sign-off.
+The added role did not restore this review path in this observation. Preserve
+the earlier review attempts and Gemini client rejection; independent review
+remains open. Creator outputs and their costs are separate from review attempts.
