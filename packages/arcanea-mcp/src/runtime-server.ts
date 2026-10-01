@@ -1,4 +1,5 @@
-import { createServer } from "./index.js";
+import { createServer, type ServerOptions } from "./index.js";
+import { catalogServer, resolveToolsets } from "./toolsets.js";
 
 import {
   searchSovereignDepths,
@@ -9,10 +10,14 @@ import {
   weightOfWondersQuerySchema,
 } from "./tools/weight-of-wonders.js";
 
-export function createRuntimeServer() {
-  const server = createServer();
+export function createRuntimeServer(options: ServerOptions = {}) {
+  const server = createServer(options);
+  const target = catalogServer(
+    server,
+    options.toolsets === undefined ? null : resolveToolsets(options.toolsets),
+  );
 
-  server.registerTool(
+  target.registerTool(
     "search_sovereign_depths",
     {
       description:
@@ -27,7 +32,7 @@ export function createRuntimeServer() {
     searchSovereignDepths,
   );
 
-  server.registerTool(
+  target.registerTool(
     "search_weight_of_wonders",
     {
       description:
