@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import {
   loadCatalog,
@@ -13,6 +14,7 @@ export interface Skill {
   version?: string;
   author?: string;
   license?: string;
+  // Legacy presentation fields are absent from the current curated catalog.
   tags?: string[];
   toolCompatibility?: string[];
   usageExamples?: string[];
@@ -27,19 +29,26 @@ interface CatalogOptions {
   sourceRevision?: string;
 }
 
-const PACKAGE_ROOT = join(
-  process.cwd(),
-  "..",
-  "..",
-  "packages",
-  "arcanea-skills",
-);
+function getPackageRoot(): string {
+  // Match the app's supported monorepo-root and apps/web execution contexts.
+  const cwd = process.cwd();
+  const roots = [
+    join(cwd, "packages", "arcanea-skills"),
+    join(cwd, "..", "..", "packages", "arcanea-skills"),
+  ].filter((root) => existsSync(join(root, "catalog.json")));
+  if (roots.length !== 1) {
+    throw new Error(
+      "Expected one canonical skill catalog in the app workspace",
+    );
+  }
+  return roots[0];
+}
 
 /** Read the same validated, ready catalog as the package API and installer. */
 export async function getAllSkills(
   options: CatalogOptions = {},
 ): Promise<Skill[]> {
-  const packageRoot = options.packageRoot ?? PACKAGE_ROOT;
+  const packageRoot = options.packageRoot ?? getPackageRoot();
   const catalog = loadCatalog(packageRoot);
   if (catalog.sourceRepo !== "frankxai/arcanea-ai-app") {
     throw new Error("Unexpected skill source repository");
@@ -81,8 +90,11 @@ export async function getSkillBySlug(
   );
 }
 
-export async function getSkillsByCategory(category: string): Promise<Skill[]> {
-  return (await getAllSkills()).filter(
+export async function getSkillsByCategory(
+  category: string,
+  options: CatalogOptions = {},
+): Promise<Skill[]> {
+  return (await getAllSkills(options)).filter(
     (skill) => (skill.category ?? "").toLowerCase() === category.toLowerCase(),
   );
 }

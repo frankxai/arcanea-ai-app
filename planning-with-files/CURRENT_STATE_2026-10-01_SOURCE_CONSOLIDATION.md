@@ -210,3 +210,25 @@ Exact candidate CI and scoped independent source/copy review are recorded in the
 PR/issue and hub after terminal verification. All four internal skill candidates
 remain zero ready; licence/Heart, donor folds, plugins/MCP consumers, creator and
 community/revenue acceptance and Frank's named #408 merge approval remain open.
+
+A subsequent default-context check found the initial adapter still assumed an
+apps/web working directory. The app's existing book resolver supports monorepo
+root as well. The skill adapter now checks those two fixed catalog locations at
+call time and requires exactly one; missing/ambiguous locations fail instead of
+choosing a duplicate. A sixth consumer case proves the default call in both actual
+execution roots. The explicit-fixture five cases and eleven package checks retain
+their earlier evidence. Initial source016db8 is retained; exact delta review and
+new source CI must bind the corrected candidate before acceptance. This proves
+local supported roots, not the deployed Vercel filesystem layout.
+
+A seventh case rejects both absent and duplicate default catalogs before reading
+their bodies. All seven consumer cases pass locally at the corrected source.
+
+The complete twelve-file source/copy review at016db8 returned PASS with two LOW
+and two INFO; it did not execute tests, fetch deployed traces or certify the whole
+PR. LOW category-option forwarding and evaluation/review declaration fields are
+corrected in this follow-up. The ready fixture now also verifies case-insensitive
+category reads with explicit source options. Legacy optional display fields are
+marked as currently absent (INFO); deployed trace inspection remains open (INFO).
+The root-context correction was found by maker inspection and the new runtime
+case, not by that baseline review. Exact follow-up review binds these corrections.

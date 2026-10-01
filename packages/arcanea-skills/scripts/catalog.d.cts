@@ -9,6 +9,18 @@ export interface CatalogSkill {
     license?: string | null;
     evidence?: string | null;
   };
+  evaluation?: {
+    status: string;
+    evidence?: string | null;
+    contentSha256?: string | null;
+  };
+  review?: {
+    status: string;
+    evidence?: string | null;
+    maker?: string | null;
+    reviewer?: string | null;
+    contentSha256?: string | null;
+  };
 }
 
 export interface Catalog {

@@ -14,7 +14,12 @@ import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
-import { getAllSkills, getCategories, getSkillBySlug } from "../loader";
+import {
+  getAllSkills,
+  getCategories,
+  getSkillBySlug,
+  getSkillsByCategory,
+} from "../loader";
 
 const packageRoot = fileURLToPath(
   new URL("../../../../../packages/arcanea-skills/", import.meta.url),
@@ -98,6 +103,19 @@ test("the actual curated catalog has zero public skills and candidate slugs are 
   assert.equal(await getSkillBySlug("world-build", { packageRoot }), null);
 });
 
+test("default reads resolve the canonical catalog from both supported execution roots", async () => {
+  const previous = process.cwd();
+  const repoRoot = resolve(packageRoot, "..", "..");
+  try {
+    process.chdir(repoRoot);
+    assert.deepEqual(await getAllSkills(), []);
+    process.chdir(join(repoRoot, "apps/web"));
+    assert.deepEqual(await getAllSkills(), []);
+  } finally {
+    process.chdir(previous);
+  }
+});
+
 test("only declared ready skills produce body, passport terms and revision-pinned links", async (t) => {
   const f = fixture(t);
   const entry = ready(f);
@@ -123,7 +141,37 @@ test("only declared ready skills produce body, passport terms and revision-pinne
     `https://github.com/frankxai/arcanea-ai-app/blob/${revision}/packages/arcanea-skills/README.md`,
   );
   assert.deepEqual(getCategories(skills), [entry.category]);
+  assert.deepEqual(
+    await getSkillsByCategory(entry.category.toUpperCase(), f.options),
+    skills,
+  );
+  assert.deepEqual(await getSkillsByCategory("missing", f.options), []);
   assert.equal(await getSkillBySlug("legacy-extra", f.options), null);
+});
+
+test("default discovery refuses missing and duplicate canonical catalogs", async (t) => {
+  const f = fixture(t);
+  const cwd = join(f.root, "apps", "web");
+  mkdirSync(cwd, { recursive: true });
+  const previous = process.cwd();
+  try {
+    process.chdir(cwd);
+    await assert.rejects(
+      getAllSkills(),
+      /Expected one canonical skill catalog/,
+    );
+    for (const root of [f.root, cwd]) {
+      const catalog = join(root, "packages", "arcanea-skills", "catalog.json");
+      mkdirSync(dirname(catalog), { recursive: true });
+      writeFileSync(catalog, "{}");
+    }
+    await assert.rejects(
+      getAllSkills(),
+      /Expected one canonical skill catalog/,
+    );
+  } finally {
+    process.chdir(previous);
+  }
 });
 
 test("missing rights, evaluation or independent evidence fails the public reader", async (t) => {
