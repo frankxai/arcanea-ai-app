@@ -1,6 +1,6 @@
 # Tideglass world seed
 
-Request: Make a one-page world bible and two story hooks. Accepted note `tideglass-note-v1` says:
+Request: Make a one-page world bible and two story hooks, labeling inventions. Accepted note `tideglass-note-v1` says:
 
 - F1: A glass bridge can be grown only during low tide.
 - F2: A grown bridge dissolves when the tide turns.
@@ -10,27 +10,35 @@ The creator wants practical coastal fantasy, with no Arcanea mythology.
 
 ## Example handoff
 
-Proposed setting and conflict: Tideglass is an archipelago whose temporary bridges make every journey a negotiation with the tide. Ferry keeper Mira earns her living when bridges disappear. Her conflict is deciding whom to carry when a bridge fails before every traveler has crossed.
+Proposed premise (P2; uses F1, F2): If P2 is adopted, temporary bridges and ferries connect the archipelago. Travel could depend on tides, and Mira could face a choice about whom to carry when a crossing fails.
 
-| ID  | Fact                                                    | Status   | Source                               |
-| --- | ------------------------------------------------------- | -------- | ------------------------------------ |
-| F1  | Bridges can be grown only during low tide               | Accepted | tideglass-note-v1                    |
-| F2  | Bridges dissolve when the tide turns                    | Accepted | tideglass-note-v1                    |
-| F3  | Mira is a ferry keeper and cannot grow glass            | Accepted | tideglass-note-v1                    |
-| P1  | Bridge growers must give up a memory to make a crossing | Proposed | This draft; creator decision pending |
+| ID  | Fact                                                      | Status   | Source                               |
+| --- | --------------------------------------------------------- | -------- | ------------------------------------ |
+| F1  | Bridges can be grown only during low tide                 | Accepted | tideglass-note-v1                    |
+| F2  | Bridges dissolve when the tide turns                      | Accepted | tideglass-note-v1                    |
+| F3  | Mira is a ferry keeper and cannot grow glass              | Accepted | tideglass-note-v1                    |
+| P1  | Bridge growers must give up a memory to make a crossing   | Proposed | This draft; creator decision pending |
+| P2  | Tideglass is an archipelago served by bridges and ferries | Proposed | This draft; creator decision pending |
+| P3  | Harbor mooring rings are placed at several heights        | Proposed | This draft; creator decision pending |
+| P4  | An apprentice starts a crossing too late                  | Proposed | This draft; creator decision pending |
+| P5  | A grower offers Mira a permanent bridge for the harbor    | Proposed | This draft; creator decision pending |
 
-The harbor's landing steps have mooring rings at several heights. This is a proposed physical consequence of tides, not a claim about an existing culture.
+Accepted character (F3): Mira is a ferry keeper and cannot grow glass. Open choice (O1): Why she lacks that ability, and how many other ferry keepers work here, are unspecified.
 
-Proposed hook 1: An apprentice starts a crossing too late. Mira can save the travelers, but taking the whole group may leave a stranded medicine courier behind. F2 creates the deadline; F3 forces a ferry solution for Mira.
+Proposed place (P3; uses F2): Mooring rings at several heights could let boats use the landing as the water rises. Their existence is a design addition.
 
-Proposed hook 2: A grower offers Mira a permanent bridge in exchange for the harbor. This contradicts F2 unless the grower is lying or the creator approves a revision. Present those alternatives; do not establish the offer as working technology.
+### Proposed hook (P4): The late crossing
 
-Open choice: Does P1 fit the desired magic cost? No fact has been promoted or written back to the note.
+Proposed (P4; uses F2, F3): If this incident is adopted, Mira could ferry the travelers to safety, but carrying everyone might leave a medicine courier behind. The tide supplies a deadline; the ferry supplies a possible response.
+
+### Proposed hook (P5): The impossible offer
+
+Proposed (P5; uses F2): The offer conflicts with F2. The grower could be lying; otherwise the creator would need to authorize a rule revision. No permanent bridge is established by this hook.
+
+Open choice (O2): Does P1 suit the magic system? These hooks do not depend on adopting the memory cost. Change log: No accepted fact changed or was written back to the note.
 
 ## Failure to catch
 
 “Mira grows a permanent bridge at high tide” violates F1, F2 and F3. Report the three conflicts with source evidence, or propose a marked revision if the creator requests changed rules.
 
-F3 does not establish why Mira cannot grow glass, or that she is the only ferry keeper. A curse or exclusive job must be labeled as a proposal, including in her biography. F1 specifies when glass growth is possible, not the only location where it can happen.
-
-For a different supplied note, “Mira forgot the harbor's name during the storm,” a faithful biography records the forgotten name and its timing. The note does not say that Mira paid the name as a bridge toll, that the storm caused the loss, or that she can never learn it again. Those mechanisms remain open. If the creator wants a proposed toll explanation, label it where it appears in the biography and in every dependent hook; do not cite the original loss as evidence that the toll occurred.
+An unlabeled biography stating that Mira was cursed invents a cause for F3. An unlabeled sentence making her the only ferry keeper invents exclusivity. Move either addition into a locally labeled proposal or leave the question open. Naming a proposal in the fact table does not label later unlabeled prose. A proposal label also does not resolve a conflict with an accepted rule.

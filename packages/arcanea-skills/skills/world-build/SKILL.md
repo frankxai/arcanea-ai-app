@@ -11,15 +11,21 @@ Use the creator's concept and accepted material to produce a world they can cont
 
 ## Work from the creator's world
 
-Read supplied notes and identify accepted facts, explicit requested changes and open choices. If sources conflict, show the two statements and ask which controls the affected part. Continue work on unaffected material. A missing detail is an open choice, not permission to describe an invention as established history.
+Read supplied notes and identify accepted facts, explicit requested changes and open choices. If sources conflict, show the two statements and ask which controls the affected part. Continue work on unaffected material. Develop useful additions while leaving their adoption to the creator.
 
 Default to the creator's names, tone and rules. Use official Arcanea facts only when the creator explicitly requests Arcanea mode and supplies a versioned source. A missing or conflicting official source blocks official assertions. Never inject Arcanea gods, Gates or frequencies into an unrelated world.
 
-Preserve each fact's stated scope. A supplied event does not establish its cause; one capable place does not establish that it is the only capable place. Label such explanations, exclusivity claims and other inferences as proposals. Carry those labels into place descriptions, character biographies and hook headings, not just the fact table. A source citation must support the whole claim attached to it.
+Preserve each fact's stated scope. An event does not establish its cause or permanence, and one capable place does not establish an exclusive route. Record unsupported causes, recovery mechanisms, institutions and limits as open choices or proposed additions. A source citation must support the whole accepted claim attached to it.
 
-Loss or erasure does not establish permanence, irreversibility or an inability to recover something later. Preserve the observed state and leave its cause and recovery mechanism open unless the supplied source defines them. Do not turn an unexplained loss into a past transmission, payment, curse or other event, even when that event would fit a proposed world mechanism.
+## Keep status attached to the text
 
-Give each unsupplied claim a local proposal label. A fact table or a later blanket disclaimer cannot make an unqualified biography or hook accurate. If a hook depends on a proposed cause, route or mechanism, keep that dependency conditional throughout the hook. Proposed explanations must not become accepted backstory in a later section.
+Give accepted facts, proposed additions and open choices stable local IDs. Use supplied IDs when present. Reuse the IDs when a detail appears elsewhere; a proposed addition remains proposed in biographies, place descriptions and hooks.
+
+When the creator asks to label inventions, start each paragraph, bullet or short development section with its status and IDs, for example `Accepted (F2)`, `Proposed place (P3; uses F1)` or `Open choice (O1)`. The label covers that unit's text, not later unlabeled paragraphs. For a mixed unit, separate the accepted statement from the proposed development. A broader heading or a fact table alone does not label an invention elsewhere.
+
+Label an invented hook as proposed at its heading and any separate paragraph that adds another premise. Name the accepted facts it uses and keep proposed dependencies conditional: `If P3 is adopted, ...`. If a hook would change an accepted rule, present that as a separate requested revision or an in-world false claim, never an accomplished change. Keep unresolved choices unresolved in every section.
+
+For another requested format, preserve that format and attach equivalent inline labels or status fields to the same units. Use concise labels so the result remains readable and editable.
 
 ## Connect the parts
 
@@ -43,4 +49,4 @@ For a compact worked example and a meaningful failure, read [references/example.
 
 Check every accepted fact against its supplied source. Trace each hook to a rule, identify proposed additions, and leave conflicting facts unresolved. Deliver editable text with source references. Creating the bible does not authorize publishing, paid media generation or changing the creator's source files.
 
-Before delivery, reread claims about past events, exclusive routes and permanent outcomes in the premise, biographies and hooks. Keep only the scope the source supports; otherwise mark the claim locally as a proposal or leave it as an open choice. A hook must not claim recovery is impossible while the open-choice list asks whether recovery is possible.
+Before delivery, inspect every development unit, including transitions between sections. Each accepted assertion must trace to its cited source; every added assertion must have a local proposal label or remain open. Check reused IDs and dependencies for status changes. Do not repair an unsupported sentence by adding a blanket disclaimer after it.

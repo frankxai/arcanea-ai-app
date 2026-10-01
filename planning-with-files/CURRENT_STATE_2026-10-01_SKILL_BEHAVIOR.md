@@ -60,3 +60,33 @@ CI run 36883680144 at e8aff17a6c failed its changed-file Prettier step because
 raw model Markdown was unformatted. Preserve exact text as `.txt` evidence and
 recheck hashes and the normal changed-file formatting gate. No gate bypass or
 output repair. That failing run cannot establish the correction's final CI.
+
+## Local status revision and fresh paired case
+
+Scope: improve the creator's editable world bible by keeping proposal status
+attached to prose units, rather than extending the accumulated warning list.
+Owner: Codex; issue #276; exact base823c0cf0ca37b69f2a965bb1d84ecd62cf0e25c2.
+Files: world-build SKILL and its existing example, the world-local-status case
+specification and this record. Other skills, rights/passports, package runtime,
+canon, publishing and installed consumers remain outside this slice.
+
+The prior W1-R2 output labels its table but invents an exposed relay, dispatch
+log, missing inquiry protocol and exclusive lead in unlabeled prose. This source
+revision replaces overlapping warnings with local accepted/proposed/open-choice
+IDs, mixed-unit separation and conditional hook dependencies. The example shows
+the same pattern. The creator's requested format remains controlling.
+
+Acceptance: preserve all prior outputs and attempts; exercise the known request
+at committed revised bytes, plus one fresh request against both baseline and
+revised bytes. Producer contexts omit checks, previous findings and sibling
+cases. Review the actual text for complete status coverage, source consistency,
+connected usable hooks and readable Markdown. One paired synthetic observation
+cannot establish causal improvement, general reliability or creator usefulness.
+Budget: one admitted tool-free Sonnet4.6 high-effort request at a time, 300seconds
+and $1 cap per request; no installation, media, worktree or runtime fanout.
+Verification: skill/catalog/resource validation, unedited output/hash bindings,
+independent scoped source review and exact-head CI. Cases are prepared, not run.
+Rollback: revert this precise source/spec slice while retaining attempt evidence.
+Four internal candidates, zero ready. Licence/Heart/launcher and release gates
+remain open. The full objective stays active; public reader/world/release owners
+and shared author/graph/runtime boundaries remain in force.
