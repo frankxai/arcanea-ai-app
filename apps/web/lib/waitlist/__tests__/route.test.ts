@@ -213,6 +213,51 @@ test("missing store env returns an honest 503, never a fake success", async (t) 
   assert.equal(calls.length, 0);
 });
 
+test("the pricing page's { email } signup is still served by the Founding Circle flow", async (t) => {
+  t.mock.method(globalThis, "fetch", kvFetch(kv, calls));
+  const { POST } = await loadRoute();
+  const bad = await POST(post({ email: "not-an-email" }));
+  assert.equal(bad.status, 400);
+  assert.deepEqual(await bad.json(), {
+    success: false,
+    error: "Please enter a valid email address.",
+  });
+  assert.equal(calls.length, 0, "no KV call for a Founding Circle signup");
+});
+
+test("a Founding Circle save that cannot reach Supabase is an honest 503", async (t) => {
+  t.mock.method(globalThis, "fetch", kvFetch(kv, calls));
+  t.mock.method(console, "error", () => {});
+  const saved = {
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    key: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  };
+  process.env.NEXT_PUBLIC_SUPABASE_URL = "https://project.supabase.test";
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = "test-anon-key";
+  t.after(() => {
+    for (const [k, v] of [
+      ["NEXT_PUBLIC_SUPABASE_URL", saved.url],
+      ["NEXT_PUBLIC_SUPABASE_ANON_KEY", saved.key],
+    ] as const) {
+      if (v === undefined) delete process.env[k];
+      else process.env[k] = v;
+    }
+  });
+  const { POST } = await loadRoute();
+  const res = await POST(post({ email: "reader@example.com" }));
+  assert.equal(res.status, 503);
+  assert.equal((await res.json()).success, false);
+  assert.equal(calls.length, 0);
+});
+
+test("a body naming a product is never misfiled as a Founding Circle signup", async (t) => {
+  t.mock.method(globalThis, "fetch", kvFetch(kv, calls));
+  const { POST } = await loadRoute();
+  const res = await POST(post({ productId: "arcanea-subscription", email: "a@b.co" }));
+  assert.equal(res.status, 400);
+  assert.deepEqual(await res.json(), { error: "Invalid request" });
+});
+
 test("no log line carries the raw email", async (t) => {
   const lines: string[] = [];
   t.mock.method(console, "error", (...args: unknown[]) =>

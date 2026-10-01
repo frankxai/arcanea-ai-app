@@ -70,13 +70,12 @@ async function readCapped(req: Request, max: number): Promise<string | null> {
   return new TextDecoder().decode(bytes);
 }
 
-/**
- * Runs before any store call, so oversized, malformed or bot-filled bodies
- * cost nothing and never touch the rate limiter or KV.
- */
-export async function parseWaitlistRequest(
-  req: Request,
-): Promise<WaitlistRequest> {
+export type WaitlistJson =
+  | { ok: true; json: unknown }
+  | { ok: false; status: 400 | 413; error: string };
+
+/** Size-capped JSON read shared by both signup shapes on /api/waitlist. */
+export async function readWaitlistJson(req: Request): Promise<WaitlistJson> {
   const declared = Number(req.headers.get("content-length") ?? 0);
   if (declared > MAX_BODY_BYTES)
     return { ok: false, status: 413, error: INVALID_REQUEST };
@@ -84,13 +83,41 @@ export async function parseWaitlistRequest(
   const text = await readCapped(req, MAX_BODY_BYTES);
   if (text === null) return { ok: false, status: 413, error: INVALID_REQUEST };
 
-  let json: unknown;
   try {
-    json = JSON.parse(text);
+    return { ok: true, json: JSON.parse(text) };
   } catch {
     return { ok: false, status: 400, error: INVALID_REQUEST };
   }
+}
 
+/**
+ * The pricing page's Founding Circle form posts only `{ email }` and is saved
+ * to Supabase `waitlists` (#458). Anything naming a product is a demand-capture
+ * signup, so a malformed product body is never misfiled as a Founding Circle one.
+ */
+export function isFoundingCircleSignup(
+  json: unknown,
+): json is { email?: unknown } {
+  return (
+    !!json &&
+    typeof json === "object" &&
+    !Array.isArray(json) &&
+    !("productId" in json)
+  );
+}
+
+/**
+ * Runs before any store call, so oversized, malformed or bot-filled bodies
+ * cost nothing and never touch the rate limiter or KV.
+ */
+export async function parseWaitlistRequest(
+  req: Request,
+): Promise<WaitlistRequest> {
+  const raw = await readWaitlistJson(req);
+  return raw.ok ? validateWaitlistBody(raw.json) : raw;
+}
+
+export function validateWaitlistBody(json: unknown): WaitlistRequest {
   const parsed = WaitlistBody.safeParse(json);
   if (!parsed.success)
     return { ok: false, status: 400, error: INVALID_REQUEST };

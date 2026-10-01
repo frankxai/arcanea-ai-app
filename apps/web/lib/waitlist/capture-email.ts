@@ -20,9 +20,11 @@ function isPlausibleEmail(email: string): boolean {
 }
 
 /**
- * Footer and coming-soon signups write public.subscribers, created by
+ * Footer and coming-soon signups write public.subscribers, and the pricing
+ * page's Founding Circle `{ email }` POST to /api/waitlist writes
+ * public.waitlists; both tables come from
  * supabase/migrations/20260926000001_waitlists.sql. A failed insert is a 503.
- * The product waitlist at /api/waitlist is a different store.
+ * Per-product /waitlist signups (with a productId) use the KV demand capture.
  */
 export async function captureEmail(
   rawEmail: unknown,
