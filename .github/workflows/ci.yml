@@ -155,7 +155,7 @@ jobs:
         run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
 
       - name: Verify feedback persistence receipts
-        run: pnpm --dir apps/web exec tsx --test lib/feedback/__tests__/route.test.ts
+        run: pnpm --dir apps/web exec tsx --test --test-concurrency=1 lib/feedback/__tests__/route.test.ts
 
       - name: Verify waitlist signups are saved or honestly refused
         run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts

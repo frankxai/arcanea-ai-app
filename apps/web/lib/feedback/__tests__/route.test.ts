@@ -77,10 +77,13 @@ test("insert failure is retryable and hides backend details", async (t) => {
   assert.equal(inserts, 1);
 });
 
-test("transport failure remains retryable", async (t) => {
+test("server error from storage is retryable and hides backend details", async (t) => {
   setStorage(t, true);
   t.mock.method(globalThis, "fetch", async () => {
-    throw new Error("private network detail");
+    return new Response(
+      JSON.stringify({ message: "private database table detail" }),
+      { status: 500, headers: { "content-type": "application/json" } },
+    );
   });
 
   await expectUnavailable(await POST(request({ message: "A missing image." })));
