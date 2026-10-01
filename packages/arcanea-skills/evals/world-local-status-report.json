@@ -1,0 +1,197 @@
+{
+  "schema": "arcanea.world-boundary-observation.v1",
+  "sourceRevision": "00ec58bf11fce4522b9b3f5097d6f0f4ae9fa53b",
+  "baselineRevision": "823c0cf0ca37b69f2a965bb1d84ecd62cf0e25c2",
+  "decision": "Retain instruction revision as internal candidate, following scoped source review; behavior remains held. No ready promotion.",
+  "cases": [
+    {
+      "id": "W2-baseline",
+      "case": "W2-orchard",
+      "mode": "baseline",
+      "sourceRevision": "823c0cf0ca37b69f2a965bb1d84ecd62cf0e25c2",
+      "contentSha256": "f0941cb141af29797faf7e2785b26c902ccf2ab912b5854097d0f759e337c592",
+      "requestSha256": "adc39f2607d60a80e813364247fca911217ce5112f47ed78590f21ed0b549b4e",
+      "promptSha256": "d66362ca91c662ff1ec86c7a2122c52e71df2081ccfaa57b4ecd31755d08030d",
+      "systemSha256": "95e7adc6370aee26965241012b4741d635e3d14dc70f76a3b9b2d590341cdfa4",
+      "artifact": "world-W2-baseline.txt",
+      "artifactUtf8Sha256": "59eaf199a33cf8ae3b86fc29029ecb8749fdeb8855712cd517ec257f4197a628",
+      "producerSessionIdSha256": "1fa2dc6c7d941aaaeee418e79b706ce93d9850f82086aef60e789d61c809642e",
+      "startedAt": "2026-10-01T19:54:40.819374+00:00",
+      "endedAt": "2026-10-01T19:55:59.227834+00:00",
+      "harnessVersion": "2.1.287 (Claude Code)",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 5041,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 3885,
+          "webSearchRequests": 0,
+          "costUSD": 0.098934,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 3962,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.098934,
+      "rubricExposedToProducer": false,
+      "status": "diagnostic-failure",
+      "makerFindings": [
+        {
+          "severity": "medium",
+          "quote": "**Neri** is a keeper of the harvest song.",
+          "reason": "CO2 establishes lost verse and remembered melody, not an accepted occupation; this role lacks a local proposal marker."
+        }
+      ]
+    },
+    {
+      "id": "W2-revised",
+      "case": "W2-orchard",
+      "mode": "revised",
+      "sourceRevision": "00ec58bf11fce4522b9b3f5097d6f0f4ae9fa53b",
+      "contentSha256": "8edc2e9954b9af160c6290b75e9f1db32b9030a51861d200e56036039fc0949d",
+      "requestSha256": "adc39f2607d60a80e813364247fca911217ce5112f47ed78590f21ed0b549b4e",
+      "promptSha256": "24a7fd2ee55892881551a73de86fa8e99f4ea380d12231f1afeea92dff8a63b0",
+      "systemSha256": "95e7adc6370aee26965241012b4741d635e3d14dc70f76a3b9b2d590341cdfa4",
+      "artifact": "world-W2-revised.txt",
+      "artifactUtf8Sha256": "00ef446b45b08d8bd67763fb9376aa89c357d4f7a899d8faffe495bfc58c604e",
+      "producerSessionIdSha256": "c669b0355873405108eea9841c9e6fd81e7cf33e192d223b9371ad6227419862",
+      "startedAt": "2026-10-01T19:56:33.480236+00:00",
+      "endedAt": "2026-10-01T19:57:58.760770+00:00",
+      "harnessVersion": "2.1.287 (Claude Code)",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 6022,
+          "cacheReadInputTokens": 1381,
+          "cacheCreationInputTokens": 2746,
+          "webSearchRequests": 0,
+          "costUSD": 0.1072293,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 4616,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.1072293,
+      "rubricExposedToProducer": false,
+      "status": "diagnostic-failure",
+      "makerFindings": [
+        {
+          "severity": "medium",
+          "quote": "the ground is dark with char from fruit held past its moment — the origin of the name.",
+          "reason": "The place paragraph adds a name origin and physical history without a local proposal label or source."
+        },
+        {
+          "severity": "medium",
+          "quote": "Vale can identify which trees the glyphs mark as highest-yield",
+          "reason": "This grants interpretation of orchard glyphs despite CO3, with no authorized capability revision. A proposal marker does not resolve that conflict."
+        },
+        {
+          "severity": "medium",
+          "quote": "Open choice (O5): Neri's role",
+          "reason": "The consolidated list swaps O5/O6, referring O5 to Vale and O6 to Neri."
+        }
+      ]
+    },
+    {
+      "id": "W1-revised",
+      "case": "W1-local-status",
+      "mode": "revised",
+      "sourceRevision": "00ec58bf11fce4522b9b3f5097d6f0f4ae9fa53b",
+      "contentSha256": "8edc2e9954b9af160c6290b75e9f1db32b9030a51861d200e56036039fc0949d",
+      "requestSha256": "f521ab53e84a9da25dddf10c7c26bae1d39ea1b3d53e022192c40cf41547581c",
+      "promptSha256": "30bdbe7180f56a6f77a5ade8d66e67dba6746f7b090e5f9365ae4485b94ccdfe",
+      "systemSha256": "95e7adc6370aee26965241012b4741d635e3d14dc70f76a3b9b2d590341cdfa4",
+      "artifact": "world-W1-local-status.txt",
+      "artifactUtf8Sha256": "effe494799b3c08f585615b17d9caf2852be161909aef9168215573b23767393",
+      "producerSessionIdSha256": "20dee2e8abbc6aebe64d5cb1405b01e5d2ad2e021d3873ad59b14a03ef7138f5",
+      "startedAt": "2026-10-01T19:58:21.899257+00:00",
+      "endedAt": "2026-10-01T20:00:03.895604+00:00",
+      "harnessVersion": "2.1.287 (Claude Code)",
+      "reportedModelUsage": {
+        "claude-sonnet-4-6": {
+          "inputTokens": 3,
+          "outputTokens": 6816,
+          "cacheReadInputTokens": 1381,
+          "cacheCreationInputTokens": 2725,
+          "webSearchRequests": 0,
+          "costUSD": 0.1190133,
+          "contextWindow": 200000,
+          "maxOutputTokens": 32000,
+          "thinkingTokens": 5456,
+          "canonicalModel": "claude-sonnet-4-6",
+          "provider": "firstParty",
+          "costBasis": "list"
+        }
+      },
+      "reportedCostUsd": 0.1190133,
+      "rubricExposedToProducer": false,
+      "status": "diagnostic-failure",
+      "makerFindings": [
+        {
+          "severity": "medium",
+          "quote": "sending erases it from the sender permanently.",
+          "reason": "Accepted(EP1) adds permanence absent from the request and from the artifact's own EP1 table row."
+        },
+        {
+          "severity": "medium",
+          "quote": "If P2 is not adopted and Ivo is not a courier, someone transmitted his daughter's name without his knowledge",
+          "reason": "Rejecting a proposed cause establishes no alternate cause for EP2; the sentence nevertheless asserts a transmission."
+        }
+      ]
+    }
+  ],
+  "independentReview": {
+    "artifact": "world-status-independent-review.txt",
+    "artifactUtf8Sha256": "4505fb785ea493bd8c99ea6f87fd69a01fbbc7e5e70da08a7c457b26d6421735",
+    "sourceVerdict": "PASS",
+    "behaviorVerdict": "REVISE",
+    "recommendation": "KEEP_CANDIDATE",
+    "reportedModelUsage": {
+      "claude-sonnet-4-6": {
+        "inputTokens": 3,
+        "outputTokens": 11005,
+        "cacheReadInputTokens": 0,
+        "cacheCreationInputTokens": 13544,
+        "webSearchRequests": 0,
+        "costUSD": 0.246348,
+        "contextWindow": 200000,
+        "maxOutputTokens": 32000,
+        "thinkingTokens": 9842,
+        "canonicalModel": "claude-sonnet-4-6",
+        "provider": "firstParty",
+        "costBasis": "list"
+      }
+    },
+    "reportedCostUsd": 0.246348,
+    "scope": "Complete baseline/candidate world SKILL and example, case requests/checks, three raw outputs; excludes rest of PR and installation/rights/release.",
+    "byteSource": "Exact returned result string encoded UTF-8; private Windows text receipt differs only by newline conversion."
+  },
+  "reviewReconciliation": [
+    {
+      "claim": "Both revised artifacts originate from the same producer session; session independence unconfirmed.",
+      "finding": "Contradicted by three distinct raw wrapper session_id values, three owned CLI PIDs, no-session-persistence and separately saved input packets. Hashed session IDs above are distinct. This is harness evidence, not provider attestation."
+    },
+    {
+      "claim": "W1 artifact handles loss-cause inference correctly.",
+      "finding": "Maker inspection finds a counterexample: rejecting P2 still asserts an alternate transmission cause. Reviewer did not report this or the orchard capability/name-origin issues. Both assessments and the untouched verdict are retained."
+    }
+  ],
+  "sourceFollowup": "Independent LOW finding: restore concrete unexplained-loss/mechanism coverage or its example before proposing release. No changed bytes are claimed evaluated without fresh evidence.",
+  "reportedProducerListCostUsd": 0.3251766,
+  "reportedReviewListCostUsd": 0.246348,
+  "costBasis": "Reported first-party list equivalent; no invoice/subscription-debit verification. Prior nine producer outputs/costs remain separate.",
+  "limits": [
+    "Single synthetic observation per condition; no causal or statistical uplift claim.",
+    "Fresh paired request is not a held-out set after disclosure.",
+    "Maker inspection is not independent approval; reviewer source PASS is separate from behavior REVISE.",
+    "No authenticated rights, authentic creator usefulness, installed consumer, engine/media, canon, publication or commerce proof."
+  ],
+  "readyCount": 0,
+  "goal": "active"
+}

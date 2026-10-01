@@ -90,3 +90,33 @@ Rollback: revert this precise source/spec slice while retaining attempt evidence
 Four internal candidates, zero ready. Licence/Heart/launcher and release gates
 remain open. The full objective stays active; public reader/world/release owners
 and shared author/graph/runtime boundaries remain in force.
+
+## Observed local-status results
+
+Source00ec58bf11 passed CI36917608538: Install and all four required checks.
+The known request and fresh baseline/revised pair returned three artifacts,
+all with diagnostic failures. Unedited artifacts, source/prompt/system hashes,
+distinct producer-session bindings, model/time/cost receipts and findings are in
+packages/arcanea-skills/evals/world-local-status-report.{md,json}.
+
+The independent full world-source/artifact review returned source PASS,
+behavior REVISE and KEEP_CANDIDATE. Local labels are retained as candidate
+guidance; no behavioral pass, rights decision or readiness follows. One LOW
+source follow-up remains: restore concrete unexplained-loss/mechanism coverage.
+Maker inspection records reviewer omissions and the false same-session claim
+against exact raw receipts; the original verdict remains unedited.
+
+The fresh revised artifact swaps open-choice IDs, invents an unlabeled name
+origin and interprets glyph yield despite the accepted reading limit. The known
+request adds permanent erasure under Accepted(EP1) and asserts a transmission
+when a proposed cause is rejected. Both revised outputs remain held. Producer
+list equivalent $0.3251766; review $0.246348, neither verified billed spend.
+The earlier nine outputs and all unavailable attempts remain intact.
+
+The four required checks passed on the preceding823 source and its description-
+edited run36916204878. They do not prove world behavior. This evidence packaging
+commit must receive its own checks; the world-source blob and evaluated aggregate
+hash are unchanged by packaging. No app merge, external install or publication.
+Full creator/world/revenue goal remains active; the reader and shared world/author
+release program remain open. Avoid repeating the same source/request merely for
+activity; address the source follow-up or next independent product proof.

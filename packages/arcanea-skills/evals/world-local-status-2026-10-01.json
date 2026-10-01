@@ -3,7 +3,7 @@
   "sourceGoal": "01a0f74f-8bad-7db1-ab06-fd89b5faec84",
   "ownerIssue": 276,
   "baselineRevision": "823c0cf0ca37b69f2a965bb1d84ecd62cf0e25c2",
-  "status": "prepared-not-run",
+  "status": "completed-diagnostic-failure",
   "producerReceivesChecks": false,
   "cases": [
     {
@@ -36,5 +36,7 @@
     "requests": "One revised-source known regression; one fresh request on baseline and revised source, isolated and sequential",
     "context": "Same engineering kernel and producer settings; only selected skill/example and the request, no checks or prior findings",
     "limits": "Single synthetic paired observation, not held-out after disclosure, not causal attribution, general reliability or customer usefulness; all attempts and raw outputs retained"
-  }
+  },
+  "executionReport": "world-local-status-report.json",
+  "evaluatedSourceRevision": "00ec58bf11fce4522b9b3f5097d6f0f4ae9fa53b"
 }
