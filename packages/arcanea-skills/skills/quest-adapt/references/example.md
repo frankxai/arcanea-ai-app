@@ -25,3 +25,5 @@ Replay cases:
 Failure is a proposed game outcome; it does not establish a death or rewrite a published story. No engine import or playtest has occurred. Confirm understandable choices and a recoverable retry before implementation.
 
 Asset needs: landing, ferry, dissolving bridge, two characters. No art/audio is supplied or generated; rights and visual identities remain open.
+
+Scope control: F3 limits Mira's glass growth, not every traveler's abilities. An unnamed traveler is not automatically Mira or a named relative. Keep that identity open and bind any ability check to its actual actor. A dropped keepsake or missed departure can be a proposed game consequence, but is not an accepted event merely because the packet needs an ending. If a creator supplies a JSON envelope, use that complete envelope rather than the illustrative table above.

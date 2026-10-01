@@ -15,6 +15,8 @@ Read supplied notes and identify accepted facts, explicit requested changes and 
 
 Default to the creator's names, tone and rules. Use official Arcanea facts only when the creator explicitly requests Arcanea mode and supplies a versioned source. A missing or conflicting official source blocks official assertions. Never inject Arcanea gods, Gates or frequencies into an unrelated world.
 
+Preserve each fact's stated scope. A supplied event does not establish its cause; one capable place does not establish that it is the only capable place. Label such explanations, exclusivity claims and other inferences as proposals. Carry those labels into place descriptions, character biographies and hook headings, not just the fact table. A source citation must support the whole claim attached to it.
+
 ## Connect the parts
 
 Choose the few rules that make this world distinct and show their consequences for daily life, power and conflict. Give each rule a limit, cost or counterexample. Keep accepted facts separate from proposed additions; label creator-authorized revisions with the superseded fact and reason.

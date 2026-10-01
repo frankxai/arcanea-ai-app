@@ -11,11 +11,15 @@ Use the source scene, intended medium and accepted character/world references. O
 
 Identify the decisive action and emotional change. Keep costume, anatomy, props, lighting logic and world limits consistent across shots. Translate internal narration into an observable choice without inventing a new power or event.
 
+Keep visual constraints separate from accepted world facts. “Do not add a glow in this illustration” is a brief constraint; it does not establish that a process can never glow elsewhere in the world. Label inferred materials, ages, mechanisms and other unsupplied details as proposals wherever they appear in the prompt or table.
+
 Return a shot/illustration table with stable shot ID, source excerpt/location, subject/action, framing, constraints, proposed duration where applicable and prompt text. Label invented visual details as proposals. Each shot needs a narrative purpose.
 
 Keep briefs engine-neutral unless a provider is chosen. Verify current provider parameters before a provider-specific job; do not invent model IDs, prices or API fields. Preparing a brief does not authorize generation, provider calls or spend.
 
 Record supplied assets with source, rights status and intended use. Public visibility is not rights clearance. Mark absent rights as unknown. When generation is separately authorized, record exact submitted prompt, model/provider, returned seed if available, session and source references using the active provenance contract. Use required companion sidecars and generation ledgers. Never fabricate generation receipts for a text brief.
+
+Receiving text, notes or an upload does not prove the submitter owns it. Use “supplied by creator; ownership/license unverified” until a declaration or permission record is supplied, including for the scene and world notes. A reference image cannot supply unseen costume details when its contents have not been provided.
 
 Read [references/example.md](references/example.md) for a two-shot example and continuity failure. It uses an invented world, with no official Arcanea assertion.
 

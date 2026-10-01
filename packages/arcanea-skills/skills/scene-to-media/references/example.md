@@ -15,4 +15,6 @@ Proposed visuals: overcast light, boat scale and rope texture. Costume/face rema
 
 Rights: creator scene supplied; ownership declaration still needed for commercial release. Image references: none. Provider/model/seed: not selected or generated. No sidecar is fabricated.
 
+Asset record: `crossing-draft-v3`, supplied by creator; ownership/license unverified. Receiving the scene does not establish ownership. “No magic emerges from Mira's hands” is a constraint grounded in her supplied limitation; “glass can never glow” would invent a broader world rule. An absent costume reference provides no wardrobe facts.
+
 A radiant bridge growing from Mira's palm would reverse accepted rules and source action. Depict an already dissolving bridge and physical rescue instead.
