@@ -440,7 +440,14 @@ test("CLI dry-run and generation use the pinned fixture and preserve its sources
         output,
         ...args,
       ],
-      { encoding: "utf8", timeout: 15000 },
+      {
+        encoding: "utf8",
+        timeout: 15000,
+        env: {
+          ...process.env,
+          NODE_PATH: dirname(dirname(require.resolve("yaml/package.json"))),
+        },
+      },
     );
   const dry = cli(["--dry-run"]);
   assert.equal(dry.status, 0, dry.stderr);
@@ -449,6 +456,15 @@ test("CLI dry-run and generation use the pinned fixture and preserve its sources
   assert.equal(actual.status, 0, actual.stderr);
   assert.equal(JSON.parse(actual.stdout).pluginRoot, join(output, "plugin"));
   assert.equal(git("status", "--porcelain"), before);
+  t.diagnostic(
+    JSON.stringify({
+      node: process.version,
+      platform: process.platform,
+      yaml: require("yaml/package.json").version,
+      scope:
+        "CLI fixture reuses the resolved existing dependency; no installation",
+    }),
+  );
 });
 
 test("CLI refuses typo, repeated option or missing output without invoking home installation", () => {
