@@ -7,6 +7,7 @@ jobs:
   close-incidents:
     name: Close All Auto-Generated Incident Issues
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       issues: write
     steps:

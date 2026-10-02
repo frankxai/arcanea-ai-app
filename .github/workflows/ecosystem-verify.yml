@@ -22,6 +22,7 @@ jobs:
     # Cost gate: skip on draft PRs — agents iterate free; verification runs when marked ready.
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
