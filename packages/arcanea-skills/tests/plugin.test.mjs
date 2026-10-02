@@ -20,11 +20,16 @@ import { fileURLToPath } from "node:url";
 import test from "node:test";
 
 const require = createRequire(import.meta.url);
-const { loadCatalog, validateSources } = require("../scripts/catalog.cjs");
+const {
+  loadCatalog,
+  validateSources,
+  canonicalBytes,
+} = require("../scripts/catalog.cjs");
 const {
   preparePlugin,
   materializePlugin,
   validatePortablePaths,
+  validateYamlPin,
 } = require("../scripts/plugin.cjs");
 const source = fileURLToPath(new URL("../", import.meta.url));
 
@@ -50,6 +55,22 @@ function fixture(t, ready = true) {
     cpSync(join(source, file), join(pkg, file));
   }
   const catalog = loadCatalog(pkg);
+  const git = (...args) =>
+    execFileSync("git", ["-C", repo, ...args], {
+      encoding: "utf8",
+      timeout: 10000,
+      stdio: ["ignore", "pipe", "pipe"],
+    }).trim();
+  git("init", "--quiet");
+  git("config", "core.autocrlf", "true");
+  git("config", "user.name", "Arcanea test fixture");
+  git("config", "user.email", "fixture@example.invalid");
+  git(
+    "remote",
+    "add",
+    "origin",
+    "https://github.com/frankxai/arcanea-ai-app.git",
+  );
   if (ready) {
     const files = validateSources(pkg, catalog)[0].files;
     const skillFile = join(pkg, "skills/world-build/SKILL.md");
@@ -60,11 +81,28 @@ function fixture(t, ready = true) {
         "internal: false",
       ),
     );
+    git("add", "packages/arcanea-skills/skills");
+    git(
+      "commit",
+      "--quiet",
+      "-m",
+      "Synthetic source for blob-bound fixture hash",
+    );
     const hash = createHash("sha256");
     for (const file of files)
       hash.update(
         `${file}\0${createHash("sha256")
-          .update(readFileSync(join(pkg, "skills/world-build", file)))
+          .update(
+            canonicalBytes(
+              file,
+              execFileSync("git", [
+                "-C",
+                repo,
+                "show",
+                `HEAD:packages/arcanea-skills/skills/world-build/${file}`,
+              ]),
+            ),
+          )
           .digest("hex")}\n`,
       );
     const sha = hash.digest("hex");
@@ -91,21 +129,6 @@ function fixture(t, ready = true) {
     });
     writeFileSync(join(pkg, "catalog.json"), JSON.stringify(catalog));
   }
-  const git = (...args) =>
-    execFileSync("git", ["-C", repo, ...args], {
-      encoding: "utf8",
-      timeout: 10000,
-      stdio: ["ignore", "pipe", "pipe"],
-    }).trim();
-  git("init", "--quiet");
-  git("config", "user.name", "Arcanea test fixture");
-  git("config", "user.email", "fixture@example.invalid");
-  git(
-    "remote",
-    "add",
-    "origin",
-    "https://github.com/frankxai/arcanea-ai-app.git",
-  );
   git(
     "add",
     "packages/arcanea-skills/catalog.json",
@@ -164,7 +187,12 @@ test("plugin includes exact ready bytes/resources, excludes candidate and develo
   for (const file of ["SKILL.md", "references/example.md"])
     assert.deepEqual(
       readFileSync(join(result.pluginRoot, "skills/world-build", file)),
-      readFileSync(join(pkg, "skills/world-build", file)),
+      execFileSync("git", [
+        "-C",
+        repo,
+        "show",
+        `${commit}:packages/arcanea-skills/skills/world-build/${file}`,
+      ]),
     );
   const manifest = JSON.parse(
     readFileSync(join(result.pluginRoot, ".claude-plugin/plugin.json")),
@@ -294,6 +322,22 @@ test("dirty compiler, catalog validator, CLI or package manifest refuses before 
   }
 });
 
+test("different committed compiler cannot use this executing implementation", (t) => {
+  const { pkg, git, output } = fixture(t);
+  const target = join(pkg, "scripts/plugin.cjs");
+  writeFileSync(
+    target,
+    readFileSync(target, "utf8") + "\n// Different committed implementation\n",
+  );
+  git("add", "packages/arcanea-skills/scripts/plugin.cjs");
+  git("commit", "--quiet", "-m", "Synthetic different committed compiler");
+  assert.throws(
+    () => preparePlugin(pkg, git("rev-parse", "HEAD")),
+    /executing implementation differs/i,
+  );
+  assert.equal(existsSync(output), false);
+});
+
 test("CRLF checkout conversion preserves LF blob output and receipt bytes", (t) => {
   const { pkg, commit } = fixture(t);
   const before = preparePlugin(pkg, commit);
@@ -315,6 +359,82 @@ test("CRLF checkout conversion preserves LF blob output and receipt bytes", (t) 
     );
   }
   assert.deepEqual(preparePlugin(pkg, commit), before);
+  const catalog = loadCatalog(pkg);
+  assert.equal(
+    validateSources(pkg, catalog)[0].sha256,
+    catalog.skills[0].contentSha256,
+  );
+});
+
+test("installer validator accepts canonical blob hash in a CRLF checkout", (t) => {
+  const { pkg } = fixture(t);
+  const catalog = loadCatalog(pkg);
+  for (const file of validateSources(pkg, catalog)[0].files) {
+    const target = join(pkg, "skills/world-build", file);
+    writeFileSync(
+      target,
+      readFileSync(target, "utf8")
+        .replaceAll("\r\n", "\n")
+        .replaceAll("\n", "\r\n"),
+    );
+  }
+  assert.equal(
+    validateSources(pkg, catalog)[0].sha256,
+    catalog.skills[0].contentSha256,
+  );
+});
+
+test("compiler requires exact YAML dependency pin rather than a recorded arbitrary version", () => {
+  const bytes = readFileSync(join(source, "package.json"));
+  validateYamlPin(bytes, "2.9.1");
+  assert.throws(
+    () => validateYamlPin(bytes, "2.9.0"),
+    /require 2.9.1, resolved 2.9.0/,
+  );
+  assert.throws(
+    () =>
+      validateYamlPin(
+        Buffer.from('{"dependencies":{"yaml":"^2.9.1"}}'),
+        "2.9.1",
+      ),
+    /dependency differs/i,
+  );
+});
+
+test("canonical text hashing changes only CRLF bytes and preserves binary bytes", () => {
+  const nonUtf8 = Buffer.from([0xff, 13, 10, 0xfe]);
+  assert.deepEqual(
+    canonicalBytes("reference.txt", nonUtf8),
+    Buffer.from([0xff, 10, 0xfe]),
+  );
+  assert.deepEqual(canonicalBytes("reference.bin", nonUtf8), nonUtf8);
+  const binary = Buffer.from([0, 13, 10, 0xff]);
+  assert.deepEqual(canonicalBytes("reference.txt", binary), binary);
+});
+
+test("nonportable ready skill directory fails before reading or creating it", (t) => {
+  const { pkg, git, output } = fixture(t);
+  const catalog = loadCatalog(pkg);
+  catalog.skills[0].name = "con";
+  catalog.skills[0].path = "skills/con";
+  writeFileSync(join(pkg, "catalog.json"), JSON.stringify(catalog));
+  git("add", "packages/arcanea-skills/catalog.json");
+  git("commit", "--quiet", "-m", "Synthetic reserved skill directory passport");
+  assert.throws(
+    () => preparePlugin(pkg, git("rev-parse", "HEAD")),
+    /nonportable/i,
+  );
+  assert.equal(existsSync(output), false);
+});
+
+test("dirty declared candidates also block compilation under the all-catalog source contract", (t) => {
+  const { pkg, commit, output } = fixture(t);
+  writeFileSync(
+    join(pkg, "skills/continuity-check/uncommitted.txt"),
+    "candidate drift",
+  );
+  assert.throws(() => preparePlugin(pkg, commit), /untracked source mode/i);
+  assert.equal(existsSync(output), false);
 });
 
 test("usual HTTPS and SSH origin spellings identify the same app source", (t) => {
@@ -461,6 +581,7 @@ test("CLI dry-run and generation use the pinned fixture and preserve its sources
       node: process.version,
       platform: process.platform,
       yaml: require("yaml/package.json").version,
+      fixtureAutocrlf: git("config", "--get", "core.autocrlf"),
       scope:
         "CLI fixture reuses the resolved existing dependency; no installation",
     }),
@@ -484,8 +605,8 @@ test("CLI refuses typo, repeated option or missing output without invoking home 
   }
 });
 
-test("output cannot grow inside canonical skills or compiler source", (t) => {
-  const { pkg, commit, git } = fixture(t);
+test("output cannot grow inside canonical package or checkout discovery directories", (t) => {
+  const { pkg, repo, commit, git } = fixture(t);
   const plan = preparePlugin(pkg, commit),
     before = git("status", "--porcelain");
   for (const directory of [
@@ -494,6 +615,19 @@ test("output cannot grow inside canonical skills or compiler source", (t) => {
     "bin/generated",
   ]) {
     const output = join(pkg, directory);
+    assert.throws(() => materializePlugin(plan, output), /overlaps canonical/i);
+    assert.equal(existsSync(output), false);
+  }
+  for (const directory of [
+    ".claude",
+    ".claude-plugin",
+    "skills",
+    "commands",
+    "agents",
+    "hooks",
+  ]) {
+    mkdirSync(join(repo, directory), { recursive: true });
+    const output = join(repo, directory, "generated");
     assert.throws(() => materializePlugin(plan, output), /overlaps canonical/i);
     assert.equal(existsSync(output), false);
   }

@@ -46,7 +46,10 @@ must name the same `contentSha256`. To promote a candidate, remove its internal
 discovery flag, hash the final files, and obtain evidence against those bytes.
 Keep `private: true` until the repository's separate release gate is satisfied.
 
-For each file, compute SHA-256 of its bytes. Sort relative POSIX paths and compute
+For each recognized text file (`md`, `json`, `js`, `cjs`, `mjs`, `cts`, `txt`, `sh`,
+`py`, `yaml`, `yml`) without NUL bytes, normalize CRLF to LF before hashing.
+Other files retain exact bytes. The installer and compiler use this same rule.
+Compute SHA-256 of those canonical bytes. Sort relative POSIX paths and compute
 the skill hash over `path + NUL + fileHash + LF` for every file. Support files are
 included. Source validation rejects links, hidden files, missing resources,
 identity mismatches and references escaping the skill directory.
@@ -107,14 +110,17 @@ claude plugin validate <new-directory>/plugin --strict
 ```
 
 The source must identify the app through a canonical HTTPS or SSH origin, its package path and
-the specified checkout HEAD. Catalog and selected skill/support bytes must match
-Git blobs at that commit. Text checkouts may differ only by CRLF-to-LF conversion; output always uses the committed bytes. Unrelated development files
-are ignored. The builder snapshots validated bytes before writing; later source
+the specified checkout HEAD. Catalog and every declared skill/support folder must match
+Git blobs at that commit. Text checkouts may differ only by CRLF-to-LF conversion; output always uses the committed bytes.
+All catalog folders are validated, including candidates that will not ship.
+An untracked or edited candidate support file blocks compilation. Undeclared
+development directories are ignored. The builder snapshots validated bytes before writing; later source
 edits cannot change that snapshot. Only ready entries reach the artifact's
 default `skills/` folder. No development commands, agents, hooks, MCP setup,
 candidate folders or implicit blanket license are copied. `release.json`
 identifies input commit, catalog and content hashes, commit-bound CLI/generator/validator/package hashes and resolved YAML version
-and complete declared passports. The distinct plugin name is `arcanea-creator-skills`; its version has a letter-prefixed commit identifier. Support paths with Windows-reserved names, invalid characters or case collisions are rejected before output. Git symlink modes are refused even when checked out as plain files; executable support modes are recorded and applied on POSIX. Determinism requires the same source and YAML version. Configured origin identity is not remote authentication. These declarations do not authenticate rights
+and complete declared passports. The resolved YAML version must equal the exact dependency pin in the committed package manifest; a mismatch refuses before output.
+The distinct plugin name is `arcanea-creator-skills`; its version has a letter-prefixed commit identifier. Skill directory and support paths with Windows-reserved names, invalid characters or case collisions are rejected before output. Git symlink modes are refused even when checked out as plain files; executable support modes are recorded and applied on POSIX. Determinism requires the same source and pinned YAML version. Configured origin identity is not remote authentication. These declarations do not authenticate rights
 or reviewers and do not replace human publication approval.
 
 Currently four candidates and zero ready means exit 2 before creating output.
@@ -122,8 +128,11 @@ This is not an available public plugin. Synthetic ready fixtures establish
 transport behavior only; no real skill has been promoted or installed.
 
 Output parents must exist, be directories without links and stay stable under
-one writer. Output inside canonical `skills`, `bin` or `scripts` is refused to
-preserve source. The builder exclusively creates a new wrapper, assembles inside
+one writer. Output anywhere inside this canonical package or the checkout's
+`.claude`, `.claude-plugin`, root `skills`, `commands`, `agents` or `hooks` is refused
+to preserve source and avoid discovery by the development plugin. Use an external
+new directory or a separate release directory outside those roots.
+The builder exclusively creates a new wrapper, assembles inside
 its hidden `.staging` directory, then renames the complete directory to `plugin`.
 An interrupted/failed write leaves inspectable new staging without the final
 plugin path. A retry requires a new output; existing outputs are never replaced

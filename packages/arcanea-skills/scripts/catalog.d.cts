@@ -49,3 +49,4 @@ export function validateSources(
   readBytes?: (path: string) => Buffer,
 ): ValidatedSource[];
 export function contained(root: string, target: string): boolean;
+export function canonicalBytes(file: string, bytes: Buffer): Buffer;

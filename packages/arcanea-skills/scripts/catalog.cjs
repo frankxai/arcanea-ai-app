@@ -112,6 +112,15 @@ function regularFiles(root) {
   return files.sort();
 }
 
+// The passport hash is portable across ordinary Git text checkout conversion.
+// Binary and unrecognized file types retain their exact bytes.
+function canonicalBytes(file, bytes) {
+  return /\.(?:md|json|[cm]?js|cts|txt|sh|py|yaml|yml)$/.test(file) &&
+    !bytes.includes(0)
+    ? Buffer.from(bytes.toString("latin1").replaceAll("\r\n", "\n"), "latin1")
+    : bytes;
+}
+
 function validateSources(packageRoot, catalog, readBytes = fs.readFileSync) {
   checkStructure(catalog);
   const sourceRoot = path.join(packageRoot, "skills");
@@ -160,7 +169,7 @@ function validateSources(packageRoot, catalog, readBytes = fs.readFileSync) {
     }
     const hash = createHash("sha256");
     for (const file of files) {
-      const content = readBytes(path.join(root, file));
+      const content = canonicalBytes(file, readBytes(path.join(root, file)));
       hash.update(
         `${file}\0${createHash("sha256").update(content).digest("hex")}\n`,
       );
@@ -193,7 +202,13 @@ function validateSources(packageRoot, catalog, readBytes = fs.readFileSync) {
   });
 }
 
-module.exports = { loadCatalog, selectReady, validateSources, contained };
+module.exports = {
+  loadCatalog,
+  selectReady,
+  validateSources,
+  contained,
+  canonicalBytes,
+};
 
 if (require.main === module) {
   try {

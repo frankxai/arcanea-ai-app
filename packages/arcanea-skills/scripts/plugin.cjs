@@ -9,11 +9,20 @@ const {
   selectReady,
   validateSources,
   contained,
+  canonicalBytes,
 } = require("./catalog.cjs");
 
 const ORIGIN = "https://github.com/frankxai/arcanea-ai-app.git";
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const json = (value) => Buffer.from(JSON.stringify(value, null, 2) + "\n");
+
+function validateYamlPin(packageBytes, resolvedVersion) {
+  const pin = JSON.parse(packageBytes).dependencies?.yaml;
+  if (!/^\d+\.\d+\.\d+$/.test(pin ?? "") || resolvedVersion !== pin)
+    throw new Error(
+      `YAML dependency differs from pinned package: require ${pin}, resolved ${resolvedVersion}`,
+    );
+}
 
 function git(root, args) {
   return execFileSync("git", ["-C", root, ...args], {
@@ -73,14 +82,12 @@ function preparePlugin(packageRoot, sourceCommit) {
       throw new Error(`Unsupported or untracked source mode: ${relativePath}`);
     const bytes = fs.readFileSync(file);
     const blob = git(root, ["show", `${sourceCommit}:${gitPath}`]);
-    const text =
-      /\.(?:md|json|[cm]?js|cts|txt|sh|py|yaml|yml)$/.test(relativePath) &&
-      !bytes.includes(0) &&
-      !blob.includes(0);
-    const normalized = text
-      ? Buffer.from(bytes.toString("utf8").replaceAll("\r\n", "\n"))
-      : bytes;
-    if (!bytes.equals(blob) && !normalized.equals(blob))
+    if (
+      !bytes.equals(blob) &&
+      !canonicalBytes(relativePath, bytes).equals(
+        canonicalBytes(relativePath, blob),
+      )
+    )
       throw new Error(
         `Source bytes differ from pinned commit: ${relativePath}`,
       );
@@ -100,9 +107,7 @@ function preparePlugin(packageRoot, sourceCommit) {
   // Refuse a different executing implementation even when testing another root.
   for (const file of engines) {
     const executing = fs.readFileSync(path.join(__dirname, "..", file));
-    const normalized = Buffer.from(
-      executing.toString("utf8").replaceAll("\r\n", "\n"),
-    );
+    const normalized = canonicalBytes(file, executing);
     if (
       !executing.equals(pinned(file).bytes) &&
       !normalized.equals(pinned(file).bytes)
@@ -112,6 +117,8 @@ function preparePlugin(packageRoot, sourceCommit) {
       );
   }
   const catalogBytes = pinned("catalog.json").bytes;
+  const yamlVersion = require("yaml/package.json").version;
+  validateYamlPin(pinned("package.json").bytes, yamlVersion);
   const catalog = loadCatalog(packageRoot);
   if (!json(catalog).equals(json(JSON.parse(catalogBytes))))
     throw new Error("Catalog changed during planning");
@@ -125,6 +132,8 @@ function preparePlugin(packageRoot, sourceCommit) {
   }
   const readPinned = (file) =>
     pinned(path.relative(packageRoot, file).replaceAll("\\", "/")).bytes;
+  for (const skill of ready)
+    validatePortablePaths([`skills/${skill.name}/SKILL.md`], skill.name);
   const sources = validateSources(packageRoot, catalog, readPinned);
   const files = [];
   const passports = ready.map((skill) => {
@@ -140,7 +149,10 @@ function preparePlugin(packageRoot, sourceCommit) {
     const paths = entries
       .map((entry) => entry.split("\t")[1].slice(gitPrefix.length))
       .sort();
-    validatePortablePaths(paths, skill.name);
+    validatePortablePaths(
+      paths.map((file) => `skills/${skill.name}/${file}`),
+      skill.name,
+    );
     if (JSON.stringify(paths) !== JSON.stringify(source.files))
       throw new Error(
         `Committed and checkout file lists differ: ${skill.name}`,
@@ -165,7 +177,7 @@ function preparePlugin(packageRoot, sourceCommit) {
     schema: "arcanea.plugin-build.v1",
     generator: "arcanea-skills/plugin-v1",
     engineHashes,
-    yamlVersion: require("yaml/package.json").version,
+    yamlVersion,
     source: {
       repository: ORIGIN,
       commit: sourceCommit,
@@ -184,6 +196,7 @@ function preparePlugin(packageRoot, sourceCommit) {
   });
   return {
     sourceRoot: packageRoot,
+    repositoryRoot: root,
     files: files.sort((a, b) =>
       a.path < b.path ? -1 : a.path > b.path ? 1 : 0,
     ),
@@ -240,8 +253,10 @@ function checkOutput(output) {
 function materializePlugin(plan, output, { dryRun = false } = {}) {
   output = checkOutput(output);
   if (
-    ["skills", "bin", "scripts"].some((directory) =>
-      contained(path.join(plan.sourceRoot, directory), output),
+    contained(plan.sourceRoot, output) ||
+    [".claude", ".claude-plugin", "skills", "commands", "agents", "hooks"].some(
+      (directory) =>
+        contained(path.join(plan.repositoryRoot, directory), output),
     )
   )
     throw new Error("Output overlaps canonical source or compiler directories");
@@ -275,4 +290,9 @@ function materializePlugin(plan, output, { dryRun = false } = {}) {
   return { pluginRoot, files: plan.files.length, written: true };
 }
 
-module.exports = { preparePlugin, materializePlugin, validatePortablePaths };
+module.exports = {
+  preparePlugin,
+  materializePlugin,
+  validatePortablePaths,
+  validateYamlPin,
+};
