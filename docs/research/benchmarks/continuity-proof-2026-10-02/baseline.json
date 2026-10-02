@@ -115,6 +115,12 @@
       "wordCountWhitespace": 962,
       "sha256": "49ad89446ee9a724a22942cc2dd99af67f4193a757e195db725b903a1033727c",
       "scope": "Reproducible from the committed response member using this recipe. Private original response hash/count and original prompt hash are runner assertions, not publicly byte-verifiable receipts."
+    },
+    "serializationGap": {
+      "originalPrivateCount": 964,
+      "publicNormalizedResponseCount": 962,
+      "difference": 2,
+      "explanation": "The original private response has two whitespace tokens for its opening ```json and closing ``` code fences. Removing those yields 962, matching the public JSON response-member recipe. This comparison is a runner assertion; original response bytes are not committed."
     }
   },
   "promptContract": {

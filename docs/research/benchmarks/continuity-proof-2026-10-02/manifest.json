@@ -58,15 +58,57 @@
     "comparison.json"
   ],
   "highestEnvironment": "Local Node24 component export; isolated provider baseline; no installed-harness, cloud cockpit, EPUB, PDF or production proof",
-  "failureHistory": "Three local integration failures retained: Windows LF/CRLF patch, Windows ESM URL, staged patch whitespace. Bare blank context lines accepted by Git; strict third-party patch consumers untested. Final bytes rechecked.",
+  "failureHistory": "Four local integration/editing failures retained: initial Windows LF/CRLF patch, Windows ESM URL and staged patch whitespace, then index UTF-8 corruption. All resolved without disabling checks. Patch support is Git-only; other consumers untested. Final bytes rechecked.",
   "artifactSha256": {
     "edited-manuscript.md": "72104abf25c788a56f0299d4d692acfee4665516182ec28c884e4e86705ac0fb",
     "revision.patch": "32faaf683d0cd0164171843a4d1fcfb555adda5c8445fdbf9501a96dfe9e70a4",
-    "edits.json": "a4a5cb83fc1bb60e84646cfec0123fd25ec9cac32829f0108777d7321b7b8575",
+    "edits.json": "602c6bbd1a8a23fcf4a0ea406ba66abf8b48db0f1abe71fc52d2cee3c0c9b037",
     "baseline-manuscript.md": "c3de48bef01a755ad08c6ab4e815288e885fca714884389aadd1aa2c971a8bde",
     "baseline.patch": "9c5c65817ed2eb3efb7cc4d798ad98f3497a3fdd83d4467a522a1b7fee6dc13a",
-    "baseline.json": "bacae70445565e62c49417b2a1ada5fc73e6b530480fa187bcb3fb4d3c6ac700",
-    "comparison.json": "dd121a35e3d99fd486bb39de2f1f70793cc19ff3c7b753759ea9b34f1a4212bd"
+    "baseline.json": "3bb3b8c2d152f4d147f79593ccaaf67721354b4a1b0dccc59e9b3ba0aed68b24",
+    "comparison.json": "c92b89ea7c2694a02987d85796e6da7dec6bd2ddb57937c155342efb4a4b52cd"
   },
-  "authorQuestions": "Maret mother/newborn memory with explicit three-way choices; day counting, ship identity, sleep duration and Void/Spirit naming remain unresolved."
+  "authorQuestions": [
+    {
+      "id": "MOTHER_MEMORY",
+      "disposition": "author decision"
+    },
+    {
+      "id": "DAY_COUNT",
+      "disposition": "unresolved convention; retain source"
+    },
+    {
+      "id": "WRECK",
+      "disposition": "author question"
+    },
+    {
+      "id": "SLEEP",
+      "disposition": "author question"
+    },
+    {
+      "id": "VOID_SPIRIT",
+      "disposition": "author question"
+    },
+    {
+      "id": "INSTITUTIONS",
+      "disposition": "owner question referencing locked Tier 6; conflict not established"
+    },
+    {
+      "id": "HISTORY",
+      "disposition": "author question"
+    },
+    {
+      "id": "FREQUENCY",
+      "disposition": "owner-only source conflict"
+    },
+    {
+      "id": "TESTIMONY",
+      "disposition": "preserve character belief"
+    },
+    {
+      "id": "PROLEPSIS",
+      "disposition": "author question"
+    }
+  ],
+  "authorQuestionDetails": "edits.json unresolved and comparison.json unresolvedAuthorChoices carry the same complete ten questions."
 }
