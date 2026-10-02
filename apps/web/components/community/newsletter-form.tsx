@@ -1,31 +1,80 @@
-/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
 "use client";
 
+import { type FormEvent, useId, useRef, useState } from "react";
+import { submitWaitlist } from "@/lib/waitlist/submit";
+
+type SubmitStatus = "idle" | "submitting" | "success" | "error";
+
+// Adapted from draft #403; uses the durable waitlist contract merged in #458.
 export function NewsletterForm() {
+  const id = useId();
+  const pending = useRef(false);
+  const [status, setStatus] = useState<SubmitStatus>("idle");
+  const [message, setMessage] = useState("");
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (pending.current) return;
+    const form = event.currentTarget;
+    const email = String(new FormData(form).get("email") ?? "");
+    pending.current = true;
+    setStatus("submitting");
+    setMessage("");
+    try {
+      const result = await submitWaitlist(email, "community_footer");
+      if (result.success) {
+        form.reset();
+        setStatus("success");
+        setMessage("Your interest in Arcanea updates is saved.");
+      } else {
+        setStatus("error");
+        setMessage(result.error);
+      }
+    } finally {
+      pending.current = false;
+    }
+  }
+
   return (
     <form
-      aria-label="Newsletter signup"
-      className="flex flex-col sm:flex-row gap-3 max-w-lg"
-      onSubmit={(e) => e.preventDefault()}
+      aria-label="Arcanea updates signup"
+      aria-describedby={`${id}-status`}
+      aria-busy={status === "submitting"}
+      className="max-w-lg"
+      onSubmit={handleSubmit}
     >
-      <label htmlFor="newsletter-email" className="sr-only">
-        Email address
-      </label>
-      <input
-        id="newsletter-email"
-        type="email"
-        name="email"
-        autoComplete="email"
-        placeholder="Your email address"
-        className="flex-1 px-4 py-3 rounded-xl liquid-glass border border-white/[0.06] bg-white/[0.04] text-text-primary placeholder-text-muted font-sans text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary/40 transition-all"
-        aria-required="true"
-      />
-      <button
-        type="submit"
-        className="shrink-0 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold text-sm shadow-glow-brand hover:scale-[1.03] hover:shadow-[0_0_28px_rgba(13,71,161,0.45)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-primary/70 focus:ring-offset-2 focus:ring-offset-cosmic-void"
+      <div className="flex flex-col sm:flex-row gap-3">
+        <label htmlFor={`${id}-email`} className="sr-only">
+          Email address
+        </label>
+        <input
+          id={`${id}-email`}
+          type="email"
+          name="email"
+          autoComplete="email"
+          placeholder="Your email address"
+          required
+          maxLength={320}
+          disabled={status === "submitting"}
+          className="min-w-0 flex-1 px-4 py-3 rounded-xl liquid-glass border border-white/[0.06] bg-white/[0.04] text-text-primary placeholder-text-muted font-sans text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary/40 transition-colors disabled:opacity-60"
+        />
+        <button
+          type="submit"
+          disabled={status === "submitting"}
+          className="shrink-0 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold text-sm shadow-glow-brand transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary/70 focus:ring-offset-2 focus:ring-offset-cosmic-void disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {status === "submitting" ? "Saving..." : "Keep me updated"}
+        </button>
+      </div>
+      <p
+        id={`${id}-status`}
+        role={status === "error" ? "alert" : "status"}
+        aria-live={status === "error" ? "assertive" : "polite"}
+        aria-atomic="true"
+        className="mt-3 text-sm text-text-muted"
       >
-        Subscribe
-      </button>
+        {message}
+      </p>
     </form>
   );
 }

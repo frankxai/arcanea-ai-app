@@ -259,7 +259,7 @@ jobs:
         run: pnpm --dir apps/web test:billing
 
       - name: Verify waitlist signups are saved or honestly refused
-        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts
+        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts lib/waitlist/__tests__/submit.test.ts
 
       - name: Verify library chapter slugs and hidden agent files
         run: pnpm --dir apps/web exec tsx --test lib/content/__tests__/loader-slugs.test.ts
