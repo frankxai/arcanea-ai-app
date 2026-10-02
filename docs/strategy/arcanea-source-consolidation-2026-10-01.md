@@ -29,7 +29,7 @@ The existing program sets world, stories, audience and releases first; Studio In
 
 GitHub metadata verified public app, public legacy `arcanea`, private `arcanea-platform`, private `arcanea-agent-skills`, public Hermes profile, public marketplace/records/intelligence-os, public ecosystem and studio. None of those was archived at observation. `arcanea-claw` was archived. `frankxai/arcanea-mcp` returned 404; the local origin identifies the accessible private `frankxai/arcanea-mcp-generate`. Directory names are not repository identities.
 
-The earlier 3,380/4,614 unique-path comparison is supplied context, not remeasured evidence in this slice. Archive approval requires a fresh content/hash and consumer comparison.
+October 3 [legacy recovery evidence](arcanea-legacy-salvage-2026-10-03.md) remeasures immutable full trees: 3,380 legacy-only paths against main4e1d914, including297 objects present elsewhere and3,083 absent, plus1,201 same-path divergences. Main has4,616 target-only paths at this revision. The native read-only audit and pinned Vael’Keth candidate references are preparation; no source group is migrated or archive-approved. Consumer and rights review remain required.
 
 ## Measured skill sources
 
