@@ -226,7 +226,7 @@
   "nextActions": [
     "Review each selected skill support file and embedded or referenced third-party material at an immutable revision.",
     "Trace historical import commits and notices; current upstream comparison alone does not establish provenance.",
-    "Keep the eight document-skill copies outside curated bundles. Audit current-tree consumers before proposing removal or replacement; preserve import evidence and do not rewrite history.",
+    "Review the October2 current-tree removal proposal and its recorded consumer search; assess indirect/name-based consumers and separately authorized document tools. Preserve historical import/notice entries and Git history; removal grants no rights.",
     "Review scoped public MIT assertions separately; preserve legitimate package/import licences and leave original Arcanea code and lore choices to Frank.",
     "Fold only eligible skills into the existing curated package after rights, eval and independent-review evidence; keep canon in place."
   ],
@@ -299,5 +299,6 @@
       "No sibling licence copied or root licence selected",
       "Current-tree deduplication does not settle historical redistribution"
     ]
-  }
+  },
+  "historicalEntriesMeaning": "The ten entries describe the pinned October1 source snapshots, including document-skill copies later removed by currentTreeRemediation; entry presence does not assert current-tree presence or clearance."
 }

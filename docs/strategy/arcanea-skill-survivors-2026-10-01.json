@@ -3305,12 +3305,13 @@
     "Broader legacy experiments/content outside the specified roots"
   ],
   "migrationRules": [
-    "Matching skill bytes do not authorize source retirement or establish equivalent support files",
+    "Matching skill bytes alone do not authorize current-tree deletion, donor-repository retirement or equivalent support-file claims.",
     "Dispositions are proposals; four current candidates do not replace every donor capability",
     "Retain source identities and support-file hashes; rebase references inside the downloaded plugin subtree after rights review",
     "Use existing source-bound locked-canon generation; starter aids never replace official authority",
     "Keep operator and Studio gateway material outside public creator installation",
-    "Retain shared dependency owners; do not add a parallel world schema or runtime"
+    "Retain shared dependency owners; do not add a parallel world schema or runtime",
+    "Current-tree duplicate deletion needs an identical Git blob, a verified single-file subtree, a byte-identical survivor at the candidate tree and tracked consumer search with index reconciliation; preserve Git history and rights status. Donor-repository retirement and indirect/external consumer acceptance remain separate reviews."
   ],
   "canonicalRootRemediation": {
     "date": "2026-10-02",
@@ -3514,7 +3515,8 @@
       "No working-set links or rights clearance",
       "No replacement of retained story, specialty or development jobs",
       "Independent review and release gates remain open"
-    ]
+    ],
+    "retainedIdenticalPathsMeaning": "Historical survivors at the canonical-root removal slice; later OSS duplicate removal superseded some paths. Use currentSurvivorProjection for validated survivors at its pinned tree."
   },
   "workingSetOssRemediation": {
     "date": "2026-10-02",
@@ -3654,5 +3656,331 @@
     "rightsStatus": "pending; observed-source attribution is not clearance",
     "canonicalCandidates": 4,
     "readySkills": 0
+  },
+  "currentSurvivorProjection": {
+    "tree": "7400659ef1857172797adccbdc3a9889da927a7d",
+    "date": "2026-10-02",
+    "scope": "38 single-file duplicate removals only; inspected retained bytes, not rights or equivalent installed execution. This documentation-only correction leaves skill trees unchanged.",
+    "mappings": [
+      {
+        "removedPath": "packages/arcanea-skills/skills/api-design/SKILL.md",
+        "blob": "3383084e9b6c39adf41e76de11c7bd42539189bc",
+        "sha256": "8a4876fe9d2b7b1e9ec170bfda9db54392d3cb18c6d486319bb8a957bb722815",
+        "survivingIdenticalPaths": [
+          ".claude/skills/development/api-design/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/arcanea-creator-academy/SKILL.md",
+        "blob": "38db1ee8cc87e9091efffd107b0b3c04f34ae389",
+        "sha256": "7fee9d651e44fb744169b15457488cafa9f7acedac7ab8e8c63e132ce910b581",
+        "survivingIdenticalPaths": [
+          ".arcanea/skills/arcanea/arcanea-creator-academy/SKILL.md",
+          ".claude/skills/arcanea/arcanea-creator-academy/SKILL.md",
+          "oss/skills/arcanea/arcanea-creator-academy/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/architecture-patterns/SKILL.md",
+        "blob": "a54504dbf3a3f41e064a9831e7e494f3f4733d97",
+        "sha256": "40ca0f1c53325faa822406f28fd79eeb2f8d08d7535bb230499fc0afb2c5e086",
+        "survivingIdenticalPaths": [
+          ".claude/skills/development/architecture-patterns/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/bestiary-nav/SKILL.md",
+        "blob": "53afe6d1652844daf4077e8e295f02b43776890d",
+        "sha256": "35a13ce395b26d84d39095a4dbe876f10086fa6cb66416b70feec784e3e22c68",
+        "survivingIdenticalPaths": [
+          ".arcanea/skills/creative/bestiary-nav/SKILL.md",
+          ".claude/skills/creative/bestiary-nav/SKILL.md",
+          "oss/skills/creative/bestiary-nav/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/centaur-mode/SKILL.md",
+        "blob": "0a82a10be09d4b4c37acecb33a29a815138ebb04",
+        "sha256": "307c93679b5cd022dd2c11328acdea6646decff8d66d188a550e2678cf72c4bf",
+        "survivingIdenticalPaths": [
+          ".arcanea/skills/arcanea/centaur-mode/SKILL.md",
+          ".claude/skills/arcanea/centaur-mode/SKILL.md",
+          "oss/skills/arcanea/arcanea-centaur-mode/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/character-forge/SKILL.md",
+        "blob": "5ac904d8c13be6e867c682a5d9995629dff5f39b",
+        "sha256": "c485cd6f7a178f35017603fab8239e3f3b99de9676bbac6672a166e41df61237",
+        "survivingIdenticalPaths": [
+          ".arcanea/skills/creative/character-forge/SKILL.md",
+          ".claude/skills/creative/character-forge/SKILL.md",
+          "oss/skills/creative/character-forge/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/code-review/SKILL.md",
+        "blob": "8a50ea48f6501fac3f3611398ae2853bd7e1471b",
+        "sha256": "8bbce7d2301e4caa8e01cc6fa02800f9469a4038892a60b00ddf1618147893cb",
+        "survivingIdenticalPaths": [
+          ".claude/skills/development/code-review/SKILL.md",
+          "oss/skills/development/code-review/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/creative-flow/SKILL.md",
+        "blob": "33d1413df94bdc165f598d4a3b6eeeeb38006945",
+        "sha256": "20e2f113384a655e24ef1a38b22268857ddfb008c699e8c3bb11a0f34fcd71a2",
+        "survivingIdenticalPaths": [
+          ".claude/skills/meta/creative-flow/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/deep-work/SKILL.md",
+        "blob": "fada7d28d6fad0aeaf305f55cf156451566f318c",
+        "sha256": "4adb9bcf4b479a0f1e79d949b5346754371a9043cdc6aed3a4bb08e22e99f8c1",
+        "survivingIdenticalPaths": [".claude/skills/meta/deep-work/SKILL.md"]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/dialogue-mastery/SKILL.md",
+        "blob": "c2f828b08180dc7ed9b47901543ec1ee7ec1e247",
+        "sha256": "9c77b45f180815ddd054a6ea5cc8857f2c7b45ee6f88ed06769964fa2296670a",
+        "survivingIdenticalPaths": [
+          ".arcanea/skills/creative/dialogue-mastery/SKILL.md",
+          ".claude/skills/creative/dialogue-mastery/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/luminor-wisdom/SKILL.md",
+        "blob": "017c281513557a652e2506d6b2f2645862fa9a1b",
+        "sha256": "502d961a6dc7de2cb46b281f98150ccba5b89f80c01040c678af4dc382ef546d",
+        "survivingIdenticalPaths": [
+          ".arcanea/skills/arcanea/luminor-wisdom/SKILL.md",
+          ".claude/skills/arcanea/luminor-wisdom/SKILL.md",
+          "oss/skills/arcanea/luminor-wisdom/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/performance-tuning/SKILL.md",
+        "blob": "7b963672957ec40f909c7139e20ecf59e27871ae",
+        "sha256": "11898ba007fd19cc1e965081040d44c062f1fa7a8cd4006c0be128c5c23011fe",
+        "survivingIdenticalPaths": [
+          ".claude/skills/development/performance-tuning/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/prompt-craft/SKILL.md",
+        "blob": "ca69af4dc15d8aada54fb9867ef94e9d56e824ac",
+        "sha256": "83a99dc8b6462055a24f8ee26b44cf6342ed1e288f3d71cbe84fca96a47bb035",
+        "survivingIdenticalPaths": [
+          ".arcanea/skills/arcanea/prompt-craft/SKILL.md",
+          ".claude/skills/arcanea/prompt-craft/SKILL.md",
+          "oss/skills/arcanea/prompt-craft/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/refactoring-ritual/SKILL.md",
+        "blob": "df142a4a3b4ff2ee5b0bfdd211ac18aeab6e1c5d",
+        "sha256": "471ba1cb40713c31e0bccf0d0296358e0146b6466f8ebc35a4b024ebad39a7d6",
+        "survivingIdenticalPaths": [
+          ".claude/skills/development/refactoring-ritual/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/scene-craft/SKILL.md",
+        "blob": "a960096256399ee647c443c933118d1ddedea4c1",
+        "sha256": "a092060828696d06882207169f6968a2dc8788bdf46dd96ade32c3ab3c9f9b95",
+        "survivingIdenticalPaths": [
+          ".arcanea/skills/creative/scene-craft/SKILL.md",
+          ".claude/skills/creative/scene-craft/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/story-weave/SKILL.md",
+        "blob": "42fd2a05f2ed23cdc939ae5f01d3f4850b602437",
+        "sha256": "84ba570f210f76b271fad95a850c167383bda98eaa74907c92f9f8331f53fedb",
+        "survivingIdenticalPaths": [
+          ".arcanea/skills/creative/story-weave/SKILL.md",
+          ".claude/skills/creative/story-weave/SKILL.md",
+          "oss/skills/creative/story-weave/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/systematic-debug/SKILL.md",
+        "blob": "b6089570bc7431a824d4c291a7665c09738e9633",
+        "sha256": "3cdc65515369af7cddf24a079a55e7a7c9da26af08cd5c2cadd1ce193544f676",
+        "survivingIdenticalPaths": [
+          ".claude/skills/development/systematic-debug/SKILL.md",
+          "oss/skills/development/systematic-debug/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/tdd/SKILL.md",
+        "blob": "da72c246baf3d76533f56031ab368cf80db289a2",
+        "sha256": "6ec3401488703dd1647f288c3199c6cb9cdb545a901fe2b8f6184c8ee26b35dc",
+        "survivingIdenticalPaths": [
+          ".claude/skills/development/tdd/SKILL.md",
+          "oss/skills/development/tdd/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": "packages/arcanea-skills/skills/voice-alchemy/SKILL.md",
+        "blob": "4d00dbf7384533c29e632bb515b50f076608e0be",
+        "sha256": "b868c0cfcbe541749e4ff1e20d12592f39c7a5402000234ca4698dcc304964e4",
+        "survivingIdenticalPaths": [
+          ".arcanea/skills/creative/voice-alchemy/SKILL.md",
+          ".claude/skills/creative/voice-alchemy/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/api-design/SKILL.md",
+        "blob": "3383084e9b6c39adf41e76de11c7bd42539189bc",
+        "sha256": "8a4876fe9d2b7b1e9ec170bfda9db54392d3cb18c6d486319bb8a957bb722815",
+        "survivingIdenticalPaths": [
+          ".claude/skills/development/api-design/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/architecture-patterns/SKILL.md",
+        "blob": "a54504dbf3a3f41e064a9831e7e494f3f4733d97",
+        "sha256": "40ca0f1c53325faa822406f28fd79eeb2f8d08d7535bb230499fc0afb2c5e086",
+        "survivingIdenticalPaths": [
+          ".claude/skills/development/architecture-patterns/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/bestiary-nav/SKILL.md",
+        "blob": "53afe6d1652844daf4077e8e295f02b43776890d",
+        "sha256": "35a13ce395b26d84d39095a4dbe876f10086fa6cb66416b70feec784e3e22c68",
+        "survivingIdenticalPaths": [
+          ".claude/skills/creative/bestiary-nav/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/character-forge/SKILL.md",
+        "blob": "5ac904d8c13be6e867c682a5d9995629dff5f39b",
+        "sha256": "c485cd6f7a178f35017603fab8239e3f3b99de9676bbac6672a166e41df61237",
+        "survivingIdenticalPaths": [
+          ".claude/skills/creative/character-forge/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/code-review/SKILL.md",
+        "blob": "8a50ea48f6501fac3f3611398ae2853bd7e1471b",
+        "sha256": "8bbce7d2301e4caa8e01cc6fa02800f9469a4038892a60b00ddf1618147893cb",
+        "survivingIdenticalPaths": [
+          ".claude/skills/development/code-review/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/creative-flow/SKILL.md",
+        "blob": "33d1413df94bdc165f598d4a3b6eeeeb38006945",
+        "sha256": "20e2f113384a655e24ef1a38b22268857ddfb008c699e8c3bb11a0f34fcd71a2",
+        "survivingIdenticalPaths": [
+          ".claude/skills/meta/creative-flow/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/deep-work/SKILL.md",
+        "blob": "fada7d28d6fad0aeaf305f55cf156451566f318c",
+        "sha256": "4adb9bcf4b479a0f1e79d949b5346754371a9043cdc6aed3a4bb08e22e99f8c1",
+        "survivingIdenticalPaths": [".claude/skills/meta/deep-work/SKILL.md"]
+      },
+      {
+        "removedPath": ".claude/skills/oss/dialogue-mastery/SKILL.md",
+        "blob": "c2f828b08180dc7ed9b47901543ec1ee7ec1e247",
+        "sha256": "9c77b45f180815ddd054a6ea5cc8857f2c7b45ee6f88ed06769964fa2296670a",
+        "survivingIdenticalPaths": [
+          ".claude/skills/creative/dialogue-mastery/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/performance-tuning/SKILL.md",
+        "blob": "7b963672957ec40f909c7139e20ecf59e27871ae",
+        "sha256": "11898ba007fd19cc1e965081040d44c062f1fa7a8cd4006c0be128c5c23011fe",
+        "survivingIdenticalPaths": [
+          ".claude/skills/development/performance-tuning/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/refactoring-ritual/SKILL.md",
+        "blob": "df142a4a3b4ff2ee5b0bfdd211ac18aeab6e1c5d",
+        "sha256": "471ba1cb40713c31e0bccf0d0296358e0146b6466f8ebc35a4b024ebad39a7d6",
+        "survivingIdenticalPaths": [
+          ".claude/skills/development/refactoring-ritual/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/revision-ritual/SKILL.md",
+        "blob": "ff9dbb18d149623a0a694349d1806e22bac1404a",
+        "sha256": "62d3ebedd584e0476a7e522eb4fe340e8b8b51011b385cd24c4856cac712bb8b",
+        "survivingIdenticalPaths": [
+          ".claude/skills/creative/revision-ritual/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/scene-craft/SKILL.md",
+        "blob": "a960096256399ee647c443c933118d1ddedea4c1",
+        "sha256": "a092060828696d06882207169f6968a2dc8788bdf46dd96ade32c3ab3c9f9b95",
+        "survivingIdenticalPaths": [
+          ".claude/skills/creative/scene-craft/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/skill-mastery/SKILL.md",
+        "blob": "4bb2d657f63c88c974343904d42ebd1fe90c1b74",
+        "sha256": "661a6db77deeb8f658bbc91d09b84dd0c4fb5a2c27189d7e81563781b610d4f8",
+        "survivingIdenticalPaths": [
+          ".claude/skills/meta/skill-mastery/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/story-weave/SKILL.md",
+        "blob": "42fd2a05f2ed23cdc939ae5f01d3f4850b602437",
+        "sha256": "84ba570f210f76b271fad95a850c167383bda98eaa74907c92f9f8331f53fedb",
+        "survivingIdenticalPaths": [
+          ".claude/skills/creative/story-weave/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/systematic-debug/SKILL.md",
+        "blob": "b6089570bc7431a824d4c291a7665c09738e9633",
+        "sha256": "3cdc65515369af7cddf24a079a55e7a7c9da26af08cd5c2cadd1ce193544f676",
+        "survivingIdenticalPaths": [
+          ".claude/skills/development/systematic-debug/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/tdd/SKILL.md",
+        "blob": "da72c246baf3d76533f56031ab368cf80db289a2",
+        "sha256": "6ec3401488703dd1647f288c3199c6cb9cdb545a901fe2b8f6184c8ee26b35dc",
+        "survivingIdenticalPaths": [".claude/skills/development/tdd/SKILL.md"]
+      },
+      {
+        "removedPath": ".claude/skills/oss/voice-alchemy/SKILL.md",
+        "blob": "4d00dbf7384533c29e632bb515b50f076608e0be",
+        "sha256": "b868c0cfcbe541749e4ff1e20d12592f39c7a5402000234ca4698dcc304964e4",
+        "survivingIdenticalPaths": [
+          ".claude/skills/creative/voice-alchemy/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/oss/world-build/SKILL.md",
+        "blob": "a6526fabebea2c15758d6693aa22bd7065d8032c",
+        "sha256": "a3ce2baded3e92aef21690ada32c6ea648a75caf2e14e2120af2529a6a235802",
+        "survivingIdenticalPaths": [
+          ".claude/skills/creative/world-build/SKILL.md"
+        ]
+      },
+      {
+        "removedPath": ".claude/skills/external/doc-coauthoring/SKILL.md",
+        "blob": "64b962ad16442f65182d80c0b0bf838e5c9a77f7",
+        "sha256": "188c34046043d75419f5fb0bebdf15230bee00f89d4364d901ea46cc3feb6ddd",
+        "survivingIdenticalPaths": [".claude/skills/doc-coauthoring/SKILL.md"]
+      }
+    ],
+    "allPathsExistAtTree": true,
+    "allBodiesByteIdenticalAtTree": true,
+    "historicalMappingsPreserved": true
   }
 }

@@ -80,15 +80,11 @@ The CommonJS API keeps `skills`, `skillCount`, `bundledCount`, `categories`,
 the review backlog. Callers that relied on the previous top-20 list must migrate.
 `name`, `version` and `skillsDir` also expose package identity and source location.
 
-The canonical package root now contains only its four catalog candidates.
-Nineteen unlisted legacy package copies were removed after verifying byte-identical
-sources elsewhere in the app. Their pinned source mappings and historical fold
-records remain in `docs/strategy/arcanea-skill-survivors-2026-10-01.json`.
-Eighteen duplicate `.claude/skills/oss` copies are also removed; their identical
-+creative, development and meta sources remain in the working set. Retained sources
-+still need rights and workflow reconciliation. Other discovery
-roots and plugin manifests in the app still need reconciliation; this package
-does not make a repository-wide install curated.
+The source package contains four catalog candidates. Other repository discovery
+roots and plugin manifests remain separate work; installing from the repository
+root does not provide this package's catalog-controlled selection. Consolidation
+history and current-tree source mappings are recorded with
+[draft #487](https://github.com/frankxai/arcanea-ai-app/pull/487).
 
 ## Rights and integration
 
@@ -103,13 +99,3 @@ salvage have not been applied.
 
 Track the consolidation and product scope in
 [Arcanea issue #276](https://github.com/frankxai/arcanea-ai-app/issues/276).
-
-### Removed restricted working-set imports
-
-This draft also removes eight document-skill copy trees (`docx`, `pdf`, `pptx`,
-`xlsx` and their `external/` copies) from `.claude/skills`. Their notices restrict
-redistribution; the pinned evidence is retained in
-`docs/strategy/arcanea-skill-rights-evidence-2026-10-01.md` at the repo root.
-Current-tree removal does not settle historical rights or clear other imports.
-Document workflows use separately authorized tools from their existing owners.
-The remaining development roots are not a curated repository-wide install.

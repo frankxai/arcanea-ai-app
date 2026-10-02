@@ -13,7 +13,7 @@ Acceptance: reproducible committed-source inventory; duplicate variants visible;
 Verification: Node 22.23.2 via fnm, matching `.nvmrc` 22. Two Node tests passed, covering scalar-name review, Unicode byte parsing, identical/variant duplicates, immutable ref, dirty/untracked exclusion, root restriction, traversal and invalid refs. Inventory: 261 paths, 31 duplicated recognized names (28 identical skill texts, three variants), no root license.
 Rollback: revert the four exact files; no production or data side effects.
 
-## Current findings
+## Initial findings at the recorded base (historical)
 
 - Use the app as proposed public Arcanea integration source, with shared dependencies retaining owners until an actual contract migration.
 - Reuse `packages/arcanea-skills/skills` as proposed curated root; it is not already a cleared public pack.
@@ -387,3 +387,46 @@ generic README language. Independent cumulative review requires fresh admission.
 Rollback: reviewed scoped revert of these8 files, preserving all later work.
 Budget: ordinary text/small tests, no install/build/worktree/provider fanout.
 Stop: evidence-bound draft and issue/hub receipts; full goal remains active.
+
+## Cumulative cleanup review correction, October 2
+
+Owner: Codex, existing draft #487 / issue #276. Exact base: `7400659ef1857172797adccbdc3a9889da927a7d`.
+Files: seven existing documents listed in the private reconciliation plan; no
+skill bodies/support files, catalog/passport readiness, licence, canon or runtime
+are changed. User job: inspect truthful current and historical consolidation
+evidence before a curated install. This is supporting work, not a completed
+creator outcome. Product-outcome-quality policy was read in full in this session;
+loading it does not establish executable enforcement or customer acceptance.
+
+Alternative: preserve misleading current survivor claims and broad development
+discovery. Correction preserves all historical JSON identities and mappings while
+adding an explicit immutable-tree current-survivor projection, records the
+stronger single-file/consumer conditions for copy subtraction, updates superseded
+rights-review wording, removes repository-only cleanup text/stray diff markers
+from the standalone package README and labels the formatter-shaped index.
+
+The initial complete review failed prompt_too_long with reported0USD/no verdict.
+Lossless object/path deduplication and two disjoint batches preserve all 103 unique
+deleted text objects across 298 paths. The first batch (52 objects) produced provisional REVISE
+text but terminal budget_exhausted and reported $3.399642 despite a requested $3 limit;
+it is not a completed sign-off. Four LOW documentation findings and one INFO
+index qualification were inspected and corrected. All receipts and failures stay.
+
+Acceptance: every current survivor path exists with identical bytes; historical
+source/resource/notice/mapping data retained; no candidate promotion or rights
+grant; package text portable; existing audit/catalog checks and all four native
+checks; corrected-source independent coverage must include both complete batches.
+Budget: ordinary text/small tests, no install/new worktree/build/fanout. Requested
+5USD per corrected serial review batch (not a strict spend guarantee), a 600s owned
+process deadline and fresh PP admission; at most two corrected batches before
+reassessing a concrete failure. Rollback: reviewed revert of these documents,
+preserving later changes/history and shared owners. Stop: evidence-bound draft;
+full creator/world/release goal remains active, four candidates/zero ready.
+
+Creator proof remains under #276/#282/#280: actual selected manuscript input, useful
+editable narrative, a serious same-task alternative and recovery/export behavior,
+with independent/human quality evidence. Frank's manuscript/release selection is
+still required by #280. No scaffold, manifest, fixture or passing tests establishes
+a paid product, creator usefulness or release approval. One public app source,
+pinned-folder bundles, existing shared AuthorOS/SIS/WorldPack/media owners and
+#408/#427 are preserved; root-plugin migration and rights/Heart choices remain open.

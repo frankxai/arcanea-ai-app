@@ -11,7 +11,7 @@ No root `LICENSE`, `LICENSE.md` or `LICENSE.txt` exists in either measured tree.
 Package licence declarations and imported notices do not establish blanket terms
 for the app, skills, canon or assets. Frank's code and lore licence choices remain open.
 
-## Selected imports
+## Historical imports at the measured October 1 snapshots
 
 | Import                                         | Existing notice evidence                                                         | Remaining decision or review                             |
 | ---------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------- |
@@ -23,9 +23,10 @@ for the app, skills, canon or assets. Frank's code and lore licence choices rema
 The document notices reserve rights and restrict reproduction, derivative works
 and distribution. They are not MIT or Apache notices. The official upstream
 [README](https://github.com/anthropics/skills/blob/8a1541c4a3ffa5a20a5a91de0dcf3f0bab1d1ef4/README.md)
-also describes these four document skills as source-available. Keep all eight
-copies outside curated release bundles while authorization or a removal/replacement
-proposal is reviewed. Existing development copies are unchanged by this slice.
+also describes these four document skills as source-available. At those snapshots the eight copies remained outside the proposed curated bundle.
+The October 2 current-tree removal proposal supersedes that retention state: all
+eight copy trees are absent from this candidate, while their historical notice and
+import evidence stays recorded. Authorization and historical rights remain open.
 
 The [machine-readable receipt](arcanea-skill-rights-evidence-2026-10-01.json)
 records each local skill and notice blob, SHA-256, immutable upstream commit and
@@ -57,10 +58,12 @@ scope remains tracked `SKILL.md` files, not installer discovery or a legal audit
 ## Next review
 
 1. Trace imports and inspect supporting resources, including referenced material.
-2. Audit document-skill consumers before proposing current-tree removal or replacement.
-   Preserve the import record and skip history rewriting.
-3. Review public blanket MIT claims in `/skills` and the homepage separately from
-   legitimate scoped package licences. Those claims remain unchanged by this slice.
+2. Review the October 2 removal's recorded consumer search and remaining indirect,
+   name-based and provider compatibility. Preserve historical import records and
+   Git history; the eight current-tree copy removals grant no rights.
+3. Keep the separately corrected `/skills` and homepage terms scoped to their
+   exact source and readiness evidence; preserve legitimate package/import notices.
+   These historical import records do not grant app-wide MIT terms.
 4. Fold only eligible skills into `packages/arcanea-skills/skills` after rights,
    evaluation and independent-review evidence. Canon stays in place.
 
@@ -93,9 +96,9 @@ machine admission held the reviewer before invocation in this slice.
 
 ## Doc-coauthoring provenance, October 2
 
-The two local bodies are identical, blob64b962ad16442f65182d80c0b0bf838e5c9a77f7.
+The two local bodies are identical, blob `64b962ad16442f65182d80c0b0bf838e5c9a77f7`.
 They entered the app together at be859c91a352c942d5b0b82e4acdc5d1cf0ef6c3.
-Against observed upstream8a1541c4a3ffa5a20a5a91de0dcf3f0bab1d1ef4, the only local
+Against observed upstream `8a1541c4a3ffa5a20a5a91de0dcf3f0bab1d1ef4`, the only local
 change is an added frontmatter version line; removing it restores the exact bytes.
 The external duplicate and its index row are removed; the retained body is unchanged.
 Its new `UPSTREAM.md` records attribution, hashes, the change and remaining limits.

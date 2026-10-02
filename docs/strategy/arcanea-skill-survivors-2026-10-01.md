@@ -173,3 +173,20 @@ The committed working-set inventory has zero duplicated recognized scalar names,
 with92 unique names retained. Its38 entries needing name review remain unresolved;
 this is not proof of complete skills CLI discovery or external consumer migration.
 The curated root still has four unchanged candidates and zero ready skills.
+
+## Current survivor projection and historical mappings, October 2
+
+The earlier `canonicalRootRemediation.removed[].retainedIdenticalPaths` arrays
+record survivors at that removal slice. Fifteen listed OSS paths were subsequently
+removed as duplicates. Those arrays remain historical evidence; they are not a
+current lookup table. `currentSurvivorProjection` records all 38 duplicate removals
+against tree `7400659ef1857172797adccbdc3a9889da927a7d`, with existing survivor paths and identical
+Git blob/SHA-256 bytes. This correction changes documents only, so those skill
+trees remain unchanged at the corrected candidate.
+
+Current-tree duplicate removal requires more than matching text: a single-file
+subtree, an identical retained body, tracked consumer search and active-index
+reconciliation. Git history and unresolved rights are retained. These conditions
+do not authorize donor-repository retirement or prove indirect/external consumer
+compatibility. The working-set counts refer only to recognized scalar names in
+tracked SKILL.md files; they do not assert unique keys in the generated index.
