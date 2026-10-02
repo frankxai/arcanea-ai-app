@@ -56,8 +56,8 @@ collapsed `workspaces`; native CI rejected that formatting. Using the package
 manifest's `json-stringify` parser restores the original array formatting.
 The existing `.prettierignore` excludes the native-format pnpm lockfile.
 `eslint-config-next` is already 16.3.6. Existing security overrides remain enabled.
-Actual `.nvmrc` and native CI specify Node 22, and packageManager/CI pin pnpm 8.15.0;
-the older AGENTS Node 20 text is stale against those executable sources.
+Actual `.nvmrc` and native CI specify Node 22, and packageManager/CI pin pnpm 8.15.0.
+The pinned base AGENTS contract directs agents to those executable runtime sources.
 
 Local verification with the existing YAML 2.9.1 parser passes for all 1,850 package
 snapshots, eleven upgrades and twenty registry records. It compares the complete
