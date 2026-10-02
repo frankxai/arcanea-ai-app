@@ -147,3 +147,19 @@ without admitted different-harness review and all native required checks.
 The capability-loading path named by home instructions is absent both from the
 local canonical config checkout and its current HEAD; no missing guide is
 treated as permission to activate a provider or bypass admission.
+
+### Native format correction
+
+CI36990060684 at15d2a27cfad31241620ab0e1bc57713b4fcfbeb5 passed its
+frozen Install and TypeScript checks; Lint failed the changed-file Prettier
+check on packages/world-sdk/package.json. The local standalone formatter used
+the general JSON parser instead of Prettier's inferred json-stringify parser
+for package.json. Correct the package format with the same pinned3.9.9;
+SDK runtime, dependency version and four-line lock importer remain unchanged.
+Retain this failed run and verify all required checks at the corrected source.
+
+The initial native Build completed successfully:SDK62/62 and quick632/632
+under frozen YAML2.9.1, plus web build and existing boundary/rendered checks.
+CI Status failed because Lint failed; it is retained as failure, not green.
+The correction changes only JSON layout and this record. An exact parsed-JSON
+comparison verifies no package metadata or dependency semantics changed.
