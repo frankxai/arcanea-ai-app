@@ -63,3 +63,26 @@ of 12. No reviewer PID, provider verdict or spend is claimed. The complete
 exact-source review packet is preserved privately for an admitted review.
 Native CI and draft/issue receipts will bind the resulting commit on #283/#276;
 this local receipt does not claim those pending checks have passed.
+
+## Native failure and memory-loss correction
+
+CI36981919511 at `66a3562a62f8b913066ba4d2f1212edec59a74b6` passed
+Install, Lint and TypeScript, plus the web build and existing quick tests, but
+failed the newly wired SDK suite: 21 pass/one fail. Two records shared a
+millisecond, so the old timestamp-only filename overwrote the first memory.
+The failed run and its Build/CI Status verdicts are retained.
+
+Correction scope: evolution module, policy tests, README and this record, at
+base66a3562. Two deterministic regressions failed before the correction: three
+same-timestamp concurrent writes retained one file; unsafe timestamp input was
+accepted. Filenames now use a normalized timestamp plus random UUID and
+exclusive creation. Parseable ISO timestamps are checked before directory
+creation; the record retains the supplied timestamp. Existing memory filenames
+remain readable. Directory-link containment and broad SDK promotion remain open.
+This changes memory filenames, not memory content or public-canon authority.
+
+Official Node22 docs confirm [exclusive file creation](https://nodejs.org/docs/latest-v22.x/api/fs.html#file-system-flags)
+and [random UUID generation](https://nodejs.org/docs/latest-v22.x/api/crypto.html#cryptorandomuuidoptions).
+The corrected source must pass its 24-case local/native suite and the complete
+required checks, then receive an admitted exact-source different-harness review.
+No passing rerun, review, rights grant or creator acceptance is inferred here.

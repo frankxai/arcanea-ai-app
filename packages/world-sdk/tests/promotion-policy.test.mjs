@@ -11,7 +11,12 @@ import { createWorld, scaffoldWorld } from "../src/scaffold.mjs";
 import { readWorld } from "../src/fs-world.mjs";
 import { contentHash } from "../src/contenthash.mjs";
 import { computeProof } from "../src/proof.mjs";
-import { evolve, evolveCharacter } from "../src/evolution.mjs";
+import {
+  evolve,
+  evolveCharacter,
+  recordMemory,
+  listMemories,
+} from "../src/evolution.mjs";
 
 const run = promisify(execFile);
 const cli = fileURLToPath(new URL("../bin/cli.mjs", import.meta.url));
@@ -140,6 +145,33 @@ test("custom policy pointers remain metadata and cannot escape through scaffold 
     code: "ENOENT",
   });
   await assert.rejects(fs.stat(path.join(dir, "licenses")), { code: "ENOENT" });
+});
+
+test("records sharing a timestamp retain distinct files and all memory contents", async (t) => {
+  const dir = await fixture(t);
+  const ts = "2026-10-02T08:10:00.000Z";
+  const records = await Promise.all(
+    ["first", "second", "third"].map((content) =>
+      recordMemory(dir, { content, ts }),
+    ),
+  );
+  assert.equal(new Set(records.map((r) => r.path)).size, 3);
+  const memories = await listMemories(dir);
+  assert.deepEqual(memories.map((m) => m.content).sort(), [
+    "first",
+    "second",
+    "third",
+  ]);
+  assert.ok(memories.every((m) => m.ts === ts));
+});
+
+test("invalid memory timestamp is rejected before creating any world directory", async (t) => {
+  const dir = path.join(await fixture(t), "missing");
+  await assert.rejects(
+    recordMemory(dir, { content: "private", ts: "../../outside" }),
+    { code: "INVALID_MEMORY_TIMESTAMP" },
+  );
+  await assert.rejects(fs.stat(dir), { code: "ENOENT" });
 });
 
 for (const operation of [evolveCharacter, evolve]) {

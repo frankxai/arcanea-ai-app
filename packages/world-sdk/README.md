@@ -35,6 +35,12 @@ remain separate human decisions.
 local `.arcanea/memories` workflow. Those memory files are excluded from the
 existing content hash.
 
+Memory filenames include a unique ID and use exclusive creation, so records
+sharing a timestamp cannot overwrite one another. An explicit timestamp must
+be a parseable ISO date-time; invalid values fail before creating directories.
+Legacy memory files remain readable. General filesystem containment, links and
+concurrent directory mutation remain part of the open hardening work below.
+
 `evolveCharacter` and `evolve` always reject with the error code
 `CANON_PROMOTION_REQUIRES_REVIEW`, before reading or writing a world. The CLI's
 `evolve` command exits with status 1 and the same code. Callers must handle this

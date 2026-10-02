@@ -5,6 +5,7 @@
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { randomUUID } from "node:crypto";
 
 const MEM_DIR = ".arcanea/memories";
 
@@ -13,8 +14,21 @@ async function ensureDir(d) {
 }
 
 export async function recordMemory(dir, mem) {
+  const ts = mem.ts ?? new Date().toISOString();
+  if (
+    typeof ts !== "string" ||
+    !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2})$/.test(
+      ts,
+    ) ||
+    !Number.isFinite(Date.parse(ts))
+  ) {
+    const error = new Error(
+      "Memory timestamp must be a parseable ISO date-time.",
+    );
+    error.code = "INVALID_MEMORY_TIMESTAMP";
+    throw error;
+  }
   await ensureDir(path.join(dir, MEM_DIR));
-  const ts = mem.ts || new Date().toISOString();
   const rec = {
     ts,
     characterId: mem.characterId || null,
@@ -25,10 +39,13 @@ export async function recordMemory(dir, mem) {
         : 0.5,
     meaningImpact: mem.meaningImpact || null,
   };
-  const fname = `${ts.replace(/[:.]/g, "-")}.json`;
+  // Same-millisecond records are distinct. Exclusive creation prevents an
+  // existing destination from being overwritten even on an ID collision.
+  const fname = `${new Date(ts).toISOString().replace(/[:.]/g, "-")}-${randomUUID()}.json`;
   await fs.writeFile(
     path.join(dir, MEM_DIR, fname),
     JSON.stringify(rec, null, 2) + "\n",
+    { flag: "wx" },
   );
   return { path: `${MEM_DIR}/${fname}`, record: rec };
 }
