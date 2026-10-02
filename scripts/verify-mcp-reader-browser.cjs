@@ -241,6 +241,15 @@ function sourceEvidence() {
           assert.equal(overflow, false, `${state.name}: ${scope} overflow`);
         };
         await page.goto(`${base}/mcp`, { waitUntil: "networkidle" });
+        await expect(page.getByRole("main")).toHaveCount(1);
+        await expect(
+          page.getByRole("heading", {
+            level: 1,
+            name: "Arcanea reader",
+            exact: true,
+          }),
+        ).toBeVisible();
+        await expect(page.getByRole("main")).not.toContainText("Generate * 4");
         const copy = page.getByRole("button", {
           name: "Copy reader address",
           exact: true,

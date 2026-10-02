@@ -61,7 +61,7 @@ export function McpCommandCenter() {
   return (
     <section className="relative overflow-hidden bg-[var(--arc-cosmic-void)] px-4 pb-24 pt-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-10 text-center">
+        <header className="mb-10 text-center">
           <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--arc-brand-atlantean-teal)]/30 bg-[var(--arc-brand-atlantean-teal)]/10 px-4 py-2 text-sm text-[var(--arc-brand-atlantean-teal)]">
             <span
               className="inline-block h-2 w-2 rounded-full bg-[var(--arc-brand-atlantean-teal)]"
@@ -69,14 +69,14 @@ export function McpCommandCenter() {
             />
             Remote reader. No package or provider key.
           </p>
-          <h2 className="mb-4 font-display text-3xl font-semibold tracking-[-0.03em] text-white md:text-5xl">
+          <h1 className="mb-4 font-display text-3xl font-semibold tracking-[-0.03em] text-white md:text-5xl">
             Arcanea reader
-          </h2>
+          </h1>
           <p className="mx-auto max-w-2xl text-lg leading-relaxed text-white/55">
             Point Claude, Codex, or Cursor at one HTTPS address. The first call
             can fail a draft that invents an eleventh gate.
           </p>
-        </div>
+        </header>
 
         <div className="mb-10 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6">
           <p className="mb-2 text-sm text-white/45">Reader address</p>

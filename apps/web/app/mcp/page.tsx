@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { PlatformStudioShell, STUDIO_BY_ID } from "@/components/studio";
 import { McpCommandCenter } from "./mcp-command-center";
 
 export const metadata: Metadata = {
@@ -10,15 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function McpPage() {
-  return (
-    <>
-      <PlatformStudioShell
-        studio={STUDIO_BY_ID["agent-os"]}
-        label="Remote Arcanea reader"
-        title="A reader your agent can call before it invents the world"
-        subtitle="Connect your agent to public rubric prompts and limited deterministic draft checks. Review canon in the public app repository. Studio availability has a separate waitlist."
-      />
-      <McpCommandCenter />
-    </>
-  );
+  return <McpCommandCenter />;
 }
