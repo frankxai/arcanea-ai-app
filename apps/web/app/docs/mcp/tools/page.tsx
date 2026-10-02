@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function McpToolsPage() {
   return (
     <div className="relative min-h-screen bg-[var(--arc-cosmic-void)]">
-      <main className="mx-auto max-w-4xl px-5 sm:px-8">
+      <div className="mx-auto max-w-4xl px-5 sm:px-8">
         <nav className="pb-2 pt-8">
           <ol className="flex items-center gap-2 text-sm text-zinc-500">
             <li>
@@ -83,7 +83,7 @@ export default function McpToolsPage() {
             </article>
           ))}
         </section>
-      </main>
+      </div>
     </div>
   );
 }
