@@ -44,8 +44,9 @@ work from #403. Prior #487/#490/#491 proposals remain intact.
 
 Budget and stops: one sequential interactive text/test workload; no dependency
 install, new worktree, local full build or long-lived server. PP bounded, above the
-4 GiB RAM floor; disk bounded at approximately 14% free. Independent provider review
-is one tool-free call with a 300-second deadline and maximum USD 1. Stop on lane,
+4 GiB RAM floor; disk bounded at approximately 14% free. Independent provider reviews
+are sequential tool-free calls, each with a 300-second deadline and maximum USD 1;
+all attempts and reported list costs are retained. Stop on lane,
 branch/upstream change, failed checks or machine hold. No merge/mark-ready/deploy.
 
 Acceptance: exact current API payload; explicit success/failure; source persisted
@@ -108,7 +109,8 @@ with the field; a later validation-400 distinction can add that marker correctly
 CI36945626972 actually ran all fifteen native waitlist cases successfully and
 passed TypeScript at this source. Its Lint job failed on Prettier for submit.ts;
 the initial local formatter was 3.8.3, while frozen CI uses the current lockfile.
-The receipt guard is split into simple equivalent checks for stable formatting.
+The receipt guard was split into simple equivalent checks as a formatting
+hypothesis; that hypothesis was disproved by the next native formatter failure.
 This source change requires fresh review and required CI; the failed run is kept.
 
 The same-source Vercel preview `dpl_FmU9eyQMw6PWP2dhusKZaepBjZ6c` reached READY.
@@ -117,6 +119,22 @@ deployment marker, updated signup copy/form and expected email control. It is no
 hydration, browser or live signup proof. Direct unauthenticated GET redirects to
 Vercel login. Browser QA admission returned HOLD at 7801 MiB free, below the required
 8192 MiB including reserve; no browser was started or foreign process stopped.
+
+Two-file guard review at `78dc99ec606ac490b3192e19fb1248200bb2b3d7` returned
+PASS/no findings. CI36946322787 again failed Lint on submit.ts formatting while
+TypeScript passed. Its exact final outcome is recorded on #276 and in the hub.
+Vercel's current78 preview `dpl_7wLr5MMZycY9zCPrc23beQvjabYt` is CANCELED at
+ignored-build, despite GitHub success. The prior226 HTML is not current78 proof.
+
+A bounded 2,801,547-byte formatter archive was read from the official npm registry
+and its SHA-512 matched the exact accepted lockfile's Prettier3.9.9 integrity.
+Only its standalone JS, TypeScript/estree plugins and licence were retained as
+private review tools; no node_modules, package installation or lockfile change.
+Exact formatting output proves the remaining difference was the union type's
+leading-pipe layout, not the receipt conditional. That whitespace-only difference
+is corrected. The prior review's assertion that the conditional caused the failure
+is also unsupported and retained as a review-reconciliation note. Frozen native CI
+must verify this exact correction. Source behavior and tests remain unchanged.
 
 Official references consulted: [React useId](https://react.dev/reference/react/useId)
 and [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController).

@@ -1,6 +1,5 @@
 export type WaitlistSubmission =
-  | { success: true }
-  | { success: false; error: string };
+  { success: true } | { success: false; error: string };
 
 const SAVE_ERROR = "We couldn't confirm your signup. Please try again.";
 const TIMEOUT_ERROR =
