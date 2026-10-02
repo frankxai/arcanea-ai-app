@@ -1,0 +1,27 @@
+# Public MCP entry and observed tool limits
+
+Source: Codex goal `01a0f74f-8bad-7db1-ab06-fd89b5faec84`; existing issue #276 and quality issue #427. Reuse the one public app integration source and existing reader/server owners. Base `740a6328c4d675e95d7609c20d646173d1c32bc1`.
+
+User job: connect an existing agent to the remote reader, understand what a clear result means, find canonical source, and recover a Studio waitlist request without losing the email.
+
+Scope: one shared public reader catalog; four client-specific instructions; honest tool arguments/limits/source links; recoverable existing MCP waitlist; meaningful schema and built-app verification.
+Owner: Codex, branch `agent/codex/arcanea-mcp-entry-20261002`, sequential bounded work.
+Files: `/mcp` entry/component; three `/docs/mcp` pages; `lib/mcp/reader-catalog.ts` and observed-schema fixtures/tests; existing proposed `lib/waitlist/submit.ts` plus its tests; `scripts/verify-mcp-reader-browser.cjs`; additive `.github/workflows/ci.yml`; this record.
+Non-goals: server or gateway changes, canon movement or edits, private code extraction, licences, package readiness, pricing, archive/rename/history actions, deployment/configuration changes, real signup/mail/payment, merge or release.
+Acceptance: docs use the same six tools and required arguments observed on the remote server; Desktop uses connectors, Code local HTTP, trusted-project Codex TOML, Cursor project JSON; source links pin the public app commit; limited Guardian/gate checks do not claim godbeast coverage; refusals do not imply public canon is private. Signup requires literal successful HTTP receipt, blocks pending edits/duplicates, retains failures, times out with uncertain-save/retry wording, and identifies only the known invalid-email response. Copy failures announce recovery.
+Verification: small schema/helper/backend tests; pinned formatting; native four required checks; built-app Chromium desktop/mobile/reduced-motion/forced-colors, all signup calls intercepted; exact-source independent provider review when machine admission permits. Static tests, browser fixtures and endpoint read checks establish different scopes; no customer, screen-reader, live persistence or production proof.
+Budget: no installs/worktree/build/browser fanout on local bounded storage. Small text/tests allowed. Independent CLI review only after fresh terminal PP admission and free RAM reserve. One cloud CI lifecycle; preserve all attempts.
+Stop condition: bounded draft with concrete evidence and open limitations. No app merge before Frank explicitly says `merge N` under #408.
+Rollback: revert only this candidate's named source changes; do not revert other open proposals or remote server ownership.
+
+## Observations and unresolved server work
+
+On 2026-10-02, read-only `/health` and initialization succeeded, reporting reader 0.5.1 and protocol 2025-06-18. `tools/list` returned six tools. Template `name` is required; lore `query` is optional. Synthetic gate and Guardian contradictions were flagged. `Kaelith is of Fire.` returned clear despite the locked Earth/Foundation canon. This is an observed false-clear result, not proof of general server failure. Worker/source inspection found missing godbeast data on the public path. Keep this as an open server-owner repair and regression case; documentation correction does not repair the worker.
+
+Canon remains `.arcanea/lore/CANON_LOCKED.md`. The full immutable app source link establishes location, not reuse rights. No root licence has been chosen. Public rubric responses are short prompts, not a completed model-based quality evaluation. Studio tools/access remain outside this reader.
+
+Client docs checked 2026-10-02 against [Claude connectors](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp), [Claude Code MCP](https://code.claude.com/docs/en/mcp), [Codex MCP](https://developers.openai.com/codex/mcp) and [Cursor MCP](https://prod.cursor.com/help/customization/mcp). No local or cloud client settings were changed.
+
+Shared submission helper/test source is reused from proposed footer #497 at `b5bf8e5713c898a6473161e96409022e5feb2366`, not a second implementation. Other footer/community/pricing draft source is not stacked into this candidate. Their eventual integration must reconcile shared helper and workflow changes.
+
+Status: 20 small frozen-source tests pass with local Node22/Sucrase; pinned Prettier3.9.9, browser-driver syntax and diff checks pass. Initial schema test incorrectly assumed every schema explicitly had `required`; corrected to JSON Schema empty default. The sparse checkout omitted unchanged backend files, so the local fixture uses their exact Git bytes outside the app. Native tsx/Next CI and built-app artifacts pending. Review-lite PP returned HOLD with 5733MiB free versus 6144MiB required; no review process was launched in that attempt. Complete-source independent review remains pending until fresh admission. Rights, customer usefulness, human/release/domain/rollback execution gates remain open. The broader consolidation goal remains active.
