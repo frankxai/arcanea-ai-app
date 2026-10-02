@@ -17,6 +17,7 @@
     "skills/quest-adapt/",
     "bin/",
     "scripts/catalog.cjs",
+    "scripts/plugin.cjs",
     "catalog.json",
     "index.js",
     "README.md"
@@ -25,7 +26,8 @@
     "install-skills": "node bin/install.js",
     "list": "node bin/install.js --list",
     "validate": "node scripts/catalog.cjs",
-    "test": "node --test tests/catalog.test.mjs"
+    "build-plugin": "node bin/plugin.js",
+    "test": "node --test --test-concurrency=1 tests/catalog.test.mjs tests/plugin.test.mjs"
   },
   "keywords": [
     "claude-code",

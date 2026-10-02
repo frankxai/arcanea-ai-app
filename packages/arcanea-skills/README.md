@@ -88,6 +88,55 @@ history and current-tree source mappings are recorded with
 
 ## Rights and integration
 
+### Native plugin build
+
+The repository-root plugin is a development bundle: it references
+`.claude/skills` and `.claude/commands` and does not enforce this catalog.
+Do not list that root as the public curated plugin. Native Claude Code
+[skill paths add to the default `skills/` scan](https://code.claude.com/docs/en/plugins-reference#how-each-key-combines-with-its-default-location),
+so a manifest placed in this candidate package would also expose candidates.
+
+`bin/plugin.js` builds a separate transport artifact from the same canonical
+catalog and source files. It creates no second editable skill root or repository.
+Run from the app checkout with its dependencies available:
+
+```sh
+node packages/arcanea-skills/bin/plugin.js --commit <full-source-SHA> --output <new-directory> --dry-run
+node packages/arcanea-skills/bin/plugin.js --commit <full-source-SHA> --output <new-directory>
+claude plugin validate <new-directory>/plugin --strict
+```
+
+The source must be the app's exact HTTPS origin, its canonical package path and
+the specified checkout HEAD. Catalog and selected skill/support bytes must match
+Git blobs at that commit, including line endings. Unrelated development files
+are ignored. The builder snapshots validated bytes before writing; later source
+edits cannot change that snapshot. Only ready entries reach the artifact's
+default `skills/` folder. No development commands, agents, hooks, MCP setup,
+candidate folders or implicit blanket license are copied. `release.json`
+identifies input commit, catalog and content hashes, executing generator hashes
+and declared passport evidence. These declarations do not authenticate rights
+or reviewers and do not replace human publication approval.
+
+Currently four candidates and zero ready means exit 2 before creating output.
+This is not an available public plugin. Synthetic ready fixtures establish
+transport behavior only; no real skill has been promoted or installed.
+
+Output parents must exist, be directories without links and stay stable under
+one writer. The builder exclusively creates a new wrapper, assembles inside its
+hidden `.staging` directory, then renames the complete directory to `plugin`.
+An interrupted/failed write leaves inspectable new staging without the final
+plugin path. A retry requires a new output; existing outputs are never replaced
+or automatically deleted. This is not crash-safe durability or defense against
+a malicious process replacing parents. Load only the returned `/plugin` path.
+
+The hub should list a future reviewed materialized subdirectory in this same
+app repo using a [git-subdir source with a full commit SHA](https://code.claude.com/docs/en/plugins/marketplace-reference#git-subdir-plugin-source).
+That consumer SHA must identify the commit containing the artifact; the input
+SHA in `release.json` identifies its source. They can differ. No entry is emitted
+that falsely claims an artifact exists at its input commit. Materializing a
+release directory in the app, proving native installation/discovery and listing
+the pinned artifact await ready skill evidence and the separate release gate.
+
 The existing package's `license: MIT` metadata is unchanged. Each candidate's rights
 passport remains pending, and no root license has been added. Rights decisions for
 earlier sources, official lore and third-party material remain separate work.
