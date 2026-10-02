@@ -1,0 +1,35 @@
+name: Bug report
+description: Report a reproducible problem in the app, skill package or integration.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Search existing issues first. This report is public: remove credentials, personal data and unpublished material.
+        For a suspected vulnerability, follow [SECURITY.md](https://github.com/frankxai/arcanea-ai-app/blob/main/SECURITY.md). Do not post exploit details here.
+  - type: input
+    id: source
+    attributes:
+      label: Version or commit
+      description: Include the app route or package, plus the commit or installed version when known.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Use a small example you can share publicly; include commands or actions and environment details.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+      description: Describe what should happen, what happened and the effect on your work.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Optional logs, screenshots or a minimal example. Remove secrets and private content.
