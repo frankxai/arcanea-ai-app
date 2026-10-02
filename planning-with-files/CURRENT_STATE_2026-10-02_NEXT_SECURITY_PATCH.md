@@ -4,8 +4,7 @@
 
 Scope: upgrade the root development dependency, web runtime dependency and root
 override from Next.js 16.3.5 to 16.3.6; update their existing lockfile references
-and exact registry integrity values. Owner: Codex, issue to be linked in the draft
-receipt. Base: `b86549cd04562471a677301e5c095cd6f093919e` on main. Branch:
+and exact registry integrity values. Owner: Codex, [issue #503](https://github.com/frankxai/arcanea-ai-app/issues/503). Base: `b86549cd04562471a677301e5c095cd6f093919e` on main. Branch:
 `agent/codex/arcanea-next-security-20261002`.
 
 Files: `package.json`, `apps/web/package.json`, `pnpm-lock.yaml` and this record.
@@ -52,20 +51,31 @@ platform SWC packages. Next.js changes only its matching env/SWC dependency pins
 the inspected engines, peer requirements and other dependencies remain equal.
 
 Main's React 19.3.0 graph and all unrelated resolution entries are preserved.
+The initial private formatter used JSON parsing for the package manifest, which
+collapsed `workspaces`; native CI rejected that formatting. Using the package
+manifest's `json-stringify` parser restores the original array formatting.
+The existing `.prettierignore` excludes the native-format pnpm lockfile.
 `eslint-config-next` is already 16.3.6. Existing security overrides remain enabled.
 Actual `.nvmrc` and native CI specify Node 22, and packageManager/CI pin pnpm 8.15.0;
 the older AGENTS Node 20 text is stale against those executable sources.
 
-Local verification will use the existing YAML 2.9.1 parser to compare complete
-parsed graphs, check exact metadata integrities and reject unrelated graph changes.
+Local verification with the existing YAML 2.9.1 parser passes for all 1,850 package
+snapshots, eleven upgrades and twenty registry records. It compares the complete
+parsed graph against the pinned Git base, validates exact metadata integrities and
+rejects unrelated graph changes. The multilingual manifest keeps its existing
+Next peer range `>=16.2.6`; its lock specifier follows the root Next override.
+There are no standalone `satori` or `@vercel/og` package snapshots in this parsed
+lockfile. This patch covers the Next.js-bundled `next/og` implementation only.
+That name check does not establish absence of vendored code or other repositories.
 Native CI's pinned `pnpm install --frozen-lockfile` is the authoritative dependency
-consumer check. This record does not claim a generated lockfile, local install or
+consumer check for its Linux platform. It verifies fetched applicable artifacts;
+optional binaries for other platforms are not thereby installed or exercised. This record does not claim a generated lockfile, local install or
 local build. Formatting, graph checks and reviews retain failed attempts.
 
 ## Delivery and remaining work
 
 One lead performs the patch; independent review is one serial tools-disabled
-provider call after fresh review admission, capped at $2 reported provider budget
+provider call per revision after fresh review admission, capped at $2 per call
 and 180 seconds. No new agents, installations, worktrees, servers or media jobs.
 Final CI and review results must be read from their exact-head receipts.
 
@@ -73,12 +83,8 @@ The upstream workaround is to prevent untrusted SVG values entering Node
 ImageResponse if upgrade is unavailable. The patch selects the released fix;
 selected routes do not justify a speculative runtime rewrite.
 
-The broader Arcanea goal remains active: one public app with canon in place,
-curated skills/plugin consumers pinned by repo/folder/commit, shared MCP and creator
-workflows, unique legacy recovery, rights, demand and revenue. Drafts #487, #499,
-#500, #501 and #502 and shared AuthorOS/World Repo/SIS/runtime/media ownership are
-preserved. Heart/licence, human creative acceptance and engine selection remain
-pending. Launcher upstream/ownership and reproduced boundary failures remain open.
-Named merges #408, publishing #277 and source-bound release #427 retain their gates.
-This draft authorizes no merge, deployment, skill promotion, archive, rename,
-licence change or commerce action.
+The broader Arcanea work remains open under #276 and the existing hub handover.
+This patch leaves the source-consolidation and creator drafts, canon, skill
+readiness, launcher ownership and licence/Heart choices unchanged. Named merges
+#408, publishing #277 and source-bound release #427 retain their gates. No merge,
+deployment, skill promotion, archive, rename, licence or commerce decision is made.

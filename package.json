@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "AI-powered creative ecosystem empowering the next generation of creators",
   "private": true,
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "turbo run dev",
     "dev:academy": "turbo run dev --filter=@arcanea/academy",
