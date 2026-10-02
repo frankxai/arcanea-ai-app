@@ -1,0 +1,88 @@
+{
+  "goal": "01a0f74f-8bad-7db1-ab06-fd89b5faec84",
+  "base": "fcad9bf92db5932e7093fcabe0fa3b934beea6d3",
+  "candidate": "scene-craft",
+  "status": "internal candidate; five total, zero ready, private:true",
+  "sourceHistory": [
+    {
+      "repo": "frankxai/arcanea-agent-skills",
+      "commit": "8bd8f50ae140132319ce69a145b45d5f6780e186",
+      "path": "skills/emotional-story-architect/SKILL.md",
+      "sha256": "3e0fdec40ae3c07a135b989bbce9f286d90208f4ad420c79251d081b06aeeb53",
+      "relation": "adapted methods, no whole-file copy/shared reference dependency",
+      "rights": "pending"
+    },
+    {
+      "repo": "frankxai/arcanea-ai-app",
+      "commit": "fcad9bf92db5932e7093fcabe0fa3b934beea6d3",
+      "path": ".claude/skills/creative/scene-craft/SKILL.md",
+      "sha256": "a092060828696d06882207169f6968a2dc8788bdf46dd96ade32c3ab3c9f9b95",
+      "relation": "distilled guide, original retained",
+      "rights": "pending"
+    }
+  ],
+  "requestSha256": "81d051a40f20d1271fe03286e4914acf4fd76036d30db11258f398b453233410",
+  "primary": {
+    "maker": "Codex lead",
+    "method": "hand-authored before alternative response; two self-review repairs retained",
+    "sha256": "da0d4c4aa1efe7bdfeb6d016deb5edd95436c8b1409785b7b58d8297c8f4c244",
+    "effort": "unmetered; no independent producing-call receipt"
+  },
+  "baseline": {
+    "sourceApp": "fcad9bf92db5932e7093fcabe0fa3b934beea6d3",
+    "promptSha256": "04e210cad1cc5a20313c2f9514ce61b68d4ccc42cc42438cdfe23a85ed11e402",
+    "systemSha256": "16c04172001fb420ca90695054b6167d105899c3026f4209d35e2eddf127c5df",
+    "runnerSha256": "8483f2d9dd4c47058042b3fadefa80b88e70cfd3ecb37d9768513a4c19b9a6dd",
+    "sourcesSha256": "e275ae4bdb565e10c5a6f915139594c4bd51562f9b08c6de22907ca2cf6533ed",
+    "requestedModel": "claude-sonnet-5-5",
+    "effort": "high",
+    "state": "terminal",
+    "exitCode": 0,
+    "seconds": 87.412886,
+    "reportedCostUsd": 0.1100294,
+    "toolCalls": 0,
+    "outputSha256": "a6785dca5be9325e2005e544a1238229deecc6865eccd1748f3ff15f604f5b58"
+  },
+  "wordCounts": {
+    "primaryProseWords": 619,
+    "baselineProseWords": 615
+  },
+  "leadReading": {
+    "primary": "Source-preserving practical rescue, father safely waiting, distinct interests, refund paid and slipping oar physical consequence. Future return/delivery not guaranteed. Ending quiet, father tension softened by his agreement.",
+    "baseline": "Usable rescue scene, distinct dialogue, cargo discard and debt, coherent capacity proposal. Model output has a proposed grower injury/cost implication and broad no-powers line requiring author interpretation; kept unedited.",
+    "disposition": "Both useful drafts; no benefit/model/skill winner or causal score. Source consistency and editorial preference are separate."
+  },
+  "comparisonLimits": [
+    "N=1 existing app-guide alternative vs unmetered lead using revised candidate, producing model/context/effort differ.",
+    "Both received exact same request; baseline had existing original app guide/kernel, not revised candidate/donor.",
+    "Lead wrote primary before observing baseline; self-repair before comparison retained. No matched producing-model ablation.",
+    "Authoring walkthrough is not forward reliability, human creative acceptance, rights clearance or paid value.",
+    "Reported cost is list equivalent, not invoice/total lead or goal spend."
+  ],
+  "localTests": {
+    "catalog": 11,
+    "pass": 11,
+    "fail": 0,
+    "dryRunExit": 2,
+    "homeInstall": "none; synthetic test homes only",
+    "scope": "catalog/source/installation boundaries, not prose quality"
+  },
+  "launcherObservation": {
+    "source": "c035e594aa714bcdca2c2923f4f30d8405a734cc",
+    "rootSupport": "present; no origin, Claude-owned branch/untracked preserved",
+    "linkedRootProbe": "accepted outside-fixture root junction",
+    "differentPinAllProbe": "silently merged same repo/root at first sha",
+    "scope": "synthetic local function probes only, no Git/npx/global install; first ESM-prep failure retained",
+    "effect": "old027 patch stale; root setting alone insufficient, coordinated origin/owner and failure fixes required"
+  },
+  "remaining": [
+    "Other donor skill folds/working-set links/unique legacy salvage",
+    "Rights/source attribution and root code/lore licence",
+    "Independent forward evaluation and human scene review",
+    "Native installed-harness/marketplace/launcher delivery",
+    "Existing shared graph/author/MCP/runtime/media owners and human release gates"
+  ],
+  "sourceReview": "pending exact frozen delta",
+  "nativeCI": "pending exact head",
+  "fullGoal": "active"
+}

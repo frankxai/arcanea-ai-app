@@ -1,0 +1,17 @@
+# Arcanea scene donor fold
+
+Source task:01a0f74f-8bad-7db1-ab06-fd89b5faec84, existing #276/#282 and draft487.
+Owner:Codex, agent/codex/arcanea-source-consolidation-20261001.
+Base:fcad9bf92db5932e7093fcabe0fa3b934beea6d3. Donor:8bd8f50ae140132319ce69a145b45d5f6780e186.
+Scope: fold a useful scene-writing method into the existing curated app root, with a complete editable scene, original-guide alternative and source/attempt receipts. Existing four workflows remain unchanged; new scene-craft is internal candidate, five total/zero ready/private:true.
+Files:catalog/README/existing catalog tests, scene-craft SKILL/example, scene-donor-fold-2026-10-02 request/primary/baseline/report JSON/MD and this record (eleven files).
+Non-goals: canon pack, source/lore edits, operator/Gateway/extra repo, launcher edits, working-set links/removals, licence/Heart, rights clearance, skill promotion, installed harness, game, merge/deploy/publication/commerce.
+Acceptance: complete usable prose rather than beats alone, choice/cost/physical turn, F1/F2/F3 preserved, proposed additions/status/source hashes, same-request serious alternative retained, zero-ready catalog behavior preserved, independent exact-source delta review/native source CI and both saves. Authorship/effort/context differences prohibit winner inference.
+Verification:Node22.23.2/existing pinned YAML2.9.1 fixture, catalog11 and dry-run2, four frontmatter controls plus new candidate, pinned formatter3.9.9, unchanged original sources, independent tools-disabled serial provider review and frozen Install/all four native contexts at exacthead. No local heavybuild/install/media/worktree/fanout. Reviewer input/output/cost/failures retained.
+Rollback: scoped revert of these eleven files, preserving original guides and attempt history.
+
+Prior turn is progress: complete quest502/50325f18 source review/CI and bothsaves. Current scene authoring uses Tideglass, no official canon assertions. Lead corrected tide ordering and showed the refund paid before reading the baseline. Alternative terminal87.41s/tools0/reported$0.1100294list, no invoice/winner/human quality claim. Baseline raw output retained. Initial Windows ESM probe failed before invocation; corrected fileURL probe retained.
+
+Launcher currentc035e594 already implements roots/pinnedCLI, still no remote on Claude branch with unrelated untracked backtick file. Selected-root junction accepted; all mode same repo/root/differentSHA silently first-pin merged in private probes. Old027 patch stale; no writes there. Discovery registry lookup/capability-policy named files missing in current checkout; explicit app routing passed. Preserve shared ownership and no inferred authority.
+
+Exact-source review/native CI receipts remain pending until recorded externally at final source. Catalog packaging proves its own scope; source instructions loaded in this session are not global enforcement. Human scene engagement, forward eval, rights and broader creator/community/revenue remain open. Current existing487 branch is reused; retained499/500/501/502 intact. #408/#277/#427 still control merge/publication/release.

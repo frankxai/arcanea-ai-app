@@ -60,7 +60,7 @@ test("installer leaves home untouched when no skill is cleared, including undecl
 test("ready claims need rights, content and independent evidence; candidates stay visible", () => {
   const { loadCatalog, selectReady } = require("../scripts/catalog.cjs");
   const catalog = loadCatalog(packageRoot);
-  assert.equal(catalog.skills.length, 4);
+  assert.equal(catalog.skills.length, 5);
   assert.equal(selectReady(catalog).length, 0);
   for (const field of ["rights", "evaluation", "review"]) {
     const forged = structuredClone(catalog);
@@ -71,15 +71,16 @@ test("ready claims need rights, content and independent evidence; candidates sta
   const api = require("../index.js");
   assert.deepEqual(api.skills, []);
   assert.equal(api.bundledCount, 0);
-  assert.equal(api.candidates.length, 4);
+  assert.equal(api.candidates.length, 5);
   assert.throws(() => api.getSkillPath("world-build"), /not.*ready/i);
+  assert.throws(() => api.getSkillPath("scene-craft"), /not.*ready/i);
 });
 
 test("candidate files validate with portable examples and exact names", () => {
   const { loadCatalog, validateSources } = require("../scripts/catalog.cjs");
   const catalog = loadCatalog(packageRoot);
   const rows = validateSources(packageRoot, catalog);
-  assert.equal(rows.length, 4);
+  assert.equal(rows.length, 5);
   for (const row of rows) {
     assert.match(row.sha256, /^[a-f0-9]{64}$/);
     assert.ok(row.files.includes("SKILL.md"));
@@ -119,7 +120,7 @@ test("candidate visibility follows parsed metadata rather than unrelated text", 
     "metadata:\n    internal: true",
   ]) {
     writeFileSync(file, `---\n${header}${metadata}\n---${body}`);
-    assert.equal(validateSources(pkg, catalog).length, 4, metadata);
+    assert.equal(validateSources(pkg, catalog).length, 5, metadata);
   }
 });
 

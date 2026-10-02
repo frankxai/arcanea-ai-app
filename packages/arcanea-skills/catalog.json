@@ -22,9 +22,19 @@
       "aliases": ["arcanea-world-build"],
       "permissions": ["read supplied source", "draft editable artifacts"],
       "resources": ["references/example.md"],
-      "rights": { "status": "pending", "license": null, "evidence": null },
-      "evaluation": { "status": "pending", "evidence": null },
-      "review": { "status": "pending", "evidence": null },
+      "rights": {
+        "status": "pending",
+        "license": null,
+        "evidence": null
+      },
+      "evaluation": {
+        "status": "pending",
+        "evidence": null
+      },
+      "review": {
+        "status": "pending",
+        "evidence": null
+      },
       "releaseBlockers": [
         "Rights ruling and attribution review",
         "Independent forward evaluation",
@@ -42,9 +52,19 @@
       "sourceHistory": [],
       "permissions": ["read supplied source", "propose local repair"],
       "resources": ["references/example.md"],
-      "rights": { "status": "pending", "license": null, "evidence": null },
-      "evaluation": { "status": "pending", "evidence": null },
-      "review": { "status": "pending", "evidence": null },
+      "rights": {
+        "status": "pending",
+        "license": null,
+        "evidence": null
+      },
+      "evaluation": {
+        "status": "pending",
+        "evidence": null
+      },
+      "review": {
+        "status": "pending",
+        "evidence": null
+      },
       "releaseBlockers": [
         "Rights ruling",
         "Forward evaluation of conflicts and false positives",
@@ -62,9 +82,19 @@
       "sourceHistory": [],
       "permissions": ["read supplied scene", "draft text brief"],
       "resources": ["references/example.md"],
-      "rights": { "status": "pending", "license": null, "evidence": null },
-      "evaluation": { "status": "pending", "evidence": null },
-      "review": { "status": "pending", "evidence": null },
+      "rights": {
+        "status": "pending",
+        "license": null,
+        "evidence": null
+      },
+      "evaluation": {
+        "status": "pending",
+        "evidence": null
+      },
+      "review": {
+        "status": "pending",
+        "evidence": null
+      },
       "releaseBlockers": [
         "Rights ruling",
         "Forward evaluation of source fidelity and provenance boundary",
@@ -82,13 +112,73 @@
       "sourceHistory": [],
       "permissions": ["read supplied world", "draft quest and replay cases"],
       "resources": ["references/example.md"],
-      "rights": { "status": "pending", "license": null, "evidence": null },
-      "evaluation": { "status": "pending", "evidence": null },
-      "review": { "status": "pending", "evidence": null },
+      "rights": {
+        "status": "pending",
+        "license": null,
+        "evidence": null
+      },
+      "evaluation": {
+        "status": "pending",
+        "evidence": null
+      },
+      "review": {
+        "status": "pending",
+        "evidence": null
+      },
       "releaseBlockers": [
         "Rights ruling",
         "Forward evaluation and target-engine proof",
         "Independent provider review"
+      ]
+    },
+    {
+      "name": "scene-craft",
+      "path": "skills/scene-craft",
+      "category": "writing",
+      "status": "candidate",
+      "owner": "Arcanea maintainers",
+      "mode": "creator-owned",
+      "authoringSession": "01a0f74f-8bad-7db1-ab06-fd89b5faec84",
+      "sourceHistory": [
+        {
+          "repo": "frankxai/arcanea-agent-skills",
+          "commit": "8bd8f50ae140132319ce69a145b45d5f6780e186",
+          "path": "skills/emotional-story-architect/SKILL.md",
+          "relation": "Adapted compact scene-turn, desire, pressure and sensory-action methods; root references and mandatory output template omitted; no whole-file copy or rights grant",
+          "sha256": "3e0fdec40ae3c07a135b989bbce9f286d90208f4ad420c79251d081b06aeeb53"
+        },
+        {
+          "repo": "frankxai/arcanea-ai-app",
+          "commit": "fcad9bf92db5932e7093fcabe0fa3b934beea6d3",
+          "path": ".claude/skills/creative/scene-craft/SKILL.md",
+          "relation": "Distilled existing goal/obstacle/pivot, geography, pacing and revision guidance; legacy guide preserved, not linked or removed",
+          "sha256": "a092060828696d06882207169f6968a2dc8788bdf46dd96ade32c3ab3c9f9b95"
+        }
+      ],
+      "aliases": ["emotional-story-architect"],
+      "permissions": [
+        "read supplied source",
+        "draft editable scene",
+        "propose revision"
+      ],
+      "resources": ["references/example.md"],
+      "rights": {
+        "status": "pending",
+        "license": null,
+        "evidence": null
+      },
+      "evaluation": {
+        "status": "pending",
+        "evidence": null
+      },
+      "review": {
+        "status": "pending",
+        "evidence": null
+      },
+      "releaseBlockers": [
+        "Rights/source attribution ruling including donor source",
+        "Independent forward evaluation beyond authored walkthrough",
+        "Independent provider review and human creative acceptance"
       ]
     }
   ]

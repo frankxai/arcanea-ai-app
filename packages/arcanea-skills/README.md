@@ -1,7 +1,7 @@
 # Arcanea creator workflows
 
 This package proposes `packages/arcanea-skills/skills` as the curated source inside
-`frankxai/arcanea-ai-app`. It currently has four candidates and zero ready skills.
+`frankxai/arcanea-ai-app`. It currently has five candidates and zero ready skills.
 The package is private while release decisions remain open.
 
 | Candidate          | Creator's job                                                                         | Example                                                           |
@@ -10,9 +10,12 @@ The package is private while release decisions remain open.
 | `continuity-check` | Find source-backed contradictions and propose small repairs                           | [Bridge conflict](skills/continuity-check/references/example.md)  |
 | `scene-to-media`   | Turn a scene into a traceable shot and prompt brief                                   | [Ferry rescue brief](skills/scene-to-media/references/example.md) |
 | `quest-adapt`      | Adapt a world into one quest with conditions, consequences and replay cases           | [Last crossing](skills/quest-adapt/references/example.md)         |
+| `scene-craft`      | Write a complete dramatic scene with a source-backed choice, cost and turn            | [The second seat](skills/scene-craft/references/example.md)       |
 
-The examples use an invented creator-owned world. They are authored walkthroughs;
-behavioral evaluation and independent review are pending. The source checkout's
+The examples use an invented creator-owned world. They are authored walkthroughs,
+not human acceptance or readiness. The scene-craft donor fold and one matched-request
+comparison are recorded in [its evaluation report](evals/scene-donor-fold-2026-10-02/report.md);
+the passport remains pending. Wider behavioral evaluation remains open. The source checkout's
 `evals/creator-smoke-2026-10-01.md` records a fresh four-request packet and a review
 timeout with zero returned outputs; it provides no sign-off. Official Arcanea canon
 remains in `.arcanea/lore/CANON_LOCKED.md` at the repository root.
@@ -80,7 +83,7 @@ The CommonJS API keeps `skills`, `skillCount`, `bundledCount`, `categories`,
 the review backlog. Callers that relied on the previous top-20 list must migrate.
 `name`, `version` and `skillsDir` also expose package identity and source location.
 
-The source package contains four catalog candidates. Other repository discovery
+The source package contains five catalog candidates. Other repository discovery
 roots and plugin manifests remain separate work; installing from the repository
 root does not provide this package's catalog-controlled selection. Consolidation
 history and current-tree source mappings are recorded with
@@ -92,8 +95,10 @@ The existing package's `license: MIT` metadata is unchanged. Each candidate's ri
 passport remains pending, and no root license has been added. Rights decisions for
 earlier sources, official lore and third-party material remain separate work.
 
-The bundle launcher still needs a verified repository origin and coordinated root
-selection for both discovery and installation. Future bundle sources should pin
+The launcher observed at c035e594 already has root selection and a pinned skills CLI,
+but its checkout has no verified origin and still lists earlier Arcanea donors.
+The older private root patch is stale and has not been applied. Link/ambiguous-pin
+refusals, actual installation and coordinated app selection remain unverified. Future bundle sources should pin
 the app repository, this folder and a commit. Working-set links and legacy-repo
 salvage have not been applied.
 
