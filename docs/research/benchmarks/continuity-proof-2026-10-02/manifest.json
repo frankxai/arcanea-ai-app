@@ -62,11 +62,11 @@
   "artifactSha256": {
     "edited-manuscript.md": "72104abf25c788a56f0299d4d692acfee4665516182ec28c884e4e86705ac0fb",
     "revision.patch": "32faaf683d0cd0164171843a4d1fcfb555adda5c8445fdbf9501a96dfe9e70a4",
-    "edits.json": "26e1e51ed33a1892089ec6d3d31c7100fdf7aa53c292f1a75d3a92f36a8dc4da",
+    "edits.json": "7d8c818499d6549bb9d075f12c6928800856f0dcb8ac07e97e0aea74ebcb009d",
     "baseline-manuscript.md": "c3de48bef01a755ad08c6ab4e815288e885fca714884389aadd1aa2c971a8bde",
     "baseline.patch": "9c5c65817ed2eb3efb7cc4d798ad98f3497a3fdd83d4467a522a1b7fee6dc13a",
-    "baseline.json": "1fb968ad49ea6d41c6ff6925f5cfc7d78c9011c66209870946c309739f9d6ffd",
-    "comparison.json": "b5f23a0074c75f540859c00e6ba046b17649627cff98d6fb778e663e57200a90"
+    "baseline.json": "9ec541472957300c68098f0d7f54ae22fa7cc4dee6da852623ef6cfecd79fff8",
+    "comparison.json": "88a43aa3a2c33570e4a722c10acbd3b15f2cc020ab9caec7afbe8da926054e67"
   },
   "authorQuestions": "Maret mother/newborn memory with explicit three-way choices; day counting, ship identity, sleep duration and Void/Spirit naming remain unresolved."
 }

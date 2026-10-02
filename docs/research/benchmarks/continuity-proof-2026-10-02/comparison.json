@@ -1,13 +1,13 @@
 {
   "scope": "One source-derived two-chapter task, not the full20-task or1/3/5-cell benchmark. Both outputs are author-unaccepted proposals.",
-  "conditions": "Same complete source chapters and locked canon. Baseline has no continuity-check/Canon Guardian procedures; both use a strong lead, no tools/delegation in baseline. Codex A2 is refined after seeing baseline, so this is not a blinded randomized trial or isolated causal measurement.",
+  "conditions": "Same supplied complete chapters and locked canon; exact baseline task prompt/source hashes are in baseline.json. Baseline maximum6 edits/1600 words; lead had no preset edit/word cap beyond smallest local repair. A2/A3 were refined after observing B. A alone received iterative independent review; B is frozen observed output. This is not a blinded randomized trial, controlled causal evaluation or quality/size/speed winner comparison.",
   "candidateA": {
     "edits": 3,
     "iterations": [
       {
         "version": "A1",
         "edits": 3,
-        "status": "Initial lead proposal created without seeing baseline response; private source retained."
+        "status": "Initial three-edit list is now committed in edits.json history. Order is lead-reported and not independently proven."
       },
       {
         "version": "A2",
@@ -25,7 +25,8 @@
     "authorRepairMinutes": null,
     "endToEndLeadSeconds": null,
     "leadModelCostUsd": null,
-    "measurementLimit": "Codex thinking/lead time and cost were not instrumented; no speed/cost superiority claim."
+    "measurementLimit": "Codex thinking/lead time and cost were not instrumented; no speed/cost superiority claim.",
+    "budget": "No preset edit/word cap; smallest-local-repair scope. Iterative lead reading and review time/cost not fully instrumented."
   },
   "candidateB": {
     "edits": 5,
@@ -33,7 +34,9 @@
     "providerSeconds": 79.765597,
     "providerListCostUsd": 0.2283,
     "humanAccepted": false,
-    "authorRepairMinutes": null
+    "authorRepairMinutes": null,
+    "editBudget": 6,
+    "responseWordBudget": 1600
   },
   "diagnosticControl": {
     "implementation": "author-os/bin/quality-check.js --imprint arcanea",
@@ -203,14 +206,33 @@
       "disposition": "author question",
       "evidence": "Void names the fifth manifestation; locked source groups Void/Spirit and distinguishes aspects. Do not invent a new mechanic to repair terminology."
     },
-    "Maret: mother memory and nineteen-year doubt are an author question. Settling in town does not prove her birthplace or Maret never met her elsewhere; baseline changes whom the memory concerns.",
-    "A week without sleep need not begin with the storm. Baseline narrows it; source does not explicitly rule out earlier insomnia.",
-    "Academies and Houses are different institutional terms; no supplied mapping proves exclusivity or a locked conflict.",
-    "First Siege and sealing dates may name distinct events; no automatic numerical repair.",
-    "Frequency conflict in locked source remains owner-only; neither chapter needs a frequency change.",
-    "Character explanations of Malachar and Kael remain testimony/hypothesis, not accepted canon updates."
+    {
+      "id": "INSTITUTIONS",
+      "disposition": "author question",
+      "evidence": "Academies and Houses have no supplied exclusive mapping."
+    },
+    {
+      "id": "HISTORY",
+      "disposition": "author question",
+      "evidence": "First Siege and sealing dates may name distinct events; do not infer a contradiction."
+    },
+    {
+      "id": "FREQUENCY",
+      "disposition": "owner-only source conflict",
+      "evidence": "Locked-source Heart table/log conflict is unchanged and not needed by either chapter."
+    },
+    {
+      "id": "TESTIMONY",
+      "disposition": "preserve character belief",
+      "evidence": "Bren and Sela give interpretations, not new accepted canon."
+    },
+    {
+      "id": "PROLEPSIS",
+      "disposition": "author question",
+      "evidence": "Kael will think of the losses while polishing brass/eating porridge in the weeks after, yet departs next morning after the emissaries. Probably prolepsis or recurring habits, not an automatic retcon."
+    }
   ],
-  "independentDisposition": "Recorded on issue282 after exact-source review; lead observations are not human acceptance.",
+  "independentDisposition": "At this assembly checkpoint, completed reviews are REVISE at c642d556 and2b42c2e7. Consult issue282 for subsequent exact-head receipts; this file does not claim its final bytes have sign-off.",
   "commercialEvidence": "No customer acceptance, paid demand, revenue or marketing quality claim.",
   "dayCountCorrection": "Initial lead and baseline both overcalled a counting-convention ambiguity. Independent review rejected that certainty. A3 retains the original Maret day; B stays unchanged as observed.",
   "localFailures": {
@@ -234,7 +256,7 @@
         "repair": "Two context lines, bare empty context lines accepted by Git, no trailing blank line; both standard Git patch checks rerun. No check disabled."
       }
     ],
-    "scope": "Two local integration failures; no source manuscript, canon, Git index or provider output was changed."
+    "scope": "Three initial local integration failures; no source manuscript, canon, tracked index entries or shared AuthorOS implementation changed. An additional evidence-only UTF-8 index corruption is recorded as the second review finding and restored from the base."
   },
   "committedPostFormatOutputs": [
     {
@@ -255,6 +277,7 @@
   "initialIndependentReview": {
     "head": "c642d556f7ce9960fbf5bfa7c7b66d8ff8e04d0f",
     "verdict": "REVISE",
-    "disposition": "Day-count edit withdrawn; Maret author fork, final output hashes, final patch recovery, A1/A2 history and all failures clarified. Final exact-source review recorded on issue282."
-  }
+    "disposition": "Initial REVISE findings reconciled; second review at2b42c2e7 confirmed narrative repair but requested evidence/index corrections. Subsequent final-head review is pending at this assembly checkpoint; consult issue282."
+  },
+  "refinementAsymmetry": "A received review-driven correction; B did not. A adopted the casualty wording idea from baseline F5. Edit counts are descriptive observations, not usable repair size or quality."
 }

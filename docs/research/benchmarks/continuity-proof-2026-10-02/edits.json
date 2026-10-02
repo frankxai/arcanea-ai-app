@@ -35,7 +35,7 @@
     {
       "version": "A1",
       "edits": 3,
-      "status": "Initial lead proposal created without seeing baseline response; private source retained."
+      "status": "Initial three-edit list is now in committed history; generation order is lead-reported, not independently established."
     },
     {
       "version": "A2",
@@ -131,5 +131,6 @@
       "disposition": "author question",
       "evidence": "Void names the fifth manifestation; locked source groups Void/Spirit and distinguishes aspects. Do not invent a new mechanic to repair terminology."
     }
-  ]
+  ],
+  "comparisonLimits": "Lead A received iterative review while frozen B did not. Lead has no preset edit/word cap; baseline max6 edits/1600 words. Final3 vs observed5 counts are descriptive only."
 }

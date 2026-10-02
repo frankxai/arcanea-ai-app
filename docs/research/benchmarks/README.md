@@ -1,9 +1,9 @@
 # Benchmarks
 
-> _"Fire does not guess at its own temperature. Measure, or be consumed."_
-> â€” Draconia, Guardian of Fire
+> *"Fire does not guess at its own temperature. Measure, or be consumed."*
+> — Draconia, Guardian of Fire
 
-Our own benchmark reports â€” performance tests, quality evaluations, and comparative analyses run against the Arcanea stack. Every claim about speed, cost, or quality must have a benchmark behind it.
+Our own benchmark reports — performance tests, quality evaluations, and comparative analyses run against the Arcanea stack. Every claim about speed, cost, or quality must have a benchmark behind it.
 
 ## How to Add
 
@@ -17,7 +17,6 @@ Our own benchmark reports â€” performance tests, quality evaluations, and c
 <!-- Add entries below in reverse chronological order -->
 
 - [2026-10-02 continuity proof](2026-10-02_continuity-proof.md): two actual chapters, three proposed repairs, unchanged general-editor baseline and native AuthorOS Markdown export. Human disposition pending.
-
 <!-- Example:
-- `2026-04-04_chat-latency-gemini-vs-claude.md` â€” Gemini 2.5 vs Claude Opus chat response latency (Relevance: 9/10, Gates: Fire, Voice)
+- `2026-04-04_chat-latency-gemini-vs-claude.md` — Gemini 2.5 vs Claude Opus chat response latency (Relevance: 9/10, Gates: Fire, Voice)
 -->

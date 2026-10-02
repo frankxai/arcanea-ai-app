@@ -2,7 +2,7 @@
 
 Scope: source-derived two-chapter editorial proposal and same-input general-editor comparison under #282/#276. Owner: Codex. Base `fcad9bf92db5932e7093fcabe0fa3b934beea6d3`; branch `agent/codex/arcanea-creator-continuity-proof-20261002`. Eleven named evaluation/report files are scoped in the private lane plan; source manuscript/canon and existing candidate skills remain unchanged.
 
-Job: let an author inspect/edit a complete continuity repair and recover the source without accepting invented biography. Artifact: two complete Markdown outputs, four/five exact replacements, source/export provenance and limits. Alternative: strong general Claude editor with the same chapters/canon; existing AuthorOS diagnostics as a semantic false-positive control. Shared AuthorOS remains the owner of exporter and authoring infrastructure.
+Job: let an author inspect/edit a complete continuity repair and recover the source without accepting invented biography. Artifact: two complete Markdown outputs, three/five exact replacements, source/export provenance and limits. Alternative: strong general Claude editor with the same chapters/canon; existing AuthorOS diagnostics as a semantic false-positive control. Shared AuthorOS remains the owner of exporter and authoring infrastructure.
 
 Acceptance: actual complete prose inspected; exact Git patch check, inverse recovery and stale-input refusal; native AuthorOS Markdown export and post-format prose equality; exact-source independent review and native required checks. Human disposition, founder repair time, lead time/cost, full benchmark and creator/customer value remain pending. Policy loaded locally is not universal runtime enforcement.
 
@@ -17,3 +17,7 @@ Rollback: reviewed revert of these eleven files only. Author can reject every pr
 ## Independent REVISE and correction
 
 The review at c642d556 returned REVISE, not sign-off. Withdraw the Maret date change: a counting convention and three-day reflection make the original defensible. A3 contains three supported local replacements. Keep the mother's-memory tension as an explicit three-way author fork; preserve baseline and A1/A2 history. Separate pre-format private export hashes from committed post-format bytes, disclose heading/emphasis normalization and all three integration failures, and recheck final patch/recovery bytes. Human acceptance and source/canon/release decisions remain pending.
+
+## Second review: narrative confirmed, evidence correction
+
+Review at2b42c2e7 returned REVISE for index encoding, premature final-review wording, undisclosed baseline budget and stale receipts. Restore base UTF-8 index plus only one entry; expose exact baseline task/header and source-hash equality; disclose max6 edits/1600 words versus no preset lead cap and asymmetric review; retain human acceptance pending. Original manuscripts and both current reading outputs are unchanged. Final-head review is pending at this assembly checkpoint and will be recorded on282 with its source hash.
