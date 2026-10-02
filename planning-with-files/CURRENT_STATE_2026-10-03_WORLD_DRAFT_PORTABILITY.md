@@ -72,3 +72,5 @@ Broader setup remains open: curated installs/rights, reader integration, launche
 upstream ownership, legacy recovery, manuscript selection, community demand and
 revenue. Keep #487/#499/#500/#501/#502 and shared AuthorOS/World Repo/SIS/runtime/
 media owners. Heart/licence/engine and #408/#277/#427 remain human gates.
+
+Source review follow-up: an identical imported draft could clear a pending new concept without confirmation. Show that pending text so it can be copied and require confirmation before clearing it. A native browser regression cancels the identical import and checks that the concept remains. Preserve first source f108c1b3 and all its CI attempts; final-source checks must use the resulting revision.

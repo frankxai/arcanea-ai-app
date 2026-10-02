@@ -847,10 +847,13 @@ export default function CreateWorldPage() {
       const replacesDraft =
         current && serializeDraft(current) !== serializeDraft(incoming.draft);
       if (
-        (replacesDraft || heroImage || (!result && description.trim())) &&
+        (replacesDraft ||
+          pendingConcept ||
+          heroImage ||
+          (!result && description.trim())) &&
         !window.confirm(
           current
-            ? "Open this draft? It will replace the work on screen. Your previous text draft stays available to restore in this tab. Keep any concept art you need first."
+            ? "Open this draft? It will replace the work on screen. Your previous text draft stays available to restore in this tab. Copy any pending concept and keep any concept art you need first."
             : "Open this draft? It will replace your current concept. Copy the concept first if you need to keep it.",
         )
       )
@@ -1082,6 +1085,9 @@ export default function CreateWorldPage() {
                 <p className="mt-2 text-sm text-white/70">
                   You also brought a new concept. Keep this draft or start the
                   new idea with a recoverable copy of the previous text.
+                </p>
+                <p className="mt-3 text-sm text-white/80 whitespace-pre-wrap">
+                  {pendingConcept}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-3">
                   <button

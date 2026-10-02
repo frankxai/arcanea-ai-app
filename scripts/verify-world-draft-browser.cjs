@@ -177,6 +177,19 @@ const draft = {
         JSON.parse(await fs.readFile(await download.path(), "utf8")),
         draft,
       );
+      page.once("dialog", (dialog) => dialog.dismiss());
+      await page
+        .getByLabel("Import draft", { exact: true })
+        .setInputFiles({
+          name: "same-world.json",
+          mimeType: "application/json",
+          buffer: Buffer.from(JSON.stringify(draft)),
+        });
+      await expect(
+        page.getByLabel("Import draft", { exact: true }),
+      ).toBeEnabled();
+      await expect(choice).toContainText("A new city beneath the sea");
+      assert.equal(await readStorage(conceptKey), "A new city beneath the sea");
       await button("Keep this draft").click();
       await expect(choice).toHaveCount(0);
       assert.equal(await readStorage(conceptKey), null);
@@ -397,6 +410,7 @@ const draft = {
       "outstanding file read blocks reset/refine/another import",
       "same-identity text changes retain an accessible previous version",
       "explicit pending-concept choice",
+      "identical imports still confirm before clearing a pending concept",
       "cancel and confirm start over",
       "previous draft survives reload",
       "new concept retains previous draft",
