@@ -34,7 +34,7 @@
     "visibility": "Draft evaluation material in existing app; no live posting or publication"
   },
   "generatedWith": {
-    "A": "Codex lead; existing candidate continuity-check and installed Canon Guardian; A2 source-derived four replacements",
+    "A": "Codex lead A3, three replacements; ambiguous Maret-date edit withdrawn after independent REVISE",
     "B": "Claude Code2.1.287 claude-sonnet-5-5/high, explicit1USD requested cap, actual cost/seconds in comparison"
   },
   "sharedExporter": {
@@ -58,14 +58,15 @@
     "comparison.json"
   ],
   "highestEnvironment": "Local Node24 component export; isolated provider baseline; no installed-harness, cloud cockpit, EPUB, PDF or production proof",
-  "failureHistory": "Initial patch CRLF and Windows ESM path failures retained privately; corrected without changing originals/index/shared exporter.",
+  "failureHistory": "Three local integration failures retained: Windows LF/CRLF patch, Windows ESM URL, staged patch whitespace. Bare blank context lines accepted by Git; strict third-party patch consumers untested. Final bytes rechecked.",
   "artifactSha256": {
-    "edited-manuscript.md": "7b6e425145e9067c756c1468e6633296c2b161496f7b4708cf3d7c7e6032144d",
-    "revision.patch": "39d087a42ef9abb464973f8fc3273603cf91081e618b83a236c4931a31e68d71",
-    "edits.json": "6b10b849dbcb4ae505f904a6e39ceca50e71fcb2eeb328d53607894aea954201",
+    "edited-manuscript.md": "72104abf25c788a56f0299d4d692acfee4665516182ec28c884e4e86705ac0fb",
+    "revision.patch": "32faaf683d0cd0164171843a4d1fcfb555adda5c8445fdbf9501a96dfe9e70a4",
+    "edits.json": "26e1e51ed33a1892089ec6d3d31c7100fdf7aa53c292f1a75d3a92f36a8dc4da",
     "baseline-manuscript.md": "c3de48bef01a755ad08c6ab4e815288e885fca714884389aadd1aa2c971a8bde",
     "baseline.patch": "9c5c65817ed2eb3efb7cc4d798ad98f3497a3fdd83d4467a522a1b7fee6dc13a",
     "baseline.json": "1fb968ad49ea6d41c6ff6925f5cfc7d78c9011c66209870946c309739f9d6ffd",
-    "comparison.json": "0449f6fd33f7089505d385df5ce474f82b0c1b1ed822793332d485939d06794c"
-  }
+    "comparison.json": "b5f23a0074c75f540859c00e6ba046b17649627cff98d6fb778e663e57200a90"
+  },
+  "authorQuestions": "Maret mother/newborn memory with explicit three-way choices; day counting, ship identity, sleep duration and Void/Spirit naming remain unresolved."
 }

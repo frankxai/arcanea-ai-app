@@ -1,6 +1,6 @@
 ---
 title: "The Gate of Foundation: internal continuity proposal"
-exportedAt: "2026-10-02T12:12:20.329Z"
+exportedAt: "2026-10-02T12:25:49.537Z"
 generator: "AuthorOS 2026"
 ---
 
@@ -172,7 +172,7 @@ Kael thought about that for three days, which was how Kael thought about most th
 
 The dreams got stranger. The crystal gate in the field of darkness was the same each time, but the field was different — sometimes volcanic rock, sometimes limestone, sometimes a floor of interlocking stone tiles that seemed to go on in all directions without edge. The voice from the other side of the gate was still not quite words. But it was — closer, each night, to being words. As though the thing on the other side was learning the distance, adjusting for it, refining the transmission.
 
-On the third day, Maret showed up at the lighthouse door before dawn with a small bundle of salt fish and a look of someone who had been arguing with themselves and lost. She pushed the fish into Kael's arms and then stood very still and said, "Your mother had the same eyes for three days after she was born. Before they settled into brown. I have thought for nineteen years that I was wrong about what I saw." She paused. "I was not wrong."
+On the fourth day, Maret showed up at the lighthouse door before dawn with a small bundle of salt fish and a look of someone who had been arguing with themselves and lost. She pushed the fish into Kael's arms and then stood very still and said, "Your mother had the same eyes for three days after she was born. Before they settled into brown. I have thought for nineteen years that I was wrong about what I saw." She paused. "I was not wrong."
 
 "What does it mean?"
 

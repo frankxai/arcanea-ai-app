@@ -6,12 +6,6 @@
   "scope": "Two-chapter source-derived internal continuity proposal; not a release selection",
   "edits": [
     {
-      "path": "book/chapters/book1/01-the-storm-that-remembered.md",
-      "before": "On the fourth day, Maret showed up at the lighthouse door before dawn",
-      "after": "On the third day, Maret showed up at the lighthouse door before dawn",
-      "reason": "The visitors arrive the next morning. Moving this visit one day earlier reconciles their day-four arrival with chapter two's repeated four-days-ago statements; the warning, fish and goodbye remain."
-    },
-    {
       "path": "book/chapters/book1/02-the-ones-who-came.md",
       "before": "The first arrived at dawn. The second at midday. The third was already there when Kael turned around.",
       "after": "The first arrived at dawn. The second later that morning. The third was already there when Kael turned around.",
@@ -47,6 +41,95 @@
       "version": "A2",
       "edits": 4,
       "status": "After seeing baseline, add supported casualty-wording repair. Unblinded refinement, not independent configuration uplift."
+    },
+    {
+      "version": "A3",
+      "edits": 3,
+      "status": "Independent REVISE: retain original date; explicit unresolved author choices and corrected export/recovery evidence."
+    }
+  ],
+  "history": {
+    "A1": {
+      "edits": [
+        {
+          "path": "book/chapters/book1/01-the-storm-that-remembered.md",
+          "before": "On the fourth day, Maret showed up at the lighthouse door before dawn",
+          "after": "On the third day, Maret showed up at the lighthouse door before dawn",
+          "reason": "The visitors arrive the next morning. Moving this visit one day earlier reconciles their day-four arrival with chapter two's repeated four-days-ago statements; the warning, fish and goodbye remain."
+        },
+        {
+          "path": "book/chapters/book1/02-the-ones-who-came.md",
+          "before": "The first arrived at dawn. The second at midday. The third was already there when Kael turned around.",
+          "after": "The first arrived at dawn. The second later that morning. The third was already there when Kael turned around.",
+          "reason": "The later narration places Bren's arrival as the sun clears the sea-cliffs and the subsequent conversations in the morning. Change the opening summary rather than moving every later event."
+        },
+        {
+          "path": "book/chapters/book1/02-the-ones-who-came.md",
+          "before": "There was something about the directness that was restful after two days of people with agendas wrapped in care.",
+          "after": "There was something about the directness that was restful after a morning of people with agendas wrapped in care.",
+          "reason": "Sirvaine and Bren have just made their offers on the same morning; this local repair keeps the contrast without implying two days of emissary meetings."
+        }
+      ],
+      "status": "Initial three-edit list retained privately until this correction. Lead-reported order, not a blinded/proven-independent arm."
+    },
+    "A2": {
+      "commit": "c642d556f7ce9960fbf5bfa7c7b66d8ff8e04d0f",
+      "status": "Four-edit proposal; independent REVISE. Exact source retained in Git."
+    },
+    "A3": {
+      "status": "Withdraws Maret date change after reviewer found day-count convention ambiguous; final three-edit proposal."
+    }
+  },
+  "unresolved": [
+    {
+      "id": "MOTHER_MEMORY",
+      "disposition": "author decision",
+      "evidence": [
+        "Your mother had the same eyes for three days after she was born.",
+        "I have thought for nineteen years that I was wrong about what I saw.",
+        "She settled here. You were born.",
+        "She came here to quiet it."
+      ],
+      "options": [
+        {
+          "choice": "Keep original",
+          "consequence": "Retains the mother link; the nineteen-year interval, birth location and what Maret saw still need explanation."
+        },
+        {
+          "choice": "Use baseline Kael-newborn reading",
+          "consequence": "Adds multicolored eyes at Kael birth; affects Not again and Sela undetected/suppression hypothesis. Requires owner approval."
+        },
+        {
+          "choice": "Remove birth/date details",
+          "proposal": "Your mother had the same eyes once. I thought I was wrong about what I saw.",
+          "consequence": "Retains a mother memory but loses the precise three-day/nineteen-year clue. Requires owner approval."
+        }
+      ]
+    },
+    {
+      "id": "DAY_COUNT",
+      "disposition": "unresolved convention; retain source",
+      "evidence": "Storm night, fourth day visit, next morning, three days of reflection and colloquial four days ago do not fix an unambiguous time origin.",
+      "options": [
+        "Leave unchanged pending author timeline",
+        "If a precise Day0 convention is selected, change repeated chapter2 day-count language coherently",
+        "Change the next morning or Maret day only with author acceptance and recheck three-day reflection"
+      ]
+    },
+    {
+      "id": "WRECK",
+      "disposition": "author question",
+      "evidence": "Calloway merchant vessel and unnamed wreck may be different ships. Preserve the stated26/23/3 arithmetic, without resolving identity."
+    },
+    {
+      "id": "SLEEP",
+      "disposition": "author question",
+      "evidence": "A week of poor sleep may predate the storm; source does not explicitly exclude it. Retain original."
+    },
+    {
+      "id": "VOID_SPIRIT",
+      "disposition": "author question",
+      "evidence": "Void names the fifth manifestation; locked source groups Void/Spirit and distinguishes aspects. Do not invent a new mechanic to repair terminology."
     }
   ]
 }

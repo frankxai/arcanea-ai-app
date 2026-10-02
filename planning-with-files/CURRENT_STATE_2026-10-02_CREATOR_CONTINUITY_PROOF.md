@@ -13,3 +13,7 @@ Initial A1 has three edits; A2 adds casualty wording after reading baseline. Pre
 Non-goals: release selection under #280, locked canon/frequency change, manuscript replacement, candidate promotion, rights grants, new repo/platform/schema, install, new worktree, paid/public posting or app merge. Stacked base is existing unmerged draft487; it is not accepted main. Reuse current worktree and retain SDK499/3c82 and consolidation487/fcad branches.
 
 Rollback: reviewed revert of these eleven files only. Author can reject every proposal and retain the originals. Stop: exact-source reviewable narrative proof and existing issue/estate receipts; full goal remains active. Keep #408/#427 and all shared owners.
+
+## Independent REVISE and correction
+
+The review at c642d556 returned REVISE, not sign-off. Withdraw the Maret date change: a counting convention and three-day reflection make the original defensible. A3 contains three supported local replacements. Keep the mother's-memory tension as an explicit three-way author fork; preserve baseline and A1/A2 history. Separate pre-format private export hashes from committed post-format bytes, disclose heading/emphasis normalization and all three integration failures, and recheck final patch/recovery bytes. Human acceptance and source/canon/release decisions remain pending.

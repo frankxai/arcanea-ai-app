@@ -2,7 +2,7 @@
   "scope": "One source-derived two-chapter task, not the full20-task or1/3/5-cell benchmark. Both outputs are author-unaccepted proposals.",
   "conditions": "Same complete source chapters and locked canon. Baseline has no continuity-check/Canon Guardian procedures; both use a strong lead, no tools/delegation in baseline. Codex A2 is refined after seeing baseline, so this is not a blinded randomized trial or isolated causal measurement.",
   "candidateA": {
-    "edits": 4,
+    "edits": 3,
     "iterations": [
       {
         "version": "A1",
@@ -13,6 +13,11 @@
         "version": "A2",
         "edits": 4,
         "status": "After seeing baseline, add supported casualty-wording repair. Unblinded refinement, not independent configuration uplift."
+      },
+      {
+        "version": "A3",
+        "edits": 3,
+        "status": "Independent REVISE: retain original date; explicit unresolved author choices and corrected export/recovery evidence."
       }
     ],
     "completeEditableMarkdown": true,
@@ -78,7 +83,15 @@
       "reverseExactSourceRecovery": true,
       "staleSourceRejected": true,
       "staleInputPreserved": true,
-      "scope": "In-memory exact-context proposal application and read-only Git check; does not prove crash-safe disk replacement, filesystem concurrency or a release adapter."
+      "scope": "Exact final patch context check and in-memory inverse/stale-source checks; no concurrent/crash-safe disk replacement claim.",
+      "finalPatchSha256": "32faaf683d0cd0164171843a4d1fcfb555adda5c8445fdbf9501a96dfe9e70a4",
+      "command": "git apply --check --cached <candidate.patch>",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "sameTrackedIndexEntriesBeforeAfter": true,
+      "finalInverseExactSourceRecovery": true,
+      "finalStaleInputRejectedBeforeReplacement": true
     },
     "candidateB": {
       "gitApplyCheckCached": true,
@@ -86,7 +99,15 @@
       "reverseExactSourceRecovery": true,
       "staleSourceRejected": true,
       "staleInputPreserved": true,
-      "scope": "In-memory exact-context proposal application and read-only Git check; does not prove crash-safe disk replacement, filesystem concurrency or a release adapter."
+      "scope": "Exact final patch context check and in-memory inverse/stale-source checks; no concurrent/crash-safe disk replacement claim.",
+      "finalPatchSha256": "9c5c65817ed2eb3efb7cc4d798ad98f3497a3fdd83d4467a522a1b7fee6dc13a",
+      "command": "git apply --check --cached <candidate.patch>",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "sameTrackedIndexEntriesBeforeAfter": true,
+      "finalInverseExactSourceRecovery": true,
+      "finalStaleInputRejectedBeforeReplacement": true
     }
   },
   "exports": {
@@ -95,30 +116,26 @@
     "exporterSha256": "6370e201b87aeb1cf2fcdf0fa84f5caedb3a205147b901d88fa8963c5f596b63",
     "rows": [
       {
-        "candidate": "A",
-        "format": "Markdown",
-        "sha256": "880b76a0b7b4499923a6445991d45428a5f89ad8a8a3235a22d8a118bad74585",
-        "bytes": 34829,
-        "elapsedMs": 7.3264,
-        "sceneBytesPreserved": true
-      },
-      {
         "candidate": "B",
         "format": "Markdown",
         "sha256": "3cb6d79da69ee2d2c8821de9a1639f63212ce7636fc6461c4bf0532bed6b97a2",
         "bytes": 34838,
         "elapsedMs": 0.09660000000000224,
         "sceneBytesPreserved": true
+      },
+      {
+        "candidate": "A",
+        "format": "Markdown",
+        "sha256": "452734c2dc4a9d4db20fd3bf6e3bc3c705c8bff0861577ed33d6c9c3d5017e9b",
+        "bytes": 34830,
+        "elapsedMs": 1.9529999999999959,
+        "sceneBytesPreserved": true
       }
     ],
-    "scope": "Native AuthorOS Markdown export only; embedded exportedAt is nondeterministic. No EPUB, PDF or installed-host acceptance."
+    "scope": "Native AuthorOS Markdown export only; embedded exportedAt is nondeterministic. No EPUB, PDF or installed-host acceptance.",
+    "stage": "Raw native pre-format export; hashes/byte sizes identify private raw files, not committed Markdown."
   },
   "leadFindings": [
-    {
-      "id": "DAY",
-      "evidence": "Maret on day4 + emissaries next morning vs repeated four-days-ago testimony",
-      "proposal": "Maret day3; emissaries day4"
-    },
     {
       "id": "TIME",
       "evidence": "Second arrival midday vs sun-clearing-cliffs and morning throughout",
@@ -136,6 +153,56 @@
     }
   ],
   "unresolvedAuthorChoices": [
+    {
+      "id": "MOTHER_MEMORY",
+      "disposition": "author decision",
+      "evidence": [
+        "Your mother had the same eyes for three days after she was born.",
+        "I have thought for nineteen years that I was wrong about what I saw.",
+        "She settled here. You were born.",
+        "She came here to quiet it."
+      ],
+      "options": [
+        {
+          "choice": "Keep original",
+          "consequence": "Retains the mother link; the nineteen-year interval, birth location and what Maret saw still need explanation."
+        },
+        {
+          "choice": "Use baseline Kael-newborn reading",
+          "consequence": "Adds multicolored eyes at Kael birth; affects Not again and Sela undetected/suppression hypothesis. Requires owner approval."
+        },
+        {
+          "choice": "Remove birth/date details",
+          "proposal": "Your mother had the same eyes once. I thought I was wrong about what I saw.",
+          "consequence": "Retains a mother memory but loses the precise three-day/nineteen-year clue. Requires owner approval."
+        }
+      ]
+    },
+    {
+      "id": "DAY_COUNT",
+      "disposition": "unresolved convention; retain source",
+      "evidence": "Storm night, fourth day visit, next morning, three days of reflection and colloquial four days ago do not fix an unambiguous time origin.",
+      "options": [
+        "Leave unchanged pending author timeline",
+        "If a precise Day0 convention is selected, change repeated chapter2 day-count language coherently",
+        "Change the next morning or Maret day only with author acceptance and recheck three-day reflection"
+      ]
+    },
+    {
+      "id": "WRECK",
+      "disposition": "author question",
+      "evidence": "Calloway merchant vessel and unnamed wreck may be different ships. Preserve the stated26/23/3 arithmetic, without resolving identity."
+    },
+    {
+      "id": "SLEEP",
+      "disposition": "author question",
+      "evidence": "A week of poor sleep may predate the storm; source does not explicitly exclude it. Retain original."
+    },
+    {
+      "id": "VOID_SPIRIT",
+      "disposition": "author question",
+      "evidence": "Void names the fifth manifestation; locked source groups Void/Spirit and distinguishes aspects. Do not invent a new mechanic to repair terminology."
+    },
     "Maret: mother memory and nineteen-year doubt are an author question. Settling in town does not prove her birthplace or Maret never met her elsewhere; baseline changes whom the memory concerns.",
     "A week without sleep need not begin with the storm. Baseline narrows it; source does not explicitly rule out earlier insomnia.",
     "Academies and Houses are different institutional terms; no supplied mapping proves exclusivity or a locked conflict.",
@@ -144,5 +211,50 @@
     "Character explanations of Malachar and Kael remain testimony/hypothesis, not accepted canon updates."
   ],
   "independentDisposition": "Recorded on issue282 after exact-source review; lead observations are not human acceptance.",
-  "commercialEvidence": "No customer acceptance, paid demand, revenue or marketing quality claim."
+  "commercialEvidence": "No customer acceptance, paid demand, revenue or marketing quality claim.",
+  "dayCountCorrection": "Initial lead and baseline both overcalled a counting-convention ambiguity. Independent review rejected that certainty. A3 retains the original Maret day; B stays unchanged as observed.",
+  "localFailures": {
+    "attempts": [
+      {
+        "operation": "Git patch check",
+        "result": "failed",
+        "cause": "Private Python write_text converted LF patch bytes to CRLF on Windows; index source uses LF.",
+        "repair": "Write patch bytes explicitly as UTF-8/LF; preserve initial failed patch."
+      },
+      {
+        "operation": "Native AuthorOS export adapter",
+        "result": "failed",
+        "cause": "Windows absolute ESM import was interpreted as unsupported c: URL scheme.",
+        "repair": "Use a file:/// URL for the existing module; no shared AuthorOS source change."
+      },
+      {
+        "operation": "Staged diff check",
+        "result": "failed before commit",
+        "cause": "Unified patch files contain literal blank context prefixes, which the ordinary staged whitespace check flags.",
+        "repair": "Two context lines, bare empty context lines accepted by Git, no trailing blank line; both standard Git patch checks rerun. No check disabled."
+      }
+    ],
+    "scope": "Two local integration failures; no source manuscript, canon, Git index or provider output was changed."
+  },
+  "committedPostFormatOutputs": [
+    {
+      "candidate": "A",
+      "path": "edited-manuscript.md",
+      "sha256": "72104abf25c788a56f0299d4d692acfee4665516182ec28c884e4e86705ac0fb",
+      "bytes": 34830,
+      "stage": "Committed post-format reading derivative; managed headings and Markdown emphasis differ from source layout. Patch is exact change record."
+    },
+    {
+      "candidate": "B",
+      "path": "baseline-manuscript.md",
+      "sha256": "c3de48bef01a755ad08c6ab4e815288e885fca714884389aadd1aa2c971a8bde",
+      "bytes": 34838,
+      "stage": "Committed post-format reading derivative; managed headings and Markdown emphasis differ from source layout. Patch is exact change record."
+    }
+  ],
+  "initialIndependentReview": {
+    "head": "c642d556f7ce9960fbf5bfa7c7b66d8ff8e04d0f",
+    "verdict": "REVISE",
+    "disposition": "Day-count edit withdrawn; Maret author fork, final output hashes, final patch recovery, A1/A2 history and all failures clarified. Final exact-source review recorded on issue282."
+  }
 }
