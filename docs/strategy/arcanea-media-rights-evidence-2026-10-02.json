@@ -10,7 +10,13 @@
     "rootLicenseSha256": "99b301ba83ead919aa4538eb6e981e5a64dc1d066be3d53b0d5e26b7da7fde2f",
     "noticeSha256": "130a8f0dd2d615a8a4f94a52f494e816f39b5cb9a5368044c9e435f02ac1d222",
     "publicAtObservation": true,
-    "unchangedByThisSlice": true
+    "unchangedByThisSlice": true,
+    "releaseIndexObservation": {
+      "limit": 100,
+      "returnedReleases": 0,
+      "scope": "current gh release index only, not prior/deleted releases or external binaries"
+    },
+    "noticeReview": "local LICENSE presents Arcanea copyright over software including derived paths; component/copyright/permission notice applicability needs owner review, preserve existing text now"
   },
   "upstream": {
     "repo": "Anil-Matcha/Open-Generative-AI",
@@ -27,12 +33,18 @@
     "copyrightLine": "Copyright (c) 2026 Open Generative AI Contributors",
     "rootLicenseBytesSameAtTwoObservedLicensedTrees": true,
     "currentLicenseUrl": "https://github.com/Anil-Matcha/Open-Generative-AI/blob/ebebc51eb3740641458a4a11ce03f390e7a58af1/LICENSE",
-    "historyScope": "one entry returned by path-specific GitHub commit history at observation; not a rights or retroactivity ruling"
+    "historyScope": "one entry returned by path-specific GitHub commit history at observation; not a rights or retroactivity ruling",
+    "forkRootNoticeFilenameCheck": {
+      "scope": "root tree entries, case-insensitive prefixes license/licence/copying and exact copyright/notice",
+      "matches": [],
+      "notAFullTermsScan": true
+    },
+    "firstObservedRootLicenseDateType": "introducing commit committer timestamp, UTC, added-file status verified through GitHub commit API"
   },
   "method": {
     "local": "git --no-replace-objects ls-tree -r -z at exact committed source",
     "upstream": "GitHub recursive Git tree API at three immutable commits; all truncated:false; LICENSE blob decoded and SHA256 checked",
-    "comparison": "same-path Git blob identity and cross-path matches, no checkout/newclone or media download",
+    "comparison": "tree-level same-path Git blob identity and cross-path matches only; fresh local fork history does not establish shared ancestry, no checkout/newclone or media download",
     "absenceScope": "no root LICENSE entry at recorded fork; component MIT metadata recorded separately",
     "classification": "mechanical comparison only; not rights/author/notice applicability or license coverage classes",
     "notAudited": [
@@ -40,7 +52,9 @@
       "third-party dependencies and provider/model terms",
       "authorship/rights in imported assets",
       "historical authorization/retroactivity",
-      "whole Git history or current deployment/runtime"
+      "whole Git history or current deployment/runtime",
+      "private/operator classification of tracked saved patches/config/local-path docs",
+      "historical release/binary distribution and model-provider output rights"
     ]
   },
   "counts": {
@@ -1506,14 +1520,18 @@
       "public/vite.svg",
       "src/javascript.svg"
     ],
-    "generation": "no new image/media generation; existing source metadata only"
+    "generation": "no new image/media generation; existing source metadata only",
+    "notes": [
+      "template SVG marks, upstream branding and potential generated/provider demo outputs need asset/trademark applicability review; equality does not establish those rights"
+    ]
   },
   "disposition": {
-    "sourceAbsenceClaim": "the dated fork-root absence is supported; a claim that current upstream lacks a root license is contradicted",
+    "sourceAbsenceClaim": "historical root-notice filename absence is supported within the declared root scan; the assertion that observed current upstream lacks a root LICENSE is contradicted; dependency/redistribution hold is not lifted",
     "rootLicenseChoice": "Frank owns app/original software/lore choice; no license file changed",
-    "reuse": "pending component applicability, notices, hunk lineage, assets, provider terms and owner review; exact blob equality alone clears nothing",
+    "reuse": "pending component applicability, attribution and notice obligations, hunk lineage, assets, provider terms and owner review; exact blob equality alone clears nothing",
     "release": "not approved; no dependency/import/build/install/deployment/publish/archive or private/public setting change",
-    "strategy": "retain existing media owner while recording recovery and required attribution; prefer a bounded adapter to a pinned reviewed current upstream or existing accepted app media service over maintaining another broad public Arcanea fork; final integration requires measured workflow and owner acceptance",
-    "fullGoal": "active"
+    "strategy": "compare candidate options, none selected or approved: historical fork with component/asset/hunk review, or bounded adapter to pinned reviewed current upstream or an existing app media service whose acceptance is unverified. Both options need the same applicability/notice/asset/provider review; reduced catalog maintenance is an untested hypothesis. Preserve existing media owner; no additional public Arcanea fork proposed",
+    "fullGoal": "active",
+    "preparationAuthority": "user goal authorizes this read-only audit and reversible draft preparation; owner/human approval still applies to integration, rights, visibility and release side effects"
   }
 }
