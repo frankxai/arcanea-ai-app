@@ -205,11 +205,7 @@ export function McpCommandCenter() {
             not grant Studio access or reserve a price. No payment is collected
             here.
           </p>
-          {status === "done" ? (
-            <p className="text-sm text-[var(--arc-brand-atlantean-teal)]">
-              Your email is saved on the Studio list.
-            </p>
-          ) : (
+          {status === "done" ? null : (
             <div className="flex flex-col gap-3 sm:flex-row">
               <label className="sr-only" htmlFor={emailId}>
                 Email
