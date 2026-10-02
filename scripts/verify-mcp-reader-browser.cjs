@@ -291,9 +291,14 @@ function sourceEvidence() {
         await expect(button).toBeDisabled();
         await expect(message).toHaveText("Saving your email…");
         await input.evaluate((element) => {
-          element.value = "replacement@example.test";
+          const setter = Object.getOwnPropertyDescriptor(
+            HTMLInputElement.prototype,
+            "value",
+          ).set;
+          setter.call(element, "replacement@example.test");
           element.dispatchEvent(new Event("input", { bubbles: true }));
         });
+        await expect(input).toHaveValue("reader@example.test");
         await form.evaluate((element) =>
           element.dispatchEvent(
             new Event("submit", { bubbles: true, cancelable: true }),
