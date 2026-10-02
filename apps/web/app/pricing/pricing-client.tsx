@@ -160,7 +160,13 @@ export function PricingClient() {
                 required
                 maxLength={320}
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                  if (!pending.current) {
+                    setStatus("idle");
+                    setMessage("");
+                  }
+                }}
                 readOnly={status === "loading"}
                 aria-describedby={statusId}
                 className="w-full rounded-xl border border-white/20 bg-white/[0.03] p-3 text-base text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)]"
@@ -201,6 +207,8 @@ export function PricingClient() {
             </Link>
             <Link
               href="https://github.com/frankxai/arcanea-ai-app"
+              target="_blank"
+              rel="noopener noreferrer"
               className={linkStyle}
             >
               Inspect the app source

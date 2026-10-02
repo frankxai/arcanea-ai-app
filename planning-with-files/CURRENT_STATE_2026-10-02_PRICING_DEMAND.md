@@ -78,8 +78,25 @@ label/status, native validation and expected-link checks. This is source/SSR pro
 browser interaction and live database behavior remain untested. Both pricing
 TSX files use the verified lockfile-pinned Prettier 3.9.9 standalone formatter.
 Shared helper/tests remain byte-identical to #493; backend/world/auth/lockfile
-remain unchanged. Independent review and remote CI are pending.
+remain unchanged. Editing an email after a result resets the old status so a
+different typed address does not retain a stale successful-save message.
+
+Independent complete six-file review at `154a9b11542984f2bc9e4aa6978dad800dd27959`
+returned PASS with two LOW and two INFO findings. Restore the prior external
+GitHub new-tab behavior with explicit opener protection. Keep the field's native
+validity and bound live status; marking every transport/storage failure as an
+invalid email would misstate the error. Field-specific server400 classification
+remains a follow-up shared with #493. INFO concerns describe tested response-body
+failure and server-side email normalization, requiring no runtime change.
+The stale-result reset is a lead self-review correction beyond those findings.
+Current two-file correction review and native CI results are recorded on #276
+and draft #494; no result is inferred from the earlier source. Initial preview
+`dpl_4AFsuLVpaV5Z44sYk3f1MWzYVoim` was CANCELED at ignored-build despite the GitHub
+success status. No extra deployment or settings changes.
 
 Two malformed patch-tool inputs were rejected before any edits
 (missing patch wrapper, then duplicate delete/add target). A single-file update
 applied successfully; no partial failed patch remained.
+One follow-up formatter/diff invocation used the private evidence cwd: static
+rendering succeeded, but relative Markdown formatting and Git reads failed.
+No staging occurred there; re-run formatting and Git checks from the assigned repo.
