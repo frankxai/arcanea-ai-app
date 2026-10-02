@@ -58,7 +58,7 @@ export default function McpToolsPage() {
           {READER_TOOLS.map((tool) => (
             <article
               key={tool.name}
-              className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5"
+              className="min-w-0 rounded-xl border border-white/[0.06] bg-white/[0.02] p-5"
             >
               <h2 className="font-mono text-sm text-[var(--arc-brand-atlantean-teal)]">
                 {tool.name}
@@ -77,7 +77,7 @@ export default function McpToolsPage() {
                   ))}
                 </ul>
               ) : null}
-              <pre className="mt-4 overflow-x-auto font-mono text-xs text-zinc-400">
+              <pre className="mt-4 overflow-x-auto whitespace-pre-wrap break-words font-mono text-xs text-zinc-400">
                 {`${tool.name}(${JSON.stringify(tool.example)})`}
               </pre>
             </article>
