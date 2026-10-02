@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "description": "AI-powered creative ecosystem empowering the next generation of creators",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "dev": "turbo run dev",
     "dev:academy": "turbo run dev --filter=@arcanea/academy",
@@ -95,7 +92,7 @@
     "@turbo/gen": "^2.11.4",
     "autoprefixer": "^10.6.1",
     "eslint": "^9.39.4",
-    "next": "16.3.5",
+    "next": "16.3.6",
     "postcss": "^8.5.28",
     "prettier": "^3.9.9",
     "semver": "^7.8.5",
@@ -139,7 +136,7 @@
   "homepage": "https://arcanea.ai",
   "pnpm": {
     "overrides": {
-      "next": "16.3.5",
+      "next": "16.3.6",
       "@types/react": "^19.0.0",
       "@types/react-dom": "^19.0.0",
       "eslint": "9.39.4",
