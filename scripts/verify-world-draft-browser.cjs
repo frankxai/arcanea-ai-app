@@ -1,4 +1,7 @@
 const assert = require("node:assert/strict");
+const crypto = require("node:crypto");
+const { execFileSync } = require("node:child_process");
+const { readFileSync } = require("node:fs");
 const fs = require("node:fs/promises");
 const { createRequire } = require("node:module");
 const { resolve } = require("node:path");
@@ -10,6 +13,40 @@ const output = "screenshots/world-drafts";
 const currentKey = "arcanea.world-draft.v1";
 const previousKey = "arcanea.world-draft.previous.v1";
 const conceptKey = "arcanea.world-concept";
+function sourceEvidence() {
+  const checkoutCommit = execFileSync("git", ["rev-parse", "HEAD"], {
+    encoding: "utf8",
+  }).trim();
+  const event = process.env.GITHUB_EVENT_PATH
+    ? JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, "utf8"))
+    : null;
+  const reviewedSourceCommit = event?.pull_request?.head?.sha || checkoutCommit;
+  const files = [
+    "apps/web/app/worlds/create/page.tsx",
+    "apps/web/lib/worlds/draft.ts",
+    "apps/web/lib/worlds/draft-portability.ts",
+    "apps/web/lib/worlds/__tests__/draft-portability.test.ts",
+    "scripts/verify-world-draft-browser.cjs",
+    ".github/workflows/ci.yml",
+  ];
+  const hashes = {};
+  for (const file of files) {
+    const bytes = readFileSync(file);
+    assert.ok(
+      bytes.equals(
+        execFileSync("git", ["show", `${reviewedSourceCommit}:${file}`]),
+      ),
+      `Source mismatch: ${file}`,
+    );
+    hashes[file] = crypto.createHash("sha256").update(bytes).digest("hex");
+  }
+  return {
+    checkoutCommit,
+    reviewedSourceCommit,
+    sourceFilesMatchReviewedCommit: true,
+    sourceFileSha256: hashes,
+  };
+}
 const draft = {
   version: 1,
   description: "A library inside a dying star",
@@ -50,9 +87,10 @@ const draft = {
   await fs.mkdir(output, { recursive: true });
   const browser = await chromium.launch();
   const evidence = {
-    sourceCommit: process.env.GITHUB_SHA || null,
+    ...sourceEvidence(),
     modes: [],
     interactions: [],
+    captures: [],
   };
   const errors = [];
   try {
@@ -93,7 +131,7 @@ const draft = {
       page.setDefaultTimeout(15000);
       page.on("pageerror", (error) => errors.push(error.message));
       let modelRequests = 0;
-      await page.route("**/api/worlds/generate**", (route) => {
+      await context.route("**/api/worlds/**", (route) => {
         modelRequests += 1;
         return route.fulfill({
           status: 500,
@@ -137,11 +175,137 @@ const draft = {
       const download = await downloadPromise;
       assert.deepEqual(
         JSON.parse(await fs.readFile(await download.path(), "utf8")),
-        draft.world,
+        draft,
       );
       await button("Keep this draft").click();
       await expect(choice).toHaveCount(0);
       assert.equal(await readStorage(conceptKey), null);
+      const fileInput = page.getByLabel("Import draft", { exact: true });
+      const upload = async (value) =>
+        fileInput.setInputFiles({
+          name: "world.json",
+          mimeType: "application/json",
+          buffer: Buffer.from(JSON.stringify(value)),
+        });
+      const originalStorage = await readStorage(currentKey);
+      await upload({ ...draft, version: 99 });
+      await expect(
+        page.getByRole("alert").filter({ hasText: "not supported" }),
+      ).toBeVisible();
+      assert.equal(await readStorage(currentKey), originalStorage);
+      await expect(worldTitle).toBeVisible();
+      const replacement = {
+        ...draft,
+        draft_id: "f259e024-a6e9-4f54-b547-901d285377d3",
+        world: {
+          ...draft.world,
+          name: "The second library",
+          slug: "the-second-library",
+        },
+      };
+      page.once("dialog", (dialog) => dialog.dismiss());
+      await upload(replacement);
+      await expect(fileInput).toBeEnabled();
+      assert.equal(await readStorage(currentKey), originalStorage);
+      page.once("dialog", (dialog) => dialog.accept());
+      await upload(replacement);
+      await expect(
+        page.getByRole("heading", {
+          name: replacement.world.name,
+          exact: true,
+        }),
+      ).toBeVisible();
+      assert.deepEqual(JSON.parse(await readStorage(previousKey)), draft);
+      await page.reload();
+      await button("Restore previous draft").click();
+      await expect(worldTitle).toBeVisible();
+      const sameIdentity = {
+        ...draft,
+        world: {
+          ...draft.world,
+          laws: [
+            { name: "The cost", description: "Reading costs two memories." },
+          ],
+        },
+      };
+      page.once("dialog", (dialog) => dialog.accept());
+      await upload(sameIdentity);
+      await expect(
+        page.getByText("Reading costs two memories.", { exact: true }),
+      ).toBeVisible();
+      await expect(button("Restore previous draft")).toBeVisible();
+      await button("Restore previous draft").click();
+      await expect(
+        page.getByText("Reading costs one memory.", { exact: true }),
+      ).toBeVisible();
+      assert.deepEqual(JSON.parse(await readStorage(currentKey)), draft);
+      const beforeFailure = await page.evaluate(() => ({
+        current: sessionStorage.getItem("arcanea.world-draft.v1"),
+        previous: sessionStorage.getItem("arcanea.world-draft.previous.v1"),
+      }));
+      await page.evaluate((key) => {
+        const original = Storage.prototype.setItem;
+        let failed = false;
+        Storage.prototype.setItem = function (name, value) {
+          if (name === key && !failed) {
+            failed = true;
+            throw new DOMException("Synthetic quota", "QuotaExceededError");
+          }
+          return original.call(this, name, value);
+        };
+      }, currentKey);
+      page.once("dialog", (dialog) => dialog.accept());
+      await upload(replacement);
+      await expect(
+        page.getByRole("alert").filter({ hasText: "Import did not finish" }),
+      ).toBeVisible();
+      assert.equal(await readStorage(currentKey), beforeFailure.current);
+      assert.equal(await readStorage(previousKey), beforeFailure.previous);
+      await expect(worldTitle).toBeVisible();
+
+      // Reopen the actual download after deleting all tab recovery records.
+      await page.evaluate(() => sessionStorage.clear());
+      await page.reload();
+      await expect(
+        page.getByRole("textbox", { name: "Describe your world" }),
+      ).toBeVisible();
+      await fileInput.focus();
+      await expect(fileInput).toBeFocused();
+      await fileInput.setInputFiles(await download.path());
+      await expect(worldTitle).toBeVisible();
+      assert.deepEqual(JSON.parse(await readStorage(currentKey)), draft);
+      // An outstanding file read must not race reset/refine/another import.
+      await page.evaluate((text) => {
+        const original = File.prototype.text;
+        File.prototype.text = function () {
+          return new Promise((resolve) => {
+            window.releaseDraftRead = () => {
+              File.prototype.text = original;
+              resolve(text);
+            };
+          });
+        };
+      }, JSON.stringify(draft));
+      await upload(draft);
+      await expect(fileInput).toBeDisabled();
+      await expect(button("Start over")).toBeDisabled();
+      await expect(button("Refine")).toBeDisabled();
+      assert.deepEqual(JSON.parse(await readStorage(currentKey)), draft);
+      await page.evaluate(() => window.releaseDraftRead());
+      await expect(fileInput).toBeEnabled();
+      assert.deepEqual(JSON.parse(await readStorage(currentKey)), draft);
+      page.once("dialog", (dialog) => dialog.accept());
+      await upload(draft.world);
+      await expect(
+        page.getByRole("status").filter({ hasText: "Older world JSON" }),
+      ).toBeVisible();
+      const legacy = JSON.parse(await readStorage(currentKey));
+      assert.notEqual(legacy.draft_id, draft.draft_id);
+      assert.deepEqual(legacy.world, draft.world);
+      page.once("dialog", (dialog) => dialog.accept());
+      await upload(draft);
+      await expect(fileInput).toBeEnabled();
+      assert.deepEqual(JSON.parse(await readStorage(currentKey)), draft);
       page.once("dialog", (dialog) => dialog.dismiss());
       await button("Start over").click();
       await expect(worldTitle).toBeVisible();
@@ -158,11 +322,32 @@ const draft = {
       await page.reload();
       await button("Restore previous draft").click();
       await expect(worldTitle).toBeVisible();
+      const capturePath = `${output}/${mode.name}-restored.png`;
       await page.screenshot({
-        path: `${output}/${mode.name}-restored.png`,
+        path: capturePath,
         fullPage: true,
         animations: "disabled",
       });
+      const bytes = await fs.readFile(capturePath);
+      const companion = {
+        kind: "browser-screenshot",
+        prompt: `Capture built draft after JSON round-trip and recovery: ${mode.name}, ${page.url()}`,
+        model: null,
+        provider: "Playwright Chromium",
+        seed: null,
+        agentSession: "01a0f74f-8bad-7db1-ab06-fd89b5faec84",
+        checkoutCommit: evidence.checkoutCommit,
+        reviewedSourceCommit: evidence.reviewedSourceCommit,
+        viewport: { width: mode.width, height: mode.height },
+        reducedMotion: mode.reducedMotion,
+        bytes: bytes.length,
+        sha256: crypto.createHash("sha256").update(bytes).digest("hex"),
+      };
+      await fs.writeFile(
+        `${capturePath}.vis.provenance.json`,
+        JSON.stringify(companion, null, 2) + "\n",
+      );
+      evidence.captures.push({ path: capturePath, ...companion });
       await page.evaluate(
         (key) => sessionStorage.setItem(key, "A new city beneath the sea"),
         conceptKey,
@@ -203,6 +388,14 @@ const draft = {
     assert.deepEqual(errors, [], "Unexpected browser runtime errors");
     evidence.interactions = [
       "complete draft inspection and exact JSON export",
+      "actual downloaded JSON reopens without tab recovery records",
+      "unsupported version preserves the current draft",
+      "cancel and confirm file replacement with full previous-draft recovery",
+      "failed second storage write rolls back both draft records",
+      "older world-only JSON retains complete text with a new identity",
+      "native file input accepts keyboard focus",
+      "outstanding file read blocks reset/refine/another import",
+      "same-identity text changes retain an accessible previous version",
       "explicit pending-concept choice",
       "cancel and confirm start over",
       "previous draft survives reload",

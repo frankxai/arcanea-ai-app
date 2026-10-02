@@ -152,7 +152,7 @@ jobs:
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
 
       - name: Verify exact world drafts and account return paths
-        run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
+        run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/draft-portability.test.ts lib/worlds/__tests__/entry-access.test.ts
 
       - name: Verify feedback persistence receipts
         run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/feedback/__tests__/route.test.ts
@@ -312,7 +312,7 @@ jobs:
         run: |
           git rev-parse --verify HEAD^ > /dev/null
           homepage_changed=0
-          git diff --quiet HEAD^ HEAD -- apps/web/app/page.tsx apps/web/app/home-experience.tsx apps/web/app/home.module.css apps/web/components/worlds/world-workbench.tsx apps/web/components/worlds/world-workbench.module.css apps/web/app/globals.css packages/design-system/src/tokens.css scripts/verify-world-workbench-browser.cjs scripts/verify-homepage-built-app.cjs .github/workflows/ci.yml || homepage_changed=$?
+          git diff --quiet HEAD^ HEAD -- apps/web/app/page.tsx apps/web/app/home-experience.tsx apps/web/app/home.module.css apps/web/components/worlds/world-workbench.tsx apps/web/components/worlds/world-workbench.module.css apps/web/app/globals.css packages/design-system/src/tokens.css apps/web/app/worlds/create/page.tsx apps/web/lib/worlds/draft-portability.ts apps/web/lib/worlds/__tests__/draft-portability.test.ts scripts/verify-world-draft-browser.cjs scripts/verify-world-workbench-browser.cjs scripts/verify-homepage-built-app.cjs .github/workflows/ci.yml || homepage_changed=$?
           if [ "$homepage_changed" -gt 1 ]; then exit "$homepage_changed"; fi
           if [ "$homepage_changed" -eq 1 ]; then
             echo "run=true" >> "$GITHUB_OUTPUT"
