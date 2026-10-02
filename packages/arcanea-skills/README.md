@@ -80,8 +80,11 @@ The CommonJS API keeps `skills`, `skillCount`, `bundledCount`, `categories`,
 the review backlog. Callers that relied on the previous top-20 list must migrate.
 `name`, `version` and `skillsDir` also expose package identity and source location.
 
-Earlier skill folders remain in the checkout and Git history for reconciliation.
-They are excluded from the API, installer and package file list. Other discovery
+The canonical package root now contains only its four catalog candidates.
+Nineteen unlisted legacy package copies were removed after verifying byte-identical
+sources elsewhere in the app. Their pinned source mappings and historical fold
+records remain in `docs/strategy/arcanea-skill-survivors-2026-10-01.json`.
+Those retained development and specialty sources still need reconciliation. Other discovery
 roots and plugin manifests in the app still need reconciliation; this package
 does not make a repository-wide install curated.
 

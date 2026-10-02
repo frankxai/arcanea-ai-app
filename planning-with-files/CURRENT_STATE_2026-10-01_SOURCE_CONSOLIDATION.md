@@ -322,3 +322,23 @@ NODE_PATH: all15 pass, no installation. Frozen CI uses pinned2.9.1 and is pendin
 The active generated index is formatted for the existing changed-Markdown gate;
 its remaining skill data is preserved. No implementation tests were added for
 this removal. All source, rights and release qualifications above remain.
+
+## Canonical skill-root cleanup, October 2
+
+Scope: remove19 unlisted duplicate single-file skills from the canonical package
+root while retaining exact source copies and all four existing candidate bytes.
+User job: inspect one bounded Arcanea root without receiving unrelated old skills.
+Owner: Codex, draft487, issue276. Base:794e83bb7a2e229c08a25faa980436196879c7e8.
+Files:19 explicit package SKILL.md deletions; existing survivor JSON/Markdown,
+package README and this task record. Historical source/resource records retained.
+Acceptance: root bodies equal the four catalog paths; every removal has a retained
+byte-identical app source, single-file subtree and no active direct-path consumer.
+Non-goals: rights choice/clearance, donor retirement, other roots/plugins, installed
+tools, candidate rewriting/promotion, working-set links, canon, merge or release.
+Verification: exact Git blobs/hashes/subtrees/consumer grep; retained candidate and
+source-record equality; existing auditor4/catalog11; all four exact-head CI checks.
+Independent review remains held by recent PP HOLD5315MiB/required6144,32runtimes/12.
+Rollback: reviewed scoped restoration of19 paths from the pinned base; preserve
+all later edits and unresolved rights. Budget: ordinary text/removal/small tests,
+no new worktree/install/local build/provider or foreign process cleanup.
+Stop: tested reviewable draft with source/CI/limits saved; full goal remains active.

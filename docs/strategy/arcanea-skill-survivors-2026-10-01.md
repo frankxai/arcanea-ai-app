@@ -1,6 +1,6 @@
 # Arcanea skill fold decisions
 
-Status: proposed source decisions, with no moves, source deletion or rights clearance.
+Status: historical fold proposals and current canonical-root cleanup in draft; no rights clearance.
 Owning issue: [#276](https://github.com/frankxai/arcanea-ai-app/issues/276).
 The [evidence map](arcanea-skill-survivors-2026-10-01.json) pins every inspected snapshot,
 skill blob and recognized support file. It complements the existing consolidation plan.
@@ -117,3 +117,25 @@ Operator/private material, unknown entries, legacy CLI/agents/commands, loose de
 upstream developer skills and broader repo salvage remain open. No repo retirement follows
 from this skill map alone. Community and revenue outcomes still need real creator use and
 the existing release/commerce proofs in program #276.
+
+## Canonical-root duplicate cleanup, October 2
+
+At app source `794e83bb7a2e229c08a25faa980436196879c7e8`, the proposed canonical
+root held 23 skill bodies although its catalog listed four candidates. This draft
+removes the 19 unlisted single-file copies from that package root. Every removed
+file has a byte-identical retained source elsewhere in the app; the evidence map's
+`canonicalRootRemediation` records exact paths, Git blobs and SHA-256 values.
+No unique skill body or support file is removed. Historical snapshot entries stay
+unchanged; source retention does not grant rights or prove equivalent execution.
+
+The root now contains only `world-build`, `continuity-check`, `scene-to-media`
+and `quest-adapt`, with their existing examples. Their bytes/passports are unchanged:
+four candidates, zero ready. The API/installer/package file list already used the
+catalog; broad repository and root-plugin discovery remain separate open work.
+Tracked consumer search found only historical evidence-map references to the
+removed package paths. Development/specialty sources and installed donor plugins
+remain with their existing owners; no global install or working-set link changes.
+
+This subtracts duplicate package copies while retaining story, specialty and
+developer work for later selection. It does not fold or approve all donor sources.
+Rights, independent evaluation/review, creator acceptance and release gates remain.
