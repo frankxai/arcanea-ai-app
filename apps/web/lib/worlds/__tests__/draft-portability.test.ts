@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { brand } from "../../../../../packages/design-system/src/tokens";
 import {
   readStoredWorldDraft,
   WORLD_DRAFT_KEY,
@@ -26,7 +27,7 @@ const draft: PortableDraft = {
     tagline: "Memories return home",
     description: "An authored world with a rule, a consequence and a choice.",
     mood: "Quiet",
-    elements: [{ name: "Light", domain: "Memory", color: "#ffd700" }],
+    elements: [{ name: "Light", domain: "Memory", color: brand.arcaneanGold }],
     laws: [
       {
         name: "The cost",
@@ -63,7 +64,11 @@ const draft: PortableDraft = {
       description: "A courier refuses to surrender a memory.",
       era: "First night",
     },
-    palette: { primary: "#00bcd4", secondary: "#0d47a1", accent: "#ffd700" },
+    palette: {
+      primary: brand.atlanteanTeal,
+      secondary: brand.cosmicBlue,
+      accent: brand.arcaneanGold,
+    },
     image_prompt: "A library inside a dying star",
   },
 };
