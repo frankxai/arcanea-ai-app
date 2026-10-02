@@ -1,0 +1,148 @@
+{
+  "scope": "One source-derived two-chapter task, not the full20-task or1/3/5-cell benchmark. Both outputs are author-unaccepted proposals.",
+  "conditions": "Same complete source chapters and locked canon. Baseline has no continuity-check/Canon Guardian procedures; both use a strong lead, no tools/delegation in baseline. Codex A2 is refined after seeing baseline, so this is not a blinded randomized trial or isolated causal measurement.",
+  "candidateA": {
+    "edits": 4,
+    "iterations": [
+      {
+        "version": "A1",
+        "edits": 3,
+        "status": "Initial lead proposal created without seeing baseline response; private source retained."
+      },
+      {
+        "version": "A2",
+        "edits": 4,
+        "status": "After seeing baseline, add supported casualty-wording repair. Unblinded refinement, not independent configuration uplift."
+      }
+    ],
+    "completeEditableMarkdown": true,
+    "humanAccepted": false,
+    "authorRepairMinutes": null,
+    "endToEndLeadSeconds": null,
+    "leadModelCostUsd": null,
+    "measurementLimit": "Codex thinking/lead time and cost were not instrumented; no speed/cost superiority claim."
+  },
+  "candidateB": {
+    "edits": 5,
+    "completeEditableMarkdown": true,
+    "providerSeconds": 79.765597,
+    "providerListCostUsd": 0.2283,
+    "humanAccepted": false,
+    "authorRepairMinutes": null
+  },
+  "diagnosticControl": {
+    "implementation": "author-os/bin/quality-check.js --imprint arcanea",
+    "sourceCommit": "30d90432d84c526315985d806cd938c726b4271d",
+    "original": [
+      {
+        "chapter": 1,
+        "exitCode": 0,
+        "reportedPass": true
+      },
+      {
+        "chapter": 2,
+        "exitCode": 0,
+        "reportedPass": true
+      }
+    ],
+    "candidateA": [
+      {
+        "chapter": 1,
+        "exitCode": 0,
+        "reportedPass": true
+      },
+      {
+        "chapter": 2,
+        "exitCode": 0,
+        "reportedPass": true
+      }
+    ],
+    "candidateB": [
+      {
+        "chapter": 1,
+        "exitCode": 0,
+        "reportedPass": true
+      },
+      {
+        "chapter": 2,
+        "exitCode": 0,
+        "reportedPass": true
+      }
+    ],
+    "meaning": "Original and both proposals pass the verbal-tic/passive heuristic. It supplies no timeline or biographical consistency verdict."
+  },
+  "recovery": {
+    "candidateA": {
+      "gitApplyCheckCached": true,
+      "originalIndexUnmodified": true,
+      "reverseExactSourceRecovery": true,
+      "staleSourceRejected": true,
+      "staleInputPreserved": true,
+      "scope": "In-memory exact-context proposal application and read-only Git check; does not prove crash-safe disk replacement, filesystem concurrency or a release adapter."
+    },
+    "candidateB": {
+      "gitApplyCheckCached": true,
+      "originalIndexUnmodified": true,
+      "reverseExactSourceRecovery": true,
+      "staleSourceRejected": true,
+      "staleInputPreserved": true,
+      "scope": "In-memory exact-context proposal application and read-only Git check; does not prove crash-safe disk replacement, filesystem concurrency or a release adapter."
+    }
+  },
+  "exports": {
+    "node": "v24.14.0",
+    "authorOsCommit": "30d90432d84c526315985d806cd938c726b4271d",
+    "exporterSha256": "6370e201b87aeb1cf2fcdf0fa84f5caedb3a205147b901d88fa8963c5f596b63",
+    "rows": [
+      {
+        "candidate": "A",
+        "format": "Markdown",
+        "sha256": "880b76a0b7b4499923a6445991d45428a5f89ad8a8a3235a22d8a118bad74585",
+        "bytes": 34829,
+        "elapsedMs": 7.3264,
+        "sceneBytesPreserved": true
+      },
+      {
+        "candidate": "B",
+        "format": "Markdown",
+        "sha256": "3cb6d79da69ee2d2c8821de9a1639f63212ce7636fc6461c4bf0532bed6b97a2",
+        "bytes": 34838,
+        "elapsedMs": 0.09660000000000224,
+        "sceneBytesPreserved": true
+      }
+    ],
+    "scope": "Native AuthorOS Markdown export only; embedded exportedAt is nondeterministic. No EPUB, PDF or installed-host acceptance."
+  },
+  "leadFindings": [
+    {
+      "id": "DAY",
+      "evidence": "Maret on day4 + emissaries next morning vs repeated four-days-ago testimony",
+      "proposal": "Maret day3; emissaries day4"
+    },
+    {
+      "id": "TIME",
+      "evidence": "Second arrival midday vs sun-clearing-cliffs and morning throughout",
+      "proposal": "Later that morning"
+    },
+    {
+      "id": "SPAN",
+      "evidence": "Two days of agendas vs sequential same-morning offers",
+      "proposal": "A morning"
+    },
+    {
+      "id": "CASUALTIES",
+      "evidence": "Three not found until morning vs one recovered/two never recovered",
+      "proposal": "Three not found that night"
+    }
+  ],
+  "unresolvedAuthorChoices": [
+    "Maret: mother memory and nineteen-year doubt are an author question. Settling in town does not prove her birthplace or Maret never met her elsewhere; baseline changes whom the memory concerns.",
+    "A week without sleep need not begin with the storm. Baseline narrows it; source does not explicitly rule out earlier insomnia.",
+    "Academies and Houses are different institutional terms; no supplied mapping proves exclusivity or a locked conflict.",
+    "First Siege and sealing dates may name distinct events; no automatic numerical repair.",
+    "Frequency conflict in locked source remains owner-only; neither chapter needs a frequency change.",
+    "Character explanations of Malachar and Kael remain testimony/hypothesis, not accepted canon updates."
+  ],
+  "independentDisposition": "Recorded on issue282 after exact-source review; lead observations are not human acceptance.",
+  "commercialEvidence": "No customer acceptance, paid demand, revenue or marketing quality claim."
+}

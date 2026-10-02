@@ -1,0 +1,52 @@
+{
+  "candidate": "A",
+  "maker": "Codex lead using the existing continuity-check candidate and Canon Guardian instructions",
+  "state": "proposal",
+  "humanDisposition": "pending",
+  "scope": "Two-chapter source-derived internal continuity proposal; not a release selection",
+  "edits": [
+    {
+      "path": "book/chapters/book1/01-the-storm-that-remembered.md",
+      "before": "On the fourth day, Maret showed up at the lighthouse door before dawn",
+      "after": "On the third day, Maret showed up at the lighthouse door before dawn",
+      "reason": "The visitors arrive the next morning. Moving this visit one day earlier reconciles their day-four arrival with chapter two's repeated four-days-ago statements; the warning, fish and goodbye remain."
+    },
+    {
+      "path": "book/chapters/book1/02-the-ones-who-came.md",
+      "before": "The first arrived at dawn. The second at midday. The third was already there when Kael turned around.",
+      "after": "The first arrived at dawn. The second later that morning. The third was already there when Kael turned around.",
+      "reason": "The later narration places Bren's arrival as the sun clears the sea-cliffs and the subsequent conversations in the morning. Change the opening summary rather than moving every later event."
+    },
+    {
+      "path": "book/chapters/book1/02-the-ones-who-came.md",
+      "before": "There was something about the directness that was restful after two days of people with agendas wrapped in care.",
+      "after": "There was something about the directness that was restful after a morning of people with agendas wrapped in care.",
+      "reason": "Sirvaine and Bren have just made their offers on the same morning; this local repair keeps the contrast without implying two days of emissary meetings."
+    },
+    {
+      "path": "book/chapters/book1/01-the-storm-that-remembered.md",
+      "before": "were not found until morning.",
+      "after": "were not found that night.",
+      "reason": "All three were missing overnight; one was recovered in the morning and two never were. Preserve the 26/23/3 outcome while avoiding an implication that all three were found."
+    }
+  ],
+  "controls": [
+    "Six open Gates and Master rank agree with locked canon; preserve Sirvaine's introduction.",
+    "Five elemental manifestations do not establish five named Gates or a Luminor rank; add no rank promotion.",
+    "Eight hundred years since First Siege and twelve hundred years of sealing are not explicitly the same event; no automatic numerical retcon.",
+    "Heart table and historical approval log disagree. Neither chapter depends on a numerical Heart frequency; leave that owner decision unresolved.",
+    "Bren's explanation of Malachar's fall and Sela's bloodline claim are character testimony, not locked canon updates."
+  ],
+  "iterations": [
+    {
+      "version": "A1",
+      "edits": 3,
+      "status": "Initial lead proposal created without seeing baseline response; private source retained."
+    },
+    {
+      "version": "A2",
+      "edits": 4,
+      "status": "After seeing baseline, add supported casualty-wording repair. Unblinded refinement, not independent configuration uplift."
+    }
+  ]
+}
