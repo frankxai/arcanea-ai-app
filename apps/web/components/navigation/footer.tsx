@@ -2,7 +2,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useCallback } from "react";
+import { useState, useRef, useId } from "react";
+import { submitWaitlist } from "@/lib/waitlist/submit";
 import { ArcaneanMark } from "@/components/brand/arcanea-mark";
 
 const footerLinks = {
@@ -75,39 +76,38 @@ const footerLinks = {
 
 export function Footer() {
   const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
+  const [status, setStatus] = useState<
+    "idle" | "pending" | "success" | "error"
+  >("idle");
+  const [message, setMessage] = useState("");
+  const [invalidEmail, setInvalidEmail] = useState(false);
+  const pending = useRef(false);
+  const input = useRef<HTMLInputElement>(null);
+  const id = useId();
+  const submitting = status === "pending";
 
-  const handleSubscribe = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      if (!email.trim() || submitting) return;
-      setSubmitting(true);
-      setError("");
-      try {
-        const res = await fetch("/api/subscribe", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email.trim(), source: "footer" }),
-        });
-        const data = await res.json().catch(() => ({}));
-        if (res.ok && data.success) {
-          setSubscribed(true);
-          setEmail("");
-        } else {
-          setError(
-            data.error || "We couldn't save your email. Please try again.",
-          );
-        }
-      } catch {
-        setError("We couldn't reach the server. Please try again.");
-      } finally {
-        setSubmitting(false);
-      }
-    },
-    [email, submitting],
-  );
+  async function handleSubscribe(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!email.trim() || pending.current) return;
+    pending.current = true;
+    setStatus("pending");
+    setMessage("Saving your email…");
+    setInvalidEmail(false);
+    const result = await submitWaitlist(email, "footer", {
+      endpoint: "/api/subscribe",
+    });
+    pending.current = false;
+    if (result.success) {
+      setStatus("success");
+      setMessage("Your email is on the updates list.");
+      setEmail("");
+    } else {
+      setStatus("error");
+      setMessage(result.error);
+      setInvalidEmail(result.invalidEmail === true);
+      if (result.invalidEmail) input.current?.focus();
+    }
+  }
 
   return (
     <footer
@@ -140,35 +140,55 @@ export function Footer() {
             <h3 className="mb-3 font-editorial text-lg italic font-normal leading-none text-white/50">
               Stay in the loop
             </h3>
-            {subscribed ? (
-              <p className="text-sm text-[var(--arc-brand-atlantean-teal)]">
-                Welcome to the multiverse.
-              </p>
-            ) : (
-              <form onSubmit={handleSubscribe} className="flex gap-2">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your@email.com"
-                  required
-                  aria-label="Email address for newsletter"
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-white/80 placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/30 focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
-                />
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="px-5 py-2.5 rounded-xl bg-[var(--arc-brand-atlantean-teal)]/12 border border-[var(--arc-brand-atlantean-teal)]/20 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors disabled:opacity-50"
-                >
-                  {submitting ? "..." : "Subscribe"}
-                </button>
-              </form>
-            )}
-            {error && !subscribed && (
-              <p role="alert" className="mt-2 text-sm text-white/60">
-                {error}
-              </p>
-            )}
+            <p id={`${id}-help`} className="mb-3 text-sm text-white/50">
+              Join the update list for worlds, stories and releases.
+            </p>
+            <form
+              onSubmit={handleSubscribe}
+              className="flex gap-2"
+              aria-busy={submitting}
+            >
+              <label htmlFor={`${id}-email`} className="sr-only">
+                Email address for Arcanea updates
+              </label>
+              <input
+                ref={input}
+                id={`${id}-email`}
+                name="email"
+                type="email"
+                autoComplete="email"
+                value={email}
+                onChange={(event) => {
+                  if (pending.current) return;
+                  setEmail(event.target.value);
+                  setStatus("idle");
+                  setMessage("");
+                  setInvalidEmail(false);
+                }}
+                placeholder="your@email.com"
+                required
+                maxLength={320}
+                readOnly={submitting}
+                aria-invalid={invalidEmail}
+                aria-describedby={`${id}-help ${id}-status`}
+                className="flex-1 min-w-0 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm text-white/80 placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[var(--arc-brand-atlantean-teal)]/30 focus:border-[var(--arc-brand-atlantean-teal)]/30 transition-colors"
+              />
+              <button
+                type="submit"
+                disabled={submitting}
+                className="px-5 py-2.5 rounded-xl bg-[var(--arc-brand-atlantean-teal)]/12 border border-[var(--arc-brand-atlantean-teal)]/20 text-sm font-medium text-[var(--arc-brand-atlantean-teal)] hover:bg-[var(--arc-brand-atlantean-teal)]/20 transition-colors disabled:opacity-50"
+              >
+                {submitting ? "Saving…" : "Subscribe"}
+              </button>
+            </form>
+            <p
+              id={`${id}-status`}
+              role={status === "error" ? "alert" : "status"}
+              aria-atomic="true"
+              className="mt-2 text-sm text-white/60"
+            >
+              {message}
+            </p>
           </div>
         </div>
 
