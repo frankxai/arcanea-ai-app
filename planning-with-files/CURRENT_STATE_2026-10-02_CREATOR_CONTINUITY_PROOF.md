@@ -8,7 +8,7 @@ Acceptance: actual complete prose inspected; exact Git patch check, inverse reco
 
 Files: docs/research/benchmarks/continuity-proof-2026-10-02/{manifest.json,edits.json,edited-manuscript.md,revision.patch,baseline.json,baseline-manuscript.md,baseline.patch,comparison.json}, the dated benchmark report, existing benchmark README and this task record.
 
-Initial A1 has three edits; A2 adds casualty wording after reading baseline. Preserve the unblinded refinement, baseline's five original edits and all failures. Serial baseline used 79.77s and reported $0.228300; independent review requests2USD/300s under fresh admission. Caps may overshoot; retain actual cost. No 3/5-cell fanout was authorized or run.
+Initial A1 has three edits; A2 adds casualty wording after reading baseline. Preserve the unblinded refinement, baseline's five original edits and all failures. Serial baseline used 79.77s and reported $0.228300; independent review requests 2 USD/300 s under fresh admission. Caps may overshoot; retain actual cost. No 3/5-cell fanout was authorized or run.
 
 Non-goals: release selection under #280, locked canon/frequency change, manuscript replacement, candidate promotion, rights grants, new repo/platform/schema, install, new worktree, paid/public posting or app merge. Stacked base is existing unmerged draft487; it is not accepted main. Reuse current worktree and retain SDK499/3c82 and consolidation487/fcad branches.
 
@@ -20,8 +20,12 @@ The review at c642d556 returned REVISE, not sign-off. Withdraw the Maret date ch
 
 ## Second review: narrative confirmed, evidence correction
 
-Review at2b42c2e7 returned REVISE for index encoding, premature final-review wording, undisclosed baseline budget and stale receipts. Restore original base UTF-8 index prose/em dashes and add one entry plus Markdown emphasis/blank-line normalization required by the native CI formatting ratchet; expose exact baseline task/header and source-hash equality; disclose max6 edits/1600 words versus no preset lead cap and asymmetric review; retain human acceptance pending. Original manuscripts and both current reading outputs are unchanged. Final-head review is pending at this assembly checkpoint and will be recorded on282 with its source hash.
+Review at 2b42c2e7 returned REVISE for index encoding, premature final-review wording, undisclosed baseline budget and stale receipts. Restore original base UTF-8 index prose/em dashes and add one entry plus Markdown emphasis/blank-line normalization required by the native CI formatting ratchet; expose exact baseline task/header and source-hash equality; disclose max6 edits/1600 words versus no preset lead cap and asymmetric review; retain human acceptance pending. Original manuscripts and both current reading outputs are unchanged. Final-head review is pending at this assembly checkpoint and will be recorded on 282 with its source hash.
 
 ## Third review: methods and report correction
 
 Review at c8e78e66 returned REVISE with three low and one medium findings, while confirming the three A3 repairs. Disclose shared Luminor kernel/editorial override and unequal lead context, full user-prompt hash coverage and measured whitespace response count. Remove the unsupported restarted-export claim; mark raw private exports non-reproducible from public files and inverse/stale checks as in-memory replacements. Add the existing PROLEPSIS question to the author ledger. No manuscript output changes. Final-head review and native checks remain pending at this assembly checkpoint.
+
+## Methods-review source binding and final claims correction
+
+The review naming 63d95b28 returned REVISE, but its diff hash differs from the submitted source; preserve it as a failed source binding, not exact-source approval. Its textual findings prompted normalized baseline transcription and public response-member count/hash, private runner-assertion labels, narrower reproducibility wording, four temporal edits plus one biography count, heuristic-result scope and the recorded bounded runtime-budget constraint. Both manuscript outputs remain unchanged. A smaller final packet contains all current complete files and unchanged source/canon, omitting repeated historical diffs; earlier attempts remain preserved privately. Final-head correctly bound review and native CI remain pending at this checkpoint.

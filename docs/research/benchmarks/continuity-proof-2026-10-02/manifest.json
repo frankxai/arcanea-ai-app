@@ -35,7 +35,7 @@
   },
   "generatedWith": {
     "A": "Codex lead A3, three replacements; ambiguous Maret-date edit withdrawn after independent REVISE",
-    "B": "Claude Code2.1.287 claude-sonnet-5-5/high, explicit1USD requested cap, actual cost/seconds in comparison"
+    "B": "Claude Code 2.1.287 claude-sonnet-5-5/high, explicit 1 USD requested cap, actual cost/seconds in comparison"
   },
   "sharedExporter": {
     "repo": "frankxai/author-os",
@@ -65,8 +65,8 @@
     "edits.json": "a4a5cb83fc1bb60e84646cfec0123fd25ec9cac32829f0108777d7321b7b8575",
     "baseline-manuscript.md": "c3de48bef01a755ad08c6ab4e815288e885fca714884389aadd1aa2c971a8bde",
     "baseline.patch": "9c5c65817ed2eb3efb7cc4d798ad98f3497a3fdd83d4467a522a1b7fee6dc13a",
-    "baseline.json": "dd03145328facee76c790e5f70412d4b49ef59e0e48a0a9f766f0e8a7a0eb797",
-    "comparison.json": "32c3d1e95a36a1ab750ebb5e2bb976675d52b0126282367ecf5abc0c485e61c8"
+    "baseline.json": "bacae70445565e62c49417b2a1ada5fc73e6b530480fa187bcb3fb4d3c6ac700",
+    "comparison.json": "dd121a35e3d99fd486bb39de2f1f70793cc19ff3c7b753759ea9b34f1a4212bd"
   },
   "authorQuestions": "Maret mother/newborn memory with explicit three-way choices; day counting, ship identity, sleep duration and Void/Spirit naming remain unresolved."
 }

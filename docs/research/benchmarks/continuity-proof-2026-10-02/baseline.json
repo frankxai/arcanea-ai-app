@@ -106,7 +106,15 @@
       "words": 964,
       "method": "Whitespace-delimited tokens in the complete provider response.txt, including JSON keys/formatting and any code fences; excludes hidden reasoning, input and system prompts.",
       "responseSha256": "d6283d181e2c9557154d9f7522209fb48762028a6585027091bb206d7d09df07",
-      "within1600ByThisMeasure": true
+      "within1600ByThisMeasure": true,
+      "verification": "Private runner assertion: response.txt is not committed. Public normalized response-object count/hash is provided separately."
+    },
+    "publicTranscription": {
+      "status": "Normalized JSON transcription without semantic edits; original response.txt is private.",
+      "serialization": "JSON response member only: Python json.dumps(response, indent=2, ensure_ascii=False) plus one LF, encoded UTF-8.",
+      "wordCountWhitespace": 962,
+      "sha256": "49ad89446ee9a724a22942cc2dd99af67f4193a757e195db725b903a1033727c",
+      "scope": "Reproducible from the committed response member using this recipe. Private original response hash/count and original prompt hash are runner assertions, not publicly byte-verifiable receipts."
     }
   },
   "promptContract": {
@@ -136,6 +144,7 @@
     "hashCoverage": "promptSha256 covers the full UTF-8 user prompt: exactTaskText including its terminal LF, followed immediately by json.dumps(evidence, ensure_ascii=False) using Python default separators. It includes all supplied source text and input metadata, excludes the separately supplied system prompt, and is not a header-only hash. Exact full prompt bytes remain in private evidence, not committed here.",
     "taskHeaderSha256": "a72f20d503d6134ac96930d2f72b175302eaaa7e53a05e4d4995cd4104666077",
     "serializedEvidenceSha256": "c7a9dc4ef4e0935dca5d728fe8dedee91e9ecd767ac3f8cf82c1678992e45094",
-    "fullPromptBytes": 66403
+    "fullPromptBytes": 66403,
+    "publicVerification": "The full original user prompt and separately supplied system prompt are private. Prompt/hash coverage is a runner assertion; public pinned source blobs and the exact header can be inspected, but the original full evidence serialization cannot be reconstructed from these public files alone."
   }
 }
