@@ -250,5 +250,54 @@
     "historyUnchanged": true,
     "clearanceGranted": false,
     "remaining": "Historical copies and any separately authorized basis remain unresolved. Other third-party imports, root licence and candidate readiness are not cleared."
+  },
+  "docCoauthoringEvidence": {
+    "baseCommit": "24ddaec778c931ce2536986c611f8a5db74ec232",
+    "localPath": ".claude/skills/doc-coauthoring/SKILL.md",
+    "localBlob": "64b962ad16442f65182d80c0b0bf838e5c9a77f7",
+    "localSha256": "188c34046043d75419f5fb0bebdf15230bee00f89d4364d901ea46cc3feb6ddd",
+    "upstreamRepo": "anthropics/skills",
+    "observedUpstreamCommit": "8a1541c4a3ffa5a20a5a91de0dcf3f0bab1d1ef4",
+    "upstreamSkillBlob": "a5a69839ef4a161131d80b6daef10037a9686f4a",
+    "upstreamSkillSha256": "2e47d78846faeea4a56e9809c52700087a15a2155a3f293a3efbaded81398ef4",
+    "importCommit": "be859c91a352c942d5b0b82e4acdc5d1cf0ef6c3",
+    "historicalUpstreamImportPin": "not recorded; current/pinned comparison only",
+    "localNotice": "absent",
+    "upstreamRootLicense": "absent at observed snapshot",
+    "upstreamSkillCompanionLicense": "absent at observed snapshot",
+    "clearance": false,
+    "upstreamEvidence": [
+      {
+        "path": "README.md",
+        "blob": "eb54ee8b92f2d40b4b26569be0772be3c1e23156",
+        "sha256": "2fb9c4cc026366ea6e21c60cb23c908a4d27c62071819cc06beffaac102d0694",
+        "url": "https://github.com/anthropics/skills/blob/8a1541c4a3ffa5a20a5a91de0dcf3f0bab1d1ef4/README.md"
+      },
+      {
+        "path": ".claude-plugin/marketplace.json",
+        "blob": "1969092344b3405a5459f82c1dd252d30b335a6e",
+        "sha256": "9bafecba8a8fd0a4d73670cc442504fcb27394d3f8960a5171f570d443b81936",
+        "url": "https://github.com/anthropics/skills/blob/8a1541c4a3ffa5a20a5a91de0dcf3f0bab1d1ef4/.claude-plugin/marketplace.json"
+      },
+      {
+        "path": "THIRD_PARTY_NOTICES.md",
+        "blob": "ffef92c48b351a3ed036556ed32dda934e8cf41a",
+        "sha256": "a8ff7a84dee9dfb42ab448de281784387ceafdf63881b7c070ee2de7f6ed865c",
+        "url": "https://github.com/anthropics/skills/blob/8a1541c4a3ffa5a20a5a91de0dcf3f0bab1d1ef4/THIRD_PARTY_NOTICES.md"
+      }
+    ],
+    "date": "2026-10-02",
+    "localMutation": "Only added frontmatter version line; removing it reconstructs pinned upstream bytes",
+    "retainedPath": ".claude/skills/doc-coauthoring/SKILL.md",
+    "removedDuplicatePath": ".claude/skills/external/doc-coauthoring/SKILL.md",
+    "provenanceNote": ".claude/skills/doc-coauthoring/UPSTREAM.md",
+    "rightsStatus": "applicable-grant-and-notice-review-pending",
+    "readyCandidates": 0,
+    "limitations": [
+      "Observed upstream source is not a verified historical import pin",
+      "Generic README Apache statement is not treated as skill-specific clearance",
+      "No sibling licence copied or root licence selected",
+      "Current-tree deduplication does not settle historical redistribution"
+    ]
   }
 }

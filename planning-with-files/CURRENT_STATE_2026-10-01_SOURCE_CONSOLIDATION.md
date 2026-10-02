@@ -364,3 +364,26 @@ Independent cumulative review only after machine admission; recent HOLD5127/6144
 Rollback: reviewed scoped restoration from pinned base; preserve all later work.
 Budget: ordinary text/removal/small tests, no install/local build/worktree/fanout.
 Stop: reviewable draft and verified issue/hub receipts; full goal stays active.
+
+## Doc-coauthoring attribution and duplicate, October 2
+
+Scope: trace the remaining recognized duplicate pair; remove its external copy
+and active index row; attach explicit observed-source attribution to the retained body.
+Owner: Codex, draft487/issue276. Base:24ddaec778c931ce2536986c611f8a5db74ec232.
+Files: one explicit SKILL.md deletion, one UPSTREAM.md addition, existing index,
+rights JSON/Markdown, survivor JSON/Markdown and this task record.
+Acceptance: retained skill and four candidates byte-preserved;137 remaining index
+rows preserve metadata; observed upstream bytes reconstruct after removing only
+the local version line; source hashes/import history and rights gaps are explicit.
+Tracked path references are the active index and March24 historical skills audit;
+that dated audit and its earlier grading claims remain historical evidence.
+Non-goals: a licence grant, historical clearance, generic-source retirement,
+working-set links, global install/uninstall, canon, archive/history/merge/release.
+Verification: pinned official GitHub tree/content/README/marketplace/notices;
+immutable before/after inventories, equality proofs, existing audit4/catalog11,
+named-file/secret checks and four exact-head native CI contexts.
+Upstream import pin remains unknown. No root/sibling licence is invented from
+generic README language. Independent cumulative review requires fresh admission.
+Rollback: reviewed scoped revert of these8 files, preserving all later work.
+Budget: ordinary text/small tests, no install/build/worktree/provider fanout.
+Stop: evidence-bound draft and issue/hub receipts; full goal remains active.

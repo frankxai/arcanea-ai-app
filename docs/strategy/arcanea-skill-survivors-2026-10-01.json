@@ -3641,5 +3641,18 @@
       "No source rights clearance or specialty replacement",
       "Broad root plugin remains uncurated; independent review and release gates open"
     ]
+  },
+  "docCoauthoringRemediation": {
+    "date": "2026-10-02",
+    "baseCommit": "24ddaec778c931ce2536986c611f8a5db74ec232",
+    "removedPath": ".claude/skills/external/doc-coauthoring/SKILL.md",
+    "retainedPath": ".claude/skills/doc-coauthoring/SKILL.md",
+    "bodyBlob": "64b962ad16442f65182d80c0b0bf838e5c9a77f7",
+    "bodySha256": "188c34046043d75419f5fb0bebdf15230bee00f89d4364d901ea46cc3feb6ddd",
+    "activeIndexRowsRemoved": 1,
+    "provenanceNote": ".claude/skills/doc-coauthoring/UPSTREAM.md",
+    "rightsStatus": "pending; observed-source attribution is not clearance",
+    "canonicalCandidates": 4,
+    "readySkills": 0
   }
 }

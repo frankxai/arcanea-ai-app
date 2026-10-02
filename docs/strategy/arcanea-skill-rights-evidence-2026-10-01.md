@@ -90,3 +90,19 @@ tools through their existing owner/provider. No global skill is uninstalled and
 no external tool is activated. Four internal candidates remain zero ready.
 App checks and independent review must bind the new head before promotion;
 machine admission held the reviewer before invocation in this slice.
+
+## Doc-coauthoring provenance, October 2
+
+The two local bodies are identical, blob64b962ad16442f65182d80c0b0bf838e5c9a77f7.
+They entered the app together at be859c91a352c942d5b0b82e4acdc5d1cf0ef6c3.
+Against observed upstream8a1541c4a3ffa5a20a5a91de0dcf3f0bab1d1ef4, the only local
+change is an added frontmatter version line; removing it restores the exact bytes.
+The external duplicate and its index row are removed; the retained body is unchanged.
+Its new `UPSTREAM.md` records attribution, hashes, the change and remaining limits.
+
+The pinned upstream snapshot has no root or skill-folder licence. Its README's
+generic Apache statement and example-skills membership are evidence, not a verified
+skill-specific grant. No sibling licence was copied. The additional JSON evidence
+records source/notice observations without changing the original ten historical
+entries. Applicable grant/notices and historical import rights remain unresolved;
+no clearance, root-licence decision or catalog promotion follows.

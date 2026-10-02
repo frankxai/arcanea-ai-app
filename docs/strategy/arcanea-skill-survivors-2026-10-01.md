@@ -159,3 +159,17 @@ external path users. Working-set links to the canonical root remain separate wor
 The package still has four unchanged candidates and zero ready entries. Other
 roots, broad root-plugin discovery, rights, evaluation/review, creator acceptance
 and self-contained installation remain open; no source retirement or release.
+
+## Remaining recognized duplicate pair, October 2
+
+The redundant external doc-coauthoring copy is removed after its exact body and
+single-file subtree matched the retained working-set source. One active index row
+is removed; all other index data and historical fold evidence are preserved.
+The retained skill body is unchanged. Its new upstream-provenance note records the
+observed Anthropic source, local version-line modification and unresolved terms.
+Rights evidence is in the existing rights map; no licence or clearance is inferred.
+
+The committed working-set inventory has zero duplicated recognized scalar names,
+with92 unique names retained. Its38 entries needing name review remain unresolved;
+this is not proof of complete skills CLI discovery or external consumer migration.
+The curated root still has four unchanged candidates and zero ready skills.
