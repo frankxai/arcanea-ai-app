@@ -183,6 +183,7 @@ function preparePlugin(packageRoot, sourceCommit) {
     mode: "100644",
   });
   return {
+    sourceRoot: packageRoot,
     files: files.sort((a, b) =>
       a.path < b.path ? -1 : a.path > b.path ? 1 : 0,
     ),
@@ -238,6 +239,12 @@ function checkOutput(output) {
 
 function materializePlugin(plan, output, { dryRun = false } = {}) {
   output = checkOutput(output);
+  if (
+    ["skills", "bin", "scripts"].some((directory) =>
+      contained(path.join(plan.sourceRoot, directory), output),
+    )
+  )
+    throw new Error("Output overlaps canonical source or compiler directories");
   if (dryRun)
     return {
       pluginRoot: path.join(output, "plugin"),

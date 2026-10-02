@@ -122,8 +122,9 @@ This is not an available public plugin. Synthetic ready fixtures establish
 transport behavior only; no real skill has been promoted or installed.
 
 Output parents must exist, be directories without links and stay stable under
-one writer. The builder exclusively creates a new wrapper, assembles inside its
-hidden `.staging` directory, then renames the complete directory to `plugin`.
+one writer. Output inside canonical `skills`, `bin` or `scripts` is refused to
+preserve source. The builder exclusively creates a new wrapper, assembles inside
+its hidden `.staging` directory, then renames the complete directory to `plugin`.
 An interrupted/failed write leaves inspectable new staging without the final
 plugin path. A retry requires a new output; existing outputs are never replaced
 or automatically deleted. This is not crash-safe durability or defense against

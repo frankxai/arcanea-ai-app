@@ -468,6 +468,22 @@ test("CLI refuses typo, repeated option or missing output without invoking home 
   }
 });
 
+test("output cannot grow inside canonical skills or compiler source", (t) => {
+  const { pkg, commit, git } = fixture(t);
+  const plan = preparePlugin(pkg, commit),
+    before = git("status", "--porcelain");
+  for (const directory of [
+    "skills/world-build/generated",
+    "scripts/generated",
+    "bin/generated",
+  ]) {
+    const output = join(pkg, directory);
+    assert.throws(() => materializePlugin(plan, output), /overlaps canonical/i);
+    assert.equal(existsSync(output), false);
+  }
+  assert.equal(git("status", "--porcelain"), before);
+});
+
 test(
   "native Claude validator accepts isolated synthetic transport manifest",
   { skip: !process.env.ARCANEA_PLUGIN_VALIDATOR },
