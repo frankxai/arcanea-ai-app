@@ -10,12 +10,24 @@ export interface WorldManifest {
   genesisPrompt?: string;
   premise?: string;
   laws?: string[];
-  mood?: "fantasy" | "sci-fi" | "horror" | "steampunk" | "mythological" | "cosmic" | "other";
+  mood?:
+    | "fantasy"
+    | "sci-fi"
+    | "horror"
+    | "steampunk"
+    | "mythological"
+    | "cosmic"
+    | "other";
   visualDna?: { palette?: string[]; style?: string; motifs?: string[] };
   theme?: { audio?: string; prompt?: string };
   cover?: string;
   creator: { handle: string; wallet?: string };
-  license?: { spdx: string; pointer?: string; commercial?: boolean; remix?: "allow" | "allow-attribution" | "deny" };
+  license?: {
+    spdx: string;
+    pointer?: string;
+    commercial?: boolean;
+    remix?: "allow" | "allow-attribution" | "deny";
+  };
   royalty?: { policy?: string; splits?: { to: string; bps: number }[] };
   content: Record<string, string>;
   agents?: WorldAgent[];
@@ -63,10 +75,17 @@ export interface WorldSpec {
   mood?: WorldManifest["mood"];
   visualDna?: WorldManifest["visualDna"];
   theme?: WorldManifest["theme"];
-  characters?: { name: string; role?: string; persona?: string; backstory?: string }[];
+  characters?: {
+    name: string;
+    role?: string;
+    persona?: string;
+    backstory?: string;
+  }[];
   locations?: { name: string; description?: string }[];
   agents?: WorldAgent[];
   creator?: { handle: string; wallet?: string };
+  license?: WorldManifest["license"];
+  royalty?: WorldManifest["royalty"];
   idSeed?: string;
 }
 
@@ -78,35 +97,113 @@ export interface ChainAdapter {
 
 export function worldId(seed: string): string;
 export function slugify(name: string): string;
-export function buildManifest(spec: WorldSpec & Partial<WorldManifest>): WorldManifest;
-export function validateManifest(m: WorldManifest): { valid: boolean; errors: string[] };
-export function contentHash(files: WorldFile[], manifest: WorldManifest): string;
+export function buildManifest(
+  spec: WorldSpec & Partial<WorldManifest>,
+): WorldManifest;
+export function validateManifest(m: WorldManifest): {
+  valid: boolean;
+  errors: string[];
+};
+export function contentHash(
+  files: WorldFile[],
+  manifest: WorldManifest,
+): string;
 export function readWorld(dir: string): Promise<World>;
-export function writeManifest(dir: string, manifest: WorldManifest): Promise<void>;
-export function genesis(sentence: string, opts?: { llm?: (p: string) => Promise<object>; idSeed?: string }): Promise<WorldSpec>;
-export function genesisOffline(sentence: string, opts?: { idSeed?: string }): WorldSpec;
-export function scaffoldWorld(dir: string, spec: WorldSpec, opts?: { useWorldEngine?: boolean }): Promise<WorldManifest>;
-export function createWorld(dir: string, sentence: string, opts?: { llm?: (p: string) => Promise<object>; idSeed?: string; creator?: { handle: string }; useWorldEngine?: boolean }): Promise<{ dir: string; manifest: WorldManifest }>;
-export function assignmentsFor(manifest: WorldManifest, harness: string): WorldAgent[];
-export function harnessContext(args: { dir: string; harness: string; manifest: WorldManifest }): {
+export function writeManifest(
+  dir: string,
+  manifest: WorldManifest,
+): Promise<void>;
+export function genesis(
+  sentence: string,
+  opts?: { llm?: (p: string) => Promise<object>; idSeed?: string },
+): Promise<WorldSpec>;
+export function genesisOffline(
+  sentence: string,
+  opts?: { idSeed?: string },
+): WorldSpec;
+export function scaffoldWorld(
+  dir: string,
+  spec: WorldSpec,
+  opts?: { useWorldEngine?: boolean },
+): Promise<WorldManifest>;
+export function createWorld(
+  dir: string,
+  sentence: string,
+  opts?: {
+    llm?: (p: string) => Promise<object>;
+    idSeed?: string;
+    creator?: { handle: string };
+    useWorldEngine?: boolean;
+    license?: WorldManifest["license"];
+    royalty?: WorldManifest["royalty"];
+  },
+): Promise<{ dir: string; manifest: WorldManifest }>;
+/** Always rejects with code CANON_PROMOTION_REQUIRES_REVIEW; never writes canon. */
+export function evolveCharacter(
+  dir: string,
+  characterSlug: string,
+  opts?: { summary?: string; ts?: string },
+): Promise<never>;
+/** Always rejects with code CANON_PROMOTION_REQUIRES_REVIEW; never writes canon. */
+export function evolve(
+  dir: string,
+  characterSlug: string,
+  opts?: { summary?: string; ts?: string },
+): Promise<never>;
+export function assignmentsFor(
+  manifest: WorldManifest,
+  harness: string,
+): WorldAgent[];
+export function harnessContext(args: {
+  dir: string;
+  harness: string;
+  manifest: WorldManifest;
+}): {
   harness: string;
   assignments: WorldAgent[];
   addCharacter(c: object): Promise<string>;
-  appendLore(l: { title: string; body: string; canonLevel?: number }): Promise<string>;
+  appendLore(l: {
+    title: string;
+    body: string;
+    canonLevel?: number;
+  }): Promise<string>;
   addQuest(q: { title: string; body: string }): Promise<string>;
   commit(msg: string): Promise<{ sha: string } | null>;
 };
-export function buildIndex(world: World): { worldId: string; embedding: { model: string; dim: number }; nodes: object[]; chunks: object[] };
-export function verifySignature(secret: string, rawBody: string | Buffer, signatureHeader: string): boolean;
+export function buildIndex(world: World): {
+  worldId: string;
+  embedding: { model: string; dim: number };
+  nodes: object[];
+  chunks: object[];
+};
+export function verifySignature(
+  secret: string,
+  rawBody: string | Buffer,
+  signatureHeader: string,
+): boolean;
 export function handlePush(args: {
   rawBody: string | Buffer;
   signature?: string;
   secret?: string;
   loadWorld: (payload: object) => Promise<World>;
   persistIndex: (index: object, meta: object) => Promise<void>;
-}): Promise<{ ok: boolean; status: number; worldId?: string; sha?: string; nodes?: number; chunks?: number; error?: string }>;
+}): Promise<{
+  ok: boolean;
+  status: number;
+  worldId?: string;
+  sha?: string;
+  nodes?: number;
+  chunks?: number;
+  error?: string;
+}>;
 export function mockChain(chain?: string, standard?: string): ChainAdapter;
-export function claimWorldProof(args: { dir: string; adapter?: ChainAdapter; chain?: string; repoPointer?: string; now?: string }): Promise<{
+export function claimWorldProof(args: {
+  dir: string;
+  adapter?: ChainAdapter;
+  chain?: string;
+  repoPointer?: string;
+  now?: string;
+}): Promise<{
   entry: ProvenanceEntry;
   contentHash: string;
   wallet: string;

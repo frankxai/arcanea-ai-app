@@ -297,7 +297,9 @@ jobs:
         run: pnpm --dir apps/web test:saga-gate
 
       - name: Run package tests
-        run: pnpm test:quick
+        run: |
+          pnpm test:quick
+          node --test packages/world-sdk/tests/*.test.mjs
 
       - name: Verify public collection assets and proposal relationships
         run: |

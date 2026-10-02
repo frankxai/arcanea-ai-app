@@ -65,12 +65,15 @@ ${manifest.tagline || ""}
 An Arcanea world. The repo is the source of truth — portable, ownable, agent-editable.
 See \`world.arcanea.json\`. World id: \`${manifest.id}\`.
 
+Content licence: ${manifest.license?.spdx || "not selected"}.
+Royalty terms: ${manifest.royalty ? "declared in world.arcanea.json" : "not selected"}.
+
 Built with the [Arcanea World Repo Standard](https://arcanea.ai).
 `;
 }
 
 function licenseDoc(manifest) {
-  return `# License\n\nSPDX: ${manifest.license?.spdx || "CC-BY-4.0"}\nCommercial: ${!!manifest.license?.commercial}\nRemix: ${manifest.license?.remix || "allow-attribution"}\n\nThis world's canon is owned by its creator (\`${manifest.creator?.handle}\`).\n`;
+  return `# Content licence declaration\n\nSPDX: ${manifest.license.spdx}\nCommercial: ${manifest.license.commercial ?? "not specified"}\nRemix: ${manifest.license.remix ?? "not specified"}\n\nCaller-supplied declaration. This summary does not include the licence text or verify rights over the world's sources.\n`;
 }
 
 /**
@@ -98,15 +101,27 @@ export async function scaffoldWorld(dir, spec, { useWorldEngine = true } = {}) {
   const files = [
     { path: "README.md", bytes: readme(manifest) },
     { path: "canon/world-bible.md", bytes: worldBible(manifest) },
-    { path: "licenses/LICENSE.md", bytes: licenseDoc(manifest) },
-    { path: "licenses/royalty.json", bytes: JSON.stringify(manifest.royalty, null, 2) + "\n" },
     { path: "media/.gitkeep", bytes: "" },
     { path: "quests/.gitkeep", bytes: "" },
     { path: "books/.gitkeep", bytes: "" },
   ];
 
+  // Other pointers belong to the caller; policy metadata is not a write path.
+  if (manifest.license?.pointer === "licenses/LICENSE.md") {
+    files.push({ path: "licenses/LICENSE.md", bytes: licenseDoc(manifest) });
+  }
+  if (manifest.royalty?.policy === "licenses/royalty.json") {
+    files.push({
+      path: "licenses/royalty.json",
+      bytes: JSON.stringify(manifest.royalty, null, 2) + "\n",
+    });
+  }
+
   for (const c of characters) {
-    files.push({ path: `characters/${slugify(c.name)}.md`, bytes: characterDoc(c) });
+    files.push({
+      path: `characters/${slugify(c.name)}.md`,
+      bytes: characterDoc(c),
+    });
   }
   for (const l of spec.locations || []) {
     files.push({
@@ -115,7 +130,10 @@ export async function scaffoldWorld(dir, spec, { useWorldEngine = true } = {}) {
     });
   }
   for (const a of manifest.agents || []) {
-    files.push({ path: `agents/${a.id}.md`, bytes: `# ${a.id}\n\n- harness: ${a.harness}\n- role: ${a.role}\n${a.skill ? `- skill: ${a.skill}\n` : ""}` });
+    files.push({
+      path: `agents/${a.id}.md`,
+      bytes: `# ${a.id}\n\n- harness: ${a.harness}\n- role: ${a.role}\n${a.skill ? `- skill: ${a.skill}\n` : ""}`,
+    });
   }
 
   await writeManifest(dir, manifest);
@@ -127,6 +145,13 @@ export async function scaffoldWorld(dir, spec, { useWorldEngine = true } = {}) {
 export async function createWorld(dir, sentence, opts = {}) {
   const spec = await genesis(sentence, opts);
   if (opts.creator) spec.creator = opts.creator;
-  const manifest = await scaffoldWorld(dir, spec, { useWorldEngine: opts.useWorldEngine !== false });
+  // Enrichment is creative output, not authority to select rights or fees.
+  delete spec.license;
+  delete spec.royalty;
+  if (opts.license != null) spec.license = opts.license;
+  if (opts.royalty != null) spec.royalty = opts.royalty;
+  const manifest = await scaffoldWorld(dir, spec, {
+    useWorldEngine: opts.useWorldEngine !== false,
+  });
   return { dir, manifest };
 }

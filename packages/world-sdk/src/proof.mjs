@@ -7,14 +7,25 @@ import { contentHash } from "./contenthash.mjs";
 import { SCHEMA_VERSION } from "./manifest.mjs";
 
 /** The onchain record shape (see WORLD_REPO_STANDARD.md §5). */
-export function computeProof({ manifest, hash, chain, repoPointer, wallet, now }) {
+export function computeProof({
+  manifest,
+  hash,
+  chain,
+  repoPointer,
+  wallet,
+  now,
+}) {
   return {
     worldId: manifest.id,
     creatorWallet: wallet,
     contentHash: hash,
     schemaVersion: SCHEMA_VERSION,
-    licensePointer: manifest.license?.pointer || "licenses/LICENSE.md",
-    royaltyPolicy: manifest.royalty?.policy || "licenses/royalty.json",
+    ...(manifest.license?.pointer
+      ? { licensePointer: manifest.license.pointer }
+      : {}),
+    ...(manifest.royalty?.policy
+      ? { royaltyPolicy: manifest.royalty.policy }
+      : {}),
     repoOrBundlePointer: repoPointer || manifest.repoUrl || "",
     timestamp: now,
     chain,
@@ -30,11 +41,15 @@ export function mockChain(chain = "solana", standard = "metaplex-core") {
   return {
     chain,
     async getOrCreateWallet(handle) {
-      const h = createHash("sha256").update("wallet:" + handle).digest("hex");
+      const h = createHash("sha256")
+        .update("wallet:" + handle)
+        .digest("hex");
       return { pubkey: "So1" + h.slice(0, 41) }; // solana-shaped, deterministic
     },
     async mint(proof) {
-      const ref = createHash("sha256").update(proof.contentHash + proof.worldId + chain).digest("hex");
+      const ref = createHash("sha256")
+        .update(proof.contentHash + proof.worldId + chain)
+        .digest("hex");
       return { ref, standard };
     },
   };
@@ -49,16 +64,31 @@ export function mockChain(chain = "solana", standard = "metaplex-core") {
  * @param {string} [args.repoPointer]
  * @param {string} [args.now]      ISO timestamp (inject for determinism; defaults to wall clock)
  */
-export async function claimWorldProof({ dir, adapter = mockChain(), chain, repoPointer, now }) {
+export async function claimWorldProof({
+  dir,
+  adapter = mockChain(),
+  chain,
+  repoPointer,
+  now,
+}) {
   const world = await readWorld(dir);
   const { manifest, files } = world;
   const hash = contentHash(files, manifest);
   const targetChain = chain || adapter.chain || "solana";
 
-  const wallet = await adapter.getOrCreateWallet(manifest.creator?.handle || "anon");
+  const wallet = await adapter.getOrCreateWallet(
+    manifest.creator?.handle || "anon",
+  );
   manifest.creator = { ...(manifest.creator || {}), wallet: wallet.pubkey };
 
-  const proof = computeProof({ manifest, hash, chain: targetChain, repoPointer, wallet: wallet.pubkey, now: now || new Date().toISOString() });
+  const proof = computeProof({
+    manifest,
+    hash,
+    chain: targetChain,
+    repoPointer,
+    wallet: wallet.pubkey,
+    now: now || new Date().toISOString(),
+  });
   const minted = await adapter.mint(proof);
 
   const entry = {
