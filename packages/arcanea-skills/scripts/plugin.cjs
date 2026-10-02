@@ -82,6 +82,8 @@ function preparePlugin(packageRoot, sourceCommit) {
       throw new Error(`Unsupported or untracked source mode: ${relativePath}`);
     const bytes = fs.readFileSync(file);
     const blob = git(root, ["show", `${sourceCommit}:${gitPath}`]);
+    if (!canonicalBytes(relativePath, blob).equals(blob))
+      throw new Error(`Committed text must use LF: ${relativePath}`);
     if (
       !bytes.equals(blob) &&
       !canonicalBytes(relativePath, bytes).equals(
@@ -100,6 +102,7 @@ function preparePlugin(packageRoot, sourceCommit) {
     "scripts/plugin.cjs",
     "scripts/catalog.cjs",
     "package.json",
+    ".gitattributes",
   ];
   const engineHashes = Object.fromEntries(
     engines.map((file) => [file, digest(pinned(file).bytes)]),
@@ -159,6 +162,10 @@ function preparePlugin(packageRoot, sourceCommit) {
       );
     const members = source.files.map((file) => {
       const { bytes, mode } = pinned(`${skill.path}/${file}`);
+      if (mode !== "100644")
+        throw new Error(
+          `Executable support files require mode-bound review; refused: ${skill.name}/${file}`,
+        );
       const sha256 = digest(bytes);
       files.push({ path: `skills/${skill.name}/${file}`, bytes, mode });
       return { path: file, sha256, mode };
@@ -254,9 +261,16 @@ function materializePlugin(plan, output, { dryRun = false } = {}) {
   output = checkOutput(output);
   if (
     contained(plan.sourceRoot, output) ||
-    [".claude", ".claude-plugin", "skills", "commands", "agents", "hooks"].some(
-      (directory) =>
-        contained(path.join(plan.repositoryRoot, directory), output),
+    [
+      ".git",
+      ".claude",
+      ".claude-plugin",
+      "skills",
+      "commands",
+      "agents",
+      "hooks",
+    ].some((directory) =>
+      contained(path.join(plan.repositoryRoot, directory), output),
     )
   )
     throw new Error("Output overlaps canonical source or compiler directories");

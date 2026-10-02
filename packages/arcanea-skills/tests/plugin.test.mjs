@@ -10,7 +10,6 @@ import {
   rmSync,
   symlinkSync,
   writeFileSync,
-  statSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
@@ -33,7 +32,7 @@ const {
 } = require("../scripts/plugin.cjs");
 const source = fileURLToPath(new URL("../", import.meta.url));
 
-function fixture(t, ready = true) {
+function fixture(t, ready = true, extraText = false) {
   const dir = mkdtempSync(join(tmpdir(), "arcanea-plugin-"));
   t.after(() => {
     const rel = relative(resolve(tmpdir()), resolve(dir));
@@ -50,11 +49,17 @@ function fixture(t, ready = true) {
     "scripts/plugin.cjs",
     "scripts/catalog.cjs",
     "package.json",
+    ".gitattributes",
   ]) {
     mkdirSync(dirname(join(pkg, file)), { recursive: true });
     cpSync(join(source, file), join(pkg, file));
   }
   const catalog = loadCatalog(pkg);
+  if (extraText)
+    writeFileSync(
+      join(pkg, "skills/world-build/references/example.svg"),
+      "<svg>\r\n</svg>\r\n",
+    );
   const git = (...args) =>
     execFileSync("git", ["-C", repo, ...args], {
       encoding: "utf8",
@@ -136,6 +141,7 @@ function fixture(t, ready = true) {
     "packages/arcanea-skills/bin",
     "packages/arcanea-skills/scripts",
     "packages/arcanea-skills/package.json",
+    "packages/arcanea-skills/.gitattributes",
   );
   git(
     "commit",
@@ -309,6 +315,7 @@ test("dirty compiler, catalog validator, CLI or package manifest refuses before 
     "scripts/catalog.cjs",
     "bin/plugin.js",
     "package.json",
+    ".gitattributes",
   ]) {
     const target = join(pkg, file),
       before = readFileSync(target);
@@ -523,7 +530,7 @@ test("Git symlink mode is refused when the working file is plain text", (t) => {
   assert.equal(existsSync(output), false);
 });
 
-test("support executable mode is recorded and applied on POSIX", (t) => {
+test("support executable mode cannot bypass content-only review evidence", (t) => {
   const { pkg, git, output } = fixture(t);
   git(
     "update-index",
@@ -531,19 +538,84 @@ test("support executable mode is recorded and applied on POSIX", (t) => {
     "packages/arcanea-skills/skills/world-build/references/example.md",
   );
   git("commit", "--quiet", "-m", "Synthetic executable support mode");
-  const plan = preparePlugin(pkg, git("rev-parse", "HEAD"));
-  const member = plan.receipt.skills[0].files.find(
-    (file) => file.path === "references/example.md",
+  assert.throws(
+    () => preparePlugin(pkg, git("rev-parse", "HEAD")),
+    /executable support files/i,
   );
-  assert.equal(member.mode, "100755");
-  const result = materializePlugin(plan, output);
-  if (process.platform !== "win32")
-    assert.equal(
-      statSync(
-        join(result.pluginRoot, "skills/world-build/references/example.md"),
-      ).mode & 0o777,
-      0o755,
-    );
+  assert.equal(existsSync(output), false);
+});
+
+test("committed CRLF text is refused even when its canonical passport hash matches", (t) => {
+  const { pkg, git, output, repo } = fixture(t);
+  const relativePath =
+    "packages/arcanea-skills/skills/world-build/references/example.md";
+  const file = join(repo, relativePath);
+  const crlf = Buffer.from(
+    readFileSync(file, "utf8")
+      .replaceAll("\r\n", "\n")
+      .replaceAll("\n", "\r\n"),
+  );
+  const blob = execFileSync(
+    "git",
+    ["-C", repo, "hash-object", "-w", "--stdin"],
+    { input: crlf, encoding: "utf8" },
+  ).trim();
+  writeFileSync(file, crlf);
+  git("update-index", "--cacheinfo", `100644,${blob},${relativePath}`);
+  git(
+    "commit",
+    "--quiet",
+    "-m",
+    "Synthetic raw CRLF blob bypasses Git text filters",
+  );
+  const catalog = loadCatalog(pkg);
+  assert.equal(
+    validateSources(pkg, catalog)[0].sha256,
+    catalog.skills[0].contentSha256,
+  );
+  assert.throws(
+    () => preparePlugin(pkg, git("rev-parse", "HEAD")),
+    /committed text must use LF/i,
+  );
+  assert.equal(existsSync(output), false);
+});
+
+test("package attributes keep unlisted text extensions LF with autocrlf=true", (t) => {
+  const { pkg, git, commit } = fixture(t, true, true);
+  // Force an actual fresh checkout, not an index-stat shortcut for this file.
+  rmSync(join(pkg, "skills/world-build/references/example.svg"));
+  git(
+    "checkout-index",
+    "--force",
+    "--",
+    "packages/arcanea-skills/skills/world-build/references/example.svg",
+  );
+  const text = readFileSync(
+    join(pkg, "skills/world-build/references/example.svg"),
+    "utf8",
+  );
+  assert.equal(text.includes("\r"), false);
+  assert.match(
+    git(
+      "check-attr",
+      "eol",
+      "--",
+      "packages/arcanea-skills/skills/world-build/references/example.svg",
+    ),
+    /eol: lf/,
+  );
+  const catalog = loadCatalog(pkg);
+  assert.equal(
+    validateSources(pkg, catalog)[0].sha256,
+    catalog.skills[0].contentSha256,
+  );
+  const plan = preparePlugin(pkg, commit);
+  assert.equal(
+    plan.files
+      .find((file) => file.path.endsWith("example.svg"))
+      .bytes.toString(),
+    text,
+  );
 });
 
 test("CLI dry-run and generation use the pinned fixture and preserve its sources", (t) => {
@@ -619,6 +691,7 @@ test("output cannot grow inside canonical package or checkout discovery director
     assert.equal(existsSync(output), false);
   }
   for (const directory of [
+    ".git",
     ".claude",
     ".claude-plugin",
     "skills",

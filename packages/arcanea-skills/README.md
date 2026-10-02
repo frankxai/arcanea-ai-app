@@ -112,7 +112,7 @@ claude plugin validate <new-directory>/plugin --strict
 The source must identify the app through a canonical HTTPS or SSH origin, its package path and
 the specified checkout HEAD. Catalog and every declared skill/support folder must match
 Git blobs at that commit. Text checkouts may differ only by CRLF-to-LF conversion; output always uses the committed bytes.
-All catalog folders are validated, including candidates that will not ship.
+When at least one skill is ready, all catalog folders are validated, including candidates that will not ship.
 An untracked or edited candidate support file blocks compilation. Undeclared
 development directories are ignored. The builder snapshots validated bytes before writing; later source
 edits cannot change that snapshot. Only ready entries reach the artifact's
@@ -120,16 +120,26 @@ default `skills/` folder. No development commands, agents, hooks, MCP setup,
 candidate folders or implicit blanket license are copied. `release.json`
 identifies input commit, catalog and content hashes, commit-bound CLI/generator/validator/package hashes and resolved YAML version
 and complete declared passports. The resolved YAML version must equal the exact dependency pin in the committed package manifest; a mismatch refuses before output.
-The distinct plugin name is `arcanea-creator-skills`; its version has a letter-prefixed commit identifier. Skill directory and support paths with Windows-reserved names, invalid characters or case collisions are rejected before output. Git symlink modes are refused even when checked out as plain files; executable support modes are recorded and applied on POSIX. Determinism requires the same source and pinned YAML version. Configured origin identity is not remote authentication. These declarations do not authenticate rights
+The distinct plugin name is `arcanea-creator-skills`; its version has a letter-prefixed commit identifier. Skill directory and support paths with Windows-reserved names, invalid characters or case collisions are rejected before output. Git symlink modes are refused even when checked out as plain files.
+Ready support files must have Git mode `100644`; executable files require mode-bound
+review evidence that this catalog does not provide, so `100755` is refused.
+Recognized text blobs committed with CRLF are also refused, ensuring shipped text
+bytes equal the canonical hash input. The package's pinned `.gitattributes` uses
+`* text=auto eol=lf` for ordinary Git text conversion, including unlisted extensions.
+Checkout or renormalize files before obtaining review evidence; existing committed
+CRLF is not silently rewritten by the compiler.
+Determinism requires the same source and pinned YAML version. Configured origin identity is not remote authentication. These declarations do not authenticate rights
 or reviewers and do not replace human publication approval.
 
-Currently four candidates and zero ready means exit 2 before creating output.
+With valid pinned engines and dependency, four candidates and zero ready means
+exit 2 before source-folder validation or output creation. Engine or dependency
+failures happen first and exit 1 without output.
 This is not an available public plugin. Synthetic ready fixtures establish
 transport behavior only; no real skill has been promoted or installed.
 
 Output parents must exist, be directories without links and stay stable under
 one writer. Output anywhere inside this canonical package or the checkout's
-`.claude`, `.claude-plugin`, root `skills`, `commands`, `agents` or `hooks` is refused
+`.git`, `.claude`, `.claude-plugin`, root `skills`, `commands`, `agents` or `hooks` is refused
 to preserve source and avoid discovery by the development plugin. Use an external
 new directory or a separate release directory outside those roots.
 The builder exclusively creates a new wrapper, assembles inside
