@@ -24,16 +24,16 @@ export async function submitWaitlist(
       signal: controller.signal,
     });
     const result: unknown = await response.json();
-    if (
-      !response.ok ||
-      typeof result !== "object" ||
-      result === null ||
-      !("success" in result) ||
-      result.success !== true
-    ) {
+    if (!response.ok) {
       return { success: false, error: SAVE_ERROR };
     }
-    return { success: true };
+    if (result === null || typeof result !== "object") {
+      return { success: false, error: SAVE_ERROR };
+    }
+    if ("success" in result && result.success === true) {
+      return { success: true };
+    }
+    return { success: false, error: SAVE_ERROR };
   } catch {
     return {
       success: false,

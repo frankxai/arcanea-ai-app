@@ -101,5 +101,22 @@ critical lint severity overstates the known soft lint posture; its underlying
 unused import is still corrected. Fresh source review and CI remain necessary.
 Raw review and all attempts are preserved privately.
 
+Three-file correction review at `226d6caafe882bbbc48c4a5ee6b9679d477fe1e1`
+returned PASS with one LOW: a browser-accepted address rejected by the server lacks
+a control-level `aria-invalid` marker. The live status remains directly associated
+with the field; a later validation-400 distinction can add that marker correctly.
+CI36945626972 actually ran all fifteen native waitlist cases successfully and
+passed TypeScript at this source. Its Lint job failed on Prettier for submit.ts;
+the initial local formatter was 3.8.3, while frozen CI uses the current lockfile.
+The receipt guard is split into simple equivalent checks for stable formatting.
+This source change requires fresh review and required CI; the failed run is kept.
+
+The same-source Vercel preview `dpl_FmU9eyQMw6PWP2dhusKZaepBjZ6c` reached READY.
+An authorized authenticated GET of /community returned initial HTML with its
+deployment marker, updated signup copy/form and expected email control. It is not
+hydration, browser or live signup proof. Direct unauthenticated GET redirects to
+Vercel login. Browser QA admission returned HOLD at 7801 MiB free, below the required
+8192 MiB including reserve; no browser was started or foreign process stopped.
+
 Official references consulted: [React useId](https://react.dev/reference/react/useId)
 and [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController).
