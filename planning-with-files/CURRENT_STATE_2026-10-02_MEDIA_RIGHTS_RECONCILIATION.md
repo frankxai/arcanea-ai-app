@@ -1,0 +1,11 @@
+# Current state: Media Studio source and rights reconciliation
+
+Source: active goal `01a0f74f-8bad-7db1-ab06-fd89b5faec84`, issue276, existing draft487. App base9e287e47130bef39bf3b8caf7f60b20abd3b0ee3. Previous turn made progress: scene candidate, exact review/native CI and both saves. Full goal remains active; one public app source/canon in place.
+
+Outcome: replace the stale current-upstream absence claim with pinned evidence, while preserving historical fork and rights questions. Studioedaf7aff has101 files, fork6f9cdee lacks rootLICENSE but component package declaresMIT. Upstream rootMIT introduced1ff3667581047989d21c06871ffb236c0b2ba8a1 onJune12; observedcurrentebebc51 sameLICblob84757c5a/sha17cd2323. Mechanical38 exact licensed-tree matches,34 unchangedfork unmatched,8 modifiedfork unmatched,21 noforkpath. All26 selected assets in38; no authored/generated rights proof. No class is a permission ruling.
+
+Four documents: complete101fileJSON, interpretation/alternativesMD, consolidation evidence paragraph and this state. No implementation/dependency/Studio/notice/licence/asset/canon/candidate edits. Five candidates/zero ready/private:true. Existing studios/SDK/compiler/continuity/quest owners and drafts preserved; no archive/rename/history/newrepo/merge/deployment/price/publication authority.
+
+Verification/stop: confirm all101 local rawGit identities, three nontruncated API trees, decodedMIT SHA and historical component metadata; recompute classes/asset selection and frozen fourfile hashes. Independent tools-disabled different-provider scope review and native frozenInstall/all4 bind finalhead; both issue276 and hub threefile saves. Normal text/Git/API reads only; serial review requires freshPP admission. No localheavybuild/newworktree/install/media/fanout.
+
+Next: component/hunk lineage and exact attribution review, then compare historical-fork maintenance against a bounded adapter to pinned reviewed current upstream/existing accepted app media service. No implementation option chosen or approved. Media source changes enable preparation, not working creator/customer/revenue proof. Rootlicence/lore/Heart remain Frank's decisions. #277/#408/#427 gates preserved; full282evals,500 humanacceptance and502 enginechoice pending. Private raw receipts: media-rights-reconciliation-20261002 under arcanea-isolated-evaluation-20261001.
