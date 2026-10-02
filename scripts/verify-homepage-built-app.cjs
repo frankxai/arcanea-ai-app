@@ -144,13 +144,14 @@ function sourceEvidence() {
         );
         await page.goto(base, { waitUntil: "domcontentloaded" });
         const concept = page.getByLabel("What makes your world different?");
+        const feedback = page
+          .locator('section[aria-labelledby="home-title"]')
+          .getByRole("alert");
         await concept.fill("Tiny");
         await page
           .getByRole("button", { name: "Create a world", exact: true })
           .click();
-        await expect(page.getByRole("alert")).toContainText(
-          "a little more detail",
-        );
+        await expect(feedback).toContainText("a little more detail");
         await expect(concept).toBeFocused();
         const storageConcept =
           "A city where everyone shares one borrowed memory.";
@@ -173,9 +174,7 @@ function sourceEvidence() {
         await page
           .getByRole("button", { name: "Create a world", exact: true })
           .click();
-        await expect(page.getByRole("alert")).toContainText(
-          "Copy your concept",
-        );
+        await expect(feedback).toContainText("Copy your concept");
         await expect(concept).toHaveValue(storageConcept);
         await expect(page).toHaveURL(base + "/");
         await expect(

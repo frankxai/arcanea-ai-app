@@ -101,3 +101,23 @@ plus one scoped hover record). Original page JSON-LD block equals main exactly.
 Current creator read confirmed existing-draft/pending-concept choices and recovery
 copy; no speculative backend rewrite was needed. Original403 audit unchanged.
 Native CI/browser, artifact visual inspection and independent review remain pending.
+
+First native attempt at source7c2: CI36954812805 terminal FAILURE. Install, lint,
+TypeScript and Next compilation passed. The desktop authored-example/auth journey
+passed, then the short-concept assertion matched both homepage feedback and Next's
+route announcer. Scope both feedback assertions to the home-title section; preserve
+semantic alert and text/focus requirements. Existing world-draft browser suite
+passed desktop/mobile/reduced-motion with synthetic fixtures. The failed attempt
+and partial artifacts remain evidence, not a four-context pass.
+
+Full nine-file source review timed out at its300-second deadline with no final
+verdict; exact owned PID52148 terminated and absent. Retry packet prepared, but
+fresh RAM2771MiB failed the4096MiB assertion before CLI invocation. No review pass
+or final cost inferred; no foreign cleanup. Later retry requires fresh admission.
+A first failed-log display hit console encoding after saving raw log; corrected
+UTF-8 read retained it, without a CI restart.
+
+Source7c2 Vercel dpl_EhZywVz6gRJ2CFMASub22mrLLKLx is READY at that exact commit.
+Authorized connector GET returned protection302 rather than app HTML. No preview
+render/interaction proof or protection change. Correction-source CI/review and
+artifact visual inspection remain pending; draft496 stays unmerged.
