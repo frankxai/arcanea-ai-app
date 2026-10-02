@@ -299,6 +299,9 @@ jobs:
       - name: Run package tests
         run: pnpm test:quick
 
+      - name: Verify proposed quest fixture replay and refusal
+        run: node docs/research/benchmarks/quest-authoring-proof-2026-10-02/replay-check.mjs
+
       - name: Verify public collection assets and proposal relationships
         run: |
           node scripts/verify-sovereign-depths.mjs
