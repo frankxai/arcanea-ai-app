@@ -12,7 +12,7 @@ Reuse the existing catalog's rights/evaluation/review/hash rules rather than a
 parallel allowlist. Existing root plugin remains the development bundle.
 
 Files: package `bin/plugin.js`, `scripts/plugin.cjs`, `tests/plugin.test.mjs`,
-`package.json`, `README.md`, catalog validator/typing and this record.
+`bin/install.js`, `.gitattributes`, `package.json`, `README.md`, catalog validator/typing and this record.
 Non-goals: rights/license decisions, candidate promotion, canon, archive, launcher,
 root development plugin changes, public listing, install, merge or deployment.
 Acceptance: only ready sources copied, byte/commit-bound inputs, no developer
@@ -23,7 +23,7 @@ Opt-in Claude2.1.287 strict native manifest validation passes with no warnings;
 its contents array is empty, so native discovery/installation is not established.
 Native CI uses pinned YAML2.9.1; the native CLI opt-in test skips there when absent.
 Corrected candidate precommit:29/29 tests pass including native manifest validation. Exact corrected commit rerun, independent review and pinned Linux native CI pending; terminal receipts belong in issue276/PR501.
-Rollback: scoped revert of the eight files; retain failed/new outputs for inspection.
+Rollback: scoped revert of the ten files; retain failed/new outputs for inspection.
 
 Alternative: explicit manifest paths into candidate package are insufficient
 because native `skills` adds to default `skills/` discovery. A self-contained
@@ -65,3 +65,5 @@ Native CI37021681467 at43fe0b7d passed all checks. Second independent review cor
 Atb4fccad50, Windows Node22.23.2/pinned YAML2.9.1 passed36/36 (native manifest only). Existing dependency materialized as an isolated 686297-byte text fixture with lockfile SHA512 verified; no repository node_modules or lockfile changed. Actual zero-ready exits2/no output; actual2.9.0 mismatch exits1/no output. Third review REVISE (one MEDIUM/two LOW, reported $0.5337594), bound to full eight-file diff6d0f8eae. Corrections refuse committed CRLF recognized text and executable100755 ready support (catalog hash has no mode); pinned package .gitattributes makes ordinary Git text checkout LF including unlisted extensions. Zero-ready documentation now states engine/dependency prechecks and skips folder validation. Added raw CRLF-blob, mode-only, SVG/autocrlf and Git-metadata output denial tests. Scope is now nine files. Existing parent installer mode behavior is unchanged; compiler output is explicitly limited to100644. Native CI/review against corrected source still required, no approval from preceding checks.
 
 Third-correction targeted tests initially2/3: Git checkout-index reused the already-clean fixture file instead of rewriting its CRLF bytes. The SVG test now removes only its own fixture file before restoring it through Git, proving a fresh checkout under the attributes. The assertion stays strict. b4fccad native CI37024040240 passed all checks; 37023655035 was cancelled by PR-description update. Historical source remains REVISE.
+
+Atcda4e8a45, Windows38/38 and native CI37025604710 all checks passed (Linux37pass/1 native opt-in skip, quick632pass). Fourth review bound to nine-file diff9f8000a4 returned REVISE (one MEDIUM/one LOW, reported$0.5948294): installer accepted canonical hashes then copied raw checkout bytes, and display-based Git blob reads were insufficiently explicit. Installer now snapshots bytes during validation and writes the same canonical form exclusively with0644; actual synthetic-home installed-byte regression covers CRLF input. Compiler uses cat-file blob by ls-tree objectID and disables replace objects; configured-textconv regression verifies raw transport. Scope now ten files; new source requires fresh exact tests/CI/review. Earlier evidence/reviews remain historical, no real skill installed/promoted or release approved.

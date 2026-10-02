@@ -9,6 +9,7 @@ const {
   selectReady,
   validateSources,
   contained,
+  canonicalBytes,
 } = require("../scripts/catalog.cjs");
 
 function existingStat(target) {
@@ -54,7 +55,12 @@ function run(args) {
   }
   const packageRoot = path.resolve(__dirname, "..");
   const catalog = loadCatalog(packageRoot);
-  const sources = validateSources(packageRoot, catalog);
+  // Preserve the bytes read during validation; copying cannot reread changed sources.
+  const sourceBytes = new Map();
+  const sources = validateSources(packageRoot, catalog, (file) => {
+    if (!sourceBytes.has(file)) sourceBytes.set(file, fs.readFileSync(file));
+    return sourceBytes.get(file);
+  });
   const ready = selectReady(catalog);
   if (args.includes("--list") || args.includes("-l")) {
     console.log(
@@ -109,10 +115,13 @@ function run(args) {
     for (const file of row.source.files) {
       const target = path.join(row.target, file);
       fs.mkdirSync(path.dirname(target), { recursive: true });
-      fs.copyFileSync(
-        path.join(packageRoot, row.skill.path, file),
+      fs.writeFileSync(
         target,
-        fs.constants.COPYFILE_EXCL,
+        canonicalBytes(
+          file,
+          sourceBytes.get(path.join(packageRoot, row.skill.path, file)),
+        ),
+        { flag: "wx", mode: 0o644 },
       );
     }
     console.log(

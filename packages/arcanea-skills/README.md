@@ -68,7 +68,10 @@ replace the human release approval tracked by issue #277.
 ## Installation behavior
 
 Only ready entries are copied to `~/.claude/skills/<name>`, including their
-validated support files. The installer plans all destinations before copying and
+validated support files. The installer snapshots the bytes read during validation
+and writes their canonical form with mode `0644`; text CRLF becomes LF, binary bytes
+remain exact. It does not reread source files during materialization.
+The installer plans all destinations before copying and
 refuses existing skill directories, destination links and unknown options.
 `--dry-run` performs validation and planning without writing. An I/O failure during
 copying exits with code 1 and may leave a partial new directory for inspection;
@@ -112,6 +115,8 @@ claude plugin validate <new-directory>/plugin --strict
 The source must identify the app through a canonical HTTPS or SSH origin, its package path and
 the specified checkout HEAD. Catalog and every declared skill/support folder must match
 Git blobs at that commit. Text checkouts may differ only by CRLF-to-LF conversion; output always uses the committed bytes.
+Blob reads use `git cat-file blob` by object ID with replace objects disabled;
+Git display textconv and clean filters are not invoked.
 When at least one skill is ready, all catalog folders are validated, including candidates that will not ship.
 An untracked or edited candidate support file blocks compilation. Undeclared
 development directories are ignored. The builder snapshots validated bytes before writing; later source

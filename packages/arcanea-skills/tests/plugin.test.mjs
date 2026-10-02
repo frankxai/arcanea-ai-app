@@ -46,6 +46,7 @@ function fixture(t, ready = true, extraText = false) {
   cpSync(join(source, "catalog.json"), join(pkg, "catalog.json"));
   for (const file of [
     "bin/plugin.js",
+    "bin/install.js",
     "scripts/plugin.cjs",
     "scripts/catalog.cjs",
     "package.json",
@@ -388,6 +389,72 @@ test("installer validator accepts canonical blob hash in a CRLF checkout", (t) =
   assert.equal(
     validateSources(pkg, catalog)[0].sha256,
     catalog.skills[0].contentSha256,
+  );
+});
+
+test("installer writes validated canonical LF bytes from a CRLF checkout", (t) => {
+  const { pkg, repo, commit, dir } = fixture(t);
+  const files = validateSources(pkg, loadCatalog(pkg))[0].files;
+  for (const file of files) {
+    const target = join(pkg, "skills/world-build", file);
+    writeFileSync(
+      target,
+      readFileSync(target, "utf8")
+        .replaceAll("\r\n", "\n")
+        .replaceAll("\n", "\r\n"),
+    );
+  }
+  const home = join(dir, "synthetic-home");
+  mkdirSync(home);
+  const run = spawnSync(process.execPath, [join(pkg, "bin/install.js")], {
+    encoding: "utf8",
+    timeout: 15000,
+    env: {
+      ...process.env,
+      HOME: home,
+      USERPROFILE: home,
+      NODE_PATH: dirname(dirname(require.resolve("yaml/package.json"))),
+    },
+  });
+  assert.equal(run.status, 0, run.stderr);
+  for (const file of files)
+    assert.deepEqual(
+      readFileSync(join(home, ".claude/skills/world-build", file)),
+      execFileSync("git", [
+        "-C",
+        repo,
+        "show",
+        `${commit}:packages/arcanea-skills/skills/world-build/${file}`,
+      ]),
+    );
+  assert.deepEqual(readdirSync(join(home, ".claude/skills")), ["world-build"]);
+});
+
+test("Git display textconv is never used to read compiled support blobs", (t) => {
+  const { pkg, repo, commit, git, output } = fixture(t);
+  writeFileSync(
+    join(repo, ".git/info/attributes"),
+    "packages/arcanea-skills/skills/world-build/references/example.md diff=arcanea-test\n",
+  );
+  git(
+    "config",
+    "diff.arcanea-test.textconv",
+    "arcanea-test-nonexistent-converter-must-not-run",
+  );
+  assert.throws(() =>
+    git(
+      "show",
+      "--textconv",
+      `${commit}:packages/arcanea-skills/skills/world-build/references/example.md`,
+    ),
+  );
+  const plan = preparePlugin(pkg, commit);
+  const result = materializePlugin(plan, output);
+  assert.deepEqual(
+    readFileSync(
+      join(result.pluginRoot, "skills/world-build/references/example.md"),
+    ),
+    readFileSync(join(pkg, "skills/world-build/references/example.md")),
   );
 });
 

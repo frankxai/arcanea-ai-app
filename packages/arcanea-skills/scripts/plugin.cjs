@@ -25,7 +25,7 @@ function validateYamlPin(packageBytes, resolvedVersion) {
 }
 
 function git(root, args) {
-  return execFileSync("git", ["-C", root, ...args], {
+  return execFileSync("git", ["--no-replace-objects", "-C", root, ...args], {
     timeout: 10000,
     maxBuffer: 8 * 1024 * 1024,
     stdio: ["ignore", "pipe", "pipe"],
@@ -81,7 +81,8 @@ function preparePlugin(packageRoot, sourceCommit) {
     if (!mode || entry.split("\t")[1] !== gitPath)
       throw new Error(`Unsupported or untracked source mode: ${relativePath}`);
     const bytes = fs.readFileSync(file);
-    const blob = git(root, ["show", `${sourceCommit}:${gitPath}`]);
+    const objectId = entry.match(/^\d+ blob ([a-f0-9]{40})\t/)?.[1];
+    const blob = git(root, ["cat-file", "blob", objectId]);
     if (!canonicalBytes(relativePath, blob).equals(blob))
       throw new Error(`Committed text must use LF: ${relativePath}`);
     if (
