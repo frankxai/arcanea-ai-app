@@ -38,7 +38,6 @@ export function NewsletterForm() {
   return (
     <form
       aria-label="Arcanea updates signup"
-      aria-describedby={`${id}-status`}
       aria-busy={status === "submitting"}
       className="max-w-lg"
       onSubmit={handleSubmit}
@@ -52,6 +51,7 @@ export function NewsletterForm() {
           type="email"
           name="email"
           autoComplete="email"
+          aria-describedby={`${id}-status`}
           placeholder="Your email address"
           required
           maxLength={320}
