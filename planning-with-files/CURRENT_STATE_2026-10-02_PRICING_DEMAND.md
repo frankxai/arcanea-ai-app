@@ -1,0 +1,85 @@
+# Pricing proposals and interest capture
+
+Source: goal `01a0f74f-8bad-7db1-ab06-fd89b5faec84`, app #276 and #427.
+Base: main `e863be8304fdde9f00ba812d7845d66ec52787b9`.
+Owner: Codex, branch `agent/codex/arcanea-pricing-demand-20261002`, in the existing
+assigned source-consolidation worktree. Original draft #403 at
+`f20484f8ec7cc02e2f9507f08186057597360db5`, owner task
+`01a08d75-75fd-7ab2-9234-5351ac1a51e9`, remains intact with its untracked audit.
+This additive derivative does not supersede or authorize that draft.
+
+User job: distinguish proposed plans from available offers, register interest and
+know whether an email reached the interest list. Signup is not paid demand,
+delivered value, an entitlement or mail-delivery proof. This serves #276's audience
+and release priority.
+
+Scope: reconcile existing pricing and metadata. Retain $0/$12/$39 as explicitly
+unapproved proposals. Remove unsupported popularity, unlimited usage, tool/repo
+counts, blanket licence, local-only hosted privacy, first-100 scarcity, lifetime
+discount, private Discord and access/delivery claims. Keep plan comparison, signup
+and world/library/source paths. Use existing design variables, canonical glass
+recipe and sentence case. No images, animations, dependencies or new tokens.
+
+Original #403 only adds program/source/page_path to the old form payload. Its
+broader Growth Core API would replace the newer #458 durable Supabase insert.
+Use main's unchanged API/insert adapter with email/source instead. Shared submit
+helper and nine tests are copied byte-for-byte from draft #493 at
+`27ad6204f098b2edffd3a8fbb2dc828a1bd5b75e`. Identical source avoids a second request
+implementation. This branch starts at main and includes none of #493's community
+edits. Add the same native test path to CI; preserve every existing check.
+
+Files: pricing client/metadata, shared waitlist helper/tests, CI test path and
+this record. Guidance: AGENTS.md, apps/web/CLAUDE.md, TASTE.md, DESIGN.md, humanizer,
+#276 hierarchy, #408 merge authority and #427 proof. Historical MIT/count
+requirements in taste guidance are not evidence of rights or shipped capabilities.
+
+Behavior: retain source `pricing_founding_circle`. Native required/email/max320
+validation stays active. Unique label/control/live-status IDs bind descriptions.
+An immediate ref prevents duplicate pending requests; email is read-only during
+save and clears only after HTTP success plus literal JSON success. Failures retain
+it. The ten-second timeout acknowledges a possibly completed write and safe retry.
+Repeated emails remain on the shared list, without a second plan subscription.
+The form stays mounted; no confirmation mail or paid access is claimed.
+
+Non-goals: approve prices/benefits/licence/Heart, checkout, new subscription or
+backend, mail, world/auth/canon changes, archive/rename/history, homepage/dossier
+integration or production. Draft #487 already contains README/community/repository
+metadata proposals absent from main; do not duplicate them. Launcher upstream is
+unresolved. No foreign branch, audit or remote is changed.
+
+Budget: one sequential interactive text/test workload. PP bounded, 7800 MiB free
+at admission; disk bounded at about 14% free. No installation, new worktree, local
+full build, browser or persistent service. Independent provider review is a
+sequential tool-free call, maximum USD 1 and 300-second deadline. Stop on changed
+branch/upstream/ownership, machine hold or failed verification. Preserve attempts.
+No merge/mark-ready/deploy; #408 and #427 retain authority.
+
+Acceptance: explicit proposal status in copy/metadata, retained unapproved numbers,
+honest shared-list capture, recoverable failures and current API payload. Local
+behavioral cases and static React render, exact-source independent review and
+four native CI contexts are required for a verified draft. Static rendering does
+not prove hydration, interaction, layout, live storage or customer success.
+Browser and release gates remain pending until executed at the exact source.
+
+Verification: existing Node 22/Sucrase type erasure for 15 join/submit cases; real
+React static markup; scoped formatting, diff and secret hooks. Remote frozen
+Node/pnpm performs native tests and build/typecheck/lint/status. No live signup or
+database write. HTTP fixture uses real fetch and unchanged insert adapter with an
+in-memory sink; its owned server closes at completion.
+
+Rollback: leave the draft unmerged. If later integrated, revert its scoped change
+while retaining the identical shared helper if #493 has also integrated. Preserve
+main #458, merged world/auth work and other proposals.
+
+Local results: all 15 join/submit cases passed using Node 22 and Sucrase type
+erasure, including actual HTTP fetch through the unchanged insert adapter fixture.
+Real React 19 static rendering passed proposal-price/copy, unique ID, bound
+label/status, native validation and expected-link checks. This is source/SSR proof;
+browser interaction and live database behavior remain untested. Both pricing
+TSX files use the verified lockfile-pinned Prettier 3.9.9 standalone formatter.
+Shared helper/tests remain byte-identical to #493; backend/world/auth/lockfile
+remain unchanged. Independent review and remote CI are pending.
+
+Two malformed patch-tool inputs were rejected before any edits
+(missing patch wrapper, then duplicate delete/add target). A single-file update
+applied successfully; no partial failed patch remained.
