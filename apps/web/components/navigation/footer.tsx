@@ -183,7 +183,8 @@ export function Footer() {
             </form>
             <p
               id={`${id}-status`}
-              role={status === "error" ? "alert" : "status"}
+              role="status"
+              aria-live="polite"
               aria-atomic="true"
               className="mt-2 text-sm text-white/60"
             >

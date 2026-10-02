@@ -98,6 +98,7 @@ function sourceEvidence() {
     const bytes = fs.readFileSync(path);
     const provenance = {
       kind: "browser-screenshot",
+      screenshotAnimations: "disabled",
       prompt: `Capture existing footer UI: ${name}, ${state.name}, ${page.url()}`,
       model: null,
       provider: "Playwright Chromium",
@@ -189,10 +190,8 @@ function sourceEvidence() {
           exact: true,
         });
         const form = footer.locator("form");
-        const button = footer.getByRole("button", {
-          name: "Subscribe",
-          exact: true,
-        });
+        const button = form.getByRole("button");
+        await expect(button).toHaveAccessibleName("Subscribe");
         await footer.scrollIntoViewIfNeeded();
         await expect(input).toBeVisible();
         const describedBy = (
@@ -218,6 +217,7 @@ function sourceEvidence() {
         await expect.poll(() => posts.length).toBe(1);
         await expect(input).toHaveJSProperty("readOnly", true);
         await expect(button).toBeDisabled();
+        await expect(button).toHaveAccessibleName("Saving…");
         await expect(form).toHaveAttribute("aria-busy", "true");
         await expect(footer.getByRole("status")).toHaveText(
           "Saving your email…",
@@ -251,7 +251,7 @@ function sourceEvidence() {
           await input.fill(failedEmail);
           await expect(footer.getByRole("status")).toHaveText("");
           await button.click();
-          await expect(footer.getByRole("alert")).toContainText(
+          await expect(footer.getByRole("status")).toContainText(
             "couldn't confirm your signup",
           );
           await expect(input).toHaveValue(failedEmail);
@@ -266,7 +266,7 @@ function sourceEvidence() {
           true,
         );
         await button.click();
-        await expect(footer.getByRole("alert")).toHaveText(
+        await expect(footer.getByRole("status")).toHaveText(
           "Please enter a valid email address.",
         );
         await expect(input).toHaveValue("a@b");
@@ -278,7 +278,7 @@ function sourceEvidence() {
         await button.click();
         await expect(input).toHaveJSProperty("readOnly", true);
         await page.clock.fastForward(10_001);
-        await expect(footer.getByRole("alert")).toContainText(
+        await expect(footer.getByRole("status")).toContainText(
           "may have been saved; retrying is safe",
         );
         await expect(input).toHaveValue(recoveryEmail);
