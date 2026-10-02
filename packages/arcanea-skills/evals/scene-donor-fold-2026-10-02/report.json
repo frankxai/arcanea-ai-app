@@ -26,7 +26,12 @@
     "maker": "Codex lead",
     "method": "initial hand-authored/self-repaired before baseline response; corrected receipt continuity and courier identification after source review, earlier bytes retained",
     "sha256": "dd0d135609db36364d467e7d8cfc4bd026e9584ed760323209c07297494b7423",
-    "effort": "unmetered; no independent producing-call receipt"
+    "effort": "unmetered; no independent producing-call receipt",
+    "priorPrimary": {
+      "commit": "9dd889aa9e7eafa0351ed249612d12cd1ee22506",
+      "sha256": "da0d4c4aa1efe7bdfeb6d016deb5edd95436c8b1409785b7b58d8297c8f4c244",
+      "path": "packages/arcanea-skills/evals/scene-donor-fold-2026-10-02/primary.txt"
+    }
   },
   "baseline": {
     "sourceApp": "fcad9bf92db5932e7093fcabe0fa3b934beea6d3",
@@ -82,7 +87,7 @@
     "Native installed-harness/marketplace/launcher delivery",
     "Existing shared graph/author/MCP/runtime/media owners and human release gates"
   ],
-  "sourceReview": "eleven-file9dd delta qualifiedPASS/one medium and low findings; eight-file wording/prose/alias correction requires new exact source sign-off; full PR and readiness pending",
+  "sourceReview": "eleven-file9dd delta qualifiedPASS/one medium and low findings; seven-file wording/prose/alias correction requires new exact source sign-off; full PR and readiness pending",
   "nativeCI": "pending exact head",
   "fullGoal": "active",
   "reviewAttempts": [

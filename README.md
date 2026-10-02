@@ -15,7 +15,7 @@ Arcanea's universe, stories and software live in this app repository. Explore
 
 ## Review creator skills
 
-The curated package has four internal candidates and zero ready skills. Its
+The curated package contains internal candidates and zero ready skills. Its
 installer excludes candidates. Earlier skill roots still exist in this repository;
 a repository-wide skills scan is not a curated installation.
 
