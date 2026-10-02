@@ -20,7 +20,7 @@ export const READER_TOOLS = [
   {
     name: "arcanea_canon_lint",
     detail:
-      "Flags supported gate-count and Guardian-element contradictions without a model call. Godbeast-element checks are not covered.",
+      "Checks specific gate-count and Guardian-element wording; matching patterns return flags without a model call. Godbeast-element checks are not covered.",
     params: [
       {
         name: "draft",

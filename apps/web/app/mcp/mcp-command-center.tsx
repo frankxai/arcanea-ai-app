@@ -114,6 +114,9 @@ export function McpCommandCenter() {
           {copyStatus}
         </p>
 
+        <h2 className="mb-4 font-display text-2xl font-semibold text-white/90">
+          Connect your client
+        </h2>
         <div className="mb-12 grid gap-4 md:grid-cols-2">
           {READER_CLIENTS.map((item) => (
             <article
@@ -151,9 +154,9 @@ export function McpCommandCenter() {
         </div>
 
         <div className="mb-12">
-          <h3 className="mb-4 font-display text-2xl font-semibold text-white/90">
+          <h2 className="mb-4 font-display text-2xl font-semibold text-white/90">
             Reader tools
-          </h3>
+          </h2>
           <ul className="grid gap-3">
             {READER_TOOLS.map((tool) => (
               <li
@@ -172,9 +175,9 @@ export function McpCommandCenter() {
         </div>
 
         <div className="mb-12 rounded-2xl border border-[var(--arc-brand-arcanean-gold)]/20 bg-[var(--arc-brand-arcanean-gold)]/5 p-6">
-          <h3 className="mb-2 font-display text-xl font-semibold text-white/90">
+          <h2 className="mb-2 font-display text-xl font-semibold text-white/90">
             Coverage and canon source
-          </h3>
+          </h2>
           <p className="max-w-3xl text-sm leading-relaxed text-white/55">
             {READER_LIMITS}
           </p>
@@ -197,9 +200,9 @@ export function McpCommandCenter() {
           aria-busy={status === "saving"}
           className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6"
         >
-          <h3 className="mb-2 font-display text-xl font-semibold text-white/90">
+          <h2 className="mb-2 font-display text-xl font-semibold text-white/90">
             Studio waitlist
-          </h3>
+          </h2>
           <p className="mb-5 max-w-2xl text-sm leading-relaxed text-white/50">
             Leave an email for Studio availability updates. The waitlist does
             not grant Studio access or reserve a price. No payment is collected
