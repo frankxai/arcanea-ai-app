@@ -5,6 +5,9 @@ import { createHash } from "node:crypto";
 import { MANIFEST_FILE, canonicalManifestForHash } from "./manifest.mjs";
 import { publicSources } from "./source-files.mjs";
 
+// A local SDK profile, not World Repo Standard §4 or a minting approval.
+export const CONTENT_HASH_PROFILE = "arcanea-world-sdk/declared-public-v1";
+
 const TEXT_EXT = new Set([
   ".md",
   ".mdx",
@@ -62,7 +65,9 @@ function toBytes(file) {
  * @returns {string} "sha256:<hex>"
  */
 export function contentHash(files, manifest) {
-  const entries = [];
+  const entries = [
+    ["::hash-profile", sha256hex(Buffer.from(CONTENT_HASH_PROFILE, "utf8"))],
+  ];
   for (const f of publicSources(files, manifest)) {
     entries.push([f.path, sha256hex(toBytes(f))]);
   }

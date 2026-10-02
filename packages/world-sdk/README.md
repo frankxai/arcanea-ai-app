@@ -6,7 +6,9 @@ index. The world repo remains its source.
 
 Spec: `arcanea-ecosystem/docs/WORLD_REPO_STANDARD.md`.
 Schema: `arcanea-ecosystem/schemas/world.arcanea.schema.json`.
-This repair uses the existing contract; it creates no separate world schema.
+This repair creates no separate world schema. Declared-source hashing uses a
+local SDK profile that differs from the pinned standard's tracked-file rule;
+its acceptance in the shared proof contract remains pending.
 
 ## Content rights and royalties
 
@@ -78,6 +80,11 @@ Custom content roots also determine index node sections.
 existing regular files at the Git root. It rejects unrelated staged changes,
 directory/pathspec inputs and redirected Git environments; it never stages the
 whole repository. Git/signing/hook failures reject. A sole Git writer is required.
+Failed commits remove paths newly staged by that call and preserve prior selected
+index bytes. Cleanup failures surface both errors and require manual index
+inspection. Staged rename preflight inspects both names. Git repository/index/ref/
+configuration environment variables, including empty values, are rejected;
+only host `GIT_PAGER` and `GIT_LFS_PATH` variables are allowed.
 `harnessContext.commit` commits only candidates created through that context,
 retains pending paths after failure and rejects when there are no new candidates.
 It does not push or authorize publication. This is a breaking API change.
@@ -87,6 +94,31 @@ v1.1 validation, signed human promotion, locked graph projection and continuity
 proofs. Scaffolds retain public visibility/canon-level defaults, and generic
 non-locked writes still rely on the caller's authority. A new manifest or public
 metadata is not authenticated approval. Release and creator acceptance remain open.
+
+## Hash compatibility and proof claims
+
+`CONTENT_HASH_PROFILE` identifies `arcanea-world-sdk/declared-public-v1`.
+The profile label participates in the hash domain, alongside declared public
+sources and the stable manifest core. The default declared roots include `game/`;
+custom roots and explicit local pointers follow the same selection.
+
+This is a breaking hash change. Old SDK hashes/provenance and World Repo Standard
+section4 tracked-file hashes are not interchangeable with this profile. Preserve
+the original inputs and pinned SDK revision for historical comparisons. This SDK
+does not migrate or re-verify legacy provenance, or label it verified by the new
+profile. Existing provenance stays unchanged.
+
+`computeProof` returns a local proposal with `hashProfile`. The current shared
+provenance schema has no profile field, so `claimWorldProof` and CLI `claim` always
+reject with `WORLD_HASH_PROFILE_REQUIRES_REVIEW` before filesystem access, adapters
+or provenance writes, including mock claims. Caller approval flags cannot bypass
+this gate. Profile-aware proof-contract acceptance belongs to the existing owner;
+the World Repo Standard/schema version is not silently reassigned.
+
+LLM enrichment is limited to creative fields and `theme.prompt`. Model-provided
+identity, creator/wallet, provenance, snapshots, hosting, visibility, cover and
+external file pointers cannot select those decisions. Caller declarations and
+hand-authored scaffolds remain subject to their existing authority limits.
 
 ## Local use
 
@@ -106,9 +138,9 @@ await createWorld("./my-world", "a drowned city where memory is currency", {
 const index = buildIndex(await readWorld("./my-world"));
 ```
 
-The existing `claim` command uses a deterministic mock chain. It creates local
-test provenance, not a real-chain transaction or proof of legal ownership.
-Real adapters and publication require separate review and acceptance.
+The `claim` command is blocked pending hash-profile contract acceptance. The
+standalone `mockChain` remains a deterministic local fixture; no mock or real
+adapter is called by `claimWorldProof`. Hashes do not establish legal ownership.
 
 ## Test
 

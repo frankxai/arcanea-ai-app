@@ -163,3 +163,55 @@ under frozen YAML2.9.1, plus web build and existing boundary/rendered checks.
 CI Status failed because Lint failed; it is retained as failure, not green.
 The correction changes only JSON layout and this record. An exact parsed-JSON
 comparison verifies no package metadata or dependency semantics changed.
+
+## Independent review and reconciliation at01b711c
+
+CI36990941601 passed frozen Install/all4 checks, SDK62/62 and quick632/632
+at01b711c0350dbb61bb7d3951499851c0363b9e02. Issues283/276 and
+hub98/e83aac5 saved that exact receipt; earlier handovers remain historical.
+Machine admission later improved to bounded:6840MiB at09:49UTC,7531MiB at09:58UTC,
+one serial tool/MCP-disabled independent reviewer. CLI2.1.287/Sonnet5.5 received
+all24 changed files,6 contexts,2 external contract sources and the full diff.
+First attempt PID6668 exhausted the1USD setting without a verdict and reported
+2.499976USD. The setting was not a strict spend cap. Retained streamed retry
+PID31556,3USD setting, completed with REVISE and zero tool calls, reported
+2.5492652USD. Total provider-list cost5.0492412USD; no billing invoice is claimed.
+Both processes are terminal; all input/output/cost/error receipts remain private.
+
+Review identified whitespace-fence privacy bypass, unmarked hash drift from the
+shared tracked-file rule, staged residue after commit failure, Git environment
+gaps and model-supplied identity/proof/pointer fields. Six new regressions failed
+against that exact source (existing62 passed). Reconciliation scope adds the
+already-owned proof/manifest/genesis modules and existing e2e tests to the prior
+file set; no shared ecosystem checkout or competing schema is changed.
+
+Whitespace fences/YAML end markers preserve metadata; malformed language fences
+fail closed. Null privacy flags cannot default into public selection. Git preflight
+disables rename elision, rejects unknown GIT_* variables (host pager/LFS location
+exceptions), leaves selected prior index bytes intact and removes newly staged
+paths on failure. Cleanup failure surfaces both errors for manual recovery.
+Model enrichment is allowlisted to creative fields/theme.prompt; identity,
+provenance, snapshots, visibility/hosting and local media pointers are not model
+decisions. The default declared roots include game/.
+
+Declared-source hashing is an explicit local arcanea-world-sdk/declared-public-v1
+profile, domain-separated and incompatible with old SDK/standard section4 hashes.
+The provenance schema has no profile field. Therefore claimWorldProof/CLI claim
+are blocked before access/adapters/writes with WORLD_HASH_PROFILE_REQUIRES_REVIEW,
+including mocks/forged approval flags, until the existing owner accepts a
+profile-aware contract. computeProof is a local tagged proposal. Old provenance
+is retained, not migrated or re-verified. This is an additional breaking safety
+restriction, not a new World schema or reassignment of its version.
+Require new local/native checks and complete exact-source independent review.
+No merge, release, rights/frequency choice or creator acceptance is inferred.
+
+Formatted reconciliation suite passes70/70 on Node22.23.2/local YAML2.9.0,
+including the six initial red cases, null visibility and the blocked CLI claim.
+One intermediate run failed3 commit cases because the initial environment filter
+also rejected the host GIT_PAGER/GIT_LFS_PATH variables; that failure is retained.
+The two explicit host exceptions restore compatibility while repository/config/
+ref redirection variables, including empty values, remain rejected. The signing
+fixture asserts an actual signer error and exact cached-byte preservation.
+Existing locked destinations are checked by their canonical resolved filename;
+an enabled NTFS8.3 short-name fixture is not claimed as executed. Git roots compare
+resolved filesystem identities rather than case-folding distinct Linux paths.

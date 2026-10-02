@@ -9,10 +9,13 @@ function invalid() {
 
 export function parseFrontmatter(text) {
   const normalized = String(text)
-    .replace(/^\uFEFF/, "")
+    .replace(/^\uFEFF+/, "")
     .replace(/\r\n/g, "\n");
-  if (!/^---(?:\n|$)/.test(normalized)) return { data: {}, body: normalized };
-  const match = /^---\n([\s\S]*?)\n---(?:\n|$)/.exec(normalized);
+  if (!normalized.startsWith("---")) return { data: {}, body: normalized };
+  if (!/^---[ \t]*(?:\n|$)/.test(normalized)) throw invalid();
+  const match = /^---[ \t]*\n([\s\S]*?)^(?:---|\.\.\.)[ \t]*(?:\n|$)/m.exec(
+    normalized,
+  );
   if (!match || Buffer.byteLength(match[1]) > 65536) throw invalid();
   let data;
   try {
@@ -62,7 +65,7 @@ export function metadataForFile(file) {
 export function publicFile(file) {
   const data = metadataForFile(file);
   return (
-    (file.visibility ?? "public") === "public" &&
+    (file.visibility === undefined ? "public" : file.visibility) === "public" &&
     (data.visibility ?? "public") === "public" &&
     !["STAGING", "CANDIDATE", "DRAFT"].includes(data.status?.toUpperCase())
   );

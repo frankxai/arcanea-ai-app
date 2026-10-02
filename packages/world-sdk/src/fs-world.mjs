@@ -73,7 +73,7 @@ export async function readWorld(dir) {
 
 function forbidLocked(file) {
   if (
-    path.posix.basename(file.path).toUpperCase() === "CANON_LOCKED.MD" ||
+    path.basename(file.path).toUpperCase() === "CANON_LOCKED.MD" ||
     metadataForFile(file).status?.toUpperCase() === "LOCKED"
   ) {
     const error = new Error(
@@ -95,7 +95,10 @@ export async function prepareWrites(dir, files, { exclusive = false } = {}) {
     forbidLocked({ ...f, bytes });
     const safe = await checkedPath(dir, f.path, { exclusive });
     if (safe.exists)
-      forbidLocked({ path: f.path, bytes: await fs.readFile(safe.target) });
+      forbidLocked({
+        path: await fs.realpath(safe.target),
+        bytes: await fs.readFile(safe.target),
+      });
     prepared.push({ path: f.path, bytes });
   }
   return prepared;
@@ -108,7 +111,10 @@ export async function writeFiles(dir, files, { exclusive = false } = {}) {
     await fs.mkdir(path.dirname(safe.target), { recursive: true });
     safe = await checkedPath(dir, file.path, { exclusive });
     if (safe.exists)
-      forbidLocked({ path: file.path, bytes: await fs.readFile(safe.target) });
+      forbidLocked({
+        path: await fs.realpath(safe.target),
+        bytes: await fs.readFile(safe.target),
+      });
     await fs.writeFile(safe.target, file.bytes, {
       flag: exclusive ? "wx" : "w",
     });

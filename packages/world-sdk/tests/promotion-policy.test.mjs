@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 import { buildManifest } from "../src/manifest.mjs";
 import { createWorld, scaffoldWorld } from "../src/scaffold.mjs";
 import { readWorld } from "../src/fs-world.mjs";
-import { contentHash } from "../src/contenthash.mjs";
+import { contentHash, CONTENT_HASH_PROFILE } from "../src/contenthash.mjs";
 import { computeProof } from "../src/proof.mjs";
 import {
   evolve,
@@ -72,6 +72,7 @@ test("proof does not invent policy pointers when rights are unselected", () => {
   });
   assert.equal(Object.hasOwn(proof, "licensePointer"), false);
   assert.equal(Object.hasOwn(proof, "royaltyPolicy"), false);
+  assert.equal(proof.hashProfile, CONTENT_HASH_PROFILE);
 });
 
 test("model output cannot select commercial rights or royalties for createWorld", async (t) => {
@@ -93,6 +94,37 @@ test("createWorld preserves policies explicitly supplied by the caller", async (
   });
   assert.deepEqual(manifest.license, licence);
   assert.deepEqual(manifest.royalty, royalty);
+});
+
+test("model enrichment cannot invent identity, provenance or external file pointers", async (t) => {
+  const dir = await fixture(t);
+  const { manifest } = await createWorld(dir, sentence, {
+    useWorldEngine: false,
+    llm: async () => ({
+      name: "Creative name",
+      id: "forged",
+      idSeed: "forged",
+      creator: { handle: "forged", wallet: "forged" },
+      provenance: [{ ref: "forged" }],
+      snapshot: { ipfs: "forged" },
+      cover: "missing.png",
+      theme: { audio: "missing.wav", prompt: "Creative music" },
+      visibility: "private",
+      hosting: "hosted_public",
+    }),
+  });
+  assert.equal(manifest.name, "Creative name");
+  assert.notEqual(manifest.id, "forged");
+  assert.equal(manifest.creator.handle, "anon");
+  assert.equal(manifest.creator.wallet, undefined);
+  assert.deepEqual(manifest.provenance, []);
+  assert.deepEqual(manifest.snapshot, {});
+  assert.equal(manifest.cover, "");
+  assert.equal(manifest.theme.audio, "");
+  assert.equal(manifest.theme.prompt, "Creative music");
+  assert.equal(manifest.visibility, "public");
+  assert.equal(manifest.hosting, "repo");
+  await readWorld(dir);
 });
 
 test("explicit standard policy pointers generate only the declared summaries", async (t) => {
@@ -221,4 +253,15 @@ test("CLI evolve exits unsuccessfully with the review boundary and leaves the wo
     },
   );
   assert.deepEqual(await readWorld(dir), before);
+});
+
+test("CLI claim blocks before accessing a missing world or writing provenance", async (t) => {
+  const dir = path.join(await fixture(t), "missing");
+  await assert.rejects(run(process.execPath, [cli, "claim", dir]), (error) => {
+    assert.equal(error.code, 1);
+    assert.match(error.stderr, /WORLD_HASH_PROFILE_REQUIRES_REVIEW/);
+    assert.equal(error.stdout, "");
+    return true;
+  });
+  await assert.rejects(fs.stat(dir), { code: "ENOENT" });
 });

@@ -52,7 +52,10 @@ export function declarations(manifest) {
 }
 
 export function assertPublicWorld(manifest) {
-  if ((manifest.visibility ?? "public") !== "public") {
+  if (
+    (manifest.visibility === undefined ? "public" : manifest.visibility) !==
+    "public"
+  ) {
     const error = new Error(
       "Public hashing and indexing require a public world.",
     );

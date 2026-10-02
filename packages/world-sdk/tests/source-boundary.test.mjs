@@ -213,3 +213,69 @@ test("private tooling declarations and missing explicit policy files fail closed
   );
   await assert.rejects(readWorld(dir), { code: "ENOENT" });
 });
+
+test("whitespace and YAML end-marker fences retain privacy", () => {
+  const manifest = { id: "fixture", content: { canon: "canon/" } };
+  const baseline = contentHash([], manifest);
+  for (const [open, close] of [
+    ["--- ", "---"],
+    ["---\t", "--- "],
+    ["---", "..."],
+  ]) {
+    const files = [
+      {
+        path: "canon/secret.md",
+        bytes: `${open}\nvisibility: private\n${close}\nPrivate fixture.`,
+      },
+    ];
+    assert.equal(contentHash(files, manifest), baseline);
+    assert.equal(buildIndex({ manifest, files }).chunks.length, 0);
+  }
+  assert.throws(
+    () =>
+      contentHash(
+        [
+          {
+            path: "canon/secret.md",
+            bytes: "---yaml\nvisibility: private\n---\nPrivate fixture.",
+          },
+        ],
+        manifest,
+      ),
+    { code: "WORLD_FRONTMATTER_INVALID" },
+  );
+});
+
+test("public proof claims are blocked until the declared hash profile has an accepted proof contract", async (t) => {
+  const dir = await fixture(t);
+  await authoredWorld(dir);
+  const before = await readWorld(dir);
+  let calls = 0;
+  const adapter = {
+    chain: "other",
+    async getOrCreateWallet() {
+      calls++;
+      return { pubkey: "fixture" };
+    },
+    async mint() {
+      calls++;
+      return { ref: "fixture", standard: "fixture" };
+    },
+  };
+  await assert.rejects(claimWorldProof({ dir, adapter, approved: true }), {
+    code: "WORLD_HASH_PROFILE_REQUIRES_REVIEW",
+  });
+  assert.equal(calls, 0);
+  assert.deepEqual(await readWorld(dir), before);
+});
+
+test("explicit null visibility cannot default into public selection", () => {
+  const manifest = { id: "fixture", content: { canon: "canon/" } };
+  const files = [
+    { path: "canon/secret.md", bytes: "Fixture", visibility: null },
+  ];
+  assert.equal(contentHash(files, manifest), contentHash([], manifest));
+  assert.throws(() => contentHash([], { ...manifest, visibility: null }), {
+    code: "WORLD_NOT_PUBLIC",
+  });
+});

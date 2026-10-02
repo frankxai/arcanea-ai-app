@@ -4,6 +4,7 @@
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { randomUUID } from "node:crypto";
+import { promises as fs } from "node:fs";
 import path from "node:path";
 import { slugify } from "./manifest.mjs";
 import { writeFiles } from "./fs-world.mjs";
@@ -60,14 +61,11 @@ export async function commitWorld(dir, message, { paths } = {}) {
   uniquePaths(paths);
   if (typeof message !== "string" || !message.trim())
     throw boundaryError("Commit message is required.");
+  const hostGitVariables = new Set(["GIT_PAGER", "GIT_LFS_PATH"]);
   if (
-    [
-      "GIT_DIR",
-      "GIT_WORK_TREE",
-      "GIT_INDEX_FILE",
-      "GIT_OBJECT_DIRECTORY",
-      "GIT_ALTERNATE_OBJECT_DIRECTORIES",
-    ].some((key) => process.env[key])
+    Object.keys(process.env).some(
+      (key) => /^GIT_/i.test(key) && !hostGitVariables.has(key.toUpperCase()),
+    )
   )
     throw boundaryError(
       "Commit refuses an externally redirected Git environment.",
@@ -76,7 +74,7 @@ export async function commitWorld(dir, message, { paths } = {}) {
   const git = async (...args) =>
     (await exec("git", ["--literal-pathspecs", "-C", root, ...args])).stdout;
   const repoRoot = (await git("rev-parse", "--show-toplevel")).trim();
-  if (path.resolve(repoRoot).toLowerCase() !== root.toLowerCase())
+  if ((await fs.realpath(repoRoot)) !== (await fs.realpath(root)))
     throw boundaryError("World commit requires the Git repository root.");
   for (const p of paths) {
     relativePath(p);
@@ -84,13 +82,49 @@ export async function commitWorld(dir, message, { paths } = {}) {
     if (!safe.exists)
       throw boundaryError("Commit path must name an existing regular file.");
   }
-  const staged = (await git("diff", "--cached", "--name-only", "-z"))
+  const staged = (
+    await git(
+      "diff",
+      "--cached",
+      "--no-renames",
+      "--ignore-submodules=none",
+      "--name-only",
+      "-z",
+    )
+  )
     .split("\0")
     .filter(Boolean);
   if (staged.some((p) => !paths.includes(p)))
     throw boundaryError("Commit refuses unrelated staged changes.");
-  await git("add", "--", ...paths);
-  await git("commit", "--only", "-m", message, "--", ...paths);
+  const tracked = new Set(
+    (await git("ls-files", "-z", "--", ...paths)).split("\0").filter(Boolean),
+  );
+  const newlyStaged = paths.filter((p) => !tracked.has(p));
+  try {
+    // --only reads tracked working-tree bytes. Leave prior selected index
+    // versions intact until success; only previously untracked files need add.
+    if (newlyStaged.length) await git("add", "--", ...newlyStaged);
+    await git("commit", "--only", "-m", message, "--", ...paths);
+  } catch (failure) {
+    if (newlyStaged.length) {
+      try {
+        await git(
+          "rm",
+          "--cached",
+          "--force",
+          "--ignore-unmatch",
+          "--",
+          ...newlyStaged,
+        );
+      } catch (cleanup) {
+        throw new AggregateError(
+          [failure, cleanup],
+          "Commit failed and newly staged paths could not be removed; inspect the index before retrying.",
+        );
+      }
+    }
+    throw failure;
+  }
   return { sha: (await git("rev-parse", "HEAD")).trim() };
 }
 

@@ -40,7 +40,7 @@ export interface WorldManifest {
 
 export interface WorldAgent {
   id: string;
-  harness: "claude" | "codex" | "gemini" | "antigravity" | "any";
+  harness: "claude" | "codex" | "gemini" | "antigravity" | "grok" | "any";
   role: string;
   skill?: string;
 }
@@ -105,6 +105,7 @@ export function validateManifest(m: WorldManifest): {
   valid: boolean;
   errors: string[];
 };
+export const CONTENT_HASH_PROFILE: "arcanea-world-sdk/declared-public-v1";
 export function contentHash(
   files: WorldFile[],
   manifest: WorldManifest,
@@ -230,15 +231,31 @@ export function handlePush(args: {
   error?: string;
 }>;
 export function mockChain(chain?: string, standard?: string): ChainAdapter;
+/** Local proposal only; hashProfile is not an accepted onchain contract. */
+export function computeProof(args: {
+  manifest: WorldManifest;
+  hash: string;
+  chain?: string;
+  repoPointer?: string;
+  wallet?: string;
+  now?: string;
+}): {
+  worldId: string;
+  contentHash: string;
+  hashProfile: typeof CONTENT_HASH_PROFILE;
+  schemaVersion: string;
+  creatorWallet?: string;
+  licensePointer?: string;
+  royaltyPolicy?: string;
+  repoOrBundlePointer: string;
+  timestamp?: string;
+  chain?: string;
+};
+/** Always rejects before access with WORLD_HASH_PROFILE_REQUIRES_REVIEW. */
 export function claimWorldProof(args: {
   dir: string;
   adapter?: ChainAdapter;
   chain?: string;
   repoPointer?: string;
   now?: string;
-}): Promise<{
-  entry: ProvenanceEntry;
-  contentHash: string;
-  wallet: string;
-  manifest: WorldManifest;
-}>;
+}): Promise<never>;

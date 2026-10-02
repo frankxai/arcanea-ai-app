@@ -164,3 +164,65 @@ test("failed context commits retain their pending candidates for retry", async (
     [candidate],
   );
 });
+
+test("failed signing removes newly staged candidates and preserves prior selected index bytes", async (t) => {
+  const dir = await gitWorld(t);
+  const candidate = await appendLore(dir, {
+    title: "Unstaged",
+    body: "Fixture",
+  });
+  await fs.writeFile(
+    path.join(dir, "canon/bridge.md"),
+    "Prior selected stage.",
+  );
+  await git(dir, "add", "--", "canon/bridge.md");
+  const cached = await git(dir, "diff", "--cached");
+  await fs.writeFile(
+    path.join(dir, "canon/bridge.md"),
+    "New worktree contents.",
+  );
+  await git(dir, "config", "commit.gpgsign", "true");
+  await git(dir, "config", "gpg.program", "arcanea-nonexistent-test-signer");
+  await assert.rejects(
+    commitWorld(dir, "Failed signing", {
+      paths: [candidate, "canon/bridge.md"],
+    }),
+    (error) => {
+      assert.match(error.stderr ?? "", /gpg|sign/i);
+      return true;
+    },
+  );
+  assert.equal(await git(dir, "diff", "--cached"), cached);
+  assert.ok(await fs.readFile(path.join(dir, candidate), "utf8"));
+});
+
+test("staged renames expose both paths before commit and keep the index unchanged", async (t) => {
+  const dir = await gitWorld(t);
+  await git(dir, "mv", "canon/bridge.md", "canon/renamed.md");
+  const cached = await git(dir, "diff", "--cached");
+  await assert.rejects(
+    commitWorld(dir, "Selected new name", { paths: ["canon/renamed.md"] }),
+  );
+  assert.equal(await git(dir, "diff", "--cached"), cached);
+});
+
+test("redirected Git settings are refused even when their value is empty", async (t) => {
+  const dir = await gitWorld(t);
+  for (const [key, value] of [
+    ["GIT_COMMON_DIR", ""],
+    ["GIT_NAMESPACE", ""],
+    ["GIT_CONFIG_COUNT", "0"],
+  ]) {
+    const previous = process.env[key];
+    try {
+      process.env[key] = value;
+      await assert.rejects(
+        commitWorld(dir, "Redirected fixture", { paths: ["canon/bridge.md"] }),
+        { code: "WORLD_PATH_UNSAFE" },
+      );
+    } finally {
+      if (previous === undefined) delete process.env[key];
+      else process.env[key] = previous;
+    }
+  }
+});

@@ -38,6 +38,7 @@ export const DEFAULT_CONTENT = {
   books: "books/",
   media: "media/",
   agents: "agents/",
+  game: "game/",
 };
 
 /** Build a full manifest object from a partial spec, filling standard defaults. */

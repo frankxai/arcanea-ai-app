@@ -166,25 +166,24 @@ test("push webhook rebuilds the index (with signature verification)", async () =
   assert.equal(persisted.meta.repo, "frankx/drowned");
 });
 
-test("claim proof appends provenance; content hash stable across claim", async () => {
+test("claim proof is blocked without changing world bytes, provenance or hash", async () => {
   const dir = await tmp();
   await createWorld(dir, SENTENCE, opts);
 
   const before = await readWorld(dir);
   const hashBefore = contentHash(before.files, before.manifest);
 
-  const res = await claimWorldProof({
-    dir,
-    adapter: mockChain("solana"),
-    now: NOW,
-  });
-  assert.match(res.contentHash, /^sha256:[0-9a-f]{64}$/);
-  assert.equal(res.entry.chain, "solana");
-  assert.equal(res.entry.standard, "metaplex-core");
-  assert.equal(res.manifest.provenance.length, 1);
-  assert.ok(res.wallet.startsWith("So1"), "embedded wallet minted");
+  await assert.rejects(
+    claimWorldProof({
+      dir,
+      adapter: mockChain("solana"),
+      now: NOW,
+    }),
+    { code: "WORLD_HASH_PROFILE_REQUIRES_REVIEW" },
+  );
 
   const after = await readWorld(dir);
+  assert.deepEqual(after, before);
   const hashAfter = contentHash(after.files, after.manifest);
   assert.equal(
     hashBefore,

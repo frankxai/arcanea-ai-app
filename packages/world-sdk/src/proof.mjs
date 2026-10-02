@@ -1,12 +1,11 @@
-// Proof rail — onchain underneath, invisible on top. Onchain stores PROOFS, not the world.
-// Real chains (Solana/Metaplex via Helius, EVM via thirdweb) implement the same two adapters.
+// Local proof proposals and mock fixtures. Claims are blocked until the shared
+// contract can identify the declared-source hash profile without mistagging it.
 
 import { createHash } from "node:crypto";
-import { readWorld, writeManifest } from "./fs-world.mjs";
-import { contentHash } from "./contenthash.mjs";
+import { CONTENT_HASH_PROFILE } from "./contenthash.mjs";
 import { SCHEMA_VERSION } from "./manifest.mjs";
 
-/** The onchain record shape (see WORLD_REPO_STANDARD.md §5). */
+/** Local proof proposal; its hash profile is not an accepted onchain contract. */
 export function computeProof({
   manifest,
   hash,
@@ -19,6 +18,7 @@ export function computeProof({
     worldId: manifest.id,
     creatorWallet: wallet,
     contentHash: hash,
+    hashProfile: CONTENT_HASH_PROFILE,
     schemaVersion: SCHEMA_VERSION,
     ...(manifest.license?.pointer
       ? { licensePointer: manifest.license.pointer }
@@ -56,7 +56,7 @@ export function mockChain(chain = "solana", standard = "metaplex-core") {
 }
 
 /**
- * The "Claim World Proof" button, server-side.
+ * Always rejects before access; caller flags cannot approve the new profile.
  * @param {object} args
  * @param {string} args.dir
  * @param {object} [args.adapter]  wallet+mint adapter (defaults to mockChain())
@@ -64,43 +64,10 @@ export function mockChain(chain = "solana", standard = "metaplex-core") {
  * @param {string} [args.repoPointer]
  * @param {string} [args.now]      ISO timestamp (inject for determinism; defaults to wall clock)
  */
-export async function claimWorldProof({
-  dir,
-  adapter = mockChain(),
-  chain,
-  repoPointer,
-  now,
-}) {
-  const world = await readWorld(dir);
-  const { manifest, files } = world;
-  const hash = contentHash(files, manifest);
-  const targetChain = chain || adapter.chain || "solana";
-
-  const wallet = await adapter.getOrCreateWallet(
-    manifest.creator?.handle || "anon",
+export async function claimWorldProof(_args) {
+  const error = new Error(
+    "Declared-source hashes use a new SDK profile. Proof claims require an accepted profile-aware contract before adapters or provenance writes.",
   );
-  manifest.creator = { ...(manifest.creator || {}), wallet: wallet.pubkey };
-
-  const proof = computeProof({
-    manifest,
-    hash,
-    chain: targetChain,
-    repoPointer,
-    wallet: wallet.pubkey,
-    now: now || new Date().toISOString(),
-  });
-  const minted = await adapter.mint(proof);
-
-  const entry = {
-    contentHash: hash,
-    chain: targetChain,
-    standard: minted.standard,
-    ref: minted.ref,
-    schemaVersion: SCHEMA_VERSION,
-    timestamp: proof.timestamp,
-  };
-  manifest.provenance = [...(manifest.provenance || []), entry];
-  await writeManifest(dir, manifest);
-
-  return { entry, contentHash: hash, wallet: wallet.pubkey, manifest };
+  error.code = "WORLD_HASH_PROFILE_REQUIRES_REVIEW";
+  throw error;
 }
