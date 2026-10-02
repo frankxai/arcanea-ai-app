@@ -139,3 +139,23 @@ remain with their existing owners; no global install or working-set link changes
 This subtracts duplicate package copies while retaining story, specialty and
 developer work for later selection. It does not fold or approve all donor sources.
 Rights, independent evaluation/review, creator acceptance and release gates remain.
+
+## Duplicate OSS working-set root removed, October 2
+
+At `0e20b3b42a2f5cb81617c8f9d6310e9a270746c5`, `.claude/skills/oss`
+contained18 single-file skills. Every body is byte-identical to one retained
+`.claude/skills/creative`, `development` or `meta` source. This draft removes
+those duplicate files and18 active index rows. The JSON's `workingSetOssRemediation`
+pins each removed path, retained path, Git blob and SHA-256 value. Historical source
+entries and the previous canonical-root cleanup record remain unchanged.
+
+No unique skill body or support file is removed. Tracked path references occur
+only in the active index and historical evidence; there is no discovered active
+direct-path consumer beyond that index. Retained story, specialty, development
+and meta jobs preserve their bytes. This reduces duplicate-name discovery in the
+developer root without changing installed donor plugins or claiming compatible
+external path users. Working-set links to the canonical root remain separate work.
+
+The package still has four unchanged candidates and zero ready entries. Other
+roots, broad root-plugin discovery, rights, evaluation/review, creator acceptance
+and self-contained installation remain open; no source retirement or release.

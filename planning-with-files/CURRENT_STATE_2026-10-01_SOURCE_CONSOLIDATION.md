@@ -342,3 +342,25 @@ Rollback: reviewed scoped restoration of19 paths from the pinned base; preserve
 all later edits and unresolved rights. Budget: ordinary text/removal/small tests,
 no new worktree/install/local build/provider or foreign process cleanup.
 Stop: tested reviewable draft with source/CI/limits saved; full goal remains active.
+
+## Duplicate OSS working-set root, October 2
+
+Scope: remove18 duplicate single-file skills from `.claude/skills/oss` and their
+active index rows; preserve the identical role-based working-set sources.
+User job: discover one working-set definition per retained skill instead of the
+same name arriving through the obsolete OSS copy root.
+Owner: Codex, draft487/issue276. Base:0e20b3b42a2f5cb81617c8f9d6310e9a270746c5.
+Files:18 explicit SKILL.md deletions plus existing index, survivor JSON/Markdown,
+package README and this task record. All historical metadata is retained.
+Acceptance: duplicate root absent; retained bodies and canonical candidates byte-
+preserved;138 remaining index rows preserve metadata; source mappings and current
+versus historical claims explicit. Consumer grep finds only index/history paths.
+Non-goals: other roots, global install/uninstall, working-set links, rights/Heart/
+licence choice, candidate promotion, canon, archive, history rewrite, merge/release.
+Verification: exact single-file trees/blobs/hashes, retained source/candidate and
+index/evidence equality, existing audit4/catalog11 and all four exact-head CI checks.
+Independent cumulative review only after machine admission; recent HOLD5127/6144,
+32 task runtimes/12. No reviewer invocation/PID/cost from this removal.
+Rollback: reviewed scoped restoration from pinned base; preserve all later work.
+Budget: ordinary text/removal/small tests, no install/local build/worktree/fanout.
+Stop: reviewable draft and verified issue/hub receipts; full goal stays active.

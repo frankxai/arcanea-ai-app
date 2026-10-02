@@ -84,7 +84,9 @@ The canonical package root now contains only its four catalog candidates.
 Nineteen unlisted legacy package copies were removed after verifying byte-identical
 sources elsewhere in the app. Their pinned source mappings and historical fold
 records remain in `docs/strategy/arcanea-skill-survivors-2026-10-01.json`.
-Those retained development and specialty sources still need reconciliation. Other discovery
+Eighteen duplicate `.claude/skills/oss` copies are also removed; their identical
++creative, development and meta sources remain in the working set. Retained sources
++still need rights and workflow reconciliation. Other discovery
 roots and plugin manifests in the app still need reconciliation; this package
 does not make a repository-wide install curated.
 
