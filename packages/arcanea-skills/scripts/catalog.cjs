@@ -112,7 +112,7 @@ function regularFiles(root) {
   return files.sort();
 }
 
-function validateSources(packageRoot, catalog) {
+function validateSources(packageRoot, catalog, readBytes = fs.readFileSync) {
   checkStructure(catalog);
   const sourceRoot = path.join(packageRoot, "skills");
   const sourceStat = fs.lstatSync(sourceRoot);
@@ -124,7 +124,7 @@ function validateSources(packageRoot, catalog) {
     const files = regularFiles(root);
     if (!files.includes("SKILL.md"))
       throw new Error(`Missing SKILL.md: ${skill.name}`);
-    const text = fs.readFileSync(path.join(root, "SKILL.md"), "utf8");
+    const text = readBytes(path.join(root, "SKILL.md")).toString("utf8");
     const frontmatter = text.match(
       /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/,
     )?.[1];
@@ -160,7 +160,7 @@ function validateSources(packageRoot, catalog) {
     }
     const hash = createHash("sha256");
     for (const file of files) {
-      const content = fs.readFileSync(path.join(root, file));
+      const content = readBytes(path.join(root, file));
       hash.update(
         `${file}\0${createHash("sha256").update(content).digest("hex")}\n`,
       );

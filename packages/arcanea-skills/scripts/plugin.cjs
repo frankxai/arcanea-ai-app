@@ -41,13 +41,80 @@ function preparePlugin(packageRoot, sourceCommit) {
       "packages/arcanea-skills"
   )
     throw new Error("Require the canonical packages/arcanea-skills root");
-  if (git(root, ["remote", "get-url", "origin"]).toString().trim() !== ORIGIN)
+  const origin = git(root, ["config", "--get", "remote.origin.url"])
+    .toString()
+    .trim();
+  const canonicalOrigin = origin
+    .replace(/^git@github\.com:/i, "https://github.com/")
+    .replace(/^ssh:\/\/git@github\.com\//i, "https://github.com/")
+    .replace(/\/?(?:\.git)?\/?$/, "")
+    .toLowerCase();
+  if (canonicalOrigin !== "https://github.com/frankxai/arcanea-ai-app")
     throw new Error("Unexpected source repository origin");
   if (git(root, ["rev-parse", "HEAD"]).toString().trim() !== sourceCommit)
     throw new Error("Source commit does not match checkout HEAD");
 
+  // The configured origin identifies a repository, not remote authentication.
+  // Use immutable blob bytes. Accept CRLF checkout conversion for text only;
+  // substantive edits and arbitrary Git clean filters are never accepted/run.
+  const snapshot = new Map();
+  function pinned(relativePath) {
+    if (snapshot.has(relativePath)) return snapshot.get(relativePath);
+    const file = path.join(packageRoot, relativePath);
+    const fileStat = fs.lstatSync(file);
+    if (!fileStat.isFile() || fileStat.isSymbolicLink())
+      throw new Error(`Unsafe source file: ${relativePath}`);
+    const gitPath = path.relative(root, file).replaceAll("\\", "/");
+    const entry = git(root, ["ls-tree", "-z", sourceCommit, "--", gitPath])
+      .toString()
+      .split("\0")[0];
+    const mode = entry.match(/^(100644|100755) blob [a-f0-9]{40}\t/)?.[1];
+    if (!mode || entry.split("\t")[1] !== gitPath)
+      throw new Error(`Unsupported or untracked source mode: ${relativePath}`);
+    const bytes = fs.readFileSync(file);
+    const blob = git(root, ["show", `${sourceCommit}:${gitPath}`]);
+    const text =
+      /\.(?:md|json|[cm]?js|cts|txt|sh|py|yaml|yml)$/.test(relativePath) &&
+      !bytes.includes(0) &&
+      !blob.includes(0);
+    const normalized = text
+      ? Buffer.from(bytes.toString("utf8").replaceAll("\r\n", "\n"))
+      : bytes;
+    if (!bytes.equals(blob) && !normalized.equals(blob))
+      throw new Error(
+        `Source bytes differ from pinned commit: ${relativePath}`,
+      );
+    const value = { bytes: blob, mode };
+    snapshot.set(relativePath, value);
+    return value;
+  }
+  const engines = [
+    "bin/plugin.js",
+    "scripts/plugin.cjs",
+    "scripts/catalog.cjs",
+    "package.json",
+  ];
+  const engineHashes = Object.fromEntries(
+    engines.map((file) => [file, digest(pinned(file).bytes)]),
+  );
+  // Refuse a different executing implementation even when testing another root.
+  for (const file of engines) {
+    const executing = fs.readFileSync(path.join(__dirname, "..", file));
+    const normalized = Buffer.from(
+      executing.toString("utf8").replaceAll("\r\n", "\n"),
+    );
+    if (
+      !executing.equals(pinned(file).bytes) &&
+      !normalized.equals(pinned(file).bytes)
+    )
+      throw new Error(
+        `Executing implementation differs from pinned commit: ${file}`,
+      );
+  }
+  const catalogBytes = pinned("catalog.json").bytes;
   const catalog = loadCatalog(packageRoot);
-  const sources = validateSources(packageRoot, catalog);
+  if (!json(catalog).equals(json(JSON.parse(catalogBytes))))
+    throw new Error("Catalog changed during planning");
   const ready = selectReady(catalog);
   if (!ready.length) {
     const error = new Error(
@@ -56,48 +123,39 @@ function preparePlugin(packageRoot, sourceCommit) {
     error.exitCode = 2;
     throw error;
   }
-  function pinnedBytes(relativePath) {
-    const file = path.join(packageRoot, relativePath);
-    const fileStat = fs.lstatSync(file);
-    if (!fileStat.isFile() || fileStat.isSymbolicLink())
-      throw new Error(`Unsafe source file: ${relativePath}`);
-    const bytes = fs.readFileSync(file);
-    const gitPath = path.relative(root, file).replaceAll("\\", "/");
-    const committed = git(root, ["show", `${sourceCommit}:${gitPath}`]);
-    if (!bytes.equals(committed))
-      throw new Error(
-        `Source bytes differ from pinned commit: ${relativePath}`,
-      );
-    return bytes;
-  }
-  const catalogBytes = pinnedBytes("catalog.json");
-  if (!json(catalog).equals(json(JSON.parse(catalogBytes))))
-    throw new Error("Catalog changed during planning");
+  const readPinned = (file) =>
+    pinned(path.relative(packageRoot, file).replaceAll("\\", "/")).bytes;
+  const sources = validateSources(packageRoot, catalog, readPinned);
   const files = [];
   const passports = ready.map((skill) => {
     const source = sources.find((row) => row.name === skill.name);
-    const hash = createHash("sha256");
+    const gitPrefix =
+      path
+        .relative(root, path.join(packageRoot, skill.path))
+        .replaceAll("\\", "/") + "/";
+    const entries = git(root, ["ls-tree", "-rz", sourceCommit, "--", gitPrefix])
+      .toString()
+      .split("\0")
+      .filter(Boolean);
+    const paths = entries
+      .map((entry) => entry.split("\t")[1].slice(gitPrefix.length))
+      .sort();
+    validatePortablePaths(paths, skill.name);
+    if (JSON.stringify(paths) !== JSON.stringify(source.files))
+      throw new Error(
+        `Committed and checkout file lists differ: ${skill.name}`,
+      );
     const members = source.files.map((file) => {
-      const bytes = pinnedBytes(`${skill.path}/${file}`);
+      const { bytes, mode } = pinned(`${skill.path}/${file}`);
       const sha256 = digest(bytes);
-      hash.update(`${file}\0${sha256}\n`);
-      files.push({ path: `skills/${skill.name}/${file}`, bytes });
-      return { path: file, sha256 };
+      files.push({ path: `skills/${skill.name}/${file}`, bytes, mode });
+      return { path: file, sha256, mode };
     });
-    if (hash.digest("hex") !== skill.contentSha256)
-      throw new Error(`Reviewed snapshot changed: ${skill.name}`);
-    return {
-      name: skill.name,
-      contentSha256: skill.contentSha256,
-      rights: skill.rights,
-      evaluation: skill.evaluation,
-      review: skill.review,
-      files: members,
-    };
+    return { ...skill, files: members };
   });
   const manifest = {
-    name: "arcanea",
-    version: `1.0.0-${sourceCommit.slice(0, 12)}`,
+    name: "arcanea-creator-skills",
+    version: `1.0.0-g${sourceCommit.slice(0, 12)}`,
     description: "Catalog-ready Arcanea creator workflows",
     author: { name: "FrankX", url: "https://arcanea.ai" },
     repository: "https://github.com/frankxai/arcanea-ai-app",
@@ -106,10 +164,8 @@ function preparePlugin(packageRoot, sourceCommit) {
   const receipt = {
     schema: "arcanea.plugin-build.v1",
     generator: "arcanea-skills/plugin-v1",
-    generatorSha256: digest(fs.readFileSync(__filename)),
-    catalogValidatorSha256: digest(
-      fs.readFileSync(path.join(__dirname, "catalog.cjs")),
-    ),
+    engineHashes,
+    yamlVersion: require("yaml/package.json").version,
     source: {
       repository: ORIGIN,
       commit: sourceCommit,
@@ -118,14 +174,44 @@ function preparePlugin(packageRoot, sourceCommit) {
     },
     skills: passports,
     scope:
-      "Catalog declarations checked, not authenticated rights or reviewer authority. Source commit covers selected input bytes; generator hashes identify the executing implementation. No publication approval.",
+      "Commit-bound source and generator bytes, declared passports, resolved YAML version. Origin is configured identity, not remote authentication. No authenticated rights/reviewer or publication approval.",
   };
-  files.push({ path: "release.json", bytes: json(receipt) });
-  files.push({ path: ".claude-plugin/plugin.json", bytes: json(manifest) });
+  files.push({ path: "release.json", bytes: json(receipt), mode: "100644" });
+  files.push({
+    path: ".claude-plugin/plugin.json",
+    bytes: json(manifest),
+    mode: "100644",
+  });
   return {
-    files: files.sort((a, b) => a.path.localeCompare(b.path, "en")),
+    files: files.sort((a, b) =>
+      a.path < b.path ? -1 : a.path > b.path ? 1 : 0,
+    ),
     receipt,
   };
+}
+
+function validatePortablePaths(paths, skillName) {
+  const seen = new Map();
+  for (const file of paths) {
+    const segments = file.split("/");
+    if (
+      segments.some(
+        (part) =>
+          !part ||
+          /[\\:<>"|?*\x00-\x1f]/.test(part) ||
+          /[. ]$/.test(part) ||
+          /^(?:con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/i.test(part),
+      )
+    )
+      throw new Error(`Nonportable support path: ${skillName}/${file}`);
+    for (let i = 1; i <= segments.length; i++) {
+      const prefix = segments.slice(0, i).join("/");
+      const folded = prefix.toLowerCase();
+      if (seen.has(folded) && seen.get(folded) !== prefix)
+        throw new Error(`Case-colliding support paths: ${skillName}/${file}`);
+      seen.set(folded, prefix);
+    }
+  }
 }
 
 function checkOutput(output) {
@@ -170,11 +256,16 @@ function materializePlugin(plan, output, { dryRun = false } = {}) {
     if (!contained(staging, target))
       throw new Error("Output path escapes plugin");
     fs.mkdirSync(path.dirname(target), { recursive: true });
-    fs.writeFileSync(target, file.bytes, { flag: "wx" });
+    fs.writeFileSync(target, file.bytes, {
+      flag: "wx",
+      mode: file.mode === "100755" ? 0o755 : 0o644,
+    });
+    if (process.platform !== "win32")
+      fs.chmodSync(target, file.mode === "100755" ? 0o755 : 0o644);
   }
   const pluginRoot = path.join(output, "plugin");
   fs.renameSync(staging, pluginRoot);
   return { pluginRoot, files: plan.files.length, written: true };
 }
 
-module.exports = { preparePlugin, materializePlugin };
+module.exports = { preparePlugin, materializePlugin, validatePortablePaths };

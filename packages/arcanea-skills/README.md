@@ -106,15 +106,15 @@ node packages/arcanea-skills/bin/plugin.js --commit <full-source-SHA> --output <
 claude plugin validate <new-directory>/plugin --strict
 ```
 
-The source must be the app's exact HTTPS origin, its canonical package path and
+The source must identify the app through a canonical HTTPS or SSH origin, its package path and
 the specified checkout HEAD. Catalog and selected skill/support bytes must match
-Git blobs at that commit, including line endings. Unrelated development files
+Git blobs at that commit. Text checkouts may differ only by CRLF-to-LF conversion; output always uses the committed bytes. Unrelated development files
 are ignored. The builder snapshots validated bytes before writing; later source
 edits cannot change that snapshot. Only ready entries reach the artifact's
 default `skills/` folder. No development commands, agents, hooks, MCP setup,
 candidate folders or implicit blanket license are copied. `release.json`
-identifies input commit, catalog and content hashes, executing generator hashes
-and declared passport evidence. These declarations do not authenticate rights
+identifies input commit, catalog and content hashes, commit-bound CLI/generator/validator/package hashes and resolved YAML version
+and complete declared passports. The distinct plugin name is `arcanea-creator-skills`; its version has a letter-prefixed commit identifier. Support paths with Windows-reserved names, invalid characters or case collisions are rejected before output. Git symlink modes are refused even when checked out as plain files; executable support modes are recorded and applied on POSIX. Determinism requires the same source and YAML version. Configured origin identity is not remote authentication. These declarations do not authenticate rights
 or reviewers and do not replace human publication approval.
 
 Currently four candidates and zero ready means exit 2 before creating output.

@@ -1,3 +1,5 @@
+import type { Buffer } from "node:buffer";
+
 export interface CatalogSkill {
   name: string;
   path: string;
@@ -44,5 +46,6 @@ export function selectReady(catalog: Catalog): CatalogSkill[];
 export function validateSources(
   packageRoot: string,
   catalog: Catalog,
+  readBytes?: (path: string) => Buffer,
 ): ValidatedSource[];
 export function contained(root: string, target: string): boolean;

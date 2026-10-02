@@ -12,18 +12,18 @@ Reuse the existing catalog's rights/evaluation/review/hash rules rather than a
 parallel allowlist. Existing root plugin remains the development bundle.
 
 Files: package `bin/plugin.js`, `scripts/plugin.cjs`, `tests/plugin.test.mjs`,
-`package.json`, `README.md` and this record.
+`package.json`, `README.md`, catalog validator/typing and this record.
 Non-goals: rights/license decisions, candidate promotion, canon, archive, launcher,
 root development plugin changes, public listing, install, merge or deployment.
 Acceptance: only ready sources copied, byte/commit-bound inputs, no developer
 components, zero-ready no writes, safe refusal of existing/linked destinations,
 preserved partial failures and fresh-directory retry, deterministic transport.
-Verification: Node22.23.2, all21 local tests pass with existing YAML2.9.0.
+Initial verification atf976ed30: Node22.23.2, all21 local tests pass with existing YAML2.9.0.
 Opt-in Claude2.1.287 strict native manifest validation passes with no warnings;
 its contents array is empty, so native discovery/installation is not established.
 Native CI uses pinned YAML2.9.1; the native CLI opt-in test skips there when absent.
-Exact revision independent review and native CI pending.
-Rollback: scoped revert of the six files; retain failed/new outputs for inspection.
+Corrected candidate precommit:29/29 tests pass including native manifest validation. Exact corrected commit rerun, independent review and pinned Linux native CI pending; terminal receipts belong in issue276/PR501.
+Rollback: scoped revert of the eight files; retain failed/new outputs for inspection.
 
 Alternative: explicit manifest paths into candidate package are insufficient
 because native `skills` adds to default `skills/` discovery. A self-contained
@@ -47,3 +47,11 @@ ready visibility was changed while still validating as a candidate. The fixture
 now computes the final file hash before adding synthetic passports. Existing
 catalog validation was preserved; reruns pass20/20 and then21/21 with native
 manifest validation. No source candidate, passport, lockfile or canon changed.
+
+Independent review atf976ed30 returned REVISE (three MEDIUM/two LOW), correctly bound to six-file diffde6f60b7. First native CI37017948976 passed all four checks/frozen Install at that head; it does not clear review. Correcting commit-bound executing engines, recorded YAML, exact-source test receipts, normal HTTPS/SSH origin spelling and CRLF blob normalization, distinct plugin namespace/valid version, portable support names and executable/symlink Git modes.
+
+Catalog validation now accepts an optional byte reader for compiler-pinned Git blobs; default installer/API filesystem validation remains. Source/generator bytes come from the commit with only ordinary text EOL conversion accepted in the checkout. No clean filters run. Remote identity is configured metadata, not authenticated provenance. Exact corrected source tests and independent review are required; prior failures/findings remain preserved. YAML2.9.0 local results and pinned2.9.1 Linux CI are separate environments, not equivalent dependency receipts.
+
+Correction precommit run:25/27 passed; one assertion expected the older weaker content error but the new committed-mode check correctly refused an untracked file first. The Windows Git index refused a reserved CON name before compiler invocation; that portability test now checks the shared validator directly and uses a real case-colliding Git tree for integration. Git NTFS protection remains enabled. A separate formatter attempt used Babel for .cts and failed; the existing TypeScript formatter plugin is now selected. No check was disabled.
+
+Corrected precommit tests29/29 pass with actual native strict manifest validation (contents[] empty), CLI dry-run/generation, dirty engine refusal, source EOL equivalence, usual origin spellings, real case-colliding Git tree, portable-name unit cases, executable mode and Git symlink-mode denial. Existing eleven catalog/installer tests pass with the new optional byte reader. Current real catalog still four candidates/zero ready.

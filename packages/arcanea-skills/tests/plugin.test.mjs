@@ -10,6 +10,7 @@ import {
   rmSync,
   symlinkSync,
   writeFileSync,
+  statSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
@@ -20,7 +21,11 @@ import test from "node:test";
 
 const require = createRequire(import.meta.url);
 const { loadCatalog, validateSources } = require("../scripts/catalog.cjs");
-const { preparePlugin, materializePlugin } = require("../scripts/plugin.cjs");
+const {
+  preparePlugin,
+  materializePlugin,
+  validatePortablePaths,
+} = require("../scripts/plugin.cjs");
 const source = fileURLToPath(new URL("../", import.meta.url));
 
 function fixture(t, ready = true) {
@@ -35,6 +40,15 @@ function fixture(t, ready = true) {
   mkdirSync(pkg, { recursive: true });
   cpSync(join(source, "skills"), join(pkg, "skills"), { recursive: true });
   cpSync(join(source, "catalog.json"), join(pkg, "catalog.json"));
+  for (const file of [
+    "bin/plugin.js",
+    "scripts/plugin.cjs",
+    "scripts/catalog.cjs",
+    "package.json",
+  ]) {
+    mkdirSync(dirname(join(pkg, file)), { recursive: true });
+    cpSync(join(source, file), join(pkg, file));
+  }
   const catalog = loadCatalog(pkg);
   if (ready) {
     const files = validateSources(pkg, catalog)[0].files;
@@ -96,6 +110,9 @@ function fixture(t, ready = true) {
     "add",
     "packages/arcanea-skills/catalog.json",
     "packages/arcanea-skills/skills",
+    "packages/arcanea-skills/bin",
+    "packages/arcanea-skills/scripts",
+    "packages/arcanea-skills/package.json",
   );
   git(
     "commit",
@@ -166,6 +183,8 @@ test("plugin includes exact ready bytes/resources, excludes candidate and develo
       .commit,
     commit,
   );
+  assert.equal(manifest.name, "arcanea-creator-skills");
+  assert.match(manifest.version, /^1\.0\.0-g[a-f0-9]{12}$/);
   assert.deepEqual(readFileSync(join(pkg, "catalog.json")), before);
   assert.equal(existsSync(join(output, ".staging")), false);
 });
@@ -195,7 +214,10 @@ test("staged catalog changes and untracked support files cannot impersonate comm
   assert.throws(() => preparePlugin(pkg, commit), /pinned commit/i);
   writeFileSync(catalogFile, before);
   writeFileSync(join(pkg, "skills/world-build/new-support.txt"), "unreviewed");
-  assert.throws(() => preparePlugin(pkg, commit), /reviewed content changed/i);
+  assert.throws(
+    () => preparePlugin(pkg, commit),
+    /reviewed content changed|untracked source mode/i,
+  );
 });
 
 test("materialization uses immutable planned bytes after source changes", (t) => {
@@ -249,6 +271,183 @@ test("two plans for identical input are byte-identical and do not alter reposito
   const a = preparePlugin(pkg, commit);
   const b = preparePlugin(pkg, commit);
   assert.deepEqual(a, b);
+  assert.equal(git("status", "--porcelain"), before);
+});
+
+test("dirty compiler, catalog validator, CLI or package manifest refuses before output", (t) => {
+  const { pkg, commit, output } = fixture(t);
+  for (const file of [
+    "scripts/plugin.cjs",
+    "scripts/catalog.cjs",
+    "bin/plugin.js",
+    "package.json",
+  ]) {
+    const target = join(pkg, file),
+      before = readFileSync(target);
+    writeFileSync(
+      target,
+      Buffer.concat([before, Buffer.from("\nchanged implementation\n")]),
+    );
+    assert.throws(() => preparePlugin(pkg, commit), /pinned commit/i);
+    assert.equal(existsSync(output), false);
+    writeFileSync(target, before);
+  }
+});
+
+test("CRLF checkout conversion preserves LF blob output and receipt bytes", (t) => {
+  const { pkg, commit } = fixture(t);
+  const before = preparePlugin(pkg, commit);
+  for (const file of [
+    "scripts/plugin.cjs",
+    "scripts/catalog.cjs",
+    "bin/plugin.js",
+    "package.json",
+    "catalog.json",
+    "skills/world-build/SKILL.md",
+    "skills/world-build/references/example.md",
+  ]) {
+    const target = join(pkg, file);
+    writeFileSync(
+      target,
+      readFileSync(target, "utf8")
+        .replaceAll("\r\n", "\n")
+        .replaceAll("\n", "\r\n"),
+    );
+  }
+  assert.deepEqual(preparePlugin(pkg, commit), before);
+});
+
+test("usual HTTPS and SSH origin spellings identify the same app source", (t) => {
+  const { pkg, commit, git } = fixture(t);
+  const before = preparePlugin(pkg, commit);
+  for (const origin of [
+    "https://github.com/frankxai/arcanea-ai-app",
+    "git@github.com:frankxai/arcanea-ai-app.git",
+    "ssh://git@github.com/frankxai/arcanea-ai-app.git",
+  ]) {
+    git("remote", "set-url", "origin", origin);
+    assert.deepEqual(preparePlugin(pkg, commit), before);
+  }
+});
+
+test("nonportable support names and directory-case collisions are rejected", () => {
+  for (const paths of [
+    ["references/CON.txt"],
+    ["references/bad:name.txt"],
+    ["references/a\\b.txt"],
+    ["references/a.txt", "references/A.txt"],
+    ["Refs/a.txt", "refs/b.txt"],
+    ["references/trailing. "],
+  ]) {
+    assert.throws(
+      () => validatePortablePaths(paths, "fixture"),
+      /nonportable|case-colliding/i,
+    );
+  }
+});
+
+test("case-colliding Git paths fail before creating output", (t) => {
+  const { pkg, git, output } = fixture(t);
+  const blob = git(
+    "rev-parse",
+    "HEAD:packages/arcanea-skills/skills/world-build/references/example.md",
+  );
+  for (const file of ["references/EXAMPLE.md"]) {
+    git(
+      "update-index",
+      "--add",
+      "--cacheinfo",
+      `100644,${blob},packages/arcanea-skills/skills/world-build/${file}`,
+    );
+    git(
+      "commit",
+      "--quiet",
+      "-m",
+      "Synthetic nonportable tree; no working file created",
+    );
+    assert.throws(
+      () => preparePlugin(pkg, git("rev-parse", "HEAD")),
+      /nonportable|case-colliding/i,
+    );
+    assert.equal(existsSync(output), false);
+    git(
+      "update-index",
+      "--force-remove",
+      `packages/arcanea-skills/skills/world-build/${file}`,
+    );
+    git(
+      "commit",
+      "--quiet",
+      "-m",
+      "Remove synthetic invalid path from scratch tree",
+    );
+  }
+});
+
+test("Git symlink mode is refused when the working file is plain text", (t) => {
+  const { pkg, git, output } = fixture(t);
+  const file =
+    "packages/arcanea-skills/skills/world-build/references/example.md";
+  const blob = git("rev-parse", `HEAD:${file}`);
+  git("update-index", "--cacheinfo", `120000,${blob},${file}`);
+  git(
+    "commit",
+    "--quiet",
+    "-m",
+    "Synthetic symlink blob with plain checkout file",
+  );
+  assert.throws(
+    () => preparePlugin(pkg, git("rev-parse", "HEAD")),
+    /unsupported.*source mode/i,
+  );
+  assert.equal(existsSync(output), false);
+});
+
+test("support executable mode is recorded and applied on POSIX", (t) => {
+  const { pkg, git, output } = fixture(t);
+  git(
+    "update-index",
+    "--chmod=+x",
+    "packages/arcanea-skills/skills/world-build/references/example.md",
+  );
+  git("commit", "--quiet", "-m", "Synthetic executable support mode");
+  const plan = preparePlugin(pkg, git("rev-parse", "HEAD"));
+  const member = plan.receipt.skills[0].files.find(
+    (file) => file.path === "references/example.md",
+  );
+  assert.equal(member.mode, "100755");
+  const result = materializePlugin(plan, output);
+  if (process.platform !== "win32")
+    assert.equal(
+      statSync(
+        join(result.pluginRoot, "skills/world-build/references/example.md"),
+      ).mode & 0o777,
+      0o755,
+    );
+});
+
+test("CLI dry-run and generation use the pinned fixture and preserve its sources", (t) => {
+  const { pkg, commit, output, git } = fixture(t);
+  const before = git("status", "--porcelain");
+  const cli = (args) =>
+    spawnSync(
+      process.execPath,
+      [
+        join(pkg, "bin/plugin.js"),
+        "--commit",
+        commit,
+        "--output",
+        output,
+        ...args,
+      ],
+      { encoding: "utf8", timeout: 15000 },
+    );
+  const dry = cli(["--dry-run"]);
+  assert.equal(dry.status, 0, dry.stderr);
+  assert.equal(existsSync(output), false);
+  const actual = cli([]);
+  assert.equal(actual.status, 0, actual.stderr);
+  assert.equal(JSON.parse(actual.stdout).pluginRoot, join(output, "plugin"));
   assert.equal(git("status", "--porcelain"), before);
 });
 
