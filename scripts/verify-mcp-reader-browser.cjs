@@ -95,41 +95,46 @@ function sourceEvidence() {
   const reports = [],
     captures = [];
   let completed = false;
-  const capture = async (panel, page, state, name) => {
+  const capture = async (
+    panel,
+    page,
+    state,
+    name,
+    scope = "MCP Studio waitlist panel",
+  ) => {
     await page.evaluate(() => document.fonts.ready);
     await panel.evaluate((element) =>
       element.scrollIntoView({ block: "center", behavior: "instant" }),
     );
-    if (!name.startsWith("docs-"))
-      await expect
-        .poll(() =>
-          panel.evaluate((element) =>
-            Array.from(element.querySelectorAll("input, button")).every(
-              (control) => {
-                const box = control.getBoundingClientRect();
-                const hit = document.elementFromPoint(
-                  box.left + box.width / 2,
-                  box.top + box.height / 2,
-                );
-                return (
-                  box.width > 0 &&
-                  box.height > 0 &&
-                  (control === hit || control.contains(hit))
-                );
-              },
+    await expect
+      .poll(() =>
+        panel.evaluate((element) =>
+          Array.from(
+            element.querySelectorAll(
+              "input, button, h1, h2, h3, a, [role='status']",
             ),
-          ),
-        )
-        .toBe(true);
+          ).every((control) => {
+            const box = control.getBoundingClientRect();
+            const hit = document.elementFromPoint(
+              box.left + box.width / 2,
+              box.top + box.height / 2,
+            );
+            return (
+              box.width > 0 &&
+              box.height > 0 &&
+              (control === hit || control.contains(hit))
+            );
+          }),
+        ),
+      )
+      .toBe(true);
     const path = `${output}/${name}-${state.name}.png`;
     await panel.screenshot({ path, type: "png", animations: "disabled" });
     const bytes = fs.readFileSync(path);
     const provenance = {
       kind: "browser-screenshot",
       screenshotAnimations: "disabled",
-      captureScope: name.startsWith("docs-")
-        ? "MCP docs content"
-        : "MCP Studio waitlist panel",
+      captureScope: scope,
       prompt: `Capture existing MCP reader ${name}, ${state.name}, ${page.url()}`,
       model: null,
       provider: "Playwright Chromium",
@@ -396,7 +401,23 @@ function sourceEvidence() {
             }
           }
           await checkOverflow(route);
-          await capture(main, page, state, `docs-${route.split("/").at(-1)}`);
+          const panel = route.endsWith("install")
+            ? main.locator("article").filter({ hasText: "Claude Desktop" })
+            : route.endsWith("tools")
+              ? main.locator("article").filter({ hasText: "arcanea_template" })
+              : main.locator("section").last();
+          const scope = route.endsWith("install")
+            ? "MCP Claude Desktop connection card"
+            : route.endsWith("tools")
+              ? "MCP template tool card"
+              : "MCP coverage and canonical source";
+          await capture(
+            panel,
+            page,
+            state,
+            `docs-${route.split("/").at(-1)}`,
+            scope,
+          );
         }
         assert.deepEqual(runtimeErrors, []);
         assert.deepEqual(unexpected, []);
