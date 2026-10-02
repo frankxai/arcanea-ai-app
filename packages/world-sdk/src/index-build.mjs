@@ -3,12 +3,16 @@
 // One direction only: repo -> index. Never the reverse.
 
 import { parseFrontmatter } from "./fs-world.mjs";
+import { publicSources, declarations, sectionOf } from "./source-files.mjs";
 
 const CHUNK_MAX = 1200;
 
 function chunkMarkdown(text) {
   const { body } = parseFrontmatter(text);
-  const blocks = body.split(/\n{2,}/).map((b) => b.trim()).filter(Boolean);
+  const blocks = body
+    .split(/\n{2,}/)
+    .map((b) => b.trim())
+    .filter(Boolean);
   const chunks = [];
   let buf = "";
   for (const b of blocks) {
@@ -21,11 +25,6 @@ function chunkMarkdown(text) {
   }
   if (buf) chunks.push(buf);
   return chunks;
-}
-
-function sectionOf(path) {
-  const top = path.split("/")[0];
-  return ["canon", "characters", "locations", "quests", "books"].includes(top) ? top : "other";
 }
 
 function titleOf(text, fallback) {
@@ -41,29 +40,58 @@ function titleOf(text, fallback) {
  */
 export function buildIndex(world) {
   const { manifest, files } = world;
+  const sources = publicSources(files, manifest);
+  const declared = declarations(manifest);
   const nodes = [
-    { type: "world", id: manifest.id, title: manifest.name, mood: manifest.mood, premise: manifest.premise },
+    {
+      type: "world",
+      id: manifest.id,
+      title: manifest.name,
+      mood: manifest.mood,
+      premise: manifest.premise,
+    },
   ];
   const chunks = [];
 
-  for (const f of files) {
+  for (const f of sources) {
     if (!/\.(md|mdx)$/i.test(f.path)) continue;
-    if ((f.visibility || "public") !== "public") continue; // private content never enters the index
-    const text = typeof f.bytes === "string" ? f.bytes : f.bytes.toString("utf8");
-    const section = sectionOf(f.path);
+    const text =
+      typeof f.bytes === "string"
+        ? f.bytes
+        : Buffer.from(f.bytes).toString("utf8");
+    const section = sectionOf(f.path, declared);
     const title = titleOf(text, f.path);
 
-    if (section === "characters" || section === "locations" || section === "quests") {
-      nodes.push({ type: section.replace(/s$/, ""), id: f.path, title, worldId: manifest.id });
+    if (
+      section === "characters" ||
+      section === "locations" ||
+      section === "quests"
+    ) {
+      nodes.push({
+        type: section.replace(/s$/, ""),
+        id: f.path,
+        title,
+        worldId: manifest.id,
+      });
     }
     chunkMarkdown(text).forEach((c, i) => {
-      chunks.push({ id: `${f.path}#${i}`, worldId: manifest.id, path: f.path, section, title, text: c });
+      chunks.push({
+        id: `${f.path}#${i}`,
+        worldId: manifest.id,
+        path: f.path,
+        section,
+        title,
+        text: c,
+      });
     });
   }
 
   return {
     worldId: manifest.id,
-    embedding: { model: manifest.index?.embeddingModel || "gemini-text-embedding-004", dim: manifest.index?.dim || 768 },
+    embedding: {
+      model: manifest.index?.embeddingModel || "gemini-text-embedding-004",
+      dim: manifest.index?.dim || 768,
+    },
     nodes,
     chunks,
   };

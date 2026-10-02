@@ -86,3 +86,64 @@ and [random UUID generation](https://nodejs.org/docs/latest-v22.x/api/crypto.htm
 The corrected source must pass its 24-case local/native suite and the complete
 required checks, then receive an admitted exact-source different-harness review.
 No passing rerun, review, rights grant or creator acceptance is inferred here.
+
+## Continued file and Git boundaries
+
+Previous turn made progress: current draft4991259381 passed CI36983223654,
+local/nativeSDK24 and quick632. Issues283/276 and hubbb58990/draft98 were saved.
+Full goal remains active. This next slice starts at that exact source1259381.
+
+User job: inspect and build a creator-owned world without exporting undeclared
+files, escaping its folder, staging unrelated edits or overwriting accepted lore.
+Scope: contained world I/O and memory paths; shared declared-source filtering for
+hash/index; YAML visibility failures closed; explicit Git paths and surfaced
+failures; append-only local candidate outputs from agent helpers; types/docs/tests.
+Files: world-sdk src/{world-paths,source-files,frontmatter,fs-world,contenthash,
+index-build,harness,evolution,scaffold}.mjs, package.json, index.d.ts, README,
+tests/{helpers,filesystem-boundary,source-boundary,git-boundary}.mjs,
+tests/promotion-policy.test.mjs, pnpm-lock.yaml and this record.
+Use yaml2.9.1 from the existing lock resolution; no local dependency install.
+Local small Node22 tests may use the existing yaml2.9.0 with process-scoped
+NODE_PATH; frozen nativeCI supplies the pinned2.9.1. No new repo/worktree/server.
+Acceptance: red regressions for traversal/links/partial-batch hazards, undeclared
+and ambiguous private sources, unrelated/pre-staged Git edits and silent errors;
+shared hash/index selection; preserved accepted files; all local/native tests and
+required checks at the resulting revision, then admitted independent review.
+Stop at a reviewable draft; no merge/release or code/lore licence/Heart choice.
+Rollback: scoped revert while retaining evidence; no production/data migration.
+The cross-process parent-swap race requires a trusted stable filesystem and sole
+Git worktree writer; portable path checks do not authenticate that environment.
+Unexpected I/O failure may leave partial new files. General v1.1 validation,
+scaffold publication defaults, human promotion and graph proofs remain open.
+
+### File and Git verification before commit
+
+The exact base1259381 failed all 34 initial boundary regressions; the log is
+retained. After implementation and four additional retry/metadata/custom-root
+cases, the formatted Node22.23.2 suite passed62/62 with no skipped cases.
+Local YAML resolution is the existing2.9.0 via process-scoped NODE_PATH; native
+frozen CI must verify the direct2.9.1 dependency. No install was performed.
+The lockfile change is four importer lines using an existing resolution; its
+native pnpm format is retained per the repository's .prettierignore.
+
+Read/hash/index now follow declared content and local policy/media pointers.
+Remote HTTP(S) pointers remain metadata. Actual Markdown visibility/status is
+parsed with duplicate-key/type/ambiguity rejection, including CRLF; supplied
+public flags cannot override a private or candidate document. Non-public world
+hash/index/proof operations reject before adapters. Agent helper writes are
+unique local private CANDIDATE documents, without modifying accepted sources.
+Write batches prevalidate portable paths and existing destinations; links,
+hardlinks, aliases, locked canon and existing scaffold output are refused.
+Git commits require explicit regular files at the repository root, refuse foreign
+staged changes and redirected Git environments, and surface failures. Context
+commits track their own paths and retain them after signing failures for retry.
+These APIs still require caller ownership, stable trees and a sole Git writer;
+the pending human receipt and full graph acceptance are not implemented.
+
+Fresh independent-review admission at2026-10-02T09:24:33.895Z is HOLD:
+5417MiB free/6144 required,32 task runtimes/12 budget. No provider was invoked.
+An exact-source complete review packet will be saved; draft499 cannot be promoted
+without admitted different-harness review and all native required checks.
+The capability-loading path named by home instructions is absent both from the
+local canonical config checkout and its current HEAD; no missing guide is
+treated as permission to activate a provider or bypass admission.

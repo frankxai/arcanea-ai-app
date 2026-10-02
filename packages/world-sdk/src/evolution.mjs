@@ -4,14 +4,11 @@
 // until a separate human-reviewed promotion workflow exists (issue #283).
 
 import { promises as fs } from "node:fs";
-import path from "node:path";
 import { randomUUID } from "node:crypto";
+import { writeFiles } from "./fs-world.mjs";
+import { checkedPath } from "./world-paths.mjs";
 
 const MEM_DIR = ".arcanea/memories";
-
-async function ensureDir(d) {
-  await fs.mkdir(d, { recursive: true });
-}
 
 export async function recordMemory(dir, mem) {
   const ts = mem.ts ?? new Date().toISOString();
@@ -28,7 +25,6 @@ export async function recordMemory(dir, mem) {
     error.code = "INVALID_MEMORY_TIMESTAMP";
     throw error;
   }
-  await ensureDir(path.join(dir, MEM_DIR));
   const rec = {
     ts,
     characterId: mem.characterId || null,
@@ -42,27 +38,32 @@ export async function recordMemory(dir, mem) {
   // Same-millisecond records are distinct. Exclusive creation prevents an
   // existing destination from being overwritten even on an ID collision.
   const fname = `${new Date(ts).toISOString().replace(/[:.]/g, "-")}-${randomUUID()}.json`;
-  await fs.writeFile(
-    path.join(dir, MEM_DIR, fname),
-    JSON.stringify(rec, null, 2) + "\n",
-    { flag: "wx" },
+  await writeFiles(
+    dir,
+    [
+      {
+        path: `${MEM_DIR}/${fname}`,
+        bytes: JSON.stringify(rec, null, 2) + "\n",
+      },
+    ],
+    { exclusive: true },
   );
   return { path: `${MEM_DIR}/${fname}`, record: rec };
 }
 
 export async function listMemories(dir) {
-  const p = path.join(dir, MEM_DIR);
-  try {
-    const files = await fs.readdir(p);
-    const out = [];
-    for (const f of files.filter((f) => f.endsWith(".json"))) {
-      const raw = await fs.readFile(path.join(p, f), "utf8");
-      out.push(JSON.parse(raw));
-    }
-    return out.sort((a, b) => a.ts.localeCompare(b.ts));
-  } catch {
-    return [];
+  const { target: p, exists } = await checkedPath(dir, MEM_DIR, {
+    kind: "directory",
+  });
+  if (!exists) return [];
+  const files = await fs.readdir(p);
+  const out = [];
+  for (const f of files.filter((f) => f.endsWith(".json"))) {
+    const safe = await checkedPath(dir, `${MEM_DIR}/${f}`);
+    const raw = await fs.readFile(safe.target, "utf8");
+    out.push(JSON.parse(raw));
   }
+  return out.sort((a, b) => a.ts.localeCompare(b.ts));
 }
 
 export function distillOffline(memories, { max = 3 } = {}) {

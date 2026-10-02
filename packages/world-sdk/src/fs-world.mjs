@@ -1,73 +1,125 @@
-// Read/write a world as a folder on disk. The folder IS the source of truth.
+// Read only declared world sources; writes require a caller-owned stable tree.
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { MANIFEST_FILE } from "./manifest.mjs";
+import {
+  checkedRoot,
+  checkedPath,
+  relativePath,
+  uniquePaths,
+  boundaryError,
+} from "./world-paths.mjs";
+import { declarations, sourcePath } from "./source-files.mjs";
+import { metadataForFile } from "./frontmatter.mjs";
+export { parseFrontmatter } from "./frontmatter.mjs";
 
-const SKIP_DIRS = new Set(["node_modules", ".git", "dist", ".turbo", ".next"]);
-
-/** Minimal frontmatter reader — only the fields the standard cares about. */
-export function parseFrontmatter(text) {
-  const m = /^---\n([\s\S]*?)\n---\n?/.exec(text);
-  if (!m) return { data: {}, body: text };
-  const data = {};
-  for (const line of m[1].split("\n")) {
-    const kv = /^([A-Za-z0-9_]+):\s*(.*)$/.exec(line.trim());
-    if (kv) data[kv[1]] = kv[2].replace(/^["']|["']$/g, "");
-  }
-  return { data, body: text.slice(m[0].length) };
-}
-
-async function walk(root, rel = "") {
-  const out = [];
-  const dir = path.join(root, rel);
-  let entries;
-  try {
-    entries = await fs.readdir(dir, { withFileTypes: true });
-  } catch {
-    return out;
-  }
-  for (const ent of entries) {
-    if (ent.isDirectory()) {
-      if (SKIP_DIRS.has(ent.name)) continue;
-      out.push(...(await walk(root, path.join(rel, ent.name))));
-    } else if (ent.isFile()) {
-      out.push(path.join(rel, ent.name).split(path.sep).join("/"));
+async function walk(dir, rel, paths) {
+  const checked = await checkedPath(dir, rel, { kind: "directory" });
+  for (const entry of await fs.readdir(checked.target, {
+    withFileTypes: true,
+  })) {
+    const p = `${rel}/${entry.name}`;
+    relativePath(p);
+    if (!sourcePath(p)) continue;
+    if (entry.isSymbolicLink())
+      throw boundaryError("Declared source contains a link.");
+    if (entry.isDirectory()) await walk(dir, p, paths);
+    else {
+      await checkedPath(dir, p);
+      paths.add(p);
     }
   }
-  return out;
 }
 
 /** Read a world dir into { dir, manifest, files:[{path, bytes, isText, visibility}] }. */
 export async function readWorld(dir) {
-  const manifestRaw = await fs.readFile(path.join(dir, MANIFEST_FILE), "utf8");
-  const manifest = JSON.parse(manifestRaw);
-  const paths = await walk(dir);
-  const files = [];
-  for (const p of paths) {
-    const bytes = await fs.readFile(path.join(dir, p));
-    const isText = /\.(md|mdx|json|txt|ya?ml|mjs|js|ts|csv|svg)$/i.test(p);
-    let visibility = "public";
-    if (isText && /\.(md|mdx)$/i.test(p)) {
-      const { data } = parseFrontmatter(bytes.toString("utf8"));
-      if (data.visibility) visibility = data.visibility;
+  const { target } = await checkedPath(dir, MANIFEST_FILE);
+  const manifest = JSON.parse(await fs.readFile(target, "utf8"));
+  const declared = declarations(manifest);
+  const paths = new Set();
+  for (const d of declared) {
+    const abs = path.join(dir, d.path);
+    let stat;
+    try {
+      stat = await fs.lstat(abs);
+    } catch (error) {
+      if (error.code === "ENOENT" && !d.required) continue;
+      throw error;
     }
-    files.push({ path: p, bytes, isText, visibility });
+    if (stat.isDirectory()) {
+      if (d.required) throw boundaryError("File pointer names a directory.");
+      await walk(dir, d.path, paths);
+    } else {
+      await checkedPath(dir, d.path);
+      paths.add(d.path);
+    }
+  }
+  const files = [];
+  for (const p of [...paths].sort()) {
+    const safe = await checkedPath(dir, p);
+    const bytes = await fs.readFile(safe.target);
+    const isText = /\.(md|mdx|json|txt|ya?ml|mjs|js|ts|csv|svg)$/i.test(p);
+    const data = metadataForFile({ path: p, bytes });
+    files.push({
+      path: p,
+      bytes,
+      isText,
+      visibility: data.visibility ?? "public",
+    });
   }
   return { dir, manifest, files };
 }
 
-export async function writeManifest(dir, manifest) {
-  await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(path.join(dir, MANIFEST_FILE), JSON.stringify(manifest, null, 2) + "\n", "utf8");
+function forbidLocked(file) {
+  if (
+    path.posix.basename(file.path).toUpperCase() === "CANON_LOCKED.MD" ||
+    metadataForFile(file).status?.toUpperCase() === "LOCKED"
+  ) {
+    const error = new Error(
+      "SDK writes cannot create or replace locked canon.",
+    );
+    error.code = "CANON_PROMOTION_REQUIRES_REVIEW";
+    throw error;
+  }
 }
 
-/** Write a set of files (relative paths) under dir, creating folders as needed. */
-export async function writeFiles(dir, files) {
+export async function prepareWrites(dir, files, { exclusive = false } = {}) {
+  if (!Array.isArray(files))
+    throw boundaryError("World writes must be a file array.");
+  uniquePaths(files.map((f) => f.path));
+  await checkedRoot(dir);
+  const prepared = [];
   for (const f of files) {
-    const abs = path.join(dir, f.path);
-    await fs.mkdir(path.dirname(abs), { recursive: true });
-    const data = typeof f.bytes === "string" ? f.bytes : Buffer.from(f.bytes);
-    await fs.writeFile(abs, data);
+    const bytes = typeof f.bytes === "string" ? f.bytes : Buffer.from(f.bytes);
+    forbidLocked({ ...f, bytes });
+    const safe = await checkedPath(dir, f.path, { exclusive });
+    if (safe.exists)
+      forbidLocked({ path: f.path, bytes: await fs.readFile(safe.target) });
+    prepared.push({ path: f.path, bytes });
   }
+  return prepared;
+}
+
+export async function writeFiles(dir, files, { exclusive = false } = {}) {
+  const prepared = await prepareWrites(dir, files, { exclusive });
+  for (const file of prepared) {
+    let safe = await checkedPath(dir, file.path, { exclusive });
+    await fs.mkdir(path.dirname(safe.target), { recursive: true });
+    safe = await checkedPath(dir, file.path, { exclusive });
+    if (safe.exists)
+      forbidLocked({ path: file.path, bytes: await fs.readFile(safe.target) });
+    await fs.writeFile(safe.target, file.bytes, {
+      flag: exclusive ? "wx" : "w",
+    });
+  }
+}
+
+export async function writeManifest(dir, manifest, opts = {}) {
+  declarations(manifest);
+  await writeFiles(
+    dir,
+    [{ path: MANIFEST_FILE, bytes: JSON.stringify(manifest, null, 2) + "\n" }],
+    opts,
+  );
 }

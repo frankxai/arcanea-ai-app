@@ -1,8 +1,11 @@
 // Scaffold — turn a WorldSpec into a conforming world repo on disk.
 // The scaffolder IS the world template (programmatic, so it never drifts from the standard).
 
-import { buildManifest, slugify } from "./manifest.mjs";
-import { writeManifest, writeFiles } from "./fs-world.mjs";
+import { buildManifest, slugify, MANIFEST_FILE } from "./manifest.mjs";
+import { writeFiles } from "./fs-world.mjs";
+import { declarations } from "./source-files.mjs";
+import { documentWithMetadata } from "./frontmatter.mjs";
+import { relativePath } from "./world-paths.mjs";
 import { genesis } from "./genesis.mjs";
 
 async function maybeWorldEngine() {
@@ -14,20 +17,15 @@ async function maybeWorldEngine() {
 }
 
 function characterDoc(c) {
-  return `---
-name: ${c.name}
-role: ${c.role || "inhabitant"}
-visibility: public
-canonLevel: 1
----
-
-# ${c.name}
-
-${c.persona || ""}
-
-## Backstory
-${c.backstory || ""}
-`;
+  return documentWithMetadata(
+    {
+      name: c.name,
+      role: c.role || "inhabitant",
+      visibility: "public",
+      canonLevel: 1,
+    },
+    `# ${c.name}\n\n${c.persona || ""}\n\n## Backstory\n${c.backstory || ""}`,
+  );
 }
 
 function worldBible(manifest) {
@@ -97,13 +95,19 @@ export async function scaffoldWorld(dir, spec, { useWorldEngine = true } = {}) {
   }
 
   const manifest = buildManifest({ ...spec, agents: spec.agents });
+  declarations(manifest);
+  const contentPath = (section, file) =>
+    `${relativePath(manifest.content[section], { directory: true })}/${file}`;
 
   const files = [
     { path: "README.md", bytes: readme(manifest) },
-    { path: "canon/world-bible.md", bytes: worldBible(manifest) },
-    { path: "media/.gitkeep", bytes: "" },
-    { path: "quests/.gitkeep", bytes: "" },
-    { path: "books/.gitkeep", bytes: "" },
+    {
+      path: contentPath("canon", "world-bible.md"),
+      bytes: worldBible(manifest),
+    },
+    { path: contentPath("media", ".gitkeep"), bytes: "" },
+    { path: contentPath("quests", ".gitkeep"), bytes: "" },
+    { path: contentPath("books", ".gitkeep"), bytes: "" },
   ];
 
   // Other pointers belong to the caller; policy metadata is not a write path.
@@ -119,25 +123,34 @@ export async function scaffoldWorld(dir, spec, { useWorldEngine = true } = {}) {
 
   for (const c of characters) {
     files.push({
-      path: `characters/${slugify(c.name)}.md`,
+      path: contentPath("characters", `${slugify(c.name)}.md`),
       bytes: characterDoc(c),
     });
   }
   for (const l of spec.locations || []) {
     files.push({
-      path: `locations/${slugify(l.name)}.md`,
-      bytes: `---\nname: ${l.name}\nvisibility: public\ncanonLevel: 1\n---\n\n# ${l.name}\n\n${l.description || ""}\n`,
+      path: contentPath("locations", `${slugify(l.name)}.md`),
+      bytes: documentWithMetadata(
+        { name: l.name, visibility: "public", canonLevel: 1 },
+        `# ${l.name}\n\n${l.description || ""}`,
+      ),
     });
   }
   for (const a of manifest.agents || []) {
     files.push({
-      path: `agents/${a.id}.md`,
+      path: contentPath("agents", `${a.id}.md`),
       bytes: `# ${a.id}\n\n- harness: ${a.harness}\n- role: ${a.role}\n${a.skill ? `- skill: ${a.skill}\n` : ""}`,
     });
   }
 
-  await writeManifest(dir, manifest);
-  await writeFiles(dir, files);
+  await writeFiles(
+    dir,
+    [
+      { path: MANIFEST_FILE, bytes: JSON.stringify(manifest, null, 2) + "\n" },
+      ...files,
+    ],
+    { exclusive: true },
+  );
   return manifest;
 }
 

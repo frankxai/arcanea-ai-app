@@ -127,17 +127,18 @@ test("explicit standard policy pointers generate only the declared summaries", a
 test("custom policy pointers remain metadata and cannot escape through scaffold writes", async (t) => {
   const root = await fixture(t);
   const dir = path.join(root, "world");
-  const manifest = await scaffoldWorld(
-    dir,
-    {
-      name: "Tideglass",
-      license: { ...licence, pointer: "../licence.md" },
-      royalty: { ...royalty, policy: "../royalty.json" },
-    },
-    { useWorldEngine: false },
+  await assert.rejects(
+    scaffoldWorld(
+      dir,
+      {
+        name: "Tideglass",
+        license: { ...licence, pointer: "../licence.md" },
+        royalty: { ...royalty, policy: "../royalty.json" },
+      },
+      { useWorldEngine: false },
+    ),
   );
-  assert.equal(manifest.license.pointer, "../licence.md");
-  assert.equal(manifest.royalty.policy, "../royalty.json");
+  await assert.rejects(fs.stat(dir), { code: "ENOENT" });
   await assert.rejects(fs.stat(path.join(root, "licence.md")), {
     code: "ENOENT",
   });

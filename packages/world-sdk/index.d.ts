@@ -69,6 +69,7 @@ export interface World {
 
 export interface WorldSpec {
   name?: string;
+  content?: Record<string, string>;
   genesisPrompt?: string;
   premise?: string;
   laws?: string[];
@@ -112,7 +113,39 @@ export function readWorld(dir: string): Promise<World>;
 export function writeManifest(
   dir: string,
   manifest: WorldManifest,
+  opts?: { exclusive?: boolean },
 ): Promise<void>;
+export function writeFiles(
+  dir: string,
+  files: WorldFile[],
+  opts?: { exclusive?: boolean },
+): Promise<void>;
+/** Requires repository root, explicit existing files and a sole Git writer. Failures reject. */
+export function commitWorld(
+  dir: string,
+  message: string,
+  opts: { paths: string[] },
+): Promise<{ sha: string }>;
+/** Writes a private local candidate, never accepted character source. */
+export function addCharacter(
+  dir: string,
+  character: {
+    name: string;
+    role?: string;
+    persona?: string;
+    backstory?: string;
+    visibility?: string;
+    canonLevel?: number;
+  },
+): Promise<string>;
+export function appendLore(
+  dir: string,
+  lore: { title: string; body: string; canonLevel?: number },
+): Promise<string>;
+export function addQuest(
+  dir: string,
+  quest: { title: string; body: string },
+): Promise<string>;
 export function genesis(
   sentence: string,
   opts?: { llm?: (p: string) => Promise<object>; idSeed?: string },
@@ -168,7 +201,7 @@ export function harnessContext(args: {
     canonLevel?: number;
   }): Promise<string>;
   addQuest(q: { title: string; body: string }): Promise<string>;
-  commit(msg: string): Promise<{ sha: string } | null>;
+  commit(msg: string): Promise<{ sha: string }>;
 };
 export function buildIndex(world: World): {
   worldId: string;
