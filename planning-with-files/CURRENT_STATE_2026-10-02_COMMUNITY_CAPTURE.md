@@ -91,5 +91,15 @@ Source review and required CI results will be linked to the exact commit on #276
 and in agentic-ops-hub #98. Source-matched browser proof, live storage acceptance,
 mail delivery and release approval remain separate work.
 
+Initial complete seven-file review at `9afb94d408406b32c2cb316020d3fe06af8c4b94`
+returned REVISE: unused Link import, field/error association, native typecheck
+evidence gap. The unused import is removed and the status description is directly
+associated with the email input. The review's proposed `aria-invalid` for all
+failed saves is not applied: transport/storage failures do not establish an
+invalid address. Native required/email validation remains operative. The review's
+critical lint severity overstates the known soft lint posture; its underlying
+unused import is still corrected. Fresh source review and CI remain necessary.
+Raw review and all attempts are preserved privately.
+
 Official references consulted: [React useId](https://react.dev/reference/react/useId)
 and [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController).
