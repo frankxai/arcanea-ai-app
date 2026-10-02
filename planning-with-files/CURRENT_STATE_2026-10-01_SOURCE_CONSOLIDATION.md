@@ -292,3 +292,33 @@ inventory. Content/rights readiness review still has to consider those URLs.
 Fourteen consumer cases pass locally after correction; exact source CI and scoped
 correction review remain necessary. Raw initial/timeout/retry/output/SSR receipts
 are kept privately; the review does not approve rights, the whole PR or release.
+
+## Restricted document imports: current-tree subtraction, October 2
+
+Scope: remove eight document-skill import trees and their active index rows;
+preserve source evidence and document remaining historical/provider obligations.
+User job: install/reuse Arcanea workflows without receiving these restricted copies.
+Owner: Codex, existing draft487, issue276. Base:a20c06d43a8cc6f448076d15f9e13442660bacbb.
+Files:260 explicit tracked files in the eight docx/pdf/pptx/xlsx copy trees;
+`.agents/claude-skill-index.md`, existing rights Markdown/JSON, package README
+and this task record. No new skill root, repository, archive or licence choice.
+Acceptance: all8 trees absent from the candidate index, active rows removed,
+notice/blob evidence retained, historical records and other skills byte-preserved.
+Consumer grep found only active index and historical audit/rights references;
+the broad root plugin remains uncurated. Existing document tool owners retained.
+Non-goals: canon, root licence, ready promotion, global uninstall, history rewrite,
+legal clearance, app merge, public release or replacement document implementation.
+Verification: immutable before/after inventory, retained notice hashes, existing
+auditor/package tests, diff/secret checks and all four exact-head native app checks.
+Independent review is not invoked while PP HOLD (5677MiB/required6144 this turn).
+Budget: ordinary text/removal and small tests, no install/build/worktree/fanout.
+Stop: reviewable draft; source/CI proof is not rights or creator/release acceptance.
+Rollback: reviewed restoration from a20's exact paths; retain provenance and
+unresolved rights, never republish restricted copies as a cleared distribution.
+
+Local attempt: inventory4 passed, package11 failed because the sparse checkout
+could not resolve YAML. Rerun used existing YAML2.9.0 through a process-scoped
+NODE_PATH: all15 pass, no installation. Frozen CI uses pinned2.9.1 and is pending.
+The active generated index is formatted for the existing changed-Markdown gate;
+its remaining skill data is preserved. No implementation tests were added for
+this removal. All source, rights and release qualifications above remain.

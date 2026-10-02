@@ -67,3 +67,26 @@ scope remains tracked `SKILL.md` files, not installer discovery or a legal audit
 Owning issue: [#276](https://github.com/frankxai/arcanea-ai-app/issues/276).
 Implementation candidate: draft [#487](https://github.com/frankxai/arcanea-ai-app/pull/487).
 Merge/release approval, original Arcanea licensing and Heart frequency remain open.
+
+## Current-tree removal proposal, October 2
+
+Draft #487 removes both tracked copies of each of the four document skills:
+`.claude/skills/{docx,pdf,pptx,xlsx}` and their `external/` copies: 260 tracked
+files, including skill bodies, support files and notices. The notices are
+retained as immutable blob/hash references in the evidence above. Their Git
+history is unchanged. This source proposal grants no rights and does not resolve
+historical redistribution or establish an independently authorized basis.
+
+The active Claude skill index no longer points at these eight entrypoints. A
+tracked-reference audit found only that index plus historical audit/cleanup and
+rights records outside the removed trees; those dated records are preserved.
+The root plugin's broad skill path now sees the remaining working set. It is
+still not a curated or cleared public install. Algorithmic-art, Apple and other
+imports remain subject to their recorded provenance/resource review.
+
+This change removes copied document tooling from this candidate; it does not
+replace authoring/export implementations. Use separately authorized document
+tools through their existing owner/provider. No global skill is uninstalled and
+no external tool is activated. Four internal candidates remain zero ready.
+App checks and independent review must bind the new head before promotion;
+machine admission held the reviewer before invocation in this slice.

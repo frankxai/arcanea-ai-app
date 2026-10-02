@@ -98,3 +98,13 @@ salvage have not been applied.
 
 Track the consolidation and product scope in
 [Arcanea issue #276](https://github.com/frankxai/arcanea-ai-app/issues/276).
+
+### Removed restricted working-set imports
+
+This draft also removes eight document-skill copy trees (`docx`, `pdf`, `pptx`,
+`xlsx` and their `external/` copies) from `.claude/skills`. Their notices restrict
+redistribution; the pinned evidence is retained in
+`docs/strategy/arcanea-skill-rights-evidence-2026-10-01.md` at the repo root.
+Current-tree removal does not settle historical rights or clear other imports.
+Document workflows use separately authorized tools from their existing owners.
+The remaining development roots are not a curated repository-wide install.

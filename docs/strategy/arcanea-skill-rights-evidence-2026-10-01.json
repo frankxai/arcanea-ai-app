@@ -229,5 +229,26 @@
     "Keep the eight document-skill copies outside curated bundles. Audit current-tree consumers before proposing removal or replacement; preserve import evidence and do not rewrite history.",
     "Review scoped public MIT assertions separately; preserve legitimate package/import licences and leave original Arcanea code and lore choices to Frank.",
     "Fold only eligible skills into the existing curated package after rights, eval and independent-review evidence; keep canon in place."
-  ]
+  ],
+  "currentTreeRemediation": {
+    "date": "2026-10-02",
+    "candidateBase": "a20c06d43a8cc6f448076d15f9e13442660bacbb",
+    "action": "Remove eight tracked document-skill import trees and their live index entries from this draft candidate.",
+    "trees": [
+      ".claude/skills/docx",
+      ".claude/skills/pdf",
+      ".claude/skills/pptx",
+      ".claude/skills/xlsx",
+      ".claude/skills/external/docx",
+      ".claude/skills/external/pdf",
+      ".claude/skills/external/pptx",
+      ".claude/skills/external/xlsx"
+    ],
+    "trackedFilesRemoved": 260,
+    "noticeSha256": "79f6d8f5b427252fa3b1c11ecdbdb6bf610b944f7530b4de78f770f38741cfaa",
+    "currentTreeOnly": true,
+    "historyUnchanged": true,
+    "clearanceGranted": false,
+    "remaining": "Historical copies and any separately authorized basis remain unresolved. Other third-party imports, root licence and candidate readiness are not cleared."
+  }
 }
