@@ -1,6 +1,6 @@
 {
   "scope": "One source-derived two-chapter task, not the full20-task or1/3/5-cell benchmark. Both outputs are author-unaccepted proposals.",
-  "conditions": "Same supplied complete chapters and locked canon; exact baseline task prompt/source hashes are in baseline.json. Baseline maximum6 edits/1600 words; lead had no preset edit/word cap beyond smallest local repair. A2/A3 were refined after observing B. A alone received iterative independent review; B is frozen observed output. This is not a blinded randomized trial, controlled causal evaluation or quality/size/speed winner comparison.",
+  "conditions": "Same supplied complete chapters and locked canon; exact baseline task prompt/source hashes are in baseline.json. Baseline maximum6 edits/1600 words; lead had no preset edit/word cap beyond smallest local repair. A2/A3 were refined after observing B. A alone received iterative independent review; B is frozen observed output. This is not a blinded randomized trial, controlled causal evaluation or quality/size/speed winner comparison. B also loaded the pinned Luminor Engineering Kernel with an editorial override; lead context differed. Full prompt hash coverage and measured response word count are recorded in baseline.json.",
   "candidateA": {
     "edits": 3,
     "iterations": [
@@ -36,7 +36,13 @@
     "humanAccepted": false,
     "authorRepairMinutes": null,
     "editBudget": 6,
-    "responseWordBudget": 1600
+    "responseWordBudget": 1600,
+    "responseWordCount": {
+      "words": 964,
+      "method": "Whitespace-delimited tokens in the complete provider response.txt, including JSON keys/formatting and any code fences; excludes hidden reasoning, input and system prompts.",
+      "responseSha256": "d6283d181e2c9557154d9f7522209fb48762028a6585027091bb206d7d09df07",
+      "within1600ByThisMeasure": true
+    }
   },
   "diagnosticControl": {
     "implementation": "author-os/bin/quality-check.js --imprint arcanea",
@@ -136,7 +142,8 @@
       }
     ],
     "scope": "Native AuthorOS Markdown export only; embedded exportedAt is nondeterministic. No EPUB, PDF or installed-host acceptance.",
-    "stage": "Raw native pre-format export; hashes/byte sizes identify private raw files, not committed Markdown."
+    "stage": "Raw native pre-format export; hashes/byte sizes identify private raw files, not committed Markdown.",
+    "reproducibility": "Raw export files/projects are preserved privately, not committed; their hashes are not independently reproducible from this report alone. Embedded timestamps vary. Committed output hashes and exact patch checks are publicly reproducible; inverse/stale checks are in-memory replacement operations, not patch-file crash/restart tests. No restarted-export receipt is claimed."
   },
   "leadFindings": [
     {
@@ -232,7 +239,7 @@
       "evidence": "Kael will think of the losses while polishing brass/eating porridge in the weeks after, yet departs next morning after the emissaries. Probably prolepsis or recurring habits, not an automatic retcon."
     }
   ],
-  "independentDisposition": "At this assembly checkpoint, completed reviews are REVISE at c642d556 and2b42c2e7. Consult issue282 for subsequent exact-head receipts; this file does not claim its final bytes have sign-off.",
+  "independentDisposition": "At this assembly checkpoint, completed reviews are REVISE at c642d556,2b42c2e7 andc8e78e66. The three A3 narrative repairs were confirmed; the latest method/report corrections need an exact-head review receipt on issue282. No final-head sign-off is asserted here.",
   "commercialEvidence": "No customer acceptance, paid demand, revenue or marketing quality claim.",
   "dayCountCorrection": "Initial lead and baseline both overcalled a counting-convention ambiguity. Independent review rejected that certainty. A3 retains the original Maret day; B stays unchanged as observed.",
   "localFailures": {

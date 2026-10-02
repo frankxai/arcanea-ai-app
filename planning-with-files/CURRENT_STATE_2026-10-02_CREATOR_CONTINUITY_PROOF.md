@@ -20,4 +20,8 @@ The review at c642d556 returned REVISE, not sign-off. Withdraw the Maret date ch
 
 ## Second review: narrative confirmed, evidence correction
 
-Review at2b42c2e7 returned REVISE for index encoding, premature final-review wording, undisclosed baseline budget and stale receipts. Restore base UTF-8 index plus only one entry; expose exact baseline task/header and source-hash equality; disclose max6 edits/1600 words versus no preset lead cap and asymmetric review; retain human acceptance pending. Original manuscripts and both current reading outputs are unchanged. Final-head review is pending at this assembly checkpoint and will be recorded on282 with its source hash.
+Review at2b42c2e7 returned REVISE for index encoding, premature final-review wording, undisclosed baseline budget and stale receipts. Restore original base UTF-8 index prose/em dashes and add one entry plus Markdown emphasis/blank-line normalization required by the native CI formatting ratchet; expose exact baseline task/header and source-hash equality; disclose max6 edits/1600 words versus no preset lead cap and asymmetric review; retain human acceptance pending. Original manuscripts and both current reading outputs are unchanged. Final-head review is pending at this assembly checkpoint and will be recorded on282 with its source hash.
+
+## Third review: methods and report correction
+
+Review at c8e78e66 returned REVISE with three low and one medium findings, while confirming the three A3 repairs. Disclose shared Luminor kernel/editorial override and unequal lead context, full user-prompt hash coverage and measured whitespace response count. Remove the unsupported restarted-export claim; mark raw private exports non-reproducible from public files and inverse/stale checks as in-memory replacements. Add the existing PROLEPSIS question to the author ledger. No manuscript output changes. Final-head review and native checks remain pending at this assembly checkpoint.
