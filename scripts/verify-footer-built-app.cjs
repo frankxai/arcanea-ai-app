@@ -92,14 +92,38 @@ function sourceEvidence() {
   let completed = false;
   const capture = async (footer, page, state, name) => {
     await page.evaluate(() => document.fonts.ready);
-    await footer.scrollIntoViewIfNeeded();
+    const panel = footer.locator("form").locator("..");
+    await panel.evaluate((element) =>
+      element.scrollIntoView({ block: "center", behavior: "instant" }),
+    );
+    await expect
+      .poll(() =>
+        panel.evaluate((element) =>
+          Array.from(element.querySelectorAll("input, button")).every(
+            (control) => {
+              const box = control.getBoundingClientRect();
+              const hit = document.elementFromPoint(
+                box.left + box.width / 2,
+                box.top + box.height / 2,
+              );
+              return (
+                box.width > 0 &&
+                box.height > 0 &&
+                (control === hit || control.contains(hit))
+              );
+            },
+          ),
+        ),
+      )
+      .toBe(true);
     const path = `${output}/${name}-${state.name}.png`;
-    await footer.screenshot({ path, type: "png", animations: "disabled" });
+    await panel.screenshot({ path, type: "png", animations: "disabled" });
     const bytes = fs.readFileSync(path);
     const provenance = {
       kind: "browser-screenshot",
       screenshotAnimations: "disabled",
-      prompt: `Capture existing footer UI: ${name}, ${state.name}, ${page.url()}`,
+      captureScope: "footer signup panel",
+      prompt: `Capture existing footer signup panel: ${name}, ${state.name}, ${page.url()}`,
       model: null,
       provider: "Playwright Chromium",
       seed: null,
