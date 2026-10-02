@@ -155,7 +155,6 @@
           "sha256": "a092060828696d06882207169f6968a2dc8788bdf46dd96ade32c3ab3c9f9b95"
         }
       ],
-      "aliases": ["emotional-story-architect"],
       "permissions": [
         "read supplied source",
         "draft editable scene",

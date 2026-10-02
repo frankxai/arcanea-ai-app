@@ -4,7 +4,7 @@ Proposed scene in the creator-owned Tideglass world. All people, events, boat de
 
 Mira heard the bridge go before she saw it. A thin hiss, like water poured over hot iron, reached the ferry landing. The tide had turned. Where the glass had joined the far bank, daylight showed through. Then the crossing was gone.
 
-Three people waited on the other side. A man in a soaked wedding coat held a girl's hand. The third person had dragged a wooden chest to the steps and was trying to wave without letting go of its handle.
+Three people waited on the other side. A man in a soaked wedding coat held a girl's hand. The third person, a courier, had dragged a wooden chest to the steps and was trying to wave without letting go of its handle.
 
 Mira pushed her boat out. The empty seats knocked against the thwarts. Two passengers, she reminded herself. Two, with her at the oars. She had painted the number on the gunwale because people always thought a small boat could carry one more person if the reason was good enough.
 
@@ -44,7 +44,7 @@ The courier set the bottle down carefully. “Go with what?”
 
 Mira could take the father and child together. The courier would lose the cart. Or she could take the child and courier, leaving the father to wait. The bottles could fit beneath a seat if the courier carried only what was needed tonight. The chest and its extra stock would have to stay.
 
-She did not touch the receipt again.
+She left the receipt in his hand.
 
 “Wrap tonight's bottles in your coat,” she told the courier. “Your fare is returned. Put it toward getting someone back here for the chest.”
 

@@ -13,9 +13,10 @@ The package is private while release decisions remain open.
 | `scene-craft`      | Write a complete dramatic scene with a source-backed choice, cost and turn            | [The second seat](skills/scene-craft/references/example.md)       |
 
 The examples use an invented creator-owned world. They are authored walkthroughs,
-not human acceptance or readiness. The scene-craft donor fold and one matched-request
-comparison are recorded in [its evaluation report](evals/scene-donor-fold-2026-10-02/report.md);
-the passport remains pending. Wider behavioral evaluation remains open. The source checkout's
+not human acceptance or readiness. The scene-craft donor fold and one same-request
+comparison with different producers are recorded in [its evaluation report](evals/scene-donor-fold-2026-10-02/report.md);
+all five passports remain pending. Wider behavioral evaluation and package-wide
+independent readiness review remain open. The source checkout's
 `evals/creator-smoke-2026-10-01.md` records a fresh four-request packet and a review
 timeout with zero returned outputs; it provides no sign-off. Official Arcanea canon
 remains in `.arcanea/lore/CANON_LOCKED.md` at the repository root.
@@ -95,10 +96,9 @@ The existing package's `license: MIT` metadata is unchanged. Each candidate's ri
 passport remains pending, and no root license has been added. Rights decisions for
 earlier sources, official lore and third-party material remain separate work.
 
-The launcher observed at c035e594 already has root selection and a pinned skills CLI,
-but its checkout has no verified origin and still lists earlier Arcanea donors.
-The older private root patch is stale and has not been applied. Link/ambiguous-pin
-refusals, actual installation and coordinated app selection remain unverified. Future bundle sources should pin
+Bundle launcher integration requires verified upstream ownership and source-bound
+root/pin/link refusal checks before installation.
+Future bundle sources should pin
 the app repository, this folder and a commit. Working-set links and legacy-repo
 salvage have not been applied.
 

@@ -24,8 +24,8 @@
   "requestSha256": "81d051a40f20d1271fe03286e4914acf4fd76036d30db11258f398b453233410",
   "primary": {
     "maker": "Codex lead",
-    "method": "hand-authored before alternative response; two self-review repairs retained",
-    "sha256": "da0d4c4aa1efe7bdfeb6d016deb5edd95436c8b1409785b7b58d8297c8f4c244",
+    "method": "initial hand-authored/self-repaired before baseline response; corrected receipt continuity and courier identification after source review, earlier bytes retained",
+    "sha256": "dd0d135609db36364d467e7d8cfc4bd026e9584ed760323209c07297494b7423",
     "effort": "unmetered; no independent producing-call receipt"
   },
   "baseline": {
@@ -44,7 +44,7 @@
     "outputSha256": "a6785dca5be9325e2005e544a1238229deecc6865eccd1748f3ff15f604f5b58"
   },
   "wordCounts": {
-    "primaryProseWords": 619,
+    "primaryProseWords": 621,
     "baselineProseWords": 615
   },
   "leadReading": {
@@ -55,7 +55,7 @@
   "comparisonLimits": [
     "N=1 existing app-guide alternative vs unmetered lead using revised candidate, producing model/context/effort differ.",
     "Both received exact same request; baseline had existing original app guide/kernel, not revised candidate/donor.",
-    "Lead wrote primary before observing baseline; self-repair before comparison retained. No matched producing-model ablation.",
+    "Initial primary before baseline; two lead self-repairs before response and two minor source-review prose repairs after baseline retained. Not a blind matched-model comparison.",
     "Authoring walkthrough is not forward reliability, human creative acceptance, rights clearance or paid value.",
     "Reported cost is list equivalent, not invoice/total lead or goal spend."
   ],
@@ -82,7 +82,22 @@
     "Native installed-harness/marketplace/launcher delivery",
     "Existing shared graph/author/MCP/runtime/media owners and human release gates"
   ],
-  "sourceReview": "pending exact frozen delta",
+  "sourceReview": "eleven-file9dd delta qualifiedPASS/one medium and low findings; eight-file wording/prose/alias correction requires new exact source sign-off; full PR and readiness pending",
   "nativeCI": "pending exact head",
-  "fullGoal": "active"
+  "fullGoal": "active",
+  "reviewAttempts": [
+    {
+      "state": "timed-out",
+      "seconds": 180.06517,
+      "verdict": null,
+      "costUsd": null
+    },
+    {
+      "state": "terminal",
+      "seconds": 152.891612,
+      "verdict": "qualifiedPASS",
+      "costUsd": 0.3769714,
+      "scope": "9dd eleven-filedelta"
+    }
+  ]
 }
