@@ -148,3 +148,22 @@ receipt; do not retry quota-blocked review. No human licence/price/Heart decisio
 merge/deploy/live signup/mail, demand or release proof; #408/#427 remain.
 Stop on identity/lane changes or failed checks; inspect the same live run until
 terminal. Rollback: scoped revert of this follow-up, retain the shared helper.
+
+First native37097095817 at9df829c0642fc35498ce83c9282326816bdb3349 is terminal
+FAILURE. Install/Lint/TypeScript pass; Build/CI Status fail. Artifact11264922050
+binds builtmerge65576537188f0916bc809f9da9b5b7559b893547 (verified parents main
+79f3fb25ca8d34c22eae1210c7c92ae2ebe8ea0b and source9df829c064). Actual Chromium
+153.0.8010.12 stops all modes at missing pricing-content container; zero signup
+journeys execute. SHA256 10cd2bc392cf9c37c157341b6c3db9e75610577e591a70340de1776f2dcd76e7.
+This failure proves the named-container mismatch, not yet the one-main or signup
+behavior. Preserve the original artifact and full seven-file source packet.
+
+Source inspection separately confirms the inherited nested pricing main inside
+layout main-content. Correction uses a plain pricing-content div in the existing
+shared main, a named form with aria-busy during save and an alert role on failures.
+The existing readonly pending field, ref guard, required/email/max320 validation,
+price proposals, source payload and shared helper remain intact. No design
+constants, labels promising availability or backend/storage behavior is changed.
+The same fourteen grouped journeys are retained, including one-main assertion.
+Resulting-source native browser/checks and exact seven-file independent review
+remain required; the earlier static-render/review passes are not extended here.

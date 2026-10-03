@@ -66,7 +66,10 @@ export function PricingClient() {
   }
 
   return (
-    <main className="min-h-screen bg-[var(--arc-cosmic-void)] px-6 pb-24 pt-20 text-white">
+    <div
+      id="pricing-content"
+      className="min-h-screen bg-[var(--arc-cosmic-void)] px-6 pb-24 pt-20 text-white"
+    >
       <div className="mx-auto max-w-5xl">
         <header className="mb-12 max-w-2xl">
           <p className="mb-4 font-mono text-sm text-[var(--arc-brand-atlantean-teal)]">
@@ -148,7 +151,12 @@ export function PricingClient() {
                 before submitting.
               </p>
             </div>
-            <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+            <form
+              aria-label="Creator plan interest"
+              aria-busy={status === "loading"}
+              onSubmit={handleWaitlistSubmit}
+              className="space-y-4"
+            >
               <label htmlFor={emailId} className="block text-sm font-medium">
                 Email address
               </label>
@@ -180,7 +188,7 @@ export function PricingClient() {
               </button>
               <p
                 id={statusId}
-                role="status"
+                role={status === "error" ? "alert" : "status"}
                 aria-live="polite"
                 aria-atomic="true"
                 className="min-h-6 text-sm leading-relaxed text-white/80"
@@ -216,6 +224,6 @@ export function PricingClient() {
           </div>
         </section>
       </div>
-    </main>
+    </div>
   );
 }
