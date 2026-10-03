@@ -6,12 +6,13 @@ name: Copilot Setup Steps
 # with the pinned package manager.
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - .github/workflows/copilot-setup-steps.yml
   pull_request:
     paths:
       - .github/workflows/copilot-setup-steps.yml
+
+concurrency:
+  group: copilot-setup-steps-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   copilot-setup-steps:
