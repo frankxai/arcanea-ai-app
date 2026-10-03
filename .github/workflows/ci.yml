@@ -306,6 +306,27 @@ jobs:
           node scripts/verify-weight-of-wonders.mjs
           pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/weight-of-wonders.test.ts
 
+      - name: Verify pricing interest and recovery in the built browser
+        timeout-minutes: 5
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+        run: |
+          pnpm --dir apps/web exec playwright install --with-deps chromium
+          pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/pricing-next.log" 2>&1 &
+          pricing_server_pid=$!
+          trap 'kill "$pricing_server_pid" 2>/dev/null || true' EXIT
+          node scripts/verify-pricing-capture-browser.cjs
+
+      - name: Upload pricing interest browser evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: pricing-capture-built-app-${{ github.sha }}
+          path: screenshots/pricing-capture/
+          retention-days: 7
+          if-no-files-found: warn
+
       - name: Verify galleries rendered desktop, 375px mobile and reduced motion
         if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
         env:

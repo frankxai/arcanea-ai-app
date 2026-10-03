@@ -100,3 +100,51 @@ applied successfully; no partial failed patch remained.
 One follow-up formatter/diff invocation used the private evidence cwd: static
 rendering succeeded, but relative Markdown formatting and Git reads failed.
 No staging occurred there; re-run formatting and Git checks from the assigned repo.
+
+## Pricing browser proof, October 3
+
+Source: existing goal and owning #276; draft #494 at 455f815db8352ffb31140694d9a4f9089ff3bc30.
+Owner: Codex, existing assigned sparse worktree and pricing branch.
+User job: distinguish unapproved plans from available offers, reach the existing
+world/library/privacy paths and recover an interest submission without losing
+the address or mistaking an uncertain write for a confirmed one.
+
+Four-file follow-up: CI, pricing client, scripts/verify-pricing-capture-browser.cjs
+and this record; full draft becomes seven files. Shared submit helper/tests,
+API/insert adapter, metadata, lockfile, community #493 and original #403 stay intact.
+Acceptance: actual Chromium desktop,375px touch,reduced-motion journeys exercise
+proposal prices/no checkout, one shared main, same-tab anchor and world/library/
+privacy navigation, native email validity, associated live-status IDs, immediate
+pending guard, failed HTTP/nonliteral receipt/reset recovery, real10s timeout and
+retry, stale receipt reset and viewport bounds. All writes are intercepted; nine
+fixture POSTs retain pricing_founding_circle per mode. Source hashes and actual
+built merge/source commits are saved in CI artifact; required checks remain.
+
+Serious alternative: original #403 annotates the old payload and broadly replaces
+the newer durable API; this derivative reuses the unchanged #458 insert adapter
+and shared request helper, keeping the existing public proposal/interest job.
+No paid product/demand/customer success is established by a working form.
+
+Fresh Vercel deployment dpl_5zo55nSdrrzw4FDS2L5MhAVzVLdU is CANCELED at the
+ignored-build step, bound to455f815db8; GitHub SUCCESS does not establish preview
+availability. No redeploy or setting change. Prefer actual native built browser
+evidence until an existing source-matched preview is available.
+
+First native attempt deliberately leaves pricing runtime unchanged to reproduce
+its inherited nested main in the actual built app and inspect further behavior.
+The verifier reuses the proven community fixture lifecycle atd677479680; no
+community source is copied into this proposal. An initial Node input parse failed
+before execution; a subsequent sparse missing scripts-directory write failed,
+then the explicitly owned path was created. No partial wrong-source edit remains.
+
+Guidance loaded: repository/web/shared instructions, master plan, taste/design,
+workspace and outcome/performance contracts. Official Playwright network,
+locators and navigation/hydration docs consulted before implementation.
+Budget: sequential text/small verification; no local install/build/browser/worker,
+no extra agents. Native CI owns the timed server and closes it via EXIT trap.
+Full updated seven-file independent review remains pending; earlier six-file
+and two-file review do not cover this follow-up. Preserve terminal provider-limit
+receipt; do not retry quota-blocked review. No human licence/price/Heart decision,
+merge/deploy/live signup/mail, demand or release proof; #408/#427 remain.
+Stop on identity/lane changes or failed checks; inspect the same live run until
+terminal. Rollback: scoped revert of this follow-up, retain the shared helper.
