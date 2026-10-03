@@ -51,7 +51,29 @@ async function verifyWorldWorkbench({ page, context, base, state, capture }) {
     }
     await capture(page, state, "world-workbench-home");
 
-    const dossier = page.locator('[aria-label="Interactive world example"]');
+    const allDossiers = page.locator(
+      '[aria-label="Interactive world example"]',
+    );
+    const dossier = page.locator(
+      '[aria-label="Interactive world example"]:visible',
+    );
+    const dossierNodes = await allDossiers.evaluateAll((elements) =>
+      elements.map((element) => {
+        const rect = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        return {
+          width: rect.width,
+          height: rect.height,
+          display: style.display,
+          visibility: style.visibility,
+          hiddenAncestor: Boolean(
+            element.closest('[hidden], [aria-hidden="true"], [inert]'),
+          ),
+        };
+      }),
+    );
+    console.log(JSON.stringify({ state: state.name, dossierNodes }));
+    await expect(dossier).toHaveCount(1);
     const originalBox = await dossier.boundingBox();
     for (const name of ["Characters", "Locations", "World rule"]) {
       await page.getByRole("button", { name, exact: true }).click();
@@ -173,6 +195,7 @@ async function verifyWorldWorkbench({ page, context, base, state, capture }) {
       state: state.name,
       overflow,
       stableDossier: true,
+      dossierNodes,
       conceptRecovery: true,
       anonymousModelRequests: modelRequests.length,
       runtimeErrors,

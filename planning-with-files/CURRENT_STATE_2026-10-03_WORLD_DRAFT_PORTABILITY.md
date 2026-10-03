@@ -76,3 +76,21 @@ media owners. Heart/licence/engine and #408/#277/#427 remain human gates.
 Source review follow-up: an identical imported draft could clear a pending new concept without confirmation. Show that pending text so it can be copied and require confirmation before clearing it. A native browser regression cancels the identical import and checks that the concept remains. Preserve first source f108c1b3 and all its CI attempts; final-source checks must use the resulting revision.
 
 Native run37078257257 at0d66 passed frozen Install/TypeScript and the ten portability tests, then ESLint rejected four raw hex fixture literals. Replace them with the canonical design-system brand tokens, importing the exact source so lint tests do not need a built workspace dist. Keep the failing run and console-log encoding failure; no rule or check was disabled. Its continuing Build/browser job remains independently observable until terminal.
+
+Native run37078851599 at8806214 passed Install, Lint, TypeScript, all ten native
+portability tests and the production build. The draft browser suite passed
+desktop, mobile375 and reduced-motion export/import, cancellation, backup,
+reload, storage rollback and legacy recovery. Overall CI failed because the
+homepage forced-colors journey matched two labelled dossier DOM nodes at the
+bounding-box lookup. The screenshot shows one visible example and source has
+one render site; a hidden retained node is a hypothesis, not established cause.
+
+The homepage test now uses Playwright's documented CSS `:visible` locator and
+explicitly requires exactly one visible dossier. Two visible examples still fail.
+Record every matching node's dimensions, CSS visibility/display and hidden
+ancestor in stdout and the successful report. Keep all four homepage modes and
+their interaction/access checks. Documentation:
+https://playwright.dev/docs/other-locators#css-matching-only-visible-elements.
+Artifact11257054953 and all failing native receipts remain available in the
+private world-draft-portability-20261003 review case. Final-source native checks
+and independent provider review remain pending.

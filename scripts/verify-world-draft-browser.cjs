@@ -178,13 +178,11 @@ const draft = {
         draft,
       );
       page.once("dialog", (dialog) => dialog.dismiss());
-      await page
-        .getByLabel("Import draft", { exact: true })
-        .setInputFiles({
-          name: "same-world.json",
-          mimeType: "application/json",
-          buffer: Buffer.from(JSON.stringify(draft)),
-        });
+      await page.getByLabel("Import draft", { exact: true }).setInputFiles({
+        name: "same-world.json",
+        mimeType: "application/json",
+        buffer: Buffer.from(JSON.stringify(draft)),
+      });
       await expect(
         page.getByLabel("Import draft", { exact: true }),
       ).toBeEnabled();
