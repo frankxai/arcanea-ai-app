@@ -1,0 +1,47 @@
+```json
+{
+  "sourceRevision": "00ec58bf11fce4522b9b3f5097d6f0f4ae9fa53b",
+  "baselineRevision": "823c0cf0ca37b69f2a965bb1d84ecd62cf0e25c2",
+  "sourceVerdict": "PASS",
+  "behaviorVerdict": "REVISE",
+  "recommendation": "KEEP_CANDIDATE",
+  "findings": [
+    {
+      "severity": "medium",
+      "case": "W1-local-status / revised artifact",
+      "evidence": "Premise writes 'Accepted (EP1): ...sending erases it from the sender permanently.' EP1 states 'sending erases that memory from the sender' — no 'permanently.' The fact table row for EP1 correctly omits the word, creating an internal contradiction within the same artifact.",
+      "reason": "An Accepted label is applied to a scope extension the source does not supply. Candidate SKILL.md states explicitly 'An event does not establish its cause or permanence' and 'Each accepted assertion must trace to its cited source.' The overstatement occurs despite the source prohibiting exactly this class of permanence inference. This is a behavioral fault, not a source fault.",
+      "remedy": "Remove 'permanently' from the Accepted(EP1) premise statement, or open a dedicated proposal for permanent erasure and an explicit open choice on recoverability."
+    },
+    {
+      "severity": "medium",
+      "case": "W2-orchard / revised artifact",
+      "evidence": "In the Neri character block, 'Open choice (O5)' refers to Neri's role. In the Vale block, 'Open choice (O6)' refers to Vale's glyph limitation. The consolidated Open Choices section reverses these: O5 = Vale's glyph reading, O6 = Neri's role.",
+      "reason": "Candidate SKILL.md requires stable local IDs that are reused consistently across sections. The swap makes the consolidated Open Choices list unreliable as a navigation index and violates the 'reuse the IDs when a detail appears elsewhere' requirement. Behavioral fault; the source requirement is unambiguous.",
+      "remedy": "Assign one ID per distinct open choice and apply it consistently in every section. Renumber one of the conflicting inline references before delivery."
+    },
+    {
+      "severity": "low",
+      "case": "source / SKILL.md candidate",
+      "evidence": "Baseline contained 'Do not turn an unexplained loss into a past transmission, payment, curse or other event, even when that event would fit a proposed world mechanism.' Candidate removes this. Nearest replacement is the general clause 'An event does not establish its cause or permanence.' The harbor-name failure example in example.md — which concretely illustrated the mechanism-inference failure — is also removed and replaced with an unlabeled-biography example.",
+      "reason": "The deleted language targeted a high-probability failure mode with concrete prohibitions. The general permanence clause covers permanence but does not explicitly block mechanism inference (tolls, curses, payments). Illustrative example coverage for loss-cause inference is reduced in example.md. The W1 artifact handles this correctly under the candidate source, so the gap has not produced a confirmed regression, but explicit coverage is weaker.",
+      "remedy": "Add one sentence reinstating the mechanism-inference prohibition in the 'Keep status attached to the text' section, or restore a brief failure example to example.md covering an unexplained loss."
+    },
+    {
+      "severity": "low",
+      "case": "W2-orchard / baseline artifact",
+      "evidence": "The premise section is unlabeled: 'Its central tension is practical: a verse that went missing yesterday and a visitor who cannot read the glyphs may each hold what the other needs.' No proposal marker appears. The baseline example.md demonstrated the expected 'Proposed setting and conflict:' prefix for equivalent text.",
+      "reason": "Baseline SKILL.md requires invented mechanisms in the premise to be marked as proposals. The artifact omits this. Scoped to the baseline output; the candidate's explicit per-unit labeling instruction directly addresses this gap and is one of the revision's genuine improvements.",
+      "remedy": "Output-level only; no source action required. Noted for behavioral comparison."
+    }
+  ],
+  "limitations": [
+    "Single synthetic observation per case; no held-out evaluation set after disclosure.",
+    "Producer rubric not exposed; chain-of-thought unavailable for both sessions.",
+    "W1-local-status has no paired baseline artifact; behavioral comparison for that case is one-sided.",
+    "Both revised artifacts originate from the same producer session; session independence unconfirmed.",
+    "Findings are scoped to the supplied source files and three artifacts only; no broader reliability inference is drawn."
+  ],
+  "releaseStatus": "not assessed"
+}
+```

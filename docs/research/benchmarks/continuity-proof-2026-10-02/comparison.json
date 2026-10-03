@@ -1,0 +1,303 @@
+{
+  "scope": "One source-derived two-chapter task, not the full 20-task or 1/3/5-cell benchmark. Both outputs are author-unaccepted proposals.",
+  "conditions": "Same supplied complete chapters and locked canon; exact baseline task prompt/source hashes are in baseline.json. Baseline maximum6 edits/1600 words; lead had no preset edit/word cap beyond smallest local repair. A2/A3 were refined after observing B. A alone received iterative independent review; B is a normalized content transcription; semantic equality to observed output is asserted by the runner, and original byte identity is not publicly verifiable. This is not a blinded randomized trial, controlled causal evaluation or quality/size/speed winner comparison. B also loaded the pinned Luminor Engineering Kernel with an editorial override; lead context differed. Full prompt hash coverage and measured response word count are recorded in baseline.json.",
+  "candidateA": {
+    "edits": 3,
+    "iterations": [
+      {
+        "version": "A1",
+        "edits": 3,
+        "status": "Initial three-edit list is now committed in edits.json history. Order is lead-reported and not independently proven."
+      },
+      {
+        "version": "A2",
+        "edits": 4,
+        "status": "After seeing baseline, add supported casualty-wording repair. Unblinded refinement, not independent configuration uplift."
+      },
+      {
+        "version": "A3",
+        "edits": 3,
+        "status": "Independent REVISE: retain original date; explicit unresolved author choices and corrected export/recovery evidence."
+      }
+    ],
+    "completeEditableMarkdown": true,
+    "humanAccepted": false,
+    "authorRepairMinutes": null,
+    "endToEndLeadSeconds": null,
+    "leadModelCostUsd": null,
+    "measurementLimit": "Codex thinking/lead time and cost were not instrumented; no speed/cost superiority claim.",
+    "budget": "No preset edit/word cap; smallest-local-repair scope. Iterative lead reading and review time/cost not fully instrumented.",
+    "editDisposition": {
+      "recommended": [1, 2],
+      "optional": [3],
+      "reason": "First two align explicit same-morning scenes. Third removes a possible all-recovered implication and also removes the original recovery-time cue; a wording judgment, not a demonstrated contradiction."
+    }
+  },
+  "candidateB": {
+    "edits": 5,
+    "completeEditableMarkdown": true,
+    "providerSeconds": 79.765597,
+    "providerListCostUsd": 0.2283,
+    "humanAccepted": false,
+    "authorRepairMinutes": null,
+    "editBudget": 6,
+    "responseWordBudget": 1600,
+    "responseWordCount": {
+      "words": 964,
+      "method": "Whitespace-delimited tokens in the complete provider response.txt, including JSON keys/formatting and any code fences; excludes hidden reasoning, input and system prompts.",
+      "responseSha256": "d6283d181e2c9557154d9f7522209fb48762028a6585027091bb206d7d09df07",
+      "within1600ByThisMeasure": true,
+      "verification": "Private runner assertion: response.txt is not committed. Public normalized response-object count/hash is provided separately."
+    },
+    "publicTranscription": {
+      "status": "Normalized JSON transcription without semantic edits; original response.txt is private.",
+      "serialization": "JSON response member only: Python json.dumps(response, indent=2, ensure_ascii=False) plus one LF, encoded UTF-8.",
+      "wordCountWhitespace": 962,
+      "sha256": "49ad89446ee9a724a22942cc2dd99af67f4193a757e195db725b903a1033727c",
+      "scope": "Reproducible from the committed response member using this recipe. Private original response hash/count and original prompt hash are runner assertions, not publicly byte-verifiable receipts."
+    }
+  },
+  "diagnosticControl": {
+    "implementation": "author-os/bin/quality-check.js --imprint arcanea",
+    "sourceCommit": "30d90432d84c526315985d806cd938c726b4271d",
+    "original": [
+      {
+        "chapter": 1,
+        "exitCode": 0,
+        "reportedPass": true
+      },
+      {
+        "chapter": 2,
+        "exitCode": 0,
+        "reportedPass": true
+      }
+    ],
+    "candidateA": [
+      {
+        "chapter": 1,
+        "exitCode": 0,
+        "reportedPass": true
+      },
+      {
+        "chapter": 2,
+        "exitCode": 0,
+        "reportedPass": true
+      }
+    ],
+    "candidateB": [
+      {
+        "chapter": 1,
+        "exitCode": 0,
+        "reportedPass": true
+      },
+      {
+        "chapter": 2,
+        "exitCode": 0,
+        "reportedPass": true
+      }
+    ],
+    "meaning": "On this two-chapter input, the verbal-tic/passive heuristic reported PASS for original and both proposals and did not distinguish them. It supplies no measured human or timeline-consistency verdict."
+  },
+  "recovery": {
+    "candidateA": {
+      "gitApplyCheckCached": true,
+      "originalIndexUnmodified": true,
+      "reverseExactSourceRecovery": true,
+      "staleSourceRejected": true,
+      "staleInputPreserved": true,
+      "scope": "Exact final patch context check and in-memory inverse/stale-source checks; no concurrent/crash-safe disk replacement claim.",
+      "finalPatchSha256": "32faaf683d0cd0164171843a4d1fcfb555adda5c8445fdbf9501a96dfe9e70a4",
+      "command": "git apply --check --cached <candidate.patch>",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "sameTrackedIndexEntriesBeforeAfter": true,
+      "finalInverseExactSourceRecovery": true,
+      "finalStaleInputRejectedBeforeReplacement": true
+    },
+    "candidateB": {
+      "gitApplyCheckCached": true,
+      "originalIndexUnmodified": true,
+      "reverseExactSourceRecovery": true,
+      "staleSourceRejected": true,
+      "staleInputPreserved": true,
+      "scope": "Exact final patch context check and in-memory inverse/stale-source checks; no concurrent/crash-safe disk replacement claim.",
+      "finalPatchSha256": "9c5c65817ed2eb3efb7cc4d798ad98f3497a3fdd83d4467a522a1b7fee6dc13a",
+      "command": "git apply --check --cached <candidate.patch>",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "sameTrackedIndexEntriesBeforeAfter": true,
+      "finalInverseExactSourceRecovery": true,
+      "finalStaleInputRejectedBeforeReplacement": true
+    }
+  },
+  "exports": {
+    "node": "v24.14.0",
+    "authorOsCommit": "30d90432d84c526315985d806cd938c726b4271d",
+    "exporterSha256": "6370e201b87aeb1cf2fcdf0fa84f5caedb3a205147b901d88fa8963c5f596b63",
+    "rows": [
+      {
+        "candidate": "B",
+        "format": "Markdown",
+        "sha256": "3cb6d79da69ee2d2c8821de9a1639f63212ce7636fc6461c4bf0532bed6b97a2",
+        "bytes": 34838,
+        "elapsedMs": 0.09660000000000224,
+        "sceneBytesPreserved": true
+      },
+      {
+        "candidate": "A",
+        "format": "Markdown",
+        "sha256": "452734c2dc4a9d4db20fd3bf6e3bc3c705c8bff0861577ed33d6c9c3d5017e9b",
+        "bytes": 34830,
+        "elapsedMs": 1.9529999999999959,
+        "sceneBytesPreserved": true
+      }
+    ],
+    "scope": "Native AuthorOS Markdown export only; embedded exportedAt is nondeterministic. No EPUB, PDF or installed-host acceptance.",
+    "stage": "Raw native pre-format export; hashes/byte sizes identify private raw files, not committed Markdown.",
+    "reproducibility": "Raw export files/projects are preserved privately, not committed; their hashes are not independently reproducible from this report alone. Embedded timestamps vary. Committed output hashes and exact patch checks are publicly reproducible; inverse/stale checks are in-memory replacement operations, not patch-file crash/restart tests. No restarted-export receipt is claimed."
+  },
+  "leadFindings": [
+    {
+      "id": "TIME",
+      "evidence": "Second arrival midday vs sun-clearing-cliffs and morning throughout",
+      "proposal": "Later that morning"
+    },
+    {
+      "id": "SPAN",
+      "evidence": "Two days of agendas vs sequential same-morning offers",
+      "proposal": "A morning"
+    },
+    {
+      "id": "CASUALTIES",
+      "evidence": "Three not found until morning vs one recovered/two never recovered",
+      "proposal": "Three not found that night"
+    }
+  ],
+  "unresolvedAuthorChoices": [
+    {
+      "id": "MOTHER_MEMORY",
+      "disposition": "author decision",
+      "evidence": [
+        "Your mother had the same eyes for three days after she was born.",
+        "I have thought for nineteen years that I was wrong about what I saw.",
+        "She settled here. You were born.",
+        "She came here to quiet it."
+      ],
+      "options": [
+        {
+          "choice": "Keep original",
+          "consequence": "Retains the mother link; the nineteen-year interval, birth location and what Maret saw still need explanation."
+        },
+        {
+          "choice": "Use baseline Kael-newborn reading",
+          "consequence": "Adds multicolored eyes at Kael birth; affects Not again and Sela undetected/suppression hypothesis. Requires owner approval."
+        },
+        {
+          "choice": "Remove birth/date details",
+          "proposal": "Your mother had the same eyes once. I thought I was wrong about what I saw.",
+          "consequence": "Retains a mother memory but loses the precise three-day/nineteen-year clue. Requires owner approval."
+        }
+      ]
+    },
+    {
+      "id": "DAY_COUNT",
+      "disposition": "unresolved convention; retain source",
+      "evidence": "Storm night, fourth day visit, next morning, three days of reflection and colloquial four days ago do not fix an unambiguous time origin.",
+      "options": [
+        "Leave unchanged pending author timeline",
+        "If a precise Day0 convention is selected, change repeated chapter2 day-count language coherently",
+        "Change the next morning or Maret day only with author acceptance and recheck three-day reflection"
+      ]
+    },
+    {
+      "id": "WRECK",
+      "disposition": "author question",
+      "evidence": "Calloway merchant vessel and unnamed wreck may be different ships. Preserve the stated26/23/3 arithmetic, without resolving identity."
+    },
+    {
+      "id": "SLEEP",
+      "disposition": "author question",
+      "evidence": "A week of poor sleep may predate the storm; source does not explicitly exclude it. Retain original."
+    },
+    {
+      "id": "VOID_SPIRIT",
+      "disposition": "author question",
+      "evidence": "Void names the fifth manifestation; locked source groups Void/Spirit and distinguishes aspects. Do not invent a new mechanic to repair terminology."
+    },
+    {
+      "id": "INSTITUTIONS",
+      "disposition": "owner question referencing locked Tier 6; conflict not established",
+      "evidence": "Locked Tier 6 names seven Academy Houses; these chapters name three working Academies and a Lost Academy. No supplied exclusive Academy-to-House mapping or required equality establishes a contradiction. The relationship needs owner clarification before a lore change."
+    },
+    {
+      "id": "HISTORY",
+      "disposition": "author question",
+      "evidence": "First Siege and sealing dates may name distinct events; do not infer a contradiction."
+    },
+    {
+      "id": "FREQUENCY",
+      "disposition": "owner-only source conflict",
+      "evidence": "Locked-source Heart table/log conflict is unchanged and not needed by either chapter."
+    },
+    {
+      "id": "TESTIMONY",
+      "disposition": "preserve character belief",
+      "evidence": "Bren and Sela give interpretations, not new accepted canon."
+    },
+    {
+      "id": "PROLEPSIS",
+      "disposition": "author question",
+      "evidence": "Kael will think of the losses while polishing brass/eating porridge in the weeks after, yet departs next morning after the emissaries. Probably prolepsis or recurring habits, not an automatic retcon."
+    }
+  ],
+  "independentDisposition": "At this assembly checkpoint, the completed source-bound review at 328b95d3 is REVISE with two medium and three low findings. These five findings are being reconciled; correction review and native checks for the resulting head are pending. Earlier reviews and the incorrect-hash methods attempt remain preserved. Consult issue 282 for correctly bound subsequent receipts; no final-head sign-off is asserted here.",
+  "commercialEvidence": "No customer acceptance, paid demand, revenue or marketing quality claim.",
+  "dayCountCorrection": "Initial lead and baseline treated the date as a contradiction without a chosen time origin. A contradiction is not established; A3 retains the source date. Illustrative conventions and the reflection consequence appear in the report; B is a normalized transcription, with semantic equality asserted by the runner and original byte identity not publicly verifiable.",
+  "localFailures": {
+    "attempts": [
+      {
+        "operation": "Git patch check",
+        "result": "failed",
+        "cause": "Private Python write_text converted LF patch bytes to CRLF on Windows; index source uses LF.",
+        "repair": "Write patch bytes explicitly as UTF-8/LF; preserve initial failed patch."
+      },
+      {
+        "operation": "Native AuthorOS export adapter",
+        "result": "failed",
+        "cause": "Windows absolute ESM import was interpreted as unsupported c: URL scheme.",
+        "repair": "Use a file:/// URL for the existing module; no shared AuthorOS source change."
+      },
+      {
+        "operation": "Staged diff check",
+        "result": "failed before commit",
+        "cause": "Unified patch files contain literal blank context prefixes, which the ordinary staged whitespace check flags.",
+        "repair": "Two context lines, bare empty context lines accepted by Git, no trailing blank line; both standard Git patch checks rerun. No check disabled."
+      }
+    ],
+    "scope": "Three initial local integration failures; no source manuscript, canon, tracked index entries or shared AuthorOS implementation changed. An additional evidence-only UTF-8 index corruption is recorded as the second review finding and restored from the base."
+  },
+  "committedPostFormatOutputs": [
+    {
+      "candidate": "A",
+      "path": "edited-manuscript.md",
+      "sha256": "72104abf25c788a56f0299d4d692acfee4665516182ec28c884e4e86705ac0fb",
+      "bytes": 34830,
+      "stage": "Committed post-format reading derivative; managed headings and Markdown emphasis differ from source layout. Patch is exact change record."
+    },
+    {
+      "candidate": "B",
+      "path": "baseline-manuscript.md",
+      "sha256": "c3de48bef01a755ad08c6ab4e815288e885fca714884389aadd1aa2c971a8bde",
+      "bytes": 34838,
+      "stage": "Committed post-format reading derivative; managed headings and Markdown emphasis differ from source layout. Patch is exact change record."
+    }
+  ],
+  "initialIndependentReview": {
+    "head": "c642d556f7ce9960fbf5bfa7c7b66d8ff8e04d0f",
+    "verdict": "REVISE",
+    "disposition": "Initial REVISE findings reconciled; second review at2b42c2e7 confirmed narrative repair but requested evidence/index corrections. Subsequent final-head review is pending at this assembly checkpoint; consult issue282."
+  },
+  "refinementAsymmetry": "A received review-driven correction; B did not. A adopted the casualty wording idea from baseline F5. Edit counts are descriptive observations, not usable repair size or quality."
+}

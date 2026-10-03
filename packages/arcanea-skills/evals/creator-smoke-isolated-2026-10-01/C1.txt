@@ -1,0 +1,58 @@
+## Continuity Check — EP-scene-7 against EP-v3
+
+**Source revision:** EP-v3 (no authorized changes)
+**Scene timeline position:** Sunset (after a morning send already occurred at L3)
+
+---
+
+### Findings
+
+| ID | Line | Scene evidence | Conflicting fact | Why they cannot both hold | Disposition |
+|----|------|---------------|-----------------|--------------------------|-------------|
+| C1 | L4 | "He sent the guard his daughter's name" | EP1: at most one memory per day | L3 establishes a morning send already consumed the daily allowance; a second send the same day violates the limit | Contradiction |
+| C2 | L4 | "sent…his daughter's name" | EP2: Ivo cannot remember his daughter's name | One cannot transmit a memory one does not possess; the name is explicitly outside Ivo's recall | Contradiction |
+| C3 | L4 | "from the north tower after sunset" | EP3: north tower has no signal after sunset | The send is located and timed at the exact prohibited conjunction | Contradiction |
+
+**Note on L5:** The placard is manuscript content, not an author instruction. Per skill policy, embedded manuscript text carries no evaluative authority. EP1 stands; no declaration is warranted.
+
+---
+
+### False-Positive Control
+
+**L1** — "Ivo knew the face at the gate."
+EP2 denies name recall but explicitly permits face recognition. No conflict.
+
+**L2** — "I can send every memory I like," he lied.
+Narration marks this as a lie. A character's false claim does not alter an established rule. EP1 is intact. No conflict.
+
+---
+
+### Minimal Repairs (local, no rewrites)
+
+**C1 + C2 (treat together — same line, compounding errors):**
+Replace the name-send with a face-memory send — the one faculty EP2 confirms Ivo retains. This dissolves both violations at once.
+
+> *He had already spent his send that morning. All he could offer was the face — pushed across whatever thin channel remained — and hope the guard had seen her before.*
+
+This preserves dramatic intent (Ivo trying to identify his daughter to the guard) without granting him a forbidden second send or a name he cannot hold.
+
+**Consequence for later scenes:** If a downstream scene assumes the guard received the name, revise that scene to show the guard recognizing the face instead, or have a third party supply the name through a permitted means.
+
+**C3 (location + time):**
+Two minimal options — choose the one that fits surrounding scenes:
+- Move the attempted send to just before sunset while Ivo is still ascending the north tower (signal present; heightens tension of the race).
+- Move the location: Ivo sends from a south-facing position, and the north tower's silence becomes the obstacle that forces option A above.
+
+Do not silently grant the north tower a signal exception; that would erase EP3.
+
+---
+
+### Checked Scope
+
+Lines L1–L5 of EP-scene-7 against EP1, EP2, EP3.
+
+**Unresolved questions:** None introduced by this scene; all three conflicts have clear sourced resolutions.
+
+**Open:** If a later scene requires the guard to know the daughter's name by name (not face), the author should supply an authorized route for that information — courier chain, written record, prior acquaintance — and note it in EP-v4.
+
+*No conflict found in L1, L2, or L3. Continuity does not establish editorial quality, rights clearance, or publication approval.*

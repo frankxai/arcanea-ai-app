@@ -1,0 +1,66 @@
+# Ember Post — Compact World Bible
+
+## Premise
+
+Ember Post is a courier network where memory is the medium of transmission. Every message costs the sender a piece of their own past. The central conflict: the people most essential to the network are the ones most systematically erased by it.
+
+---
+
+## Fact Table
+
+| ID | Fact | Status | Source |
+|---|---|---|---|
+| EP1 | Couriers may send one memory per day; sending erases that memory from the sender | Accepted | EP-v3 |
+| EP2 | Ivo lost the memory of his daughter's name yesterday; he still recognizes her face | Accepted | EP-v3 |
+| EP3-R | The north tower can transmit after sunset via hand-cranked relay at one hour of physical labor per memory sent | Accepted (revision) | EP-v3; supersedes EP3-orig |
+| EP3-orig | The north tower had no signal after sunset | Superseded | EP-v3 |
+| P1 | Received memories arrive as knowledge, not first-person experience — the recipient knows the fact without the feeling | Proposed | This draft |
+| P2 | Senior couriers are called *dim carriers* — an honorific that became a quiet tragedy | Proposed | This draft |
+| P3 | The north tower's crank crew rotates among junior couriers working off apprenticeship debt | Proposed | This draft |
+
+---
+
+## Places
+
+**North Tower** — The only after-sunset relay point (EP3-R). Daytime operation is standard. After dark, the crank room runs on labor: one hour per memory sent. Proposed (P3): junior couriers staff it in rotation, earning their way out through the machine.
+
+**The Routing Hall** — [Proposed] Administrative center where couriers register their daily send. A blackboard tracks each courier's remaining capacity — one slot per person. Names with a dash instead of a number mark couriers who have stopped sending entirely.
+
+---
+
+## Characters
+
+**Ivo** — A courier who sent the memory of his daughter's name yesterday (EP2). He still recognizes her face. His arc is open; what he does next is a creator decision. Proposed: if P2 holds, he is approaching dim carrier threshold.
+
+**The Night Operator** — [Proposed] Whoever staffs the north tower crank after sunset (EP3-R). Whether this is a single recurring figure or a rotating role is an open choice (P3).
+
+---
+
+## Story Hooks
+
+**Hook 1 — The Name He Can't Send**
+Someone in a distant settlement knows Ivo's daughter's full name — the name he no longer remembers (EP2). Transmitting it would erase that courier's own memory of it (EP1). If P1 is accepted, Ivo would receive it as bare fact, stripped of feeling. The obstacle: is it worth erasing a stranger to recover a word he can no longer feel the weight of? The north tower's after-sunset window (EP3-R) adds a second pressure point — if the settlement's courier misses daylight, an hour of labor and a crank crew now stand between Ivo and the answer.
+
+**Hook 2 — The Crank and the Debt**
+A junior courier has cranked enough late shifts to earn her release from apprenticeship (P3). The night she plans to leave, an urgent after-sunset message arrives requiring a memory she has protected for years (EP1, EP3-R). She is the only courier available; someone must also crank while she sends. If she sends, she loses the memory. If she cranks for someone else, she operates the machine that takes it. The hook: is working the relay morally different from being the sender?
+
+**Connection:** Both hooks turn on the same structural irony — the person most harmed by a loss must authorize it. Ivo's hook asks whether recovered information can substitute for recovered meaning. The operator's asks whether labor-as-cost is cleaner than memory-as-cost.
+
+---
+
+## Open Choices
+
+1. How does a received memory arrive — as knowledge, as experience, or something you define?
+2. Can a recipient refuse a transmission? What happens to the sent memory if they decline?
+3. Is there a physical or institutional threshold after too many sends?
+4. Does EP3-R change *who* can afford after-sunset transmission, or only the mechanics of access?
+
+---
+
+## Change Log
+
+| Original (EP3-orig) | Revision (EP3-R) | Authority |
+|---|---|---|
+| North tower has no signal after sunset | Hand-cranked relay enables after-sunset transmission; cost is one hour of physical labor per memory sent | Creator instruction, EP-v3 |
+
+EP1 and EP2 unchanged.

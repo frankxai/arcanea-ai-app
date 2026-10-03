@@ -1,0 +1,75 @@
+# Ember Post — World Bible (Compact)
+*Draft 1 · 2026-10-01*
+
+---
+
+## Premise and Central Conflict
+
+Ember Post is a setting where memory is both medium and cost. Couriers transmit memories between people — the recipient receives the experience; the sender loses it permanently. The central tension is asymmetry: connection is real, but those who make it possible are slowly unmade by it. The one-per-day limit is also the only structural protection preventing a wealthy patron from burning a courier hollow.
+
+---
+
+## Fact Table
+
+| ID | Fact | Status | Source |
+|----|------|--------|--------|
+| EP1 | Couriers may send one memory per day; sending erases that memory from the sender | Accepted | EP-v3 |
+| EP2 | Ivo lost the memory of his daughter's name yesterday; he still recognizes her face | Accepted | EP-v3 |
+| EP3 | The north tower can transmit after sunset via hand-cranked relay, at one hour of physical labor per memory | Accepted (revised) | EP-v3; supersedes EP3-original ("no signal after sunset"); creator authorized |
+| P1 | The outgoing log records a memory's category ("a name," "a place") but not its content — couriers know what kind of thing they sent, not what it was | Proposed | This draft; creator decision pending |
+| P2 | The north tower is the only after-sunset transmission route for the surrounding region | Proposed | This draft; open choice |
+| P3 | The one-per-day limit is per sender, not per courier | Proposed | This draft; open choice |
+
+---
+
+## Places
+
+**The North Tower**
+After sunset, the relay crank (EP3-revised) makes this station the sole bottleneck for urgent transmissions. Someone labors a full hour per memory — meaning night capacity is sharply constrained, and control of the crank is real power. Whether the night shift is a paid post, a punishment rotation, or an informal conscription is an open choice. The tower's day and night characters likely differ. [EP3-revised, P2-proposed]
+
+**The Sorting Hall** *(Proposed)*
+Where couriers log their daily send. Long-serving couriers move through it quietly; enough small losses over a career and the texture of one's own past thins noticeably. Proposed as the place where that accumulation becomes socially visible. [Proposed consequence of EP1; creator decision pending]
+
+---
+
+## Characters
+
+**Ivo**
+Yesterday he transmitted a memory of his daughter's name. He still recognizes her face (EP2) — the gap is precise, a name-shaped hole with recognition intact. EP2 does not establish why he sent this memory, who received it, whether he acted as courier or civilian sender, or whether the loss was willing. Those are open choices. Any explanation in this draft is a proposal, not a stated fact.
+
+**The Night Operator** *(Proposed)*
+The person who cranks the north tower relay after sunset. One hour of physical labor per transmission (EP3-revised). They exhaust themselves for a connection they do not share and cannot read. Whether this is a respected post, a hardship assignment, or a coerced position is an open choice. [Proposed thematic consequence of EP3-revised]
+
+---
+
+## Story Hooks
+
+Both hooks connect: Hook 1 establishes the wound; Hook 2 exploits it.
+
+**Hook 1 — The Label**
+Ivo's daughter cannot ask her father her own name. She finds the outgoing log and sees the entry: *memory sent, category: "a name"* (P1-proposed). A recipient is listed. She does not know whether the transmission was willing, coerced, or an error. EP1 makes recovery impossible; EP2 makes the loss visible in his face every time he looks at her. Her decision: confront the recipient who now holds her name, or accept that it cannot be undone. Obstacle follows entirely from EP1 and EP2.
+
+**Hook 2 — The Second Crank**
+Late at night, the night operator receives a second transmission request attributed to Ivo. This would violate EP1's daily limit (P3-proposed scope). Either someone is forging Ivo's identity to move an unauthorized memory through the after-sunset relay — the only viable channel at this hour (P2-proposed) — or Ivo himself is attempting to break the limit to recover yesterday's loss. The operator must refuse and surface the fraud, or crank a second hour and become complicit. Connected to Hook 1: the fraudulent transmission may be an attempt to intercept or return the memory of the daughter's name.
+
+---
+
+## Open Choices
+
+- Is Ivo a courier or a civilian sender?
+- Can transmitted memories be recovered, returned, or copied?
+- What is the mechanism of transmission — physical, biological, ritual?
+- Is the one-per-day limit institutional rule or an intrinsic constraint?
+- Who staffs the north tower night shift, and under what terms?
+
+---
+
+## Change Log
+
+| Revised ID | Superseded Fact | New Fact | Reason | Authorized |
+|------------|----------------|----------|--------|------------|
+| EP3 | "North tower has no signal after sunset" | Hand-cranked relay enables after-sunset transmission at one hour of physical labor per memory | Creator-authorized rule change to enable costly night relay | EP-v3 request |
+
+---
+
+*P1–P3 are proposals pending creator decision. EP1 and EP2 are unchanged. EP3 revised per explicit creator authorization. No Arcanea lore introduced.*
