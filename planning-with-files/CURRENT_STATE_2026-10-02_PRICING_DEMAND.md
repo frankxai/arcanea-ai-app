@@ -167,3 +167,22 @@ constants, labels promising availability or backend/storage behavior is changed.
 The same fourteen grouped journeys are retained, including one-main assertion.
 Resulting-source native browser/checks and exact seven-file independent review
 remain required; the earlier static-render/review passes are not extended here.
+
+Second native37097649133 atadf1e0b149 is terminal FAILURE; Install/Lint/TypeScript
+pass and Build/CI Status fail. Artifact11265056423 binds builtmerge279bcdbc372471941afaae698bae60c2ad0c87fe
+(main79f3fb25 plus sourceadf1e0b149), Chromium153.0.8010.12, JSON SHA256
+7ed43f87552083e440af98df36a7dfed0c0720ecd1472e3a782eb23fa40d36b4. All three modes pass the
+proposal/single-main and hero interest-anchor groups, then stop at the Worlds
+heading hidden from the accessible tree by its real first-visit dialog. No signup
+groups execute. Source inspection confirms the Radix Worlds onboarding hides
+underlying content and returns focus to worlds-heading when completed.
+
+Verifier correction walks all three existing dialog steps using actual keyboard
+or touch, checks dismissal and returned heading focus, then verifies the actual
+page heading. No injected onboarded flag, skipped navigation, weakened heading
+assertion or Worlds implementation change. Failure diagnostics now retain path,
+main count and dialog headings. All fourteen grouped journeys remain required.
+The earlier same-source37097601441 was canceled by the PR edited event when the
+complete-scope description was updated; not an observation timeout or test verdict.
+Both failure artifacts/source packets remain preserved; native proof and current
+seven-file independent review remain pending.

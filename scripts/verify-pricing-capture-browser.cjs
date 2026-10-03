@@ -111,15 +111,13 @@ async function verifyMode(browser, mode, evidence) {
         copy,
       ),
     );
-    const links = await main
-      .locator("a[href]")
-      .evaluateAll((nodes) =>
-        nodes.map((node) => ({
-          href: node.getAttribute("href"),
-          target: node.getAttribute("target"),
-          rel: node.getAttribute("rel"),
-        })),
-      );
+    const links = await main.locator("a[href]").evaluateAll((nodes) =>
+      nodes.map((node) => ({
+        href: node.getAttribute("href"),
+        target: node.getAttribute("target"),
+        rel: node.getAttribute("rel"),
+      })),
+    );
     assert.ok(
       links
         .filter(
@@ -180,6 +178,28 @@ async function verifyMode(browser, mode, evidence) {
       await expect(page).toHaveTitle(
         destination === "/library" ? /Library of Arcanea/ : /Arcanea/,
       );
+      if (destination === "/worlds") {
+        const dialog = page.getByRole("dialog");
+        for (const [index, title] of [
+          "Welcome to the Multiverse",
+          "Create or Explore",
+          "Talk to Characters",
+        ].entries()) {
+          await expect(dialog.getByRole("heading")).toHaveText(title);
+          const next = dialog.getByRole("button", {
+            name: index === 2 ? "Get Started" : "Next",
+            exact: true,
+          });
+          if (mode.hasTouch) await next.tap();
+          else {
+            await next.focus();
+            await expect(next).toBeFocused();
+            await next.press("Enter");
+          }
+        }
+        await expect(dialog).toHaveCount(0);
+        await expect(page.locator("#worlds-heading")).toBeFocused();
+      }
       const heading = page.getByRole("heading", { level: 1 }).first();
       await expect(heading).toBeVisible();
       assert.ok((await heading.innerText()).trim().length > 0);
@@ -359,6 +379,11 @@ async function verifyMode(browser, mode, evidence) {
     row.failurePage = await page
       .evaluate(() => ({
         readyState: document.readyState,
+        pathname: location.pathname,
+        mainCount: document.querySelectorAll("main").length,
+        dialogs: [...document.querySelectorAll('[role="dialog"]')].map(
+          (node) => node.querySelector("h1,h2,h3")?.textContent,
+        ),
         activeTag: document.activeElement?.tagName,
         activeHref: document.activeElement?.getAttribute("href"),
         containers: [...document.querySelectorAll("#pricing-content")].map(
