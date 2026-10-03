@@ -167,3 +167,21 @@ exercise hydration, native constraint handling or the visible retry interaction.
 Keep original403, pricing494/shared submit helper, parent work and280/408/427.
 Rollback: scoped revert of these owned additions/correction only. Native CI and
 actual browser results will be recorded on493/276 with source identities.
+
+The first native run37091767939 at7affa3b475 reached the actual browser and failed
+in all three modes only when a new address retained the previous save message.
+Each mode passed the preceding seven journeys, including real timeout/retry,
+and intercepted nine writes. Artifact11263055432 binds builtmerge d5a18e65 to
+source7affa3b475; JSON SHA2568d8983a1946407f17693c825114009b375c38581a3adda9872cb0b0332df376d.
+Install/Lint/TypeScript passed; Build and CI Status failed as required. Keep that
+failure. The form correction clears terminal success/error feedback on editing,
+without changing request payloads, in-flight exclusion, the API or shared helper.
+The browser verifier remains byte-identical. Resulting-head CI and independent
+review remain pending at this assembly checkpoint.
+
+Local attempts retained: atomic patch initially refused an absent sparse task
+file before any edits; materializing only its exact tracked paths resolved it.
+The first formatter pass was non-idempotent; repeated formatting stabilized
+before staging. Initial CI-preservation comparison used implicit Windows decoding;
+explicit UTF-8 proves all previous jobs, steps and conditions unchanged. Security
+hooks remained enabled. These failures do not establish application test failure.

@@ -56,6 +56,12 @@ export function NewsletterForm() {
           required
           maxLength={320}
           disabled={status === "submitting"}
+          onChange={() => {
+            if (status === "success" || status === "error") {
+              setStatus("idle");
+              setMessage("");
+            }
+          }}
           className="min-w-0 flex-1 px-4 py-3 rounded-xl liquid-glass border border-white/[0.06] bg-white/[0.04] text-text-primary placeholder-text-muted font-sans text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary/40 transition-colors disabled:opacity-60"
         />
         <button
