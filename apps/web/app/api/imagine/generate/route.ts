@@ -1,18 +1,66 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import { NextRequest, NextResponse } from 'next/server';
-import { generateImages } from '@/lib/imagine/generate';
-import { applyStyle } from '@/lib/imagine/styles';
-import type { ImagineGenerationResponse } from '@/lib/imagine/contracts';
+import { NextRequest, NextResponse } from "next/server";
+import { generateImages } from "@/lib/imagine/generate";
+import { applyStyle } from "@/lib/imagine/styles";
+import { checkImageAdmission } from "@/lib/imagine/admission";
+import type { ImagineGenerationResponse } from "@/lib/imagine/contracts";
 
 export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   const startedAt = new Date();
   try {
-    const { prompt, count = 4, aspectRatio = '1:1', provider, model, style, enhance: shouldEnhance } = await req.json();
+    const {
+      prompt,
+      count = 4,
+      aspectRatio = "1:1",
+      provider,
+      model,
+      style,
+      enhance: shouldEnhance,
+    } = await req.json();
 
-    if (!prompt || typeof prompt !== 'string') {
-      return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
+    if (
+      typeof prompt !== "string" ||
+      !prompt.trim() ||
+      prompt.length > 2000 ||
+      !Number.isInteger(count) ||
+      count < 1 ||
+      count > 4
+    ) {
+      return NextResponse.json(
+        { error: "Provide a prompt (up to 2000 characters) and 1–4 images" },
+        { status: 400 },
+      );
+    }
+
+    // Admission precedes optional enhancement and all provider calls. A
+    // browser cookie alone is not proof of a successful credit transaction.
+    let spendRes: Response;
+    try {
+      spendRes = await fetch(new URL("/api/credits/spend", req.url), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          cookie: req.headers.get("cookie") ?? "",
+        },
+        body: JSON.stringify({ creationType: "image" }),
+      });
+    } catch {
+      return NextResponse.json(
+        { error: "Credit admission is unavailable" },
+        { status: 503 },
+      );
+    }
+    const admission = checkImageAdmission(
+      spendRes.status,
+      await spendRes.json().catch(() => null),
+    );
+    if (!admission.allowed) {
+      return NextResponse.json(
+        { error: admission.error },
+        { status: admission.status },
+      );
     }
 
     // ── Pipeline: raw prompt → APL enhance (optional) → Style wrap ──────
@@ -20,10 +68,10 @@ export async function POST(req: NextRequest) {
 
     if (shouldEnhance) {
       try {
-        const enhanceRes = await fetch(new URL('/api/apl/enhance', req.url), {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt: processedPrompt, mode: 'image' }),
+        const enhanceRes = await fetch(new URL("/api/apl/enhance", req.url), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: processedPrompt, mode: "image" }),
         });
         if (enhanceRes.ok) {
           const enhanceData = await enhanceRes.json();
@@ -36,34 +84,10 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const { prompt: styledPrompt } = applyStyle(processedPrompt, style || 'none');
-
-    // ── Credit check: spend 1 credit per generation request ──────────────
-    // Forward cookies so the spend endpoint can authenticate the user.
-    // For public (unauthenticated) users, skip the credit check to keep
-    // /imagine accessible without login.
-    const cookieHeader = req.headers.get('cookie') ?? '';
-    const spendRes = await fetch(new URL('/api/credits/spend', req.url), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        cookie: cookieHeader,
-      },
-      body: JSON.stringify({ creationType: 'image' }),
-    });
-
-    if (!spendRes.ok && spendRes.status !== 401) {
-      // Allow unauthenticated users through (401) — block only real failures
-      const spendErr = await spendRes.json().catch(() => ({}));
-      const status = spendRes.status === 402 ? 402 : spendRes.status;
-      return NextResponse.json(
-        {
-          error: (spendErr as { error?: string }).error ?? 'Credit check failed',
-          reason: (spendErr as { reason?: string }).reason ?? 'unknown',
-        },
-        { status },
-      );
-    }
+    const { prompt: styledPrompt } = applyStyle(
+      processedPrompt,
+      style || "none",
+    );
 
     // Generate images via shared lib (Grok → OpenRouter → Gemini fallback)
     try {
@@ -79,7 +103,7 @@ export async function POST(req: NextRequest) {
       // Map to the existing response shape for backwards compatibility.
       // Grok returns external URLs; Gemini/OpenRouter return base64 data URLs.
       const images = result.images.map((img) => {
-        if (img.url.startsWith('data:')) {
+        if (img.url.startsWith("data:")) {
           const match = img.url.match(/^data:([^;]+);base64,(.+)$/);
           if (match) {
             return {
@@ -97,7 +121,7 @@ export async function POST(req: NextRequest) {
 
       const response: ImagineGenerationResponse = {
         generationId: `gen_${startedAt.getTime()}`,
-        status: 'completed',
+        status: "completed",
         provider: result.provider,
         model: result.model,
         prompt,
@@ -110,8 +134,9 @@ export async function POST(req: NextRequest) {
             url: img.url,
             prompt: img.revisedPrompt || prompt,
             revisedPrompt: img.revisedPrompt,
-            mimeType: 'mimeType' in legacyImage ? legacyImage.mimeType : undefined,
-            data: 'data' in legacyImage ? legacyImage.data : undefined,
+            mimeType:
+              "mimeType" in legacyImage ? legacyImage.mimeType : undefined,
+            data: "data" in legacyImage ? legacyImage.data : undefined,
           };
         }),
         timing: {
@@ -121,7 +146,7 @@ export async function POST(req: NextRequest) {
         },
         safety: {
           providerConfigured: true,
-          fallbackUsed: result.provider !== 'openrouter',
+          fallbackUsed: result.provider !== "openrouter",
         },
         saveState: {
           canSave: images.length > 0,
@@ -135,17 +160,18 @@ export async function POST(req: NextRequest) {
 
       return NextResponse.json(response);
     } catch (genErr) {
-      const msg = genErr instanceof Error ? genErr.message : 'Image generation failed';
+      const msg =
+        genErr instanceof Error ? genErr.message : "Image generation failed";
       // Detect the "no provider configured" error for a 503 status
-      if (msg.includes('No image generation API configured')) {
+      if (msg.includes("No image generation API configured")) {
         return NextResponse.json({ error: msg }, { status: 503 });
       }
       return NextResponse.json({ error: msg }, { status: 500 });
     }
   } catch (error) {
-    console.error('Imagine API error:', error);
+    console.error("Imagine API error:", error);
     return NextResponse.json(
-      { error: 'Failed to generate images' },
+      { error: "Failed to generate images" },
       { status: 500 },
     );
   }
