@@ -1,0 +1,104 @@
+**Start:** `encounter` — Ivo holds the kitchen drawing; a child needs directions to the ferry. After sunset.
+**Goal:** Get the child to the ferry.
+
+---
+
+```json
+{
+  "start": "encounter",
+  "goal": "Help the child reach the ferry",
+  "variables": [
+    { "id": "drawingHeld", "initial": true },
+    { "id": "childBoarded", "initial": false }
+  ],
+  "states": [
+    { "id": "encounter" },
+    { "id": "escorting" },
+    { "id": "directing" },
+    { "id": "delivered" },
+    { "id": "guided" }
+  ],
+  "transitions": [
+    {
+      "from": "encounter",
+      "action": "Walk child to the ferry",
+      "when": "true",
+      "set": {},
+      "to": "escorting"
+    },
+    {
+      "from": "encounter",
+      "action": "Give verbal directions, keep the drawing",
+      "when": "true",
+      "set": {},
+      "to": "directing"
+    },
+    {
+      "from": "escorting",
+      "action": "Deliver child to ferry dock",
+      "when": "true",
+      "set": { "childBoarded": true },
+      "to": "delivered"
+    },
+    {
+      "from": "directing",
+      "action": "Child departs on given directions",
+      "when": "true",
+      "set": {},
+      "to": "guided"
+    }
+  ],
+  "endings": [
+    {
+      "state": "delivered",
+      "result": "Child reaches the ferry; boarding confirmed. Ivo retains the drawing; cost was time and physical presence."
+    },
+    {
+      "state": "guided",
+      "result": "Child departs with verbal directions; drawing preserved. Arrival at the ferry is unconfirmed from Ivo's position."
+    }
+  ]
+}
+```
+
+---
+
+**Source references:** EP-v3 — EP1, EP2, EP3.
+
+---
+
+**Unavailable action — replay check**
+
+Action attempted: *"Transmit the kitchen-memory to guide the child."*
+Blocked by EP3: no north-tower signal after sunset. State remains `encounter`; `drawingHeld` and `childBoarded` unchanged.
+EP1 is a secondary constraint — transmission would also erase the memory — but EP3 is the structural gate for this scene. Neither constraint is softened by the other.
+
+---
+
+**Full replay checks**
+
+| Path | Actions | End state | `drawingHeld` | `childBoarded` |
+|---|---|---|---|---|
+| Escort | Walk → Deliver | `delivered` | true | true |
+| Directions | Give directions → Depart | `guided` | true | false |
+| Unavailable | Transmit memory | rejected; `encounter` | true | false |
+
+---
+
+**EP2 identity note (outside packet)**
+
+EP2 establishes that Ivo cannot recall his daughter's name but would recognize her. The child's identity is left open here — she is not asserted to be his daughter. If the creator confirms identity, EP2 binds to Ivo's recognition behavior and any name-recall check in this scene; it does not bind to any other character's abilities. Bind any future ability check to its declared actor.
+
+---
+
+**Unresolved choices / playtest questions**
+
+1. Does the `directing` path resolve deterministically (child reaches ferry) or probabilistically (arrival unconfirmed becomes a loss condition)? Currently `guided` is an open ending, not a failure. Creator should declare whether unconfirmed arrival is acceptable or triggers a follow-up state.
+2. Is Ivo's drawing of the kitchen a recoverable asset post-session, or is retaining it a one-session variable only? EP1 does not address physical objects — treatment is unspecified.
+3. If the child is later confirmed as Ivo's daughter, EP2 would retroactively affect dialogue at `encounter` and `escorting`. No canon identity is asserted here.
+
+---
+
+**Scope note**
+
+`drawingHeld=true` in both endings is consistent with the supplied scene; neither action requires surrendering the drawing. The two endings differ on confirmed vs unconfirmed delivery, not on drawing custody. This is a proposed game outcome. No accepted world event has been added or rewritten. This packet has not been imported, replayed, or played in a runtime. Confirm reachable paths and recoverable retry logic before engine import.

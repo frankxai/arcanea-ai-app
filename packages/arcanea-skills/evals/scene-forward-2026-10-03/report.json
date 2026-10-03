@@ -1,0 +1,94 @@
+{
+  "schema": "arcanea.scene-forward-walkthrough.v1",
+  "sourceBase": "af0b366892713d0460a7535bc9ad7a80235380a1",
+  "authoringSession": "01a0f74f-8bad-7db1-ab06-fd89b5faec84",
+  "harness": "Codex lead",
+  "providerModelIdentifier": "not independently exposed",
+  "externalProviderRequests": 0,
+  "providerCostUsd": 0,
+  "leadTimeEffort": "unmetered; no repair-time or causal comparison claim",
+  "method": "Two lead-authored proposals in one shared context; both guides read; not blinded or independent; no skill/model winner",
+  "requestSha256": "ffa94c720a604883e94d17d387903698646dbae7e62de2b118762547b2e263ab",
+  "inputs": {
+    "packages/arcanea-skills/evals/world-W2-revised.txt": {
+      "sha256": "00ef446b45b08d8bd67763fb9376aa89c357d4f7a899d8faffe495bfc58c604e",
+      "gitBlob": "dcf74c43dc3c62b24475290684a87c0b235320b2"
+    },
+    "packages/arcanea-skills/skills/scene-craft/SKILL.md": {
+      "sha256": "ba7ca01c69702542f2b3bccd81c140d520a758e2e56bfe56c8de1cdc448e8241",
+      "gitBlob": "c48c6831c9782b948d48897c806f8687a5225e5f"
+    },
+    ".claude/skills/creative/scene-craft/SKILL.md": {
+      "sha256": "a092060828696d06882207169f6968a2dc8788bdf46dd96ade32c3ab3c9f9b95",
+      "gitBlob": "a960096256399ee647c443c933118d1ddedea4c1"
+    },
+    "packages/arcanea-skills/catalog.json": {
+      "sha256": "8188cf13ba608ad88d70283813f832b35dee87a261f71bafbdbab78ee53f7ca6",
+      "gitBlob": "1d59ad3e6849ca97f7f0090a7fb40414886ec7a0"
+    },
+    "packages/arcanea-skills/package.json": {
+      "sha256": "ba078f6b806b81acd40cd9a6534edf61ec3fdc18d5ff72bc16436b9fa7beb63b",
+      "gitBlob": "d7cd1847f513010b2291b480c3c36dc37794f53c"
+    },
+    ".arcanea/lore/CANON_LOCKED.md": {
+      "sha256": "58c9c86fd3b540e274d478b91096523031132388b7b18b2fa1d67dee676bf54f",
+      "gitBlob": "ecb9f8f393478c0b41d0829fac654090090ecd11"
+    }
+  },
+  "outputs": {
+    "primary": {
+      "sceneWords": 832,
+      "wholeFileSha256": "0b2f5098c5f655bcb6cf91c7f23bfd6f86f0d74640822a4393d61070f63cacec",
+      "path": "packages/arcanea-skills/evals/scene-forward-2026-10-03/primary.txt"
+    },
+    "alternative": {
+      "sceneWords": 718,
+      "wholeFileSha256": "3a1e01f3ff79fa3eb627ecae1ba77f34c60cb2a2431e147ed9853086d0701eb7",
+      "path": "packages/arcanea-skills/evals/scene-forward-2026-10-03/alternative.txt"
+    }
+  },
+  "acceptedFacts": [
+    "CO1: east gate opens at noon",
+    "CO2: Neri forgot the final verse yesterday and remembers the melody",
+    "CO3: Vale is a traveling potter who cannot read orchard glyphs"
+  ],
+  "selectedProposals": [
+    "P2: melody loosens/lights fruit without release; full verse releases it",
+    "P3: glyphs describe readiness and safe yield",
+    "P6: sold glyph-shape copies may have errors"
+  ],
+  "manualObservations": {
+    "CO1": "Both open just after noon; no closing or exclusivity established",
+    "CO2": "Both retain melody, missing final verse and attached fruit",
+    "CO3": "Vale asks for meaning, recognizes copied shapes only; no semantic decoding",
+    "actionStatus": "One actual refund per scene; five refunds remain future; primary explicitly carries remaining five coins",
+    "quietSceneTurn": "Neri admits missing words and declines an endorsement; no recovered magic or invented trauma",
+    "proposalBoundary": "Whole-scene proposal label plus locally selected premises and after-scene source notes; not official Arcanea",
+    "craftLimits": "Shared transaction/same lead context and refinement; emotional engagement and voice unverified"
+  },
+  "inputFindings": [
+    {
+      "location": "world-W2-revised.txt Hook A",
+      "finding": "Identifying highest-yield tree glyph meanings is unsupported for Vale without another source of knowledge; original retained"
+    },
+    {
+      "location": "world-W2-revised.txt character/open-choice sections",
+      "finding": "O5/O6 role and glyph-reading descriptions disagree; reconcile with author before adoption; original retained"
+    }
+  ],
+  "refinement": {
+    "initialOutputsRetainedPrivately": true,
+    "initialWords": {
+      "primary": 716,
+      "alternative": 668
+    },
+    "change": "Add one actual refund and public disclosure to each scene; primary carries remaining refund coins; distinguish completed actions from future visits"
+  },
+  "mechanicalVerificationScope": "Word counts, LF bytes, complete output sections, immutable input hashes and zero-ready catalog; not semantic/editorial review",
+  "independentReview": "pending; no new provider request",
+  "humanAcceptance": "pending",
+  "skillsReady": 0,
+  "skillsCandidate": 5,
+  "publicInstallRelease": "not authorized or claimed",
+  "nativeCi": "Resulting committed-head receipt follows externally; no inherited PASS"
+}

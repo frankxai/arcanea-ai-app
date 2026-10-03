@@ -131,10 +131,10 @@
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frankxai/arcanea.git"
+    "url": "https://github.com/frankxai/arcanea-ai-app.git"
   },
   "bugs": {
-    "url": "https://github.com/frankxai/arcanea/issues"
+    "url": "https://github.com/frankxai/arcanea-ai-app/issues"
   },
   "homepage": "https://arcanea.ai",
   "pnpm": {

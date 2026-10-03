@@ -1,0 +1,59 @@
+## Illustration Brief — EP-Scene-8 · IL-01
+
+**World context accepted:** Sending erases memory (EP1). Ivo recognizes his daughter's face; her name is gone (EP2). These are established rules. "Ivo cannot retrieve her name" constrains caption and expression; it does not assert that memory loss is permanent, universal, or visible as a glow or symbol in this or any other scene.
+
+---
+
+### Shot Table
+
+| Field | Value |
+|---|---|
+| **Shot ID** | IL-01 |
+| **Source lines** | L1 · L2 · L3 (full scene) |
+| **Subject / action** | The daughter extends a small drawing of an old kitchen toward Ivo. Ivo's hands close on the paper's edges — both hold it simultaneously. His face shows unmistakable recognition; his mouth is closed. |
+| **Framing** | Medium two-shot. Both figures face each other slightly off-center; the paper is horizontal in the lower third, held between them. The daughter's arm extends into frame from the left. Ivo's hands grip from the right. Faces are visible above the paper. Rain and the north tower occupy the background, soft-focus. |
+| **Constraints** | No text, speech bubbles, or name visible anywhere. Ivo's expression must read as recognition, not greeting or confusion. Hands grip — do not float passively. The drawing within the illustration depicts an interior kitchen; its specific contents are a proposal. Tower is background architecture, wet and unlit; it is a visual atmosphere note, not a new story event. |
+| **Proposed duration** | N/A — single illustration |
+| **Prompt text** | A man and a young woman stand outdoors near a stone tower. Rain falls behind them. She extends a small hand-drawn sketch of a kitchen toward him; his hands grip the edges of the paper — both hold it at once. He looks at her face with unmistakable recognition; his lips are together, closed. No words appear. The mood is quiet and irreversible. Background: a tall north tower, dark stone, wet with rain, out of focus. Lighting: overcast, diffuse, no strong shadows. *Proposals: man's approximate age late 40s–50s, woman's age early-to-mid 20s, muted palette of grey and warm paper-tones, the kitchen drawing suggests a small table and window, costumes are plain practical outerwear.* Engine-neutral draft prompt; not an executed generation record. |
+
+---
+
+### Narrative Purpose
+
+The single illustration locks the peak emotional beat: recognition without retrieval. The held paper is the physical axis — it is what she offered (L1), what he grips (L2), and what proves he knows her without being able to name her. The rain and tower (L3) are atmosphere, not action; they belong in the background, not described in the foreground.
+
+Translating L2's internal state ("he cannot say her name") into observable form: closed mouth, gripped paper, eye contact — no invented symbol, shimmer, or void.
+
+---
+
+### Proposals (labeled, not asserted)
+
+- **Ages:** Ivo ~late 40s–50s; daughter ~early-to-mid 20s — *proposal, adjust per character bible*
+- **Palette:** overcast grey, warm paper-cream, muted outerwear — *proposal*
+- **Wardrobe:** plain practical outerwear, no visible insignia — *proposal; see rights note below*
+- **Kitchen drawing contents:** small table, window, a cup — *proposal; any detail not in the scene is invented*
+- **Tower detail:** dark stone, no light source, rain-slick — *proposal grounded in L3 "silent north tower"*
+
+---
+
+### Rights Record
+
+| Asset | Source | Rights status |
+|---|---|---|
+| Scene text (L1–L3) and EP world rules | Supplied by creator | Ownership/license unverified. Receiving the scene does not establish ownership. Commercial release requires declaration. |
+| Costume reference image | Public image found online by creator | **Rights unknown.** Public visibility is not rights clearance. Cannot be used for commercial production without license confirmation. This reference has not been provided to this brief; it supplies no wardrobe facts here. Any costume details in this brief are proposals. |
+
+---
+
+### Provider / Generation Status
+
+No provider selected. No generation requested or authorized. No model, seed, or API parameters are recorded. This document is an editable brief only. No generation receipt is fabricated.
+
+---
+
+### Open Questions (reversible unless you confirm)
+
+1. **Age range** — confirm or adjust the proposed ages; this changes figure scale and casting.
+2. **Costume reference** — if you supply the image contents or a cleared reference, wardrobe can be specified rather than proposed.
+3. **Tower visibility** — brief assumes background; confirm if the tower should be closer or narratively foregrounded.
+4. **Daughter's name** — withheld from prompt intentionally to match the scene's constraint. Confirm if a working title tag is needed internally.

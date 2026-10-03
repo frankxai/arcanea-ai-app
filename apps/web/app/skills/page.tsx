@@ -1,30 +1,30 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions, @typescript-eslint/ban-ts-comment, @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-function-type, react-hooks/exhaustive-deps, react-hooks/set-state-in-effect, react-hooks/rules-of-hooks, react-hooks/purity, react-hooks/refs, react-hooks/static-components, react-hooks/immutability, react-hooks/preserve-manual-memoization, jsx-a11y/alt-text, @next/next/no-img-element, @next/next/no-html-link-for-pages, react/no-unescaped-entities */
-import Link from 'next/link';
-import type { Metadata } from 'next';
-import { GitBranch, Package, Sparkles } from 'lucide-react';
-import { getAllSkills, getCategories } from '@/lib/skills/loader';
-import SkillSearch from '@/components/skills/SkillSearch';
-import { Badge } from '@/components/ui/badge';
+import Link from "next/link";
+import type { Metadata } from "next";
+import { GitBranch, Package, Sparkles } from "lucide-react";
+import { getAllSkills, getCategories } from "@/lib/skills/loader";
+import SkillSearch from "@/components/skills/SkillSearch";
+import { Badge } from "@/components/ui/badge";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: 'Skills',
+  title: "Skills",
   description:
-    'Browse and install open-source skills for Claude Code, OpenCode, and Cursor.',
+    "Browse reviewed creator workflows for worldbuilding, writing, media, and games. Follow each skill’s own terms.",
   openGraph: {
-    title: 'Arcanea Skills',
+    title: "Arcanea Skills",
     description:
-      'Open-source skills for Claude Code, OpenCode, and Cursor.',
-    type: 'website',
+      "Reviewed creator workflows for worldbuilding, writing, media, and games.",
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Arcanea Skills',
+    card: "summary_large_image",
+    title: "Arcanea Skills",
     description:
-      'Open-source skills for Claude Code, OpenCode, and Cursor.',
+      "Reviewed creator workflows for worldbuilding, writing, media, and games.",
   },
-  alternates: { canonical: '/skills' },
+  alternates: { canonical: "/skills" },
   robots: { index: true, follow: true },
 };
 
@@ -40,9 +40,9 @@ export default async function SkillsMarketplacePage() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-[var(--arc-brand-atlantean-teal)]/[0.04] blur-[140px] pointer-events-none" />
 
         <div className="relative max-w-5xl mx-auto px-6 pt-24 pb-16 text-center">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-[var(--arc-brand-atlantean-teal)]/70 mb-4 inline-flex items-center gap-2 justify-center">
+          <p className="text-[10px] tracking-[0.3em] text-[var(--arc-brand-atlantean-teal)]/70 mb-4 inline-flex items-center gap-2 justify-center">
             <Sparkles className="h-3 w-3" aria-hidden="true" />
-            Arcanea Open Library
+            Arcanea creator workflows
           </p>
 
           <h1 className="text-4xl sm:text-6xl font-display font-bold tracking-tight text-white/95 mb-5">
@@ -50,19 +50,28 @@ export default async function SkillsMarketplacePage() {
           </h1>
 
           <p className="text-lg text-white/50 max-w-2xl mx-auto leading-relaxed mb-10">
-            {skills.length} skills for Claude Code, OpenCode, and Cursor.
+            Workflows for worldbuilding, continuity, media briefs, and game
+            adaptation.
           </p>
 
           {/* Stats row */}
           <div className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap">
-            <Badge variant="crystal" size="md" icon={<Package className="h-3 w-3" />}>
-              {skills.length} Skills
+            <Badge
+              variant="crystal"
+              size="md"
+              icon={<Package className="h-3 w-3" />}
+            >
+              {skills.length} ready skills
             </Badge>
             <Badge variant="default" size="md">
-              {categories.length || '—'} Categories
+              {categories.length} categories
             </Badge>
-            <Badge variant="gold" size="md" icon={<GitBranch className="h-3 w-3" />}>
-              MIT Licensed
+            <Badge
+              variant="gold"
+              size="md"
+              icon={<GitBranch className="h-3 w-3" />}
+            >
+              Per-skill terms
             </Badge>
           </div>
         </div>
@@ -75,11 +84,11 @@ export default async function SkillsMarketplacePage() {
         ) : (
           <div className="text-center py-24">
             <p className="text-white/40 text-sm mb-3">
-              No skills found in the open library yet.
+              No skills are ready for installation yet.
             </p>
             <p className="text-white/25 text-xs">
-              Skills live in{' '}
-              <code className="text-[var(--arc-brand-atlantean-teal)]/60">oss/skills/arcanea/</code>
+              You can read the source or propose a small workflow example while
+              release review continues.
             </p>
           </div>
         )}
@@ -87,16 +96,17 @@ export default async function SkillsMarketplacePage() {
 
       {/* Footer CTA */}
       <section className="max-w-6xl mx-auto px-6 pb-24">
-          <div className="rounded-2xl bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/[0.08] via-white/[0.02] to-transparent border border-white/[0.06] backdrop-blur-sm p-8 sm:p-12 text-center">
+        <div className="rounded-2xl bg-gradient-to-br from-[var(--arc-brand-atlantean-teal)]/[0.08] via-white/[0.02] to-transparent border border-white/[0.06] backdrop-blur-sm p-8 sm:p-12 text-center">
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-white/95 mb-3">
             Build your own skill
           </h2>
           <p className="text-white/50 max-w-xl mx-auto mb-6 text-sm leading-relaxed">
-            Skills are markdown files with frontmatter. Fork the repo, add your skill, open a PR.
+            Propose a workflow with a small example, its sources, and permission
+            to share it.
           </p>
           <div className="flex items-center justify-center gap-3">
             <Link
-              href="https://github.com/frankxai/arcanea/tree/main/skills/arcanea"
+              href="https://github.com/frankxai/arcanea-ai-app"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[var(--arc-brand-atlantean-teal)]/15 border border-[var(--arc-brand-atlantean-teal)]/30 text-[var(--arc-brand-atlantean-teal)] text-sm font-medium hover:bg-[var(--arc-brand-atlantean-teal)]/25 transition-colors"

@@ -136,6 +136,9 @@ jobs:
             fi
           fi
 
+      - name: Verify legacy repository recovery comparisons
+        run: node --test scripts/audit-repo-salvage.test.mjs
+
       - name: Verify changed-file formatting failure handling
         run: node --test scripts/tests/changed-format.test.mjs
 
@@ -297,7 +300,11 @@ jobs:
         run: pnpm --dir apps/web test:saga-gate
 
       - name: Run package tests
-        run: pnpm test:quick
+        run: |
+          pnpm test:quick
+          pnpm --filter @arcanea/skills test
+          node --test scripts/audit-skill-sources.test.mjs
+          pnpm --dir apps/web exec tsx --test lib/skills/__tests__/loader.test.ts
 
       - name: Verify public collection assets and proposal relationships
         run: |
