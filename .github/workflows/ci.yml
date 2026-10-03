@@ -158,7 +158,7 @@ jobs:
         run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/feedback/__tests__/route.test.ts
 
       - name: Verify waitlist signups are saved or honestly refused
-        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts
+        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts lib/waitlist/__tests__/submit.test.ts
 
       - name: Verify library chapter slugs and hidden agent files
         run: pnpm --dir apps/web exec tsx --test lib/content/__tests__/loader-slugs.test.ts
@@ -305,6 +305,27 @@ jobs:
           pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/sovereign-depths.test.ts
           node scripts/verify-weight-of-wonders.mjs
           pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/weight-of-wonders.test.ts
+
+      - name: Verify community signup and recovery in the built browser
+        timeout-minutes: 5
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+        run: |
+          pnpm --dir apps/web exec playwright install --with-deps chromium
+          pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/community-next.log" 2>&1 &
+          community_server_pid=$!
+          trap 'kill "$community_server_pid" 2>/dev/null || true' EXIT
+          node scripts/verify-community-capture-browser.cjs
+
+      - name: Upload community signup browser evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: community-capture-built-app-${{ github.sha }}
+          path: screenshots/community-capture/
+          retention-days: 7
+          if-no-files-found: warn
 
       - name: Verify galleries rendered desktop, 375px mobile and reduced motion
         if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
