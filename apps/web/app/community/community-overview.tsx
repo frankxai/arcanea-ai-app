@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import {
   PhArrowUpRight,
   PhChatCircle,
@@ -8,7 +9,8 @@ import {
   PhUsers,
 } from "@/lib/phosphor-icons";
 import {
-  OSS_STATS,
+  CANONICAL_REPO_URL,
+  COMMUNITY_STARTS,
   WAYS_TO_CONTRIBUTE,
   FEATURED_REPOS,
 } from "./community-data";
@@ -34,42 +36,40 @@ export function CommunityOverview() {
           <div className="relative max-w-4xl">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-primary/30 bg-brand-primary/10 mb-8">
               <PhUsers className="w-3.5 h-3.5 text-brand-primary" />
-              <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
+              <span className="text-xs font-mono tracking-widest text-brand-primary">
                 Community
               </span>
             </div>
 
             <h1 className="text-fluid-hero font-display font-bold mb-6 leading-none tracking-tight">
-              Join the
+              Explore Arcanea
               <span className="block text-gradient-brand">
-                Creative Civilization
+                with other creators
               </span>
             </h1>
 
             <p className="text-fluid-lg text-text-secondary leading-relaxed max-w-2xl font-body mb-10">
-              Not just users — co-creators. Contribute lore, agents, skills,
-              code, art, music. Shape a living ecosystem where imagination
-              becomes infrastructure and every creator has a voice.
+              Read the stories, explore the source, and bring your questions and
+              creative proposals. Find a starting point for the world you want
+              to build.
             </p>
 
             <div className="flex flex-wrap gap-4">
               <a
-                href="https://discord.gg/arcanea"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#community-updates"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
               >
                 <PhChatCircle className="w-4 h-4" />
-                Join Discord
+                Register interest
               </a>
               <a
-                href="https://github.com/frankxai"
+                href={CANONICAL_REPO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
               >
                 <PhGithubLogo className="w-4 h-4" />
-                Explore GitHub
+                Explore Arcanea source
               </a>
             </div>
           </div>
@@ -79,30 +79,37 @@ export function CommunityOverview() {
       {/* ── 2. Open Source Stats ─────────────────────────────────────────── */}
       <section
         className="py-16 border-t border-white/[0.04]"
-        aria-labelledby="oss-stats-heading"
+        aria-labelledby="start-heading"
       >
         <div className="mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-5">
             <PhGithubLogo className="w-3 h-3 text-crystal" />
-            <span className="text-xs font-mono tracking-widest uppercase text-crystal">
-              Open Source
+            <span className="text-xs font-mono tracking-widest text-crystal">
+              Start here
             </span>
           </div>
           <h2
-            id="oss-stats-heading"
+            id="start-heading"
             className="text-fluid-3xl font-display font-bold mb-4"
           >
-            Built in the open
+            Choose your starting point
           </h2>
           <p className="text-text-secondary font-sans max-w-2xl">
-            Arcanea is fully open source. Explore the codebase, contribute
-            features, build skills, and help shape the platform.
+            Read a book, inspect the app, discuss a proposal, or register
+            interest in the next release.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
-          {OSS_STATS.map((stat) => (
-            <div
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          {COMMUNITY_STARTS.map((stat) => (
+            <Link
+              href={stat.href}
+              target={stat.href.startsWith("https://") ? "_blank" : undefined}
+              rel={
+                stat.href.startsWith("https://")
+                  ? "noopener noreferrer"
+                  : undefined
+              }
               key={stat.label}
               className="relative card-3d liquid-glass rounded-2xl p-6 text-center overflow-hidden group hover-lift transition-all"
             >
@@ -123,7 +130,7 @@ export function CommunityOverview() {
                   {stat.label}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -136,7 +143,7 @@ export function CommunityOverview() {
         <div className="mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-earth/30 bg-earth/10 mb-5">
             <PhLeaf className="w-3 h-3 text-earth" />
-            <span className="text-xs font-mono tracking-widest uppercase text-earth-bright">
+            <span className="text-xs font-mono tracking-widest text-earth-bright">
               Contribute
             </span>
           </div>
@@ -147,8 +154,8 @@ export function CommunityOverview() {
             Ways to shape Arcanea
           </h2>
           <p className="text-text-secondary font-sans max-w-2xl">
-            The platform, the mythology, and the intelligence layer are all open
-            to contribution. Every form of creative work is welcome here.
+            Start a discussion in the repository before making a substantial
+            contribution. Include the problem, your proposal and its sources.
           </p>
         </div>
 
@@ -214,19 +221,21 @@ export function CommunityOverview() {
         <div className="mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-5">
             <PhGitBranch className="w-3 h-3 text-brand-gold" />
-            <span className="text-xs font-mono tracking-widest uppercase text-brand-gold">
-              Featured Repos
+            <span className="text-xs font-mono tracking-widest text-brand-gold">
+              Source map
             </span>
           </div>
           <h2
             id="repos-heading"
             className="text-fluid-3xl font-display font-bold mb-4"
           >
-            Explore the ecosystem
+            One repository, several ways in
           </h2>
           <p className="text-text-secondary font-sans max-w-2xl">
-            The Arcanea ecosystem spans multiple repositories. Start with any of
-            these to contribute, learn, or build something new.
+            The canonical Arcanea source is in arcanea-ai-app. These folders
+            connect the public experience, story source, shared packages and
+            documentation. Check document status and applicable terms before
+            reuse.
           </p>
         </div>
 
@@ -293,13 +302,13 @@ export function CommunityOverview() {
 
         <div className="mt-8 flex flex-wrap gap-4 justify-center">
           <a
-            href="https://github.com/frankxai"
+            href={CANONICAL_REPO_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-crystal/10 border border-crystal/20 text-crystal font-semibold hover:bg-crystal/15 hover:border-crystal/30 transition-all btn-glow"
           >
             <PhGithubLogo className="w-4 h-4" />
-            View all repositories
+            Open the canonical repository
             <PhArrowUpRight className="w-3.5 h-3.5" />
           </a>
         </div>

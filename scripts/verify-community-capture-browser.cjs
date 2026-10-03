@@ -75,6 +75,100 @@ async function verifyMode(browser, mode, evidence) {
 
   try {
     await page.goto(`${base}/community`, { waitUntil: "domcontentloaded" });
+    const main = page.getByRole("main");
+    const links = await main.locator("a[href]").evaluateAll((nodes) =>
+      nodes.map((node) => ({
+        href: node.getAttribute("href"),
+        target: node.getAttribute("target"),
+      })),
+    );
+    const repo = "https://github.com/frankxai/arcanea-ai-app";
+    const githubLinks = links.filter((link) =>
+      link.href.startsWith("https://github.com/"),
+    );
+    assert.ok(githubLinks.length > 0);
+    assert.ok(
+      githubLinks.every(
+        (link) => link.href === repo || link.href.startsWith(repo + "/"),
+      ),
+    );
+    assert.ok(links.every((link) => !link.href.includes("discord.gg")));
+    assert.ok(
+      links
+        .filter(
+          (link) => link.href.startsWith("/") || link.href.startsWith("#"),
+        )
+        .every((link) => !link.target || link.target === "_self"),
+    );
+    for (const folder of ["apps/web", "book", "packages", "docs"])
+      assert.ok(
+        githubLinks.some((link) => link.href === repo + "/tree/main/" + folder),
+      );
+    await expect(
+      main.getByRole("heading", { name: "Gathering ideas", exact: true }),
+    ).toBeVisible();
+    await expect(main).toContainText(
+      "These formats are proposals. No dates are announced here.",
+    );
+    await expect(
+      main.getByRole("heading", { name: "Creation ideas", exact: true }),
+    ).toBeVisible();
+    const copy = await main.innerText();
+    assert.ok(
+      !/fully open source|governance rights|vote on canon decisions|Resonance Mage|Archive Walker|Solfeggio Wanderer/i.test(
+        copy,
+      ),
+    );
+    row.cases.push({
+      name: "canonical repository, same-tab local links and honest proposal status",
+      links,
+    });
+
+    const interest = main.getByRole("link", {
+      name: "Register interest",
+      exact: true,
+    });
+    await interest.scrollIntoViewIfNeeded();
+    if (mode.hasTouch) await interest.tap();
+    else {
+      await interest.focus();
+      await expect(interest).toBeFocused();
+      await interest.press("Enter");
+    }
+    await expect(page).toHaveURL(base + "/community#community-updates");
+    await expect(main.locator("#community-updates")).toBeInViewport();
+    assert.equal(context.pages().length, 1);
+    row.cases.push({
+      name: "hero interest action reaches the signup in the same tab",
+    });
+
+    for (const destination of ["/books", "/library"]) {
+      await page.goto(base + "/community", { waitUntil: "domcontentloaded" });
+      const link = page
+        .getByRole("main")
+        .locator('a[href="' + destination + '"]')
+        .first();
+      if (mode.hasTouch) await link.tap();
+      else {
+        await link.focus();
+        await expect(link).toBeFocused();
+        await link.press("Enter");
+      }
+      await expect(page).toHaveURL(base + destination);
+      await expect(page).toHaveTitle(
+        destination === "/books" ? /Books.*Arcanea/ : /Library of Arcanea/,
+      );
+      const heading = page.getByRole("heading", { level: 1 }).first();
+      await expect(heading).toBeVisible();
+      assert.ok((await heading.innerText()).trim().length > 0);
+      assert.equal(context.pages().length, 1);
+      row.cases.push({
+        name: "reader entry opens " + destination,
+        title: await page.title(),
+        heading: await heading.innerText(),
+      });
+    }
+    await page.goto(base + "/community", { waitUntil: "domcontentloaded" });
     const form = page.getByRole("form", { name: "Arcanea updates signup" });
     const input = form.getByRole("textbox", { name: "Email address" });
     const button = form.getByRole("button", { name: "Keep me updated" });
@@ -263,6 +357,9 @@ async function verifyMode(browser, mode, evidence) {
   let browser;
   try {
     for (const path of [
+      "apps/web/app/community/community-data.ts",
+      "apps/web/app/community/community-overview.tsx",
+      "apps/web/app/community/page.tsx",
       "apps/web/components/community/newsletter-form.tsx",
       "apps/web/lib/waitlist/submit.ts",
       "scripts/verify-community-capture-browser.cjs",

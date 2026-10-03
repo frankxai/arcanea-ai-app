@@ -185,3 +185,76 @@ The first formatter pass was non-idempotent; repeated formatting stabilized
 before staging. Initial CI-preservation comparison used implicit Windows decoding;
 explicit UTF-8 proves all previous jobs, steps and conditions unchanged. Security
 hooks remained enabled. These failures do not establish application test failure.
+
+## October 3: canonical community entry paths
+
+Source: same goal and owning issue276, existing draft493 at
+658380ed5d75afc7159f5bbef1715255e41744ba. Five-file exclusive lane
+codex-209eab67: community-data.ts, community-overview.tsx, page.tsx,
+verify-community-capture-browser.cjs and this record. Guard, explicit routing,
+clean branch/upstream identity and separate session ownership pass. No new repo,
+backend, license, install, image, local build/browser or production write.
+
+Reader/builder job: enter the existing books or Library, find the canonical app
+source and discussion path, or register interest with a truthful save receipt.
+This supports the broader creator/community outcome; entry links and a form alone
+do not establish delivered community value, demand or revenue.
+
+Live read-only evidence, October3: Discord invite API at03:25UTC returns404
+Unknown Invite/code10006. GitHub metadata rechecked in this slice confirms
+arcanea-skills-opensource404, claude-arcanea archived, and the canonical app public
+with no GitHub-detected license. Both production reader entrypages return200 with
+their expected titles at03:33UTC; that is entrypage evidence, not full chapter
+functionality or deployment-source binding. Apps/web, book, packages and docs
+exist at the exact source tree. No license choice or repository archival follows.
+
+The serious alternative was to preserve the inherited multi-repo/Discord entry
+surface. Its missing/archived destinations contradict the available entry paths.
+The app's earlier consolidation and reader drafts remain intact; this derivative
+points into their existing home instead of duplicating canon, skills or readers.
+
+Changes: replace vanity readiness counts with linked Read/Build/Discuss/Follow
+actions; point every main-content GitHub entry at arcanea-ai-app or its folders;
+route expired invite actions to the existing interest form; keep local reader and
+anchor links in the same tab. Label all four gathering concepts as undated
+proposals. Preserve all three creation concepts as ideas without unsupported
+creator attribution, weekly submission or image-preview claims. Replace promises
+of governance/canon voting, marketplace publishing and unrestricted reuse with
+reviewable contributions and applicable terms. Existing source/backups preserve
+the original proposed material. Uppercase interface styling is removed in the
+owned page and overview. Global footer/shared navigation belong to other work;
+this is a community-main claim, not an estate-wide link cleanup.
+
+Verification adds four built-browser journey groups per mode: canonical folder
+links/proposal status; keyboard or touch hero action to the interest section;
+actual navigation to books; actual navigation to Library. Existing nine signup
+groups, all write interception, ten-second deadline, retries and source payload
+checks remain. Evidence also hashes the three community source files. Official
+[Playwright locators](https://playwright.dev/docs/api/class-locator) and
+[page URL assertions/navigation](https://playwright.dev/docs/api/class-page)
+were consulted before implementation. No external accounts, joins, emails or
+real registrations are performed.
+
+Fresh task correction: source uniqueness is UNIQUE(email,source), as the previous
+section states. At6583, native CI37092308687 passed all required checks and all
+three modes/nine signup groups. Baseline stale-receipt failure37091767939 remains
+preserved. Read-only deployed project metadata identified Arcanea project
+hcfhyssdzphudaqatxbk as ACTIVE_HEALTHY with RLS enabled and INSERT-only public roles
+on waitlists/subscribers, matching the recorded unique constraints. This does not
+prove the production app's current environment binding or a live persisted signup.
+
+Small pinned-format/syntax/protected-source checks and new exact-revision native
+CI remain required. Independent review of the full updated PR remains pending;
+earlier correction reviews exclude these new page/verifier changes. Existing
+provider-limit failure is terminal, not a live verifier or an independent verdict.
+No acceptance, source-matched preview, full accessibility, visual approval,
+chapter-link completeness, mail delivery or release is inferred. Keep draft493,
+original403, pricing494/shared helper and all retained fronts;408/427 govern
+merge/release. Rollback is a scoped revert of these five files, without a migration.
+
+Local verification limits: the first protected-source check tried to hash a sparse
+absent unchanged helper and stopped. Git's skip-worktree flag and exact HEAD blob
+comparison resolve that check without materializing or changing the helper. The
+Node REPL child environment also lacks GitHub CLI authentication; its failed reads
+are not repository availability evidence. The existing authenticated PowerShell
+CLI supplies those reads. No authentication, permission or security setting changed.
