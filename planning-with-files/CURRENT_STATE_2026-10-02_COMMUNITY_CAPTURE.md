@@ -274,3 +274,19 @@ main landmark. Scope all community link checks to that container, without
 loosening destinations, proposal status, same-tab assertions or any signup
 journey. This fixes the inherited nested landmark and the verifier readiness
 assumption. Resulting-source native checks remain required.
+
+Second native37095208069 at5812aeebaf is terminal FAILURE, with Install/Lint/TS
+passing and Build/CI Status failing. Artifact11264605147 binds builtmergefa5d4088
+(main79f3fb25 plus source5812aeebaf); JSON SHA256 ac005dc6e67fc14f0ba2e63acc8a4078074d7d781d13a0e8f51f99b44079f4e0.
+The single-main assertion passes. Desktop/mobile subsequently encounter duplicate
+community IDs, one outside the shared main; reduced motion passes link audit and
+interest anchor, then loses focus during the subsequent community reload. No
+signup groups execute in this attempt. Both original artifacts remain retained.
+
+Verifier correction waits for the browser's load event on each community visit,
+then scopes links to the community container within the shared main. Visible
+main/heading, URL, touch, focus, same-tab and signup assertions are retained.
+DOM diagnostics on failure capture container ancestry/readiness/active element
+without addresses. This is a browser readiness correction, not a claim that load
+alone proves all React hydration or a full accessibility audit. See official
+Playwright navigation/hydration guidance. New-source CI remains required.
