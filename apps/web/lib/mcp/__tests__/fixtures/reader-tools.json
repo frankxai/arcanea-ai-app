@@ -1,0 +1,74 @@
+{
+  "observedAt": "2026-10-02T04:00:24.754692+00:00",
+  "endpoint": "https://arcanea-reader.frankxai.workers.dev/mcp",
+  "version": "0.5.1",
+  "scope": "Read-only tools/list observation, not a continuing availability guarantee",
+  "tools": [
+    {
+      "name": "arcanea_rubric",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    {
+      "name": "arcanea_canon_lint",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "draft": {
+            "type": "string"
+          }
+        },
+        "required": ["draft"]
+      }
+    },
+    {
+      "name": "arcanea_score",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "draft": {
+            "type": "string"
+          }
+        },
+        "required": ["draft"]
+      }
+    },
+    {
+      "name": "arcanea_doctor",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "arcanea_lore",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "arcanea_template",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": ["name"]
+      }
+    }
+  ]
+}
