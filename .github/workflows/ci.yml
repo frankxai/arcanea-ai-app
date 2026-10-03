@@ -152,13 +152,16 @@ jobs:
         run: node --test scripts/tests/prompt-books-first-html-contract.test.mjs
 
       - name: Verify exact world drafts and account return paths
-        run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/entry-access.test.ts
+        run: pnpm --dir apps/web exec tsx --test lib/worlds/__tests__/draft.test.ts lib/worlds/__tests__/draft-portability.test.ts lib/worlds/__tests__/entry-access.test.ts
 
       - name: Verify feedback persistence receipts
         run: pnpm --dir apps/web exec tsx --test --test-force-exit lib/feedback/__tests__/route.test.ts
 
       - name: Verify waitlist signups are saved or honestly refused
-        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts
+        run: pnpm --dir apps/web exec tsx --test lib/waitlist/__tests__/join.test.ts lib/waitlist/__tests__/submit.test.ts
+
+      - name: Verify reader arguments against observed remote schema
+        run: pnpm --dir apps/web exec tsx --test lib/mcp/__tests__/reader-catalog.test.ts
 
       - name: Verify library chapter slugs and hidden agent files
         run: pnpm --dir apps/web exec tsx --test lib/content/__tests__/loader-slugs.test.ts
@@ -225,13 +228,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: [install, lint]
     if: ${{ !cancelled() }}
-    timeout-minutes: 15
+    # One build plus seven serial entry suites and the retained release gallery suites.
+    timeout-minutes: 25
 
     steps:
       - name: Checkout
         uses: actions/checkout@v7
         with:
           persist-credentials: false
+          fetch-depth: 2
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -296,6 +301,11 @@ jobs:
       - name: Verify saga public release boundary (default-deny)
         run: pnpm --dir apps/web test:saga-gate
 
+      - name: Verify catalog entries match reader chapters
+        run: |
+          pnpm --dir apps/web exec tsx lib/saga/__tests__/chapter-files.test.ts
+          pnpm --dir apps/web exec tsx --test lib/saga/__tests__/series-entry.test.ts
+
       - name: Run package tests
         run: pnpm test:quick
 
@@ -306,33 +316,53 @@ jobs:
           node scripts/verify-weight-of-wonders.mjs
           pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/weight-of-wonders.test.ts
 
-      - name: Verify galleries rendered desktop, 375px mobile and reduced motion
-        if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+      - name: Select creator entry browser scope
+        id: entry-scope
+        run: |
+          git rev-parse --verify HEAD^ > /dev/null
+          entry_changed=0
+          git diff --quiet HEAD^ HEAD -- apps/web/app/page.tsx apps/web/app/home-experience.tsx apps/web/app/home.module.css apps/web/app/books apps/web/app/community apps/web/app/pricing apps/web/app/mcp apps/web/app/docs/mcp apps/web/app/worlds/create apps/web/components/community apps/web/components/navigation/footer.tsx apps/web/components/worlds apps/web/lib/saga apps/web/lib/worlds apps/web/lib/waitlist apps/web/lib/mcp/reader-catalog.ts apps/web/app/api/waitlist apps/web/app/api/subscribe apps/web/app/layout.tsx apps/web/app/globals.css packages/design-system/src/tokens.css scripts/verify-reader-entry-browser.cjs scripts/verify-homepage-built-app.cjs scripts/verify-world-workbench-browser.cjs scripts/verify-world-draft-browser.cjs scripts/verify-community-capture-browser.cjs scripts/verify-pricing-capture-browser.cjs scripts/verify-footer-built-app.cjs scripts/verify-mcp-reader-browser.cjs .github/workflows/ci.yml || entry_changed=$?
+          if [ "$entry_changed" -gt 1 ]; then exit "$entry_changed"; fi
+          if [ "$entry_changed" -eq 1 ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verify the integrated built-app creator journeys
+        if: github.event_name != 'pull_request' || github.event.pull_request.draft == false || steps.entry-scope.outputs.run == 'true'
+        timeout-minutes: 15
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
           NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+          CREATOR_ENTRY_BROWSER: ${{ steps.entry-scope.outputs.run }}
+          RUN_GALLERY_BROWSER: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
         run: |
           pnpm --dir apps/web exec playwright install --with-deps chromium
-          pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/sovereign-next.log" 2>&1 &
-          sovereign_server_pid=$!
-          trap 'kill "$sovereign_server_pid" 2>/dev/null || true' EXIT
-          # Collect both suites' evidence even if one fails; either failure blocks merge.
-          gallery_status=0
-          starter_status=0
-          draft_status=0
-          node scripts/capture-sovereign-built-app.cjs || gallery_status=$?
-          node scripts/verify-creator-starters-browser.cjs || starter_status=$?
-          node scripts/verify-world-draft-browser.cjs || draft_status=$?
-          if [ "$gallery_status" -ne 0 ] || [ "$starter_status" -ne 0 ] || [ "$draft_status" -ne 0 ]; then
-            exit 1
+          setsid pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/creator-entry-next.log" 2>&1 &
+          entry_server_pid=$!
+          trap 'kill -- "-$entry_server_pid" 2>/dev/null || true' EXIT
+          # Keep collecting each suite's evidence after failures; any failure blocks Build.
+          entry_status=0
+          if [ "$CREATOR_ENTRY_BROWSER" = "true" ] || [ "$RUN_GALLERY_BROWSER" = "true" ]; then
+            for suite in verify-reader-entry-browser verify-homepage-built-app verify-world-draft-browser verify-community-capture-browser verify-pricing-capture-browser verify-footer-built-app verify-mcp-reader-browser; do
+              timeout 180s node "scripts/$suite.cjs" || entry_status=1
+            done
           fi
+          if [ "$RUN_GALLERY_BROWSER" = "true" ]; then
+            timeout 180s node scripts/capture-sovereign-built-app.cjs || entry_status=1
+            timeout 180s node scripts/verify-creator-starters-browser.cjs || entry_status=1
+          fi
+          exit "$entry_status"
 
-      - name: Upload gallery rendered evidence
-        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false)
+      - name: Upload integrated creator and gallery browser evidence
+        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.draft == false || steps.entry-scope.outputs.run == 'true')
         uses: actions/upload-artifact@v7
         with:
-          name: galleries-built-app-${{ github.sha }}
-          path: screenshots/
+          name: creator-entry-built-app-${{ github.sha }}
+          path: |
+            screenshots/
+            ${{ runner.temp }}/creator-entry-next.log
           retention-days: 7
           if-no-files-found: warn
 

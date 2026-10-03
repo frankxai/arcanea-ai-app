@@ -23,6 +23,12 @@ import {
   saveWorldDraftSchema,
   type WorldDraft,
 } from "@/lib/worlds/draft";
+import {
+  parseDraftFile,
+  persistImportedDraft,
+  serializeDraft,
+  MAX_DRAFT_FILE_BYTES,
+} from "@/lib/worlds/draft-portability";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -48,6 +54,7 @@ interface GenerateResult {
   image_prompt?: string;
   saved: boolean;
   world_id?: string;
+  saved_slug?: string;
 }
 
 type Phase = "input" | "generating" | "result";
@@ -490,6 +497,9 @@ export default function CreateWorldPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [saving, setSaving] = useState(false);
   const [refining, setRefining] = useState(false);
+  const [importing, setImporting] = useState(false);
+  const importInFlight = useRef(false);
+  const importRevision = useRef(0);
   const [pendingConcept, setPendingConcept] = useState<string | null>(null);
   const [previousDraft, setPreviousDraft] =
     useState<ReturnType<typeof readStoredWorldDraft>>(null);
@@ -536,7 +546,10 @@ export default function CreateWorldPage() {
         "Browser storage is unavailable. Export your draft before leaving this page.",
       );
     }
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+      importRevision.current += 1;
+    };
   }, []);
 
   const rememberDraft = useCallback(
@@ -601,6 +614,7 @@ export default function CreateWorldPage() {
 
   const generateHeroImage = useCallback(
     async (imagePrompt: string, worldName: string) => {
+      if (importInFlight.current) return;
       if (!isAuthenticated) {
         continueToSignIn();
         return;
@@ -655,6 +669,7 @@ export default function CreateWorldPage() {
         !trimmed ||
         trimmed.length < 5 ||
         generating.current ||
+        importInFlight.current ||
         isAuthenticated === null
       )
         return;
@@ -712,13 +727,13 @@ export default function CreateWorldPage() {
   );
 
   const saveWorld = useCallback(async () => {
-    if (!result || saving) return;
+    if (!result || saving || importInFlight.current) return;
     setSaving(true);
     setError(null);
 
     try {
-      if (result.saved && result.world?.slug) {
-        router.push(`/worlds/${result.world.slug}`);
+      if (result.saved && result.saved_slug) {
+        router.push(`/worlds/${encodeURIComponent(result.saved_slug)}`);
         return;
       }
 
@@ -747,7 +762,7 @@ export default function CreateWorldPage() {
         ...result,
         saved: true,
         world_id: data.world_id,
-        world: { ...result.world, slug: data.slug },
+        saved_slug: data.slug,
       });
       try {
         sessionStorage.removeItem(WORLD_DRAFT_KEY);
@@ -777,20 +792,109 @@ export default function CreateWorldPage() {
 
   const exportDraft = () => {
     if (!result) return;
-    const url = URL.createObjectURL(
-      new Blob([JSON.stringify(result.world, null, 2)], {
-        type: "application/json",
-      }),
-    );
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `${result.world.slug}.json`;
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    try {
+      const raw = serializeDraft({
+        version: 1,
+        description,
+        draft_id: result.draft_id,
+        world: result.world,
+      });
+      const url = URL.createObjectURL(
+        new Blob([raw], { type: "application/json" }),
+      );
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${result.world.slug}.json`;
+      try {
+        link.click();
+      } finally {
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Export did not finish.");
+    }
+  };
+
+  const importDraft = async (file: File | undefined) => {
+    if (
+      !file ||
+      importInFlight.current ||
+      generating.current ||
+      saving ||
+      imageLoading
+    )
+      return;
+    importInFlight.current = true;
+    const revision = ++importRevision.current;
+    setImporting(true);
+    setError(null);
+    try {
+      if (file.size > MAX_DRAFT_FILE_BYTES)
+        throw new Error("This draft file is too large.");
+      const raw = await file.text();
+      if (revision !== importRevision.current) return;
+      const incoming = parseDraftFile(raw, () => crypto.randomUUID());
+      const current =
+        result && !result.saved
+          ? {
+              version: 1 as const,
+              description,
+              draft_id: result.draft_id,
+              world: result.world,
+            }
+          : null;
+      const replacesDraft =
+        current && serializeDraft(current) !== serializeDraft(incoming.draft);
+      if (
+        (replacesDraft ||
+          pendingConcept ||
+          heroImage ||
+          (!result && description.trim())) &&
+        !window.confirm(
+          current
+            ? "Open this draft? It will replace the work on screen. Your previous text draft stays available to restore in this tab. Copy any pending concept and keep any concept art you need first."
+            : "Open this draft? It will replace your current concept. Copy the concept first if you need to keep it.",
+        )
+      )
+        return;
+      const displaced = persistImportedDraft(
+        sessionStorage,
+        incoming.draft,
+        current,
+      );
+      if (displaced) {
+        setPreviousDraft(displaced);
+        setPreviousHeroImage(current ? heroImage : null);
+      }
+      setDescription(incoming.draft.description);
+      setResult(draftResult(incoming.draft.world, incoming.draft.draft_id));
+      setHeroImage(null);
+      setPendingConcept(null);
+      setRefining(false);
+      setPhase("result");
+      setStorageNote(
+        incoming.legacy
+          ? "Older world JSON opened as a new draft. Its original concept was not included; the world description is used instead. Export a restorable copy before closing this tab."
+          : "Draft imported into this tab. Save to your account or export a copy before closing it.",
+      );
+    } catch (err) {
+      if (revision === importRevision.current)
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Import did not finish. Your current draft is unchanged.",
+        );
+    } finally {
+      if (revision === importRevision.current) {
+        importInFlight.current = false;
+        setImporting(false);
+      }
+    }
   };
 
   const reset = () => {
-    if (saving || imageLoading) return false;
+    if (saving || imageLoading || importInFlight.current) return false;
     if (
       result &&
       !result.saved &&
@@ -837,17 +941,50 @@ export default function CreateWorldPage() {
   };
 
   const restorePrevious = () => {
-    if (!previousDraft || saving || imageLoading || phase === "generating")
+    if (
+      !previousDraft ||
+      saving ||
+      imageLoading ||
+      phase === "generating" ||
+      importInFlight.current
+    )
       return;
     const restored = draftResult(previousDraft.world, previousDraft.draft_id);
     const restoredImage = previousHeroImage;
-    rememberDraft(restored, previousDraft.description);
+    try {
+      const displaced = persistImportedDraft(
+        sessionStorage,
+        previousDraft,
+        result && !result.saved
+          ? {
+              version: 1,
+              description,
+              draft_id: result.draft_id,
+              world: result.world,
+            }
+          : null,
+      );
+      if (displaced) {
+        setPreviousDraft(displaced);
+        setPreviousHeroImage(heroImage);
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Recovery did not finish. Your current draft is unchanged.",
+      );
+      return;
+    }
     setDescription(previousDraft.description);
     setResult(restored);
     setHeroImage(restoredImage);
     setPhase("result");
     setError(null);
     setPendingConcept(null);
+    setStorageNote(
+      "Previous text draft restored in this tab. Export a copy before closing it.",
+    );
   };
 
   // Preserve native Tab navigation and IME composition.
@@ -897,6 +1034,46 @@ export default function CreateWorldPage() {
           </div>
 
           <div className="relative z-10 max-w-4xl mx-auto px-6 pt-8 pb-24">
+            <div className="mb-8 rounded-xl bg-white/[0.03] border border-white/[0.06] p-5">
+              <label
+                htmlFor="world-draft-import"
+                className="block text-sm font-medium mb-2"
+              >
+                Import draft
+              </label>
+              <input
+                id="world-draft-import"
+                type="file"
+                accept=".json,application/json"
+                aria-describedby="world-draft-import-help"
+                disabled={
+                  importing || saving || imageLoading || phase === "generating"
+                }
+                onChange={(event) => {
+                  const file = event.currentTarget.files?.[0];
+                  event.currentTarget.value = "";
+                  void importDraft(file);
+                }}
+                className="block w-full min-w-0 text-sm text-white/70 file:mr-3 file:rounded-lg file:border file:border-white/20 file:bg-transparent file:px-4 file:py-3 file:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--arc-brand-atlantean-teal)] disabled:opacity-50"
+              />
+              <p
+                id="world-draft-import-help"
+                className="mt-3 text-xs text-white/70"
+              >
+                Open an exported JSON draft in this tab. No sign-in or AI
+                generation is needed. Concept art is separate.
+              </p>
+              {importing && (
+                <p role="status" className="mt-3 text-sm text-white/70">
+                  Opening draft…
+                </p>
+              )}
+              {storageNote && (
+                <p role="status" className="mt-3 text-sm text-white/70">
+                  {storageNote}
+                </p>
+              )}
+            </div>
             {pendingConcept && (
               <section
                 aria-label="Choose your draft"
@@ -908,6 +1085,9 @@ export default function CreateWorldPage() {
                 <p className="mt-2 text-sm text-white/70">
                   You also brought a new concept. Keep this draft or start the
                   new idea with a recoverable copy of the previous text.
+                </p>
+                <p className="mt-3 text-sm text-white/80 whitespace-pre-wrap">
+                  {pendingConcept}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-3">
                   <button
@@ -935,15 +1115,24 @@ export default function CreateWorldPage() {
                 </div>
               </section>
             )}
-            {previousDraft && previousDraft.draft_id !== result?.draft_id && (
-              <button
-                onClick={restorePrevious}
-                disabled={saving || imageLoading || phase === "generating"}
-                className="mb-6 rounded-lg border border-white/20 px-4 py-3 text-sm disabled:opacity-50"
-              >
-                Restore previous draft
-              </button>
-            )}
+            {previousDraft &&
+              (previousDraft.draft_id !== result?.draft_id ||
+                previousDraft.description !== description ||
+                JSON.stringify(previousDraft.world) !==
+                  JSON.stringify(result?.world)) && (
+                <button
+                  onClick={restorePrevious}
+                  disabled={
+                    importing ||
+                    saving ||
+                    imageLoading ||
+                    phase === "generating"
+                  }
+                  className="mb-6 rounded-lg border border-white/20 px-4 py-3 text-sm disabled:opacity-50"
+                >
+                  Restore previous draft
+                </button>
+              )}
             <AnimatePresence mode="wait">
               {/* -- Phase: Input ----------------------------------------- */}
               {phase === "input" && (
@@ -1008,6 +1197,7 @@ export default function CreateWorldPage() {
                         }}
                         placeholder="A floating archipelago where gravity is controlled by ancient crystals..."
                         rows={3}
+                        disabled={importing}
                         className="relative w-full px-6 py-5 bg-transparent text-white/90 placeholder-white/60 resize-none focus:outline-none font-body text-[15px] leading-relaxed"
                       />
                     </div>
@@ -1031,7 +1221,9 @@ export default function CreateWorldPage() {
                     whileTap={{ scale: 0.97 }}
                     onClick={() => generate()}
                     disabled={
-                      description.trim().length < 5 || isAuthenticated === null
+                      importing ||
+                      description.trim().length < 5 ||
+                      isAuthenticated === null
                     }
                     className={`px-10 py-4 rounded-xl font-bold text-base transition-colors duration-200 ${
                       description.trim().length >= 5
@@ -1054,6 +1246,7 @@ export default function CreateWorldPage() {
                       {EXAMPLES.map((ex) => (
                         <button
                           key={ex}
+                          disabled={importing}
                           onClick={() => setDescription(ex)}
                           className="px-4 py-2 rounded-full text-[13px] text-white/70 hover:text-white/90 bg-white/[0.02] hover:bg-[var(--arc-brand-atlantean-teal)]/[0.06] border border-white/[0.04] hover:border-[var(--arc-brand-atlantean-teal)]/20 transition-colors duration-300"
                         >
@@ -1204,12 +1397,6 @@ export default function CreateWorldPage() {
                       </div>
                     </section>
                   )}
-                  <p
-                    role="status"
-                    className="text-sm text-white/70 text-center my-5"
-                  >
-                    {storageNote}
-                  </p>
                   {error && (
                     <p
                       role="alert"
@@ -1227,7 +1414,7 @@ export default function CreateWorldPage() {
                     </button>
                     {result.image_prompt && !heroImage && (
                       <button
-                        disabled={imageLoading}
+                        disabled={importing || imageLoading}
                         onClick={() =>
                           generateHeroImage(
                             result.image_prompt!,
@@ -1265,7 +1452,7 @@ export default function CreateWorldPage() {
                           whileHover={{ scale: 1.03 }}
                           whileTap={{ scale: 0.97 }}
                           onClick={saveWorld}
-                          disabled={saving}
+                          disabled={importing || saving}
                           className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--arc-brand-atlantean-teal)] text-[var(--arc-cosmic-void)] font-bold rounded-xl shadow-lg shadow-[var(--arc-brand-atlantean-teal)]/20 hover:shadow-[var(--arc-brand-atlantean-teal)]/40 transition-shadow disabled:opacity-50"
                         >
                           {saving ? "Saving..." : "Save this world"}
@@ -1309,7 +1496,7 @@ export default function CreateWorldPage() {
 
                       <button
                         onClick={startRefine}
-                        disabled={saving || imageLoading}
+                        disabled={importing || saving || imageLoading}
                         className="inline-flex items-center gap-2 px-8 py-4 border border-[var(--arc-brand-arcanean-gold)]/20 text-[var(--arc-brand-arcanean-gold)]/60 font-bold rounded-xl hover:bg-[var(--arc-brand-arcanean-gold)]/[0.04] hover:text-[var(--arc-brand-arcanean-gold)]/80 transition-colors"
                       >
                         Refine
@@ -1317,7 +1504,7 @@ export default function CreateWorldPage() {
 
                       <button
                         onClick={reset}
-                        disabled={saving || imageLoading}
+                        disabled={importing || saving || imageLoading}
                         className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/60 font-bold rounded-xl hover:bg-white/[0.04] transition-colors"
                       >
                         Start over
@@ -1341,6 +1528,7 @@ export default function CreateWorldPage() {
                             {REFINE_SUFFIXES.map((suffix) => (
                               <button
                                 key={suffix}
+                                disabled={importing}
                                 onClick={() => handleRefine(suffix)}
                                 className="px-4 py-2 rounded-full text-[13px] text-[var(--arc-brand-arcanean-gold)]/50 hover:text-[var(--arc-brand-arcanean-gold)]/80 bg-[var(--arc-brand-arcanean-gold)]/[0.03] hover:bg-[var(--arc-brand-arcanean-gold)]/[0.08] border border-[var(--arc-brand-arcanean-gold)]/10 hover:border-[var(--arc-brand-arcanean-gold)]/30 transition-colors duration-300"
                               >
