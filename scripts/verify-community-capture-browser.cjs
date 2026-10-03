@@ -37,11 +37,21 @@ async function verifyMode(browser, mode, evidence) {
     serviceWorkers: "block",
   });
   const page = await context.newPage();
-  const row = { mode: name, cases: [], requests: [], errors: [] };
+  const row = {
+    mode: name,
+    cases: [],
+    requests: [],
+    errors: [],
+    consoleErrors: [],
+  };
   evidence.modes.push(row);
   const fixtures = [];
   const held = [];
   page.on("pageerror", (error) => row.errors.push(error.message));
+  page.on("console", (message) => {
+    if (message.type() === "error" && row.consoleErrors.length < 20)
+      row.consoleErrors.push(message.text().slice(0, 1000));
+  });
 
   // Intercept every write. Real rendered form, fixture transport: no database,
   // email delivery, paid-demand or live-signup evidence is claimed.
@@ -74,8 +84,8 @@ async function verifyMode(browser, mode, evidence) {
   });
 
   try {
-    await page.goto(`${base}/community`, { waitUntil: "domcontentloaded" });
-    const main = page.locator("#community-content");
+    await page.goto(`${base}/community`, { waitUntil: "load" });
+    const main = page.getByRole("main").locator("#community-content");
     await expect(main.getByRole("heading", { level: 1 })).toBeVisible();
     await expect(page.getByRole("main")).toHaveCount(1);
     const links = await main.locator("a[href]").evaluateAll((nodes) =>
@@ -145,8 +155,9 @@ async function verifyMode(browser, mode, evidence) {
     });
 
     for (const destination of ["/books", "/library"]) {
-      await page.goto(base + "/community", { waitUntil: "domcontentloaded" });
+      await page.goto(base + "/community", { waitUntil: "load" });
       const link = page
+        .getByRole("main")
         .locator("#community-content")
         .locator('a[href="' + destination + '"]')
         .first();
@@ -170,7 +181,7 @@ async function verifyMode(browser, mode, evidence) {
         heading: await heading.innerText(),
       });
     }
-    await page.goto(base + "/community", { waitUntil: "domcontentloaded" });
+    await page.goto(base + "/community", { waitUntil: "load" });
     const form = page.getByRole("form", { name: "Arcanea updates signup" });
     const input = form.getByRole("textbox", { name: "Email address" });
     const button = form.getByRole("button", { name: "Keep me updated" });
@@ -334,6 +345,26 @@ async function verifyMode(browser, mode, evidence) {
     row.passed = true;
   } catch (error) {
     row.errors.push(error.stack || error.message);
+    row.failurePage = await page
+      .evaluate(() => ({
+        readyState: document.readyState,
+        activeTag: document.activeElement?.tagName,
+        activeHref: document.activeElement?.getAttribute("href"),
+        containers: [...document.querySelectorAll("#community-content")].map(
+          (node) => ({
+            withinMain: Boolean(node.closest("#main-content")),
+            ancestors: [
+              node.parentElement,
+              node.parentElement?.parentElement,
+            ].map((parent) =>
+              parent
+                ? { tag: parent.tagName, id: parent.id, hidden: parent.hidden }
+                : null,
+            ),
+          }),
+        ),
+      }))
+      .catch(() => null);
     row.passed = false;
   } finally {
     await context.close();
