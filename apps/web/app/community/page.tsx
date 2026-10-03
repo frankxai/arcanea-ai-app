@@ -15,20 +15,21 @@ import {
 import { CommunityOverview } from "./community-overview";
 import { NewsletterForm } from "@/components/community/newsletter-form";
 import {
+  CANONICAL_REPO_URL,
   COMMUNITY_SPACES,
-  EVENTS,
-  SPOTLIGHTS,
+  EVENT_IDEAS,
+  CREATION_IDEAS,
   QUICK_LINKS,
 } from "./community-data";
 
 export const metadata: Metadata = {
   title: "Community",
   description:
-    "Join the Arcanean community — collaborate, share, and co-create.",
+    "Read Arcanea stories, explore the source and register interest in community updates.",
   openGraph: {
     title: "Community",
     description:
-      "Join the Arcanean community — collaborate, share, and co-create.",
+      "Read Arcanea stories, explore the source and register interest in community updates.",
   },
 };
 
@@ -54,19 +55,19 @@ export default function CommunityPage() {
         >
           <div className="mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-5">
-              <span className="text-xs font-mono tracking-widest uppercase text-crystal">
-                Community Spaces
+              <span className="text-xs font-mono tracking-widest text-crystal">
+                Reader and builder paths
               </span>
             </div>
             <h2
               id="spaces-heading"
               className="text-fluid-3xl font-display font-bold mb-4"
             >
-              Where creators gather
+              Read, build and follow
             </h2>
             <p className="text-text-secondary font-sans max-w-2xl">
-              Each space serves a distinct purpose in the ecosystem. Join all of
-              them, or start with the one that calls to you.
+              Read the books and Library, explore the repository, or register
+              your interest in what comes next.
             </p>
           </div>
 
@@ -74,11 +75,17 @@ export default function CommunityPage() {
             {COMMUNITY_SPACES.map((space) => {
               const Icon = space.icon;
               return (
-                <a
+                <Link
                   key={space.id}
                   href={space.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={
+                    space.href.startsWith("https://") ? "_blank" : undefined
+                  }
+                  rel={
+                    space.href.startsWith("https://")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
                   className={`group relative card-3d liquid-glass rounded-2xl p-8 overflow-hidden glow-card hover-lift transition-all ${space.borderHoverClass}`}
                   aria-label={`${space.name} — ${space.tagline}`}
                 >
@@ -132,7 +139,7 @@ export default function CommunityPage() {
                       />
                     </div>
                   </div>
-                </a>
+                </Link>
               );
             })}
           </div>
@@ -146,7 +153,7 @@ export default function CommunityPage() {
           <div className="mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-5">
               <PhCalendar className="w-3 h-3 text-brand-gold" />
-              <span className="text-xs font-mono tracking-widest uppercase text-brand-gold">
+              <span className="text-xs font-mono tracking-widest text-brand-gold">
                 Gatherings
               </span>
             </div>
@@ -154,17 +161,16 @@ export default function CommunityPage() {
               id="events-heading"
               className="text-fluid-3xl font-display font-bold mb-4"
             >
-              Gatherings of Creators
+              Gathering ideas
             </h2>
             <p className="text-text-secondary font-sans max-w-2xl">
-              The Arc turns in cycles. These gatherings mark the moments where
-              the community converges — to celebrate, to create, to advance
-              together.
+              These formats are proposals. No dates are announced here. Register
+              your interest if you would like to follow their development.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {EVENTS.map((event) => {
+            {EVENT_IDEAS.map((event) => {
               const EventIcon = event.icon;
               const FormatIcon = event.formatIcon;
               return (
@@ -215,13 +221,11 @@ export default function CommunityPage() {
 
           <div className="mt-8 text-center">
             <a
-              href="https://discord.gg/arcanea"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#community-updates"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-brand-gold/20 text-brand-gold text-sm font-semibold hover:bg-brand-gold/5 hover:border-brand-gold/40 transition-all"
             >
               <PhCalendar className="w-4 h-4" />
-              Stay informed — join Discord for event announcements
+              Register interest in gatherings
               <PhArrowRight className="w-3.5 h-3.5" />
             </a>
           </div>
@@ -235,24 +239,24 @@ export default function CommunityPage() {
           <div className="mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-water/20 bg-water/8 mb-5">
               <PhStar className="w-3 h-3 text-water" />
-              <span className="text-xs font-mono tracking-widest uppercase text-water">
-                Creator Spotlight
+              <span className="text-xs font-mono tracking-widest text-water">
+                Creative starting points
               </span>
             </div>
             <h2
               id="spotlight-heading"
               className="text-fluid-3xl font-display font-bold mb-4"
             >
-              From the community
+              Creation ideas
             </h2>
             <p className="text-text-secondary font-sans max-w-2xl">
-              Every week, remarkable works emerge from the Arcanea community.
-              These are the creations that illuminate what is possible.
+              These are starting concepts for writing, art and music inspired by
+              Arcanea. Explore one in your own creative practice.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {SPOTLIGHTS.map((work) => (
+            {CREATION_IDEAS.map((work) => (
               <div
                 key={work.title}
                 className="group relative card-3d liquid-glass rounded-2xl p-7 overflow-hidden glow-card hover-lift transition-all"
@@ -280,8 +284,7 @@ export default function CommunityPage() {
                       backgroundColor: `${work.accent}10`,
                       borderColor: `${work.accent}20`,
                     }}
-                    role="img"
-                    aria-label={`Visual preview for ${work.title}`}
+                    aria-hidden="true"
                   >
                     <PhSparkle
                       className="w-6 h-6 opacity-40"
@@ -299,27 +302,22 @@ export default function CommunityPage() {
                   <p className="text-text-secondary text-sm leading-relaxed font-sans mb-4">
                     {work.description}
                   </p>
-                  <div className="flex items-center justify-between pt-4 border-t border-white/[0.04]">
-                    <span className="text-xs text-text-muted font-sans">
-                      {work.creator}
-                    </span>
-                  </div>
                 </div>
               </div>
             ))}
           </div>
 
           <p className="mt-6 text-center text-sm text-text-muted font-sans">
-            Creator spotlights are community-nominated. Share your work in{" "}
+            Have a concept to discuss?{" "}
             <a
-              href="https://discord.gg/arcanea"
+              href={CANONICAL_REPO_URL + "/issues"}
               target="_blank"
               rel="noopener noreferrer"
               className="text-crystal underline underline-offset-2 hover:text-crystal-bright transition-colors"
             >
-              Discord #create
-            </a>{" "}
-            to be considered.
+              Propose it in the repository
+            </a>
+            .
           </p>
         </section>
 
@@ -331,7 +329,7 @@ export default function CommunityPage() {
           <div className="mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-primary/20 bg-brand-primary/8 mb-5">
               <PhShieldStar className="w-3 h-3 text-brand-primary" />
-              <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
+              <span className="text-xs font-mono tracking-widest text-brand-primary">
                 Connect
               </span>
             </div>
@@ -339,7 +337,7 @@ export default function CommunityPage() {
               id="links-heading"
               className="text-fluid-3xl font-display font-bold mb-4"
             >
-              Find us everywhere
+              Useful links
             </h2>
           </div>
 
@@ -347,11 +345,17 @@ export default function CommunityPage() {
             {QUICK_LINKS.map((link) => {
               const LinkIcon = link.icon;
               return (
-                <a
+                <Link
                   key={link.label}
                   href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={
+                    link.href.startsWith("https://") ? "_blank" : undefined
+                  }
+                  rel={
+                    link.href.startsWith("https://")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
                   className="group flex items-center gap-4 liquid-glass rounded-xl p-5 hover-lift transition-all"
                 >
                   <div
@@ -370,7 +374,7 @@ export default function CommunityPage() {
                     </p>
                   </div>
                   <PhArrowUpRight className="w-3.5 h-3.5 text-text-muted opacity-0 group-hover:opacity-100 ml-auto shrink-0 transition-opacity" />
-                </a>
+                </Link>
               );
             })}
           </div>
@@ -379,6 +383,7 @@ export default function CommunityPage() {
         {/* ── 9. Newsletter CTA ───────────────────────────────────────────── */}
         <section
           className="py-16 border-t border-white/[0.04]"
+          id="community-updates"
           aria-labelledby="newsletter-heading"
         >
           <div className="relative liquid-glass rounded-3xl overflow-hidden p-10 sm:p-14">
@@ -439,7 +444,7 @@ export default function CommunityPage() {
 
               <blockquote className="max-w-3xl mx-auto">
                 <p className="text-fluid-3xl font-display font-bold leading-snug mb-6">
-                  We believe the antidote to a terrible future{" "}
+                  The antidote to a terrible future{" "}
                   <span className="text-gradient-crystal">
                     is imagining a good one.
                   </span>
@@ -457,13 +462,11 @@ export default function CommunityPage() {
 
               <div className="mt-12 flex flex-wrap justify-center gap-4">
                 <a
-                  href="https://discord.gg/arcanea"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#community-updates"
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                 >
                   <PhChatCircle className="w-4 h-4" />
-                  Join the community
+                  Follow Arcanea updates
                 </a>
                 <Link
                   href="/academy"
