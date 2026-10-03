@@ -75,7 +75,9 @@ async function verifyMode(browser, mode, evidence) {
 
   try {
     await page.goto(`${base}/community`, { waitUntil: "domcontentloaded" });
-    const main = page.getByRole("main");
+    const main = page.locator("#community-content");
+    await expect(main.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByRole("main")).toHaveCount(1);
     const links = await main.locator("a[href]").evaluateAll((nodes) =>
       nodes.map((node) => ({
         href: node.getAttribute("href"),
@@ -145,7 +147,7 @@ async function verifyMode(browser, mode, evidence) {
     for (const destination of ["/books", "/library"]) {
       await page.goto(base + "/community", { waitUntil: "domcontentloaded" });
       const link = page
-        .getByRole("main")
+        .locator("#community-content")
         .locator('a[href="' + destination + '"]')
         .first();
       if (mode.hasTouch) await link.tap();

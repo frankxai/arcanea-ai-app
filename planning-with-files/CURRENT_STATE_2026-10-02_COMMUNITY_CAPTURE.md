@@ -258,3 +258,19 @@ comparison resolve that check without materializing or changing the helper. The
 Node REPL child environment also lacks GitHub CLI authentication; its failed reads
 are not repository availability evidence. The existing authenticated PowerShell
 CLI supplies those reads. No authentication, permission or security setting changed.
+
+First entry-path native run37094670741 atc12569fb46 is terminal FAILURE. Install,
+Lint and TypeScript pass; Build/CI Status fail on the browser verifier.
+Artifact11264385300 binds builtmerge745ff514 (main79f3fb25 plus sourcec12569fb46)
+and actual Chromium153.0.8010.12; JSON SHA256 973603a2bceff8ce8f44422afd2c2da5df5a6df50991a9e07bfde42c9e1d4da2.
+Desktop/mobile fail on two main landmarks, inherited from the page nested in
+the shared layout. Reduced motion also exposes inspection before streamed page
+content is ready. No signup journey in this attempt reached execution; do not
+inherit a pass from the previous source. The original artifact remains private.
+
+Correction: use a plain community-content container inside the existing shared
+main; wait for its actual heading before link inspection and assert exactly one
+main landmark. Scope all community link checks to that container, without
+loosening destinations, proposal status, same-tab assertions or any signup
+journey. This fixes the inherited nested landmark and the verifier readiness
+assumption. Resulting-source native checks remain required.
