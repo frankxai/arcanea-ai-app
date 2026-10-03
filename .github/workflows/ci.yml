@@ -296,6 +296,11 @@ jobs:
       - name: Verify saga public release boundary (default-deny)
         run: pnpm --dir apps/web test:saga-gate
 
+      - name: Verify catalog entries match reader chapters
+        run: |
+          pnpm --dir apps/web exec tsx lib/saga/__tests__/chapter-files.test.ts
+          pnpm --dir apps/web exec tsx --test lib/saga/__tests__/series-entry.test.ts
+
       - name: Run package tests
         run: pnpm test:quick
 
@@ -305,6 +310,27 @@ jobs:
           pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/sovereign-depths.test.ts
           node scripts/verify-weight-of-wonders.mjs
           pnpm --dir apps/web exec tsx --test lib/visual-encyclopedia/weight-of-wonders.test.ts
+
+      - name: Verify reader catalog and featured chapter journeys
+        timeout-minutes: 5
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-key
+        run: |
+          pnpm --dir apps/web exec playwright install --with-deps chromium
+          pnpm --dir apps/web exec next start -p 3001 > "$RUNNER_TEMP/reader-next.log" 2>&1 &
+          reader_server_pid=$!
+          trap 'kill "$reader_server_pid" 2>/dev/null || true' EXIT
+          node scripts/verify-reader-entry-browser.cjs
+
+      - name: Upload reader journey evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reader-entry-${{ github.sha }}
+          path: screenshots/reader-entry/evidence.json
+          retention-days: 7
+          if-no-files-found: warn
 
       - name: Verify galleries rendered desktop, 375px mobile and reduced motion
         if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
